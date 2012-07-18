@@ -153,6 +153,8 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     ArrayList<SignalCluster> mSignalClusters = new ArrayList<SignalCluster>();
     ArrayList<NetworkSignalChangedCallback> mSignalsChangedCallbacks =
             new ArrayList<NetworkSignalChangedCallback>();
+    ArrayList<SignalStrengthChangedCallback> mSignalStrengthChangedCallbacks =
+            new ArrayList<SignalStrengthChangedCallback>();
     int mLastPhoneSignalIconId = -1;
     int mLastDataDirectionIconId = -1;
     int mLastDataDirectionOverlayIconId = -1;
@@ -183,6 +185,10 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 boolean activityIn, boolean activityOut,
                 String dataTypeContentDescriptionId, String description);
         void onAirplaneModeChanged(boolean enabled);
+    }
+
+    public interface SignalStrengthChangedCallback {
+        void onPhoneSignalStrengthChanged(int dbm);
     }
 
     /**
@@ -325,6 +331,15 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         mSignalsChangedCallbacks.remove(cb);
     }
 
+    public void addSignalStrengthChangedCallback(SignalStrengthChangedCallback cb) {
+        mSignalStrengthChangedCallbacks.add(cb);
+        notifySignalStrengthChangedCallbacks(cb);
+    }
+
+    public void removeSignalStrengthChangedCallback(SignalStrengthChangedCallback cb) {
+        mSignalStrengthChangedCallbacks.remove(cb);
+    }
+
     public void refreshSignalCluster(SignalCluster cluster) {
         if (mDemoMode) return;
         cluster.setWifiIndicators(
@@ -392,6 +407,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             }
         }
         cb.onAirplaneModeChanged(mAirplaneMode);
+    }
+
+    private void notifySignalStrengthChangedCallbacks(SignalStrengthChangedCallback cb) {
+        int dbm = mSignalStrength != null ? mSignalStrength.getDbm() : 0;
+        cb.onPhoneSignalStrengthChanged(dbm);
     }
 
     public void setStackedMode(boolean stacked) {
@@ -1237,6 +1257,10 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         // update QS
         for (NetworkSignalChangedCallback cb : mSignalsChangedCallbacks) {
             notifySignalsChangedCallbacks(cb);
+        }
+
+        for (SignalStrengthChangedCallback cb : mSignalStrengthChangedCallbacks) {
+            notifySignalStrengthChangedCallbacks(cb);
         }
 
         if (mLastPhoneSignalIconId          != mPhoneSignalIconId
