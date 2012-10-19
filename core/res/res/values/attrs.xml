@@ -2610,6 +2610,10 @@
              "MM:SS" or "H:MM:SS". -->
         <attr name="format" format="string" localization="suggested" />
     </declare-styleable>
+    <declare-styleable name="ColorPickerView">
+    </declare-styleable>
+    <declare-styleable name="ColorPickerPanelView">
+    </declare-styleable>
     <declare-styleable name="CompoundButton">
         <!-- Indicates the initial checked state of this button. -->
         <attr name="checked" format="boolean" />
@@ -4995,6 +4999,10 @@
         <!-- The state (true for on, or false for off) that causes dependents to be disabled. By default,
              dependents will be disabled when this is unchecked, so the value of this preference is false. -->
         <attr name="disableDependentsState" format="boolean" />
+    </declare-styleable>
+
+    <!-- Base attributes available to ColorPickerPreference. -->
+    <declare-styleable name="ColorPickerPreference">
     </declare-styleable>
 
     <!-- Base attributes available to DialogPreference. -->
