@@ -50,6 +50,10 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
      */
     private boolean mStopFormatting;
 
+    private int mLastNumberStart = 0;
+
+    private final int mSeparatorLength = 2; // ". " or "; "
+
     private AsYouTypeFormatter mFormatter;
 
     /**
@@ -96,24 +100,36 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
 
     @Override
     public synchronized void afterTextChanged(Editable s) {
+        mLastNumberStart = findLastNumberStart(s);
         if (mStopFormatting) {
-            // Restart the formatting when all texts were clear.
-            mStopFormatting = !(s.length() == 0);
-            return;
+            // Restart the formatting when all texts were clear
+            // or a new recipent will be added.
+            mStopFormatting = hasSeparator(s, mLastNumberStart, s.length() - mLastNumberStart);
         }
-        if (mSelfChange) {
+        if (mSelfChange || mStopFormatting) {
             // Ignore the change caused by s.replace().
             return;
         }
-        String formatted = reformat(s, Selection.getSelectionEnd(s));
+        int sLength = Selection.getSelectionEnd(s) - mLastNumberStart;
+        String lastNumber, formatted;
+        if (sLength > 0) {
+            char[] cLastNumber = new char[sLength];
+            s.getChars(mLastNumberStart, sLength + mLastNumberStart, cLastNumber, 0);
+            lastNumber = new String(cLastNumber);
+            formatted = reformat(lastNumber, sLength);
+        } else {
+            lastNumber = null;
+            formatted = null;
+        }
         if (formatted != null) {
             int rememberedPos = mFormatter.getRememberedPosition();
             mSelfChange = true;
-            s.replace(0, s.length(), formatted, 0, formatted.length());
+            s.replace(mLastNumberStart, mLastNumberStart + sLength,
+                  formatted, 0, formatted.length());
             // The text could be changed by other TextWatcher after we changed it. If we found the
             // text is not the one we were expecting, just give up calling setSelection().
-            if (formatted.equals(s.toString())) {
-                Selection.setSelection(s, rememberedPos);
+            if (formatted.equals(lastNumber.toString())) {
+                Selection.setSelection(s, mLastNumberStart + rememberedPos);
             }
             mSelfChange = false;
         }
@@ -164,11 +180,40 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
 
     private boolean hasSeparator(final CharSequence s, final int start, final int count) {
         for (int i = start; i < start + count; i++) {
+            if (i < start + count - 1  && CheckSeparator(s, i)) {
+                continue;
+            }
             char c = s.charAt(i);
             if (!PhoneNumberUtils.isNonSeparator(c)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean CheckSeparator(final CharSequence s, final int index) {
+        if (index < 0 || index >= s.length() - 1) {
+            return false;
+        }
+        if ((s.charAt(index) == ',' || s.charAt(index) == ';')  && s.charAt(index + 1) == ' ') {
+            return true;
+        }
+        return false;
+    }
+
+    private int findLastNumberStart(final CharSequence s) {
+        int index = s.length() - mSeparatorLength;
+        while (index >= 0) {
+            if (CheckSeparator(s, index)) {
+                break;
+            }
+            index--;
+        }
+        // If the Separator is at the beginning of the number, consider it as part of number
+        if (index < 1) {
+            return 0;
+        } else {
+            return index + mSeparatorLength;
+        }
     }
 }
