@@ -2046,11 +2046,10 @@
   <java-symbol type="string" name="global_actions_expanded_desktop_mode_on_status" />
 
 
-  <!-- Simple color dialog layout. -->
-  <public type="layout" name="dialog_color_picker" id="0x01090018" />
-  <public type="id" name="color_picker_view" />
-  <public type="id" name="old_color_panel" />
-  <public type="id" name="new_color_panel" />
-  <public type="id" name="hex" />
+  <!-- Color picker API -->
+  <public type="string" name="color_picker" />
+  <public type="string" name="color_picker_hint" />
+  <public type="string" name="color_picker_hex" />
+  <public type="string" name="color_picker_arrow_right" />
 
 </resources>

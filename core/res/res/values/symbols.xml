@@ -221,6 +221,13 @@
   <java-symbol type="id" name="sms_short_code_remember_undo_instruction" />
   <java-symbol type="id" name="breadcrumb_section" />
 
+  <!-- Simple color dialog layout. -->
+  <java-symbol type="layout" name="dialog_color_picker" id="0x01090018" />
+  <java-symbol type="id" name="color_picker_view" />
+  <java-symbol type="id" name="old_color_panel" />
+  <java-symbol type="id" name="new_color_panel" />
+  <java-symbol type="id" name="hex" />
+
   <java-symbol type="attr" name="actionModeShareDrawable" />
   <java-symbol type="attr" name="alertDialogCenterButtons" />
   <java-symbol type="attr" name="gestureOverlayViewStyle" />
