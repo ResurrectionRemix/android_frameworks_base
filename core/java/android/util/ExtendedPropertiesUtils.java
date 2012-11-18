@@ -148,7 +148,7 @@ public class ExtendedPropertiesUtils {
 
             // In case that densities aren't determined in previous step
             // we calculate it by dividing DPI by default density (160).
-            if (info.dpi != 0) {                        
+            if (info.dpi != 0) {
                 info.density = info.density == 0 ? info.dpi / (float) DisplayMetrics.DENSITY_DEFAULT : info.density;
                 info.scaledDensity = info.scaledDensity == 0 ? info.dpi / (float) DisplayMetrics.DENSITY_DEFAULT : info.scaledDensity;
             }
@@ -200,7 +200,7 @@ public class ExtendedPropertiesUtils {
                         mLocalHook.force = tempProps.mLocalHook.force;
                         mLocalHook.large = tempProps.mLocalHook.large;
                         mLocalHook.scaledDensity = tempProps.mLocalHook.scaledDensity;
-                        mLocalHook.density = tempProps.mLocalHook.density;                        
+                        mLocalHook.density = tempProps.mLocalHook.density;
                     }
                     return;
                 case AppInfo:
