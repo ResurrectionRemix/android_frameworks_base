@@ -43,20 +43,15 @@ import java.util.List;
 
 public class ExtendedPropertiesUtils {
  
-    private static final String TAG = "paranoid";
+    private static final String TAG = "ExtendedPropertiesUtils";
 
     /**
      * Public variables
      */
-    public static final String PARANOID_PROPERTIES = "/system/etc/paranoid/properties.conf";
-    public static final String PARANOID_DIR = "/system/etc/paranoid/";
     public static final String PARANOID_MAINCONF = "properties.conf";
     public static final String PARANOID_BACKUPCONF = "backup.conf";
-    public static final String PARANOID_PREFIX_0 = "mod";
-    public static final String PARANOID_PREFIX_1 = "preferences";
-    public static final String PARANOID_PREFIX_2 = "ro";
-    public static final String PARANOID_PREFIX_3 = "com";
-    public static final String PARANOID_PREFIX_4 = "version";
+    public static final String PARANOID_PROPERTIES = "/system/etc/paranoid/" + PARANOID_MAINCONF;
+    public static final String PARANOID_DIR = "/system/etc/paranoid/";
     public static final String PARANOID_PREFIX = "%";
     public static final String PARANOID_SEPARATOR = ".";
     public static final String PARANOID_STRING_DELIMITER = "\\|";
@@ -96,7 +91,9 @@ public class ExtendedPropertiesUtils {
     public static boolean mIsTablet;
     public static int mRomLcdDensity = DisplayMetrics.DENSITY_DEFAULT;
 
+    // Native methods
     public static native String readFile(String s);
+    public static native int getStamp();
     
     /**
      * Contains all the details for an application
@@ -130,7 +127,7 @@ public class ExtendedPropertiesUtils {
      * @param  info  instance containing app details
      */
     public static void setAppConfiguration(ParanoidAppInfo info) {
-        if(mIsHybridModeEnabled && isEnvironmentSane()){
+        if(mIsHybridModeEnabled){
             // Load default values to be used in case that property is 
             // missing from configuration.
             boolean isSystemApp = info.path.contains("system/app");
@@ -151,7 +148,7 @@ public class ExtendedPropertiesUtils {
 
             // In case that densities aren't determined in previous step
             // we calculate it by dividing DPI by default density (160).
-            if (info.dpi != 0) {			
+            if (info.dpi != 0) {                        
                 info.density = info.density == 0 ? info.dpi / (float) DisplayMetrics.DENSITY_DEFAULT : info.density;
                 info.scaledDensity = info.scaledDensity == 0 ? info.dpi / (float) DisplayMetrics.DENSITY_DEFAULT : info.scaledDensity;
             }
@@ -388,17 +385,6 @@ public class ExtendedPropertiesUtils {
      */
     public static String getProperty(String prop, String def) {
         try {
-            if(mGlobalHook.name.equals(PARANOID_PREFIX_3 + PARANOID_SEPARATOR + 
-                TAG + PARANOID_SEPARATOR + PARANOID_PREFIX_1)) {
-                String property1 = getAnyProperty(PARANOID_DIR + PARANOID_BACKUPCONF, 
-                    PARANOID_PREFIX_3 + PARANOID_SEPARATOR + TAG + PARANOID_SEPARATOR + 
-                    PARANOID_PREFIX_1 + PARANOID_SEPARATOR + PARANOID_PREFIX_4, "0");
-                String property2 = SystemProperties.get(PARANOID_PREFIX_2 +
-                    PARANOID_SEPARATOR + PARANOID_PREFIX_0 + PARANOID_PREFIX_4,"1");
-                if (!property1.equals(property2))
-                    return "0";
-            }
-
             if (isInitialized()) {
                 String result = mPropertyMap.get(prop);
                 if (result == null) return def;
@@ -421,38 +407,6 @@ public class ExtendedPropertiesUtils {
                 }
                 return def;
             }
-        } catch (NullPointerException e){
-            e.printStackTrace();
-        }
-        return def;
-    }
-
-    /**
-     * Returns a {@link String}, containing the result of the configuration
-     * for the input argument <code>prop</code>. If the property is not found
-     * it returns the input argument <code>def</code>.
-     *
-     * @properties  target property file
-     * @param  prop  a string containing the property to checkout
-     * @param  def  default value to be returned in case that property is missing
-     * @return current stored value of property
-     * TODO: Port to native code
-     */
-    public static String getAnyProperty(String properties, String prop, String def) {
-        try {
-            String[] props = readFile(properties).split("\n");
-            for(int i=0; i<props.length; i++) {
-                if(props[i].contains("=")) {
-                    if(props[i].substring(0, props[i].lastIndexOf("=")).equals(prop)) {
-                        String result = props[i].replace(prop+"=", "").trim();  
-                        if (result.startsWith(PARANOID_PREFIX)) {
-                            result = getProperty(result, def);
-                        }
-                        return result;
-                    }
-                }
-            }
-            return def;
         } catch (NullPointerException e){
             e.printStackTrace();
         }
@@ -496,55 +450,6 @@ public class ExtendedPropertiesUtils {
         }
 
         return result;
-    }
-
-    /**
-     * Stores a boolean that will determine if the environment
-     * is sane and will allow hybrid to run without problems.
-     * We say that environment is sane, when native density
-     * (ro.sf.lcd_density) equals to "rom_default_dpi" parameter,
-     * and it's any of the possible values defined on {@link DisplayMetrics}
-     * class.
-     */
-    public static void getEnvironmentState() {
-        int nativeDensity = SystemProperties.getInt("qemu.sf.lcd_density", SystemProperties
-            .getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT));
-        if(nativeDensity == Integer.parseInt(getProperty(PARANOID_PREFIX + "rom_default_dpi"))) {
-            switch(nativeDensity) {
-                case DisplayMetrics.DENSITY_LOW:
-                case DisplayMetrics.DENSITY_MEDIUM:
-                case DisplayMetrics.DENSITY_TV:
-                case DisplayMetrics.DENSITY_HIGH:
-                case DisplayMetrics.DENSITY_XHIGH:
-                case DisplayMetrics.DENSITY_XXHIGH:
-                    setIsEnvironmentSane(true);
-                    return;
-            }
-        }
-
-        setIsEnvironmentSane(false);
-    }
-
-
-    /**
-     * Method used by {@link #getEnvironmentState() getEnvironmentState}
-     * for storing whether if environment is sane or not.
-     *
-     * @param  state  environment state
-     * @see getEnvironmentState
-     */
-    public static void setIsEnvironmentSane(boolean state) {
-        SystemProperties.set("sys.environment", Integer.toString(state ? 1 : 0));
-    }
-
-    /**
-     * Returns a {@link Boolean}, if environment is sane.
-     *
-     * @return is environment sane
-     * @see getEnvironmentState
-     */
-    public static boolean isEnvironmentSane() {
-        return Integer.parseInt(SystemProperties.get("sys.environment", Integer.toString(0))) == 1;
     }
 
     

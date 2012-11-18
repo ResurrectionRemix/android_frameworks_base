@@ -50,12 +50,23 @@ static jstring android_util_ExtendedPropertiesUtils_readFile(JNIEnv* env, jobjec
     return env->NewStringUTF(content);
 }
 
+static jint android_util_ExtendedPropertiesUtils_getStamp(JNIEnv* env, jobject clazz){
+    #ifdef STAMP
+        // this  is probably the dirtiest workaround ever
+        // but works
+        return 0 + STAMP;
+    #else
+        return 0;
+    #endif
+}
+
 /*
  * JNI registration.
  */
 static JNINativeMethod gMethods[] = {
     /* name, signature, funcPtr */
     { "readFile",      "(Ljava/lang/String;)Ljava/lang/String;", (void*) android_util_ExtendedPropertiesUtils_readFile },
+    { "getStamp",      "()I", (void*) android_util_ExtendedPropertiesUtils_getStamp },
 };
 
 int register_android_util_ExtendedPropertiesUtils(JNIEnv* env)

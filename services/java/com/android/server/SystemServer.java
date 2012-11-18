@@ -1,7 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
  * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
- * This code has been modified. Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +44,6 @@ import android.server.search.SearchManagerService;
 import android.service.dreams.DreamService;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
-import android.util.ExtendedPropertiesUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.view.WindowManager;
@@ -102,9 +100,6 @@ class ServerThread extends Thread {
 
         BinderInternal.disableBackgroundScheduling(true);
         android.os.Process.setCanSelfBackground(false);
-
-        // Get environment state, to check whether if it's sane or not.
-        ExtendedPropertiesUtils.getEnvironmentState();
 
         // Check whether we failed to shut down last time we tried.
         {
