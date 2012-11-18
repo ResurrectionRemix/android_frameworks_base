@@ -1484,8 +1484,9 @@ public class Resources extends ExtendedPropertiesUtils {
             if (mConfiguration.densityDpi != Configuration.DENSITY_DPI_UNDEFINED) {
                 mMetrics.densityDpi = mConfiguration.densityDpi;
                 mMetrics.density = mConfiguration.densityDpi * DisplayMetrics.DENSITY_DEFAULT_SCALE;
+                mMetrics.paranoidHook();
             }
-            mMetrics.scaledDensity = mMetrics.density * mConfiguration.fontScale;
+            mMetrics.scaledDensity = mMetrics.density * mConfiguration.fontScale;            
 
             String locale = null;
             if (mConfiguration.locale != null) {
@@ -1893,7 +1894,7 @@ public class Resources extends ExtendedPropertiesUtils {
             }
             sPreloaded = true;
             mPreloading = true;
-            sPreloadedDensity = DisplayMetrics.DENSITY_DEVICE;
+            sPreloadedDensity = DisplayMetrics.getDeviceDensity();
             mConfiguration.densityDpi = sPreloadedDensity;
             updateConfiguration(null, null);
         }
