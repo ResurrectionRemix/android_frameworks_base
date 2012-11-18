@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -781,7 +782,7 @@ public abstract class Drawable {
         // drawn to the screen.
         if (opts == null) opts = new BitmapFactory.Options();
         opts.inScreenDensity = res != null
-                ? res.getDisplayMetrics().noncompatDensityDpi : DisplayMetrics.DENSITY_DEVICE;
+                ? res.getDisplayMetrics().noncompatDensityDpi : DisplayMetrics.getDeviceDensity();
         Bitmap  bm = BitmapFactory.decodeResourceStream(res, value, is, pad, opts);
         if (bm != null) {
             byte[] np = bm.getNinePatchChunk();
