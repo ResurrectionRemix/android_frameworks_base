@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +37,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 
 import java.io.File;
@@ -44,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Content providers are one of the primary building blocks of Android applications, providing
@@ -197,7 +200,11 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
 
         @Override
         public Uri insert(Uri uri, ContentValues initialValues) {
-            enforceWritePermission(uri);
+            String settings = initialValues != null ? initialValues.getAsString("name") : null;
+            if(settings == null || !Arrays.asList(
+                    Settings.System.INSECURE_SETTINGS).contains(settings)) {
+                enforceWritePermission(uri);
+            }
             return ContentProvider.this.insert(uri, initialValues);
         }
 

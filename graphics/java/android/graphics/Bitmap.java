@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +20,7 @@ package android.graphics;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
+import android.util.ExtendedPropertiesUtils;
 
 import java.io.OutputStream;
 import java.nio.Buffer;
@@ -77,7 +79,15 @@ public final class Bitmap implements Parcelable {
     }
 
     static int getDefaultDensity() {
+<<<<<<< HEAD
         return DisplayMetrics.getDeviceDensity();
+=======
+        if (sDefaultDensity >= 0) {
+            return ExtendedPropertiesUtils.mGlobalHook.dpi == 0 ? sDefaultDensity : ExtendedPropertiesUtils.mGlobalHook.dpi;
+        }
+        sDefaultDensity = DisplayMetrics.getDeviceDensity();
+        return sDefaultDensity;
+>>>>>>> 7c6f443... Merge 20121118
     }
 
     /**

@@ -2,6 +2,7 @@
 <!--
 /*
 ** Copyright 2012, The Android Open Source Project
+** This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -34,4 +35,12 @@
 
     <!-- Enable the "flip settings" panel -->
     <bool name="config_hasFlipSettingsPanel">false</bool>
+
+    <!-- Whether we're using the tablet-optimized recents interface (we use this
+     value at runtime for some things) -->
+    <bool name="config_recents_interface_for_tablets">false</bool>
+
+    <!-- Whether recents thumbnails should stretch in both x and y to fill their
+     ImageView -->
+    <bool name="config_recents_thumbnail_image_fits_to_xy">false</bool>
 </resources>

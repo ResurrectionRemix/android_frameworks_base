@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
  * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
+ * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +19,12 @@
 package android.content.res;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.ExtendedPropertiesUtils;
+import android.util.Log;
 import android.view.View;
 import android.util.Log;
 import android.os.SystemProperties;
@@ -38,7 +42,7 @@ import java.util.Locale;
  * with {@link android.app.Activity#getResources}:</p>
  * <pre>Configuration config = getResources().getConfiguration();</pre>
  */
-public final class Configuration implements Parcelable, Comparable<Configuration> {
+public final class Configuration extends ExtendedPropertiesUtils implements Parcelable, Comparable<Configuration> {
     /** @hide */
     public static final Configuration EMPTY = new Configuration();
 
@@ -597,6 +601,30 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * @hide Internal book-keeping.
      */
     public int seq;
+
+    public boolean active;
+
+    /**
+     * Process layout changes for current hook
+     */
+    public void paranoidHook() {        
+        if (active) {            
+            if (getLayout() != 0) {
+                Point size = new Point();
+                mDisplay.getSize(size);
+                float factor = (float)Math.max(size.x, size.y) / (float)Math.min(size.x, size.y);
+                screenWidthDp = getLayout();
+                screenHeightDp = (int)(screenWidthDp * factor);
+                smallestScreenWidthDp = getLayout();           
+                if (getLarge()) {
+                    screenLayout |= SCREENLAYOUT_SIZE_XLARGE;
+                }
+                compatScreenWidthDp = screenWidthDp;
+                compatScreenHeightDp = screenHeightDp;
+                compatSmallestScreenWidthDp = smallestScreenWidthDp;
+            }
+        }
+    }
     
     /**
      * Construct an invalid Configuration.  You must call {@link #setToDefaults}
@@ -639,6 +667,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         compatScreenHeightDp = o.compatScreenHeightDp;
         compatSmallestScreenWidthDp = o.compatSmallestScreenWidthDp;
         seq = o.seq;
+        paranoidHook();
         if (o.customTheme != null) {
             customTheme = (CustomTheme) o.customTheme.clone();
         }
