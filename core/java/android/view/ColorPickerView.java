@@ -544,15 +544,13 @@ public class ColorPickerView extends View {
             mLastTouchedPanel = PANEL_HUE;
             mHue = pointToHue(event.getY());
             update = true;
-        }
-        else if(mSatValRect.contains(startX, startY)) {
+        } else if(mSatValRect.contains(startX, startY)) {
             mLastTouchedPanel = PANEL_SAT_VAL;
             float[] result = pointToSatVal(event.getX(), event.getY());
             mSat = result[0];
             mVal = result[1];
             update = true;
-        }
-        else if(mAlphaRect != null && mAlphaRect.contains(startX, startY)) {
+        } else if(mAlphaRect != null && mAlphaRect.contains(startX, startY)) {
             mLastTouchedPanel = PANEL_ALPHA;
             mAlpha = pointToAlpha((int)event.getX());
             update = true;
@@ -799,6 +797,10 @@ public class ColorPickerView extends View {
 
             requestLayout();
         }
+    }
+
+    public boolean getAlphaSliderVisible() {
+        return mShowAlphaPanel;
     }
 
     public void setSliderTrackerColor(int color) {

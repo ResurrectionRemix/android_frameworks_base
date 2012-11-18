@@ -87,15 +87,15 @@ public class ColorPickerDialog extends Dialog implements
         mColorPicker.setColor(color, true);
         mHex.setText(ColorPickerPreference.convertToARGB(color));
         mHex.addTextChangedListener(new TextWatcher() {
-         
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-         
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-         
+
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = mHex.getText().toString();
@@ -104,6 +104,12 @@ public class ColorPickerDialog extends Dialog implements
                 mColorPicker.setColor(newColor, true);
             }
         });
+    }
+
+    public void setColors(int oldColor, int newColor) {
+        mOldColor.setColor(oldColor);
+        mColorPicker.setColor(newColor, true);
+        mHex.setText(ColorPickerPreference.convertToARGB(newColor));
     }
 
     @Override
@@ -117,6 +123,10 @@ public class ColorPickerDialog extends Dialog implements
 
     public void setAlphaSliderVisible(boolean visible) {
         mColorPicker.setAlphaSliderVisible(visible);
+    }
+
+    public boolean getAlphaSliderVisible() {
+        return mColorPicker.getAlphaSliderVisible();
     }
 
     /**
@@ -137,6 +147,10 @@ public class ColorPickerDialog extends Dialog implements
         if (v.getId() == R.id.new_color_panel) {
             if (mListener != null) {
                 mListener.onColorChanged(mNewColor.getColor());
+            }
+        } else if (v.getId() == R.id.old_color_panel) {
+            if (mListener != null) {
+                mListener.onColorChanged(mOldColor.getColor());
             }
         }
         dismiss();
