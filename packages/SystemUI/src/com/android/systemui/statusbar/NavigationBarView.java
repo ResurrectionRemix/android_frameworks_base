@@ -305,6 +305,10 @@ public class NavigationBarView extends LinearLayout {
                 getBackground(), new BitmapDrawable(bm)});
         transition.setCrossFadeEnabled(true);
         setBackground(transition);
+<<<<<<< HEAD
+=======
+        transition.startTransition(speed);
+>>>>>>> 0436165... Color transition speed
     }
 
     public void setTransparencyManager(TransparencyManager tm) {

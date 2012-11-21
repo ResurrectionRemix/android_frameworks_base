@@ -4012,20 +4012,22 @@ public final class Settings {
 
         /**
          * Ability to change navigation bar color
-         * Format: AARRGGBB|AARRGGBB|index
+         * Format: AARRGGBB|AARRGGBB|index[|speed]
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
-         * Last (third) entry determines which has changed last, 0 or 1
+         * third entry determines which has changed last, 0 or 1
+         * fourth, optional entry determines the transition speed, defaults to 1000ms
          * @hide
          */
         public static final String NAV_BAR_COLOR = "nav_bar_color";
 
          /**
          * Ability to change navigation button color
-         * Format: AARRGGBB|AARRGGBB|index
+         * Format: AARRGGBB|AARRGGBB|index[|speed]
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
-         * Last (third) entry determines which has changed last, 0 or 1
+         * third entry determines which has changed last, 0 or 1
+         * fourth, optional entry determines the transition speed, defaults to 1000ms
          * @hide
          */
         public static final String NAV_BUTTON_COLOR = "nav_button_color";
@@ -4033,20 +4035,22 @@ public final class Settings {
          /**
          * Widget Buttons to Use
          * Ability to change navigation glow color
-         * Format: AARRGGBB|AARRGGBB|index
+         * Format: AARRGGBB|AARRGGBB|index[|speed]
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
-         * Last (third) entry determines which has changed last, 0 or 1
+         * third entry determines which has changed last, 0 or 1
+         * fourth, optional entry determines the transition speed, defaults to 1000ms
          * @hide
          */
         public static final String NAV_GLOW_COLOR = "nav_glow_color";
 
         /**
          * Statusbar color. May include alpha
-         * Format: AARRGGBB|AARRGGBB|index
+         * Format: AARRGGBB|AARRGGBB|index[|speed]
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
-         * Last (third) entry determines which has changed last, 0 or 1
+         * third entry determines which has changed last, 0 or 1
+         * fourth, optional entry determines the transition speed, defaults to 1000ms
          * @hide
          */
         public static final String STATUS_BAR_COLOR = "status_bar_color";

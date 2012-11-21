@@ -2875,7 +2875,7 @@ public final class ActivityThread {
                                    ExtendedPropertiesUtils.PARANOID_STRING_DELIMITER);
 
                             // Sanity check
-                            if (colors.length != 3) {
+                            if (colors.length < 3) {
                                 colors = ExtendedPropertiesUtils.PARANOID_COLORS_DEFAULTS[i].split(
                                        ExtendedPropertiesUtils.PARANOID_STRING_DELIMITER);
                                 Settings.System.putString(r.activity.getContentResolver(),
