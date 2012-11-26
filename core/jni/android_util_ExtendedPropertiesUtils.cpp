@@ -52,8 +52,6 @@ static jstring android_util_ExtendedPropertiesUtils_readFile(JNIEnv* env, jobjec
 
 static jint android_util_ExtendedPropertiesUtils_getStamp(JNIEnv* env, jobject clazz){
     #ifdef STAMP
-        // this  is probably the dirtiest workaround ever
-        // but works
         return 0 + STAMP;
     #else
         return 0;
