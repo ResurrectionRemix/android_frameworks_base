@@ -49,6 +49,7 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -4679,9 +4680,6 @@ public class Activity extends ContextThemeWrapper
      * @see android.view.Window#getLayoutInflater
      */
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-
-        Log.d("PARANOID:onCreateView", "Name="+ExtendedPropertiesUtils.mGlobalHook.name);
-
         if (!"fragment".equals(name)) {
             return onCreateView(name, context, attrs);
         }
@@ -5238,6 +5236,55 @@ public class Activity extends ContextThemeWrapper
     }
     
     final void performResume() {
+        // Per-App-Extras
+        if (mWindow != null && ExtendedPropertiesUtils.isInitialized() ) {
+            try {
+                // Per-App-Expand
+                if (ExtendedPropertiesUtils.mGlobalHook.expand == 1) {
+                    // 0 = Normal Desktop
+                    // 1 = Expanded Desktop
+                    Settings.System.putInt(this.getContentResolver(),
+                        Settings.System.EXPANDED_DESKTOP_STATE, 1);
+                }
+                // Per-App-Color
+                else {
+                    for (int i = 0; i < ExtendedPropertiesUtils.PARANOID_COLORS_COUNT; i++) {
+                        // Fetch defaults
+                        String setting = Settings.System.getString(this.getContentResolver(),
+                            ExtendedPropertiesUtils.PARANOID_COLORS_SETTINGS[i]);
+
+                        String[] colors = (setting == null || setting.equals("") ?
+                            ExtendedPropertiesUtils.PARANOID_COLORS_DEFAULTS[i] : setting).split(
+                            ExtendedPropertiesUtils.PARANOID_STRING_DELIMITER);
+
+                        // Sanity check
+                        if (colors.length < 3) {
+                            colors = ExtendedPropertiesUtils.PARANOID_COLORS_DEFAULTS[i].split(
+                                ExtendedPropertiesUtils.PARANOID_STRING_DELIMITER);
+                            Settings.System.putString(this.getContentResolver(),
+                                ExtendedPropertiesUtils.PARANOID_COLORS_SETTINGS[i],
+                                ExtendedPropertiesUtils.PARANOID_COLORS_DEFAULTS[i]);
+                        }
+
+                        // Change color
+                        String currentColor = colors[Integer.parseInt(colors[2])];
+                        String appColor = ExtendedPropertiesUtils.mGlobalHook.colors[i];
+                        String nextColor = appColor == null ? colors[0] : appColor;
+
+                        if (!nextColor.toUpperCase().equals(currentColor.toUpperCase()) ||
+                            ExtendedPropertiesUtils.mGlobalHook.firstRun == 0) {
+                            Settings.System.putString(this.getContentResolver(),
+                                ExtendedPropertiesUtils.PARANOID_COLORS_SETTINGS[i],
+                                colors[0] + "|" + nextColor + "|1");
+                        }
+                    }
+                    ExtendedPropertiesUtils.mGlobalHook.firstRun = 1;
+                }
+            } catch (Exception e) {
+                // Current application is null, or hook is not set
+            }
+        }
+
         performRestart();
         
         mFragments.execPendingActions();
@@ -5342,6 +5389,21 @@ public class Activity extends ContextThemeWrapper
     }
 
     final void performDestroy() {
+        // Per-App-Extras
+        if (mWindow != null && ExtendedPropertiesUtils.isInitialized()) {
+            try {
+                // Paer-App-Expand
+                if (ExtendedPropertiesUtils.mGlobalHook.expand == 1) {
+                    // 0 = Normal Desktop
+                    // 1 = Expanded Desktop
+                    Settings.System.putInt(this.getContentResolver(),
+                        Settings.System.EXPANDED_DESKTOP_STATE, 0);
+                }
+            } catch (Exception e) {
+                    // Current application is null, or hook is not set
+            }
+        }
+
         mDestroyed = true;
         mWindow.destroy();
         mFragments.dispatchDestroy();

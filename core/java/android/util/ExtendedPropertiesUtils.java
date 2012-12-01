@@ -110,6 +110,7 @@ public class ExtendedPropertiesUtils {
         public int force;
         public int large;
         public int expand;
+        public int firstRun;
         public float scaledDensity;
         public float density;
         public String[] colors = new String[4];
@@ -161,6 +162,7 @@ public class ExtendedPropertiesUtils {
             info.force = Integer.parseInt(getProperty(info.name + PARANOID_FORCE_SUFFIX));
             info.large = Integer.parseInt(getProperty(info.name + PARANOID_LARGE_SUFFIX));
             info.expand = Integer.parseInt(getProperty(info.name + PARANOID_EXPAND_SUFFIX));
+            info.firstRun = 0;
 
             // Color parameters
             String[] colors = getProperty(info.name +
