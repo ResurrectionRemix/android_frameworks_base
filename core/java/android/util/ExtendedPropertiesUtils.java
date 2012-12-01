@@ -87,9 +87,10 @@ public class ExtendedPropertiesUtils {
 
     public static ParanoidAppInfo mGlobalHook = new ParanoidAppInfo();
     public ParanoidAppInfo mLocalHook = new ParanoidAppInfo();
-    public static boolean mIsHybridModeEnabled;
 
-    public static boolean mIsTablet;
+    public static boolean sIsHybridModeEnabled;
+    public static boolean sIsTablet;
+
     public static int mRomLcdDensity = DisplayMetrics.DENSITY_DEFAULT;
 
     // Native methods
@@ -129,7 +130,7 @@ public class ExtendedPropertiesUtils {
      * @param  info  instance containing app details
      */
     public static void setAppConfiguration(ParanoidAppInfo info) {
-        if(mIsHybridModeEnabled){
+        if(sIsHybridModeEnabled){
             // Load default values to be used in case that property is 
             // missing from configuration.
             boolean isSystemApp = info.path.contains("system/app");
@@ -275,6 +276,24 @@ public class ExtendedPropertiesUtils {
     }
     public float getDensity() {
         return mLocalHook.active ? mLocalHook.density : mGlobalHook.density;
+    }
+
+    /**
+     * Returns whether if device is running hybrid mode
+     *
+     * @return hybrid mode enabled
+     */
+    public static boolean isHybridModeEnabled() {
+        return sIsHybridModeEnabled;
+    }
+
+    /**
+     * Returns whether if device is on tablet UI or not
+     *
+     * @return device is tablet
+     */
+    public static boolean isTablet() {
+        return sIsTablet;
     }
 
     
