@@ -62,6 +62,7 @@ public class ExtendedPropertiesUtils {
     public static final String PARANOID_CHECK_SUFFIX = ".version";
     public static final String PARANOID_DENSITY_SUFFIX = ".den";
     public static final String PARANOID_SCALEDDENSITY_SUFFIX = ".sden";
+    public static final String PARANOID_EXPAND_SUFFIX = ".expand";
 
     // Color definitions
     public static final String PARANOID_COLORS_SUFFIX = ".colors";
@@ -108,6 +109,7 @@ public class ExtendedPropertiesUtils {
         public int layout;
         public int force;
         public int large;
+        public int expand;
         public float scaledDensity;
         public float density;
         public String[] colors = new String[4];
@@ -158,6 +160,7 @@ public class ExtendedPropertiesUtils {
             // layout matching to assign bigger containers.
             info.force = Integer.parseInt(getProperty(info.name + PARANOID_FORCE_SUFFIX));
             info.large = Integer.parseInt(getProperty(info.name + PARANOID_LARGE_SUFFIX));
+            info.expand = Integer.parseInt(getProperty(info.name + PARANOID_EXPAND_SUFFIX));
 
             // Color parameters
             String[] colors = getProperty(info.name +

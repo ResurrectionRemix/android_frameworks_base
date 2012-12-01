@@ -4145,7 +4145,8 @@ public final class Settings {
             NAV_BAR_COLOR,
             NAV_BUTTON_COLOR,
             NAV_GLOW_COLOR,
-            STATUS_BAR_COLOR
+            STATUS_BAR_COLOR,
+            EXPANDED_DESKTOP_STATE
         };
 
         // Settings moved to Settings.Secure
