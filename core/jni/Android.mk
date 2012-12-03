@@ -24,7 +24,6 @@ ifeq ($(USE_OPENGL_RENDERER),true)
 endif
 
 LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
-LOCAL_CFLAGS += -DSTAMP=$(shell cat .stamp)
 
 LOCAL_SRC_FILES:= \
 	AndroidRuntime.cpp \

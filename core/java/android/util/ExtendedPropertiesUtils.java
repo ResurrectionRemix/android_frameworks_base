@@ -95,7 +95,6 @@ public class ExtendedPropertiesUtils {
 
     // Native methods
     public static native String readFile(String s);
-    public static native int getStamp();
     
     /**
      * Contains all the details for an application
