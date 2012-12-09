@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.util.ExtendedPropertiesUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Surface;
 import android.util.Log;
 import android.os.SystemProperties;
 import android.text.TextUtils;
@@ -608,8 +609,15 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
      * Process layout changes for current hook
      */
     public void paranoidHook() {        
-        if (active) {            
-            if (getLayout() != 0) {
+        if (active) {
+
+            boolean isOrientationOk = true;
+            if (getLandscape() && mDisplay != null) {
+                final int rotation = mDisplay.getRotation();
+                isOrientationOk = (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270);
+            }
+
+            if (getLayout() != 0 && isOrientationOk) {
                 Point size = new Point();
                 mDisplay.getSize(size);
                 float factor = (float)Math.max(size.x, size.y) / (float)Math.min(size.x, size.y);

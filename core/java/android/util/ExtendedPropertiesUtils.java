@@ -63,6 +63,7 @@ public class ExtendedPropertiesUtils {
     public static final String PARANOID_DENSITY_SUFFIX = ".den";
     public static final String PARANOID_SCALEDDENSITY_SUFFIX = ".sden";
     public static final String PARANOID_EXPAND_SUFFIX = ".expand";
+    public static final String PARANOID_LANDSC_SUFFIX = ".landsc";
 
     // Color definitions
     public static final String PARANOID_COLORS_SUFFIX = ".colors";
@@ -110,6 +111,7 @@ public class ExtendedPropertiesUtils {
         public int force;
         public int large;
         public int expand;
+        public int landsc;
         public int firstRun;
         public float scaledDensity;
         public float density;
@@ -162,6 +164,7 @@ public class ExtendedPropertiesUtils {
             info.force = Integer.parseInt(getProperty(info.name + PARANOID_FORCE_SUFFIX));
             info.large = Integer.parseInt(getProperty(info.name + PARANOID_LARGE_SUFFIX));
             info.expand = Integer.parseInt(getProperty(info.name + PARANOID_EXPAND_SUFFIX));
+            info.landsc = Integer.parseInt(getProperty(info.name + PARANOID_LANDSC_SUFFIX));
             info.firstRun = 0;
 
             // Color parameters
@@ -277,6 +280,9 @@ public class ExtendedPropertiesUtils {
     }
     public float getDensity() {
         return mLocalHook.active ? mLocalHook.density : mGlobalHook.density;
+    }
+    public boolean getLandscape() {
+        return (mLocalHook.active ? mLocalHook.landsc : mGlobalHook.landsc) == 1;
     }
 
     /**
