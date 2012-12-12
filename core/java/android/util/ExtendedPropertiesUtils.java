@@ -453,22 +453,26 @@ public class ExtendedPropertiesUtils {
      * @see getProperty
      */
     public static int getActualProperty(String property) {
-        int result = -1;
+        int result = 0;
 
         if (property.endsWith(PARANOID_DPI_SUFFIX)) {
             ApplicationInfo appInfo = getAppInfoFromPackageName(property.substring(0, property.length()
                     - PARANOID_DPI_SUFFIX.length()));
-            boolean isSystemApp = 
-                    appInfo.sourceDir.substring(0, appInfo.sourceDir.lastIndexOf("/")).contains("system/app");
-            result = Integer.parseInt(getProperty(property, getProperty(PARANOID_PREFIX + (isSystemApp ? 
-                    "system_default_dpi" : "user_default_dpi"))));
+            if(appInfo != null) {
+                boolean isSystemApp = 
+                        appInfo.sourceDir.substring(0, appInfo.sourceDir.lastIndexOf("/")).contains("system/app");
+                result = Integer.parseInt(getProperty(property, getProperty(PARANOID_PREFIX + (isSystemApp ? 
+                        "system_default_dpi" : "user_default_dpi"))));
+            }
         } else if (property.endsWith(PARANOID_LAYOUT_SUFFIX)) {
             ApplicationInfo appInfo = getAppInfoFromPackageName(property.substring(0, property.length()
                     - PARANOID_LAYOUT_SUFFIX.length()));
-            boolean isSystemApp =
-                    appInfo.sourceDir.substring(0, appInfo.sourceDir.lastIndexOf("/")).contains("system/app");
-            result = Integer.parseInt(getProperty(property, getProperty(PARANOID_PREFIX + (isSystemApp ? 
-                    "system_default_layout" : "user_default_layout"))));
+            if(appInfo != null) {
+                boolean isSystemApp =
+                        appInfo.sourceDir.substring(0, appInfo.sourceDir.lastIndexOf("/")).contains("system/app");
+                result = Integer.parseInt(getProperty(property, getProperty(PARANOID_PREFIX + (isSystemApp ? 
+                        "system_default_layout" : "user_default_layout"))));
+            }
         } else if (property.endsWith("_dpi") || property.endsWith("_layout")) {
             result = Integer.parseInt(getProperty(property));
         }
