@@ -454,6 +454,7 @@ public class ExtendedPropertiesUtils {
      */
     public static int getActualProperty(String property) {
         int result = 0;
+        boolean getProp = false;
 
         if (property.endsWith(PARANOID_DPI_SUFFIX)) {
             ApplicationInfo appInfo = getAppInfoFromPackageName(property.substring(0, property.length()
@@ -463,6 +464,8 @@ public class ExtendedPropertiesUtils {
                         appInfo.sourceDir.substring(0, appInfo.sourceDir.lastIndexOf("/")).contains("system/app");
                 result = Integer.parseInt(getProperty(property, getProperty(PARANOID_PREFIX + (isSystemApp ? 
                         "system_default_dpi" : "user_default_dpi"))));
+            } else {
+                getProp = true;
             }
         } else if (property.endsWith(PARANOID_LAYOUT_SUFFIX)) {
             ApplicationInfo appInfo = getAppInfoFromPackageName(property.substring(0, property.length()
@@ -472,10 +475,14 @@ public class ExtendedPropertiesUtils {
                         appInfo.sourceDir.substring(0, appInfo.sourceDir.lastIndexOf("/")).contains("system/app");
                 result = Integer.parseInt(getProperty(property, getProperty(PARANOID_PREFIX + (isSystemApp ? 
                         "system_default_layout" : "user_default_layout"))));
+            } else {
+                getProp = true;
             }
         } else if (property.endsWith("_dpi") || property.endsWith("_layout")) {
-            result = Integer.parseInt(getProperty(property));
+            getProp = true;
         }
+
+        if(getProp) result = Integer.parseInt(getProperty(property));
 
         if (result == 0) {
             result = Integer.parseInt(property.endsWith("dpi") ? getProperty(PARANOID_PREFIX + "rom_default_dpi")
