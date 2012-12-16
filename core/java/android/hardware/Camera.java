@@ -2152,6 +2152,22 @@ public class Camera {
          */
         public static final String SCENE_MODE_ASD = "asd";
 
+        //Values for ISO settings
+        /** @hide */
+        public static final String ISO_AUTO = "auto";
+        /** @hide */
+        public static final String ISO_HJR = "ISO_HJR";
+        /** @hide */
+        public static final String ISO_100 = "ISO100";
+        /** @hide */
+        public static final String ISO_200 = "ISO200";
+        /** @hide */
+        public static final String ISO_400 = "ISO400";
+        /** @hide */
+        public static final String ISO_800 = "ISO800";
+        /** @hide */
+        public static final String ISO_1600 = "ISO1600";
+
         /**
          * Scene mode is off.
          */
