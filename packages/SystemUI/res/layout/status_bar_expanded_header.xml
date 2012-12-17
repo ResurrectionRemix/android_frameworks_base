@@ -35,7 +35,7 @@
         android:background="@drawable/ic_notify_button_bg"
         android:enabled="false"
         >
-        <com.android.systemui.statusbar.policy.Clock
+        <com.android.systemui.statusbar.policy.ClockStock
             android:id="@+id/clock"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -45,7 +45,6 @@
             android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Clock"
             android:background="@drawable/ic_notify_button_bg"
             android:gravity="center_vertical"
-            android:clickable="true"
             />
 
         <com.android.systemui.statusbar.policy.DateView 
