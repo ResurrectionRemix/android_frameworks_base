@@ -60,6 +60,8 @@ public final class URLUtil {
         if (inUrl.startsWith("file:")) return inUrl;
         // Do not try to interpret javascript scheme URLs
         if (inUrl.startsWith("javascript:")) return inUrl;
+        // Do not try to interpret rtsp scheme URLs
+        if (inUrl.startsWith("rtsp:")) return inUrl;
 
         // bug 762454: strip period off end of url
         if (inUrl.endsWith(".") == true) {
