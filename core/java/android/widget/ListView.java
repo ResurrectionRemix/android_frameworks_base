@@ -2536,7 +2536,9 @@ public class ListView extends AbsListView {
         View selectedView = getSelectedView();
         int selectedPos = mSelectedPosition;
 
-        int nextSelectedPosition = nextSelectedPositionForDirection(selectedView, selectedPos, direction);
+        int nextSelectedPosition = (direction == View.FOCUS_DOWN) ?
+                lookForSelectablePosition(selectedPos + 1, true) :
+                lookForSelectablePosition(selectedPos - 1, false);
         int amountToScroll = amountToScroll(direction, nextSelectedPosition);
 
         // if we are moving focus, we may OVERRIDE the default behavior
