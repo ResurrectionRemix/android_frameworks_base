@@ -18,8 +18,10 @@ package android.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.ContentResolver;
 import android.graphics.Point;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -399,9 +401,12 @@ public class TouchUtils {
                 x + touchSlop / 2, y + touchSlop / 2, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
-        
+
+        ContentResolver resolver = v.getContext().getContentResolver();
+        int timeout = Settings.Secure.getInt(resolver, Settings.Secure.LONG_PRESS_TIMEOUT,
+                ViewConfiguration.getLongPressTimeout());
         try {
-            Thread.sleep((long)(ViewConfiguration.getLongPressTimeout() * 1.5f));
+            Thread.sleep((long)(timeout * 1.5f));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
