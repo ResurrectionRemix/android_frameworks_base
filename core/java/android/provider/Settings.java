@@ -3040,7 +3040,7 @@ public final class Settings {
         public static final String PIE_CONTROLS = "pie_controls";
 
         /**
-         * Pie menu, should default to 0 (no, show only when needed)
+         * Pie menu, should default to 1 (yes, show)
          * @hide
          */
         public static final String PIE_MENU = "pie_menu";
@@ -3052,7 +3052,7 @@ public final class Settings {
         public static final String PIE_SEARCH = "pie_search";
 
         /**
-         * Pie will not rotate. Should default to 0 (no, rotate)
+         * Pie will not rotate. Should default to 1 (yes, do not rotate)
          * @hide
          */
         public static final String PIE_STICK = "pie_stick";
@@ -3064,7 +3064,7 @@ public final class Settings {
         public static final String PIE_LAST_APP = "pie_last_app";
 
         /**
-         * Pie gap angle, should default to 1
+         * Pie gap angle, should default to 3
          * @hide
          */
         public static final String PIE_GAP = "pie_gap";

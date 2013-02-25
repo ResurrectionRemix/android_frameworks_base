@@ -247,28 +247,31 @@
 
     <!-- Constant for hidden ribbon drag handle -->
     <dimen name="ribbon_drag_handle_height">25dp</dimen>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 188b1f6... PIE: compressed layout, stubs, new defaults
     <!-- PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE -->
     <dimen name="pie_trigger_height">12dp</dimen>
     <dimen name="pie_radius_start">65dp</dimen>
     <dimen name="pie_radius_increment">80dp</dimen>
     <dimen name="pie_outline">1.5dp</dimen>
-    <dimen name="pie_chevron_start">250dp</dimen>
-    <dimen name="pie_chevron_start_right">250dp</dimen>
+    <dimen name="pie_chevron_start">240dp</dimen>
+    <dimen name="pie_chevron_start_right">240dp</dimen>
     <dimen name="pie_chevron_increment">2dp</dimen>
     <dimen name="pie_chevron_increment_right">2dp</dimen>
     <dimen name="pie_battery_start">155dp</dimen>
     <dimen name="pie_battery_increment">10dp</dimen>
     <dimen name="pie_status_start">155dp</dimen>
-    <dimen name="pie_notifications_start">260dp</dimen>
-    <dimen name="pie_clock_size">70dp</dimen>
+    <dimen name="pie_notifications_start">250dp</dimen>
+    <dimen name="pie_clock_size">58dp</dimen>
     <dimen name="pie_clock_offset">-20dp</dimen>
     <dimen name="pie_ampm_size">15dp</dimen>
-    <dimen name="pie_ampm_offset">-75dp</dimen>
+    <dimen name="pie_ampm_offset">-67dp</dimen>
     <dimen name="pie_status_size">12dp</dimen>
     <dimen name="pie_status_offset">-14dp</dimen>
     <dimen name="pie_notification_size">13dp</dimen>
-    <dimen name="pie_notification_offset">-105dp</dimen>
     <dimen name="pie_notification_row_size">16dp</dimen>
     <dimen name="pie_notification_icon_size">15dp</dimen>
     <dimen name="pie_snap_radius">30dp</dimen>
