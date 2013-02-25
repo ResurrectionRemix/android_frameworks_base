@@ -56,6 +56,7 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -114,7 +115,7 @@ public class PieMenu extends FrameLayout {
     private static final int COLOR_BATTERY_BACKGROUND = 0xffffff;
     private static final int COLOR_STATUS = 0xffffff;
     private static final int BASE_SPEED = 1000;
-    private static final int EMPTY_ANGLE_BASE = 12;
+    private static final int EMPTY_ANGLE_BASE = 0;
     private static final int CHEVRON_FRAGMENTS = 16;
     private static final float SIZE_BASE = 1f;
 
@@ -326,11 +327,11 @@ public class PieMenu extends FrameLayout {
         float fragmentSize = 90 / CHEVRON_FRAGMENTS;
         for (int i=0; i < CHEVRON_FRAGMENTS + 1; i++) {
             mChevronPathLeft[i] = makeSlice(mPanelDegree + (i * fragmentSize), mPanelDegree + (i * fragmentSize) + fragmentSize / 2,
-                    mInnerChevronRadius, mOuterChevronRadius, mCenter, 0);
+                    mInnerChevronRadius, mOuterChevronRadius, mCenter);
         }
 
         mChevronPathRight = makeSlice(mPanelDegree + (mPanelOrientation != Gravity.TOP ? -5 : 3), mPanelDegree + 90, mInnerChevronRightRadius,
-                mOuterChevronRightRadius, mCenter, 0);
+                mOuterChevronRightRadius, mCenter);
 
         // Calculate text circle
         mStatusRadius = (int)(mResources.getDimensionPixelSize(R.dimen.pie_status_start) * mPieSize);
@@ -364,8 +365,8 @@ public class PieMenu extends FrameLayout {
 
         mStartBattery = mPanel.getDegree() + mEmptyAngle + mPieGap;
         mEndBattery = mPanel.getDegree() + (mPieGap <= 2 ? 88 : 90 - mPieGap);
-        mBatteryPathBackground = makeSlice(mStartBattery, mEndBattery, mInnerBatteryRadius, mOuterBatteryRadius, mCenter, 0);
-        mBatteryPathJuice = makeSlice(mStartBattery, mStartBattery, mInnerBatteryRadius, mOuterBatteryRadius, mCenter, 0);
+        mBatteryPathBackground = makeSlice(mStartBattery, mEndBattery, mInnerBatteryRadius, mOuterBatteryRadius, mCenter);
+        mBatteryPathJuice = makeSlice(mStartBattery, mStartBattery, mInnerBatteryRadius, mOuterBatteryRadius, mCenter);
 
         // Colors
         mEnableColor = (Settings.System.getInt(mContext.getContentResolver(),
@@ -441,17 +442,18 @@ public class PieMenu extends FrameLayout {
 
         mAnimators[ANIMATOR_ACC_SPEED15].duration = (int)(mOverallSpeed * 1.5);
         mAnimators[ANIMATOR_ACC_SPEED15].animator.setInterpolator(new AccelerateInterpolator());
-        mAnimators[ANIMATOR_DEC_SPEED15].animator.setStartDelay((int)(mInitialSpeed * 1.5));
+        mAnimators[ANIMATOR_ACC_SPEED15].animator.setStartDelay((int)(mInitialSpeed * 1.5));
 
         // Cascade accelerators
+        int count = 0;
         for(int i = ANIMATOR_ACC_INC_1; i < ANIMATOR_ACC_INC_15 + 1; i++) {
-            mAnimators[i].duration = (int)(mOverallSpeed);
-            mAnimators[i].animator.setInterpolator(new AccelerateInterpolator());
-            mAnimators[i].animator.setStartDelay(mInitialSpeed + i * 75);
+            mAnimators[i].duration = 150;
+            mAnimators[i].animator.setInterpolator(new DecelerateInterpolator());
+            mAnimators[i].animator.setStartDelay((int)(mInitialSpeed * 1.5f + (++count * 75) ));
         }
 
         // Special purpose
-        mAnimators[ANIMATOR_BATTERY_METER].duration = (int)(mOverallSpeed * 3);
+        mAnimators[ANIMATOR_BATTERY_METER].duration = (int)(mOverallSpeed * 1.5);
         mAnimators[ANIMATOR_BATTERY_METER].animator.setInterpolator(new DecelerateInterpolator());
         mAnimators[ANIMATOR_BATTERY_METER].animator.setStartDelay((int)(mInitialSpeed * 1.5));
 
@@ -654,11 +656,15 @@ public class PieMenu extends FrameLayout {
         if (!mPanel.currentAppUsesMenu() && !mUseMenuAlways) itemCount--;
         if (!mUseSearch) itemCount--;
 
-
+        int totalCount = 0;
         int lesserSweepCount = 0;
         for (PieItem item : mItems) {
-            if (item.isLesser() && canItemDisplay(item)) {
-                lesserSweepCount += 1;
+            boolean canDisplay = canItemDisplay(item);
+            if (canDisplay) {
+                totalCount++;
+                if (item.isLesser()) {
+                    lesserSweepCount += 1;
+                }
             }
         }
 
@@ -667,13 +673,14 @@ public class PieMenu extends FrameLayout {
         float angle = 0;
         float total = 0;
 
+        int count = 0;
         for (PieItem item : mItems) {
             if (!canItemDisplay(item)) continue;
 
             sweep = ((float) (Math.PI - 2 * emptyangle) / itemCount) * (item.isLesser() ? 0.65f : 1 + adjustedSweep);
             angle = (emptyangle + sweep / 2 - (float)Math.PI/2);
             item.setPath(makeSlice(getDegrees(0) - mPieGap, getDegrees(sweep) + mPieGap, outer, inner, mCenter,
-                    (mPieGap > 0 ? mPieGap + 0.4f : 0)));
+                    (mPieGap > 0 ? mPieGap + 0.4f : 0), count != 0));
             View view = item.getView();
 
             if (view != null) {
@@ -707,6 +714,7 @@ public class PieMenu extends FrameLayout {
             float itemstart = total + angle - sweep / 2;
             item.setGeometry(itemstart, sweep, inner, outer);
             total += sweep;
+            count++;
         }
     }
 
@@ -729,7 +737,7 @@ public class PieMenu extends FrameLayout {
             // Special purpose animators go here
             if (mIndex == ANIMATOR_BATTERY_METER) {
                 mBatteryPathJuice = makeSlice(mStartBattery, mStartBattery + (float)animation.getAnimatedFraction() *
-                        (mBatteryLevel * (mEndBattery-mStartBattery) / 100), mInnerBatteryRadius, mOuterBatteryRadius, mCenter, 0);
+                        (mBatteryLevel * (mEndBattery-mStartBattery) / 100), mInnerBatteryRadius, mOuterBatteryRadius, mCenter);
             }
             invalidate();
         }
@@ -914,12 +922,16 @@ public class PieMenu extends FrameLayout {
         }
     }
 
-    private Path makeSlice(float start, float end, int outer, int inner, Point center, float narrow) {
+    private Path makeSlice(float start, float end, int outer, int inner, Point center) {
+        return makeSlice(start, end, outer, inner, center, 0, true);
+    }
+
+    private Path makeSlice(float start, float end, int outer, int inner, Point center, float narrow, boolean bothEnds) {
         RectF bb = new RectF(center.x - outer, center.y - outer, center.x + outer, center.y + outer);
         RectF bbi = new RectF(center.x - inner, center.y - inner, center.x + inner, center.y + inner);
         Path path = new Path();
         path.arcTo(bb, start, end - start, true);
-        path.arcTo(bbi, end + narrow, start - end - narrow);
+        path.arcTo(bbi, end + narrow, start - end - (bothEnds ? narrow : narrow*2));
         path.close();
         return path;
     }
@@ -1045,7 +1057,7 @@ public class PieMenu extends FrameLayout {
                 // Check for onEnter separately or'll face constant deselect
                 PieItem item = findItem(getPolar(mX, mY));
                 if (item != null) {
-                    if (mCenterDistance < shadeTreshold && mCenterDistance > (mInnerPieRadius/2)) {
+                    if (mCenterDistance < shadeTreshold && mCenterDistance > (mInnerPieRadius * 0.75f)) {
                         onEnter(item);
                     } else {
                         deselect();
