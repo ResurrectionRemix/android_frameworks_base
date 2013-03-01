@@ -23,6 +23,18 @@
     android:orientation="vertical"
     android:gravity="center_vertical">
 
+
+        <ImageView android:id="@+id/clear_all_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:paddingRight="20dp"
+            android:paddingBottom="15dp"
+            android:src="@drawable/ic_notify_clear_normal"
+            android:contentDescription="@string/accessibility_clear_all"/>
+
+
         <ScrollView
             android:id="@+id/content_scroll"
             android:layout_width="match_parent"
