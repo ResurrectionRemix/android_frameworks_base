@@ -75,9 +75,10 @@ public class PieStatusPanel {
         mNotificationPanel = mPanel.getBar().getNotificationRowLayout();
         mNotificationPanel.setTag(NOTIFICATIONS_PANEL);
         mQS = mPanel.getBar().getQuickSettingsPanel();
-
+        mQS.setTag(QUICK_SETTINGS_PANEL);
 
         mPanelParents[NOTIFICATIONS_PANEL] = (ViewGroup) mNotificationPanel.getParent();
+        mPanelParents[QUICK_SETTINGS_PANEL] = (ViewGroup) mQS.getParent();
 
         mContentFrame = (View) mPanel.getBar().mContainer.findViewById(R.id.content_frame);
         mScrollView = (ScrollView) mPanel.getBar().mContainer.findViewById(R.id.content_scroll);
@@ -138,6 +139,8 @@ public class PieStatusPanel {
     public void hidePanels(boolean reset) {
         if (mCurrentViewState == NOTIFICATIONS_PANEL) {
             hidePanel(mNotificationPanel);
+        } else if (mCurrentViewState == QUICK_SETTINGS_PANEL) {
+            hidePanel(mQS);
         }
         if (reset) mCurrentViewState = -1;
     }
@@ -145,7 +148,11 @@ public class PieStatusPanel {
     public void swapPanels() {
         hidePanels(false);
         if (mCurrentViewState == NOTIFICATIONS_PANEL) {
+            mCurrentViewState = QUICK_SETTINGS_PANEL;
             showPanel(mQS);
+        } else if (mCurrentViewState == QUICK_SETTINGS_PANEL) {
+            mCurrentViewState = NOTIFICATIONS_PANEL;
+            showPanel(mNotificationPanel);
         }
     }
 
@@ -153,7 +160,7 @@ public class PieStatusPanel {
         if (((Integer)panel.getTag()).intValue() == NOTIFICATIONS_PANEL) {
             return mPanelParents[NOTIFICATIONS_PANEL];
         } else {
-            return mPanelParents[NOTIFICATIONS_PANEL];
+            return mPanelParents[QUICK_SETTINGS_PANEL];
         }
     }
 
