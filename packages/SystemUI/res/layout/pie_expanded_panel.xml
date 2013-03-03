@@ -46,7 +46,6 @@
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Clock"
                     android:layout_centerVertical="true"
-                    systemui:showAlways="true"
                     />
 
                 <com.android.systemui.statusbar.policy.DateView android:id="@+id/date"
@@ -67,7 +66,6 @@
                 android:paddingRight="8dp"
                 android:src="@drawable/ic_notify_clear_normal"
                 android:contentDescription="@string/accessibility_clear_all"/>
-
         </RelativeLayout>
 
         <ScrollView
