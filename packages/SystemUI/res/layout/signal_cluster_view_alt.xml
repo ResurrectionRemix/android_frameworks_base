@@ -38,10 +38,13 @@
             android:scaleType="fitCenter"
             android:layout_gravity="fill_vertical"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             android:paddingTop="@dimen/status_bar_icon_top_padding"
             android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
             />
         <ImageView
             android:id="@+id/wifi_inout"
@@ -57,11 +60,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:layout_gravity="center"/>
 =======
             android:singleLine="true"
             android:gravity="center"/>
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+            android:layout_gravity="center"/>
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
     </FrameLayout>
     <View
         android:layout_height="6dp"
@@ -111,6 +118,7 @@
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
 <<<<<<< HEAD
+<<<<<<< HEAD
                 android:layout_gravity="fill_vertical"
                 android:scaleType="fitCenter" />
 =======
@@ -119,6 +127,10 @@
                 android:scaleType="fitCenter"
                 android:layout_gravity="fill_vertical"/>
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+                android:layout_gravity="fill_vertical"
+                android:scaleType="fitCenter" />
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
             <com.android.systemui.statusbar.policy.SignalText
                 android:id="@+id/signal_text"
                 android:textAppearance="@style/TextAppearance.StatusBar.SignalText"
@@ -126,10 +138,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 <<<<<<< HEAD
+<<<<<<< HEAD
                 android:layout_gravity="center" />
 =======
                 android:gravity="center" />
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+                android:layout_gravity="center" />
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
         </LinearLayout>
     </FrameLayout>
     <ImageView
@@ -139,9 +155,12 @@
         android:scaleType="fitCenter"
         android:layout_gravity="center"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         android:paddingTop="@dimen/status_bar_icon_top_padding"
         android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
         />
 </com.android.systemui.statusbar.SignalClusterView>

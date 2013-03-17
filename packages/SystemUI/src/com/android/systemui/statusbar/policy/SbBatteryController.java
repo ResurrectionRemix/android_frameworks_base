@@ -236,10 +236,13 @@ public class SbBatteryController extends LinearLayout {
         mFontSize = Settings.System.getInt(cr,
                 Settings.System.STATUSBAR_FONT_SIZE, mStockFontSize);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         int width = StatusBarHelpers.getIconWidth(mContext, mFontSize);
         mBatteryIcon.getLayoutParams().width = width;
 
+=======
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
 
         switch (mBatteryStyle) {
             case STYLE_ICON_ONLY:

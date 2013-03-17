@@ -79,10 +79,13 @@
     <dimen name="status_bar_icon_top_padding">3dp</dimen>
     <dimen name="status_bar_icon_bottom_padding">3dp</dimen>
 
+<<<<<<< HEAD
 =======
     <dimen name="status_bar_icon_top_padding">@*android:dimen/status_bar_icon_top_padding</dimen>
     <dimen name="status_bar_icon_bottom_padding">@*android:dimen/status_bar_icon_bottom_padding</dimen>
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
     <!-- Height of a small notification in the status bar -->
     <dimen name="notification_min_height">64dp</dimen>
 

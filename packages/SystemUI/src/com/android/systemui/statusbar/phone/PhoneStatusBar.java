@@ -395,11 +395,17 @@ public class PhoneStatusBar extends BaseStatusBar {
         mWm = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
 
         updateDisplaySize(); // populates mDisplayMetrics
+<<<<<<< HEAD
 
         //loadDimens();
 
         //mIconSize = res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_icon_size);
 
+=======
+        //loadDimens();
+
+        //mIconSize = res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_icon_size);
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
 
         mStatusBarWindow = (StatusBarWindowView) View.inflate(context,
                 R.layout.super_status_bar, null);
@@ -2645,12 +2651,18 @@ public class PhoneStatusBar extends BaseStatusBar {
         int newIconHPadding = res.getDimensionPixelSize(
                 R.dimen.status_bar_icon_padding);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
         int toppadding = mContext.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_top_padding);
         int bottompadding = mContext.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_bottom_padding);
+<<<<<<< HEAD
 =======
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
         int padding = mContext.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.status_bar_padding);
         float fontSizepx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mFontSize,
@@ -2660,6 +2672,7 @@ public class PhoneStatusBar extends BaseStatusBar {
         // Set the Bar height to the size of the font plus padding.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
         int newIconSize = mNaturalBarHeight - (toppadding + bottompadding);
@@ -2667,6 +2680,9 @@ public class PhoneStatusBar extends BaseStatusBar {
 >>>>>>> parent of 998e186... remove conf
         int newIconSize = StatusBarHelpers.getIconWidth(mContext, mFontSize);
 >>>>>>> cb6489f... FW : Allow user selection of Font Size
+=======
+        int newIconSize = mNaturalBarHeight - (toppadding + bottompadding);
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
 
 
         if (newIconHPadding != mIconHPadding || newIconSize != mIconSize) {

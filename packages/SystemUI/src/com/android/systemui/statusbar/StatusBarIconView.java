@@ -80,8 +80,11 @@ public class StatusBarIconView extends AnimatedImageView {
 
         mObserver = new SettingsObserver(new Handler());
 
+<<<<<<< HEAD
         // these dimensions may not be the right size.  However, this is only for calculating scale, so won't matter
 
+=======
+>>>>>>> b54a95b... FW : Allow user selection of Font Size
         final int outerBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         final float scale = (float)imageBounds / (float)outerBounds;
