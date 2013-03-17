@@ -80,6 +80,8 @@ public class StatusBarIconView extends AnimatedImageView {
 
         mObserver = new SettingsObserver(new Handler());
 
+        // these dimensions may not be the right size.  However, this is only for calculating scale, so won't matter
+
         final int outerBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         final float scale = (float)imageBounds / (float)outerBounds;
@@ -94,6 +96,7 @@ public class StatusBarIconView extends AnimatedImageView {
     public StatusBarIconView(Context context, AttributeSet attrs) {
         super(context, attrs);
         final Resources res = context.getResources();
+        // these dimensions may not be the right size.  However, this is only for calculating scale, so won't matter
         final int outerBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         final float scale = (float)imageBounds / (float)outerBounds;

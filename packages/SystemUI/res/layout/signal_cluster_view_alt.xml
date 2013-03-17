@@ -37,18 +37,31 @@
             android:layout_width="wrap_content"
             android:scaleType="fitCenter"
             android:layout_gravity="fill_vertical"
+<<<<<<< HEAD
+=======
+            android:paddingTop="@dimen/status_bar_icon_top_padding"
+            android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
             />
         <ImageView
             android:id="@+id/wifi_inout"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="center|bottom"
+            android:paddingTop="@dimen/status_bar_icon_top_padding"
+            android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
             />
         <com.android.systemui.statusbar.policy.WifiText
             android:id="@+id/wifi_signal_text"
+            android:textAppearance="@style/TextAppearance.StatusBar.WifiText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+<<<<<<< HEAD
             android:layout_gravity="center"/>
+=======
+            android:singleLine="true"
+            android:gravity="center"/>
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
     </FrameLayout>
     <View
         android:layout_height="6dp"
@@ -81,25 +94,42 @@
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center|right"
+                android:paddingTop="@dimen/status_bar_icon_top_padding"
+                android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
                 />
             <ImageView
                 android:id="@+id/mobile_inout"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center|right"
+                android:paddingTop="@dimen/status_bar_icon_top_padding"
+                android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
                 />
             </FrameLayout>
             <ImageView
                 android:id="@+id/mobile_signal"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
+<<<<<<< HEAD
                 android:layout_gravity="fill_vertical"
                 android:scaleType="fitCenter" />
+=======
+                android:paddingTop="@dimen/status_bar_icon_top_padding"
+                android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
+                android:scaleType="fitCenter"
+                android:layout_gravity="fill_vertical"/>
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
             <com.android.systemui.statusbar.policy.SignalText
                 android:id="@+id/signal_text"
+                android:textAppearance="@style/TextAppearance.StatusBar.SignalText"
+                android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+<<<<<<< HEAD
                 android:layout_gravity="center" />
+=======
+                android:gravity="center" />
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
         </LinearLayout>
     </FrameLayout>
     <ImageView
@@ -108,5 +138,10 @@
         android:layout_width="wrap_content"
         android:scaleType="fitCenter"
         android:layout_gravity="center"
+<<<<<<< HEAD
+=======
+        android:paddingTop="@dimen/status_bar_icon_top_padding"
+        android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
         />
 </com.android.systemui.statusbar.SignalClusterView>

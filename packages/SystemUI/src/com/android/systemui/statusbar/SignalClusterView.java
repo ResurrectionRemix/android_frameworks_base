@@ -26,6 +26,7 @@ import android.util.Slog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -289,6 +290,13 @@ public class SignalClusterView
             mFontSize = fontSize;
             mWiFiText.setTextSize(mFontSize);
             mMobileText.setTextSize(mFontSize);
+<<<<<<< HEAD
+=======
+            int width = StatusBarHelpers.getIconWidth(mContext, mFontSize);
+            mWifi.getLayoutParams().width = width;
+            mMobile.getLayoutParams().width = width;
+            mAirplane.getLayoutParams().width = width;
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
         }
         apply();
     }

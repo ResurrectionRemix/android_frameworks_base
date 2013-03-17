@@ -16,7 +16,14 @@
 
 package com.android.internal.util.aokp;
 
+<<<<<<< HEAD
 import android.content.Context;
+=======
+import com.android.internal.R;
+
+import android.content.Context;
+import android.util.TypedValue;
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
 
 public class StatusBarHelpers {
 
@@ -27,4 +34,23 @@ public class StatusBarHelpers {
         float scaledDensity = c.getResources().getDisplayMetrics().scaledDensity;
         return (int) (px/scaledDensity);
     }
+<<<<<<< HEAD
+=======
+
+    public static int getIconWidth(Context c, int fontsize) {
+
+        int toppadding = c.getResources().getDimensionPixelSize(
+                com.android.internal.R.dimen.status_bar_icon_top_padding);
+        int bottompadding = c.getResources().getDimensionPixelSize(
+                com.android.internal.R.dimen.status_bar_icon_bottom_padding);
+        int padding = c.getResources().getDimensionPixelSize(
+                com.android.internal.R.dimen.status_bar_padding);
+        float fontSizepx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, fontsize,
+                c.getResources().getDisplayMetrics());
+        int naturalBarHeight = (int) (fontSizepx + padding);
+
+        int newIconSize = naturalBarHeight - (toppadding + bottompadding);
+        return newIconSize;
+    }
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
 }

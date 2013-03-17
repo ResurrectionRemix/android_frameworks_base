@@ -161,6 +161,7 @@ public abstract class Ticker {
     public Ticker(Context context, View sb) {
         mContext = context;
         final Resources res = context.getResources();
+        // this dimension may not be the right size.  However, this is only for calculating scale, so won't matter
         final int outerBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         mIconScale = (float)imageBounds / (float)outerBounds;

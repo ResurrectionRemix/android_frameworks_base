@@ -18,12 +18,14 @@ package com.android.systemui.statusbar.phone;
 
 import android.content.Context;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Slog;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.android.internal.statusbar.StatusBarIcon;
+import com.android.internal.util.aokp.StatusBarHelpers;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.StatusBarIconView;
@@ -38,8 +40,10 @@ public class IconMerger extends LinearLayout {
     public IconMerger(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mIconSize = context.getResources().getDimensionPixelSize(
-                R.dimen.status_bar_icon_size);
+        // We need to know the current icon width in order to properly calculate overflow
+        int fontSize = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUSBAR_FONT_SIZE, 16);
+        mIconSize = StatusBarHelpers.getIconWidth(context, fontSize);
 
         if (DEBUG) {
             setBackgroundColor(0x800099FF);
