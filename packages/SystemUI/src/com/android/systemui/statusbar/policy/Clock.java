@@ -47,6 +47,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.android.internal.util.aokp.StatusBarHelpers;
 import com.android.internal.R;
 
 /**
@@ -79,6 +80,8 @@ public class Clock extends TextView {
     protected int mClockStyle = STYLE_CLOCK_RIGHT;
 
     protected int mClockColor;
+    protected int mStockFontSize;
+    protected int mFontSize;
 
     public Clock(Context context) {
         this(context, null);
@@ -99,6 +102,7 @@ public class Clock extends TextView {
         if (!mAttached) {
             mAttached = true;
             mClockColor = getTextColors().getDefaultColor();
+            mStockFontSize = StatusBarHelpers.pixelsToSp(mContext,getTextSize());
             IntentFilter filter = new IntentFilter();
 
             filter.addAction(Intent.ACTION_TIME_TICK);
@@ -168,9 +172,6 @@ public class Clock extends TextView {
         } else {
             res = R.string.twelve_hour_time_format;
         }
-
-        final char MAGIC1 = '\uEF00';
-        final char MAGIC2 = '\uEF01';
 
         SimpleDateFormat sdf;
         String format = context.getString(res);
@@ -267,12 +268,17 @@ public class Clock extends TextView {
                 Settings.System.STATUSBAR_CLOCK_STYLE, STYLE_CLOCK_RIGHT);
         mWeekdayStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_WEEKDAY, WEEKDAY_STYLE_GONE);
-
+        mFontSize = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_FONT_SIZE, mStockFontSize);
         newColor = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_COLOR, mClockColor);
+
         if (newColor < 0 && newColor != mClockColor) {
             mClockColor = newColor;
             setTextColor(mClockColor);
+        }
+        if (mFontSize != getTextSize()){
+            setTextSize(mFontSize);
         }
         updateClockVisibility();
         updateClock();

@@ -39,7 +39,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.android.internal.util.aokp.StatusBarHelpers;
 import com.android.systemui.R;
 
 public class SbBatteryController extends LinearLayout {
@@ -68,6 +68,8 @@ public class SbBatteryController extends LinearLayout {
 
     private int mLevel = -1;
     private boolean mPlugged = false;
+    private int mStockFontSize;
+    private int mFontSize;
 
     public static final int STYLE_ICON_ONLY = 0;
     public static final int STYLE_TEXT_ONLY = 1;
@@ -94,6 +96,7 @@ public class SbBatteryController extends LinearLayout {
         mBatteryTextOnly_Plugged = (TextView) findViewById(R.id.battery_text_only_plugged);
         addIconView(mBatteryIcon);
 
+        mStockFontSize = StatusBarHelpers.pixelsToSp(mContext,mBatteryTextOnly.getTextSize());
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
         settingsObserver.observe();
         updateSettings(); // to initialize values
@@ -228,6 +231,8 @@ public class SbBatteryController extends LinearLayout {
         ContentResolver cr = mContext.getContentResolver();
         mBatteryStyle = Settings.System.getInt(cr,
                 Settings.System.STATUSBAR_BATTERY_ICON, 0);
+        mFontSize = Settings.System.getInt(cr,
+                Settings.System.STATUSBAR_FONT_SIZE, mStockFontSize);
 
         switch (mBatteryStyle) {
             case STYLE_ICON_ONLY:
@@ -274,6 +279,12 @@ public class SbBatteryController extends LinearLayout {
                 break;
         }
 
+        if (StatusBarHelpers.pixelsToSp(mContext,mBatteryTextOnly.getTextSize()) != mFontSize) {
+            // assume if one needs changed, all of them do.
+            mBatteryTextOnly.setTextSize(mFontSize);
+            mBatteryTextOnly_Low.setTextSize(mFontSize);
+            mBatteryTextOnly_Plugged.setTextSize(mFontSize);
+        }
         setBatteryIcon(mLevel, mPlugged);
 
     }
