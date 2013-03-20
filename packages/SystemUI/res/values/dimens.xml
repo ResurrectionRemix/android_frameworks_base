@@ -277,5 +277,5 @@
 
     <dimen name="pie_sysinfo_radius">165dp</dimen>
     <dimen name="pie_sysinfo_height">85sp</dimen>
-    
+   
 </resources>

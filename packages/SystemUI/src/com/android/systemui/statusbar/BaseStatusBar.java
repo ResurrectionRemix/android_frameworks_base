@@ -247,7 +247,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
 
     };
-
     // UI-specific methods
 
     /**

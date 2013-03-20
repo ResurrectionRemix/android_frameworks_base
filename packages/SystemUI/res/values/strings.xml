@@ -645,7 +645,6 @@
     <string name="pie_battery_status_charging">Charging (<xliff:g id="percent">%d</xliff:g>%%)</string>
     <string name="pie_battery_status_full">Charged</string>
     <string name="pie_battery_status_discharging"><xliff:g id="percent">%d</xliff:g>%% remaining</string>
-    
 
     <!-- Phone status in pie controls -->
     <string name="pie_phone_status_no_service">No service</string>

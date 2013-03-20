@@ -41,7 +41,6 @@
     <color name="toggle_text_changing_state_color">#ff787878</color>
     <color name="toggle_image_changing_state_overlay">@color/toggle_text_changing_state_color</color>
     
-
     <!-- ==================== pie controls ==================== -->
     <!-- this color is used to darkening the whole screen when pie controls are active -->
     <color name="pie_overlay_color">#cc000000</color>
