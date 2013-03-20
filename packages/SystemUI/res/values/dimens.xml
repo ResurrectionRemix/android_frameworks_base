@@ -247,9 +247,6 @@
 
     <!-- Constant for hidden ribbon drag handle -->
     <dimen name="ribbon_drag_handle_height">25dp</dimen>
-    
-    <!-- PA HALO -->
-    <dimen name="halo_content_max_width">250dp</dimen>
 
     <!-- The padding of the items of the battery cluster -->
     <dimen name="status_bar_battery_cluster_padding">2dip</dimen>
@@ -280,4 +277,5 @@
 
     <dimen name="pie_sysinfo_radius">165dp</dimen>
     <dimen name="pie_sysinfo_height">85sp</dimen>
+    
 </resources>
