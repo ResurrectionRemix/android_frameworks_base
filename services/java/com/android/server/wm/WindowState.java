@@ -499,9 +499,14 @@ final class WindowState implements WindowManagerPolicy.WindowState {
         }
 
         if (mIsWallpaper) {
+<<<<<<< HEAD
             final int rotation = mService.getRotation();
             mService.updateWallpaperOffsetLocked(this, mPolicy.getWallpaperWidth(rotation),
                     mPolicy.getWallpaperHeight(rotation),
+=======
+            final DisplayInfo displayInfo = mDisplayContent.getDisplayInfo();
+            mService.updateWallpaperOffsetLocked(this, displayInfo.appWidth, displayInfo.appHeight,
+>>>>>>> 667cdc8... Fix up expanded desktop behaviour.
                     false);
         }
 
