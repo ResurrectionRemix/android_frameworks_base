@@ -54,6 +54,7 @@ public class StatusBarManagerService extends IStatusBarService.Stub
     implements WindowManagerService.OnHardKeyboardStatusChangeListener
 {
     static final String TAG = "StatusBarManagerService";
+    static final String PARANOID_PREFERENCES_PKG = "com.paranoid.preferences";
     static final boolean SPEW = false;
 
     final Context mContext;
@@ -286,7 +287,7 @@ public class StatusBarManagerService extends IStatusBarService.Stub
                                         am.getRunningTasks(1).get(0);
                                 String foregroundTaskPackageName = 
                                         foregroundTaskInfo.topActivity.getPackageName();
-                                if (!foregroundTaskPackageName.equals("com.paranoid.preferences")) {
+                                if (!foregroundTaskPackageName.equals(PARANOID_PREFERENCES_PKG)) {
                                     Settings.System.putString(mContext.getContentResolver(),
                                             Settings.System.FOREGROUND_APP, foregroundTaskPackageName);
                                 }
