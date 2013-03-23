@@ -286,8 +286,10 @@ public class StatusBarManagerService extends IStatusBarService.Stub
                                         am.getRunningTasks(1).get(0);
                                 String foregroundTaskPackageName = 
                                         foregroundTaskInfo.topActivity.getPackageName();
-                                Settings.System.putString(mContext.getContentResolver(),
-                                        Settings.System.FOREGROUND_APP, foregroundTaskPackageName);
+                                if (!foregroundTaskPackageName.equals("com.paranoid.preferences")) {
+                                    Settings.System.putString(mContext.getContentResolver(),
+                                            Settings.System.FOREGROUND_APP, foregroundTaskPackageName);
+                                }
                             } catch (RemoteException ex) {
                             }
                         }
