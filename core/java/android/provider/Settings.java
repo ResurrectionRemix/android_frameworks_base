@@ -2467,22 +2467,23 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_ICON = "statusbar_battery_icon";
 
         /**
+<<<<<<< HEAD
          * Control the display of the action overflow button within app UI.
          * 0 = use system default
          * 1 = force on
          * Whether to enable pie controls on expanded screen?
          * The value is boolean (1 or 0).
+=======
+         * Whether to enable pie controls?
+         * The value is integer:
+         * 2 = always on
+         * 1 = expanded desktop
+         * 0 = off
+>>>>>>> 1c601ac... Merge Navigation Bar and Pie Controls button config (1/2)
          * Default: 0
          * @hide
          */
         public static final String PIE_CONTROLS = "pie_controls";
-
-        /**
-         * Display search button in pie?
-         * The value is boolean (1 or 0).
-         * @hide
-         */
-        public static final String PIE_SEARCH = "pie_search";
 
         /**
          * Locations of the pie in the screen.
@@ -2493,7 +2494,7 @@ public final class Settings {
          * Default: BOTTOM
          * @hide
          */
-        public static final String PIE_GRAVITY = "pie_gravity";
+        public static final String PIE_POSITIONS = "pie_positions";
 
         /**
          * Relative pie size (fraction)
