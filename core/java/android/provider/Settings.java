@@ -4011,12 +4011,78 @@ public final class Settings {
         public static final String THEME_WALLPAPER = "theme_wallpaper";
 
         /**
+<<<<<<< HEAD
+=======
+         * Whether to enable custom rebindings of the actions performed on
+         * certain key press events.
+         * @hide
+         */
+       public static final String HARDWARE_KEY_REBINDING = "hardware_key_rebinding";
+
+        /**
+         * Action to perform when the home key is long-pressed. (Default is 2)
+         * 0 - Nothing
+         * 1 - Menu
+         * 2 - App-switch
+         * 3 - Search
+         * 4 - Voice search
+         * 5 - In-app search
+         * @hide
+         */
+        public static final String KEY_HOME_LONG_PRESS_ACTION = "key_home_long_press_action";
+
+        /**
+         * Action to perform when the menu key is pressed. (Default is 1)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_MENU_ACTION = "key_menu_action";
+
+        /**
+         * Action to perform when the menu key is long-pressed.
+         * (Default is 0 on devices with a search key, 3 on devices without)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_MENU_LONG_PRESS_ACTION = "key_menu_long_press_action";
+
+        /**
+         * Action to perform when the assistant (search) key is pressed. (Default is 3)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_ASSIST_ACTION = "key_assist_action";
+
+        /**
+         * Action to perform when the assistant (search) key is long-pressed. (Default is 4)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_ASSIST_LONG_PRESS_ACTION = "key_assist_long_press_action";
+
+        /**
+         * Action to perform when the app switch key is pressed. (Default is 2)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_ACTION = "key_app_switch_action";
+
+        /**
+         * Ability to change color per app
+         * 0 = P.A.C. is off, it will switch everything color related back to stock and ignore calls
+         * 1 = P.A.C. is on, it will listen to calls again
+         * @hide
+         */
+        public static final String PER_APP_COLOR = "per_app_color";
+
+        /**
+>>>>>>> 226f87b... Squashed PA merges
          * Ability to change navigation bar color
          * Format: AARRGGBB|AARRGGBB|index[|speed]
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
          * third entry determines which has changed last, 0 or 1
-         * fourth, optional entry determines the transition speed, defaults to 1000ms
+         * fourth, optional entry determines the transition speed, defaults to 500ms
          * @hide
          */
         public static final String NAV_BAR_COLOR = "nav_bar_color";
@@ -4027,7 +4093,7 @@ public final class Settings {
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
          * third entry determines which has changed last, 0 or 1
-         * fourth, optional entry determines the transition speed, defaults to 1000ms
+         * fourth, optional entry determines the transition speed, defaults to 500ms
          * @hide
          */
         public static final String NAV_BUTTON_COLOR = "nav_button_color";
@@ -4039,7 +4105,7 @@ public final class Settings {
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
          * third entry determines which has changed last, 0 or 1
-         * fourth, optional entry determines the transition speed, defaults to 1000ms
+         * fourth, optional entry determines the transition speed, defaults to 500ms
          * @hide
          */
         public static final String NAV_GLOW_COLOR = "nav_glow_color";
@@ -4050,11 +4116,63 @@ public final class Settings {
          * First color is the primary, systemwide color
          * Second is the color of the current foreground-app
          * third entry determines which has changed last, 0 or 1
-         * fourth, optional entry determines the transition speed, defaults to 1000ms
+         * fourth, optional entry determines the transition speed, defaults to 500ms
          * @hide
          */
         public static final String STATUS_BAR_COLOR = "status_bar_color";
+<<<<<<< HEAD
         
+=======
+
+        /**
+         * Action to perform when the app switch key is long-pressed. (Default is 0)
+         * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
+         * @hide
+         */
+        public static final String KEY_APP_SWITCH_LONG_PRESS_ACTION = "key_app_switch_long_press_action";
+
+        /**
+<<<<<<< HEAD
+=======
+         * Status icon color. May include alpha
+         * Format: AARRGGBB|AARRGGBB|index[|speed]
+         * First color is the primary, systemwide color
+         * Second is the color of the current foreground-app
+         * third entry determines which has changed last, 0 or 1
+         * fourth, optional entry determines the transition speed, defaults to 500ms
+         * @hide
+         */
+        public static final String STATUS_ICON_COLOR = "status_icon_color";
+
+        /**
+         * User Interface State
+         * 1 = Rebuild UI, resets to 0 automatically
+         * @hide
+         */
+        public static final String USER_INTERFACE_STATE = "user_interface_state";
+
+        /**
+>>>>>>> 3ae164c... Squashed PA merges
+         * Allows to show the background activity back the lockscreen
+         * @hide
+         */
+        public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
+
+        /**
+         * Allows to disable Camera widget in lockscreen
+         * 0 = use system default (show)
+         * 1 = hide camera
+         * @hide
+         */
+        public static final String CAMERA_WIDGET_HIDE = "camera_widget_show";
+
+        /**
+         * Give MMS Notifications a breathing effect
+         * @hide
+         */
+        public static final String MISSED_CALL_BREATH = "missed_call_breath";
+
+>>>>>>> 226f87b... Squashed PA merges
         /**
          * Low battery warning dialog and sound
          * 0 = off
@@ -4143,10 +4261,12 @@ public final class Settings {
          */
         public static final String[] INSECURE_SETTINGS = {
             EXPANDED_DESKTOP_STATE,
+            PER_APP_COLOR,
             NAV_BAR_COLOR,
             NAV_BUTTON_COLOR,
             NAV_GLOW_COLOR,
-            STATUS_BAR_COLOR
+            STATUS_BAR_COLOR,
+            STATUS_ICON_COLOR
         };
 
         // Settings moved to Settings.Secure

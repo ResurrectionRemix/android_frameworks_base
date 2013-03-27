@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
+ * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1715,8 +1715,8 @@ public final class ActivityThread {
         //}
 
         AssetManager assets = new AssetManager();
-        assets.setThemeSupport(compInfo.isThemeable);
         assets.overrideHook(resDir, ExtendedPropertiesUtils.OverrideMode.FullNameExclude);
+        assets.setThemeSupport(compInfo.isThemeable);
         if (assets.addAssetPath(resDir) == 0) {
             return null;
         }

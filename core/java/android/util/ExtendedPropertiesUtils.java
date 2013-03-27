@@ -67,17 +67,18 @@ public class ExtendedPropertiesUtils {
 
     // Color definitions
     public static final String PARANOID_COLORS_SUFFIX = ".colors";
-    public static final int PARANOID_COLORS_COUNT = 4;
+    public static final String PARANOID_MANCOL_SUFFIX = ".mancol";
+    public static final int PARANOID_COLORS_COUNT = 5;
     public static final String[] PARANOID_COLORS_SETTINGS = {Settings.System.NAV_BAR_COLOR,
-            Settings.System.NAV_BUTTON_COLOR, Settings.System.NAV_GLOW_COLOR,
-            Settings.System.STATUS_BAR_COLOR};
-    public static final String[] PARANOID_COLORS_DEFAULTS = {"FF000000|FF000000|0", "B2FFFFFF|B2FFFFFF|0",
-            "FFFFFFFF|FFFFFFFF|0", "FF000000|FF000000|0"};
-    public static final int[] PARANOID_COLORCODES_DEFAULTS = {0xFF000000, 0xB2FFFFFF, 0xFFFFFFFF, 0xFF000000};
+        Settings.System.NAV_BUTTON_COLOR, Settings.System.NAV_GLOW_COLOR,
+        Settings.System.STATUS_BAR_COLOR, Settings.System.STATUS_ICON_COLOR};
+    public static final int[] PARANOID_COLORCODES_DEFAULTS = 
+        {0xFF000000, 0xB2FFFFFF, 0xFFFFFFFF, 0xFF000000, 0xFF33B5E5};
     public static final int PARANOID_COLORS_NAVBAR = 0;
     public static final int PARANOID_COLORS_NAVBUTTON = 1;
     public static final int PARANOID_COLORS_NAVGLOW = 2;
     public static final int PARANOID_COLORS_STATBAR = 3;
+    public static final int PARANOID_COLORS_STATICONS = 4;
 
     public static HashMap<String, String> mPropertyMap = new HashMap<String, String>();
     public static ActivityThread mMainThread;
@@ -90,7 +91,6 @@ public class ExtendedPropertiesUtils {
     public ParanoidAppInfo mLocalHook = new ParanoidAppInfo();
 
     public static boolean sIsHybridModeEnabled;
-    public static boolean sIsTablet;
 
     public static int mRomLcdDensity = DisplayMetrics.DENSITY_DEFAULT;
 
@@ -112,10 +112,11 @@ public class ExtendedPropertiesUtils {
         public int large;
         public int expand;
         public int landsc;
+        public int mancol;
         public int firstRun;
         public float scaledDensity;
         public float density;
-        public String[] colors = new String[4];
+        public String[] colors = new String[PARANOID_COLORS_COUNT];
     }
 
     /**
@@ -165,15 +166,15 @@ public class ExtendedPropertiesUtils {
             info.large = Integer.parseInt(getProperty(info.name + PARANOID_LARGE_SUFFIX));
             info.expand = Integer.parseInt(getProperty(info.name + PARANOID_EXPAND_SUFFIX));
             info.landsc = Integer.parseInt(getProperty(info.name + PARANOID_LANDSC_SUFFIX));
+            info.mancol = Integer.parseInt(getProperty(info.name + PARANOID_MANCOL_SUFFIX));
             info.firstRun = 0;
 
             // Color parameters
             String[] colors = getProperty(info.name +
                     PARANOID_COLORS_SUFFIX).split(PARANOID_STRING_DELIMITER);
-            if (colors.length == PARANOID_COLORS_COUNT) {
-                for(int i=0; i < colors.length; i++) {
-                    info.colors[i] = colors[i].toUpperCase();
-                }
+            for(int i=0; i < PARANOID_COLORS_COUNT; i++) {
+                    info.colors[i] = colors.length == PARANOID_COLORS_COUNT ?
+                            colors[i].toUpperCase() : "";
             }
 
             // If everything went nice, stop parsing.
@@ -300,7 +301,14 @@ public class ExtendedPropertiesUtils {
      * @return device is tablet
      */
     public static boolean isTablet() {
-        return sIsTablet;
+        int layout;
+        String prop = readProperty("com.android.systemui.layout", "0");
+        if(isParsableToInt(prop)) {
+            layout = Integer.parseInt(prop);
+        } else {
+            layout = getActualProperty(prop);
+        }
+        return layout >= 1000;
     }
 
     
@@ -422,22 +430,36 @@ public class ExtendedPropertiesUtils {
                 }
                 return result;
             } else {
-                String[] props = readFile(PARANOID_PROPERTIES).split("\n");
-                for(int i=0; i<props.length; i++) {
-                    if(props[i].contains("=")) {
-                        if(props[i].substring(0, props[i].lastIndexOf("=")).equals(prop)) {
-                            String result = props[i].replace(prop+"=", "").trim();  
-                            if (result.startsWith(PARANOID_PREFIX)) {
-                                result = getProperty(result, def);
-                            }
-                            return result;
-                        }
-                    }
-                }
-                return def;
+                return readProperty(prop, def);
             }
         } catch (NullPointerException e){
             e.printStackTrace();
+        }
+        return def;
+    }
+
+    /**
+     * Returns a {@link String}, containing the result of the configuration
+     * for the input argument <code>prop</code>. If the property is not found
+     * it returns the input argument <code>def</code>. This property is directly
+     * read from the configuration file.
+     *
+     * @param  prop  a string containing the property to checkout
+     * @param  def  default value to be returned in case that property is missing
+     * @return current stored value of property
+     */
+    public static String readProperty(String prop, String def) {
+        String[] props = readFile(PARANOID_PROPERTIES).split("\n");
+        for(int i=0; i<props.length; i++) {
+            if(props[i].contains("=")) {
+                if(props[i].substring(0, props[i].lastIndexOf("=")).equals(prop)) {
+                    String result = props[i].replace(prop+"=", "").trim();  
+                    if (result.startsWith(PARANOID_PREFIX)) {
+                        result = getProperty(result, def);
+                    }
+                    return result;
+                }
+            }
         }
         return def;
     }
@@ -492,6 +514,21 @@ public class ExtendedPropertiesUtils {
         return result;
     }
 
+    /**
+     * Returns a {@link Boolean}, meaning if the input argument is an integer
+     * number.
+     *
+     * @param  str  the string to be tested
+     * @return the string is an integer number
+     */
+    public static boolean isParsableToInt(String str) {
+        try {
+            int i = Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException nfe) {
+            return false;
+        }
+    }
     
     public void debugOut(String msg) {
         Log.i(TAG + ":" + msg, "Init=" + (mMainThread != null && mContext != null && 

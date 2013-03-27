@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
+ * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1959,10 +1959,6 @@ class ContextImpl extends Context {
                     ExtendedPropertiesUtils.mPackageManager.getInstalledPackages(0);
                 ExtendedPropertiesUtils.mGlobalHook.pid = android.os.Process.myPid();
 
-                // Initialize constants to be public. sIsTablet constant returns whether if 
-                // workspace we're working on is tablet workspace, or something different
-                ExtendedPropertiesUtils.sIsTablet = Integer.parseInt(ExtendedPropertiesUtils.getProperty
-                    ("com.android.systemui.layout")) >= 1000;
                 ExtendedPropertiesUtils.mRomLcdDensity = SystemProperties.getInt("qemu.sf.lcd_density",
                     SystemProperties.getInt("ro.sf.lcd_density", DisplayMetrics.DENSITY_DEFAULT));
 

@@ -80,9 +80,12 @@ public class KeyButtonView extends ImageView {
     AnimatorSet mPressedAnim;
     Context mContext;
 
+<<<<<<< HEAD
     private boolean mAttached = false;
     private SettingsObserver mSettingsObserver;
 
+=======
+>>>>>>> 3ae164c... Squashed PA merges
     private ColorUtils.ColorSettingInfo mLastButtonColor;
     private ColorUtils.ColorSettingInfo mLastGlowColor;
 
@@ -133,6 +136,7 @@ public class KeyButtonView extends ImageView {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
+<<<<<<< HEAD
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -173,6 +177,27 @@ public class KeyButtonView extends ImageView {
                         updateButtonColor();
                     }});
 
+=======
+        clearColorFilter();
+        BUTTON_QUIESCENT_ALPHA = 0.70f;
+        setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
+
+        // Only watch for per app color changes when the setting is in check
+        if (ColorUtils.getPerAppColorState(mContext)) {
+
+            mLastGlowColor = ColorUtils.getColorSettingInfo(mContext, Settings.System.NAV_GLOW_COLOR);
+            mLastButtonColor = ColorUtils.getColorSettingInfo(mContext, Settings.System.NAV_BUTTON_COLOR);
+
+            updateButtonColor();
+
+            mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.NAV_BUTTON_COLOR), false, new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        updateButtonColor();
+                    }});
+
+>>>>>>> 3ae164c... Squashed PA merges
             mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.NAV_GLOW_COLOR), false, new ContentObserver(new Handler()) {
                     @Override
@@ -182,8 +207,11 @@ public class KeyButtonView extends ImageView {
         }
     }
 
+<<<<<<< HEAD
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
         settingsObserver.observe();
+=======
+>>>>>>> 3ae164c... Squashed PA merges
     private void updateButtonColor() {
         ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext,
                 Settings.System.NAV_BUTTON_COLOR);
