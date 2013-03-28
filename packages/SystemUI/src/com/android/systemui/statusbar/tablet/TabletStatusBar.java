@@ -207,7 +207,7 @@ public class TabletStatusBar extends BaseStatusBar implements
     KeyEvent mSpaceBarKeyEvent = null;
 
     View mCompatibilityHelpDialog = null;
-    View mDummyView ;
+    public View[] mPieDummytrigger = {null, null, null, null};
 
     // for disabling the status bar
     int mDisabled = 0;
@@ -514,9 +514,12 @@ public class TabletStatusBar extends BaseStatusBar implements
 
         sb.setHandler(mHandler);
 
-        // Create a dummy view to force the screen to redraw
-        mDummyView = new View(mContext);
-        mWindowManager.addView(mDummyView, getDummyTriggerLayoutParams(mContext,Gravity.TOP));
+        // Overload screen with views that literally do nothing, thank you Google
+        int dummyGravity[] = {Gravity.LEFT, Gravity.TOP, Gravity.RIGHT, Gravity.BOTTOM};  
+        for (int i = 0; i < 4; i++ ) {
+            mPieDummytrigger[i] = new View(mContext);
+            mWindowManager.addView(mPieDummytrigger[i], getDummyTriggerLayoutParams(mContext, dummyGravity[i]));
+        }
 
         mBarContents = (ViewGroup) sb.findViewById(R.id.bar_contents);
 

@@ -185,6 +185,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     public PieControlPanel mPieControlPanel;
     public View mPieControlsTrigger;
     public PieExpandPanel mContainer;
+    public View[] mPieDummytrigger = {null, null, null, null};
     int mIndex;
 
     // Halo
@@ -666,6 +667,10 @@ public abstract class BaseStatusBar extends SystemUI implements
     public void updatePieControls() {
         if (mPieControlsTrigger != null) mWindowManager.removeView(mPieControlsTrigger);
         if (mPieControlPanel != null)  mWindowManager.removeView(mPieControlPanel);
+
+        for (int i = 0; i < 4; i++ )
+            if (mPieDummytrigger[i] != null)  mWindowManager.removeView(mPieDummytrigger[i]);
+
         attachPie();
     }
 
@@ -703,10 +708,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         } else {
             mPieControlsTrigger = null;
             mPieControlPanel = null;
+            for (int i = 0; i < 4; i++ )
+                mPieDummytrigger[i] = null;
         }
     }
 
-    private void addPieInLocation(int gravity) {
+    private void addPieInLocation(int gravity) {                
         // Quick navigation bar panel
         PieControlPanel panel = (PieControlPanel) View.inflate(mContext,
                 R.layout.pie_control_panel, null);
@@ -722,6 +729,19 @@ public abstract class BaseStatusBar extends SystemUI implements
         mWindowManager.addView(pieControlsTrigger, getPieTriggerLayoutParams(mContext, gravity));
 
         panel.init(mHandler, this, pieControlsTrigger, gravity);
+        mPieControlsTrigger = new View(mContext);
+        mPieControlsTrigger.setOnTouchListener(new PieControlsTouchListener());
+        mWindowManager.addView(mPieControlsTrigger, getPieTriggerLayoutParams(mContext, gravity));
+
+        // Overload screen with views that literally do nothing, thank you Google
+        int dummyGravity[] = {Gravity.LEFT, Gravity.TOP, Gravity.RIGHT, Gravity.BOTTOM};  
+        for (int i = 0; i < 4; i++ ) {
+            mPieDummytrigger[i] = new View(mContext);
+            mWindowManager.addView(mPieDummytrigger[i], getDummyTriggerLayoutParams(mContext, dummyGravity[i]));
+        }
+
+        // Init Panel
+        mPieControlPanel.init(mHandler, this, mPieControlsTrigger, gravity);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -758,6 +778,26 @@ public abstract class BaseStatusBar extends SystemUI implements
         return lp;
     }
 
+    public static WindowManager.LayoutParams getDummyTriggerLayoutParams(Context context, int gravity) {
+        final Resources res = context.getResources();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+              (gravity == Gravity.TOP || gravity == Gravity.BOTTOM ?
+                    ViewGroup.LayoutParams.MATCH_PARENT : 1),
+              (gravity == Gravity.LEFT || gravity == Gravity.RIGHT ?
+                    ViewGroup.LayoutParams.MATCH_PARENT : 1),
+              WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL,
+                      WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                      | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                      | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                      | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH
+                      | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+              PixelFormat.TRANSLUCENT);
+        lp.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED
+                | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
+        lp.gravity = gravity;
+        return lp;
+    }
+    
     private void updateIconColor() {
         ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext,
                 Settings.System.STATUS_ICON_COLOR);
