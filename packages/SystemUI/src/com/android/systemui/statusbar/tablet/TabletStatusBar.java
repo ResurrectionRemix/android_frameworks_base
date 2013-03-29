@@ -207,7 +207,7 @@ public class TabletStatusBar extends BaseStatusBar implements
     KeyEvent mSpaceBarKeyEvent = null;
 
     View mCompatibilityHelpDialog = null;
-    public View[] mPieDummytrigger = {null, null, null, null};
+    public View[] mPieDummyTrigger = new View[4];
 
     // for disabling the status bar
     int mDisabled = 0;
@@ -516,9 +516,9 @@ public class TabletStatusBar extends BaseStatusBar implements
 
         // Overload screen with views that literally do nothing, thank you Google
         int dummyGravity[] = {Gravity.LEFT, Gravity.TOP, Gravity.RIGHT, Gravity.BOTTOM};  
-        for (int i = 0; i < 4; i++ ) {
-            mPieDummytrigger[i] = new View(mContext);
-            mWindowManager.addView(mPieDummytrigger[i], getDummyTriggerLayoutParams(mContext, dummyGravity[i]));
+        for (int i = 0; i < 4; i++) {
+            mPieDummyTrigger[i] = new View(mContext);
+            mWindowManager.addView(mPieDummyTrigger[i], getDummyTriggerLayoutParams(mContext, dummyGravity[i]));
         }
 
         mBarContents = (ViewGroup) sb.findViewById(R.id.bar_contents);
