@@ -127,6 +127,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
     private Drawable mBackIcon;
     private Drawable mBackAltIcon;
 
+<<<<<<< HEAD
     protected int mExpandedDesktopState;
     private int mPieTriggerSlots;
     private int mPieTriggerMask = PiePosition.LEFT.FLAG
@@ -152,6 +153,110 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                 activateFromListener(touchX, touchY, position);
                 // give the main thread some time to do the bookkeeping
                 mHandler.obtainMessage(MSG_PIE_GAIN_FOCUS).sendToTarget();
+=======
+    /**
+     * Defines the positions in which pie controls may appear. This enumeration is used to store
+     * an index, a flag and the android gravity for each position.
+     */
+    public enum Position {
+        LEFT(0, 0, android.view.Gravity.LEFT),
+        BOTTOM(1, 1, android.view.Gravity.BOTTOM),
+        RIGHT(2, 1, android.view.Gravity.RIGHT),
+        TOP(3, 0, android.view.Gravity.TOP);
+
+        Position(int index, int factor, int android_gravity) {
+            INDEX = index;
+            FLAG = (0x01<<index);
+            ANDROID_GRAVITY = android_gravity;
+            FACTOR = factor;
+        }
+
+        public final int INDEX;
+        public final int FLAG;
+        public final int ANDROID_GRAVITY;
+        /**
+         * This is 1 when the position is not at the axis (like {@link Position.RIGHT} is
+         * at {@code Layout.getWidth()} not at {@code 0}).
+         */
+        public final int FACTOR;
+    }
+
+    private Position mPosition;
+
+    public static class Tracker {
+        public static float sDistance;
+        private float initialX = 0;
+        private float initialY = 0;
+        private float gracePeriod = 0;
+
+        private Tracker(Position position) {
+            this.position = position;
+        }
+
+        public void start(MotionEvent event) {
+            initialX = event.getX();
+            initialY = event.getY();
+            switch (position) {
+                case LEFT:
+                    gracePeriod = initialX + sDistance / 3.0f;
+                    break;
+                case RIGHT:
+                    gracePeriod = initialX - sDistance / 3.0f;
+                    break;
+            }
+            active = true;
+        }
+
+        public boolean move(MotionEvent event) {
+            final float x = event.getX();
+            final float y = event.getY();
+            if (!active) {
+                return false;
+            }
+
+            // Unroll the complete logic here - we want to be fast and out of the
+            // event chain as fast as possible.
+            boolean loaded = false;
+            switch (position) {
+                case LEFT:
+                    if (x < gracePeriod) {
+                        initialY = y;
+                    }
+                    if (initialY - y < sDistance && y - initialY < sDistance) {
+                        if (x - initialX <= sDistance) {
+                            return false;
+                        }
+                        loaded = true;
+                    }
+                    break;
+                case BOTTOM:
+                    if (initialX - x < sDistance && x - initialX < sDistance) {
+                        if (initialY - y <= sDistance) {
+                            return false;
+                        }
+                        loaded = true;
+                    }
+                    break;
+                case TOP:
+                    if (initialX - x < sDistance && x - initialX < sDistance) {
+                        if (y - initialY <= sDistance) {
+                            return false;
+                        }
+                        loaded = true;
+                    }
+                    break;
+                case RIGHT:
+                    if (x > gracePeriod) {
+                        initialY = y;
+                    }
+                    if (initialY - y < sDistance && y - initialY < sDistance) {
+                        if (initialX - x <= sDistance) {
+                            return false;
+                        }
+                        loaded = true;
+                    }
+                    break;
+>>>>>>> e025153... Improving pie control's user interaction
             }
         }
     };
