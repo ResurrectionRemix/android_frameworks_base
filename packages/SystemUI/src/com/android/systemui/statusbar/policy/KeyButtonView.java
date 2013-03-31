@@ -20,7 +20,6 @@ package com.android.systemui.statusbar.policy;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.database.ContentObserver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -33,7 +32,6 @@ import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.os.ServiceManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -78,7 +76,6 @@ public class KeyButtonView extends ImageView {
     protected boolean mHandlingLongpress = false;
     RectF mRect = new RectF(0f,0f,0f,0f);
     AnimatorSet mPressedAnim;
-    Context mContext;
 
     private boolean mAttached = false;
     private SettingsObserver mSettingsObserver;
@@ -177,6 +174,8 @@ public class KeyButtonView extends ImageView {
         clearColorFilter();
         BUTTON_QUIESCENT_ALPHA = 0.70f;
         setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
+        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+        settingsObserver.observe();
 
         // Only watch for per app color changes when the setting is in check
         if (ColorUtils.getPerAppColorState(mContext)) {
@@ -210,9 +209,8 @@ public class KeyButtonView extends ImageView {
                 Settings.System.NAV_BUTTON_COLOR);
         if (!colorInfo.lastColorString.equals(mLastButtonColor.lastColorString)) {
             if (colorInfo.isLastColorNull) {
-                clearColorFilter();
-                BUTTON_QUIESCENT_ALPHA = 0.70f;
-                setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
+                SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+                settingsObserver.observe();
             } else {
                 setColorFilter(ColorUtils.extractRGB(colorInfo.lastColor) | 0xFF000000, PorterDuff.Mode.SRC_ATOP);
                 BUTTON_QUIESCENT_ALPHA = (float)ColorUtils.extractAlpha(colorInfo.lastColor) / 255f;
@@ -228,13 +226,14 @@ public class KeyButtonView extends ImageView {
                 Settings.System.NAV_GLOW_COLOR);
         if (!colorInfo.lastColorString.equals(mLastGlowColor.lastColorString)) {
             if (colorInfo.isLastColorNull) {
-                mGlowBG.clearColorFilter();
+                SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+                settingsObserver.observe();
             } else {
                 mGlowBG.setColorFilter(colorInfo.lastColor, PorterDuff.Mode.SRC_ATOP);
             }
             mLastGlowColor = colorInfo;
         }
-     }
+    }
 
     public void setSupportsLongPress(boolean supports) {
         mSupportsLongpress = supports;
@@ -354,7 +353,7 @@ public class KeyButtonView extends ImageView {
 
             // also invalidate our immediate parent to help avoid situations where nearby glows
             // interfere
-            ((View)getParent()).invalidate();
+            ((View)getParent().getParent()).invalidate();
         }
     }
 
@@ -382,7 +381,7 @@ public class KeyButtonView extends ImageView {
                         mGlowScale = mCustomGlowScale;
                     if (mGlowAlpha < BUTTON_QUIESCENT_ALPHA)
                         mGlowAlpha = BUTTON_QUIESCENT_ALPHA;
-                    setDrawingAlpha(1f);
+                    setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
                     as.playTogether(
                         ObjectAnimator.ofFloat(this, "glowAlpha", 1f),
                         ObjectAnimator.ofFloat(this, "glowScale", mCustomGlowScale)
@@ -477,6 +476,13 @@ public class KeyButtonView extends ImageView {
 
         return true;
     }
+
+    public void sendEventSequence(int[][] actions) {
+        for(int[] action : actions) {
+            sendEvent(action[0], action[1],
+                SystemClock.uptimeMillis());
+        }
+    }   
 
     void sendEvent(int action, int flags) {
         sendEvent(action, flags, SystemClock.uptimeMillis());
