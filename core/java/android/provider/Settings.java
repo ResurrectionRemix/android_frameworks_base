@@ -2713,6 +2713,81 @@ public final class Settings {
         public static final String NAVIGATION_BAR_LEFTY_MODE = "navigation_bar_lefty_mode";
 
         /**
+         * Soft key actions for Home
+         * 0 == single click
+         * 1 == long click
+         * 2 == double click
+         * @hide
+         */
+        public static final String[] SOFT_KEY_HOME = new String[] {
+                "soft_key_home_single",
+                "soft_key_home_long",
+                "soft_key_home_double",
+        };
+
+        /**
+         * Soft key actions for Menu
+         * 0 == single click
+         * 1 == long click
+         * 2 == double click
+         * @hide
+         */
+        public static final String[] SOFT_KEY_MENU = new String[] {
+                "soft_key_menu_single",
+                "soft_key_menu_long",
+                "soft_key_menu_double",
+        };
+
+        /**
+         * Soft key actions for Back
+         * 0 == single click
+         * 1 == long click
+         * 2 == double click
+         * @hide
+         */
+        public static final String[] SOFT_KEY_BACK = new String[] {
+                "soft_key_back_single",
+                "soft_key_back_long",
+                "soft_key_back_double",
+        };
+
+        /**
+         * Soft key actions for Recents
+         * 0 == single click
+         * 1 == long click
+         * 2 == double click
+         * @hide
+         */
+        public static final String[] SOFT_KEY_APPSWITCH = new String[] {
+                "soft_key_appswitch_single",
+                "soft_key_appswitch_long",
+                "soft_key_appswitch_double",
+        };
+
+        /**
+         * Soft key actions for Search
+         * 0 == single click
+         * 1 == long click
+         * 2 == double click
+         * @hide
+         */
+        public static final String[] SOFT_KEY_SEARCH = new String[] {
+                "soft_key_search_single",
+                "soft_key_search_long",
+                "soft_key_search_double",
+        };
+
+         /**
+         * @hide
+         */
+        public static final String SOFT_KEY_ENABLE = "soft_key_enable";
+
+         /**
+         * @hide
+         */
+        public static final String SOFT_KEY_ENABLE_DOUBLE_CLICK = "soft_key_enable_double_click";
+
+        /**
          * Custom Spen Actions
          *
          * @hide
