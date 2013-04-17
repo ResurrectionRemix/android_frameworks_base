@@ -28,9 +28,9 @@ import android.graphics.PorterDuff.Mode;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.internal.util.pie.PiePosition;
 import com.android.systemui.R;
-import com.android.systemui.statusbar.pie.PieLayout.PieDrawable;
-import com.android.systemui.statusbar.policy.PieController.Position;
+import com.android.systemui.statusbar.pie.PieView.PieDrawable;
 
 /**
  * A clickable pie menu item.
@@ -38,9 +38,9 @@ import com.android.systemui.statusbar.policy.PieController.Position;
  * This is the actual end point for user interaction.<br>
  * ( == This is what a user clicks on.)
  */
-public class PieItem extends PieLayout.PieDrawable {
+public class PieItem extends PieView.PieDrawable {
 
-    private PieLayout mPieLayout;
+    private PieView mPieLayout;
 
     private Paint mBackgroundPaint = new Paint();
     private Paint mSelectedPaint = new Paint();
@@ -73,7 +73,7 @@ public class PieItem extends PieLayout.PieDrawable {
      */
     public final static int SELECTED = 0x100;
 
-    public PieItem(Context context, PieLayout parent, int flags, int width, Object tag, View view) {
+    public PieItem(Context context, PieView parent, int flags, int width, Object tag, View view) {
         mView = view;
         mPieLayout = parent;
         this.tag = tag;
@@ -104,9 +104,9 @@ public class PieItem extends PieLayout.PieDrawable {
 
     public void show(boolean show) {
         if (show) {
-            flags |= PieLayout.PieDrawable.VISIBLE;
+            flags |= PieView.PieDrawable.VISIBLE;
         } else {
-            flags &= ~PieLayout.PieDrawable.VISIBLE;
+            flags &= ~PieView.PieDrawable.VISIBLE;
         }
     }
 
@@ -142,7 +142,7 @@ public class PieItem extends PieLayout.PieDrawable {
     }
 
     @Override
-    public void prepare(Position position, float scale) {
+    public void prepare(PiePosition position, float scale) {
         mPath = getOutline(scale);
         if (mView != null) {
             mView.measure(mView.getLayoutParams().width, mView.getLayoutParams().height);
@@ -162,17 +162,29 @@ public class PieItem extends PieLayout.PieDrawable {
     }
 
     @Override
+<<<<<<< HEAD
     public void draw(Canvas canvas, Position position) {
         canvas.drawPath(mPath, (flags & SELECTED) != 0
                 ? mSelectedPaint : mBackgroundPaint);
         canvas.drawPath(mPath, (flags & SELECTED) != 0
                 ? mSelectedPaint : mOutlinePaint);
+=======
+    public void draw(Canvas canvas, PiePosition position) {
+        if ((flags & SELECTED) != 0) {
+            Paint paint = (flags & LONG_PRESSED) == 0
+                    ? mSelectedPaint : mLongPressPaint;
+            canvas.drawPath(mPath, paint);
+        } else {
+            canvas.drawPath(mPath, mBackgroundPaint);
+            canvas.drawPath(mPath, mOutlinePaint);
+        }
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
 
         if (mView != null) {
             int state = canvas.save();
             canvas.translate(mView.getLeft(), mView.getTop());
             // keep icons "upright" if we get displayed on TOP position
-            if (position != Position.TOP) {
+            if (position != PiePosition.TOP) {
                 canvas.rotate(mStart + mSweep / 2 - 270);
             } else {
                 canvas.rotate(mStart + mSweep / 2 - 90);
