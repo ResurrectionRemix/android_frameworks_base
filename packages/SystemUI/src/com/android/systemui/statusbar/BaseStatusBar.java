@@ -29,10 +29,8 @@ import com.android.systemui.TransparencyManager;
 import com.android.systemui.recent.RecentTasksLoader;
 import com.android.systemui.recent.RecentsActivity;
 import com.android.systemui.recent.TaskDescription;
-import com.android.systemui.statusbar.pie.PieLayout;
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
 import com.android.systemui.statusbar.policy.PieController;
-import com.android.systemui.statusbar.policy.PieController.Position;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
 import com.android.systemui.statusbar.WidgetView;
 import com.android.systemui.aokp.AppWindow;
@@ -49,7 +47,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
@@ -58,7 +55,6 @@ import android.content.res.Resources.NotFoundException;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -69,6 +65,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.service.pie.PieManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -96,7 +93,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         CommandQueue.Callbacks {
     public static final String TAG = "StatusBar";
     public static final boolean DEBUG = false;
-    public static final boolean DEBUG_INPUT = false;
     public static final boolean MULTIUSER_DEBUG = false;
 
     protected static final int MSG_TOGGLE_RECENTS_PANEL = 1020;
@@ -144,7 +140,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected FrameLayout mStatusBarContainer;
 
-
     /**
      * An interface for navigation key bars to allow status bars to signal which keys are
      * currently of interest to the user.<br>
@@ -173,6 +168,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     // Pie Control
     protected PieController mPieController;
+<<<<<<< HEAD
     protected PieLayout mPieContainer;
     private int mPieTriggerSlots;
     private int mPieTriggerMask = Position.LEFT.FLAG
@@ -258,6 +254,8 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
 
     };
+=======
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
 
 
     // UI-specific methods
@@ -419,6 +417,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             }
         }, filter);
 
+<<<<<<< HEAD
         mPieController = new PieController(mContext);
         mPieController.attachTo(this);
         addNavigationBarCallback(mPieController);
@@ -429,6 +428,13 @@ public abstract class BaseStatusBar extends SystemUI implements
         mSettingsObserver.onChange(true);
 
         mSettingsObserver.observe();
+=======
+        if (PieManager.getInstance().isPresent()) {
+            mPieController = new PieController(mContext);
+            mPieController.attachStatusBar(this);
+            addNavigationBarCallback(mPieController);
+        }
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
     }
 
     public void userSwitched(int newUserId) {
@@ -837,30 +843,12 @@ public abstract class BaseStatusBar extends SystemUI implements
                  if (DEBUG) Slog.d(TAG, "opening search panel");
                  if (mSearchPanelView != null && mSearchPanelView.isAssistantAvailable()) {
                      mSearchPanelView.show(true, true);
-
-                     View bottom = mPieTrigger[Position.BOTTOM.INDEX];
-                     if (bottom != null) {
-                         WindowManager.LayoutParams lp =
-                                 (android.view.WindowManager.LayoutParams) bottom.getLayoutParams();
-                         lp.flags &= ~WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-                         lp.flags |= WindowManager.LayoutParams.FLAG_SLIPPERY;
-                         mWindowManager.updateViewLayout(bottom, lp);
-                     }
                  }
                  break;
              case MSG_CLOSE_SEARCH_PANEL:
                  if (DEBUG) Slog.d(TAG, "closing search panel");
                  if (mSearchPanelView != null && mSearchPanelView.isShowing()) {
                      mSearchPanelView.show(false, true);
-
-                     View bottom = mPieTrigger[Position.BOTTOM.INDEX];
-                     if (bottom != null) {
-                         WindowManager.LayoutParams lp =
-                                 (android.view.WindowManager.LayoutParams) bottom.getLayoutParams();
-                         lp.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-                         lp.flags &= ~WindowManager.LayoutParams.FLAG_SLIPPERY;
-                         mWindowManager.updateViewLayout(bottom, lp);
-                     }
                  }
                  break;
             }
@@ -1347,6 +1335,18 @@ public abstract class BaseStatusBar extends SystemUI implements
         return km.inKeyguardRestrictedInputMode();
     }
 
+<<<<<<< HEAD
+=======
+    public int getExpandedDesktopMode() {
+        ContentResolver resolver = mContext.getContentResolver();
+        boolean expanded = Settings.System.getInt(resolver,
+                Settings.System.EXPANDED_DESKTOP_STATE, 0) == 1;
+        if (expanded) {
+            return Settings.System.getInt(resolver, Settings.System.EXPANDED_DESKTOP_STYLE, 0);
+        }
+        return 0;
+    }
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
 
     public void addNavigationBarCallback(NavigationBarCallback callback) {
         mNavigationCallbacks.add(callback);
@@ -1372,6 +1372,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     // Pie Controls
 
+<<<<<<< HEAD
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -1457,45 +1458,14 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     }
 
+=======
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
     public void updatePieTriggerMask(int newMask) {
-        int oldState = mPieTriggerSlots & mPieTriggerMask;
-        mPieTriggerMask = newMask;
-
-        // first we check, if it would make a change
-        if ((mPieTriggerSlots & mPieTriggerMask) != oldState) {
-            if (isPieEnabled()) {
-                refreshPieTriggers();
-            }
+        if (mPieController != null) {
+            mPieController.updatePieTriggerMask(newMask);
         }
     }
-
-    // This should only be called, when is is clear that the pie controls are active
-    private void refreshPieTriggers() {
-        for (Position g : Position.values()) {
-            View trigger = mPieTrigger[g.INDEX];
-            if (trigger == null && (mPieTriggerSlots & mPieTriggerMask & g.FLAG) != 0) {
-                trigger = new View(mContext);
-                trigger.setClickable(false);
-                trigger.setLongClickable(false);
-                trigger.setTag(mPieController.buildTracker(g));
-                trigger.setOnTouchListener(mPieTriggerOnTouchHandler);
-
-                if (DEBUG) {
-                    trigger.setVisibility(View.VISIBLE);
-                    trigger.setBackgroundColor(0x77ff0000);
-                    Slog.d(TAG, "addPieTrigger on " + g.INDEX
-                            + " with position: " + g + " : " + trigger.toString());
-                }
-                mWindowManager.addView(trigger, getPieTriggerLayoutParams(g));
-                mPieTrigger[g.INDEX] = trigger;
-            } else if (trigger != null && (mPieTriggerSlots & mPieTriggerMask & g.FLAG) == 0) {
-                mWindowManager.removeView(trigger);
-                mPieTrigger[g.INDEX] = null;
-            } else if (trigger != null) {
-                mWindowManager.updateViewLayout(trigger, getPieTriggerLayoutParams(g));
-            }
-        }
-    }
+<<<<<<< HEAD
 
     private WindowManager.LayoutParams getPieTriggerLayoutParams(Position position) {
         final Resources res = mContext.getResources();
@@ -1528,4 +1498,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
 
+=======
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
 }
