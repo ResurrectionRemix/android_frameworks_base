@@ -198,6 +198,8 @@ public class AudioManager {
     public static final String EXTRA_MASTER_VOLUME_MUTED =
         "android.media.EXTRA_MASTER_VOLUME_MUTED";
 
+    /** No audio stream */
+    public static final int STREAM_DEFAULT = AudioSystem.STREAM_DEFAULT;
     /** The audio stream for phone calls */
     public static final int STREAM_VOICE_CALL = AudioSystem.STREAM_VOICE_CALL;
     /** The audio stream for system sounds */

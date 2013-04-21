@@ -5336,6 +5336,7 @@
     <declare-styleable name="VolumePreference">
         <!-- Different audio stream types. -->
         <attr name="streamType">
+            <enum name="none" value="-1" />
             <enum name="voice" value="0" />
             <enum name="system" value="1" />
             <enum name="ring" value="2" />

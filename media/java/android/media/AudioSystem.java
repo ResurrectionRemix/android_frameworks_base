@@ -32,6 +32,8 @@ public class AudioSystem
      * If these are modified, please also update Settings.System.VOLUME_SETTINGS
      * and attrs.xml and AudioManager.java.
      */
+    /* Empty stream */
+    public static final int STREAM_DEFAULT = -1;
     /* The audio stream for phone calls */
     public static final int STREAM_VOICE_CALL = 0;
     /* The audio stream for system sounds */
