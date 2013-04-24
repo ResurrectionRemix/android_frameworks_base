@@ -304,7 +304,7 @@ public abstract class DialogPreference extends Preference implements
         Context context = getContext();
 
         mWhichButtonClicked = DialogInterface.BUTTON_NEGATIVE;
-        
+
         mBuilder = new AlertDialog.Builder(context)
             .setTitle(mDialogTitle)
             .setIcon(mDialogIcon)
@@ -318,9 +318,9 @@ public abstract class DialogPreference extends Preference implements
         } else {
             mBuilder.setMessage(mDialogMessage);
         }
-        
+
         onPrepareDialogBuilder(mBuilder);
-        
+
         getPreferenceManager().registerOnActivityDestroyListener(this);
 
         return mBuilder.create();
