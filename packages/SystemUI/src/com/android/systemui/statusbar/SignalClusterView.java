@@ -73,8 +73,6 @@ public class SignalClusterView
 
     Handler mHandler;
 
-    private SettingsObserver mSettingsObserver;
-
     public SignalClusterView(Context context) {
         this(context, null);
     }
@@ -85,8 +83,6 @@ public class SignalClusterView
 
     public SignalClusterView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
-        mSettingsObserver = new SettingsObserver(mHandler);
         mColorInfo = ColorUtils.getColorSettingInfo(context, Settings.System.STATUS_ICON_COLOR);
 
     }
@@ -107,14 +103,15 @@ public class SignalClusterView
         mMobile         = (ImageView) findViewById(R.id.mobile_signal);
         mMobileActivity = (ImageView) findViewById(R.id.mobile_inout);
         mMobileType     = (ImageView) findViewById(R.id.mobile_type);
-        mMobileText    = (TextView)  findViewById(R.id.signal_text);
-        mWiFiText    = (TextView)  findViewById(R.id.wifi_signal_text);
+        mMobileText     = (TextView)  findViewById(R.id.signal_text);
+        mWiFiText       = (TextView)  findViewById(R.id.wifi_signal_text);
         mSpacer         =             findViewById(R.id.spacer);
         mAirplane       = (ImageView) findViewById(R.id.airplane);
 
         mHandler = new Handler();
 
-        mSettingsObserver.observe();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
 
         apply();
     }
@@ -132,8 +129,6 @@ public class SignalClusterView
         mWiFiText       = null;
         mSpacer         = null;
         mAirplane       = null;
-
-        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
 
         super.onDetachedFromWindow();
     }
@@ -196,7 +191,7 @@ public class SignalClusterView
             mWifiGroup.setVisibility(View.VISIBLE);
             Drawable wifiBitmap = mContext.getResources().getDrawable(mWifiStrengthId);
             if (mColorInfo.isLastColorNull) {
-                 wifiBitmap.clearColorFilter();
+                wifiBitmap.clearColorFilter();
             } else {
                 wifiBitmap.setColorFilter(mColorInfo.lastColor, PorterDuff.Mode.SRC_IN);
             }
@@ -226,7 +221,7 @@ public class SignalClusterView
             if(mMobileStrengthId != 0) {
                 Drawable mobileBitmap = mContext.getResources().getDrawable(mMobileStrengthId);
                 if (mColorInfo.isLastColorNull) {
-                     mobileBitmap.clearColorFilter();
+                    mobileBitmap.clearColorFilter();
                 } else {
                     mobileBitmap.setColorFilter(mColorInfo.lastColor, PorterDuff.Mode.SRC_IN);
                 }
@@ -247,12 +242,12 @@ public class SignalClusterView
             mMobileGroup.setVisibility(View.GONE);
         }
 
-        if (mIsAirplaneMode) {
+       if (mIsAirplaneMode) {
             mAirplane.setVisibility(View.VISIBLE);
             if(mAirplaneIconId != 0) {
                 Drawable AirplaneBitmap = mContext.getResources().getDrawable(mAirplaneIconId);
                 if (mColorInfo.isLastColorNull) {
-                     mAirplane.clearColorFilter();
+                    mAirplane.clearColorFilter();
                 } else {
                     mAirplane.setColorFilter(mColorInfo.lastColor, PorterDuff.Mode.SRC_IN);
                 }
@@ -311,8 +306,8 @@ public class SignalClusterView
     protected void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
 
-        showingSignalText = (Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_SIGNAL_TEXT,STYLE_HIDE) > 0);
+        showingSignalText = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_SIGNAL_TEXT, 0) != 0;
         showingWiFiText = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_WIFI_SIGNAL_TEXT, 0) != 0;
         boolean clustdefault = getResources().getBoolean(R.bool.statusbar_alt_signal_layout);

@@ -21,6 +21,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.CharacterStyle;
 import android.text.style.RelativeSizeSpan;
+import android.util.ColorUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -41,10 +42,12 @@ public class SignalText extends TextView {
     private int style;
     private Handler mHandler;
     private Context mContext;
-    protected int mSignalColor;
+    protected int mSignalColor = com.android.internal.R.color.holo_blue_light;
     private PhoneStateIntentReceiver mPhoneStateReceiver;
 
     private SignalText mSignalText;
+
+    private ColorUtils.ColorSettingInfo mLastTextColor;
 
     private SettingsObserver mSettingsObserver;
 
@@ -78,6 +81,38 @@ public class SignalText extends TextView {
     public SignalText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
+
+        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+        settingsObserver.observe();
+
+        // Only watch for per app color changes when the setting is in check
+        if (ColorUtils.getPerAppColorState(mContext)) {
+
+            mLastTextColor = ColorUtils.getColorSettingInfo(mContext, Settings.System.STATUS_ICON_COLOR);
+
+            updateTextColor();
+
+            mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.STATUS_ICON_COLOR), false, new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        updateTextColor();
+                    }});
+        }
+    }
+
+    private void updateTextColor() {
+        ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext,
+                Settings.System.STATUS_ICON_COLOR);
+        if (!colorInfo.lastColorString.equals(mLastTextColor.lastColorString)) {
+            if (colorInfo.isLastColorNull) {
+                SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+                settingsObserver.observe();
+            } else {
+                setTextColor(colorInfo.lastColor);
+            }
+            mLastTextColor = colorInfo;
+        }
     }
 
     @Override
@@ -129,14 +164,15 @@ public class SignalText extends TextView {
     }
 
     private void updateSettings() {
-        int newColor = 0;
         ContentResolver resolver = getContext().getContentResolver();
-        newColor = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_SIGNAL_TEXT_COLOR,mSignalColor);
-        if (newColor < 0 && newColor != mSignalColor) {
-            mSignalColor = newColor;
-            setTextColor(mSignalColor);
+        mSignalColor = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_SIGNAL_TEXT_COLOR,
+                0xFF33B5E5);
+        if (mSignalColor == Integer.MIN_VALUE) {
+            // flag to reset the color
+            mSignalColor = 0xFF33B5E5;
         }
+        setTextColor(mSignalColor);
         updateSignalText();
     }
 

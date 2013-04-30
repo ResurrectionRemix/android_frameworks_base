@@ -105,6 +105,8 @@ import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.SbBatteryController;
 import com.android.systemui.statusbar.policy.BluetoothController;
+import com.android.systemui.statusbar.policy.Clock;
+import com.android.systemui.statusbar.policy.ClockCenter;
 import com.android.systemui.statusbar.policy.DateView;
 import com.android.systemui.statusbar.policy.IntruderAlertView;
 import com.android.systemui.statusbar.policy.LocationController;
@@ -434,6 +436,10 @@ public class PhoneStatusBar extends BaseStatusBar {
 
         mBarView = (ViewGroup) mStatusBarView;
 
+        // status bar clock
+        mClock = (Clock) mStatusBarView.findViewById(R.id.clock);
+        mCClock = (ClockCenter) mStatusBarView.findViewById(R.id.center_clock);
+
         PanelHolder holder = (PanelHolder) mStatusBarWindow.findViewById(R.id.panel_holder);
         mStatusBarView.setPanelHolder(holder);
 
@@ -569,7 +575,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         }
 
         mTicker = new MyTicker(context, mStatusBarView);
-
         TickerView tickerView = (TickerView)mStatusBarView.findViewById(R.id.tickerText);
         tickerView.mTicker = mTicker;
         if (mHaloActive) mTickerView.setVisibility(View.GONE);
@@ -582,17 +587,13 @@ public class PhoneStatusBar extends BaseStatusBar {
         // Other icons
         mLocationController = new LocationController(mContext); // will post a notification
         mBatteryController = new BatteryController(mContext);
+        mBatteryController.addIconView((ImageView)mStatusBarView.findViewById(R.id.battery));
         mSbBatteryController = (SbBatteryController)mStatusBarView.findViewById(R.id.battery_cluster);
         mNetworkController = new NetworkController(mContext);
         mBluetoothController = new BluetoothController(mContext);
-
-        SignalClusterView signalCluster = (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
-        mNetworkController.addSignalCluster(signalCluster);
-        signalCluster.setNetworkController(mNetworkController);
-
-        signalCluster = (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster_alt);
-        mNetworkController.addSignalCluster(signalCluster);
-        signalCluster.setNetworkController(mNetworkController);
+        mSignalCluster = (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
+        mNetworkController.addSignalCluster(mSignalCluster);
+        mSignalCluster.setNetworkController(mNetworkController);
 
         mEmergencyCallLabel = (TextView)mStatusBarWindow.findViewById(R.id.emergency_calls_only);
         if (mEmergencyCallLabel != null) {
@@ -688,9 +689,13 @@ public class PhoneStatusBar extends BaseStatusBar {
             mSettingsContainer = (QuickSettingsContainerView)
                     mStatusBarWindow.findViewById(R.id.quick_settings_container);
 
+<<<<<<< HEAD
             mAokpSwipeRibbonBottom = new AokpSwipeRibbon(mContext,null,"bottom");
             mAokpSwipeRibbonLeft = new AokpSwipeRibbon(mContext,null,"left");
             mAokpSwipeRibbonRight = new AokpSwipeRibbon(mContext,null,"right");
+=======
+            android.util.Log.d("PARANOID", "mSettingsContainer="+mSettingsContainer);
+>>>>>>> bf5f805... Fix Per-App Color
 
             mToggleManager = new ToggleManager(mContext);
             mToggleManager.setControllers(mBluetoothController, mNetworkController, mBatteryController,
@@ -795,16 +800,16 @@ public class PhoneStatusBar extends BaseStatusBar {
         return lp;
     }
 
+    void onBarViewDetached() {
+     //   WindowManagerImpl.getDefault().removeView(mStatusBarWindow);
+    }
+
     @Override
     public void toggleNotificationShade() {
         int msg = (mExpandedVisible)
                 ? MSG_CLOSE_PANELS : MSG_OPEN_NOTIFICATION_PANEL;
         mHandler.removeMessages(msg);
         mHandler.sendEmptyMessage(msg);
-    }
-
-    void onBarViewDetached() {
-     //   WindowManagerImpl.getDefault().removeView(mStatusBarWindow);
     }
 
     @Override
@@ -2965,10 +2970,77 @@ public class PhoneStatusBar extends BaseStatusBar {
 
          @Override
         public void onChange(boolean selfChange) {
+<<<<<<< HEAD
             updateSettings();
+=======
+            boolean uiModeIsToggled = Settings.Secure.getInt(mContext.getContentResolver(),
+                                    Settings.Secure.UI_MODE_IS_TOGGLED, 0) == 1;
+            onChange(selfChange, null);
+            if (uiModeIsToggled != mUiModeIsToggled) {
+                recreateStatusBar();
+            }
+>>>>>>> bf5f805... Fix Per-App Color
         }
     }
 
+<<<<<<< HEAD
+=======
+    private static void copyNotifications(ArrayList<Pair<IBinder, StatusBarNotification>> dest,
+            NotificationData source) {
+        int N = source.size();
+        for (int i = 0; i < N; i++) {
+            NotificationData.Entry entry = source.get(i);
+            dest.add(Pair.create(entry.key, entry.notification));
+        }
+    }
+
+    private void recreateStatusBar() {
+        mRecreating = true;
+        mStatusBarContainer.removeAllViews();
+
+        // extract icons from the soon-to-be recreated viewgroup.
+        int nIcons = mStatusIcons.getChildCount();
+        ArrayList<StatusBarIcon> icons = new ArrayList<StatusBarIcon>(nIcons);
+        ArrayList<String> iconSlots = new ArrayList<String>(nIcons);
+        for (int i = 0; i < nIcons; i++) {
+            StatusBarIconView iconView = (StatusBarIconView)mStatusIcons.getChildAt(i);
+            icons.add(iconView.getStatusBarIcon());
+            iconSlots.add(iconView.getStatusBarSlot());
+        }
+
+        // extract notifications.
+        int nNotifs = mNotificationData.size();
+        ArrayList<Pair<IBinder, StatusBarNotification>> notifications =
+                new ArrayList<Pair<IBinder, StatusBarNotification>>(nNotifs);
+        copyNotifications(notifications, mNotificationData);
+        mNotificationData.clear();
+
+        makeStatusBarView();
+        repositionNavigationBar();
+
+        // recreate StatusBarIconViews.
+        for (int i = 0; i < nIcons; i++) {
+            StatusBarIcon icon = icons.get(i);
+            String slot = iconSlots.get(i);
+            addIcon(slot, i, i, icon);
+        }
+
+        // recreate notifications.
+        for (int i = 0; i < nNotifs; i++) {
+            Pair<IBinder, StatusBarNotification> notifData = notifications.get(i);
+            addNotificationViews(notifData.first, notifData.second);
+        }
+
+        setAreThereNotifications();
+
+        mStatusBarContainer.addView(mStatusBarWindow);
+
+        updateExpandedViewPos(EXPANDED_LEAVE_ALONE);
+        mNotificationShortcutsLayout.recreateShortcutLayout();
+        mRecreating = false;
+   }
+
+>>>>>>> bf5f805... Fix Per-App Color
    protected void updateSettings() {
         ContentResolver cr = mContext.getContentResolver();
 

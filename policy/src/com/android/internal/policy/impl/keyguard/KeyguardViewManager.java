@@ -33,6 +33,8 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.os.SystemProperties;
 import android.provider.Settings;
+import android.util.ColorUtils;
+import android.util.ExtendedPropertiesUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -74,6 +76,14 @@ public class KeyguardViewManager {
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
 
+<<<<<<< HEAD
+=======
+    private String[] currentColors = new String[ExtendedPropertiesUtils.PARANOID_COLORS_COUNT];
+    private String[] stockColors = new String[ExtendedPropertiesUtils.PARANOID_COLORS_COUNT];
+
+    private boolean mUnlockKeyDown = false;
+
+>>>>>>> bf5f805... Fix Per-App Color
     public interface ShowListener {
         void onShown(IBinder windowToken);
     };
@@ -112,6 +122,32 @@ public class KeyguardViewManager {
 
         SettingsObserver observer = new SettingsObserver(new Handler());
         observer.observe();
+
+        grabStockColors(false);
+    }
+
+    private void grabStockColors(boolean refresh) {
+        if (refresh) {
+            ExtendedPropertiesUtils.refreshProperties();
+        }
+        String[] colors = ExtendedPropertiesUtils.getProperty("android.colors").
+                split(ExtendedPropertiesUtils.PARANOID_STRING_DELIMITER);
+        for(int i=0; i < ExtendedPropertiesUtils.PARANOID_COLORS_COUNT; i++) {
+            stockColors[i] = colors.length == ExtendedPropertiesUtils.PARANOID_COLORS_COUNT ?
+                    colors[i].toUpperCase() : "NULL";
+        }
+    }
+
+    private void fadeColors(int speed, boolean lockColors) {
+        if (ColorUtils.getPerAppColorState(mContext)) {
+            for (int i = 0; i < ExtendedPropertiesUtils.PARANOID_COLORS_COUNT; i++) {
+                String color = ExtendedPropertiesUtils.mGlobalHook.colors[i];
+                String setting = ExtendedPropertiesUtils.PARANOID_COLORS_SETTINGS[i];
+                ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext, setting);
+                ColorUtils.setColor(mContext, setting, colorInfo.systemColorString,
+                        (lockColors ? stockColors[i] : currentColors[i]), 1, speed);
+            }
+        }
     }
 
     /**
@@ -119,6 +155,15 @@ public class KeyguardViewManager {
      * lazily.
      */
     public synchronized void show(Bundle options) {
+        // Grab current colors
+        for (int i = 0; i < ExtendedPropertiesUtils.PARANOID_COLORS_COUNT; i++) {
+            currentColors[i] = ColorUtils.getColorSettingInfo(mContext,
+                    ExtendedPropertiesUtils.PARANOID_COLORS_SETTINGS[i]).lastColorString;
+        }
+
+        // Fade to system
+        fadeColors(0, true);
+
         if (DEBUG) Log.d(TAG, "show(); mKeyguardView==" + mKeyguardView);
 
         boolean enableScreenRotation = shouldEnableScreenRotation();
@@ -436,6 +481,9 @@ public class KeyguardViewManager {
      * Hides the keyguard view
      */
     public synchronized void hide() {
+        // Fade to current colors        
+        fadeColors(800, false);
+
         if (DEBUG) Log.d(TAG, "hide()");
 
         if (mKeyguardHost != null) {
@@ -462,6 +510,8 @@ public class KeyguardViewManager {
                 }, 500);
             }
         }
+        // fetch current colors
+        grabStockColors(false);
     }
 
     /**

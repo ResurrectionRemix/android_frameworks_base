@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -39,6 +40,7 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.util.Slog;
+import android.util.ColorUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -78,8 +80,6 @@ public class Clock extends TextView {
 
     protected int mClockStyle = STYLE_CLOCK_RIGHT;
 
-    protected int mClockColor;
-
     public Clock(Context context) {
         this(context, null);
     }
@@ -98,7 +98,6 @@ public class Clock extends TextView {
 
         if (!mAttached) {
             mAttached = true;
-            mClockColor = getTextColors().getDefaultColor();
             IntentFilter filter = new IntentFilter();
 
             filter.addAction(Intent.ACTION_TIME_TICK);
@@ -243,10 +242,24 @@ public class Clock extends TextView {
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_STYLE), false,
                     this);
             resolver.registerContentObserver(Settings.System
+<<<<<<< HEAD
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_COLOR), false,
                     this);
             resolver.registerContentObserver(Settings.System
+<<<<<<< HEAD
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_WEEKDAY), false,
+=======
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_DISPLAY), false,
+                    this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_STYLE), false,
+                    this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_FORMAT), false,
+=======
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_WEEKDAY), false,
+>>>>>>> bf5f805... Fix Per-App Color
+>>>>>>> 2f4ef6d... Fix Per-App Color
                     this);
             updateSettings();
         }
@@ -259,14 +272,21 @@ public class Clock extends TextView {
 
     protected void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
-        int newColor = 0;
 
         mAmPmStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_GONE);   
         mClockStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_STYLE, STYLE_CLOCK_RIGHT);
+<<<<<<< HEAD
         mWeekdayStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_WEEKDAY, WEEKDAY_STYLE_GONE);
+=======
+<<<<<<< HEAD
+        mClockDateDisplay = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_CLOCK_DATE_DISPLAY, CLOCK_DATE_DISPLAY_GONE);
+        mClockDateStyle = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_CLOCK_DATE_STYLE, CLOCK_DATE_STYLE_UPPERCASE);
+>>>>>>> 2f4ef6d... Fix Per-App Color
 
         newColor = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_COLOR, mClockColor);
@@ -274,6 +294,10 @@ public class Clock extends TextView {
             mClockColor = newColor;
             setTextColor(mClockColor);
         }
+=======
+        mWeekdayStyle = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_CLOCK_WEEKDAY, WEEKDAY_STYLE_GONE);
+>>>>>>> bf5f805... Fix Per-App Color
         updateClockVisibility();
         updateClock();
     }

@@ -92,6 +92,18 @@ public class ColorUtils {
                 systemColor + "|" + currentColor + "|" + index + "|" + speed);
     }
 
+    public static int hexToInt(String hexString) {
+        // Don't even bother with an exception if string is null        
+        if (hexString == null) return 0;
+
+        try {
+            return new BigInteger(hexString, 16).intValue();
+        } catch(NumberFormatException nfe) {
+            // If value is not a valid representation
+            return 0;
+        }
+    }
+
     public static ColorSettingInfo getColorSettingInfo(Context context, String settingName) {
         ColorSettingInfo result = new ColorSettingInfo();
 
@@ -151,9 +163,9 @@ public class ColorUtils {
 
         // Get color values
         result.systemColor = result.isSystemColorNull ? result.defaultColor :
-                new BigInteger(result.systemColorString, 16).intValue();
+                hexToInt(result.systemColorString);
         result.currentColor = result.isCurrentColorNull ? result.defaultColor :
-                new BigInteger(result.currentColorString, 16).intValue();
+                hexToInt(result.currentColorString);
         result.lastColor = result.currentIndex == 0 ? result.systemColor : result.currentColor;
 
         // Check alpha state
