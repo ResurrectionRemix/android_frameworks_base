@@ -82,38 +82,9 @@ public class BatteryController extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
         if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
-            final int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-            final int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS,
-                    BatteryManager.BATTERY_STATUS_UNKNOWN);
-
-            boolean plugged = false;
-            switch (status) {
-                case BatteryManager.BATTERY_STATUS_CHARGING:
-                case BatteryManager.BATTERY_STATUS_FULL:
-                    plugged = true;
-                    break;
-            }
-
-            final int icon = plugged ? R.drawable.stat_sys_battery_charge
-                    : R.drawable.stat_sys_battery;
-
-            int N = mIconViews.size();
-            for (int i = 0; i < N; i++) {
-                ImageView v = mIconViews.get(i);
-                v.setImageResource(icon);
-                v.setImageLevel(level);
-                v.setContentDescription(mContext.getString(R.string.accessibility_battery_level,
-                        level));
-            }
-            N = mLabelViews.size();
-            for (int i = 0; i < N; i++) {
-                TextView v = mLabelViews.get(i);
-                v.setText(mContext.getString(R.string.status_bar_settings_battery_meter_format,
-                        level));
-            }
-            sBatteryLevel = level;
-            sBatteryCharging = plugged;
-            updateCallbacks();
+            mLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+            mPlugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) != 0;
+            updateBatteryLevel();
         }
     }
 

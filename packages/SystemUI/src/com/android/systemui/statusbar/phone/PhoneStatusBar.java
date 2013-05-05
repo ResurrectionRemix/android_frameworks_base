@@ -181,8 +181,6 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     // These are no longer handled by the policy, because we need custom strategies for them
     BluetoothController mBluetoothController;
-    BatteryController mBatteryController;
-    SbBatteryController mSbBatteryController;
     LocationController mLocationController;
     NetworkController mNetworkController;
 

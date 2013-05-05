@@ -212,16 +212,17 @@ public class SbBatteryController extends LinearLayout {
         int N = mIconViews.size();
         for (int i = 0; i < N; i++) {
             ImageView v = mIconViews.get(i);
-            v.setImageResource(icon);
-            v.setImageLevel(level);
-            v.setContentDescription(mContext.getString(
-                    R.string.accessibility_battery_level, level));
+            Drawable batteryBitmap = mContext.getResources().getDrawable(icon);
+            if (mColorInfo.isLastColorNull) {
+                batteryBitmap.clearColorFilter();                
+            } else {
+                batteryBitmap.setColorFilter(mColorInfo.lastColor, PorterDuff.Mode.SRC_IN);
+            }
+            v.setImageDrawable(batteryBitmap);
         }
         N = mLabelViews.size();
         for (int i = 0; i < N; i++) {
             TextView v = mLabelViews.get(i);
-            v.setText(mContext.getString(
-                    R.string.status_bar_settings_battery_meter_format, level));
         }
 
         // do my stuff here
