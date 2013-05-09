@@ -23,7 +23,7 @@
     android:id="@+id/ribbon_main"
     android:orientation="vertical"
     android:focusable="true"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:gravity="center"
     android:descendantFocusability="afterDescendants">
@@ -40,7 +40,7 @@
                 android:id="@+id/toggles"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4.0dp"
                 android:paddingRight="4.0dp" />
@@ -50,7 +50,37 @@
                 android:id="@+id/label"
                 android:gravity="center"
                 android:visibility="gone"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingBottom="4.0dip"
+                android:scrollHorizontally="true" />
+
+            <LinearLayout
+                android:id="@+id/ribbon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4.0dp"
+                android:paddingRight="4.0dp"
+                android:orientation="horizontal" />
+
+            <ImageButton
+                android:id="@+id/toggles_bottom"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4.0dp"
+                android:paddingRight="4.0dp" />
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/label_bottom"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:ellipsize="end"
@@ -59,12 +89,4 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ribbon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16.0dp"
-            android:paddingRight="16.0dp"
-            android:orientation="horizontal" >
-        </LinearLayout>
 </LinearLayout>

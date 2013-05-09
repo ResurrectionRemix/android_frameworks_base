@@ -245,4 +245,7 @@
     <!-- Constant for hidden navbar drag handle -->
     <dimen name="drag_handle_height">10dp</dimen>
 
+    <!-- Constant for hidden ribbon drag handle -->
+    <dimen name="ribbon_drag_handle_height">25dp</dimen>
+
 </resources>

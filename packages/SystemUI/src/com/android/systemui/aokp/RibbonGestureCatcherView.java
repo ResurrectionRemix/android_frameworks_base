@@ -3,6 +3,9 @@ package com.android.systemui.aokp;
 import com.android.systemui.R;
 import com.android.systemui.aokp.AokpSwipeRibbon;
 import com.android.systemui.aokp.AppWindow;
+import com.android.systemui.aokp.AwesomeAction;
+
+import static com.android.internal.util.aokp.AwesomeConstants.*;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -13,8 +16,12 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -22,6 +29,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class RibbonGestureCatcherView extends LinearLayout{
 
@@ -29,7 +37,7 @@ public class RibbonGestureCatcherView extends LinearLayout{
     private Resources res;
     private ImageView mDragButton;
     long mDowntime;
-    int mTimeOut, mLocation;
+    int mTimeOut, mLocation, ribbonNumber;
     private int mButtonWeight = 30;
     private int mButtonHeight = 0;
     private int mGestureHeight;
@@ -43,7 +51,9 @@ public class RibbonGestureCatcherView extends LinearLayout{
     private boolean mRibbonSwipeStarted = false;
     private boolean mRibbonShortSwiped = false;
     private int mScreenWidth, mScreenHeight;
-    private String mAction;
+    private String mAction, mLongSwipeAction, mLongPressAction;
+    private Animation mAnimationIn;
+    private Animation mAnimationOut;
 
     private SettingsObserver mSettingsObserver;
 
@@ -58,8 +68,11 @@ public class RibbonGestureCatcherView extends LinearLayout{
         mRightSide = mAction.equals("right");
         mDragButton = new ImageView(mContext);
         res = mContext.getResources();
-        mGestureHeight = res.getDimensionPixelSize(R.dimen.drag_handle_height);
+        mGestureHeight = res.getDimensionPixelSize(R.dimen.ribbon_drag_handle_height);
         updateLayout();
+        mAnimationIn = PlayInAnim();
+        mAnimationOut = PlayOutAnim();
+        ribbonNumber = getRibbonNumber();
         Point size = new Point();
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getSize(size);
@@ -73,14 +86,14 @@ public class RibbonGestureCatcherView extends LinearLayout{
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (vib && !mVibLock) {
-                    mVibLock = true;
-                    performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                }
                 int action = event.getAction();
                 switch (action) {
                 case  MotionEvent.ACTION_DOWN :
                     if (!mRibbonSwipeStarted) {
+                        if (vib && !mVibLock) {
+                            mVibLock = true;
+                            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                        }
                         mDownPoint[0] = event.getX();
                         mDownPoint[1] = event.getY();
                         mRibbonSwipeStarted = true;
@@ -108,7 +121,6 @@ public class RibbonGestureCatcherView extends LinearLayout{
                                 Intent showRibbon = new Intent(
                                     AokpSwipeRibbon.RibbonReceiver.ACTION_SHOW_RIBBON);
                                 showRibbon.putExtra("action", mAction);
-                                Log.d(TAG, "Sending broadcast for" + mAction);
                                 mContext.sendBroadcast(showRibbon);
                                 mVibLock = false;
                             }
@@ -116,9 +128,7 @@ public class RibbonGestureCatcherView extends LinearLayout{
                                 Intent hideRibbon = new Intent(
                                     AokpSwipeRibbon.RibbonReceiver.ACTION_HIDE_RIBBON);
                                 mContext.sendBroadcast(hideRibbon);
-                                Intent showAppWindow = new Intent(
-                                    AppWindow.WindowReceiver.ACTION_SHOW_APP_WINDOW);
-                                mContext.sendBroadcast(showAppWindow);
+                                AwesomeAction.launchAction(mContext, mLongSwipeAction);
                                 mVibLock = false;
                                 mRibbonSwipeStarted = false;
                                 mRibbonShortSwiped = false;
@@ -141,14 +151,7 @@ public class RibbonGestureCatcherView extends LinearLayout{
             @Override
             public boolean onLongClick(View v) {
                 performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                Log.d(TAG, "Long pressed sending broadcast");
-           /*     Intent showRibbon = new Intent(
-                        AokpSwipeRibbon.RibbonReceiver.ACTION_SHOW_RIBBON);
-                showRibbon.putExtra("action", mAction);
-                mContext.sendBroadcast(showRibbon); */
-                                Intent showAppWindow = new Intent(
-                                    AppWindow.WindowReceiver.ACTION_SHOW_APP_WINDOW);
-                                mContext.sendBroadcast(showAppWindow);
+                AwesomeAction.launchAction(mContext, mLongPressAction);
                 return true;
                 }
             });
@@ -165,6 +168,17 @@ public class RibbonGestureCatcherView extends LinearLayout{
     protected void onDetachedFromWindow() {
         mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
         super.onDetachedFromWindow();
+    }
+
+    private int getRibbonNumber() {
+        if (mAction.equals("left")) {
+            return 0;
+        } else if (mAction.equals("right")) {
+            return 1;
+        } else if (mAction.equals("bottom")) {
+            return 2;
+        }
+        return 0;
     }
 
     private int getGravity() {
@@ -212,10 +226,65 @@ public class RibbonGestureCatcherView extends LinearLayout{
         return lp;
     }
 
+    public boolean setViewVisibility(boolean visibleIME) {
+        if (visibleIME) {
+            mDragButton.startAnimation(mAnimationOut);
+        } else {
+            mDragButton.setVisibility(View.VISIBLE);
+            mDragButton.startAnimation(mAnimationIn);
+        }
+        return false;
+    }
+
+    public Animation PlayOutAnim() {
+        if (mDragButton != null) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, com.android.internal.R.anim.slow_fade_out);
+            animation.setStartOffset(0);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mDragButton.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+            return animation;
+        }
+        return null;
+    }
+
+    public Animation PlayInAnim() {
+        if (mDragButton != null) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, com.android.internal.R.anim.slow_fade_in);
+            animation.setStartOffset(0);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+            return animation;
+        }
+        return null;
+    }
+
     private void updateLayout() {
         LinearLayout.LayoutParams dragParams;
         float dragSize = 0;
-        float dragHeight = mGestureHeight + (mGestureHeight * (mButtonHeight * 0.01f));
+        float dragHeight = (mGestureHeight * (mButtonHeight * 0.01f));
         removeAllViews();
         if (mVerticalLayout) {
             dragSize = ((mScreenHeight) * (mButtonWeight*0.02f)) / getResources().getDisplayMetrics().density;
@@ -243,15 +312,19 @@ public class RibbonGestureCatcherView extends LinearLayout{
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.RIBBON_DRAG_HANDLE_WEIGHT), false, this);
+                    Settings.System.RIBBON_DRAG_HANDLE_WEIGHT[ribbonNumber]), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.RIBBON_DRAG_HANDLE_OPACITY), false, this);
+                    Settings.System.RIBBON_DRAG_HANDLE_OPACITY[ribbonNumber]), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.RIBBON_DRAG_HANDLE_HEIGHT), false, this);
+                    Settings.System.RIBBON_DRAG_HANDLE_HEIGHT[ribbonNumber]), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SWIPE_RIBBON_VIBRATE), false, this);
+                    Settings.System.SWIPE_RIBBON_VIBRATE[ribbonNumber]), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.RIBBON_DRAG_HANDLE_LOCATION), false, this);
+                    Settings.System.RIBBON_DRAG_HANDLE_LOCATION[ribbonNumber]), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RIBBON_LONG_SWIPE[ribbonNumber]), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RIBBON_LONG_PRESS[ribbonNumber]), false, this);
         }
          @Override
         public void onChange(boolean selfChange) {
@@ -260,11 +333,21 @@ public class RibbonGestureCatcherView extends LinearLayout{
     }
    protected void updateSettings() {
         ContentResolver cr = mContext.getContentResolver();
-        mDragButtonOpacity = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_OPACITY, 0);
-        mButtonWeight = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_WEIGHT, 30);
-        mButtonHeight = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_HEIGHT, 0);
-        vib = Settings.System.getBoolean(cr, Settings.System.SWIPE_RIBBON_VIBRATE, false);
-        mLocation = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_LOCATION, 0);
+        mDragButtonOpacity = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_OPACITY[ribbonNumber], 0);
+        mButtonWeight = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_WEIGHT[ribbonNumber], 30);
+        mButtonHeight = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_HEIGHT[ribbonNumber], 50);
+        mLongSwipeAction = Settings.System.getString(cr, Settings.System.RIBBON_LONG_SWIPE[ribbonNumber]);
+        if (TextUtils.isEmpty(mLongSwipeAction)) {
+             mLongSwipeAction = AwesomeConstant.ACTION_APP_WINDOW.value();
+             Settings.System.putString(cr, Settings.System.RIBBON_LONG_SWIPE[ribbonNumber], AwesomeConstant.ACTION_APP_WINDOW.value());
+        }
+        mLongPressAction = Settings.System.getString(cr, Settings.System.RIBBON_LONG_PRESS[ribbonNumber]);
+        if (TextUtils.isEmpty(mLongPressAction)) {
+             mLongPressAction = AwesomeConstant.ACTION_APP_WINDOW.value();
+             Settings.System.putString(cr, Settings.System.RIBBON_LONG_PRESS[ribbonNumber], AwesomeConstant.ACTION_APP_WINDOW.value());
+        }
+        vib = Settings.System.getBoolean(cr, Settings.System.SWIPE_RIBBON_VIBRATE[ribbonNumber], false);
+        mLocation = Settings.System.getInt(cr, Settings.System.RIBBON_DRAG_HANDLE_LOCATION[ribbonNumber], 0);
         updateLayout();
     }
 }
