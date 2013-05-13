@@ -1010,6 +1010,20 @@ public final class Settings {
         }
 
         /**
+         * Look up a name in the database.
+         * @param resolver to access the database with
+         * @param name to look up in the table
+         * @param defaultValue returned if value is null
+         * @return the corresponding value, or default if not present
+         */
+        public synchronized static String getString(ContentResolver resolver,
+                String name, String defaultValue) {
+
+            String value = getString(resolver, name);
+            return value == null ? defaultValue: value;
+        }
+
+        /**
          * Store a name/value pair into the database.
          * @param resolver to access the database with
          * @param name to store
@@ -3642,6 +3656,8 @@ public final class Settings {
          * @hide
          */
         public static final String MVNO_ROAMING = "mvno_roaming";
+
+        public static final String THEME_WALLPAPER = "theme_wallpaper";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
