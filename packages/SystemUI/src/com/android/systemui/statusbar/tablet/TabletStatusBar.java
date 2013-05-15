@@ -537,7 +537,9 @@ public class TabletStatusBar extends BaseStatusBar implements
         mDoNotDisturb = new DoNotDisturb(mContext);
 
         mBatteryController = new BatteryController(mContext);
-        mSbBatteryController = (SbBatteryController)sb.findViewById(R.id.battery_cluster);
+        mBatteryController.addIconView((ImageView)mStatusBarView.findViewById(R.id.battery));
+        mSbBatteryController = (SbBatteryController)mStatusBarView.findViewById(R.id.battery_cluster);
+
         mBluetoothController = new BluetoothController(mContext);
         mBluetoothController.addIconView((ImageView)sb.findViewById(R.id.bluetooth));
 
