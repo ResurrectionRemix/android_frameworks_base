@@ -31,6 +31,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputBinding;
@@ -67,7 +68,8 @@ class IInputMethodWrapper extends IInputMethod.Stub
     private static final int DO_SHOW_SOFT_INPUT = 60;
     private static final int DO_HIDE_SOFT_INPUT = 70;
     private static final int DO_CHANGE_INPUTMETHOD_SUBTYPE = 80;
-   
+
+    private static Context mContext;
     final WeakReference<AbstractInputMethodService> mTarget;
     final HandlerCaller mCaller;
     final WeakReference<InputMethod> mInputMethod;
@@ -79,7 +81,6 @@ class IInputMethodWrapper extends IInputMethod.Stub
     
     // NOTE: we should have a cache of these.
     static class InputMethodSessionCallbackWrapper implements InputMethod.SessionCallback {
-        final Context mContext;
         final IInputMethodCallback mCb;
         InputMethodSessionCallbackWrapper(Context context, IInputMethodCallback cb) {
             mContext = context;
@@ -105,6 +106,7 @@ class IInputMethodWrapper extends IInputMethod.Stub
         mCaller = new HandlerCaller(context.getApplicationContext(), this);
         mInputMethod = new WeakReference<InputMethod>(inputMethod);
         mTargetSdkVersion = context.getApplicationInfo().targetSdkVersion;
+        mContext = context;
     }
 
     public InputMethod getInternalInputMethod() {
@@ -118,6 +120,9 @@ class IInputMethodWrapper extends IInputMethod.Stub
             Log.w(TAG, "Input method reference was null, ignoring message: " + msg.what);
             return;
         }
+
+        boolean formalText = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FORMAL_TEXT_INPUT, 0) == 1;
 
         switch (msg.what) {
             case DO_DUMP: {
@@ -157,6 +162,7 @@ class IInputMethodWrapper extends IInputMethod.Stub
                         ? new InputConnectionWrapper(inputContext) : null;
                 EditorInfo info = (EditorInfo)args.arg2;
                 info.makeCompatible(mTargetSdkVersion);
+                info.formalTextInput(formalText);
                 inputMethod.startInput(ic, info);
                 args.recycle();
                 return;
@@ -168,6 +174,7 @@ class IInputMethodWrapper extends IInputMethod.Stub
                         ? new InputConnectionWrapper(inputContext) : null;
                 EditorInfo info = (EditorInfo)args.arg2;
                 info.makeCompatible(mTargetSdkVersion);
+                info.formalTextInput(formalText);
                 inputMethod.restartInput(ic, info);
                 args.recycle();
                 return;
