@@ -2038,4 +2038,27 @@
   <!-- Kill App -->
   <java-symbol type="string" name="app_killed_message" />
   <java-symbol type="integer" name="config_backKillTimeout" />
+<<<<<<< HEAD
+=======
+
+  <!-- Power widget -->
+  <java-symbol type="string" name="hour" />
+  <java-symbol type="string" name="hours" />
+  <java-symbol type="string" name="minute" />
+  <java-symbol type="string" name="minutes" />
+  <java-symbol type="string" name="second" />
+  <java-symbol type="string" name="seconds" />
+
+  <!-- Profiles -->
+  <java-symbol type="string" name="wildcardProfile" />
+  <java-symbol type="string" name="global_action_choose_profile" />
+  <java-symbol type="drawable" name="ic_lock_profile" />
+  <java-symbol type="xml" name="profile_default" /> 
+
+  <!-- Expanded desktop -->
+  <java-symbol type="drawable" name="ic_lock_expanded_desktop" /> 
+  <java-symbol type="string" name="global_actions_toggle_expanded_desktop_mode" />
+  <java-symbol type="string" name="global_actions_expanded_desktop_mode_off_status" />
+  <java-symbol type="string" name="global_actions_expanded_desktop_mode_on_status" />
+>>>>>>> a0e2f0b... Added Expanded desktop mod (see credit below)
 </resources>
