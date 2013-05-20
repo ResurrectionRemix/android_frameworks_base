@@ -346,7 +346,7 @@ public class PieView extends View implements View.OnTouchListener {
                     mSnapPoints[g.INDEX] = new SnapPoint(g.FACTOR * width, height / 2, g);
         // reuse already created snap points
         for (PiePosition g : PiePosition.values()) {
-            if ((mSnapPointMask & g.FLAG) == 0) {
+            if ((mSnapPointMask & g.FLAG) != 0) {
                 int x = width / 2;
                 int y = height / 2;
                 if (g == PiePosition.LEFT || g == PiePosition.RIGHT) {
