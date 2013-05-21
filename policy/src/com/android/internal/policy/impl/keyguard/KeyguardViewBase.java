@@ -27,6 +27,7 @@ import android.media.AudioManager;
 import android.media.IAudioService;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -45,7 +46,7 @@ import android.widget.FrameLayout;
  */
 public abstract class KeyguardViewBase extends FrameLayout {
 
-    private static final int BACKGROUND_COLOR = 0x70000000;
+    private static int BACKGROUND_COLOR = 112;
     private AudioManager mAudioManager;
     private TelephonyManager mTelephonyManager = null;
     protected KeyguardViewMediator.ViewMediatorCallback mViewMediatorCallback;
@@ -59,7 +60,7 @@ public abstract class KeyguardViewBase extends FrameLayout {
     private static final Drawable mBackgroundDrawable = new Drawable() {
         @Override
         public void draw(Canvas canvas) {
-            canvas.drawColor(BACKGROUND_COLOR, PorterDuff.Mode.SRC);
+            canvas.drawColor(BACKGROUND_COLOR<<24, PorterDuff.Mode.SRC);
         }
 
         @Override
@@ -86,6 +87,8 @@ public abstract class KeyguardViewBase extends FrameLayout {
     }
 
     public void resetBackground() {
+        BACKGROUND_COLOR = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_ALPHA_CONFIG, 112);
         setBackground(mBackgroundDrawable);
     }
 
