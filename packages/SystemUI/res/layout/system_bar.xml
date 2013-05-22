@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2010 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<!-- TabletStatusBarView extends FrameLayout -->
+<com.android.systemui.statusbar.tablet.TabletStatusBarView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/system_bar_background"
+    android:layout_height="@*android:dimen/system_bar_height"
+    >
+    
+    <LinearLayout
+        android:id="@+id/bar_contents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <!-- navigation controls -->
+        <LinearLayout
+               android:id="@+id/navigationArea"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="45" >
+               <include layout="@layout/navigation_bar"
+                    android:id="@+id/navigationBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+         </LinearLayout>
+
+        <!-- fake space bar zone -->
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="5" >
+            <com.android.systemui.statusbar.policy.EventHole android:id="@+id/fake_space_bar"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- notification icons & panel access -->
+        <RelativeLayout
+            android:id="@+id/notificationHolder"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50" >
+            <include layout="@layout/system_bar_notification_area"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="1dp" />
+        </RelativeLayout>>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/bar_shadow_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        >
+        <!-- lights out shade -->
+        <RelativeLayout
+            android:id="@+id/bar_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF000000"
+            android:visibility="gone"
+            >
+        </RelativeLayout>
+    </FrameLayout>
+</com.android.systemui.statusbar.tablet.TabletStatusBarView>

@@ -1,0 +1,126 @@
+fullpage=true
+no_footer_links=true
+carousel=true
+page.metaDescription=The official site for Android developers. Provides the Android SDK and documentation for app developers and designers.
+@jd:body
+
+
+<div class="wrap">
+    <!-- Slideshow -->
+    <div class="slideshow-container slideshow-home col-16">
+        <a href="" class="slideshow-prev">Prev</a>
+        <a href="" class="slideshow-next">Next</a>
+        <div class="frame">
+            <ul>
+                <li class="item carousel-home">
+                    <div class="content-left col-11" style="padding-top:65px;">
+                      <script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+                      <div style="box-shadow: 3px 10px 18px 1px #999;width:600px;height:338px">
+                        <div id="ytapiplayer">
+                          You need Flash player 8+ and JavaScript enabled to view this video.
+                        </div>
+                        <script type="text/javascript">
+                            var params = { allowScriptAccess: "always" };
+                            var atts = { id: "ytapiplayer" };
+                            swfobject.embedSWF("//www.youtube.com/v/RRelFvc6Czo?enablejsapi=1&playerapiid=ytplayer&version=3&HD=1;rel=0;showinfo=0;modestbranding;origin=developer.android.com;autohide=1",
+                              "ytapiplayer", "600", "338", "8", null, null, params, atts);
+
+                            // Callback used to pause/resume carousel based on video state
+                            function onytplayerStateChange(newState) {              
+                               var isPaused = $("#pauseButton").hasClass("paused");
+                               if ((newState == 1) || (newState == 3)) {
+                               // if playing or buffering, pause the carousel
+                                 if (!isPaused) {
+                                    $("#pauseButton").click();
+                                 }
+                               } else {
+                               // otherwise, make sure carousel is running
+                                 if (isPaused) {
+                                    $("#pauseButton").click();
+                                 }
+                               }
+                            }
+
+                            // Callback received when YouTube player loads to setup callback (above)
+                            function onYouTubePlayerReady(playerId) {
+                              var ytplayer = document.getElementById("ytapiplayer");
+                              ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+                            }
+
+                        </script>
+                      </div>
+                    </div>
+                    <div class="content-right col-4">
+                    <h1 style="white-space:nowrap;line-height:1em;">Developer Story: Smule</h1>
+                    <p>The creators of AutoRap, Magic Piano, and Songify talk about launching on
+                       Android and the explosive global growth they’ve seen on Google Play.</p>
+                    </div>
+                </li>
+                <li class="item carousel-home">
+                    <div class="content-left col-9">
+                        <a href="{@docRoot}about/versions/jelly-bean.html"><img src="{@docRoot}images/home/android-jellybean.png" ></a>
+                    </div>
+                    <div class="content-right col-6">
+                    <h1>Android 4.2 Jelly Bean!</h1>
+                    <p>The latest version of Jelly Bean is here, with performance optimizations, a refreshed UI, and great new features for developers. </p>
+                    <p>Android 4.2 includes APIs for developing lock sceen widgets and Daydream screensavers, using external displays, creating RTL layouts, building flexible UI with nested Fragments, and much more.</p>
+                    <p><a href="{@docRoot}about/versions/jelly-bean.html" class="button">Learn More</a></p>
+                    </div>
+                </li>
+                <li class="item carousel-home">
+                    <div class="content-left col-10">
+                        <img src="{@docRoot}images/home/design.png" style="margin-top:30px">
+                    </div>
+                    <div class="content-right col-5">
+                    <h1>Make your Android apps<br>look great</h1>
+                    <p>New templates in the design guide make it easier than ever to design apps
+that are beautiful and easy to use.</p>
+                    <p><a href="{@docRoot}design/index.html" class="button">Learn More</a></p>
+                    </div>
+                </li>
+                <li class="item carousel-home">
+                        <div class="content-left col-10">
+                        <img src="{@docRoot}images/home/google-io.png">
+                        </div>
+                        <div class="content-right col-5">
+                        <h1>Android videos<br/> from Google I/O!</h1>
+                        <p>If you couldn't make it to Google I/O this year or want to review some of the material,
+                          all of the Android sessions are now available for viewing online.</p>
+                        <p><a href="http://www.youtube.com/playlist?list=PL4C6BCDE45E05F49E&feature=plcp"
+class="button">Watch the Android sessions</a></p>
+                        </div>
+                </li>
+                <li class="item carousel-home">
+                        <div class="content-left col-10">
+                            <img src="{@docRoot}images/home/google-play.png"
+                                  style="margin-top:50px">
+                        </div>
+                        <div class="content-right col-5">
+                        <h1>Publish your apps<br>in Google Play</h1>
+                        <p>The most visited store in the world for Android apps. Cloud-connected and always synced, it's never been easier for users to find and download your apps.</p>
+
+                        <p><a href="{@docRoot}distribute/index.html" class="button">Learn More</a></p>
+                        </div> 
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /End slideshow -->
+    
+    <a href="" id="pauseButton" style="display:none">pause</a>
+    
+    
+</div>
+<div class="wrap" style="padding-bottom:20px">
+    <!-- Section links -->
+    <div class="home-sections">
+        <ul>
+            <li><a href="{@docRoot}about/index.html">About Android</a></li>
+            <li><a href="{@docRoot}sdk/index.html">Get the SDK</a></li>
+            <li><a href="http://source.android.com">Open Source</a></li>
+            <li><a href="{@docRoot}support.html">Support</a></li>
+            <li class="last"><a href="{@docRoot}legal.html">Legal</a></li>
+        </ul>
+    </div>
+    <!-- /Section links -->
+</div>     

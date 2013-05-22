@@ -1,0 +1,371 @@
+fullpage=true
+page.title=Develop
+header.hide=1
+carousel=1
+tabbedList=1
+@jd:body
+
+<style>
+#noplayer-message {
+position:absolute;top:50%;left:0;width:100%;z-index:-1;text-align:center;display:none;
+}
+#player-frame object {z-index:1;}
+</style>
+
+<div id="player-wrapper">
+  <div id="player-frame">
+    <div id="noplayer-message">
+      <!-- busted flash player message -->
+      Your video is supposed to appear here.<br/>
+      Make sure you have the <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash&reg; Player</a>.
+    </div>
+    <div id="player"><!-- Youtube embeds here... actually replaces this div --></div>
+    <a class="close" onclick="$('#player-wrapper').hide()">close video</a>
+  </div>
+</div>
+<div class="wrap">
+   <!-- Slideshow -->
+   <div class="slideshow-container slideshow-develop col-16">
+       <a href="" class="slideshow-prev">Prev</a>
+       <a href="" class="slideshow-next">Next</a>
+       <div class="frame">
+           <ul>
+              <li class="item carousel-home">
+                 <div class="col-8">
+                   <img src="{@docRoot}images/google/maps-v2-trulia-n7.png"
+class="play no-shadow no-transform" style="margin:0 0 0 40px;max-height:250px;height:250px;
+                                           max-width:409px;width:409px" />
+                 </div>
+                <div class="content-right col-6" style="width:350px">
+                  <h2>New Google Maps Android APIs!</h2>
+                  <p>Google Maps Android API version 2 is now available with enhanced
+                    features such as 3D buildings, vector-based map tiles, rich overlay capabilities,
+                    indoor maps, support for fragments, and much more.</p>
+                    
+                  <p>The APIs are bundled with Google Play services and are
+                  compatible with Android 2.2 and higher.</p>
+                  <p><a
+href="{@docRoot}google/play-services/maps.html" class="button">Read more</a></p>
+                </div>            
+              </li>
+              <li class="item carousel-home">
+                 <div class="col-8">
+                   <img
+src="//lh4.ggpht.com/-lfjzgG5Dqrk/UHMThRtpRwI/AAAAAAAABpk/h4d3nsmkgPM/s400/mint.png"
+class="play no-shadow no-transform" />
+                 </div>
+                <div class="content-right col-6">
+                  <h2>Building Great Apps for Tablets</h2>
+                  <p>Tablets are a growing part of the Android installed base and they offer new opportunities for user engagement and monetization. If you are targeting tablets, check out the <strong>Tablet App Quality Checklist</strong> for tips and techniques on how to deliver a great app experience for tablet users.  </p>
+                  <p><a
+href="/distribute/googleplay/quality/tablet.html" class="button">Read
+more</a></p>
+                </div>            
+              </li>
+               <li class="item carousel-home">
+                   <div class="col-8">
+                     <img
+src="//lh4.ggpht.com/-6K1kfNOdek8/T72bXvtTSQI/AAAAAAAABmw/kYzmJt0_328/s1600/google-play-subscriptions.png" class="play"></div>
+                   <div class="content-right col-6">
+                   <h2>In-app Subscriptions with Trials</h2>
+                   <p>You can now set up a <strong>free trial period</strong> for any Google Play in-app subscription, making it easy for users try your subscriber content before automatically converting to a full subscription. Free trials give you a new way to bring users into your products and engage them effectively. </p>
+                   <p><a class="button"
+href="{@docRoot}google/play/billing/v2/billing_subscriptions.html#trials">Read
+more</a></p>
+                   </div>                
+                </li>
+               <li class="item carousel-home">
+                   <div class="col-8">
+                     <img
+src="//lh4.ggpht.com/-MgN5DnoO5XU/UHYGYzTcAOI/AAAAAAAABs4/jTS7sKkfBcM/s1600/pubsites.png" class="play"></div>
+                   <div class="content-right col-6">
+                   <p class="title-intro">From the blog:</p>
+                   <h2>New Google Play Developer Console</h2>
+                   <p>All developers can now try the <strong>new Google Play Developer Console</strong>. With a streamlined publishing flow, new language options, and new user ratings statistics, you’ll have better tools for delivering great Android apps that delight users.</p>
+                  <p><a
+href="http://android-developers.blogspot.com/2012/10/new-google-play-developer-console.html" class="button">Read
+more</a></p>
+                   </div>                
+                </li>
+               <li class="item carousel-home">
+                 <div class="col-8">
+                   <img
+src="//lh4.ggpht.com/-g05If_eKKRQ/UAcrVLI-OYI/AAAAAAAAAr8/AWvunVb5S-w/s320/nexus7.png"
+class="play no-shadow no-transform" />
+                 </div>
+                <div class="content-right col-6">
+                  <p class="title-intro">From the blog:</p>
+                  <h2>Getting Your App Ready for Jelly Bean and Nexus 7</h2>
+                  <p>For many people, their first taste of Jelly Bean will be on the beautiful 
+                    <strong>Nexus 7 tablet</strong>. Most applications will run just fine on Nexus 7, but who wants 
+                    their app to be just fine? Here are some tips for optimizing your app 
+                    to make the most of this device.</p>
+                  <p><a
+href="http://android-developers.blogspot.com/2012/07/getting-your-app-ready-for-jelly-bean.html" class="button">Read
+more</a></p>
+                </div>            
+              </li>
+           </ul>
+       </div>
+   </div>
+   <!-- /End slideshow -->
+</div>
+<div class="wrap">
+	<!-- news and feature feed -->
+	<div class="feed col-8" style="margin-left:0">
+		<ul class="feed-nav">
+			<li class="active">DEVELOPER NEWS</li>
+			<li>FEATURED DOCS</li>
+		</ul>
+		<div class="feed-container">
+			<div class="feed-frame">
+                                <!-- DEVELOPER NEWS -->
+          <ul>
+            <li><a href="//android-developers.blogspot.com/2013/01/verifying-back-end-calls-from-android.html">
+              <div class="feed-image" style="background:url('//lh4.ggpht.com/7z4NItEg-X21zvFGAarKonk-VaysBYthJ30u1JjaQ0-5fjyHNawnmoNeG--4FCACog=w124') no-repeat 0 0"></div>
+              <h4>Verifying Back-End Calls from Android Apps</h4>
+              <p>You can take advantage of the auth APIs in Google Play services to let your back end know which app is calling and for which user....</p>
+              </a></li>
+            <li><a href="//android-developers.blogspot.com/2012/12/daydream-interactive-screen-savers.html">
+              <div class="feed-image" style="background:url('//lh4.ggpht.com/-wVsUOo4xGE0/UNy9mZ1nmMI/AAAAAAAAB4w/f6rhyLn5KbI/s1600/daydream-example.jpg') no-repeat 0 0;background-position:right top;"></div>
+              <h4>Daydream: Interactive Screen Savers</h4>
+              <p>Daydream is an interactive screen-saver mode introduced in Android 4.2. Learn how to add Daydreams to your apps...</p>
+              </a></li>
+            <li><a href="//android-developers.blogspot.com/2012/11/designing-for-tablets-were-here-to-help.html">
+              <div class="feed-image" style="background:url('//developer.android.com/design/media/multipane_expand.png') no-repeat 0 0; background-position:right top;"></div>
+              <h4>Designing for Tablets?</h4>
+              <p>Essential resources for everyone in the app development pipeline—from product managers, to designers, to developers, and QA engineers...</p>
+              </a></li>
+            <li><a href="//android-developers.blogspot.com/2012/12/in-app-billing-version-3.html">
+              <div class="feed-image" style="background:url('//developer.android.com/images/iab-thumb.png') no-repeat 0 0;background-position:center right;"></div>
+              <h4>In-app Billing Version 3 Now Available</h4>
+              <p>A new version of In-app Billing is available that lets you sell digital goods in your app with just a few lines of code...</p>
+              </a></li>
+          </ul>
+                                <!-- FEATURED DOCS -->
+          <ul>
+            <li><a href="{@docRoot}distribute/googleplay/spotlight/tablets.html">
+              <h4>Tablet Stories</h4>
+              <p>More developers are investing in a full tablet experience for their apps. Here are some stories from developers who are seeing real results as they expand their offering to include Android tablets. </p>
+              </a></li>
+            <li><a href="{@docRoot}distribute/googleplay/quality/core.html">
+              <h4>Core App Quality Guidelines</h4>
+              <p>This document helps you assess basic aspects of quality in your app through a compact set of core app quality criteria and associated tests. All Android apps should meet these criteria.</p>
+              </a></li>
+            <li><a href="{@docRoot}guide/topics/ui/notifiers/notifications.html">
+              <h4>Updated Notifications API Guide</h4>
+              <p>The Notifications API Guide is updated to include information about building Jelly Bean rich notifications using the Support Library APIs for backwards-compatibility.</p>
+              </a></li>
+            <li><a href="{@docRoot}guide/topics/ui/dialogs.html">
+              <h4>Updated Dialogs API Guide</h4>
+              <p>The Dialogs API Guide now shows to use DialogFragment class, a simpler way to manage your dialogs and embed them in alternative layouts.</p>
+              </a></li>                                      
+          </ul>
+			</div>
+		</div>
+	</div>	<!-- /news and feature feed -->
+	<!-- video feed -->
+	<div class="feed col-8" style="margin-right:0">
+		<ul class="feed-nav">
+			<li class="active">DEVELOPERS LIVE</li>
+			<li>VIDEO PLAYLISTS</li>
+		</ul>
+		<div class="feed-container">
+			<div class="feed-frame">
+              <ul id="DevelopersLive">
+              </ul>
+              <ul id="VideoPlaylists">
+              </ul>
+			</div>
+		</div>
+	</div>
+	<!-- /video feed -->
+</div>
+
+<br class="clearfix"/>
+
+      
+      
+      
+      
+      
+      
+      
+      
+
+<script src="//swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+/* Load a video into the player box.
+ * @param id        The YouTube video ID
+ * @param title     The video title to display in the player box (character escaped)
+ * @param autoplay  Whether to automatically play the video
+ */
+function loadVideo(id, title, autoplay) {
+  swfobject.embedSWF('//www.youtube.com/v/' + id + '&rel=1&border=0&fs=1&autoplay=' +
+      (autoplay?1:0), 'player', '525', '330', '9.0.0', false, false, {allowfullscreen: 'true'});
+  $("#videoPlayerTitle").html("<h2>" + unescape(title) + "</h2>");
+  $("#player-wrapper").show();
+  setTimeout(function(){$('#noplayer-message').show()}, 2000);
+}
+
+/* Draw all videos from a playlist into a 'videoPreviews' list
+ * @param data  The feed data returned from the youtube request
+ */
+function renderVideoPlaylists(data) {
+  var MAX_LIST_DESC_LENGTH = 130; // the length at which we will trim the description
+  var MAX_VIDEO_DESC_LENGTH = 100; // the length at which we will trim the description
+  var MAX_LIST_LENGTH = 4; // number of videos to put in the list
+  var feed = data.feed;
+  var entries = feed.entry || [];
+  var playlistId = feed.yt$playlistId.$t;
+
+  var $ulVideos = $('<ul style="display:none"/>');
+  var summary = feed.media$group.media$description != null ? feed.media$group.media$description.$t : feed.subtitle.$t;
+  
+  var $liPlaylist = $('<li class="playlist"></li>');
+  var $aPlaylist = $('<a href="" onclick="togglePlaylist(this);return false;"></a>');
+  $liPlaylist.append($aPlaylist);
+  $aPlaylist.append('<h4>' + feed.title.$t + '</h4>');
+  
+  var playlistDescription = summary.substr(0, MAX_LIST_DESC_LENGTH);
+  playlistDescription += playlistDescription.length == MAX_LIST_DESC_LENGTH ? "..." : ""; // add ellipsis if we've chopped the description
+  $aPlaylist.append('<p>' +  playlistDescription + '</p>');
+  
+  // Loop through each entry (each video) and add it to the 'videoPreviews' list
+  var length = feed.entry.length < MAX_LIST_LENGTH ? feed.entry.length : MAX_LIST_LENGTH; // max of 4 videos per list
+  for (var i = 0; i < length; i++) {
+    var entry = entries[i];
+
+    var title = entry.title.$t;
+    var id = entry.media$group.yt$videoid.$t;
+    var thumbUrl = entry.media$group.media$thumbnail[0].url;
+    var fullDescription = entry.media$group.media$description.$t;
+    var playerUrl = entry.media$group.media$content[0].url;
+
+    var shortDescription = fullDescription.substr(0, MAX_VIDEO_DESC_LENGTH);
+    shortDescription += shortDescription.length == MAX_VIDEO_DESC_LENGTH ? "..." : ""; // add ellipsis if we've chopped the description
+
+    var img = $('<img src="' + thumbUrl + '" width="60" height="45"/>');
+    var a = $('<a href="#" onclick="loadVideo(\'' + id + '\',\'' + escape(title) + '\',true); return false;" />');
+    var pShortDescription = $('<p>' + shortDescription + '</p>');
+    var h5Title = "<h5>" + title + "</h5>";
+    var li = $('<li class="playlist-video"/>');
+
+    li.append(a);
+    a.append(img).append(h5Title).append(pShortDescription);
+
+    $ulVideos.append(li);
+    
+    // use the first entry's thumbnail for the playlist
+    if (i == 0) {
+      $aPlaylist.prepend('<img src="' + thumbUrl + '" width="120" height="90"/>');
+    }
+  }
+  
+  if (feed.entry.length > MAX_LIST_LENGTH) {
+    // add item to go to youtube for playlist
+    $ulVideos.append('<li class="more"><a href="//www.youtube.com/playlist?list=PL' + playlistId + '">More &raquo;</a></li>');
+  }
+
+  $liPlaylist.append($ulVideos);
+  $('#VideoPlaylists').append($liPlaylist);
+}
+
+
+function renderDevelopersLivePlaylist(data) {
+
+  var MAX_DESC_LENGTH = 125; // the length at which we will trim the description
+  var feed = data.feed;
+  var entries = feed.entry || [];
+  var playlistId = feed.yt$playlistId.$t;
+
+  var ul = $('#DevelopersLive');
+
+  // Loop through each entry (each video) and add it to the '#DevelopersLive' list
+  for (var i = 0; i < 4; i++) {
+    var entry = entries[i];
+
+    var title = entry.title.$t;
+    var id = entry.media$group.yt$videoid.$t;
+    var thumbUrl = entry.media$group.media$thumbnail[0].url;
+    var fullDescription = entry.media$group.media$description.$t;
+    var playerUrl = entry.media$group.media$content[0].url;
+    var shortDescription = fullDescription.substr(0, MAX_DESC_LENGTH);
+    shortDescription += shortDescription.length == MAX_DESC_LENGTH ? "..." : ""; // add ellipsis if we've chopped the description
+
+    var img = $('<img src="' + thumbUrl + '" width="120" height="90"/>');
+    var a = $('<a href="#" onclick="loadVideo(\'' + id + '\',\'' + escape(title) + '\',true); return false;" />');
+    var pShortDescription = $('<p>' + shortDescription + '</p>');
+    var h4Title = "<h4>" + title + "</h4>";
+    var li = $('<li/>');
+
+    li.append(a);
+    a.append(img).append(h4Title).append(pShortDescription);
+
+    ul.append(li);
+  }
+}
+
+
+
+/* This 'playlist' object defines the playlist IDs for each tab.
+ * Each name inside 'playlist' corresponds to class names for the tab that the playlists belong to (eg: "googleioTab" and "googleioBox" divs).
+ * Each string in 'ids' is the ID of a YouTube playlist that belongs in the corresponding tab.
+ */
+var playlists = {
+  'designinaction' : {
+    'ids': ["PLWz5rJ2EKKc8j2B95zGMb8muZvrIy-wcF"]
+  },
+  'about' : {
+    'ids': ["PL611F8C5DBF49CEC6"]
+  },
+  'developersstrikeback' : {
+    'ids': ["PLWz5rJ2EKKc8nhhIOieejm1PxYHmPkIPh"]
+  },
+  'googleio' : {
+    'ids': ["PL4C6BCDE45E05F49E"]
+  }
+};
+
+/* Request the playlist feeds from YouTube */
+function showVideosPlaylists() {
+  for (var x in playlists) {
+    var ids = playlists[x].ids;
+    for (var i in ids) {
+      var script = "<script type='text/javascript' src='//gdata.youtube.com/feeds/api/playlists/"
+                    + ids[i] +
+                    "?v=2&alt=json-in-script&max-results=50&callback=renderVideoPlaylists&orderby=published'><\/script>";
+      $("body").append(script);
+    }
+  }
+}
+
+
+/* Request the playlist feeds from YouTube */
+function showDevelopersLivePlaylist() {
+  var playlistId = "PLWz5rJ2EKKc_XOgcRukSoKKjewFJZrKV0"; /* DevBytes */
+  var script = "<script type='text/javascript' src='//gdata.youtube.com/feeds/api/playlists/"
+                + playlistId +
+                "?v=2&alt=json-in-script&max-results=10&callback=renderDevelopersLivePlaylist&orderby=published'><\/script > ";
+  $("body").append(script);
+}
+
+
+function togglePlaylist(listLink) {
+  var $list = $(listLink).parent();
+  var $ul = $list.find('ul');
+  if ($ul.is(":visible")) {
+    $ul.slideUp(function() {
+      $list.css({'height':'inherit'});
+    });
+  } else {
+    $list.closest('ul').find('li.playlist').find('ul').slideUp();
+    $ul.slideDown();
+    $list.css({'height':'auto'});
+  }
+}
+
+showDevelopersLivePlaylist();
+showVideosPlaylists();
+</script>

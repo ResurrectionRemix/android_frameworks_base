@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:maxLevel="0">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim0" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_0" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="1">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim1" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_1" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="2">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim2" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_2" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="3">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim3" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_3" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="4">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim4" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_4" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="5">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim5" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_5" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="6">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim6" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_6" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="7">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim7" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_7" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="8">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim8" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_8" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="9">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim9" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_9" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="10">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim10" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_10" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="11">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim11" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_11" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="12">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim12" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_12" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="13">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim13" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_13" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="14">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim14" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_14" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="15">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim15" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_15" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="16">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim16" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_16" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="17">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim17" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_17" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="18">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim18" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_18" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="19">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim19" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_19" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="20">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim20" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_20" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="21">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim21" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_21" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="22">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim22" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_22" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="23">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim23" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_23" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="24">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim24" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_24" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="25">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim25" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_25" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="26">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim26" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_26" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="27">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim27" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_27" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="28">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim28" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_28" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="29">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim29" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_29" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="30">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim30" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_30" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="31">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim31" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_31" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="32">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim32" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_32" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="33">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim33" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_33" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="34">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim34" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_34" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="35">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim35" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_35" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="36">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim36" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_36" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="37">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim37" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_37" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="38">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim38" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_38" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="39">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim39" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_39" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="40">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim40" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_40" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="41">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim41" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_41" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="42">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim42" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_42" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="43">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim43" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_43" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="44">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim44" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_44" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="45">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim45" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_45" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="46">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim46" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_46" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="47">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim47" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_47" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="48">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim48" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_48" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="49">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim49" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_49" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="50">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim50" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_50" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="51">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim51" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_51" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="52">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim52" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_52" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="53">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim53" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_53" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="54">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim54" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_54" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="55">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim55" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_55" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="56">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim56" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_56" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="57">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim57" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_57" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="58">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim58" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_58" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="59">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim59" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_59" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="60">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim60" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_60" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="61">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim61" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_61" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="62">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim62" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_62" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="63">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim63" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_63" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="64">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim64" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_64" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="65">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim65" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_65" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="66">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim66" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_66" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="67">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim67" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_67" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="68">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim68" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_68" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="69">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim69" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_69" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="70">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim70" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_70" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="71">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim71" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_71" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="72">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim72" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_72" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="73">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim73" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_73" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="74">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim74" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_74" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="75">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim75" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_75" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="76">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim76" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_76" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="77">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim77" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_77" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="78">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim78" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_78" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="79">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim79" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_79" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="80">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim80" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_80" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="81">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim81" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_81" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="82">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim82" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_82" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="83">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim83" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_83" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="84">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim84" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_84" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="85">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim85" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_85" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="86">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim86" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_86" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="87">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim87" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_87" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="88">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim88" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_88" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="89">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim89" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_89" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="90">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim90" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_90" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="91">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim91" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_91" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="92">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim92" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_92" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="93">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim93" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_93" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="94">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim94" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_94" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="95">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim95" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_95" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="96">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim96" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_96" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="97">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim97" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_97" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="98">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim98" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_98" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="99">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim99" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_99" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="100">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1500" android:drawable="@drawable/stat_sys_battery_circle_charge_anim100" />
+            <item android:duration="500" android:drawable="@drawable/stat_sys_battery_circle_100" />
+        </animation-list>
+    </item>
+    <item android:maxLevel="101">
+        <animation-list android:oneshot="false"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:duration="1000" android:drawable="@drawable/stat_sys_battery_circle_charge_anim100" />
+            <item android:duration="1000" android:drawable="@drawable/stat_sys_battery_circle_charge_animfull" />
+        </animation-list>
+    </item>
+</level-list>
