@@ -16,7 +16,6 @@
 
 package com.android.systemui.power;
 
-
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.Arrays;

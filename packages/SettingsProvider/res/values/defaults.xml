@@ -16,8 +16,7 @@
  * limitations under the License.
  */
 -->
-<resources>
-    
+<resources>   
     <bool name="def_dim_screen">true</bool>
     <integer name="def_screen_off_timeout">60000</integer>
     <bool name="def_airplane_mode_on">false</bool>
