@@ -3,14 +3,17 @@ package com.android.systemui.statusbar.toggles;
 
 import android.app.ActivityManagerNative;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -33,6 +36,7 @@ public abstract class BaseToggle
 
     protected int mStyle;
 
+    private boolean mCollapsePref;
     private Drawable mIconDrawable = null;
     private int mIconLevel = -1;
     private CharSequence mLabelText = null;
@@ -42,6 +46,8 @@ public abstract class BaseToggle
     protected TextView mLabel = null;
     protected ImageView mIcon = null;
     private int mIconId = -1;
+
+    private SettingsObserver mObserver = null;
 
     protected ArrayList<BroadcastReceiver> mRegisteredReceivers = new ArrayList<BroadcastReceiver>();
 
@@ -60,6 +66,8 @@ public abstract class BaseToggle
         mContext = c;
         mStyle = style;
         mHandler = new Handler();
+        mObserver = new SettingsObserver(mHandler);
+        mObserver.observe();
         setTextSize(ToggleManager.getTextSize(mContext));
         scheduleViewUpdate();
     }
@@ -110,6 +118,15 @@ public abstract class BaseToggle
     @Override
     public boolean onLongClick(View v) {
         return true;
+    }
+
+    /* Called by StateFullToggle
+     * Grant elsewhere if user should have a choice
+     */
+    protected final void collapseShadePref() {
+        if (mCollapsePref) {
+            collapseStatusBar();
+        }
     }
 
     protected final void collapseStatusBar() {
@@ -258,5 +275,33 @@ public abstract class BaseToggle
 
     protected static void log(String msg, Exception e) {
         ToggleManager.log(msg, e);
+    }
+
+    private void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        mCollapsePref = Settings.System.getBoolean(resolver,
+                Settings.System.SHADE_COLLAPSE_ALL, false);
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.SHADE_COLLAPSE_ALL),
+                    false, this);
+
+            updateSettings();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
     }
 }
