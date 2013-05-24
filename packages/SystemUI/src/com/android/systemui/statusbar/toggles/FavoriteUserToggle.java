@@ -77,9 +77,7 @@ public class FavoriteUserToggle extends BaseToggle {
                     lookupKey);
             Uri res = ContactsContract.Contacts.lookupContact(mContext.getContentResolver(),
                     lookupUri);
-            Intent intent = ContactsContract.QuickContact.composeQuickContactsIntent(
-                    mContext, v, res,
-                    ContactsContract.QuickContact.MODE_LARGE, null);
+            Intent intent = new Intent(Intent.ACTION_VIEW, res);
             mContext.startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
         }
     }
