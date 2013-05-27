@@ -1047,7 +1047,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } catch (RemoteException ex) { }
 
         mDisableOverlays = updateFlingerOptions();
-        updateHWOverlays();
         updateHybridLayout();
 
         mSettingsObserver = new SettingsObserver(mHandler);
