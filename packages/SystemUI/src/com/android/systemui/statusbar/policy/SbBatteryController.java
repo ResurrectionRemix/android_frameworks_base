@@ -235,7 +235,7 @@ public class SbBatteryController extends LinearLayout {
                 Settings.System.STATUSBAR_BATTERY_ICON, 0);
         mFontSize = Settings.System.getInt(cr,
                 Settings.System.STATUSBAR_FONT_SIZE, mStockFontSize);
-<<<<<<< HEAD
+
 
         int width = StatusBarHelpers.getIconWidth(mContext, mFontSize);
         mBatteryIcon.getLayoutParams().width = width;
