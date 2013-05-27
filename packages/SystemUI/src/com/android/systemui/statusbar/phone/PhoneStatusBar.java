@@ -2657,9 +2657,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         mNaturalBarHeight = (int) (fontSizepx + padding);
         // Set the Bar height to the size of the font plus padding.
 
-
-        int newIconSize = mNaturalBarHeight - (toppadding + bottompadding);
-
         int newIconSize = StatusBarHelpers.getIconWidth(mContext, mFontSize);
 
 
