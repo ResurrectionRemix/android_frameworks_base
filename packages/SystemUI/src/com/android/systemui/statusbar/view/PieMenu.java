@@ -656,6 +656,7 @@ public class PieMenu extends FrameLayout {
         int itemCount = mItems.size();
         if (!mPanel.currentAppUsesMenu() && !mUseMenuAlways) itemCount--;
         if (!mUseSearch) itemCount--;
+        if (!mUseLastApp) itemCount--;
 
         int totalCount = 0;
         int lesserSweepCount = 0;
