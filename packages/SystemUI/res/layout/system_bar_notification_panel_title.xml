@@ -57,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.SystemBar.Expanded.Date"
+<<<<<<< HEAD
                 android:singleLine="true"
                 android:ellipsize="end"/>
                 >
@@ -80,6 +81,10 @@
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:text="@string/status_bar_settings_settings_button"/>
+=======
+                android:layout_toRightOf="@id/clock"
+		android:layout_centerVertical="true"/>
+>>>>>>> 6938349... SystemUI: Fix Tablet UI Date View
 
         </LinearLayout>
 
