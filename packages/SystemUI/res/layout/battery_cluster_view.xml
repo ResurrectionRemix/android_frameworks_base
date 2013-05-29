@@ -21,52 +21,58 @@
 <com.android.systemui.statusbar.policy.SbBatteryController
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/battery_cluster_view"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="wrap_content"
     android:orientation="horizontal">
     <FrameLayout
         android:id="@+id/battery_combo"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:paddingLeft="4dp">
 
         <ImageView
             android:id="@+id/battery"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:layout_gravity="right" />
+            android:scaleType="fitCenter"
+            android:layout_gravity="fill_vertical|right"
+            android:paddingTop="@dimen/status_bar_icon_top_padding"
+            android:paddingBottom="@dimen/status_bar_icon_bottom_padding" />
         <TextView
             android:id="@+id/battery_text"
             style="@style/Battery_Offset"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:visibility="gone" />
         <TextView
             android:id="@+id/battery_text_center"
             style="@style/Battery_Center"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:visibility="gone" />
         <TextView
             android:id="@+id/battery_text_only"
             android:textAppearance="@style/TextAppearance.StatusBar.BatteryTextOnly"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:singleLine="true"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:gravity="center" />
         <TextView
             android:id="@+id/battery_text_only_low"
             android:textAppearance="@style/TextAppearance.StatusBar.BatteryTextOnly_Low"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:singleLine="true"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:gravity="center" />
         <TextView
             android:id="@+id/battery_text_only_plugged"
             android:textAppearance="@style/TextAppearance.StatusBar.BatteryTextOnly_Plugged"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:singleLine="true"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:gravity="center" />
     </FrameLayout>
 </com.android.systemui.statusbar.policy.SbBatteryController>
