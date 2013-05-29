@@ -1254,7 +1254,6 @@
   <java-symbol type="dimen" name="navigation_bar_height_landscape" />
   <java-symbol type="dimen" name="navigation_bar_width" />
   <java-symbol type="dimen" name="status_bar_height" />
-  <java-symbol type="dimen" name="status_bar_padding" />
   <java-symbol type="dimen" name="kg_widget_pager_horizontal_padding" />
   <java-symbol type="dimen" name="kg_widget_pager_top_padding" />
   <java-symbol type="dimen" name="kg_widget_pager_bottom_padding" />
@@ -1735,8 +1734,6 @@
   <java-symbol type="anim" name="push_up_out" />
   <java-symbol type="bool" name="config_alwaysUseCdmaRssi" />
   <java-symbol type="dimen" name="status_bar_icon_size" />
-  <java-symbol type="dimen" name="status_bar_icon_top_padding" />
-  <java-symbol type="dimen" name="status_bar_icon_bottom_padding" />
   <java-symbol type="dimen" name="system_bar_icon_size" />
   <java-symbol type="drawable" name="list_selector_pressed_holo_dark" />
   <java-symbol type="drawable" name="scrubber_control_disabled_holo" />
