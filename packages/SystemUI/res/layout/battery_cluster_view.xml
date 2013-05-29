@@ -34,8 +34,11 @@
             android:id="@+id/battery"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
+<<<<<<< HEAD
             android:scaleType="fitXY"
+=======
             android:scaleType="fitCenter"
+>>>>>>> cb6489f... FW : Allow user selection of Font Size
             android:layout_gravity="fill_vertical|right"
             android:paddingTop="@dimen/status_bar_icon_top_padding"
             android:paddingBottom="@dimen/status_bar_icon_bottom_padding" />
