@@ -107,7 +107,9 @@
                 android:layout_gravity="fill_vertical"
                 android:scaleType="fitCenter"
                 android:paddingTop="@dimen/status_bar_icon_top_padding"
-                android:paddingBottom="@dimen/status_bar_icon_bottom_padding"/>
+                android:paddingBottom="@dimen/status_bar_icon_bottom_padding"
+                android:scaleType="fitCenter"
+                android:layout_gravity="fill_vertical"/>
                 
             <com.android.systemui.statusbar.policy.SignalText
                 android:id="@+id/signal_text"

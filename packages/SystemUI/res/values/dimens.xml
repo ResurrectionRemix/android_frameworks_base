@@ -72,6 +72,13 @@
 
     <!-- Height of notification icons in the status bar -->
     <dimen name="status_bar_icon_size">@*android:dimen/status_bar_icon_size</dimen>
+
+    <!-- StatusBar Icon size is now dynamically scaled. As Such, we need to specify some padding -->
+    <!-- These are for System Icons -->
+    <dimen name="status_bar_icon_top_padding">3dp</dimen>
+    <dimen name="status_bar_icon_bottom_padding">3dp</dimen>
+
+
     <dimen name="status_bar_icon_top_padding">@*android:dimen/status_bar_icon_top_padding</dimen>
     <dimen name="status_bar_icon_bottom_padding">@*android:dimen/status_bar_icon_bottom_padding</dimen>
 
