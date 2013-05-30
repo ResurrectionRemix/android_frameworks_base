@@ -75,6 +75,7 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
@@ -272,6 +273,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     WindowState mStatusBar = null;
     boolean mHasSystemNavBar;
     int mStatusBarHeight;
+    int mFontSize;
     WindowState mNavigationBar = null;
     boolean mHasNavigationBar = false;
     boolean mNavBarAutoHide = false;
@@ -642,6 +644,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.NAVIGATION_BAR_HEIGHT_LANDSCAPE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVIGATION_BAR_WIDTH), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_FONT_SIZE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.USER_UI_MODE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1140,8 +1144,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
 
-        mStatusBarHeight = mContext.getResources().getDimensionPixelSize(
+        mFontSize = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUSBAR_FONT_SIZE, -1);
+        if (mFontSize == -1) { // No custom Font Size - so obey @dimen
+            mStatusBarHeight = mContext.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.status_bar_height);
+        } else { // Custom Font size, so let's adjust Statusbar Height
+            float fontSizepx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mFontSize,
+                    mContext.getResources().getDisplayMetrics());
+            int padding = mContext.getResources().getDimensionPixelSize(
+                    com.android.internal.R.dimen.status_bar_padding);
+            mStatusBarHeight = (int) (fontSizepx + padding);
+            // This gives the StatusBar room for the Font, plus a little padding.
+        }
 
         // Height of the navigation bar when presented horizontally at bottom
         mNavigationBarHeightForRotation[mPortraitRotation] =
@@ -1378,6 +1393,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         if (NavHide != mNavBarAutoHide && mUserUIMode != 1) {
             mNavBarAutoHide = NavHide;
+            resetScreenHelper();
+        }
+        int fontSize = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_FONT_SIZE, -1);
+        if (fontSize != mFontSize) {
+            mFontSize = fontSize;
             resetScreenHelper();
         }
     }

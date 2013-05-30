@@ -994,16 +994,16 @@
     <string name="year" msgid="4001118221013892076">"г."</string>
     <string name="years" msgid="6881577717993213522">"г."</string>
   <plurals name="duration_seconds">
-    <item quantity="one" msgid="6962015528372969481">"1 сек."</item>
-    <item quantity="other" msgid="1886107766577166786">"<xliff:g id="COUNT">%d</xliff:g> сек."</item>
+    <item quantity="one" msgid="6962015528372969481">"1 сек."</item>
+    <item quantity="other" msgid="1886107766577166786">"<xliff:g id="COUNT">%d</xliff:g> сек."</item>
   </plurals>
   <plurals name="duration_minutes">
-    <item quantity="one" msgid="4915414002546085617">"1 мин."</item>
-    <item quantity="other" msgid="3165187169224908775">"<xliff:g id="COUNT">%d</xliff:g> мин."</item>
+    <item quantity="one" msgid="4915414002546085617">"1 мин."</item>
+    <item quantity="other" msgid="3165187169224908775">"<xliff:g id="COUNT">%d</xliff:g> мин."</item>
   </plurals>
   <plurals name="duration_hours">
-    <item quantity="one" msgid="8917467491248809972">"1 ч."</item>
-    <item quantity="other" msgid="3863962854246773930">"<xliff:g id="COUNT">%d</xliff:g> ч."</item>
+    <item quantity="one" msgid="8917467491248809972">"1 ч."</item>
+    <item quantity="other" msgid="3863962854246773930">"<xliff:g id="COUNT">%d</xliff:g> ч."</item>
   </plurals>
     <string name="VideoView_error_title" msgid="3534509135438353077">"Ошибка"</string>
     <string name="VideoView_error_text_invalid_progressive_playback" msgid="3186670335938670444">"Это видео не предназначено для потокового воспроизведения на данном устройстве."</string>
@@ -1428,7 +1428,7 @@
     <string name="kg_sim_unlock_progress_dialog_message" msgid="8950398016976865762">"Разблокировка SIM-карты…"</string>
     <string name="kg_password_wrong_pin_code" msgid="1139324887413846912">"Неверный PIN-код."</string>
     <string name="kg_invalid_sim_pin_hint" msgid="8795159358110620001">"Введите PIN-код (от 4 до 8 цифр)."</string>
-    <string name="kg_invalid_sim_puk_hint" msgid="7553388325654369575">"PUK-код должен содержать не менее 8 символов."</string>
+    <string name="kg_invalid_sim_puk_hint" msgid="7553388325654369575">"PUK-код должен содержать не менее 8 символов."</string>
     <string name="kg_invalid_puk" msgid="3638289409676051243">"Введите правильный PUK-код. После нескольких неудачных попыток SIM-карта будет заблокирована."</string>
     <string name="kg_invalid_confirm_pin_hint" product="default" msgid="7003469261464593516">"PIN-коды не совпадают"</string>
     <string name="kg_login_too_many_attempts" msgid="6486842094005698475">"Слишком много попыток ввода графического ключа"</string>
@@ -1456,4 +1456,64 @@
     <string name="enable_accessibility_canceled" msgid="3833923257966635673">"Специальные возможности не будут включены."</string>
     <string name="user_switched" msgid="3768006783166984410">"Выбран аккаунт пользователя <xliff:g id="NAME">%1$s</xliff:g>."</string>
     <string name="owner_name" msgid="2716755460376028154">"Владелец"</string>
+    <string name="global_action_screenshot">Снимок экрана</string>
+    <string name="global_action_torch">Фонарь</string>
+    <string name="global_actions_toggle_navbar_hide">Управление навигацией и строкой состояния</string>
+    <string name="permlab_accessSuperuser">полный доступ ко всем функциям и памяти устройства</string>
+    <string name="permdesc_accessSuperuser">Суперпользователь предоставляет полный доступ ко всем функциям и памяти устройства, включая защищенные и чувчтвительные элементы оборудования. Это разрешение потенциально опасно.</string>
+    <string name="permlab_preventpower">не реагировать на кнопку питания</string>
+    <string name="permdesc_preventpower">Позволяет приложению не реагировать на кнопку питания</string>
+    <string name="permlab_fm_radio_receiver">управление FM приёмником</string>
+    <string name="permdesc_fm_radio_receiver">Приложение сможет контролировать FM приёмник.</string>
+    <string name="permlab_fm_radio_transmitter">управление FM передатчиком</string>
+    <string name="permdesc_fm_radio_transmitter">Приложение сможет контролировать FM передатчик.</string>
+    <string name="permlab_revokePermissions">Приложение сможет просматривать и редактировать отозванные разрешения. Это разрешение не используется обычными приложениями.</string>
+    <string name="permdesc_revokePermissions">Приложение сможет считывать и записывать отозванные разрешения. Это разрешение не используется обычными приложениями.</string>
+    <string name="lockscreen_always_battery">Разряжается, %d%%</string>
+    <string name="lockscreen_always_low_battery">Подключите зарядное устройство, %d%%</string>
+    <string name="reset_perms">Восстановить разрешения</string>
+    <string name="network_available_sign_in_detailed">%1$s</string>
+    <string name="locale_replacement">"[пустая строка]"</string>
+    <string name="alternate_eri_file">/data/eri.xml</string>
+    <string name="app_killed_message">Приложение завершено</string>
+    <string name="reboot">Перезагрузка</string>
+    <string name="reboot_recovery">Рекавери</string>
+    <string name="reboot_download">Загрузка</string>
+    <string name="reboot_bootloader">Загрузчик</string>
+    <string name="reboot_progress">Ваше устройство перезагружается</string>
+    <string name="vibration_picker_title">Выбрать вибрацию</string>
+    <string name="vibration_picker_del_title">Удалить вибрацию</string>
+    <string name="notify_turn_wifi_off_title">Выключить Wi-Fi</string>
+    <string name="notify_turn_wifi_ap_off_title">Выключить точку доступа Wi-Fi</string>
+    <string name="toast_rotation_unlocked">Автоповорот вкл</string>
+    <string name="toast_rotation_locked">Автоповорот выкл</string>
+    <string name="action_home">Домой</string>
+    <string name="action_back">Назад</string>
+    <string name="action_recents">Недавние</string>
+    <string name="action_recents_gb">Недавние (GB стиль)</string>
+    <string name="action_search">Поиск</string>
+    <string name="action_screenshot">Снимок экрана</string>
+    <string name="action_menu">Меню</string>
+    <string name="action_ime">Переключатель IME</string>
+    <string name="action_kill">Завершить задачу</string>
+    <string name="action_lastapp">Последнее прил.</string>
+    <string name="action_power">Питание</string>
+    <string name="action_notifications">Уведомления</string>
+    <string name="action_assist">Поиск (Google Now)</string>
+    <string name="action_clockoptions">Опции часов</string>
+    <string name="action_voiceassist">Голосовой поиск</string>
+    <string name="action_torch">Фонарь</string>
+    <string name="action_silent">Звук/без звука</string>
+    <string name="action_vib">Звук/вибрация</string>
+    <string name="action_silent_vib">Звук/вибрация/без звука</string>
+    <string name="action_event">Событие</string>
+    <string name="action_today">Сегодня</string>
+    <string name="action_alarm">Будильник</string>
+    <string name="action_unlock">Разблокировать</string>
+    <string name="action_camera">Камера</string>
+    <string name="action_null">Пусто</string>
+    <string name="action_widgets">Виджеты нав.панели</string>
+    <string name="action_app_window">Окно приложения</string>
+    <string name="action_ribbon">Лента AOKP</string>
+    <string name="action_app">Свое приложение/ярлык</string>
 </resources>

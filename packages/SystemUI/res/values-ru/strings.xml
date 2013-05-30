@@ -207,4 +207,114 @@
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"АВТОНАСТРОЙКА"</string>
     <string name="status_bar_help_title" msgid="1199237744086469217">"Это панель уведомлений"</string>
     <string name="status_bar_help_text" msgid="7874607155052076323">"Ее можно открыть, пролистнув экран вниз."\n"Чтобы открыть настройки, проведите пальцем вниз ещё раз."</string>
+    <string name="permdesc_screenshot">Сделать снимок экрана</string>
+    <string name="permlab_screenshot">Позволяет приложению использовать снимок экрана. Защищено SystemUI.</string>
+    <string name="accessibility_data_connection_HP">HSPA+</string>
+    <string name="accessibility_battery_level">Батарея %d процентов.</string>
+    <string name="quick_settings_battery_charged_label">Заряжено</string>
+    <string name="quick_settings_swagger">Swagger</string>
+    <string name="quick_settings_swaggersun">Swagger воскресенье</string>
+    <string name="quick_settings_fbgt">FBGT</string>
+    <string name="quick_settings_recording">Запись...</string>
+    <string name="quick_settings_recordingcap">Запись выполнена</string>
+    <string name="quick_settings_playing">Воспроизведение...</string>
+    <string name="quick_settings_quickrecord">Быстрая запись</string>
+    <string name="quick_settings_nofile">Длит. нажатие для записи</string>
+    <string name="quick_settings_sleep">Сон</string>
+    <string name="quick_settings_reboot">Перезагрузка</string>
+    <string name="quick_settings_reboot_message">Ваше устройство перезагружается</string>
+    <string name="quick_settings_stayawake_on">Бодрств.вкл</string>
+    <string name="quick_settings_stayawake_off">Бодрств.выкл</string>
+    <string name="close">Закрыть</string>
+    <string name="app_window">Приложения</string>
+    <string name="shortcut_label">Действия AOKP</string>
+    <string name="action_home">Домой</string>
+    <string name="action_back">Назад</string>
+    <string name="action_recents">Недавние</string>
+    <string name="action_screenshot">Снимок экрана</string>
+    <string name="action_menu">Меню</string>
+    <string name="action_ime">Переключатель IME</string>
+    <string name="action_kill">Завершить задачу</string>
+    <string name="action_power">Питание</string>
+    <string name="action_search">Поиск</string>
+    <string name="action_notifications">Уведомления</string>
+    <string name="action_lastapp">Посл.приложение</string>
+    <string name="action_none">Пусто</string>
+    <string name="widgets">Виджеты</string>
+    <string name="toggle_navbar">Переключение нав.панели</string>
+    <string name="toggle_statusbar">Переключение стр.состояния</string>
+    <string name="toggle_widgets">Переключение виджетов</string>
+    <string name="toggle_ring_vib">Переключение звук/вибр</string>
+    <string name="toggle_ring_silent">Переключение звук/без звука</string>
+    <string name="toggle_ring_vib_silent">Переключение звук/вибр/без звука</string>
+    <string name="app_killed_message">Приложение завершено</string>
+    <string name="recents_kill_all_button_text">Заверш.всё</string>
+    <string name="screenshot_toast">Снимок экрана через %1$d с</string>
+    <string name="quick_settings_vibrate_on_label">Вибр.вкл</string>
+    <string name="quick_settings_vibrate_off_label">Вибр.выкл</string>
+    <string name="quick_settings_silent_on_label">Без зв.вкл</string>
+    <string name="quick_settings_silent_off_label">Без зв.выкл</string>
+    <string name="quick_settings_fcharge_on_label">Быстр.зар.вкл</string>
+    <string name="quick_settings_fcharge_off_label">Быстр.зар.выкл</string>
+    <string name="quick_settings_torch_on_label">Фонарь вкл</string>
+    <string name="quick_settings_torch_off_label">Фонарь выкл</string>
+    <string name="quick_settings_nfc_on_label">NFC вкл</string>
+    <string name="quick_settings_nfc_off_label">NFC выкл</string>
+    <string name="quick_settings_wifi_tether_on_label">Модем Wifi вкл</string>
+    <string name="quick_settings_wifi_tether_off_label">Модем Wifi выкл</string>
+    <string name="quick_settings_bt_tether_on_label">Модем BT вкл</string>
+    <string name="quick_settings_bt_tether_off_label">Модем BT выкл</string>
+    <string name="quick_settings_usb_tether_on_label">Модем USB вкл</string>
+    <string name="quick_settings_usb_tether_off_label">Модем USB выкл</string>
+    <string name="quick_settings_sync_on_label">Синхр.вкл</string>
+    <string name="quick_settings_sync_off_label">Синхр.выкл</string>
+    <string name="quick_settings_twog_on_label">2g вкл</string>
+    <string name="quick_settings_twog_off_label">2g выкл</string>
+    <string name="quick_settings_lte_on_label">LTE вкл</string>
+    <string name="quick_settings_lte_off_label">LTE выкл</string>
+    <string name="quick_settings_gps_on_label">GPS вкл</string>
+    <string name="quick_settings_gps_off_label">GPS выкл</string>
+    <string name="quick_settings_data_on_label">Моб.данные вкл</string>
+    <string name="quick_settings_data_off_label">Моб.данные выкл</string>
+    <string name="quick_settings_navbar_hide_on_label">Скрыт.навиг.вкл</string>
+    <string name="quick_settings_navbar_hide_off_label">Скрыт.навиг.выкл</string>
+    <string name="quick_settings_quiet_hours_on_label">Тих.часы вкл</string>
+    <string name="quick_settings_quiet_hours_off_label">Тих.часы выкл</string>
+    <string name="quick_settings_sound_on">Звук вкл</string>
+    <string name="quick_settings_statusbar_on_label">Строка сост.вкл</string>
+    <string name="quick_settings_statusbar_off_label">Строка сост.выкл</string>
+    <string name="quick_settings_swaggersuntoast">#SwaggerВоскресенье</string>
+    <string name="quick_settings_screenshot">Снимок экрана</string>
+
+    <!--  RamBar -->
+    <string name="memory">RAM</string>
+    <!-- [CHAR LIMIT=10] Running services, summary of background processes -->
+    <string name="service_background_processes"><xliff:g id="memory">%1$s</xliff:g> свободно</string>
+    <!-- [CHAR LIMIT=10] Running services, summary of foreground processes -->
+    <string name="service_foreground_processes"><xliff:g id="memory">%1$s</xliff:g> занято</string>
+    <!-- Text to label a process entry with the process name. -->
+    <string name="service_process_name"><xliff:g id="process">%1$s</xliff:g></string>
+    <!-- Running services, description for a service in the started state -->
+    <string name="service_client_name"><xliff:g id="client_name">%1$s</xliff:g></string>
+    <!-- Running services, description for a service in the started state -->
+    <string name="service_started_by_app">Запущено прилож.</string>
+    <!-- Descriptive text of a running process: singular process, singular service. -->
+    <string name="running_processes_item_description_s_s"><xliff:g id="numprocess">%1$d</xliff:g>
+        процесс и <xliff:g id="numservices">%2$d</xliff:g> служба</string>
+    <!-- Descriptive text of a running process: singular process, plural service. -->
+    <string name="running_processes_item_description_s_p"><xliff:g id="numprocess">%1$d</xliff:g>
+        процесс и <xliff:g id="numservices">%2$d</xliff:g> служб</string>
+     <!-- Descriptive text of a running process: plural process, singular service. -->
+    <string name="running_processes_item_description_p_s"><xliff:g id="numprocess">%1$d</xliff:g>
+        процессов и <xliff:g id="numservices">%2$d</xliff:g> служба</string>
+    <!-- Descriptive text of a running process: plural process, plural service. -->
+    <string name="running_processes_item_description_p_p"><xliff:g id="numprocess">%1$d</xliff:g>
+        процессов и <xliff:g id="numservices">%2$d</xliff:g> служб</string>
+    <!-- [CHAR LIMIT=NONE] Label of a running process that represents another user -->
+    <string name="running_process_item_user_label">Пользователь: <xliff:g id="user_name">%1$s</xliff:g></string>
+
+    <string name="quick_settings_adb_on"><xliff:g id="ip" example="192.168.1.5">%s</xliff:g></string>
+    <string name="quick_settings_adb_off">Wireless ADB выкл</string>
+    <string name="toggles">Переключатели</string>
+    <string name="ribbon">Лента</string>
 </resources>

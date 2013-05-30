@@ -1840,6 +1840,17 @@ public final class Settings {
          */
         public static final String AUTO_BRIGHTNESS_BACKLIGHT = "auto_brightness_backlight";
 
+        /**
+         * Correction factor for auto-brightness adjustment light sensor
+         * debounce times.
+         * Smaller factors will make the adjustment more responsive, but might
+         * cause flicker and/or cause higher CPU usage.
+         * Valid range is 0.2 ... 3
+         *
+         * @hide
+         */
+        public static final String AUTO_BRIGHTNESS_RESPONSIVENESS = "auto_brightness_responsiveness";
+
          /**
           * Determines which streams are affected by mute. The
           * stream type's bit should be set to 1 if it should be muted when a mute request
@@ -2475,6 +2486,12 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_CLOCK_WEEKDAY = "statusbar_clock_weekday";
+
+        /**
+         * This should be an Int representing the Font Size in SP.
+         * @hide
+        */
+        public static final String STATUSBAR_FONT_SIZE = "statusbar_font_size";
 
         /**
          * Show the pending notification counts as overlays on the statusbar
@@ -3613,17 +3630,6 @@ public final class Settings {
             "custom_toggle_icons_2",
             "custom_toggle_icons_3",
             "custom_toggle_icons_4",
-        };
-
-        /**
-         * @hide
-         */
-        public static final String[] CUSTOM_TOGGLE_TEXT = new String[] {
-            "custom_toggle_text_0",
-            "custom_toggle_text_1",
-            "custom_toggle_text_2",
-            "custom_toggle_text_3",
-            "custom_toggle_text_4",
         };
 
         /**
@@ -5809,24 +5815,6 @@ public final class Settings {
         public static final String POWER_SOUNDS_ENABLED = "power_sounds_enabled";
 
         /**
-         * Whether to sound when charger power is connected/disconnected
-         * @hide
-         */
-        public static final String POWER_NOTIFICATIONS_ENABLED = "power_notifications_enabled";
-
-        /**
-         * Whether to vibrate when charger power is connected/disconnected
-         * @hide
-         */
-        public static final String POWER_NOTIFICATIONS_VIBRATE = "power_notifications_vibrate";
-
-        /**
-         * URI for power notification sounds
-         * @hide
-         */
-        public static final String POWER_NOTIFICATIONS_RINGTONE = "power_notifications_ringtone";
-
-        /**
          * URI for the "wireless charging started" sound.
          * @hide
          */
@@ -6895,9 +6883,6 @@ public final class Settings {
             AUTO_TIME,
             AUTO_TIME_ZONE,
             POWER_SOUNDS_ENABLED,
-            POWER_NOTIFICATIONS_ENABLED,
-            POWER_NOTIFICATIONS_VIBRATE,
-            POWER_NOTIFICATIONS_RINGTONE,
             DOCK_SOUNDS_ENABLED,
             USB_MASS_STORAGE_ENABLED,
             ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED,

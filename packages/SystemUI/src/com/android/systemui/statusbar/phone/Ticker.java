@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.StaticLayout;
 import android.text.Layout.Alignment;
 import android.text.TextPaint;
@@ -28,6 +29,7 @@ import android.util.Slog;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ImageSwitcher;
@@ -40,6 +42,7 @@ import com.android.internal.util.CharSequences;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.StatusBarIconView;
+import com.android.internal.util.aokp.StatusBarHelpers;
 
 public abstract class Ticker {
     private static final int TICKER_SEGMENT_DELAY = 3000;
@@ -158,6 +161,7 @@ public abstract class Ticker {
     public Ticker(Context context, View sb) {
         mContext = context;
         final Resources res = context.getResources();
+        // this dimension may not be the right size.  However, this is only for calculating scale, so won't matter
         final int outerBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = res.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
         mIconScale = (float)imageBounds / (float)outerBounds;
@@ -169,6 +173,7 @@ public abstract class Ticker {
                     AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_in));
         mIconSwitcher.setOutAnimation(
                     AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_out));
+        // Let's let the base image attributes decide scaling.
         mIconSwitcher.setScaleX(mIconScale);
         mIconSwitcher.setScaleY(mIconScale);
 
@@ -179,8 +184,18 @@ public abstract class Ticker {
                     AnimationUtils.loadAnimation(context, com.android.internal.R.anim.push_up_out));
 
         // Copy the paint style of one of the TextSwitchers children to use later for measuring
-        TextView text = (TextView)mTextSwitcher.getChildAt(0);
+        TextView text = (TextView) mTextSwitcher.getChildAt(0);
         mPaint = text.getPaint();
+        int stockFontSize = StatusBarHelpers.pixelsToSp(mContext,
+                text.getTextSize());
+        int fontSize = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUSBAR_FONT_SIZE,0);
+        // If custom fonSize is set, then need to reduce by 2 to keep stock look/feel
+        // if no custom size is set, then stay with what was set by layout/style.
+        fontSize = (fontSize == 0 ? stockFontSize : fontSize -2);
+        text.setTextSize(fontSize);
+        text = (TextView) mTextSwitcher.getChildAt(1);
+        text.setTextSize(fontSize);
     }
 
 

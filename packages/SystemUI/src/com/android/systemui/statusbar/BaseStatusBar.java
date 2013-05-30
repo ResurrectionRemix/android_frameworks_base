@@ -941,7 +941,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         final StatusBarIconView iconView = new StatusBarIconView(mContext,
                 notification.pkg + "/0x" + Integer.toHexString(notification.id),
                 notification.notification);
-        iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         final StatusBarIcon ic = new StatusBarIcon(notification.pkg,
                     notification.user,

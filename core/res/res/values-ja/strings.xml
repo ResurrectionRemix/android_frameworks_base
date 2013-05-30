@@ -1526,6 +1526,22 @@
     <string name="toast_rotation_unlocked">画面の自動回転を有効にしました</string>
     <string name="toast_rotation_locked">画面の向きをロックしました</string>
 
+    <!-- Animation Strings -->
+    <string name="animation_fade">フェード</string>
+    <string name="animation_slide_right">右にスライド</string>
+    <string name="animation_slide_left">左にスライド</string>
+    <string name="animation_slide_right_no_fade">右にスライド (フェードなし)</string>
+    <string name="animation_slide_left_no_fade">左にスライド (フェードなし)</string>
+    <string name="animation_slide_up">下にスライド</string>
+    <string name="animation_slide_down">上にスライド</string>
+    <string name="animation_default">デフォルト</string>
+    <string name="animation_translucent">半透明</string>
+    <string name="animation_grow_shrink">拡大縮小 (上)</string>
+    <string name="animation_grow_shrink_center">拡大縮小 (中央)</string>
+    <string name="animation_grow_shrink_bottom">拡大縮小 (下)</string>
+    <string name="animation_grow_shrink_left">拡大縮小 (左)</string>
+    <string name="animation_grow_shrink_right">拡大縮小 (右)</string>
+
     <!-- Awesome Action Stuff-->
     <string name="action_home">ホーム</string>
     <string name="action_back">戻る</string>

@@ -1473,6 +1473,22 @@
     <string name="lockscreen_always_battery">Vybíjení, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
     <string name="lockscreen_always_low_battery">Připojte dobíjecí zařízení, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
     <string name="global_actions_toggle_navbar_hide">Ovládání navigační a stavové lišty</string>
+    <!-- Animation Strings -->
+    <string name="animation_fade">Slábnutí</string>
+    <string name="animation_slide_right">Zasunutí vpravo</string>
+    <string name="animation_slide_left">Zasunutí vlevo</string>
+    <string name="animation_slide_right_no_fade">Zasunutí vpravo (bez slábnutí)</string>
+    <string name="animation_slide_left_no_fade">Zasunutí vlevo (bez slábnutí)</string>
+    <string name="animation_slide_up">Zasunutí dospod</string>
+    <string name="animation_slide_down">Zasunutí navrch</string>
+    <string name="animation_default">Výchozí</string>
+    <string name="animation_translucent">Průhledná</string>
+    <string name="animation_grow_shrink">Růst (navrch)</string>
+    <string name="animation_grow_shrink_center">Růst (na střed)</string>
+    <string name="animation_grow_shrink_bottom">Růst (dospod)</string>
+    <string name="animation_grow_shrink_left">Růst (vlevo)</string>
+    <string name="animation_grow_shrink_right">Růst (vpravo)</string>
+
     <!-- Awesome Action Stuff-->
     <string name="action_home">Domů</string>
     <string name="action_back">Zpět</string>

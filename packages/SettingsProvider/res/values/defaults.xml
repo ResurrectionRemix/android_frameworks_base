@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 -->
-<resources>   
+<resources>
     <bool name="def_dim_screen">true</bool>
     <integer name="def_screen_off_timeout">60000</integer>
     <bool name="def_airplane_mode_on">false</bool>
@@ -76,10 +76,6 @@
     <string name="def_lock_sound" translatable="false">/system/media/audio/ui/Lock.ogg</string>
     <string name="def_unlock_sound" translatable="false">/system/media/audio/ui/Unlock.ogg</string>
     <string name="def_wireless_charging_started_sound" translatable="false">/system/media/audio/ui/WirelessChargingStarted.ogg</string>
-
-    <bool name="def_power_notifications_enabled">false</bool>
-    <bool name="def_power_notifications_vibrate">false</bool>
-    <string name="def_power_notifications_ringtone" translatable="false">content://settings/system/notification_sound</string>
 
     <bool name="def_lockscreen_disabled">false</bool>
     <bool name="def_device_provisioned">false</bool>
