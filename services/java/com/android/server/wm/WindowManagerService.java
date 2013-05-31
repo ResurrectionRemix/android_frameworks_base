@@ -10237,7 +10237,10 @@ public class WindowManagerService extends IWindowManager.Stub
         return mPolicy.hasMenuKeyEnabled();
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> 45b6edf... Detect whether overflow button should be shown based on menu key state
     public void lockNow(Bundle options) {
         mPolicy.lockNow(options);
     }

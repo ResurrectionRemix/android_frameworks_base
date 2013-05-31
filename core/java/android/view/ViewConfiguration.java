@@ -691,7 +691,11 @@ public class ViewConfiguration {
         IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
         // Report no menu key if device has soft buttons
         try {
+<<<<<<< HEAD
             if (wm.hasNavigationBar()) {
+=======
+            if (wm.hasSystemNavBar() || wm.hasNavigationBar()) {
+>>>>>>> 45b6edf... Detect whether overflow button should be shown based on menu key state
                 return false;
             }
         } catch (RemoteException ex) {
