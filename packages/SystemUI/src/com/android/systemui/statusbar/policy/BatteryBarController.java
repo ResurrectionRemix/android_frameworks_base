@@ -17,22 +17,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 public class BatteryBarController extends LinearLayout {
 
     private static final String TAG = "BatteryBarController";
 
     BatteryBar mainBar;
     BatteryBar alternateStyleBar;
-    SettingsObserver mSettingsObserver;
+    GlobalSettingsObserver mSettingsObserver;
 
     public static final int STYLE_REGULAR = 0;
     public static final int STYLE_SYMMETRIC = 1;
 
-    int mStyle = STYLE_REGULAR;
-    int mLocation = 0;
+    static int mStyle = STYLE_REGULAR;
+    static int mLocation = 0;
 
     protected final static int CURRENT_LOC = 1;
-    int mLocationToLookFor = 0;
+    static int mLocationToLookFor = 0;
 
     private int mBatteryLevel = 0;
     private boolean mBatteryCharging = false;
@@ -40,13 +42,38 @@ public class BatteryBarController extends LinearLayout {
     boolean isAttached = false;
     boolean isVertical = false;
 
-    class SettingsObserver extends ContentObserver {
+    static class GlobalSettingsObserver extends ContentObserver {
+        private static GlobalSettingsObserver sInstance;
+        private ArrayList<BatteryBarController> mBatteryBarControllers = new ArrayList<BatteryBarController>();
+        private Context mContext;
 
-        public SettingsObserver(Handler handler) {
+        public GlobalSettingsObserver(Handler handler, Context context) {
             super(handler);
+            mContext = context.getApplicationContext();
         }
 
-        void observer() {
+        static GlobalSettingsObserver getInstance(Context context) {
+            if (sInstance == null) {
+                sInstance = new GlobalSettingsObserver(new Handler(), context);
+            }
+            return sInstance;
+        }
+
+        void attach(BatteryBarController bbc) {
+            if (mBatteryBarControllers.isEmpty()) {
+                observe();
+            }
+            mBatteryBarControllers.add(bbc);
+        }
+
+        void detach(BatteryBarController bbc) {
+            mBatteryBarControllers.remove(bbc);
+            if (mBatteryBarControllers.isEmpty()) {
+                unobserve();
+            }
+        }
+
+        void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.STATUSBAR_BATTERY_BAR), false, this);
@@ -58,9 +85,31 @@ public class BatteryBarController extends LinearLayout {
                     false, this);
         }
 
+        void unobserve() {
+            mContext.getContentResolver().unregisterContentObserver(this);
+        }
+
         @Override
         public void onChange(boolean selfChange) {
-            updateSettings();
+            this.updateSettings();
+        }
+
+        void updateSettings() {
+            mStyle = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.STATUSBAR_BATTERY_BAR_STYLE, 0);
+            mLocation = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.STATUSBAR_BATTERY_BAR, 0);
+
+            for (BatteryBarController bbc : mBatteryBarControllers) {
+                if (mLocationToLookFor == mLocation) {
+                    bbc.removeBars();
+                    bbc.addBars();
+                    bbc.setVisibility(View.VISIBLE);
+                } else {
+                    bbc.removeBars();
+                    bbc.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
@@ -71,6 +120,7 @@ public class BatteryBarController extends LinearLayout {
             String ns = "http://schemas.android.com/apk/res/com.android.systemui";
             mLocationToLookFor = attrs.getAttributeIntValue(ns, "viewLocation", 0);
         }
+        mSettingsObserver = GlobalSettingsObserver.getInstance(context);
     }
 
     @Override
@@ -84,8 +134,7 @@ public class BatteryBarController extends LinearLayout {
             filter.addAction(Intent.ACTION_BATTERY_CHANGED);
             getContext().registerReceiver(mIntentReceiver, filter);
 
-            mSettingsObserver = new SettingsObserver(new Handler());
-            mSettingsObserver.observer();
+            mSettingsObserver.attach(this);
             updateSettings();
         }
     }
@@ -108,7 +157,7 @@ public class BatteryBarController extends LinearLayout {
         if (isAttached) {
             isAttached = false;
             removeBars();
-            getContext().getContentResolver().unregisterContentObserver(mSettingsObserver);
+            mSettingsObserver.detach(this);
         }
         super.onDetachedFromWindow();
     }

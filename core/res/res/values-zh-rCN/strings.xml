@@ -1490,6 +1490,23 @@
     <string name="toast_rotation_unlocked">屏幕方向自动旋转</string>
     <string name="toast_rotation_locked">屏幕方向已锁定</string>
 
+    <!-- Animation Strings -->
+    <string name="animation_fade">淡入淡出</string>
+    <string name="animation_slide_right">右侧滑动</string>
+    <string name="animation_slide_left">左侧滑动</string>
+    <string name="animation_slide_right_no_fade">右侧滑动（无淡入淡出）</string>
+    <string name="animation_slide_left_no_fade">左侧滑动（无淡入淡出）</string>
+    <string name="animation_slide_up">底部滑动</string>
+    <string name="animation_slide_down">顶部滑动</string>
+    <string name="animation_default">默认</string>
+    <string name="animation_translucent">透明</string>
+    <string name="animation_grow_shrink">缩放（顶部）</string>
+    <string name="animation_grow_shrink_center">缩放（中间）</string>
+    <string name="animation_grow_shrink_bottom">缩放（底部）</string>
+    <string name="animation_grow_shrink_left">缩放（左侧）</string>
+    <string name="animation_grow_shrink_right">缩放（右侧）</string>
+
+
     <!-- Awesome Action Stuff-->
     <string name="action_home">主屏幕</string>
     <string name="action_back">返回</string>

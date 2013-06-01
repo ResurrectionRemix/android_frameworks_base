@@ -2315,21 +2315,6 @@ public final class Settings {
         public static final String POWER_SOUNDS_ENABLED = Global.POWER_SOUNDS_ENABLED;
 
         /**
-         * Whether to sound when charger power is connected/disconnected	5265
-         * @hide
-		 */
-        public static final String POWER_NOTIFICATIONS_ENABLED = "power_notifications_enabled";
-        /**
-         * Whether to vibrate when charger power is connected/disconnected	5271
-         * @hide
-         */
-        public static final String POWER_NOTIFICATIONS_VIBRATE = "power_notifications_vibrate";
-        /**
-         * URI for power notification sounds
-         * @hide
-         */
-        public static final String POWER_NOTIFICATIONS_RINGTONE = "power_notifications_ringtone";
-        /**
          * @deprecated Use {@link android.provider.Settings.Global#DOCK_SOUNDS_ENABLED}
          * instead
          * @hide
@@ -2501,12 +2486,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_CLOCK_WEEKDAY = "statusbar_clock_weekday";
-
-        /**
-         * This should be an Int representing the Font Size in SP.
-         * @hide
-        */
-        public static final String STATUSBAR_FONT_SIZE = "statusbar_font_size";
 
         /**
          * Show the pending notification counts as overlays on the statusbar
@@ -3110,6 +3089,12 @@ public final class Settings {
             "lockscreen_targets_icon_6",
             "lockscreen_targets_icon_7",
         };
+
+        /**
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_GLOW_TORCH = "lockscreen_glow_torch";
 
         /**
          * Whether to use the custom quick unlock screen control
@@ -3718,9 +3703,6 @@ public final class Settings {
             SOUND_EFFECTS_ENABLED,
             HAPTIC_FEEDBACK_ENABLED,
             POWER_SOUNDS_ENABLED,       // moved to global
-            POWER_NOTIFICATIONS_ENABLED,
-            POWER_NOTIFICATIONS_VIBRATE,
-            POWER_NOTIFICATIONS_RINGTONE,
             DOCK_SOUNDS_ENABLED,        // moved to global
             LOCKSCREEN_SOUNDS_ENABLED,
             SHOW_WEB_SUGGESTIONS,
@@ -5513,13 +5495,6 @@ public final class Settings {
         public static final String UI_INVERTED_MODE = "ui_inverted_mode";
 
         /**
-         * force UI mode change for methods which are not observing
-         * UiModeManagerService
-         * @hide
-         */
-        public static final String UI_MODE_IS_TOGGLED = "ui_mode_is_toggled";
-
-        /**
          * Whether screensavers are enabled.
          * @hide
          */
@@ -5604,7 +5579,6 @@ public final class Settings {
             MOUNT_UMS_NOTIFY_ENABLED,
             UI_NIGHT_MODE,
             UI_INVERTED_MODE,
-            UI_MODE_IS_TOGGLED,
             LOCK_SCREEN_OWNER_INFO,
             LOCK_SCREEN_OWNER_INFO_ENABLED
         };

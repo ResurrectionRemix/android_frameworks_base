@@ -71,6 +71,7 @@ public class FavoriteUserToggle extends BaseToggle {
                 Settings.System.QUICK_TOGGLE_FAV_CONTACT);
 
         if (lookupKey != null && lookupKey.length() > 0) {
+            dismissKeyguard();
             collapseStatusBar();
             Uri lookupUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI,
                     lookupKey);

@@ -314,7 +314,7 @@ public class NavigationBarView extends LinearLayout {
                 if (v.getId() == R.id.back){
                     mBackIcon = v.getDrawable();
                 }
-                if (mNumberOfButtons == 3 && j != (mNumberOfButtons - 1)) {
+                if (mNumberOfButtons == 3 && j != (mNumberOfButtons - 1) && mCurrentUIMode != 2) {
                     // add separator view here
                     View separator = new View(mContext);
                     separator.setLayoutParams(getSeparatorLayoutParams(landscape));
@@ -338,7 +338,7 @@ public class NavigationBarView extends LinearLayout {
                     addButton(navButtonLayout, generateKey(landscape, KEY_ARROW_LEFT), !landscape);
                     addButton(navButtonLayout, generateKey(landscape, KEY_ARROW_RIGHT), landscape);
             }
-            if (mCurrentUIMode == 1) {
+            if (mCurrentUIMode == 1 || mCurrentUIMode == 2) {
                 // add spacer views to the outside edges to help with Glowscale cutoff
                 // We'll only do this for Tablet UI for now.  It was suffering the worst from
                 // glowscale cutoff.  I may add some user adjustable padding at a later date that

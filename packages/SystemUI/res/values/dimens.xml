@@ -72,8 +72,7 @@
 
     <!-- Height of notification icons in the status bar -->
     <dimen name="status_bar_icon_size">@*android:dimen/status_bar_icon_size</dimen>
-    <dimen name="status_bar_icon_top_padding">@*android:dimen/status_bar_icon_top_padding</dimen>
-    <dimen name="status_bar_icon_bottom_padding">@*android:dimen/status_bar_icon_bottom_padding</dimen>
+
     <!-- Height of a small notification in the status bar -->
     <dimen name="notification_min_height">64dp</dimen>
 
@@ -93,7 +92,7 @@
     <item type="dimen" name="status_bar_icon_drawing_alpha">65%</item>
 
     <!-- gap on either side of status bar notification icons -->
-    <dimen name="status_bar_icon_padding">4dp</dimen>
+    <dimen name="status_bar_icon_padding">0dp</dimen>
 
     <!-- half the distance between notifications in the panel -->
     <dimen name="notification_divider_height">3dp</dimen>

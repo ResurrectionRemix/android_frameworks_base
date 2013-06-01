@@ -355,15 +355,15 @@
              1  UI_MODE_TYPE_NORMAL
              4  UI_MODE_TYPE_TELEVISION
              5  UI_MODE_TYPE_APPLIANCE
-             69 UI_MODE_TYPE_INVERTED
          Any other values will have surprising consequences. -->
     <integer name="config_defaultUiModeType">1</integer>
 
-    <!-- Control the alternative UI mode type to use when UI mode is toggled
-         from framework.  One of the following values (See Configuration.java):
-             1  UI_MODE_TYPE_NORMAL
-             69 UI_MODE_TYPE_INVERTED -->
-    <integer name="config_alternativeUiModeType">69</integer>
+    <!-- Control the default inverted UI mode to use.
+         One of the following values (See Configuration.java):
+             1 UI_INVERTED_MODE_NORMAL (default)
+             2 UI_INVERTED_MODE_YES
+             3 UI_INVERTED_MODE_NO -->
+    <integer name="config_uiInvertedMode">1</integer>
 
     <!-- Control whether being in the desk dock (and powered) always
          keeps the screen on.  By default it stays on when plugged in to

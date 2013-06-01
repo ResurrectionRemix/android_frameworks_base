@@ -32,8 +32,6 @@
     <dimen name="toast_y_offset">64dip</dimen>
     <!-- Height of the status bar -->
     <dimen name="status_bar_height">25dip</dimen>
-    <!-- Padding of the status bar -->
-    <dimen name="status_bar_padding">9dip</dimen>
     <!-- Height of the bottom navigation / system bar. -->
     <dimen name="navigation_bar_height">48dp</dimen>
     <!-- Height of the bottom navigation bar in portrait; often the same as @dimen/navigation_bar_height -->
@@ -42,12 +40,6 @@
     <dimen name="navigation_bar_width">42dp</dimen>
     <!-- Height of notification icons in the status bar -->
     <dimen name="status_bar_icon_size">24dip</dimen>
-
-    <!-- StatusBar Icon size is now dynamically scaled. As Such, we need to specify some padding -->
-    <!-- These are for System Icons -->
-    <dimen name="status_bar_icon_top_padding">3dp</dimen>
-    <dimen name="status_bar_icon_bottom_padding">3dp</dimen>
-
     <!-- Size of the giant number (unread count) in the notifications -->
     <dimen name="status_bar_content_number_size">48sp</dimen>
     <!-- Height of the system bar (combined status & navigation); used by

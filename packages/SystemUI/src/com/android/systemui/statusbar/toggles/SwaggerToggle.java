@@ -27,6 +27,7 @@ public class SwaggerToggle extends BaseToggle implements OnTouchListener {
     @Override
     public void init(Context c, int style) {
         super.init(c, style);
+        updateClock();
         registerBroadcastReceiver(new BroadcastReceiver() {
 
             @Override
