@@ -64,15 +64,15 @@ public class AOKPLogoActivity extends Activity {
         TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
         tv.setTextSize(1.25f*size);
-        tv.setTextColor(0xFFFFFFFF);
+        tv.setTextColor(0xffff4444);
         tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
-        tv.setText("Android Open Kang Project");
+        tv.setText("Resurrection Remix");
         view.addView(tv, lp);
 
         tv = new TextView(this);
         if (normal != null) tv.setTypeface(normal);
         tv.setTextSize(size);
-        tv.setTextColor(0xFFFFFFFF);
+        tv.setTextColor(0xffff4444);
         tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
         tv.setText("");
         view.addView(tv, lp);
