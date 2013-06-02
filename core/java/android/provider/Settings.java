@@ -1195,12 +1195,11 @@ public final class Settings {
          * @return true if the value was set, false on database errors
          */
         public static boolean putArrayList(ContentResolver cr, String name, ArrayList<String> list) {
-            if (list != null && list.size() > 0) {
+            if (list.size() > 0) {
                 String joined = TextUtils.join("|",list);
                 return putString(cr, name, joined);
-            } else {
-                return putString(cr, name, "");
             }
+            return false;
         }
 
 
@@ -1208,11 +1207,9 @@ public final class Settings {
             String v = getString(cr, name);
             ArrayList<String> list = new ArrayList<String>();
             if (v != null) {
-                if (!v.isEmpty()){
-                    String[] split = v.split("\\|");
-                    for (String i : split) {
-                        list.add(i);
-                    }
+                String[] split = v.split("\\|");
+                for (String i : split) {
+                    list.add(i);
                 }
             }
             return list;
@@ -1840,17 +1837,6 @@ public final class Settings {
          */
         public static final String AUTO_BRIGHTNESS_BACKLIGHT = "auto_brightness_backlight";
 
-        /**
-         * Correction factor for auto-brightness adjustment light sensor
-         * debounce times.
-         * Smaller factors will make the adjustment more responsive, but might
-         * cause flicker and/or cause higher CPU usage.
-         * Valid range is 0.2 ... 3
-         *
-         * @hide
-         */
-        public static final String AUTO_BRIGHTNESS_RESPONSIVENESS = "auto_brightness_responsiveness";
-
          /**
           * Determines which streams are affected by mute. The
           * stream type's bit should be set to 1 if it should be muted when a mute request
@@ -2314,21 +2300,6 @@ public final class Settings {
         @Deprecated
         public static final String POWER_SOUNDS_ENABLED = Global.POWER_SOUNDS_ENABLED;
 
-        /**
-         * Whether to sound when charger power is connected/disconnected	5265
-         * @hide
-		 */
-        public static final String POWER_NOTIFICATIONS_ENABLED = "power_notifications_enabled";
-        /**
-         * Whether to vibrate when charger power is connected/disconnected	5271
-         * @hide
-         */
-        public static final String POWER_NOTIFICATIONS_VIBRATE = "power_notifications_vibrate";
-        /**
-         * URI for power notification sounds
-         * @hide
-         */
-        public static final String POWER_NOTIFICATIONS_RINGTONE = "power_notifications_ringtone";
         /**
          * @deprecated Use {@link android.provider.Settings.Global#DOCK_SOUNDS_ENABLED}
          * instead
@@ -3106,12 +3077,6 @@ public final class Settings {
         };
 
         /**
-         *
-         * @hide
-         */
-        public static final String LOCKSCREEN_GLOW_TORCH = "lockscreen_glow_torch";
-
-        /**
          * Whether to use the custom quick unlock screen control
          * @hide
          */
@@ -3175,8 +3140,6 @@ public final class Settings {
             "ribbon_targets_short_notification",
             "ribbon_targets_short_swipe",
             "ribbon_targets_short_quicksettings",
-            "ribbon_targets_short_swipe_right",
-            "ribbon_targets_short_swipe_bottom",
         };
 
         /**
@@ -3189,8 +3152,6 @@ public final class Settings {
             "ribbon_targets_long_notification",
             "ribbon_targets_long_swipe",
             "ribbon_targets_long_quicksettings",
-            "ribbon_targets_long_swipe_right",
-            "ribbon_targets_long_swipe_bottom",
         };
 
         /**
@@ -3203,8 +3164,6 @@ public final class Settings {
             "ribbon_targets_icons_notification",
             "ribbon_targets_icons_swipe",
             "ribbon_targets_icons_quicksettings",
-            "ribbon_targets_icons_swipe_right",
-            "ribbon_targets_icons_swipe_bottom",
         };
 
         /**
@@ -3217,8 +3176,6 @@ public final class Settings {
             "ribbon_text_notification",
             "ribbon_text_swipe",
             "ribbon_text_quicksettings",
-            "ribbon_text_swipe_right",
-            "ribbon_text_swipe_bottom",
         };
 
         /**
@@ -3231,8 +3188,6 @@ public final class Settings {
             "color_text_notification",
             "color_text_swipe",
             "color_text_quicksettings",
-            "color_text_swipe_right",
-            "color_text_swipe_bottom",
         };
 
         /**
@@ -3245,8 +3200,6 @@ public final class Settings {
             "ribbon_icon_notification",
             "ribbon_icon_swipe",
             "ribbon_icon_quicksettings",
-            "ribbon_icon_swipe_right",
-            "ribbon_icon_swipe_bottom",
         };
 
         public static final String[] ENABLE_RIBBON_LOCATION = new String[] {
@@ -3259,282 +3212,55 @@ public final class Settings {
          *
          * @hide
          */
-        public static final String[] RIBBON_ICON_SPACE = new String[] {
-            "ribbon_icon_lockscreen_space",
-            "ribbon_icon_notification_space",
-            "ribbon_icon_swipe_space_left",
-            "ribbon_icon_quicksettings_space",
-            "ribbon_icon_swipe_space_right",
-            "ribbon_icon_swipe_space_bottom",
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_ICON_VIBRATE = new String[] {
-            "ribbon_icon_lockscreen_vibrate",
-            "ribbon_icon_notification_vibrate",
-            "ribbon_icon_swipe_vibrate",
-            "ribbon_icon_quicksettings_vibrate",
-            "ribbon_icon_swipe_vibrate_right",
-            "ribbon_icon_swipe_vibrate_bottom",
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_ICON_COLORIZE = new String[] {
-            "ribbon_icon_lockscreen_colorize",
-            "ribbon_icon_notification_colorize",
-            "ribbon_icon_swipe_colorize",
-            "ribbon_icon_quicksettings_colorize",
-            "ribbon_icon_swipe_colorize_right",
-            "ribbon_icon_swipe_colorize_bottom",
-        };
+        public static final String RIBBON_HIDE_TIMEOUT = "ribbon_hide_timeout";
 
         /**
          *
          * @hide
          */
-        public static final String[] RIBBON_HIDE_TIMEOUT = new String[] {
-            "ribbon_hide_timeout_left",
-            "ribbon_hide_timeout_right",
-            "ribbon_hide_timeout_bottom",
-        };
+        public static final String SWIPE_RIBBON_OPACITY = "swipe_ribbon_opacity";
 
         /**
          *
          * @hide
          */
-        public static final String[] SWIPE_RIBBON_OPACITY = new String[] {
-            "swipe_ribbon_opacity_left",
-            "swipe_ribbon_opacity_right",
-            "swipe_ribbon_opacity_bottom",
-        };
+        public static final String SWIPE_RIBBON_COLOR = "swipe_ribbon_color";
 
         /**
          *
          * @hide
          */
-        public static final String[] SWIPE_RIBBON_COLOR = new String[] {
-            "swipe_ribbon_color_left",
-            "swipe_ribbon_color_right",
-            "swipe_ribbon_color_bottom",
-        };
+        public static final String RIBBON_DRAG_HANDLE_WEIGHT = "ribbon_drag_handle_weight";
 
         /**
          *
          * @hide
          */
-        public static final String[] SWIPE_RIBBON_TOGGLES = new String[] {
-            "swipe_ribbon_toggles_left",
-            "swipe_ribbon_toggles_right",
-            "swipe_ribbon_toggles_bottom",
-        };
+        public static final String RIBBON_DRAG_HANDLE_LOCATION = "ribbon_drag_handle_location";
 
         /**
          *
          * @hide
          */
-        public static final String[] RIBBON_LONG_PRESS = new String[] {
-            "ribbon_long_press_left",
-            "ribbon_long_press_right",
-            "ribbon_long_press_bottom",
-        };
+        public static final String RIBBON_ICON_LOCATION = "ribbon_icon_location";
 
         /**
          *
          * @hide
          */
-        public static final String[] RIBBON_LONG_SWIPE = new String[] {
-            "ribbon_long_swipe_left",
-            "ribbon_long_swipe_right",
-            "ribbon_long_swipe_bottom",
-        };
+        public static final String SWIPE_RIBBON_VIBRATE = "swipe_ribbon_vibrate";
 
         /**
          *
          * @hide
          */
-        public static final String[] RIBBON_ANIMATION_DURATION = new String[] {
-            "ribbon_animation_duration_left",
-            "ribbon_animation_duration_right",
-            "ribbon_animation_duration_bottom",
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_DISMISS = new String[] {
-            "ribbon_left_dismiss",
-            "ribbon_right_dismiss",
-            "ribbon_bottom_dismiss",
-
-        };
+        public static final String RIBBON_DRAG_HANDLE_HEIGHT = "ribbon_drag_handle_height";
 
         /**
          *
          * @hide
          */
-        public static final String APP_WINDOW_ANIMATION_DURATION = "app_window_animation_duration";
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_DRAG_HANDLE_WEIGHT = new String[] {
-            "ribbon_drag_handle_weight_left",
-            "ribbon_drag_handle_weight_right",
-            "ribbon_drag_handle_weight_bottom",
-
-        };
-
-        /**
-         *
-         * @hide
-         */
-        public static final String APP_WINDOW_COLOR_BG = "app_window_color_bg";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String APP_WINDOW_COLUMNS = "app_window_columns";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String APP_WINDOW_COLOR_TEXT = "app_window_color_text";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String APP_WINDOW_OPACITY = "app_window_opacity";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String APP_WINDOW_HIDDEN_APPS = "app_window_hidden_apps";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String APP_WINDOW_ANIMATION_TYPE = "app_window_animation_type";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String LAUNCH_APP_ANIMATION = "launch_app_animation";
-
-        /**
-         *
-         * @hide
-         */
-        public static final String APP_WINDOW_SPACING = "app_window_spacing";
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_DRAG_HANDLE_LOCATION = new String[] {
-            "ribbon_drag_handle_location_left",
-            "ribbon_drag_handle_location_right",
-            "ribbon_drag_handle_location_bottom",
-
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_HIDE_IME = new String[] {
-            "ribbon_hide_ime_left",
-            "ribbon_hide_ime_right",
-            "ribbon_hide_ime_bottom",
-
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_TOGGLE_BUTTON_LOCATION = new String[] {
-            "ribbon_toggle_button_location_left",
-            "ribbon_toggle_button_location_right",
-            "ribbon_toggle_button_location_bottom",
-
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_ANIMATION_TYPE = new String[] {
-            "ribbon_animation_type_left",
-            "ribbon_animation_type_right",
-            "ribbon_animation_type_bottom",
-        };
-
-        /**
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_ICON_LOCATION = new String[] {
-            "ribbon_icon_location_left",
-            "ribbon_icon_location_right",
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] SWIPE_RIBBON_VIBRATE = new String[] {
-            "swipe_ribbon_vibrate_left",
-            "swipe_ribbon_vibrate_right",
-            "swipe_ribbon_vibrate_bottom",
-
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_DRAG_HANDLE_HEIGHT = new String[] {
-            "ribbon_drag_handle_height_left",
-            "ribbon_drag_handle_height_right",
-            "ribbon_drag_handle_height_bottom",
-
-        };
-
-        /**
-         * Ribbon Targets
-         *
-         * @hide
-         */
-        public static final String[] RIBBON_DRAG_HANDLE_OPACITY = new String[] {
-            "ribbon_drag_handle_opacity_left",
-            "ribbon_drag_handle_opacity_right",
-            "ribbon_drag_handle_opacity_bottom",
-
-        };
+        public static final String RIBBON_DRAG_HANDLE_OPACITY = "ribbon_drag_handle_opacity";
 
         /**
          * enabled and order of quick toggles
@@ -3587,12 +3313,12 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String CUSTOM_TOGGLE_REVERT = "custom_toggle_revert";
+        public static final String CUSTOM_TOGGLE_ADVANCED = "custom_toggle_advanced";
 
         /**
          * @hide
          */
-        public static final String CUSTOM_TOGGLE_STATE = "custom_toggle_state";
+        public static final String CUSTOM_TOGGLE_REVERT = "custom_toggle_revert";
 
         /**
          * @hide
@@ -3645,6 +3371,17 @@ public final class Settings {
             "custom_toggle_icons_2",
             "custom_toggle_icons_3",
             "custom_toggle_icons_4",
+        };
+
+        /**
+         * @hide
+         */
+        public static final String[] CUSTOM_TOGGLE_TEXT = new String[] {
+            "custom_toggle_text_0",
+            "custom_toggle_text_1",
+            "custom_toggle_text_2",
+            "custom_toggle_text_3",
+            "custom_toggle_text_4",
         };
 
         /**
@@ -3718,9 +3455,6 @@ public final class Settings {
             SOUND_EFFECTS_ENABLED,
             HAPTIC_FEEDBACK_ENABLED,
             POWER_SOUNDS_ENABLED,       // moved to global
-            POWER_NOTIFICATIONS_ENABLED,
-            POWER_NOTIFICATIONS_VIBRATE,
-            POWER_NOTIFICATIONS_RINGTONE,
             DOCK_SOUNDS_ENABLED,        // moved to global
             LOCKSCREEN_SOUNDS_ENABLED,
             SHOW_WEB_SUGGESTIONS,
@@ -4021,11 +3755,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_ALPHA_CONFIG = "status_bar_alpha_config";
-
-        /**
-         * @hide
-         */
-        public static final String LOCKSCREEN_ALPHA_CONFIG = "lockscreen_alpha_config";
 
         /**
          * 0 == QuickSettings Tile
@@ -5506,13 +5235,6 @@ public final class Settings {
         public static final String UI_NIGHT_MODE = "ui_night_mode";
 
         /**
-         * Whether user activated inverted UI mode or default UI mode. Owned
-         * and controlled by UiModeManagerService.
-         * @hide
-         */
-        public static final String UI_INVERTED_MODE = "ui_inverted_mode";
-
-        /**
          * Whether screensavers are enabled.
          * @hide
          */
@@ -5596,7 +5318,6 @@ public final class Settings {
             MOUNT_UMS_PROMPT,
             MOUNT_UMS_NOTIFY_ENABLED,
             UI_NIGHT_MODE,
-            UI_INVERTED_MODE,
             LOCK_SCREEN_OWNER_INFO,
             LOCK_SCREEN_OWNER_INFO_ENABLED
         };
@@ -5823,6 +5544,24 @@ public final class Settings {
          * @hide
          */
         public static final String POWER_SOUNDS_ENABLED = "power_sounds_enabled";
+
+        /**
+         * Whether to sound when charger power is connected/disconnected
+        * @hide
+         */
+        public static final String POWER_NOTIFICATIONS_ENABLED = "power_notifications_enabled";
+
+        /**
+         * Whether to vibrate when charger power is connected/disconnected
+         * @hide
+         */
+        public static final String POWER_NOTIFICATIONS_VIBRATE = "power_notifications_vibrate";
+
+        /**
+         * URI for power notification sounds
+         * @hide
+         */
+        public static final String POWER_NOTIFICATIONS_RINGTONE = "power_notifications_ringtone";
 
         /**
          * URI for the "wireless charging started" sound.
@@ -6893,6 +6632,9 @@ public final class Settings {
             AUTO_TIME,
             AUTO_TIME_ZONE,
             POWER_SOUNDS_ENABLED,
+             POWER_NOTIFICATIONS_ENABLED,
+            POWER_NOTIFICATIONS_VIBRATE,
+            POWER_NOTIFICATIONS_RINGTONE,
             DOCK_SOUNDS_ENABLED,
             USB_MASS_STORAGE_ENABLED,
             ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED,

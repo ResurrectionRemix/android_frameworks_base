@@ -67,9 +67,6 @@ public class PowerUI extends SystemUI {
     // For filtering ACTION_POWER_DISCONNECTED on boot
    boolean mIgnoreFirstPowerEvent = true;
 
-    // For filtering ACTION_POWER_DISCONNECTED on boot
-    boolean mIgnoreFirstPowerEvent = true;
-
     public void start() {
 
         mLowBatteryAlertCloseLevel = mContext.getResources().getInteger(
@@ -130,10 +127,6 @@ public class PowerUI extends SystemUI {
 
                 final boolean plugged = mPlugType != 0;
                 final boolean oldPlugged = oldPlugType != 0;
-                
-                if (mIgnoreFirstPowerEvent && plugged) {
-                    mIgnoreFirstPowerEvent = false;
-                }
 
                 if (mIgnoreFirstPowerEvent && plugged) {
                     mIgnoreFirstPowerEvent = false;
@@ -179,12 +172,7 @@ public class PowerUI extends SystemUI {
                     dismissLowBatteryWarning();
                 } else if (mBatteryLevelTextView != null) {
                     showLowBatteryWarning();
-                }
-
-       } else if (action.equals(Intent.ACTION_POWER_CONNECTED)
-                    || action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
-                final ContentResolver cr = mContext.getContentResolver();
-                
+                }               
             } else if (action.equals(Intent.ACTION_POWER_CONNECTED)
                     || action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
                 final ContentResolver cr = mContext.getContentResolver();
@@ -337,10 +325,7 @@ public class PowerUI extends SystemUI {
                 // DEFAULT_SOUND overrides so flip off
                 powerNotify.defaults &= ~Notification.DEFAULT_SOUND;
             }
-        }
-
-                if (Settings.Global.getInt(cr,
-                
+        }              
         if (Settings.Global.getInt(cr,
                 Settings.Global.POWER_NOTIFICATIONS_VIBRATE, 0) == 0) {
             powerNotify.defaults &= ~Notification.DEFAULT_VIBRATE;
