@@ -87,7 +87,13 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
     private static final int MSG_INJECT_KEY = 1066;
 
     private Context mContext;
+<<<<<<< HEAD
     private PieLayout mPieContainer;
+=======
+    private PieManager mPieManager;
+    private PieView mPieContainer;
+    private boolean mIsDetaching = false;
+>>>>>>> 4e88ae9... Pie controls: Catching activation corner cases
     /**
      * This is only needed for #toggleRecentApps()
      */
@@ -140,6 +146,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
 
     private Position mPosition;
 
+<<<<<<< HEAD
     public static class Tracker {
         public static float sDistance;
         private float initialX = 0;
@@ -198,6 +205,25 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
                         loaded = true;
                     }
                     break;
+=======
+    private PieManager.PieActivationListener mPieActivationListener =
+            new PieManager.PieActivationListener(Looper.getMainLooper()) {
+        @Override
+        public void onPieActivation(int touchX, int touchY, PiePosition position, int flags) {
+            if (position == PiePosition.BOTTOM && isSearchLightEnabled() && mStatusBar != null) {
+                // if we are at the bottom and nothing else is there, use a
+                // search light!
+                mStatusBar.showSearchPanel();
+                // restore listener state immediately (after the bookkeeping), and since the
+                // search panel is a single gesture we will not trigger again
+                mHandler.obtainMessage(MSG_PIE_RESTORE_LISTENER_STATE).sendToTarget();
+            } else if (mPieContainer != null && activateFromListener(touchX, touchY, position)) {
+                // give the main thread some time to do the bookkeeping
+                mHandler.obtainMessage(MSG_PIE_GAIN_FOCUS).sendToTarget();
+            } else {
+                // if anything goes wrong, just quit the ongoing activation
+                mPieActivationListener.restoreListenerState();
+>>>>>>> 4e88ae9... Pie controls: Catching activation corner cases
             }
             active = false;
             return loaded;
@@ -224,7 +250,22 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
                     inputManager.injectInputEvent(new KeyEvent(eventTime - 50, eventTime - 25,
                             KeyEvent.ACTION_UP, m.arg1, 0),
                             InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
+<<<<<<< HEAD
 
+=======
+                    break;
+                case MSG_PIE_GAIN_FOCUS:
+                    if (mPieContainer != null) {
+                        if (!mPieActivationListener.gainTouchFocus(mPieContainer.getWindowToken())) {
+                            mPieContainer.exit();
+                        }
+                    } else {
+                        mPieActivationListener.restoreListenerState();
+                    }
+                    break;
+                case MSG_PIE_RESTORE_LISTENER_STATE:
+                    mPieActivationListener.restoreListenerState();
+>>>>>>> 4e88ae9... Pie controls: Catching activation corner cases
                     break;
             }
         }
@@ -249,7 +290,29 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
 
         @Override
         public void onChange(boolean selfChange) {
+<<<<<<< HEAD
             setupNavigationItems();
+=======
+            ContentResolver resolver = mContext.getContentResolver();
+            boolean expanded = Settings.System.getInt(resolver,
+                    Settings.System.EXPANDED_DESKTOP_STATE, 0) == 1;
+            if (expanded) {
+                mExpandedDesktopState = Settings.System.getInt(resolver,
+                        Settings.System.EXPANDED_DESKTOP_STYLE, 0);
+            } else {
+                mExpandedDesktopState = 0;
+            }
+            if (isEnabled()) {
+                setupContainer();
+                setupNavigationItems();
+                setupListener();
+            } else if (!isShowing()) {
+                detachContainer();
+            } else {
+                // delay detach to #onExit()
+                mIsDetaching = true;
+            }
+>>>>>>> 4e88ae9... Pie controls: Catching activation corner cases
         }
     }
 
@@ -295,7 +358,11 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         mBackAltIcon = res.getDrawable(R.drawable.ic_sysbar_back_ime);
     }
 
+<<<<<<< HEAD
     public void attachTo(BaseStatusBar statusBar) {
+=======
+    public void attachStatusBar(BaseStatusBar statusBar) {
+>>>>>>> 4e88ae9... Pie controls: Catching activation corner cases
         mStatusBar = statusBar;
     }
 
@@ -327,8 +394,40 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         mSysInfo.setGeometry(START_ANGLE, 180 - 2 * EMPTY_ANGLE, inner, outer);
         mPieContainer.addSlice(mSysInfo);
 
+<<<<<<< HEAD
         // start listening for changes
         mSettingsObserver.observe();
+=======
+    @Override
+    public void onExit() {
+        mWindowManager.removeView(mPieContainer);
+        mPieActivationListener.restoreListenerState();
+        if (mIsDetaching) {
+            detachContainer();
+            mIsDetaching = false;
+        }
+    }
+
+    private void detachContainer() {
+        if (mPieContainer == null) {
+            return;
+        }
+
+        mPieManager.updatePieActivationListener(mPieActivationListener, 0);
+
+        if (mTelephonyManager != null) {
+            mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
+        }
+
+        mContext.unregisterReceiver(mBroadcastReceiver);
+
+        mPieContainer.clearSlices();
+        mPieContainer = null;
+    }
+
+    private void setupListener() {
+        ContentResolver resolver = mContext.getContentResolver();
+>>>>>>> 4e88ae9... Pie controls: Catching activation corner cases
 
         mContext.registerReceiver(mBroadcastReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -386,6 +485,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         return item;
     }
 
+<<<<<<< HEAD
     public void activateFromTrigger(View view, MotionEvent event, Position position) {
         if (mPieContainer != null && !isShowing()) {
             doHapticTriggerFeedback();
@@ -394,6 +494,65 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
             Point center = new Point((int) event.getRawX(), (int) event.getRawY());
             mPieContainer.activate(center, position);
             mPieContainer.invalidate();
+=======
+    private PieItem findItem(ButtonInfo type) {
+        for (PieItem item : mNavigationSlice.getItems()) {
+            if (type == item.tag) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private void setItemWithTagVisibility(ButtonInfo type, boolean show) {
+        PieItem item = findItem(type);
+        if (item != null) {
+            item.show(show);
+        }
+    }
+
+    public boolean activateFromListener(int touchX, int touchY, PiePosition position) {
+        if (isShowing()) {
+            return false;
+        }
+
+        doHapticTriggerFeedback();
+
+        mPosition = position;
+        Point center = new Point(touchX, touchY);
+        mPieContainer.setSnapPoints(mPieTriggerMask & ~mPieTriggerSlots);
+        mPieContainer.activate(center, position);
+        mWindowManager.addView(mPieContainer, generateLayoutParam());
+
+        return true;
+    }
+
+    private WindowManager.LayoutParams generateLayoutParam() {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL,
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                PixelFormat.TRANSLUCENT);
+        lp.privateFlags = WindowManager.LayoutParams.PRIVATE_FLAG_FORCE_SHOW_NAV_BAR;
+        // This title is for debugging only. See: dumpsys window
+        lp.setTitle("PieControlPanel");
+        lp.windowAnimations = android.R.style.Animation;
+        lp.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_BEHIND;
+        return lp;
+    }
+
+    public void updatePieTriggerMask(int newMask) {
+        int oldState = mPieTriggerSlots & mPieTriggerMask;
+        mPieTriggerMask = newMask;
+
+        // check if we are active and if it would make a change at all
+        if (mPieContainer != null && ((mPieTriggerSlots & mPieTriggerMask) != oldState)) {
+            setupListener();
+>>>>>>> 4e88ae9... Pie controls: Catching activation corner cases
         }
     }
 
