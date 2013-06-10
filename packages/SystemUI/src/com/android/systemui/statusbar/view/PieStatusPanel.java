@@ -37,6 +37,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.animation.AlphaAnimation;
 import android.view.LayoutInflater;
 import android.view.View;

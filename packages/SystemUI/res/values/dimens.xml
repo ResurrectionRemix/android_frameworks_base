@@ -277,4 +277,14 @@
     <dimen name="pie_item_size">40dp</dimen>
     <dimen name="pie_panel_padding">20dp</dimen>
 
+<<<<<<< HEAD
+=======
+    <!-- Notification Shortcuts -->
+    <dimen name="notification_shortcuts_close_handle_height">26dp</dimen>
+    <dimen name="notification_shortcuts_spacing_height">88dp</dimen>
+    <dimen name="notification_shortcuts_drawer_margin">88dp</dimen>
+
+    <!-- PA HALO -->
+    <dimen name="halo_content_max_width">250dp</dimen>
+>>>>>>> 2bd1802... HALO (1/2)
 </resources>
