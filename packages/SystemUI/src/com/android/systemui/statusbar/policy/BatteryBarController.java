@@ -34,7 +34,7 @@ public class BatteryBarController extends LinearLayout {
     static int mLocation = 0;
 
     protected final static int CURRENT_LOC = 1;
-    static int mLocationToLookFor = 0;
+    int mLocationToLookFor = 0;
 
     private int mBatteryLevel = 0;
     private boolean mBatteryCharging = false;
@@ -101,7 +101,7 @@ public class BatteryBarController extends LinearLayout {
                     Settings.System.STATUSBAR_BATTERY_BAR, 0);
 
             for (BatteryBarController bbc : mBatteryBarControllers) {
-                if (mLocationToLookFor == mLocation) {
+                if (bbc.mLocationToLookFor == mLocation) {
                     bbc.removeBars();
                     bbc.addBars();
                     bbc.setVisibility(View.VISIBLE);
