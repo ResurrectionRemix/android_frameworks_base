@@ -41,6 +41,11 @@
     <!-- The fixed height of each tile -->
     <dimen name="quick_settings_cell_height">100dp</dimen>
 
+<<<<<<< HEAD
     <!-- Height of search panel including navigation bar height -->
     <dimen name="navbar_search_panel_height">280dip</dimen>
+=======
+    <dimen name="pie_panel_padding">100dp</dimen>
+    <dimen name="halo_content_max_width">350dp</dimen>
+>>>>>>> 9872c9e... HALO (1/2)
 </resources>

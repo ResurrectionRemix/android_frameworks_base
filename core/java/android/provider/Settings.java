@@ -2560,6 +2560,29 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
 
         /**
+<<<<<<< HEAD
+=======
+         * HALO, should default to 0 (no, do not show)
+         * @hide
+         */
+        public static final String HALO_ACTIVE = "halo_active";
+
+        /**
+         * HALO reversed?, should default to 1 (yes, reverse)
+         * @hide
+         */
+        public static final String HALO_REVERSED = "halo_reversed";
+
+        /**
+         * HALO hide?, should default to 0 (no, do not hide)
+         * @hide
+         */
+        public static final String HALO_HIDE = "halo_hide";
+
+        /**
+         * Use the Notification Power Widget? (Who wouldn't!)
+         *
+>>>>>>> 9872c9e... HALO (1/2)
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_THICKNESS = "statusbar_battery_bar_thickness";
