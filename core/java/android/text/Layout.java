@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * This code has been modified. Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,8 +135,9 @@ public abstract class Layout {
                      int width, Alignment align, TextDirectionHeuristic textDir,
                      float spacingMult, float spacingAdd) {
 
-        if (width < 0)
-            throw new IllegalArgumentException("Layout: " + width + " < 0");
+        if (width < 0) {
+            width = 0;
+        }
 
         // Ensure paint doesn't have baselineShift set.
         // While normally we don't modify the paint the user passed in,
@@ -164,7 +166,7 @@ public abstract class Layout {
                               int width, Alignment align,
                               float spacingmult, float spacingadd) {
         if (width < 0) {
-            throw new IllegalArgumentException("Layout: " + width + " < 0");
+            width = 0;
         }
 
         mText = text;
