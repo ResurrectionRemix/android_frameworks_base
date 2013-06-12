@@ -43,4 +43,7 @@
 
     <!-- Height of search panel including navigation bar height -->
     <dimen name="navbar_search_panel_height">280dip</dimen>
+    
+    <!-- PA HALO -->
+    <dimen name="halo_content_max_width">350dp</dimen>
 </resources>

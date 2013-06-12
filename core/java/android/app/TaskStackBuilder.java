@@ -62,6 +62,7 @@ public class TaskStackBuilder {
 
     private final ArrayList<Intent> mIntents = new ArrayList<Intent>();
     private final Context mSourceContext;
+    private boolean mFirstTaskOnHome = true;
 
     private TaskStackBuilder(Context a) {
         mSourceContext = a;
@@ -76,6 +77,10 @@ public class TaskStackBuilder {
      */
     public static TaskStackBuilder create(Context context) {
         return new TaskStackBuilder(context);
+    }
+
+    public void setTaskOnHome(boolean firstTaskOnHome) {
+        mFirstTaskOnHome = firstTaskOnHome;
     }
 
     /**
@@ -297,10 +302,17 @@ public class TaskStackBuilder {
     public Intent[] getIntents() {
         Intent[] intents = new Intent[mIntents.size()];
         if (intents.length == 0) return intents;
+        
+        Intent newIntent = new Intent(mIntents.get(0));
+        newIntent.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        intents[0] = new Intent(mIntents.get(0)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+        if (mFirstTaskOnHome) {
+            newIntent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+        }
+
+        intents[0] = newIntent;
         for (int i = 1; i < intents.length; i++) {
             intents[i] = new Intent(mIntents.get(i));
         }
