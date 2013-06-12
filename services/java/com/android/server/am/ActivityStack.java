@@ -58,6 +58,8 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
@@ -1531,7 +1533,7 @@ final class ActivityStack {
         
         // We need to start pausing the current activity so the top one
         // can be resumed...
-        if (mResumedActivity != null && !next.floatingWindow) {
+        if (mResumedActivity != null && (pauseActiveAppWhenUsingHalo() || !next.floatingWindow)) {
             if (DEBUG_SWITCH) Slog.v(TAG, "Skip resume: need to start pausing");
             // At this point we want to put the upcoming activity's process
             // at the top of the LRU list, since we know we will be needing it
@@ -4755,7 +4757,13 @@ final class ActivityStack {
 
         return true;
     }
-    
+
+    private boolean pauseActiveAppWhenUsingHalo() {
+        int isLowRAM = (ActivityManager.isLargeRAM()) ? 0 : 1;
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HALO_PAUSE, isLowRAM) == 1;
+    }
+
     public void dismissKeyguardOnNextActivityLocked() {
         mDismissKeyguardOnNextActivity = true;
     }
