@@ -3056,6 +3056,12 @@ public final class Settings {
         public static final String STATUSBAR_WIFI_SIGNAL_TEXT = "statusbar_wifi_signal_text";
 
         /**
+         * Automatic keyboard rotation timeout.  0 to disable completely.
+         * @hide
+         */
+        public static final String KEYBOARD_ROTATION_TIMEOUT = "keyboard_rotation_timeout";
+
+        /**
          * statusbar WIFI signal text color
          *
          * @hide
@@ -3679,6 +3685,16 @@ public final class Settings {
         public static final String MVNO_ROAMING = "mvno_roaming";
 
         public static final String THEME_WALLPAPER = "theme_wallpaper";
+
+        /**
+         * Low battery warning dialog and sound
+         * 0 = off
+         * 1 = dialog only
+         * 2 = sound only
+         * 3 = dialog and sound
+         * @hide
+         */
+        public static final String POWER_UI_LOW_BATTERY_WARNING_POLICY = "power_ui_low_battery_warning_policy";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
