@@ -2578,6 +2578,12 @@ public final class Settings {
         public static final String HALO_PAUSE = "halo_pause";
 
         /**
+         * HALO enabled, should default to 0 (no, HALO is disabled)
+         * @hide
+         */
+        public static final String HALO_ENABLED = "halo_enabled";
+
+        /**
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
