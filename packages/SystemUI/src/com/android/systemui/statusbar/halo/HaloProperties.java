@@ -16,8 +16,12 @@
 
 package com.android.systemui.statusbar.halo;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -58,21 +62,17 @@ public class HaloProperties extends FrameLayout {
     protected View mHaloNumberView;
     protected TextView mHaloNumber;
 
+    Handler mHandler;
+
     CustomObjectAnimator mHaloOverlayAnimator;
 
     public HaloProperties(Context context) {
         super(context);
 
-        mHaloDismiss = mContext.getResources().getDrawable(R.drawable.halo_dismiss);
-        mHaloBackL = mContext.getResources().getDrawable(R.drawable.halo_back_left);
-        mHaloBackR = mContext.getResources().getDrawable(R.drawable.halo_back_right);
         mHaloBlackX = mContext.getResources().getDrawable(R.drawable.halo_black_x);
+        updateDrawable();
 
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
-        mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-        mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
 
         mHaloContentView = mInflater.inflate(R.layout.halo_speech, null);
         mHaloTickerContent = mHaloContentView.findViewById(R.id.ticker);
@@ -86,6 +86,9 @@ public class HaloProperties extends FrameLayout {
         mHaloNumber.setAlpha(0f);
 
         mHaloOverlayAnimator = new CustomObjectAnimator(this);
+        mHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
     }        
 
     public void setHaloX(int value) {
@@ -160,5 +163,49 @@ public class HaloProperties extends FrameLayout {
         mHaloNumberView.measure(MeasureSpec.getSize(mHaloNumberView.getMeasuredWidth()),
                 MeasureSpec.getSize(mHaloNumberView.getMeasuredHeight()));
         mHaloNumberView.layout(0, 0, 0, 0);
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HALO_STYLE), false, this);
+            updateDrawable();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateDrawable();
+        }
+    }
+
+    private void updateDrawable() {
+        boolean defStyle = Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.HALO_STYLE, 0) == 1;
+
+        mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        if (defStyle) {
+            mHaloDismiss = mContext.getResources().getDrawable(R.drawable.halo_dismiss_min);
+            mHaloBackL = mContext.getResources().getDrawable(R.drawable.halo_back_left_min);
+            mHaloBackR = mContext.getResources().getDrawable(R.drawable.halo_back_right_min);
+
+            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_min, null);
+            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
+            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
+        } else {
+            mHaloDismiss = mContext.getResources().getDrawable(R.drawable.halo_dismiss);
+            mHaloBackL = mContext.getResources().getDrawable(R.drawable.halo_back_left);
+            mHaloBackR = mContext.getResources().getDrawable(R.drawable.halo_back_right);
+
+            mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
+            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
+            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
+        }
     }
 }
