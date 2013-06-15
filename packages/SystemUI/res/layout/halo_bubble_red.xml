@@ -14,7 +14,7 @@
                 android:id="@+id/halo_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/halo_bg_min"/>
+                android:src="@drawable/halo_bg_red"/>
 
             <ImageView
                 android:id="@+id/app_icon"
