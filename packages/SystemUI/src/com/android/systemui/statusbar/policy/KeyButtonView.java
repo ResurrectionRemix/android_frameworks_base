@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.policy;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.util.ColorUtils;
 import android.animation.ObjectAnimator;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -35,7 +36,6 @@ import android.os.SystemClock;
 import android.os.ServiceManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
-import android.util.ColorUtils;
 import android.util.ExtendedPropertiesUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
@@ -79,7 +79,6 @@ public class KeyButtonView extends ImageView {
 
     private boolean mAttached = false;
     private SettingsObserver mSettingsObserver;
-
     private ColorUtils.ColorSettingInfo mLastButtonColor;
     private ColorUtils.ColorSettingInfo mLastGlowColor;
 
@@ -128,39 +127,8 @@ public class KeyButtonView extends ImageView {
 
         setClickable(true);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-    }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-
-        if (!mAttached) {
-            mAttached = true;
-            mSettingsObserver = new SettingsObserver(new Handler());
-            mSettingsObserver.observe();
-            updateSettings();
-        }
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-
-        if (mAttached) {
-            getContext().getContentResolver().unregisterContentObserver(mSettingsObserver);
-            mAttached = false;
-        }
-
-        clearColorFilter();
-        BUTTON_QUIESCENT_ALPHA = 0.70f;
-        setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
-
-        // Only watch for per app color changes when the setting is in check
-        if (ColorUtils.getPerAppColorState(mContext)) {
-
-            mLastGlowColor = ColorUtils.getColorSettingInfo(mContext, Settings.System.NAV_GLOW_COLOR);
-            mLastButtonColor = ColorUtils.getColorSettingInfo(mContext, Settings.System.NAV_BUTTON_COLOR);
-
+<<<<<<< HEAD
             updateButtonColor();
 
             mContext.getContentResolver().registerContentObserver(
@@ -174,6 +142,8 @@ public class KeyButtonView extends ImageView {
         clearColorFilter();
         BUTTON_QUIESCENT_ALPHA = 0.70f;
         setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
+=======
+>>>>>>> 5a1e4e3... Fixed conflicts
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
         settingsObserver.observe();
 
@@ -202,8 +172,6 @@ public class KeyButtonView extends ImageView {
         }
     }
 
-        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
-        settingsObserver.observe();
     private void updateButtonColor() {
         ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext,
                 Settings.System.NAV_BUTTON_COLOR);
@@ -232,6 +200,28 @@ public class KeyButtonView extends ImageView {
                 mGlowBG.setColorFilter(colorInfo.lastColor, PorterDuff.Mode.SRC_ATOP);
             }
             mLastGlowColor = colorInfo;
+        }
+     }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        if (!mAttached) {
+            mAttached = true;
+            mSettingsObserver = new SettingsObserver(new Handler());
+            mSettingsObserver.observe();
+            updateSettings();
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (mAttached) {
+            getContext().getContentResolver().unregisterContentObserver(mSettingsObserver);
+            mAttached = false;
         }
     }
 
@@ -482,7 +472,7 @@ public class KeyButtonView extends ImageView {
             sendEvent(action[0], action[1],
                 SystemClock.uptimeMillis());
         }
-    }   
+    } 
 
     void sendEvent(int action, int flags) {
         sendEvent(action, flags, SystemClock.uptimeMillis());

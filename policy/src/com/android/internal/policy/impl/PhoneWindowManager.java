@@ -20,6 +20,7 @@ package com.android.internal.policy.impl;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
+import android.app.AppGlobals;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.app.IUiModeManager;
@@ -1105,35 +1106,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mUserInterfaceObserver = new UserInterfaceObserver(mHandler);
         mUserInterfaceObserver.observe();
 
-        // Expanded desktop
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.EXPANDED_DESKTOP_STATE),
-                    false, new ContentObserver(new Handler()) {
-            @Override
-            public void onChange(boolean selfChange) {
-
-                // Restart default launcher activity
-                final PackageManager mPm = mContext.getPackageManager();
-                final ActivityManager am = (ActivityManager)mContext
-                        .getSystemService(Context.ACTIVITY_SERVICE);
-                final Intent intent = new Intent(Intent.ACTION_MAIN); 
-                intent.addCategory(Intent.CATEGORY_HOME); 
-                final ResolveInfo res = mPm.resolveActivity(intent, 0);
-
-                // Launcher is running task #1
-                List<ActivityManager.RunningTaskInfo> runningTasks = am.getRunningTasks(1);
-                if (runningTasks != null) {
-                    for (ActivityManager.RunningTaskInfo task : runningTasks) {
-                        String packageName = task.baseActivity.getPackageName();
-                        if (packageName.equals(res.activityInfo.packageName)) {
-                            closeApplication(packageName);
-                            break;
-                        }
-                    }
-                }
-            }
-        });
-
         mShortcutManager = new ShortcutManager(context, mHandler);
         mShortcutManager.observe();
         mUiMode = context.getResources().getInteger(
@@ -1271,6 +1243,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
 
+<<<<<<< HEAD
         // SystemUI (status bar) layout policy
         int sysLayout = ExtendedPropertiesUtils.getActualProperty("com.android.systemui.layout");
         int sysDpi = ExtendedPropertiesUtils.getActualProperty("android.dpi");
@@ -1422,6 +1395,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } else {
             mCanHideNavigationBar = false;
         }
+=======
+>>>>>>> 5a1e4e3... Fixed conflicts
         getDimensions();
 
         // For demo purposes, allow the rotation of the HDMI display to be controlled.
@@ -1452,16 +1427,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } catch (RemoteException e) {
                 // Good luck next time!
             }
-        }
-    }
-
-    private void closeApplication(String packageName) {
-        try {
-            ActivityManagerNative.getDefault().killApplicationProcess(
-                    packageName, AppGlobals.getPackageManager().getPackageUid(
-                    packageName, UserHandle.myUserId()));
-        } catch (RemoteException e) {
-            // Good luck next time!
         }
     }
 
@@ -5093,7 +5058,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static String currentPackageName;
     public void setPackageName(String pkgName) {
         if (pkgName == null) {
-            pkgName = "unknown";
+            pkgName = "unkown";
         }
         this.currentPackageName = pkgName;
     }
