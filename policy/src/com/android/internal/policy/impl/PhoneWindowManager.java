@@ -1276,6 +1276,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    private void closeApplication(String packageName) {
+        try {
+            ActivityManagerNative.getDefault().killApplicationProcess(
+                    packageName, AppGlobals.getPackageManager().getPackageUid(
+                    packageName, UserHandle.myUserId()));
+        } catch (RemoteException e) {
+            // Good luck next time!
+        }
+    }
+
     private int updateHybridLayout() {
         int oldSystemUiLayout = mSystemUiLayout == 0 ?
             ExtendedPropertiesUtils.getActualProperty("com.android.systemui.layout") : mSystemUiLayout;
@@ -4904,7 +4914,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static String currentPackageName;
     public void setPackageName(String pkgName) {
         if (pkgName == null) {
-            pkgName = "unkown";
+            pkgName = "unknown";
         }
         this.currentPackageName = pkgName;
     }
