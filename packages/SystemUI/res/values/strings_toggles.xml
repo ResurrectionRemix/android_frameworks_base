@@ -34,20 +34,20 @@
     <string name="toggle_SYNC">Sync</string>
     <string name="toggle_NFC">NFC</string>
     <string name="toggle_TORCH">Torch</string>
-    <string name="toggle_WIFITETHER">WiFi Tether</string>
-    <string name="toggle_USBTETHER">USB Tether</string>
+    <string name="toggle_WIFITETHER">WiFi tether</string>
+    <string name="toggle_USBTETHER">USB tether</string>
     <string name="toggle_2G">2G</string>
     <string name="toggle_LTE">LTE</string>
     <string name="toggle_FAVCONTACT">Favorite contact</string>
     <string name="toggle_SOUNDSTATE">Sound state</string>
     <string name="toggle_NAVBARHIDE">Navbar hide</string>
     <string name="toggle_QUICKRECORD">Quick record</string>
-    <string name="toggle_QUIETHOURS">Quiet Hours</string>
+    <string name="toggle_QUIETHOURS">Quiet hours</string>
     <string name="toggle_SLEEP">Sleep</string>
     <string name="toggle_STATUSBAR">Statusbar</string>
     <string name="toggle_SCREENSHOT">Screenshot</string>
     <string name="toggle_REBOOT">Reboot</string>
     <string name="toggle_CUSTOM">Custom</string>
-    <string name="toggle_STAYAWAKE">Stay Awake</string>
+    <string name="toggle_STAYAWAKE">Stay awake</string>
     <string name="toggle_WIRELESSADB">Wireless ADB</string>
 </resources>
