@@ -17,23 +17,6 @@
 
 package com.android.systemui.statusbar;
 
-import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.statusbar.StatusBarIcon;
-import com.android.internal.statusbar.StatusBarIconList;
-import com.android.internal.statusbar.StatusBarNotification;
-import com.android.internal.widget.SizeAdaptiveLayout;
-import com.android.systemui.R;
-import com.android.systemui.SearchPanelView;
-import com.android.systemui.SystemUI;
-import com.android.systemui.TransparencyManager;
-import com.android.systemui.recent.RecentTasksLoader;
-import com.android.systemui.recent.RecentsActivity;
-import com.android.systemui.recent.TaskDescription;
-import com.android.systemui.statusbar.policy.NotificationRowLayout;
-import com.android.systemui.statusbar.tablet.StatusBarPanel;
-import com.android.systemui.statusbar.WidgetView;
-import com.android.systemui.aokp.AppWindow;
-
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
@@ -53,9 +36,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.database.ContentObserver;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -115,7 +95,6 @@ import com.android.systemui.SystemUI;
 import com.android.systemui.recent.RecentTasksLoader;
 import com.android.systemui.recent.RecentsActivity;
 import com.android.systemui.recent.TaskDescription;
-import com.android.systemui.statusbar.WidgetView;
 import com.android.systemui.statusbar.halo.Halo;
 import com.android.systemui.statusbar.phone.QuickSettingsContainerView;
 import com.android.systemui.statusbar.phone.Ticker;
@@ -131,6 +110,7 @@ import com.android.systemui.statusbar.view.PieStatusPanel;
 import com.android.systemui.statusbar.view.PieExpandPanel;
 import com.android.systemui.statusbar.WidgetView;
 import com.android.systemui.TransparencyManager;
+import com.android.systemui.aokp.AppWindow;
 
 import java.util.ArrayList;
 import java.math.BigInteger;
@@ -182,12 +162,18 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected PopupMenu mNotificationBlamePopup;
 
     protected int mCurrentUserId = 0;
+<<<<<<< HEAD
     
+=======
+
+    protected FrameLayout mStatusBarContainer;
+
+>>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
     // Pie controls
     public PieControlPanel mPieControlPanel;
     public View mPieControlsTrigger;
     public PieExpandPanel mContainer;
-    public View[] mPieDummytrigger = {null, null, null, null};
+    public View[] mPieDummyTrigger = new View[4];
     int mIndex;
 
     // Halo
@@ -238,9 +224,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     public TransparencyManager mTransparencyManager;
 
     private boolean mDeviceProvisioned = false;
-
-    private boolean mExpandedDesktop;
-    private boolean mPieExpandedOnly;
 
     public Ticker getTicker() {
         return mTicker;
@@ -367,7 +350,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         public boolean onTouch(View v, MotionEvent event) {
             final int action = event.getAction();
 
-            if (!mPieControlPanel.isShowing()) {
+            if (!mPieControlPanel.isShowing() && ! mPieControlPanel.getKeyguardStatus()) {
                 switch(action) {
                     case MotionEvent.ACTION_DOWN:
                         centerPie = Settings.System.getInt(mContext.getContentResolver(), Settings.System.PIE_CENTER, 1) == 1;
@@ -413,6 +396,8 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         mCurrentUIMode = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.CURRENT_UI_MODE,0);
+
+        mStatusBarContainer = new FrameLayout(mContext);
 
         // Connect in to the status bar manager service
         StatusBarIconList iconList = new StatusBarIconList();
@@ -494,6 +479,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                     userSwitched(mCurrentUserId);
                 }
             }}, filter);
+<<<<<<< HEAD
             
         // Listen for PIE gravity
         mContext.getContentResolver().registerContentObserver(
@@ -506,6 +492,8 @@ public abstract class BaseStatusBar extends SystemUI implements
                     }
                 }
             });
+=======
+>>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
 
         // Only watch for per app color changes when the setting is in check
         if (ColorUtils.getPerAppColorState(mContext)) {
@@ -580,18 +568,18 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
 
         attachPie();
-        // Listen for HALO state
+
+        // Listen for HALO enabled switch
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.HALO_ACTIVE), false, new ContentObserver(new Handler()) {
+                Settings.System.getUriFor(Settings.System.HALO_ENABLED), false, new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
                 updateHalo();
             }});
 
-
-        // Listen for HALO enabled switch
+        // Listen for HALO state
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.HALO_ENABLED), false, new ContentObserver(new Handler()) {
+                Settings.System.getUriFor(Settings.System.HALO_ACTIVE), false, new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
                 updateHalo();
@@ -620,6 +608,8 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected void updateHaloButton() {
         if (!mHaloEnabled) {
             mHaloButtonVisible = false;
+        } else {
+            mHaloButtonVisible = true;
         }
         if (mHaloButton != null) {
             mHaloButton.setVisibility(mHaloButtonVisible && !mHaloActive ? View.VISIBLE : View.GONE);
@@ -639,20 +629,19 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected void updateHalo() {
         mHaloEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HALO_ENABLED, 0) == 1;
-
         mHaloActive = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HALO_ACTIVE, 0) == 1;
 
         updateHaloButton();
 
         if (!mHaloEnabled) {
-          mHaloActive = false;
+            mHaloActive = false;
         }
 
         if (mHaloActive) {
             if (mHalo == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 mHalo = (Halo)inflater.inflate(R.layout.halo_trigger, null);
                 mHalo.setLayerType (View.LAYER_TYPE_HARDWARE, null);
                 WindowManager.LayoutParams params = mHalo.getWMParams();
@@ -669,20 +658,19 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     private boolean showPie() {
-        boolean expanded = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.EXPANDED_DESKTOP_STATE, 0) == 1;
-        boolean navbarZero = Integer.parseInt(ExtendedPropertiesUtils
-                .getProperty("com.android.systemui.navbar.dpi", "100")) == 0;
+        boolean pie = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0) == 1;
 
-        return (expanded || navbarZero);
+        return (pie);
     }
 
     public void updatePieControls() {
         if (mPieControlsTrigger != null) mWindowManager.removeView(mPieControlsTrigger);
         if (mPieControlPanel != null)  mWindowManager.removeView(mPieControlPanel);
 
-        for (int i = 0; i < 4; i++ )
-            if (mPieDummytrigger[i] != null)  mWindowManager.removeView(mPieDummytrigger[i]);
+        for (int i = 0; i < 4; i++) {
+            if (mPieDummyTrigger[i] != null)  mWindowManager.removeView(mPieDummyTrigger[i]);
+        }
 
         attachPie();
     }
@@ -721,36 +709,27 @@ public abstract class BaseStatusBar extends SystemUI implements
         } else {
             mPieControlsTrigger = null;
             mPieControlPanel = null;
-            for (int i = 0; i < 4; i++ )
-                mPieDummytrigger[i] = null;
+            for (int i = 0; i < 4; i++) {
+                mPieDummyTrigger[i] = null;
+            }
         }
     }
 
     private void addPieInLocation(int gravity) {                
         // Quick navigation bar panel
-        PieControlPanel panel = (PieControlPanel) View.inflate(mContext,
+        mPieControlPanel = (PieControlPanel) View.inflate(mContext,
                 R.layout.pie_control_panel, null);
 
         // Quick navigation bar trigger area
-        View pieControlsTrigger = new View(mContext);
-
-        // Store our views for removing / adding
-        mPieControlPanel = panel;
-        mPieControlsTrigger = pieControlsTrigger;
-
-        pieControlsTrigger.setOnTouchListener(new PieControlsTouchListener());
-        mWindowManager.addView(pieControlsTrigger, getPieTriggerLayoutParams(mContext, gravity));
-
-        panel.init(mHandler, this, pieControlsTrigger, gravity);
         mPieControlsTrigger = new View(mContext);
         mPieControlsTrigger.setOnTouchListener(new PieControlsTouchListener());
         mWindowManager.addView(mPieControlsTrigger, getPieTriggerLayoutParams(mContext, gravity));
 
         // Overload screen with views that literally do nothing, thank you Google
         int dummyGravity[] = {Gravity.LEFT, Gravity.TOP, Gravity.RIGHT, Gravity.BOTTOM};  
-        for (int i = 0; i < 4; i++ ) {
-            mPieDummytrigger[i] = new View(mContext);
-            mWindowManager.addView(mPieDummytrigger[i], getDummyTriggerLayoutParams(mContext, dummyGravity[i]));
+        for (int i = 0; i < 4; i++) {
+            mPieDummyTrigger[i] = new View(mContext);
+            mWindowManager.addView(mPieDummyTrigger[i], getDummyTriggerLayoutParams(mContext, dummyGravity[i]));
         }
 
         // Init Panel
@@ -767,7 +746,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         lp.setTitle("PieControlPanel");
         lp.windowAnimations = android.R.style.Animation;
 
-        mWindowManager.addView(panel, lp);
+        mWindowManager.addView(mPieControlPanel, lp);
     }
 
     public static WindowManager.LayoutParams getPieTriggerLayoutParams(Context context, int gravity) {
@@ -1047,20 +1026,18 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         // Provide SearchPanel with a temporary parent to allow layout params to work.
         LinearLayout tmpRoot = new LinearLayout(mContext);
-        switch (mCurrentUIMode) {
-            case 0 :  // Phone Mode
-                mSearchPanelView = (SearchPanelView) LayoutInflater.from(mContext).inflate(
-                    R.layout.status_bar_search_panel, tmpRoot, false);
-                break;
-            case 1 : // Tablet Mode
-                mSearchPanelView = (SearchPanelView) LayoutInflater.from(mContext).inflate(
+
+        if (mSystemUiLayout >= 1000) {  // Device is Tablet 
+            mSearchPanelView = (SearchPanelView) LayoutInflater.from(mContext).inflate(
                     R.layout.status_bar_search_panel_tablet, tmpRoot, false);
-                break;
-            case 2 : // Phablet Mode
-                mSearchPanelView = (SearchPanelView) LayoutInflater.from(mContext).inflate(
+        } else if (mSystemUiLayout >= 600) {  // Device uses Phablet UI
+            mSearchPanelView = (SearchPanelView) LayoutInflater.from(mContext).inflate(
                     R.layout.status_bar_search_panel_phablet, tmpRoot, false);
-                break;    
+        } else {  // Device is Phone 
+            mSearchPanelView = (SearchPanelView) LayoutInflater.from(mContext).inflate(
+                    R.layout.status_bar_search_panel, tmpRoot, false);
         }
+
         mSearchPanelView.setOnTouchListener(
                  new TouchOutsideListener(MSG_CLOSE_SEARCH_PANEL, mSearchPanelView));
         mSearchPanelView.setVisibility(View.GONE);
@@ -1286,11 +1263,11 @@ public abstract class BaseStatusBar extends SystemUI implements
                  }
                  break;
              case MSG_CLOSE_SEARCH_PANEL:
-                 if (DEBUG) Slog.d(TAG, "closing search panel");
-                 if (mSearchPanelView != null && mSearchPanelView.isShowing()) {
-                     mSearchPanelView.show(false, true);
-                 }
-                 break;
+                if (DEBUG) Slog.d(TAG, "closing search panel");
+                if (mSearchPanelView != null && mSearchPanelView.isShowing()) {
+                    mSearchPanelView.show(false, true);
+                }
+                break;
             }
         }
     }
@@ -1467,10 +1444,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                     // the stack trace isn't very helpful here.  Just log the exception message.
                     Slog.w(TAG, "Sending contentIntent failed: " + e);
                 }
-
-                KeyguardManager kgm =
-                    (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
-                if (kgm != null) kgm.exitKeyguardSecurely(null);
             }
 
             try {

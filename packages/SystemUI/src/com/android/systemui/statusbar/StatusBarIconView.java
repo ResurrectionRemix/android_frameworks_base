@@ -327,6 +327,30 @@ public class StatusBarIconView extends AnimatedImageView {
         GlobalSettingsObserver(Handler handler, Context context) {
             super(handler);
             mContext = context.getApplicationContext();
+<<<<<<< HEAD
+=======
+        }
+
+        static GlobalSettingsObserver getInstance(Context context) {
+            if (sInstance == null) {
+                sInstance = new GlobalSettingsObserver(new Handler(), context);
+            }
+            return sInstance;
+        }
+
+        void attach(StatusBarIconView sbiv) {
+            if (mIconViews.isEmpty()) {
+                observe();
+            }
+            mIconViews.add(sbiv);
+        }
+
+        void detach(StatusBarIconView sbiv) {
+            mIconViews.remove(sbiv);
+            if (mIconViews.isEmpty()) {
+                unobserve();
+            }
+>>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
         }
 
         static GlobalSettingsObserver getInstance(Context context) {
