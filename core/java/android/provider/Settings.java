@@ -2661,6 +2661,12 @@ public final class Settings {
                 "navring_3",
                 "navring_4",
         };
+        
+         /**
+         * Statusbar State
+         * @hide
+         */
+        public static final String EXPANDED_DESKTOP_STATE = "expanded_desktop_state";
 
         /**
          * Custom navring long press actions
@@ -3146,6 +3152,12 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
+
+        /**
+         * Whether power menu expanded desktop is enabled
+         * @hide
+         */
+        public static final String POWER_MENU_EXPANDED_DESKTOP_ENABLED = "power_menu_expanded_desktop_enabled";
 
         /**
          * Setting to allow Unlimited Widgets
