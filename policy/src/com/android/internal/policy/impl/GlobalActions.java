@@ -376,6 +376,12 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         } else {
             Slog.e(TAG, "not adding AirplaneToggle");
         }
+         // next: expanded desktop toggle
+        // only shown if enabled, disabled by default
+        if(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 0) == 1){
+            mItems.add(mExpandDesktopModeOn);
+        }
         // next: screenshot
         if (mEnableScreenshotToggle) {
             Slog.e(TAG, "Adding screenshot");
@@ -426,12 +432,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         if(mEnableNavBarHideToggle) {
             mItems.add(mNavBarHideToggle);
         }
-        // next: expanded desktop toggle
-        // only shown if enabled, disabled by default
-        if(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 0) == 1){
-            mItems.add(mExpandDesktopModeOn);
-        }
+
         // next: bug report, if enabled
         if (Settings.Secure.getInt(mContext.getContentResolver(),
                 Settings.Secure.BUGREPORT_IN_POWER_MENU, 0) != 0) {
