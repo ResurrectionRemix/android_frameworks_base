@@ -42,6 +42,7 @@
     <color name="toggle_image_changing_state_overlay">@color/toggle_text_changing_state_color</color>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 3b9b8db... Bringing basic pie controls to CyanogenMod. (1/2)
 
@@ -58,4 +59,6 @@
     <color name="pie_background_color">#dd0099cc</color>
     <color name="pie_selected_color">@android:color/holo_blue_light</color>
     <color name="pie_outline_color">#dd0099cc</color>
+=======
+>>>>>>> parent of 6d67190... Bringing basic pie controls to CyanogenMod. (1/2)
 </resources>

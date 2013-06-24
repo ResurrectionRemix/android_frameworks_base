@@ -28,10 +28,7 @@ import com.android.systemui.TransparencyManager;
 import com.android.systemui.recent.RecentTasksLoader;
 import com.android.systemui.recent.RecentsActivity;
 import com.android.systemui.recent.TaskDescription;
-import com.android.systemui.statusbar.pie.PieLayout;
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
-import com.android.systemui.statusbar.policy.PieController;
-import com.android.systemui.statusbar.policy.PieController.Position;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
 import com.android.systemui.statusbar.WidgetView;
 import com.android.systemui.aokp.AppWindow;
@@ -47,14 +44,16 @@ import android.app.TaskStackBuilder;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import android.content.ComponentName;
 >>>>>>> ad5759caa5cf99bf57fd04c4c8813763d18c9a36
 import android.content.ContentResolver;
+=======
+>>>>>>> parent of 6d67190... Bringing basic pie controls to CyanogenMod. (1/2)
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
@@ -67,6 +66,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.graphics.Paint;
+<<<<<<< HEAD
 import android.graphics.PixelFormat;
 <<<<<<< HEAD
 =======
@@ -74,6 +74,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 >>>>>>> ad5759caa5cf99bf57fd04c4c8813763d18c9a36
+=======
+>>>>>>> parent of 6d67190... Bringing basic pie controls to CyanogenMod. (1/2)
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -139,7 +141,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         CommandQueue.Callbacks {
     public static final String TAG = "StatusBar";
     public static final boolean DEBUG = false;
-    public static final boolean DEBUG_INPUT = false;
     public static final boolean MULTIUSER_DEBUG = false;
 
     protected static final int MSG_TOGGLE_RECENTS_PANEL = 1020;
@@ -192,6 +193,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected int mCurrentUserId = 0;
 
+<<<<<<< HEAD
 
     protected FrameLayout mStatusBarContainer;
 
@@ -318,6 +320,8 @@ public abstract class BaseStatusBar extends SystemUI implements
 =======
 
 >>>>>>> parent of 3b9b8db... Bringing basic pie controls to CyanogenMod. (1/2)
+=======
+>>>>>>> parent of 6d67190... Bringing basic pie controls to CyanogenMod. (1/2)
     // UI-specific methods
 
     /**
@@ -514,19 +518,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                     if (true) Slog.v(TAG, "userId " + mCurrentUserId + " is in the house");
                     userSwitched(mCurrentUserId);
                 }
-            }
-        }, filter);
-
-        mPieController = new PieController(mContext);
-        mPieController.attachTo(this);
-        addNavigationBarCallback(mPieController);
-
-        mSettingsObserver = new PieSettingsObserver(new Handler());
-
-        // this calls attachPie() implicitly
-        mSettingsObserver.onChange(true);
-
-        mSettingsObserver.observe();
+            }}, filter);
     }
         // Listen for HALO state
         mContext.getContentResolver().registerContentObserver(
@@ -1561,6 +1553,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
         return km.inKeyguardRestrictedInputMode();
     }
+<<<<<<< HEAD
 
 
     public void addNavigationBarCallback(NavigationBarCallback callback) {
@@ -1743,4 +1736,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
 
+=======
+>>>>>>> parent of 6d67190... Bringing basic pie controls to CyanogenMod. (1/2)
 }

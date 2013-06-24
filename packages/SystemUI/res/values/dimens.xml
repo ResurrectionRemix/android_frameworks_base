@@ -251,6 +251,7 @@
     <!-- PA HALO -->
     <dimen name="halo_content_max_width">250dp</dimen>
 
+<<<<<<< HEAD
     <!-- The padding of the items of the battery cluster -->
     <dimen name="status_bar_battery_cluster_padding">2dip</dimen>
     <!-- The margin adjusment of the text items of the battery cluster -->
@@ -287,4 +288,6 @@
 >>>>>>> 39b76cf133afefc045b849beb9df0e9fa8124b64
 =======
 >>>>>>> parent of 3b9b8db... Bringing basic pie controls to CyanogenMod. (1/2)
+=======
+>>>>>>> parent of 6d67190... Bringing basic pie controls to CyanogenMod. (1/2)
 </resources>
