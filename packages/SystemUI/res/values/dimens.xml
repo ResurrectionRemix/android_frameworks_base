@@ -280,4 +280,8 @@
 
     <dimen name="pie_sysinfo_radius">165dp</dimen>
     <dimen name="pie_sysinfo_height">85sp</dimen>
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 39b76cf133afefc045b849beb9df0e9fa8124b64
 </resources>
