@@ -141,8 +141,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected int mCurrentUserId = 0;
 
-<<<<<<< HEAD
-=======
+
     protected FrameLayout mStatusBarContainer;
 
 
@@ -249,7 +248,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     };
 
->>>>>>> 9422b3f... Bringing basic pie controls to CyanogenMod. (1/2)
+
     // UI-specific methods
 
     /**
@@ -1318,8 +1317,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
         return km.inKeyguardRestrictedInputMode();
     }
-<<<<<<< HEAD
-=======
+
 
     public void addNavigationBarCallback(NavigationBarCallback callback) {
         mNavigationCallbacks.add(callback);
@@ -1485,5 +1483,5 @@ public abstract class BaseStatusBar extends SystemUI implements
         return lp;
     }
 
->>>>>>> 9422b3f... Bringing basic pie controls to CyanogenMod. (1/2)
+
 }
