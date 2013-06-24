@@ -105,6 +105,7 @@ import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
 import com.android.systemui.statusbar.policy.OnSizeChangedListener;
 import com.android.systemui.statusbar.policy.Prefs;
+<<<<<<< HEAD
 import com.android.systemui.statusbar.toggles.ToggleManager;
 import com.android.systemui.aokp.AwesomeAction;
 import com.android.internal.util.aokp.AokpRibbonHelper;
@@ -114,6 +115,10 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+=======
+import com.android.systemui.statusbar.policy.PieController.Position;
+import com.android.systemui.statusbar.powerwidget.PowerWidget;
+>>>>>>> da062dc... Add pie control optimizations for Phone UI.
 
 public class PhoneStatusBar extends BaseStatusBar {
     static final String TAG = "PhoneStatusBar";
@@ -2254,6 +2259,21 @@ public class PhoneStatusBar extends BaseStatusBar {
         }
         if (mNavigationBarView != null) {
             mNavigationBarView.setMenuVisibility(showMenu);
+        }
+
+        // hide pie triggers when keyguard is visible
+        try {
+            if (mWindowManagerService.isKeyguardLocked()) {
+                updatePieTriggerMask(Position.BOTTOM.FLAG
+                        | Position.TOP.FLAG);
+            } else {
+                updatePieTriggerMask(Position.LEFT.FLAG
+                        | Position.BOTTOM.FLAG
+                        | Position.RIGHT.FLAG
+                        | Position.TOP.FLAG);
+            }
+        } catch (RemoteException e) {
+            // nothing else to do ...
         }
 
         // See above re: lights-out policy for legacy apps.
