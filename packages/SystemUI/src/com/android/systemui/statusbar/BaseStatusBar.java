@@ -312,8 +312,12 @@ public abstract class BaseStatusBar extends SystemUI implements
 <<<<<<< HEAD
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> 39b76cf133afefc045b849beb9df0e9fa8124b64
+=======
+
+>>>>>>> parent of 3b9b8db... Bringing basic pie controls to CyanogenMod. (1/2)
     // UI-specific methods
 
     /**
