@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/halo_content"      
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/halo_bg_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_blue" />
+            <ImageView
+                android:id="@+id/halo_bg_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_green" />
+            <ImageView
+                android:id="@+id/halo_bg_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_white" />
+            <ImageView
+                android:id="@+id/halo_bg_purple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_purple" />
+            <ImageView
+                android:id="@+id/halo_bg_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_red" />
+            <ImageView
+                android:id="@+id/halo_bg_yellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_yellow" />
+            <ImageView
+                android:id="@+id/halo_bg_pink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_pink" />
+            <ImageView
+                android:id="@+id/halo_bg_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:src="@drawable/halo_bg_black" />
+
+            <ImageView
+                android:id="@+id/app_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"                
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/halo_overlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"                
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:alpha="0"/>
+
+        </RelativeLayout>
+
+</FrameLayout>

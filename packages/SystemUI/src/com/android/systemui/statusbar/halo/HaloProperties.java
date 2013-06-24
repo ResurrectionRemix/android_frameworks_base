@@ -55,6 +55,8 @@ public class HaloProperties extends FrameLayout {
 
     protected View mHaloBubble;
     protected ImageView mHaloIcon, mHaloOverlay;
+    protected ImageView mHaloBgBlue, mHaloBgGreen, mHaloBgWhite, mHaloBgPurple, mHaloBgRed,
+         mHaloBgYellow, mHaloBgPink, mHaloBgBlack;
 
     protected View mHaloContentView, mHaloTickerContent;
     protected TextView mHaloTextViewR, mHaloTextViewL;
@@ -69,7 +71,8 @@ public class HaloProperties extends FrameLayout {
     private static final int PURPLE = 3;
     private static final int RED = 4;
     private static final int YELLOW = 5;
-    private static final int BLACK = 6;
+    private static final int PINK = 6;
+    private static final int BLACK = 7;
 
     Handler mHandler;
 
@@ -78,10 +81,28 @@ public class HaloProperties extends FrameLayout {
     public HaloProperties(Context context) {
         super(context);
 
-        mHaloBlackX = mContext.getResources().getDrawable(R.drawable.halo_black_x);
-        updateDrawable();
-
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        mHaloDismiss = mContext.getResources().getDrawable(R.drawable.halo_dismiss);
+        mHaloBackL = mContext.getResources().getDrawable(R.drawable.halo_back_left);
+        mHaloBackR = mContext.getResources().getDrawable(R.drawable.halo_back_right);
+        mHaloBlackX = mContext.getResources().getDrawable(R.drawable.halo_black_x);
+
+        mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
+
+        // The colors
+        mHaloBgBlue = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_blue);
+        mHaloBgGreen = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_green);
+        mHaloBgWhite = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_white);
+        mHaloBgPurple = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_purple);
+        mHaloBgRed = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_red);
+        mHaloBgYellow = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_yellow);
+        mHaloBgPink = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_pink);
+        mHaloBgBlack = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_black);
+
+        updateDrawable();
+        mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
+        mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
 
         mHaloContentView = mInflater.inflate(R.layout.halo_speech, null);
         mHaloTickerContent = mHaloContentView.findViewById(R.id.ticker);
@@ -193,59 +214,90 @@ public class HaloProperties extends FrameLayout {
         }
     }
 
-    private void originalDrawables() {
-        mHaloDismiss = mContext.getResources().getDrawable(R.drawable.halo_dismiss);
-        mHaloBackL = mContext.getResources().getDrawable(R.drawable.halo_back_left);
-        mHaloBackR = mContext.getResources().getDrawable(R.drawable.halo_back_right);
-    }
-
     private void updateDrawable() {
         ContentResolver cr = mContext.getContentResolver();
-        mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mStyle = Settings.System.getInt(cr, Settings.System.HALO_STYLE, 0);
 
         switch (mStyle) {
             case BLUE:
-            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_blue, null);
-            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
-            originalDrawables();
+            mHaloBgBlue.setVisibility(View.VISIBLE);
+            mHaloBgGreen.setVisibility(View.GONE);
+            mHaloBgWhite.setVisibility(View.GONE);
+            mHaloBgPurple.setVisibility(View.GONE);
+            mHaloBgRed.setVisibility(View.GONE);
+            mHaloBgYellow.setVisibility(View.GONE);
+            mHaloBgPink.setVisibility(View.GONE);
+            mHaloBgBlack.setVisibility(View.GONE);
             break;
             case GREEN:
-            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_green, null);
-            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
-            originalDrawables();
+            mHaloBgBlue.setVisibility(View.GONE);
+            mHaloBgGreen.setVisibility(View.VISIBLE);
+            mHaloBgWhite.setVisibility(View.GONE);
+            mHaloBgPurple.setVisibility(View.GONE);
+            mHaloBgRed.setVisibility(View.GONE);
+            mHaloBgYellow.setVisibility(View.GONE);
+            mHaloBgPink.setVisibility(View.GONE);
+            mHaloBgBlack.setVisibility(View.GONE);
             break;
             case WHITE:
-            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_white, null);
-            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
-            originalDrawables();
+            mHaloBgBlue.setVisibility(View.GONE);
+            mHaloBgGreen.setVisibility(View.GONE);
+            mHaloBgWhite.setVisibility(View.VISIBLE);
+            mHaloBgPurple.setVisibility(View.GONE);
+            mHaloBgRed.setVisibility(View.GONE);
+            mHaloBgYellow.setVisibility(View.GONE);
+            mHaloBgPink.setVisibility(View.GONE);
+            mHaloBgBlack.setVisibility(View.GONE);
             break;
             case PURPLE:
-            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_purple, null);
-            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
-            originalDrawables();
+            mHaloBgBlue.setVisibility(View.GONE);
+            mHaloBgGreen.setVisibility(View.GONE);
+            mHaloBgWhite.setVisibility(View.GONE);
+            mHaloBgPurple.setVisibility(View.VISIBLE);
+            mHaloBgRed.setVisibility(View.GONE);
+            mHaloBgYellow.setVisibility(View.GONE);
+            mHaloBgPink.setVisibility(View.GONE);
+            mHaloBgBlack.setVisibility(View.GONE);
             break;
             case RED:
-            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_red, null);
-            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
-            originalDrawables();
+            mHaloBgBlue.setVisibility(View.GONE);
+            mHaloBgGreen.setVisibility(View.GONE);
+            mHaloBgWhite.setVisibility(View.GONE);
+            mHaloBgPurple.setVisibility(View.GONE);
+            mHaloBgRed.setVisibility(View.VISIBLE);
+            mHaloBgYellow.setVisibility(View.GONE);
+            mHaloBgPink.setVisibility(View.GONE);
+            mHaloBgBlack.setVisibility(View.GONE);
             break;
             case YELLOW:
-            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_yellow, null);
-            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
-            originalDrawables();
+            mHaloBgBlue.setVisibility(View.GONE);
+            mHaloBgGreen.setVisibility(View.GONE);
+            mHaloBgWhite.setVisibility(View.GONE);
+            mHaloBgPurple.setVisibility(View.GONE);
+            mHaloBgRed.setVisibility(View.GONE);
+            mHaloBgYellow.setVisibility(View.VISIBLE);
+            mHaloBgPink.setVisibility(View.GONE);
+            mHaloBgBlack.setVisibility(View.GONE);
+            break;
+            case PINK:
+            mHaloBgBlue.setVisibility(View.GONE);
+            mHaloBgGreen.setVisibility(View.GONE);
+            mHaloBgWhite.setVisibility(View.GONE);
+            mHaloBgPurple.setVisibility(View.GONE);
+            mHaloBgRed.setVisibility(View.GONE);
+            mHaloBgYellow.setVisibility(View.GONE);
+            mHaloBgPink.setVisibility(View.VISIBLE);
+            mHaloBgBlack.setVisibility(View.GONE);
             break;
             case BLACK:
-            mHaloBubble = mInflater.inflate(R.layout.halo_bubble_black, null);
-            mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
-            mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
-            originalDrawables();
+            mHaloBgBlue.setVisibility(View.GONE);
+            mHaloBgGreen.setVisibility(View.GONE);
+            mHaloBgWhite.setVisibility(View.GONE);
+            mHaloBgPurple.setVisibility(View.GONE);
+            mHaloBgRed.setVisibility(View.GONE);
+            mHaloBgYellow.setVisibility(View.GONE);
+            mHaloBgPink.setVisibility(View.GONE);
+            mHaloBgBlack.setVisibility(View.VISIBLE);
             break;            
         }
     }
