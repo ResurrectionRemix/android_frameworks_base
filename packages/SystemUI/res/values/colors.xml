@@ -40,25 +40,4 @@
     <color name="toggle_text">#ffffffff</color>
     <color name="toggle_text_changing_state_color">#ff787878</color>
     <color name="toggle_image_changing_state_overlay">@color/toggle_text_changing_state_color</color>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 3b9b8db... Bringing basic pie controls to CyanogenMod. (1/2)
-
-=======
-    
->>>>>>> 39b76cf133afefc045b849beb9df0e9fa8124b64
-    <!-- ==================== pie controls ==================== -->
-    <!-- this color is used to darkening the whole screen when pie controls are active -->
-    <color name="pie_overlay_color">#cc000000</color>
-    <!-- color of an active snap point (inactive are blended with a 0x40 alpha channel) -->
-    <color name="pie_snap_color">@android:color/holo_blue_light</color>
-    <color name="pie_text_color">#ffffffff</color>
-    <color name="pie_foreground_color">#ffffffff</color>
-    <color name="pie_background_color">#dd0099cc</color>
-    <color name="pie_selected_color">@android:color/holo_blue_light</color>
-    <color name="pie_outline_color">#dd0099cc</color>
-=======
->>>>>>> parent of 6d67190... Bringing basic pie controls to CyanogenMod. (1/2)
 </resources>

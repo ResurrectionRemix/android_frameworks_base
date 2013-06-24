@@ -2218,7 +2218,11 @@ public final class ActivityThread {
                 r.state.setClassLoader(cl);
             }
         } catch (Exception e) {
-                // Unable to resume activity
+            if (!mInstrumentation.onException(activity, e)) {
+                throw new RuntimeException(
+                    "Unable to instantiate activity " + component
+                    + ": " + e.toString(), e);
+            }
         }
 
         try {
