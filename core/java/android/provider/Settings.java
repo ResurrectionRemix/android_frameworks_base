@@ -2456,7 +2456,6 @@ public final class Settings {
         public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
 
         /**
-<<<<<<< HEAD
          * Style of Battery
          * 0 - Icon Only
          * 1 - Text Only
@@ -2471,7 +2470,6 @@ public final class Settings {
          * Control the display of the action overflow button within app UI.
          * 0 = use system default
          * 1 = force on
-=======
          * Whether to enable pie controls on expanded screen?
          * The value is boolean (1 or 0).
          * Default: 0
@@ -2507,7 +2505,6 @@ public final class Settings {
         /**
          * Quick Settings Panel Tiles to Use
          *
->>>>>>> 9422b3f... Bringing basic pie controls to CyanogenMod. (1/2)
          * @hide
          */
         public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
