@@ -30,7 +30,9 @@ import com.android.systemui.recent.RecentTasksLoader;
 import com.android.systemui.recent.RecentsActivity;
 import com.android.systemui.recent.TaskDescription;
 import com.android.systemui.statusbar.pie.PieLayout;
+import com.android.systemui.statusbar.halo.Halo;
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
+import com.android.systemui.statusbar.phone.Ticker;
 import com.android.systemui.statusbar.policy.PieController;
 import com.android.systemui.statusbar.policy.PieController.Position;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
@@ -93,33 +95,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RemoteViews;
 import android.widget.TextView;
-
-import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.statusbar.StatusBarIcon;
-import com.android.internal.statusbar.StatusBarIconList;
-import com.android.internal.statusbar.StatusBarNotification;
-import com.android.internal.widget.SizeAdaptiveLayout;
-import com.android.systemui.aokp.AokpSwipeRibbon;
-import com.android.systemui.R;
-import com.android.systemui.SearchPanelView;
-import com.android.systemui.SystemUI;
-import com.android.systemui.recent.RecentTasksLoader;
-import com.android.systemui.recent.RecentsActivity;
-import com.android.systemui.recent.TaskDescription;
-import com.android.systemui.statusbar.halo.Halo;
-import com.android.systemui.statusbar.phone.QuickSettingsContainerView;
-import com.android.systemui.statusbar.phone.Ticker;
-import com.android.systemui.statusbar.policy.BatteryController;
-import com.android.systemui.statusbar.policy.SbBatteryController;
-import com.android.systemui.statusbar.policy.Clock;
-import com.android.systemui.statusbar.policy.ClockCenter;
-import com.android.systemui.statusbar.policy.NetworkController;
-import com.android.systemui.statusbar.policy.NotificationRowLayout;
-import com.android.systemui.statusbar.tablet.StatusBarPanel;
-import com.android.systemui.statusbar.view.PieStatusPanel;
-import com.android.systemui.statusbar.view.PieExpandPanel;
-import com.android.systemui.statusbar.WidgetView;
-import com.android.systemui.aokp.AppWindow;
 
 import java.util.ArrayList;
 
@@ -290,13 +265,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     };
 
-    // Pie controls
-    public PieControlPanel mPieControlPanel;
-    public View mPieControlsTrigger;
-    public PieExpandPanel mContainer;
-    public View[] mPieDummyTrigger = new View[4];
-    int mIndex;
-
     // Halo
     protected Halo mHalo = null;
     protected Ticker mTicker;
@@ -305,28 +273,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected ImageView mHaloButton;
     protected boolean mHaloButtonVisible = true;
 
-    // Policy
-    public NetworkController mNetworkController;
-    public BatteryController mBatteryController;
-    public SbBatteryController mSbBatteryController;
-    public SignalClusterView mSignalCluster;
-    public Clock mClock;
-    public ClockCenter mCClock;
-
-    // left-hand icons 
-    public LinearLayout mStatusIcons;
-
-    // Statusbar view container
-    public ViewGroup mBarView;
-
-    // Color fields
-    private Canvas mCurrentCanvas;
-    private Canvas mNewCanvas;
-    private TransitionDrawable mTransition;
-    public ColorUtils.ColorSettingInfo mLastIconColor;
-    public ColorUtils.ColorSettingInfo mLastBackgroundColor;
-    protected int mClockColor = com.android.internal.R.color.holo_blue_light;
-    public int mSystemUiLayout = ExtendedPropertiesUtils.getActualProperty("com.android.systemui.layout");
 
     // UI-specific methods
 
