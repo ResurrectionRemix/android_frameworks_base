@@ -22,6 +22,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.gesture.Gesture;
+import android.gesture.GestureLibraries;
+import android.gesture.GestureLibrary;
+import android.gesture.Prediction;
+import android.gesture.GestureStore;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.RemoteException;
@@ -37,6 +42,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * Keeps the lock pattern/password data and related settings for each user.
@@ -61,6 +67,9 @@ public class LockSettingsService extends ILockSettings.Stub {
     private static final String SYSTEM_DIRECTORY = "/system/";
     private static final String LOCK_PATTERN_FILE = "gesture.key";
     private static final String LOCK_PASSWORD_FILE = "password.key";
+    private static final String LOCK_GESTURE_FILE = "lock_gesture.key";
+
+    private static final String LOCK_GESTURE_NAME = "lock_gesture";
 
     private final Context mContext;
 
@@ -179,6 +188,25 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
+    private String getLockGestureFilename(int userId) {
+        return getLockGestureFilename(userId, isDefaultSize(userId));
+    }
+
+    private String getLockGestureFilename(int userId, boolean defaultSize) {
+        String dataSystemDirectory =
+                android.os.Environment.getDataDirectory().getAbsolutePath() +
+                SYSTEM_DIRECTORY;
+        String patternFile = LOCK_GESTURE_FILE;
+
+        if (userId == 0) {
+            // Leave it in the same place for user 0
+            return dataSystemDirectory + patternFile;
+        } else {
+            return  new File(Environment.getUserSystemDirectory(userId), patternFile)
+                    .getAbsolutePath();
+        }
+    }
+
     private String getLockPasswordFilename(int userId) {
         String dataSystemDirectory =
                 android.os.Environment.getDataDirectory().getAbsolutePath() +
@@ -204,6 +232,13 @@ public class LockSettingsService extends ILockSettings.Stub {
         // Do we need a permissions check here?
 
         return new File(getLockPatternFilename(userId)).length() > 0;
+    }
+
+    @Override
+    public boolean haveGesture(int userId) throws RemoteException {
+        // Do we need a permissions check here?
+
+        return new File(getLockGestureFilename(userId)).length() > 0;
     }
 
     @Override
@@ -234,6 +269,46 @@ public class LockSettingsService extends ILockSettings.Stub {
             Slog.e(TAG, "Cannot read file " + ioe);
             return true;
         }
+    }
+
+    @Override
+    public void setLockGesture(Gesture gesture, int userId) throws RemoteException {
+        checkWritePermission(userId);
+        if (gesture == null)
+            return;
+
+        File storeFile = new File(getLockGestureFilename(userId));
+        GestureLibrary store = GestureLibraries.fromFile(storeFile);
+
+        store.load();
+        if (store.getGestures(LOCK_GESTURE_NAME) != null) {
+            store.removeEntry(LOCK_GESTURE_NAME);
+        }
+
+        store.addGesture(LOCK_GESTURE_NAME, gesture);
+        store.save();
+    }
+
+    @Override
+    public boolean checkGesture(Gesture gesture, int userId) throws RemoteException {
+        checkPasswordReadPermission(userId);
+
+        File storeFile = new File(getLockGestureFilename(userId));
+        GestureLibrary store = GestureLibraries.fromFile(storeFile);
+        int minPredictionScore = mContext.getResources().getInteger(
+                com.android.internal.R.integer.min_gesture_prediction_score);
+        store.setOrientationStyle(GestureStore.ORIENTATION_SENSITIVE);
+        store.load();
+        ArrayList<Prediction> predictions = store.recognize(gesture);
+        if (predictions.size() > 0) {
+            Prediction prediction = predictions.get(0);
+            if (prediction.score > minPredictionScore) {
+                if (prediction.name.equals(LOCK_GESTURE_NAME)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
