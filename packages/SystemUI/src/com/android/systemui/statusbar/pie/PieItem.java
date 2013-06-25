@@ -73,11 +73,7 @@ public class PieItem extends PieView.PieDrawable {
      */
     public final static int SELECTED = 0x100;
 
-<<<<<<< HEAD
     public PieItem(Context context, PieView parent, int flags, int width, Object tag, View view) {
-=======
-    public PieItem(Context context, PieLayout parent, int flags, int width, Object tag, View view) {
->>>>>>> e025153... Improving pie control's user interaction
         mView = view;
         mPieLayout = parent;
         this.tag = tag;
