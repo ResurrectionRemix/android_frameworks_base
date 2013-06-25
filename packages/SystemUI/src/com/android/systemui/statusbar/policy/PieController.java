@@ -144,7 +144,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         public static float sDistance;
         private float initialX = 0;
         private float initialY = 0;
-        private float gracePeriod = 0;
 
         private Tracker(Position position) {
             this.position = position;
@@ -153,14 +152,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         public void start(MotionEvent event) {
             initialX = event.getX();
             initialY = event.getY();
-            switch (position) {
-                case LEFT:
-                    gracePeriod = initialX + sDistance / 3.0f;
-                    break;
-                case RIGHT:
-                    gracePeriod = initialX - sDistance / 3.0f;
-                    break;
-            }
             active = true;
         }
 
@@ -176,9 +167,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
             boolean loaded = false;
             switch (position) {
                 case LEFT:
-                    if (x < gracePeriod) {
-                        initialY = y;
-                    }
                     if (initialY - y < sDistance && y - initialY < sDistance) {
                         if (x - initialX <= sDistance) {
                             return false;
@@ -203,9 +191,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
                     }
                     break;
                 case RIGHT:
-                    if (x > gracePeriod) {
-                        initialY = y;
-                    }
                     if (initialY - y < sDistance && y - initialY < sDistance) {
                         if (initialX - x <= sDistance) {
                             return false;
@@ -400,7 +385,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         view.setMinimumHeight(minimumImageSize);
         LayoutParams lp = new LayoutParams(minimumImageSize, minimumImageSize);
         view.setLayoutParams(lp);
-        PieItem item = new PieItem(mContext, mPieContainer, 0, width, type, view);
+        PieItem item = new PieItem(mContext, mPieContainer, width, type, view);
         item.setOnClickListener(this);
         return item;
     }

@@ -136,6 +136,11 @@ public class PieLayout extends FrameLayout implements View.OnTouchListener {
             mOuter = outer;
         }
 
+        public boolean hit(float alpha, int radius) {
+            return (alpha > mStart) && (alpha < mStart + mSweep)
+                    && (radius > mInner) && (radius < mOuter);
+        }
+
         // Display on all positions
         public final static int DISPLAY_ALL = Position.LEFT.FLAG
                 | Position.BOTTOM.FLAG
@@ -147,6 +152,8 @@ public class PieLayout extends FrameLayout implements View.OnTouchListener {
                 | Position.RIGHT.FLAG;
         // The PieDrawable is visible, note that slice visibility overrides item visibility
         public final static int VISIBLE = 0x10;
+        // The item (?) is selected
+        public final static int SELECTED = 0x20;
 
         public int flags;
     };
@@ -597,7 +604,6 @@ public class PieLayout extends FrameLayout implements View.OnTouchListener {
         if (mActiveItem != null) {
             mActiveItem.setSelected(false);
         }
-        mActiveItem = null;
 
         mActive = false;
     }
