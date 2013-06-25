@@ -221,13 +221,8 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
                     inputManager.injectInputEvent(new KeyEvent(eventTime - 50, eventTime - 50,
                             KeyEvent.ACTION_DOWN, m.arg1, 0),
                             InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
-<<<<<<< HEAD
                     inputManager.injectInputEvent(new KeyEvent(eventTime - 50, eventTime - 25,
                             KeyEvent.ACTION_UP, m.arg1, 0),
-
-                    break;
-                case MSG_INJECT_KEY_UP:
-                    inputManager.injectInputEvent((KeyEvent) m.obj,
                             InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
 
                     break;
@@ -530,7 +525,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
 
     @Override
     public void onClick(PieItem item) {
-<<<<<<< HEAD
         ButtonType type = (ButtonType) item.tag;
 
         // provide the same haptic feedback as if a virtual key is pressed
@@ -547,18 +541,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
                 injectKeyDelayed(KeyEvent.KEYCODE_MENU);
                 break;
             case RECENT:
-        long when = SystemClock.uptimeMillis();
-        ButtonInfo bi = (ButtonInfo) item.tag;
-
-        // play sound effect directly, since detaching the container will prevent to play the sound
-        // at a later time.
-        mPieContainer.playSoundEffect(SoundEffectConstants.CLICK);
-        if (bi.keyCode != 0) {
-            injectKeyDelayed(bi.keyCode, when);
-        } else {
-            // provide the same haptic feedback as if a virtual key is pressed
-            mPieContainer.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            if (bi == NavigationButtons.RECENT) {
                 if (mStatusBar != null) {
                     mStatusBar.toggleRecentApps();
                 }
