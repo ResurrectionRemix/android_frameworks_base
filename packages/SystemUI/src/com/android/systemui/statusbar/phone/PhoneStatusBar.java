@@ -115,7 +115,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import com.android.systemui.statusbar.policy.PieController.Position;
-import com.android.systemui.statusbar.powerwidget.PowerWidget;
 
 public class PhoneStatusBar extends BaseStatusBar {
     static final String TAG = "PhoneStatusBar";
