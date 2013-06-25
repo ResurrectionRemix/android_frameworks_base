@@ -51,8 +51,10 @@ import com.android.internal.util.aokp.BackgroundAlphaColorDrawable;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.NavigationBarView;
 import com.android.systemui.statusbar.policy.PieController.Position;
+=======
 import com.android.internal.util.pie.PiePosition;
 import com.android.systemui.R;
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
 
 public class PhoneStatusBarView extends PanelBar {
     private static final String TAG = "PhoneStatusBarView";

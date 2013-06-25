@@ -33,8 +33,11 @@ import android.provider.Settings;
 import android.util.Slog;
 import android.view.MotionEvent;
 import android.view.View;
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
 import android.widget.FrameLayout;
+=======
 import android.view.ViewConfiguration;
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
 
 import com.android.internal.util.pie.PiePosition;
 import com.android.systemui.R;
@@ -57,11 +60,14 @@ public class PieView extends View implements View.OnTouchListener {
     /* DEBUG */
     private long mActivateStartDebug = 0;
 
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
     private static final int TIME_FADEIN = 600;
     private static final int TIME_FADEIN_DELAY = 1000;
 
     private static final int COLOR_BACKGROUND = 0xee000000;
+=======
     private static final int TIME_FADEIN = 300;
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
 
     private Paint mBackgroundPaint = new Paint();
     private float mBackgroundFraction;
@@ -229,10 +235,13 @@ public class PieView extends View implements View.OnTouchListener {
         public final PiePosition position;
     }
 
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
     private int mTriggerSlots;
     private SnapPoint[] mSnapPoints = new SnapPoint[Position.values().length];
+=======
     private int mSnapPointMask = 0;
     private SnapPoint[] mSnapPoints = new SnapPoint[PiePosition.values().length];
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
     private SnapPoint mActiveSnap = null;
 
     /**
@@ -243,6 +252,7 @@ public class PieView extends View implements View.OnTouchListener {
     }
     private OnSnapListener mOnSnapListener = null;
 
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
     private final class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -265,22 +275,27 @@ public class PieView extends View implements View.OnTouchListener {
     private SettingsObserver mSettingsObserver;
 
     public PieLayout(Context context) {
+=======
     public interface OnExitListener {
         void onExit();
     }
     private OnExitListener mOnExitListener = null;
 
     public PieView(Context context) {
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
         super(context);
 
         mBackgroundAnimator.addUpdateListener(mUpdateListener);
 
         setDrawingCacheEnabled(false);
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
         setVisibility(View.GONE);
+=======
         setVisibility(View.VISIBLE);
         setWillNotDraw(false);
         setFocusable(true);
         setOnTouchListener(this);
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
 
         getDimensions();
         getColors();
@@ -293,6 +308,8 @@ public class PieView extends View implements View.OnTouchListener {
         mOnSnapListener = onSnapListener;
     }
 
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
+=======
     public void setOnExitListener(OnExitListener onExitListener) {
         mOnExitListener = onExitListener;
     }
@@ -305,6 +322,7 @@ public class PieView extends View implements View.OnTouchListener {
         mSnapPointMask = mask;
     }
 
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
     private void getDimensions() {
         mPieScale = Settings.System.getFloat(mContext.getContentResolver(),
                 Settings.System.PIE_SIZE, 1f);
@@ -340,10 +358,12 @@ public class PieView extends View implements View.OnTouchListener {
         }
 
         mActiveSnap = null;
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
         for (Position g : Position.values()) {
             if ((mTriggerSlots & g.FLAG) == 0) {
                 if (g == Position.LEFT || g == Position.RIGHT) {
                     mSnapPoints[g.INDEX] = new SnapPoint(g.FACTOR * width, height / 2, g);
+=======
         // reuse already created snap points
         for (PiePosition g : PiePosition.values()) {
             if ((mSnapPointMask & g.FLAG) == 0) {
@@ -356,6 +376,7 @@ public class PieView extends View implements View.OnTouchListener {
                 }
                 if (mSnapPoints[g.INDEX] != null) {
                     mSnapPoints[g.INDEX].reposition(x, y);
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
                 } else {
                     mSnapPoints[g.INDEX] = new SnapPoint(width / 2, g.FACTOR * height, g);
                 }
@@ -502,10 +523,13 @@ public class PieView extends View implements View.OnTouchListener {
                 }
                 PieView.this.exit();
             }
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
+=======
 
             if (action == MotionEvent.ACTION_CANCEL) {
                 PieView.this.exit();
             }
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
         }
         return true;
     }
@@ -599,7 +623,10 @@ public class PieView extends View implements View.OnTouchListener {
 
         mActivateStartDebug = SystemClock.uptimeMillis();
 
+<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
+=======
         getDimensions();
+>>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
         mPosition = position;
         mLayoutDoneForPosition = null;
         mActive = true;
