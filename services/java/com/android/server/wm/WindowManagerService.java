@@ -10463,6 +10463,9 @@ public class WindowManagerService extends IWindowManager.Stub
         }
         mPolicy.showAssistant();
     }
+
+<<<<<<< HEAD
+=======
     public void updateDisplayMetrics() {
         long origId = Binder.clearCallingIdentity();
         boolean changed = false;
@@ -10513,6 +10516,7 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
+>>>>>>> 9f11bd1... Pie controls: Introducing a pie delivery service
     void dumpPolicyLocked(PrintWriter pw, String[] args, boolean dumpAll) {
         pw.println("WINDOW MANAGER POLICY STATE (dumpsys window policy)");
         mPolicy.dump("    ", pw, args);
