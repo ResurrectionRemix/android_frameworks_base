@@ -55,9 +55,7 @@ public class HaloProperties extends FrameLayout {
     private Drawable mHaloCurrentOverlay;
 
     protected View mHaloBubble;
-    protected ImageView mHaloIcon, mHaloOverlay;
-    protected ImageView mHaloBgBlue, mHaloBgGreen, mHaloBgWhite, mHaloBgPurple, mHaloBgRed,
-         mHaloBgYellow, mHaloBgPink, mHaloBgBlack;
+    protected ImageView mHaloBg, mHaloIcon, mHaloOverlay;
 
     protected View mHaloContentView, mHaloTickerContent;
     protected TextView mHaloTextViewR, mHaloTextViewL;
@@ -90,18 +88,7 @@ public class HaloProperties extends FrameLayout {
         mHaloBlackX = mContext.getResources().getDrawable(R.drawable.halo_black_x);
 
         mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
-
-        // The colors
-        mHaloBgBlue = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_blue);
-        mHaloBgGreen = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_green);
-        mHaloBgWhite = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_white);
-        mHaloBgPurple = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_purple);
-        mHaloBgRed = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_red);
-        mHaloBgYellow = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_yellow);
-        mHaloBgPink = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_pink);
-        mHaloBgBlack = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_black);
-
-        updateDrawable();
+        mHaloBg = (ImageView) mHaloBubble.findViewById(R.id.halo_bg);
         mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
         mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
 
@@ -109,7 +96,8 @@ public class HaloProperties extends FrameLayout {
         mHaloTickerContent = mHaloContentView.findViewById(R.id.ticker);
         mHaloTextViewR = (TextView) mHaloTickerContent.findViewById(R.id.bubble_r);
         mHaloTextViewL = (TextView) mHaloTickerContent.findViewById(R.id.bubble_l);
-        updateTextView();
+
+        updateColorView();
 
         mHaloNumberView = mInflater.inflate(R.layout.halo_number, null);
         mHaloNumber = (TextView) mHaloNumberView.findViewById(R.id.number);
@@ -204,128 +192,44 @@ public class HaloProperties extends FrameLayout {
             ContentResolver resolver = mContext.getContentResolver();
 
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HALO_STYLE), false, this);
+                    Settings.System.HALO_CIRCLE_COLOR), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HALO_BUBBLE_COLOR), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HALO_BUBBLE_TEXT_COLOR), false, this);
-            updateDrawable();
-            updateTextView();
+            updateColorView();
         }
 
         @Override
         public void onChange(boolean selfChange) {
-            updateDrawable();
-            updateTextView();
+            updateColorView();
         }
     }
 
-    private void updateTextView() {
+    private void updateColorView() {
         ContentResolver cr = mContext.getContentResolver();
-        int mColor = Settings.System.getInt(cr,
+        int mCircleColor = Settings.System.getInt(cr,
+               Settings.System.HALO_CIRCLE_COLOR, 0xFF33B5E5);
+        int mBubbleColor = Settings.System.getInt(cr,
                Settings.System.HALO_BUBBLE_COLOR, 0xFF33B5E5);
         int mTextColor = Settings.System.getInt(cr, 
                Settings.System.HALO_BUBBLE_TEXT_COLOR, 0xFFFFFFFF);
 
-        // TODO : Add Halo speech bubbles
+        // Ring
+        mHaloBg.setBackgroundResource(R.drawable.halo_bg);
+        mHaloBg.getBackground().setColorFilter(ColorFilterMaker.
+                changeColorAlpha(mCircleColor, .32f, 0f));
+
+        // Speech bubbles
         mHaloTextViewL.setBackgroundResource(R.drawable.bubble_l);
         mHaloTextViewL.getBackground().setColorFilter(ColorFilterMaker.
-                changeColorAlpha(mColor, .32f, 0f));
+                changeColorAlpha(mBubbleColor, .32f, 0f));
         mHaloTextViewL.setTextColor(mTextColor);
         mHaloTextViewL.setAlpha(0f);
         mHaloTextViewR.setBackgroundResource(R.drawable.bubble_r);
         mHaloTextViewR.getBackground().setColorFilter(ColorFilterMaker.
-                changeColorAlpha(mColor, .32f, 0f));
+                changeColorAlpha(mBubbleColor, .32f, 0f));
         mHaloTextViewR.setTextColor(mTextColor);
         mHaloTextViewR.setAlpha(0f);
-    }
-        
-
-    private void updateDrawable() {
-        ContentResolver cr = mContext.getContentResolver();
-        mStyle = Settings.System.getInt(cr, Settings.System.HALO_STYLE, 0);
-
-        switch (mStyle) {
-            case BLUE:
-            mHaloBgBlue.setVisibility(View.VISIBLE);
-            mHaloBgGreen.setVisibility(View.GONE);
-            mHaloBgWhite.setVisibility(View.GONE);
-            mHaloBgPurple.setVisibility(View.GONE);
-            mHaloBgRed.setVisibility(View.GONE);
-            mHaloBgYellow.setVisibility(View.GONE);
-            mHaloBgPink.setVisibility(View.GONE);
-            mHaloBgBlack.setVisibility(View.GONE);
-            break;
-            case GREEN:
-            mHaloBgBlue.setVisibility(View.GONE);
-            mHaloBgGreen.setVisibility(View.VISIBLE);
-            mHaloBgWhite.setVisibility(View.GONE);
-            mHaloBgPurple.setVisibility(View.GONE);
-            mHaloBgRed.setVisibility(View.GONE);
-            mHaloBgYellow.setVisibility(View.GONE);
-            mHaloBgPink.setVisibility(View.GONE);
-            mHaloBgBlack.setVisibility(View.GONE);
-            break;
-            case WHITE:
-            mHaloBgBlue.setVisibility(View.GONE);
-            mHaloBgGreen.setVisibility(View.GONE);
-            mHaloBgWhite.setVisibility(View.VISIBLE);
-            mHaloBgPurple.setVisibility(View.GONE);
-            mHaloBgRed.setVisibility(View.GONE);
-            mHaloBgYellow.setVisibility(View.GONE);
-            mHaloBgPink.setVisibility(View.GONE);
-            mHaloBgBlack.setVisibility(View.GONE);
-            break;
-            case PURPLE:
-            mHaloBgBlue.setVisibility(View.GONE);
-            mHaloBgGreen.setVisibility(View.GONE);
-            mHaloBgWhite.setVisibility(View.GONE);
-            mHaloBgPurple.setVisibility(View.VISIBLE);
-            mHaloBgRed.setVisibility(View.GONE);
-            mHaloBgYellow.setVisibility(View.GONE);
-            mHaloBgPink.setVisibility(View.GONE);
-            mHaloBgBlack.setVisibility(View.GONE);
-            break;
-            case RED:
-            mHaloBgBlue.setVisibility(View.GONE);
-            mHaloBgGreen.setVisibility(View.GONE);
-            mHaloBgWhite.setVisibility(View.GONE);
-            mHaloBgPurple.setVisibility(View.GONE);
-            mHaloBgRed.setVisibility(View.VISIBLE);
-            mHaloBgYellow.setVisibility(View.GONE);
-            mHaloBgPink.setVisibility(View.GONE);
-            mHaloBgBlack.setVisibility(View.GONE);
-            break;
-            case YELLOW:
-            mHaloBgBlue.setVisibility(View.GONE);
-            mHaloBgGreen.setVisibility(View.GONE);
-            mHaloBgWhite.setVisibility(View.GONE);
-            mHaloBgPurple.setVisibility(View.GONE);
-            mHaloBgRed.setVisibility(View.GONE);
-            mHaloBgYellow.setVisibility(View.VISIBLE);
-            mHaloBgPink.setVisibility(View.GONE);
-            mHaloBgBlack.setVisibility(View.GONE);
-            break;
-            case PINK:
-            mHaloBgBlue.setVisibility(View.GONE);
-            mHaloBgGreen.setVisibility(View.GONE);
-            mHaloBgWhite.setVisibility(View.GONE);
-            mHaloBgPurple.setVisibility(View.GONE);
-            mHaloBgRed.setVisibility(View.GONE);
-            mHaloBgYellow.setVisibility(View.GONE);
-            mHaloBgPink.setVisibility(View.VISIBLE);
-            mHaloBgBlack.setVisibility(View.GONE);
-            break;
-            case BLACK:
-            mHaloBgBlue.setVisibility(View.GONE);
-            mHaloBgGreen.setVisibility(View.GONE);
-            mHaloBgWhite.setVisibility(View.GONE);
-            mHaloBgPurple.setVisibility(View.GONE);
-            mHaloBgRed.setVisibility(View.GONE);
-            mHaloBgYellow.setVisibility(View.GONE);
-            mHaloBgPink.setVisibility(View.GONE);
-            mHaloBgBlack.setVisibility(View.VISIBLE);
-            break;            
-        }
     }
 }

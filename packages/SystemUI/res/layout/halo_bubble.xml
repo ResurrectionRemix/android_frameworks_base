@@ -11,45 +11,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/halo_bg_blue"
+                android:id="@+id/halo_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_blue" />
-            <ImageView
-                android:id="@+id/halo_bg_green"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_green" />
-            <ImageView
-                android:id="@+id/halo_bg_white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_white" />
-            <ImageView
-                android:id="@+id/halo_bg_purple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_purple" />
-            <ImageView
-                android:id="@+id/halo_bg_red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_red" />
-            <ImageView
-                android:id="@+id/halo_bg_yellow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_yellow" />
-            <ImageView
-                android:id="@+id/halo_bg_pink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_pink" />
-            <ImageView
-                android:id="@+id/halo_bg_black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:src="@drawable/halo_bg_black" />
+                android:src="@drawable/halo_bg" />
 
             <ImageView
                 android:id="@+id/app_icon"

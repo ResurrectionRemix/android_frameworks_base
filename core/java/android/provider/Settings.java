@@ -3726,6 +3726,13 @@ public final class Settings {
         };
 
         /**
+         *
+         * HALO circle bg color.
+         * @hide
+         */
+        public static final String HALO_CIRCLE_COLOR = "halo_circle_color";
+
+        /**
          * HALO speech bubble color
          * @hide
          */

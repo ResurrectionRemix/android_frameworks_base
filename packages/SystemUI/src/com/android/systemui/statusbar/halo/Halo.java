@@ -224,7 +224,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         mSettingsObserver.onChange(true);
 
         // Init variables
-        BitmapDrawable bd = (BitmapDrawable) mContext.getResources().getDrawable(R.drawable.halo_bg_blue);
+        BitmapDrawable bd = (BitmapDrawable) mContext.getResources().getDrawable(R.drawable.halo_bg);
         mIconSize = bd.getBitmap().getWidth();
         mIconHalfSize = mIconSize / 2;
 
