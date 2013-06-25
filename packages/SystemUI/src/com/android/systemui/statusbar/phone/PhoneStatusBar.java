@@ -114,8 +114,6 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import com.android.systemui.statusbar.policy.PieController.Position;
-import com.android.systemui.statusbar.powerwidget.PowerWidget;
 
 public class PhoneStatusBar extends BaseStatusBar {
     static final String TAG = "PhoneStatusBar";
@@ -1689,11 +1687,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
             return ;
         }
-        // don't allow expanding via e.g. service call while status bar is hidden
-        // due to expanded desktop
-        if (mExpandedDesktopState == 2) {
-            return;
-        }
 
         mNotificationPanel.expand();
         if (mHasFlipSettings && mScrollView.getVisibility() != View.VISIBLE) {
@@ -1748,11 +1741,6 @@ public class PhoneStatusBar extends BaseStatusBar {
     public void animateExpandSettingsPanel() {
         if (SPEW) Slog.d(TAG, "animateExpand: mExpandedVisible=" + mExpandedVisible);
         if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
-            return;
-        }
-        // don't allow expanding via e.g. service call while status bar is hidden
-        // due to expanded desktop
-        if (mExpandedDesktopState == 2) {
             return;
         }
 
@@ -2235,21 +2223,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         }
         if (mNavigationBarView != null) {
             mNavigationBarView.setMenuVisibility(showMenu);
-        }
-
-        // hide pie triggers when keyguard is visible
-        try {
-            if (mWindowManagerService.isKeyguardLocked()) {
-                updatePieTriggerMask(Position.BOTTOM.FLAG
-                        | Position.TOP.FLAG);
-            } else {
-                updatePieTriggerMask(Position.LEFT.FLAG
-                        | Position.BOTTOM.FLAG
-                        | Position.RIGHT.FLAG
-                        | Position.TOP.FLAG);
-            }
-        } catch (RemoteException e) {
-            // nothing else to do ...
         }
 
         // See above re: lights-out policy for legacy apps.

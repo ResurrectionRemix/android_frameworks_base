@@ -46,9 +46,6 @@ import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
 import com.android.systemui.R;
-import com.android.systemui.statusbar.NavigationButtons;
-import com.android.systemui.statusbar.phone.NavbarEditor;
-import com.android.systemui.statusbar.phone.NavigationBarView;
 
 public class KeyButtonView extends ImageView {
     private static final String TAG = "StatusBar.KeyButtonView";
@@ -306,37 +303,6 @@ public class KeyButtonView extends ImageView {
             }
         }
         super.setPressed(pressed);
-    }
-
-    public void setInfo(NavigationButtons.ButtonInfo buttonInfo, boolean isVertical) {
-        setTag(buttonInfo);
-        final Resources res = getResources();
-        setContentDescription(res.getString(buttonInfo.contentDescription));
-        mCode = buttonInfo.keyCode;
-        boolean isSmallButton = ArrayUtils.contains(NavbarEditor.smallButtonIds, getId());
-        Drawable keyD;
-        if (isSmallButton) {
-            keyD = res.getDrawable(buttonInfo.sideResource);
-        } else if (!isVertical) {
-            keyD = res.getDrawable(buttonInfo.portResource);
-        } else {
-            keyD = res.getDrawable(buttonInfo.landResource);
-        }
-        //Reason for setImageDrawable vs setImageResource is because setImageResource calls relayout() w/o
-        //any checks. setImageDrawable performs size checks and only calls relayout if necessary. We rely on this
-        //because otherwise the setX/setY attributes which are post layout cause it to mess up the layout.
-        setImageDrawable(keyD);
-        if (buttonInfo == NavigationButtons.EMPTY) {
-            if (isSmallButton) {
-                setVisibility(NavigationBarView.getEditMode() ? View.VISIBLE : View.INVISIBLE);
-            } else {
-                setVisibility(NavigationBarView.getEditMode() ? View.VISIBLE : View.GONE);
-            }
-        } else if (buttonInfo == NavigationButtons.CONDITIONAL_MENU) {
-            setVisibility(NavigationBarView.getEditMode() ? View.VISIBLE : View.INVISIBLE);
-        } else if (buttonInfo == NavigationButtons.HOME) {
-            mSupportsLongpress = false;
-        }
     }
 
     public boolean onTouchEvent(MotionEvent ev) {
