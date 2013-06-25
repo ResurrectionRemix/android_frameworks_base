@@ -3734,7 +3734,14 @@ public final class Settings {
 
         /**
          *
-         * HALO circle bg color.
+         * HALO effect color
+         * @hide
+         */
+        public static final String HALO_EFFECT_COLOR = "halo_effect_color";
+
+        /**
+         *
+         * HALO circle bg color
          * @hide
          */
         public static final String HALO_CIRCLE_COLOR = "halo_circle_color";
