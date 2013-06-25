@@ -1751,8 +1751,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
             return;
         }
-<<<<<<< HEAD
-=======
         // don't allow expanding via e.g. service call while status bar is hidden
         // due to expanded desktop
         if (getExpandedDesktopMode() == 2) {

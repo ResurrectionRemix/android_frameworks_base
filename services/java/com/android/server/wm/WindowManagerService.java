@@ -10463,31 +10463,6 @@ public class WindowManagerService extends IWindowManager.Stub
         }
         mPolicy.showAssistant();
     }
-    public void updateDisplayMetrics() {
-        long origId = Binder.clearCallingIdentity();
-        boolean changed = false;
-
-        synchronized (mWindowMap) {
-            final DisplayContent displayContent = getDefaultDisplayContentLocked();
-            final DisplayInfo displayInfo =
-                    displayContent != null ? displayContent.getDisplayInfo() : null;
-            final int oldWidth = displayInfo != null ? displayInfo.appWidth : -1;
-            final int oldHeight = displayInfo != null ? displayInfo.appHeight : -1;
-            final ApplicationDisplayMetrics metrics =
-                    updateApplicationDisplayMetricsLocked(displayContent);
-
-            if (metrics != null && oldWidth >= 0 && oldHeight >= 0) {
-                changed = oldWidth != metrics.appWidth || oldHeight != metrics.appHeight;
-            }
-        }
-
-        if (changed) {
-            mH.sendEmptyMessage(H.SEND_NEW_CONFIGURATION);
-        }
-
-        Binder.restoreCallingIdentity(origId);
-    }
-
     /**
      * Tries to set the status bar visibilty mask. This will fail if the mask was set already.
      *

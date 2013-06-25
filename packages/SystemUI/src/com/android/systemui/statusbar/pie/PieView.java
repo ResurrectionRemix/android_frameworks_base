@@ -16,13 +16,10 @@
 package com.android.systemui.statusbar.pie;
 
 import android.animation.ValueAnimator;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.ContentObserver;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
@@ -33,7 +30,6 @@ import android.provider.Settings;
 import android.util.Slog;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.view.ViewConfiguration;
 
 import com.android.internal.util.pie.PiePosition;
@@ -57,10 +53,6 @@ public class PieView extends View implements View.OnTouchListener {
     /* DEBUG */
     private long mActivateStartDebug = 0;
 
-    private static final int TIME_FADEIN = 600;
-    private static final int TIME_FADEIN_DELAY = 1000;
-
-    private static final int COLOR_BACKGROUND = 0xee000000;
     private static final int TIME_FADEIN = 300;
 
     private Paint mBackgroundPaint = new Paint();
@@ -82,6 +74,14 @@ public class PieView extends View implements View.OnTouchListener {
     private Point mCenter = new Point(0, 0);
     private PiePosition mPosition = PiePosition.BOTTOM;
     private PiePosition mLayoutDoneForPosition;
+
+    private Handler mHandler;
+    private Runnable mLongPressRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateActiveItem(mActiveItem, true);
+        }
+    };
 
     private ValueAnimator mBackgroundAnimator
             = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(TIME_FADEIN);
@@ -180,10 +180,11 @@ public class PieView extends View implements View.OnTouchListener {
     private List<PieSlice> mSlices = new ArrayList<PieSlice>();
     private List<PieDrawable> mDrawableCache = new ArrayList<PieDrawable>();
     private PieItem mActiveItem;
+    private boolean mLongPressed = false;
 
     private class SnapPoint {
-        private final int mX;
-        private final int mY;
+        private int mX;
+        private int mY;
         private float mActivity;
 
         public SnapPoint(int x, int y, PiePosition gravity) {
@@ -191,6 +192,11 @@ public class PieView extends View implements View.OnTouchListener {
             mY = y;
             mActivity = 0.0f;
             this.position = gravity;
+        }
+
+        public void reposition(int x, int y) {
+            mX = x;
+            mY = y;
         }
 
         public void reset() {
@@ -229,8 +235,6 @@ public class PieView extends View implements View.OnTouchListener {
         public final PiePosition position;
     }
 
-    private int mTriggerSlots;
-    private SnapPoint[] mSnapPoints = new SnapPoint[Position.values().length];
     private int mSnapPointMask = 0;
     private SnapPoint[] mSnapPoints = new SnapPoint[PiePosition.values().length];
     private SnapPoint mActiveSnap = null;
@@ -243,28 +247,6 @@ public class PieView extends View implements View.OnTouchListener {
     }
     private OnSnapListener mOnSnapListener = null;
 
-    private final class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PIE_SIZE), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PIE_GRAVITY), false, this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            getDimensions();
-            setupSnapPoints(getWidth(), getHeight(), true);
-        }
-    }
-    private SettingsObserver mSettingsObserver;
-
-    public PieLayout(Context context) {
     public interface OnExitListener {
         void onExit();
     }
@@ -273,10 +255,10 @@ public class PieView extends View implements View.OnTouchListener {
     public PieView(Context context) {
         super(context);
 
+        mHandler = new Handler();
         mBackgroundAnimator.addUpdateListener(mUpdateListener);
 
         setDrawingCacheEnabled(false);
-        setVisibility(View.GONE);
         setVisibility(View.VISIBLE);
         setWillNotDraw(false);
         setFocusable(true);
@@ -284,9 +266,6 @@ public class PieView extends View implements View.OnTouchListener {
 
         getDimensions();
         getColors();
-
-        mTriggerSlots = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_GRAVITY, Position.BOTTOM.FLAG);
     }
 
     public void setOnSnapListener(OnSnapListener onSnapListener) {
@@ -333,17 +312,8 @@ public class PieView extends View implements View.OnTouchListener {
         mBackgroundTargetAlpha = mBackgroundPaint.getAlpha();
     }
 
-    private void setupSnapPoints(int width, int height, boolean force) {
-        if (force) {
-            mTriggerSlots = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.PIE_GRAVITY, Position.BOTTOM.FLAG);
-        }
-
+    private void setupSnapPoints(int width, int height) {
         mActiveSnap = null;
-        for (Position g : Position.values()) {
-            if ((mTriggerSlots & g.FLAG) == 0) {
-                if (g == Position.LEFT || g == Position.RIGHT) {
-                    mSnapPoints[g.INDEX] = new SnapPoint(g.FACTOR * width, height / 2, g);
         // reuse already created snap points
         for (PiePosition g : PiePosition.values()) {
             if ((mSnapPointMask & g.FLAG) != 0) {
@@ -357,22 +327,12 @@ public class PieView extends View implements View.OnTouchListener {
                 if (mSnapPoints[g.INDEX] != null) {
                     mSnapPoints[g.INDEX].reposition(x, y);
                 } else {
-                    mSnapPoints[g.INDEX] = new SnapPoint(width / 2, g.FACTOR * height, g);
+                    mSnapPoints[g.INDEX] = new SnapPoint(x, y, g);
                 }
             } else {
                 mSnapPoints[g.INDEX] = null;
             }
         }
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        setWillNotDraw(false);
-        setFocusable(true);
-        setOnTouchListener(this);
-
-        mSettingsObserver = new SettingsObserver(new Handler());
-        mSettingsObserver.observe();
     }
 
     @Override
@@ -478,15 +438,7 @@ public class PieView extends View implements View.OnTouchListener {
                         newItem = tmp;
                     }
                 }
-                if (newItem != mActiveItem) {
-                    if (newItem != null) {
-                        newItem.setSelected(true);
-                    }
-                    if (mActiveItem != null) {
-                        mActiveItem.setSelected(false);
-                    }
-                    mActiveItem = newItem;
-                }
+                updateActiveItem(newItem, mLongPressed);
             }
 
             if (action == MotionEvent.ACTION_UP) {
@@ -497,7 +449,7 @@ public class PieView extends View implements View.OnTouchListener {
                     }
                 } else {
                     if (mActiveItem != null) {
-                        mActiveItem.onClickCall();
+                        mActiveItem.onClickCall(mLongPressed);
                     }
                 }
                 PieView.this.exit();
@@ -508,6 +460,33 @@ public class PieView extends View implements View.OnTouchListener {
             }
         }
         return true;
+    }
+
+    private void updateActiveItem(PieItem newActiveItem, boolean newLongPressed) {
+        if (mActiveItem != newActiveItem || mLongPressed != newLongPressed) {
+            mHandler.removeCallbacks(mLongPressRunnable);
+            if (mActiveItem != null) {
+                mActiveItem.setSelected(false, false);
+            }
+            if (newActiveItem != null) {
+                boolean canLongPressed = (newActiveItem.flags & PieItem.CAN_LONG_PRESS) != 0;
+                newLongPressed = newLongPressed && canLongPressed;
+                newActiveItem.setSelected(true, newLongPressed);
+                if (canLongPressed && !newLongPressed) {
+                    mHandler.postDelayed(mLongPressRunnable,
+                            (int) (ViewConfiguration.getLongPressTimeout() * 1.5f));
+                }
+                // if the fade in hasn't started yet, restart again
+                if (!mBackgroundAnimator.isRunning() && mBackgroundFraction == 0.0f) {
+                    mBackgroundAnimator.cancel();
+                    mBackgroundAnimator.start();
+                }
+            } else {
+                newLongPressed = false;
+            }
+        }
+        mActiveItem = newActiveItem;
+        mLongPressed = newLongPressed;
     }
 
     @Override
@@ -525,9 +504,7 @@ public class PieView extends View implements View.OnTouchListener {
         }
 
         int viewMask = PieDrawable.VISIBLE | mPosition.FLAG;
-        if (changed) {
-            setupSnapPoints(right - left, bottom - top, false);
-        }
+        setupSnapPoints(right - left, bottom - top);
 
         // we are only doing this, when the layout changed or
         // our position changed
@@ -559,6 +536,7 @@ public class PieView extends View implements View.OnTouchListener {
                 estimatedWidth = Math.max(estimatedWidth, slice.estimateWidth());
             }
         }
+        estimatedWidth = estimatedWidth  * mPieScale;
 
         if (mPosition == PiePosition.LEFT || mPosition == PiePosition.RIGHT) {
             mCenter.x = mPadding + (int) ((getWidth() - 2 * mPadding) * mPosition.FACTOR);
@@ -616,7 +594,7 @@ public class PieView extends View implements View.OnTouchListener {
         }
 
         mBackgroundFraction = 0.0f;
-        mBackgroundAnimator.setStartDelay(TIME_FADEIN_DELAY);
+        mBackgroundAnimator.setStartDelay(ViewConfiguration.getLongPressTimeout() * 2);
         mBackgroundAnimator.start();
 
         Slog.d(TAG, "activate finished within "
@@ -640,10 +618,7 @@ public class PieView extends View implements View.OnTouchListener {
             }
         }
 
-        if (mActiveItem != null) {
-            mActiveItem.setSelected(false);
-        }
-        mActiveItem = null;
+        updateActiveItem(null, false);
 
         mActive = false;
         if (mOnExitListener != null) {
@@ -658,7 +633,7 @@ public class PieView extends View implements View.OnTouchListener {
         if (!mActive) {
             mAnimationListenerCache.clear();
             mDrawableCache.clear();
-            mActiveItem = null;
+            updateActiveItem(null, false);
         }
     }
 
