@@ -126,7 +126,8 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
     private boolean mShowMenu = false;
     private Drawable mBackIcon;
     private Drawable mBackAltIcon;
-    
+
+<<<<<<< HEAD
     protected int mExpandedDesktopState;
     private int mPieTriggerSlots;
     private int mPieTriggerMask = PiePosition.LEFT.FLAG
@@ -152,6 +153,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                 activateFromListener(touchX, touchY, position);
                 // give the main thread some time to do the bookkeeping
                 mHandler.obtainMessage(MSG_PIE_GAIN_FOCUS).sendToTarget();
+=======
     /**
      * Defines the positions in which pie controls may appear. This enumeration is used to store
      * an index, a flag and the android gravity for each position.
@@ -254,6 +256,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                         loaded = true;
                     }
                     break;
+>>>>>>> e025153... Improving pie control's user interaction
             }
         }
     };
