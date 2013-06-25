@@ -349,13 +349,11 @@
     <!-- Left padding of num pad key on keyguard -->
     <dimen name="kg_num_pad_key_padding_left">10dp</dimen>
 
-<<<<<<< HEAD
     <dimen name="icon_size_20">20.0dip</dimen>
     <dimen name="icon_size_15">15.0dip</dimen>
     <dimen name="notification_ribbon_padding">16dp</dimen>
     <dimen name="lockscreen_ribbon_padding">16dp</dimen>
 
-=======
     <!-- Pie service: Distance a swipe must travel to be recognized as pie swipe.
          Used by the pie service. -->
     <dimen name="pie_trigger_distance">10dp</dimen>
@@ -367,5 +365,4 @@
 
     <!-- Pie service: Thickness of the active trigger fields around the screen border -->
     <dimen name="pie_trigger_thickness">6dp</dimen>
->>>>>>> 9f11bd1... Pie controls: Introducing a pie delivery service
 </resources>

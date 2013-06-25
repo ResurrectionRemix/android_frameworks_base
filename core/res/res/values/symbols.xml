@@ -1982,8 +1982,6 @@
   <java-symbol type="anim" name="recents_fade_in" />
   <java-symbol type="anim" name="recents_fade_out" />
 
-<<<<<<< HEAD
-=======
   <!-- Options that show upon long-pressing a key on the physical keyboard -->
   <java-symbol type="string" name="symbol_picker_0" />
   <java-symbol type="string" name="symbol_picker_1" />
@@ -2044,5 +2042,4 @@
   <java-symbol type="dimen" name="pie_trigger_thickness" />
   <java-symbol type="dimen" name="pie_trigger_distance" />
   <java-symbol type="dimen" name="pie_perpendicular_distance" />
->>>>>>> 9f11bd1... Pie controls: Introducing a pie delivery service
 </resources>
