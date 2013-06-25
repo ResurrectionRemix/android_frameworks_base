@@ -1697,10 +1697,9 @@ public class PhoneStatusBar extends BaseStatusBar {
 <<<<<<< HEAD
     Animator mScrollViewAnim, mFlipSettingsViewAnim, mNotificationButtonAnim,
         mSettingsButtonAnim, mClearButtonAnim;
-=======
+
     Animator mScrollViewAnim, mFlipSettingsViewAnim, mPowerWidgetAnim, mNotificationButtonAnim,
         mSettingsButtonAnim, mHaloButtonAnim, mClearButtonAnim;
->>>>>>> 9872c9e... HALO (1/2)
 
     @Override
     public void animateExpandNotificationsPanel() {

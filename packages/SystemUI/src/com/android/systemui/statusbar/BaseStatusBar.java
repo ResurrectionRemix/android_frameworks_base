@@ -60,12 +60,9 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
-<<<<<<< HEAD
-=======
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
->>>>>>> 9872c9e... HALO (1/2)
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -97,8 +94,6 @@ import android.widget.PopupMenu;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-<<<<<<< HEAD
-=======
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.statusbar.StatusBarIconList;
@@ -126,7 +121,6 @@ import com.android.systemui.statusbar.view.PieExpandPanel;
 import com.android.systemui.statusbar.WidgetView;
 import com.android.systemui.aokp.AppWindow;
 
->>>>>>> 9872c9e... HALO (1/2)
 import java.util.ArrayList;
 
 public abstract class BaseStatusBar extends SystemUI implements
@@ -181,7 +175,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected FrameLayout mStatusBarContainer;
 
-<<<<<<< HEAD
 
     /**
      * An interface for navigation key bars to allow status bars to signal which keys are
@@ -297,7 +290,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     };
 
-=======
     // Pie controls
     public PieControlPanel mPieControlPanel;
     public View mPieControlsTrigger;
@@ -335,7 +327,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     public ColorUtils.ColorSettingInfo mLastBackgroundColor;
     protected int mClockColor = com.android.internal.R.color.holo_blue_light;
     public int mSystemUiLayout = ExtendedPropertiesUtils.getActualProperty("com.android.systemui.layout");
->>>>>>> 9872c9e... HALO (1/2)
 
     // UI-specific methods
 
@@ -349,9 +340,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected IWindowManager mWindowManagerService;
     protected Display mDisplay;
 
-<<<<<<< HEAD
     public TransparencyManager mTransparencyManager;
-=======
     private boolean mDeviceProvisioned = false;
 
     public Ticker getTicker() {
@@ -360,7 +349,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     public void collapse() {
     }
->>>>>>> 9872c9e... HALO (1/2)
 
     private boolean mDeviceProvisioned = false;
 
@@ -446,14 +434,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         } catch (RemoteException ex) {
             // If the system process isn't there we're doomed anyway.
         }
-<<<<<<< HEAD
+
         mTransparencyManager = new TransparencyManager(mContext);
-=======
 
         mHaloActive = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HALO_ACTIVE, 0) == 1;
 
->>>>>>> 9872c9e... HALO (1/2)
         createAndAddWindows();
         // create WidgetView
         mWidgetView = new WidgetView(mContext,null);
@@ -511,8 +497,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                     if (true) Slog.v(TAG, "userId " + mCurrentUserId + " is in the house");
                     userSwitched(mCurrentUserId);
                 }
-<<<<<<< HEAD
-=======
+
             }}, filter);
 
         // Only watch for per app color changes when the setting is in check
@@ -696,7 +681,6 @@ public abstract class BaseStatusBar extends SystemUI implements
             mPieControlPanel = null;
             for (int i = 0; i < 4; i++) {
                 mPieDummyTrigger[i] = null;
->>>>>>> 9872c9e... HALO (1/2)
             }
         }, filter);
 

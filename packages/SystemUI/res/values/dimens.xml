@@ -248,7 +248,6 @@
     <!-- Constant for hidden ribbon drag handle -->
     <dimen name="ribbon_drag_handle_height">25dp</dimen>
 
-<<<<<<< HEAD
     <!-- The padding of the items of the battery cluster -->
     <dimen name="status_bar_battery_cluster_padding">2dip</dimen>
     <!-- The margin adjusment of the text items of the battery cluster -->
@@ -278,8 +277,6 @@
 
     <dimen name="pie_sysinfo_radius">165dp</dimen>
     <dimen name="pie_sysinfo_height">85sp</dimen>
-=======
     <dimen name="halo_content_max_width">250dp</dimen>
 
->>>>>>> 9872c9e... HALO (1/2)
 </resources>
