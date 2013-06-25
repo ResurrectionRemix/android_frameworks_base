@@ -3576,7 +3576,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         updateLockScreenTimeout();
         return changes;
     }
-
     public boolean allowAppAnimationsLw() {
         if (mKeyguard != null && mKeyguard.isVisibleLw() && !mKeyguard.isAnimatingLw()) {
             // If keyguard is currently visible, no reason to animate
