@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.halo;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
+import android.graphics.ColorFilterMaker;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.provider.Settings;
@@ -108,8 +109,7 @@ public class HaloProperties extends FrameLayout {
         mHaloTickerContent = mHaloContentView.findViewById(R.id.ticker);
         mHaloTextViewR = (TextView) mHaloTickerContent.findViewById(R.id.bubble_r);
         mHaloTextViewL = (TextView) mHaloTickerContent.findViewById(R.id.bubble_l);
-        mHaloTextViewL.setAlpha(0f);
-        mHaloTextViewR.setAlpha(0f);
+        updateTextView();
 
         mHaloNumberView = mInflater.inflate(R.layout.halo_number, null);
         mHaloNumber = (TextView) mHaloNumberView.findViewById(R.id.number);
@@ -205,14 +205,41 @@ public class HaloProperties extends FrameLayout {
 
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HALO_STYLE), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HALO_BUBBLE_COLOR), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HALO_BUBBLE_TEXT_COLOR), false, this);
             updateDrawable();
+            updateTextView();
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateDrawable();
+            updateTextView();
         }
     }
+
+    private void updateTextView() {
+        ContentResolver cr = mContext.getContentResolver();
+        int mColor = Settings.System.getInt(cr,
+               Settings.System.HALO_BUBBLE_COLOR, 0xFF33B5E5);
+        int mTextColor = Settings.System.getInt(cr, 
+               Settings.System.HALO_BUBBLE_TEXT_COLOR, 0xFFFFFFFF);
+
+        // TODO : Add Halo speech bubbles
+        mHaloTextViewL.setBackgroundResource(R.drawable.bubble_l);
+        mHaloTextViewL.getBackground().setColorFilter(ColorFilterMaker.
+                changeColorAlpha(mColor, .32f, 0f));
+        mHaloTextViewL.setTextColor(mTextColor);
+        mHaloTextViewL.setAlpha(0f);
+        mHaloTextViewR.setBackgroundResource(R.drawable.bubble_r);
+        mHaloTextViewR.getBackground().setColorFilter(ColorFilterMaker.
+                changeColorAlpha(mColor, .32f, 0f));
+        mHaloTextViewR.setTextColor(mTextColor);
+        mHaloTextViewR.setAlpha(0f);
+    }
+        
 
     private void updateDrawable() {
         ContentResolver cr = mContext.getContentResolver();
