@@ -48,11 +48,8 @@ import android.view.accessibility.AccessibilityEvent;
 
 import com.android.internal.util.aokp.BackgroundAlphaColorDrawable;
 import com.android.systemui.R;
-<<<<<<< HEAD
 import com.android.systemui.statusbar.NavigationBarView;
-=======
 import com.android.systemui.statusbar.policy.PieController.Position;
->>>>>>> da062dc... Add pie control optimizations for Phone UI.
 
 public class PhoneStatusBarView extends PanelBar {
     private static final String TAG = "PhoneStatusBarView";
