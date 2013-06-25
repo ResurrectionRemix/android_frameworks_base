@@ -265,9 +265,4 @@ interface IWindowManager
      * credentials.
      */
     void showAssistant();
-
-    /**
-     * Update the application display metrics
-     */
-    void updateDisplayMetrics();
 }
