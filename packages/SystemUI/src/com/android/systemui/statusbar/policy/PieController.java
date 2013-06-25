@@ -361,7 +361,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         ButtonInfo[] buttons = NavigationButtons.loadButtonMap(mContext);
 
         mNavigationSlice.clear();
-<<<<<<< HEAD
         mNavigationSlice.addItem(constructItem(2, ButtonType.BACK,
                 R.drawable.ic_sysbar_back, minimumImageSize));
         mNavigationSlice.addItem(constructItem(2, ButtonType.HOME,
@@ -383,7 +382,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
         mMenuButton = constructItem(1, ButtonType.MENU,
                 R.drawable.ic_sysbar_menu, minimumImageSize);
         mNavigationSlice.addItem(mMenuButton);
-=======
 
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i] != NavigationButtons.EMPTY) {
@@ -404,7 +402,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
             }
         }
         mMenuButton = findItem(NavigationButtons.CONDITIONAL_MENU);
->>>>>>> 1c601ac... Merge Navigation Bar and Pie Controls button config (1/2)
 
         setNavigationIconHints(mNavigationIconHints, true);
         setMenuVisibility(mShowMenu);

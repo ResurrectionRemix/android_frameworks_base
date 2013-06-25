@@ -46,12 +46,9 @@ import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
 import com.android.systemui.R;
-<<<<<<< HEAD
-=======
 import com.android.systemui.statusbar.NavigationButtons;
 import com.android.systemui.statusbar.phone.NavbarEditor;
 import com.android.systemui.statusbar.phone.NavigationBarView;
->>>>>>> 1c601ac... Merge Navigation Bar and Pie Controls button config (1/2)
 
 public class KeyButtonView extends ImageView {
     private static final String TAG = "StatusBar.KeyButtonView";
@@ -311,8 +308,6 @@ public class KeyButtonView extends ImageView {
         super.setPressed(pressed);
     }
 
-<<<<<<< HEAD
-=======
     public void setInfo(NavigationButtons.ButtonInfo buttonInfo, boolean isVertical) {
         setTag(buttonInfo);
         final Resources res = getResources();
@@ -344,7 +339,6 @@ public class KeyButtonView extends ImageView {
         }
     }
 
->>>>>>> 1c601ac... Merge Navigation Bar and Pie Controls button config (1/2)
     public boolean onTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
         int x, y;
