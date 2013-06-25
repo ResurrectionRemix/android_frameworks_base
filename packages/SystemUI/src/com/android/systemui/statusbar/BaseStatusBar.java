@@ -168,7 +168,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     // Pie Control
     protected PieController mPieController;
-<<<<<<< HEAD
     protected PieLayout mPieContainer;
     private int mPieTriggerSlots;
     private int mPieTriggerMask = Position.LEFT.FLAG
@@ -254,8 +253,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
 
     };
-=======
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
 
     // UI-specific methods
@@ -417,7 +414,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             }
         }, filter);
 
-<<<<<<< HEAD
+
         mPieController = new PieController(mContext);
         mPieController.attachTo(this);
         addNavigationBarCallback(mPieController);
@@ -428,13 +425,13 @@ public abstract class BaseStatusBar extends SystemUI implements
         mSettingsObserver.onChange(true);
 
         mSettingsObserver.observe();
-=======
+
         if (PieManager.getInstance().isPresent()) {
             mPieController = new PieController(mContext);
             mPieController.attachStatusBar(this);
             addNavigationBarCallback(mPieController);
         }
->>>>>>> d4bb3bc... Pie controls: A new way of activation
+
     }
 
     public void userSwitched(int newUserId) {
@@ -1335,8 +1332,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         return km.inKeyguardRestrictedInputMode();
     }
 
-<<<<<<< HEAD
-=======
     public int getExpandedDesktopMode() {
         ContentResolver resolver = mContext.getContentResolver();
         boolean expanded = Settings.System.getInt(resolver,
@@ -1346,7 +1341,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
         return 0;
     }
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
     public void addNavigationBarCallback(NavigationBarCallback callback) {
         mNavigationCallbacks.add(callback);
@@ -1372,7 +1366,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     // Pie Controls
 
-<<<<<<< HEAD
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -1458,14 +1451,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     }
 
-=======
->>>>>>> d4bb3bc... Pie controls: A new way of activation
     public void updatePieTriggerMask(int newMask) {
         if (mPieController != null) {
             mPieController.updatePieTriggerMask(newMask);
         }
     }
-<<<<<<< HEAD
+
 
     private WindowManager.LayoutParams getPieTriggerLayoutParams(Position position) {
         final Resources res = mContext.getResources();
@@ -1498,6 +1489,4 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
 
-=======
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 }

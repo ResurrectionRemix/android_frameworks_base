@@ -51,22 +51,16 @@ import android.util.Slog;
 import android.view.HapticFeedbackConstants;
 import android.view.IWindowManager;
 import android.view.KeyEvent;
-<<<<<<< HEAD
 import android.view.MotionEvent;
-=======
 import android.view.SoundEffectConstants;
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
-<<<<<<< HEAD
-=======
 import com.android.internal.util.cm.DevUtils;
 import com.android.internal.util.pie.PiePosition;
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.pie.PieItem;
@@ -82,13 +76,10 @@ import com.android.systemui.statusbar.pie.PieSysInfo;
  * This class is responsible for setting up the pie control, activating it, and defining and
  * executing the actions that can be triggered by the pie control.
  */
-<<<<<<< HEAD
 public class PieController implements BaseStatusBar.NavigationBarCallback,
         PieLayout.OnSnapListener, PieItem.PieOnClickListener {
-=======
 public class PieController implements BaseStatusBar.NavigationBarCallback, PieView.OnExitListener,
         PieView.OnSnapListener, PieItem.PieOnClickListener, PieItem.PieOnLongClickListener {
->>>>>>> d4bb3bc... Pie controls: A new way of activation
     public static final String TAG = "PieController";
     public static final boolean DEBUG = false;
 
@@ -103,15 +94,11 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
 
     public static final float EMPTY_ANGLE = 10;
     public static final float START_ANGLE = 180 + EMPTY_ANGLE;
-
-<<<<<<< HEAD
     private static final int MSG_INJECT_KEY = 1066;
-=======
     private static final int MSG_INJECT_KEY_DOWN = 1066;
     private static final int MSG_INJECT_KEY_UP = 1067;
     private static final int MSG_PIE_GAIN_FOCUS = 1068;
     private static final int MSG_PIE_RESTORE_LISTENER_STATE = 1069;
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
     private Context mContext;
     private PieManager mPieManager;
@@ -214,9 +201,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
             ContentResolver resolver = mContext.getContentResolver();
             // trigger setupNavigationItems()
             resolver.registerContentObserver(Settings.System.getUriFor(
-<<<<<<< HEAD
                     Settings.System.PIE_SEARCH), false, this);
-=======
                     Settings.System.NAV_BUTTONS), false, this);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.KILL_APP_LONGPRESS_BACK), false, this);
@@ -230,7 +215,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
             // trigger setupListener()
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.PIE_POSITIONS), false, this);
->>>>>>> d4bb3bc... Pie controls: A new way of activation
         }
 
         @Override
@@ -303,7 +287,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         mSettingsObserver.onChange(true);
     }
 
-<<<<<<< HEAD
     public void attachTo(BaseStatusBar statusBar) {
         mStatusBar = statusBar;
     }
@@ -311,7 +294,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
     public void attachTo(PieLayout container) {
         mPieContainer = container;
         mPieContainer.clearSlices();
-=======
     private void detachContainer() {
         if (mPieContainer == null) {
             return;
@@ -338,7 +320,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
             mPieContainer = new PieView(mContext);
             mPieContainer.setOnSnapListener(this);
             mPieContainer.setOnExitListener(this);
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
             if (mTelephonyManager != null) {
                 mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SERVICE_STATE);
@@ -370,7 +351,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         mPieContainer.addSlice(mSysInfo);
     }
 
-<<<<<<< HEAD
         // start listening for changes
         mSettingsObserver.observe();
 
@@ -386,7 +366,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                     (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
             telephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SERVICE_STATE);
         }
-=======
     private void setupListener() {
         ContentResolver resolver = mContext.getContentResolver();
 
@@ -394,7 +373,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                 Settings.System.PIE_POSITIONS, PiePosition.BOTTOM.FLAG);
         mPieManager.updatePieActivationListener(mPieActivationListener,
                 mPieTriggerSlots & mPieTriggerMask);
->>>>>>> d4bb3bc... Pie controls: A new way of activation
     }
 
     private void setupNavigationItems() {
@@ -439,10 +417,8 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         return item;
     }
 
-<<<<<<< HEAD
     public void activateFromTrigger(View view, MotionEvent event, Position position) {
         if (mPieContainer != null && !isShowing()) {
-=======
     private PieItem findItem(ButtonInfo type) {
         for (PieItem item : mNavigationSlice.getItems()) {
             if (type == item.tag) {
@@ -462,7 +438,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
 
     public void activateFromListener(int touchX, int touchY, PiePosition position) {
         if (!isShowing()) {
->>>>>>> d4bb3bc... Pie controls: A new way of activation
             doHapticTriggerFeedback();
 
             mPosition = position;
@@ -623,11 +598,8 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         }
 
         int triggerSlots = Settings.System.getInt(mContext.getContentResolver(),
-<<<<<<< HEAD
                 Settings.System.PIE_GRAVITY, Position.BOTTOM.FLAG);
-=======
                 Settings.System.PIE_POSITIONS, PiePosition.BOTTOM.FLAG);
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
         triggerSlots = triggerSlots & ~mPosition.FLAG | position.FLAG;
 

@@ -162,13 +162,11 @@ public class PieItem extends PieView.PieDrawable {
     }
 
     @Override
-<<<<<<< HEAD
     public void draw(Canvas canvas, Position position) {
         canvas.drawPath(mPath, (flags & SELECTED) != 0
                 ? mSelectedPaint : mBackgroundPaint);
         canvas.drawPath(mPath, (flags & SELECTED) != 0
                 ? mSelectedPaint : mOutlinePaint);
-=======
     public void draw(Canvas canvas, PiePosition position) {
         if ((flags & SELECTED) != 0) {
             Paint paint = (flags & LONG_PRESSED) == 0
@@ -178,7 +176,6 @@ public class PieItem extends PieView.PieDrawable {
             canvas.drawPath(mPath, mBackgroundPaint);
             canvas.drawPath(mPath, mOutlinePaint);
         }
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
         if (mView != null) {
             int state = canvas.save();
