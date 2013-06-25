@@ -221,6 +221,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
                     inputManager.injectInputEvent(new KeyEvent(eventTime - 50, eventTime - 50,
                             KeyEvent.ACTION_DOWN, m.arg1, 0),
                             InputManager.INJECT_INPUT_EVENT_MODE_ASYNC);
+<<<<<<< HEAD
                     inputManager.injectInputEvent(new KeyEvent(eventTime - 50, eventTime - 25,
                             KeyEvent.ACTION_UP, m.arg1, 0),
 
@@ -529,7 +530,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback,
 
     @Override
     public void onClick(PieItem item) {
-
+<<<<<<< HEAD
         ButtonType type = (ButtonType) item.tag;
 
         // provide the same haptic feedback as if a virtual key is pressed
