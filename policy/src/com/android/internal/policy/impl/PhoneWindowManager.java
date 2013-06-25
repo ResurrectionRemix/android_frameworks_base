@@ -1357,7 +1357,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mHasSoftInput = hasSoftInput;
                 updateRotation = true;
             }
-
+<<<<<<< HEAD
+=======
 
             // Update navigation bar dimensions
             if (expandedDesktopHidesNavigationBar()) {
@@ -1389,7 +1390,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         mContext.getResources().getDimensionPixelSize(
                                 com.android.internal.R.dimen.navigation_bar_width);
             }
-
+>>>>>>> 667cdc8... Fix up expanded desktop behaviour.
         }
         if (updateRotation) {
             updateRotation(true);
@@ -2815,15 +2816,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // For purposes of positioning and showing the nav bar, if we have
             // decided that it can't be hidden (because of the screen aspect ratio),
             // then take that into account.
+<<<<<<< HEAD
             navVisible |= !mCanHideNavigationBar;
             navVisible &= (Settings.System.getInt(mContext.getContentResolver(), Settings.System.EXPANDED_DESKTOP_STATE, 0) == 0);
             
+=======
             if (expandedDesktopHidesNavigationBar()) {
                 navVisible = false;
             } else if (!mCanHideNavigationBar) {
                 navVisible = true;
             }
 
+>>>>>>> 667cdc8... Fix up expanded desktop behaviour.
             if (mNavigationBar != null) {
                 // Force the navigation bar to its appropriate place and
                 // size.  We need to do this directly, instead of relying on
@@ -3479,10 +3483,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // and mTopIsFullscreen is that that mTopIsFullscreen is set only if the window
                 // has the FLAG_FULLSCREEN set.  Not sure if there is another way that to be the
                 // case though.
-
+<<<<<<< HEAD
                if (topIsFullscreen || Settings.System.getInt(mContext.getContentResolver(), Settings.System.EXPANDED_DESKTOP_STATE, 0) == 1) {
-
+=======
                 if (topIsFullscreen) {
+>>>>>>> 667cdc8... Fix up expanded desktop behaviour.
                     if (DEBUG_LAYOUT) Log.v(TAG, "** HIDING status bar");
                     if (mStatusBar.hideLw(true)) {
                         changes |= FINISH_LAYOUT_REDO_LAYOUT;
