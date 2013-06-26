@@ -18,10 +18,13 @@ package com.android.internal.policy.impl.keyguard;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.IAudioService;
@@ -34,6 +37,10 @@ import android.util.Log;
 import android.util.Slog;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+
+import java.io.File;
 
 /**
  * Base class for keyguard view.  {@link #reset} is where you should
@@ -47,9 +54,13 @@ import android.widget.FrameLayout;
 public abstract class KeyguardViewBase extends FrameLayout {
 
     private static int BACKGROUND_COLOR = 112;
+    private static final String WALLPAPER_IMAGE_PATH =
+            "/data/data/com.aokp.romcontrol/files/lockscreen_wallpaper.jpg";
     private AudioManager mAudioManager;
     private TelephonyManager mTelephonyManager = null;
     protected KeyguardViewMediator.ViewMediatorCallback mViewMediatorCallback;
+    private ImageView mLockScreenWallpaperImage;
+    private Bitmap bitmapWallpaper;
 
     // Whether the volume keys should be handled by keyguard. If true, then
     // they will be handled here for specific media types such as music, otherwise
@@ -87,9 +98,22 @@ public abstract class KeyguardViewBase extends FrameLayout {
     }
 
     public void resetBackground() {
-        BACKGROUND_COLOR = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.LOCKSCREEN_ALPHA_CONFIG, 112);
-        setBackground(mBackgroundDrawable);
+        File file = new File(WALLPAPER_IMAGE_PATH);
+
+        if (file.exists()) {
+            setBackground(null);
+            mLockScreenWallpaperImage = new ImageView(getContext());
+            mLockScreenWallpaperImage.setScaleType(ScaleType.CENTER_CROP);
+            addView(mLockScreenWallpaperImage, -1, -1);
+            bitmapWallpaper = BitmapFactory.decodeFile(WALLPAPER_IMAGE_PATH);
+            Drawable d = new BitmapDrawable(getResources(), bitmapWallpaper);
+            mLockScreenWallpaperImage.setImageDrawable(d);
+        } else {
+            BACKGROUND_COLOR = Settings.System.getInt(getContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_ALPHA_CONFIG, 112);
+            setBackground(mBackgroundDrawable);
+            removeView(mLockScreenWallpaperImage);
+        }
     }
 
     /**
@@ -139,7 +163,12 @@ public abstract class KeyguardViewBase extends FrameLayout {
     /**
      * Called before this view is being removed.
      */
-    abstract public void cleanUp();
+    public void cleanUp() {
+         if (bitmapWallpaper != null) {
+             bitmapWallpaper.recycle();
+         }
+         System.gc();
+    }
 
     /**
      * Gets the desired user activity timeout in milliseconds, or -1 if the
