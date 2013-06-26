@@ -1531,7 +1531,7 @@ final class ActivityStack {
         
         // We need to start pausing the current activity so the top one
         // can be resumed...
-        if (mResumedActivity != null && !next.floatingWindow) {
+        if (mResumedActivity != null) {
             if (DEBUG_SWITCH) Slog.v(TAG, "Skip resume: need to start pausing");
             // At this point we want to put the upcoming activity's process
             // at the top of the LRU list, since we know we will be needing it
@@ -1610,7 +1610,7 @@ final class ActivityStack {
             if (prev.finishing) {
                 if (DEBUG_TRANSITION) Slog.v(TAG,
                         "Prepare close transition: prev=" + prev);
-                if (mNoAnimActivities.contains(prev) || next.floatingWindow) {
+                if (mNoAnimActivities.contains(prev)) {
                     mService.mWindowManager.prepareAppTransition(
                             WindowManagerPolicy.TRANSIT_NONE, false);
                 } else {
@@ -1623,7 +1623,7 @@ final class ActivityStack {
             } else {
                 if (DEBUG_TRANSITION) Slog.v(TAG,
                         "Prepare open transition: prev=" + prev);
-                if (mNoAnimActivities.contains(next) || next.floatingWindow) {
+                if (mNoAnimActivities.contains(next)) {
                     noAnim = true;
                     mService.mWindowManager.prepareAppTransition(
                             WindowManagerPolicy.TRANSIT_NONE, false);
@@ -1755,7 +1755,7 @@ final class ActivityStack {
                 if (!next.hasBeenLaunched) {
                     next.hasBeenLaunched = true;
                 } else {
-                    if (SHOW_APP_STARTING_PREVIEW && mMainStack && !next.floatingWindow) {
+                    if (SHOW_APP_STARTING_PREVIEW && mMainStack) {
                         mService.mWindowManager.setAppStartingWindow(
                                 next.appToken, next.packageName, next.theme,
                                 mService.compatibilityInfoForPackageLocked(
@@ -1789,7 +1789,7 @@ final class ActivityStack {
             if (!next.hasBeenLaunched) {
                 next.hasBeenLaunched = true;
             } else {
-                if (SHOW_APP_STARTING_PREVIEW && !next.floatingWindow) {
+                if (SHOW_APP_STARTING_PREVIEW) {
                     mService.mWindowManager.setAppStartingWindow(
                             next.appToken, next.packageName, next.theme,
                             mService.compatibilityInfoForPackageLocked(
@@ -1888,13 +1888,12 @@ final class ActivityStack {
             }
             if (DEBUG_TRANSITION) Slog.v(TAG,
                     "Prepare open transition: starting " + r);
-
-            if (((r.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0) || (r.floatingWindow && !r.topIntent)) {
+            if ((r.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0) {
                 mService.mWindowManager.prepareAppTransition(
                         WindowManagerPolicy.TRANSIT_NONE, keepCurTransition);
                 mNoAnimActivities.add(r);
             } else {
-                mService.mWindowManager.prepareAppTransition(newTask && !r.floatingWindow
+                mService.mWindowManager.prepareAppTransition(newTask
                         ? WindowManagerPolicy.TRANSIT_TASK_OPEN
                         : WindowManagerPolicy.TRANSIT_ACTIVITY_OPEN, keepCurTransition);
                 mNoAnimActivities.remove(r);
@@ -1916,7 +1915,7 @@ final class ActivityStack {
                     doShow = topRunningNonDelayedActivityLocked(null) == r;
                 }
             }
-            if (SHOW_APP_STARTING_PREVIEW && doShow && !r.floatingWindow) {
+            if (SHOW_APP_STARTING_PREVIEW && doShow) {
                 // Figure out if we are transitioning from another activity that is
                 // "has the same starting icon" as the next one.  This allows the
                 // window manager to keep the previous window it had previously
@@ -3817,7 +3816,7 @@ final class ActivityStack {
                     || (mHistory.get(index-1)).task != r.task;
             if (DEBUG_TRANSITION) Slog.v(TAG,
                     "Prepare close transition: finishing " + r);
-            mService.mWindowManager.prepareAppTransition(endTask && !r.floatingWindow
+            mService.mWindowManager.prepareAppTransition(endTask
                     ? WindowManagerPolicy.TRANSIT_TASK_CLOSE
                     : WindowManagerPolicy.TRANSIT_ACTIVITY_CLOSE, false);
     
@@ -4303,7 +4302,7 @@ final class ActivityStack {
         if (top < 0 || (mHistory.get(top)).task.taskId == task) {
             // nothing to do!
             if (reason != null &&
-                    ((reason.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0 || reason.floatingWindow)) {
+                    (reason.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0) {
                 ActivityOptions.abort(options);
             } else {
                 updateTransitLocked(WindowManagerPolicy.TRANSIT_TASK_TO_FRONT, options);
@@ -4342,7 +4341,7 @@ final class ActivityStack {
         if (DEBUG_TRANSITION) Slog.v(TAG,
                 "Prepare to front transition: task=" + tr);
         if (reason != null &&
-                ((reason.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0 || reason.floatingWindow)) {
+                (reason.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0) {
             mService.mWindowManager.prepareAppTransition(
                     WindowManagerPolicy.TRANSIT_NONE, false);
             ActivityRecord r = topRunningActivityLocked(null);
@@ -4435,7 +4434,7 @@ final class ActivityStack {
         }
 
         if (reason != null &&
-                ((reason.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0 || reason.floatingWindow)) {
+                (reason.intent.getFlags()&Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0) {
             mService.mWindowManager.prepareAppTransition(
                     WindowManagerPolicy.TRANSIT_NONE, false);
             ActivityRecord r = topRunningActivityLocked(null);
