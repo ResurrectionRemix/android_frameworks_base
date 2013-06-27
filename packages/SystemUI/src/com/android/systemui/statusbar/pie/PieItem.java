@@ -44,7 +44,6 @@ public class PieItem extends PieView.PieDrawable {
 
     private Paint mBackgroundPaint = new Paint();
     private Paint mSelectedPaint = new Paint();
-    private Paint mLongPressPaint = new Paint();
     private Paint mOutlinePaint = new Paint();
 
     private View mView;
@@ -69,23 +68,10 @@ public class PieItem extends PieView.PieDrawable {
     }
     private PieOnClickListener mOnClickListener = null;
 
-    public interface PieOnLongClickListener {
-        public void onLongClick(PieItem item);
-    }
-    private PieOnLongClickListener mOnLongClickListener = null;
-
     /**
      * The item is selected / has the focus from the gesture.
      */
     public final static int SELECTED = 0x100;
-    /**
-     * The item was long pressed.
-     */
-    public final static int LONG_PRESSED = 0x200;
-    /**
-     * The item can be long pressed.
-     */
-    public final static int CAN_LONG_PRESS = 0x400;
 
     public PieItem(Context context, PieView parent, int flags, int width, Object tag, View view) {
         mView = view;
@@ -100,8 +86,6 @@ public class PieItem extends PieView.PieDrawable {
         mBackgroundPaint.setAntiAlias(true);
         mSelectedPaint.setColor(res.getColor(R.color.pie_selected_color));
         mSelectedPaint.setAntiAlias(true);
-        mLongPressPaint.setColor(res.getColor(R.color.pie_long_pressed_color));
-        mLongPressPaint.setAntiAlias(true);
         mOutlinePaint.setColor(res.getColor(R.color.pie_outline_color));
         mOutlinePaint.setAntiAlias(true);
         mOutlinePaint.setStyle(Style.STROKE);
@@ -118,15 +102,6 @@ public class PieItem extends PieView.PieDrawable {
         mOnClickListener = onClickListener;
     }
 
-    public void setOnLongClickListener(PieOnLongClickListener onLongClickListener) {
-        mOnLongClickListener = onLongClickListener;
-        if (onLongClickListener != null) {
-            flags |= CAN_LONG_PRESS;
-        } else {
-            flags &= ~CAN_LONG_PRESS;
-        }
-    }
-
     public void show(boolean show) {
         if (show) {
             flags |= PieView.PieDrawable.VISIBLE;
@@ -135,13 +110,12 @@ public class PieItem extends PieView.PieDrawable {
         }
     }
 
-    public void setSelected(boolean selected, boolean longPressed) {
+    public void setSelected(boolean selected) {
         mPieLayout.postInvalidate();
-        longPressed = longPressed & (flags & CAN_LONG_PRESS) != 0;
         if (selected) {
-            flags |= longPressed ? SELECTED | LONG_PRESSED : SELECTED;
+            flags |= SELECTED;
         } else {
-            flags &= ~SELECTED & ~LONG_PRESSED;
+            flags &= ~SELECTED;
         }
     }
 
@@ -188,6 +162,13 @@ public class PieItem extends PieView.PieDrawable {
     }
 
     @Override
+<<<<<<< HEAD
+    public void draw(Canvas canvas, Position position) {
+        canvas.drawPath(mPath, (flags & SELECTED) != 0
+                ? mSelectedPaint : mBackgroundPaint);
+        canvas.drawPath(mPath, (flags & SELECTED) != 0
+                ? mSelectedPaint : mOutlinePaint);
+=======
     public void draw(Canvas canvas, PiePosition position) {
         if ((flags & SELECTED) != 0) {
             Paint paint = (flags & LONG_PRESSED) == 0
@@ -197,6 +178,7 @@ public class PieItem extends PieView.PieDrawable {
             canvas.drawPath(mPath, mBackgroundPaint);
             canvas.drawPath(mPath, mOutlinePaint);
         }
+>>>>>>> d4bb3bc... Pie controls: A new way of activation
 
         if (mView != null) {
             int state = canvas.save();
@@ -222,15 +204,9 @@ public class PieItem extends PieView.PieDrawable {
         return null;
     }
 
-    /* package */ void onClickCall(boolean longPressed) {
-        if (!longPressed) {
-            if (mOnClickListener != null) {
-                mOnClickListener.onClick(this);
-            }
-        } else {
-            if (mOnLongClickListener != null) {
-                mOnLongClickListener.onLongClick(this);
-            }
+    /* package */ void onClickCall() {
+        if (mOnClickListener != null) {
+            mOnClickListener.onClick(this);
         }
     }
 
@@ -255,4 +231,3 @@ public class PieItem extends PieView.PieDrawable {
         return path;
     }
 }
-
