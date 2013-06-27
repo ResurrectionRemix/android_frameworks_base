@@ -315,7 +315,7 @@ public class PieLayout extends FrameLayout implements View.OnTouchListener {
 
         mActiveSnap = null;
         for (Position g : Position.values()) {
-            if ((mTriggerSlots & g.FLAG) == 0) {
+            if ((mTriggerSlots & g.FLAG) != 0) {
                 if (g == Position.LEFT || g == Position.RIGHT) {
                     mSnapPoints[g.INDEX] = new SnapPoint(g.FACTOR * width, height / 2, g);
                 } else {
