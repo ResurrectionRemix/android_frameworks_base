@@ -85,7 +85,6 @@ import android.widget.TextView;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.statusbar.StatusBarNotification;
-import com.android.internal.util.pie.PiePosition;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
@@ -106,7 +105,6 @@ import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
 import com.android.systemui.statusbar.policy.OnSizeChangedListener;
 import com.android.systemui.statusbar.policy.Prefs;
-<<<<<<< HEAD
 import com.android.systemui.statusbar.toggles.ToggleManager;
 import com.android.systemui.aokp.AwesomeAction;
 import com.android.internal.util.aokp.AokpRibbonHelper;
@@ -117,9 +115,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import com.android.systemui.statusbar.policy.PieController.Position;
-=======
-import com.android.systemui.statusbar.powerwidget.PowerWidget;
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
 public class PhoneStatusBar extends BaseStatusBar {
     static final String TAG = "PhoneStatusBar";
@@ -1693,14 +1688,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
             return ;
         }
-<<<<<<< HEAD
-=======
-        // don't allow expanding via e.g. service call while status bar is hidden
-        // due to expanded desktop
-        if (getExpandedDesktopMode() == 2) {
-            return;
-        }
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
         mNotificationPanel.expand();
         if (mHasFlipSettings && mScrollView.getVisibility() != View.VISIBLE) {
@@ -1757,14 +1744,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
             return;
         }
-<<<<<<< HEAD
-=======
-        // don't allow expanding via e.g. service call while status bar is hidden
-        // due to expanded desktop
-        if (getExpandedDesktopMode() == 2) {
-            return;
-        }
->>>>>>> d4bb3bc... Pie controls: A new way of activation
 
         // Settings are not available in setup
         if (!mUserSetup) return;
@@ -2250,13 +2229,13 @@ public class PhoneStatusBar extends BaseStatusBar {
         // hide pie triggers when keyguard is visible
         try {
             if (mWindowManagerService.isKeyguardLocked()) {
-                updatePieTriggerMask(PiePosition.BOTTOM.FLAG
-                        | PiePosition.TOP.FLAG);
+                updatePieTriggerMask(Position.BOTTOM.FLAG
+                        | Position.TOP.FLAG);
             } else {
-                updatePieTriggerMask(PiePosition.LEFT.FLAG
-                        | PiePosition.BOTTOM.FLAG
-                        | PiePosition.RIGHT.FLAG
-                        | PiePosition.TOP.FLAG);
+                updatePieTriggerMask(Position.LEFT.FLAG
+                        | Position.BOTTOM.FLAG
+                        | Position.RIGHT.FLAG
+                        | Position.TOP.FLAG);
             }
         } catch (RemoteException e) {
             // nothing else to do ...

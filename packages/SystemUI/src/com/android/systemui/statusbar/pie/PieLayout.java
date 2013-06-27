@@ -33,13 +33,9 @@ import android.provider.Settings;
 import android.util.Slog;
 import android.view.MotionEvent;
 import android.view.View;
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
 import android.widget.FrameLayout;
-=======
-import android.view.ViewConfiguration;
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
 
-import com.android.internal.util.pie.PiePosition;
+import com.android.systemui.statusbar.policy.PieController.Position;
 import com.android.systemui.R;
 
 import java.util.ArrayList;
@@ -52,7 +48,7 @@ import java.util.List;
  * processing the input events from the user.<br>
  * (It handles the events for the snap points, too.)
  */
-public class PieView extends View implements View.OnTouchListener {
+public class PieLayout extends FrameLayout implements View.OnTouchListener {
     public static final String TAG = "PieLayout";
     public static final boolean DEBUG = false;
     public static final boolean DEBUG_INPUT = false;
@@ -60,14 +56,10 @@ public class PieView extends View implements View.OnTouchListener {
     /* DEBUG */
     private long mActivateStartDebug = 0;
 
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
     private static final int TIME_FADEIN = 600;
     private static final int TIME_FADEIN_DELAY = 1000;
 
     private static final int COLOR_BACKGROUND = 0xee000000;
-=======
-    private static final int TIME_FADEIN = 300;
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
 
     private Paint mBackgroundPaint = new Paint();
     private float mBackgroundFraction;
@@ -86,8 +78,8 @@ public class PieView extends View implements View.OnTouchListener {
     private boolean mActive = false;
     private int mPointerId;
     private Point mCenter = new Point(0, 0);
-    private PiePosition mPosition = PiePosition.BOTTOM;
-    private PiePosition mLayoutDoneForPosition;
+    private Position mPosition = Position.BOTTOM;
+    private Position mLayoutDoneForPosition;
 
     private ValueAnimator mBackgroundAnimator
             = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(TIME_FADEIN);
@@ -111,7 +103,7 @@ public class PieView extends View implements View.OnTouchListener {
             }
 
             // animation updates occur on the main thread. it is save to call invalidate here.
-            PieView.this.invalidate();
+            PieLayout.this.invalidate();
         }
 
     };
@@ -121,8 +113,8 @@ public class PieView extends View implements View.OnTouchListener {
      * <p>
      * This defines the basic geometry of a pie thing and provides the
      * interface to trigger positioning and draw preparations
-     * ({@link #prepare(PiePosition, float)}), drawing
-     * ({@link #draw(Canvas, PiePosition)}) as well as user interaction
+     * ({@link #prepare(Position, float)}), drawing
+     * ({@link #draw(Canvas, Position)}) as well as user interaction
      * ({@link #interact(float, int)}).
      */
     public abstract static class PieDrawable {
@@ -131,9 +123,9 @@ public class PieView extends View implements View.OnTouchListener {
         protected int mInner;
         protected int mOuter;
 
-        abstract public void prepare(PiePosition position, float scale);
+        abstract public void prepare(Position position, float scale);
 
-        abstract public void draw(Canvas canvas, PiePosition position);
+        abstract public void draw(Canvas canvas, Position position);
 
         abstract public PieItem interact(float alpha, int radius);
 
@@ -145,14 +137,14 @@ public class PieView extends View implements View.OnTouchListener {
         }
 
         // Display on all positions
-        public final static int DISPLAY_ALL = PiePosition.LEFT.FLAG
-                | PiePosition.BOTTOM.FLAG
-                | PiePosition.RIGHT.FLAG
-                | PiePosition.TOP.FLAG;
+        public final static int DISPLAY_ALL = Position.LEFT.FLAG
+                | Position.BOTTOM.FLAG
+                | Position.RIGHT.FLAG
+                | Position.TOP.FLAG;
         // Display on all except the TOP position
-        public final static int DISPLAY_NOT_AT_TOP = PiePosition.LEFT.FLAG
-                | PiePosition.BOTTOM.FLAG
-                | PiePosition.RIGHT.FLAG;
+        public final static int DISPLAY_NOT_AT_TOP = Position.LEFT.FLAG
+                | Position.BOTTOM.FLAG
+                | Position.RIGHT.FLAG;
         // The PieDrawable is visible, note that slice visibility overrides item visibility
         public final static int VISIBLE = 0x10;
 
@@ -170,7 +162,7 @@ public class PieView extends View implements View.OnTouchListener {
         public final static float GAP = 3.0f;
 
         /**
-         * The slice will be considerer as important - {@link PieView} will try to keep
+         * The slice will be considerer as important - {@link PieLayout} will try to keep
          * these slices on screen, when placing the pie control.
          * @see PieDrawable#flags
          */
@@ -192,7 +184,7 @@ public class PieView extends View implements View.OnTouchListener {
         private final int mY;
         private float mActivity;
 
-        public SnapPoint(int x, int y, PiePosition gravity) {
+        public SnapPoint(int x, int y, Position gravity) {
             mX = x;
             mY = y;
             mActivity = 0.0f;
@@ -215,7 +207,7 @@ public class PieView extends View implements View.OnTouchListener {
         public boolean interact(float x, float y) {
             float distanceSqr = (x - mX) * (x - mX) + (y - mY) * (y - mY);
             if (distanceSqr - mSnapRadiusSqr < mSnapThresholdSqr) {
-                PieView.this.invalidate();
+                PieLayout.this.invalidate();
 
                 if (distanceSqr < mSnapRadiusSqr) {
                     if (DEBUG) {
@@ -232,27 +224,21 @@ public class PieView extends View implements View.OnTouchListener {
             return false;
         }
 
-        public final PiePosition position;
+        public final Position position;
     }
 
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
     private int mTriggerSlots;
     private SnapPoint[] mSnapPoints = new SnapPoint[Position.values().length];
-=======
-    private int mSnapPointMask = 0;
-    private SnapPoint[] mSnapPoints = new SnapPoint[PiePosition.values().length];
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
     private SnapPoint mActiveSnap = null;
 
     /**
      * Listener interface for snap events on {@link SnapPoint}s.
      */
     public interface OnSnapListener {
-        void onSnap(PiePosition position);
+        void onSnap(Position position);
     }
     private OnSnapListener mOnSnapListener = null;
 
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
     private final class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -275,27 +261,12 @@ public class PieView extends View implements View.OnTouchListener {
     private SettingsObserver mSettingsObserver;
 
     public PieLayout(Context context) {
-=======
-    public interface OnExitListener {
-        void onExit();
-    }
-    private OnExitListener mOnExitListener = null;
-
-    public PieView(Context context) {
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
         super(context);
 
         mBackgroundAnimator.addUpdateListener(mUpdateListener);
 
         setDrawingCacheEnabled(false);
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
         setVisibility(View.GONE);
-=======
-        setVisibility(View.VISIBLE);
-        setWillNotDraw(false);
-        setFocusable(true);
-        setOnTouchListener(this);
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
 
         getDimensions();
         getColors();
@@ -308,21 +279,6 @@ public class PieView extends View implements View.OnTouchListener {
         mOnSnapListener = onSnapListener;
     }
 
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
-=======
-    public void setOnExitListener(OnExitListener onExitListener) {
-        mOnExitListener = onExitListener;
-    }
-
-    /**
-     * Tells the Layout where to show snap points.
-     * @param mask is a mask that corresponds to {@link Position}{@code .FLAG}.
-     */
-    public void setSnapPoints(int mask) {
-        mSnapPointMask = mask;
-    }
-
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
     private void getDimensions() {
         mPieScale = Settings.System.getFloat(mContext.getContentResolver(),
                 Settings.System.PIE_SIZE, 1f);
@@ -358,25 +314,10 @@ public class PieView extends View implements View.OnTouchListener {
         }
 
         mActiveSnap = null;
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
         for (Position g : Position.values()) {
             if ((mTriggerSlots & g.FLAG) != 0) {
                 if (g == Position.LEFT || g == Position.RIGHT) {
                     mSnapPoints[g.INDEX] = new SnapPoint(g.FACTOR * width, height / 2, g);
-=======
-        // reuse already created snap points
-        for (PiePosition g : PiePosition.values()) {
-            if ((mSnapPointMask & g.FLAG) == 0) {
-                int x = width / 2;
-                int y = height / 2;
-                if (g == PiePosition.LEFT || g == PiePosition.RIGHT) {
-                    x = g.FACTOR * width;
-                } else {
-                    y = g.FACTOR * height;
-                }
-                if (mSnapPoints[g.INDEX] != null) {
-                    mSnapPoints[g.INDEX].reposition(x, y);
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
                 } else {
                     mSnapPoints[g.INDEX] = new SnapPoint(width / 2, g.FACTOR * height, g);
                 }
@@ -521,15 +462,8 @@ public class PieView extends View implements View.OnTouchListener {
                         mActiveItem.onClickCall();
                     }
                 }
-                PieView.this.exit();
+                PieLayout.this.exit();
             }
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
-=======
-
-            if (action == MotionEvent.ACTION_CANCEL) {
-                PieView.this.exit();
-            }
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
         }
         return true;
     }
@@ -584,7 +518,7 @@ public class PieView extends View implements View.OnTouchListener {
             }
         }
 
-        if (mPosition == PiePosition.LEFT || mPosition == PiePosition.RIGHT) {
+        if (mPosition == Position.LEFT || mPosition == Position.RIGHT) {
             mCenter.x = mPadding + (int) ((getWidth() - 2 * mPadding) * mPosition.FACTOR);
             if (estimatedWidth * 1.3f > getHeight()) {
                 mCenter.y = getHeight() / 2;
@@ -616,17 +550,13 @@ public class PieView extends View implements View.OnTouchListener {
         getDimensions();
     }
 
-    public void activate(Point center, PiePosition position) {
+    public void activate(Point center, Position position) {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             Slog.w(TAG, "Activation not on main thread: " + Thread.currentThread().getName());
         }
 
         mActivateStartDebug = SystemClock.uptimeMillis();
 
-<<<<<<< HEAD:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieLayout.java
-=======
-        getDimensions();
->>>>>>> d4bb3bc... Pie controls: A new way of activation:packages/SystemUI/src/com/android/systemui/statusbar/pie/PieView.java
         mPosition = position;
         mLayoutDoneForPosition = null;
         mActive = true;
@@ -646,18 +576,15 @@ public class PieView extends View implements View.OnTouchListener {
         mBackgroundAnimator.setStartDelay(TIME_FADEIN_DELAY);
         mBackgroundAnimator.start();
 
+        setVisibility(View.VISIBLE);
+
+
         Slog.d(TAG, "activate finished within "
                 + (SystemClock.uptimeMillis() - mActivateStartDebug) + " ms");
     }
 
     public void exit() {
-        if (DEBUG) {
-            Slog.d(TAG, "Exiting pie now");
-        }
-        // if exit was called before, just ignore this one.
-        if (!mActive) {
-            return;
-        }
+        setVisibility(View.GONE);
         mBackgroundAnimator.cancel();
 
         mActiveSnap = null;
@@ -673,9 +600,6 @@ public class PieView extends View implements View.OnTouchListener {
         mActiveItem = null;
 
         mActive = false;
-        if (mOnExitListener != null) {
-            mOnExitListener.onExit();
-        }
     }
 
     public void clearSlices() {
