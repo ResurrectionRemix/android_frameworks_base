@@ -285,6 +285,11 @@ final class ActivityStack {
      */
     boolean mDismissKeyguardOnNextActivity = false;
 
+    /**
+     * Is the privacy guard currently enabled?
+     */
+    String mPrivacyGuardPackageName = null;
+
     int mThumbnailWidth = -1;
     int mThumbnailHeight = -1;
 
@@ -1251,6 +1256,7 @@ final class ActivityStack {
         } else {
             next.cpuTimeAtResume = 0; // Couldn't get the cpu time of process
         }
+        updatePrivacyGuardNotificationLocked(next);
     }
 
     /**
@@ -1744,7 +1750,7 @@ final class ActivityStack {
                 next.app.pendingUiClean = true;
                 next.app.thread.scheduleResumeActivity(next.appToken,
                         mService.isNextTransitionForward());
-                
+
                 checkReadyForSleepLocked();
 
             } catch (Exception e) {
@@ -1805,40 +1811,34 @@ final class ActivityStack {
             startSpecificActivityLocked(next, true, true);
         }
 
-        handlePrivacyGuardNotification(prev, next);
-
         return true;
     }
 
-    private final void handlePrivacyGuardNotification(ActivityRecord prev, ActivityRecord next) {
-        boolean curPrivacy = false;
-        boolean prevPrivacy = false;
+    private final void updatePrivacyGuardNotificationLocked(ActivityRecord next) {
 
-        if (next != null) {
-            try {
-                curPrivacy = AppGlobals.getPackageManager().getPrivacyGuardSetting(
-                        next.packageName, next.userId);
-            } catch (RemoteException e) {
-                // nothing
-            }
+        if (mPrivacyGuardPackageName != null && mPrivacyGuardPackageName.equals(next.packageName)) {
+            return;
         }
-        if (prev != null) {
-            try {
-                prevPrivacy = AppGlobals.getPackageManager().getPrivacyGuardSetting(
-                        prev.packageName, prev.userId);
-            } catch (RemoteException e) {
-                // nothing
-            }
+
+        boolean privacy = false;
+
+        try {
+            privacy = AppGlobals.getPackageManager().getPrivacyGuardSetting(
+                    next.packageName, next.userId);
+        } catch (RemoteException e) {
+            // nothing
         }
-        if (prevPrivacy && !curPrivacy) {
+
+        if (mPrivacyGuardPackageName != null && !privacy) {
             Message msg = mService.mHandler.obtainMessage(
-                    ActivityManagerService.CANCEL_PRIVACY_NOTIFICATION_MSG, prev.userId);
+                    ActivityManagerService.CANCEL_PRIVACY_NOTIFICATION_MSG, next.userId);
             msg.sendToTarget();
-        } else if ((!prevPrivacy && curPrivacy) ||
-                (prevPrivacy && curPrivacy && !next.packageName.equals(prev.packageName))) {
+            mPrivacyGuardPackageName = null;
+        } else if (privacy) {
             Message msg = mService.mHandler.obtainMessage(
                     ActivityManagerService.POST_PRIVACY_NOTIFICATION_MSG, next);
             msg.sendToTarget();
+            mPrivacyGuardPackageName = next.packageName;
         }
     }
 
