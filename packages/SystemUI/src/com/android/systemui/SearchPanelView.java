@@ -77,7 +77,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import static com.android.internal.util.aokp.AwesomeConstants.*;
+import com.android.internal.util.aokp.GlowPadTorchHelper;
 import com.android.internal.util.aokp.NavRingHelpers;
+import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.GlowPadView.OnTriggerListener;
 import com.android.internal.widget.multiwaveview.TargetDrawable;
@@ -109,7 +111,9 @@ public class SearchPanelView extends FrameLayout implements
     private View mSearchTargetsContainer;
     private GlowPadView mGlowPadView;
     private IWindowManager mWm;
+    private KeyguardManager mKeyguardManager;
 
+    private LockPatternUtils mLockPatternUtils;
     private PackageManager mPackageManager;
     private Resources mResources;
     private SettingsObserver mSettingsObserver;
@@ -122,6 +126,8 @@ public class SearchPanelView extends FrameLayout implements
 
     private int mNavRingAmount;
     private int mCurrentUIMode;
+    private int mGlowTorch;
+    private boolean mGlowTorchOn;
     private boolean mLefty;
     private boolean mBoolLongPress;
     private boolean mSearchPanelLock;
@@ -144,8 +150,14 @@ public class SearchPanelView extends FrameLayout implements
         mPackageManager = mContext.getPackageManager();
         mResources = mContext.getResources();
 
+        mLockPatternUtils = new LockPatternUtils(mContext);
+        mKeyguardManager =
+                (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+
         mContentResolver = mContext.getContentResolver();
         mSettingsObserver = new SettingsObserver(new Handler());
+
+        mGlowTorchOn = false;
         updateSettings();
     }
 
@@ -231,9 +243,22 @@ public class SearchPanelView extends FrameLayout implements
 
         public void onGrabbed(View v, int handle) {
             mSearchPanelLock = false;
+
+            if (mGlowTorch == 2) {
+                //faceUnlock uses camera so we can't use it - let's not try.
+                boolean faceUnlock = mLockPatternUtils.usingBiometricWeak();
+                boolean screenLocked =
+                        mKeyguardManager != null && mKeyguardManager.isKeyguardLocked();
+
+                if (screenLocked && !faceUnlock) {
+                    mHandler.removeCallbacks(checkTorch);
+                    mHandler.postDelayed(startTorch, GlowPadTorchHelper.TORCH_TIMEOUT);
+                }
+            }
         }
 
         public void onReleased(View v, int handle) {
+            fireTorch();
         }
 
         public void onTargetChange(View v, final int target) {
@@ -241,6 +266,7 @@ public class SearchPanelView extends FrameLayout implements
                 mHandler.removeCallbacks(SetLongPress);
                 mLongPress = false;
             } else {
+                fireTorch();
                 if (mBoolLongPress && !TextUtils.isEmpty(longList.get(target)) && !longList.get(target).equals(AwesomeConstant.ACTION_NULL.value())) {
                     mTarget = target;
                     mHandler.postDelayed(SetLongPress, ViewConfiguration.getLongPressTimeout());
@@ -319,6 +345,31 @@ public class SearchPanelView extends FrameLayout implements
         u.setAction("com.android.lockscreen.ACTION_UNLOCK_RECEIVER");
         mContext.sendBroadcastAsUser(u, UserHandle.ALL);
     }
+
+    private void fireTorch() {
+        mHandler.removeCallbacks(startTorch);
+        if (mGlowTorch == 2 && mGlowTorchOn) {
+            mGlowTorchOn = false;
+            GlowPadTorchHelper.killTorch(mContext);
+            mHandler.postDelayed(checkTorch, GlowPadTorchHelper.TORCH_CHECK);
+        }
+    }
+
+    final Runnable startTorch = new Runnable () {
+        public void run() {
+            if (!mGlowTorchOn) {
+                mGlowTorchOn = GlowPadTorchHelper.startTorch(mContext);
+            }
+        }
+    };
+
+    final Runnable checkTorch = new Runnable () {
+        public void run() {
+            if (GlowPadTorchHelper.torchActive(mContext)) {
+                GlowPadTorchHelper.torchOff(mContext, true);
+            }
+        }
+    };
 
     private void setDrawables() {
         mLongPress = false;
@@ -609,6 +660,8 @@ public class SearchPanelView extends FrameLayout implements
                     Settings.System.SYSTEMUI_NAVRING_AMOUNT), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SYSTEMUI_NAVRING_LONG_ENABLE), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_GLOW_TORCH), false, this);
 
             for (int i = 0; i < 5; i++) {
 	            resolver.registerContentObserver(
@@ -643,6 +696,9 @@ public class SearchPanelView extends FrameLayout implements
 
         mBoolLongPress = (Settings.System.getBoolean(mContext.getContentResolver(),
                 Settings.System.SYSTEMUI_NAVRING_LONG_ENABLE, false));
+
+        mGlowTorch = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_GLOW_TORCH, 0));
 
         mNavRingAmount = Settings.System.getInt(mContext.getContentResolver(),
                          Settings.System.SYSTEMUI_NAVRING_AMOUNT, 1);

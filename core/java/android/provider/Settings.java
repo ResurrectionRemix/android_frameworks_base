@@ -2582,6 +2582,13 @@ public final class Settings {
          * @hide
          */
         public static final String RAM_USAGE_BAR = "ram_usage_bar";
+        
+        /**
+         * Goodbye fullscreen keyboard
+         *
+         * @hide
+         */
+        public static final String FULLSCREEN_KEYBOARD = "fullscreen_keyboard";
 
        /**
         * Key to store Torch state.
@@ -2654,6 +2661,12 @@ public final class Settings {
                 "navring_3",
                 "navring_4",
         };
+        
+         /**
+         * Statusbar State
+         * @hide
+         */
+        public static final String EXPANDED_DESKTOP_STATE = "expanded_desktop_state";
 
         /**
          * Custom navring long press actions
@@ -3056,6 +3069,12 @@ public final class Settings {
         public static final String STATUSBAR_WIFI_SIGNAL_TEXT = "statusbar_wifi_signal_text";
 
         /**
+         * Automatic keyboard rotation timeout.  0 to disable completely.
+         * @hide
+         */
+        public static final String KEYBOARD_ROTATION_TIMEOUT = "keyboard_rotation_timeout";
+
+        /**
          * statusbar WIFI signal text color
          *
          * @hide
@@ -3133,6 +3152,12 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_AUTO_ROTATE = "lockscreen_auto_rotate";
+
+        /**
+         * Whether power menu expanded desktop is enabled
+         * @hide
+         */
+        public static final String POWER_MENU_EXPANDED_DESKTOP_ENABLED = "power_menu_expanded_desktop_enabled";
 
         /**
          * Setting to allow Unlimited Widgets
@@ -3572,6 +3597,13 @@ public final class Settings {
         public static final String QUICK_TOGGLE_FAV_CONTACT = "quick_toggle_fav_contact";
 
         /**
+         * enable and disable shade collapse on click
+         *
+         * @hide
+         */
+        public static final String SHADE_COLLAPSE_ALL = "shade_collapse_all";
+
+        /**
          * enable and disable fast toggle in settings
          *
          * @hide
@@ -3679,6 +3711,16 @@ public final class Settings {
         public static final String MVNO_ROAMING = "mvno_roaming";
 
         public static final String THEME_WALLPAPER = "theme_wallpaper";
+
+        /**
+         * Low battery warning dialog and sound
+         * 0 = off
+         * 1 = dialog only
+         * 2 = sound only
+         * 3 = dialog and sound
+         * @hide
+         */
+        public static final String POWER_UI_LOW_BATTERY_WARNING_POLICY = "power_ui_low_battery_warning_policy";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

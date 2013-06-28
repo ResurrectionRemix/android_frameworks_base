@@ -1472,4 +1472,66 @@
     <!-- Rebooting message -->
     <string name="reboot_progress">A készülék újraindul</string>
 
+    <!-- Vibration picker dialog title -->
+    <string name="vibration_picker_title">Rezgés választása</string>
+    <string name="vibration_picker_del_title">Rezgés törlése</string>
+
+    <!-- In WiFi notification -->
+    <string name="notify_turn_wifi_off_title">Wi-fi kikapcsolása</string>
+
+    <!-- In WiFi AP notification -->
+    <string name="notify_turn_wifi_ap_off_title">Wi-fi AP kikapcsolása</string>
+
+    <!-- Hardware Rotation lock string -->
+    <string name="toast_rotation_unlocked">Képernyő forgatás feloldva</string>
+    <string name="toast_rotation_locked">Képernyő forgatás zárolva</string>
+
+    <!-- Animation Strings -->
+    <string name="animation_fade">Áttűnés</string>
+    <string name="animation_slide_right">Jobbról csúszik</string>
+    <string name="animation_slide_left">Balról csúszik</string>
+    <string name="animation_slide_right_no_fade">Jobbról csúszik (nincs áttűnés)</string>
+    <string name="animation_slide_left_no_fade">Balról csúszik (nincs áttűnés)</string>
+    <string name="animation_slide_up">Alulról csúszik</string>
+    <string name="animation_slide_down">Felülről csúszik</string>
+    <string name="animation_default">Alapértelmezett</string>
+    <string name="animation_translucent">Áttetsző</string>
+    <string name="animation_grow_shrink">Nyúlás (Felülről)</string>
+    <string name="animation_grow_shrink_center">Nyúlás (Középről)</string>
+    <string name="animation_grow_shrink_bottom">Nyúlás (Alulról)</string>
+    <string name="animation_grow_shrink_left">Nyúlás (Balról)</string>
+    <string name="animation_grow_shrink_right">Nyúlás (Jobbról)</string>
+
+
+    <!-- Awesome Action Stuff-->
+    <string name="action_home">Kezdőképernyő</string>
+    <string name="action_back">Vissza</string>
+    <string name="action_recents">Legutóbbiak</string>
+    <string name="action_recents_gb">Legutóbbiak (GB stílus)</string>
+    <string name="action_search">Keresés</string>
+    <string name="action_screenshot">Képernyőkép</string>
+    <string name="action_menu">Menü</string>
+    <string name="action_ime">Bill. váltó megnyítása</string>
+    <string name="action_kill">Kill task</string>
+    <string name="action_power">Power</string>
+    <string name="action_notifications">Értesítések</string>
+    <string name="action_lastapp">Utolsó Alkalmazás</string>
+    <string name="action_assist">Keresés (Google Now)</string>
+    <string name="action_clockoptions">Óra opciók</string>
+    <string name="action_voiceassist">Hang keresés</string>
+    <string name="action_torch">Zseblámpa</string>
+    <string name="action_silent">Cseng/Néma</string>
+    <string name="action_vib">Cseng/Rezeg</string>
+    <string name="action_silent_vib">Cseng/Rezgés/Néma</string>
+    <string name="action_event">Esemény</string>
+    <string name="action_today">Ma</string>
+    <string name="action_alarm">Riasztás</string>
+    <string name="action_unlock">Feloldás</string>
+    <string name="action_camera">Kamera</string>
+    <string name="action_null">Üres</string>
+    <string name="action_widgets">Nav Modulok</string>
+    <string name="action_app_window">Alkalmazás Ablak</string>
+    <string name="action_ribbon">AOKP Szalag</string>
+    <string name="action_app">Egyéni Alk./Shortcut</string>
+
 </resources>

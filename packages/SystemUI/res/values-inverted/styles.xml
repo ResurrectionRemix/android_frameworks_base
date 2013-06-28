@@ -69,14 +69,14 @@
     <style name="TextAppearance.StatusBar.Date" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
     <style name="TextAppearance.StatusBar.BatteryTextOnly_Plugged" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <!-- Note: must be dp to fit in status bar -->
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_green_light</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
     <style name="TextAppearance.StatusBar.BatteryTextOnly_Low" parent="@*android:style/TextAppearance.StatusBar.Icon">
@@ -89,13 +89,13 @@
     <style name="TextAppearance.StatusBar.WifiText" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
     <style name="TextAppearance.StatusBar.SignalText" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
     <style name="TextAppearance.StatusBar.Expanded" parent="@*android:style/TextAppearance.StatusBar" />
@@ -158,7 +158,7 @@
       <item name="android:layout_gravity">left|bottom</item>
       <item name="android:textSize">11dp</item>
       <item name="android:textStyle">bold</item>
-      <item name="android:shadowColor">#FF000000</item>
+      <item name="android:shadowColor">#ffff4444</item>
       <item name="android:shadowDx">0</item>
       <item name="android:shadowDy">0</item>
       <item name="android:shadowRadius">2.5</item>
@@ -169,7 +169,7 @@
       <item name="android:layout_gravity">center</item>
       <item name="android:textSize">9dp</item>
       <item name="android:textStyle">bold</item>
-      <item name="android:shadowColor">#FF000000</item>
+      <item name="android:shadowColor">#ffff4444</item>
       <item name="android:shadowDx">0</item>
       <item name="android:shadowDy">0</item>
       <item name="android:shadowRadius">2.5</item>
@@ -177,7 +177,7 @@
 
     <style name="TextAppearance.QuickSettings.Clock" parent="@style/TextAppearance.QuickSettings.TileView">
         <item name="android:textSize">20dp</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
     <style name="TextAppearance.QuickSettings.Date" parent="@style/TextAppearance.QuickSettings.TileView">
@@ -186,7 +186,7 @@
 
     <style name="TextAppearance.QuickSettings.Alarm" parent="@style/TextAppearance.QuickSettings.TileView">
         <item name="android:textSize">14dp</item>
-        <item name="android:textColor">#ff3a3b39</item>
+        <item name="android:textColor">#ffff4444</item>
     </style>
     
     
@@ -230,7 +230,7 @@
     <style name="TextAppearance.StatusBar.Toggle" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
      <style name="brucekey_icon">
@@ -254,14 +254,14 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:textSize">23sp</item>
         <item name="android:textColor">#ffff4444</item>
-        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowColor">#ffff4444</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
     <style name="ClingText">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">#ffff4444</item>
-        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowColor">#ffff4444</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">2.0</item>
         <item name="android:lineSpacingMultiplier">1.1</item>
