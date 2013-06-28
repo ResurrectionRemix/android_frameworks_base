@@ -104,6 +104,9 @@ public class ToggleManager {
     public static final String HYBRID_TOGGLE = "HYBRID";
     public static final String MUSIC_TOGGLE = "MUSIC";
     public static final String HALO_TOGGLE = "HALO";
+<<<<<<< HEAD
+>>>>>>> d10d31f... HALO Toggle
+=======
 >>>>>>> d10d31f... HALO Toggle
 
     private int mStyle;
@@ -179,6 +182,9 @@ public class ToggleManager {
             toggleMap.put(HYBRID_TOGGLE, HybridToggle.class);
             toggleMap.put(MUSIC_TOGGLE, MusicToggle.class);
             toggleMap.put(HALO_TOGGLE, HaloToggle.class);
+<<<<<<< HEAD
+>>>>>>> d10d31f... HALO Toggle
+=======
 >>>>>>> d10d31f... HALO Toggle
             // toggleMap.put(BT_TETHER_TOGGLE, null);
         }

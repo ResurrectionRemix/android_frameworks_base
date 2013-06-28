@@ -55,5 +55,8 @@
     <string name="toggle_HYBRID">Hybrid</string>
     <string name="toggle_MUSIC">Music</string>
     <string name="toggle_HALO">Halo</string>
+<<<<<<< HEAD
+>>>>>>> d10d31f... HALO Toggle
+=======
 >>>>>>> d10d31f... HALO Toggle
 </resources>
