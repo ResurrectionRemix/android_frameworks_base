@@ -50,4 +50,10 @@
     <string name="toggle_CUSTOM">Custom</string>
     <string name="toggle_STAYAWAKE">Stay awake</string>
     <string name="toggle_WIRELESSADB">Wireless ADB</string>
+<<<<<<< HEAD
+=======
+    <string name="toggle_HYBRID">Hybrid</string>
+    <string name="toggle_MUSIC">Music</string>
+    <string name="toggle_HALO">Halo</string>
+>>>>>>> d10d31f... HALO Toggle
 </resources>
