@@ -2476,6 +2476,12 @@ public final class Settings {
         public static final String LOCKSCREEN_COLOR_ALPHA = "lockscreen_color_alpha";
 
         /**
+         * Foreground App
+         * @hide
+         */
+        public static final String FOREGROUND_APP = "foreground_app";
+
+        /**
          * Control the display of the action overflow button within app UI.
          * 0 = use system default
          * 1 = force on

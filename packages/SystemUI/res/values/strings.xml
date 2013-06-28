@@ -540,6 +540,7 @@
     <string name="quick_settings_stayawake_off">Stay Awake Off</string>
     <string name="quick_settings_adb_on"><xliff:g id="ip" example="192.168.1.5">%s</xliff:g></string>
     <string name="quick_settings_adb_off">Wireless ADB Off</string>
+    <string name="quick_settings_hybrid">Hybrid</string>
 
     <!-- Title of help text shown when the notification panel is pulled down for the very first time. [CHAR LIMIT=NONE] -->
     <string name="status_bar_help_title">Notifications appear here</string>
