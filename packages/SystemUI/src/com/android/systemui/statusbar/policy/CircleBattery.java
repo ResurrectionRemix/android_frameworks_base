@@ -36,6 +36,7 @@ import android.os.BatteryManager;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.AttributeSet;
+import android.util.ColorUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -77,6 +78,11 @@ public class CircleBattery extends ImageView {
     private Paint   mPaintSystem;
     private Paint   mPaintRed;
 
+<<<<<<< HEAD
+=======
+    public ColorUtils.ColorSettingInfo mLastIconColor;
+
+>>>>>>> c072146... Add Per-App-Color Engine support for CM Circle Battery
     private int batteryStyle;
 
     // runnable to invalidate view via mHandler.postDelayed() call
@@ -213,6 +219,47 @@ public class CircleBattery extends ImageView {
         // font needs some extra settings
         mPaintFont.setTextAlign(Align.CENTER);
         mPaintFont.setFakeBoldText(true);
+<<<<<<< HEAD
+=======
+
+        // Only watch for per app color changes when the setting is in check
+        if (ColorUtils.getPerAppColorState(mContext)) {
+
+            mLastIconColor = ColorUtils.getColorSettingInfo(mContext, 
+                    Settings.System.STATUS_ICON_COLOR);
+            mLastIconColor.lastColorString = "";
+            updateIconColor();
+
+            // Listen for status bar icon color changes
+            mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.STATUS_ICON_COLOR), false, 
+                    new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        updateIconColor();
+                    }});
+        }
+    }
+
+    private void updateIconColor() {
+        Resources res = getResources();
+        ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext,
+                Settings.System.STATUS_ICON_COLOR);
+        if (!colorInfo.lastColorString.equals(mLastIconColor.lastColorString)) {
+            if (colorInfo.isLastColorNull) {
+                mPaintFont.setColor(res.getColor(R.color.holo_blue_dark));
+                mPaintSystem.setColor(res.getColor(R.color.holo_blue_dark));
+                mPaintGray.setColor(res.getColor(R.color.darker_gray));
+                mPaintRed.setColor(res.getColor(R.color.holo_red_light));
+            } else {
+                mPaintFont.setColor(colorInfo.lastColor);
+                mPaintSystem.setColor(colorInfo.lastColor);
+                mPaintGray.setColor(colorInfo.lastColor);
+                mPaintRed.setColor(colorInfo.lastColor);
+            }
+            mLastIconColor = colorInfo;
+        }
+>>>>>>> c072146... Add Per-App-Color Engine support for CM Circle Battery
     }
 
     @Override
@@ -243,7 +290,7 @@ public class CircleBattery extends ImageView {
         if (mCircleSize == 0) {
             initSizeMeasureIconHeight();
         }
-        setMeasuredDimension(mCircleSize + getPaddingLeft(), mCircleSize);
+        setMeasuredDimension(mCircleSize + getPaddingLeft() + getPaddingRight(), mCircleSize);
     }
 
     @Override
@@ -356,7 +403,7 @@ public class CircleBattery extends ImageView {
      */
     private void initSizeMeasureIconHeight() {
         final Bitmap measure = BitmapFactory.decodeResource(getResources(),
-                com.android.systemui.R.drawable.stat_sys_wifi_signal_4_fully);
+                com.android.systemui.R.drawable.stat_sys_battery_100);
         final int x = measure.getWidth() / 2;
 
         mCircleSize = measure.getHeight();
