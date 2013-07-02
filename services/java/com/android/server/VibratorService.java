@@ -551,7 +551,10 @@ public class VibratorService extends IVibratorService.Stub
                 Settings.System.QUIET_HOURS_END, 0);
         boolean quietHoursVibrate = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QUIET_HOURS_STILL, 0) != 0;
-        if (quietHoursEnabled && quietHoursVibrate && (quietHoursStart != quietHoursEnd)) {
+        if (quietHoursEnabled && quietHoursVibrate) {
+            if (quietHoursStart == quietHoursEnd) {
+                return true;
+            }
             // Get the date in "quiet hours" format.
             Calendar calendar = Calendar.getInstance();
             int minutes = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);

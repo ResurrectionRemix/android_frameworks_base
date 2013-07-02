@@ -1415,7 +1415,10 @@ public class NotificationManagerService extends INotificationManager.Stub
     }
 
     private boolean inQuietHours() {
-        if (mQuietHoursEnabled && (mQuietHoursStart != mQuietHoursEnd)) {
+        if (mQuietHoursEnabled) {
+            if (mQuietHoursStart == mQuietHoursEnd) {
+                return true;
+            }
             // Get the date in "quiet hours" format.
             Calendar calendar = Calendar.getInstance();
             int minutes = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
