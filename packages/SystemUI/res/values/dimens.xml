@@ -247,11 +247,7 @@
 
     <!-- Constant for hidden ribbon drag handle -->
     <dimen name="ribbon_drag_handle_height">25dp</dimen>
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 188b1f6... PIE: compressed layout, stubs, new defaults
     <!-- PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE -->
     <dimen name="pie_trigger_height">12dp</dimen>
     <dimen name="pie_radius_start">65dp</dimen>
