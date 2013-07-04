@@ -43,4 +43,7 @@
 
     <!-- Height of search panel including navigation bar height -->
     <dimen name="navbar_search_panel_height">280dip</dimen>
+    
+    <!-- PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE -->
+    <dimen name="pie_panel_padding">100dp</dimen>
 </resources>

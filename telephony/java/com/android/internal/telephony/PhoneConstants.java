@@ -80,6 +80,7 @@ public class PhoneConstants {
     public static final int NT_MODE_LTE_CMDA_EVDO_GSM_WCDMA = RILConstants.NETWORK_MODE_LTE_CMDA_EVDO_GSM_WCDMA;
 
     public static final int NT_MODE_LTE_ONLY     = RILConstants.NETWORK_MODE_LTE_ONLY;
+    public static final int NT_MODE_LTE_WCDMA    = RILConstants.NETWORK_MODE_LTE_WCDMA;
     public static final int PREFERRED_NT_MODE    = RILConstants.PREFERRED_NETWORK_MODE;
 
     // Number presentation type for caller id display (From internal/Conneciton.java)

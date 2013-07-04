@@ -99,6 +99,7 @@ public class LteToggle extends StatefulToggle {
                 || mode == PhoneConstants.NT_MODE_LTE_CDMA_EVDO
                 || mode == PhoneConstants.NT_MODE_LTE_GSM_WCDMA
                 || mode == PhoneConstants.NT_MODE_LTE_CMDA_EVDO_GSM_WCDMA
-                || mode == PhoneConstants.NT_MODE_LTE_ONLY;
+                || mode == PhoneConstants.NT_MODE_LTE_ONLY
+                || mode == PhoneConstants.NT_MODE_LTE_WCDMA;
     }
 }
