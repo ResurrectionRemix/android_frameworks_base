@@ -2467,27 +2467,12 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_ICON = "statusbar_battery_icon";
 
         /**
-<<<<<<< HEAD
-=======
-         * Swap volume buttons when the screen is rotated by 90 or 180 degrees
-         * @hide
-         */
-        public static final String SWAP_VOLUME_KEYS_BY_ROTATE = "swap_volume_keys_by_rotate";
-
-        /**
-         * Lock Volume Keys, Whether to lock ringer volume changes in silent mode.
-         * @hide
-         */
-        public static final String LOCK_VOLUME_KEYS = "lock_volume_keys";
-
-        /**
          * Whether to use the custom quick unlock screen control
          * @hide
          */
         public static final String LOCKSCREEN_COLOR_ALPHA = "lockscreen_color_alpha";
 
         /**
->>>>>>> 8232e21... Lockscreen Tint Color Mod (See Credit Below)
          * Control the display of the action overflow button within app UI.
          * 0 = use system default
          * 1 = force on
