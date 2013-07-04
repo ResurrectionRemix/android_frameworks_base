@@ -57,16 +57,44 @@
                     android:layout_alignBaseline="@id/clock"
                     />
             </RelativeLayout>
-            
-            <ImageView android:id="@+id/clear_all_button"
+
+            <RelativeLayout
+                android:id="@+id/toggle_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+<<<<<<< HEAD
                 android:paddingTop="10dp"
                 android:paddingRight="8dp"
                 android:src="@drawable/ic_notify_clear_normal"
                 android:contentDescription="@string/accessibility_clear_all"/>
         </RelativeLayout>
+=======
+                android:enabled="false"
+                >
+
+                <ImageView android:id="@+id/halo_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_notify_halo_normal"
+                    android:contentDescription="@string/accessibility_halo"
+                    />
+
+                <ImageView android:id="@+id/clear_all_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/halo_button"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/ic_notify_clear"
+                    android:contentDescription="@string/accessibility_clear_all"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>            
+>>>>>>> 0e6e666... HALO: show halo button in pie
 
         <ScrollView
             android:id="@+id/content_scroll"
