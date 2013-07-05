@@ -54,9 +54,12 @@
 =======
     <string name="toggle_HYBRID">Hybrid</string>
     <string name="toggle_MUSIC">Music</string>
+<<<<<<< HEAD
     <string name="toggle_HALO">Halo</string>
 <<<<<<< HEAD
 >>>>>>> d10d31f... HALO Toggle
 =======
 >>>>>>> d10d31f... HALO Toggle
+=======
+>>>>>>> parent of d10d31f... HALO Toggle
 </resources>

@@ -616,8 +616,6 @@
     <string name="quick_settings_statusbar_off_label">StatusBar Off</string>
     <string name="quick_settings_swaggersuntoast">#SwaggerSunday</string>
     <string name="quick_settings_screenshot">Screenshot</string>
-    <string name="quick_settings_halo_on_label">Halo On</string>
-    <string name="quick_settings_halo_off_label">Halo Off</string>
 
     <!--  RamBar -->
     <string name="memory">RAM</string>

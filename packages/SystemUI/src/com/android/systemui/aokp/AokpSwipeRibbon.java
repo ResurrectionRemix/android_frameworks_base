@@ -482,11 +482,14 @@ public class AokpSwipeRibbon extends LinearLayout {
 =======
             toggleMap.put(HYBRID_TOGGLE, HybridToggle.class);
             toggleMap.put(MUSIC_TOGGLE, MusicToggle.class);
+<<<<<<< HEAD
             toggleMap.put(HALO_TOGGLE, HaloToggle.class);
 <<<<<<< HEAD
 >>>>>>> d10d31f... HALO Toggle
 =======
 >>>>>>> d10d31f... HALO Toggle
+=======
+>>>>>>> parent of d10d31f... HALO Toggle
             // toggleMap.put(BT_TETHER_TOGGLE, null);
         }
         return toggleMap;
