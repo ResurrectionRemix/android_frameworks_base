@@ -42,11 +42,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
-<<<<<<< HEAD
-=======
 import android.content.ComponentName;
-import android.content.ContentResolver;
->>>>>>> 2bd1802... HALO (1/2)
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -68,12 +64,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
-<<<<<<< HEAD
-=======
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.drawable.TransitionDrawable;
->>>>>>> 2bd1802... HALO (1/2)
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -224,10 +215,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     public TransparencyManager mTransparencyManager;
 
     private boolean mDeviceProvisioned = false;
-<<<<<<< HEAD
-    
-      public void collapse() {
-=======
 
     private boolean mExpandedDesktop;
     private boolean mPieExpandedOnly;
@@ -237,7 +224,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     public void collapse() {
->>>>>>> 2bd1802... HALO (1/2)
     }
 
     @Override
