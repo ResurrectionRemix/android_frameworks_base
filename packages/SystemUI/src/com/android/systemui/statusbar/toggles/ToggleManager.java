@@ -99,18 +99,6 @@ public class ToggleManager {
     public static final String CUSTOM_TOGGLE = "CUSTOM";
     public static final String STAYAWAKE_TOGGLE = "STAYAWAKE";
     public static final String WIRELESS_ADB_TOGGLE = "WIRELESSADB";
-<<<<<<< HEAD
-=======
-    public static final String HYBRID_TOGGLE = "HYBRID";
-    public static final String MUSIC_TOGGLE = "MUSIC";
-<<<<<<< HEAD
-    public static final String HALO_TOGGLE = "HALO";
-<<<<<<< HEAD
->>>>>>> d10d31f... HALO Toggle
-=======
->>>>>>> d10d31f... HALO Toggle
-=======
->>>>>>> parent of d10d31f... HALO Toggle
 
     private int mStyle;
 
@@ -180,18 +168,6 @@ public class ToggleManager {
             toggleMap.put(CUSTOM_TOGGLE, CustomToggle.class);
             toggleMap.put(STAYAWAKE_TOGGLE, StayAwakeToggle.class);
             toggleMap.put(WIRELESS_ADB_TOGGLE, WirelessAdbToggle.class);
-<<<<<<< HEAD
-=======
-            toggleMap.put(HYBRID_TOGGLE, HybridToggle.class);
-            toggleMap.put(MUSIC_TOGGLE, MusicToggle.class);
-<<<<<<< HEAD
-            toggleMap.put(HALO_TOGGLE, HaloToggle.class);
-<<<<<<< HEAD
->>>>>>> d10d31f... HALO Toggle
-=======
->>>>>>> d10d31f... HALO Toggle
-=======
->>>>>>> parent of d10d31f... HALO Toggle
             // toggleMap.put(BT_TETHER_TOGGLE, null);
         }
         return toggleMap;
