@@ -74,20 +74,13 @@ public class SbBatteryController extends LinearLayout {
     public static final int STYLE_ICON_TEXT = 2;
     public static final int STYLE_ICON_CENTERED_TEXT = 3;
     public static final int STYLE_ICON_CIRCLE = 4;
-<<<<<<< HEAD
     public static final int STYLE_ICON_RESURRECTION = 5;
-    public static final int BATTERY_STYLE_CIRCLE = 6;
-    public static final int BATTERY_STYLE_CIRCLE_PERCENT = 7;
-    public static final int BATTERY_STYLE_DOTTED_CIRCLE_PERCENT = 8;
-    public static final int STYLE_ICON_BRICK = 9;
-    public static final int STYLE_ICON_PLANET = 10;
-    public static final int STYLE_ICON_RACING = 11;
-    public static final int STYLE_ICON_SLIDER = 12;
-    public static final int STYLE_HIDE = 13;
-=======
-    public static final int STYLE_HIDE = 5;
+    public static final int STYLE_ICON_BRICK = 6;
+    public static final int STYLE_ICON_PLANET = 7;
+    public static final int STYLE_ICON_RACING = 8;
+    public static final int STYLE_ICON_SLIDER = 9;
+    public static final int STYLE_HIDE = 10;
 
->>>>>>> parent of 158c26b... Bring in CMs 3 real Circle battery && also circle dotted battery [1/2]
     public SbBatteryController(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -300,25 +293,6 @@ public class SbBatteryController extends LinearLayout {
                 mBatteryIcon.setVisibility(View.VISIBLE);
                 setVisibility(View.VISIBLE);
                 break;
-<<<<<<< HEAD
-            case BATTERY_STYLE_CIRCLE:
-                mBatteryText.setVisibility(View.GONE);
-                mBatteryCenterText.setVisibility(View.GONE);
-                mBatteryIcon.setVisibility(View.GONE);
-                setVisibility(View.VISIBLE);
-                break;
-            case BATTERY_STYLE_CIRCLE_PERCENT:
-                mBatteryText.setVisibility(View.GONE);
-                mBatteryCenterText.setVisibility(View.GONE);
-                mBatteryIcon.setVisibility(View.GONE);
-                setVisibility(View.VISIBLE);
-                break;
-            case BATTERY_STYLE_DOTTED_CIRCLE_PERCENT:
-                mBatteryText.setVisibility(View.GONE);
-                mBatteryCenterText.setVisibility(View.GONE);
-                mBatteryIcon.setVisibility(View.GONE);
-                setVisibility(View.VISIBLE);
-                break;
             case STYLE_ICON_BRICK:
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
@@ -349,8 +323,6 @@ public class SbBatteryController extends LinearLayout {
                 mBatteryIcon.setVisibility(View.VISIBLE);
                 setVisibility(View.VISIBLE);
                 break;
-=======
->>>>>>> parent of 158c26b... Bring in CMs 3 real Circle battery && also circle dotted battery [1/2]
             default:
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
