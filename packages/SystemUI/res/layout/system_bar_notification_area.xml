@@ -140,16 +140,6 @@
                 android:paddingLeft="4dip"
                 android:visibility="gone"
                 />
-	    <com.android.systemui.statusbar.policy.CircleBattery
-                android:id="@+id/dock_circle_battery"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:singleLine="true"
-                android:paddingLeft="4dip"
-                android:layout_marginRight="-3dip"
-                android:gravity="center_vertical|left"
-                android:visibility="gone"
-                />
             <include layout="@layout/battery_cluster_view"
                 android:id="@+id/battery_cluster"
                 android:layout_width="wrap_content"

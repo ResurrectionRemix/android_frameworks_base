@@ -2462,9 +2462,7 @@ public final class Settings {
          * 2 - Icon Text
          * 3 - Icon Centered Text
          * 4 - Icon Circle
-	 * 5 - Cyanogen Circle
-	 * 6 - Cyanogen Circle with percentage
-         * 7 - Hide
+         * 5 - Hide
          */
         public static final String STATUSBAR_BATTERY_ICON = "statusbar_battery_icon";
 
@@ -2488,7 +2486,7 @@ public final class Settings {
          */
         public static final String POWER_MENU_EXPANDED_DESKTOP_ENABLED = "power_menu_expanded_desktop_enabled";
 
-	/**
+        /**
          * AM/PM Style for clock options
          * 0 - Normal AM/PM
          * 1 - Small AM/PM

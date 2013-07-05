@@ -27,10 +27,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-<<<<<<< HEAD
 import android.graphics.DashPathEffect;
-=======
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
@@ -80,7 +77,6 @@ public class CircleBattery extends ImageView {
     private Paint   mPaintSystem;
     private Paint   mPaintRed;
 
-<<<<<<< HEAD
     private int batteryStyle;
 
     private int mCircleColor;
@@ -88,8 +84,6 @@ public class CircleBattery extends ImageView {
     private int mCircleAnimSpeed;
     private int mCircleReset;
 
-=======
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
     // runnable to invalidate view via mHandler.postDelayed() call
     private final Runnable mInvalidate = new Runnable() {
         public void run() {
@@ -109,7 +103,6 @@ public class CircleBattery extends ImageView {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_BATTERY_ICON), false, this);
-<<<<<<< HEAD
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CIRCLE_BATTERY_COLOR), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -118,14 +111,11 @@ public class CircleBattery extends ImageView {
                     Settings.System.STATUS_BAR_CIRCLE_BATTERY_ANIMATIONSPEED), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CIRCLE_BATTERY_RESET), false, this);
-=======
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
             onChange(true);
         }
 
         @Override
         public void onChange(boolean selfChange) {
-<<<<<<< HEAD
             Resources res = getResources();
 
             batteryStyle = (Settings.System.getInt(mContext.getContentResolver(),
@@ -156,13 +146,6 @@ public class CircleBattery extends ImageView {
                           batteryStyle == SbBatteryController.BATTERY_STYLE_DOTTED_CIRCLE_PERCENT);
             mPercentage = (batteryStyle == SbBatteryController.BATTERY_STYLE_CIRCLE_PERCENT ||
                            batteryStyle == SbBatteryController.BATTERY_STYLE_DOTTED_CIRCLE_PERCENT);
-=======
-            int batteryStyle = (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.STATUSBAR_BATTERY_ICON, 0));
-
-            mActivated = (batteryStyle == SbBatteryController.BATTERY_STYLE_CIRCLE || batteryStyle == SbBatteryController.BATTERY_STYLE_CIRCLE_PERCENT);
-            mPercentage = (batteryStyle == SbBatteryController.BATTERY_STYLE_CIRCLE_PERCENT);
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
 
             setVisibility(mActivated ? View.VISIBLE : View.GONE);
             if (mBatteryReceiver != null) {
@@ -238,43 +221,14 @@ public class CircleBattery extends ImageView {
         mContext = context;
         mHandler = new Handler();
 
-<<<<<<< HEAD
         batteryStyle = (Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.STATUSBAR_BATTERY_ICON, 0));
 
-=======
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
         mBatteryReceiver = new BatteryReceiver(mContext);
 
-<<<<<<< HEAD
         initializeCircleVars();
-=======
-        // initialize and setup all paint variables
-        // stroke width is later set in initSizeBasedStuff()
-        Resources res = getResources();
-
-        mPaintFont = new Paint();
-        mPaintFont.setAntiAlias(true);
-        mPaintFont.setDither(true);
-        mPaintFont.setStyle(Paint.Style.STROKE);
-
-        mPaintGray = new Paint(mPaintFont);
-        mPaintSystem = new Paint(mPaintFont);
-        mPaintRed = new Paint(mPaintFont);
-
-        mPaintFont.setColor(res.getColor(R.color.holo_blue_dark));
-        mPaintSystem.setColor(res.getColor(R.color.holo_blue_dark));
-        // could not find the darker definition anywhere in resources
-        // do not want to use static 0x404040 color value. would break theming.
-        mPaintGray.setColor(res.getColor(R.color.darker_gray));
-        mPaintRed.setColor(res.getColor(R.color.holo_red_light));
-
-        // font needs some extra settings
-        mPaintFont.setTextAlign(Align.CENTER);
-        mPaintFont.setFakeBoldText(true);
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
     }
 
     @Override
@@ -317,15 +271,11 @@ public class CircleBattery extends ImageView {
         updateChargeAnim();
 
         Paint usePaint = mPaintSystem;
-<<<<<<< HEAD
 
-=======
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
         // turn red at 14% - same level android battery warning appears
         if (mLevel <= 14) {
             usePaint = mPaintRed;
         }
-<<<<<<< HEAD
         usePaint.setAntiAlias(true);
         if (batteryStyle == SbBatteryController.BATTERY_STYLE_DOTTED_CIRCLE_PERCENT) {
             // change usePaint from solid to dashed
@@ -333,8 +283,6 @@ public class CircleBattery extends ImageView {
         }else {
             usePaint.setPathEffect(null);
         }
-=======
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
 
         // pad circle percentage to 100% once it reaches 97%
         // for one, the circle looks odd with a too small gap,
@@ -351,21 +299,16 @@ public class CircleBattery extends ImageView {
         // if chosen by options, draw percentage text in the middle
         // always skip percentage when 100, so layout doesnt break
         if (mLevel < 100 && mPercentage){
-<<<<<<< HEAD
             if (mLevel <= 14) {
                 mPaintFont.setColor(mPaintRed.getColor());
             }else {
                 mPaintFont.setColor(mCircleTextColor);
             }
-=======
-            mPaintFont.setColor(usePaint.getColor());
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
             canvas.drawText(Integer.toString(mLevel), mPercentX, mPercentY, mPaintFont);
         }
     }
 
     /***
-<<<<<<< HEAD
      * Initialize the Circle vars for start and observer
      */
     private void initializeCircleVars() {
@@ -395,8 +338,6 @@ public class CircleBattery extends ImageView {
     }
 
     /***
-=======
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
      * updates the animation counter
      * cares for timed callbacks to continue animation cycles
      * uses mInvalidate for delayed invalidate() callbacks
@@ -416,11 +357,7 @@ public class CircleBattery extends ImageView {
         if (mAnimOffset > 360) {
             mAnimOffset = 0;
         } else {
-<<<<<<< HEAD
             mAnimOffset += mCircleAnimSpeed;
-=======
-            mAnimOffset += 3;
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
         }
 
         mHandler.removeCallbacks(mInvalidate);
@@ -439,11 +376,7 @@ public class CircleBattery extends ImageView {
 
         mPaintFont.setTextSize(mCircleSize / 2f);
 
-<<<<<<< HEAD
         float strokeWidth = mCircleSize / 7f;
-=======
-        float strokeWidth = mCircleSize / 6.5f;
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
         mPaintRed.setStrokeWidth(strokeWidth);
         mPaintSystem.setStrokeWidth(strokeWidth);
         mPaintGray.setStrokeWidth(strokeWidth / 3.5f);
@@ -476,21 +409,13 @@ public class CircleBattery extends ImageView {
                 com.android.systemui.R.drawable.stat_sys_wifi_signal_4_fully);
         final int x = measure.getWidth() / 2;
 
-<<<<<<< HEAD
         mCircleSize = measure.getHeight();
      /* mCircleSize = 0;
-=======
-        mCircleSize = 0;
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
         for (int y = 0; y < measure.getHeight(); y++) {
             int alpha = Color.alpha(measure.getPixel(x, y));
             if (alpha > 5) {
                 mCircleSize++;
             }
-<<<<<<< HEAD
         } */
-=======
-        }
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
     }
 }
