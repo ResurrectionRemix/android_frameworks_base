@@ -74,18 +74,14 @@ public class SbBatteryController extends LinearLayout {
     public static final int STYLE_ICON_TEXT = 2;
     public static final int STYLE_ICON_CENTERED_TEXT = 3;
     public static final int STYLE_ICON_CIRCLE = 4;
-<<<<<<< HEAD
     public static final int STYLE_ICON_RESURRECTION = 5;
     public static final int STYLE_ICON_BRICK = 6;
     public static final int STYLE_ICON_PLANET = 7;
     public static final int STYLE_ICON_RACING = 8;
     public static final int STYLE_ICON_SLIDER = 9;
-    public static final int STYLE_HIDE = 10;
-=======
-    public  static final int BATTERY_STYLE_CIRCLE         = 5;
-    public  static final int BATTERY_STYLE_CIRCLE_PERCENT = 6;
-    public static final int STYLE_HIDE = 7;
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
+    public static final int BATTERY_STYLE_CIRCLE         = 10;
+    public static final int BATTERY_STYLE_CIRCLE_PERCENT = 11;
+    public static final int STYLE_HIDE = 12;
 
     public SbBatteryController(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -299,7 +295,6 @@ public class SbBatteryController extends LinearLayout {
                 mBatteryIcon.setVisibility(View.VISIBLE);
                 setVisibility(View.VISIBLE);
                 break;
-<<<<<<< HEAD
             case STYLE_ICON_BRICK:
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
@@ -328,7 +323,6 @@ public class SbBatteryController extends LinearLayout {
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
                 mBatteryIcon.setVisibility(View.VISIBLE);
-=======
 	    case BATTERY_STYLE_CIRCLE:
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
@@ -339,7 +333,6 @@ public class SbBatteryController extends LinearLayout {
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
                 mBatteryIcon.setVisibility(View.GONE);
->>>>>>> 60db1d1... Cyanogen Circle Battery - Thanks CyanogenMod (1/2)
                 setVisibility(View.VISIBLE);
                 break;
             default:
