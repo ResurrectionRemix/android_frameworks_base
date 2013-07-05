@@ -3842,32 +3842,6 @@ public final class Settings {
          */
         public static final String SYSTEM_POWER_ENABLE_CRT_OFF = "system_power_enable_crt_off";
 
-<<<<<<< HEAD
-=======
-        /**
-         * Circle battery icon color
-         * in statusbar
-         */
-        public static final String STATUS_BAR_CIRCLE_BATTERY_COLOR = "status_bar_circle_battery_color";
-
-        /**
-         * Circle battery icon text color
-         * in statusbar
-         */
-        public static final String STATUS_BAR_CIRCLE_BATTERY_TEXT_COLOR = "status_bar_circle_battery_text_color";
-
-        /**
-         * Circle battery animation speed during charge
-         * in statusbar
-         */
-        public static final String STATUS_BAR_CIRCLE_BATTERY_ANIMATIONSPEED = "status_bar_circle_battery_animationspeed";
-
-        /**
-         * Circle battery icon reset helper
-         */
-        public static final String STATUS_BAR_CIRCLE_BATTERY_RESET = "status_bar_circle_battery_reset";
-        
->>>>>>> 72f7533... [Framework] Add custom circle battery options - SlimBean port
         /**
          * Electronic beam animation mode
          * 0 = always horizontal, 1 = always vertical, 2 = dependent on orientation
