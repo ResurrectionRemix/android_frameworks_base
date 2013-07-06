@@ -478,12 +478,8 @@ public class AokpSwipeRibbon extends LinearLayout {
             toggleMap.put(CUSTOM_TOGGLE, CustomToggle.class);
             toggleMap.put(STAYAWAKE_TOGGLE, StayAwakeToggle.class);
             toggleMap.put(WIRELESS_ADB_TOGGLE, WirelessAdbToggle.class);
-<<<<<<< HEAD
-=======
-            toggleMap.put(HYBRID_TOGGLE, HybridToggle.class);
-            toggleMap.put(MUSIC_TOGGLE, MusicToggle.class);
             toggleMap.put(HALO_TOGGLE, HaloToggle.class);
->>>>>>> d10d31f... HALO Toggle
+
             // toggleMap.put(BT_TETHER_TOGGLE, null);
         }
         return toggleMap;
