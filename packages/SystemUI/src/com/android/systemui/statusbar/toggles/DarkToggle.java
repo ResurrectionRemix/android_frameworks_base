@@ -9,7 +9,6 @@ import android.database.ContentObserver;
 import android.os.Handler;
 import android.provider.Settings;;
 import android.view.View;
-
 import com.android.systemui.R;
 
 public class DarkToggle extends StatefulToggle {
