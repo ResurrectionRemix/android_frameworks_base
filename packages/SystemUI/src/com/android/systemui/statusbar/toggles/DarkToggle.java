@@ -1,7 +1,6 @@
 
 package com.android.systemui.statusbar.toggles;
 
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,25 +14,22 @@ import com.android.systemui.R;
 
 public class DarkToggle extends StatefulToggle {
 
-SettingsObserver mSettingsObserver;
-
     @Override
     public void init(Context c, int style) {
         super.init(c, style);
-        mSettingsObserver = new SettingsObserver(new Handler());
         scheduleViewUpdate();
     }
 
     @Override
     protected void doEnable() {
         Settings.Secure.putInt(mContext.getContentResolver(),
-                Settings.Secure.UI_INVERTED_MODE, 1);
+                Settings.Secure.UI_INVERTED_MODE, 2);
     }
 
     @Override
     protected void doDisable() {
         Settings.Secure.putInt(mContext.getContentResolver(),
-                Settings.Secure.UI_INVERTED_MODE, 0);
+                Settings.Secure.UI_INVERTED_MODE, 1);
     }
 
     @Override
@@ -47,7 +43,7 @@ SettingsObserver mSettingsObserver;
     @Override
     protected void updateView() {
         boolean enabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.UI_INVERTED_MODE, 0) == 1;
+                Settings.Secure.UI_INVERTED_MODE, 1) == 2;
         setEnabledState(enabled);
         setIcon(enabled ? R.drawable.ic_pb_on : R.drawable.ic_pb_off);
         setLabel(enabled ? R.string.quick_settings_rr_dark_on_label
@@ -56,3 +52,4 @@ SettingsObserver mSettingsObserver;
     }
 
 }
+

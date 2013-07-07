@@ -12,7 +12,6 @@ import android.provider.Settings;
 import android.view.View;
 
 import com.android.systemui.R;
-import com.android.internal.util.aokp.SysHelpers;
 
 public class HaloToggle extends StatefulToggle {
 
