@@ -96,5 +96,6 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/newwavelabs/BussaMove.ogg:system/media/audio/ringtones/BussaMove.ogg \
 	$(LOCAL_PATH)/newwavelabs/DonMessWivIt.ogg:system/media/audio/ringtones/DonMessWivIt.ogg \
 	$(LOCAL_PATH)/newwavelabs/SilkyWay.ogg:system/media/audio/ringtones/SilkyWay.ogg \
+	$(LOCAL_PATH)/newwavelabs/Testudo.ogg:system/media/audio/ringtones/Testudo.ogg \
 	$(LOCAL_PATH)/newwavelabs/Playa.ogg:system/media/audio/ringtones/Playa.ogg
 endif
