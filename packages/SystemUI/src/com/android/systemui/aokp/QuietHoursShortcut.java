@@ -17,20 +17,16 @@
 package com.android.systemui.aokp;
 
 import android.app.Activity;
-import android.content.Context;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.provider.Settings;
 
 /*
- * Toggle Ring/Vibrate/Silent
+ * Toggle QuietHours On/Off
  */
 
-public class RingSilentToggle extends Activity  {
+public class QuietHoursShortcut extends Activity  {
 
-    public RingSilentToggle() {
+    public QuietHoursShortcut() {
         super();
     }
 
@@ -43,19 +39,10 @@ public class RingSilentToggle extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-
-        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if (am != null) {
-            if (am.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
-                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-            } else {
-                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, (int)(ToneGenerator.MAX_VOLUME * 0.85));
-                if (tg != null) {
-                    tg.startTone(ToneGenerator.TONE_PROP_BEEP);
-                }
-            }
-        }
-        finish();
+        int quietHoursEnabled = Settings.System.getInt(getContentResolver(),
+                Settings.System.QUIET_HOURS_ENABLED, 0);
+        Settings.System.putInt(getContentResolver(),
+                Settings.System.QUIET_HOURS_ENABLED, (quietHoursEnabled == 0) ? 1 : 0);
+        this.finish();
     }
 }

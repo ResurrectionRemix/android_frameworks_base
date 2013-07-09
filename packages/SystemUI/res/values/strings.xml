@@ -571,6 +571,7 @@
     <string name="action_none">Empty</string>
 
     <string name="widgets">Widgets</string>
+    <string name="toggle_quiethours">QuietHours - Toggle</string>
     <string name="toggle_navbar">NavBar - Toggle</string>
     <string name="toggle_statusbar">StatusBar - Toggle</string>
     <string name="toggle_widgets">Widgets - Toggle</string>

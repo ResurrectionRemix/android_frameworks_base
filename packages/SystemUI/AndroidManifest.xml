@@ -249,6 +249,19 @@
         </activity>
 
         <activity
+            android:name="com.android.systemui.aokp.QuietHoursShortcut"
+            android:label="@string/toggle_quiethours"
+            android:icon="@drawable/toggle_quiethours"
+            android:theme="@android:style/Theme.Holo.Panel"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="com.android.systemui.INTENT_QUIETHOURS_TOGGLE" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.systemui.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.android.systemui.aokp.NavbarToggle"
             android:label="@string/toggle_navbar"
             android:icon="@drawable/toggle_navbar"

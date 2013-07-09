@@ -56,6 +56,8 @@ public class CreateShortcut extends LauncherActivity {
 
     if (c.equals("Torch")) {
         return R.drawable.toggle_torch;
+      } else if (c.equals ("QuietHoursShortcut")) {
+          return R.drawable.toggle_quiethours;
       } else if (c.equals ("NavbarToggle")) {
           return R.drawable.toggle_navbar;
       } else if (c.equals ("StatusbarToggleShortcut")) {
@@ -68,7 +70,7 @@ public class CreateShortcut extends LauncherActivity {
           return R.drawable.ic_lockscreen_silent;
       } else if (c.equals ("RingVibSilentToggle")) {
           return R.drawable.ic_lockscreen_soundon;
-      }else {
+      } else {
         return R.drawable.ic_sysbar_null;
       }
   }

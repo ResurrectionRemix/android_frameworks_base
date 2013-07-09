@@ -25,23 +25,24 @@ import android.provider.Settings;
  */
 
 public class StatusbarToggleShortcut extends Activity  {
-  public StatusbarToggleShortcut() {
-    super();
-  }
 
-  /** Called when the activity is first created. */
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
+    public StatusbarToggleShortcut() {
+        super();
+    }
 
-  @Override
-  public void onResume() {
-    super.onResume();
-    boolean StatusbarState = Settings.System.getBoolean(getContentResolver(),
-      Settings.System.STATUSBAR_HIDDEN, false);
-    Settings.System.putBoolean(getContentResolver(),
-      Settings.System.STATUSBAR_HIDDEN, !StatusbarState);
-    this.finish();
-  }
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean StatusbarState = Settings.System.getBoolean(getContentResolver(),
+                Settings.System.STATUSBAR_HIDDEN, false);
+        Settings.System.putBoolean(getContentResolver(),
+                Settings.System.STATUSBAR_HIDDEN, !StatusbarState);
+        this.finish();
+    }
 }

@@ -29,38 +29,39 @@ import android.provider.Settings;
  */
 
 public class RingVibSilentToggle extends Activity  {
-  public RingVibSilentToggle() {
-    super();
-  }
 
-  /** Called when the activity is first created. */
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-
-    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-    if(am != null){
-      if(am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
-        am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if(vib != null){
-          vib.vibrate(50);
-        }
-      }else if(am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
-        am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-      }else{
-        am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, (int)(ToneGenerator.MAX_VOLUME * 0.85));
-        if(tg != null){
-          tg.startTone(ToneGenerator.TONE_PROP_BEEP);
-        }
-      }
+    public RingVibSilentToggle() {
+        super();
     }
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (am != null) {
+            if (am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
+                am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (vib != null) {
+                    vib.vibrate(50);
+                }
+            } else if (am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
+                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            } else {
+                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, (int)(ToneGenerator.MAX_VOLUME * 0.85));
+                if (tg != null) {
+                    tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+                }
+            }
+        }
     finish();
-  }
+    }
 }
