@@ -63,15 +63,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-<<<<<<< HEAD
-                android:paddingTop="10dp"
-                android:paddingRight="8dp"
-                android:src="@drawable/ic_notify_clear_normal"
-                android:contentDescription="@string/accessibility_clear_all"/>
+                android:enabled="false">
         </RelativeLayout>
-=======
-                android:enabled="false"
-                >
+
+                
+                
 
                 <ImageView android:id="@+id/halo_button"
                     android:layout_width="wrap_content"
@@ -92,9 +88,6 @@
                     />
 
             </RelativeLayout>
-
-        </RelativeLayout>            
->>>>>>> 0e6e666... HALO: show halo button in pie
 
         <ScrollView
             android:id="@+id/content_scroll"
