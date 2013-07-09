@@ -18,11 +18,6 @@
 package com.android.systemui.statusbar;
 
 import android.app.ActionBar.Tab;
-<<<<<<< HEAD
-=======
-import android.app.StatusBarManager;
-import android.app.KeyguardManager;
->>>>>>> 9773447... Prevent PIE recent button from changing to clear all button on lockscreen
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -70,7 +65,6 @@ public class PieControl implements OnClickListener {
     private PieItem mSearch;
     private OnNavButtonPressedListener mListener;
     private PieControlPanel mPanel;
-    private KeyguardManager mKeyguardManager;
 
     private boolean mIsAssistantAvailable;
 
@@ -78,7 +72,6 @@ public class PieControl implements OnClickListener {
         mContext = context;
         mPanel = panel;
         mItemSize = (int) context.getResources().getDimension(R.dimen.pie_item_size);
-        mKeyguardManager = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
     }
 
     public PieMenu getPieMenu() {
@@ -143,26 +136,6 @@ public class PieControl implements OnClickListener {
     }
 
     @Override
-<<<<<<< HEAD
-=======
-    public void setNavigationIconHints(int button, int hints, boolean force) {
-        mNavigationIconHints = hints;
-
-        if (button == NavigationCallback.NAVBAR_RECENTS_HINT) {
-            boolean alt = (0 != (hints & StatusBarManager.NAVIGATION_HINT_RECENT_ALT) && !mKeyguardManager.isKeyguardLocked());
-            mRecent.setIcon(alt ? R.drawable.ic_sysbar_recent_clear
-                    : R.drawable.ic_sysbar_recent);
-            mRecent.setName(alt ? CLEAR_ALL_BUTTON : RECENT_BUTTON);
-        }
-    }
-
-    @Override
-    public int getNavigationIconHints() {
-        return mNavigationIconHints;
-    }
-
-    @Override
->>>>>>> 9773447... Prevent PIE recent button from changing to clear all button on lockscreen
     public void onClick(View v) {
         if (mListener != null) {
             mListener.onNavButtonPressed((String) v.getTag());
