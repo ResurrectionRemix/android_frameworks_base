@@ -24,7 +24,7 @@
                 android:paddingBottom="30dp"
                 android:background="@drawable/bubble_r"
                 android:singleLine="false"
-                android:textColor="#000000"
+                android:textColor="#ffffff"
                 android:maxLines = "3"
                 android:visibility="gone"/>
 
@@ -38,7 +38,7 @@
                 android:paddingBottom="30dp"
                 android:background="@drawable/bubble_l"
                 android:singleLine="false"
-                android:textColor="#000000"
+                android:textColor="#ffffff"
                 android:maxLines = "3"
                 android:visibility="gone"/>
 
