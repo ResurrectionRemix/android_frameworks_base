@@ -651,9 +651,18 @@
     <string name="pie_hour_format_12">hh:mm</string>
     <string name="pie_hour_format_24">HH:mm</string>
     <string name="pie_am_pm">a</string>
+<<<<<<< HEAD
     
     
     <string name="quick_settings_rr_dark_on_label">Pitch Black On</string>
     <string name="quick_settings_rr_dark_off_label">Pitch Black Off</string>
     
+=======
+    <string name="powerwidget_screen_timeout_toast">Screen timeout set to: %1$d %2$s</string>
+    <string name="brightness_label">Brightness</string>
+
+    <string name="halo_dismiss">Dismiss notification</string>
+    <string name="halo_hide">Hide HALO</string>
+
+>>>>>>> 8e5c983... HALO Style revamp
 </resources>
