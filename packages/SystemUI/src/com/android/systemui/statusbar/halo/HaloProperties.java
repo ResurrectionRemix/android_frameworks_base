@@ -55,7 +55,7 @@ public class HaloProperties extends FrameLayout {
     private Drawable mHaloCurrentOverlay;
 
     protected View mHaloBubble;
-    protected ImageView mHaloBg, mHaloIcon, mHaloOverlay;
+    protected ImageView mHaloBg, mHaloBgCustom, mHaloIcon, mHaloOverlay;
 
     protected View mHaloContentView, mHaloTickerContent;
     protected TextView mHaloTextViewR, mHaloTextViewL;
@@ -84,6 +84,7 @@ public class HaloProperties extends FrameLayout {
 
         mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
         mHaloBg = (ImageView) mHaloBubble.findViewById(R.id.halo_bg);
+        mHaloBgCustom = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_custom);
         mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
         mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
 
@@ -248,9 +249,11 @@ public class HaloProperties extends FrameLayout {
 
         if (mEnableColor) {
            // Ring
-           mHaloBg.setBackgroundResource(R.drawable.halo_bg_custom);
-           mHaloBg.getBackground().setColorFilter(ColorFilterMaker.
+           mHaloBgCustom.setBackgroundResource(R.drawable.halo_bg_custom);
+           mHaloBgCustom.getBackground().setColorFilter(ColorFilterMaker.
                    changeColorAlpha(mCircleColor, .32f, 0f));
+           mHaloBg.setVisibility(View.GONE);
+           mHaloBgCustom.setVisibility(View.VISIBLE);
 
            // Speech bubbles
            mHaloTextViewL.setBackgroundResource(R.drawable.bubble_l_custom);
@@ -263,7 +266,8 @@ public class HaloProperties extends FrameLayout {
            mHaloTextViewR.setTextColor(mTextColor);
         } else {
            // Ring
-           mHaloBg.setBackgroundResource(R.drawable.halo_bg);
+           mHaloBg.setVisibility(View.VISIBLE);
+           mHaloBgCustom.setVisibility(View.GONE);
 
            // Speech bubbles
            mHaloTextViewL.setBackgroundResource(R.drawable.bubble_l);
