@@ -54,7 +54,7 @@
 		    android:background="#AAA"
 		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="1dp"
+		    android:layout_marginLeft="-2dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch2"
@@ -65,7 +65,7 @@
 		    android:background="#AAA"
 		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="1dp"
+		    android:layout_marginLeft="-2dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch3"
@@ -76,7 +76,7 @@
 		    android:background="#AAA"
 		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="1dp"
+		    android:layout_marginLeft="-2dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch4"
@@ -87,7 +87,7 @@
 		    android:background="#AAA"
 		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="1dp"
+		    android:layout_marginLeft="-2dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch5"
