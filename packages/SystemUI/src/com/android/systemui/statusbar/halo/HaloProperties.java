@@ -40,7 +40,9 @@ public class HaloProperties extends FrameLayout {
         BLACK_X,
         BACK_LEFT,
         BACK_RIGHT,
-        DISMISS
+        DISMISS,
+        SILENCE,
+        CLEAR_ALL
     }
 
     private LayoutInflater mInflater;
@@ -52,6 +54,8 @@ public class HaloProperties extends FrameLayout {
     private Drawable mHaloBackL;
     private Drawable mHaloBackR;
     private Drawable mHaloBlackX;
+    private Drawable mHaloClearAll;
+    private Drawable mHaloSilence;
     private Drawable mHaloCurrentOverlay;
 
     protected View mHaloBubble;
@@ -81,6 +85,8 @@ public class HaloProperties extends FrameLayout {
         mHaloBackL = mContext.getResources().getDrawable(R.drawable.halo_back_left);
         mHaloBackR = mContext.getResources().getDrawable(R.drawable.halo_back_right);
         mHaloBlackX = mContext.getResources().getDrawable(R.drawable.halo_black_x);
+        mHaloClearAll = mContext.getResources().getDrawable(R.drawable.halo_clear_all);
+        mHaloSilence = mContext.getResources().getDrawable(R.drawable.halo_silence);
 
         mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
         mHaloBg = (ImageView) mHaloBubble.findViewById(R.id.halo_bg);
@@ -184,6 +190,12 @@ public class HaloProperties extends FrameLayout {
             case DISMISS:
                 d = mHaloDismiss;
                 break;
+            case SILENCE:
+                d = mHaloSilence;
+                break;
+            case CLEAR_ALL:
+                d = mHaloClearAll;
+                break;
         }
 
         if (d != mHaloCurrentOverlay) {
@@ -191,9 +203,7 @@ public class HaloProperties extends FrameLayout {
             mHaloCurrentOverlay = d;
         }
 
-        mHaloOverlayAnimator.animate(ObjectAnimator.ofFloat(mHaloOverlay, "alpha", overlayAlpha).setDuration(250),
-                new DecelerateInterpolator(), null);
-
+        mHaloOverlay.setAlpha(overlayAlpha);
         updateResources();
     }
 
