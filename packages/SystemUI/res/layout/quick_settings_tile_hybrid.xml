@@ -14,8 +14,8 @@
      limitations under the License.
 -->
 <com.android.systemui.statusbar.phone.QuickSettingsTileView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
 	android:gravity="center" >
 
 	<LinearLayout
@@ -35,69 +35,70 @@
 
 	    <LinearLayout
 		android:layout_marginTop="5dp"
-		android:layout_marginBottom="5dp"
+		android:gravity="center"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
 
 		<RelativeLayout
 		    android:background="#AAA"
-		    android:layout_width="15dp"
+		    android:layout_width="12dp"
 		    android:layout_height="15dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch1"
-		        android:layout_width="13dp"
+		        android:layout_width="10dp"
 		        android:layout_height="13dp"/>
 		</RelativeLayout>
 		<RelativeLayout
 		    android:background="#AAA"
-		    android:layout_width="15dp"
+		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="4dp"
+		    android:layout_marginLeft="1dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch2"
-		        android:layout_width="13dp"
+		        android:layout_width="10dp"
 		        android:layout_height="13dp"/>
 		</RelativeLayout>
 		<RelativeLayout
 		    android:background="#AAA"
-		    android:layout_width="15dp"
+		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="4dp"
+		    android:layout_marginLeft="1dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch3"
-		        android:layout_width="13dp"
+		        android:layout_width="10dp"
 		        android:layout_height="13dp"/>
 		</RelativeLayout>
 		<RelativeLayout
 		    android:background="#AAA"
-		    android:layout_width="15dp"
+		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="4dp"
+		    android:layout_marginLeft="1dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch4"
-		        android:layout_width="13dp"
+		        android:layout_width="10dp"
 		        android:layout_height="13dp"/>
 		</RelativeLayout>
 		<RelativeLayout
 		    android:background="#AAA"
-		    android:layout_width="15dp"
+		    android:layout_width="12dp"
 		    android:layout_height="15dp"
-		    android:layout_marginLeft="4dp"
+		    android:layout_marginLeft="1dp"
 		    android:gravity="center" >
 		    <View
 		        android:id="@+id/hybrid_swatch5"
-		        android:layout_width="13dp"
+		        android:layout_width="10dp"
 		        android:layout_height="13dp"/>
 		</RelativeLayout>
 
 	    </LinearLayout>
 
 	    <TextView
+		android:layout_marginTop="5dp"
 		style="@style/TextAppearance.QuickSettings.TileView"
 		android:id="@+id/hybrid_app"
 		android:layout_width="wrap_content"

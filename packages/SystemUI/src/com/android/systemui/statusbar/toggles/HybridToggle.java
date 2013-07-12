@@ -133,8 +133,12 @@ public class HybridToggle extends BaseToggle {
 
             TextView status = (TextView) mQuick.findViewById(R.id.hybrid_status);
             status.setText(mStatus);
+            status.setTextSize(1, super.getTextSize());
+            status.setTextColor(super.getTextColor());
             TextView app = (TextView) mQuick.findViewById(R.id.hybrid_app);
             app.setText(mLabel);
+            app.setTextSize(1, super.getTextSize());
+            app.setTextColor(super.getTextColor());
 
             // Color changes
             View[] swatches = new View[5];
