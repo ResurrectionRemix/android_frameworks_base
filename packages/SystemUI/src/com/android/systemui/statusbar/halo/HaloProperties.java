@@ -270,9 +270,7 @@ public class HaloProperties extends FrameLayout {
            mHaloBgCustom.setVisibility(View.GONE);
 
            // Speech bubbles
-           mHaloTextViewL.setBackgroundResource(R.drawable.bubble_l);
            mHaloTextViewL.setTextColor(getResources().getColor(R.color.halo_text_color));
-           mHaloTextViewR.setBackgroundResource(R.drawable.bubble_r);
            mHaloTextViewR.setTextColor(getResources().getColor(R.color.halo_text_color));
         }
     }

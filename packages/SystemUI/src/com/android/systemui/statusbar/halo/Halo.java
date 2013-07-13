@@ -929,8 +929,20 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
                 return;
             }
 
+            final float scale = getResources().getDisplayMetrics().density;
+            int l = (int) (16 * scale + 0.5f);
+            int t = (int) (24 * scale + 0.5f);
+            int r = (int) (10 * scale + 0.5f);
+            int b = (int) (10 * scale + 0.5f);
+
             mHaloTextViewR.setText(tickerText);
+            mHaloTextViewR.setPadding(l, t, r, b);
+            mHaloTextViewR.setGravity(Gravity.CENTER_HORIZONTAL);
+            mHaloTextViewR.setMaxLines(2);
             mHaloTextViewL.setText(tickerText);
+            mHaloTextViewL.setPadding(l, t, r, b);
+            mHaloTextViewL.setGravity(Gravity.CENTER_HORIZONTAL);
+            mHaloTextViewL.setMaxLines(2);
 
             float total = TICKER_HIDE_TIME + startDuration + 1000;
             PropertyValuesHolder tickerUpFrames = PropertyValuesHolder.ofKeyframe("haloContentAlpha",
