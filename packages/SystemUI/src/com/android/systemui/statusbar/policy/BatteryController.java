@@ -113,7 +113,11 @@ public class BatteryController extends BroadcastReceiver {
                 Settings.System.PAC_STATUS, 0) == 1;
         final int icon;
         switch (mBatteryStyle) {
-              case STYLE_ICON_BRICK:
+            case STYLE_ICON_CIRCLE:
+                 icon = mPlugged ? R.drawable.stat_sys_battery_charge_circle
+                 : R.drawable.stat_sys_battery_circle;
+                 break;
+            case STYLE_ICON_BRICK:
                  icon = mplugged ? R.drawable.stat_sys_battery_charge_brick
                  : R.drawable.stat_sys_battery_brick;
                  break;

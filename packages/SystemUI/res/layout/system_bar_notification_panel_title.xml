@@ -96,7 +96,58 @@
                 android:visibility="invisible"
                 android:contentDescription="@string/accessibility_notifications_button"/>
 
+<<<<<<< HEAD
         </RelativeLayout>
+=======
+            <!-- to keep the column ids stable we wrap disappearing views in
+                 frames -->
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                >
+                <ImageView
+                    android:id="@+id/bluetooth"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="16dp"
+                    android:visibility="gone"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center_vertical"
+                    />
+            </FrameLayout>
+
+<<<<<<< HEAD
+            <!-- mobile data -->
+            <FrameLayout
+                android:id="@+id/mobile_icon"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="6dp"
+                >
+=======
+        <ImageView android:id="@+id/halo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/quick_buttons"
+            android:paddingTop="14dp"
+            android:layout_alignParentTop="true"
+            android:paddingRight="15dp"
+            android:src="@drawable/ic_notify_halo_normal"
+            android:contentDescription="@string/accessibility_halo" />  
+
+        <ImageView android:id="@+id/clear_all_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/quick_buttons"
+            android:paddingTop="14dp"
+            android:layout_alignParentTop="true"
+            android:paddingRight="15dp"
+            android:src="@drawable/ic_notify_clear_normal"
+            android:contentDescription="@string/accessibility_clear_all"/>
+>>>>>>> f449b2f... Halo: tablet mode support
+>>>>>>> efc557c... Halo: tablet mode support
 
         <ImageView android:id="@+id/clear_all_button"
             android:layout_width="wrap_content"
@@ -110,4 +161,14 @@
 
     </RelativeLayout>
 
+<<<<<<< HEAD
+=======
+            <!-- this will stretch to eat up available space -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                />
+        </TableRow>
+    </TableLayout>
+>>>>>>> efc557c... Halo: tablet mode support
 </com.android.systemui.statusbar.tablet.NotificationPanelTitle>
