@@ -930,9 +930,9 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
             }
 
             final float scale = getResources().getDisplayMetrics().density;
-            int l = (int) (16 * scale + 0.5f);
-            int t = (int) (24 * scale + 0.5f);
-            int r = (int) (10 * scale + 0.5f);
+            int l = (int) (18 * scale + 0.5f);
+            int t = (int) (10 * scale + 0.5f);
+            int r = (int) (24 * scale + 0.5f);
             int b = (int) (10 * scale + 0.5f);
 
             mHaloTextViewR.setText(tickerText);
@@ -940,7 +940,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
             mHaloTextViewR.setGravity(Gravity.CENTER_HORIZONTAL);
             mHaloTextViewR.setMaxLines(2);
             mHaloTextViewL.setText(tickerText);
-            mHaloTextViewL.setPadding(l, t, r, b);
+            mHaloTextViewL.setPadding(r, t, l, b);
             mHaloTextViewL.setGravity(Gravity.CENTER_HORIZONTAL);
             mHaloTextViewL.setMaxLines(2);
 
