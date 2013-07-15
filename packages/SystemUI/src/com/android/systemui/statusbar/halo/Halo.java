@@ -1064,7 +1064,14 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
             int ch = mHaloTickerContent.getMeasuredHeight();
             int cw = mHaloTickerContent.getMeasuredWidth();
             int y = mHaloY + mIconHalfSize - ch / 2;
-            if (y < 0) y = 0;
+            if (mGesture == Gesture.TASK) {
+                if (mHaloY < mIconHalfSize) {
+                    y = y + (int)(mIconSize * 0.6f);
+                } else {
+                    y = y - (int)(mIconSize * 0.6f);
+                }
+            }
+
             int x = mHaloX + mIconSize;
             if (!mTickerLeft) {
                 x = mHaloX - cw;
@@ -1083,7 +1090,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
             // Horizontal Marker
             if (mGesture == Gesture.TASK) {
                 if (y > 0 && mNotificationData != null && mNotificationData.size() > 0) {
-                    int pulseY = (int)(mHaloY - mIconSize * 0.1f);
+                    int pulseY = mHaloY + mIconHalfSize - mMarker.getHeight() / 2;
                     int items = mNotificationData.size();
                     int indexLength = (mScreenWidth - mIconSize * 2) / items;
 
@@ -1117,7 +1124,6 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                 yButtom = yButtom + (int)(mIconSize * 0.6f);
                 canvas.drawBitmap(mMarkerB, xPos, yButtom, mMarkerPaint);
             }
-
 
             // Bubble
             state = canvas.save();
