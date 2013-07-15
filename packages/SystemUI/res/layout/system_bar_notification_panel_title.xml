@@ -108,6 +108,7 @@
         >
         <TableRow>
 
+<<<<<<< HEAD
             <!-- to keep the column ids stable we wrap disappearing views in
                  frames -->
             <FrameLayout
@@ -135,21 +136,38 @@
                 android:paddingRight="6dp"
                 >
         <ImageView android:id="@+id/halo_button"
+=======
+        </RelativeLayout>  
+
+        <ImageView android:id="@+id/clear_all_button"
+>>>>>>> 6e0a8ca... Halo: Fix icon position in tablet status bar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/quick_buttons"
             android:paddingTop="14dp"
             android:layout_alignParentTop="true"
             android:paddingRight="15dp"
-            android:src="@drawable/ic_notify_halo_normal"
-            android:contentDescription="@string/accessibility_halo" />  
+            android:src="@drawable/ic_notify_clear_normal"
+            android:contentDescription="@string/accessibility_clear_all"/>
 
+<<<<<<< HEAD
                 <ImageView
                     android:id="@+id/mobile_signal"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:contentDescription="@null"
                     />
+=======
+        <ImageView android:id="@+id/halo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/clear_all_button"
+            android:paddingTop="14dp"
+            android:layout_alignParentTop="true"
+            android:paddingRight="15dp"
+            android:src="@drawable/ic_notify_halo_normal"
+            android:contentDescription="@string/accessibility_halo" />
+>>>>>>> 6e0a8ca... Halo: Fix icon position in tablet status bar
 
                 <ImageView
                     android:id="@+id/mobile_type"
