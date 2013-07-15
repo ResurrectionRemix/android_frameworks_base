@@ -74,6 +74,7 @@ public class SbBatteryController extends LinearLayout {
 
     private int mLevel = -1;
     private boolean mPlugged = false;
+    private boolean mStatusPac;
 
     public static final int STYLE_ICON_ONLY = 0;
     public static final int STYLE_TEXT_ONLY = 1;
@@ -134,7 +135,6 @@ public class SbBatteryController extends LinearLayout {
 
     public void setColor(ColorUtils.ColorSettingInfo colorInfo) {
         mColorInfo = colorInfo;
-        updateBatteryLevel();
     }
 
     private BroadcastReceiver mBatteryBroadcastReceiver = new BroadcastReceiver() {
@@ -152,33 +152,13 @@ public class SbBatteryController extends LinearLayout {
         }
     };
 
-    private void updateBatteryLevel() {
-        int N = mIconViews.size();
-        for (int i=0; i<N; i++) {
-            ImageView v = mIconViews.get(i);
-            v.setImageLevel(mLevel);
-            v.setContentDescription(mContext.getString(R.string.accessibility_battery_level,
-                    mLevel));
-        }
-        N = mLabelViews.size();
-        for (int i=0; i<N; i++) {
-            TextView v = mLabelViews.get(i);
-            v.setText(mContext.getString(R.string.status_bar_settings_battery_meter_format,
-                    mLevel));
-        }
-
-        for (BatteryStateChangeCallback cb : mChangeCallbacks) {
-            cb.onBatteryLevelChanged(mLevel, mPlugged);
-        }
-        setBatteryIcon(mLevel, mPlugged);
-    }
-
     private void setBatteryIcon(int level, boolean plugged) {
         mLevel = level;
         mPlugged = plugged;
-        ContentResolver cr = mContext.getContentResolver();
-        mBatteryStyle = Settings.System.getInt(cr,
+        mBatteryStyle = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUSBAR_BATTERY_ICON, 0);
+        mStatusPac = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PAC_STATUS, 0) == 1;
         int icon;
                 if (mBatteryStyle == STYLE_ICON_CIRCLE) {
             icon = plugged ? R.drawable.stat_sys_battery_charge_circle
@@ -213,11 +193,13 @@ public class SbBatteryController extends LinearLayout {
         for (int i = 0; i < N; i++) {
             ImageView v = mIconViews.get(i);
             Drawable batteryBitmap = mContext.getResources().getDrawable(icon);
+         if (mStatusPac) {
             if (mColorInfo.isLastColorNull) {
                 batteryBitmap.clearColorFilter();                
             } else {
                 batteryBitmap.setColorFilter(mColorInfo.lastColor, PorterDuff.Mode.SRC_IN);
             }
+         }
             v.setImageDrawable(batteryBitmap);
         }
         N = mLabelViews.size();
@@ -279,6 +261,12 @@ public class SbBatteryController extends LinearLayout {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.STATUSBAR_BATTERY_ICON), false,
                     this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.PAC_STATUS), false,
+                    this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUS_ICON_COLOR), false,
+                    this);
         }
 
         @Override
@@ -289,8 +277,7 @@ public class SbBatteryController extends LinearLayout {
 
     private void updateSettings() {
         // Slog.i(TAG, "updated settings values");
-        ContentResolver cr = mContext.getContentResolver();
-        mBatteryStyle = Settings.System.getInt(cr,
+        mBatteryStyle = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUSBAR_BATTERY_ICON, 0);
 
         switch (mBatteryStyle) {

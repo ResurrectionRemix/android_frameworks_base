@@ -2482,6 +2482,29 @@ public final class Settings {
         public static final String FOREGROUND_APP = "foreground_app";
 
         /**
+<<<<<<< HEAD
+=======
+         * Network speed indicator
+         * @hide
+         */
+        public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
+
+        /**
+         * statusbar signal traffic color
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_TRAFFIC_TEXT_COLOR = "status_bar_traffic_text_color";
+
+        /**
+         * Enable or Disable PAC for certain options
+         *
+         * @hide
+         */
+        public static final String PAC_STATUS = "pac_status";
+
+        /**
+>>>>>>> 2a69f10... Fixed issue with battery switching at random
          * Control the display of the action overflow button within app UI.
          * 0 = use system default
          * 1 = force on
