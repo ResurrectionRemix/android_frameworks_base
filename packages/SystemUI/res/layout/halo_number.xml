@@ -6,12 +6,12 @@
     <TextView
         android:id="@+id/number"
         android:animateLayoutChanges="true"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/halo_number_size"
+        android:layout_height="@dimen/halo_number_size"
         android:gravity="center"
         android:background="@drawable/halo_number_shape"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:textSize="14sp"/>
+        android:textSize="@dimen/halo_number_text_size"/>
 
 </LinearLayout>

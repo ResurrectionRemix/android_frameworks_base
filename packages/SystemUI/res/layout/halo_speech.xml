@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="@dimen/halo_content_max_width"
         android:layout_height="wrap_content">
 
@@ -18,23 +19,31 @@
                 android:id="@+id/bubble_r"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:paddingLeft="@dimen/halo_speech_hpadding_wide"
+                android:paddingRight="@dimen/halo_speech_hpadding_short"
+                android:paddingTop="@dimen/halo_speech_vpadding_bottom"
+                android:paddingBottom="@dimen/halo_speech_vpadding_bottom"
                 android:background="@drawable/bubble_r"
                 android:singleLine="false"
                 android:visibility="gone"
                 android:textColor="#fff"
                 android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/halo_speech_text_size"/>
 
             <TextView
                 android:id="@+id/bubble_l"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:paddingLeft="@dimen/halo_speech_hpadding_wide"
+                android:paddingRight="@dimen/halo_speech_hpadding_short"
+                android:paddingTop="@dimen/halo_speech_vpadding_bottom"
+                android:paddingBottom="@dimen/halo_speech_vpadding_bottom"
                 android:background="@drawable/bubble_l"
                 android:singleLine="false"
                 android:visibility="gone"
                 android:textColor="#fff"
                 android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/halo_speech_text_size"/>
 
         </RelativeLayout>
 
