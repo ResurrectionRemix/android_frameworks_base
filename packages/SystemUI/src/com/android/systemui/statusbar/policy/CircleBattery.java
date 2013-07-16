@@ -1,18 +1,18 @@
 /*
- * Copyright (C) 2012 Sven Dawitz for the CyanogenMod Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright (C) 2012 Sven Dawitz for the CyanogenMod Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 package com.android.systemui.statusbar.policy;
 
@@ -43,13 +43,13 @@ import android.widget.ImageView;
 import com.android.internal.R;
 
 /***
- * Note about CircleBattery Implementation:
- *
- * Unfortunately, we cannot use BatteryController or DockBatteryController here,
- * since communication between controller and this view is not possible without
- * huge changes. As a result, this Class is doing everything by itself,
- * monitoring battery level and battery settings.
- */
+* Note about CircleBattery Implementation:
+*
+* Unfortunately, we cannot use BatteryController or DockBatteryController here,
+* since communication between controller and this view is not possible without
+* huge changes. As a result, this Class is doing everything by itself,
+* monitoring battery level and battery settings.
+*/
 
 public class CircleBattery extends ImageView {
     private Handler mHandler;
@@ -57,32 +57,29 @@ public class CircleBattery extends ImageView {
     private BatteryReceiver mBatteryReceiver = null;
 
     // state variables
-    private boolean mAttached;      // whether or not attached to a window
-    private boolean mActivated;     // whether or not activated due to system settings
-    private boolean mPercentage;    // whether or not to show percentage number
-    private boolean mIsCharging;    // whether or not device is currently charging
-    private int     mLevel;         // current battery level
-    private int     mAnimOffset;    // current level of charging animation
-    private boolean mIsAnimating;   // stores charge-animation status to reliably remove callbacks
+    private boolean mAttached; // whether or not attached to a window
+    private boolean mActivated; // whether or not activated due to system settings
+    private boolean mPercentage; // whether or not to show percentage number
+    private boolean mIsCharging; // whether or not device is currently charging
+    private int mLevel; // current battery level
+    private int mAnimOffset; // current level of charging animation
+    private boolean mIsAnimating; // stores charge-animation status to reliably remove callbacks
 
-    private int     mCircleSize;    // draw size of circle. read rather complicated from
+    private int mCircleSize; // draw size of circle. read rather complicated from
                                     // another status bar icon, so it fits the icon size
                                     // no matter the dps and resolution
-    private RectF   mCircleRect;    // contains the precalculated rect used in drawArc(), derived from mCircleSize
-    private Float   mPercentX;      // precalculated x position for drawText() to appear centered
-    private Float   mPercentY;      // precalculated y position for drawText() to appear vertical-centered
+    private RectF mCircleRect; // contains the precalculated rect used in drawArc(), derived from mCircleSize
+    private Float mPercentX; // precalculated x position for drawText() to appear centered
+    private Float mPercentY; // precalculated y position for drawText() to appear vertical-centered
 
     // quiet a lot of paint variables. helps to move cpu-usage from actual drawing to initialization
-    private Paint   mPaintFont;
-    private Paint   mPaintGray;
-    private Paint   mPaintSystem;
-    private Paint   mPaintRed;
+    private Paint mPaintFont;
+    private Paint mPaintGray;
+    private Paint mPaintSystem;
+    private Paint mPaintRed;
 
-<<<<<<< HEAD
-=======
     public ColorUtils.ColorSettingInfo mLastIconColor;
 
->>>>>>> c072146... Add Per-App-Color Engine support for CM Circle Battery
     private int batteryStyle;
 
     // runnable to invalidate view via mHandler.postDelayed() call
@@ -173,8 +170,8 @@ public class CircleBattery extends ImageView {
     }
 
     /***
-     * Start of CircleBattery implementation
-     */
+* Start of CircleBattery implementation
+*/
     public CircleBattery(Context context) {
         this(context, null);
     }
@@ -219,20 +216,18 @@ public class CircleBattery extends ImageView {
         // font needs some extra settings
         mPaintFont.setTextAlign(Align.CENTER);
         mPaintFont.setFakeBoldText(true);
-<<<<<<< HEAD
-=======
 
         // Only watch for per app color changes when the setting is in check
         if (ColorUtils.getPerAppColorState(mContext)) {
 
-            mLastIconColor = ColorUtils.getColorSettingInfo(mContext, 
+            mLastIconColor = ColorUtils.getColorSettingInfo(mContext,
                     Settings.System.STATUS_ICON_COLOR);
             mLastIconColor.lastColorString = "";
             updateIconColor();
 
             // Listen for status bar icon color changes
             mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.STATUS_ICON_COLOR), false, 
+                Settings.System.getUriFor(Settings.System.STATUS_ICON_COLOR), false,
                     new ContentObserver(new Handler()) {
                     @Override
                     public void onChange(boolean selfChange) {
@@ -259,7 +254,6 @@ public class CircleBattery extends ImageView {
             }
             mLastIconColor = colorInfo;
         }
->>>>>>> c072146... Add Per-App-Color Engine support for CM Circle Battery
     }
 
     @Override
@@ -280,7 +274,7 @@ public class CircleBattery extends ImageView {
             mBatteryReceiver.updateRegistration();
             mCircleRect = null; // makes sure, size based variables get
                                 // recalculated on next attach
-            mCircleSize = 0;    // makes sure, mCircleSize is reread from icons on
+            mCircleSize = 0; // makes sure, mCircleSize is reread from icons on
                                 // next attach
         }
     }
@@ -335,10 +329,10 @@ public class CircleBattery extends ImageView {
     }
 
     /***
-     * updates the animation counter
-     * cares for timed callbacks to continue animation cycles
-     * uses mInvalidate for delayed invalidate() callbacks
-     */
+* updates the animation counter
+* cares for timed callbacks to continue animation cycles
+* uses mInvalidate for delayed invalidate() callbacks
+*/
     private void updateChargeAnim() {
         if (!mIsCharging || mLevel >= 97) {
             if (mIsAnimating) {
@@ -362,10 +356,10 @@ public class CircleBattery extends ImageView {
     }
 
     /***
-     * initializes all size dependent variables
-     * sets stroke width and text size of all involved paints
-     * YES! i think the method name is appropriate
-     */
+* initializes all size dependent variables
+* sets stroke width and text size of all involved paints
+* YES! i think the method name is appropriate
+*/
     private void initSizeBasedStuff() {
         if (mCircleSize == 0) {
             initSizeMeasureIconHeight();
@@ -395,12 +389,12 @@ public class CircleBattery extends ImageView {
     }
 
     /***
-     * we need to measure the size of the circle battery by checking another
-     * resource. unfortunately, those resources have transparent/empty borders
-     * so we have to count the used pixel manually and deduct the size from
-     * it. quiet complicated, but the only way to fit properly into the
-     * statusbar for all resolutions
-     */
+* we need to measure the size of the circle battery by checking another
+* resource. unfortunately, those resources have transparent/empty borders
+* so we have to count the used pixel manually and deduct the size from
+* it. quiet complicated, but the only way to fit properly into the
+* statusbar for all resolutions
+*/
     private void initSizeMeasureIconHeight() {
         final Bitmap measure = BitmapFactory.decodeResource(getResources(),
                 com.android.systemui.R.drawable.stat_sys_battery_100);
@@ -408,11 +402,11 @@ public class CircleBattery extends ImageView {
 
         mCircleSize = measure.getHeight();
      /* mCircleSize = 0;
-        for (int y = 0; y < measure.getHeight(); y++) {
-            int alpha = Color.alpha(measure.getPixel(x, y));
-            if (alpha > 5) {
-                mCircleSize++;
-            }
-        } */
+for (int y = 0; y < measure.getHeight(); y++) {
+int alpha = Color.alpha(measure.getPixel(x, y));
+if (alpha > 5) {
+mCircleSize++;
+}
+} */
     }
 }
