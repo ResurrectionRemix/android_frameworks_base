@@ -20,13 +20,13 @@ package com.android.systemui.statusbar.view;
 import android.database.ContentObserver;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.ColorFilterMaker;
 import android.graphics.drawable.Drawable;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.ColorUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -53,6 +53,8 @@ public class PieItem {
     private String mName;
     private Path mPath;
     private boolean mIsLesser;
+
+    private ColorUtils.ColorSettingInfo mLastButtonColor;
 
     public PieItem(View view, Context context, int level, String name, boolean lesser) {
         mContext = context;
