@@ -19,15 +19,15 @@
                 android:id="@+id/bubble_r"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/halo_speech_hpadding_wide"
-                android:paddingRight="@dimen/halo_speech_hpadding_short"
-                android:paddingTop="@dimen/halo_speech_vpadding_bottom"
+                android:paddingLeft="@dimen/halo_speech_hpadding_short"
+                android:paddingRight="@dimen/halo_speech_hpadding_wide"
+                android:paddingTop="@dimen/halo_speech_vpadding_top"
                 android:paddingBottom="@dimen/halo_speech_vpadding_bottom"
                 android:background="@drawable/bubble_r"
                 android:singleLine="false"
                 android:visibility="gone"
-                android:textColor="#fff"
                 android:textStyle="bold"
+                android:textColor="#fff"
                 android:textSize="@dimen/halo_speech_text_size"/>
 
             <TextView
@@ -36,13 +36,13 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/halo_speech_hpadding_wide"
                 android:paddingRight="@dimen/halo_speech_hpadding_short"
-                android:paddingTop="@dimen/halo_speech_vpadding_bottom"
+                android:paddingTop="@dimen/halo_speech_vpadding_top"
                 android:paddingBottom="@dimen/halo_speech_vpadding_bottom"
                 android:background="@drawable/bubble_l"
                 android:singleLine="false"
                 android:visibility="gone"
-                android:textColor="#fff"
                 android:textStyle="bold"
+                android:textColor="#fff"
                 android:textSize="@dimen/halo_speech_text_size"/>
 
         </RelativeLayout>

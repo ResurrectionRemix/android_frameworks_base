@@ -72,6 +72,7 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.TranslateAnimation;
 import android.animation.TimeInterpolator;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.Gravity;
@@ -953,18 +954,21 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                 return;
             }
 
-            final float scale = getResources().getDisplayMetrics().density;
-            int l = (int) (18 * scale + 0.5f);
-            int t = (int) (10 * scale + 0.5f);
-            int r = (int) (24 * scale + 0.5f);
-            int b = (int) (10 * scale + 0.5f);
+            int shrt = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 
+                    18, getResources().getDisplayMetrics());
+            int wide = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    24, getResources().getDisplayMetrics());
+            int top = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 
+                    10, getResources().getDisplayMetrics());
+            int bttm = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    10, getResources().getDisplayMetrics());
 
             mHaloTextViewR.setText(tickerText);
-            mHaloTextViewR.setPadding(l, t, r, b);
+            mHaloTextViewR.setPadding(shrt, top, wide, bttm);
             mHaloTextViewR.setGravity(Gravity.CENTER_HORIZONTAL);
             mHaloTextViewR.setMaxLines(2);
             mHaloTextViewL.setText(tickerText);
-            mHaloTextViewL.setPadding(r, t, l, b);
+            mHaloTextViewL.setPadding(wide, top, shrt, bttm);
             mHaloTextViewL.setGravity(Gravity.CENTER_HORIZONTAL);
             mHaloTextViewL.setMaxLines(2);
 
