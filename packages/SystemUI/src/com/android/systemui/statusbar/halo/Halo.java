@@ -61,7 +61,6 @@ import android.os.ServiceManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.ExtendedPropertiesUtils;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -103,9 +102,8 @@ import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.phone.Ticker;
-import com.android.systemui.statusbar.tablet.TabletTicker;
 
-public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTicker.TabletTickerCallback {
+public class Halo extends FrameLayout implements Ticker.TickerCallback {
 
     public static final String TAG = "HaloLauncher";
 
@@ -178,8 +176,8 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
     private int oldIconIndex = -1;
     private float initialX = 0;
     private float initialY = 0;
-    private boolean hiddenState = false;
     private float mHaloSize = 1.0f;
+    private boolean hiddenState = false;
     
     // Halo dock position
     SharedPreferences preferences;
@@ -410,13 +408,9 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
 
     public void setStatusBar(BaseStatusBar bar) {
         mBar = bar;
-        if(ExtendedPropertiesUtils.isTablet()) {
-            if (mBar.getTabletTicker() != null) mBar.getTabletTicker().setUpdateEvent(this);
-        } else {
-            if (mBar.getTicker() != null) mBar.getTicker().setUpdateEvent(this);
-        }
-            mNotificationData = mBar.getNotificationData();
-            loadLastNotification(true);
+        if (mBar.getTicker() != null) mBar.getTicker().setUpdateEvent(this);
+        mNotificationData = mBar.getNotificationData();
+        loadLastNotification(true);
     }
 
     void launchTask(NotificationClicker intent) {
@@ -607,7 +601,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
 
                     if (mContentIntent != null) {
                         try {
-                            mBar.getService().onNotificationClear(mContentIntent.mPkg, mContentIntent.mTag, mContentIntent.mId);
+                            mBar.getStatusBarService().onNotificationClear(mContentIntent.mPkg, mContentIntent.mTag, mContentIntent.mId);
                         } catch (RemoteException ex) {
                             // system process is dead if we're here.
                         }
@@ -846,11 +840,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
         mEffect.unscheduleSleep();
         mHandler.removeCallbacksAndMessages(null);
         // Kill callback
-        if(ExtendedPropertiesUtils.isTablet()) {
-            if (mBar.getTabletTicker() != null) mBar.getTabletTicker().setUpdateEvent(null);
-        } else {
-             mBar.getTicker().setUpdateEvent(null);
-        }
+        mBar.getTicker().setUpdateEvent(null);
         // Flag tasker
         mBar.setHaloTaskerActive(false, false);
         // Kill the effect layer
@@ -1211,10 +1201,6 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
 
         mEffect.updateResources();
         mEffect.invalidate();
-    }
-
-    public void updateTicker(StatusBarNotification notification) {
-        loadLastNotification(true);
     }
 
     // This is the android ticker callback
