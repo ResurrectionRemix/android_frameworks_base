@@ -285,7 +285,6 @@ public class TabletStatusBar extends BaseStatusBar implements
         mNotificationPanel.setOnTouchListener(
                 new TouchOutsideListener(MSG_CLOSE_NOTIFICATION_PANEL, mNotificationPanel));
 
-<<<<<<< HEAD
         // Bt
         mBluetoothController.addIconView(
                 (ImageView)mNotificationPanel.findViewById(R.id.bluetooth));
@@ -311,15 +310,14 @@ public class TabletStatusBar extends BaseStatusBar implements
                 (TextView)mNotificationPanel.findViewById(R.id.mobile_text));
         mNetworkController.addCombinedLabelView(
                 (TextView)mBarContents.findViewById(R.id.network_text));
-=======
+
         mHaloButton = (ImageView) mNotificationPanel.findViewById(R.id.halo_button);
         if (mHaloButton != null) {
             mHaloButton.setOnClickListener(mHaloButtonListener);
             mHaloButtonVisible = true;
             updateHaloButton();
         }
->>>>>>> f449b2f... Halo: tablet mode support
-
+        
         mStatusBarView.setIgnoreChildren(0, mNotificationTrigger, mNotificationPanel);
 
         WindowManager.LayoutParams lp = mNotificationPanelParams = new WindowManager.LayoutParams(
@@ -1069,12 +1067,8 @@ public class TabletStatusBar extends BaseStatusBar implements
                     if (DEBUG) Slog.d(TAG, "opening notifications panel");
                     if (!mNotificationPanel.isShowing()) {
                         mNotificationPanel.show(true, true);
-<<<<<<< HEAD
                         mNotificationArea.setVisibility(View.INVISIBLE);
-                        mTicker.halt();
-=======
                         mTabletTicker.halt();
->>>>>>> f449b2f... Halo: tablet mode support
                     }
                     break;
                 case MSG_CLOSE_NOTIFICATION_PANEL:
