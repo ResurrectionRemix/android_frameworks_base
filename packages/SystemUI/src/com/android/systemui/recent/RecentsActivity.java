@@ -48,7 +48,6 @@ public class RecentsActivity extends Activity {
     private IntentFilter mIntentFilter;
     private boolean mShowing;
     private boolean mForeground;
-    protected boolean mBackPressed;
 
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
@@ -141,12 +140,7 @@ public class RecentsActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        mBackPressed = true;
-        try {
-            dismissAndGoBack();
-        } finally {
-            mBackPressed = false;
-        }
+        dismissAndGoBack();
     }
 
     public void dismissAndGoHome() {
@@ -170,7 +164,6 @@ public class RecentsActivity extends Activity {
                             ActivityManager.RECENT_IGNORE_UNAVAILABLE);
             if (recentTasks.size() > 1 &&
                     mRecentsPanel.simulateClick(recentTasks.get(1).persistentId)) {
-                finish();
                 // recents panel will take care of calling show(false) through simulateClick
                 return;
             }
