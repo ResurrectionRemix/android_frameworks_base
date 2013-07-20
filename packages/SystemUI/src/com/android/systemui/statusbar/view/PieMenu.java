@@ -771,7 +771,11 @@ public class PieMenu extends FrameLayout {
             int state;
 
             // Draw background
+<<<<<<< HEAD
+            if (mStatusMode != -1) {
+=======
             if (mStatusMode != -1 && !mNavbarZero) {
+>>>>>>> 5b07144... PAC support for PIE :)
                 canvas.drawARGB((int)(mAnimators[ANIMATOR_DEC_SPEED15].fraction * 0xcc), 0, 0, 0);
             }
 
@@ -807,7 +811,11 @@ public class PieMenu extends FrameLayout {
             }
 
             // Paint status report only if settings allow
+<<<<<<< HEAD
+            if (mStatusMode != -1) {
+=======
             if (mStatusMode != -1 && !mNavbarZero) {
+>>>>>>> 5b07144... PAC support for PIE :)
 
                 // Draw chevron rings
                 mChevronBackgroundLeft.setAlpha((int)(mAnimators[ANIMATOR_DEC_SPEED15].fraction * mGlowOffsetLeft / 2 * (mPanelOrientation == Gravity.TOP ? 0.2 : 1)));
