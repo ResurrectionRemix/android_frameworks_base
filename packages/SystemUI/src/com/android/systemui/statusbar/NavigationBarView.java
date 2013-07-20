@@ -348,6 +348,12 @@ public class NavigationBarView extends LinearLayout {
                 spacer1.setLayoutParams(getSeparatorLayoutParams(landscape));
                 navButtonLayout.addView(spacer, 0);
                 navButtonLayout.addView(spacer1);
+                View spacer2 = new View(mContext);
+                spacer2.setLayoutParams(getSeparatorLayoutParams(landscape));
+                View spacer3 = new View(mContext);
+                spacer3.setLayoutParams(getSeparatorLayoutParams(landscape));
+                lightsOut.addView(spacer2, 0);
+                lightsOut.addView(spacer3);
             }
         }
         Drawable bg = mContext.getResources().getDrawable(R.drawable.nav_bar_bg);
