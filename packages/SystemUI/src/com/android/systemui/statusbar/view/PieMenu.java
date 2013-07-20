@@ -53,13 +53,7 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
-<<<<<<< HEAD
-import android.util.ColorUtils;
 import android.util.AttributeSet;
-import android.util.ExtendedPropertiesUtils;
-=======
-import android.util.AttributeSet;
->>>>>>> parent of 8371efe... PAC support for PIE :)
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
