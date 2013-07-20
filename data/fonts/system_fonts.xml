@@ -27,9 +27,9 @@
             <name>verdana</name>
         </nameset>
         <fileset>
-            <file>Roboto-Light.ttf</file>
+            <file>Roboto-Regular.ttf</file>
             <file>Roboto-Bold.ttf</file>
-            <file>Roboto-LightItalic.ttf</file>
+            <file>Roboto-Italic.ttf</file>
             <file>Roboto-BoldItalic.ttf</file>
         </fileset>
     </family>
