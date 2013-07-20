@@ -1062,42 +1062,6 @@ public class LockPatternUtils {
     }
 
     /**
-<<<<<<< HEAD
-=======
-     * @return the pattern lockscreen size
-     */
-    public byte getLockPatternSize() {
-        try {
-            return getLockSettings().getLockPatternSize(getCurrentOrCallingUserId());
-        } catch (RemoteException re) {
-            return PATTERN_SIZE_DEFAULT;
-        }
-    }
-
-    /**
-     * Set the pattern lockscreen size
-     */
-    public void setLockPatternSize(long size) {
-        setLong(Settings.Secure.LOCK_PATTERN_SIZE, size);
-    }
-
-    public void setVisibleDotsEnabled(boolean enabled) {
-        setBoolean(Settings.Secure.LOCK_DOTS_VISIBLE, enabled);
-    }
-
-    public boolean isVisibleDotsEnabled() {
-        return getBoolean(Settings.Secure.LOCK_DOTS_VISIBLE, true);
-    }
-
-    public void setShowErrorPath(boolean enabled) {
-        setBoolean(Settings.Secure.LOCK_SHOW_ERROR_PATH, enabled);
-    }
-
-    public boolean isShowErrorPath() {
-        return getBoolean(Settings.Secure.LOCK_SHOW_ERROR_PATH, true);
-    }
-
-    /**
      * Set whether the lock gesture is enabled.
      */
     public void setLockGestureEnabled(boolean enabled) {
@@ -1119,7 +1083,6 @@ public class LockPatternUtils {
     }
 
     /**
->>>>>>> 1655e16... Add gesture based lockscreen security. [1/2]
      * Set and store the lockout deadline, meaning the user can't attempt his/her unlock
      * pattern until the deadline has passed.
      * @return the chosen deadline.
