@@ -4999,12 +4999,23 @@ public final class Settings {
         @Deprecated
         public static final String
                 LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED = "lock_pattern_tactile_feedback_enabled";
-                
+
+        /**
+<<<<<<< HEAD
+=======
+         * Whether lock pattern will show dots (0 = false, 1 = true)
+         */
+        public static final String LOCK_DOTS_VISIBLE = "lock_pattern_dotsvisible";
+
+        /**
+         * Whether lockscreen error pattern is visible (0 = false, 1 = true)
+         */
+        public static final String LOCK_SHOW_ERROR_PATH = "lock_pattern_show_error_path";
+
         /**
          * Whether autolock is enabled (0 = false, 1 = true)
          * @hide
          */
-
         public static final String LOCK_GESTURE_ENABLED = "lock_gesture_autolock";
 
         /**
@@ -5014,6 +5025,7 @@ public final class Settings {
         public static final String LOCK_GESTURE_VISIBLE = "lock_gesture_visible_pattern";
 
         /**
+>>>>>>> 1655e16... Add gesture based lockscreen security. [1/2]
          * This preference allows the device to be locked given time after screen goes off,
          * subject to current DeviceAdmin policy limits.
          * @hide
