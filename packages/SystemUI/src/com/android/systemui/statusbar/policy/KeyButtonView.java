@@ -128,22 +128,6 @@ public class KeyButtonView extends ImageView {
         setClickable(true);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
-<<<<<<< HEAD
-            updateButtonColor();
-
-            mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.NAV_BUTTON_COLOR), false, new ContentObserver(new Handler()) {
-                    @Override
-                    public void onChange(boolean selfChange) {
-                        updateButtonColor();
-                    }});
-
-=======
-        clearColorFilter();
-        BUTTON_QUIESCENT_ALPHA = 0.70f;
-        setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
-=======
->>>>>>> 5a1e4e3... Fixed conflicts
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
         settingsObserver.observe();
 
