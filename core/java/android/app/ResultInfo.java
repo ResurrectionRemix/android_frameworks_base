@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +24,9 @@ import android.os.Bundle;
 
 import java.util.Map;
 
+/**
+ * {@hide}
+ */
 public class ResultInfo implements Parcelable {
     public final String mResultWho;
     public final int mRequestCode;

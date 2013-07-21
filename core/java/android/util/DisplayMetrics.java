@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +26,7 @@ import android.os.SystemProperties;
  * <pre> DisplayMetrics metrics = new DisplayMetrics();
  * getWindowManager().getDefaultDisplay().getMetrics(metrics);</pre>
  */
-public class DisplayMetrics extends ExtendedPropertiesUtils {
+public class DisplayMetrics {
     /**
      * Standard quantized DPI for low-density screens.
      */
@@ -95,18 +94,12 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
     @Deprecated
     public static int DENSITY_DEVICE;
 
-<<<<<<< HEAD
     public static int DENSITY_CURRENT;
 
     static {
         DENSITY_DEVICE = SystemProperties.getInt("qemu.sf.lcd_density", SystemProperties
             .getInt("ro.sf.lcd_density", DENSITY_DEFAULT));
         DENSITY_CURRENT = SystemProperties.getInt("persist.lcd_density", DENSITY_DEVICE);
-=======
-    static {
-        DENSITY_DEVICE = SystemProperties.getInt("qemu.sf.lcd_density", SystemProperties
-            .getInt("ro.sf.lcd_density", DENSITY_DEFAULT));
->>>>>>> 7c6f443... Merge 20121118
     }
 
     /**
@@ -198,7 +191,6 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
      */
     public float noncompatYdpi;
 
-<<<<<<< HEAD
     public void updateDensity() {
         density = DENSITY_CURRENT / (float) DENSITY_DEFAULT;
         densityDpi = DENSITY_CURRENT;
@@ -210,20 +202,6 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
         noncompatScaledDensity = scaledDensity;
         noncompatXdpi = xdpi;
         noncompatYdpi = ydpi;
-=======
-    /**
-     * Process DPI for current hook.
-     */
-    public void paranoidHook() {
-        if (getActive()) {
-            density = getDensity() == 0 ? density : getDensity();
-            scaledDensity = getScaledDensity() == 0 ? scaledDensity : getScaledDensity();
-            densityDpi = getDpi() == 0 ? densityDpi : getDpi();
-            noncompatDensity = densityDpi;
-            noncompatDensityDpi = densityDpi;
-            noncompatScaledDensity = scaledDensity;
-        }
->>>>>>> 7c6f443... Merge 20121118
     }
 
     public DisplayMetrics() {
@@ -244,11 +222,7 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
         noncompatScaledDensity = o.noncompatScaledDensity;
         noncompatXdpi = o.noncompatXdpi;
         noncompatYdpi = o.noncompatYdpi;
-<<<<<<< HEAD
         updateDensity();
-=======
-        paranoidHook();
->>>>>>> 7c6f443... Merge 20121118
     }
     
     public void setToDefaults() {
@@ -323,10 +297,6 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
     }
 
     public static int getDeviceDensity() {
-<<<<<<< HEAD
         return DENSITY_CURRENT;
-=======
-        return mGlobalHook.dpi == 0 ? DENSITY_DEVICE : mGlobalHook.dpi;
->>>>>>> 7c6f443... Merge 20121118
     }
 }

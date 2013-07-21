@@ -27,10 +27,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.TransitionDrawable;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -40,7 +36,6 @@ import android.os.Message;
 import android.os.ServiceManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
-import android.util.ExtendedPropertiesUtils;
 import android.util.Slog;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -50,12 +45,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import java.math.BigIntegergit;
 
 import static com.android.internal.util.aokp.AwesomeConstants.*;
 import com.android.internal.util.aokp.BackgroundAlphaColorDrawable;
@@ -271,40 +263,6 @@ public class NavigationBarView extends LinearLayout {
         mBackAltIcon = ((KeyButtonView)generateKey(false, KEY_BACK_ALT)).getDrawable();
         mButtonWidth = res.getDimensionPixelSize(R.dimen.navigation_key_width);
         mMenuWidth = res.getDimensionPixelSize(R.dimen.navigation_menu_key_width);
-
-        mContext.getContentResolver().registerContentObserver(
-            Settings.System.getUriFor(Settings.System.NAV_BAR_COLOR), false, new ContentObserver(new Handler()) {
-                @Override
-                public void onChange(boolean selfChange) {
-                    updateColor(false);
-                }});
-    }
-
-    private void updateColor(boolean defaults) {
-        Bitmap bm = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-        Canvas cnv = new Canvas(bm);
-
-        if (defaults) {
-            cnv.drawColor(0xFF000000);
-            setBackground(new BitmapDrawable(bm));
-            return;
-        }
-
-        String setting = Settings.System.getString(mContext.getContentResolver(),
-                Settings.System.NAV_BAR_COLOR);
-        String[] colors = (setting == null || setting.equals("")  ?
-                ExtendedPropertiesUtils.PARANOID_COLORS_DEFAULTS[
-                ExtendedPropertiesUtils.PARANOID_COLORS_NAVBAR] : setting).split(
-                ExtendedPropertiesUtils.PARANOID_STRING_DELIMITER);
-        String currentColor = colors[Integer.parseInt(colors[2])];
-        int speed = colors.length < 4 ? 1000 : Integer.parseInt(colors[3]);
-        
-        cnv.drawColor(new BigInteger(currentColor, 16).intValue());
-
-        TransitionDrawable transition = new TransitionDrawable(new Drawable[]{
-                getBackground(), new BitmapDrawable(bm)});
-        transition.setCrossFadeEnabled(true);
-        setBackground(transition);
     }
 
     public void setTransparencyManager(TransparencyManager tm) {
@@ -849,7 +807,6 @@ public class NavigationBarView extends LinearLayout {
              ViewGroup group = (ViewGroup) v.findViewById(R.id.nav_buttons);
              group.setMotionEventSplittingEnabled(false);
          }
-         updateColor(true);
          mCurrentView = mRotatedViews[Surface.ROTATION_0];
 
          // this takes care of making the buttons

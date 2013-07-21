@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -307,12 +306,7 @@ public final class DisplayInfo implements Parcelable {
         outMetrics.scaledDensity = outMetrics.noncompatScaledDensity = outMetrics.density;
         outMetrics.xdpi = outMetrics.noncompatXdpi = physicalXDpi;
         outMetrics.ydpi = outMetrics.noncompatYdpi = physicalYDpi;
-<<<<<<< HEAD
         outMetrics.updateDensity();
-=======
-        if (outMetrics.isHooked())
-            outMetrics.paranoidHook();
->>>>>>> 7c6f443... Merge 20121118
 
         if (cih != null) {
             CompatibilityInfo ci = cih.getIfNeeded();

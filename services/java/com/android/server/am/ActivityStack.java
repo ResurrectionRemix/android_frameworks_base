@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
- * This code has been modified. Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,13 +58,9 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
-<<<<<<< HEAD
 import android.provider.Settings;
-=======
->>>>>>> 8f4d31b... Merge 20121118
 import android.util.DisplayMetrics;
 import android.util.EventLog;
-import android.util.ExtendedPropertiesUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.view.Display;
@@ -945,13 +940,10 @@ final class ActivityStack {
         int w = mThumbnailWidth;
         int h = mThumbnailHeight;
         if (w < 0) {
-            int mAndroidDpi = ExtendedPropertiesUtils.getActualProperty("android.dpi");
             mThumbnailWidth = w =
-                Math.round((float)res.getDimensionPixelSize(com.android.internal.R.dimen.thumbnail_width) *  
-                DisplayMetrics.DENSITY_DEVICE / mAndroidDpi);
+                res.getDimensionPixelSize(com.android.internal.R.dimen.thumbnail_width);
             mThumbnailHeight = h =
-                Math.round((float)res.getDimensionPixelSize(com.android.internal.R.dimen.thumbnail_height) *  
-                DisplayMetrics.DENSITY_DEVICE / mAndroidDpi);
+                res.getDimensionPixelSize(com.android.internal.R.dimen.thumbnail_height);
         }
 
         if (w > 0) {

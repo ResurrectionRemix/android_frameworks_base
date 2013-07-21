@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +30,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.ExtendedPropertiesUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.TypedValue;
@@ -69,7 +67,7 @@ import libcore.icu.NativePluralRules;
  * <p>For more information about using resources, see the documentation about <a
  * href="{@docRoot}guide/topics/resources/index.html">Application Resources</a>.</p>
  */
-public class Resources extends ExtendedPropertiesUtils {
+public class Resources {
     static final String TAG = "Resources";
     private static final boolean DEBUG_LOAD = false;
     private static final boolean DEBUG_CONFIG = false;
@@ -119,22 +117,6 @@ public class Resources extends ExtendedPropertiesUtils {
     private NativePluralRules mPluralRule;
     
     private CompatibilityInfo mCompatibilityInfo;
-
-     /**
-     * Override current object with temp properties stored in enum interface
-     */
-    public void paranoidHook() {
-        mConfiguration.active = true;        
-        mConfiguration.overrideHook(this, OverrideMode.ExtendedProperties);
-        mConfiguration.paranoidHook();
-
-        mTmpConfig.active = true;        
-        mTmpConfig.overrideHook(this, OverrideMode.ExtendedProperties);
-        mTmpConfig.paranoidHook();
-
-        mMetrics.overrideHook(this, OverrideMode.ExtendedProperties);
-        mMetrics.paranoidHook();
-    }
 
     /** @hide */
     public static int selectDefaultTheme(int curTheme, int targetSdkVersion) {
@@ -202,12 +184,7 @@ public class Resources extends ExtendedPropertiesUtils {
             Configuration config, CompatibilityInfo compInfo) {
         mAssets = assets;
         mMetrics.setToDefaults();
-<<<<<<< HEAD
         mMetrics.updateDensity();
-=======
-        overrideHook(assets, OverrideMode.ExtendedProperties);
-        paranoidHook();
->>>>>>> 7c6f443... Merge 20121118
         mCompatibilityInfo = compInfo;
         updateConfiguration(config, metrics);
         assets.ensureStringBlocks();
