@@ -202,12 +202,9 @@ public class Resources extends ExtendedPropertiesUtils {
             Configuration config, CompatibilityInfo compInfo) {
         mAssets = assets;
         mMetrics.setToDefaults();
-<<<<<<< HEAD
         mMetrics.updateDensity();
-=======
         overrideHook(assets, OverrideMode.ExtendedProperties);
         paranoidHook();
->>>>>>> 7c6f443... Merge 20121118
         mCompatibilityInfo = compInfo;
         updateConfiguration(config, metrics);
         assets.ensureStringBlocks();
