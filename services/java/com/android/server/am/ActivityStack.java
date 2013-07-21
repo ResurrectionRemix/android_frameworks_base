@@ -59,10 +59,7 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
-<<<<<<< HEAD
 import android.provider.Settings;
-=======
->>>>>>> 8f4d31b... Merge 20121118
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.ExtendedPropertiesUtils;

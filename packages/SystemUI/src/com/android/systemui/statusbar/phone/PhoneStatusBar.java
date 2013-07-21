@@ -405,26 +405,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         mIconPolicy = new PhoneStatusBarPolicy(mContext);
     }
 
-<<<<<<< HEAD
-=======
-    private int calculateCarrierLabelBottomMargin() {
-        return mNotificationShortcutsToggle ? mShortcutsSpacingHeight : 0;
-    }
-
-    private void updateNotificationShortcutsMargin() {
-        lpScrollView.bottomMargin = mNotificationShortcutsToggle ? mShortcutsDrawerMargin : 0;
-        mScrollView.setLayoutParams(lpScrollView);
-
-        if (!mShowCarrierInPanel) return;
-        lpCarrierLabel.bottomMargin = mNotificationShortcutsToggle ? mShortcutsSpacingHeight : mCloseViewHeight;
-        mCarrierAndWifiView.setLayoutParams(lpCarrierLabel);
-    }
-
-    private void toggleCarrierAndWifiLabelVisibility() {
-        mShowCarrierInPanel = !mNotificationShortcutsHideCarrier;
-        mCarrierAndWifiView.setVisibility(mShowCarrierInPanel ? View.VISIBLE : View.INVISIBLE);
-    }
-
     private void updateColor(boolean defaults) {
         if (defaults) {
             Bitmap bm = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
@@ -453,7 +433,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         transition.startTransition(1000);
     }
 
->>>>>>> 7c6f443... Merge 20121118
     // ================================================================================
     // Constructing the view
     // ================================================================================
