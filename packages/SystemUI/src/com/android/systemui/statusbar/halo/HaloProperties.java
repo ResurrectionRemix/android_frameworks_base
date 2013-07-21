@@ -53,6 +53,7 @@ public class HaloProperties extends FrameLayout {
     private LayoutInflater mInflater;
 
     protected int mHaloX = 0, mHaloY = 0;
+    protected int mHaloContentY = 0;
     protected float mHaloContentAlpha = 0;
 
     private Drawable mHaloDismiss;
@@ -185,6 +186,47 @@ public class HaloProperties extends FrameLayout {
         return mHaloY;
     }
 
+<<<<<<< HEAD
+=======
+    public void setHaloContentY(int value) {
+        mHaloContentY = value;
+    }
+
+    public int getHaloContentY() {
+        return mHaloContentY; 
+    }
+
+    protected CustomObjectAnimator msgNumberFlipAnimator = new CustomObjectAnimator(this);
+    protected CustomObjectAnimator msgNumberAlphaAnimator = new CustomObjectAnimator(this);
+    public void setHaloMessageNumber(int value, boolean alwaysFlip) {
+
+        // Allow transitions only if no overlay is set
+        if (mHaloCurrentOverlay == null) {
+            msgNumberAlphaAnimator.cancel(true);
+            float oldAlpha = mHaloNumber.getAlpha();
+            mHaloNumber.setAlpha(1f);
+
+            if (value < 1) {
+                mHaloNumber.setText("M");
+            } else if (value < 100) {
+                mHaloNumber.setText(String.valueOf(value));
+            } else {
+                mHaloNumber.setText("+");
+            }
+            
+            if (value < 1) {
+                msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumber, "alpha", 0f).setDuration(1000),
+                        new DecelerateInterpolator(), null, 1500, null);
+            }
+
+            if (!alwaysFlip && oldAlpha == 1f && (value == mHaloMessageNumber || (value > 99 && mHaloMessageNumber > 99))) return;
+            msgNumberFlipAnimator.animate(ObjectAnimator.ofFloat(mHaloNumber, "rotationY", -180, 0).setDuration(500),
+                        new DecelerateInterpolator(), null);
+        }
+        mHaloMessageNumber = value;
+    }
+
+>>>>>>> d05bd23... HALO bigger update
     public void setHaloContentAlpha(float value) {
         mHaloContentAlpha = value;
         mHaloTextViewL.setAlpha(value);
@@ -227,6 +269,17 @@ public class HaloProperties extends FrameLayout {
         if (d != mHaloCurrentOverlay) {
             mHaloOverlay.setImageDrawable(d);
             mHaloCurrentOverlay = d;
+<<<<<<< HEAD
+=======
+
+            // Fade out number batch
+            if (overlay != Overlay.NONE) {
+                msgNumberFlipAnimator.animate(ObjectAnimator.ofFloat(mHaloNumber, "rotationY", 270).setDuration(500),
+                        new DecelerateInterpolator(), null);
+                msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumber, "alpha", 0f).setDuration(500),
+                        new DecelerateInterpolator(), null);
+            }
+>>>>>>> d05bd23... HALO bigger update
         }
 
         mHaloOverlay.setAlpha(overlayAlpha);
