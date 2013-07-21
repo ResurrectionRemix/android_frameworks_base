@@ -257,17 +257,10 @@ public class TabletStatusBar extends BaseStatusBar implements
                     | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
                 PixelFormat.TRANSPARENT);
 
-<<<<<<< HEAD
-        // We explicitly leave FLAG_HARDWARE_ACCELERATED out of the flags.  The status bar occupies
-        // very little screen real-estate and is updated fairly frequently.  By using CPU rendering
-        // for the status bar, we prevent the GPU from having to wake up just to do these small
-        // updates, which should help keep power consumption down.
-=======
         if (ActivityManager.isHighEndGfx()) {
             lp.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
         }
 
->>>>>>> 226f87b... Squashed PA merges
         lp.gravity = getStatusBarGravity();
         lp.setTitle("SystemBar");
         lp.packageName = mContext.getPackageName();
@@ -1054,12 +1047,7 @@ public class TabletStatusBar extends BaseStatusBar implements
                     if (DEBUG) Slog.d(TAG, "opening notifications panel");
                     if (!mNotificationPanel.isShowing()) {
                         mNotificationPanel.show(true, true);
-<<<<<<< HEAD
-                        mNotificationArea.setVisibility(View.INVISIBLE);
                         mTabletTicker.halt();
-=======
-                        mTicker.halt();
->>>>>>> 226f87b... Squashed PA merges
                     }
                     break;
                 case MSG_CLOSE_NOTIFICATION_PANEL:

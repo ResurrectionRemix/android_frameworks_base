@@ -80,12 +80,9 @@ public class KeyButtonView extends ImageView {
     AnimatorSet mPressedAnim;
     Context mContext;
 
-<<<<<<< HEAD
     private boolean mAttached = false;
     private SettingsObserver mSettingsObserver;
 
-=======
->>>>>>> 3ae164c... Squashed PA merges
     private ColorUtils.ColorSettingInfo mLastButtonColor;
     private ColorUtils.ColorSettingInfo mLastGlowColor;
 
@@ -136,7 +133,6 @@ public class KeyButtonView extends ImageView {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
-<<<<<<< HEAD
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -207,11 +203,8 @@ public class KeyButtonView extends ImageView {
         }
     }
 
-<<<<<<< HEAD
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
         settingsObserver.observe();
-=======
->>>>>>> 3ae164c... Squashed PA merges
     private void updateButtonColor() {
         ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext,
                 Settings.System.NAV_BUTTON_COLOR);

@@ -399,54 +399,6 @@ public class PhoneStatusBar extends BaseStatusBar {
         mIconPolicy = new PhoneStatusBarPolicy(mContext);
     }
 
-<<<<<<< HEAD
-    private void updateColor(boolean defaults) {
-        if (defaults) {
-            Bitmap bm = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-            Canvas cnv = new Canvas(bm);
-            cnv.drawColor(0xFF000000);
-            mStatusBarView.setBackground(new BitmapDrawable(bm));
-            return;
-        }
-
-        String setting = Settings.System.getString(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_COLOR);
-        String[] colors = (setting == null || setting.equals("")  ?
-                ExtendedPropertiesUtils.PARANOID_COLORS_DEFAULTS[
-                ExtendedPropertiesUtils.PARANOID_COLORS_NAVBAR] : setting).split(
-                ExtendedPropertiesUtils.PARANOID_STRING_DELIMITER);
-        String currentColor = colors[Integer.parseInt(colors[2])];
-        int speed = colors.length < 4 ? 1000 : Integer.parseInt(colors[3]);
-
-        Bitmap bm = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-        Canvas cnv = new Canvas(bm);
-        cnv.drawColor(new BigInteger(currentColor, 16).intValue());
-
-        TransitionDrawable transition = new TransitionDrawable(new Drawable[]{
-                mStatusBarView.getBackground(), new BitmapDrawable(bm)});
-        transition.setCrossFadeEnabled(true);
-        mStatusBarView.setBackground(transition);
-        transition.startTransition(speed);
-=======
-    private int calculateCarrierLabelBottomMargin() {
-        return mNotificationShortcutsToggle ? mShortcutsSpacingHeight : 0;
-    }
-
-    private void updateNotificationShortcutsMargin() {
-        lpScrollView.bottomMargin = mNotificationShortcutsToggle ? mShortcutsDrawerMargin : 0;
-        mScrollView.setLayoutParams(lpScrollView);
-
-        if (!mShowCarrierInPanel) return;
-        lpCarrierLabel.bottomMargin = mNotificationShortcutsToggle ? mShortcutsSpacingHeight : mCloseViewHeight;
-        mCarrierAndWifiView.setLayoutParams(lpCarrierLabel);
-    }
-
-    private void toggleCarrierAndWifiLabelVisibility() {
-        mShowCarrierInPanel = !mNotificationShortcutsHideCarrier;
-        mCarrierAndWifiView.setVisibility(mShowCarrierInPanel ? View.VISIBLE : View.INVISIBLE);
->>>>>>> 226f87b... Squashed PA merges
-    }
-
     // ================================================================================
     // Constructing the view
     // ================================================================================
@@ -479,11 +431,8 @@ public class PhoneStatusBar extends BaseStatusBar {
         mStatusBarView = (PhoneStatusBarView) mStatusBarWindow.findViewById(R.id.status_bar);
         mStatusBarView.setStatusBar(this);
         mStatusBarView.setBar(this);
-<<<<<<< HEAD
-=======
 
         mBarView = (ViewGroup) mStatusBarView;
->>>>>>> 3ae164c... Squashed PA merges
 
         PanelHolder holder = (PanelHolder) mStatusBarWindow.findViewById(R.id.panel_holder);
         mStatusBarView.setPanelHolder(holder);

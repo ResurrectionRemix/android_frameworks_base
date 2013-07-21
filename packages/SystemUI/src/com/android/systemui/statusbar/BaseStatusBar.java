@@ -70,10 +70,7 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
-<<<<<<< HEAD
-=======
 import android.graphics.Rect;
->>>>>>> 226f87b... Squashed PA merges
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -922,9 +919,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     public void dismissIntruder() {
         // pass
     }
-<<<<<<< HEAD
-    
-=======
 
     /*public void showClock(boolean show) {
         if (mClock != null) {
@@ -934,7 +928,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     }*/
 
->>>>>>> 226f87b... Squashed PA merges
     @Override
     public void animateCollapsePanels(int flags) {
         if (mPieControlPanel != null
