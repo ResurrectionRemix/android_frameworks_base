@@ -232,6 +232,30 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
         }
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        if (!mAttached) {
+            mAttached = true;
+            mSettingsObserver = new SettingsObserver(new Handler());
+            mSettingsObserver.observe();
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (mAttached) {
+            mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
+            mAttached = false;
+        }
+    }
+
+>>>>>>> 35e2bfb... HALO bugfixes
     public Halo(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -252,6 +276,10 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
         mKeyguardManager = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
 
         // Init variables
+        mInteractionReversed =
+                Settings.System.getInt(mContext.getContentResolver(), Settings.System.HALO_REVERSED, 1) == 1;
+        mHideTicker =
+                Settings.System.getInt(mContext.getContentResolver(), Settings.System.HALO_HIDE, 0) == 1;
         mHaloSize = Settings.System.getFloat(mContext.getContentResolver(),
                 Settings.System.HALO_SIZE, 1.0f);
         mIconSize = (int)(mContext.getResources().getDimensionPixelSize(R.dimen.halo_bubble_size) * mHaloSize);
@@ -409,7 +437,6 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
 
     private void loadLastNotification(boolean includeCurrentDismissable) {
         if (mNotificationData.size() > 0) {
-            //oldEntry = mLastNotificationEntry;
             mLastNotificationEntry = mNotificationData.get(mNotificationData.size() - 1);
 
             // If the current notification is dismissable we might want to skip it if so desired
@@ -626,6 +653,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                         // system process is dead if we're here.
                     }
                     
+<<<<<<< HEAD
                     mCurrentNotficationEntry = null;
                     if (mNotificationData.size() > 0) {
                         for (int i = mNotificationData.size() - 1; i >= 0; i--) {
@@ -642,6 +670,10 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                     mLastNotificationEntry = null;
                     loadLastNotification(true);
                     
+=======
+                    loadLastNotification(false);
+
+>>>>>>> 35e2bfb... HALO bugfixes
                     mEffect.nap(1500);
                     if (mHideTicker) mEffect.sleep(HaloEffect.NAP_TIME + 3000, HaloEffect.SLEEP_TIME, false);
 
