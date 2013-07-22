@@ -215,13 +215,13 @@ public class HaloProperties extends FrameLayout {
         // Allow transitions only if no overlay is set
         if (mHaloCurrentOverlay == null) {
             msgNumberAlphaAnimator.cancel(true);
-            mHaloNumberContainer.setAlpha(1f);
-
             float oldAlpha = mHaloNumberContainer.getAlpha();
+
+            mHaloNumberContainer.setAlpha(1f);
             mHaloNumberIcon.setAlpha(0f);
             if (value < 1) {
                 mHaloNumber.setText("");
-                mHaloNumberIcon.setAlpha(1f);                
+                mHaloNumberIcon.setAlpha(1f);
             } else if (value < 100) {
                 mHaloNumber.setText(String.valueOf(value));
             } else {
