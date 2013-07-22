@@ -109,9 +109,13 @@ public class SignalClusterView
         mAirplane       = (ImageView) findViewById(R.id.airplane);
 
         mHandler = new Handler();
+<<<<<<< HEAD
 
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
+=======
+        SettingsObserver settingsObserver = new SettingsObserver (mHandler);
+>>>>>>> 53f9f11... FW: Fix signal indicators not changing color immediately like clock and battery icon in statusbar icons, whle using PA colors.
 
         apply();
     }
@@ -306,7 +310,11 @@ public class SignalClusterView
     protected void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
 
+<<<<<<< HEAD
         showingSignalText = Settings.System.getInt(resolver,
+=======
+        showingSignalText = Settings.System.getInt(resolver, 
+>>>>>>> 53f9f11... FW: Fix signal indicators not changing color immediately like clock and battery icon in statusbar icons, whle using PA colors.
                 Settings.System.STATUSBAR_SIGNAL_TEXT, 0) != 0;
         showingWiFiText = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_WIFI_SIGNAL_TEXT, 0) != 0;
