@@ -26,8 +26,8 @@
                 android:background="@drawable/bubble_r"
                 android:singleLine="false"
                 android:visibility="gone"
-                android:textStyle="bold"
-                android:textColor="#3892b4"
+                android:textStyle="bold|italic"
+                android:textColor="#33b5e5"
                 android:textSize="@dimen/halo_speech_text_size"/>
 
             <TextView
@@ -41,8 +41,8 @@
                 android:background="@drawable/bubble_l"
                 android:singleLine="false"
                 android:visibility="gone"
-                android:textStyle="bold"
-                android:textColor="#3892b4"
+                android:textStyle="bold|italic"
+                android:textColor="#33b5e5"
                 android:textSize="@dimen/halo_speech_text_size"/>
 
         </RelativeLayout>
