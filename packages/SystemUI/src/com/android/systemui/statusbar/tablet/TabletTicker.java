@@ -197,7 +197,7 @@ public class TabletTicker
                 mWindow.removeView(mCurrentView);
                 mWindowManager.removeView(mWindow);
                 mWindow = null;
-                mBar.doneTicking();                
+                mBar.doneTicking();
             }
             mCurrentView = null;
             mCurrentKey = null;
@@ -367,4 +367,3 @@ public class TabletTicker
         return group;
     }
 }
-
