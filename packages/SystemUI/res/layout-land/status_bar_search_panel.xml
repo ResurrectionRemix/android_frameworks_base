@@ -24,6 +24,7 @@
     android:id="@+id/search_panel_container"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:gravity="center_vertical|right"
     android:paddingBottom="0dip">
 
     <RelativeLayout
