@@ -1508,12 +1508,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mNavigationBarWidthForRotation[mLandscapeRotation] = mNavigationBarWidthForRotation[mSeascapeRotation] =
                 Math.round(navigationBarWidth);
 
-        if (mSystemUiLayout < 500) {
-            // 0-499dp: "phone" UI with a separate status & navigation bar
+        if (mSystemUiLayout < 600) {
+            // 0-599dp: "phone" UI with a separate status & navigation bar
             mHasSystemNavBar = false;
             mNavigationBarCanMove = true;
         } else if (mSystemUiLayout < 720) {
-            // 500+dp: "phone" UI with modifications for larger screens
+            // 600+dp: "phone" UI with modifications for larger screens
             mHasSystemNavBar = false;
             mNavigationBarCanMove = false;
         } else if (mSystemUiLayout == 1000) {
