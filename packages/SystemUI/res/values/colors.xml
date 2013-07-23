@@ -36,5 +36,11 @@
     <color name="batterymeter_charge_color">#FFFFFFFF</color>
     <color name="batterymeter_bolt_color">#B2000000</color><!-- 70% black -->
     <color name="status_bar_clock_color">#FFFFFFFF</color>
+<<<<<<< HEAD
     <color name="status_bar_traffic_color">#FFFFFFFF</color>
+=======
+
+    <!-- app sidebar trigger region color -->
+    <color name="trigger_region_color">#8015a0e5</color>
+>>>>>>> b5eca28... App sidebar [1/2]
 </resources>

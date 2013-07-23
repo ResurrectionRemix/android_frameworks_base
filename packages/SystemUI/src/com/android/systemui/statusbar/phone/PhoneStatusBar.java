@@ -101,6 +101,7 @@ import com.android.systemui.DockBatteryMeterView;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.R;
 import com.android.systemui.BatteryMeterView;
+import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.GestureRecorder;
@@ -370,6 +371,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.STATUS_BAR_CUSTOM_HEADER), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT), false, this);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.APP_SIDEBAR_POSITION), false, this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -601,6 +604,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         } catch (RemoteException ex) {
             // no window manager? good luck with that
         }
+
+        if (mRecreating) {
+	    removeSidebarView();
+        }
+	addSidebarView();
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
@@ -2901,6 +2909,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 notifyHeadsUpScreenOn(false);
                 finishBarAnimations();
             }
+            else if (Intent.ACTION_CONFIGURATION_CHANGED.equals(action)) {
+                Configuration config = mContext.getResources().getConfiguration();
+                try {
+                    // position app sidebar on left if in landscape orientation and device has a navbar
+                    if (mWindowManagerService.hasNavigationBar() &&
+                            config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        mWindowManager.updateViewLayout(mAppSidebar,
+                                getAppSidebarLayoutParams(AppSidebar.SIDEBAR_POSITION_LEFT));
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAppSidebar.setPosition(AppSidebar.SIDEBAR_POSITION_LEFT);
+                            }
+                        }, 500);
+                    }
+                } catch (RemoteException e) {
+                }
+            }
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 mScreenOn = true;
                 // work around problem where mDisplay.getRotation() is not stable while screen is off (bug 7086018)
@@ -2993,6 +3019,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mDockBatteryController.onBatteryMeterModeChanged(mode);
         mDockBatteryView.setShowPercent(showPercent);
         mDockBatteryController.onBatteryMeterShowPercent(showPercent);
+
+        int sidebarPosition = Settings.System.getInt(
+                resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
+        if (sidebarPosition != mSidebarPosition) {
+            mSidebarPosition = sidebarPosition;
+            mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
+        }
     }
 
     private void resetUserSetupObserver() {
