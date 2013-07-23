@@ -79,6 +79,7 @@ public class HaloProperties extends FrameLayout {
 
     private SettingsObserver mSettingsObserver;
     private Handler mHandler;
+
     private float mFraction = 1.0f;
 
     CustomObjectAnimator mHaloOverlayAnimator;
@@ -150,6 +151,7 @@ public class HaloProperties extends FrameLayout {
         final int newBubbleSize = (int)(mContext.getResources().getDimensionPixelSize(R.dimen.halo_bubble_size) * fraction);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(newBubbleSize, newBubbleSize);
         mHaloBg.setLayoutParams(layoutParams);
+        mHaloBgCustom.setLayoutParams(layoutParams);
         mHaloIcon.setLayoutParams(layoutParams);
         mHaloOverlay.setLayoutParams(layoutParams);
 
