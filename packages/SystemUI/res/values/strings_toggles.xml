@@ -52,5 +52,5 @@
     <string name="toggle_WIRELESSADB">Wireless ADB</string>
     <string name="toggle_HALO">Halo</string>
     <string name="toggle_DARK">Pitch Black</string>
-    <string name="toggle_HYBRID">Hybrid</string>)
+    <string name="toggle_HYBRID">Hybrid</string>
 </resources>
