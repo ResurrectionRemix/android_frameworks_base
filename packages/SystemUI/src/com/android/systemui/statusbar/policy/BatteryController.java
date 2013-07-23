@@ -114,23 +114,23 @@ public class BatteryController extends BroadcastReceiver {
         final int icon;
         switch (mBatteryStyle) {
               case STYLE_ICON_BRICK:
-                 icon = plugged ? R.drawable.stat_sys_battery_charge_brick
+                 icon = mplugged ? R.drawable.stat_sys_battery_charge_brick
                  : R.drawable.stat_sys_battery_brick;
                  break;
             case STYLE_ICON_PLANET:
-                 icon = plugged ? R.drawable.stat_sys_battery_charge_planet
+                 icon = mplugged ? R.drawable.stat_sys_battery_charge_planet
                  : R.drawable.stat_sys_battery_planet;
                  break;
             case STYLE_ICON_RACING:
-                 icon = plugged ? R.drawable.stat_sys_battery_charge_racing
+                 icon = mplugged ? R.drawable.stat_sys_battery_charge_racing
                  : R.drawable.stat_sys_battery_racing;
                  break;
             case STYLE_ICON_SLIDER:
-                 icon = plugged ? R.drawable.stat_sys_battery_charge_slider
+                 icon = mplugged ? R.drawable.stat_sys_battery_charge_slider
                  : R.drawable.stat_sys_battery_slider;
                  break;
             case STYLE_ICON_RESURRECTION:
-                 icon = plugged ? R.drawable.stat_sys_battery_charge_rr
+                 icon = mplugged ? R.drawable.stat_sys_battery_charge_rr
                  : R.drawable.stat_sys_battery_rr;
                  break;
         }
