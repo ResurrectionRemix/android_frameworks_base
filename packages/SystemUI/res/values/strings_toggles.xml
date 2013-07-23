@@ -50,11 +50,7 @@
     <string name="toggle_CUSTOM">Custom</string>
     <string name="toggle_STAYAWAKE">Stay awake</string>
     <string name="toggle_WIRELESSADB">Wireless ADB</string>
-<<<<<<< HEAD
     <string name="toggle_HALO">Halo</string>
     <string name="toggle_DARK">Pitch Black</string>
-
-=======
-    <string name="toggle_HYBRID">Hybrid</string>
->>>>>>> 196ccb4... Hybrid Toggle (See Credit Below)
+    <string name="toggle_HYBRID">Hybrid</string>)
 </resources>
