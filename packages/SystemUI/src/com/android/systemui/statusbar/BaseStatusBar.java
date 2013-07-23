@@ -162,13 +162,9 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected PopupMenu mNotificationBlamePopup;
 
     protected int mCurrentUserId = 0;
-<<<<<<< HEAD
-    
-=======
 
     protected FrameLayout mStatusBarContainer;
 
->>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
     // Pie controls
     public PieControlPanel mPieControlPanel;
     public View mPieControlsTrigger;
@@ -479,21 +475,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                     userSwitched(mCurrentUserId);
                 }
             }}, filter);
-<<<<<<< HEAD
-            
-        // Listen for PIE gravity
-        mContext.getContentResolver().registerContentObserver(
-            Settings.System.getUriFor(Settings.System.PIE_GRAVITY), false, new ContentObserver(new Handler()) {
-                @Override
-                public void onChange(boolean selfChange) {
-                    if (Settings.System.getInt(mContext.getContentResolver(),
-                            Settings.System.PIE_STICK, 1) == 0) {
-                        updatePieControls();
-                    }
-                }
-            });
-=======
->>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
 
         // Only watch for per app color changes when the setting is in check
         if (ColorUtils.getPerAppColorState(mContext)) {

@@ -405,11 +405,8 @@ public class NavigationBarView extends LinearLayout {
                     addButton(navButtonLayout, generateKey(landscape, KEY_ARROW_LEFT), !landscape);
                     addButton(navButtonLayout, generateKey(landscape, KEY_ARROW_RIGHT), landscape);
             }
-<<<<<<< HEAD
-            if (mCurrentUIMode == 1 || mCurrentUIMode == 2) {
-=======
+
             if (mSystemUiLayout >= 1000) {
->>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
                 // add spacer views to the outside edges to help with Glowscale cutoff
                 // We'll only do this for Tablet UI for now.  It was suffering the worst from
                 // glowscale cutoff.  I may add some user adjustable padding at a later date that
@@ -1054,12 +1051,6 @@ public class NavigationBarView extends LinearLayout {
             ContentResolver resolver = mContext.getContentResolver();
 
             resolver.registerContentObserver(
-<<<<<<< HEAD
-                    Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_COLOR), false, this);
-=======
-                    Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_ALLCOLOR), false, this);
->>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
-            resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.MENU_LOCATION), false,
                     this);
             resolver.registerContentObserver(
@@ -1104,13 +1095,6 @@ public class NavigationBarView extends LinearLayout {
 
         mMenuLocation = Settings.System.getInt(resolver,
                 Settings.System.MENU_LOCATION, SHOW_RIGHT_MENU);
-<<<<<<< HEAD
-        mNavigationBarColor = Settings.System.getInt(resolver,
-                Settings.System.NAVIGATION_BAR_COLOR, -1);
-=======
-        mColorAllIcons = Settings.System.getBoolean(resolver,
-                Settings.System.NAVIGATION_BAR_ALLCOLOR, false);
->>>>>>> 14eeea6... Fix SystemUI FC / Some moar changes
         mMenuVisbility = Settings.System.getInt(resolver,
                 Settings.System.MENU_VISIBILITY, VISIBILITY_SYSTEM);
         mMenuArrowKeys = Settings.System.getBoolean(resolver,
