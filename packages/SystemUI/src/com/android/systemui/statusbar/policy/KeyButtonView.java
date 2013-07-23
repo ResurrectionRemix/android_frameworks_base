@@ -146,7 +146,6 @@ public class KeyButtonView extends ImageView {
                         updateButtonColor();
                     }});
 
->>>>>>> 3ae164c... Squashed PA merges
             mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.NAV_GLOW_COLOR), false, new ContentObserver(new Handler()) {
                     @Override
