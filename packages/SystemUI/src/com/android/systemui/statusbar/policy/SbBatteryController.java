@@ -188,10 +188,6 @@ public class SbBatteryController extends LinearLayout {
                  icon = plugged ? R.drawable.stat_sys_battery_charge_rr
                  : R.drawable.stat_sys_battery_rr;
                  break;
-            default:
-                 icon = mPlugged ? R.drawable.stat_sys_battery_charge
-                 : R.drawable.stat_sys_battery;
-                 break;
           }
         int N = mIconViews.size();
         for (int i = 0; i < N; i++) {

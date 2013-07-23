@@ -204,6 +204,8 @@ public class TabletStatusBar extends BaseStatusBar implements
 
     NotificationIconArea.IconLayout mIconLayout;
 
+    TabletTicker mTicker;
+
     View mFakeSpaceBar;
     KeyEvent mSpaceBarKeyEvent = null;
 
@@ -276,44 +278,6 @@ public class TabletStatusBar extends BaseStatusBar implements
         mNotificationPanel.setOnTouchListener(
                 new TouchOutsideListener(MSG_CLOSE_NOTIFICATION_PANEL, mNotificationPanel));
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        // Bt
-        mBluetoothController.addIconView(
-                (ImageView)mNotificationPanel.findViewById(R.id.bluetooth));
-
-        // network icons: either a combo icon that switches between mobile and data, or distinct
-        // mobile and data icons
-        final ImageView mobileRSSI =
-                (ImageView)mNotificationPanel.findViewById(R.id.mobile_signal);
-        if (mobileRSSI != null) {
-            mNetworkController.addPhoneSignalIconView(mobileRSSI);
-        }
-        final ImageView wifiRSSI =
-                (ImageView)mNotificationPanel.findViewById(R.id.wifi_signal);
-        if (wifiRSSI != null) {
-            mNetworkController.addWifiIconView(wifiRSSI);
-        }
-        mNetworkController.addWifiLabelView(
-                (TextView)mNotificationPanel.findViewById(R.id.wifi_text));
-
-        mNetworkController.addDataTypeIconView(
-                (ImageView)mNotificationPanel.findViewById(R.id.mobile_type));
-        mNetworkController.addMobileLabelView(
-                (TextView)mNotificationPanel.findViewById(R.id.mobile_text));
-        mNetworkController.addCombinedLabelView(
-                (TextView)mBarContents.findViewById(R.id.network_text));
-=======
-        mHaloButton = (ImageView) mNotificationPanel.findViewById(R.id.halo_button);
-        if (mHaloButton != null) {
-            mHaloButton.setOnClickListener(mHaloButtonListener);
-            mHaloButtonVisible = true;
-            updateHaloButton();
-        }
->>>>>>> f449b2f... Halo: tablet mode support
-
->>>>>>> efc557c... Halo: tablet mode support
         mStatusBarView.setIgnoreChildren(0, mNotificationTrigger, mNotificationPanel);
 
         WindowManager.LayoutParams lp = mNotificationPanelParams = new WindowManager.LayoutParams(
@@ -402,16 +366,6 @@ public class TabletStatusBar extends BaseStatusBar implements
             mDateTimeView.setEnabled(true);
         }
     }
-
-    private View.OnClickListener mHaloButtonListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            // Activate HALO
-            Settings.System.putInt(mContext.getContentResolver(),
-                    Settings.System.HALO_ACTIVE, 1);
-            // Collapse
-            animateCollapsePanels();
-        }
-    };
 
     @Override
     protected int getExpandedViewMaxHeight() {
@@ -572,7 +526,7 @@ public class TabletStatusBar extends BaseStatusBar implements
         mNotificationPeekTapDuration = ViewConfiguration.getTapTimeout();
         mNotificationFlingVelocity = 300; // px/s
 
-        mTabletTicker = new TabletTicker(this);
+        mTicker = new TabletTicker(this);
 
         // The icons
         mLocationController = new LocationController(mContext); // will post a notification
@@ -978,15 +932,7 @@ public class TabletStatusBar extends BaseStatusBar implements
                     if (DEBUG) Slog.d(TAG, "opening notifications panel");
                     if (!mNotificationPanel.isShowing()) {
                         mNotificationPanel.show(true, true);
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-                        mNotificationArea.setVisibility(View.INVISIBLE);
->>>>>>> efc557c... Halo: tablet mode support
                         mTicker.halt();
-=======
-                        mTabletTicker.halt();
->>>>>>> f449b2f... Halo: tablet mode support
                     }
                     break;
                 case MSG_CLOSE_NOTIFICATION_PANEL:
@@ -1028,7 +974,7 @@ public class TabletStatusBar extends BaseStatusBar implements
                     notifyUiVisibilityChanged();
                     break;
                 case MSG_STOP_TICKER:
-                    mTabletTicker.halt();
+                    mTicker.halt();
                     break;
             }
         }
@@ -1072,7 +1018,7 @@ public class TabletStatusBar extends BaseStatusBar implements
     public void removeNotification(IBinder key) {
         if (DEBUG) Slog.d(TAG, "removeNotification(" + key + ")");
         removeNotificationViews(key);
-        mTabletTicker.remove(key);
+        mTicker.remove(key);
         setAreThereNotifications();
     }
 
@@ -1116,7 +1062,7 @@ public class TabletStatusBar extends BaseStatusBar implements
 
             if ((state & StatusBarManager.DISABLE_NOTIFICATION_ICONS) != 0) {
                 Slog.i(TAG, "DISABLE_NOTIFICATION_ICONS: yes" + (mNotificationDNDMode?" (DND)":""));
-                mTabletTicker.halt();
+                mTicker.halt();
             } else {
                 Slog.i(TAG, "DISABLE_NOTIFICATION_ICONS: no" + (mNotificationDNDMode?" (DND)":""));
             }
@@ -1125,7 +1071,7 @@ public class TabletStatusBar extends BaseStatusBar implements
             reloadAllNotificationIcons();
         } else if ((diff & StatusBarManager.DISABLE_NOTIFICATION_TICKER) != 0) {
             if ((state & StatusBarManager.DISABLE_NOTIFICATION_TICKER) != 0) {
-                mTabletTicker.halt();
+                mTicker.halt();
             }
         }
         if ((diff & (StatusBarManager.DISABLE_RECENT
@@ -1170,10 +1116,10 @@ public class TabletStatusBar extends BaseStatusBar implements
         // until status bar window is attached to the window manager,
         // because...  well, what's the point otherwise?  And trying to
         // run a ticker without being attached will crash!
-         if (n.notification.tickerText != null && mStatusBarView.getWindowToken() != null) {
+        if (hasTicker(n.notification) && mStatusBarView.getWindowToken() != null) {
             if (0 == (mDisabled & (StatusBarManager.DISABLE_NOTIFICATION_ICONS
                             | StatusBarManager.DISABLE_NOTIFICATION_TICKER))) {
-                mTabletTicker.add(key, n);
+                mTicker.add(key, n);
                 mFeedbackIconArea.setVisibility(View.GONE);
             }
         }
@@ -1181,7 +1127,6 @@ public class TabletStatusBar extends BaseStatusBar implements
 
     // called by TabletTicker when it's done with all queued ticks
     public void doneTicking() {
-        if (mHaloActive) return;
         mFeedbackIconArea.setVisibility(View.VISIBLE);
     }
 
@@ -1688,7 +1633,7 @@ public class TabletStatusBar extends BaseStatusBar implements
             if (i >= N) break;
             Entry ent = mNotificationData.get(N-i-1);
             if ((provisioned && ent.notification.score >= HIDE_ICONS_BELOW_SCORE)
-                    || showNotificationEvenIfUnprovisioned(ent.notification) || mHaloTaskerActive) {
+                    || showNotificationEvenIfUnprovisioned(ent.notification)) {
                 toShow.add(ent.icon);
             }
         }
@@ -1806,7 +1751,7 @@ public class TabletStatusBar extends BaseStatusBar implements
 
     @Override
     protected void haltTicker() {
-        mTabletTicker.halt();
+        mTicker.halt();
     }
 
     @Override
