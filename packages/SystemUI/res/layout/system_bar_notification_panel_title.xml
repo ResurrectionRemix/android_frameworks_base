@@ -56,10 +56,9 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingRight="6dp"
+                android:textAppearance="@style/TextAppearance.SystemBar.Expanded.Date"
+                android:singleLine="true"
+                android:ellipsize="end"/>
                 >
         <ImageView android:id="@+id/halo_button"
             android:layout_width="wrap_content"
@@ -69,26 +68,8 @@
             android:layout_alignParentTop="true"
             android:paddingRight="15dp"
             android:src="@drawable/ic_notify_halo_normal"
-            android:contentDescription="@string/accessibility_halo" />  
-
-                <ImageView
-                    android:id="@+id/mobile_signal"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:contentDescription="@null"
-                    />
-
-                <ImageView
-                    android:id="@+id/mobile_type"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:contentDescription="@null"
-                    />
-=======
-                android:textAppearance="@style/TextAppearance.SystemBar.Expanded.Date"
-                android:singleLine="true"
-                android:ellipsize="end"/>
->>>>>>> 2f4ef6d... Fix Per-App Color
+            android:contentDescription="@string/accessibility_halo" /> 
+             
 
             <TextView
                 android:id="@+id/mobile_text"
@@ -115,22 +96,11 @@
                 android:id="@+id/settings_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:paddingRight="12dp"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:text="@string/status_bar_settings_settings_button"
-                />
-
-            <include layout="@layout/battery_cluster_view"
-                android:id="@+id/battery_cluster"
-=======
                 android:src="@drawable/ic_notify_quicksettings_normal"
                 android:contentDescription="@string/accessibility_desc_quick_settings"/>
 
             <ImageView
                 android:id="@+id/notification_button"
->>>>>>> bf5f805... Fix Per-App Color
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_notify_open_normal"

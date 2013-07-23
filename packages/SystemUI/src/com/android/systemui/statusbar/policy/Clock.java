@@ -242,24 +242,10 @@ public class Clock extends TextView {
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_STYLE), false,
                     this);
             resolver.registerContentObserver(Settings.System
-<<<<<<< HEAD
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_COLOR), false,
                     this);
             resolver.registerContentObserver(Settings.System
-<<<<<<< HEAD
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_WEEKDAY), false,
-=======
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_DISPLAY), false,
-                    this);
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_STYLE), false,
-                    this);
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_FORMAT), false,
-=======
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_WEEKDAY), false,
->>>>>>> bf5f805... Fix Per-App Color
->>>>>>> 2f4ef6d... Fix Per-App Color
                     this);
             updateSettings();
         }
@@ -277,27 +263,10 @@ public class Clock extends TextView {
                 Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_GONE);   
         mClockStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_STYLE, STYLE_CLOCK_RIGHT);
-<<<<<<< HEAD
-        mWeekdayStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_WEEKDAY, WEEKDAY_STYLE_GONE);
-=======
-<<<<<<< HEAD
-        mClockDateDisplay = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_DATE_DISPLAY, CLOCK_DATE_DISPLAY_GONE);
-        mClockDateStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_DATE_STYLE, CLOCK_DATE_STYLE_UPPERCASE);
->>>>>>> 2f4ef6d... Fix Per-App Color
 
-        newColor = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_COLOR, mClockColor);
-        if (newColor < 0 && newColor != mClockColor) {
-            mClockColor = newColor;
-            setTextColor(mClockColor);
-        }
-=======
         mWeekdayStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_WEEKDAY, WEEKDAY_STYLE_GONE);
->>>>>>> bf5f805... Fix Per-App Color
+
         updateClockVisibility();
         updateClock();
     }

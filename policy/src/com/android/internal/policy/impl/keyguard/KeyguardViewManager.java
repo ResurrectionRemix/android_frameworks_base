@@ -76,14 +76,9 @@ public class KeyguardViewManager {
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
 
-<<<<<<< HEAD
-=======
     private String[] currentColors = new String[ExtendedPropertiesUtils.PARANOID_COLORS_COUNT];
     private String[] stockColors = new String[ExtendedPropertiesUtils.PARANOID_COLORS_COUNT];
 
-    private boolean mUnlockKeyDown = false;
-
->>>>>>> bf5f805... Fix Per-App Color
     public interface ShowListener {
         void onShown(IBinder windowToken);
     };

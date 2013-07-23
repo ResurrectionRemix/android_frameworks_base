@@ -220,11 +220,8 @@ public abstract class BaseStatusBar extends SystemUI implements
     private TransitionDrawable mTransition;
     public ColorUtils.ColorSettingInfo mLastIconColor;
     public ColorUtils.ColorSettingInfo mLastBackgroundColor;
-<<<<<<< HEAD
-=======
     protected int mClockColor = com.android.internal.R.color.holo_blue_light;
     public int mSystemUiLayout = ExtendedPropertiesUtils.getActualProperty("com.android.systemui.layout");
->>>>>>> bf5f805... Fix Per-App Color
 
     // UI-specific methods
 
