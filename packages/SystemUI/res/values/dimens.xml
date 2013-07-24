@@ -282,7 +282,7 @@
     <!-- PA HALO -->
     <dimen name="halo_bubble_size">75dp</dimen>
     <dimen name="halo_number_size">24dp</dimen>
-    <dimen name="halo_number_icon_size">16dp</dimen>
+    <dimen name="halo_number_icon_size">18dp</dimen>
     <dimen name="halo_number_text_size">14sp</dimen>
     <dimen name="halo_speech_text_size">15sp</dimen>
     <dimen name="halo_speech_hpadding_short">10dp</dimen>

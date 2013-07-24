@@ -27,7 +27,7 @@
                 android:singleLine="false"
                 android:visibility="gone"
                 android:textStyle="bold|italic"
-                android:textColor="#33b5e5"
+                android:textColor="#fff"
                 android:textSize="@dimen/halo_speech_text_size"/>
 
             <TextView
@@ -42,7 +42,7 @@
                 android:singleLine="false"
                 android:visibility="gone"
                 android:textStyle="bold|italic"
-                android:textColor="#33b5e5"
+                android:textColor="#fff"
                 android:textSize="@dimen/halo_speech_text_size"/>
 
         </RelativeLayout>
