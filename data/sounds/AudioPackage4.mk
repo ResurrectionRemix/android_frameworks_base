@@ -100,6 +100,5 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/newwavelabs/Terminated.ogg:system/media/audio/ringtones/Terminated.ogg \
 	$(LOCAL_PATH)/newwavelabs/Third_Eye.ogg:system/media/audio/ringtones/Third_Eye.ogg \
 	$(LOCAL_PATH)/newwavelabs/TwirlAway.ogg:system/media/audio/ringtones/TwirlAway.ogg \
-	$(LOCAL_PATH)/newwavelabs/Testudo.ogg:system/media/audio/ringtones/Testudo.ogg \
 	$(LOCAL_PATH)/newwavelabs/World.ogg:system/media/audio/ringtones/World.ogg
 endif
