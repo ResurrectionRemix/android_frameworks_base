@@ -2468,15 +2468,7 @@ public final class Settings {
          * 5 - Hide
          */
         public static final String STATUSBAR_BATTERY_ICON = "statusbar_battery_icon";
-        
-        /**
-         * Control the display of the action overflow button within app UI.
-         * 0 = use system default
-         * 1 = force on
-         * @hide
-         */
-         
-        public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
+
         /**
          * Whether to use the custom quick unlock screen control
          * @hide
@@ -2495,6 +2487,14 @@ public final class Settings {
          * @hide
          */
         public static final String PAC_STATUS = "pac_status";
+
+        /**
+         * Control the display of the action overflow button within app UI.
+         * 0 = use system default
+         * 1 = force on
+         * @hide
+         */
+        public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
 
         /**
          * Whether power menu expanded desktop is enabled
