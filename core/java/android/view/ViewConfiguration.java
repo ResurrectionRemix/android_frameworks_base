@@ -685,10 +685,8 @@ public class ViewConfiguration {
         boolean showOverflowButton = Settings.System.getBoolean(
                 mContext.getContentResolver(),
                 Settings.System.UI_FORCE_OVERFLOW_BUTTON, false);
-        if (showOverflowButton) {
-            // Force overflow button on by reporting that
-            // the device has no permanent menu key
-            return false;
+        if (!showOverflowButton) {
+            return true;
         } else {
             return sHasPermanentMenuKey;
         }
