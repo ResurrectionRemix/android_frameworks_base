@@ -42,17 +42,21 @@ public class VibrationPattern {
 
     public VibrationPattern(Uri uri, Context context) {
         if (uri != null) {
+            ContentResolver cr = context.getContentResolver();
             mUri = uri;
             mContext = context;
             mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+            Cursor vibCursor = cr.query(mUri, null, null, null, null);
             try {
-                Cursor vibCursor = context.getContentResolver()
-                        .query(mUri, null, null, null, null);
                 vibCursor.moveToFirst();
                 mName = vibCursor.getString(1);
                 setPatternFromString(vibCursor.getString(2));
                 vibCursor.close();
             } catch (Exception e) {
+                // Default setting potentially deleted by user
+                vibCursor.close();
+                Settings.System.putString(cr, Settings.System.PHONE_VIBRATION,
+                        Settings.System.DEFAULT_VIBRATION_URI.toString());
                 Log.d(TAG, "No vibration matching, cloning default vibration");
                 VibrationPattern def = new VibrationPattern(Uri.parse(VibrationPattern
                         .getPhoneVibration(context)), context);
