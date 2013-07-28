@@ -187,7 +187,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
     SharedPreferences preferences;
     private String KEY_HALO_POSITION_Y = "halo_position_y";
     private String KEY_HALO_POSITION_X = "halo_position_x";
-    private String KEY_HALO_FIRST_START = "halo_first_run";
+    private String KEY_HALO_FIRST_RUN = "halo_first_run";
 
     private final class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
@@ -257,7 +257,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                 Settings.System.getInt(mContext.getContentResolver(), Settings.System.HALO_HIDE, 0) == 1;
         mHaloSize = Settings.System.getFloat(mContext.getContentResolver(),
                 Settings.System.HALO_SIZE, 1.0f);
-        mHapticFeedback = Settings.System.getInt(mContext.getContentResolver(),	265
+        mHapticFeedback = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0;
         mIconSize = (int)(mContext.getResources().getDimensionPixelSize(R.dimen.halo_bubble_size) * mHaloSize);
         mIconHalfSize = mIconSize / 2;
