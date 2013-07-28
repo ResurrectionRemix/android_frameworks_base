@@ -662,4 +662,8 @@
     <string name="halo_hide">Hide HALO</string>
     <string name="halo_clear_all">Clear all notifications</string>
     <string name="halo_silence">Hide and silence until woken</string>
+    
+    <string name="halo_tutorial1">This is HALO.</string>
+    <string name="halo_tutorial2">Double-tap-drag to move it around, drag to task.</string>
+    <string name="halo_tutorial3">Change behavior in the settings.</string>
 </resources>
