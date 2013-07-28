@@ -2150,6 +2150,17 @@ public final class ActivityThread {
         return mActivities.get(token).activity;
     }
 
+    protected void performFinishFloating() {
+        synchronized (mPackages) {
+            for (ActivityClientRecord ar : mActivities.values()) {
+                Activity a = ar.activity;
+                if (a != null && !a.mFinished && a.getWindow() != null && a.getWindow().mIsFloatingWindow) {
+                    a.finish();
+                }
+            }
+        }
+    }
+
     public final void sendActivityResult(
             IBinder token, String id, int requestCode,
             int resultCode, Intent data) {
