@@ -32,7 +32,9 @@ import android.widget.TextView;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.util.TypedValue;
 import android.provider.Settings;
 
@@ -83,7 +85,7 @@ public class HaloProperties extends FrameLayout {
     private Handler mHandler;
 
     private float mFraction = 1.0f;
-
+    private int mHaloMessageNumber = 0;
     CustomObjectAnimator mHaloOverlayAnimator;
 
     public HaloProperties(Context context) {
@@ -188,6 +190,29 @@ public class HaloProperties extends FrameLayout {
         return mHaloY;
     }
 
+    protected CustomObjectAnimator msgNumberFlipAnimator = new CustomObjectAnimator(this);
+    protected CustomObjectAnimator msgNumberAlphaAnimator = new CustomObjectAnimator(this);
+    public void setHaloMessageNumber(int value, boolean alwaysFlip) {
+
+        // Allow transitions only if no overlay is set
+        if (mHaloCurrentOverlay == null) {
+            msgNumberAlphaAnimator.cancel(true);
+            float oldAlpha = mHaloNumber.getAlpha();
+            mHaloNumber.setAlpha(1f);                
+            mHaloNumber.setText((value < 100) ? String.valueOf(value == 0 ? 1 : value) : "+");
+            
+            if (value == 0) {
+                msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumber, "alpha", 0f).setDuration(1000),
+                        new DecelerateInterpolator(), null, 1500, null);
+            }
+
+            if (!alwaysFlip && oldAlpha == 1f && (value == mHaloMessageNumber || (value > 99 && mHaloMessageNumber > 99))) return;
+            msgNumberFlipAnimator.animate(ObjectAnimator.ofFloat(mHaloNumber, "rotationY", -180, 0).setDuration(500),
+                        new DecelerateInterpolator(), null);
+        }
+        mHaloMessageNumber = value;
+    }
+
     public void setHaloContentAlpha(float value) {
         mHaloContentAlpha = value;
         mHaloTextViewL.setAlpha(value);
@@ -233,6 +258,12 @@ public class HaloProperties extends FrameLayout {
         if (d != mHaloCurrentOverlay) {
             mHaloOverlay.setImageDrawable(d);
             mHaloCurrentOverlay = d;
+            
+            // Fade out number batch
+            if (overlay != Overlay.NONE) {
+                msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumber, "alpha", 0f).setDuration(250),
+                        new DecelerateInterpolator(), null);
+            }
         }
 
         mHaloOverlay.setAlpha(overlayAlpha);

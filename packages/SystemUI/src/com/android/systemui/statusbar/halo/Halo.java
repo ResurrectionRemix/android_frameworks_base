@@ -428,8 +428,8 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                     && mLastNotificationEntry.notification.notification.tickerText != null) {
                 mNotificationText = mLastNotificationEntry.notification.notification.tickerText.toString();
             }
-
-            tick(mLastNotificationEntry, "", 0, 0);
+            
+          tick(mLastNotificationEntry, "", 0, 0, false);
         } else {
             clearTicker();
         }
@@ -442,8 +442,8 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
         } else {
             if (mBar.getTicker() != null) mBar.getTicker().setUpdateEvent(this);
         }
-            mNotificationData = mBar.getNotificationData();
-            loadLastNotification(true);
+        mNotificationData = mBar.getNotificationData();
+        loadLastNotification(true);
     }
 
     void launchTask(NotificationClicker intent) {
@@ -625,7 +625,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                             NotificationData.Entry item = mNotificationData.get(i);
                             if (!((item.notification.notification.flags &
                                     Notification.FLAG_AUTO_CANCEL) == Notification.FLAG_AUTO_CANCEL)) {
-                                tick(item, "", 0, 0);
+                                tick(item, "", 0, 0, false);
                                 break;
                             }
                         }
@@ -633,7 +633,8 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
 
                     if (mCurrentNotficationEntry == null) clearTicker();
                     mLastNotificationEntry = null;
-
+                    loadLastNotification(true);
+                    
                     mEffect.nap(1500);
                     if (mHideTicker) mEffect.sleep(HaloEffect.NAP_TIME + 3000, HaloEffect.SLEEP_TIME, false);
 
@@ -671,7 +672,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                     if (entry == null && mNotificationData.size() > 0) {
                         loadLastNotification(false);
                     } else {
-                        tick(entry, "", 0, 0);
+                        tick(entry, "", 0, 0, false);
                     }
 
                     mEffect.nap(1500);
@@ -850,7 +851,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                             if (mMarkerIndex == -1) {
                                 mTaskIntent = null;
                                 resetIcons();
-                                tick(mLastNotificationEntry, gestureText, 0, 250);
+                                tick(mLastNotificationEntry, gestureText, 0, 250, false);
 
                                 // Ping to notify the user we're back where we started
                                 if (mEnableColor) {
@@ -865,7 +866,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                                 if (entry.notification.notification.tickerText != null) {
                                     text = entry.notification.notification.tickerText.toString();
                                 }
-                                tick(entry, text, 0, 250);
+                                tick(entry, text, 0, 250, false);
                                 mTaskIntent = entry.getFloatingIntent();
                             }
                         } catch (Exception e) {
@@ -1186,7 +1187,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
             canvas.restoreToCount(state);
 
             // Number
-            if (mState == State.IDLE || mState == State.GESTURES && !verticalGesture()) {
+            if (mState == State.IDLE || mState == State.GESTURES) {
                 state = canvas.save();
                 canvas.translate(mTickerLeft ? mHaloX + mIconSize - mHaloNumber.getMeasuredWidth() : mHaloX, mHaloY);
                 mHaloNumberView.draw(canvas);
@@ -1212,15 +1213,16 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
 
     void clearTicker() {
         mEffect.mHaloIcon.setImageDrawable(null);
-        mEffect.mHaloNumber.setAlpha(0f);
+        mEffect.msgNumberAlphaAnimator.cancel(true);
+        mEffect.setHaloMessageNumber(0, false);
         mContentIntent = null;
         mCurrentNotficationEntry = null;
         mEffect.killTicker();
         mEffect.updateResources();
         mEffect.invalidate();
     }
+    void tick(NotificationData.Entry entry, String text, int delay, int duration, boolean alwaysFlip) {
 
-    void tick(NotificationData.Entry entry, String text, int delay, int duration) {
         if (entry == null) {
             clearTicker();
             return;
@@ -1236,13 +1238,6 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
         // set the avatar
         mEffect.mHaloIcon.setImageDrawable(new BitmapDrawable(mContext.getResources(), entry.getRoundIcon()));
 
-        // Set Number
-        if (n.number > 0) {
-            mEffect.mHaloNumber.setText((n.number < 100) ? String.valueOf(n.number) : "+");
-            mEffect.mHaloNumber.setAlpha(1f);
-        } else {
-            mEffect.mHaloNumber.setAlpha(0f);
-        }
 
         // Set text
 
@@ -1250,6 +1245,9 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
         
         mEffect.updateResources();
         mEffect.invalidate();
+        
+        // Set Number
+        mEffect.setHaloMessageNumber(n.number, alwaysFlip);
     }
 
     public void updateTicker(StatusBarNotification notification) {
@@ -1286,8 +1284,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                     mLastNotificationEntry = entry;
 
                     if (allowed) {
-                        tick(entry, text, HaloEffect.WAKE_TIME, 1000);
-
+                        tick(entry, text, HaloEffect.WAKE_TIME, 1000, true);
                         // Pop while not tasking, only if notification is certified fresh
                         if (mEnableColor) {
                             if (mGesture != Gesture.TASK && mState != State.SILENT) mEffect.ping(mPaintHoloCustom, HaloEffect.WAKE_TIME);
