@@ -34,10 +34,6 @@ public class CustomObjectAnimator {
         rootView = root;
     }
 
-    public boolean isRunning() {
-        return animator != null && animator.isRunning();
-    }
-
     public void animate(ObjectAnimator newInstance, TimeInterpolator interpolator, AnimatorUpdateListener update) {
         runAnimation(newInstance, interpolator, update, null);
     }

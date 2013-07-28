@@ -27,11 +27,7 @@
                 android:singleLine="false"
                 android:visibility="gone"
                 android:textStyle="bold"
-<<<<<<< HEAD
                 android:textColor="#fff"
-=======
-                android:textColor="#3892b4"
->>>>>>> d05bd23... HALO bigger update
                 android:textSize="@dimen/halo_speech_text_size"/>
 
             <TextView
@@ -46,11 +42,7 @@
                 android:singleLine="false"
                 android:visibility="gone"
                 android:textStyle="bold"
-<<<<<<< HEAD
                 android:textColor="#fff"
-=======
-                android:textColor="#3892b4"
->>>>>>> d05bd23... HALO bigger update
                 android:textSize="@dimen/halo_speech_text_size"/>
 
         </RelativeLayout>
