@@ -110,7 +110,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
     public static final String TAG = "HaloLauncher";
 
     enum State {
-		FIRST_START,
+		FIRST_RUN,
         IDLE,
         HIDDEN,
         SILENT,
@@ -186,7 +186,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
     SharedPreferences preferences;
     private String KEY_HALO_POSITION_Y = "halo_position_y";
     private String KEY_HALO_POSITION_X = "halo_position_x";
-    private String KEY_HALO_FIRST_START = "halo_first_start";
+    private String KEY_HALO_FIRST_START = "halo_first_run";
 
     private final class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
@@ -325,9 +325,9 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
         int msavePositionX = preferences.getInt(KEY_HALO_POSITION_X, 0);
         int msavePositionY = preferences.getInt(KEY_HALO_POSITION_Y, mScreenHeight / 2 - mIconHalfSize);
 
-        if (preferences.getBoolean(KEY_HALO_FIRST_START, true)) {
-            mState = State.FIRST_START;
-            preferences.edit().putBoolean(KEY_HALO_FIRST_START, false).apply();
+        if (preferences.getBoolean(KEY_HALO_FIRST_RUN, true)) {
+            mState = State.FIRST_RUN;
+            preferences.edit().putBoolean(KEY_HALO_FIRST_RUN, false).apply();
         }
        
         mKillX = mScreenWidth / 2;
@@ -357,30 +357,36 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
             mTickerLeft = msavePositionX == 0 ? true : false;
             updateTriggerPosition(msavePositionX, msavePositionY);
             mEffect.mHaloTextViewL.setVisibility(mTickerLeft ? View.VISIBLE : View.GONE);
-            mEffect.mHaloTextViewR.setVisibility(mTickerLeft ? View.GONE : View.VISIBLE);
-            mEffect.setHaloX(msavePositionX);
-            mEffect.setHaloY(msavePositionY);
-            mEffect.nap(500);
-            
-            if (mState == State.FIRST_START) {
-                mEffect.ticker(mContext.getResources().getString(R.string.halo_tutorial1), 0, 1000);
-                mEffect.updateResources();
+            mEffect.mHaloTextViewR.setVisibility(mTickerLeft ? View.GONE : View.VISIBLE);            
+            mEffect.setHaloY(msavePositionY);         
+
+            if (mState == State.FIRST_RUN) {
+                mEffect.setHaloX(msavePositionX + (mTickerLeft ? -mIconSize : mIconSize));
+                mEffect.setHaloOverlay(HaloProperties.Overlay.MESSAGE, 1f);
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
                         mEffect.ticker(mContext.getResources().getString(R.string.halo_tutorial2), 0, 4000);
                         mEffect.updateResources();
                         mHandler.postDelayed(new Runnable() {
                             public void run() {
-                                mEffect.ticker(mContext.getResources().getString(R.string.halo_tutorial3), 0, 3000);
-                                mEffect.updateResources();
+                                tick(mLastNotificationEntry, mContext.getResources().getString(R.string.halo_tutorial2), 0, 3000, true);
                                 mHandler.postDelayed(new Runnable() {
                                     public void run() {
-                                        mState = State.IDLE;
-                                        if (mHideTicker) mEffect.sleep(HaloEffect.SNAP_TIME + HaloEffect.NAP_TIME + 2500, HaloEffect.SLEEP_TIME, false);
-                                    }}, 3000);
-                            }}, 7000);
-                    }}, 5000);
+                                        tick(mLastNotificationEntry, mContext.getResources().getString(R.string.halo_tutorial3), 0, 3000, true);
+                                        mHandler.postDelayed(new Runnable() {
+                                            public void run() {
+                                                mState = State.IDLE;                                        
+                                                mEffect.nap(0);
+                                                mEffect.setHaloOverlay(HaloProperties.Overlay.NONE, 0f);
+                                                if (mHideTicker) mEffect.sleep(HaloEffect.SNAP_TIME + HaloEffect.NAP_TIME
+                                                        + 2500, HaloEffect.SLEEP_TIME, false);                                        
+                                            }}, 6000);
+                                    }}, 6000);
+                            }}, 6000);
+                    }}, 1000);
             } else {
+                mEffect.setHaloX(msavePositionX);
+                mEffect.nap(500);
                 if (mHideTicker) mEffect.sleep(HaloEffect.SNAP_TIME + HaloEffect.NAP_TIME + 2500, HaloEffect.SLEEP_TIME, false);
             }
         }
@@ -533,7 +539,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
     public boolean onTouchEvent(MotionEvent event) {
 		
         // Prevent any kind of interaction while HALO explains itself
-        if (mState == State.FIRST_START) return true;
+        if (mState == State.FIRST_RUN) return true;
         
         mGestureDetector.onTouchEvent(event);
 
@@ -1241,7 +1247,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
 
         // Set text
 
-        if (mState != State.SILENT && mState != State.FIRST_START) mEffect.ticker(text, delay, duration);
+        if (mState != State.SILENT) mEffect.ticker(text, delay, duration);
         
         mEffect.updateResources();
         mEffect.invalidate();
@@ -1283,7 +1289,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback, TabletTi
                     mNotificationText = text;
                     mLastNotificationEntry = entry;
 
-                    if (allowed) {
+                    if (allowed && mState != State.FIRST_RUN) {
                         tick(entry, text, HaloEffect.WAKE_TIME, 1000, true);
                         // Pop while not tasking, only if notification is certified fresh
                         if (mEnableColor) {
