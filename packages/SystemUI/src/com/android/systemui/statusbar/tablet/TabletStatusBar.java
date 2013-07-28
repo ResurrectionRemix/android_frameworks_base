@@ -561,10 +561,7 @@ public class TabletStatusBar extends BaseStatusBar implements
                 (SignalClusterView)sb.findViewById(R.id.signal_cluster);
         mNetworkController.addSignalCluster(mSignalCluster);
         mSignalCluster.setNetworkController(mNetworkController);
-<<<<<<< HEAD
 
-=======
->>>>>>> 53f9f11... FW: Fix signal indicators not changing color immediately like clock and battery icon in statusbar icons, whle using PA colors.
         mBarView = (ViewGroup) mStatusBarView;
 
         mNavigationArea = (ViewGroup) sb.findViewById(R.id.navigationArea);

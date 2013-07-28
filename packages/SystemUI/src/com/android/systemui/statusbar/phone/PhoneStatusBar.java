@@ -589,27 +589,10 @@ public class PhoneStatusBar extends BaseStatusBar {
         mSbBatteryController = (SbBatteryController)mStatusBarView.findViewById(R.id.battery_cluster);
         mNetworkController = new NetworkController(mContext);
         mBluetoothController = new BluetoothController(mContext);
-<<<<<<< HEAD
         mSignalCluster = (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
         mNetworkController.addSignalCluster(mSignalCluster);
         mSignalCluster.setNetworkController(mNetworkController);
 
-=======
-        mSignalCluster =
-                (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
-
-        mNetworkController.addSignalCluster(mSignalCluster);
-        mSignalCluster.setNetworkController(mNetworkController);
-
-        mHasDockBattery = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_hasDockBattery);
-
-        if (mHasDockBattery) {
-            mDockBatteryController = new DockBatteryController(mContext);
-            mDockBatteryController.addIconView((ImageView)mStatusBarView.findViewById(R.id.dock_battery));
-        }
-
->>>>>>> 53f9f11... FW: Fix signal indicators not changing color immediately like clock and battery icon in statusbar icons, whle using PA colors.
         mEmergencyCallLabel = (TextView)mStatusBarWindow.findViewById(R.id.emergency_calls_only);
         if (mEmergencyCallLabel != null) {
             mNetworkController.addEmergencyLabelView(mEmergencyCallLabel);
