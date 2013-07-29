@@ -2014,4 +2014,7 @@
   <java-symbol type="string" name="privacy_guard_notification_detail" />
   <java-symbol type="drawable" name="stat_notify_privacy_guard" />
 
+  <!-- Screenshort Trash -->
+  <java-symbol type="string" name="trash" />
+  
 </resources>
