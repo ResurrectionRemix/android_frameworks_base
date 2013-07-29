@@ -99,7 +99,19 @@
              TODO: Should have an android:permission attribute -->
         <service android:name=".screenshot.TakeScreenshotService"
             android:process=":screenshot"
+<<<<<<< HEAD
             android:exported="false" />
+=======
+            android:permission="android.permission.SCREENSHOT"
+            android:exported="false">
+            <intent-filter>
+               <android name="android.intent.action.SCREENSHOT"/>
+            </intent-filter>
+        </service>
+        
+        <receiver android:name=".screenshot.TrashScreenshot"
+                android:exported="true" />
+>>>>>>> a8bf06b...  ScreenShot notification Panel Quick Trash
 
         <service android:name=".LoadAverageService"
                 android:exported="true" />

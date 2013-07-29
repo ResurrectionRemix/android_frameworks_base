@@ -57,6 +57,7 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
 import com.android.systemui.R;
+import com.android.systemui.screenshot.TrashScreenshot;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -230,11 +231,25 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                      r.getString(com.android.internal.R.string.share),
                      PendingIntent.getActivity(context, 0, chooserIntent,
                              PendingIntent.FLAG_CANCEL_CURRENT));
+<<<<<<< HEAD
 
             OutputStream out = resolver.openOutputStream(uri);
             image.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
+=======
+            // Trash Image
+            Intent trashIntent = new Intent();
+            trashIntent.setClass(context, TrashScreenshot.class);
+            trashIntent.putExtra(TrashScreenshot.SCREENSHOT_URI, uri.toString());
+
+            mNotificationBuilder.addAction(R.drawable.ic_menu_trash,
+                     r.getString(com.android.internal.R.string.trash),
+                     PendingIntent.getBroadcast(context, 0, trashIntent,
+                        PendingIntent.FLAG_CANCEL_CURRENT));
+            outStream = resolver.openOutputStream(uri);
+            image.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+>>>>>>> a8bf06b...  ScreenShot notification Panel Quick Trash
 
             // update file size in the database
             values.clear();
@@ -303,9 +318,13 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
  *     type of gallery?
  */
 class GlobalScreenshot {
+<<<<<<< HEAD
     private static final String TAG = "GlobalScreenshot";
 
     private static final int SCREENSHOT_NOTIFICATION_ID = 789;
+=======
+    public static final int SCREENSHOT_NOTIFICATION_ID = 789;
+>>>>>>> a8bf06b...  ScreenShot notification Panel Quick Trash
     private static final int SCREENSHOT_FLASH_TO_PEAK_DURATION = 130;
     private static final int SCREENSHOT_DROP_IN_DURATION = 430;
     private static final int SCREENSHOT_DROP_OUT_DELAY = 500;
