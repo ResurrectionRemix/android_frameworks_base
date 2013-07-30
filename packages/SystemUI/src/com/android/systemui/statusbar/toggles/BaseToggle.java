@@ -1,3 +1,4 @@
+
 package com.android.systemui.statusbar.toggles;
 
 import android.app.ActivityManagerNative;
@@ -71,17 +72,10 @@ public abstract class BaseToggle
         scheduleViewUpdate();
     }
 
-<<<<<<< HEAD
-=======
-    protected final void setTextColor(int cl) {
-        mTextColor = cl;
-    }
-
     public final int getTextColor() {
         return mTextColor;
     }
 
->>>>>>> ce3869b... add support for textsize and -color
     protected final void setTextSize(int s) {
         mTextSize = s;
     }
