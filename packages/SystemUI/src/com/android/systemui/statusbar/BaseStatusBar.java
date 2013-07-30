@@ -1513,7 +1513,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             canvas.drawCircle(iconSize / 2, iconSize / 2, iconSize / 2.3f, smoothingPaint);
             smoothingPaint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
             final int newWidth = iconSize;
-            final int newHeight = largeIconWidth / largeIconHeight * iconSize;
+            final int newHeight = iconSize * largeIconWidth / largeIconHeight;
             Bitmap scaledBitmap = Bitmap.createScaledBitmap(notification.notification.largeIcon, newWidth, newHeight, true);
             canvas.drawBitmap(scaledBitmap, null, new Rect(0, 0,
                     iconSize, iconSize), smoothingPaint);
