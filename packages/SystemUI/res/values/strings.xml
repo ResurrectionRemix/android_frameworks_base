@@ -666,4 +666,7 @@
     <string name="halo_tutorial1">This is HALO.</string>
     <string name="halo_tutorial2">Double-tap-drag to move it around, drag to task.</string>
     <string name="halo_tutorial3">Change behavior in the settings.</string>
+    
+    <string name="quick_settings_music_play">Play</string>
+    <string name="quick_settings_music_pause">Pause</string>
 </resources>

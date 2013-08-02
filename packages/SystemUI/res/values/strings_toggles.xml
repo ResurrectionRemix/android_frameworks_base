@@ -53,4 +53,5 @@
     <string name="toggle_HALO">Halo</string>
     <string name="toggle_DARK">Pitch Black</string>
     <string name="toggle_HYBRID">Hybrid</string>
+    <string name="toggle_MUSIC">Music</string>
 </resources>
