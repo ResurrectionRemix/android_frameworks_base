@@ -2493,8 +2493,16 @@ public final class Settings {
          * 1 = force on
          * @hide
          */
+         
         public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
-
+        
+         /**
+         * statusbar signal traffic color
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_TRAFFIC_TEXT_COLOR = "status_bar_traffic_text_color";
+        
         /**
          * Whether power menu expanded desktop is enabled
          * @hide
