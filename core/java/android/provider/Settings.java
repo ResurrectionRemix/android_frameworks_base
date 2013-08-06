@@ -2480,6 +2480,12 @@ public final class Settings {
          */
         public static final String FOREGROUND_APP = "foreground_app";
 
+         /**
+         * Network speed indicator
+         * @hide
+         */
+        public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
+
         /**
          * Enable or Disable PAC for certain options
          *
