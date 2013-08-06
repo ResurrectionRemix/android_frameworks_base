@@ -193,19 +193,13 @@ public class SbBatteryController extends LinearLayout {
         for (int i = 0; i < N; i++) {
             ImageView v = mIconViews.get(i);
             Drawable batteryBitmap = mContext.getResources().getDrawable(icon);
-<<<<<<< HEAD
          if (mStatusPac) {
-=======
->>>>>>> 3f03c77... PAC: Fix Battery icons
             if (mColorInfo.isLastColorNull) {
                 batteryBitmap.clearColorFilter();                
             } else {
                 batteryBitmap.setColorFilter(mColorInfo.lastColor, PorterDuff.Mode.SRC_IN);
             }
-<<<<<<< HEAD
          }
-=======
->>>>>>> 3f03c77... PAC: Fix Battery icons
             v.setImageDrawable(batteryBitmap);
         }
         N = mLabelViews.size();
