@@ -3301,6 +3301,7 @@ public final class Settings {
          *
          * @hide
          */
+         
         public static final String STATUSBAR_SIGNAL_TEXT_COLOR = "statusbar_signal_text_color";
 
         /**
@@ -3315,6 +3316,7 @@ public final class Settings {
          *
          * @hide
          */
+         
         public static final String STATUSBAR_WIFI_SIGNAL_TEXT = "statusbar_wifi_signal_text";
 
         /**

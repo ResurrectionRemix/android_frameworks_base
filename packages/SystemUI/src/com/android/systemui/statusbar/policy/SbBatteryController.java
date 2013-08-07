@@ -279,7 +279,9 @@ public class SbBatteryController extends LinearLayout {
         // Slog.i(TAG, "updated settings values");
         mBatteryStyle = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUSBAR_BATTERY_ICON, 0);
-
+        mStatusPac = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PAC_STATUS, 0) == 1;
+                
         switch (mBatteryStyle) {
             case STYLE_ICON_ONLY:
                 mBatteryCenterText.setVisibility(View.GONE);
