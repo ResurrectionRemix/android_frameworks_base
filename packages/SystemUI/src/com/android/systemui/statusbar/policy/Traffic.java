@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.util.AttributeSet;
-import android.util.ColorUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,15 +22,26 @@ public class Traffic extends TextView {
 	TrafficStats mTrafficStats;
 	boolean showTraffic;
 	Handler mHandler;
-	private Context mContext;
 	Handler mTrafficHandler;
 	float speed;
 	float totalRxBytes;
-	protected int mTrafficColor = com.android.internal.R.color.holo_blue_light;
 
-	private ColorUtils.ColorSettingInfo mLastTextColor;
+	class SettingsObserver extends ContentObserver {
+		SettingsObserver(Handler handler) {
+			super(handler);
+		}
 
-	private SettingsObserver mSettingsObserver;
+		void observe() {
+			ContentResolver resolver = mContext.getContentResolver();
+			resolver.registerContentObserver(Settings.System
+					.getUriFor(Settings.System.STATUS_BAR_TRAFFIC), false, this);
+		}
+
+		@Override
+		public void onChange(boolean selfChange) {
+			updateSettings();
+		}
+	}
 
 	public Traffic(Context context) {
 		this(context, null);
@@ -43,40 +53,11 @@ public class Traffic extends TextView {
 
 	public Traffic(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		mContext = context;
-
-		SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+		mHandler = new Handler();
+		SettingsObserver settingsObserver = new SettingsObserver(mHandler);
 		mTrafficStats = new TrafficStats();
 		settingsObserver.observe();
-
-        // Only watch for per app color changes when the setting is in check
-		if (ColorUtils.getPerAppColorState(mContext)) {
-
-			mLastTextColor = ColorUtils.getColorSettingInfo(mContext, Settings.System.STATUS_ICON_COLOR);
-
-			updateTextColor();
-
-			mContext.getContentResolver().registerContentObserver(
-			Settings.System.getUriFor(Settings.System.STATUS_ICON_COLOR), false, new ContentObserver(new Handler()) {
-				@Override
-				public void onChange(boolean selfChange) {
-					updateTextColor();
-				}});
-		}
-	}
-
-	private void updateTextColor() {
-		ColorUtils.ColorSettingInfo colorInfo = ColorUtils.getColorSettingInfo(mContext,
-			Settings.System.STATUS_ICON_COLOR);
-		if (!colorInfo.lastColorString.equals(mLastTextColor.lastColorString)) {
-			if (colorInfo.isLastColorNull) {
-				SettingsObserver settingsObserver = new SettingsObserver(new Handler());
-				settingsObserver.observe();
-			} else {
-				setTextColor(colorInfo.lastColor);
-			}
-			mLastTextColor = colorInfo;
-		}
+		updateSettings();
 	}
 
 	@Override
@@ -85,16 +66,12 @@ public class Traffic extends TextView {
 
 		if (!mAttached) {
 			mAttached = true;
-			mTrafficColor = getTextColors().getDefaultColor();
-			mHandler = new Handler();
-			mSettingsObserver = new SettingsObserver(mHandler);
-			mSettingsObserver.observe();
 			IntentFilter filter = new IntentFilter();
 			filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 			getContext().registerReceiver(mIntentReceiver, filter, null,
 					getHandler());
-			updateSettings();
 		}
+		updateSettings();
 	}
 
 	@Override
@@ -103,27 +80,6 @@ public class Traffic extends TextView {
 		if (mAttached) {
 			getContext().unregisterReceiver(mIntentReceiver);
 			mAttached = false;
-		}
-	}
-
-	class SettingsObserver extends ContentObserver {
-		SettingsObserver(Handler handler) {
-			super(handler);
-		}
-
-		void observe() {
-			ContentResolver resolver = mContext.getContentResolver();
-			resolver.registerContentObserver(
-				Settings.System.getUriFor(Settings.System.STATUS_BAR_TRAFFIC), false,
-				this);
-			resolver.registerContentObserver(
-				Settings.System.getUriFor(Settings.System.STATUS_BAR_TRAFFIC_TEXT_COLOR), false,
-				this);
-		}
-
-		@Override
-		public void onChange(boolean selfChange) {
-			updateSettings();
 		}
 	}
 
@@ -143,15 +99,13 @@ public class Traffic extends TextView {
 			public void handleMessage(Message msg) {
 				speed = (mTrafficStats.getTotalRxBytes() - totalRxBytes) / 1024 / 3;
 				totalRxBytes = mTrafficStats.getTotalRxBytes();
-				DecimalFormat DecimalFormatfnum = new DecimalFormat("###0");
-				if (speed < 1 && speed*1024 >= 1) {
-					setText(DecimalFormatfnum.format(speed * 1024) + "B/s");
-				} else if (speed >= 1 && speed < 1024) {
-					setText(DecimalFormatfnum.format(speed) + "KB/s");
-				} else if (speed >= 1024) {
+				DecimalFormat DecimalFormatfnum = new DecimalFormat("##0.00");
+				if (speed / 1024 >= 1) {
 					setText(DecimalFormatfnum.format(speed / 1024) + "MB/s");
+				} else if (speed <= 0.0099) {
+					setText(DecimalFormatfnum.format(speed * 1024) + "B/s");
 				} else {
-					setText("");
+					setText(DecimalFormatfnum.format(speed) + "KB/s");
 				}
 				update();
 				super.handleMessage(msg);
@@ -189,17 +143,7 @@ public class Traffic extends TextView {
 	private void updateSettings() {
 		ContentResolver resolver = mContext.getContentResolver();
 		showTraffic = (Settings.System.getInt(resolver,
-				Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
-
-		mTrafficColor = Settings.System.getInt(resolver,
-			Settings.System.STATUS_BAR_TRAFFIC_TEXT_COLOR,
-			0xFF33B5E5);
-		if (mTrafficColor == Integer.MIN_VALUE) {
-		// flag to reset the color
-			mTrafficColor = 0xFF33B5E5;
-		}
-		setTextColor(mTrafficColor);
-
+				Settings.System.STATUS_BAR_TRAFFIC, 1) == 1);
 		if (showTraffic && getConnectAvailable()) {
 			if (mAttached) {
 				updateTraffic();
