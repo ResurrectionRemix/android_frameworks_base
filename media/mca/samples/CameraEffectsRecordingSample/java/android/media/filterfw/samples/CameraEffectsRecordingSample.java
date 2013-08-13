@@ -86,6 +86,13 @@ public class CameraEffectsRecordingSample extends Activity {
         }
     }
 
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mRunner.isRunning()) {
+            mRunner.close();
+        }
+    }
+
     private OnClickListener mRunButtonClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
