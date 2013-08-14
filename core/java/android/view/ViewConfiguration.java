@@ -681,14 +681,14 @@ public class ViewConfiguration {
      *
      * @return true if a permanent menu key is present, false otherwise.
      */
- public boolean hasPermanentMenuKey() {
+     public boolean hasPermanentMenuKey() {
         // The action overflow button within app UI can
         // be controlled with a system setting
-        int showOverflowButton = Settings.System.getInt(
+        boolean showOverflowButton = Settings.System.getBoolean(
                 mContext.getContentResolver(),
-                Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0);
+                Settings.System.UI_FORCE_OVERFLOW_BUTTON, false);
         if (!showOverflowButton) {
-            return true; 
+            return true;
         } else {
             return sHasPermanentMenuKey;
         }
