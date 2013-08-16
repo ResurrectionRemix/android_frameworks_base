@@ -983,16 +983,18 @@ class ZygoteConnection {
 
         boolean usingWrapper = false;
         if (pipeFd != null && pid > 0) {
-            DataInputStream is = new DataInputStream(new FileInputStream(pipeFd));
+            DataInputStream is = null;
             int innerPid = -1;
             try {
+                is = new DataInputStream(new FileInputStream(pipeFd));
                 innerPid = is.readInt();
             } catch (IOException ex) {
                 Log.w(TAG, "Error reading pid from wrapped process, child may have died", ex);
             } finally {
-                try {
-                    is.close();
-                } catch (IOException ex) {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException ex) {}
                 }
             }
 

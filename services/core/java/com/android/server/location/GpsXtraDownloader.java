@@ -152,14 +152,17 @@ public class GpsXtraDownloader {
                 try {
                     if (entity.getContentLength() > 0) {
                         body = new byte[(int) entity.getContentLength()];
-                        DataInputStream dis = new DataInputStream(entity.getContent());
+                        DataInputStream dis = null;
                         try {
+                            dis = new DataInputStream(entity.getContent());
                             dis.readFully(body);
                         } finally {
-                            try {
-                                dis.close();
-                            } catch (IOException e) {
-                                Log.e(TAG, "Unexpected IOException.", e);
+                            if (dis != null) {
+                                try {
+                                    dis.close();
+                                } catch (IOException e) {
+                                    Log.e(TAG, "Unexpected IOException.", e);
+                                }
                             }
                         }
                     }
