@@ -681,14 +681,22 @@ public class ViewConfiguration {
      *
      * @return true if a permanent menu key is present, false otherwise.
      */
- public boolean hasPermanentMenuKey() {
+    public boolean hasPermanentMenuKey() {
         // The action overflow button within app UI can
         // be controlled with a system setting
         int showOverflowButton = Settings.System.getInt(
                 mContext.getContentResolver(),
-                Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0);
+<<<<<<< HEAD
+                Settings.System.UI_FORCE_OVERFLOW_BUTTON, false);
         if (!showOverflowButton) {
-            return true; 
+            return true;
+=======
+                Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0);
+        if (showOverflowButton == 1) {
+            // Force overflow button on by reporting that
+            // the device has no permanent menu key
+            return false;
+>>>>>>> 6052780... Hardware keys remapped mod
         } else {
             return sHasPermanentMenuKey;
         }

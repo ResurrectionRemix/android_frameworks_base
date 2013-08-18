@@ -2008,6 +2008,7 @@
   <java-symbol type="drawable" name="ic_lock_expanded_desktop" />
   <java-symbol type="drawable" name="ic_lock_expanded_desktop_off" />
 
+<<<<<<< HEAD
 
   <!-- Privacy Guard -->
   <java-symbol type="string" name="privacy_guard_notification" />
@@ -2017,7 +2018,9 @@
   <!-- Screenshort Trash -->
   <java-symbol type="string" name="trash" />
   
+=======
   <!-- Hardware Key ReMapping -->
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
+>>>>>>> 6052780... Hardware keys remapped mod
 </resources>
