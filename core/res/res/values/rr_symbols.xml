@@ -3,4 +3,8 @@
     <!-- Device have FOD -->
     <java-symbol type="bool" name="config_mHasFod" />
 
+    <!-- Button backlight -->
+    <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+    <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
+
 </resources>
