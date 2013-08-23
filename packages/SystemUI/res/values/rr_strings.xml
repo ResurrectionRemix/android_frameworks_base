@@ -23,7 +23,8 @@
     <!-- Content description of the halo button in the notification panel for accessibility (not sho
          wn on the screen). [CHAR LIMIT=NONE] -->	
     <string name="accessibility_halo">Create notification halo.</string>	
-				
+    <!-- Title shown in notification popup for launching notification in floating mode -->
+    <string name="status_bar_notification_floating_item_title">Floating mode</string>				
     <!-- HALO -->
     <string name="halo_dismiss">Dismiss notification</string>	
     <string name="halo_hide">Hide</string>	
