@@ -16,19 +16,17 @@
 
 package com.android.systemui.statusbar.halo;
 
+import android.os.Handler;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.graphics.ColorFilterMaker;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-<<<<<<< HEAD
-=======
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.util.Log;
->>>>>>> 9907857... --- HALO 2.0 ---
 import android.os.Handler;
 import android.provider.Settings;
 import android.view.LayoutInflater;
@@ -61,8 +59,6 @@ public class HaloProperties extends FrameLayout {
         MESSAGE
     }
 
-<<<<<<< HEAD
-=======
     public enum ContentStyle {
         CONTENT_NONE,
         CONTENT_DOWN,
@@ -76,7 +72,6 @@ public class HaloProperties extends FrameLayout {
     }
 
     private Handler mAnimQueue = new Handler();
->>>>>>> 9907857... --- HALO 2.0 ---
     private LayoutInflater mInflater;
 
     protected int mHaloX = 0, mHaloY = 0;
@@ -92,7 +87,6 @@ public class HaloProperties extends FrameLayout {
     private Drawable mHaloSilenceL;
     private Drawable mHaloSilenceR;
     private Drawable mHaloMessage;
-
     private Drawable mHaloCurrentOverlay;
 
     protected Drawable mHaloSpeechL, mHaloSpeechR, mHaloSpeechLD, mHaloSpeechRD;
@@ -104,8 +98,8 @@ public class HaloProperties extends FrameLayout {
     protected TextView mHaloTextView;
 
     protected View mHaloNumberView;
-    protected TextView mHaloNumber;
-    protected ImageView mHaloNumberIcon;
+    protected TextView mHaloNumber, mHaloCount;
+    protected ImageView mHaloNumberIcon, mHaloSystemIcon, mHaloPinned;
     protected RelativeLayout mHaloNumberContainer;
 
     private boolean mEnableColor;
@@ -117,13 +111,10 @@ public class HaloProperties extends FrameLayout {
 
     private float mFraction = 1.0f;
     private int mHaloMessageNumber = 0;
-<<<<<<< HEAD
-=======
     private MessageType mHaloMessageType = MessageType.MESSAGE;
 
     private boolean mLastContentStateLeft = true;
 
->>>>>>> 9907857... --- HALO 2.0 ---
     CustomObjectAnimator mHaloOverlayAnimator;
 
     public HaloProperties(Context context) {
@@ -140,15 +131,12 @@ public class HaloProperties extends FrameLayout {
         mHaloSilenceR = mContext.getResources().getDrawable(R.drawable.halo_silence_right);
         mHaloMessage = mContext.getResources().getDrawable(R.drawable.halo_message);
 
-<<<<<<< HEAD
-=======
         mHaloSpeechL = mContext.getResources().getDrawable(R.drawable.halo_speech_l_u);
         mHaloSpeechR = mContext.getResources().getDrawable(R.drawable.halo_speech_r_u);
         mHaloSpeechLD = mContext.getResources().getDrawable(R.drawable.halo_speech_l_d);
         mHaloSpeechRD = mContext.getResources().getDrawable(R.drawable.halo_speech_r_d);
 
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
->>>>>>> 9907857... --- HALO 2.0 ---
 
         mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
         mHaloBg = (ImageView) mHaloBubble.findViewById(R.id.halo_bg);
@@ -159,30 +147,19 @@ public class HaloProperties extends FrameLayout {
         mHaloContentView = mInflater.inflate(R.layout.halo_speech, null);
         mHaloTickerWrapper = mHaloContentView.findViewById(R.id.ticker_wrapper);
         mHaloTickerContent = mHaloContentView.findViewById(R.id.ticker);
-<<<<<<< HEAD
-        mHaloTextViewR = (TextView) mHaloTickerContent.findViewById(R.id.bubble_r);
-        mHaloTextViewR.setAlpha(0f);
-        mHaloTextViewL = (TextView) mHaloTickerContent.findViewById(R.id.bubble_l);
-        mHaloTextViewL.setAlpha(0f);
-
-        updateColorView();
-=======
         mHaloTextView = (TextView) mHaloContentView.findViewById(R.id.bubble);
         mHaloTextView.setAlpha(1f);
->>>>>>> 9907857... --- HALO 2.0 ---
 
         mHaloNumberView = mInflater.inflate(R.layout.halo_number, null);
         mHaloNumberContainer = (RelativeLayout)mHaloNumberView.findViewById(R.id.container);
         mHaloNumber = (TextView) mHaloNumberView.findViewById(R.id.number);
+        mHaloCount = (TextView) mHaloNumberView.findViewById(R.id.haloCount);
         mHaloNumberIcon = (ImageView) mHaloNumberView.findViewById(R.id.icon);
         mHaloNumberIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.halo_batch_message));
-<<<<<<< HEAD
-=======
         mHaloSystemIcon = (ImageView) mHaloNumberView.findViewById(R.id.system);
         mHaloSystemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.halo_system_message));
         mHaloPinned = (ImageView) mHaloNumberView.findViewById(R.id.pinned);
         mHaloPinned.setImageDrawable(mContext.getResources().getDrawable(R.drawable.halo_pinned_app));
->>>>>>> 9907857... --- HALO 2.0 ---
 
         mHaloContentHeight = mContext.getResources().getDimensionPixelSize(R.dimen.notification_min_height);
 
@@ -214,7 +191,7 @@ public class HaloProperties extends FrameLayout {
             mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
             mAttached = false;
         }
-    } 
+    }
 
     int newPaddingHShort;
     int newPaddingHWide;
@@ -239,6 +216,8 @@ public class HaloProperties extends FrameLayout {
         RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(newNumberSize, newNumberSize);
         mHaloNumber.setLayoutParams(layoutParams2);
         mHaloNumber.setTextSize(TypedValue.COMPLEX_UNIT_PX, newNumberTextSize);
+        mHaloCount.setLayoutParams(layoutParams2);
+        mHaloCount.setTextSize(TypedValue.COMPLEX_UNIT_PX, newNumberTextSize);
 
         final int newSpeechTextSize = (int)(mContext.getResources().getDimensionPixelSize(R.dimen.halo_speech_text_size) * fraction);
         mHaloTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, newSpeechTextSize);
@@ -248,6 +227,8 @@ public class HaloProperties extends FrameLayout {
         layoutParams3.addRule(RelativeLayout.CENTER_VERTICAL);
         layoutParams3.addRule(RelativeLayout.CENTER_HORIZONTAL);
         mHaloNumberIcon.setLayoutParams(layoutParams3);
+        mHaloSystemIcon.setLayoutParams(layoutParams3);
+        mHaloPinned.setLayoutParams(layoutParams3);
 
         updateResources(mLastContentStateLeft);
         updateColorView();
@@ -263,7 +244,7 @@ public class HaloProperties extends FrameLayout {
     }
 
     public int getHaloX() {
-        return mHaloX; 
+        return mHaloX;
     }
 
     public int getHaloY() {
@@ -275,36 +256,11 @@ public class HaloProperties extends FrameLayout {
     }
 
     public int getHaloContentY() {
-        return mHaloContentY; 
+        return mHaloContentY;
     }
 
     protected CustomObjectAnimator msgNumberFlipAnimator = new CustomObjectAnimator(this);
     protected CustomObjectAnimator msgNumberAlphaAnimator = new CustomObjectAnimator(this);
-<<<<<<< HEAD
-    public void setHaloMessageNumber(int value, boolean alwaysFlip) {
-
-        // Allow transitions only if no overlay is set
-        if (mHaloCurrentOverlay == null) {
-            msgNumberAlphaAnimator.cancel(true);
-            float oldAlpha = mHaloNumberContainer.getAlpha();
-
-            mHaloNumberContainer.setAlpha(1f);
-            mHaloNumber.setAlpha(1f);
-            mHaloNumberIcon.setAlpha(0f);
-            if (value < 1) {
-                mHaloNumber.setText("");
-                mHaloNumberIcon.setAlpha(1f);
-            } else if (value < 100) {
-                mHaloNumber.setText(String.valueOf(value));
-            } else {
-                mHaloNumber.setText("+");
-            }
-            
-            if (value < 1) {
-                msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumberContainer, "alpha", 0f).setDuration(1000),
-                        new DecelerateInterpolator(), null, 1500, null);
-            }
-=======
     public void animateHaloBatch(final int value, final int msgCount, final boolean alwaysFlip, int delay, final MessageType msgType) {
         if (msgCount == 0) {
             msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumberContainer, "alpha", 0f).setDuration(1000),
@@ -360,25 +316,17 @@ public class HaloProperties extends FrameLayout {
                 mHaloMessageType = msgType;
             }}, delay);
     }
->>>>>>> 9907857... --- HALO 2.0 ---
 
-            if (!alwaysFlip && oldAlpha == 1f && (value == mHaloMessageNumber || (value > 99 && mHaloMessageNumber > 99))) return;
-            msgNumberFlipAnimator.animate(ObjectAnimator.ofFloat(mHaloNumberContainer, "rotationY", -180, 0).setDuration(500),
-                        new DecelerateInterpolator(), null);
-        }
-        mHaloMessageNumber = value;
+    void setHaloMessageNumber(int count) {
+        mHaloCount.setText(String.valueOf(count));
+        invalidate();
     }
 
     public void setHaloContentAlpha(float value) {
-<<<<<<< HEAD
-=======
         mHaloTickerWrapper.setAlpha(value);
         mHaloTextView.setTextColor(mHaloTextView.getTextColors().withAlpha((int)(value * 255)));
         mHaloTickerWrapper.invalidate();
->>>>>>> 9907857... --- HALO 2.0 ---
         mHaloContentAlpha = value;
-        mHaloTextViewL.setAlpha(value);
-        mHaloTextViewR.setAlpha(value);
     }
 
     public float getHaloContentAlpha() {
@@ -423,12 +371,10 @@ public class HaloProperties extends FrameLayout {
         if (d != mHaloCurrentOverlay) {
             mHaloOverlay.setImageDrawable(d);
             mHaloCurrentOverlay = d;
-            
+
             // Fade out number batch
             if (overlay != Overlay.NONE) {
-                msgNumberFlipAnimator.animate(ObjectAnimator.ofFloat(mHaloNumberContainer, "rotationY", 270).setDuration(500),
-                        new DecelerateInterpolator(), null);
-                msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumberContainer, "alpha", 0f).setDuration(500),
+            msgNumberAlphaAnimator.animate(ObjectAnimator.ofFloat(mHaloNumberContainer, "alpha", 0f).setDuration(100),
                         new DecelerateInterpolator(), null);
             }
         }
@@ -437,14 +383,6 @@ public class HaloProperties extends FrameLayout {
         updateResources(mLastContentStateLeft);
     }
 
-<<<<<<< HEAD
-    public void updateResources() {
-
-        final int iconSize = (int)(mContext.getResources().getDimensionPixelSize(R.dimen.halo_bubble_size) * mFraction);
-        final int newSize = (int)(getWidth() * 0.9f) - iconSize;
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(newSize, LinearLayout.LayoutParams.WRAP_CONTENT);
-        mHaloTickerContainer.setLayoutParams(layoutParams);
-=======
     private ContentStyle mLastContentStyle = ContentStyle.CONTENT_NONE;
     public void setHaloContentBackground(boolean contentLeft, ContentStyle style) {
         if (style != mLastContentStyle) {
@@ -457,7 +395,6 @@ public class HaloProperties extends FrameLayout {
                     mHaloTickerWrapper.setBackground(contentLeft ? mHaloSpeechLD : mHaloSpeechRD);
                     break;
             }
->>>>>>> 9907857... --- HALO 2.0 ---
 
             // ... and override its padding
             if (contentLeft) {
@@ -546,7 +483,7 @@ public class HaloProperties extends FrameLayout {
                Settings.System.HALO_CIRCLE_COLOR, 0xFF33B5E5);
         int mBubbleColor = Settings.System.getInt(cr,
                Settings.System.HALO_BUBBLE_COLOR, 0xFF33B5E5);
-        int mTextColor = Settings.System.getInt(cr, 
+        int mTextColor = Settings.System.getInt(cr,
                Settings.System.HALO_BUBBLE_TEXT_COLOR, 0xFFFFFFFF);
 
         if (mEnableColor) {

@@ -1493,9 +1493,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         return entry.notification;
     }
 
-<<<<<<< HEAD
-    private Bitmap createRoundIcon(StatusBarNotification notification) {
-=======
     public void prepareHaloNotification(NotificationData.Entry entry, StatusBarNotification notification, boolean update) {
 
         Notification notif = notification.getNotification();
@@ -1521,7 +1518,6 @@ public abstract class BaseStatusBar extends SystemUI implements
             android.util.Log.d("PARANOID", "   Non uniform content?");
         }
 
->>>>>>> 9907857... --- HALO 2.0 ---
         // Construct the round icon
         final float haloSize = Settings.System.getFloat(mContext.getContentResolver(),
                 Settings.System.HALO_SIZE, 1.0f);
@@ -1587,15 +1583,9 @@ public abstract class BaseStatusBar extends SystemUI implements
             return null;
         }
 
-<<<<<<< HEAD
-        NotificationData.Entry entry = new NotificationData.Entry(key, notification, iconView,
-                createRoundIcon(notification));
-        entry.hide = entry.notification.pkg.equals("com.paranoid.halo");
-=======
         NotificationData.Entry entry = new NotificationData.Entry(key, notification, iconView);
         prepareHaloNotification(entry, notification, false);
         entry.hide = entry.notification.getPackageName().equals("com.paranoid.halo");
->>>>>>> 9907857... --- HALO 2.0 ---
 
         final PendingIntent contentIntent = notification.notification.contentIntent;
         if (contentIntent != null) {

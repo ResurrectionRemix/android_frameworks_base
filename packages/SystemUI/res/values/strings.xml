@@ -547,35 +547,6 @@
     <!-- Body of help text shown when the notification panel is pulled down for the very first time. [CHAR LIMIT=NONE] -->
     <string name="status_bar_help_text">Access them anytime by swiping down.\nSwipe down again for system controls.</string>
 
-<<<<<<< HEAD
-=======
-   <!-- PAC in Black strings -->
-    <string name="quick_settings_pib_label">PIB</string>
-    <string name="quick_settings_pib_on_label">PIB On</string>
-    <string name="quick_settings_pib_off_label">PIB Off</string>
-    <string name="quick_settings_camera_label">Camera</string>
-
-    <!-- Camera tile toasts -->
-    <string name="quick_settings_camera_error_connect">Can\'t connect to camera</string>
-
-
-    <string name="pie_date_format">ccc, dd MMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
-
-    <string name="halo_dismiss">Dismiss notification</string>
-    <string name="halo_hide">Hide</string>
-    <string name="halo_clear_all">Clear all notifications</string>
-    <string name="halo_silence">Hide and silence until woken</string>
-    <string name="halo_tutorial1">This is HALO</string>
-    <string name="halo_tutorial2">Move me: 2x-tap &amp; drag</string>
-    <string name="halo_tutorial3">Horizontal drag to task</string>
-
-    <string name="quick_settings_music_play">Play</string>
-    <string name="quick_settings_music_pause">Pause</string>
-
->>>>>>> 9907857... --- HALO 2.0 ---
     <!--  AOKP Strings can go here... -->
 
     <!--  App window Strings -->
@@ -694,8 +665,8 @@
     <string name="halo_silence">Hide and silence until woken</string>
     
     <string name="halo_tutorial1">This is HALO.</string>
-    <string name="halo_tutorial2">Double-tap-drag to move it around, drag to task.</string>
-    <string name="halo_tutorial3">Change behavior in the settings.</string>
+    <string name="halo_tutorial2">Move me: 2x-tap &amp; drag</string>
+    <string name="halo_tutorial3">Horizontal drag to task</string>
     
     <string name="quick_settings_music_play">Play</string>
     <string name="quick_settings_music_pause">Pause</string>
