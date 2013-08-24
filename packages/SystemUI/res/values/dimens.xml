@@ -284,7 +284,6 @@
     <dimen name="halo_number_size">24dp</dimen>
     <dimen name="halo_number_icon_size">18dp</dimen>
     <dimen name="halo_number_text_size">14sp</dimen>
-<<<<<<< HEAD
     <dimen name="halo_speech_text_size">15sp</dimen>
     <dimen name="halo_speech_hpadding_short">10dp</dimen>
     <dimen name="halo_speech_hpadding_wide">18dp</dimen>
@@ -292,16 +291,4 @@
     <dimen name="halo_speech_vpadding_bottom">7dp</dimen>
     <dimen name="halo_content_max_width">250dp</dimen>
 
-=======
-    <dimen name="halo_speech_text_size">18sp</dimen>
-    <dimen name="halo_speech_hpadding_short">4dp</dimen>
-    <dimen name="halo_speech_hpadding_wide">13dp</dimen>
-    <dimen name="halo_speech_vpadding_top">3dp</dimen>
-    <dimen name="halo_speech_vpadding_bottom">3dp</dimen>
-    <dimen name="halo_content_max_width">250dp</dimen>
-
-    <!-- Height of carrier label + close handle -->
-    <dimen name="weather_text_margin">56dp</dimen>
-
->>>>>>> 9907857... --- HALO 2.0 ---
 </resources>
