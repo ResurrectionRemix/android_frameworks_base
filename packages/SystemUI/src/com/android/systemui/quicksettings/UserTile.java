@@ -54,6 +54,9 @@ public class UserTile extends QuickSettingsTile {
                     Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Profile.CONTENT_URI);
                     startSettingsActivity(intent);
                 }
+		if (isFlipTilesEnabled()) {
+                    flipTile(0);
+                }
             }
         };
         qsc.registerAction(Intent.ACTION_USER_SWITCHED, this);
