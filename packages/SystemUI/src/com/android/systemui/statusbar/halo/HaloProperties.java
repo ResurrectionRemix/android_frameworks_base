@@ -492,7 +492,7 @@ public class HaloProperties extends FrameLayout implements BatteryStateChangeCal
     }
 
     @Override
-    public void onBatteryLevelChanged(int level, boolean pluggedIn) {
+    public void onBatteryLevelChanged(int level, boolean pluggedIn, int status) {
         mBatteryLevel = level;
         mCharging = pluggedIn;
     }
