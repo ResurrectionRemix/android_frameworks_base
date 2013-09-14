@@ -91,6 +91,9 @@
     <!-- AppSidebar -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
+    <!-- Active display -->
+    <uses-permission android:name="android.permission.SYSTEM_NOTIFICATION_LISTENER" />
+
     <application
         android:persistent="true"
         android:allowClearUserData="false"
@@ -285,8 +288,18 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity android:name="com.android.systemui.Transparent"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+=======
+        <activity android:name=".statusbar.policy.activedisplay.DummyActivity"
+                  android:label=""
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:exported="true"
+                  android:theme="@style/Theme.DummyActivity">
+        </activity>
+>>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
 
     </application>
 </manifest>
