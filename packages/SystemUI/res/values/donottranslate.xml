@@ -17,8 +17,13 @@
  */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<<<<<<< HEAD
     <!-- DO NOT TRANSLATE. ICU date format for display.  -->
     <string name="system_ui_date_pattern" translatable="false">MMMMd</string>
     <!-- DO NOT TRANSLATE. ICU weekday format for display -->
     <string name="system_ui_weekday_pattern" translatable="false">eeee</string>
+=======
+    <!-- Date format for display: should match the lockscreen in /policy.  -->
+    <string name="system_ui_date_pattern">@*android:string/system_ui_date_pattern</string>
+>>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
 </resources>

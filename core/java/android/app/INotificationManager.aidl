@@ -48,4 +48,7 @@ interface INotificationManager
     void cancelAllNotificationsFromListener(in INotificationListener token);
 
     StatusBarNotification[] getActiveNotificationsFromListener(in INotificationListener token);
+
+    StatusBarNotification[] getActiveNotificationsFromSystemListener(in INotificationListener token);
+    void cancelNotificationFromSystemListener(in INotificationListener token, String pkg, String tag, int id);
 }
