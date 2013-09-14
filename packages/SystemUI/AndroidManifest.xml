@@ -1,7 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
         package="com.android.systemui"
+<<<<<<< HEAD
         android:sharedUserId="android.uid.systemui"
+=======
+        android:sharedUserId="android.uid.system"
+>>>>>>> 0e846d1... Add active display to ChameleonOS [1/2]
         coreApp="true">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -285,8 +289,18 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity android:name="com.android.systemui.Transparent"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+=======
+        <activity android:name=".statusbar.policy.activedisplay.DummyActivity"
+                  android:label=""
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:exported="true"
+                  android:theme="@style/Theme.DummyActivity">
+        </activity>
+>>>>>>> 0e846d1... Add active display to ChameleonOS [1/2]
 
     </application>
 </manifest>

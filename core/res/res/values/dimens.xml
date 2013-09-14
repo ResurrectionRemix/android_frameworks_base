@@ -356,6 +356,18 @@
     <!-- Outline width for video subtitles. -->
     <dimen name="subtitle_outline_width">2dp</dimen>
 
+<<<<<<< HEAD
     <!-- width of ImmersiveModeConfirmation (-1 for match_parent) -->
     <dimen name="immersive_mode_cling_width">-1px</dimen>
+=======
+    <!-- Font size for notification text -->
+    <dimen name="glowpad_notification_font_size">12dp</dimen>
+
+    <!-- Radius of notification text -->
+    <dimen name="glowpad_notification_text_radius">60dp</dimen>
+
+    <!-- Top margin for overflow notifications shown in the P.O.R.N. view -->
+    <dimen name="glowpad_overflow_notifications_margin_top">48dp</dimen>
+
+>>>>>>> 0e846d1... Add active display to ChameleonOS [1/2]
 </resources>
