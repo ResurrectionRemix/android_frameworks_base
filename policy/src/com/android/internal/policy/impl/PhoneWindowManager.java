@@ -6121,7 +6121,20 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         pw.print(prefix); pw.print("mDemoHdmiRotation="); pw.print(mDemoHdmiRotation);
                 pw.print(" mDemoHdmiRotationLock="); pw.println(mDemoHdmiRotationLock);
         pw.print(prefix); pw.print("mUndockedHdmiRotation="); pw.println(mUndockedHdmiRotation);
+<<<<<<< HEAD
         mStatusBarController.dump(pw, prefix);
         mNavigationBarController.dump(pw, prefix);
+=======
+    }
+
+    /** Translucent bars */
+    public boolean isBarTranslucent() {
+        return mBarsAreTranslucent && (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_TRANSPARENT_ON_KEYGUARD, 1) == 1);
+    }
+
+    public void setBarTranslucentAllowed(boolean allowed) {
+        mBarsAreTranslucent = allowed;
+>>>>>>> 7c0ae53... [1/2] Setting for translucent statusbar on lockscreen
     }
 }
