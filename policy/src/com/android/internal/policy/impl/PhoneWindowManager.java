@@ -1511,10 +1511,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     && mCameraWakeScreen);
             mVolBtnMusicControls = (Settings.System.getIntForUser(resolver,
                     Settings.System.VOLBTN_MUSIC_CONTROLS, 1, UserHandle.USER_CURRENT) == 1);
+<<<<<<< HEAD
             mCameraMusicControls = ((Settings.System.getIntForUser(resolver,
                     Settings.System.CAMERA_MUSIC_CONTROLS, 1, UserHandle.USER_CURRENT) == 1)
                     && !mCameraWakeScreen);
                     
+=======
+<<<<<<< HEAD
+>>>>>>> 96216cf... Camera button support (1/2)
             // navigation bar custom height
              int  mNavigationBarHeight = Settings.System.getInt(resolver,
                      Settings.System.NAVIGATION_BAR_HEIGHT, 48);
@@ -1529,7 +1533,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              mNavigationBarWidthForRotation[mLandscapeRotation] =
              mNavigationBarWidthForRotation[mSeascapeRotation] =
                  (mNavigationBarHeight - 6) * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
+<<<<<<< HEAD
 
+=======
+=======
+            mCameraMusicControls = ((Settings.System.getIntForUser(resolver,
+                    Settings.System.CAMERA_MUSIC_CONTROLS, 1, UserHandle.USER_CURRENT) == 1)
+                    && !mCameraWakeScreen);
+
+>>>>>>> e074949... Camera button support (1/2)
+>>>>>>> 96216cf... Camera button support (1/2)
             mExpandedDesktopStyle = Settings.System.getIntForUser(resolver,
                     Settings.System.EXPANDED_DESKTOP_STYLE, 0, UserHandle.USER_CURRENT);
             if (Settings.System.getIntForUser(resolver,
