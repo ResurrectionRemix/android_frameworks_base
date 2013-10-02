@@ -2039,5 +2039,5 @@
   <java-symbol type="color" name="holo_green_dark" />
   <java-symbol type="color" name="holo_purple_dark" />
   <java-symbol type="color" name="holo_red_dark" />
-
+  <java-symbol type="bool" name="use_motion_accel" />
 </resources>
