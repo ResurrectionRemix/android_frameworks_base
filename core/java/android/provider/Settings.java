@@ -2055,6 +2055,7 @@ public final class Settings {
             "notifications_use_ring_volume";
 
         /**
+<<<<<<< HEAD
          * Whether the blacklisting feature for phone calls is enabled
          * @hide
          */
@@ -2121,6 +2122,8 @@ public final class Settings {
         public static final int VOLUME_OVERLAY_NONE = 3;
 
         /**
+=======
+>>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
          * Volume Adjust Sounds Enable, This is the noise made when using volume hard buttons
          * Defaults to 1 - sounds enabled
          * @hide
