@@ -1478,4 +1478,14 @@ public class TelephonyManager {
         return mContext.getResources().getString(
                 com.android.internal.R.string.config_mms_user_agent_profile_url);
     }
+
+    /**
+     * @hide
+     */
+    public void toggle2G(boolean twoGees) {
+        try {
+            getITelephony().toggle2G(twoGees);
+        } catch (RemoteException e) {
+        }
+    }
 }
