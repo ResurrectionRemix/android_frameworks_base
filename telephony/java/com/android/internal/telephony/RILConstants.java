@@ -473,4 +473,6 @@ cat include/telephony/ril.h | \
     int RIL_UNSOL_RESPONSE_ADN_RECORDS = 1047;
     int RIL_UNSOL_STK_SEND_SMS_RESULT = 11002; /* Samsung STK */
     int RIL_UNSOL_PCO_DATA = 1049;
+
+    int RIL_UNSOL_STK_SEND_SMS_RESULT = 11002; /* Samsung STK */
 }
