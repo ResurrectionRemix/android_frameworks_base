@@ -218,6 +218,7 @@ class GlobalScreenrecord {
             File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
             File screenshots = new File(pictures, "Screenshots");
 
+<<<<<<< HEAD
             if (!screenshots.exists()) {
                 if (!screenshots.mkdir()) {
                     Log.e(TAG, "Cannot create screenshots directory");
@@ -225,6 +226,8 @@ class GlobalScreenrecord {
                 }
             }
 
+=======
+>>>>>>> dec9972... base: Add a key combo to start/stop video recording
             File input = new File(TMP_PATH);
             final File output = new File(screenshots, fileName);
 
