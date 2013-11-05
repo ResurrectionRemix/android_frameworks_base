@@ -100,7 +100,56 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private boolean mFitThumbnailToXY;
     private int mRecentItemLayoutId;
     private boolean mHighEndGfx;
+<<<<<<< HEAD
     private ImageView mClearRecents;
+=======
+    private int mAndroidDpi = DisplayMetrics.DENSITY_DEVICE;
+
+    private RecentsActivity mRecentsActivity;
+    boolean mRecentsKillAllEnabled;
+
+    private LinearColorBar mRamUsageBar;
+
+    private long mFreeMemory;
+    private long mTotalMemory;
+    private long mCachedMemory;
+    private long mActiveMemory;
+
+    TextView mUsedMemText;
+    TextView mFreeMemText;
+    TextView mRamText;
+
+    Handler mHandler = new Handler();
+    SettingsObserver mSettingsObserver;
+    ActivityManager mAm;
+    ActivityManager.MemoryInfo mMemInfo;
+
+    private ImageView mAlarmClock;
+    private ImageView mCalculator;
+    private ImageView mCamera;
+    private ImageView mCalendar;
+    private ImageView mMaps;
+    private ImageView mMusic;
+    private ImageView mFacebook;
+    private ImageView mGooglePlus;
+    private ImageView mQQ;
+    private ImageView mSinaWeibo;
+    private ImageView mTwitter;
+    private ImageView mWeChat;
+    private ImageView mFuubo;
+
+    private ScrollView mShortcutBar;
+    private LinearLayout mRecentsShortcutBarApps;
+    boolean mRecentsShortcutBarAppsEnabled;
+
+    private String mCameraPath;
+
+    MemInfoReader mMemInfoReader = new MemInfoReader();
+
+    public static interface OnRecentsPanelVisibilityChangedListener {
+        public void onRecentsPanelVisibilityChanged(boolean visible);
+    }
+>>>>>>> 9d8e294... Add checkbox in recents settings to make app shortcuts in recents optional
 
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
@@ -349,8 +398,27 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             boolean noApps = mRecentTaskDescriptions != null
                     && (mRecentTaskDescriptions.size() == 0);
             mRecentsNoApps.setAlpha(1f);
+<<<<<<< HEAD
             mRecentsNoApps.setVisibility(noApps ? View.VISIBLE : View.INVISIBLE);
             mClearRecents.setVisibility(noApps ? View.GONE : View.VISIBLE);
+=======
+            mRecentsNoApps.setVisibility(getTasks() == 0 ? View.VISIBLE : View.INVISIBLE);
+            // check if Kill-All-Button is enabled and show if so
+            mRecentsKillAllEnabled = Settings.System.getBoolean(
+                    mContext.getContentResolver(),
+                    Settings.System.RECENT_KILL_ALL_BUTTON, false);
+            if (mRecentsKillAllButton != null) {
+                    // add check (no apps -> do not display)
+                    mRecentsKillAllButton.setVisibility(mRecentsKillAllEnabled ? (getTasks() == 0 ? View.GONE : View.VISIBLE) : View.GONE);
+            }
+            // same for App Shortcuts
+            mRecentsShortcutBarAppsEnabled = Settings.System.getBoolean(
+                    mContext.getContentResolver(),
+                    Settings.System.RECENT_APP_SHORTCUTS, false);
+            if (mRecentsShortcutBarApps != null) {
+                mRecentsShortcutBarApps.setVisibility(mRecentsShortcutBarAppsEnabled ? View.VISIBLE : View.GONE);
+            }
+>>>>>>> 9d8e294... Add checkbox in recents settings to make app shortcuts in recents optional
             onAnimationEnd(null);
             setFocusable(true);
             setFocusableInTouchMode(true);
@@ -456,6 +524,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
 
         mRecentsScrim = findViewById(R.id.recents_bg_protect);
         mRecentsNoApps = findViewById(R.id.recents_no_apps);
+<<<<<<< HEAD
 
         mClearRecents = (ImageView) findViewById(R.id.recents_clear);
         if (mClearRecents != null){
@@ -466,6 +535,39 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 }
             });
         }
+=======
+        mShortcutBar = (ScrollView) findViewById(R.id.shortcut_bar);
+        mRecentsShortcutBarApps = (LinearLayout) findViewById(R.id.shortcut_bar_apps);
+        mAlarmClock = (ImageView) findViewById(R.id.shortcut_alarmclock);
+        mCalculator = (ImageView) findViewById(R.id.shortcut_calculator);
+        mCamera = (ImageView) findViewById(R.id.shortcut_camera);
+        mCalendar = (ImageView) findViewById(R.id.shortcut_calendar);
+        mMaps = (ImageView) findViewById(R.id.shortcut_maps);
+        mMusic = (ImageView) findViewById(R.id.shortcut_music);
+        mFacebook = (ImageView) findViewById(R.id.shortcut_facebook);
+        mGooglePlus = (ImageView) findViewById(R.id.shortcut_googleplus);
+        mQQ = (ImageView) findViewById(R.id.shortcut_qq);
+        mSinaWeibo = (ImageView) findViewById(R.id.shortcut_sinaweibo);
+        mTwitter = (ImageView) findViewById(R.id.shortcut_twitter);
+        mWeChat = (ImageView) findViewById(R.id.shortcut_wechat);
+        mFuubo = (ImageView) findViewById(R.id.shortcut_fuubo);
+
+        // if previous camera doesn't exist,try to set another one
+        mCameraPath = checkApkExist(mContext, "com.android.gallery3d") ? "com.android.gallery3d" : "com.google.android.gallery3d";
+        setShortcurtEnable(mAlarmClock, "com.android.deskclock");
+        setShortcurtEnable(mCalculator, "com.android.calculator2");
+        setShortcurtEnable(mCamera, mCameraPath);
+        setShortcurtEnable(mCalendar, "com.android.calendar");
+        setShortcurtEnable(mMaps, "com.google.android.apps.maps");
+        setShortcurtEnable(mMusic, "com.andrew.apollo");
+        setShortcurtEnable(mFacebook, "com.facebook.katana");
+        setShortcurtEnable(mGooglePlus, "com.google.android.apps.plus");
+        setShortcurtEnable(mQQ, "com.tencent.mobileqq");
+        setShortcurtEnable(mSinaWeibo, "com.sina.weibo");
+        setShortcurtEnable(mTwitter, "com.twitter.android");
+        setShortcurtEnable(mWeChat, "com.tencent.mm");
+        setShortcurtEnable(mFuubo, "me.imid.fuubo");
+>>>>>>> 9d8e294... Add checkbox in recents settings to make app shortcuts in recents optional
 
         if (mRecentsScrim != null) {
             mHighEndGfx = ActivityManager.isHighEndGfx();
@@ -861,9 +963,27 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         popup.show();
     }
 
+<<<<<<< HEAD
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
+=======
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.RECENT_KILL_ALL_BUTTON),
+                    false, this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.RECENT_APP_SHORTCUTS),
+                    false, this);
+            updateSettings();
+        }
+>>>>>>> 9d8e294... Add checkbox in recents settings to make app shortcuts in recents optional
 
         int paddingLeft = mPaddingLeft;
         final boolean offsetRequired = isPaddingOffsetRequired();
@@ -895,8 +1015,21 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         return super.fitSystemWindows(insets);
     }
 
+<<<<<<< HEAD
     class FakeClearUserDataObserver extends IPackageDataObserver.Stub {
         public void onRemoveCompleted(final String packageName, final boolean succeeded) {
+=======
+        if (mRecentsKillAllButton != null) {
+			// add check (no apps -> do not display)
+            mRecentsKillAllButton.setVisibility(mRecentsKillAllEnabled ? (getTasks() == 0 ? View.GONE : View.VISIBLE) : View.GONE);
+        }
+        mRecentsShortcutBarAppsEnabled = Settings.System.getBoolean(
+                mContext.getContentResolver(),
+                Settings.System.RECENT_APP_SHORTCUTS, false);
+
+        if (mRecentsShortcutBarApps != null) {
+            mRecentsShortcutBarApps.setVisibility(mRecentsShortcutBarAppsEnabled ? View.VISIBLE : View.GONE);
+>>>>>>> 9d8e294... Add checkbox in recents settings to make app shortcuts in recents optional
         }
     }
 }

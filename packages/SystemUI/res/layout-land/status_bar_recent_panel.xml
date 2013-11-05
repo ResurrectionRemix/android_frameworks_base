@@ -55,6 +55,7 @@
 
         </com.android.systemui.recent.RecentsHorizontalScrollView>
 
+<<<<<<< HEAD
         <ImageView
             android:id="@+id/recents_clear"
             android:clickable="true"
@@ -63,6 +64,145 @@
             android:scaleType="center"
             android:layout_gravity="top|right"
             android:src="@drawable/ic_notify_clear" />
+=======
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/shortcut_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:scrollbars="horizontal"
+            android:layout_gravity="bottom|right"
+            android:gravity="center_horizontal"
+            android:fitsSystemWindows="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/shortcut_bar_apps"
+                    android:layout_width="fill_parent"
+                    android:layout_height="43dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/shortcut_alarmclock"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_alarmclock" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_calculator"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_calculator" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_camera"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_camera" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_calendar"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_calendar" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_maps"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_maps" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_music"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_music" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_qq"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_qq" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_sinaweibo"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_sinaweibo" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_fuubo"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_fuubo" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_wechat"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_wechat" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_facebook"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_facebook" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_twitter"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_twitter" />
+
+                    <ImageView
+                        android:id="@+id/shortcut_googleplus"
+                        android:clickable="true"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_shortcut_googleplus" />
+
+                </LinearLayout>
+
+                <ImageView android:id="@+id/recents_kill_all_button"
+                    android:clickable="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_notify_clear" />
+
+            </LinearLayout>
+
+        </ScrollView>
+>>>>>>> 9d8e294... Add checkbox in recents settings to make app shortcuts in recents optional
 
     </FrameLayout>
 
