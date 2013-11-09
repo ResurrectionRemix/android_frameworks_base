@@ -65,6 +65,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_ASSIST_DISCLOSURE          = 22 << MSG_SHIFT;
     private static final int MSG_START_ASSIST               = 23 << MSG_SHIFT;
     private static final int MSG_CAMERA_LAUNCH_GESTURE      = 24 << MSG_SHIFT;
+    private static final int MSG_SET_AUTOROTATE_STATUS      = 25 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -112,6 +113,7 @@ public class CommandQueue extends IStatusBar.Stub {
         public void showAssistDisclosure();
         public void startAssist(Bundle args);
         public void onCameraLaunchGestureDetected(int source);
+        public void setAutoRotate(boolean enabled);
     }
 
     public CommandQueue(Callbacks callbacks, StatusBarIconList list) {
@@ -312,6 +314,14 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
+    public void setAutoRotate(boolean enabled) {
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_SET_AUTOROTATE_STATUS);
+            mHandler.obtainMessage(MSG_SET_AUTOROTATE_STATUS,
+                enabled ? 1 : 0, 0, null).sendToTarget();
+        }
+    }
+
     private final class H extends Handler {
         public void handleMessage(Message msg) {
             if (mPaused) {
@@ -416,6 +426,9 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_CAMERA_LAUNCH_GESTURE:
                     mCallbacks.onCameraLaunchGestureDetected(msg.arg1);
+                    break;
+                case MSG_SET_AUTOROTATE_STATUS:
+                    mCallbacks.setAutoRotate(msg.arg1 != 0);
                     break;
             }
         }
