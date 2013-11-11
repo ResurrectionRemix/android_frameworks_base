@@ -136,6 +136,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
 
         public void onBluetoothStateChange(boolean up) {
             Log.d(TAG, "onBluetoothStateChange: up=" + up);
+<<<<<<< HEAD
             synchronized (mConnection) {
                 if (!up) {
                     Log.d(TAG,"Unbinding service...");
@@ -151,6 +152,20 @@ public final class BluetoothHidDevice implements BluetoothProfile {
                         Log.e(TAG,"onBluetoothStateChange: could not bind to HID Dev service: ", e);
                     } catch (SecurityException e) {
                         Log.e(TAG,"onBluetoothStateChange: could not bind to HID Dev service: ", e);
+=======
+
+            synchronized (mConnection) {
+                if (!up) {
+                    mService = null;
+                    mContext.unbindService(mConnection);
+                } else {
+                    if (mService == null) {
+                        Log.v(TAG, "Binding service");
+                        if (!mContext.bindService(new Intent(IBluetoothHidDevice.class.getName()),
+                            mConnection, 0)) {
+                            Log.e(TAG, "Could not bind service");
+                        }
+>>>>>>> 80dfb5e... Bluetooth: HID: Add support for HID Device Role
                     }
                 }
             }
@@ -182,7 +197,11 @@ public final class BluetoothHidDevice implements BluetoothProfile {
     };
 
     BluetoothHidDevice(Context context, ServiceListener listener) {
+<<<<<<< HEAD
         Log.v(TAG, "BluetoothHidDevice");
+=======
+        Log.v(TAG, "BluetoothInputDevice()");
+>>>>>>> 80dfb5e... Bluetooth: HID: Add support for HID Device Role
 
         mContext = context;
         mServiceListener = listener;
@@ -197,6 +216,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
             }
         }
 
+<<<<<<< HEAD
         doBind();
     }
 
@@ -210,6 +230,12 @@ public final class BluetoothHidDevice implements BluetoothProfile {
         }
         Log.d(TAG, "Bound to HID Device Service");
         return true;
+=======
+        if (!context.bindService(new Intent(IBluetoothHidDevice.class.getName()),
+            mConnection, 0)) {
+            Log.e(TAG, "Could not bind service");
+        }
+>>>>>>> 80dfb5e... Bluetooth: HID: Add support for HID Device Role
     }
 
     void close() {
