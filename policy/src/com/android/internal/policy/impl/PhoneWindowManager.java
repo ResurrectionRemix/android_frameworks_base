@@ -349,6 +349,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     WindowState mFocusedWindow;
     IApplicationToken mFocusedApp;
 
+<<<<<<< HEAD
     // Behavior of home wake
     boolean mHomeWakeScreen;
 
@@ -358,6 +359,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Behavior of volbtn music controls
     boolean mVolBtnMusicControls;
     boolean mIsLongPress;
+=======
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
     private boolean mClearedBecauseOfForceShow;
 
     private final class PointerLocationPointerEventListener implements PointerEventListener {
@@ -424,6 +427,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // What we last reported to system UI about whether the compatibility
     // menu needs to be displayed.
     boolean mLastFocusNeedsMenu = false;
+    // Force immersive mode
+    boolean mForceImmersiveMode = false;
 
     FakeWindow mHideNavFakeWindow = null;
 
@@ -661,7 +666,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HARDWARE_KEY_REBINDING), false, this,
                     UserHandle.USER_ALL);
+<<<<<<< HEAD
 
+=======
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.IMMERSIVE_MODE), false, this,
+                    UserHandle.USER_ALL);
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
             updateSettings();
         }
 
@@ -1523,6 +1534,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (mImmersiveModeConfirmation != null) {
                 mImmersiveModeConfirmation.loadSetting();
             }
+
+            mForceImmersiveMode = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.IMMERSIVE_MODE, 0) == 1);
         }
 
         if (updateRotation) {
@@ -3073,8 +3087,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     @Override
     public void getContentInsetHintLw(WindowManager.LayoutParams attrs, Rect contentInset) {
+<<<<<<< HEAD
         final int fl = updateWindowManagerVisibilityFlagsForExpandedDesktop(attrs.flags);
         final int systemUiVisibility = updateSystemUiVisibilityFlagsForExpandedDesktop(
+=======
+        final int fl = updateWindowManagerVisibilityFlagsForImmersive(attrs.flags);
+        final int systemUiVisibility = updateSystemUiVisibilityFlagsForImmersive(
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
                 attrs.systemUiVisibility|attrs.subtreeSystemUiVisibility);
 
         if ((fl & (FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR))
@@ -3193,6 +3212,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // For purposes of putting out fake window up to steal focus, we will
             // drive nav being hidden only by whether it is requested.
             final int sysui = mLastSystemUiFlags;
+
             boolean navVisible = (sysui & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
             boolean navTranslucent = (sysui & View.NAVIGATION_BAR_TRANSLUCENT) != 0;
             boolean immersive = (sysui & View.SYSTEM_UI_FLAG_IMMERSIVE) != 0;
@@ -3200,6 +3220,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             boolean navAllowedHidden = immersive || immersiveSticky;
             navTranslucent &= !immersiveSticky;  // transient trumps translucent
             navTranslucent &= areTranslucentBarsAllowed();
+
 
             // When the navigation bar isn't visible, we put up a fake
             // input window to catch all touch events.  This way we can
@@ -3235,11 +3256,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     int top = displayHeight - overscanBottom - mNavigationBarHeightForRotation[displayRotation];
                     mTmpNavigationFrame.set(0, top, displayWidth, displayHeight - overscanBottom);
                     mStableBottom = mTmpNavigationFrame.top;
+<<<<<<< HEAD
                     if (!expandedDesktopHidesNavigationBar()) {
                         mStableFullscreenBottom = mTmpNavigationFrame.top;
                     }
                     if (transientNavBarShowing
                             || (navVisible && expandedDesktopHidesNavigationBar())) {
+=======
+                    if (!mForceImmersiveMode) {
+                        mStableFullscreenBottom = mTmpNavigationFrame.top;
+                    }
+                    if (transientNavBarShowing
+                            || (navVisible && mForceImmersiveMode)) {
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
                         mNavigationBarController.setBarShowingLw(true);
                     } else if (navVisible) {
                         mNavigationBarController.setBarShowingLw(true);
@@ -3262,11 +3291,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     int left = displayWidth - overscanRight - mNavigationBarWidthForRotation[displayRotation];
                     mTmpNavigationFrame.set(left, 0, displayWidth - overscanRight, displayHeight);
                     mStableRight = mTmpNavigationFrame.left;
+<<<<<<< HEAD
                     if (!expandedDesktopHidesNavigationBar()) {
                         mStableFullscreenRight = mTmpNavigationFrame.left;
                     }
                     if (transientNavBarShowing
                             || (navVisible && expandedDesktopHidesNavigationBar())) {
+=======
+                    if (!mForceImmersiveMode) {
+                        mStableFullscreenRight = mTmpNavigationFrame.left;
+                    }
+                    if (transientNavBarShowing
+                            || (navVisible && mForceImmersiveMode)) {
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
                         mNavigationBarController.setBarShowingLw(true);
                     } else if (navVisible) {
                         mNavigationBarController.setBarShowingLw(true);
@@ -3331,7 +3368,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // If the status bar is hidden, we don't want to cause
                 // windows behind it to scroll.
                 if (mStatusBar.isVisibleLw()
+<<<<<<< HEAD
                         && !statusBarTransient && !expandedDesktopHidesStatusBar()) {
+=======
+                        && !statusBarTransient && !mForceImmersiveMode) {
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
                     // Status bar may go away, so the screen area it occupies
                     // is available to apps but just covering them when the
                     // status bar is visible.
@@ -3352,7 +3393,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 if (mStatusBar.isVisibleLw() && !mStatusBar.isAnimatingLw()
                         && !statusBarTransient && !statusBarTranslucent
                         && !mStatusBarController.wasRecentlyTranslucent()
+<<<<<<< HEAD
                         && !expandedDesktopHidesStatusBar()) {
+=======
+                        && !mForceImmersiveMode) {
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
                     // If the opaque status bar is currently requested to be visible,
                     // and not in the process of animating on or off, then
                     // we can tell the app that it is covered by it.
@@ -3431,7 +3476,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void applyStableConstraints(int sysui, int fl, Rect r) {
+<<<<<<< HEAD
         fl = updateWindowManagerVisibilityFlagsForExpandedDesktop(fl);
+=======
+        fl = updateWindowManagerVisibilityFlagsForImmersive(fl);
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
         if ((sysui & View.SYSTEM_UI_FLAG_LAYOUT_STABLE) != 0) {
             // If app is requesting a stable layout, don't let the
             // content insets go below the stable values.
@@ -3467,7 +3516,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         final int fl = attrs.flags;
         final int sim = attrs.softInputMode;
+<<<<<<< HEAD
         final int sysUiFl = updateSystemUiVisibilityFlagsForExpandedDesktop(win.getSystemUiVisibility());
+=======
+        final int sysUiFl = updateSystemUiVisibilityFlagsForImmersive(win.getSystemUiVisibility());
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
 
         final Rect pf = mTmpParentFrame;
         final Rect df = mTmpDisplayFrame;
@@ -3840,6 +3893,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+<<<<<<< HEAD
     private int updateSystemUiVisibilityFlagsForExpandedDesktop(int vis) {
         if (expandedDesktopHidesNavigationBar()) {
             if ((vis & View.SYSTEM_UI_FLAG_SHOW_NAVIGATION_IN_EXPANDED_DESKTOP) == 0) {
@@ -3848,17 +3902,29 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         if (expandedDesktopHidesStatusBar()) {
             vis |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+=======
+    private int updateSystemUiVisibilityFlagsForImmersive(int vis) {
+        if (mForceImmersiveMode) {
+            vis |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
         }
         return vis;
     }
 
+<<<<<<< HEAD
     private int updateWindowManagerVisibilityFlagsForExpandedDesktop(int vis) {
         if (mExpandedDesktopStyle != 0) {
+=======
+    private int updateWindowManagerVisibilityFlagsForImmersive(int vis) {
+        if (mForceImmersiveMode) {
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
             vis |= FLAG_FULLSCREEN;
         }
         return vis;
     }
 
+<<<<<<< HEAD
     private boolean expandedDesktopHidesNavigationBar() {
         return mExpandedDesktopStyle != 0;
     }
@@ -3867,6 +3933,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return mExpandedDesktopStyle == 2;
     }
 
+=======
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
     private void offsetInputMethodWindowLw(WindowState win) {
         int top = win.getContentFrameLw().top;
         top += win.getGivenContentInsetsLw().top;
@@ -3991,7 +4059,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     + " forcefkg=" + mForceStatusBarFromKeyguard
                     + " top=" + mTopFullscreenOpaqueWindowState);
             if ((mForceStatusBar || mForceStatusBarFromKeyguard)
+<<<<<<< HEAD
                     && !expandedDesktopHidesStatusBar()) {
+=======
+                    && !mForceImmersiveMode) {
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
                 if (DEBUG_LAYOUT) Slog.v(TAG, "Showing status bar: forced");
                 if (mStatusBarController.setBarShowingLw(true)) {
                     changes |= FINISH_LAYOUT_REDO_LAYOUT;
@@ -5744,6 +5816,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         int tmpVisibility = win.getSystemUiVisibility()
                 & ~mResettingSystemUiFlags
                 & ~mForceClearedSystemUiFlags;
+<<<<<<< HEAD
         tmpVisibility = updateSystemUiVisibilityFlagsForExpandedDesktop(tmpVisibility);
 
         final boolean subWindowInExpandedMode = expandedDesktopHidesNavigationBar()
@@ -5757,6 +5830,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 clearableFlags &= ~View.SYSTEM_UI_FLAG_FULLSCREEN;
             }
             if (expandedDesktopHidesNavigationBar()) {
+=======
+        tmpVisibility = updateSystemUiVisibilityFlagsForImmersive(tmpVisibility);
+
+        final boolean subWindowInImmersiveMode = mForceImmersiveMode
+                && (windowType >= WindowManager.LayoutParams.FIRST_SUB_WINDOW
+                        && windowType <= WindowManager.LayoutParams.LAST_SUB_WINDOW);
+        final boolean wasCleared = mClearedBecauseOfForceShow;
+        if (mForcingShowNavBar && (win.getSurfaceLayer() < mForcingShowNavBarLayer
+                || subWindowInImmersiveMode)) {
+            int clearableFlags = View.SYSTEM_UI_CLEARABLE_FLAGS;
+            if (mForceImmersiveMode) {
+                clearableFlags &= ~View.SYSTEM_UI_FLAG_FULLSCREEN;
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
                 clearableFlags |= View.NAVIGATION_BAR_TRANSLUCENT;
             }
             tmpVisibility &= ~clearableFlags;
@@ -5804,10 +5890,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         WindowState transWin = mKeyguard != null && mKeyguard.isVisibleLw() && !mHideLockScreen
                 ? mKeyguard
                 : mTopFullscreenOpaqueWindowState;
+<<<<<<< HEAD
         if (!expandedDesktopHidesStatusBar()) {
             vis = mStatusBarController.applyTranslucentFlagLw(transWin, vis, oldVis);
         }
         if (!expandedDesktopHidesNavigationBar()) {
+=======
+
+        if (!mForceImmersiveMode) {
+            vis = mStatusBarController.applyTranslucentFlagLw(transWin, vis, oldVis);
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
             vis = mNavigationBarController.applyTranslucentFlagLw(transWin, vis, oldVis);
         }
 
@@ -5864,7 +5956,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         boolean oldImmersiveMode = isImmersiveMode(oldVis);
         boolean newImmersiveMode = isImmersiveMode(vis);
         if (win != null && oldImmersiveMode != newImmersiveMode) {
+<<<<<<< HEAD
             final String pkg = mExpandedDesktopStyle != 0 ? "android" : win.getOwningPackage();
+=======
+            final String pkg = mForceImmersiveMode ? "android" : win.getOwningPackage();
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
             mImmersiveModeConfirmation.immersiveModeChanged(pkg, newImmersiveMode);
         }
 

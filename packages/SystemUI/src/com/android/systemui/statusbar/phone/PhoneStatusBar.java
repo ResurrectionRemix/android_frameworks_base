@@ -432,6 +432,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         @Override
         public void run() {
             doAutoHide();
+<<<<<<< HEAD
         }};
 
     private final Runnable mUserAutohide = new Runnable() {
@@ -440,6 +441,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             doAutoHide();
         }};
 
+=======
+        }};
+
+    private final Runnable mUserAutohide = new Runnable() {
+        @Override
+        public void run() {
+            doAutoHide();
+        }};
+
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
     private void doAutoHide() {
         int requested = mSystemUiVisibility & ~STATUS_OR_NAV_TRANSIENT;
         if (mSystemUiVisibility != requested) {
@@ -2307,7 +2318,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             sbModeChanged = sbModeChanged && sbVisible;
             nbModeChanged = nbModeChanged && nbVisible;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
             if (sbModeChanged || nbModeChanged) {
                 // update transient bar autohide
                 if (sbMode == MODE_SEMI_TRANSPARENT || nbMode == MODE_SEMI_TRANSPARENT) {

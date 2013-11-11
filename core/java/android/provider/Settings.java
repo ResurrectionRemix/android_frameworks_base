@@ -3176,8 +3176,20 @@ public final class Settings {
         public static final String GESTURES_DOWN_SWIPE = "gestures_down_swipe";
 
         /**
+<<<<<<< HEAD
          * Long press Action
          *
+=======
+         * Immersive mode global actions switch
+         * 0 = no
+         * 1 = yes
+         * @hide
+         */
+        public static final String IMMERSIVE_MODE = "immersive_mode";
+
+        /**
+         * Show when WiFi or data mobile is sending/receiving data
+>>>>>>> 31807e8... Immersive mode on quick settings based on PA commits
          * @hide
          */
         public static final String GESTURES_LONG_PRESS = "gestures_long_press";
