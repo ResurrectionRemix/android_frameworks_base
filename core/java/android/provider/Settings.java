@@ -3510,7 +3510,13 @@ public final class Settings {
          * @hide
          */
         public static final String EXPANDED_DESKTOP_STYLE = "expanded_desktop_style";
-
+        
+         /**
+          * Use EdgeGesture Service for system gestures in PhoneWindowManager
+          * @hide
+          */
+       public static final String USE_EDGE_SERVICE_FOR_GESTURES = "edge_service_for_gestures";
+       
          /**
          * Whether to display notifications on screen when screen is off
          * @hide
