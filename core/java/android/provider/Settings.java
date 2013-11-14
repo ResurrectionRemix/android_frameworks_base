@@ -3135,6 +3135,11 @@ public final class Settings {
          */
         public static final String POWER_MENU_PROFILES_ENABLED = "power_menu_profiles_enabled";
 
+        /** Weather to allow headsethook to launch voice commands
+         * @hide
+         */
+        public static final String HEADSETHOOK_LAUNCH_VOICE = "headsethook_launch_voice";
+
         /**
          * Enable Stylus Gestures
          *
