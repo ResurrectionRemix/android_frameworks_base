@@ -24,6 +24,7 @@ import static android.os.PowerManagerInternal.WAKEFULNESS_DREAMING;
 import android.annotation.IntDef;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.app.SynchronousUserSwitchObserver;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -4317,6 +4318,20 @@ public final class PowerManagerService extends SystemService
 
             final int uid = Binder.getCallingUid();
             final int pid = Binder.getCallingPid();
+
+            try {
+                if (mAppOps != null &&
+                        mAppOps.checkOperation(AppOpsManager.OP_WAKE_LOCK, uid, packageName)
+                        != AppOpsManager.MODE_ALLOWED) {
+                    Slog.d(TAG, "acquireWakeLock: ignoring request from " + packageName);
+                    // For (ignore) accounting purposes
+                    mAppOps.noteOperation(AppOpsManager.OP_WAKE_LOCK, uid, packageName);
+                    // silent return
+                    return;
+                }
+            } catch (RemoteException e) {
+            }
+
             final long ident = Binder.clearCallingIdentity();
             try {
                 acquireWakeLockInternal(lock, flags, tag, packageName, ws, historyTag, uid, pid);
