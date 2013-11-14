@@ -3531,7 +3531,17 @@ public final class Settings {
         public static final String ENABLE_ACTIVE_DISPLAY = "enable_active_display";
 
         /**
+<<<<<<< HEAD
          * Whether to display notification messages around ring
+=======
+         * Expanded desktop system bars visibility in locked state
+         * @hide
+         */
+        public static final String EXPANDED_DESKTOP_SYSTEM_BARS_VISIBILITY = "expanded_desktop_system_bars_visibility";
+
+        /**
+         * Use EdgeGesture Service for system gestures in PhoneWindowManager
+>>>>>>> d9bc1b3... Show panels on lockscreen in expanded desktop mode.
          * @hide
          */
         public static final String ACTIVE_DISPLAY_TEXT = "active_display_text";
