@@ -1803,6 +1803,7 @@
 
   <!-- Power menu -->
   <java-symbol type="string" name="global_action_screenshot" />
+  <java-symbol type="string" name="global_action_screen_record" />
   <java-symbol type="string" name="global_action_choose_profile" />
   <java-symbol type="string" name="global_action_reboot" />
   <java-symbol type="string" name="global_actions_toggle_expanded_desktop_mode" />
@@ -1814,6 +1815,7 @@
   <java-symbol type="array" name="shutdown_reboot_options" />
   <java-symbol type="array" name="shutdown_reboot_actions" />
   <java-symbol type="drawable" name="ic_lock_screenshot" />
+  <java-symbol type="drawable" name="ic_lock_screen_record" />
   <java-symbol type="drawable" name="ic_lock_reboot" />
   <java-symbol type="drawable" name="ic_lock_profile" />
   <java-symbol type="drawable" name="ic_lock_expanded_desktop" />
