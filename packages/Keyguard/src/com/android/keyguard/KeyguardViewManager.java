@@ -20,11 +20,14 @@ package com.android.keyguard;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
+<<<<<<< HEAD
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.*;
 import android.provider.Settings;
 import android.view.*;
+=======
+>>>>>>> 19d74a9... Lockscreen Blur
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
@@ -83,6 +86,7 @@ public class KeyguardViewManager {
     private final static boolean DEBUG = KeyguardViewMediator.DEBUG;
     private static String TAG = "KeyguardViewManager";
     public final static String IS_SWITCHING_USER = "is_switching_user";
+    private final int BLUR_RADIUS = 14;
 
     private final int BLUR_RADIUS = 14;
     private final int MAX_BLUR_WIDTH = 900;
@@ -107,8 +111,11 @@ public class KeyguardViewManager {
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
     private Drawable mCustomBackground = null;
+<<<<<<< HEAD
 
     private boolean mUnlockKeyDown = false;
+=======
+>>>>>>> 19d74a9... Lockscreen Blur
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -248,6 +255,7 @@ public class KeyguardViewManager {
         mCustomBackground = new BitmapDrawable(mContext.getResources(), bmp);
     }
 
+<<<<<<< HEAD
     private Bitmap blurBitmap(Bitmap bmp, int radius) {
         Bitmap tmpBmp = bmp;
 
@@ -260,16 +268,30 @@ public class KeyguardViewManager {
 
         Allocation input = Allocation.createFromBitmap(
                 rs, tmpBmp, MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
+=======
+    private Bitmap blurBitmap (Bitmap bmp, int radius) {
+        Bitmap out = Bitmap.createBitmap(bmp);
+        RenderScript rs = RenderScript.create(mContext);
+
+        Allocation input = Allocation.createFromBitmap(rs, bmp, MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
+>>>>>>> 19d74a9... Lockscreen Blur
         Allocation output = Allocation.createTyped(rs, input.getType());
 
         ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
         script.setInput(input);
+<<<<<<< HEAD
         script.setRadius(radius);
         script.forEach(output);
 
         output.copyTo(out);
 
         rs.destroy();
+=======
+        script.setRadius (radius);
+        script.forEach (output);
+
+        output.copyTo (out);
+>>>>>>> 19d74a9... Lockscreen Blur
 
         return out;
     }
@@ -374,7 +396,11 @@ public class KeyguardViewManager {
             if (bgAspect > vAspect) {
                 background.setBounds(0, 0, (int) (vHeight * bgAspect), vHeight);
             } else {
+<<<<<<< HEAD
                 background.setBounds(0, 0, vWidth, (int) (vWidth * (vAspect >= 1 ? bgAspect : (1 / bgAspect))));
+=======
+                mCustomBackground.setBounds(0, 0, vWidth, (int) (vWidth * (vAspect >= 1 ? bgAspect : (1 / bgAspect))));
+>>>>>>> 19d74a9... Lockscreen Blur
             }
         }
 
@@ -608,12 +634,21 @@ public class KeyguardViewManager {
                 mKeyguardHost.removeAllViews();
                 inflateKeyguardView(options);
                 mKeyguardView.requestFocus();
+<<<<<<< HEAD
         }
 
             if(mCustomBackground != null) {
                 mKeyguardHost.setCustomBackground(mCustomBackground);
         }
 
+=======
+        }
+
+            if(mCustomBackground != null) {
+                mKeyguardHost.setCustomBackground(mCustomBackground);
+        }
+
+>>>>>>> 19d74a9... Lockscreen Blur
         updateUserActivityTimeoutInWindowLayoutParams();
         mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
 
