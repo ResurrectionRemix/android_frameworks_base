@@ -17,13 +17,12 @@
 
 package com.android.keyguard;
 
-import android.app.PendingIntent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -45,6 +44,11 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings;
+import android.renderscript.Allocation;
+import android.renderscript.Allocation.MipmapControl;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -68,6 +72,8 @@ public class KeyguardViewManager {
     private static String TAG = "KeyguardViewManager";
     public final static String IS_SWITCHING_USER = "is_switching_user";
 
+    private final int BLUR_RADIUS = 14;
+
     // Delay dismissing keyguard to allow animations to complete.
     private static final int HIDE_KEYGUARD_DELAY = 500;
 
@@ -85,7 +91,9 @@ public class KeyguardViewManager {
     private KeyguardHostView mKeyguardView;
 
     private boolean mScreenOn = false;
+    private boolean mSeeThroughEnabled = false;
     private LockPatternUtils mLockPatternUtils;
+    private Drawable mCustomBackground = null;
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -114,10 +122,16 @@ public class KeyguardViewManager {
         @Override
         public void onChange(boolean selfChange) {
             setKeyguardParams();
+            updateSettings();
             mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
         }
     }
 
+    private void updateSettings() {
+        mSeeThroughEnabled = Settings.System.getInt(mContext.getContentResolver(),
+                            Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
+        if(!mSeeThroughEnabled) mCustomBackground = null;
+    }
     /**
      * @param context Used to create views.
      * @param viewManager Keyguard will be attached to this.
@@ -134,6 +148,7 @@ public class KeyguardViewManager {
 
         SettingsObserver observer = new SettingsObserver(new Handler());
         observer.observe();
+        updateSettings();
     }
 
     /**
@@ -173,7 +188,7 @@ public class KeyguardViewManager {
                     | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
                     | WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN;
 
-            if (!isSeeThroughEnabled()) {
+            if (!mSeeThroughEnabled) {
                 flags |= WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
             }
 
@@ -214,6 +229,32 @@ public class KeyguardViewManager {
     private boolean shouldEnableTranslucentDecor() {
         Resources res = mContext.getResources();
         return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor);
+    }
+
+    public void setBackgroundBitmap(Bitmap bmp) {
+        if (mSeeThroughEnabled) {
+                bmp = blurBitmap(bmp, BLUR_RADIUS);
+        }
+        mCustomBackground = new BitmapDrawable(mContext.getResources(), bmp);
+    }
+
+    private Bitmap blurBitmap(Bitmap bmp, int radius) {
+        Bitmap out = Bitmap.createBitmap(bmp);
+        RenderScript rs = RenderScript.create(mContext);
+
+        Allocation input = Allocation.createFromBitmap(
+                rs, bmp, MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
+        Allocation output = Allocation.createTyped(rs, input.getType());
+
+        ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+        script.setInput(input);
+        script.setRadius(radius);
+        script.forEach(output);
+
+        output.copyTo(out);
+
+        rs.destroy();
+        return out;
     }
 
     class ViewManagerHost extends FrameLayout {
@@ -283,7 +324,8 @@ public class KeyguardViewManager {
             if (bgAspect > vAspect) {
                 mCustomBackground.setBounds(0, 0, (int) (vHeight * bgAspect), vHeight);
             } else {
-                mCustomBackground.setBounds(0, 0, vWidth, (int) (vWidth / bgAspect));
+                mCustomBackground.setBounds(0, 0, vWidth,
+                        (int) (vWidth * (vAspect >= 1 ? bgAspect : (1 / bgAspect))));
             }
         }
 
@@ -374,11 +416,16 @@ public class KeyguardViewManager {
         }
 
         if (force || mKeyguardView == null) {
-            mKeyguardHost.setCustomBackground(null);
-            mKeyguardHost.removeAllViews();
-            inflateKeyguardView(options);
-            mKeyguardView.requestFocus();
+                mKeyguardHost.setCustomBackground(null);
+                mKeyguardHost.removeAllViews();
+                inflateKeyguardView(options);
+                mKeyguardView.requestFocus();
         }
+
+        if(mCustomBackground != null) {
+                mKeyguardHost.setCustomBackground(mCustomBackground);
+        }
+
         updateUserActivityTimeoutInWindowLayoutParams();
         mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
 
@@ -450,13 +497,8 @@ public class KeyguardViewManager {
         mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
     }
 
-    private boolean isSeeThroughEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
-    }
-
     void updateShowWallpaper(boolean show) {
-        if (isSeeThroughEnabled()) {
+        if (mSeeThroughEnabled) {
             return;
         } else {
             if (show) {
