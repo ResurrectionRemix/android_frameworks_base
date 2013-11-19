@@ -1770,14 +1770,16 @@
 
   <!-- CM -->
   <java-symbol type="bool" name="config_samsung_stk" />
-
   <java-symbol type="drawable" name="ic_lock_reboot" />
   <java-symbol type="string" name="global_action_reboot" />
   <java-symbol type="array" name="shutdown_reboot_options" />
   <java-symbol type="array" name="shutdown_reboot_actions" />
   <java-symbol type="string" name="reboot_system" />
-
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
   <java-symbol type="integer" name="config_backKillTimeout" />
   <java-symbol type="string" name="app_killed_message" />
+
+  <!-- Wifi -->
+  <java-symbol type="bool" name="config_wifiApStartInterface" />
+
 </resources>
