@@ -236,7 +236,7 @@ public class EdgeGestureService extends IEdgeGestureService.Stub {
         if (DEBUG) {
             Slog.d(TAG, "Attempting to start monitoring input events ...");
         }
-        mInputFilter = new EdgeGestureInputFilter(mContext, mHandler);
+        mInputManager.registerSecondaryInputFilter(mInputFilter);
         mInputManager.setInputFilter(mInputFilter);
         mDisplayObserver.observe();
     }
@@ -246,7 +246,7 @@ public class EdgeGestureService extends IEdgeGestureService.Stub {
             Slog.d(TAG, "Shutting down monitoring input events ...");
         }
         mDisplayObserver.unobserve();
-        mInputManager.setInputFilter(mInputFilter);
+        mInputManager.unregisterSecondaryInputFilter(mInputFilter);
         mInputFilter = null;
     }
 
