@@ -81,6 +81,7 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
+<<<<<<< HEAD
     <!-- Development shortcut -->
     <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
@@ -90,6 +91,10 @@
 
     <!-- AppSidebar -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+=======
+    <!-- Active display -->
+    <uses-permission android:name="android.permission.SYSTEM_NOTIFICATION_LISTENER" />
+>>>>>>> cf802dd... Active display [squashed] (1/2)
 
     <application
         android:persistent="true"
@@ -285,8 +290,18 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity android:name="com.android.systemui.Transparent"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+=======
+        <activity android:name=".statusbar.policy.activedisplay.DummyActivity"
+                  android:label=""
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:exported="true"
+                  android:theme="@style/Theme.DummyActivity">
+        </activity>
+>>>>>>> cf802dd... Active display [squashed] (1/2)
 
     </application>
 </manifest>
