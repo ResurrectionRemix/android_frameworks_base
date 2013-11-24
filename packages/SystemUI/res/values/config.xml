@@ -85,7 +85,7 @@
     <integer name="quick_settings_user_time_settings_tile_span">1</integer>
 
     <!-- Whether rotation lock shows up in quick settings or not -->
-    <bool name="quick_settings_show_rotation_lock">false</bool>
+    <bool name="quick_settings_show_rotation_lock">true</bool>
 
     <!-- Whether or not the RSSI tile is capitalized or not. -->
     <bool name="quick_settings_rssi_tile_capitalization">true</bool>
