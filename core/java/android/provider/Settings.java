@@ -3369,6 +3369,7 @@ public final class Settings {
         public static final String POWER_UI_LOW_BATTERY_WARNING_POLICY = "power_ui_low_battery_warning_policy";
 
         /**
+<<<<<<< HEAD
          * Defines the screen-off animation to display
          * @hide
          */
@@ -3379,6 +3380,12 @@ public final class Settings {
          * @hide
          */
         public static final String BATTERY_AROUND_LOCKSCREEN_RING = "battery_around_lockscreen_ring";
+=======
+         * Whether to use the custom status bar header or not
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
+>>>>>>> 75604a2... [1/2] SystemUI: Add time-context headers to the notification header
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
