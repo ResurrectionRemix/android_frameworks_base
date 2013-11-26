@@ -540,6 +540,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         return split;
     }
 
+<<<<<<< HEAD
     public void toggleReminderFlipper(boolean active) {
         if (mReminderEnabled == 1 && mFlipper != null) {
             mFlipper.setDisplayedChild(0);
@@ -549,6 +550,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mFlipper.setFlipInterval(1500);
                 mFlipper.startFlipping();
             }
+=======
+    private void forceAddNavigationBar() {
+        // If we have no Navbar view and we should have one, create it
+        if (mNavigationBarView != null) {
+            return;
+>>>>>>> 4224a7e... Runtime resource overlay, iteration 2
         }
     }
 
