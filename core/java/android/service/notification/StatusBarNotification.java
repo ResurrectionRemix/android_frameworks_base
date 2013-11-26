@@ -29,7 +29,7 @@ import android.os.UserHandle;
  * the status bar and any {@link android.service.notification.NotificationListenerService}s.
  */
 public class StatusBarNotification implements Parcelable {
-    private final String pkg;
+    public final String pkg;
     private final int id;
     private final String tag;
     private final String key;
@@ -38,8 +38,8 @@ public class StatusBarNotification implements Parcelable {
     private final int uid;
     private final String opPkg;
     private final int initialPid;
-    private final Notification notification;
-    private final UserHandle user;
+    public final Notification notification;
+    public final UserHandle user;
     private final long postTime;
 
     private final int score;
