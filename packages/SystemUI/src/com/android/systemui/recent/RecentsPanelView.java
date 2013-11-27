@@ -846,6 +846,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     } else {
                         throw new IllegalStateException("Oops, no tag on view " + selectedView);
                     }
+<<<<<<< HEAD
                 } else if (item.getItemId() == R.id.recent_launch_floating) {
                     ViewHolder viewHolder = (ViewHolder) selectedView.getTag();
                     if (viewHolder != null) {
@@ -856,6 +857,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                         dismissAndGoBack();
                         getContext().startActivity(intent);
                     }
+=======
+>>>>>>> 016664a... Development shortcut in StatusBar and Recent Panel
                 } else {
                     return false;
                 }
@@ -893,6 +896,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         mRecentsContainer.drawFadedEdges(canvas, left, right, top, bottom);
     }
 
+<<<<<<< HEAD
     @Override
     protected boolean fitSystemWindows(Rect insets) {
         if (mClearRecents != null) {
@@ -905,6 +909,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         return super.fitSystemWindows(insets);
     }
 
+=======
+>>>>>>> 016664a... Development shortcut in StatusBar and Recent Panel
     class FakeClearUserDataObserver extends IPackageDataObserver.Stub {
         public void onRemoveCompleted(final String packageName, final boolean succeeded) {
         }

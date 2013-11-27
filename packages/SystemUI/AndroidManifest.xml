@@ -85,12 +85,15 @@
     <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
 
+<<<<<<< HEAD
     <!-- Wifi Display -->
     <uses-permission android:name="android.permission.CONFIGURE_WIFI_DISPLAY" />
 
     <!-- AppSidebar -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
+=======
+>>>>>>> 016664a... Development shortcut in StatusBar and Recent Panel
     <application
         android:persistent="true"
         android:allowClearUserData="false"
