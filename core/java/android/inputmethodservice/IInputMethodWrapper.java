@@ -140,18 +140,17 @@ class IInputMethodWrapper extends IInputMethod.Stub
         switch (msg.what) {
             case DO_DUMP: {
                 AbstractInputMethodService target = mTarget.get();
-                if (target == null) {
-                    return;
-                }
                 SomeArgs args = (SomeArgs)msg.obj;
-                try {
-                    target.dump((FileDescriptor)args.arg1,
-                            (PrintWriter)args.arg2, (String[])args.arg3);
-                } catch (RuntimeException e) {
-                    ((PrintWriter)args.arg2).println("Exception: " + e);
-                }
-                synchronized (args.arg4) {
-                    ((CountDownLatch)args.arg4).countDown();
+                if (target != null) {
+                    try {
+                        target.dump((FileDescriptor)args.arg1,
+                                (PrintWriter)args.arg2, (String[])args.arg3);
+                    } catch (RuntimeException e) {
+                        ((PrintWriter)args.arg2).println("Exception: " + e);
+                    }
+                    synchronized (args.arg4) {
+                        ((CountDownLatch)args.arg4).countDown();
+                    }
                 }
                 args.recycle();
                 return;
