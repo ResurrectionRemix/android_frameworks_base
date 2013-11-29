@@ -18,11 +18,6 @@
 #define LOG_TAG "AudioSystem"
 #include <utils/Log.h>
 
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <math.h>
-
 #include <jni.h>
 #include <JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
@@ -46,11 +41,15 @@ enum AudioError {
 
 static int check_AudioSystem_Command(status_t status)
 {
-    if (status == NO_ERROR) {
+    switch (status) {
+    case DEAD_OBJECT:
+        return kAudioStatusMediaServerDied;
+    case NO_ERROR:
         return kAudioStatusOk;
-    } else {
-        return kAudioStatusError;
+    default:
+        break;
     }
+    return kAudioStatusError;
 }
 
 static int
@@ -72,6 +71,15 @@ android_media_AudioSystem_isStreamActive(JNIEnv *env, jobject thiz, jint stream,
 {
     bool state = false;
     AudioSystem::isStreamActive((audio_stream_type_t) stream, &state, inPastMs);
+    return state;
+}
+
+static jboolean
+android_media_AudioSystem_isStreamActiveRemotely(JNIEnv *env, jobject thiz, jint stream,
+        jint inPastMs)
+{
+    bool state = false;
+    AudioSystem::isStreamActiveRemotely((audio_stream_type_t) stream, &state, inPastMs);
     return state;
 }
 
@@ -118,21 +126,9 @@ android_media_AudioSystem_error_callback(status_t err)
 
     jclass clazz = env->FindClass(kClassPathName);
 
-    int error;
-
-    switch (err) {
-    case DEAD_OBJECT:
-        error = kAudioStatusMediaServerDied;
-        break;
-    case NO_ERROR:
-        error = kAudioStatusOk;
-        break;
-    default:
-        error = kAudioStatusError;
-        break;
-    }
-
-    env->CallStaticVoidMethod(clazz, env->GetStaticMethodID(clazz, "errorCallbackFromNative","(I)V"), error);
+    env->CallStaticVoidMethod(clazz, env->GetStaticMethodID(clazz,
+                              "errorCallbackFromNative","(I)V"),
+                              check_AudioSystem_Command(err));
 }
 
 static int
@@ -262,6 +258,29 @@ android_media_AudioSystem_getPrimaryOutputFrameCount(JNIEnv *env, jobject clazz)
     return (jint) AudioSystem::getPrimaryOutputFrameCount();
 }
 
+static jint
+android_media_AudioSystem_getOutputLatency(JNIEnv *env, jobject clazz, jint stream)
+{
+    uint32_t afLatency;
+    if (AudioSystem::getOutputLatency(&afLatency, static_cast <audio_stream_type_t>(stream))
+            != NO_ERROR) {
+        afLatency = -1;
+    }
+    return (jint) afLatency;
+}
+
+static jint
+android_media_AudioSystem_setLowRamDevice(JNIEnv *env, jobject clazz, jboolean isLowRamDevice)
+{
+    return (jint) AudioSystem::setLowRamDevice((bool) isLowRamDevice);
+}
+
+static int
+android_media_AudioSystem_checkAudioFlinger(JNIEnv *env, jobject clazz)
+{
+    return check_AudioSystem_Command(AudioSystem::checkAudioFlinger());
+}
+
 // ----------------------------------------------------------------------------
 
 static JNINativeMethod gMethods[] = {
@@ -270,6 +289,7 @@ static JNINativeMethod gMethods[] = {
     {"muteMicrophone",      "(Z)I",     (void *)android_media_AudioSystem_muteMicrophone},
     {"isMicrophoneMuted",   "()Z",      (void *)android_media_AudioSystem_isMicrophoneMuted},
     {"isStreamActive",      "(II)Z",    (void *)android_media_AudioSystem_isStreamActive},
+    {"isStreamActiveRemotely","(II)Z",  (void *)android_media_AudioSystem_isStreamActiveRemotely},
     {"isSourceActive",      "(I)Z",     (void *)android_media_AudioSystem_isSourceActive},
     {"setDeviceConnectionState", "(IILjava/lang/String;)I", (void *)android_media_AudioSystem_setDeviceConnectionState},
     {"getDeviceConnectionState", "(ILjava/lang/String;)I",  (void *)android_media_AudioSystem_getDeviceConnectionState},
@@ -286,6 +306,9 @@ static JNINativeMethod gMethods[] = {
     {"getDevicesForStream", "(I)I",     (void *)android_media_AudioSystem_getDevicesForStream},
     {"getPrimaryOutputSamplingRate", "()I", (void *)android_media_AudioSystem_getPrimaryOutputSamplingRate},
     {"getPrimaryOutputFrameCount",   "()I", (void *)android_media_AudioSystem_getPrimaryOutputFrameCount},
+    {"getOutputLatency",    "(I)I",     (void *)android_media_AudioSystem_getOutputLatency},
+    {"setLowRamDevice",     "(Z)I",     (void *)android_media_AudioSystem_setLowRamDevice},
+    {"checkAudioFlinger",    "()I",     (void *)android_media_AudioSystem_checkAudioFlinger},
 };
 
 int register_android_media_AudioSystem(JNIEnv *env)

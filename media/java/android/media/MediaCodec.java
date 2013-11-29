@@ -16,10 +16,15 @@
 
 package android.media;
 
+import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
 import android.media.MediaCrypto;
 import android.media.MediaFormat;
+import android.os.Bundle;
 import android.view.Surface;
+
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -161,14 +166,15 @@ final public class MediaCodec {
      *
      * The following is a partial list of defined mime types and their semantics:
      * <ul>
-     * <li>"video/x-vnd.on2.vp8" - VPX video (i.e. video in .webm)
+     * <li>"video/x-vnd.on2.vp8" - VP8 video (i.e. video in .webm)
+     * <li>"video/x-vnd.on2.vp9" - VP9 video (i.e. video in .webm)
      * <li>"video/avc" - H.264/AVC video
      * <li>"video/mp4v-es" - MPEG4 video
      * <li>"video/3gpp" - H.263 video
      * <li>"audio/3gpp" - AMR narrowband audio
      * <li>"audio/amr-wb" - AMR wideband audio
      * <li>"audio/mpeg" - MPEG1/2 audio layer III
-     * <li>"audio/mp4a-latm" - AAC audio
+     * <li>"audio/mp4a-latm" - AAC audio (note, this is raw AAC packets, not packaged in LATM!)
      * <li>"audio/vorbis" - vorbis audio
      * <li>"audio/g711-alaw" - G.711 alaw audio
      * <li>"audio/g711-mlaw" - G.711 ulaw audio
@@ -261,6 +267,15 @@ final public class MediaCodec {
             Surface surface, MediaCrypto crypto, int flags);
 
     /**
+     * Requests a Surface to use as the input to an encoder, in place of input buffers.  This
+     * may only be called after {@link #configure} and before {@link #start}.
+     * <p>
+     * The application is responsible for calling release() on the Surface when
+     * done.
+     */
+    public native final Surface createInputSurface();
+
+    /**
      * After successfully configuring the component, call start. On return
      * you can query the component for its input/output buffers.
      */
@@ -281,12 +296,36 @@ final public class MediaCodec {
      */
     public native final void flush();
 
+    /**
+     * Thrown when a crypto error occurs while queueing a secure input buffer.
+     */
     public final static class CryptoException extends RuntimeException {
         public CryptoException(int errorCode, String detailMessage) {
             super(detailMessage);
             mErrorCode = errorCode;
         }
 
+        /**
+         * This indicates that no key has been set to perform the requested
+         * decrypt operation.
+         */
+        public static final int ERROR_NO_KEY = 1;
+
+        /**
+         * This indicates that the key used for decryption is no longer
+         * valid due to license term expiration.
+         */
+        public static final int ERROR_KEY_EXPIRED = 2;
+
+        /**
+         * This indicates that a required crypto resource was not able to be
+         * allocated while attempting the requested operation.
+         */
+        public static final int ERROR_RESOURCE_BUSY = 3;
+
+        /**
+         * Retrieve the error code associated with a CryptoException
+         */
         public int getErrorCode() {
             return mErrorCode;
         }
@@ -384,6 +423,27 @@ final public class MediaCodec {
          * see {@link #CRYPTO_MODE_UNENCRYPTED} and {@link #CRYPTO_MODE_AES_CTR}.
          */
         public int mode;
+
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            builder.append(numSubSamples + " subsamples, key [");
+            String hexdigits = "0123456789abcdef";
+            for (int i = 0; i < key.length; i++) {
+                builder.append(hexdigits.charAt((key[i] & 0xf0) >> 4));
+                builder.append(hexdigits.charAt(key[i] & 0x0f));
+            }
+            builder.append("], iv [");
+            for (int i = 0; i < key.length; i++) {
+                builder.append(hexdigits.charAt((iv[i] & 0xf0) >> 4));
+                builder.append(hexdigits.charAt(iv[i] & 0x0f));
+            }
+            builder.append("], clear ");
+            builder.append(Arrays.toString(numBytesOfClearData));
+            builder.append(", encrypted ");
+            builder.append(Arrays.toString(numBytesOfEncryptedData));
+            return builder.toString();
+        }
     };
 
     /**
@@ -397,6 +457,9 @@ final public class MediaCodec {
      * @param presentationTimeUs The time at which this buffer should be rendered.
      * @param flags A bitmask of flags {@link #BUFFER_FLAG_SYNC_FRAME},
      *              {@link #BUFFER_FLAG_CODEC_CONFIG} or {@link #BUFFER_FLAG_END_OF_STREAM}.
+     * @throws CryptoException if an error occurs while attempting to decrypt the buffer.
+     *              An error code associated with the exception helps identify the
+     *              reason for the failure.
      */
     public native final void queueSecureInputBuffer(
             int index,
@@ -456,6 +519,13 @@ final public class MediaCodec {
     public native final void releaseOutputBuffer(int index, boolean render);
 
     /**
+     * Signals end-of-stream on input.  Equivalent to submitting an empty buffer with
+     * {@link #BUFFER_FLAG_END_OF_STREAM} set.  This may only be used with
+     * encoders receiving input from a Surface created by {@link #createInputSurface}.
+     */
+    public native final void signalEndOfInputStream();
+
+    /**
      * Call this after dequeueOutputBuffer signals a format change by returning
      * {@link #INFO_OUTPUT_FORMAT_CHANGED}
      */
@@ -497,6 +567,68 @@ final public class MediaCodec {
      * specifies the scaling mode to use. The default is "scale to fit".
      */
     public native final void setVideoScalingMode(int mode);
+
+    /**
+     * Get the component name. If the codec was created by createDecoderByType
+     * or createEncoderByType, what component is chosen is not known beforehand.
+     */
+    public native final String getName();
+
+    /**
+     * Change a video encoder's target bitrate on the fly. The value is an
+     * Integer object containing the new bitrate in bps.
+     */
+    public static final String PARAMETER_KEY_VIDEO_BITRATE = "video-bitrate";
+
+    /**
+     * Temporarily suspend/resume encoding of input data. While suspended
+     * input data is effectively discarded instead of being fed into the
+     * encoder. This parameter really only makes sense to use with an encoder
+     * in "surface-input" mode, as the client code has no control over the
+     * input-side of the encoder in that case.
+     * The value is an Integer object containing the value 1 to suspend
+     * or the value 0 to resume.
+     */
+    public static final String PARAMETER_KEY_SUSPEND = "drop-input-frames";
+
+    /**
+     * Request that the encoder produce a sync frame "soon".
+     * Provide an Integer with the value 0.
+     */
+    public static final String PARAMETER_KEY_REQUEST_SYNC_FRAME = "request-sync";
+
+    /**
+     * Communicate additional parameter changes to the component instance.
+     */
+    public final void setParameters(Bundle params) {
+        if (params == null) {
+            return;
+        }
+
+        String[] keys = new String[params.size()];
+        Object[] values = new Object[params.size()];
+
+        int i = 0;
+        for (final String key: params.keySet()) {
+            keys[i] = key;
+            values[i] = params.get(key);
+            ++i;
+        }
+
+        setParameters(keys, values);
+    }
+
+    private native final void setParameters(String[] keys, Object[] values);
+
+    /**
+     * Get the codec info. If the codec was created by createDecoderByType
+     * or createEncoderByType, what component is chosen is not known beforehand,
+     * and thus the caller does not have the MediaCodecInfo.
+     */
+    public MediaCodecInfo getCodecInfo() {
+        return MediaCodecList.getCodecInfoAt(
+                   MediaCodecList.findCodecByName(getName()));
+    }
 
     private native final ByteBuffer[] getBuffers(boolean input);
 

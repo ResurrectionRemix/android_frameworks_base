@@ -20,7 +20,14 @@
 #include <nativehelper/JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
 
+#include <EGL/egl.h>
+#include <EGL/eglext.h>
 #include <EGL/egl_cache.h>
+
+#include <utils/Timers.h>
+
+#include <Caches.h>
+#include <Extensions.h>
 
 #ifdef USE_OPENGL_RENDERER
     EGLAPI void EGLAPIENTRY eglBeginFrame(EGLDisplay dpy, EGLSurface surface);
@@ -84,21 +91,16 @@ static jboolean android_view_HardwareRenderer_isBackBufferPreserved(JNIEnv* env,
     return error == EGL_SUCCESS && value == EGL_BUFFER_PRESERVED;
 }
 
-static void android_view_HardwareRenderer_disableVsync(JNIEnv* env, jobject clazz) {
-    EGLDisplay display = eglGetCurrentDisplay();
-
-    eglGetError();
-    eglSwapInterval(display, 0);
-
-    EGLint error = eglGetError();
-    if (error != EGL_SUCCESS) {
-        RENDERER_LOGD("Could not disable v-sync (%x)", error);
-    }
-}
-
 // ----------------------------------------------------------------------------
 // Tracing and debugging
 // ----------------------------------------------------------------------------
+
+static bool android_view_HardwareRenderer_loadProperties(JNIEnv* env, jobject clazz) {
+    if (uirenderer::Caches::hasInstance()) {
+        return uirenderer::Caches::getInstance().initProperties();
+    }
+    return false;
+}
 
 static void android_view_HardwareRenderer_beginFrame(JNIEnv* env, jobject clazz,
         jintArray size) {
@@ -120,6 +122,13 @@ static void android_view_HardwareRenderer_beginFrame(JNIEnv* env, jobject clazz,
     }
 
     eglBeginFrame(display, surface);
+}
+
+static jlong android_view_HardwareRenderer_getSystemTime(JNIEnv* env, jobject clazz) {
+    if (uirenderer::Extensions::getInstance().hasNvSystemTime()) {
+        return eglGetSystemTimeNV();
+    }
+    return systemTime(SYSTEM_TIME_MONOTONIC);
 }
 
 #endif // USE_OPENGL_RENDERER
@@ -146,9 +155,11 @@ static JNINativeMethod gMethods[] = {
 #ifdef USE_OPENGL_RENDERER
     { "nIsBackBufferPreserved", "()Z",   (void*) android_view_HardwareRenderer_isBackBufferPreserved },
     { "nPreserveBackBuffer",    "()Z",   (void*) android_view_HardwareRenderer_preserveBackBuffer },
-    { "nDisableVsync",          "()V",   (void*) android_view_HardwareRenderer_disableVsync },
+    { "nLoadProperties",        "()Z",   (void*) android_view_HardwareRenderer_loadProperties },
 
     { "nBeginFrame",            "([I)V", (void*) android_view_HardwareRenderer_beginFrame },
+
+    { "nGetSystemTime",         "()J",   (void*) android_view_HardwareRenderer_getSystemTime },
 #endif
 
     { "nSetupShadersDiskCache", "(Ljava/lang/String;)V",

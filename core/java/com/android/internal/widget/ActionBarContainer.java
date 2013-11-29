@@ -84,6 +84,10 @@ public class ActionBarContainer extends FrameLayout {
         mBackground = bg;
         if (bg != null) {
             bg.setCallback(this);
+            if (mActionBarView != null) {
+                mBackground.setBounds(mActionBarView.getLeft(), mActionBarView.getTop(),
+                        mActionBarView.getRight(), mActionBarView.getBottom());
+            }
         }
         setWillNotDraw(mIsSplit ? mSplitBackground == null :
                 mBackground == null && mStackedBackground == null);
@@ -98,6 +102,10 @@ public class ActionBarContainer extends FrameLayout {
         mStackedBackground = bg;
         if (bg != null) {
             bg.setCallback(this);
+            if ((mIsStacked && mStackedBackground != null)) {
+                mStackedBackground.setBounds(mTabContainer.getLeft(), mTabContainer.getTop(),
+                        mTabContainer.getRight(), mTabContainer.getBottom());
+            }
         }
         setWillNotDraw(mIsSplit ? mSplitBackground == null :
                 mBackground == null && mStackedBackground == null);
@@ -112,6 +120,9 @@ public class ActionBarContainer extends FrameLayout {
         mSplitBackground = bg;
         if (bg != null) {
             bg.setCallback(this);
+            if (mIsSplit && mSplitBackground != null) {
+                mSplitBackground.setBounds(0, 0, getMeasuredWidth(), getMeasuredHeight());
+            }
         }
         setWillNotDraw(mIsSplit ? mSplitBackground == null :
                 mBackground == null && mStackedBackground == null);
@@ -285,23 +296,7 @@ public class ActionBarContainer extends FrameLayout {
         if (mTabContainer != null && mTabContainer.getVisibility() != GONE) {
             final int containerHeight = getMeasuredHeight();
             final int tabHeight = mTabContainer.getMeasuredHeight();
-
-            if ((mActionBarView.getDisplayOptions() & ActionBar.DISPLAY_SHOW_HOME) == 0) {
-                // Not showing home, put tabs on top.
-                final int count = getChildCount();
-                for (int i = 0; i < count; i++) {
-                    final View child = getChildAt(i);
-
-                    if (child == mTabContainer) continue;
-
-                    if (!mActionBarView.isCollapsed()) {
-                        child.offsetTopAndBottom(tabHeight);
-                    }
-                }
-                mTabContainer.layout(l, 0, r, tabHeight);
-            } else {
-                mTabContainer.layout(l, containerHeight - tabHeight, r, containerHeight);
-            }
+            mTabContainer.layout(l, containerHeight - tabHeight, r, containerHeight);
         }
 
         boolean needsInvalidate = false;

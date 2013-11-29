@@ -128,19 +128,24 @@ final class LogicalDisplay {
      *
      * @param info The logical display information, may be null.
      */
-    public void setDisplayInfoOverrideFromWindowManagerLocked(DisplayInfo info) {
+    public boolean setDisplayInfoOverrideFromWindowManagerLocked(DisplayInfo info) {
         if (info != null) {
             if (mOverrideDisplayInfo == null) {
                 mOverrideDisplayInfo = new DisplayInfo(info);
                 mInfo = null;
-            } else if (!mOverrideDisplayInfo.equals(info)) {
+                return true;
+            }
+            if (!mOverrideDisplayInfo.equals(info)) {
                 mOverrideDisplayInfo.copyFrom(info);
                 mInfo = null;
+                return true;
             }
         } else if (mOverrideDisplayInfo != null) {
             mOverrideDisplayInfo = null;
             mInfo = null;
+            return true;
         }
+        return false;
     }
 
     /**
@@ -189,6 +194,12 @@ final class LogicalDisplay {
             if ((deviceInfo.flags & DisplayDeviceInfo.FLAG_SECURE) != 0) {
                 mBaseDisplayInfo.flags |= Display.FLAG_SECURE;
             }
+            if ((deviceInfo.flags & DisplayDeviceInfo.FLAG_PRIVATE) != 0) {
+                mBaseDisplayInfo.flags |= Display.FLAG_PRIVATE;
+            }
+            if ((deviceInfo.flags & DisplayDeviceInfo.FLAG_PRESENTATION) != 0) {
+                mBaseDisplayInfo.flags |= Display.FLAG_PRESENTATION;
+            }
             mBaseDisplayInfo.type = deviceInfo.type;
             mBaseDisplayInfo.address = deviceInfo.address;
             mBaseDisplayInfo.name = deviceInfo.name;
@@ -205,6 +216,8 @@ final class LogicalDisplay {
             mBaseDisplayInfo.smallestNominalAppHeight = deviceInfo.height;
             mBaseDisplayInfo.largestNominalAppWidth = deviceInfo.width;
             mBaseDisplayInfo.largestNominalAppHeight = deviceInfo.height;
+            mBaseDisplayInfo.ownerUid = deviceInfo.ownerUid;
+            mBaseDisplayInfo.ownerPackageName = deviceInfo.ownerPackageName;
 
             mPrimaryDisplayDeviceInfo = deviceInfo;
             mInfo = null;

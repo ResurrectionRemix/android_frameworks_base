@@ -2028,28 +2028,63 @@
   <public type="style" name="Widget.DeviceDefault.CheckedTextView" id="0x010301db" />
   <public type="style" name="Widget.DeviceDefault.Light.CheckedTextView" id="0x010301dc" />
 
-  <!-- Custom Vibrations -->
-  <java-symbol type="string" name="vibration_picker_title"/>
-  <java-symbol type="string" name="vibration_picker_del_title"/>
-  <java-symbol type="layout" name="vibration_picker_dialog"/>
+<!-- ===============================================================
+     Resources added in version 18 of the platform (Jelly Bean MR2)
+     =============================================================== -->
+  <eat-comment />
 
-  <java-symbol type="bool" name="config_forceDisableHardwareKeyboard" />
+  <public type="attr" name="mipMap" id="0x010103cd" />
+  <public type="attr" name="mirrorForRtl" id="0x010103ce" />
+  <public type="attr" name="windowOverscan" id="0x010103cf" />
+  <public type="attr" name="requiredForAllUsers" id="0x010103d0" />
+  <public type="attr" name="indicatorStart" id="0x010103d1" />
+  <public type="attr" name="indicatorEnd" id="0x010103d2" />
+  <public type="attr" name="childIndicatorStart" id="0x010103d3" />
+  <public type="attr" name="childIndicatorEnd" id="0x010103d4" />
+  <public type="attr" name="restrictedAccountType" id="0x010103d5" />
+  <public type="attr" name="requiredAccountType" id="0x010103d6" />
+  <public type="attr" name="canRequestTouchExplorationMode" id="0x010103d7" />
+  <public type="attr" name="canRequestEnhancedWebAccessibility" id="0x010103d8" />
+  <public type="attr" name="canRequestFilterKeyEvents" id="0x010103d9" />
+  <public type="attr" name="layoutMode" id="0x010103da" />
 
-  <!-- Kill App -->
-  <java-symbol type="string" name="app_killed_message" />
-  <java-symbol type="integer" name="config_backKillTimeout" />
+  <public type="style" name="Theme.Holo.NoActionBar.Overscan" id="0x010301dd" />
+  <public type="style" name="Theme.Holo.Light.NoActionBar.Overscan" id="0x010301de" />
+  <public type="style" name="Theme.DeviceDefault.NoActionBar.Overscan" id="0x010301df" />
+  <public type="style" name="Theme.DeviceDefault.Light.NoActionBar.Overscan" id="0x010301e0" />
 
-  <!-- Expanded desktop -->
-  <java-symbol type="drawable" name="ic_lock_expanded_desktop" /> 
-  <java-symbol type="string" name="global_actions_toggle_expanded_desktop_mode" />
-  <java-symbol type="string" name="global_actions_expanded_desktop_mode_off_status" />
-  <java-symbol type="string" name="global_actions_expanded_desktop_mode_on_status" />
+<!-- ===============================================================
+    Resources added in version 19 of the platform (KitKat)
+    =============================================================== -->
+  <eat-comment />
 
+  <public type="attr" name="keySet" id="0x010103db" />
+  <public type="attr" name="targetId" id="0x010103dc" />
+  <public type="attr" name="fromScene" id="0x010103dd" />
+  <public type="attr" name="toScene" id="0x010103de" />
+  <public type="attr" name="transition" id="0x010103df" />
+  <public type="attr" name="transitionOrdering" id="0x010103e0" />
+  <public type="attr" name="fadingMode" id="0x010103e1" />
+  <public type="attr" name="startDelay" id="0x010103e2" />
+  <public type="attr" name="ssp" id="0x010103e3" />
+  <public type="attr" name="sspPrefix" id="0x010103e4" />
+  <public type="attr" name="sspPattern" id="0x010103e5" />
+  <public type="attr" name="addPrintersActivity" id="0x010103e6" />
+  <public type="attr" name="vendor" id="0x010103e7" />
+  <public type="attr" name="category" id="0x010103e8" />
+  <public type="attr" name="isAsciiCapable" id="0x010103e9" />
+  <public type="attr" name="autoMirrored" id="0x010103ea" />
+  <public type="attr" name="supportsSwitchingToNextInputMethod" id="0x010103eb" />
+  <public type="attr" name="requireDeviceUnlock" id="0x010103ec" />
+  <public type="attr" name="apduServiceBanner" id="0x010103ed" />
+  <public type="attr" name="accessibilityLiveRegion" id="0x010103ee" />
+  <public type="attr" name="windowTranslucentStatus" id="0x010103ef" />
+  <public type="attr" name="windowTranslucentNavigation" id="0x010103f0" />
+  <public type="attr" name="advancedPrintOptionsActivity" id="0x10103f1"/>
 
-  <!-- Color picker API -->
-  <public type="string" name="color_picker" />
-  <public type="string" name="color_picker_hint" />
-  <public type="string" name="color_picker_hex" />
-  <public type="string" name="color_picker_arrow_right" />
+  <public type="style" name="Theme.Holo.NoActionBar.TranslucentDecor" id="0x010301e1" />
+  <public type="style" name="Theme.Holo.Light.NoActionBar.TranslucentDecor" id="0x010301e2" />
+  <public type="style" name="Theme.DeviceDefault.NoActionBar.TranslucentDecor" id="0x010301e3" />
+  <public type="style" name="Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor" id="0x010301e4" />
 
 </resources>

@@ -108,7 +108,7 @@ public class QwertyKeyListener extends BaseKeyListener {
 
         // QWERTY keyboard normal case
 
-        int i = event.getUnicodeChar(event.getMetaState() | getMetaState(content));
+        int i = event.getUnicodeChar(getMetaState(content, event));
 
         if (!mFullKeyboard) {
             int count = event.getRepeatCount();
@@ -180,6 +180,7 @@ public class QwertyKeyListener extends BaseKeyListener {
                     if (composed != 0) {
                         i = composed;
                         replace = true;
+                        dead = false;
                     }
                 }
 

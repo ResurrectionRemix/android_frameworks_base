@@ -26,6 +26,7 @@
 #include "jni.h"
 #include "JNIHelp.h"
 #include "android_runtime/AndroidRuntime.h"
+#include "android_runtime/Log.h"
 
 #include "MtpDatabase.h"
 #include "MtpDataPacket.h"
@@ -775,7 +776,8 @@ MtpResponseCode MyMtpDatabase::getObjectInfo(MtpObjectHandle handle,
     env->ReleaseIntArrayElements(mIntBuffer, intValues, 0);
 
     jlong* longValues = env->GetLongArrayElements(mLongBuffer, 0);
-    info.mDateModified = longValues[0];
+    info.mDateCreated = longValues[0];
+    info.mDateModified = longValues[1];
     env->ReleaseLongArrayElements(mLongBuffer, longValues, 0);
 
 //    info.mAssociationType = (format == MTP_FORMAT_ASSOCIATION ?

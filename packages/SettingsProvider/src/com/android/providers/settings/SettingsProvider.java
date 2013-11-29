@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.app.backup.BackupManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
@@ -33,6 +33,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.UserInfo;
 import android.content.res.AssetFileDescriptor;
 import android.database.AbstractCursor;
 import android.database.Cursor;
@@ -43,12 +44,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.DropBoxManager;
 import android.os.FileObserver;
 import android.os.ParcelFileDescriptor;
+import android.os.Process;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.provider.DrmStore;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -60,6 +62,8 @@ import android.util.SparseArray;
 public class SettingsProvider extends ContentProvider {
     private static final String TAG = "SettingsProvider";
     private static final boolean LOCAL_LOGV = false;
+
+    private static final boolean USER_CHECK_THROWS = true;
 
     private static final String TABLE_SYSTEM = "system";
     private static final String TABLE_SECURE = "secure";
@@ -107,6 +111,9 @@ public class SettingsProvider extends ContentProvider {
      */
     static final HashSet<String> sSecureGlobalKeys;
     static final HashSet<String> sSystemGlobalKeys;
+
+    private static final String DROPBOX_TAG_USERLOG = "restricted_profile_ssaid";
+
     static {
         // Keys (name column) from the 'secure' table that are now in the owner user's 'global'
         // table, shared across all users
@@ -322,8 +329,9 @@ public class SettingsProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mBackupManager = new BackupManager(getContext());
-        mUserManager = (UserManager) getContext().getSystemService(Context.USER_SERVICE);
+        mUserManager = UserManager.get(getContext());
 
+        setAppOps(AppOpsManager.OP_NONE, AppOpsManager.OP_WRITE_SETTINGS);
         establishDbTracking(UserHandle.USER_OWNER);
 
         IntentFilter userFilter = new IntentFilter();
@@ -473,6 +481,13 @@ public class SettingsProvider extends ContentProvider {
         try {
             final String value = c.moveToNext() ? c.getString(0) : null;
             if (value == null) {
+                // sanity-check the user before touching the db
+                final UserInfo user = mUserManager.getUserInfo(userHandle);
+                if (user == null) {
+                    // can happen due to races when deleting users; treat as benign
+                    return false;
+                }
+
                 final SecureRandom random = new SecureRandom();
                 final String newAndroidIdValue = Long.toHexString(random.nextLong());
                 final ContentValues values = new ContentValues();
@@ -485,6 +500,16 @@ public class SettingsProvider extends ContentProvider {
                 }
                 Slog.d(TAG, "Generated and saved new ANDROID_ID [" + newAndroidIdValue
                         + "] for user " + userHandle);
+                // Write a dropbox entry if it's a restricted profile
+                if (user.isRestricted()) {
+                    DropBoxManager dbm = (DropBoxManager)
+                            getContext().getSystemService(Context.DROPBOX_SERVICE);
+                    if (dbm != null && dbm.isTagEnabled(DROPBOX_TAG_USERLOG)) {
+                        dbm.addText(DROPBOX_TAG_USERLOG, System.currentTimeMillis()
+                                + ",restricted_profile_ssaid,"
+                                + newAndroidIdValue + "\n");
+                    }
+                }
             }
             return true;
         } finally {
@@ -500,6 +525,14 @@ public class SettingsProvider extends ContentProvider {
 
     // Lazy initialize the database helper and caches for this user, if necessary
     private DatabaseHelper getOrEstablishDatabase(int callingUser) {
+        if (callingUser >= Process.SYSTEM_UID) {
+            if (USER_CHECK_THROWS) {
+                throw new IllegalArgumentException("Uid rather than user handle: " + callingUser);
+            } else {
+                Slog.wtf(TAG, "establish db for uid rather than user: " + callingUser);
+            }
+        }
+
         long oldId = Binder.clearCallingIdentity();
         try {
             DatabaseHelper dbHelper = mOpenHelpers.get(callingUser);
@@ -587,7 +620,22 @@ public class SettingsProvider extends ContentProvider {
         // Put methods - new value is in the args bundle under the key named by
         // the Settings.NameValueTable.VALUE static.
         final String newValue = (args == null)
-        ? null : args.getString(Settings.NameValueTable.VALUE);
+                ? null : args.getString(Settings.NameValueTable.VALUE);
+
+        // Framework can't do automatic permission checking for calls, so we need
+        // to do it here.
+        if (getContext().checkCallingOrSelfPermission(android.Manifest.permission.WRITE_SETTINGS)
+                != PackageManager.PERMISSION_GRANTED) {
+            throw new SecurityException(
+                    String.format("Permission denial: writing to settings requires %1$s",
+                                  android.Manifest.permission.WRITE_SETTINGS));
+        }
+
+        // Also need to take care of app op.
+        if (getAppOpsManager().noteOp(AppOpsManager.OP_WRITE_SETTINGS, Binder.getCallingUid(),
+                getCallingPackage()) != AppOpsManager.MODE_ALLOWED) {
+            return null;
+        }
 
         final ContentValues values = new ContentValues();
         values.put(Settings.NameValueTable.NAME, request);
@@ -758,7 +806,7 @@ public class SettingsProvider extends ContentProvider {
      * @returns whether the database needs to be updated or not, also modifying
      *     'initialValues' if needed.
      */
-    private boolean parseProviderList(Uri url, ContentValues initialValues) {
+    private boolean parseProviderList(Uri url, ContentValues initialValues, int desiredUser) {
         String value = initialValues.getAsString(Settings.Secure.VALUE);
         String newProviders = null;
         if (value != null && value.length() > 1) {
@@ -771,7 +819,7 @@ public class SettingsProvider extends ContentProvider {
                 String providers = "";
                 String[] columns = {Settings.Secure.VALUE};
                 String where = Settings.Secure.NAME + "=\'" + Settings.Secure.LOCATION_PROVIDERS_ALLOWED + "\'";
-                Cursor cursor = query(url, columns, where, null, null);
+                Cursor cursor = queryForUser(url, columns, where, null, null, desiredUser);
                 if (cursor != null && cursor.getCount() == 1) {
                     try {
                         cursor.moveToFirst();
@@ -848,7 +896,7 @@ public class SettingsProvider extends ContentProvider {
         // Support enabling/disabling a single provider (using "+" or "-" prefix)
         String name = initialValues.getAsString(Settings.Secure.NAME);
         if (Settings.Secure.LOCATION_PROVIDERS_ALLOWED.equals(name)) {
-            if (!parseProviderList(url, initialValues)) return null;
+            if (!parseProviderList(url, initialValues, desiredUserHandle)) return null;
         }
 
         // If this is an insert() of a key that has been migrated to the global store,
@@ -961,7 +1009,7 @@ public class SettingsProvider extends ContentProvider {
         /*
          * When a client attempts to openFile the default ringtone or
          * notification setting Uri, we will proxy the call to the current
-         * default ringtone's Uri (if it is in the DRM or media provider).
+         * default ringtone's Uri (if it is in the media provider).
          */
         int ringtoneType = RingtoneManager.getDefaultType(uri);
         // Above call returns -1 if the Uri doesn't match a default type
@@ -972,23 +1020,9 @@ public class SettingsProvider extends ContentProvider {
             Uri soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, ringtoneType);
 
             if (soundUri != null) {
-                // Only proxy the openFile call to drm or media providers
+                // Proxy the openFile call to media provider
                 String authority = soundUri.getAuthority();
-                boolean isDrmAuthority = authority.equals(DrmStore.AUTHORITY);
-                if (isDrmAuthority || authority.equals(MediaStore.AUTHORITY) ||
-                        authority.equals(RingtoneManager.THEME_AUTHORITY)) {
-
-                    if (isDrmAuthority) {
-                        try {
-                            // Check DRM access permission here, since once we
-                            // do the below call the DRM will be checking our
-                            // permission, not our caller's permission
-                            DrmStore.enforceAccessDrmPermission(context);
-                        } catch (SecurityException e) {
-                            throw new FileNotFoundException(e.getMessage());
-                        }
-                    }
-
+                if (authority.equals(MediaStore.AUTHORITY)) {
                     return context.getContentResolver().openFileDescriptor(soundUri, mode);
                 }
             }
@@ -1003,7 +1037,7 @@ public class SettingsProvider extends ContentProvider {
         /*
          * When a client attempts to openFile the default ringtone or
          * notification setting Uri, we will proxy the call to the current
-         * default ringtone's Uri (if it is in the DRM or media provider).
+         * default ringtone's Uri (if it is in the media provider).
          */
         int ringtoneType = RingtoneManager.getDefaultType(uri);
         // Above call returns -1 if the Uri doesn't match a default type
@@ -1014,25 +1048,13 @@ public class SettingsProvider extends ContentProvider {
             Uri soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, ringtoneType);
 
             if (soundUri != null) {
-                // Only proxy the openFile call to drm or media providers
+                // Proxy the openFile call to media provider
                 String authority = soundUri.getAuthority();
-                boolean isDrmAuthority = authority.equals(DrmStore.AUTHORITY);
-                if (isDrmAuthority || authority.equals(MediaStore.AUTHORITY) ||
-                        authority.equals(RingtoneManager.THEME_AUTHORITY)) {
-
-                    if (isDrmAuthority) {
-                        try {
-                            // Check DRM access permission here, since once we
-                            // do the below call the DRM will be checking our
-                            // permission, not our caller's permission
-                            DrmStore.enforceAccessDrmPermission(context);
-                        } catch (SecurityException e) {
-                            throw new FileNotFoundException(e.getMessage());
-                        }
-                    }
-
+                if (authority.equals(MediaStore.AUTHORITY)) {
+                    ParcelFileDescriptor pfd = null;
                     try {
-                        return context.getContentResolver().openAssetFileDescriptor(soundUri, mode);
+                        pfd = context.getContentResolver().openFileDescriptor(soundUri, mode);
+                        return new AssetFileDescriptor(pfd, 0, -1);
                     } catch (FileNotFoundException ex) {
                         // fall through and open the fallback ringtone below
                     }

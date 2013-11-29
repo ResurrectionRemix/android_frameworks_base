@@ -92,15 +92,9 @@ public class CompatibilityInfo implements Parcelable {
      */
     public final float applicationInvertedScale;
 
-    /**
-     * Whether the application supports third-party theming.
-     */
-    public final boolean isThemeable;
-
     public CompatibilityInfo(ApplicationInfo appInfo, int screenLayout, int sw,
             boolean forceCompat) {
         int compatFlags = 0;
-        isThemeable = appInfo.isThemeable;
 
         if (appInfo.requiresSmallestWidthDp != 0 || appInfo.compatibleWidthLimitDp != 0
                 || appInfo.largestWidthLimitDp != 0) {
@@ -248,19 +242,17 @@ public class CompatibilityInfo implements Parcelable {
     }
 
     private CompatibilityInfo(int compFlags,
-            int dens, float scale, float invertedScale, boolean isThemeable) {
+            int dens, float scale, float invertedScale) {
         mCompatibilityFlags = compFlags;
         applicationDensity = dens;
         applicationScale = scale;
         applicationInvertedScale = invertedScale;
-        this.isThemeable = isThemeable;
     }
 
     private CompatibilityInfo() {
         this(NEVER_NEEDS_COMPAT, DisplayMetrics.DENSITY_DEVICE,
                 1.0f,
-                1.0f,
-                true);
+                1.0f);
     }
 
     /**
@@ -479,8 +471,7 @@ public class CompatibilityInfo implements Parcelable {
      * Compute the frame Rect for applications runs under compatibility mode.
      *
      * @param dm the display metrics used to compute the frame size.
-     * @param orientation the orientation of the screen.
-     * @param outRect the output parameter which will contain the result.
+     * @param outDm If non-null the width and height will be set to their scaled values.
      * @return Returns the scaling factor for the window.
      */
     public static float computeCompatibleScaling(DisplayMetrics dm, DisplayMetrics outDm) {
@@ -526,13 +517,15 @@ public class CompatibilityInfo implements Parcelable {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
         try {
             CompatibilityInfo oc = (CompatibilityInfo)o;
             if (mCompatibilityFlags != oc.mCompatibilityFlags) return false;
             if (applicationDensity != oc.applicationDensity) return false;
             if (applicationScale != oc.applicationScale) return false;
             if (applicationInvertedScale != oc.applicationInvertedScale) return false;
-            if (isThemeable != oc.isThemeable) return false;
             return true;
         } catch (ClassCastException e) {
             return false;
@@ -570,7 +563,6 @@ public class CompatibilityInfo implements Parcelable {
         result = 31 * result + applicationDensity;
         result = 31 * result + Float.floatToIntBits(applicationScale);
         result = 31 * result + Float.floatToIntBits(applicationInvertedScale);
-        result = 31 * result + (isThemeable ? 1 : 0);
         return result;
     }
 
@@ -585,15 +577,16 @@ public class CompatibilityInfo implements Parcelable {
         dest.writeInt(applicationDensity);
         dest.writeFloat(applicationScale);
         dest.writeFloat(applicationInvertedScale);
-        dest.writeInt(isThemeable ? 1 : 0);
     }
 
     public static final Parcelable.Creator<CompatibilityInfo> CREATOR
             = new Parcelable.Creator<CompatibilityInfo>() {
+        @Override
         public CompatibilityInfo createFromParcel(Parcel source) {
             return new CompatibilityInfo(source);
         }
 
+        @Override
         public CompatibilityInfo[] newArray(int size) {
             return new CompatibilityInfo[size];
         }
@@ -604,6 +597,5 @@ public class CompatibilityInfo implements Parcelable {
         applicationDensity = source.readInt();
         applicationScale = source.readFloat();
         applicationInvertedScale = source.readFloat();
-        isThemeable = source.readInt() == 1 ? true : false;
     }
 }

@@ -109,7 +109,7 @@ public class SpellChecker implements SpellCheckerSessionListener {
         mIds = new int[size];
         mSpellCheckSpans = new SpellCheckSpan[size];
 
-        setLocale(mTextView.getTextServicesLocale());
+        setLocale(mTextView.getSpellCheckerLocale());
 
         mCookie = hashCode();
     }
@@ -120,7 +120,8 @@ public class SpellChecker implements SpellCheckerSessionListener {
         mTextServicesManager = (TextServicesManager) mTextView.getContext().
                 getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE);
         if (!mTextServicesManager.isSpellCheckerEnabled()
-                ||  mTextServicesManager.getCurrentSpellCheckerSubtype(true) == null) {
+                || mCurrentLocale == null
+                || mTextServicesManager.getCurrentSpellCheckerSubtype(true) == null) {
             mSpellCheckerSession = null;
         } else {
             mSpellCheckerSession = mTextServicesManager.newSpellCheckerSession(
@@ -146,8 +147,10 @@ public class SpellChecker implements SpellCheckerSessionListener {
 
         resetSession();
 
-        // Change SpellParsers' wordIterator locale
-        mWordIterator = new WordIterator(locale);
+        if (locale != null) {
+            // Change SpellParsers' wordIterator locale
+            mWordIterator = new WordIterator(locale);
+        }
 
         // This class is the listener for locale change: warn other locale-aware objects
         mTextView.onLocaleChanged();
@@ -222,9 +225,9 @@ public class SpellChecker implements SpellCheckerSessionListener {
         if (DBG) {
             Log.d(TAG, "Start spell-checking: " + start + ", " + end);
         }
-        final Locale locale = mTextView.getTextServicesLocale();
+        final Locale locale = mTextView.getSpellCheckerLocale();
         final boolean isSessionActive = isSessionActive();
-        if (mCurrentLocale == null || (!(mCurrentLocale.equals(locale)))) {
+        if (locale == null || mCurrentLocale == null || (!(mCurrentLocale.equals(locale)))) {
             setLocale(locale);
             // Re-check the entire text
             start = 0;
@@ -749,5 +752,40 @@ public class SpellChecker implements SpellCheckerSessionListener {
                 editable.removeSpan(span);
             }
         }
+    }
+
+    public static boolean haveWordBoundariesChanged(final Editable editable, final int start,
+            final int end, final int spanStart, final int spanEnd) {
+        final boolean haveWordBoundariesChanged;
+        if (spanEnd != start && spanStart != end) {
+            haveWordBoundariesChanged = true;
+            if (DBG) {
+                Log.d(TAG, "(1) Text inside the span has been modified. Remove.");
+            }
+        } else if (spanEnd == start && start < editable.length()) {
+            final int codePoint = Character.codePointAt(editable, start);
+            haveWordBoundariesChanged = Character.isLetterOrDigit(codePoint);
+            if (DBG) {
+                Log.d(TAG, "(2) Characters have been appended to the spanned text. "
+                        + (haveWordBoundariesChanged ? "Remove.<" : "Keep. <") + (char)(codePoint)
+                        + ">, " + editable + ", " + editable.subSequence(spanStart, spanEnd) + ", "
+                        + start);
+            }
+        } else if (spanStart == end && end > 0) {
+            final int codePoint = Character.codePointBefore(editable, end);
+            haveWordBoundariesChanged = Character.isLetterOrDigit(codePoint);
+            if (DBG) {
+                Log.d(TAG, "(3) Characters have been prepended to the spanned text. "
+                        + (haveWordBoundariesChanged ? "Remove.<" : "Keep.<") + (char)(codePoint)
+                        + ">, " + editable + ", " + editable.subSequence(spanStart, spanEnd) + ", "
+                        + end);
+            }
+        } else {
+            if (DBG) {
+                Log.d(TAG, "(4) Characters adjacent to the spanned text were deleted. Keep.");
+            }
+            haveWordBoundariesChanged = false;
+        }
+        return haveWordBoundariesChanged;
     }
 }

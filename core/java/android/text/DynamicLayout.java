@@ -502,10 +502,19 @@ public class DynamicLayout extends Layout
         }
 
         mNumberOfBlocks = newNumberOfBlocks;
+        int newFirstChangedBlock;
         final int deltaLines = newLineCount - (endLine - startLine + 1);
-        for (int i = firstBlock + numAddedBlocks; i < mNumberOfBlocks; i++) {
-            mBlockEndLines[i] += deltaLines;
+        if (deltaLines != 0) {
+            // Display list whose index is >= mIndexFirstChangedBlock is valid
+            // but it needs to update its drawing location.
+            newFirstChangedBlock = firstBlock + numAddedBlocks;
+            for (int i = newFirstChangedBlock; i < mNumberOfBlocks; i++) {
+                mBlockEndLines[i] += deltaLines;
+            }
+        } else {
+            newFirstChangedBlock = mNumberOfBlocks;
         }
+        mIndexFirstChangedBlock = Math.min(mIndexFirstChangedBlock, newFirstChangedBlock);
 
         int blockIndex = firstBlock;
         if (createBlockBefore) {
@@ -557,6 +566,20 @@ public class DynamicLayout extends Layout
      */
     public int getNumberOfBlocks() {
         return mNumberOfBlocks;
+    }
+
+    /**
+     * @hide
+     */
+    public int getIndexFirstChangedBlock() {
+        return mIndexFirstChangedBlock;
+    }
+
+    /**
+     * @hide
+     */
+    public void setIndexFirstChangedBlock(int i) {
+        mIndexFirstChangedBlock = i;
     }
 
     @Override
@@ -697,6 +720,8 @@ public class DynamicLayout extends Layout
     private int[] mBlockIndices;
     // Number of items actually currently being used in the above 2 arrays
     private int mNumberOfBlocks;
+    // The first index of the blocks whose locations are changed
+    private int mIndexFirstChangedBlock;
 
     private int mTopPadding, mBottomPadding;
 

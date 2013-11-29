@@ -22,9 +22,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.Message;
+import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+
+import com.android.server.net.BaseNetworkObserver;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,7 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * ConnectivityService.
  * @hide
  */
-public class EthernetDataTracker implements NetworkStateTracker {
+public class EthernetDataTracker extends BaseNetworkStateTracker {
     private static final String NETWORKTYPE = "ETHERNET";
     private static final String TAG = "Ethernet";
 
@@ -45,15 +48,11 @@ public class EthernetDataTracker implements NetworkStateTracker {
     private AtomicBoolean mDefaultRouteSet = new AtomicBoolean(false);
 
     private static boolean mLinkUp;
-    private LinkProperties mLinkProperties;
-    private LinkCapabilities mLinkCapabilities;
-    private NetworkInfo mNetworkInfo;
     private InterfaceObserver mInterfaceObserver;
     private String mHwAddr;
 
     /* For sending events to connectivity service handler */
     private Handler mCsHandler;
-    private Context mContext;
 
     private static EthernetDataTracker sInstance;
     private static String sIfaceMatch = "";
@@ -61,7 +60,7 @@ public class EthernetDataTracker implements NetworkStateTracker {
 
     private INetworkManagementService mNMService;
 
-    private static class InterfaceObserver extends INetworkManagementEventObserver.Stub {
+    private static class InterfaceObserver extends BaseNetworkObserver {
         private EthernetDataTracker mTracker;
 
         InterfaceObserver(EthernetDataTracker tracker) {
@@ -69,12 +68,14 @@ public class EthernetDataTracker implements NetworkStateTracker {
             mTracker = tracker;
         }
 
+        @Override
         public void interfaceStatusChanged(String iface, boolean up) {
             Log.d(TAG, "Interface status changed: " + iface + (up ? "up" : "down"));
         }
 
+        @Override
         public void interfaceLinkStateChanged(String iface, boolean up) {
-            if (mIface.equals(iface) && mLinkUp != up) {
+            if (mIface.equals(iface)) {
                 Log.d(TAG, "Interface " + iface + " link " + (up ? "up" : "down"));
                 mLinkUp = up;
                 mTracker.mNetworkInfo.setIsAvailable(up);
@@ -88,20 +89,14 @@ public class EthernetDataTracker implements NetworkStateTracker {
             }
         }
 
+        @Override
         public void interfaceAdded(String iface) {
             mTracker.interfaceAdded(iface);
         }
 
+        @Override
         public void interfaceRemoved(String iface) {
             mTracker.interfaceRemoved(iface);
-        }
-
-        public void limitReached(String limitName, String iface) {
-            // Ignored.
-        }
-
-        public void interfaceClassDataActivityChanged(String label, boolean active) {
-            // Ignored.
         }
     }
 
@@ -170,14 +165,14 @@ public class EthernetDataTracker implements NetworkStateTracker {
     private void runDhcp() {
         Thread dhcpThread = new Thread(new Runnable() {
             public void run() {
-                DhcpInfoInternal dhcpInfoInternal = new DhcpInfoInternal();
-                if (!NetworkUtils.runDhcp(mIface, dhcpInfoInternal)) {
+                DhcpResults dhcpResults = new DhcpResults();
+                if (!NetworkUtils.runDhcp(mIface, dhcpResults)) {
                     Log.e(TAG, "DHCP request error:" + NetworkUtils.getDhcpError());
                     return;
                 }
-                mLinkProperties = dhcpInfoInternal.makeLinkProperties();
-                mLinkProperties.setInterfaceName(mIface);
+                mLinkProperties = dhcpResults.linkProperties;
 
+                mNetworkInfo.setIsAvailable(true);
                 mNetworkInfo.setDetailedState(DetailedState.CONNECTED, null, mHwAddr);
                 Message msg = mCsHandler.obtainMessage(EVENT_STATE_CHANGED, mNetworkInfo);
                 msg.sendToTarget();
@@ -276,6 +271,11 @@ public class EthernetDataTracker implements NetworkStateTracker {
 
     @Override
     public void captivePortalCheckComplete() {
+        // not implemented
+    }
+
+    @Override
+    public void captivePortalCheckCompleted(boolean isCaptivePortal) {
         // not implemented
     }
 
@@ -406,6 +406,21 @@ public class EthernetDataTracker implements NetworkStateTracker {
     }
 
     public void setDependencyMet(boolean met) {
+        // not supported on this network
+    }
+
+    @Override
+    public void addStackedLink(LinkProperties link) {
+        mLinkProperties.addStackedLink(link);
+    }
+
+    @Override
+    public void removeStackedLink(LinkProperties link) {
+        mLinkProperties.removeStackedLink(link);
+    }
+
+    @Override
+    public void supplyMessenger(Messenger messenger) {
         // not supported on this network
     }
 }

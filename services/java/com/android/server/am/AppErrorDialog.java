@@ -16,8 +16,6 @@
 
 package com.android.server.am;
 
-import static android.view.WindowManager.LayoutParams.FLAG_SYSTEM_ERROR;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -25,7 +23,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.WindowManager;
 
-class AppErrorDialog extends BaseErrorDialog {
+final class AppErrorDialog extends BaseErrorDialog {
     private final ActivityManagerService mService;
     private final AppErrorResult mResult;
     private final ProcessRecord mProc;
@@ -33,13 +31,12 @@ class AppErrorDialog extends BaseErrorDialog {
     // Event 'what' codes
     static final int FORCE_QUIT = 0;
     static final int FORCE_QUIT_AND_REPORT = 1;
-    static final int FORCE_QUIT_AND_RESET_PERMS = 2;
 
     // 5-minute timeout, then we automatically dismiss the crash dialog
     static final long DISMISS_TIMEOUT = 1000 * 60 * 5;
     
     public AppErrorDialog(Context context, ActivityManagerService service,
-            AppErrorResult result, ProcessRecord app, boolean showRevoked) {
+            AppErrorResult result, ProcessRecord app) {
         super(context);
         
         Resources res = context.getResources();
@@ -50,26 +47,14 @@ class AppErrorDialog extends BaseErrorDialog {
         CharSequence name;
         if ((app.pkgList.size() == 1) &&
                 (name=context.getPackageManager().getApplicationLabel(app.info)) != null) {
-            if (showRevoked) {
-                setMessage(res.getString(
-                        com.android.internal.R.string.aerr_revoked_application,
-                        name.toString(), app.info.processName));
-            } else {
-                setMessage(res.getString(
-                        com.android.internal.R.string.aerr_application,
-                        name.toString(), app.info.processName));
-            }
+            setMessage(res.getString(
+                    com.android.internal.R.string.aerr_application,
+                    name.toString(), app.info.processName));
         } else {
             name = app.processName;
-            if (showRevoked) {
-                setMessage(res.getString(
-                        com.android.internal.R.string.aerr_revoked_process,
-                        name.toString()));
-            } else {
-                setMessage(res.getString(
-                        com.android.internal.R.string.aerr_process,
-                        name.toString()));
-            }
+            setMessage(res.getString(
+                    com.android.internal.R.string.aerr_process,
+                    name.toString()));
         }
 
         setCancelable(false);
@@ -78,24 +63,17 @@ class AppErrorDialog extends BaseErrorDialog {
                 res.getText(com.android.internal.R.string.force_close),
                 mHandler.obtainMessage(FORCE_QUIT));
 
-        // disable the error send if there are revoked permissions.
-        if (!showRevoked && app.errorReportReceiver != null) {
+        if (app.errorReportReceiver != null) {
             setButton(DialogInterface.BUTTON_NEGATIVE,
                     res.getText(com.android.internal.R.string.report),
                     mHandler.obtainMessage(FORCE_QUIT_AND_REPORT));
         }
 
-        if (showRevoked) {
-            setButton(DialogInterface.BUTTON_NEGATIVE,
-                    res.getText(com.android.internal.R.string.reset_perms),
-                    mHandler.obtainMessage(FORCE_QUIT_AND_RESET_PERMS));
-        }
-
         setTitle(res.getText(com.android.internal.R.string.aerr_title));
-        getWindow().addFlags(FLAG_SYSTEM_ERROR);
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.setTitle("Application Error: " + app.info.processName);
-        attrs.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
+        attrs.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SYSTEM_ERROR
+                | WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
         getWindow().setAttributes(attrs);
         if (app.persistent) {
             getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);

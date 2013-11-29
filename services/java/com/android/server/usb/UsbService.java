@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.hardware.usb.IUsbManager;
 import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbDevice;
@@ -79,8 +78,6 @@ public class UsbService extends IUsbManager.Stub {
         if (new File("/sys/class/android_usb").exists()) {
             mDeviceManager = new UsbDeviceManager(context);
         }
-        else if(new File(Resources.getSystem().getString(com.android.internal.R.string.config_legacyUmsLunFile)).exists())
-            mDeviceManager = new LegacyUsbDeviceManager(context);
 
         setCurrentUser(UserHandle.USER_OWNER);
 
@@ -255,6 +252,12 @@ public class UsbService extends IUsbManager.Stub {
     public void denyUsbDebugging() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_USB, null);
         mDeviceManager.denyUsbDebugging();
+    }
+
+    @Override
+    public void clearUsbDebuggingKeys() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_USB, null);
+        mDeviceManager.clearUsbDebuggingKeys();
     }
 
     @Override

@@ -19,7 +19,9 @@
 <resources>
     <drawable name="notification_number_text_color">#ffffffff</drawable>
     <drawable name="ticker_background_color">#ff1d1d1d</drawable>
-    <drawable name="status_bar_background">#ff000000</drawable>
+    <drawable name="system_bar_background">@color/system_bar_background_opaque</drawable>
+    <color name="system_bar_background_opaque">#ff000000</color>
+    <color name="system_bar_background_semi_transparent">#66000000</color> <!-- 40% black -->
     <color name="notification_panel_solid_background">#ff000000</color>
     <drawable name="status_bar_recents_app_thumbnail_background">#88000000</drawable>
     <color name="status_bar_recents_app_label_color">#ffffffff</color>
@@ -27,39 +29,12 @@
     <color name="notification_list_shadow_top">#80000000</color>
     <drawable name="recents_callout_line">#99ffffff</drawable>
     <drawable name="notification_item_background_legacy_color">#ffaaaaaa</drawable>
-    <drawable name="intruder_bg_pressed">#ff33B5E5</drawable>
+    <drawable name="heads_up_notification_bg_pressed">#ff33B5E5</drawable>
     <drawable name="notification_header_bg">#FF000000</drawable>
-    <drawable name="nav_bar_bg">#ff000000</drawable>
-
-    <!-- ==================== system bar only ==================== -->
-    <drawable name="system_bar_background">#ff000000</drawable>
-    <!-- the darkening filter applied to notifications -->
-    <drawable name="notification_icon_area_smoke">#aa000000</drawable>
     <color name="notification_panel_scrim_color">#B0000000</color>
-    <color name="qs_tile_user_label">#CC000000</color>
-    <color name="toggle_text">#ffffffff</color>
-    <color name="toggle_text_changing_state_color">#ff787878</color>
-    <color name="toggle_image_changing_state_overlay">@color/toggle_text_changing_state_color</color>
-
-    <!-- PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE -->
-    <color name="pie_menu_background">#C0000000</color>
-    <color name="alpha_mask">#aa000000</color>
-    <color name="opaque_mask">#ff000000</color>
-    <color name="snap_background">#ffffffff</color>
-    <color name="pie_background">#aa333333</color>
-    <color name="pie_button">#b2ffffff</color>
-    <color name="pie_select">#aa33b5e5</color>
-    <color name="pie_outlines">#ffffffff</color>
-    <color name="chevron_left">#0999cc</color>
-    <color name="chevron_right">#33b5e5</color>
-    <color name="battery_juice">#33b5e5</color>
-    <color name="battery_juice_low">#ffbb33</color>
-    <color name="battery_juice_critical">#ff4444</color>
-    <color name="battery_background">#ffffff</color>
-    <color name="status">#ffffff</color>
-
-   <!-- Halo colors -->
-   <color name="halo_ping_color">#ff33b5e5</color>
-   <color name="halo_text_color">#ffffffff</color>
-
+    <color name="batterymeter_frame_color">#66FFFFFF</color><!-- 40% white -->
+    <color name="batterymeter_charge_color">#FFFFFFFF</color>
+    <color name="batterymeter_bolt_color">#B2000000</color><!-- 70% black -->
+    <color name="status_bar_clock_color">#FFFFFFFF</color>
+    <color name="status_bar_traffic_color">#FFFFFFFF</color>
 </resources>

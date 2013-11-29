@@ -111,9 +111,9 @@ public class PackageManagerSettingsTests extends AndroidTestCase {
 
     private void writePackagesList() {
         writeFile(new File(getContext().getFilesDir(), "system/packages.list"),
-                ( "com.google.app1 11000 0 /data/data/com.google.app1"
-                + "com.google.app2 11001 0 /data/data/com.google.app2"
-                + "com.android.app3 11030 0 /data/data/com.android.app3")
+                ( "com.google.app1 11000 0 /data/data/com.google.app1 seinfo1"
+                + "com.google.app2 11001 0 /data/data/com.google.app2 seinfo2"
+                + "com.android.app3 11030 0 /data/data/com.android.app3 seinfo3")
                 .getBytes());
     }
 
@@ -139,7 +139,7 @@ public class PackageManagerSettingsTests extends AndroidTestCase {
         // Write the package files and make sure they're parsed properly the first time
         writeOldFiles();
         Settings settings = new Settings(getContext(), getContext().getFilesDir());
-        assertEquals(true, settings.readLPw(null, 0, false));
+        assertEquals(true, settings.readLPw(null, null, 0, false));
         assertNotNull(settings.peekPackageLPr(PACKAGE_NAME_3));
         assertNotNull(settings.peekPackageLPr(PACKAGE_NAME_1));
 
@@ -157,11 +157,11 @@ public class PackageManagerSettingsTests extends AndroidTestCase {
         // Write the package files and make sure they're parsed properly the first time
         writeOldFiles();
         Settings settings = new Settings(getContext(), getContext().getFilesDir());
-        assertEquals(true, settings.readLPw(null, 0, false));
+        assertEquals(true, settings.readLPw(null, null, 0, false));
 
         // Create Settings again to make it read from the new files
         settings = new Settings(getContext(), getContext().getFilesDir());
-        assertEquals(true, settings.readLPw(null, 0, false));
+        assertEquals(true, settings.readLPw(null, null, 0, false));
 
         PackageSetting ps = settings.peekPackageLPr(PACKAGE_NAME_2);
         assertEquals(COMPONENT_ENABLED_STATE_DISABLED_USER, ps.getEnabled(0));
@@ -172,12 +172,12 @@ public class PackageManagerSettingsTests extends AndroidTestCase {
         // Write the package files and make sure they're parsed properly the first time
         writeOldFiles();
         Settings settings = new Settings(getContext(), getContext().getFilesDir());
-        assertEquals(true, settings.readLPw(null, 0, false));
+        assertEquals(true, settings.readLPw(null, null, 0, false));
 
         // Enable/Disable a package
         PackageSetting ps = settings.peekPackageLPr(PACKAGE_NAME_1);
-        ps.setEnabled(COMPONENT_ENABLED_STATE_DISABLED, 0);
-        ps.setEnabled(COMPONENT_ENABLED_STATE_ENABLED, 1);
+        ps.setEnabled(COMPONENT_ENABLED_STATE_DISABLED, 0, null);
+        ps.setEnabled(COMPONENT_ENABLED_STATE_ENABLED, 1, null);
         assertEquals(COMPONENT_ENABLED_STATE_DISABLED, ps.getEnabled(0));
         assertEquals(COMPONENT_ENABLED_STATE_ENABLED, ps.getEnabled(1));
 

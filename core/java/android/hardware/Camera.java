@@ -16,6 +16,7 @@
 
 package android.hardware;
 
+import android.app.ActivityThread;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.content.Context;
@@ -30,6 +31,11 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.RSIllegalArgumentException;
+import android.renderscript.Type;
 import android.util.Log;
 import android.text.TextUtils;
 import android.view.Surface;
@@ -151,6 +157,7 @@ public class Camera {
     private PictureCallback mRawImageCallback;
     private PictureCallback mJpegCallback;
     private PreviewCallback mPreviewCallback;
+    private boolean mUsingPreviewAllocation;
     private PictureCallback mPostviewCallback;
     private AutoFocusCallback mAutoFocusCallback;
     private AutoFocusMoveCallback mAutoFocusMoveCallback;
@@ -326,6 +333,7 @@ public class Camera {
         mJpegCallback = null;
         mPreviewCallback = null;
         mPostviewCallback = null;
+        mUsingPreviewAllocation = false;
         mZoomListener = null;
 
         Looper looper;
@@ -337,7 +345,9 @@ public class Camera {
             mEventHandler = null;
         }
 
-        native_setup(new WeakReference<Camera>(this), cameraId);
+        String packageName = ActivityThread.currentPackageName();
+
+        native_setup(new WeakReference<Camera>(this), cameraId, packageName);
     }
 
     /**
@@ -350,7 +360,9 @@ public class Camera {
         release();
     }
 
-    private native final void native_setup(Object camera_this, int cameraId);
+    private native final void native_setup(Object camera_this, int cameraId,
+                                           String packageName);
+
     private native final void native_release();
 
 
@@ -582,6 +594,9 @@ public class Camera {
         mPreviewCallback = cb;
         mOneShot = false;
         mWithBuffer = false;
+        if (cb != null) {
+            mUsingPreviewAllocation = false;
+        }
         // Always use one-shot mode. We fake camera preview mode by
         // doing one-shot preview continuously.
         setHasPreviewCallback(cb != null, false);
@@ -605,6 +620,9 @@ public class Camera {
         mPreviewCallback = cb;
         mOneShot = true;
         mWithBuffer = false;
+        if (cb != null) {
+            mUsingPreviewAllocation = false;
+        }
         setHasPreviewCallback(cb != null, false);
     }
 
@@ -640,6 +658,9 @@ public class Camera {
         mPreviewCallback = cb;
         mOneShot = false;
         mWithBuffer = true;
+        if (cb != null) {
+            mUsingPreviewAllocation = false;
+        }
         setHasPreviewCallback(cb != null, true);
     }
 
@@ -738,6 +759,134 @@ public class Camera {
 
     private native final void _addCallbackBuffer(
                                 byte[] callbackBuffer, int msgType);
+
+    /**
+     * <p>Create a {@link android.renderscript RenderScript}
+     * {@link android.renderscript.Allocation Allocation} to use as a
+     * destination of preview callback frames. Use
+     * {@link #setPreviewCallbackAllocation setPreviewCallbackAllocation} to use
+     * the created Allocation as a destination for camera preview frames.</p>
+     *
+     * <p>The Allocation will be created with a YUV type, and its contents must
+     * be accessed within Renderscript with the {@code rsGetElementAtYuv_*}
+     * accessor methods. Its size will be based on the current
+     * {@link Parameters#getPreviewSize preview size} configured for this
+     * camera.</p>
+     *
+     * @param rs the RenderScript context for this Allocation.
+     * @param usage additional usage flags to set for the Allocation. The usage
+     *   flag {@link android.renderscript.Allocation#USAGE_IO_INPUT} will always
+     *   be set on the created Allocation, but additional flags may be provided
+     *   here.
+     * @return a new YUV-type Allocation with dimensions equal to the current
+     *   preview size.
+     * @throws RSIllegalArgumentException if the usage flags are not compatible
+     *   with an YUV Allocation.
+     * @see #setPreviewCallbackAllocation
+     * @hide
+     */
+    public final Allocation createPreviewAllocation(RenderScript rs, int usage)
+            throws RSIllegalArgumentException {
+        Parameters p = getParameters();
+        Size previewSize = p.getPreviewSize();
+        Type.Builder yuvBuilder = new Type.Builder(rs,
+                Element.createPixel(rs,
+                        Element.DataType.UNSIGNED_8,
+                        Element.DataKind.PIXEL_YUV));
+        // Use YV12 for wide compatibility. Changing this requires also
+        // adjusting camera service's format selection.
+        yuvBuilder.setYuvFormat(ImageFormat.YV12);
+        yuvBuilder.setX(previewSize.width);
+        yuvBuilder.setY(previewSize.height);
+
+        Allocation a = Allocation.createTyped(rs, yuvBuilder.create(),
+                usage | Allocation.USAGE_IO_INPUT);
+
+        return a;
+    }
+
+    /**
+     * <p>Set an {@link android.renderscript.Allocation Allocation} as the
+     * target of preview callback data. Use this method for efficient processing
+     * of camera preview data with RenderScript. The Allocation must be created
+     * with the {@link #createPreviewAllocation createPreviewAllocation }
+     * method.</p>
+     *
+     * <p>Setting a preview allocation will disable any active preview callbacks
+     * set by {@link #setPreviewCallback setPreviewCallback} or
+     * {@link #setPreviewCallbackWithBuffer setPreviewCallbackWithBuffer}, and
+     * vice versa. Using a preview allocation still requires an active standard
+     * preview target to be set, either with
+     * {@link #setPreviewTexture setPreviewTexture} or
+     * {@link #setPreviewDisplay setPreviewDisplay}.</p>
+     *
+     * <p>To be notified when new frames are available to the Allocation, use
+     * {@link android.renderscript.Allocation#setIoInputNotificationHandler Allocation.setIoInputNotificationHandler}. To
+     * update the frame currently accessible from the Allocation to the latest
+     * preview frame, call
+     * {@link android.renderscript.Allocation#ioReceive Allocation.ioReceive}.</p>
+     *
+     * <p>To disable preview into the Allocation, call this method with a
+     * {@code null} parameter.</p>
+     *
+     * <p>Once a preview allocation is set, the preview size set by
+     * {@link Parameters#setPreviewSize setPreviewSize} cannot be changed. If
+     * you wish to change the preview size, first remove the preview allocation
+     * by calling {@code setPreviewCallbackAllocation(null)}, then change the
+     * preview size, create a new preview Allocation with
+     * {@link #createPreviewAllocation createPreviewAllocation}, and set it as
+     * the new preview callback allocation target.</p>
+     *
+     * <p>If you are using the preview data to create video or still images,
+     * strongly consider using {@link android.media.MediaActionSound} to
+     * properly indicate image capture or recording start/stop to the user.</p>
+     *
+     * @param previewAllocation the allocation to use as destination for preview
+     * @throws IOException if configuring the camera to use the Allocation for
+     *   preview fails.
+     * @throws IllegalArgumentException if the Allocation's dimensions or other
+     *   parameters don't meet the requirements.
+     * @see #createPreviewAllocation
+     * @see #setPreviewCallback
+     * @see #setPreviewCallbackWithBuffer
+     * @hide
+     */
+    public final void setPreviewCallbackAllocation(Allocation previewAllocation)
+            throws IOException {
+        Surface previewSurface = null;
+        if (previewAllocation != null) {
+             Parameters p = getParameters();
+             Size previewSize = p.getPreviewSize();
+             if (previewSize.width != previewAllocation.getType().getX() ||
+                     previewSize.height != previewAllocation.getType().getY()) {
+                 throw new IllegalArgumentException(
+                     "Allocation dimensions don't match preview dimensions: " +
+                     "Allocation is " +
+                     previewAllocation.getType().getX() +
+                     ", " +
+                     previewAllocation.getType().getY() +
+                     ". Preview is " + previewSize.width + ", " +
+                     previewSize.height);
+             }
+             if ((previewAllocation.getUsage() &
+                             Allocation.USAGE_IO_INPUT) == 0) {
+                 throw new IllegalArgumentException(
+                     "Allocation usage does not include USAGE_IO_INPUT");
+             }
+             if (previewAllocation.getType().getElement().getDataKind() !=
+                     Element.DataKind.PIXEL_YUV) {
+                 throw new IllegalArgumentException(
+                     "Allocation is not of a YUV type");
+             }
+             previewSurface = previewAllocation.getSurface();
+             mUsingPreviewAllocation = true;
+         } else {
+             mUsingPreviewAllocation = false;
+         }
+         setPreviewCallbackSurface(previewSurface);
+    }
+
+    private native final void setPreviewCallbackSurface(Surface s);
 
     private class EventHandler extends Handler
     {
@@ -995,12 +1144,6 @@ public class Camera {
     }
 
     private native void enableFocusMoveCallback(int enable);
-
-    /**
-     * Send a raw command to the camera driver
-     * @hide
-     */
-    public native void sendRawCommand(int arg1, int arg2, int arg3);
 
     /**
      * Callback interface used to signal the moment of actual image capture.
@@ -1493,7 +1636,17 @@ public class Camera {
      * @see #getParameters()
      */
     public void setParameters(Parameters params) {
-        Log.v(TAG, "setParameters:"+params.flatten());
+        // If using preview allocations, don't allow preview size changes
+        if (mUsingPreviewAllocation) {
+            Size newPreviewSize = params.getPreviewSize();
+            Size currentPreviewSize = getParameters().getPreviewSize();
+            if (newPreviewSize.width != currentPreviewSize.width ||
+                    newPreviewSize.height != currentPreviewSize.height) {
+                throw new IllegalStateException("Cannot change preview size" +
+                        " while a preview allocation is configured.");
+            }
+        }
+
         native_setParameters(params.flatten());
     }
 
@@ -1692,7 +1845,6 @@ public class Camera {
         private static final String KEY_SCENE_MODE = "scene-mode";
         private static final String KEY_FLASH_MODE = "flash-mode";
         private static final String KEY_FOCUS_MODE = "focus-mode";
-        private static final String KEY_ISO_MODE = "iso";
         private static final String KEY_FOCUS_AREAS = "focus-areas";
         private static final String KEY_MAX_NUM_FOCUS_AREAS = "max-num-focus-areas";
         private static final String KEY_FOCAL_LENGTH = "focal-length";
@@ -1723,9 +1875,6 @@ public class Camera {
         private static final String KEY_VIDEO_SNAPSHOT_SUPPORTED = "video-snapshot-supported";
         private static final String KEY_VIDEO_STABILIZATION = "video-stabilization";
         private static final String KEY_VIDEO_STABILIZATION_SUPPORTED = "video-stabilization-supported";
-        private static final String KEY_POWER_MODE_SUPPORTED = "power-mode-supported";
-
-        private static final String KEY_POWER_MODE = "power-mode";
 
         // Parameter key suffix for supported values.
         private static final String SUPPORTED_VALUES_SUFFIX = "-values";
@@ -1760,10 +1909,6 @@ public class Camera {
         public static final String ANTIBANDING_60HZ = "60hz";
         public static final String ANTIBANDING_OFF = "off";
 
-        // Values for POWER MODE
-        public static final String LOW_POWER = "Low_Power";
-        public static final String NORMAL_POWER = "Normal_Power";
-
         // Values for flash mode settings.
         /**
          * Flash will not be fired.
@@ -1792,22 +1937,6 @@ public class Camera {
          * This can also be used for video recording.
          */
         public static final String FLASH_MODE_TORCH = "torch";
-
-        //Values for ISO settings
-        /** @hide */
-        public static final String ISO_AUTO = "auto";
-        /** @hide */
-        public static final String ISO_HJR = "ISO_HJR";
-        /** @hide */
-        public static final String ISO_100 = "ISO100";
-        /** @hide */
-        public static final String ISO_200 = "ISO200";
-        /** @hide */
-        public static final String ISO_400 = "ISO400";
-        /** @hide */
-        public static final String ISO_800 = "ISO800";
-        /** @hide */
-        public static final String ISO_1600 = "ISO1600";
 
         /**
          * Scene mode is off.
@@ -2369,7 +2498,7 @@ public class Camera {
         }
 
         /**
-         * Sets the maximum and maximum preview fps. This controls the rate of
+         * Sets the minimum and maximum preview fps. This controls the rate of
          * preview frames received in {@link PreviewCallback}. The minimum and
          * maximum preview fps must be one of the elements from {@link
          * #getSupportedPreviewFpsRange}.
@@ -2640,21 +2769,24 @@ public class Camera {
          * JPEG {@link PictureCallback}. The camera driver may set orientation
          * in the EXIF header without rotating the picture. Or the driver may
          * rotate the picture and the EXIF thumbnail. If the Jpeg picture is
-         * rotated, the orientation in the EXIF header will be missing or 1
-         * (row #0 is top and column #0 is left side).
+         * rotated, the orientation in the EXIF header will be missing or 1 (row
+         * #0 is top and column #0 is left side).
          *
-         * <p>If applications want to rotate the picture to match the orientation
-         * of what users see, apps should use {@link
-         * android.view.OrientationEventListener} and {@link CameraInfo}.
-         * The value from OrientationEventListener is relative to the natural
-         * orientation of the device. CameraInfo.orientation is the angle
-         * between camera orientation and natural device orientation. The sum
-         * of the two is the rotation angle for back-facing camera. The
-         * difference of the two is the rotation angle for front-facing camera.
-         * Note that the JPEG pictures of front-facing cameras are not mirrored
-         * as in preview display.
+         * <p>
+         * If applications want to rotate the picture to match the orientation
+         * of what users see, apps should use
+         * {@link android.view.OrientationEventListener} and
+         * {@link android.hardware.Camera.CameraInfo}. The value from
+         * OrientationEventListener is relative to the natural orientation of
+         * the device. CameraInfo.orientation is the angle between camera
+         * orientation and natural device orientation. The sum of the two is the
+         * rotation angle for back-facing camera. The difference of the two is
+         * the rotation angle for front-facing camera. Note that the JPEG
+         * pictures of front-facing cameras are not mirrored as in preview
+         * display.
          *
-         * <p>For example, suppose the natural orientation of the device is
+         * <p>
+         * For example, suppose the natural orientation of the device is
          * portrait. The device is rotated 270 degrees clockwise, so the device
          * orientation is 270. Suppose a back-facing camera sensor is mounted in
          * landscape and the top side of the camera sensor is aligned with the
@@ -2922,7 +3054,6 @@ public class Camera {
          * @see #getSceneMode()
          */
         public void setSceneMode(String value) {
-            if(getSupportedSceneModes() == null) return;
             set(KEY_SCENE_MODE, value);
         }
 
@@ -2960,7 +3091,6 @@ public class Camera {
          * @see #getFlashMode()
          */
         public void setFlashMode(String value) {
-            if(getSupportedFlashModes() == null) return;
             set(KEY_FLASH_MODE, value);
         }
 
@@ -2974,28 +3104,6 @@ public class Camera {
         public List<String> getSupportedFlashModes() {
             String str = get(KEY_FLASH_MODE + SUPPORTED_VALUES_SUFFIX);
             return split(str);
-        }
-
-        /**
-         * Sets the Power mode.
-         *
-         * @param value Power mode.
-         * @see #getPowerMode()
-         */
-        public void setPowerMode(String value) {
-            set(KEY_POWER_MODE, value);
-        }
-
-        /**
-         * Gets the current power mode setting.
-         *
-         * @return current power mode. null if power mode setting is not
-         *         supported.
-         * @see #POWER_MODE_LOW
-         * @see #POWER_MODE_NORMAL
-         */
-        public String getPowerMode() {
-            return get(KEY_POWER_MODE);
         }
 
         /**
@@ -3343,39 +3451,6 @@ public class Camera {
         }
 
         /**
-         * Gets the current ISO setting.
-         *
-         * @return one of ISO_XXX string constant. null if ISO
-         *         setting is not supported.
-         * @hide
-         */
-        public String getISOValue() {
-            return get(KEY_ISO_MODE);
-        }
-
-        /**
-         * Sets the ISO.
-         *
-         * @param iso ISO_XXX string constant.
-         * @hide
-         */
-        public void setISOValue(String iso) {
-            set(KEY_ISO_MODE, iso);
-        }
-
-         /**
-         * Gets the supported ISO values.
-         *
-         * @return a List of ISO_MODE_XXX string constants. null if iso mode
-         *         setting is not supported.
-         * @hide
-         */
-        public List<String> getSupportedIsoValues() {
-            String str = get(KEY_ISO_MODE + SUPPORTED_VALUES_SUFFIX);
-            return split(str);
-        }
-
-        /**
          * <p>Gets the distances from the camera to where an object appears to be
          * in focus. The object is sharpest at the optimal focus distance. The
          * depth of field is the far focus distance minus near focus distance.</p>
@@ -3611,14 +3686,6 @@ public class Camera {
          */
         public boolean isVideoSnapshotSupported() {
             String str = get(KEY_VIDEO_SNAPSHOT_SUPPORTED);
-            return TRUE.equals(str);
-        }
-
-        /**
-         * @return true if full size video snapshot is supported.
-         */
-        public boolean isPowerModeSupported() {
-            String str = get(KEY_POWER_MODE_SUPPORTED);
             return TRUE.equals(str);
         }
 

@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <keyboard-layouts xmlns:android="http://schemas.android.com/apk/res/android">
+    <keyboard-layout android:name="keyboard_layout_english_uk"
+            android:label="@string/keyboard_layout_english_uk_label"
+            android:keyboardLayout="@raw/keyboard_layout_english_uk" />
+
     <keyboard-layout android:name="keyboard_layout_english_us"
             android:label="@string/keyboard_layout_english_us_label"
             android:keyboardLayout="@raw/keyboard_layout_english_us" />
+
+    <keyboard-layout android:name="keyboard_layout_english_us_intl"
+            android:label="@string/keyboard_layout_english_us_intl"
+            android:keyboardLayout="@raw/keyboard_layout_english_us_intl" />
+
+    <keyboard-layout android:name="keyboard_layout_english_us_colemak"
+            android:label="@string/keyboard_layout_english_us_colemak_label"
+            android:keyboardLayout="@raw/keyboard_layout_english_us_colemak" />
 
     <keyboard-layout android:name="keyboard_layout_english_us_dvorak"
             android:label="@string/keyboard_layout_english_us_dvorak_label"
@@ -87,6 +99,10 @@
     <keyboard-layout android:name="keyboard_layout_icelandic"
             android:label="@string/keyboard_layout_icelandic"
             android:keyboardLayout="@raw/keyboard_layout_icelandic" />
+
+    <keyboard-layout android:name="keyboard_layout_brazilian"
+            android:label="@string/keyboard_layout_brazilian"
+            android:keyboardLayout="@raw/keyboard_layout_brazilian" />
 
     <keyboard-layout android:name="keyboard_layout_portuguese"
             android:label="@string/keyboard_layout_portuguese"

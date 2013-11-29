@@ -20,7 +20,7 @@ import android.test.AndroidTestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.charset.Charsets;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Tests for {@link ProcFileReader}.
@@ -134,7 +134,7 @@ public class ProcFileReaderTest extends AndroidTestCase {
             fail("somehow read a string value?");
         } catch (IOException e) {
             // expected
-            assertTrue(e.getMessage().contains("end of stream"));
+            assertTrue(e.getMessage().contains("End of stream"));
         }
     }
 
@@ -152,12 +152,26 @@ public class ProcFileReaderTest extends AndroidTestCase {
         }
     }
 
+    public void testOptionalLongs() throws Exception {
+        final ProcFileReader reader = buildReader("123 456\n789\n");
+
+        assertEquals(123L, reader.nextLong());
+        assertEquals(456L, reader.nextOptionalLong(-1L));
+        assertEquals(-1L, reader.nextOptionalLong(-1L));
+        assertEquals(-1L, reader.nextOptionalLong(-1L));
+        assertEquals(-1L, reader.nextOptionalLong(-1L));
+        reader.finishLine();
+
+        assertEquals(789L, reader.nextOptionalLong(-1L));
+        assertEquals(-1L, reader.nextOptionalLong(-1L));
+    }
+
     private static ProcFileReader buildReader(String string) throws IOException {
         return buildReader(string, 2048);
     }
 
     private static ProcFileReader buildReader(String string, int bufferSize) throws IOException {
         return new ProcFileReader(
-                new ByteArrayInputStream(string.getBytes(Charsets.US_ASCII)), bufferSize);
+                new ByteArrayInputStream(string.getBytes(StandardCharsets.US_ASCII)), bufferSize);
     }
 }

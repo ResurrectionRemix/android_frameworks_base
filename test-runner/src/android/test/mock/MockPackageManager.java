@@ -45,6 +45,9 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Binder;
+import android.os.RemoteException;
+import android.os.UserHandle;
 
 import java.util.List;
 
@@ -78,6 +81,13 @@ public class MockPackageManager extends PackageManager {
 
     @Override
     public int[] getPackageGids(String packageName) throws NameNotFoundException {
+        throw new UnsupportedOperationException();
+    }
+
+    /** @hide */
+    @Override
+    public int getPackageUid(String packageName, int userHandle)
+            throws NameNotFoundException {
         throw new UnsupportedOperationException();
     }
 
@@ -136,6 +146,12 @@ public class MockPackageManager extends PackageManager {
 
     @Override
     public List<PackageInfo> getInstalledPackages(int flags) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<PackageInfo> getPackagesHoldingPermissions(String[] permissions,
+            int flags) {
         throw new UnsupportedOperationException();
     }
 
@@ -263,6 +279,18 @@ public class MockPackageManager extends PackageManager {
     /** @hide */
     @Override
     public List<ResolveInfo> queryIntentServicesAsUser(Intent intent, int flags, int userId) {
+        throw new UnsupportedOperationException();
+    }
+
+    /** @hide */
+    @Override
+    public List<ResolveInfo> queryIntentContentProvidersAsUser(
+            Intent intent, int flags, int userId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<ResolveInfo> queryIntentContentProviders(Intent intent, int flags) {
         throw new UnsupportedOperationException();
     }
 
@@ -492,18 +520,6 @@ public class MockPackageManager extends PackageManager {
         throw new UnsupportedOperationException();
     }
 
-    /** @hide */
-    @Override
-    public void setPrivacyGuardSetting(String packageName, boolean enabled) {
-        throw new UnsupportedOperationException();
-    }
-
-    /** @hide */
-    @Override
-    public boolean getPrivacyGuardSetting(String packageName) {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     public void addPreferredActivity(IntentFilter filter,
             int match, ComponentName[] set, ComponentName activity) {
@@ -537,6 +553,12 @@ public class MockPackageManager extends PackageManager {
     @Override
     public int getPreferredActivities(List<IntentFilter> outFilters,
             List<ComponentName> outActivities, String packageName) {
+        throw new UnsupportedOperationException();
+    }
+
+    /** @hide - hidden in superclass */
+    @Override
+    public ComponentName getHomeActivities(List<ResolveInfo> outActivities) {
         throw new UnsupportedOperationException();
     }
 
@@ -584,22 +606,28 @@ public class MockPackageManager extends PackageManager {
      * @hide
      */
     @Override
-    public int installExistingPackage(String packageName)
-            throws NameNotFoundException {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @hide - to match hiding in superclass
-     */
-    @Override
-    public List<PackageInfo> getInstalledThemePackages() {
-        throw new UnsupportedOperationException();
+    public boolean setApplicationBlockedSettingAsUser(String packageName, boolean blocked,
+            UserHandle user) {
+        return false;
     }
 
     /**
      * @hide
      */
+    @Override
+    public boolean getApplicationBlockedSettingAsUser(String packageName, UserHandle user) {
+        return false;
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public int installExistingPackage(String packageName)
+            throws NameNotFoundException {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public void verifyPendingInstall(int id, int verificationCode) {
         throw new UnsupportedOperationException();
@@ -616,22 +644,6 @@ public class MockPackageManager extends PackageManager {
      */
     @Override
     public VerifierDeviceIdentity getVerifierDeviceIdentity() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @hide
-     */
-    @Override
-    public String[] getRevokedPermissions(String packageName) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @hide
-     */
-    @Override
-    public void setRevokedPermissions(String packageName, String[] perms) {
         throw new UnsupportedOperationException();
     }
 }

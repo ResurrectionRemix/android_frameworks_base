@@ -89,6 +89,10 @@ class GLES20RenderLayer extends GLES20Layer {
 
     @Override
     void end(Canvas currentCanvas) {
+        HardwareCanvas canvas = getCanvas();
+        if (canvas != null) {
+            canvas.onPostDraw();
+        }
         if (currentCanvas instanceof GLES20Canvas) {
             ((GLES20Canvas) currentCanvas).resume();
         }
@@ -96,10 +100,18 @@ class GLES20RenderLayer extends GLES20Layer {
 
     @Override
     HardwareCanvas start(Canvas currentCanvas) {
+        return start(currentCanvas, null);
+    }
+
+    @Override
+    HardwareCanvas start(Canvas currentCanvas, Rect dirty) {
         if (currentCanvas instanceof GLES20Canvas) {
             ((GLES20Canvas) currentCanvas).interrupt();
         }
-        return getCanvas();
+        HardwareCanvas canvas = getCanvas();
+        canvas.setViewport(mWidth, mHeight);
+        canvas.onPreDraw(dirty);
+        return canvas;
     }
 
     /**

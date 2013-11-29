@@ -93,9 +93,20 @@ public class ViewPropertyAnimator {
     private boolean mInterpolatorSet = false;
 
     /**
-     * Listener for the lifecycle events of the underlying 
+     * Listener for the lifecycle events of the underlying ValueAnimator object.
      */
     private Animator.AnimatorListener mListener = null;
+
+    /**
+     * Listener for the update events of the underlying ValueAnimator object.
+     */
+    private ValueAnimator.AnimatorUpdateListener mUpdateListener = null;
+
+    /**
+     * A lazily-created ValueAnimator used in order to get some default animator properties
+     * (duration, start delay, interpolator, etc.).
+     */
+    private ValueAnimator mTempValueAnimator;
 
     /**
      * This listener is the mechanism by which the underlying Animator causes changes to the
@@ -268,7 +279,10 @@ public class ViewPropertyAnimator {
         } else {
             // Just return the default from ValueAnimator, since that's what we'd get if
             // the value has not been set otherwise
-            return new ValueAnimator().getDuration();
+            if (mTempValueAnimator == null) {
+                mTempValueAnimator = new ValueAnimator();
+            }
+            return mTempValueAnimator.getDuration();
         }
     }
 
@@ -323,14 +337,54 @@ public class ViewPropertyAnimator {
     }
 
     /**
+     * Returns the timing interpolator that this animation uses.
+     *
+     * @return The timing interpolator for this animation.
+     */
+    public TimeInterpolator getInterpolator() {
+        if (mInterpolatorSet) {
+            return mInterpolator;
+        } else {
+            // Just return the default from ValueAnimator, since that's what we'd get if
+            // the value has not been set otherwise
+            if (mTempValueAnimator == null) {
+                mTempValueAnimator = new ValueAnimator();
+            }
+            return mTempValueAnimator.getInterpolator();
+        }
+    }
+
+    /**
      * Sets a listener for events in the underlying Animators that run the property
      * animations.
      *
-     * @param listener The listener to be called with AnimatorListener events.
+     * @see Animator.AnimatorListener
+     *
+     * @param listener The listener to be called with AnimatorListener events. A value of
+     * <code>null</code> removes any existing listener.
      * @return This object, allowing calls to methods in this class to be chained.
      */
     public ViewPropertyAnimator setListener(Animator.AnimatorListener listener) {
         mListener = listener;
+        return this;
+    }
+
+    /**
+     * Sets a listener for update events in the underlying ValueAnimator that runs
+     * the property animations. Note that the underlying animator is animating between
+     * 0 and 1 (these values are then turned into the actual property values internally
+     * by ViewPropertyAnimator). So the animator cannot give information on the current
+     * values of the properties being animated by this ViewPropertyAnimator, although
+     * the view object itself can be queried to get the current values.
+     *
+     * @see android.animation.ValueAnimator.AnimatorUpdateListener
+     *
+     * @param listener The listener to be called with update events. A value of
+     * <code>null</code> removes any existing listener.
+     * @return This object, allowing calls to methods in this class to be chained.
+     */
+    public ViewPropertyAnimator setUpdateListener(ValueAnimator.AnimatorUpdateListener listener) {
+        mUpdateListener = listener;
         return this;
     }
 
@@ -648,6 +702,9 @@ public class ViewPropertyAnimator {
             @Override
             public void run() {
                 mView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+                if (mView.isAttachedToWindow()) {
+                    mView.buildLayer();
+                }
             }
         };
         final int currentLayerType = mView.getLayerType();
@@ -829,7 +886,7 @@ public class ViewPropertyAnimator {
         NameValuesHolder nameValuePair = new NameValuesHolder(constantName, startValue, byValue);
         mPendingAnimations.add(nameValuePair);
         mView.removeCallbacks(mAnimationStarter);
-        mView.post(mAnimationStarter);
+        mView.postOnAnimation(mAnimationStarter);
     }
 
     /**
@@ -1045,6 +1102,9 @@ public class ViewPropertyAnimator {
                 mView.invalidate(true);
             } else {
                 mView.invalidateViewProperty(false, false);
+            }
+            if (mUpdateListener != null) {
+                mUpdateListener.onAnimationUpdate(animation);
             }
         }
     }

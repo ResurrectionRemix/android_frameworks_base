@@ -16,37 +16,39 @@
 
 package com.android.server.am;
 
+import com.android.internal.app.ProcessStats;
 import com.android.internal.os.BatteryStatsImpl;
 import com.android.server.NotificationManagerService;
 
 import android.app.INotificationManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.provider.Settings;
+import android.util.ArrayMap;
 import android.util.Slog;
 import android.util.TimeUtils;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * A running application service.
  */
-class ServiceRecord extends Binder {
+final class ServiceRecord extends Binder {
     // Maximum number of delivery attempts before giving up.
     static final int MAX_DELIVERY_COUNT = 3;
 
@@ -73,24 +75,30 @@ class ServiceRecord extends Binder {
     final boolean exported; // from ServiceInfo.exported
     final Runnable restarter; // used to schedule retries of starting the service
     final long createTime;  // when this service was created
-    final HashMap<Intent.FilterComparison, IntentBindRecord> bindings
-            = new HashMap<Intent.FilterComparison, IntentBindRecord>();
+    final ArrayMap<Intent.FilterComparison, IntentBindRecord> bindings
+            = new ArrayMap<Intent.FilterComparison, IntentBindRecord>();
                             // All active bindings to the service.
-    final HashMap<IBinder, ArrayList<ConnectionRecord>> connections
-            = new HashMap<IBinder, ArrayList<ConnectionRecord>>();
+    final ArrayMap<IBinder, ArrayList<ConnectionRecord>> connections
+            = new ArrayMap<IBinder, ArrayList<ConnectionRecord>>();
                             // IBinder -> ConnectionRecord of all bound clients
 
     ProcessRecord app;      // where this service is running or null.
     ProcessRecord isolatedProc; // keep track of isolated process, if requested
+    ProcessStats.ServiceState tracker; // tracking service execution, may be null
+    boolean delayed;        // are we waiting to start this service in the background?
     boolean isForeground;   // is service currently in foreground mode?
     int foregroundId;       // Notification ID of last foreground req.
     Notification foregroundNoti; // Notification record of foreground state.
     long lastActivity;      // last time there was some activity on the service.
+    long startingBgTimeout;  // time at which we scheduled this for a delayed start.
     boolean startRequested; // someone explicitly called start?
+    boolean delayedStop;    // service has been stopped but is in a delayed start?
     boolean stopIfKilled;   // last onStart() said to stop if service killed?
     boolean callStart;      // last onStart() has asked to alway be called on restart.
     int executeNesting;     // number of outstanding operations keeping foreground.
+    boolean executeFg;      // should we be executing in the foreground?
     long executingStart;    // start time of last execute request.
+    boolean createdFromFg;  // was this service last created due to a foreground process call?
     int crashCount;         // number of times proc has crashed with service running
     int totalRestartCount;  // number of times we have had to restart.
     int restartCount;       // number of restarts performed in a row.
@@ -215,6 +223,9 @@ class ServiceRecord extends Binder {
         if (isolatedProc != null) {
             pw.print(prefix); pw.print("isolatedProc="); pw.println(isolatedProc);
         }
+        if (delayed) {
+            pw.print(prefix); pw.print("delayed="); pw.println(delayed);
+        }
         if (isForeground || foregroundId != 0) {
             pw.print(prefix); pw.print("isForeground="); pw.print(isForeground);
                     pw.print(" foregroundId="); pw.print(foregroundId);
@@ -222,24 +233,31 @@ class ServiceRecord extends Binder {
         }
         pw.print(prefix); pw.print("createTime=");
                 TimeUtils.formatDuration(createTime, nowReal, pw);
-                pw.print(" lastActivity=");
+                pw.print(" startingBgTimeout=");
+                TimeUtils.formatDuration(startingBgTimeout, now, pw);
+                pw.println();
+        pw.print(prefix); pw.print("lastActivity=");
                 TimeUtils.formatDuration(lastActivity, now, pw);
-                pw.println("");
-        pw.print(prefix); pw.print("executingStart=");
-                TimeUtils.formatDuration(executingStart, now, pw);
                 pw.print(" restartTime=");
                 TimeUtils.formatDuration(restartTime, now, pw);
-                pw.println("");
-        if (startRequested || lastStartId != 0) {
+                pw.print(" createdFromFg="); pw.println(createdFromFg);
+        if (startRequested || delayedStop || lastStartId != 0) {
             pw.print(prefix); pw.print("startRequested="); pw.print(startRequested);
+                    pw.print(" delayedStop="); pw.print(delayedStop);
                     pw.print(" stopIfKilled="); pw.print(stopIfKilled);
                     pw.print(" callStart="); pw.print(callStart);
                     pw.print(" lastStartId="); pw.println(lastStartId);
         }
-        if (executeNesting != 0 || crashCount != 0 || restartCount != 0
-                || restartDelay != 0 || nextRestartTime != 0) {
+        if (executeNesting != 0) {
             pw.print(prefix); pw.print("executeNesting="); pw.print(executeNesting);
-                    pw.print(" restartCount="); pw.print(restartCount);
+                    pw.print(" executeFg="); pw.print(executeFg);
+                    pw.print(" executingStart=");
+                    TimeUtils.formatDuration(executingStart, now, pw);
+                    pw.println();
+        }
+        if (crashCount != 0 || restartCount != 0
+                || restartDelay != 0 || nextRestartTime != 0) {
+            pw.print(prefix); pw.print("restartCount="); pw.print(restartCount);
                     pw.print(" restartDelay=");
                     TimeUtils.formatDuration(restartDelay, now, pw);
                     pw.print(" nextRestartTime=");
@@ -255,10 +273,9 @@ class ServiceRecord extends Binder {
             dumpStartList(pw, prefix, pendingStarts, 0);
         }
         if (bindings.size() > 0) {
-            Iterator<IntentBindRecord> it = bindings.values().iterator();
             pw.print(prefix); pw.println("Bindings:");
-            while (it.hasNext()) {
-                IntentBindRecord b = it.next();
+            for (int i=0; i<bindings.size(); i++) {
+                IntentBindRecord b = bindings.valueAt(i);
                 pw.print(prefix); pw.print("* IntentBindRecord{");
                         pw.print(Integer.toHexString(System.identityHashCode(b)));
                         if ((b.collectFlags()&Context.BIND_AUTO_CREATE) != 0) {
@@ -270,9 +287,8 @@ class ServiceRecord extends Binder {
         }
         if (connections.size() > 0) {
             pw.print(prefix); pw.println("All Connections:");
-            Iterator<ArrayList<ConnectionRecord>> it = connections.values().iterator();
-            while (it.hasNext()) {
-                ArrayList<ConnectionRecord> c = it.next();
+            for (int conni=0; conni<connections.size(); conni++) {
+                ArrayList<ConnectionRecord> c = connections.valueAt(conni);
                 for (int i=0; i<c.size(); i++) {
                     pw.print(prefix); pw.print("  "); pw.println(c.get(i));
                 }
@@ -282,7 +298,8 @@ class ServiceRecord extends Binder {
 
     ServiceRecord(ActivityManagerService ams,
             BatteryStatsImpl.Uid.Pkg.Serv servStats, ComponentName name,
-            Intent.FilterComparison intent, ServiceInfo sInfo, Runnable restarter) {
+            Intent.FilterComparison intent, ServiceInfo sInfo, boolean callerIsFg,
+            Runnable restarter) {
         this.ams = ams;
         this.stats = servStats;
         this.name = name;
@@ -301,6 +318,26 @@ class ServiceRecord extends Binder {
         createTime = SystemClock.elapsedRealtime();
         lastActivity = SystemClock.uptimeMillis();
         userId = UserHandle.getUserId(appInfo.uid);
+        createdFromFg = callerIsFg;
+    }
+
+    public ProcessStats.ServiceState getTracker() {
+        if (tracker != null) {
+            return tracker;
+        }
+        if ((serviceInfo.applicationInfo.flags&ApplicationInfo.FLAG_PERSISTENT) == 0) {
+            tracker = ams.mProcessStats.getServiceStateLocked(serviceInfo.packageName,
+                    serviceInfo.applicationInfo.uid, serviceInfo.processName, serviceInfo.name);
+            tracker.applyNewOwner(this);
+        }
+        return tracker;
+    }
+
+    public void forceClearTracker() {
+        if (tracker != null) {
+            tracker.clearCurrentOwner(this, true);
+            tracker = null;
+        }
     }
 
     public AppBindRecord retrieveAppBindingLocked(Intent intent,
@@ -318,6 +355,20 @@ class ServiceRecord extends Binder {
         a = new AppBindRecord(this, i, app);
         i.apps.put(app, a);
         return a;
+    }
+
+    public boolean hasAutoCreateConnections() {
+        // XXX should probably keep a count of the number of auto-create
+        // connections directly in the service.
+        for (int conni=connections.size()-1; conni>=0; conni--) {
+            ArrayList<ConnectionRecord> cr = connections.valueAt(conni);
+            for (int i=0; i<cr.size(); i++) {
+                if ((cr.get(i).flags&Context.BIND_AUTO_CREATE) != 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void resetRestartCounter() {
@@ -368,9 +419,55 @@ class ServiceRecord extends Binder {
                         return;
                     }
                     try {
+                        if (localForegroundNoti.icon == 0) {
+                            // It is not correct for the caller to supply a notification
+                            // icon, but this used to be able to slip through, so for
+                            // those dirty apps give it the app's icon.
+                            localForegroundNoti.icon = appInfo.icon;
+
+                            // Do not allow apps to present a sneaky invisible content view either.
+                            localForegroundNoti.contentView = null;
+                            localForegroundNoti.bigContentView = null;
+                            CharSequence appName = appInfo.loadLabel(
+                                    ams.mContext.getPackageManager());
+                            if (appName == null) {
+                                appName = appInfo.packageName;
+                            }
+                            Context ctx = null;
+                            try {
+                                ctx = ams.mContext.createPackageContext(
+                                        appInfo.packageName, 0);
+                                Intent runningIntent = new Intent(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                runningIntent.setData(Uri.fromParts("package",
+                                        appInfo.packageName, null));
+                                PendingIntent pi = PendingIntent.getActivity(ams.mContext, 0,
+                                        runningIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                localForegroundNoti.setLatestEventInfo(ctx,
+                                        ams.mContext.getString(
+                                                com.android.internal.R.string
+                                                        .app_running_notification_title,
+                                                appName),
+                                        ams.mContext.getString(
+                                                com.android.internal.R.string
+                                                        .app_running_notification_text,
+                                                appName),
+                                        pi);
+                            } catch (PackageManager.NameNotFoundException e) {
+                                localForegroundNoti.icon = 0;
+                            }
+                        }
+                        if (localForegroundNoti.icon == 0) {
+                            // Notifications whose icon is 0 are defined to not show
+                            // a notification, silently ignoring it.  We don't want to
+                            // just ignore it, we want to prevent the service from
+                            // being foreground.
+                            throw new RuntimeException("icon must be non-zero");
+                        }
                         int[] outId = new int[1];
-                        nm.enqueueNotificationInternal(localPackageName, appUid, appPid,
-                                null, localForegroundId, localForegroundNoti, outId, userId);
+                        nm.enqueueNotificationInternal(localPackageName, localPackageName,
+                                appUid, appPid, null, localForegroundId, localForegroundNoti,
+                                outId, userId);
                     } catch (RuntimeException e) {
                         Slog.w(ActivityManagerService.TAG,
                                 "Error showing notification for service", e);

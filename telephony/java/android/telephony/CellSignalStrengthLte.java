@@ -18,7 +18,7 @@ package android.telephony;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+import android.telephony.Rlog;
 
 /**
  * LTE signal strength related information.
@@ -94,7 +94,7 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      * @hide
      */
     public void initialize(SignalStrength ss, int timingAdvance) {
-        mSignalStrength = ss.getLteSignalStrenght();
+        mSignalStrength = ss.getLteSignalStrength();
         mRsrp = ss.getLteRsrp();
         mRsrq = ss.getLteRsrq();
         mRssnr = ss.getLteRssnr();
@@ -247,8 +247,10 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
     public void writeToParcel(Parcel dest, int flags) {
         if (DBG) log("writeToParcel(Parcel, int): " + toString());
         dest.writeInt(mSignalStrength);
-        dest.writeInt(mRsrp);
-        dest.writeInt(mRsrq);
+        // Need to multiply rsrp and rsrq by -1
+        // to ensure consistency when reading values written here
+        dest.writeInt(mRsrp * -1);
+        dest.writeInt(mRsrq * -1);
         dest.writeInt(mRssnr);
         dest.writeInt(mCqi);
         dest.writeInt(mTimingAdvance);
@@ -260,8 +262,10 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      */
     private CellSignalStrengthLte(Parcel in) {
         mSignalStrength = in.readInt();
-        mRsrp = in.readInt();
-        mRsrq = in.readInt();
+        // rsrp and rsrq are written into the parcel as positive values.
+        // Need to convert into negative values
+        mRsrp = in.readInt() * -1;
+        mRsrq = in.readInt() * -1;
         mRssnr = in.readInt();
         mCqi = in.readInt();
         mTimingAdvance = in.readInt();
@@ -293,6 +297,6 @@ public final class CellSignalStrengthLte extends CellSignalStrength implements P
      * log
      */
     private static void log(String s) {
-        Log.w(LOG_TAG, s);
+        Rlog.w(LOG_TAG, s);
     }
 }

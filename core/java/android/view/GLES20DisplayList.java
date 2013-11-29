@@ -16,7 +16,6 @@
 
 package android.view;
 
-import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
 import java.util.ArrayList;
@@ -25,12 +24,7 @@ import java.util.ArrayList;
  * An implementation of display list for OpenGL ES 2.0.
  */
 class GLES20DisplayList extends DisplayList {
-    // These lists ensure that any Bitmaps and DisplayLists recorded by a DisplayList are kept
-    // alive as long as the DisplayList is alive.  The Bitmap and DisplayList lists
-    // are populated by the GLES20RecordingCanvas during appropriate drawing calls and are
-    // cleared at the start of a new drawing frame or when the view is detached from the window.
-    final ArrayList<Bitmap> mBitmaps = new ArrayList<Bitmap>(5);
-    final ArrayList<DisplayList> mChildDisplayLists = new ArrayList<DisplayList>();
+    private ArrayList<DisplayList> mChildDisplayLists;
 
     private GLES20RecordingCanvas mCanvas;
     private boolean mValid;
@@ -58,7 +52,7 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
-    public HardwareCanvas start() {
+    public HardwareCanvas start(int width, int height) {
         if (mCanvas != null) {
             throw new IllegalStateException("Recording has already started");
         }
@@ -66,24 +60,33 @@ class GLES20DisplayList extends DisplayList {
         mValid = false;
         mCanvas = GLES20RecordingCanvas.obtain(this);
         mCanvas.start();
+
+        mCanvas.setViewport(width, height);
+        // The dirty rect should always be null for a display list
+        mCanvas.onPreDraw(null);
+
         return mCanvas;
     }
-
     @Override
-    public void invalidate() {
+    public void clear() {
+        clearDirty();
+
         if (mCanvas != null) {
             mCanvas.recycle();
             mCanvas = null;
         }
         mValid = false;
+
+        clearReferences();
     }
 
-    @Override
-    public void clear() {
-        if (!mValid) {
-            mBitmaps.clear();
-            mChildDisplayLists.clear();
-        }
+    void clearReferences() {
+        if (mChildDisplayLists != null) mChildDisplayLists.clear();
+    }
+
+    ArrayList<DisplayList> getChildDisplayLists() {
+        if (mChildDisplayLists == null) mChildDisplayLists = new ArrayList<DisplayList>();
+        return mChildDisplayLists;
     }
 
     @Override
@@ -91,6 +94,7 @@ class GLES20DisplayList extends DisplayList {
         if (hasNativeDisplayList()) {
             nReset(mFinalizer.mNativeDisplayList);
         }
+        clear();
     }
 
     @Override
@@ -101,11 +105,12 @@ class GLES20DisplayList extends DisplayList {
     @Override
     public void end() {
         if (mCanvas != null) {
+            mCanvas.onPostDraw();
             if (mFinalizer != null) {
                 mCanvas.end(mFinalizer.mNativeDisplayList);
             } else {
                 mFinalizer = new DisplayListFinalizer(mCanvas.end(0));
-                GLES20Canvas.setDisplayListName(mFinalizer.mNativeDisplayList, mName);
+                nSetDisplayListName(mFinalizer.mNativeDisplayList, mName);
             }
             mCanvas.recycle();
             mCanvas = null;
@@ -116,8 +121,12 @@ class GLES20DisplayList extends DisplayList {
     @Override
     public int getSize() {
         if (mFinalizer == null) return 0;
-        return GLES20Canvas.getDisplayListSize(mFinalizer.mNativeDisplayList);
+        return nGetDisplayListSize(mFinalizer.mNativeDisplayList);
     }
+
+    private static native void nDestroyDisplayList(int displayList);
+    private static native int nGetDisplayListSize(int displayList);
+    private static native void nSetDisplayListName(int displayList, String name);
 
     ///////////////////////////////////////////////////////////////////////////
     // Native View Properties
@@ -131,17 +140,25 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
-    public void setClipChildren(boolean clipChildren) {
+    public void setClipToBounds(boolean clipToBounds) {
         if (hasNativeDisplayList()) {
-            nSetClipChildren(mFinalizer.mNativeDisplayList, clipChildren);
+            nSetClipToBounds(mFinalizer.mNativeDisplayList, clipToBounds);
         }
     }
 
     @Override
-    public void setStaticMatrix(Matrix matrix) {
+    public void setMatrix(Matrix matrix) {
         if (hasNativeDisplayList()) {
             nSetStaticMatrix(mFinalizer.mNativeDisplayList, matrix.native_instance);
         }
+    }
+
+    @Override
+    public Matrix getMatrix(Matrix matrix) {
+        if (hasNativeDisplayList()) {
+            nGetMatrix(mFinalizer.mNativeDisplayList, matrix.native_instance);
+        }
+        return matrix;
     }
 
     @Override
@@ -160,10 +177,27 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getAlpha() {
+        if (hasNativeDisplayList()) {
+            return nGetAlpha(mFinalizer.mNativeDisplayList);
+        }
+        return 1.0f;
+    }
+
+    @Override
     public void setHasOverlappingRendering(boolean hasOverlappingRendering) {
         if (hasNativeDisplayList()) {
             nSetHasOverlappingRendering(mFinalizer.mNativeDisplayList, hasOverlappingRendering);
         }
+    }
+
+    @Override
+    public boolean hasOverlappingRendering() {
+        //noinspection SimplifiableIfStatement
+        if (hasNativeDisplayList()) {
+            return nHasOverlappingRendering(mFinalizer.mNativeDisplayList);
+        }
+        return true;
     }
 
     @Override
@@ -174,10 +208,26 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getTranslationX() {
+        if (hasNativeDisplayList()) {
+            return nGetTranslationX(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
+    }
+
+    @Override
     public void setTranslationY(float translationY) {
         if (hasNativeDisplayList()) {
             nSetTranslationY(mFinalizer.mNativeDisplayList, translationY);
         }
+    }
+
+    @Override
+    public float getTranslationY() {
+        if (hasNativeDisplayList()) {
+            return nGetTranslationY(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
     }
 
     @Override
@@ -188,10 +238,26 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getRotation() {
+        if (hasNativeDisplayList()) {
+            return nGetRotation(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
+    }
+
+    @Override
     public void setRotationX(float rotationX) {
         if (hasNativeDisplayList()) {
             nSetRotationX(mFinalizer.mNativeDisplayList, rotationX);
         }
+    }
+
+    @Override
+    public float getRotationX() {
+        if (hasNativeDisplayList()) {
+            return nGetRotationX(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
     }
 
     @Override
@@ -202,6 +268,14 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getRotationY() {
+        if (hasNativeDisplayList()) {
+            return nGetRotationY(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
+    }
+
+    @Override
     public void setScaleX(float scaleX) {
         if (hasNativeDisplayList()) {
             nSetScaleX(mFinalizer.mNativeDisplayList, scaleX);
@@ -209,10 +283,26 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getScaleX() {
+        if (hasNativeDisplayList()) {
+            return nGetScaleX(mFinalizer.mNativeDisplayList);
+        }
+        return 1.0f;
+    }
+
+    @Override
     public void setScaleY(float scaleY) {
         if (hasNativeDisplayList()) {
             nSetScaleY(mFinalizer.mNativeDisplayList, scaleY);
         }
+    }
+
+    @Override
+    public float getScaleY() {
+        if (hasNativeDisplayList()) {
+            return nGetScaleY(mFinalizer.mNativeDisplayList);
+        }
+        return 1.0f;
     }
 
     @Override
@@ -232,10 +322,26 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getPivotX() {
+        if (hasNativeDisplayList()) {
+            return nGetPivotX(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
+    }
+
+    @Override
     public void setPivotY(float pivotY) {
         if (hasNativeDisplayList()) {
             nSetPivotY(mFinalizer.mNativeDisplayList, pivotY);
         }
+    }
+
+    @Override
+    public float getPivotY() {
+        if (hasNativeDisplayList()) {
+            return nGetPivotY(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
     }
 
     @Override
@@ -246,10 +352,26 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getCameraDistance() {
+        if (hasNativeDisplayList()) {
+            return nGetCameraDistance(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
+    }
+
+    @Override
     public void setLeft(int left) {
         if (hasNativeDisplayList()) {
             nSetLeft(mFinalizer.mNativeDisplayList, left);
         }
+    }
+
+    @Override
+    public float getLeft() {
+        if (hasNativeDisplayList()) {
+            return nGetLeft(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
     }
 
     @Override
@@ -260,10 +382,26 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
+    public float getTop() {
+        if (hasNativeDisplayList()) {
+            return nGetTop(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
+    }
+
+    @Override
     public void setRight(int right) {
         if (hasNativeDisplayList()) {
             nSetRight(mFinalizer.mNativeDisplayList, right);
         }
+    }
+
+    @Override
+    public float getRight() {
+        if (hasNativeDisplayList()) {
+            return nGetRight(mFinalizer.mNativeDisplayList);
+        }
+        return 0.0f;
     }
 
     @Override
@@ -274,10 +412,11 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
-    public void setLeftTop(int left, int top) {
+    public float getBottom() {
         if (hasNativeDisplayList()) {
-            nSetLeftTop(mFinalizer.mNativeDisplayList, left, top);
+            return nGetBottom(mFinalizer.mNativeDisplayList);
         }
+        return 0.0f;
     }
 
     @Override
@@ -288,25 +427,24 @@ class GLES20DisplayList extends DisplayList {
     }
 
     @Override
-    public void offsetLeftRight(int offset) {
+    public void offsetLeftAndRight(float offset) {
         if (hasNativeDisplayList()) {
-            nOffsetLeftRight(mFinalizer.mNativeDisplayList, offset);
+            nOffsetLeftAndRight(mFinalizer.mNativeDisplayList, offset);
         }
     }
 
     @Override
-    public void offsetTopBottom(int offset) {
+    public void offsetTopAndBottom(float offset) {
         if (hasNativeDisplayList()) {
-            nOffsetTopBottom(mFinalizer.mNativeDisplayList, offset);
+            nOffsetTopAndBottom(mFinalizer.mNativeDisplayList, offset);
         }
     }
 
     private static native void nReset(int displayList);
-    private static native void nOffsetTopBottom(int displayList, int offset);
-    private static native void nOffsetLeftRight(int displayList, int offset);
+    private static native void nOffsetTopAndBottom(int displayList, float offset);
+    private static native void nOffsetLeftAndRight(int displayList, float offset);
     private static native void nSetLeftTopRightBottom(int displayList, int left, int top,
             int right, int bottom);
-    private static native void nSetLeftTop(int displayList, int left, int top);
     private static native void nSetBottom(int displayList, int bottom);
     private static native void nSetRight(int displayList, int right);
     private static native void nSetTop(int displayList, int top);
@@ -315,7 +453,7 @@ class GLES20DisplayList extends DisplayList {
     private static native void nSetPivotY(int displayList, float pivotY);
     private static native void nSetPivotX(int displayList, float pivotX);
     private static native void nSetCaching(int displayList, boolean caching);
-    private static native void nSetClipChildren(int displayList, boolean clipChildren);
+    private static native void nSetClipToBounds(int displayList, boolean clipToBounds);
     private static native void nSetAlpha(int displayList, float alpha);
     private static native void nSetHasOverlappingRendering(int displayList,
             boolean hasOverlappingRendering);
@@ -332,6 +470,23 @@ class GLES20DisplayList extends DisplayList {
     private static native void nSetStaticMatrix(int displayList, int nativeMatrix);
     private static native void nSetAnimationMatrix(int displayList, int animationMatrix);
 
+    private static native boolean nHasOverlappingRendering(int displayList);
+    private static native void nGetMatrix(int displayList, int matrix);
+    private static native float nGetAlpha(int displayList);
+    private static native float nGetLeft(int displayList);
+    private static native float nGetTop(int displayList);
+    private static native float nGetRight(int displayList);
+    private static native float nGetBottom(int displayList);
+    private static native float nGetCameraDistance(int displayList);
+    private static native float nGetScaleX(int displayList);
+    private static native float nGetScaleY(int displayList);
+    private static native float nGetTranslationX(int displayList);
+    private static native float nGetTranslationY(int displayList);
+    private static native float nGetRotation(int displayList);
+    private static native float nGetRotationX(int displayList);
+    private static native float nGetRotationY(int displayList);
+    private static native float nGetPivotX(int displayList);
+    private static native float nGetPivotY(int displayList);
 
     ///////////////////////////////////////////////////////////////////////////
     // Finalization
@@ -347,7 +502,7 @@ class GLES20DisplayList extends DisplayList {
         @Override
         protected void finalize() throws Throwable {
             try {
-                GLES20Canvas.destroyDisplayList(mNativeDisplayList);
+                nDestroyDisplayList(mNativeDisplayList);
             } finally {
                 super.finalize();
             }

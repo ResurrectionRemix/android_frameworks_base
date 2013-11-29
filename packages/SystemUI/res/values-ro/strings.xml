@@ -20,9 +20,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"UI sistem"</string>
-    <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Ştergeţi"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"Nu deranjaţi"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"Afişaţi notificări"</string>
+    <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Ștergeţi"</string>
     <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Eliminaţi din listă"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"Informaţii despre aplicaţie"</string>
     <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Nu există aplicaţii recente"</string>
@@ -37,7 +35,7 @@
     <string name="battery_low_title" msgid="2783104807551211639">"Conectaţi încărcătorul"</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"Bateria este descărcată."</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"Rămas: <xliff:g id="NUMBER">%d%%</xliff:g>"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"Încărcarea USB nu este acceptată. "\n"Utilizaţi numai încărcătorul furnizat."</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"Încărcarea USB nu este acceptată. \nUtilizaţi numai încărcătorul furnizat."</string>
     <string name="battery_low_why" msgid="7279169609518386372">"Utilizarea bateriei"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"Setări"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"Wi-Fi"</string>
@@ -47,7 +45,7 @@
     <string name="status_bar_settings_auto_brightness_label" msgid="511453614962324674">"AUTOM."</string>
     <string name="status_bar_settings_notifications" msgid="397146176280905137">"Notificări"</string>
     <string name="bluetooth_tethered" msgid="7094101612161133267">"Conectat prin tethering prin Bluetooth"</string>
-    <string name="status_bar_input_method_settings_configure_input_methods" msgid="3504292471512317827">"Configuraţi metode de intrare"</string>
+    <string name="status_bar_input_method_settings_configure_input_methods" msgid="3504292471512317827">"Setaţi metode introducere text"</string>
     <string name="status_bar_use_physical_keyboard" msgid="7551903084416057810">"Tastatură fizică"</string>
     <string name="usb_device_permission_prompt" msgid="834698001271562057">"Permiteţi aplicaţiei <xliff:g id="APPLICATION">%1$s</xliff:g> să acceseze dispozitivul USB?"</string>
     <string name="usb_accessory_permission_prompt" msgid="5171775411178865750">"Permiteţi aplicaţiei <xliff:g id="APPLICATION">%1$s</xliff:g> să acceseze accesoriul USB?"</string>
@@ -59,12 +57,10 @@
     <string name="always_use_device" msgid="1450287437017315906">"Utilizaţi în mod prestabilit pt. acest dispoz. USB"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"Utiliz. în mod prestabilit pt. acest accesoriu USB"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"Permiteţi depanarea USB?"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"Amprenta digitală din cheia RSA a computerului este:"\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"Amprenta digitală din cheia RSA a computerului este:\n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"Permiteţi întotdeauna de pe acest computer"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"Zoom pt. a umple ecranul"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"Înt. pt. a umple ecranul"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"Zoom de compatibilitate"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"Atunci când o aplicaţie a fost concepută pentru un ecran mai mic, o comandă pentru mărire/micşorare va apărea alături de ceas."</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"Se salv. captura de ecran..."</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"Se salvează captura de ecran..."</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"Captura de ecran este salvată."</string>
@@ -80,6 +76,8 @@
     <string name="accessibility_home" msgid="8217216074895377641">"Ecranul de pornire"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"Meniu"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"Aplicaţii recente"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"Căutați"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"Cameră foto"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"Buton pentru comutarea metodei de introducere."</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"Buton zoom pentru compatibilitate."</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"Faceţi zoom de la o imagine mai mică la una mai mare."</string>
@@ -127,6 +125,7 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3.5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
     <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Roaming"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"EDGE"</string>
@@ -137,7 +136,7 @@
     <string name="accessibility_battery_level" msgid="7451474187113371965">"Baterie: <xliff:g id="NUMBER">%d</xliff:g> procente."</string>
     <string name="accessibility_settings_button" msgid="799583911231893380">"Setări de sistem."</string>
     <string name="accessibility_notifications_button" msgid="4498000369779421892">"Notificări."</string>
-    <string name="accessibility_remove_notification" msgid="3603099514902182350">"Ştergeţi notificarea."</string>
+    <string name="accessibility_remove_notification" msgid="3603099514902182350">"Ștergeţi notificarea."</string>
     <string name="accessibility_gps_enabled" msgid="3511469499240123019">"GPS activat."</string>
     <string name="accessibility_gps_acquiring" msgid="8959333351058967158">"Se obţine GPS."</string>
     <string name="accessibility_tty_enabled" msgid="4613200365379426561">"TeleTypewriter activat."</string>
@@ -159,21 +158,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"Datele 4G au fost dezactivate"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"Datele mobile au fost dezactivate"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"Utilizare date dezactivată"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Aţi atins limita specificată pentru utilizarea datelor."\n\n"Dacă reactivaţi datele, puteţi fi taxat(ă) de către operator."</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Aţi atins limita specificată pentru utilizarea datelor.\n\nDacă reactivaţi datele, puteţi fi taxat(ă) de către operator."</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"Reactivaţi datele"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"Fără conex. internet"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"Wi-Fi conectat"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"Se caută GPS"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"Locaţie setată prin GPS"</string>
-    <string name="accessibility_clear_all" msgid="5235938559247164925">"Ştergeţi toate notificările."</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"Solicitări locație active"</string>
+    <string name="accessibility_clear_all" msgid="5235938559247164925">"Ștergeţi toate notificările."</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"Informaţii despre aplicaţie"</string>
-    <string name="close_universe" msgid="3736513750241754348">"Închideţi"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"Notificările sunt dezactivate"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"Apăsaţi aici pentru a reactiva notificările."</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"Ecranul se va roti în mod automat."</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"Ecranul este blocat în orientarea de tip peisaj."</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"Ecranul este blocat în orientarea de tip portret."</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Vitrina cu dulciuri"</string>
     <string name="start_dreams" msgid="7219575858348719790">"Daydream"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"Ethernet"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"Mod Avion"</string>
@@ -186,7 +183,8 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"Rotire automată"</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"Rotire blocată"</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"Metodă de introducere"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"Locaţie în uz"</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"Locație"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"Localizarea este dezactivată"</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"Dispozitiv media"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"RSSI"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"Numai apeluri de urgenţă"</string>
@@ -201,6 +199,5 @@
     <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Ecran wireless"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"Luminozitate"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"AUTOMAT"</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"Notificările se afişează aici"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"Accesaţi-le oricând glisând în jos."\n"Glisaţi în jos din nou pentru comenzile sistemului."</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"Rețeaua poate\nfi monitorizată"</string>
 </resources>

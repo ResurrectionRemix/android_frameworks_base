@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+import libcore.io.Libcore;
+
 /*package*/ class ZygoteStartFailedEx extends Exception {
     /**
      * Something prevented the zygote process startup from happening normally
@@ -98,12 +100,6 @@ public class Process {
     public static final int DRM_UID = 1019;
 
     /**
-     * Defines the GID for the group that allows write access to the SD card.
-     * @hide
-     */
-    public static final int SDCARD_RW_GID = 1015;
-
-    /**
      * Defines the UID/GID for the group that controls VPN services.
      * @hide
      */
@@ -128,11 +124,18 @@ public class Process {
     public static final int MEDIA_RW_GID = 1023;
 
     /**
+     * Access to installed package details
+     * @hide
+     */
+    public static final int PACKAGE_INFO_GID = 1032;
+
+    /**
      * Defines the start of a range of UIDs (and GIDs), going from this
      * number to {@link #LAST_APPLICATION_UID} that are reserved for assigning
      * to applications.
      */
     public static final int FIRST_APPLICATION_UID = 10000;
+
     /**
      * Last of application-specific UIDs starting at
      * {@link #FIRST_APPLICATION_UID}.
@@ -164,11 +167,6 @@ public class Process {
      * @hide
      */
     public static final int LAST_SHARED_APPLICATION_GID = 59999;
-
-    /**
-     * Defines a secondary group id for access to the bluetooth hardware.
-     */
-    public static final int BLUETOOTH_GID = 2000;
 
     /**
      * Standard priority of application threads.
@@ -652,13 +650,25 @@ public class Process {
      * Returns the identifier of this process, which can be used with
      * {@link #killProcess} and {@link #sendSignal}.
      */
-    public static final native int myPid();
+    public static final int myPid() {
+        return Libcore.os.getpid();
+    }
+
+    /**
+     * Returns the identifier of this process' parent.
+     * @hide
+     */
+    public static final int myPpid() {
+        return Libcore.os.getppid();
+    }
 
     /**
      * Returns the identifier of the calling thread, which be used with
      * {@link #setThreadPriority(int, int)}.
      */
-    public static final native int myTid();
+    public static final int myTid() {
+        return Libcore.os.gettid();
+    }
 
     /**
      * Returns the identifier of this process's uid.  This is the kernel uid
@@ -666,7 +676,9 @@ public class Process {
      * app-specific sandbox.  It is different from {@link #myUserHandle} in that
      * a uid identifies a specific app sandbox in a specific user.
      */
-    public static final native int myUid();
+    public static final int myUid() {
+        return Libcore.os.getuid();
+    }
 
     /**
      * Returns this process's user handle.  This is the
@@ -806,7 +818,15 @@ public class Process {
      */
     public static final native void setProcessGroup(int pid, int group)
             throws IllegalArgumentException, SecurityException;
-    
+
+    /**
+     * Return the scheduling group of requested process.
+     *
+     * @hide
+     */
+    public static final native int getProcessGroup(int pid)
+            throws IllegalArgumentException, SecurityException;
+
     /**
      * Set the priority of the calling thread, based on Linux priorities.  See
      * {@link #setThreadPriority(int, int)} for more information.
@@ -883,6 +903,19 @@ public class Process {
      * {@hide}
      */
     public static final native boolean setOomAdj(int pid, int amt);
+
+    /**
+     * Adjust the swappiness level for a process.
+     *
+     * @param pid The process identifier to set.
+     * @param is_increased Whether swappiness should be increased or default.
+     *
+     * @return Returns true if the underlying system supports this
+     *         feature, else false.
+     *
+     * {@hide}
+     */
+    public static final native boolean setSwappiness(int pid, boolean is_increased);
 
     /**
      * Change this process's argv[0] parameter.  This can be useful to show
@@ -967,6 +1000,8 @@ public class Process {
     /** @hide */
     public static final int PROC_PARENS = 0x200;
     /** @hide */
+    public static final int PROC_QUOTES = 0x400;
+    /** @hide */
     public static final int PROC_OUT_STRING = 0x1000;
     /** @hide */
     public static final int PROC_OUT_LONG = 0x2000;
@@ -1009,30 +1044,5 @@ public class Process {
          * True if the process was started with a wrapper attached.
          */
         public boolean usingWrapper;
-    }
-
-    private static final int[] PROCESS_STATE_FORMAT = new int[] {
-        PROC_SPACE_TERM,
-        PROC_SPACE_TERM|PROC_PARENS, // 1: name
-        PROC_SPACE_TERM|PROC_OUT_STRING, // 2: state
-    };
-
-    /**
-     * Returns true if the process can be found and is not a zombie
-     * @param pid the process id
-     * @hide
-     */
-    public static final boolean isAlive(int pid) {
-        boolean ret = false;
-        String[] processStateString = new String[1];
-        if (Process.readProcFile("/proc/" + pid + "/stat",
-                PROCESS_STATE_FORMAT, processStateString, null, null)) {
-            ret = true;
-            // Log.i(LOG_TAG,"State of process " + pid + " is " + processStateString[0]);
-            if (processStateString[0].equals("Z")) {
-                ret = false;
-            }
-        }
-        return ret;
     }
 }

@@ -82,7 +82,7 @@ public abstract class RegisteredServicesCache<V> {
     @GuardedBy("mServicesLock")
     private boolean mPersistentServicesFileDidNotExist;
     @GuardedBy("mServicesLock")
-    private final SparseArray<UserServices<V>> mUserServices = new SparseArray<UserServices<V>>();
+    private final SparseArray<UserServices<V>> mUserServices = new SparseArray<UserServices<V>>(2);
 
     private static class UserServices<V> {
         @GuardedBy("mServicesLock")
@@ -488,7 +488,8 @@ public abstract class RegisteredServicesCache<V> {
             XmlPullParser parser = Xml.newPullParser();
             parser.setInput(fis, null);
             int eventType = parser.getEventType();
-            while (eventType != XmlPullParser.START_TAG) {
+            while (eventType != XmlPullParser.START_TAG
+                    && eventType != XmlPullParser.END_DOCUMENT) {
                 eventType = parser.next();
             }
             String tagName = parser.getName();

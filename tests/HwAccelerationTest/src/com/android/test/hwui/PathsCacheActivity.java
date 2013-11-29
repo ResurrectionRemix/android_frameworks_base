@@ -33,6 +33,7 @@ public class PathsCacheActivity extends Activity {
     private Path mPath;
 
     private final Random mRandom = new Random();
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final ArrayList<Path> mPathList = new ArrayList<Path>();
 
     @Override
@@ -45,17 +46,30 @@ public class PathsCacheActivity extends Activity {
         setContentView(view);
     }
 
-    private Path makePath() {
+    private static Path makePath() {
         Path path = new Path();
         buildPath(path);
         return path;
     }
 
-    private void buildPath(Path path) {
+    private static void buildPath(Path path) {
         path.moveTo(0.0f, 0.0f);
         path.cubicTo(0.0f, 0.0f, 100.0f, 150.0f, 100.0f, 200.0f);
         path.cubicTo(100.0f, 200.0f, 50.0f, 300.0f, -80.0f, 200.0f);
         path.cubicTo(-80.0f, 200.0f, 100.0f, 200.0f, 200.0f, 0.0f);
+    }
+
+    private static Path makeLargePath() {
+        Path path = new Path();
+        buildLargePath(path);
+        return path;
+    }
+
+    private static void buildLargePath(Path path) {
+        path.moveTo(0.0f, 0.0f);
+        path.cubicTo(0.0f, 0.0f, 10000.0f, 15000.0f, 10000.0f, 20000.0f);
+        path.cubicTo(10000.0f, 20000.0f, 5000.0f, 30000.0f, -8000.0f, 20000.0f);
+        path.cubicTo(-8000.0f, 20000.0f, 10000.0f, 20000.0f, 20000.0f, 0.0f);
     }
 
     public class PathsView extends View {
@@ -74,13 +88,18 @@ public class PathsCacheActivity extends Activity {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            
-            Log.d("OpenGLRenderer", "Start frame");
 
             canvas.drawARGB(255, 255, 255, 255);
 
             canvas.save();
             canvas.translate(550.0f, 60.0f);
+            canvas.drawPath(mPath, mMediumPaint);
+
+            mPath.reset();
+            buildPath(mPath);
+
+            canvas.translate(30.0f, 30.0f);
+            canvas.drawPath(mPath, mMediumPaint);
             canvas.drawPath(mPath, mMediumPaint);
 
             mPath.reset();
@@ -96,6 +115,9 @@ public class PathsCacheActivity extends Activity {
                 Path path = makePath();
                 int r = mRandom.nextInt(10);
                 if (r == 5 || r == 3) {
+                    mPathList.add(path);
+                } else if (r == 7) {
+                    path = makeLargePath();
                     mPathList.add(path);
                 }
     

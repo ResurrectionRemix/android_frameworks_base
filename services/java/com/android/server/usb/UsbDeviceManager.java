@@ -32,11 +32,9 @@ import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbManager;
 import android.os.FileUtils;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
-import android.os.Process;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UEventObserver;
@@ -48,6 +46,7 @@ import android.util.Pair;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.server.FgThread;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -57,6 +56,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -149,13 +149,6 @@ public class UsbDeviceManager {
         }
     };
 
-    // Dummy constructor to use when extending class
-    public UsbDeviceManager() {
-        mContext = null;
-        mContentResolver = null;
-        mHasUsbAccessory = false;
-    }
-
     public UsbDeviceManager(Context context) {
         mContext = context;
         mContentResolver = context.getContentResolver();
@@ -165,18 +158,16 @@ public class UsbDeviceManager {
 
         readOemUsbOverrideConfig();
 
-        // create a thread for our Handler
-        HandlerThread thread = new HandlerThread("UsbDeviceManager",
-                Process.THREAD_PRIORITY_BACKGROUND);
-        thread.start();
-        mHandler = new UsbHandler(thread.getLooper());
+        mHandler = new UsbHandler(FgThread.get().getLooper());
 
         if (nativeIsStartRequested()) {
             if (DEBUG) Slog.d(TAG, "accessory attached at boot");
             startAccessoryMode();
         }
 
-        if ("1".equals(SystemProperties.get("ro.adb.secure"))) {
+        boolean secureAdbEnabled = SystemProperties.getBoolean("ro.adb.secure", false);
+        boolean dataEncrypted = "1".equals(SystemProperties.get("vold.decrypt"));
+        if (secureAdbEnabled && !dataEncrypted) {
             mDebuggingManager = new UsbDebuggingManager(context);
         }
     }
@@ -199,25 +190,13 @@ public class UsbDeviceManager {
         mNotificationManager = (NotificationManager)
                 mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // We do not show the USB notification if the primary volume supports mass storage, unless
-        // persist.sys.usb.config is set to mtp,adb. This will allow the USB notification to show
-        // on devices with mtp as default and mass storage enabled on primary, so the user can choose
-        // between mtp, ptp, and mass storage. The legacy mass storage UI will be used otherwise.
+        // We do not show the USB notification if the primary volume supports mass storage.
+        // The legacy mass storage UI will be used instead.
         boolean massStorageSupported = false;
         final StorageManager storageManager = StorageManager.from(mContext);
         final StorageVolume primary = storageManager.getPrimaryVolume();
-
-        if (Settings.Secure.getInt(mContentResolver, Settings.Secure.USB_MASS_STORAGE_ENABLED, 0 ) == 1 ) {
-                massStorageSupported = primary != null && primary.allowMassStorage();
-        } else {
-                massStorageSupported = false;
-        }
-
-        if ("mtp,adb".equals(SystemProperties.get("persist.sys.usb.config"))) {
-            mUseUsbNotification = true;
-        } else {
-            mUseUsbNotification = !massStorageSupported;
-        }
+        massStorageSupported = primary != null && primary.allowMassStorage();
+        mUseUsbNotification = !massStorageSupported;
 
         // make sure the ADB_ENABLED setting value matches the current state
         Settings.Global.putInt(mContentResolver, Settings.Global.ADB_ENABLED, mAdbEnabled ? 1 : 0);
@@ -262,7 +241,7 @@ public class UsbDeviceManager {
         for (int i = 0; i < serialLength; i++) {
             address[i % (ETH_ALEN - 1) + 1] ^= (int)serial.charAt(i);
         }
-        String addrString = String.format("%02X:%02X:%02X:%02X:%02X:%02X",
+        String addrString = String.format(Locale.US, "%02X:%02X:%02X:%02X:%02X:%02X",
             address[0], address[1], address[2], address[3], address[4], address[5]);
         try {
             FileUtils.stringToFile(RNDIS_ETH_ADDR_PATH, addrString);
@@ -383,14 +362,6 @@ public class UsbDeviceManager {
                 mContentResolver.registerContentObserver(
                         Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
                                 false, new AdbSettingsObserver());
-                mContentResolver.registerContentObserver(
-                        Settings.Secure.getUriFor(Settings.Secure.ADB_NOTIFY),
-                                false, new ContentObserver(null) {
-                            public void onChange(boolean selfChange) {
-                                updateAdbNotification();
-                            }
-                        }
-                );
 
                 // Watch for USB configuration changes
                 mUEventObserver.startObserving(USB_STATE_MATCH);
@@ -741,10 +712,7 @@ public class UsbDeviceManager {
             if (mNotificationManager == null) return;
             final int id = com.android.internal.R.string.adb_active_notification_title;
             if (mAdbEnabled && mConnected) {
-                if ("0".equals(SystemProperties.get("persist.adb.notify"))
-                 || Settings.Secure.getInt(mContext.getContentResolver(),
-                    Settings.Secure.ADB_NOTIFY, 1) == 0)
-                    return;
+                if ("0".equals(SystemProperties.get("persist.adb.notify"))) return;
 
                 if (!mAdbNotificationShown) {
                     Resources r = mContext.getResources();
@@ -889,6 +857,15 @@ public class UsbDeviceManager {
     public void denyUsbDebugging() {
         if (mDebuggingManager != null) {
             mDebuggingManager.denyUsbDebugging();
+        }
+    }
+
+    public void clearUsbDebuggingKeys() {
+        if (mDebuggingManager != null) {
+            mDebuggingManager.clearUsbDebuggingKeys();
+        } else {
+            throw new RuntimeException("Cannot clear Usb Debugging keys, "
+                        + "UsbDebuggingManager not enabled");
         }
     }
 

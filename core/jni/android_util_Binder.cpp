@@ -35,7 +35,7 @@
 #include <utils/SystemClock.h>
 #include <utils/List.h>
 #include <utils/KeyedVector.h>
-#include <cutils/logger.h>
+#include <log/logger.h>
 #include <binder/Parcel.h>
 #include <binder/ProcessState.h>
 #include <binder/IServiceManager.h>
@@ -92,14 +92,6 @@ static struct debug_offsets_t
 } gDebugOffsets;
 
 // ----------------------------------------------------------------------------
-
-static struct weakreference_offsets_t
-{
-    // Class state.
-    jclass mClass;
-    jmethodID mGet;
-
-} gWeakReferenceOffsets;
 
 static struct error_offsets_t
 {
@@ -570,7 +562,7 @@ jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val)
     // Someone else's...  do we know about it?
     jobject object = (jobject)val->findObject(&gBinderProxyOffsets);
     if (object != NULL) {
-        jobject res = env->CallObjectMethod(object, gWeakReferenceOffsets.mGet);
+        jobject res = jniGetReferent(env, object);
         if (res != NULL) {
             ALOGV("objectForBinder %p: found existing %p!\n", val.get(), res);
             return res;
@@ -586,7 +578,7 @@ jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val)
         LOGDEATH("objectForBinder %p: created new proxy %p !\n", val.get(), object);
         // The proxy holds a reference to the native object.
         env->SetIntField(object, gBinderProxyOffsets.mObject, (int)val.get());
-        val->incStrong(object);
+        val->incStrong((void*)javaObjectForIBinder);
 
         // The native object needs to hold a weak reference back to the
         // proxy, so we can retrieve the same proxy if it is still active.
@@ -994,6 +986,7 @@ static bool push_eventlog_int(char** pos, const char* end, jint val) {
 }
 
 // From frameworks/base/core/java/android/content/EventLogTags.logtags:
+#define ENABLE_BINDER_SAMPLE 0
 #define LOGTAG_BINDER_OPERATION 52004
 
 static void conditionally_log_binder_call(int64_t start_millis,
@@ -1071,6 +1064,7 @@ static jboolean android_os_BinderProxy_transact(JNIEnv* env, jobject obj,
     ALOGV("Java code calling transact on %p in Java object %p with code %d\n",
             target, obj, code);
 
+#if ENABLE_BINDER_SAMPLE
     // Only log the binder call duration for things on the Java-level main thread.
     // But if we don't
     const bool time_binder_calls = should_time_binder_calls();
@@ -1079,12 +1073,15 @@ static jboolean android_os_BinderProxy_transact(JNIEnv* env, jobject obj,
     if (time_binder_calls) {
         start_millis = uptimeMillis();
     }
+#endif
     //printf("Transact from Java code to %p sending: ", target); data->print();
     status_t err = target->transact(code, *data, reply, flags);
     //if (reply) printf("Transact from Java code to %p received: ", target); reply->print();
+#if ENABLE_BINDER_SAMPLE
     if (time_binder_calls) {
         conditionally_log_binder_call(start_millis, target, code);
     }
+#endif
 
     if (err == NO_ERROR) {
         return JNI_TRUE;
@@ -1187,7 +1184,7 @@ static void android_os_BinderProxy_destroy(JNIEnv* env, jobject obj)
     env->SetIntField(obj, gBinderProxyOffsets.mObject, 0);
     env->SetIntField(obj, gBinderProxyOffsets.mOrgue, 0);
     drl->decStrong((void*)javaObjectForIBinder);
-    b->decStrong(obj);
+    b->decStrong((void*)javaObjectForIBinder);
 
     IPCThreadState::self()->flushCommands();
 }
@@ -1210,13 +1207,6 @@ const char* const kBinderProxyPathName = "android/os/BinderProxy";
 static int int_register_android_os_BinderProxy(JNIEnv* env)
 {
     jclass clazz;
-
-    clazz = env->FindClass("java/lang/ref/WeakReference");
-    LOG_FATAL_IF(clazz == NULL, "Unable to find class java.lang.ref.WeakReference");
-    gWeakReferenceOffsets.mClass = (jclass) env->NewGlobalRef(clazz);
-    gWeakReferenceOffsets.mGet
-        = env->GetMethodID(clazz, "get", "()Ljava/lang/Object;");
-    assert(gWeakReferenceOffsets.mGet);
 
     clazz = env->FindClass("java/lang/Error");
     LOG_FATAL_IF(clazz == NULL, "Unable to find class java.lang.Error");

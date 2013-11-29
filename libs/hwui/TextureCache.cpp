@@ -20,7 +20,7 @@
 
 #include <SkCanvas.h>
 
-#include <utils/threads.h>
+#include <utils/Mutex.h>
 
 #include "Caches.h"
 #include "TextureCache.h"
@@ -34,7 +34,7 @@ namespace uirenderer {
 ///////////////////////////////////////////////////////////////////////////////
 
 TextureCache::TextureCache():
-        mCache(GenerationCache<SkBitmap*, Texture*>::kUnlimitedCapacity),
+        mCache(LruCache<SkBitmap*, Texture*>::kUnlimitedCapacity),
         mSize(0), mMaxSize(MB(DEFAULT_TEXTURE_CACHE_SIZE)),
         mFlushRate(DEFAULT_TEXTURE_CACHE_FLUSH_RATE) {
     char property[PROPERTY_VALUE_MAX];
@@ -58,7 +58,7 @@ TextureCache::TextureCache():
 }
 
 TextureCache::TextureCache(uint32_t maxByteSize):
-        mCache(GenerationCache<SkBitmap*, Texture*>::kUnlimitedCapacity),
+        mCache(LruCache<SkBitmap*, Texture*>::kUnlimitedCapacity),
         mSize(0), mMaxSize(maxByteSize) {
     init();
 }
@@ -112,7 +112,7 @@ void TextureCache::operator()(SkBitmap*& bitmap, Texture*& texture) {
         if (mDebugEnabled) {
             ALOGD("Texture deleted, size = %d", texture->bitmapSize);
         }
-        glDeleteTextures(1, &texture->id);
+        texture->deleteTexture();
         delete texture;
     }
 }
@@ -139,7 +139,7 @@ Texture* TextureCache::get(SkBitmap* bitmap) {
             }
         }
 
-        texture = new Texture;
+        texture = new Texture();
         texture->bitmapSize = size;
         generateTexture(bitmap, texture, false);
 
@@ -162,7 +162,7 @@ Texture* TextureCache::get(SkBitmap* bitmap) {
 }
 
 Texture* TextureCache::getTransient(SkBitmap* bitmap) {
-    Texture* texture = new Texture;
+    Texture* texture = new Texture();
     texture->bitmapSize = bitmap->rowBytes() * bitmap->height();
     texture->cleanup = true;
 
@@ -219,7 +219,7 @@ void TextureCache::generateTexture(SkBitmap* bitmap, Texture* texture, bool rege
 
     // We could also enable mipmapping if both bitmap dimensions are powers
     // of 2 but we'd have to deal with size changes. Let's keep this simple
-    const bool canMipMap = Caches::getInstance().extensions.hasNPot();
+    const bool canMipMap = Extensions::getInstance().hasNPot();
 
     // If the texture had mipmap enabled but not anymore,
     // force a glTexImage2D to discard the mipmap levels
@@ -235,25 +235,25 @@ void TextureCache::generateTexture(SkBitmap* bitmap, Texture* texture, bool rege
     texture->width = bitmap->width();
     texture->height = bitmap->height();
 
-    glBindTexture(GL_TEXTURE_2D, texture->id);
+    Caches::getInstance().bindTexture(texture->id);
 
     switch (bitmap->getConfig()) {
     case SkBitmap::kA8_Config:
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        uploadToTexture(resize, GL_ALPHA, bitmap->rowBytesAsPixels(), texture->height,
-                GL_UNSIGNED_BYTE, bitmap->getPixels());
+        uploadToTexture(resize, GL_ALPHA, bitmap->rowBytesAsPixels(),
+                texture->width, texture->height, GL_UNSIGNED_BYTE, bitmap->getPixels());
         texture->blend = true;
         break;
     case SkBitmap::kRGB_565_Config:
         glPixelStorei(GL_UNPACK_ALIGNMENT, bitmap->bytesPerPixel());
-        uploadToTexture(resize, GL_RGB, bitmap->rowBytesAsPixels(), texture->height,
-                GL_UNSIGNED_SHORT_5_6_5, bitmap->getPixels());
+        uploadToTexture(resize, GL_RGB, bitmap->rowBytesAsPixels(),
+                texture->width, texture->height, GL_UNSIGNED_SHORT_5_6_5, bitmap->getPixels());
         texture->blend = false;
         break;
     case SkBitmap::kARGB_8888_Config:
         glPixelStorei(GL_UNPACK_ALIGNMENT, bitmap->bytesPerPixel());
-        uploadToTexture(resize, GL_RGBA, bitmap->rowBytesAsPixels(), texture->height,
-                GL_UNSIGNED_BYTE, bitmap->getPixels());
+        uploadToTexture(resize, GL_RGBA, bitmap->rowBytesAsPixels(),
+                texture->width, texture->height, GL_UNSIGNED_BYTE, bitmap->getPixels());
         // Do this after calling getPixels() to make sure Skia's deferred
         // decoding happened
         texture->blend = !bitmap->isOpaque();
@@ -293,16 +293,27 @@ void TextureCache::uploadLoFiTexture(bool resize, SkBitmap* bitmap,
     SkCanvas canvas(rgbaBitmap);
     canvas.drawBitmap(*bitmap, 0.0f, 0.0f, NULL);
 
-    uploadToTexture(resize, GL_RGBA, rgbaBitmap.rowBytesAsPixels(), height,
+    uploadToTexture(resize, GL_RGBA, rgbaBitmap.rowBytesAsPixels(), width, height,
             GL_UNSIGNED_BYTE, rgbaBitmap.getPixels());
 }
 
-void TextureCache::uploadToTexture(bool resize, GLenum format, GLsizei width, GLsizei height,
-        GLenum type, const GLvoid * data) {
+void TextureCache::uploadToTexture(bool resize, GLenum format, GLsizei stride,
+        GLsizei width, GLsizei height, GLenum type, const GLvoid * data) {
+    // TODO: With OpenGL ES 2.0 we need to copy the bitmap in a temporary buffer
+    //       if the stride doesn't match the width
+    const bool useStride = stride != width && Extensions::getInstance().hasUnpackRowLength();
+    if (useStride) {
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, stride);
+    }
+
     if (resize) {
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, type, data);
     } else {
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, format, type, data);
+    }
+
+    if (useStride) {
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     }
 }
 

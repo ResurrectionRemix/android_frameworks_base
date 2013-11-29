@@ -44,6 +44,25 @@ static jstring android_media_MediaCodecList_getCodecName(
     return env->NewStringUTF(name);
 }
 
+static jint android_media_MediaCodecList_findCodecByName(
+        JNIEnv *env, jobject thiz, jstring name) {
+    if (name == NULL) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return -ENOENT;
+    }
+
+    const char *nameStr = env->GetStringUTFChars(name, NULL);
+
+    if (nameStr == NULL) {
+        // Out of memory exception already pending.
+        return -ENOENT;
+    }
+
+    jint ret = MediaCodecList::getInstance()->findCodecByName(nameStr);
+    env->ReleaseStringUTFChars(name, nameStr);
+    return ret;
+}
+
 static jboolean android_media_MediaCodecList_isEncoder(
         JNIEnv *env, jobject thiz, jint index) {
     return MediaCodecList::getInstance()->isEncoder(index);
@@ -91,10 +110,11 @@ static jobject android_media_MediaCodecList_getCodecCapabilities(
 
     Vector<MediaCodecList::ProfileLevel> profileLevels;
     Vector<uint32_t> colorFormats;
+    uint32_t flags;
 
     status_t err =
         MediaCodecList::getInstance()->getCodecCapabilities(
-                index, typeStr, &profileLevels, &colorFormats);
+                index, typeStr, &profileLevels, &colorFormats, &flags);
 
     env->ReleaseStringUTFChars(type, typeStr);
     typeStr = NULL;
@@ -107,6 +127,9 @@ static jobject android_media_MediaCodecList_getCodecCapabilities(
     jclass capsClazz =
         env->FindClass("android/media/MediaCodecInfo$CodecCapabilities");
     CHECK(capsClazz != NULL);
+
+    jfieldID flagsField =
+        env->GetFieldID(capsClazz, "flags", "I");
 
     jobject caps = env->AllocObject(capsClazz);
 
@@ -144,6 +167,8 @@ static jobject android_media_MediaCodecList_getCodecCapabilities(
 
     env->SetObjectField(caps, profileLevelsField, profileLevelArray);
 
+    env->SetIntField(caps, flagsField, flags);
+
     env->DeleteLocalRef(profileLevelArray);
     profileLevelArray = NULL;
 
@@ -179,6 +204,9 @@ static JNINativeMethod gMethods[] = {
     { "getCodecCapabilities",
       "(ILjava/lang/String;)Landroid/media/MediaCodecInfo$CodecCapabilities;",
       (void *)android_media_MediaCodecList_getCodecCapabilities },
+
+    { "findCodecByName", "(Ljava/lang/String;)I",
+      (void *)android_media_MediaCodecList_findCodecByName },
 
     { "native_init", "()V", (void *)android_media_MediaCodecList_native_init },
 };

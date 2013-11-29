@@ -19,7 +19,6 @@ package com.android.systemui.statusbar.phone;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.Resources;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,18 +29,17 @@ import com.android.systemui.R;
 /**
  *
  */
-public class QuickSettingsContainerView extends FrameLayout {
+class QuickSettingsContainerView extends FrameLayout {
 
     // The number of columns in the QuickSettings grid
     private int mNumColumns;
 
     // The gap between tiles in the QuickSettings grid
     private float mCellGap;
-    private Context mContext;
 
     public QuickSettingsContainerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
+
         updateResources();
     }
 
@@ -56,8 +54,7 @@ public class QuickSettingsContainerView extends FrameLayout {
     void updateResources() {
         Resources r = getContext().getResources();
         mCellGap = r.getDimension(R.dimen.quick_settings_cell_gap);
-        mNumColumns = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QUICK_TOGGLES_PER_ROW, r.getInteger(R.integer.quick_settings_num_columns));
+        mNumColumns = r.getInteger(R.integer.quick_settings_num_columns);
         requestLayout();
     }
 
@@ -71,7 +68,7 @@ public class QuickSettingsContainerView extends FrameLayout {
         float cellWidth = (float) Math.ceil(((float) availableWidth) / mNumColumns);
 
         // Update each of the children's widths accordingly to the cell width
-        int N = getChildCount();
+        final int N = getChildCount();
         int cellHeight = 0;
         int cursor = 0;
         for (int i = 0; i < N; ++i) {
@@ -82,9 +79,6 @@ public class QuickSettingsContainerView extends FrameLayout {
                 int colSpan = v.getColumnSpan();
                 lp.width = (int) ((colSpan * cellWidth) + (colSpan - 1) * mCellGap);
 
-                if (mNumColumns > 3) {
-                    lp.height = (lp.width * mNumColumns-1) / mNumColumns;
-                }
                 // Measure the child
                 int newWidthSpec = MeasureSpec.makeMeasureSpec(lp.width, MeasureSpec.EXACTLY);
                 int newHeightSpec = MeasureSpec.makeMeasureSpec(lp.height, MeasureSpec.EXACTLY);
@@ -108,42 +102,52 @@ public class QuickSettingsContainerView extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int N = getChildCount();
-        int x = getPaddingLeft();
+        final int N = getChildCount();
+        final boolean isLayoutRtl = isLayoutRtl();
+        final int width = getWidth();
+
+        int x = getPaddingStart();
         int y = getPaddingTop();
         int cursor = 0;
+
         for (int i = 0; i < N; ++i) {
-            QuickSettingsTileView v = (QuickSettingsTileView) getChildAt(i);
-            ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) v.getLayoutParams();
-            if (v.getVisibility() != GONE) {
-                int col = cursor % mNumColumns;
-                int colSpan = v.getColumnSpan();
+            QuickSettingsTileView child = (QuickSettingsTileView) getChildAt(i);
+            ViewGroup.LayoutParams lp = child.getLayoutParams();
+            if (child.getVisibility() != GONE) {
+                final int col = cursor % mNumColumns;
+                final int colSpan = child.getColumnSpan();
+
+                final int childWidth = lp.width;
+                final int childHeight = lp.height;
+
                 int row = (int) (cursor / mNumColumns);
 
                 // Push the item to the next row if it can't fit on this one
                 if ((col + colSpan) > mNumColumns) {
-                    x = getPaddingLeft();
-                    y += lp.height + mCellGap;
+                    x = getPaddingStart();
+                    y += childHeight + mCellGap;
                     row++;
                 }
 
+                final int childLeft = (isLayoutRtl) ? width - x - childWidth : x;
+                final int childRight = childLeft + childWidth;
+
+                final int childTop = y;
+                final int childBottom = childTop + childHeight;
+
                 // Layout the container
-                v.layout(x, y, x + lp.width, y + lp.height);
+                child.layout(childLeft, childTop, childRight, childBottom);
 
                 // Offset the position by the cell gap or reset the position and cursor when we
                 // reach the end of the row
-                cursor += v.getColumnSpan();
+                cursor += child.getColumnSpan();
                 if (cursor < (((row + 1) * mNumColumns))) {
-                    x += lp.width + mCellGap;
+                    x += childWidth + mCellGap;
                 } else {
-                    x = getPaddingLeft();
-                    y += lp.height + mCellGap;
+                    x = getPaddingStart();
+                    y += childHeight + mCellGap;
                 }
             }
         }
-    }
-
-    public void setColumnCount(int num) {
-        mNumColumns = num;
     }
 }

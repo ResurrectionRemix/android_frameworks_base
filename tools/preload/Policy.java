@@ -69,6 +69,7 @@ public class Policy {
         // Threads
         "android.os.AsyncTask",
         "android.pim.ContactsAsyncHelper",
+        "android.webkit.WebViewClassic$1",
         "java.lang.ProcessManager"
     ));
 
@@ -80,8 +81,9 @@ public class Policy {
         return SERVICES.contains(processName);
     }
 
-    /**Reports if the given class should be preloaded. */
+    /** Reports if the given class should be preloaded. */
     public static boolean isPreloadable(LoadedClass clazz) {
-        return clazz.systemClass && !EXCLUDED_CLASSES.contains(clazz.name);
+        return clazz.systemClass && !EXCLUDED_CLASSES.contains(clazz.name)
+                && !clazz.name.endsWith("$NoPreloadHolder");
     }
 }

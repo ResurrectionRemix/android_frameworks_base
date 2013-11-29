@@ -21,6 +21,7 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
 import java.util.Collection;
+import java.util.Locale;
 
 import android.util.Log;
 
@@ -62,21 +63,21 @@ public class NetworkUtils {
      * addresses. This call blocks until it obtains a result (either success
      * or failure) from the daemon.
      * @param interfaceName the name of the interface to configure
-     * @param ipInfo if the request succeeds, this object is filled in with
+     * @param dhcpResults if the request succeeds, this object is filled in with
      * the IP address information.
      * @return {@code true} for success, {@code false} for failure
      */
-    public native static boolean runDhcp(String interfaceName, DhcpInfoInternal ipInfo);
+    public native static boolean runDhcp(String interfaceName, DhcpResults dhcpResults);
 
     /**
      * Initiate renewal on the Dhcp client daemon. This call blocks until it obtains
      * a result (either success or failure) from the daemon.
      * @param interfaceName the name of the interface to configure
-     * @param ipInfo if the request succeeds, this object is filled in with
+     * @param dhcpResults if the request succeeds, this object is filled in with
      * the IP address information.
      * @return {@code true} for success, {@code false} for failure
      */
-    public native static boolean runDhcpRenew(String interfaceName, DhcpInfoInternal ipInfo);
+    public native static boolean runDhcpRenew(String interfaceName, DhcpResults dhcpResults);
 
     /**
      * Shut down the DHCP client daemon.
@@ -103,6 +104,11 @@ public class NetworkUtils {
     public native static String getDhcpError();
 
     /**
+     * Set the SO_MARK of {@code socketfd} to {@code mark}
+     */
+    public native static void markSocket(int socketfd, int mark);
+
+    /**
      * Convert a IPv4 address from an integer to an InetAddress.
      * @param hostAddress an int corresponding to the IPv4 address in network byte order
      */
@@ -124,12 +130,9 @@ public class NetworkUtils {
      * @param inetAddr is an InetAddress corresponding to the IPv4 address
      * @return the IP address as an integer in network byte order
      */
-    public static int inetAddressToInt(InetAddress inetAddr)
+    public static int inetAddressToInt(Inet4Address inetAddr)
             throws IllegalArgumentException {
         byte [] addr = inetAddr.getAddress();
-        if (addr.length != 4) {
-            throw new IllegalArgumentException("Not an IPv4 address");
-        }
         return ((addr[3] & 0xff) << 24) | ((addr[2] & 0xff) << 16) |
                 ((addr[1] & 0xff) << 8) | (addr[0] & 0xff);
     }
@@ -226,7 +229,7 @@ public class NetworkUtils {
     public static InetAddress hexToInet6Address(String addrHexString)
             throws IllegalArgumentException {
         try {
-            return numericToInetAddress(String.format("%s:%s:%s:%s:%s:%s:%s:%s",
+            return numericToInetAddress(String.format(Locale.US, "%s:%s:%s:%s:%s:%s:%s:%s",
                     addrHexString.substring(0,4),   addrHexString.substring(4,8),
                     addrHexString.substring(8,12),  addrHexString.substring(12,16),
                     addrHexString.substring(16,20), addrHexString.substring(20,24),

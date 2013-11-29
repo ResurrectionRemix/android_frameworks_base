@@ -16,23 +16,29 @@
 
 package com.android.systemui.statusbar.phone;
 
+import com.android.systemui.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.RelativeLayout;
+import android.view.View;
+import android.widget.FrameLayout;
 
 /**
  *
  */
-public class QuickSettingsTileView extends RelativeLayout {
+class QuickSettingsTileView extends FrameLayout {
+    private static final String TAG = "QuickSettingsTileView";
 
+    private int mContentLayoutId;
     private int mColSpan;
     private int mRowSpan;
-    private int mCellWidth;
 
     public QuickSettingsTileView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        mContentLayoutId = -1;
         mColSpan = 1;
         mRowSpan = 1;
     }
@@ -41,11 +47,41 @@ public class QuickSettingsTileView extends RelativeLayout {
         mColSpan = span;
     }
 
-    public int getColumnSpan() {
+    int getColumnSpan() {
         return mColSpan;
     }
 
-    public void setContent(int layoutId, LayoutInflater inflater) {
+    void setContent(int layoutId, LayoutInflater inflater) {
+        mContentLayoutId = layoutId;
         inflater.inflate(layoutId, this);
+    }
+
+    void reinflateContent(LayoutInflater inflater) {
+        if (mContentLayoutId != -1) {
+            removeAllViews();
+            setContent(mContentLayoutId, inflater);
+        } else {
+            Log.e(TAG, "Not reinflating content: No layoutId set");
+        }
+    }
+
+    void setLoading(boolean loading) {
+        findViewById(R.id.loading).setVisibility(loading ? View.VISIBLE : View.GONE);
+        findViewById(R.id.image).setVisibility(loading ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void setVisibility(int vis) {
+        if (QuickSettings.DEBUG_GONE_TILES) {
+            if (vis == View.GONE) {
+                vis = View.VISIBLE;
+                setAlpha(0.25f);
+                setEnabled(false);
+            } else {
+                setAlpha(1f);
+                setEnabled(true);
+            }
+        }
+        super.setVisibility(vis);
     }
 }

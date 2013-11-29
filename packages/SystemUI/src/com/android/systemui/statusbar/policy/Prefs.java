@@ -22,37 +22,11 @@ import android.content.SharedPreferences;
 public class Prefs {
     private static final String SHARED_PREFS_NAME = "status_bar";
 
-    // a boolean
-    public static final String DO_NOT_DISTURB_PREF = "do_not_disturb";
-    public static final boolean DO_NOT_DISTURB_DEFAULT = false;
-
-    public static final String SHOWN_COMPAT_MODE_HELP = "shown_compat_mode_help";
-    public static final String SHOWN_QUICK_SETTINGS_HELP = "shown_quick_settings_help";
-    public static final String LAST_BATTERY_LEVEL = "last_battery_level";
-
-    public static final String LAST_FCHARGE_STATE = "last_fcharge_state";
-
     public static SharedPreferences read(Context context) {
         return context.getSharedPreferences(Prefs.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public static SharedPreferences.Editor edit(Context context) {
         return context.getSharedPreferences(Prefs.SHARED_PREFS_NAME, Context.MODE_PRIVATE).edit();
-    }
-
-    public static void setLastBatteryLevel(Context context, int level) {
-        edit(context).putInt(LAST_BATTERY_LEVEL, level).commit();
-    }
-
-    public static int getLastBatteryLevel(Context context) {
-        return read(context).getInt(LAST_BATTERY_LEVEL, 50);
-    }
-
-    public static void setLastFastChargeState(Context context, boolean enabled) {
-        edit(context).putBoolean(LAST_FCHARGE_STATE, enabled).commit();
-    }
-
-    public static boolean getLastFastChargeState(Context context) {
-        return read(context).getBoolean(LAST_FCHARGE_STATE, false);
     }
 }

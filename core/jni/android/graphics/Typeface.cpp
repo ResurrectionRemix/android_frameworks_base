@@ -29,20 +29,28 @@ private:
 
 static SkTypeface* Typeface_create(JNIEnv* env, jobject, jstring name,
                                    SkTypeface::Style style) {
-    SkTypeface* face;
+    SkTypeface* face = NULL;
 
-    if (NULL == name) {
-        face = SkTypeface::CreateFromName(NULL, (SkTypeface::Style)style);
-    }
-    else {
+    if (NULL != name) {
         AutoJavaStringToUTF8    str(env, name);
         face = SkTypeface::CreateFromName(str.c_str(), style);
+    }
+
+    // return the default font at the best style if no exact match exists
+    if (NULL == face) {
+        face = SkTypeface::CreateFromName(NULL, style);
     }
     return face;
 }
 
 static SkTypeface* Typeface_createFromTypeface(JNIEnv* env, jobject, SkTypeface* family, int style) {
-    return SkTypeface::CreateFromTypeface(family, (SkTypeface::Style)style);
+    SkTypeface* face = SkTypeface::CreateFromTypeface(family, (SkTypeface::Style)style);
+    // return the default font at the best style if the requested style does not
+    // exist in the provided family
+    if (NULL == face) {
+        face = SkTypeface::CreateFromName(NULL, (SkTypeface::Style)style);
+    }
+    return face;
 }
 
 static void Typeface_unref(JNIEnv* env, jobject obj, SkTypeface* face) {
@@ -147,25 +155,6 @@ static SkTypeface* Typeface_createFromFile(JNIEnv* env, jobject, jstring jpath) 
     return SkTypeface::CreateFromFile(str.c_str());
 }
 
-#define MIN_GAMMA   (0.1f)
-#define MAX_GAMMA   (10.0f)
-static float pinGamma(float gamma) {
-    if (gamma < MIN_GAMMA) {
-        gamma = MIN_GAMMA;
-    } else if (gamma > MAX_GAMMA) {
-        gamma = MAX_GAMMA;
-    }
-    return gamma;
-}
-
-extern void skia_set_text_gamma(float, float);
-
-static void Typeface_setGammaForText(JNIEnv* env, jobject, jfloat blackGamma,
-                                     jfloat whiteGamma) {
-    // Comment this out for release builds. This is only used during development
-    skia_set_text_gamma(pinGamma(blackGamma), pinGamma(whiteGamma));
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 
 static JNINativeMethod gTypefaceMethods[] = {
@@ -177,7 +166,6 @@ static JNINativeMethod gTypefaceMethods[] = {
                                            (void*)Typeface_createFromAsset },
     { "nativeCreateFromFile",     "(Ljava/lang/String;)I",
                                            (void*)Typeface_createFromFile },
-    { "setGammaForText", "(FF)V", (void*)Typeface_setGammaForText },
 };
 
 int register_android_graphics_Typeface(JNIEnv* env)

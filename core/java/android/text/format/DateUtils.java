@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
@@ -29,6 +30,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import libcore.icu.DateIntervalFormat;
 import libcore.icu.LocaleData;
 
 /**
@@ -39,14 +41,8 @@ public class DateUtils
 {
     private static final Object sLock = new Object();
     private static Configuration sLastConfig;
-    private static java.text.DateFormat sStatusTimeFormat;
     private static String sElapsedFormatMMSS;
     private static String sElapsedFormatHMMSS;
-
-    private static final String FAST_FORMAT_HMMSS = "%1$d:%2$02d:%3$02d";
-    private static final String FAST_FORMAT_MMSS = "%1$02d:%2$02d";
-    private static final char TIME_SEPARATOR = ':';
-
 
     public static final long SECOND_IN_MILLIS = 1000;
     public static final long MINUTE_IN_MILLIS = SECOND_IN_MILLIS * 60;
@@ -100,14 +96,14 @@ public class DateUtils
     // translated.
     /**
      * This is not actually the preferred 24-hour date format in all locales.
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static final String HOUR_MINUTE_24 = "%H:%M";
     public static final String MONTH_FORMAT = "%B";
     /**
      * This is not actually a useful month name in all locales.
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static final String ABBREV_MONTH_FORMAT = "%b";
@@ -118,58 +114,11 @@ public class DateUtils
     public static final String WEEKDAY_FORMAT = "%A";
     public static final String ABBREV_WEEKDAY_FORMAT = "%a";
 
-    // This table is used to lookup the resource string id of a format string
-    // used for formatting a start and end date that fall in the same year.
-    // The index is constructed from a bit-wise OR of the boolean values:
-    // {showTime, showYear, showWeekDay}.  For example, if showYear and
-    // showWeekDay are both true, then the index would be 3.
-    /** @deprecated do not use. */
-    public static final int sameYearTable[] = {
-        com.android.internal.R.string.same_year_md1_md2,
-        com.android.internal.R.string.same_year_wday1_md1_wday2_md2,
-        com.android.internal.R.string.same_year_mdy1_mdy2,
-        com.android.internal.R.string.same_year_wday1_mdy1_wday2_mdy2,
-        com.android.internal.R.string.same_year_md1_time1_md2_time2,
-        com.android.internal.R.string.same_year_wday1_md1_time1_wday2_md2_time2,
-        com.android.internal.R.string.same_year_mdy1_time1_mdy2_time2,
-        com.android.internal.R.string.same_year_wday1_mdy1_time1_wday2_mdy2_time2,
+    /** @deprecated Do not use. */
+    public static final int[] sameYearTable = null;
 
-        // Numeric date strings
-        com.android.internal.R.string.numeric_md1_md2,
-        com.android.internal.R.string.numeric_wday1_md1_wday2_md2,
-        com.android.internal.R.string.numeric_mdy1_mdy2,
-        com.android.internal.R.string.numeric_wday1_mdy1_wday2_mdy2,
-        com.android.internal.R.string.numeric_md1_time1_md2_time2,
-        com.android.internal.R.string.numeric_wday1_md1_time1_wday2_md2_time2,
-        com.android.internal.R.string.numeric_mdy1_time1_mdy2_time2,
-        com.android.internal.R.string.numeric_wday1_mdy1_time1_wday2_mdy2_time2,
-    };
-
-    // This table is used to lookup the resource string id of a format string
-    // used for formatting a start and end date that fall in the same month.
-    // The index is constructed from a bit-wise OR of the boolean values:
-    // {showTime, showYear, showWeekDay}.  For example, if showYear and
-    // showWeekDay are both true, then the index would be 3.
-    /** @deprecated do not use. */
-    public static final int sameMonthTable[] = {
-        com.android.internal.R.string.same_month_md1_md2,
-        com.android.internal.R.string.same_month_wday1_md1_wday2_md2,
-        com.android.internal.R.string.same_month_mdy1_mdy2,
-        com.android.internal.R.string.same_month_wday1_mdy1_wday2_mdy2,
-        com.android.internal.R.string.same_month_md1_time1_md2_time2,
-        com.android.internal.R.string.same_month_wday1_md1_time1_wday2_md2_time2,
-        com.android.internal.R.string.same_month_mdy1_time1_mdy2_time2,
-        com.android.internal.R.string.same_month_wday1_mdy1_time1_wday2_mdy2_time2,
-
-        com.android.internal.R.string.numeric_md1_md2,
-        com.android.internal.R.string.numeric_wday1_md1_wday2_md2,
-        com.android.internal.R.string.numeric_mdy1_mdy2,
-        com.android.internal.R.string.numeric_wday1_mdy1_wday2_mdy2,
-        com.android.internal.R.string.numeric_md1_time1_md2_time2,
-        com.android.internal.R.string.numeric_wday1_md1_time1_wday2_md2_time2,
-        com.android.internal.R.string.numeric_mdy1_time1_mdy2_time2,
-        com.android.internal.R.string.numeric_wday1_mdy1_time1_wday2_mdy2_time2,
-    };
+    /** @deprecated Do not use. */
+    public static final int[] sameMonthTable = null;
 
     /**
      * Request the full spelled-out name. For use with the 'abbrev' parameter of
@@ -177,7 +126,7 @@ public class DateUtils
      *
      * @more <p>
      *       e.g. "Sunday" or "January"
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static final int LENGTH_LONG = 10;
@@ -188,7 +137,7 @@ public class DateUtils
      *
      * @more <p>
      *       e.g. "Sun" or "Jan"
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static final int LENGTH_MEDIUM = 20;
@@ -200,7 +149,7 @@ public class DateUtils
      * <p>e.g. "Su" or "Jan"
      * <p>In most languages, the results returned for LENGTH_SHORT will be the same as
      * the results returned for {@link #LENGTH_MEDIUM}.
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static final int LENGTH_SHORT = 30;
@@ -209,7 +158,7 @@ public class DateUtils
      * Request an even shorter abbreviated version of the name.
      * Do not use this.  Currently this will always return the same result
      * as {@link #LENGTH_SHORT}.
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static final int LENGTH_SHORTER = 40;
@@ -221,7 +170,7 @@ public class DateUtils
      * <p>e.g. "S", "T", "T" or "J"
      * <p>In some languages, the results returned for LENGTH_SHORTEST will be the same as
      * the results returned for {@link #LENGTH_SHORT}.
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static final int LENGTH_SHORTEST = 50;
@@ -237,7 +186,7 @@ public class DateUtils
      *               Undefined lengths will return {@link #LENGTH_MEDIUM}
      *               but may return something different in the future.
      * @throws IndexOutOfBoundsException if the dayOfWeek is out of bounds.
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static String getDayOfWeekString(int dayOfWeek, int abbrev) {
@@ -259,7 +208,7 @@ public class DateUtils
      * @param ampm Either {@link Calendar#AM Calendar.AM} or {@link Calendar#PM Calendar.PM}.
      * @throws IndexOutOfBoundsException if the ampm is out of bounds.
      * @return Localized version of "AM" or "PM".
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static String getAMPMString(int ampm) {
@@ -275,53 +224,14 @@ public class DateUtils
      *               Undefined lengths will return {@link #LENGTH_MEDIUM}
      *               but may return something different in the future.
      * @return Localized month of the year.
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
+     * @deprecated Use {@link java.text.SimpleDateFormat} instead.
      */
     @Deprecated
     public static String getMonthString(int month, int abbrev) {
-        // Note that here we use d.shortMonthNames for MEDIUM, SHORT and SHORTER.
-        // This is a shortcut to not spam the translators with too many variations
-        // of the same string.  If we find that in a language the distinction
-        // is necessary, we can can add more without changing this API.
         LocaleData d = LocaleData.get(Locale.getDefault());
         String[] names;
         switch (abbrev) {
             case LENGTH_LONG:       names = d.longMonthNames;  break;
-            case LENGTH_MEDIUM:     names = d.shortMonthNames; break;
-            case LENGTH_SHORT:      names = d.shortMonthNames; break;
-            case LENGTH_SHORTER:    names = d.shortMonthNames; break;
-            case LENGTH_SHORTEST:   names = d.tinyMonthNames;  break;
-            default:                names = d.shortMonthNames; break;
-        }
-        return names[month];
-    }
-
-    /**
-     * Return a localized string for the month of the year, for
-     * contexts where the month is not formatted together with
-     * a day of the month.
-     *
-     * @param month One of {@link Calendar#JANUARY Calendar.JANUARY},
-     *               {@link Calendar#FEBRUARY Calendar.FEBRUARY}, etc.
-     * @param abbrev One of {@link #LENGTH_LONG}, {@link #LENGTH_MEDIUM},
-     *               or {@link #LENGTH_SHORTEST}.
-     *               Undefined lengths will return {@link #LENGTH_MEDIUM}
-     *               but may return something different in the future.
-     * @return Localized month of the year.
-     * @hide Pending API council approval
-     * @deprecated use {@link java.text.SimpleDateFormat} instead.
-     */
-    @Deprecated
-    public static String getStandaloneMonthString(int month, int abbrev) {
-        // Note that here we use d.shortMonthNames for MEDIUM, SHORT and SHORTER.
-        // This is a shortcut to not spam the translators with too many variations
-        // of the same string.  If we find that in a language the distinction
-        // is necessary, we can can add more without changing this API.
-        LocaleData d = LocaleData.get(Locale.getDefault());
-        String[] names;
-        switch (abbrev) {
-            case LENGTH_LONG:       names = d.longStandAloneMonthNames;
-                                                            break;
             case LENGTH_MEDIUM:     names = d.shortMonthNames; break;
             case LENGTH_SHORT:      names = d.shortMonthNames; break;
             case LENGTH_SHORTER:    names = d.shortMonthNames; break;
@@ -434,20 +344,7 @@ public class DateUtils
                 }
             }
         } else if (duration < WEEK_IN_MILLIS && minResolution < WEEK_IN_MILLIS) {
-            count = getNumberOfDaysPassed(time, now);
-            if (past) {
-                if (abbrevRelative) {
-                    resId = com.android.internal.R.plurals.abbrev_num_days_ago;
-                } else {
-                    resId = com.android.internal.R.plurals.num_days_ago;
-                }
-            } else {
-                if (abbrevRelative) {
-                    resId = com.android.internal.R.plurals.abbrev_in_num_days;
-                } else {
-                    resId = com.android.internal.R.plurals.in_num_days;
-                }
-            }
+            return getRelativeDayString(r, time, now);
         } else {
             // We know that we won't be showing the time, so it is safe to pass
             // in a null context.
@@ -456,24 +353,6 @@ public class DateUtils
 
         String format = r.getQuantityString(resId, (int) count);
         return String.format(format, count);
-    }
-
-    /**
-     * Returns the number of days passed between two dates.
-     *
-     * @param date1 first date
-     * @param date2 second date
-     * @return number of days passed between to dates.
-     */
-    private synchronized static long getNumberOfDaysPassed(long date1, long date2) {
-        if (sThenTime == null) {
-            sThenTime = new Time();
-        }
-        sThenTime.set(date1);
-        int day1 = Time.getJulianDay(date1, sThenTime.gmtoff);
-        sThenTime.set(date2);
-        int day2 = Time.getJulianDay(date2, sThenTime.gmtoff);
-        return Math.abs(day2 - day1);
     }
 
     /**
@@ -534,28 +413,29 @@ public class DateUtils
      * today this function returns "Today", if the day was a week ago it returns "7 days ago", and
      * if the day is in 2 weeks it returns "in 14 days".
      *
-     * @param r the resources to get the strings from
+     * @param r the resources
      * @param day the relative day to describe in UTC milliseconds
      * @param today the current time in UTC milliseconds
-     * @return a formatting string
      */
     private static final String getRelativeDayString(Resources r, long day, long today) {
+        Locale locale = r.getConfiguration().locale;
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
+
+        // TODO: use TimeZone.getOffset instead.
         Time startTime = new Time();
         startTime.set(day);
+        int startDay = Time.getJulianDay(day, startTime.gmtoff);
+
         Time currentTime = new Time();
         currentTime.set(today);
-
-        int startDay = Time.getJulianDay(day, startTime.gmtoff);
         int currentDay = Time.getJulianDay(today, currentTime.gmtoff);
 
         int days = Math.abs(currentDay - startDay);
         boolean past = (today > day);
 
         // TODO: some locales name other days too, such as de_DE's "Vorgestern" (today - 2).
-        Locale locale = r.getConfiguration().locale;
-        if (locale == null) {
-            locale = Locale.getDefault();
-        }
         if (days == 1) {
             if (past) {
                 return LocaleData.get(locale).yesterday;
@@ -588,21 +468,8 @@ public class DateUtils
         Configuration cfg = r.getConfiguration();
         if (sLastConfig == null || !sLastConfig.equals(cfg)) {
             sLastConfig = cfg;
-            sStatusTimeFormat = java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT);
             sElapsedFormatMMSS = r.getString(com.android.internal.R.string.elapsed_time_short_format_mm_ss);
             sElapsedFormatHMMSS = r.getString(com.android.internal.R.string.elapsed_time_short_format_h_mm_ss);
-        }
-    }
-
-    /**
-     * Format a time so it appears like it would in the status bar clock.
-     * @deprecated use {@link #DateFormat.getTimeFormat(Context)} instead.
-     * @hide
-     */
-    public static final CharSequence timeString(long millis) {
-        synchronized (sLock) {
-            initFormatStringsLocked();
-            return sStatusTimeFormat.format(millis);
         }
     }
 
@@ -640,19 +507,18 @@ public class DateUtils
     }
 
     /**
-     * Formats an elapsed time in the form "MM:SS" or "H:MM:SS"
-     * for display on the call-in-progress screen.
+     * Formats an elapsed time in a format like "MM:SS" or "H:MM:SS" (using a form
+     * suited to the current locale), similar to that used on the call-in-progress
+     * screen.
      *
-     * @param recycle {@link StringBuilder} to recycle, if possible
+     * @param recycle {@link StringBuilder} to recycle, or null to use a temporary one.
      * @param elapsedSeconds the elapsed time in seconds.
      */
     public static String formatElapsedTime(StringBuilder recycle, long elapsedSeconds) {
-        initFormatStrings();
-
+        // Break the elapsed seconds into hours, minutes, and seconds.
         long hours = 0;
         long minutes = 0;
         long seconds = 0;
-
         if (elapsedSeconds >= 3600) {
             hours = elapsedSeconds / 3600;
             elapsedSeconds -= hours * 3600;
@@ -663,70 +529,23 @@ public class DateUtils
         }
         seconds = elapsedSeconds;
 
-        String result;
+        // Create a StringBuilder if we weren't given one to recycle.
+        // TODO: if we cared, we could have a thread-local temporary StringBuilder.
+        StringBuilder sb = recycle;
+        if (sb == null) {
+            sb = new StringBuilder(8);
+        } else {
+            sb.setLength(0);
+        }
+
+        // Format the broken-down time in a locale-appropriate way.
+        // TODO: use icu4c when http://unicode.org/cldr/trac/ticket/3407 is fixed.
+        Formatter f = new Formatter(sb, Locale.getDefault());
+        initFormatStrings();
         if (hours > 0) {
-            return formatElapsedTime(recycle, sElapsedFormatHMMSS, hours, minutes, seconds);
+            return f.format(sElapsedFormatHMMSS, hours, minutes, seconds).toString();
         } else {
-            return formatElapsedTime(recycle, sElapsedFormatMMSS, minutes, seconds);
-        }
-    }
-
-    private static void append(StringBuilder sb, long value, boolean pad, char zeroDigit) {
-        if (value < 10) {
-            if (pad) {
-                sb.append(zeroDigit);
-            }
-        } else {
-            sb.append((char) (zeroDigit + (value / 10)));
-        }
-        sb.append((char) (zeroDigit + (value % 10)));
-    }
-
-    /**
-     * Fast formatting of h:mm:ss.
-     */
-    private static String formatElapsedTime(StringBuilder recycle, String format, long hours,
-            long minutes, long seconds) {
-        if (FAST_FORMAT_HMMSS.equals(format)) {
-            char zeroDigit = LocaleData.get(Locale.getDefault()).zeroDigit;
-
-            StringBuilder sb = recycle;
-            if (sb == null) {
-                sb = new StringBuilder(8);
-            } else {
-                sb.setLength(0);
-            }
-            append(sb, hours, false, zeroDigit);
-            sb.append(TIME_SEPARATOR);
-            append(sb, minutes, true, zeroDigit);
-            sb.append(TIME_SEPARATOR);
-            append(sb, seconds, true, zeroDigit);
-            return sb.toString();
-        } else {
-            return String.format(format, hours, minutes, seconds);
-        }
-    }
-
-    /**
-     * Fast formatting of mm:ss.
-     */
-    private static String formatElapsedTime(StringBuilder recycle, String format, long minutes,
-            long seconds) {
-        if (FAST_FORMAT_MMSS.equals(format)) {
-            char zeroDigit = LocaleData.get(Locale.getDefault()).zeroDigit;
-
-            StringBuilder sb = recycle;
-            if (sb == null) {
-                sb = new StringBuilder(8);
-            } else {
-                sb.setLength(0);
-            }
-            append(sb, minutes, false, zeroDigit);
-            sb.append(TIME_SEPARATOR);
-            append(sb, seconds, true, zeroDigit);
-            return sb.toString();
-        } else {
-            return String.format(format, minutes, seconds);
+            return f.format(sElapsedFormatMMSS, minutes, seconds).toString();
         }
     }
 
@@ -768,18 +587,6 @@ public class DateUtils
     }
 
     /**
-     * @hide
-     * @deprecated use {@link android.text.format.Time}
-     */
-    public static Calendar newCalendar(boolean zulu)
-    {
-        if (zulu)
-            return Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-
-        return Calendar.getInstance();
-    }
-
-    /**
      * @return true if the supplied when is today else false
      */
     public static boolean isToday(long when) {
@@ -794,127 +601,6 @@ public class DateUtils
         return (thenYear == time.year)
                 && (thenMonth == time.month)
                 && (thenMonthDay == time.monthDay);
-    }
-
-    /**
-     * @hide
-     * @deprecated use {@link android.text.format.Time}
-     * Return true if this date string is local time
-     */
-    public static boolean isUTC(String s)
-    {
-        if (s.length() == 16 && s.charAt(15) == 'Z') {
-            return true;
-        }
-        if (s.length() == 9 && s.charAt(8) == 'Z') {
-            // XXX not sure if this case possible/valid
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Return a string containing the date and time in RFC2445 format.
-     * Ensures that the time is written in UTC.  The Calendar class doesn't
-     * really help out with this, so this is slower than it ought to be.
-     *
-     * @param cal the date and time to write
-     * @hide
-     * @deprecated use {@link android.text.format.Time}
-     */
-    public static String writeDateTime(Calendar cal)
-    {
-        TimeZone tz = TimeZone.getTimeZone("GMT");
-        GregorianCalendar c = new GregorianCalendar(tz);
-        c.setTimeInMillis(cal.getTimeInMillis());
-        return writeDateTime(c, true);
-    }
-
-    /**
-     * Return a string containing the date and time in RFC2445 format.
-     *
-     * @param cal the date and time to write
-     * @param zulu If the calendar is in UTC, pass true, and a Z will
-     * be written at the end as per RFC2445.  Otherwise, the time is
-     * considered in localtime.
-     * @hide
-     * @deprecated use {@link android.text.format.Time}
-     */
-    public static String writeDateTime(Calendar cal, boolean zulu)
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.ensureCapacity(16);
-        if (zulu) {
-            sb.setLength(16);
-            sb.setCharAt(15, 'Z');
-        } else {
-            sb.setLength(15);
-        }
-        return writeDateTime(cal, sb);
-    }
-
-    /**
-     * Return a string containing the date and time in RFC2445 format.
-     *
-     * @param cal the date and time to write
-     * @param sb a StringBuilder to use.  It is assumed that setLength
-     *           has already been called on sb to the appropriate length
-     *           which is sb.setLength(zulu ? 16 : 15)
-     * @hide
-     * @deprecated use {@link android.text.format.Time}
-     */
-    public static String writeDateTime(Calendar cal, StringBuilder sb)
-    {
-        int n;
-
-        n = cal.get(Calendar.YEAR);
-        sb.setCharAt(3, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(2, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(1, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(0, (char)('0'+n%10));
-
-        n = cal.get(Calendar.MONTH) + 1;
-        sb.setCharAt(5, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(4, (char)('0'+n%10));
-
-        n = cal.get(Calendar.DAY_OF_MONTH);
-        sb.setCharAt(7, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(6, (char)('0'+n%10));
-
-        sb.setCharAt(8, 'T');
-
-        n = cal.get(Calendar.HOUR_OF_DAY);
-        sb.setCharAt(10, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(9, (char)('0'+n%10));
-
-        n = cal.get(Calendar.MINUTE);
-        sb.setCharAt(12, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(11, (char)('0'+n%10));
-
-        n = cal.get(Calendar.SECOND);
-        sb.setCharAt(14, (char)('0'+n%10));
-        n /= 10;
-        sb.setCharAt(13, (char)('0'+n%10));
-
-        return sb.toString();
-    }
-
-    /**
-     * @hide
-     * @deprecated use {@link android.text.format.Time}
-     */
-    public static void assign(Calendar lval, Calendar rval)
-    {
-        // there should be a faster way.
-        lval.clear();
-        lval.setTimeInMillis(rval.getTimeInMillis());
     }
 
     /**
@@ -996,7 +682,6 @@ public class DateUtils
      *   <li>FORMAT_SHOW_TIME</li>
      *   <li>FORMAT_SHOW_WEEKDAY</li>
      *   <li>FORMAT_SHOW_YEAR</li>
-     *   <li>FORMAT_NO_YEAR</li>
      *   <li>FORMAT_SHOW_DATE</li>
      *   <li>FORMAT_NO_MONTH_DAY</li>
      *   <li>FORMAT_12HOUR</li>
@@ -1024,11 +709,9 @@ public class DateUtils
      *
      * <p>
      * If FORMAT_SHOW_YEAR is set, then the year is always shown.
-     * If FORMAT_NO_YEAR is set, then the year is not shown.
-     * If neither FORMAT_SHOW_YEAR nor FORMAT_NO_YEAR are set, then the year
+     * If FORMAT_SHOW_YEAR is not set, then the year
      * is shown only if it is different from the current year, or if the start
-     * and end dates fall on different years.  If both are set,
-     * FORMAT_SHOW_YEAR takes precedence.
+     * and end dates fall on different years.
      *
      * <p>
      * Normally the date is shown unless the start and end day are the same.
@@ -1132,387 +815,21 @@ public class DateUtils
      * @return the formatter with the formatted date/time range appended to the string buffer.
      */
     public static Formatter formatDateRange(Context context, Formatter formatter, long startMillis,
-            long endMillis, int flags, String timeZone) {
-        Resources res = Resources.getSystem();
-        boolean showTime = (flags & FORMAT_SHOW_TIME) != 0;
-        boolean showWeekDay = (flags & FORMAT_SHOW_WEEKDAY) != 0;
-        boolean showYear = (flags & FORMAT_SHOW_YEAR) != 0;
-        boolean noYear = (flags & FORMAT_NO_YEAR) != 0;
-        boolean useUTC = (flags & FORMAT_UTC) != 0;
-        boolean abbrevWeekDay = (flags & (FORMAT_ABBREV_WEEKDAY | FORMAT_ABBREV_ALL)) != 0;
-        boolean abbrevMonth = (flags & (FORMAT_ABBREV_MONTH | FORMAT_ABBREV_ALL)) != 0;
-        boolean noMonthDay = (flags & FORMAT_NO_MONTH_DAY) != 0;
-        boolean numericDate = (flags & FORMAT_NUMERIC_DATE) != 0;
-
-        // If we're getting called with a single instant in time (from
-        // e.g. formatDateTime(), below), then we can skip a lot of
-        // computation below that'd otherwise be thrown out.
-        boolean isInstant = (startMillis == endMillis);
-
-        Time startDate;
-        if (timeZone != null) {
-            startDate = new Time(timeZone);
-        } else if (useUTC) {
-            startDate = new Time(Time.TIMEZONE_UTC);
-        } else {
-            startDate = new Time();
-        }
-        startDate.set(startMillis);
-
-        Time endDate;
-        int dayDistance;
-        if (isInstant) {
-            endDate = startDate;
-            dayDistance = 0;
-        } else {
-            if (timeZone != null) {
-                endDate = new Time(timeZone);
-            } else if (useUTC) {
-                endDate = new Time(Time.TIMEZONE_UTC);
-            } else {
-                endDate = new Time();
-            }
-            endDate.set(endMillis);
-            int startJulianDay = Time.getJulianDay(startMillis, startDate.gmtoff);
-            int endJulianDay = Time.getJulianDay(endMillis, endDate.gmtoff);
-            dayDistance = endJulianDay - startJulianDay;
+                                            long endMillis, int flags, String timeZone) {
+        // If we're being asked to format a time without being explicitly told whether to use
+        // the 12- or 24-hour clock, icu4c will fall back to the locale's preferred 12/24 format,
+        // but we want to fall back to the user's preference.
+        if ((flags & (FORMAT_SHOW_TIME | FORMAT_12HOUR | FORMAT_24HOUR)) == FORMAT_SHOW_TIME) {
+            flags |= DateFormat.is24HourFormat(context) ? FORMAT_24HOUR : FORMAT_12HOUR;
         }
 
-        if (!isInstant
-            && (endDate.hour | endDate.minute | endDate.second) == 0
-            && (!showTime || dayDistance <= 1)) {
-            endDate.monthDay -= 1;
-            endDate.normalize(true /* ignore isDst */);
+        String range = DateIntervalFormat.formatDateRange(startMillis, endMillis, flags, timeZone);
+        try {
+            formatter.out().append(range);
+        } catch (IOException impossible) {
+            throw new AssertionError(impossible);
         }
-
-        int startDay = startDate.monthDay;
-        int startMonthNum = startDate.month;
-        int startYear = startDate.year;
-
-        int endDay = endDate.monthDay;
-        int endMonthNum = endDate.month;
-        int endYear = endDate.year;
-
-        String startWeekDayString = "";
-        String endWeekDayString = "";
-        if (showWeekDay) {
-            String weekDayFormat = "";
-            if (abbrevWeekDay) {
-                weekDayFormat = ABBREV_WEEKDAY_FORMAT;
-            } else {
-                weekDayFormat = WEEKDAY_FORMAT;
-            }
-            startWeekDayString = startDate.format(weekDayFormat);
-            endWeekDayString = isInstant ? startWeekDayString : endDate.format(weekDayFormat);
-        }
-
-        String startTimeString = "";
-        String endTimeString = "";
-        if (showTime) {
-            String startTimeFormat = "";
-            String endTimeFormat = "";
-            boolean force24Hour = (flags & FORMAT_24HOUR) != 0;
-            boolean force12Hour = (flags & FORMAT_12HOUR) != 0;
-            boolean use24Hour;
-            if (force24Hour) {
-                use24Hour = true;
-            } else if (force12Hour) {
-                use24Hour = false;
-            } else {
-                use24Hour = DateFormat.is24HourFormat(context);
-            }
-            if (use24Hour) {
-                startTimeFormat = endTimeFormat =
-                    res.getString(com.android.internal.R.string.hour_minute_24);
-            } else {
-                boolean abbrevTime = (flags & (FORMAT_ABBREV_TIME | FORMAT_ABBREV_ALL)) != 0;
-                boolean capAMPM = (flags & FORMAT_CAP_AMPM) != 0;
-                boolean noNoon = (flags & FORMAT_NO_NOON) != 0;
-                boolean capNoon = (flags & FORMAT_CAP_NOON) != 0;
-                boolean noMidnight = (flags & FORMAT_NO_MIDNIGHT) != 0;
-                boolean capMidnight = (flags & FORMAT_CAP_MIDNIGHT) != 0;
-
-                boolean startOnTheHour = startDate.minute == 0 && startDate.second == 0;
-                boolean endOnTheHour = endDate.minute == 0 && endDate.second == 0;
-                if (abbrevTime && startOnTheHour) {
-                    if (capAMPM) {
-                        startTimeFormat = res.getString(com.android.internal.R.string.hour_cap_ampm);
-                    } else {
-                        startTimeFormat = res.getString(com.android.internal.R.string.hour_ampm);
-                    }
-                } else {
-                    if (capAMPM) {
-                        startTimeFormat = res.getString(com.android.internal.R.string.hour_minute_cap_ampm);
-                    } else {
-                        startTimeFormat = res.getString(com.android.internal.R.string.hour_minute_ampm);
-                    }
-                }
-
-                // Don't waste time on setting endTimeFormat when
-                // we're dealing with an instant, where we'll never
-                // need the end point.  (It's the same as the start
-                // point)
-                if (!isInstant) {
-                    if (abbrevTime && endOnTheHour) {
-                        if (capAMPM) {
-                            endTimeFormat = res.getString(com.android.internal.R.string.hour_cap_ampm);
-                        } else {
-                            endTimeFormat = res.getString(com.android.internal.R.string.hour_ampm);
-                        }
-                    } else {
-                        if (capAMPM) {
-                            endTimeFormat = res.getString(com.android.internal.R.string.hour_minute_cap_ampm);
-                        } else {
-                            endTimeFormat = res.getString(com.android.internal.R.string.hour_minute_ampm);
-                        }
-                    }
-
-                    if (endDate.hour == 12 && endOnTheHour && !noNoon) {
-                        if (capNoon) {
-                            endTimeFormat = res.getString(com.android.internal.R.string.Noon);
-                        } else {
-                            endTimeFormat = res.getString(com.android.internal.R.string.noon);
-                        }
-                    } else if (endDate.hour == 0 && endOnTheHour && !noMidnight) {
-                        if (capMidnight) {
-                            endTimeFormat = res.getString(com.android.internal.R.string.Midnight);
-                        } else {
-                            endTimeFormat = res.getString(com.android.internal.R.string.midnight);
-                        }
-                    }
-                }
-
-                if (startDate.hour == 12 && startOnTheHour && !noNoon) {
-                    if (capNoon) {
-                        startTimeFormat = res.getString(com.android.internal.R.string.Noon);
-                    } else {
-                        startTimeFormat = res.getString(com.android.internal.R.string.noon);
-                    }
-                    // Don't show the start time starting at midnight.  Show
-                    // 12am instead.
-                }
-            }
-
-            startTimeString = startDate.format(startTimeFormat);
-            endTimeString = isInstant ? startTimeString : endDate.format(endTimeFormat);
-        }
-
-        // Show the year if the user specified FORMAT_SHOW_YEAR or if
-        // the starting and end years are different from each other
-        // or from the current year.  But don't show the year if the
-        // user specified FORMAT_NO_YEAR.
-        if (showYear) {
-            // No code... just a comment for clarity.  Keep showYear
-            // on, as they enabled it with FORMAT_SHOW_YEAR.  This
-            // takes precedence over them setting FORMAT_NO_YEAR.
-        } else if (noYear) {
-            // They explicitly didn't want a year.
-            showYear = false;
-        } else if (startYear != endYear) {
-            showYear = true;
-        } else {
-            // Show the year if it's not equal to the current year.
-            Time currentTime = new Time();
-            currentTime.setToNow();
-            showYear = startYear != currentTime.year;
-        }
-
-        String defaultDateFormat, fullFormat, dateRange;
-        if (numericDate) {
-            defaultDateFormat = res.getString(com.android.internal.R.string.numeric_date);
-        } else if (showYear) {
-            if (abbrevMonth) {
-                if (noMonthDay) {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.abbrev_month_year);
-                } else {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.abbrev_month_day_year);
-                }
-            } else {
-                if (noMonthDay) {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.month_year);
-                } else {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.month_day_year);
-                }
-            }
-        } else {
-            if (abbrevMonth) {
-                if (noMonthDay) {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.abbrev_month);
-                } else {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.abbrev_month_day);
-                }
-            } else {
-                if (noMonthDay) {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.month);
-                } else {
-                    defaultDateFormat = res.getString(com.android.internal.R.string.month_day);
-                }
-            }
-        }
-
-        if (showWeekDay) {
-            if (showTime) {
-                fullFormat = res.getString(com.android.internal.R.string.wday1_date1_time1_wday2_date2_time2);
-            } else {
-                fullFormat = res.getString(com.android.internal.R.string.wday1_date1_wday2_date2);
-            }
-        } else {
-            if (showTime) {
-                fullFormat = res.getString(com.android.internal.R.string.date1_time1_date2_time2);
-            } else {
-                fullFormat = res.getString(com.android.internal.R.string.date1_date2);
-            }
-        }
-
-        if (noMonthDay && startMonthNum == endMonthNum && startYear == endYear) {
-            // Example: "January, 2008"
-            return formatter.format("%s", startDate.format(defaultDateFormat));
-        }
-
-        if (startYear != endYear || noMonthDay) {
-            // Different year or we are not showing the month day number.
-            // Example: "December 31, 2007 - January 1, 2008"
-            // Or: "January - February, 2008"
-            String startDateString = startDate.format(defaultDateFormat);
-            String endDateString = endDate.format(defaultDateFormat);
-
-            // The values that are used in a fullFormat string are specified
-            // by position.
-            return formatter.format(fullFormat,
-                    startWeekDayString, startDateString, startTimeString,
-                    endWeekDayString, endDateString, endTimeString);
-        }
-
-        // Get the month, day, and year strings for the start and end dates
-        String monthFormat;
-        if (numericDate) {
-            monthFormat = NUMERIC_MONTH_FORMAT;
-        } else if (abbrevMonth) {
-            monthFormat =
-                res.getString(com.android.internal.R.string.short_format_month);
-        } else {
-            monthFormat = MONTH_FORMAT;
-        }
-        String startMonthString = startDate.format(monthFormat);
-        String startMonthDayString = startDate.format(MONTH_DAY_FORMAT);
-        String startYearString = startDate.format(YEAR_FORMAT);
-
-        String endMonthString = isInstant ? null : endDate.format(monthFormat);
-        String endMonthDayString = isInstant ? null : endDate.format(MONTH_DAY_FORMAT);
-        String endYearString = isInstant ? null : endDate.format(YEAR_FORMAT);
-
-        String startStandaloneMonthString = startMonthString;
-        String endStandaloneMonthString = endMonthString;
-        // We need standalone months for these strings in Persian (fa): http://b/6811327
-        if (!numericDate && !abbrevMonth && Locale.getDefault().getLanguage().equals("fa")) {
-            startStandaloneMonthString = startDate.format("%-B");
-            endStandaloneMonthString = endDate.format("%-B");
-        }
-
-        if (startMonthNum != endMonthNum) {
-            // Same year, different month.
-            // Example: "October 28 - November 3"
-            // or: "Wed, Oct 31 - Sat, Nov 3, 2007"
-            // or: "Oct 31, 8am - Sat, Nov 3, 2007, 5pm"
-
-            int index = 0;
-            if (showWeekDay) index = 1;
-            if (showYear) index += 2;
-            if (showTime) index += 4;
-            if (numericDate) index += 8;
-            int resId = sameYearTable[index];
-            fullFormat = res.getString(resId);
-
-            // The values that are used in a fullFormat string are specified
-            // by position.
-            return formatter.format(fullFormat,
-                    startWeekDayString, startMonthString, startMonthDayString,
-                    startYearString, startTimeString,
-                    endWeekDayString, endMonthString, endMonthDayString,
-                    endYearString, endTimeString,
-                    startStandaloneMonthString, endStandaloneMonthString);
-        }
-
-        if (startDay != endDay) {
-            // Same month, different day.
-            int index = 0;
-            if (showWeekDay) index = 1;
-            if (showYear) index += 2;
-            if (showTime) index += 4;
-            if (numericDate) index += 8;
-            int resId = sameMonthTable[index];
-            fullFormat = res.getString(resId);
-
-            // The values that are used in a fullFormat string are specified
-            // by position.
-            return formatter.format(fullFormat,
-                    startWeekDayString, startMonthString, startMonthDayString,
-                    startYearString, startTimeString,
-                    endWeekDayString, endMonthString, endMonthDayString,
-                    endYearString, endTimeString,
-                    startStandaloneMonthString, endStandaloneMonthString);
-        }
-
-        // Same start and end day
-        boolean showDate = (flags & FORMAT_SHOW_DATE) != 0;
-
-        // If nothing was specified, then show the date.
-        if (!showTime && !showDate && !showWeekDay) showDate = true;
-
-        // Compute the time string (example: "10:00 - 11:00 am")
-        String timeString = "";
-        if (showTime) {
-            // If the start and end time are the same, then just show the
-            // start time.
-            if (isInstant) {
-                // Same start and end time.
-                // Example: "10:15 AM"
-                timeString = startTimeString;
-            } else {
-                // Example: "10:00 - 11:00 am"
-                String timeFormat = res.getString(com.android.internal.R.string.time1_time2);
-                // Don't use the user supplied Formatter because the result will pollute the buffer.
-                timeString = String.format(timeFormat, startTimeString, endTimeString);
-            }
-        }
-
-        // Figure out which full format to use.
-        fullFormat = "";
-        String dateString = "";
-        if (showDate) {
-            dateString = startDate.format(defaultDateFormat);
-            if (showWeekDay) {
-                if (showTime) {
-                    // Example: "10:00 - 11:00 am, Tue, Oct 9"
-                    fullFormat = res.getString(com.android.internal.R.string.time_wday_date);
-                } else {
-                    // Example: "Tue, Oct 9"
-                    fullFormat = res.getString(com.android.internal.R.string.wday_date);
-                }
-            } else {
-                if (showTime) {
-                    // Example: "10:00 - 11:00 am, Oct 9"
-                    fullFormat = res.getString(com.android.internal.R.string.time_date);
-                } else {
-                    // Example: "Oct 9"
-                    return formatter.format("%s", dateString);
-                }
-            }
-        } else if (showWeekDay) {
-            if (showTime) {
-                // Example: "10:00 - 11:00 am, Tue"
-                fullFormat = res.getString(com.android.internal.R.string.time_wday);
-            } else {
-                // Example: "Tue"
-                return formatter.format("%s", startWeekDayString);
-            }
-        } else if (showTime) {
-            return formatter.format("%s", timeString);
-        }
-
-        // The values that are used in a fullFormat string are specified
-        // by position.
-        return formatter.format(fullFormat, timeString, startWeekDayString, dateString);
+        return formatter;
     }
 
     /**

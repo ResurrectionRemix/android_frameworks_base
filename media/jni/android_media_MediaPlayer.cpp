@@ -31,6 +31,7 @@
 #include "JNIHelp.h"
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/android_view_Surface.h"
+#include "android_runtime/Log.h"
 #include "utils/Errors.h"  // for status_t
 #include "utils/KeyedVector.h"
 #include "utils/String8.h"
@@ -39,7 +40,7 @@
 #include "android_os_Parcel.h"
 #include "android_util_Binder.h"
 #include <binder/Parcel.h>
-#include <gui/ISurfaceTexture.h>
+#include <gui/IGraphicBufferProducer.h>
 #include <gui/Surface.h>
 #include <binder/IPCThreadState.h>
 #include <binder/IServiceManager.h>
@@ -55,6 +56,10 @@ struct fields_t {
     jfieldID    surface_texture;
 
     jmethodID   post_event;
+
+    jmethodID   proxyConfigGetHost;
+    jmethodID   proxyConfigGetPort;
+    jmethodID   proxyConfigGetExclusionList;
 };
 static fields_t fields;
 
@@ -136,10 +141,10 @@ static sp<MediaPlayer> setMediaPlayer(JNIEnv* env, jobject thiz, const sp<MediaP
     Mutex::Autolock l(sLock);
     sp<MediaPlayer> old = (MediaPlayer*)env->GetIntField(thiz, fields.context);
     if (player.get()) {
-        player->incStrong(thiz);
+        player->incStrong((void*)setMediaPlayer);
     }
     if (old != 0) {
-        old->decStrong(thiz);
+        old->decStrong((void*)setMediaPlayer);
     }
     env->SetIntField(thiz, fields.context, (int)player.get());
     return old;
@@ -236,10 +241,10 @@ android_media_MediaPlayer_setDataSourceFD(JNIEnv *env, jobject thiz, jobject fil
     process_media_player_call( env, thiz, mp->setDataSource(fd, offset, length), "java/io/IOException", "setDataSourceFD failed." );
 }
 
-static sp<ISurfaceTexture>
+static sp<IGraphicBufferProducer>
 getVideoSurfaceTexture(JNIEnv* env, jobject thiz) {
-    ISurfaceTexture * const p = (ISurfaceTexture*)env->GetIntField(thiz, fields.surface_texture);
-    return sp<ISurfaceTexture>(p);
+    IGraphicBufferProducer * const p = (IGraphicBufferProducer*)env->GetIntField(thiz, fields.surface_texture);
+    return sp<IGraphicBufferProducer>(p);
 }
 
 static void
@@ -250,9 +255,9 @@ decVideoSurfaceRef(JNIEnv *env, jobject thiz)
         return;
     }
 
-    sp<ISurfaceTexture> old_st = getVideoSurfaceTexture(env, thiz);
+    sp<IGraphicBufferProducer> old_st = getVideoSurfaceTexture(env, thiz);
     if (old_st != NULL) {
-        old_st->decStrong(thiz);
+        old_st->decStrong((void*)decVideoSurfaceRef);
     }
 }
 
@@ -269,17 +274,17 @@ setVideoSurface(JNIEnv *env, jobject thiz, jobject jsurface, jboolean mediaPlaye
 
     decVideoSurfaceRef(env, thiz);
 
-    sp<ISurfaceTexture> new_st;
+    sp<IGraphicBufferProducer> new_st;
     if (jsurface) {
         sp<Surface> surface(android_view_Surface_getSurface(env, jsurface));
         if (surface != NULL) {
-            new_st = surface->getSurfaceTexture();
+            new_st = surface->getIGraphicBufferProducer();
             if (new_st == NULL) {
                 jniThrowException(env, "java/lang/IllegalArgumentException",
                     "The surface does not have a binding SurfaceTexture!");
                 return;
             }
-            new_st->incStrong(thiz);
+            new_st->incStrong((void*)decVideoSurfaceRef);
         } else {
             jniThrowException(env, "java/lang/IllegalArgumentException",
                     "The surface has been released");
@@ -313,7 +318,7 @@ android_media_MediaPlayer_prepare(JNIEnv *env, jobject thiz)
 
     // Handle the case where the display surface was set before the mp was
     // initialized. We try again to make it stick.
-    sp<ISurfaceTexture> st = getVideoSurfaceTexture(env, thiz);
+    sp<IGraphicBufferProducer> st = getVideoSurfaceTexture(env, thiz);
     mp->setVideoSurfaceTexture(st);
 
     process_media_player_call( env, thiz, mp->prepare(), "java/io/IOException", "Prepare failed." );
@@ -330,7 +335,7 @@ android_media_MediaPlayer_prepareAsync(JNIEnv *env, jobject thiz)
 
     // Handle the case where the display surface was set before the mp was
     // initialized. We try again to make it stick.
-    sp<ISurfaceTexture> st = getVideoSurfaceTexture(env, thiz);
+    sp<IGraphicBufferProducer> st = getVideoSurfaceTexture(env, thiz);
     mp->setVideoSurfaceTexture(st);
 
     process_media_player_call( env, thiz, mp->prepareAsync(), "java/io/IOException", "Prepare Async failed." );
@@ -521,14 +526,6 @@ android_media_MediaPlayer_setVolume(JNIEnv *env, jobject thiz, float leftVolume,
     process_media_player_call( env, thiz, mp->setVolume(leftVolume, rightVolume), NULL, NULL );
 }
 
-// FIXME: deprecated
-static jobject
-android_media_MediaPlayer_getFrameAt(JNIEnv *env, jobject thiz, jint msec)
-{
-    return NULL;
-}
-
-
 // Sends the request and reply parcels to the media player via the
 // binder interface.
 static jint
@@ -622,6 +619,20 @@ android_media_MediaPlayer_native_init(JNIEnv *env)
     if (fields.surface_texture == NULL) {
         return;
     }
+
+    clazz = env->FindClass("android/net/ProxyProperties");
+    if (clazz == NULL) {
+        return;
+    }
+
+    fields.proxyConfigGetHost =
+        env->GetMethodID(clazz, "getHost", "()Ljava/lang/String;");
+
+    fields.proxyConfigGetPort =
+        env->GetMethodID(clazz, "getPort", "()I");
+
+    fields.proxyConfigGetExclusionList =
+        env->GetMethodID(clazz, "getExclusionList", "()Ljava/lang/String;");
 }
 
 static void
@@ -763,39 +774,6 @@ android_media_MediaPlayer_setRetransmitEndpoint(JNIEnv *env, jobject thiz,
     return ret;
 }
 
-static jboolean
-android_media_MediaPlayer_setParameter(JNIEnv *env, jobject thiz, jint key, jobject java_request)
-{
-    ALOGV("setParameter: key %d", key);
-    sp<MediaPlayer> mp = getMediaPlayer(env, thiz);
-    if (mp == NULL ) {
-        jniThrowException(env, "java/lang/IllegalStateException", NULL);
-        return false;
-    }
-
-    Parcel *request = parcelForJavaObject(env, java_request);
-    status_t err = mp->setParameter(key, *request);
-    if (err == OK) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-static void
-android_media_MediaPlayer_getParameter(JNIEnv *env, jobject thiz, jint key, jobject java_reply)
-{
-    ALOGV("getParameter: key %d", key);
-    sp<MediaPlayer> mp = getMediaPlayer(env, thiz);
-    if (mp == NULL ) {
-        jniThrowException(env, "java/lang/IllegalStateException", NULL);
-        return;
-    }
-
-    Parcel *reply = parcelForJavaObject(env, java_reply);
-    process_media_player_call(env, thiz, mp->getParameter(key, reply), NULL, NULL );
-}
-
 static void
 android_media_MediaPlayer_setNextMediaPlayer(JNIEnv *env, jobject thiz, jobject java_player)
 {
@@ -823,6 +801,49 @@ android_media_MediaPlayer_setNextMediaPlayer(JNIEnv *env, jobject thiz, jobject 
     ;
 }
 
+static void
+android_media_MediaPlayer_updateProxyConfig(
+        JNIEnv *env, jobject thiz, jobject proxyProps)
+{
+    ALOGV("updateProxyConfig");
+    sp<MediaPlayer> thisplayer = getMediaPlayer(env, thiz);
+    if (thisplayer == NULL) {
+        return;
+    }
+
+    if (proxyProps == NULL) {
+        thisplayer->updateProxyConfig(
+                NULL /* host */, 0 /* port */, NULL /* exclusionList */);
+    } else {
+        jstring hostObj = (jstring)env->CallObjectMethod(
+                proxyProps, fields.proxyConfigGetHost);
+
+        const char *host = env->GetStringUTFChars(hostObj, NULL);
+
+        int port = env->CallIntMethod(proxyProps, fields.proxyConfigGetPort);
+
+        jstring exclusionListObj = (jstring)env->CallObjectMethod(
+                proxyProps, fields.proxyConfigGetExclusionList);
+
+        const char *exclusionList =
+            env->GetStringUTFChars(exclusionListObj, NULL);
+
+        if (host != NULL && exclusionListObj != NULL) {
+            thisplayer->updateProxyConfig(host, port, exclusionList);
+        }
+
+        if (exclusionList != NULL) {
+            env->ReleaseStringUTFChars(exclusionListObj, exclusionList);
+            exclusionList = NULL;
+        }
+
+        if (host != NULL) {
+            env->ReleaseStringUTFChars(hostObj, host);
+            host = NULL;
+        }
+    }
+}
+
 // ----------------------------------------------------------------------------
 
 static JNINativeMethod gMethods[] = {
@@ -832,7 +853,7 @@ static JNINativeMethod gMethods[] = {
         (void *)android_media_MediaPlayer_setDataSourceAndHeaders
     },
 
-    {"setDataSource",       "(Ljava/io/FileDescriptor;JJ)V",    (void *)android_media_MediaPlayer_setDataSourceFD},
+    {"_setDataSource",       "(Ljava/io/FileDescriptor;JJ)V",    (void *)android_media_MediaPlayer_setDataSourceFD},
     {"_setVideoSurface",    "(Landroid/view/Surface;)V",        (void *)android_media_MediaPlayer_setVideoSurface},
     {"prepare",             "()V",                              (void *)android_media_MediaPlayer_prepare},
     {"prepareAsync",        "()V",                              (void *)android_media_MediaPlayer_prepareAsync},
@@ -851,7 +872,6 @@ static JNINativeMethod gMethods[] = {
     {"setLooping",          "(Z)V",                             (void *)android_media_MediaPlayer_setLooping},
     {"isLooping",           "()Z",                              (void *)android_media_MediaPlayer_isLooping},
     {"setVolume",           "(FF)V",                            (void *)android_media_MediaPlayer_setVolume},
-    {"getFrameAt",          "(I)Landroid/graphics/Bitmap;",     (void *)android_media_MediaPlayer_getFrameAt},
     {"native_invoke",       "(Landroid/os/Parcel;Landroid/os/Parcel;)I",(void *)android_media_MediaPlayer_invoke},
     {"native_setMetadataFilter", "(Landroid/os/Parcel;)I",      (void *)android_media_MediaPlayer_setMetadataFilter},
     {"native_getMetadata", "(ZZLandroid/os/Parcel;)Z",          (void *)android_media_MediaPlayer_getMetadata},
@@ -863,10 +883,9 @@ static JNINativeMethod gMethods[] = {
     {"setAuxEffectSendLevel", "(F)V",                           (void *)android_media_MediaPlayer_setAuxEffectSendLevel},
     {"attachAuxEffect",     "(I)V",                             (void *)android_media_MediaPlayer_attachAuxEffect},
     {"native_pullBatteryData", "(Landroid/os/Parcel;)I",        (void *)android_media_MediaPlayer_pullBatteryData},
-    {"setParameter",        "(ILandroid/os/Parcel;)Z",          (void *)android_media_MediaPlayer_setParameter},
-    {"getParameter",        "(ILandroid/os/Parcel;)V",          (void *)android_media_MediaPlayer_getParameter},
     {"native_setRetransmitEndpoint", "(Ljava/lang/String;I)I",  (void *)android_media_MediaPlayer_setRetransmitEndpoint},
     {"setNextMediaPlayer",  "(Landroid/media/MediaPlayer;)V",   (void *)android_media_MediaPlayer_setNextMediaPlayer},
+    {"updateProxyConfig", "(Landroid/net/ProxyProperties;)V", (void *)android_media_MediaPlayer_updateProxyConfig},
 };
 
 static const char* const kClassPathName = "android/media/MediaPlayer";
@@ -878,11 +897,14 @@ static int register_android_media_MediaPlayer(JNIEnv *env)
                 "android/media/MediaPlayer", gMethods, NELEM(gMethods));
 }
 
+extern int register_android_media_ImageReader(JNIEnv *env);
 extern int register_android_media_Crypto(JNIEnv *env);
+extern int register_android_media_Drm(JNIEnv *env);
 extern int register_android_media_MediaCodec(JNIEnv *env);
 extern int register_android_media_MediaExtractor(JNIEnv *env);
 extern int register_android_media_MediaCodecList(JNIEnv *env);
 extern int register_android_media_MediaMetadataRetriever(JNIEnv *env);
+extern int register_android_media_MediaMuxer(JNIEnv *env);
 extern int register_android_media_MediaRecorder(JNIEnv *env);
 extern int register_android_media_MediaScanner(JNIEnv *env);
 extern int register_android_media_ResampleInputStream(JNIEnv *env);
@@ -902,6 +924,11 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
         goto bail;
     }
     assert(env != NULL);
+
+    if (register_android_media_ImageReader(env) < 0) {
+        ALOGE("ERROR: ImageReader native registration failed");
+        goto bail;
+    }
 
     if (register_android_media_MediaPlayer(env) < 0) {
         ALOGE("ERROR: MediaPlayer native registration failed\n");
@@ -963,6 +990,11 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
         goto bail;
     }
 
+    if (register_android_media_MediaMuxer(env) < 0) {
+        ALOGE("ERROR: MediaMuxer native registration failed");
+        goto bail;
+    }
+
     if (register_android_media_MediaCodecList(env) < 0) {
         ALOGE("ERROR: MediaCodec native registration failed");
         goto bail;
@@ -970,6 +1002,11 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 
     if (register_android_media_Crypto(env) < 0) {
         ALOGE("ERROR: MediaCodec native registration failed");
+        goto bail;
+    }
+
+    if (register_android_media_Drm(env) < 0) {
+        ALOGE("ERROR: MediaDrm native registration failed");
         goto bail;
     }
 

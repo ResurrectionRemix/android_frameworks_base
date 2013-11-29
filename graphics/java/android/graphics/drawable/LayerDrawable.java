@@ -119,6 +119,9 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
         mOpacityOverride = a.getInt(com.android.internal.R.styleable.LayerDrawable_opacity,
                 PixelFormat.UNKNOWN);
 
+        setAutoMirrored(a.getBoolean(com.android.internal.R.styleable.LayerDrawable_autoMirrored,
+                false));
+
         a.recycle();
 
         final int innerDepth = parser.getDepth() + 1;
@@ -200,6 +203,7 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
         st.mChildren[i] = childDrawable;
         childDrawable.mId = id;
         childDrawable.mDrawable = layer;
+        childDrawable.mDrawable.setAutoMirrored(isAutoMirrored());
         childDrawable.mInsetL = left;
         childDrawable.mInsetT = top;
         childDrawable.mInsetR = right;
@@ -402,7 +406,18 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
             array[i].mDrawable.setAlpha(alpha);
         }
     }
-    
+
+    @Override
+    public int getAlpha() {
+        final ChildDrawable[] array = mLayerState.mChildren;
+        if (mLayerState.mNum > 0) {
+            // All layers should have the same alpha set on them - just return the first one
+            return array[0].mDrawable.getAlpha();
+        } else {
+            return super.getAlpha();
+        }
+    }
+
     @Override
     public void setColorFilter(ColorFilter cf) {
         final ChildDrawable[] array = mLayerState.mChildren;
@@ -434,6 +449,21 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
             return mOpacityOverride;
         }
         return mLayerState.getOpacity();
+    }
+
+    @Override
+    public void setAutoMirrored(boolean mirrored) {
+        mLayerState.mAutoMirrored = mirrored;
+        final ChildDrawable[] array = mLayerState.mChildren;
+        final int N = mLayerState.mNum;
+        for (int i=0; i<N; i++) {
+            array[i].mDrawable.setAutoMirrored(mirrored);
+        }
+    }
+
+    @Override
+    public boolean isAutoMirrored() {
+        return mLayerState.mAutoMirrored;
     }
 
     @Override
@@ -575,7 +605,7 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
     @Override
     public Drawable mutate() {
         if (!mMutated && super.mutate() == this) {
-            mLayerState = new LayerState(mLayerState, this, null);
+            mLayerState = createConstantState(mLayerState, null);
             final ChildDrawable[] array = mLayerState.mChildren;
             final int N = mLayerState.mNum;
             for (int i = 0; i < N; i++) {
@@ -589,12 +619,10 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
     /** @hide */
     @Override
     public void setLayoutDirection(int layoutDirection) {
-        if (getLayoutDirection() != layoutDirection) {
-            final ChildDrawable[] array = mLayerState.mChildren;
-            final int N = mLayerState.mNum;
-            for (int i = 0; i < N; i++) {
-                array[i].mDrawable.setLayoutDirection(layoutDirection);
-            }
+        final ChildDrawable[] array = mLayerState.mChildren;
+        final int N = mLayerState.mNum;
+        for (int i = 0; i < N; i++) {
+            array[i].mDrawable.setLayoutDirection(layoutDirection);
         }
         super.setLayoutDirection(layoutDirection);
     }
@@ -621,6 +649,8 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
         private boolean mCheckedConstantState;
         private boolean mCanConstantState;
 
+        private boolean mAutoMirrored;
+
         LayerState(LayerState orig, LayerDrawable owner, Resources res) {
             if (orig != null) {
                 final ChildDrawable[] origChildDrawable = orig.mChildren;
@@ -641,6 +671,7 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
                         r.mDrawable = or.mDrawable.getConstantState().newDrawable();
                     }
                     r.mDrawable.setCallback(owner);
+                    r.mDrawable.setLayoutDirection(or.mDrawable.getLayoutDirection());
                     r.mInsetL = or.mInsetL;
                     r.mInsetT = or.mInsetT;
                     r.mInsetR = or.mInsetR;
@@ -653,6 +684,7 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
                 mHaveStateful = orig.mHaveStateful;
                 mStateful = orig.mStateful;
                 mCheckedConstantState = mCanConstantState = true;
+                mAutoMirrored = orig.mAutoMirrored;
             } else {
                 mNum = 0;
                 mChildren = null;

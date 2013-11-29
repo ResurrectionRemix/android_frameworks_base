@@ -16,6 +16,12 @@
 
 package com.android.systemui.statusbar;
 
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
+import android.util.Log;
+import android.view.MotionEvent;
+
 import java.io.BufferedWriter;
 import java.io.FileDescriptor;
 import java.io.FileWriter;
@@ -23,12 +29,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.LinkedList;
-
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
-import android.util.Slog;
-import android.view.MotionEvent;
 
 /**
  * Convenience class for capturing gestures for later analysis.
@@ -46,7 +46,7 @@ public class GestureRecorder {
             public MotionEvent event;
             public MotionEventRecord(long when, MotionEvent event) {
                 this.time = when;
-                this.event = event.copy();
+                this.event = MotionEvent.obtain(event);
             }
             String actionName(int action) {
                 switch (action) {
@@ -101,7 +101,7 @@ public class GestureRecorder {
                 mDownTime = ev.getDownTime();
             } else {
                 if (mDownTime != ev.getDownTime()) {
-                    Slog.w(TAG, "Assertion failure in GestureRecorder: event downTime ("
+                    Log.w(TAG, "Assertion failure in GestureRecorder: event downTime ("
                             +ev.getDownTime()+") does not match gesture downTime ("+mDownTime+")");
                 }
             }
@@ -227,28 +227,21 @@ public class GestureRecorder {
 
     public void save() {
         synchronized (mGestures) {
-            BufferedWriter w = null;
             try {
-                w = new BufferedWriter(new FileWriter(mLogfile, /*append=*/ true));
+                BufferedWriter w = new BufferedWriter(new FileWriter(mLogfile, /*append=*/ true));
                 w.append(toJsonLocked() + "\n");
+                w.close();
                 mGestures.clear();
                 // If we have a pending gesture, push it back
                 if (mCurrentGesture != null && !mCurrentGesture.isComplete()) {
                     mGestures.add(mCurrentGesture);
                 }
                 if (DEBUG) {
-                    Slog.v(TAG, String.format("Wrote %d complete gestures to %s", mLastSaveLen, mLogfile));
+                    Log.v(TAG, String.format("Wrote %d complete gestures to %s", mLastSaveLen, mLogfile));
                 }
             } catch (IOException e) {
-                Slog.e(TAG, String.format("Couldn't write gestures to %s", mLogfile), e);
+                Log.e(TAG, String.format("Couldn't write gestures to %s", mLogfile), e);
                 mLastSaveLen = -1;
-            } finally {
-                if (w != null) {
-                    try {
-                        w.close();
-                    } catch (IOException ignored) {
-                    }
-                }
             }
         }
     }

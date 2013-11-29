@@ -17,7 +17,6 @@
 package android.view;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
@@ -202,6 +201,7 @@ public class GestureDetector {
     private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();
     private static final int TAP_TIMEOUT = ViewConfiguration.getTapTimeout();
     private static final int DOUBLE_TAP_TIMEOUT = ViewConfiguration.getDoubleTapTimeout();
+    private static final int DOUBLE_TAP_MIN_TIME = ViewConfiguration.getDoubleTapMinTime();
 
     // constants for Message.what used by GestureHandler below
     private static final int SHOW_PRESS = 1;
@@ -213,6 +213,7 @@ public class GestureDetector {
     private OnDoubleTapListener mDoubleTapListener;
 
     private boolean mStillDown;
+    private boolean mDeferConfirmSingleTap;
     private boolean mInLongPress;
     private boolean mAlwaysInTapRegion;
     private boolean mAlwaysInBiggerTapRegion;
@@ -267,8 +268,12 @@ public class GestureDetector {
                 
             case TAP:
                 // If the user's finger is still down, do not count it as a tap
-                if (mDoubleTapListener != null && !mStillDown) {
-                    mDoubleTapListener.onSingleTapConfirmed(mCurrentDownEvent);
+                if (mDoubleTapListener != null) {
+                    if (!mStillDown) {
+                        mDoubleTapListener.onSingleTapConfirmed(mCurrentDownEvent);
+                    } else {
+                        mDeferConfirmSingleTap = true;
+                    }
                 }
                 break;
 
@@ -318,7 +323,7 @@ public class GestureDetector {
 
     /**
      * Creates a GestureDetector with the supplied listener.
-     * You may only use this constructor from a UI thread (this is the usual situation).
+     * You may only use this constructor from a {@link android.os.Looper} thread.
      * @see android.os.Handler#Handler()
      *
      * @param context the application's context
@@ -332,14 +337,14 @@ public class GestureDetector {
     }
 
     /**
-     * Creates a GestureDetector with the supplied listener.
-     * You may only use this constructor from a UI thread (this is the usual situation).
+     * Creates a GestureDetector with the supplied listener that runs deferred events on the
+     * thread associated with the supplied {@link android.os.Handler}.
      * @see android.os.Handler#Handler()
      *
      * @param context the application's context
      * @param listener the listener invoked for all the callbacks, this must
      * not be null.
-     * @param handler the handler to use     
+     * @param handler the handler to use for running deferred listener events.
      *
      * @throws NullPointerException if {@code listener} is null.
      */
@@ -357,14 +362,15 @@ public class GestureDetector {
     }
     
     /**
-     * Creates a GestureDetector with the supplied listener.
-     * You may only use this constructor from a UI thread (this is the usual situation).
+     * Creates a GestureDetector with the supplied listener that runs deferred events on the
+     * thread associated with the supplied {@link android.os.Handler}.
      * @see android.os.Handler#Handler()
      *
      * @param context the application's context
      * @param listener the listener invoked for all the callbacks, this must
      * not be null.
-     * @param handler the handler to use
+     * @param handler the handler to use for running deferred listener events.
+     * @param unused currently not used.
      *
      * @throws NullPointerException if {@code listener} is null.
      */
@@ -533,6 +539,7 @@ public class GestureDetector {
             mAlwaysInBiggerTapRegion = true;
             mStillDown = true;
             mInLongPress = false;
+            mDeferConfirmSingleTap = false;
             
             if (mIsLongpressEnabled) {
                 mHandler.removeMessages(LONG_PRESS);
@@ -586,6 +593,9 @@ public class GestureDetector {
                 mInLongPress = false;
             } else if (mAlwaysInTapRegion) {
                 handled = mListener.onSingleTapUp(ev);
+                if (mDeferConfirmSingleTap && mDoubleTapListener != null) {
+                    mDoubleTapListener.onSingleTapConfirmed(ev);
+                }
             } else {
 
                 // A fling must travel the minimum tap distance
@@ -612,6 +622,7 @@ public class GestureDetector {
                 mVelocityTracker = null;
             }
             mIsDoubleTapping = false;
+            mDeferConfirmSingleTap = false;
             mHandler.removeMessages(SHOW_PRESS);
             mHandler.removeMessages(LONG_PRESS);
             break;
@@ -637,6 +648,7 @@ public class GestureDetector {
         mStillDown = false;
         mAlwaysInTapRegion = false;
         mAlwaysInBiggerTapRegion = false;
+        mDeferConfirmSingleTap = false;
         if (mInLongPress) {
             mInLongPress = false;
         }
@@ -649,6 +661,7 @@ public class GestureDetector {
         mIsDoubleTapping = false;
         mAlwaysInTapRegion = false;
         mAlwaysInBiggerTapRegion = false;
+        mDeferConfirmSingleTap = false;
         if (mInLongPress) {
             mInLongPress = false;
         }
@@ -660,7 +673,8 @@ public class GestureDetector {
             return false;
         }
 
-        if (secondDown.getEventTime() - firstUp.getEventTime() > DOUBLE_TAP_TIMEOUT) {
+        final long deltaTime = secondDown.getEventTime() - firstUp.getEventTime();
+        if (deltaTime > DOUBLE_TAP_TIMEOUT || deltaTime < DOUBLE_TAP_MIN_TIME) {
             return false;
         }
 
@@ -671,6 +685,7 @@ public class GestureDetector {
 
     private void dispatchLongPress() {
         mHandler.removeMessages(TAP);
+        mDeferConfirmSingleTap = false;
         mInLongPress = true;
         mListener.onLongPress(mCurrentDownEvent);
     }

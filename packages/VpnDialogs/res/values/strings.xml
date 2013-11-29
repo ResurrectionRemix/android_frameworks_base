@@ -50,7 +50,7 @@
 
     <!-- Formatted string for the network usage over VPN. [CHAR LIMIT=40] -->
     <string name="data_value_format">
-        <xliff:g id="string">%1$s</xliff:g> /
+        <xliff:g id="number">%1$s</xliff:g> bytes /
         <xliff:g id="number">%2$s</xliff:g> packets
     </string>
 </resources>

@@ -16,15 +16,18 @@
 
 package android.app;
 
+import android.app.ActivityManager.StackBoxInfo;
 import android.content.ComponentName;
 import android.content.IIntentReceiver;
 import android.content.IIntentSender;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.UriPermission;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ConfigurationInfo;
 import android.content.pm.IPackageDataObserver;
+import android.content.pm.ParceledListSlice;
 import android.content.pm.UserInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -39,7 +42,6 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.StrictMode;
-import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Singleton;
@@ -93,7 +95,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
         try {
             getDefault().broadcastIntent(
                 null, intent, null, null, Activity.RESULT_OK, null, null,
-                null /*permission*/, false, true, userId);
+                null /*permission*/, AppOpsManager.OP_NONE, false, true, userId);
         } catch (RemoteException ex) {
         }
     }
@@ -108,7 +110,8 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
     public ActivityManagerNative() {
         attachInterface(this, descriptor);
     }
-    
+
+    @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
             throws RemoteException {
         switch (code) {
@@ -117,6 +120,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
             IApplicationThread app = ApplicationThreadNative.asInterface(b);
+            String callingPackage = data.readString();
             Intent intent = Intent.CREATOR.createFromParcel(data);
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
@@ -128,7 +132,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
                     ? data.readFileDescriptor() : null;
             Bundle options = data.readInt() != 0
                     ? Bundle.CREATOR.createFromParcel(data) : null;
-            int result = startActivity(app, intent, resolvedType,
+            int result = startActivity(app, callingPackage, intent, resolvedType,
                     resultTo, resultWho, requestCode, startFlags,
                     profileFile, profileFd, options);
             reply.writeNoException();
@@ -141,6 +145,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
             IApplicationThread app = ApplicationThreadNative.asInterface(b);
+            String callingPackage = data.readString();
             Intent intent = Intent.CREATOR.createFromParcel(data);
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
@@ -149,11 +154,11 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             int startFlags = data.readInt();
             String profileFile = data.readString();
             ParcelFileDescriptor profileFd = data.readInt() != 0
-                    ? data.readFileDescriptor() : null;
+                    ? ParcelFileDescriptor.CREATOR.createFromParcel(data) : null;
             Bundle options = data.readInt() != 0
                     ? Bundle.CREATOR.createFromParcel(data) : null;
             int userId = data.readInt();
-            int result = startActivityAsUser(app, intent, resolvedType,
+            int result = startActivityAsUser(app, callingPackage, intent, resolvedType,
                     resultTo, resultWho, requestCode, startFlags,
                     profileFile, profileFd, options, userId);
             reply.writeNoException();
@@ -166,6 +171,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
             IApplicationThread app = ApplicationThreadNative.asInterface(b);
+            String callingPackage = data.readString();
             Intent intent = Intent.CREATOR.createFromParcel(data);
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
@@ -174,11 +180,11 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             int startFlags = data.readInt();
             String profileFile = data.readString();
             ParcelFileDescriptor profileFd = data.readInt() != 0
-                    ? data.readFileDescriptor() : null;
+                    ? ParcelFileDescriptor.CREATOR.createFromParcel(data) : null;
             Bundle options = data.readInt() != 0
                     ? Bundle.CREATOR.createFromParcel(data) : null;
             int userId = data.readInt();
-            WaitResult result = startActivityAndWait(app, intent, resolvedType,
+            WaitResult result = startActivityAndWait(app, callingPackage, intent, resolvedType,
                     resultTo, resultWho, requestCode, startFlags,
                     profileFile, profileFd, options, userId);
             reply.writeNoException();
@@ -191,17 +197,18 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
             IApplicationThread app = ApplicationThreadNative.asInterface(b);
+            String callingPackage = data.readString();
             Intent intent = Intent.CREATOR.createFromParcel(data);
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
-            String resultWho = data.readString();    
+            String resultWho = data.readString();
             int requestCode = data.readInt();
             int startFlags = data.readInt();
             Configuration config = Configuration.CREATOR.createFromParcel(data);
             Bundle options = data.readInt() != 0
                     ? Bundle.CREATOR.createFromParcel(data) : null;
             int userId = data.readInt();
-            int result = startActivityWithConfig(app, intent, resolvedType,
+            int result = startActivityWithConfig(app, callingPackage, intent, resolvedType,
                     resultTo, resultWho, requestCode, startFlags, config, options, userId);
             reply.writeNoException();
             reply.writeInt(result);
@@ -220,7 +227,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             }
             String resolvedType = data.readString();
             IBinder resultTo = data.readStrongBinder();
-            String resultWho = data.readString();    
+            String resultWho = data.readString();
             int requestCode = data.readInt();
             int flagsMask = data.readInt();
             int flagsValues = data.readInt();
@@ -233,7 +240,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(result);
             return true;
         }
-        
+
         case START_NEXT_MATCHING_ACTIVITY_TRANSACTION:
         {
             data.enforceInterface(IActivityManager.descriptor);
@@ -264,7 +271,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
         case FINISH_SUB_ACTIVITY_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder token = data.readStrongBinder();
-            String resultWho = data.readString();    
+            String resultWho = data.readString();
             int requestCode = data.readInt();
             finishSubActivity(token, resultWho, requestCode);
             reply.writeNoException();
@@ -341,11 +348,12 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             String resultData = data.readString();
             Bundle resultExtras = data.readBundle();
             String perm = data.readString();
+            int appOp = data.readInt();
             boolean serialized = data.readInt() != 0;
             boolean sticky = data.readInt() != 0;
             int userId = data.readInt();
             int res = broadcastIntent(app, intent, resolvedType, resultTo,
-                    resultCode, resultData, resultExtras, perm,
+                    resultCode, resultData, resultExtras, perm, appOp,
                     serialized, sticky, userId);
             reply.writeNoException();
             reply.writeInt(res);
@@ -474,14 +482,13 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             IThumbnailReceiver receiver = receiverBinder != null
                 ? IThumbnailReceiver.Stub.asInterface(receiverBinder)
                 : null;
-            List list = getTasks(maxNum, fl, receiver);
+            List<ActivityManager.RunningTaskInfo> list = getTasks(maxNum, fl, receiver);
             reply.writeNoException();
             int N = list != null ? list.size() : -1;
             reply.writeInt(N);
             int i;
             for (i=0; i<N; i++) {
-                ActivityManager.RunningTaskInfo info =
-                        (ActivityManager.RunningTaskInfo)list.get(i);
+                ActivityManager.RunningTaskInfo info = list.get(i);
                 info.writeToParcel(reply, 0);
             }
             return true;
@@ -531,14 +538,13 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             int maxNum = data.readInt();
             int fl = data.readInt();
-            List list = getServices(maxNum, fl);
+            List<ActivityManager.RunningServiceInfo> list = getServices(maxNum, fl);
             reply.writeNoException();
             int N = list != null ? list.size() : -1;
             reply.writeInt(N);
             int i;
             for (i=0; i<N; i++) {
-                ActivityManager.RunningServiceInfo info =
-                        (ActivityManager.RunningServiceInfo)list.get(i);
+                ActivityManager.RunningServiceInfo info = list.get(i);
                 info.writeToParcel(reply, 0);
             }
             return true;
@@ -551,7 +557,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeTypedList(list);
             return true;
         }
-        
+
         case GET_RUNNING_APP_PROCESSES_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             List<ActivityManager.RunningAppProcessInfo> list = getRunningAppProcesses();
@@ -601,6 +607,67 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             int task = data.readInt();
             moveTaskBackwards(task);
+            reply.writeNoException();
+            return true;
+        }
+
+        case CREATE_STACK_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int taskId = data.readInt();
+            int relativeStackId = data.readInt();
+            int position = data.readInt();
+            float weight = data.readFloat();
+            int res = createStack(taskId, relativeStackId, position, weight);
+            reply.writeNoException();
+            reply.writeInt(res);
+            return true;
+        }
+
+        case MOVE_TASK_TO_STACK_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int taskId = data.readInt();
+            int stackId = data.readInt();
+            boolean toTop = data.readInt() != 0;
+            moveTaskToStack(taskId, stackId, toTop);
+            reply.writeNoException();
+            return true;
+        }
+
+        case RESIZE_STACK_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int stackBoxId = data.readInt();
+            float weight = data.readFloat();
+            resizeStackBox(stackBoxId, weight);
+            reply.writeNoException();
+            return true;
+        }
+
+        case GET_STACK_BOXES_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            List<StackBoxInfo> list = getStackBoxes();
+            reply.writeNoException();
+            reply.writeTypedList(list);
+            return true;
+        }
+
+        case GET_STACK_BOX_INFO_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int stackBoxId = data.readInt();
+            StackBoxInfo info = getStackBoxInfo(stackBoxId);
+            reply.writeNoException();
+            if (info != null) {
+                reply.writeInt(1);
+                info.writeToParcel(reply, 0);
+            } else {
+                reply.writeInt(0);
+            }
+            return true;
+        }
+
+        case SET_FOCUSED_STACK_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int stackId = data.readInt();
+            setFocusedStack(stackId);
             reply.writeNoException();
             return true;
         }
@@ -687,6 +754,14 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
             unstableProviderDied(b);
+            reply.writeNoException();
+            return true;
+        }
+
+        case APP_NOT_RESPONDING_VIA_PROVIDER_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder b = data.readStrongBinder();
+            appNotRespondingViaProvider(b);
             reply.writeNoException();
             return true;
         }
@@ -836,8 +911,10 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             Bundle arguments = data.readBundle();
             IBinder b = data.readStrongBinder();
             IInstrumentationWatcher w = IInstrumentationWatcher.Stub.asInterface(b);
+            b = data.readStrongBinder();
+            IUiAutomationConnection c = IUiAutomationConnection.Stub.asInterface(b);
             int userId = data.readInt();
-            boolean res = startInstrumentation(className, profileFile, fl, arguments, w, userId);
+            boolean res = startInstrumentation(className, profileFile, fl, arguments, w, c, userId);
             reply.writeNoException();
             reply.writeInt(res ? 1 : 0);
             return true;
@@ -1027,9 +1104,9 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(res);
             return true;
         }
-        
+
         case CLEAR_APP_DATA_TRANSACTION: {
-            data.enforceInterface(IActivityManager.descriptor);            
+            data.enforceInterface(IActivityManager.descriptor);
             String packageName = data.readString();
             IPackageDataObserver observer = IPackageDataObserver.Stub.asInterface(
                     data.readStrongBinder());
@@ -1039,7 +1116,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeInt(res ? 1 : 0);
             return true;
         }
-        
+
         case GRANT_URI_PERMISSION_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
@@ -1051,7 +1128,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case REVOKE_URI_PERMISSION_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
@@ -1062,7 +1139,36 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
+        case TAKE_PERSISTABLE_URI_PERMISSION_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            Uri uri = Uri.CREATOR.createFromParcel(data);
+            int mode = data.readInt();
+            takePersistableUriPermission(uri, mode);
+            reply.writeNoException();
+            return true;
+        }
+
+        case RELEASE_PERSISTABLE_URI_PERMISSION_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            Uri uri = Uri.CREATOR.createFromParcel(data);
+            int mode = data.readInt();
+            releasePersistableUriPermission(uri, mode);
+            reply.writeNoException();
+            return true;
+        }
+
+        case GET_PERSISTED_URI_PERMISSIONS_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            final String packageName = data.readString();
+            final boolean incoming = data.readInt() != 0;
+            final ParceledListSlice<UriPermission> perms = getPersistedUriPermissions(
+                    packageName, incoming);
+            reply.writeNoException();
+            perms.writeToParcel(reply, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+            return true;
+        }
+
         case SHOW_WAITING_FOR_DEBUGGER_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
@@ -1147,6 +1253,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             IActivityController watcher = IActivityController.Stub.asInterface(
                     data.readStrongBinder());
             setActivityController(watcher);
+            reply.writeNoException();
             return true;
         }
 
@@ -1250,7 +1357,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             reply.writeNoException();
             return true;
         }
-        
+
         case FORCE_STOP_PACKAGE_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             String packageName = data.readString();
@@ -1286,7 +1393,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             int profileType = data.readInt();
             String path = data.readString();
             ParcelFileDescriptor fd = data.readInt() != 0
-                    ? data.readFileDescriptor() : null;
+                    ? ParcelFileDescriptor.CREATOR.createFromParcel(data) : null;
             boolean res = profileControl(process, userId, start, path, fd, profileType);
             reply.writeNoException();
             reply.writeInt(res ? 1 : 0);
@@ -1356,7 +1463,8 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             String pkg = data.readString();
             int appid = data.readInt();
-            killApplicationWithAppId(pkg, appid);
+            String reason = data.readString();
+            killApplicationWithAppId(pkg, appid, reason);
             reply.writeNoException();
             return true;
         }
@@ -1406,6 +1514,14 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             return true;
         }
         
+        case SET_USER_IS_MONKEY_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            final boolean monkey = (data.readInt() == 1);
+            setUserIsMonkey(monkey);
+            reply.writeNoException();
+            return true;
+        }
+
         case FINISH_HEAVY_WEIGHT_APP_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             finishHeavyWeightApp();
@@ -1419,6 +1535,24 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             boolean isit = isImmersive(token);
             reply.writeNoException();
             reply.writeInt(isit ? 1 : 0);
+            return true;
+        }
+
+        case CONVERT_FROM_TRANSLUCENT_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder token = data.readStrongBinder();
+            boolean converted = convertFromTranslucent(token);
+            reply.writeNoException();
+            reply.writeInt(converted ? 1 : 0);
+            return true;
+        }
+
+        case CONVERT_TO_TRANSLUCENT_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder token = data.readStrongBinder();
+            boolean converted = convertToTranslucent(token);
+            reply.writeNoException();
+            reply.writeInt(converted ? 1 : 0);
             return true;
         }
 
@@ -1513,7 +1647,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             boolean managed = data.readInt() != 0;
             String path = data.readString();
             ParcelFileDescriptor fd = data.readInt() != 0
-                    ? data.readFileDescriptor() : null;
+                    ? ParcelFileDescriptor.CREATOR.createFromParcel(data) : null;
             boolean res = dumpHeap(process, userId, managed, path, fd);
             reply.writeNoException();
             reply.writeInt(res ? 1 : 0);
@@ -1525,13 +1659,14 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             IBinder b = data.readStrongBinder();
             IApplicationThread app = ApplicationThreadNative.asInterface(b);
+            String callingPackage = data.readString();
             Intent[] intents = data.createTypedArray(Intent.CREATOR);
             String[] resolvedTypes = data.createStringArray();
             IBinder resultTo = data.readStrongBinder();
             Bundle options = data.readInt() != 0
                     ? Bundle.CREATOR.createFromParcel(data) : null;
             int userId = data.readInt();
-            int result = startActivities(app, intents, resolvedTypes, resultTo,
+            int result = startActivities(app, callingPackage, intents, resolvedTypes, resultTo,
                     options, userId);
             reply.writeNoException();
             reply.writeInt(result);
@@ -1783,6 +1918,15 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             return true;
         }
 
+        case GET_LAUNCHED_FROM_PACKAGE_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder token = data.readStrongBinder();
+            String res = getLaunchedFromPackage(token);
+            reply.writeNoException();
+            reply.writeString(res);
+            return true;
+        }
+
         case REGISTER_USER_SWITCH_OBSERVER_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             IUserSwitchObserver observer = IUserSwitchObserver.Stub.asInterface(
@@ -1812,18 +1956,76 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             int pid = data.readInt();
             boolean aboveSystem = data.readInt() != 0;
-            long res = inputDispatchingTimedOut(pid, aboveSystem);
+            String reason = data.readString();
+            long res = inputDispatchingTimedOut(pid, aboveSystem, reason);
             reply.writeNoException();
             reply.writeLong(res);
             return true;
         }
 
-        case IS_PRIVACY_GUARD_ENABLED_TRANSACTION: {
+        case GET_ASSIST_CONTEXT_EXTRAS_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
-            int pid = data.readInt();
-            boolean res = isPrivacyGuardEnabledForProcess(pid);
+            int requestType = data.readInt();
+            Bundle res = getAssistContextExtras(requestType);
             reply.writeNoException();
-            reply.writeInt(res ? 1 : 0);
+            reply.writeBundle(res);
+            return true;
+        }
+
+        case REPORT_ASSIST_CONTEXT_EXTRAS_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder token = data.readStrongBinder();
+            Bundle extras = data.readBundle();
+            reportAssistContextExtras(token, extras);
+            reply.writeNoException();
+            return true;
+        }
+
+        case KILL_UID_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            int uid = data.readInt();
+            String reason = data.readString();
+            killUid(uid, reason);
+            reply.writeNoException();
+            return true;
+        }
+
+        case HANG_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder who = data.readStrongBinder();
+            boolean allowRestart = data.readInt() != 0;
+            hang(who, allowRestart);
+            reply.writeNoException();
+            return true;
+        }
+
+        case REPORT_ACTIVITY_FULLY_DRAWN_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder token = data.readStrongBinder();
+            reportActivityFullyDrawn(token);
+            reply.writeNoException();
+            return true;
+        }
+
+        case NOTIFY_ACTIVITY_DRAWN_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder token = data.readStrongBinder();
+            notifyActivityDrawn(token);
+            reply.writeNoException();
+            return true;
+        }
+
+        case RESTART_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            restart();
+            reply.writeNoException();
+            return true;
+        }
+
+        case PERFORM_IDLE_MAINTENANCE_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            performIdleMaintenance();
+            reply.writeNoException();
             return true;
         }
         }
@@ -1862,7 +2064,7 @@ class ActivityManagerProxy implements IActivityManager
         return mRemote;
     }
 
-    public int startActivity(IApplicationThread caller, Intent intent,
+    public int startActivity(IApplicationThread caller, String callingPackage, Intent intent,
             String resolvedType, IBinder resultTo, String resultWho, int requestCode,
             int startFlags, String profileFile,
             ParcelFileDescriptor profileFd, Bundle options) throws RemoteException {
@@ -1870,6 +2072,7 @@ class ActivityManagerProxy implements IActivityManager
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeStrongBinder(caller != null ? caller.asBinder() : null);
+        data.writeString(callingPackage);
         intent.writeToParcel(data, 0);
         data.writeString(resolvedType);
         data.writeStrongBinder(resultTo);
@@ -1897,7 +2100,7 @@ class ActivityManagerProxy implements IActivityManager
         return result;
     }
 
-    public int startActivityAsUser(IApplicationThread caller, Intent intent,
+    public int startActivityAsUser(IApplicationThread caller, String callingPackage, Intent intent,
             String resolvedType, IBinder resultTo, String resultWho, int requestCode,
             int startFlags, String profileFile,
             ParcelFileDescriptor profileFd, Bundle options, int userId) throws RemoteException {
@@ -1905,6 +2108,7 @@ class ActivityManagerProxy implements IActivityManager
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeStrongBinder(caller != null ? caller.asBinder() : null);
+        data.writeString(callingPackage);
         intent.writeToParcel(data, 0);
         data.writeString(resolvedType);
         data.writeStrongBinder(resultTo);
@@ -1932,14 +2136,15 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         return result;
     }
-    public WaitResult startActivityAndWait(IApplicationThread caller, Intent intent,
-            String resolvedType, IBinder resultTo, String resultWho,
+    public WaitResult startActivityAndWait(IApplicationThread caller, String callingPackage,
+            Intent intent, String resolvedType, IBinder resultTo, String resultWho,
             int requestCode, int startFlags, String profileFile,
             ParcelFileDescriptor profileFd, Bundle options, int userId) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeStrongBinder(caller != null ? caller.asBinder() : null);
+        data.writeString(callingPackage);
         intent.writeToParcel(data, 0);
         data.writeString(resolvedType);
         data.writeStrongBinder(resultTo);
@@ -1967,14 +2172,15 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         return result;
     }
-    public int startActivityWithConfig(IApplicationThread caller, Intent intent,
-            String resolvedType, IBinder resultTo, String resultWho,
+    public int startActivityWithConfig(IApplicationThread caller, String callingPackage,
+            Intent intent, String resolvedType, IBinder resultTo, String resultWho,
             int requestCode, int startFlags, Configuration config,
             Bundle options, int userId) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeStrongBinder(caller != null ? caller.asBinder() : null);
+        data.writeString(callingPackage);
         intent.writeToParcel(data, 0);
         data.writeString(resolvedType);
         data.writeStrongBinder(resultTo);
@@ -2145,7 +2351,7 @@ class ActivityManagerProxy implements IActivityManager
     public int broadcastIntent(IApplicationThread caller,
             Intent intent, String resolvedType,  IIntentReceiver resultTo,
             int resultCode, String resultData, Bundle map,
-            String requiredPermission, boolean serialized,
+            String requiredPermission, int appOp, boolean serialized,
             boolean sticky, int userId) throws RemoteException
     {
         Parcel data = Parcel.obtain();
@@ -2159,6 +2365,7 @@ class ActivityManagerProxy implements IActivityManager
         data.writeString(resultData);
         data.writeBundle(map);
         data.writeString(requiredPermission);
+        data.writeInt(appOp);
         data.writeInt(serialized ? 1 : 0);
         data.writeInt(sticky ? 1 : 0);
         data.writeInt(userId);
@@ -2507,6 +2714,94 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
+    @Override
+    public int createStack(int taskId, int relativeStackBoxId, int position, float weight)
+            throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(taskId);
+        data.writeInt(relativeStackBoxId);
+        data.writeInt(position);
+        data.writeFloat(weight);
+        mRemote.transact(CREATE_STACK_TRANSACTION, data, reply, 0);
+        reply.readException();
+        int res = reply.readInt();
+        data.recycle();
+        reply.recycle();
+        return res;
+    }
+    @Override
+    public void moveTaskToStack(int taskId, int stackId, boolean toTop) throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(taskId);
+        data.writeInt(stackId);
+        data.writeInt(toTop ? 1 : 0);
+        mRemote.transact(MOVE_TASK_TO_STACK_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+    @Override
+    public void resizeStackBox(int stackBoxId, float weight) throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(stackBoxId);
+        data.writeFloat(weight);
+        mRemote.transact(RESIZE_STACK_TRANSACTION, data, reply, IBinder.FLAG_ONEWAY);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+    @Override
+    public List<StackBoxInfo> getStackBoxes() throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        mRemote.transact(GET_STACK_BOXES_TRANSACTION, data, reply, 0);
+        reply.readException();
+        ArrayList<StackBoxInfo> list = reply.createTypedArrayList(StackBoxInfo.CREATOR);
+        data.recycle();
+        reply.recycle();
+        return list;
+    }
+    @Override
+    public StackBoxInfo getStackBoxInfo(int stackBoxId) throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(stackBoxId);
+        mRemote.transact(GET_STACK_BOX_INFO_TRANSACTION, data, reply, 0);
+        reply.readException();
+        int res = reply.readInt();
+        StackBoxInfo info = null;
+        if (res != 0) {
+            info = StackBoxInfo.CREATOR.createFromParcel(reply);
+        }
+        data.recycle();
+        reply.recycle();
+        return info;
+    }
+    @Override
+    public void setFocusedStack(int stackId) throws RemoteException
+    {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(stackId);
+        mRemote.transact(SET_FOCUSED_STACK_TRANSACTION, data, reply, IBinder.FLAG_ONEWAY);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
     public int getTaskForActivity(IBinder token, boolean onlyRoot) throws RemoteException
     {
         Parcel data = Parcel.obtain();
@@ -2607,12 +2902,25 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         return res;
     }
+
     public void unstableProviderDied(IBinder connection) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeStrongBinder(connection);
         mRemote.transact(UNSTABLE_PROVIDER_DIED_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    @Override
+    public void appNotRespondingViaProvider(IBinder connection) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(connection);
+        mRemote.transact(APP_NOT_RESPONDING_VIA_PROVIDER_TRANSACTION, data, reply, 0);
         reply.readException();
         data.recycle();
         reply.recycle();
@@ -2864,8 +3172,8 @@ class ActivityManagerProxy implements IActivityManager
     }
 
     public boolean startInstrumentation(ComponentName className, String profileFile,
-            int flags, Bundle arguments, IInstrumentationWatcher watcher, int userId)
-            throws RemoteException {
+            int flags, Bundle arguments, IInstrumentationWatcher watcher,
+            IUiAutomationConnection connection, int userId) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
@@ -2874,6 +3182,7 @@ class ActivityManagerProxy implements IActivityManager
         data.writeInt(flags);
         data.writeBundle(arguments);
         data.writeStrongBinder(watcher != null ? watcher.asBinder() : null);
+        data.writeStrongBinder(connection != null ? connection.asBinder() : null);
         data.writeInt(userId);
         mRemote.transact(START_INSTRUMENTATION_TRANSACTION, data, reply, 0);
         reply.readException();
@@ -3114,7 +3423,7 @@ class ActivityManagerProxy implements IActivityManager
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeString(packageName);
-        data.writeStrongBinder(observer.asBinder());
+        data.writeStrongBinder((observer != null) ? observer.asBinder() : null);
         data.writeInt(userId);
         mRemote.transact(CLEAR_APP_DATA_TRANSACTION, data, reply, 0);
         reply.readException();
@@ -3166,6 +3475,50 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
+
+    @Override
+    public void takePersistableUriPermission(Uri uri, int mode) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        uri.writeToParcel(data, 0);
+        data.writeInt(mode);
+        mRemote.transact(TAKE_PERSISTABLE_URI_PERMISSION_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    @Override
+    public void releasePersistableUriPermission(Uri uri, int mode) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        uri.writeToParcel(data, 0);
+        data.writeInt(mode);
+        mRemote.transact(RELEASE_PERSISTABLE_URI_PERMISSION_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    @Override
+    public ParceledListSlice<UriPermission> getPersistedUriPermissions(
+            String packageName, boolean incoming) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeString(packageName);
+        data.writeInt(incoming ? 1 : 0);
+        mRemote.transact(GET_PERSISTED_URI_PERMISSIONS_TRANSACTION, data, reply, 0);
+        reply.readException();
+        final ParceledListSlice<UriPermission> perms = ParceledListSlice.CREATOR.createFromParcel(
+                reply);
+        data.recycle();
+        reply.recycle();
+        return perms;
+    }
+
     public void showWaitingForDebugger(IApplicationThread who, boolean waiting)
             throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -3302,6 +3655,7 @@ class ActivityManagerProxy implements IActivityManager
         data.writeString(reason);
         data.writeInt(secure ? 1 : 0);
         mRemote.transact(KILL_PIDS_TRANSACTION, data, reply, 0);
+        reply.readException();
         boolean res = reply.readInt() != 0;
         data.recycle();
         reply.recycle();
@@ -3515,12 +3869,14 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
     }
     
-    public void killApplicationWithAppId(String pkg, int appid) throws RemoteException {
+    public void killApplicationWithAppId(String pkg, int appid, String reason)
+            throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeString(pkg);
         data.writeInt(appid);
+        data.writeString(reason);
         mRemote.transact(KILL_APPLICATION_WITH_APPID_TRANSACTION, data, reply, 0);
         reply.readException();
         data.recycle();
@@ -3590,7 +3946,18 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         return res;
     }
-    
+
+    public void setUserIsMonkey(boolean monkey) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(monkey ? 1 : 0);
+        mRemote.transact(SET_USER_IS_MONKEY_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
     public void finishHeavyWeightApp() throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -3600,7 +3967,35 @@ class ActivityManagerProxy implements IActivityManager
         data.recycle();
         reply.recycle();
     }
-    
+
+    public boolean convertFromTranslucent(IBinder token)
+            throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(token);
+        mRemote.transact(CONVERT_FROM_TRANSLUCENT_TRANSACTION, data, reply, 0);
+        reply.readException();
+        boolean res = reply.readInt() != 0;
+        data.recycle();
+        reply.recycle();
+        return res;
+    }
+
+    public boolean convertToTranslucent(IBinder token)
+            throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(token);
+        mRemote.transact(CONVERT_TO_TRANSLUCENT_TRANSACTION, data, reply, 0);
+        reply.readException();
+        boolean res = reply.readInt() != 0;
+        data.recycle();
+        reply.recycle();
+        return res;
+    }
+
     public void setImmersive(IBinder token, boolean immersive)
             throws RemoteException {
         Parcel data = Parcel.obtain();
@@ -3759,13 +4154,14 @@ class ActivityManagerProxy implements IActivityManager
         return res;
     }
     
-    public int startActivities(IApplicationThread caller,
+    public int startActivities(IApplicationThread caller, String callingPackage,
             Intent[] intents, String[] resolvedTypes, IBinder resultTo,
             Bundle options, int userId) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeStrongBinder(caller != null ? caller.asBinder() : null);
+        data.writeString(callingPackage);
         data.writeTypedArray(intents, 0);
         data.writeStringArray(resolvedTypes);
         data.writeStrongBinder(resultTo);
@@ -4111,6 +4507,19 @@ class ActivityManagerProxy implements IActivityManager
         return result;
     }
 
+    public String getLaunchedFromPackage(IBinder activityToken) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(activityToken);
+        mRemote.transact(GET_LAUNCHED_FROM_PACKAGE_TRANSACTION, data, reply, 0);
+        reply.readException();
+        String result = reply.readString();
+        data.recycle();
+        reply.recycle();
+        return result;
+    }
+
     public void registerUserSwitchObserver(IUserSwitchObserver observer) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -4143,12 +4552,14 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
     }
 
-    public long inputDispatchingTimedOut(int pid, boolean aboveSystem) throws RemoteException {
+    public long inputDispatchingTimedOut(int pid, boolean aboveSystem, String reason)
+            throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeInt(pid);
         data.writeInt(aboveSystem ? 1 : 0);
+        data.writeString(reason);
         mRemote.transact(INPUT_DISPATCHING_TIMED_OUT_TRANSACTION, data, reply, 0);
         reply.readException();
         long res = reply.readInt();
@@ -4157,17 +4568,97 @@ class ActivityManagerProxy implements IActivityManager
         return res;
     }
 
-    public boolean isPrivacyGuardEnabledForProcess(int pid) throws RemoteException {
+    public Bundle getAssistContextExtras(int requestType) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
-        data.writeInt(pid);
-        mRemote.transact(IS_PRIVACY_GUARD_ENABLED_TRANSACTION, data, reply, 0);
+        data.writeInt(requestType);
+        mRemote.transact(GET_ASSIST_CONTEXT_EXTRAS_TRANSACTION, data, reply, 0);
         reply.readException();
-        int res = reply.readInt();
+        Bundle res = reply.readBundle();
         data.recycle();
         reply.recycle();
-        return res == 1;
+        return res;
     }
+
+    public void reportAssistContextExtras(IBinder token, Bundle extras)
+            throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(token);
+        data.writeBundle(extras);
+        mRemote.transact(REPORT_ASSIST_CONTEXT_EXTRAS_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    public void killUid(int uid, String reason) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeInt(uid);
+        data.writeString(reason);
+        mRemote.transact(KILL_UID_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    public void hang(IBinder who, boolean allowRestart) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(who);
+        data.writeInt(allowRestart ? 1 : 0);
+        mRemote.transact(HANG_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    public void reportActivityFullyDrawn(IBinder token) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(token);
+        mRemote.transact(REPORT_ACTIVITY_FULLY_DRAWN_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    public void notifyActivityDrawn(IBinder token) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(token);
+        mRemote.transact(NOTIFY_ACTIVITY_DRAWN_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    public void restart() throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        mRemote.transact(RESTART_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    public void performIdleMaintenance() throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        mRemote.transact(PERFORM_IDLE_MAINTENANCE_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
     private IBinder mRemote;
 }

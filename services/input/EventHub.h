@@ -18,12 +18,12 @@
 #ifndef _RUNTIME_EVENT_HUB_H
 #define _RUNTIME_EVENT_HUB_H
 
-#include <androidfw/Input.h>
-#include <androidfw/InputDevice.h>
-#include <androidfw/Keyboard.h>
-#include <androidfw/KeyLayoutMap.h>
-#include <androidfw/KeyCharacterMap.h>
-#include <androidfw/VirtualKeyMap.h>
+#include <input/Input.h>
+#include <input/InputDevice.h>
+#include <input/Keyboard.h>
+#include <input/KeyLayoutMap.h>
+#include <input/KeyCharacterMap.h>
+#include <input/VirtualKeyMap.h>
 #include <utils/String8.h>
 #include <utils/threads.h>
 #include <utils/Log.h>
@@ -33,6 +33,7 @@
 #include <utils/PropertyMap.h>
 #include <utils/Vector.h>
 #include <utils/KeyedVector.h>
+#include <utils/BitSet.h>
 
 #include <linux/input.h>
 #include <sys/epoll.h>
@@ -41,6 +42,20 @@
 
 #define BTN_FIRST 0x100  // first button code
 #define BTN_LAST 0x15f   // last button code
+
+/*
+ * These constants are used privately in Android to pass raw timestamps
+ * through evdev from uinput device drivers because there is currently no
+ * other way to transfer this information.  The evdev driver automatically
+ * timestamps all input events with the time they were posted and clobbers
+ * whatever information was passed in.
+ *
+ * For the purposes of this hack, the timestamp is specified in the
+ * CLOCK_MONOTONIC timebase and is split into two EV_MSC events specifying
+ * seconds and microseconds.
+ */
+#define MSC_ANDROID_TIME_SEC 0x6
+#define MSC_ANDROID_TIME_USEC 0x7
 
 namespace android {
 
@@ -165,6 +180,8 @@ public:
 
     virtual InputDeviceIdentifier getDeviceIdentifier(int32_t deviceId) const = 0;
 
+    virtual int32_t getDeviceControllerNumber(int32_t deviceId) const = 0;
+
     virtual void getConfiguration(int32_t deviceId, PropertyMap* outConfiguration) const = 0;
 
     virtual status_t getAbsoluteAxisInfo(int32_t deviceId, int axis,
@@ -249,6 +266,8 @@ public:
 
     virtual InputDeviceIdentifier getDeviceIdentifier(int32_t deviceId) const;
 
+    virtual int32_t getDeviceControllerNumber(int32_t deviceId) const;
+
     virtual void getConfiguration(int32_t deviceId, PropertyMap* outConfiguration) const;
 
     virtual status_t getAbsoluteAxisInfo(int32_t deviceId, int axis,
@@ -329,6 +348,11 @@ private:
         bool ffEffectPlaying;
         int16_t ffEffectId; // initially -1
 
+        int32_t controllerNumber;
+
+        int32_t timestampOverrideSec;
+        int32_t timestampOverrideUsec;
+
         Device(int fd, int32_t id, const String8& path, const InputDeviceIdentifier& identifier);
         ~Device();
 
@@ -367,6 +391,9 @@ private:
 
     bool isExternalDeviceLocked(Device* device);
 
+    int32_t getNextControllerNumberLocked(Device* device);
+    void releaseControllerNumberLocked(Device* device);
+
     // Protect all internal state.
     mutable Mutex mLock;
 
@@ -380,6 +407,8 @@ private:
     int32_t mBuiltInKeyboardId;
 
     int32_t mNextDeviceId;
+
+    BitSet32 mControllerNumbers;
 
     KeyedVector<int32_t, Device*> mDevices;
 

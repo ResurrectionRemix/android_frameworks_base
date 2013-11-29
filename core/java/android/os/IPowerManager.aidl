@@ -23,9 +23,10 @@ import android.os.WorkSource;
 
 interface IPowerManager
 {
-    // WARNING: The first two methods must remain the first two methods because their
+    // WARNING: The first three methods must remain the first three methods because their
     // transaction numbers must not change unless IPowerManager.cpp is also updated.
-    void acquireWakeLock(IBinder lock, int flags, String tag, in WorkSource ws);
+    void acquireWakeLock(IBinder lock, int flags, String tag, String packageName, in WorkSource ws);
+    void acquireWakeLockWithUid(IBinder lock, int flags, String tag, String packageName, int uidtoblame);
     void releaseWakeLock(IBinder lock, int flags);
 
     void updateWakeLockWorkSource(IBinder lock, in WorkSource ws);
@@ -52,5 +53,7 @@ interface IPowerManager
     // sets the attention light (used by phone app only)
     void setAttentionLight(boolean on, int color);
 
-    void cpuBoost(int duration);
+    int getCurrentScreenBrightnessValue();
+    int getCurrentButtonBrightnessValue();
+    void setButtonBrightness(int brightness);
 }

@@ -19,7 +19,6 @@ package android.animation;
 import android.util.Log;
 import android.util.Property;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
@@ -48,6 +47,8 @@ public final class ObjectAnimator extends ValueAnimator {
     private String mPropertyName;
 
     private Property mProperty;
+
+    private boolean mAutoCancel = false;
 
     /**
      * Sets the name of the property that will be animated. This name is used to derive
@@ -122,9 +123,37 @@ public final class ObjectAnimator extends ValueAnimator {
      * in a call to the function <code>setFoo()</code> on the target object. If either
      * <code>valueFrom</code> or <code>valueTo</code> is null, then a getter function will
      * also be derived and called.
+     *
+     * <p>If this animator was created with a {@link Property} object instead of the
+     * string name of a property, then this method will return the {@link
+     * Property#getName() name} of that Property object instead. If this animator was
+     * created with one or more {@link PropertyValuesHolder} objects, then this method
+     * will return the {@link PropertyValuesHolder#getPropertyName() name} of that
+     * object (if there was just one) or a comma-separated list of all of the
+     * names (if there are more than one).</p>
      */
     public String getPropertyName() {
-        return mPropertyName;
+        String propertyName = null;
+        if (mPropertyName != null) {
+            propertyName = mPropertyName;
+        } else if (mProperty != null) {
+            propertyName = mProperty.getName();
+        } else if (mValues != null && mValues.length > 0) {
+            for (int i = 0; i < mValues.length; ++i) {
+                if (i == 0) {
+                    propertyName = "";
+                } else {
+                    propertyName += ",";
+                }
+                propertyName += mValues[i].getPropertyName();
+            }
+        }
+        return propertyName;
+    }
+
+    @Override
+    String getNameForTrace() {
+        return "animator:" + getPropertyName();
     }
 
     /**
@@ -346,17 +375,83 @@ public final class ObjectAnimator extends ValueAnimator {
             // No values yet - this animator is being constructed piecemeal. Init the values with
             // whatever the current propertyName is
             if (mProperty != null) {
-                setValues(PropertyValuesHolder.ofObject(mProperty, (TypeEvaluator)null, values));
+                setValues(PropertyValuesHolder.ofObject(mProperty, (TypeEvaluator) null, values));
             } else {
-                setValues(PropertyValuesHolder.ofObject(mPropertyName, (TypeEvaluator)null, values));
+                setValues(PropertyValuesHolder.ofObject(mPropertyName,
+                        (TypeEvaluator) null, values));
             }
         } else {
             super.setObjectValues(values);
         }
     }
 
+    /**
+     * autoCancel controls whether an ObjectAnimator will be canceled automatically
+     * when any other ObjectAnimator with the same target and properties is started.
+     * Setting this flag may make it easier to run different animators on the same target
+     * object without having to keep track of whether there are conflicting animators that
+     * need to be manually canceled. Canceling animators must have the same exact set of
+     * target properties, in the same order.
+     *
+     * @param cancel Whether future ObjectAnimators with the same target and properties
+     * as this ObjectAnimator will cause this ObjectAnimator to be canceled.
+     */
+    public void setAutoCancel(boolean cancel) {
+        mAutoCancel = cancel;
+    }
+
+    private boolean hasSameTargetAndProperties(Animator anim) {
+        if (anim instanceof ObjectAnimator) {
+            PropertyValuesHolder[] theirValues = ((ObjectAnimator) anim).getValues();
+            if (((ObjectAnimator) anim).getTarget() == mTarget &&
+                    mValues.length == theirValues.length) {
+                for (int i = 0; i < mValues.length; ++i) {
+                    PropertyValuesHolder pvhMine = mValues[i];
+                    PropertyValuesHolder pvhTheirs = theirValues[i];
+                    if (pvhMine.getPropertyName() == null ||
+                            !pvhMine.getPropertyName().equals(pvhTheirs.getPropertyName())) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void start() {
+        // See if any of the current active/pending animators need to be canceled
+        AnimationHandler handler = sAnimationHandler.get();
+        if (handler != null) {
+            int numAnims = handler.mAnimations.size();
+            for (int i = numAnims - 1; i >= 0; i--) {
+                if (handler.mAnimations.get(i) instanceof ObjectAnimator) {
+                    ObjectAnimator anim = (ObjectAnimator) handler.mAnimations.get(i);
+                    if (anim.mAutoCancel && hasSameTargetAndProperties(anim)) {
+                        anim.cancel();
+                    }
+                }
+            }
+            numAnims = handler.mPendingAnimations.size();
+            for (int i = numAnims - 1; i >= 0; i--) {
+                if (handler.mPendingAnimations.get(i) instanceof ObjectAnimator) {
+                    ObjectAnimator anim = (ObjectAnimator) handler.mPendingAnimations.get(i);
+                    if (anim.mAutoCancel && hasSameTargetAndProperties(anim)) {
+                        anim.cancel();
+                    }
+                }
+            }
+            numAnims = handler.mDelayedAnims.size();
+            for (int i = numAnims - 1; i >= 0; i--) {
+                if (handler.mDelayedAnims.get(i) instanceof ObjectAnimator) {
+                    ObjectAnimator anim = (ObjectAnimator) handler.mDelayedAnims.get(i);
+                    if (anim.mAutoCancel && hasSameTargetAndProperties(anim)) {
+                        anim.cancel();
+                    }
+                }
+            }
+        }
         if (DBG) {
             Log.d("ObjectAnimator", "Anim target, duration: " + mTarget + ", " + getDuration());
             for (int i = 0; i < mValues.length; ++i) {

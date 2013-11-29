@@ -30,7 +30,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.android.systemui.R;
-import com.android.systemui.statusbar.tablet.StatusBarPanel;
+import com.android.systemui.statusbar.StatusBarPanel;
 
 import java.util.List;
 
@@ -127,6 +127,9 @@ public class RecentsActivity extends Activity {
         }
         mShowing = true;
         if (mRecentsPanel != null) {
+            // Call and refresh the recent tasks list in case we didn't preload tasks
+            // or in case we don't get an onNewIntent
+            mRecentsPanel.refreshRecentTasksList();
             mRecentsPanel.refreshViews();
         }
         super.onStart();
@@ -174,9 +177,14 @@ public class RecentsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().addPrivateFlags(
+                WindowManager.LayoutParams.PRIVATE_FLAG_INHERIT_TRANSLUCENT_DECOR);
         setContentView(R.layout.status_bar_recent_panel);
         mRecentsPanel = (RecentsPanelView) findViewById(R.id.recents_root);
         mRecentsPanel.setOnTouchListener(new TouchOutsideListener(mRecentsPanel));
+        mRecentsPanel.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
 
         final RecentTasksLoader recentTasksLoader = RecentTasksLoader.getInstance(this);
         recentTasksLoader.setRecentsPanel(mRecentsPanel, mRecentsPanel);

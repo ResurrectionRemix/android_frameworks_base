@@ -28,9 +28,9 @@ public class TargetDrawable {
     private static final boolean DEBUG = false;
 
     public static final int[] STATE_ACTIVE =
-            { android.R.attr.state_enabled, android.R.attr.state_active, -android.R.attr.state_focused };
+            { android.R.attr.state_enabled, android.R.attr.state_active };
     public static final int[] STATE_INACTIVE =
-            { android.R.attr.state_enabled, -android.R.attr.state_active , -android.R.attr.state_focused };
+            { android.R.attr.state_enabled, -android.R.attr.state_active };
     public static final int[] STATE_FOCUSED =
             { android.R.attr.state_enabled, -android.R.attr.state_active,
                 android.R.attr.state_focused };
@@ -45,36 +45,6 @@ public class TargetDrawable {
     private Drawable mDrawable;
     private boolean mEnabled = true;
     private final int mResourceId;
-
-    /* package */ static class DrawableWithAlpha extends Drawable {
-        private float mAlpha = 1.0f;
-        private Drawable mRealDrawable;
-        public DrawableWithAlpha(Drawable realDrawable) {
-            mRealDrawable = realDrawable;
-        }
-        public void setAlpha(float alpha) {
-            mAlpha = alpha;
-        }
-        public float getAlpha() {
-            return mAlpha;
-        }
-        public void draw(Canvas canvas) {
-            mRealDrawable.setAlpha((int) Math.round(mAlpha * 255f));
-            mRealDrawable.draw(canvas);
-        }
-        @Override
-        public void setAlpha(int alpha) {
-            mRealDrawable.setAlpha(alpha);
-        }
-        @Override
-        public void setColorFilter(ColorFilter cf) {
-            mRealDrawable.setColorFilter(cf);
-        }
-        @Override
-        public int getOpacity() {
-            return mRealDrawable.getOpacity();
-        }
-    }
 
     public TargetDrawable(Resources res, int resId) {
         mResourceId = resId;

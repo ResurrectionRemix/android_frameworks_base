@@ -35,7 +35,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
 import android.os.UserHandle;
-import android.view.CompatibilityInfoHolder;
+import android.view.DisplayAdjustments;
 import android.view.Display;
 
 import java.io.File;
@@ -135,6 +135,18 @@ public class ContextWrapper extends Context {
         return mBase.getPackageName();
     }
 
+    /** @hide */
+    @Override
+    public String getBasePackageName() {
+        return mBase.getBasePackageName();
+    }
+
+    /** @hide */
+    @Override
+    public String getOpPackageName() {
+        return mBase.getOpPackageName();
+    }
+
     @Override
     public ApplicationInfo getApplicationInfo() {
         return mBase.getApplicationInfo();
@@ -197,12 +209,22 @@ public class ContextWrapper extends Context {
     public File getExternalFilesDir(String type) {
         return mBase.getExternalFilesDir(type);
     }
-    
+
+    @Override
+    public File[] getExternalFilesDirs(String type) {
+        return mBase.getExternalFilesDirs(type);
+    }
+
     @Override
     public File getObbDir() {
         return mBase.getObbDir();
     }
-    
+
+    @Override
+    public File[] getObbDirs() {
+        return mBase.getObbDirs();
+    }
+
     @Override
     public File getCacheDir() {
         return mBase.getCacheDir();
@@ -211,6 +233,11 @@ public class ContextWrapper extends Context {
     @Override
     public File getExternalCacheDir() {
         return mBase.getExternalCacheDir();
+    }
+
+    @Override
+    public File[] getExternalCacheDirs() {
+        return mBase.getExternalCacheDirs();
     }
 
     @Override
@@ -343,6 +370,12 @@ public class ContextWrapper extends Context {
         mBase.sendBroadcast(intent, receiverPermission);
     }
 
+    /** @hide */
+    @Override
+    public void sendBroadcast(Intent intent, String receiverPermission, int appOp) {
+        mBase.sendBroadcast(intent, receiverPermission, appOp);
+    }
+
     @Override
     public void sendOrderedBroadcast(Intent intent,
             String receiverPermission) {
@@ -355,6 +388,17 @@ public class ContextWrapper extends Context {
         Handler scheduler, int initialCode, String initialData,
         Bundle initialExtras) {
         mBase.sendOrderedBroadcast(intent, receiverPermission,
+                resultReceiver, scheduler, initialCode,
+                initialData, initialExtras);
+    }
+
+    /** @hide */
+    @Override
+    public void sendOrderedBroadcast(
+        Intent intent, String receiverPermission, int appOp, BroadcastReceiver resultReceiver,
+        Handler scheduler, int initialCode, String initialData,
+        Bundle initialExtras) {
+        mBase.sendOrderedBroadcast(intent, receiverPermission, appOp,
                 resultReceiver, scheduler, initialCode,
                 initialData, initialExtras);
     }
@@ -475,8 +519,9 @@ public class ContextWrapper extends Context {
 
     /** @hide */
     @Override
-    public boolean bindService(Intent service, ServiceConnection conn, int flags, int userHandle) {
-        return mBase.bindService(service, conn, flags, userHandle);
+    public boolean bindServiceAsUser(Intent service, ServiceConnection conn, int flags,
+            UserHandle user) {
+        return mBase.bindServiceAsUser(service, conn, flags, user);
     }
 
     @Override
@@ -493,12 +538,6 @@ public class ContextWrapper extends Context {
     @Override
     public Object getSystemService(String name) {
         return mBase.getSystemService(name);
-    }
-
-    /** @hide */
-    @Override
-    public boolean isPrivacyGuardEnabled() {
-        return mBase.isPrivacyGuardEnabled();
     }
 
     @Override
@@ -605,6 +644,12 @@ public class ContextWrapper extends Context {
         return mBase.createPackageContextAsUser(packageName, flags, user);
     }
 
+    /** @hide */
+    @Override
+    public int getUserId() {
+        return mBase.getUserId();
+    }
+
     @Override
     public Context createConfigurationContext(Configuration overrideConfiguration) {
         return mBase.createConfigurationContext(overrideConfiguration);
@@ -622,7 +667,7 @@ public class ContextWrapper extends Context {
 
     /** @hide */
     @Override
-    public CompatibilityInfoHolder getCompatibilityInfo(int displayId) {
-        return mBase.getCompatibilityInfo(displayId);
+    public DisplayAdjustments getDisplayAdjustments(int displayId) {
+        return mBase.getDisplayAdjustments(displayId);
     }
 }

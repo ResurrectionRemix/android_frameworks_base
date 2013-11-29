@@ -23,23 +23,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Typeface;
 import android.hardware.usb.IUsbManager;
-import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.android.internal.app.AlertActivity;
 import com.android.internal.app.AlertController;
-
 import com.android.systemui.R;
 
 public class UsbDebuggingActivity extends AlertActivity
@@ -54,7 +50,10 @@ public class UsbDebuggingActivity extends AlertActivity
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
-        mDisconnectedReceiver = new UsbDisconnectedReceiver(this);
+        if (SystemProperties.getInt("service.adb.tcp.port", 0) == 0) {
+            mDisconnectedReceiver = new UsbDisconnectedReceiver(this);
+        }
+
         Intent intent = getIntent();
         String fingerprints = intent.getStringExtra("fingerprints");
         mKey = intent.getStringExtra("key");

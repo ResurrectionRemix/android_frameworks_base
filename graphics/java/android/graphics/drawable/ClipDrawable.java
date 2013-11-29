@@ -158,6 +158,11 @@ public class ClipDrawable extends Drawable implements Drawable.Callback {
     }
 
     @Override
+    public int getAlpha() {
+        return mClipState.mDrawable.getAlpha();
+    }
+
+    @Override
     public void setColorFilter(ColorFilter cf) {
         mClipState.mDrawable.setColorFilter(cf);
     }
@@ -263,6 +268,7 @@ public class ClipDrawable extends Drawable implements Drawable.Callback {
                     mDrawable = orig.mDrawable.getConstantState().newDrawable();
                 }
                 mDrawable.setCallback(owner);
+                mDrawable.setLayoutDirection(orig.mDrawable.getLayoutDirection());
                 mOrientation = orig.mOrientation;
                 mGravity = orig.mGravity;
                 mCheckedConstantState = mCanConstantState = true;

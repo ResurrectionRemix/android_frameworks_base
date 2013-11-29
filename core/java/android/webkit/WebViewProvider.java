@@ -26,12 +26,14 @@ import android.graphics.drawable.Drawable;
 import android.net.http.SslCertificate;
 import android.os.Bundle;
 import android.os.Message;
+import android.print.PrintDocumentAdapter;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.webkit.WebView.HitTestResult;
@@ -113,6 +115,8 @@ public interface WebViewProvider {
     public void loadDataWithBaseURL(String baseUrl, String data,
             String mimeType, String encoding, String historyUrl);
 
+    public void evaluateJavaScript(String script, ValueCallback<String> resultCallback);
+
     public void saveWebArchive(String filename);
 
     public void saveWebArchive(String basename, boolean autoname, ValueCallback<String> callback);
@@ -142,6 +146,8 @@ public interface WebViewProvider {
     public void clearView();
 
     public Picture capturePicture();
+
+    public PrintDocumentAdapter createPrintDocumentAdapter();
 
     public float getScale();
 
@@ -240,7 +246,7 @@ public interface WebViewProvider {
     public View findHierarchyView(String className, int hashCode);
 
     //-------------------------------------------------------------------------
-    // Provider glue methods
+    // Provider internal methods
     //-------------------------------------------------------------------------
 
     /**
@@ -254,6 +260,12 @@ public interface WebViewProvider {
      * returned by getViewDelegate().
      */
     /* package */ ScrollDelegate getScrollDelegate();
+
+    /**
+     * Only used by FindActionModeCallback to inform providers that the find dialog has
+     * been dismissed.
+     */
+    public void notifyFindDialogDismissed();
 
     //-------------------------------------------------------------------------
     // View / ViewGroup delegation methods
@@ -272,6 +284,8 @@ public interface WebViewProvider {
     // the remainder on the methods below.
     interface ViewDelegate {
         public boolean shouldDelayChildPressedState();
+
+        public AccessibilityNodeProvider getAccessibilityNodeProvider();
 
         public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info);
 
@@ -341,6 +355,8 @@ public interface WebViewProvider {
         public void setBackgroundColor(int color);
 
         public void setLayerType(int layerType, Paint paint);
+
+        public void preDispatchDraw(Canvas canvas);
     }
 
     interface ScrollDelegate {

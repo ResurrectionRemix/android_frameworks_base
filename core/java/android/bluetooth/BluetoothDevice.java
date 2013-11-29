@@ -18,6 +18,7 @@ package android.bluetooth;
 
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.content.Context;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -106,7 +107,7 @@ public final class BluetoothDevice implements Parcelable {
      * <p>Always contains the extra fields {@link #EXTRA_DEVICE} and {@link
      * #EXTRA_CLASS}.
      * <p>Requires {@link android.Manifest.permission#BLUETOOTH} to receive.
-     * @see {@link BluetoothClass}
+     * {@see BluetoothClass}
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_CLASS_CHANGED =
@@ -218,7 +219,7 @@ public final class BluetoothDevice implements Parcelable {
      * {@link #BOND_NONE},
      * {@link #BOND_BONDING},
      * {@link #BOND_BONDED}.
-      */
+     */
     public static final String EXTRA_BOND_STATE = "android.bluetooth.device.extra.BOND_STATE";
     /**
      * Used as an int extra field in {@link #ACTION_BOND_STATE_CHANGED} intents.
@@ -227,7 +228,7 @@ public final class BluetoothDevice implements Parcelable {
      * {@link #BOND_NONE},
      * {@link #BOND_BONDING},
      * {@link #BOND_BONDED}.
-      */
+     */
     public static final String EXTRA_PREVIOUS_BOND_STATE =
             "android.bluetooth.device.extra.PREVIOUS_BOND_STATE";
     /**
@@ -252,13 +253,47 @@ public final class BluetoothDevice implements Parcelable {
      */
     public static final int BOND_BONDED = 12;
 
-    /** @hide */
+    /**
+     * Used as an int extra field in {@link #ACTION_PAIRING_REQUEST}
+     * intents for unbond reason.
+     * @hide
+     */
     public static final String EXTRA_REASON = "android.bluetooth.device.extra.REASON";
-    /** @hide */
+
+    /**
+     * Used as an int extra field in {@link #ACTION_PAIRING_REQUEST}
+     * intents to indicate pairing method used. Possible values are:
+     * {@link #PAIRING_VARIANT_PIN},
+     * {@link #PAIRING_VARIANT_PASSKEY_CONFIRMATION},
+     */
     public static final String EXTRA_PAIRING_VARIANT =
             "android.bluetooth.device.extra.PAIRING_VARIANT";
-    /** @hide */
+
+    /**
+     * Used as an int extra field in {@link #ACTION_PAIRING_REQUEST}
+     * intents as the value of passkey.
+     */
     public static final String EXTRA_PAIRING_KEY = "android.bluetooth.device.extra.PAIRING_KEY";
+
+    /**
+     * Bluetooth device type, Unknown
+     */
+    public static final int DEVICE_TYPE_UNKNOWN = 0;
+
+    /**
+     * Bluetooth device type, Classic - BR/EDR devices
+     */
+    public static final int DEVICE_TYPE_CLASSIC = 1;
+
+    /**
+     * Bluetooth device type, Low Energy - LE-only
+     */
+    public static final int DEVICE_TYPE_LE = 2;
+
+    /**
+     * Bluetooth device type, Dual Mode - BR/EDR/LE
+     */
+    public static final int DEVICE_TYPE_DUAL = 3;
 
     /**
      * Broadcast Action: This intent is used to broadcast the {@link UUID}
@@ -285,7 +320,11 @@ public final class BluetoothDevice implements Parcelable {
     public static final String ACTION_NAME_FAILED =
             "android.bluetooth.device.action.NAME_FAILED";
 
-    /** @hide */
+    /**
+     * Broadcast Action: This intent is used to broadcast PAIRING REQUEST
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN} to
+     * receive.
+     */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_PAIRING_REQUEST =
             "android.bluetooth.device.action.PAIRING_REQUEST";
@@ -321,6 +360,9 @@ public final class BluetoothDevice implements Parcelable {
 
     /**@hide*/
     public static final int REQUEST_TYPE_PHONEBOOK_ACCESS = 2;
+
+    /**@hide*/
+    public static final int REQUEST_TYPE_MESSAGE_ACCESS = 3;
 
     /**
      * Used as an extra field in {@link #ACTION_CONNECTION_ACCESS_REQUEST} intents,
@@ -422,8 +464,8 @@ public final class BluetoothDevice implements Parcelable {
     public static final int UNBOND_REASON_REMOVED = 9;
 
     /**
-     * The user will be prompted to enter a pin
-     * @hide
+     * The user will be prompted to enter a pin or
+     * an app will enter a pin for user.
      */
     public static final int PAIRING_VARIANT_PIN = 0;
 
@@ -434,8 +476,8 @@ public final class BluetoothDevice implements Parcelable {
     public static final int PAIRING_VARIANT_PASSKEY = 1;
 
     /**
-     * The user will be prompted to confirm the passkey displayed on the screen
-     * @hide
+     * The user will be prompted to confirm the passkey displayed on the screen or
+     * an app will confirm the passkey for the user.
      */
     public static final int PAIRING_VARIANT_PASSKEY_CONFIRMATION = 2;
 
@@ -601,6 +643,26 @@ public final class BluetoothDevice implements Parcelable {
     }
 
     /**
+     * Get the Bluetooth device type of the remote device.
+     *
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH}
+     *
+     * @return the device type {@link #DEVICE_TYPE_CLASSIC}, {@link #DEVICE_TYPE_LE}
+     *                         {@link #DEVICE_TYPE_DUAL}.
+     *         {@link #DEVICE_TYPE_UNKNOWN} if it's not available
+     */
+    public int getType() {
+        if (sService == null) {
+            Log.e(TAG, "BT not enabled. Cannot get Remote Device type");
+            return DEVICE_TYPE_UNKNOWN;
+        }
+        try {
+            return sService.getRemoteType(this);
+        } catch (RemoteException e) {Log.e(TAG, "", e);}
+        return DEVICE_TYPE_UNKNOWN;
+    }
+
+    /**
      * Get the Bluetooth alias of the remote device.
      * <p>Alias is the locally modified name of a remote device.
      *
@@ -666,7 +728,6 @@ public final class BluetoothDevice implements Parcelable {
      * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}.
      *
      * @return false on immediate error, true if bonding will begin
-     * @hide
      */
     public boolean createBond() {
         if (sService == null) {
@@ -902,7 +963,13 @@ public final class BluetoothDevice implements Parcelable {
          return BluetoothDevice.ERROR;
     }
 
-    /** @hide */
+    /**
+     * Set the pin during pairing when the pairing method is {@link #PAIRING_VARIANT_PIN}
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}.
+     *
+     * @return true pin has been set
+     *         false for error
+     */
     public boolean setPin(byte[] pin) {
         if (sService == null) {
             Log.e(TAG, "BT not enabled. Cannot set Remote Device pin");
@@ -924,7 +991,13 @@ public final class BluetoothDevice implements Parcelable {
         return false;
     }
 
-    /** @hide */
+    /**
+     * Confirm passkey for {@link #PAIRING_VARIANT_PASSKEY_CONFIRMATION} pairing.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}.
+     *
+     * @return true confirmation has been sent out
+     *         false for error
+     */
     public boolean setPairingConfirmation(boolean confirm) {
         if (sService == null) {
             Log.e(TAG, "BT not enabled. Cannot set pairing confirmation");
@@ -1126,4 +1199,34 @@ public final class BluetoothDevice implements Parcelable {
         return pinBytes;
     }
 
+    /**
+     * Connect to GATT Server hosted by this device. Caller acts as GATT client.
+     * The callback is used to deliver results to Caller, such as connection status as well
+     * as any further GATT client operations.
+     * The method returns a BluetoothGatt instance. You can use BluetoothGatt to conduct
+     * GATT client operations.
+     * @param callback GATT callback handler that will receive asynchronous callbacks.
+     * @param autoConnect Whether to directly connect to the remote device (false)
+     *                    or to automatically connect as soon as the remote
+     *                    device becomes available (true).
+     * @throws IllegalArgumentException if callback is null
+     */
+    public BluetoothGatt connectGatt(Context context, boolean autoConnect,
+                                     BluetoothGattCallback callback) {
+        // TODO(Bluetooth) check whether platform support BLE
+        //     Do the check here or in GattServer?
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        IBluetoothManager managerService = adapter.getBluetoothManager();
+        try {
+            IBluetoothGatt iGatt = managerService.getBluetoothGatt();
+            if (iGatt == null) {
+                // BLE is not supported
+                return null;
+            }
+            BluetoothGatt gatt = new BluetoothGatt(context, iGatt, this);
+            gatt.connect(autoConnect, callback);
+            return gatt;
+        } catch (RemoteException e) {Log.e(TAG, "", e);}
+        return null;
+    }
 }

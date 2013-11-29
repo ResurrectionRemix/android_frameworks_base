@@ -792,6 +792,18 @@ public class DatabaseUtils {
     }
 
     /**
+     * Query the table to check whether a table is empty or not
+     * @param db the database the table is in
+     * @param table the name of the table to query
+     * @return True if the table is empty
+     * @hide
+     */
+    public static boolean queryIsEmpty(SQLiteDatabase db, String table) {
+        long isEmpty = longForQuery(db, "select exists(select 1 from " + table + ")", null);
+        return isEmpty == 0;
+    }
+
+    /**
      * Utility method to run the query on the db and return the value in the
      * first column of the first row.
      */
@@ -1364,7 +1376,7 @@ public class DatabaseUtils {
         if (sql.length() < 3) {
             return STATEMENT_OTHER;
         }
-        String prefixSql = sql.substring(0, 3).toUpperCase(Locale.US);
+        String prefixSql = sql.substring(0, 3).toUpperCase(Locale.ROOT);
         if (prefixSql.equals("SEL")) {
             return STATEMENT_SELECT;
         } else if (prefixSql.equals("INS") ||

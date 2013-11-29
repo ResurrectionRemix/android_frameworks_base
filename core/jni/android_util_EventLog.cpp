@@ -19,7 +19,7 @@
 #include "JNIHelp.h"
 #include "android_runtime/AndroidRuntime.h"
 #include "jni.h"
-#include "cutils/logger.h"
+#include "log/logger.h"
 
 // The size of the tag number comes out of the payload size.
 #define MAX_EVENT_PAYLOAD (LOGGER_ENTRY_MAX_PAYLOAD - sizeof(int32_t))
@@ -71,8 +71,8 @@ static jint android_util_EventLog_writeEvent_String(JNIEnv* env, jobject clazz,
     // Don't throw NPE -- I feel like it's sort of mean for a logging function
     // to be all crashy if you pass in NULL -- but make the NULL value explicit.
     const char *str = value != NULL ? env->GetStringUTFChars(value, NULL) : "NULL";
-    jint len = strlen(str);
-    const int max = sizeof(buf) - sizeof(len) - 2;  // Type byte, final newline
+    uint32_t len = strlen(str);
+    size_t max = sizeof(buf) - sizeof(len) - 2;  // Type byte, final newline
     if (len > max) len = max;
 
     buf[0] = EVENT_TYPE_STRING;

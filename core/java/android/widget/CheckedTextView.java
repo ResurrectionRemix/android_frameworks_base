@@ -93,7 +93,8 @@ public class CheckedTextView extends TextView implements Checkable {
         if (mChecked != checked) {
             mChecked = checked;
             refreshDrawableState();
-            notifyAccessibilityStateChanged();
+            notifyViewAccessibilityStateChangedIfNeeded(
+                    AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED);
         }
     }
 
@@ -242,7 +243,7 @@ public class CheckedTextView extends TextView implements Checkable {
                 right = width - mBasePadding;
                 left = right - mCheckMarkWidth;
             }
-            checkMarkDrawable.setBounds( left, top, right, bottom);
+            checkMarkDrawable.setBounds(mScrollX + left, top, mScrollX + right, bottom);
             checkMarkDrawable.draw(canvas);
         }
     }

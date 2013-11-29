@@ -23,6 +23,6 @@ LOCAL_JAVA_LIBRARIES := com.android.location.provider
 
 LOCAL_PACKAGE_NAME := FusedLocation
 LOCAL_CERTIFICATE := platform
-LOCAL_SDK_VERSION := current
+LOCAL_PRIVILEGED_MODULE := true
 
 include $(BUILD_PACKAGE)

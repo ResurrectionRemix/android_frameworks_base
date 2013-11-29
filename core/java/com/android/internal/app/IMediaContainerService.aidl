@@ -33,10 +33,8 @@ interface IMediaContainerService {
     boolean checkExternalFreeStorage(in Uri fileUri, boolean isForwardLocked);
     ObbInfo getObbInfo(in String filename);
     long calculateDirectorySize(in String directory);
-    byte[] listDirectory(in String directory);
     /** Return file system stats: [0] is total bytes, [1] is available bytes */
     long[] getFileSystemStats(in String path);
     void clearDirectory(in String directory);
-    void deleteFile(in String file);
     long calculateInstalledSize(in String packagePath, boolean isForwardLocked);
 }

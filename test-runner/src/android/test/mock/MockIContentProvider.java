@@ -41,12 +41,12 @@ import java.util.ArrayList;
  * @hide - @hide because this exposes bulkQuery() and call(), which must also be hidden.
  */
 public class MockIContentProvider implements IContentProvider {
-    public int bulkInsert(Uri url, ContentValues[] initialValues) {
+    public int bulkInsert(String callingPackage, Uri url, ContentValues[] initialValues) {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
     @SuppressWarnings("unused")
-    public int delete(Uri url, String selection, String[] selectionArgs)
+    public int delete(String callingPackage, Uri url, String selection, String[] selectionArgs)
             throws RemoteException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
@@ -56,23 +56,28 @@ public class MockIContentProvider implements IContentProvider {
     }
 
     @SuppressWarnings("unused")
-    public Uri insert(Uri url, ContentValues initialValues) throws RemoteException {
+    public Uri insert(String callingPackage, Uri url, ContentValues initialValues)
+            throws RemoteException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
-    public ParcelFileDescriptor openFile(Uri url, String mode) {
+    public ParcelFileDescriptor openFile(
+            String callingPackage, Uri url, String mode, ICancellationSignal signal) {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
-    public AssetFileDescriptor openAssetFile(Uri uri, String mode) {
+    public AssetFileDescriptor openAssetFile(
+            String callingPackage, Uri uri, String mode, ICancellationSignal signal) {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
-    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations) {
+    public ContentProviderResult[] applyBatch(String callingPackage,
+            ArrayList<ContentProviderOperation> operations) {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
-    public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs,
+    public Cursor query(String callingPackage, Uri url, String[] projection, String selection,
+            String[] selectionArgs,
             String sortOrder, ICancellationSignal cancellationSignal) {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
@@ -82,12 +87,12 @@ public class MockIContentProvider implements IContentProvider {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
-    public int update(Uri url, ContentValues values, String selection, String[] selectionArgs)
-            throws RemoteException {
+    public int update(String callingPackage, Uri url, ContentValues values, String selection,
+            String[] selectionArgs) throws RemoteException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
-    public Bundle call(String method, String request, Bundle args)
+    public Bundle call(String callingPackage, String method, String request, Bundle args)
             throws RemoteException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
@@ -100,13 +105,23 @@ public class MockIContentProvider implements IContentProvider {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
-    public AssetFileDescriptor openTypedAssetFile(Uri url, String mimeType, Bundle opts)
-            throws RemoteException, FileNotFoundException {
+    public AssetFileDescriptor openTypedAssetFile(String callingPackage, Uri url, String mimeType,
+            Bundle opts, ICancellationSignal signal) throws RemoteException, FileNotFoundException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 
     @Override
     public ICancellationSignal createCancellationSignal() throws RemoteException {
+        throw new UnsupportedOperationException("unimplemented mock method");
+    }
+
+    @Override
+    public Uri canonicalize(String callingPkg, Uri uri) throws RemoteException {
+        throw new UnsupportedOperationException("unimplemented mock method");
+    }
+
+    @Override
+    public Uri uncanonicalize(String callingPkg, Uri uri) throws RemoteException {
         throw new UnsupportedOperationException("unimplemented mock method");
     }
 }

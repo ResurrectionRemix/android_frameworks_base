@@ -19,14 +19,15 @@ package com.android.internal.os;
 import static libcore.io.OsConstants.S_IRWXG;
 import static libcore.io.OsConstants.S_IRWXO;
 
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.net.LocalServerSocket;
+import android.opengl.EGL14;
 import android.os.Debug;
 import android.os.Process;
 import android.os.SystemClock;
+import android.os.SystemProperties;
+import android.os.Trace;
 import android.util.EventLog;
 import android.util.Log;
 
@@ -35,6 +36,7 @@ import dalvik.system.Zygote;
 
 import libcore.io.IoUtils;
 import libcore.io.Libcore;
+import libcore.io.OsConstants;
 
 import java.io.BufferedReader;
 import java.io.FileDescriptor;
@@ -59,8 +61,9 @@ import java.util.ArrayList;
  * @hide
  */
 public class ZygoteInit {
-
     private static final String TAG = "Zygote";
+
+    private static final String PROPERTY_DISABLE_OPENGL_PRELOADING = "ro.zygote.disable_gl_preload";
 
     private static final String ANDROID_SOCKET_ENV = "ANDROID_SOCKET_zygote";
 
@@ -88,18 +91,12 @@ public class ZygoteInit {
     static final int GC_LOOP_COUNT = 10;
 
     /**
-     * If true, zygote forks for each peer. If false, a select loop is used
-     * inside a single process. The latter is preferred.
-     */
-    private static final boolean ZYGOTE_FORK_MODE = false;
-
-    /**
      * The name of a resource file that contains classes to preload.
      */
     private static final String PRELOADED_CLASSES = "preloaded-classes";
 
     /** Controls whether we should preload resources during zygote init. */
-    private static final boolean PRELOAD_RESOURCES = false;
+    private static final boolean PRELOAD_RESOURCES = true;
 
     /**
      * Invokes a static "main(argv[]) method on class "className".
@@ -233,6 +230,13 @@ public class ZygoteInit {
     static void preload() {
         preloadClasses();
         preloadResources();
+        preloadOpenGL();
+    }
+
+    private static void preloadOpenGL() {
+        if (!SystemProperties.getBoolean(PROPERTY_DISABLE_OPENGL_PRELOADING, false)) {
+            EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY);
+        }
     }
 
     /**
@@ -318,6 +322,9 @@ public class ZygoteInit {
                 // Restore default.
                 runtime.setTargetHeapUtilization(defaultUtilization);
 
+                // Fill in dex caches with classes, fields, and methods brought in by preloading.
+                runtime.preloadDexCaches();
+
                 Debug.stopAllocCounting();
 
                 // Bring back root. We'll need it later.
@@ -361,8 +368,6 @@ public class ZygoteInit {
                 ar.recycle();
                 Log.i(TAG, "...preloaded " + N + " resources in "
                         + (SystemClock.uptimeMillis()-startTime) + "ms.");
-            } else {
-                Log.i(TAG, "Preload resources disabled, skipped.");
             }
             mResources.finishPreloading();
         } catch (RuntimeException e) {
@@ -481,12 +486,24 @@ public class ZygoteInit {
      */
     private static boolean startSystemServer()
             throws MethodAndArgsCaller, RuntimeException {
+        long capabilities = posixCapabilitiesAsBits(
+            OsConstants.CAP_KILL,
+            OsConstants.CAP_NET_ADMIN,
+            OsConstants.CAP_NET_BIND_SERVICE,
+            OsConstants.CAP_NET_BROADCAST,
+            OsConstants.CAP_NET_RAW,
+            OsConstants.CAP_SYS_MODULE,
+            OsConstants.CAP_SYS_NICE,
+            OsConstants.CAP_SYS_RESOURCE,
+            OsConstants.CAP_SYS_TIME,
+            OsConstants.CAP_SYS_TTY_CONFIG
+        );
         /* Hardcoded command line to start the system server */
         String args[] = {
             "--setuid=1000",
             "--setgid=1000",
-            "--setgroups=1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1018,1021,3001,3002,3003,3004,3006,3007,3009",
-            "--capabilities=130104352,130104352",
+            "--setgroups=1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1018,1021,1032,3001,3002,3003,3004,3006,3007,3009",
+            "--capabilities=" + capabilities + "," + capabilities,
             "--runtime-init",
             "--nice-name=system_server",
             "com.android.server.SystemServer",
@@ -520,6 +537,20 @@ public class ZygoteInit {
         return true;
     }
 
+    /**
+     * Gets the bit array representation of the provided list of POSIX capabilities.
+     */
+    private static long posixCapabilitiesAsBits(int... capabilities) {
+        long result = 0;
+        for (int capability : capabilities) {
+            if ((capability < 0) || (capability > OsConstants.CAP_LAST_CAP)) {
+                throw new IllegalArgumentException(String.valueOf(capability));
+            }
+            result |= (1L << capability);
+        }
+        return result;
+    }
+
     public static void main(String argv[]) {
         try {
             // Start profiling the zygote initialization.
@@ -538,6 +569,10 @@ public class ZygoteInit {
             // Do an initial gc to clean up after startup
             gc();
 
+            // Disable tracing so that forked processes do not inherit stale tracing tags from
+            // Zygote.
+            Trace.setTracingEnabled(false);
+
             // If requested, start system server directly from Zygote
             if (argv.length != 2) {
                 throw new RuntimeException(argv[0] + USAGE_STRING);
@@ -551,11 +586,7 @@ public class ZygoteInit {
 
             Log.i(TAG, "Accepting command socket connections");
 
-            if (ZYGOTE_FORK_MODE) {
-                runForkMode();
-            } else {
-                runSelectLoopMode();
-            }
+            runSelectLoop();
 
             closeServerSocket();
         } catch (MethodAndArgsCaller caller) {
@@ -568,44 +599,6 @@ public class ZygoteInit {
     }
 
     /**
-     * Runs the zygote in accept-and-fork mode. In this mode, each peer
-     * gets its own zygote spawner process. This code is retained for
-     * reference only.
-     *
-     * @throws MethodAndArgsCaller in a child process when a main() should
-     * be executed.
-     */
-    private static void runForkMode() throws MethodAndArgsCaller {
-        while (true) {
-            ZygoteConnection peer = acceptCommandPeer();
-
-            int pid;
-
-            pid = Zygote.fork();
-
-            if (pid == 0) {
-                // The child process should handle the peer requests
-
-                // The child does not accept any more connections
-                try {
-                    sServerSocket.close();
-                } catch (IOException ex) {
-                    Log.e(TAG, "Zygote Child: error closing sockets", ex);
-                } finally {
-                    sServerSocket = null;
-                }
-
-                peer.run();
-                break;
-            } else if (pid > 0) {
-                peer.closeSocket();
-            } else {
-                throw new RuntimeException("Error invoking fork()");
-            }
-        }
-    }
-
-    /**
      * Runs the zygote process's select loop. Accepts new connections as
      * they happen, and reads commands from connections one spawn-request's
      * worth at a time.
@@ -613,9 +606,9 @@ public class ZygoteInit {
      * @throws MethodAndArgsCaller in a child process when a main() should
      * be executed.
      */
-    private static void runSelectLoopMode() throws MethodAndArgsCaller {
-        ArrayList<FileDescriptor> fds = new ArrayList();
-        ArrayList<ZygoteConnection> peers = new ArrayList();
+    private static void runSelectLoop() throws MethodAndArgsCaller {
+        ArrayList<FileDescriptor> fds = new ArrayList<FileDescriptor>();
+        ArrayList<ZygoteConnection> peers = new ArrayList<ZygoteConnection>();
         FileDescriptor[] fdArray = new FileDescriptor[4];
 
         fds.add(sServerSocket.getFileDescriptor());
@@ -734,17 +727,6 @@ public class ZygoteInit {
      */
     static native long capgetPermitted(int pid)
             throws IOException;
-
-    /**
-     * Sets the permitted and effective capability sets of this process.
-     *
-     * @param permittedCapabilities permitted set
-     * @param effectiveCapabilities effective set
-     * @throws IOException on error
-     */
-    static native void setCapabilities(
-            long permittedCapabilities,
-            long effectiveCapabilities) throws IOException;
 
     /**
      * Invokes select() on the provider array of file descriptors (selecting

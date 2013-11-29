@@ -1,9 +1,8 @@
 page.title=Building a Dynamic UI with Fragments
+page.tags="fragments", "user interface", "support library"
 
 trainingnavtop=true
 startpage=true
-next.title=Using the Android Support Library
-next.link=support-lib.html
 
 @jd:body
 
@@ -58,9 +57,6 @@ devices running versions as old as Android 1.6.</p>
 <h2>Lessons</h2>
  
 <dl>
-  <dt><b><a href="support-lib.html">Using the Android Support Library</a></b></dt>
-    <dd>Learn how to use more recent framework APIs in earlier versions of Android by bundling
-the Android Support Library into your app.</dd>
   <dt><b><a href="creating.html">Creating a Fragment</a></b></dt>
     <dd>Learn how to build a fragment and implement basic behaviors within its callback
 methods.</dd>

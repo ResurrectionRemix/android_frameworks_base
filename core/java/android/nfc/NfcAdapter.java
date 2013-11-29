@@ -33,6 +33,7 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcF;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -174,32 +175,90 @@ public final class NfcAdapter {
      * Broadcast Action: The state of the local NFC adapter has been
      * changed.
      * <p>For example, NFC has been turned on or off.
-     * <p>Always contains the extra field {@link #EXTRA_STATE}
-     * @hide
+     * <p>Always contains the extra field {@link #EXTRA_ADAPTER_STATE}
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_ADAPTER_STATE_CHANGED =
             "android.nfc.action.ADAPTER_STATE_CHANGED";
 
     /**
-     * Used as an int extra field in {@link #ACTION_STATE_CHANGED}
+     * Used as an int extra field in {@link #ACTION_ADAPTER_STATE_CHANGED}
      * intents to request the current power state. Possible values are:
      * {@link #STATE_OFF},
      * {@link #STATE_TURNING_ON},
      * {@link #STATE_ON},
      * {@link #STATE_TURNING_OFF},
-     * @hide
      */
     public static final String EXTRA_ADAPTER_STATE = "android.nfc.extra.ADAPTER_STATE";
 
-    /** @hide */
     public static final int STATE_OFF = 1;
-    /** @hide */
     public static final int STATE_TURNING_ON = 2;
-    /** @hide */
     public static final int STATE_ON = 3;
-    /** @hide */
     public static final int STATE_TURNING_OFF = 4;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag enables polling for Nfc-A technology.
+     */
+    public static final int FLAG_READER_NFC_A = 0x1;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag enables polling for Nfc-B technology.
+     */
+    public static final int FLAG_READER_NFC_B = 0x2;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag enables polling for Nfc-F technology.
+     */
+    public static final int FLAG_READER_NFC_F = 0x4;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag enables polling for Nfc-V (ISO15693) technology.
+     */
+    public static final int FLAG_READER_NFC_V = 0x8;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag enables polling for NfcBarcode technology.
+     */
+    public static final int FLAG_READER_NFC_BARCODE = 0x10;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag allows the caller to prevent the
+     * platform from performing an NDEF check on the tags it
+     * finds.
+     */
+    public static final int FLAG_READER_SKIP_NDEF_CHECK = 0x80;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag allows the caller to prevent the
+     * platform from playing sounds when it discovers a tag.
+     */
+    public static final int FLAG_READER_NO_PLATFORM_SOUNDS = 0x100;
+
+    /**
+     * Int Extra for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this integer extra allows the calling application to specify
+     * the delay that the platform will use for performing presence checks
+     * on any discovered tag.
+     */
+    public static final String EXTRA_READER_PRESENCE_CHECK_DELAY = "presence";
+
+    /** @hide */
+    public static final int FLAG_NDEF_PUSH_NO_CONFIRM = 0x1;
 
     /** @hide */
     public static final String ACTION_HANDOVER_TRANSFER_STARTED =
@@ -230,6 +289,7 @@ public final class NfcAdapter {
     // recovery
     static INfcAdapter sService;
     static INfcTag sTagService;
+    static INfcCardEmulation sCardEmulationService;
 
     /**
      * The NfcAdapter object for each application context.
@@ -247,6 +307,14 @@ public final class NfcAdapter {
 
     final NfcActivityManager mNfcActivityManager;
     final Context mContext;
+
+    /**
+     * A callback to be invoked when the system has found a tag in
+     * reader mode.
+     */
+    public interface ReaderCallback {
+        public void onTagDiscovered(Tag tag);
+    }
 
     /**
      * A callback to be invoked when the system successfully delivers your {@link NdefMessage}
@@ -348,6 +416,13 @@ public final class NfcAdapter {
                 sTagService = sService.getNfcTagInterface();
             } catch (RemoteException e) {
                 Log.e(TAG, "could not retrieve NFC Tag service");
+                throw new UnsupportedOperationException();
+            }
+
+            try {
+                sCardEmulationService = sService.getNfcCardEmulationInterface();
+            } catch (RemoteException e) {
+                Log.e(TAG, "could not retrieve card emulation service");
                 throw new UnsupportedOperationException();
             }
 
@@ -459,6 +534,15 @@ public final class NfcAdapter {
     }
 
     /**
+     * Returns the binder interface to the card emulation service.
+     * @hide
+     */
+    public INfcCardEmulation getCardEmulationService() {
+        isEnabled();
+        return sCardEmulationService;
+    }
+
+    /**
      * NFC service dead - attempt best effort recovery
      * @hide
      */
@@ -480,6 +564,13 @@ public final class NfcAdapter {
             Log.e(TAG, "could not retrieve NFC tag service during service recovery");
             // nothing more can be done now, sService is still stale, we'll hit
             // this recovery path again later
+            return;
+        }
+
+        try {
+            sCardEmulationService = service.getNfcCardEmulationInterface();
+        } catch (RemoteException ee) {
+            Log.e(TAG, "could not retrieve NFC card emulation service during service recovery");
         }
 
         return;
@@ -802,12 +893,12 @@ public final class NfcAdapter {
             if (activity == null) {
                 throw new NullPointerException("activity cannot be null");
             }
-            mNfcActivityManager.setNdefPushMessage(activity, message);
+            mNfcActivityManager.setNdefPushMessage(activity, message, 0);
             for (Activity a : activities) {
                 if (a == null) {
                     throw new NullPointerException("activities cannot contain null");
                 }
-                mNfcActivityManager.setNdefPushMessage(a, message);
+                mNfcActivityManager.setNdefPushMessage(a, message, 0);
             }
         } catch (IllegalStateException e) {
             if (targetSdkVersion < android.os.Build.VERSION_CODES.JELLY_BEAN) {
@@ -819,6 +910,16 @@ public final class NfcAdapter {
                 throw(e);
             }
         }
+    }
+
+    /**
+     * @hide
+     */
+    public void setNdefPushMessage(NdefMessage message, Activity activity, int flags) {
+        if (activity == null) {
+            throw new NullPointerException("activity cannot be null");
+        }
+        mNfcActivityManager.setNdefPushMessage(activity, message, flags);
     }
 
     /**
@@ -893,12 +994,12 @@ public final class NfcAdapter {
             if (activity == null) {
                 throw new NullPointerException("activity cannot be null");
             }
-            mNfcActivityManager.setNdefPushMessageCallback(activity, callback);
+            mNfcActivityManager.setNdefPushMessageCallback(activity, callback, 0);
             for (Activity a : activities) {
                 if (a == null) {
                     throw new NullPointerException("activities cannot contain null");
                 }
-                mNfcActivityManager.setNdefPushMessageCallback(a, callback);
+                mNfcActivityManager.setNdefPushMessageCallback(a, callback, 0);
             }
         } catch (IllegalStateException e) {
             if (targetSdkVersion < android.os.Build.VERSION_CODES.JELLY_BEAN) {
@@ -910,6 +1011,17 @@ public final class NfcAdapter {
                 throw(e);
             }
         }
+    }
+
+    /**
+     * @hide
+     */
+    public void setNdefPushMessageCallback(CreateNdefMessageCallback callback, Activity activity,
+            int flags) {
+        if (activity == null) {
+            throw new NullPointerException("activity cannot be null");
+        }
+        mNfcActivityManager.setNdefPushMessageCallback(activity, callback, flags);
     }
 
     /**
@@ -1070,6 +1182,43 @@ public final class NfcAdapter {
     }
 
     /**
+     * Limit the NFC controller to reader mode while this Activity is in the foreground.
+     *
+     * <p>In this mode the NFC controller will only act as an NFC tag reader/writer,
+     * thus disabling any peer-to-peer (Android Beam) and card-emulation modes of
+     * the NFC adapter on this device.
+     *
+     * <p>Use {@link #FLAG_READER_SKIP_NDEF_CHECK} to prevent the platform from
+     * performing any NDEF checks in reader mode. Note that this will prevent the
+     * {@link Ndef} tag technology from being enumerated on the tag, and that
+     * NDEF-based tag dispatch will not be functional.
+     *
+     * <p>For interacting with tags that are emulated on another Android device
+     * using Android's host-based card-emulation, the recommended flags are
+     * {@link #FLAG_READER_NFC_A} and {@link #FLAG_READER_SKIP_NDEF_CHECK}.
+     *
+     * @param activity the Activity that requests the adapter to be in reader mode
+     * @param callback the callback to be called when a tag is discovered
+     * @param flags Flags indicating poll technologies and other optional parameters
+     * @param extras Additional extras for configuring reader mode.
+     */
+    public void enableReaderMode(Activity activity, ReaderCallback callback, int flags,
+            Bundle extras) {
+        mNfcActivityManager.enableReaderMode(activity, callback, flags, extras);
+    }
+
+    /**
+     * Restore the NFC adapter to normal mode of operation: supporting
+     * peer-to-peer (Android Beam), card emulation, and polling for
+     * all supported tag technologies.
+     *
+     * @param activity the Activity that currently has reader mode enabled
+     */
+    public void disableReaderMode(Activity activity) {
+        mNfcActivityManager.disableReaderMode(activity);
+    }
+
+    /**
      * Enable NDEF message push over NFC while this Activity is in the foreground.
      *
      * <p>You must explicitly call this method every time the activity is
@@ -1101,7 +1250,7 @@ public final class NfcAdapter {
             throw new NullPointerException();
         }
         enforceResumed(activity);
-        mNfcActivityManager.setNdefPushMessage(activity, message);
+        mNfcActivityManager.setNdefPushMessage(activity, message, 0);
     }
 
     /**
@@ -1129,8 +1278,8 @@ public final class NfcAdapter {
             throw new NullPointerException();
         }
         enforceResumed(activity);
-        mNfcActivityManager.setNdefPushMessage(activity, null);
-        mNfcActivityManager.setNdefPushMessageCallback(activity, null);
+        mNfcActivityManager.setNdefPushMessage(activity, null, 0);
+        mNfcActivityManager.setNdefPushMessageCallback(activity, null, 0);
         mNfcActivityManager.setOnNdefPushCompleteCallback(activity, null);
     }
 

@@ -29,6 +29,7 @@
 #include "jni.h"
 #include <limits.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <android_runtime/Log.h>
 
 #include <utils/Log.h>
 #include <utils/Looper.h>
@@ -176,7 +177,6 @@ public:
     void setSystemUiVisibility(int32_t visibility);
     void setPointerSpeed(int32_t speed);
     void setShowTouches(bool enabled);
-    void setStylusIconEnabled(bool enabled);
 
     /* --- InputReaderPolicyInterface implementation --- */
 
@@ -192,7 +192,8 @@ public:
             uint32_t policyFlags);
     virtual void notifyConfigurationChanged(nsecs_t when);
     virtual nsecs_t notifyANR(const sp<InputApplicationHandle>& inputApplicationHandle,
-            const sp<InputWindowHandle>& inputWindowHandle);
+            const sp<InputWindowHandle>& inputWindowHandle,
+            const String8& reason);
     virtual void notifyInputChannelBroken(const sp<InputWindowHandle>& inputWindowHandle);
     virtual bool filterInputEvent(const InputEvent* inputEvent, uint32_t policyFlags);
     virtual void getDispatcherConfiguration(InputDispatcherConfiguration* outConfig);
@@ -237,9 +238,6 @@ private:
         // Show touches feature enable/disable.
         bool showTouches;
 
-        // Show icon when stylus is used
-        bool stylusIconEnabled;
-
         // Sprite controller singleton, created on first use.
         sp<SpriteController> spriteController;
 
@@ -278,7 +276,6 @@ NativeInputManager::NativeInputManager(jobject contextObj,
         mLocked.pointerSpeed = 0;
         mLocked.pointerGesturesEnabled = true;
         mLocked.showTouches = false;
-        mLocked.stylusIconEnabled = false;
     }
 
     sp<EventHub> eventHub = new EventHub();
@@ -411,11 +408,8 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
 
         outConfig->showTouches = mLocked.showTouches;
 
-        outConfig->stylusIconEnabled = mLocked.stylusIconEnabled;
-
         outConfig->setDisplayInfo(false /*external*/, mLocked.internalViewport);
         outConfig->setDisplayInfo(true /*external*/, mLocked.externalViewport);
-
     } // release lock
 }
 
@@ -561,7 +555,7 @@ void NativeInputManager::notifyConfigurationChanged(nsecs_t when) {
 }
 
 nsecs_t NativeInputManager::notifyANR(const sp<InputApplicationHandle>& inputApplicationHandle,
-        const sp<InputWindowHandle>& inputWindowHandle) {
+        const sp<InputWindowHandle>& inputWindowHandle, const String8& reason) {
 #if DEBUG_INPUT_DISPATCHER_POLICY
     ALOGD("notifyANR");
 #endif
@@ -572,15 +566,18 @@ nsecs_t NativeInputManager::notifyANR(const sp<InputApplicationHandle>& inputApp
             getInputApplicationHandleObjLocalRef(env, inputApplicationHandle);
     jobject inputWindowHandleObj =
             getInputWindowHandleObjLocalRef(env, inputWindowHandle);
+    jstring reasonObj = env->NewStringUTF(reason.string());
 
     jlong newTimeout = env->CallLongMethod(mServiceObj,
-                gServiceClassInfo.notifyANR, inputApplicationHandleObj, inputWindowHandleObj);
+                gServiceClassInfo.notifyANR, inputApplicationHandleObj, inputWindowHandleObj,
+                reasonObj);
     if (checkAndClearExceptionFromCallback(env, "notifyANR")) {
         newTimeout = 0; // abort dispatch
     } else {
         assert(newTimeout >= 0);
     }
 
+    env->DeleteLocalRef(reasonObj);
     env->DeleteLocalRef(inputWindowHandleObj);
     env->DeleteLocalRef(inputApplicationHandleObj);
     return newTimeout;
@@ -734,22 +731,6 @@ void NativeInputManager::setShowTouches(bool enabled) {
 
     mInputManager->getReader()->requestRefreshConfiguration(
             InputReaderConfiguration::CHANGE_SHOW_TOUCHES);
-}
-
-void NativeInputManager::setStylusIconEnabled(bool enabled) {
-    { // acquire lock
-        AutoMutex _l(mLock);
-
-        if (mLocked.stylusIconEnabled == enabled) {
-            return;
-        }
-
-        ALOGI("Setting stylus icon enabled to %s.", enabled ? "enabled" : "disabled");
-        mLocked.stylusIconEnabled = enabled;
-    } // release lock
-
-    mInputManager->getReader()->requestRefreshConfiguration(
-            InputReaderConfiguration::CHANGE_STYLUS_ICON_ENABLED);
 }
 
 bool NativeInputManager::isScreenOn() {
@@ -999,9 +980,14 @@ void NativeInputManager::loadPointerResources(PointerResources* outResources) {
 static jint nativeInit(JNIEnv* env, jclass clazz,
         jobject serviceObj, jobject contextObj, jobject messageQueueObj) {
     sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
+    if (messageQueue == NULL) {
+        jniThrowRuntimeException(env, "MessageQueue is not initialized.");
+        return 0;
+    }
+
     NativeInputManager* im = new NativeInputManager(contextObj, serviceObj,
             messageQueue->getLooper());
-    im->incStrong(serviceObj);
+    im->incStrong(0);
     return reinterpret_cast<jint>(im);
 }
 
@@ -1243,13 +1229,6 @@ static void nativeSetShowTouches(JNIEnv* env,
     im->setShowTouches(enabled);
 }
 
-static void nativeSetStylusIconEnabled(JNIEnv* env,
-        jclass clazz, jint ptr, jboolean enabled) {
-    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
-
-    im->setStylusIconEnabled(enabled);
-}
-
 static void nativeVibrate(JNIEnv* env,
         jclass clazz, jint ptr, jint deviceId, jlongArray patternObj,
         jint repeat, jint token) {
@@ -1355,8 +1334,6 @@ static JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetPointerSpeed },
     { "nativeSetShowTouches", "(IZ)V",
             (void*) nativeSetShowTouches },
-    { "nativeSetStylusIconEnabled", "(IZ)V",
-            (void*) nativeSetStylusIconEnabled },
     { "nativeVibrate", "(II[JII)V",
             (void*) nativeVibrate },
     { "nativeCancelVibrate", "(III)V",
@@ -1407,7 +1384,7 @@ int register_android_server_InputManager(JNIEnv* env) {
 
     GET_METHOD_ID(gServiceClassInfo.notifyANR, clazz,
             "notifyANR",
-            "(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;)J");
+            "(Lcom/android/server/input/InputApplicationHandle;Lcom/android/server/input/InputWindowHandle;Ljava/lang/String;)J");
 
     GET_METHOD_ID(gServiceClassInfo.filterInputEvent, clazz,
             "filterInputEvent", "(Landroid/view/InputEvent;I)Z");

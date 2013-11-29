@@ -53,12 +53,15 @@ abstract class GLES20Layer extends HardwareLayer {
     }
 
     @Override
-    boolean copyInto(Bitmap bitmap) {
+    public boolean copyInto(Bitmap bitmap) {
         return GLES20Canvas.nCopyLayer(mLayer, bitmap.mNativeBitmap);
     }
 
     @Override
-    void destroy() {
+    public void destroy() {
+        if (mDisplayList != null) {
+            mDisplayList.reset();
+        }
         if (mFinalizer != null) {
             mFinalizer.destroy();
             mFinalizer = null;

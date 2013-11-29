@@ -44,26 +44,6 @@ static jclass class_Credentials;
 static jclass class_FileDescriptor;
 static jmethodID method_CredentialsInit;
 
-/*
- * private native FileDescriptor
- * create_native(boolean stream)
- *               throws IOException;
- */
-static jobject
-socket_create (JNIEnv *env, jobject object, jboolean stream)
-{
-    int ret;
-
-    ret = socket(PF_LOCAL, stream ? SOCK_STREAM : SOCK_DGRAM, 0);
-
-    if (ret < 0) {
-        jniThrowIOException(env, errno);
-        return NULL;
-    }
-
-    return jniCreateFileDescriptor(env,ret);
-}
-
 /* private native void connectLocal(FileDescriptor fd,
  * String name, int namespace) throws IOException
  */
@@ -371,7 +351,31 @@ static void socket_setOption(
         return;
     }
 }
+static jint socket_pending (JNIEnv *env, jobject object,
+        jobject fileDescriptor)
+{
+    int fd;
 
+    fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
+
+    if (env->ExceptionOccurred() != NULL) {
+        return (jint)-1;
+    }
+
+    int pending;
+    int ret = ioctl(fd, TIOCOUTQ, &pending);
+
+    // If this were a non-socket fd, there would be other cases to worry
+    // about...
+
+    //ALOGD("socket_pending, ioctl ret:%d, pending:%d", ret, pending);
+    if (ret < 0) {
+        jniThrowIOException(env, errno);
+        return (jint) 0;
+    }
+
+    return (jint)pending;
+}
 static jint socket_available (JNIEnv *env, jobject object,
         jobject fileDescriptor)
 {
@@ -419,32 +423,6 @@ static jint socket_available (JNIEnv *env, jobject object,
 
     return (jint)ret;
 #endif
-}
-
-static void socket_close (JNIEnv *env, jobject object, jobject fileDescriptor)
-{
-    int fd;
-    int err;
-
-    if (fileDescriptor == NULL) {
-        jniThrowNullPointerException(env, NULL);
-        return;
-    }
-
-    fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
-
-    if (env->ExceptionOccurred() != NULL) {
-        return;
-    }
-
-    do {
-        err = close(fd);
-    } while (err < 0 && errno == EINTR);
-
-    if (err < 0) {
-        jniThrowIOException(env, errno);
-        return;
-    }
 }
 
 /**
@@ -885,7 +863,6 @@ static JNINativeMethod gMethods[] = {
      /* name, signature, funcPtr */
     {"getOption_native", "(Ljava/io/FileDescriptor;I)I", (void*)socket_getOption},
     {"setOption_native", "(Ljava/io/FileDescriptor;III)V", (void*)socket_setOption},
-    {"create_native", "(Z)Ljava/io/FileDescriptor;", (void*)socket_create},
     {"connectLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V",
                                                 (void*)socket_connect_local},
     {"bindLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V", (void*)socket_bind_local},
@@ -893,7 +870,7 @@ static JNINativeMethod gMethods[] = {
     {"accept", "(Ljava/io/FileDescriptor;Landroid/net/LocalSocketImpl;)Ljava/io/FileDescriptor;", (void*)socket_accept},
     {"shutdown", "(Ljava/io/FileDescriptor;Z)V", (void*)socket_shutdown},
     {"available_native", "(Ljava/io/FileDescriptor;)I", (void*) socket_available},
-    {"close_native", "(Ljava/io/FileDescriptor;)V", (void*) socket_close},
+    {"pending_native", "(Ljava/io/FileDescriptor;)I", (void*) socket_pending},
     {"read_native", "(Ljava/io/FileDescriptor;)I", (void*) socket_read},
     {"readba_native", "([BIILjava/io/FileDescriptor;)I", (void*) socket_readba},
     {"writeba_native", "([BIILjava/io/FileDescriptor;)V", (void*) socket_writeba},

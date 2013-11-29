@@ -15,12 +15,11 @@ LOCAL_SRC_FILES := \
 
 LOCAL_CFLAGS := -Wall -Werror
 
-#LOCAL_C_INCLUDES +=
-
 LOCAL_STATIC_LIBRARIES := \
-	libandroidfw \
+	libinput \
 	libutils \
-	libcutils
+	libcutils \
+	liblog
 
 ifeq ($(HOST_OS),linux)
 LOCAL_LDLIBS += -ldl -lpthread

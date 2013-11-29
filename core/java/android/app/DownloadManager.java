@@ -16,6 +16,8 @@
 
 package android.app;
 
+import android.annotation.SdkConstant;
+import android.annotation.SdkConstant.SdkConstantType;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -150,6 +152,11 @@ public class DownloadManager {
     public static final String COLUMN_MEDIAPROVIDER_URI = Downloads.Impl.COLUMN_MEDIAPROVIDER_URI;
 
     /**
+     * @hide
+     */
+    public final static String COLUMN_ALLOW_WRITE = Downloads.Impl.COLUMN_ALLOW_WRITE;
+
+    /**
      * Value of {@link #COLUMN_STATUS} when the download is waiting to start.
      */
     public final static int STATUS_PENDING = 1 << 0;
@@ -262,18 +269,21 @@ public class DownloadManager {
     /**
      * Broadcast intent action sent by the download manager when a download completes.
      */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public final static String ACTION_DOWNLOAD_COMPLETE = "android.intent.action.DOWNLOAD_COMPLETE";
 
     /**
      * Broadcast intent action sent by the download manager when the user clicks on a running
      * download, either from a system notification or from the downloads UI.
      */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public final static String ACTION_NOTIFICATION_CLICKED =
             "android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED";
 
     /**
      * Intent action to launch an activity to display all downloads.
      */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public final static String ACTION_VIEW_DOWNLOADS = "android.intent.action.VIEW_DOWNLOADS";
 
     /**
@@ -315,6 +325,7 @@ public class DownloadManager {
         Downloads.Impl.COLUMN_TOTAL_BYTES + " AS " + COLUMN_TOTAL_SIZE_BYTES,
         Downloads.Impl.COLUMN_LAST_MODIFICATION + " AS " + COLUMN_LAST_MODIFIED_TIMESTAMP,
         Downloads.Impl.COLUMN_CURRENT_BYTES + " AS " + COLUMN_BYTES_DOWNLOADED_SO_FAR,
+        Downloads.Impl.COLUMN_ALLOW_WRITE,
         /* add the following 'computed' columns to the cursor.
          * they are not 'returned' by the database, but their inclusion
          * eliminates need to have lot of methods in CursorTranslator
@@ -461,45 +472,69 @@ public class DownloadManager {
         }
 
         /**
-         * Set the local destination for the downloaded file to a path within the application's
-         * external files directory (as returned by {@link Context#getExternalFilesDir(String)}.
+         * Set the local destination for the downloaded file to a path within
+         * the application's external files directory (as returned by
+         * {@link Context#getExternalFilesDir(String)}.
          * <p>
-         * The downloaded file is not scanned by MediaScanner.
-         * But it can be made scannable by calling {@link #allowScanningByMediaScanner()}.
+         * The downloaded file is not scanned by MediaScanner. But it can be
+         * made scannable by calling {@link #allowScanningByMediaScanner()}.
          *
-         * @param context the {@link Context} to use in determining the external files directory
-         * @param dirType the directory type to pass to {@link Context#getExternalFilesDir(String)}
-         * @param subPath the path within the external directory, including the destination filename
+         * @param context the {@link Context} to use in determining the external
+         *            files directory
+         * @param dirType the directory type to pass to
+         *            {@link Context#getExternalFilesDir(String)}
+         * @param subPath the path within the external directory, including the
+         *            destination filename
          * @return this object
+         * @throws IllegalStateException If the external storage directory
+         *             cannot be found or created.
          */
         public Request setDestinationInExternalFilesDir(Context context, String dirType,
                 String subPath) {
-            setDestinationFromBase(context.getExternalFilesDir(dirType), subPath);
-            return this;
-        }
-
-        /**
-         * Set the local destination for the downloaded file to a path within the public external
-         * storage directory (as returned by
-         * {@link Environment#getExternalStoragePublicDirectory(String)}.
-         *<p>
-         * The downloaded file is not scanned by MediaScanner.
-         * But it can be made scannable by calling {@link #allowScanningByMediaScanner()}.
-         *
-         * @param dirType the directory type to pass to
-         *        {@link Environment#getExternalStoragePublicDirectory(String)}
-         * @param subPath the path within the external directory, including the destination filename
-         * @return this object
-         */
-        public Request setDestinationInExternalPublicDir(String dirType, String subPath) {
-            File file = Environment.getExternalStoragePublicDirectory(dirType);
-            if (file.exists()) {
+            final File file = context.getExternalFilesDir(dirType);
+            if (file == null) {
+                throw new IllegalStateException("Failed to get external storage files directory");
+            } else if (file.exists()) {
                 if (!file.isDirectory()) {
                     throw new IllegalStateException(file.getAbsolutePath() +
                             " already exists and is not a directory");
                 }
             } else {
-                if (!file.mkdir()) {
+                if (!file.mkdirs()) {
+                    throw new IllegalStateException("Unable to create directory: "+
+                            file.getAbsolutePath());
+                }
+            }
+            setDestinationFromBase(file, subPath);
+            return this;
+        }
+
+        /**
+         * Set the local destination for the downloaded file to a path within
+         * the public external storage directory (as returned by
+         * {@link Environment#getExternalStoragePublicDirectory(String)}).
+         * <p>
+         * The downloaded file is not scanned by MediaScanner. But it can be
+         * made scannable by calling {@link #allowScanningByMediaScanner()}.
+         *
+         * @param dirType the directory type to pass to {@link Environment#getExternalStoragePublicDirectory(String)}
+         * @param subPath the path within the external directory, including the
+         *            destination filename
+         * @return this object
+         * @throws IllegalStateException If the external storage directory
+         *             cannot be found or created.
+         */
+        public Request setDestinationInExternalPublicDir(String dirType, String subPath) {
+            File file = Environment.getExternalStoragePublicDirectory(dirType);
+            if (file == null) {
+                throw new IllegalStateException("Failed to get external storage public directory");
+            } else if (file.exists()) {
+                if (!file.isDirectory()) {
+                    throw new IllegalStateException(file.getAbsolutePath() +
+                            " already exists and is not a directory");
+                }
+            } else {
+                if (!file.mkdirs()) {
                     throw new IllegalStateException("Unable to create directory: "+
                             file.getAbsolutePath());
                 }
@@ -1085,6 +1120,7 @@ public class DownloadManager {
         values.put(Downloads.Impl.COLUMN_TOTAL_BYTES, -1);
         values.putNull(Downloads.Impl._DATA);
         values.put(Downloads.Impl.COLUMN_STATUS, Downloads.Impl.STATUS_PENDING);
+        values.put(Downloads.Impl.COLUMN_FAILED_CONNECTIONS, 0);
         mResolver.update(mBaseUri, values, getWhereClauseForIds(ids), getWhereArgsForIds(ids));
     }
 
@@ -1160,6 +1196,14 @@ public class DownloadManager {
     public long addCompletedDownload(String title, String description,
             boolean isMediaScannerScannable, String mimeType, String path, long length,
             boolean showNotification) {
+        return addCompletedDownload(title, description, isMediaScannerScannable, mimeType, path,
+                length, showNotification, false);
+    }
+
+    /** {@hide} */
+    public long addCompletedDownload(String title, String description,
+            boolean isMediaScannerScannable, String mimeType, String path, long length,
+            boolean showNotification, boolean allowWrite) {
         // make sure the input args are non-null/non-zero
         validateArgumentIsNonEmpty("title", title);
         validateArgumentIsNonEmpty("description", description);
@@ -1185,12 +1229,14 @@ public class DownloadManager {
                         Request.SCANNABLE_VALUE_NO);
         values.put(Downloads.Impl.COLUMN_VISIBILITY, (showNotification) ?
                 Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION : Request.VISIBILITY_HIDDEN);
+        values.put(Downloads.Impl.COLUMN_ALLOW_WRITE, allowWrite ? 1 : 0);
         Uri downloadUri = mResolver.insert(Downloads.Impl.CONTENT_URI, values);
         if (downloadUri == null) {
             return -1;
         }
         return Long.parseLong(downloadUri.getLastPathSegment());
     }
+
     private static final String NON_DOWNLOADMANAGER_DOWNLOAD =
             "non-dwnldmngr-download-dont-retry2download";
 
@@ -1202,8 +1248,10 @@ public class DownloadManager {
 
     /**
      * Get the DownloadProvider URI for the download with the given ID.
+     *
+     * @hide
      */
-    Uri getDownloadUri(long id) {
+    public Uri getDownloadUri(long id) {
         return ContentUris.withAppendedId(mBaseUri, id);
     }
 

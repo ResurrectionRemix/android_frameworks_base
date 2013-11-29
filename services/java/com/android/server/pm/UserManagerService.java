@@ -21,15 +21,19 @@ import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
+import android.app.ActivityThread;
 import android.app.IStopUserCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.UserInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Handler;
@@ -39,12 +43,14 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.util.AtomicFile;
+import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.TimeUtils;
 import android.util.Xml;
 
+import com.android.internal.content.PackageMonitor;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FastXmlSerializer;
 
@@ -60,6 +66,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,22 +84,46 @@ public class UserManagerService extends IUserManager.Stub {
     private static final String ATTR_ID = "id";
     private static final String ATTR_CREATION_TIME = "created";
     private static final String ATTR_LAST_LOGGED_IN_TIME = "lastLoggedIn";
+    private static final String ATTR_SALT = "salt";
+    private static final String ATTR_PIN_HASH = "pinHash";
+    private static final String ATTR_FAILED_ATTEMPTS = "failedAttempts";
+    private static final String ATTR_LAST_RETRY_MS = "lastAttemptMs";
     private static final String ATTR_SERIAL_NO = "serialNumber";
     private static final String ATTR_NEXT_SERIAL_NO = "nextSerialNumber";
     private static final String ATTR_PARTIAL = "partial";
     private static final String ATTR_USER_VERSION = "version";
     private static final String TAG_USERS = "users";
     private static final String TAG_USER = "user";
+    private static final String TAG_RESTRICTIONS = "restrictions";
+    private static final String TAG_ENTRY = "entry";
+    private static final String TAG_VALUE = "value";
+    private static final String ATTR_KEY = "key";
+    private static final String ATTR_VALUE_TYPE = "type";
+    private static final String ATTR_MULTIPLE = "m";
+
+    private static final String ATTR_TYPE_STRING_ARRAY = "sa";
+    private static final String ATTR_TYPE_STRING = "s";
+    private static final String ATTR_TYPE_BOOLEAN = "b";
 
     private static final String USER_INFO_DIR = "system" + File.separator + "users";
     private static final String USER_LIST_FILENAME = "userlist.xml";
     private static final String USER_PHOTO_FILENAME = "photo.png";
 
+    private static final String RESTRICTIONS_FILE_PREFIX = "res_";
+    private static final String XML_SUFFIX = ".xml";
+
     private static final int MIN_USER_ID = 10;
 
-    private static final int USER_VERSION = 2;
+    private static final int USER_VERSION = 4;
 
     private static final long EPOCH_PLUS_30_YEARS = 30L * 365 * 24 * 60 * 60 * 1000L; // ms
+
+    // Number of attempts before jumping to the next BACKOFF_TIMES slot
+    private static final int BACKOFF_INC_INTERVAL = 5;
+
+    // Amount of time to force the user to wait before entering the PIN again, after failing
+    // BACKOFF_INC_INTERVAL times.
+    private static final int[] BACKOFF_TIMES = { 0, 30*1000, 60*1000, 5*60*1000, 30*60*1000 };
 
     private final Context mContext;
     private final PackageManagerService mPm;
@@ -104,6 +137,17 @@ public class UserManagerService extends IUserManager.Stub {
     private final File mBaseUserPath;
 
     private final SparseArray<UserInfo> mUsers = new SparseArray<UserInfo>();
+    private final SparseArray<Bundle> mUserRestrictions = new SparseArray<Bundle>();
+
+    class RestrictionsPinState {
+        long salt;
+        String pinHash;
+        int failedAttempts;
+        long lastAttemptTime;
+    }
+
+    private final SparseArray<RestrictionsPinState> mRestrictionsPinStates =
+            new SparseArray<RestrictionsPinState>();
 
     /**
      * Set of user IDs being actively removed. Removed IDs linger in this set
@@ -188,6 +232,13 @@ public class UserManagerService extends IUserManager.Stub {
         }
     }
 
+    void systemReady() {
+        final Context context = ActivityThread.systemMain().getSystemContext();
+        mUserPackageMonitor.register(context,
+                null, UserHandle.ALL, false);
+        userForeground(UserHandle.USER_OWNER);
+    }
+
     @Override
     public List<UserInfo> getUsers(boolean excludeDying) {
         checkManageUsersPermission("query users");
@@ -211,6 +262,13 @@ public class UserManagerService extends IUserManager.Stub {
         checkManageUsersPermission("query user");
         synchronized (mPackagesLock) {
             return getUserInfoLocked(userId);
+        }
+    }
+
+    @Override
+    public boolean isRestricted() {
+        synchronized (mPackagesLock) {
+            return getUserInfoLocked(UserHandle.getCallingUserId()).isRestricted();
         }
     }
 
@@ -273,7 +331,7 @@ public class UserManagerService extends IUserManager.Stub {
         Intent changedIntent = new Intent(Intent.ACTION_USER_INFO_CHANGED);
         changedIntent.putExtra(Intent.EXTRA_USER_HANDLE, userId);
         changedIntent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
-        mContext.sendBroadcastAsUser(changedIntent, new UserHandle(userId));
+        mContext.sendBroadcastAsUser(changedIntent, UserHandle.ALL);
     }
 
     @Override
@@ -343,6 +401,28 @@ public class UserManagerService extends IUserManager.Stub {
         }
     }
 
+    @Override
+    public Bundle getUserRestrictions(int userId) {
+        // checkManageUsersPermission("getUserRestrictions");
+
+        synchronized (mPackagesLock) {
+            Bundle restrictions = mUserRestrictions.get(userId);
+            return restrictions != null ? restrictions : Bundle.EMPTY;
+        }
+    }
+
+    @Override
+    public void setUserRestrictions(Bundle restrictions, int userId) {
+        checkManageUsersPermission("setUserRestrictions");
+        if (restrictions == null) return;
+
+        synchronized (mPackagesLock) {
+            mUserRestrictions.get(userId).clear();
+            mUserRestrictions.get(userId).putAll(restrictions);
+            writeUserLocked(mUsers.get(userId));
+        }
+    }
+
     /**
      * Check if we've hit the limit of how many users can be created.
      */
@@ -409,12 +489,6 @@ public class UserManagerService extends IUserManager.Stub {
         return mUserIds;
     }
 
-    private void readUserList() {
-        synchronized (mPackagesLock) {
-            readUserListLocked();
-        }
-    }
-
     private void readUserListLocked() {
         mGuestEnabled = false;
         if (!mUserListFile.exists()) {
@@ -454,7 +528,7 @@ public class UserManagerService extends IUserManager.Stub {
             while ((type = parser.next()) != XmlPullParser.END_DOCUMENT) {
                 if (type == XmlPullParser.START_TAG && parser.getName().equals(TAG_USER)) {
                     String id = parser.getAttributeValue(null, ATTR_ID);
-                    UserInfo user = readUser(Integer.parseInt(id));
+                    UserInfo user = readUserLocked(Integer.parseInt(id));
 
                     if (user != null) {
                         mUsers.put(user.id, user);
@@ -468,7 +542,7 @@ public class UserManagerService extends IUserManager.Stub {
                 }
             }
             updateUserIdsLocked();
-            upgradeIfNecessary();
+            upgradeIfNecessaryLocked();
         } catch (IOException ioe) {
             fallbackToSingleUserLocked();
         } catch (XmlPullParserException pe) {
@@ -486,7 +560,7 @@ public class UserManagerService extends IUserManager.Stub {
     /**
      * Upgrade steps between versions, either for fixing bugs or changing the data format.
      */
-    private void upgradeIfNecessary() {
+    private void upgradeIfNecessaryLocked() {
         int userVersion = mUserVersion;
         if (userVersion < 1) {
             // Assign a proper name for the owner, if not initialized correctly before
@@ -508,6 +582,11 @@ public class UserManagerService extends IUserManager.Stub {
             userVersion = 2;
         }
 
+
+        if (userVersion < 4) {
+            userVersion = 4;
+        }
+
         if (userVersion < USER_VERSION) {
             Slog.w(LOG_TAG, "User version " + mUserVersion + " didn't upgrade as expected to "
                     + USER_VERSION);
@@ -519,11 +598,16 @@ public class UserManagerService extends IUserManager.Stub {
 
     private void fallbackToSingleUserLocked() {
         // Create the primary user
-        UserInfo primary = new UserInfo(0,
+        UserInfo primary = new UserInfo(UserHandle.USER_OWNER,
                 mContext.getResources().getString(com.android.internal.R.string.owner_name), null,
                 UserInfo.FLAG_ADMIN | UserInfo.FLAG_PRIMARY | UserInfo.FLAG_INITIALIZED);
         mUsers.put(0, primary);
         mNextSerialNumber = MIN_USER_ID;
+        mUserVersion = USER_VERSION;
+
+        Bundle restrictions = new Bundle();
+        mUserRestrictions.append(UserHandle.USER_OWNER, restrictions);
+
         updateUserIdsLocked();
 
         writeUserListLocked();
@@ -539,7 +623,7 @@ public class UserManagerService extends IUserManager.Stub {
      */
     private void writeUserLocked(UserInfo userInfo) {
         FileOutputStream fos = null;
-        AtomicFile userFile = new AtomicFile(new File(mUsersDir, userInfo.id + ".xml"));
+        AtomicFile userFile = new AtomicFile(new File(mUsersDir, userInfo.id + XML_SUFFIX));
         try {
             fos = userFile.startWrite();
             final BufferedOutputStream bos = new BufferedOutputStream(fos);
@@ -557,6 +641,21 @@ public class UserManagerService extends IUserManager.Stub {
             serializer.attribute(null, ATTR_CREATION_TIME, Long.toString(userInfo.creationTime));
             serializer.attribute(null, ATTR_LAST_LOGGED_IN_TIME,
                     Long.toString(userInfo.lastLoggedInTime));
+            RestrictionsPinState pinState = mRestrictionsPinStates.get(userInfo.id);
+            if (pinState != null) {
+                if (pinState.salt != 0) {
+                    serializer.attribute(null, ATTR_SALT, Long.toString(pinState.salt));
+                }
+                if (pinState.pinHash != null) {
+                    serializer.attribute(null, ATTR_PIN_HASH, pinState.pinHash);
+                }
+                if (pinState.failedAttempts != 0) {
+                    serializer.attribute(null, ATTR_FAILED_ATTEMPTS,
+                            Integer.toString(pinState.failedAttempts));
+                    serializer.attribute(null, ATTR_LAST_RETRY_MS,
+                            Long.toString(pinState.lastAttemptTime));
+                }
+            }
             if (userInfo.iconPath != null) {
                 serializer.attribute(null,  ATTR_ICON_PATH, userInfo.iconPath);
             }
@@ -568,6 +667,22 @@ public class UserManagerService extends IUserManager.Stub {
             serializer.text(userInfo.name);
             serializer.endTag(null, TAG_NAME);
 
+            Bundle restrictions = mUserRestrictions.get(userInfo.id);
+            if (restrictions != null) {
+                serializer.startTag(null, TAG_RESTRICTIONS);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_CONFIG_WIFI);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_MODIFY_ACCOUNTS);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_INSTALL_APPS);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_UNINSTALL_APPS);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_SHARE_LOCATION);
+                writeBoolean(serializer, restrictions,
+                        UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_CONFIG_BLUETOOTH);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_USB_FILE_TRANSFER);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_CONFIG_CREDENTIALS);
+                writeBoolean(serializer, restrictions, UserManager.DISALLOW_REMOVE_USER);
+                serializer.endTag(null, TAG_RESTRICTIONS);
+            }
             serializer.endTag(null, TAG_USER);
 
             serializer.endDocument();
@@ -620,19 +735,24 @@ public class UserManagerService extends IUserManager.Stub {
         }
     }
 
-    private UserInfo readUser(int id) {
+    private UserInfo readUserLocked(int id) {
         int flags = 0;
         int serialNumber = id;
         String name = null;
         String iconPath = null;
         long creationTime = 0L;
         long lastLoggedInTime = 0L;
+        long salt = 0L;
+        String pinHash = null;
+        int failedAttempts = 0;
+        long lastAttemptTime = 0L;
         boolean partial = false;
+        Bundle restrictions = new Bundle();
 
         FileInputStream fis = null;
         try {
             AtomicFile userFile =
-                    new AtomicFile(new File(mUsersDir, Integer.toString(id) + ".xml"));
+                    new AtomicFile(new File(mUsersDir, Integer.toString(id) + XML_SUFFIX));
             fis = userFile.openRead();
             XmlPullParser parser = Xml.newPullParser();
             parser.setInput(fis, null);
@@ -658,18 +778,39 @@ public class UserManagerService extends IUserManager.Stub {
                 iconPath = parser.getAttributeValue(null, ATTR_ICON_PATH);
                 creationTime = readLongAttribute(parser, ATTR_CREATION_TIME, 0);
                 lastLoggedInTime = readLongAttribute(parser, ATTR_LAST_LOGGED_IN_TIME, 0);
+                salt = readLongAttribute(parser, ATTR_SALT, 0L);
+                pinHash = parser.getAttributeValue(null, ATTR_PIN_HASH);
+                failedAttempts = readIntAttribute(parser, ATTR_FAILED_ATTEMPTS, 0);
+                lastAttemptTime = readLongAttribute(parser, ATTR_LAST_RETRY_MS, 0L);
                 String valueString = parser.getAttributeValue(null, ATTR_PARTIAL);
                 if ("true".equals(valueString)) {
                     partial = true;
                 }
 
-                while ((type = parser.next()) != XmlPullParser.START_TAG
-                        && type != XmlPullParser.END_DOCUMENT) {
-                }
-                if (type == XmlPullParser.START_TAG && parser.getName().equals(TAG_NAME)) {
-                    type = parser.next();
-                    if (type == XmlPullParser.TEXT) {
-                        name = parser.getText();
+                int outerDepth = parser.getDepth();
+                while ((type = parser.next()) != XmlPullParser.END_DOCUMENT
+                       && (type != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
+                    if (type == XmlPullParser.END_TAG || type == XmlPullParser.TEXT) {
+                        continue;
+                    }
+                    String tag = parser.getName();
+                    if (TAG_NAME.equals(tag)) {
+                        type = parser.next();
+                        if (type == XmlPullParser.TEXT) {
+                            name = parser.getText();
+                        }
+                    } else if (TAG_RESTRICTIONS.equals(tag)) {
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_CONFIG_WIFI);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_MODIFY_ACCOUNTS);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_INSTALL_APPS);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_UNINSTALL_APPS);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_SHARE_LOCATION);
+                        readBoolean(parser, restrictions,
+                                UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_CONFIG_BLUETOOTH);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_USB_FILE_TRANSFER);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_CONFIG_CREDENTIALS);
+                        readBoolean(parser, restrictions, UserManager.DISALLOW_REMOVE_USER);
                     }
                 }
             }
@@ -679,6 +820,18 @@ public class UserManagerService extends IUserManager.Stub {
             userInfo.creationTime = creationTime;
             userInfo.lastLoggedInTime = lastLoggedInTime;
             userInfo.partial = partial;
+            mUserRestrictions.append(id, restrictions);
+            if (salt != 0L) {
+                RestrictionsPinState pinState = mRestrictionsPinStates.get(id);
+                if (pinState == null) {
+                    pinState = new RestrictionsPinState();
+                    mRestrictionsPinStates.put(id, pinState);
+                }
+                pinState.salt = salt;
+                pinState.pinHash = pinHash;
+                pinState.failedAttempts = failedAttempts;
+                pinState.lastAttemptTime = lastAttemptTime;
+            }
             return userInfo;
 
         } catch (IOException ioe) {
@@ -692,6 +845,22 @@ public class UserManagerService extends IUserManager.Stub {
             }
         }
         return null;
+    }
+
+    private void readBoolean(XmlPullParser parser, Bundle restrictions,
+            String restrictionKey) {
+        String value = parser.getAttributeValue(null, restrictionKey);
+        if (value != null) {
+            restrictions.putBoolean(restrictionKey, Boolean.parseBoolean(value));
+        }
+    }
+
+    private void writeBoolean(XmlSerializer xml, Bundle restrictions, String restrictionKey)
+            throws IOException {
+        if (restrictions.containsKey(restrictionKey)) {
+            xml.attribute(null, restrictionKey,
+                    Boolean.toString(restrictions.getBoolean(restrictionKey)));
+        }
     }
 
     private int readIntAttribute(XmlPullParser parser, String attr, int defaultValue) {
@@ -711,6 +880,57 @@ public class UserManagerService extends IUserManager.Stub {
             return Long.parseLong(valueString);
         } catch (NumberFormatException nfe) {
             return defaultValue;
+        }
+    }
+
+    private boolean isPackageInstalled(String pkg, int userId) {
+        final ApplicationInfo info = mPm.getApplicationInfo(pkg,
+                PackageManager.GET_UNINSTALLED_PACKAGES,
+                userId);
+        if (info == null || (info.flags&ApplicationInfo.FLAG_INSTALLED) == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Removes all the restrictions files (res_<packagename>) for a given user, if all is true,
+     * else removes only those packages that have been uninstalled.
+     * Does not do any permissions checking.
+     */
+    private void cleanAppRestrictions(int userId, boolean all) {
+        synchronized (mPackagesLock) {
+            File dir = Environment.getUserSystemDirectory(userId);
+            String[] files = dir.list();
+            if (files == null) return;
+            for (String fileName : files) {
+                if (fileName.startsWith(RESTRICTIONS_FILE_PREFIX)) {
+                    File resFile = new File(dir, fileName);
+                    if (resFile.exists()) {
+                        if (all) {
+                            resFile.delete();
+                        } else {
+                            String pkg = restrictionsFileNameToPackage(fileName);
+                            if (!isPackageInstalled(pkg, userId)) {
+                                resFile.delete();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Removes the app restrictions file for a specific package and user id, if it exists.
+     */
+    private void cleanAppRestrictionsForPackage(String pkg, int userId) {
+        synchronized (mPackagesLock) {
+            File dir = Environment.getUserSystemDirectory(userId);
+            File resFile = new File(dir, packageToRestrictionsFileName(pkg));
+            if (resFile.exists()) {
+                resFile.delete();
+            }
         }
     }
 
@@ -739,6 +959,8 @@ public class UserManagerService extends IUserManager.Stub {
                     userInfo.partial = false;
                     writeUserLocked(userInfo);
                     updateUserIdsLocked();
+                    Bundle restrictions = new Bundle();
+                    mUserRestrictions.append(userId, restrictions);
                 }
             }
             if (userInfo != null) {
@@ -849,8 +1071,9 @@ public class UserManagerService extends IUserManager.Stub {
             }
         }, MINUTE_IN_MILLIS);
 
+        mRestrictionsPinStates.remove(userHandle);
         // Remove user file
-        AtomicFile userFile = new AtomicFile(new File(mUsersDir, userHandle + ".xml"));
+        AtomicFile userFile = new AtomicFile(new File(mUsersDir, userHandle + XML_SUFFIX));
         userFile.delete();
         // Update the user list
         writeUserListLocked();
@@ -867,6 +1090,330 @@ public class UserManagerService extends IUserManager.Stub {
             }
         }
         parent.delete();
+    }
+
+    @Override
+    public Bundle getApplicationRestrictions(String packageName) {
+        return getApplicationRestrictionsForUser(packageName, UserHandle.getCallingUserId());
+    }
+
+    @Override
+    public Bundle getApplicationRestrictionsForUser(String packageName, int userId) {
+        if (UserHandle.getCallingUserId() != userId
+                || !UserHandle.isSameApp(Binder.getCallingUid(), getUidForPackage(packageName))) {
+            checkManageUsersPermission("Only system can get restrictions for other users/apps");
+        }
+        synchronized (mPackagesLock) {
+            // Read the restrictions from XML
+            return readApplicationRestrictionsLocked(packageName, userId);
+        }
+    }
+
+    @Override
+    public void setApplicationRestrictions(String packageName, Bundle restrictions,
+            int userId) {
+        if (UserHandle.getCallingUserId() != userId
+                || !UserHandle.isSameApp(Binder.getCallingUid(), getUidForPackage(packageName))) {
+            checkManageUsersPermission("Only system can set restrictions for other users/apps");
+        }
+        synchronized (mPackagesLock) {
+            // Write the restrictions to XML
+            writeApplicationRestrictionsLocked(packageName, restrictions, userId);
+        }
+    }
+
+    @Override
+    public boolean setRestrictionsChallenge(String newPin) {
+        checkManageUsersPermission("Only system can modify the restrictions pin");
+        int userId = UserHandle.getCallingUserId();
+        synchronized (mPackagesLock) {
+            RestrictionsPinState pinState = mRestrictionsPinStates.get(userId);
+            if (pinState == null) {
+                pinState = new RestrictionsPinState();
+            }
+            if (newPin == null) {
+                pinState.salt = 0;
+                pinState.pinHash = null;
+            } else {
+                try {
+                    pinState.salt = SecureRandom.getInstance("SHA1PRNG").nextLong();
+                } catch (NoSuchAlgorithmException e) {
+                    pinState.salt = (long) (Math.random() * Long.MAX_VALUE);
+                }
+                pinState.pinHash = passwordToHash(newPin, pinState.salt);
+                pinState.failedAttempts = 0;
+            }
+            mRestrictionsPinStates.put(userId, pinState);
+            writeUserLocked(mUsers.get(userId));
+        }
+        return true;
+    }
+
+    @Override
+    public int checkRestrictionsChallenge(String pin) {
+        checkManageUsersPermission("Only system can verify the restrictions pin");
+        int userId = UserHandle.getCallingUserId();
+        synchronized (mPackagesLock) {
+            RestrictionsPinState pinState = mRestrictionsPinStates.get(userId);
+            // If there's no pin set, return error code
+            if (pinState == null || pinState.salt == 0 || pinState.pinHash == null) {
+                return UserManager.PIN_VERIFICATION_FAILED_NOT_SET;
+            } else if (pin == null) {
+                // If just checking if user can be prompted, return remaining time
+                int waitTime = getRemainingTimeForPinAttempt(pinState);
+                Slog.d(LOG_TAG, "Remaining waittime peek=" + waitTime);
+                return waitTime;
+            } else {
+                int waitTime = getRemainingTimeForPinAttempt(pinState);
+                Slog.d(LOG_TAG, "Remaining waittime=" + waitTime);
+                if (waitTime > 0) {
+                    return waitTime;
+                }
+                if (passwordToHash(pin, pinState.salt).equals(pinState.pinHash)) {
+                    pinState.failedAttempts = 0;
+                    writeUserLocked(mUsers.get(userId));
+                    return UserManager.PIN_VERIFICATION_SUCCESS;
+                } else {
+                    pinState.failedAttempts++;
+                    pinState.lastAttemptTime = System.currentTimeMillis();
+                    writeUserLocked(mUsers.get(userId));
+                    return waitTime;
+                }
+            }
+        }
+    }
+
+    private int getRemainingTimeForPinAttempt(RestrictionsPinState pinState) {
+        int backoffIndex = Math.min(pinState.failedAttempts / BACKOFF_INC_INTERVAL,
+                BACKOFF_TIMES.length - 1);
+        int backoffTime = (pinState.failedAttempts % BACKOFF_INC_INTERVAL) == 0 ?
+                BACKOFF_TIMES[backoffIndex] : 0;
+        return (int) Math.max(backoffTime + pinState.lastAttemptTime - System.currentTimeMillis(),
+                0);
+    }
+
+    @Override
+    public boolean hasRestrictionsChallenge() {
+        int userId = UserHandle.getCallingUserId();
+        synchronized (mPackagesLock) {
+            return hasRestrictionsPinLocked(userId);
+        }
+    }
+
+    private boolean hasRestrictionsPinLocked(int userId) {
+        RestrictionsPinState pinState = mRestrictionsPinStates.get(userId);
+        if (pinState == null || pinState.salt == 0 || pinState.pinHash == null) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void removeRestrictions() {
+        checkManageUsersPermission("Only system can remove restrictions");
+        final int userHandle = UserHandle.getCallingUserId();
+        removeRestrictionsForUser(userHandle, true);
+    }
+
+    private void removeRestrictionsForUser(final int userHandle, boolean unblockApps) {
+        synchronized (mPackagesLock) {
+            // Remove all user restrictions
+            setUserRestrictions(new Bundle(), userHandle);
+            // Remove restrictions pin
+            setRestrictionsChallenge(null);
+            // Remove any app restrictions
+            cleanAppRestrictions(userHandle, true);
+        }
+        if (unblockApps) {
+            unblockAllAppsForUser(userHandle);
+        }
+    }
+
+    private void unblockAllAppsForUser(final int userHandle) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                List<ApplicationInfo> apps =
+                        mPm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES,
+                                userHandle).getList();
+                final long ident = Binder.clearCallingIdentity();
+                try {
+                    for (ApplicationInfo appInfo : apps) {
+                        if ((appInfo.flags & ApplicationInfo.FLAG_INSTALLED) != 0
+                                && (appInfo.flags & ApplicationInfo.FLAG_BLOCKED) != 0) {
+                            mPm.setApplicationBlockedSettingAsUser(appInfo.packageName, false,
+                                    userHandle);
+                        }
+                    }
+                } finally {
+                    Binder.restoreCallingIdentity(ident);
+                }
+            }
+        });
+    }
+
+    /*
+     * Generate a hash for the given password. To avoid brute force attacks, we use a salted hash.
+     * Not the most secure, but it is at least a second level of protection. First level is that
+     * the file is in a location only readable by the system process.
+     * @param password the password.
+     * @param salt the randomly generated salt
+     * @return the hash of the pattern in a String.
+     */
+    private String passwordToHash(String password, long salt) {
+        if (password == null) {
+            return null;
+        }
+        String algo = null;
+        String hashed = salt + password;
+        try {
+            byte[] saltedPassword = (password + salt).getBytes();
+            byte[] sha1 = MessageDigest.getInstance(algo = "SHA-1").digest(saltedPassword);
+            byte[] md5 = MessageDigest.getInstance(algo = "MD5").digest(saltedPassword);
+            hashed = toHex(sha1) + toHex(md5);
+        } catch (NoSuchAlgorithmException e) {
+            Log.w(LOG_TAG, "Failed to encode string because of missing algorithm: " + algo);
+        }
+        return hashed;
+    }
+
+    private static String toHex(byte[] ary) {
+        final String hex = "0123456789ABCDEF";
+        String ret = "";
+        for (int i = 0; i < ary.length; i++) {
+            ret += hex.charAt((ary[i] >> 4) & 0xf);
+            ret += hex.charAt(ary[i] & 0xf);
+        }
+        return ret;
+    }
+
+    private int getUidForPackage(String packageName) {
+        long ident = Binder.clearCallingIdentity();
+        try {
+            return mContext.getPackageManager().getApplicationInfo(packageName,
+                    PackageManager.GET_UNINSTALLED_PACKAGES).uid;
+        } catch (NameNotFoundException nnfe) {
+            return -1;
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    private Bundle readApplicationRestrictionsLocked(String packageName,
+            int userId) {
+        final Bundle restrictions = new Bundle();
+        final ArrayList<String> values = new ArrayList<String>();
+
+        FileInputStream fis = null;
+        try {
+            AtomicFile restrictionsFile =
+                    new AtomicFile(new File(Environment.getUserSystemDirectory(userId),
+                            packageToRestrictionsFileName(packageName)));
+            fis = restrictionsFile.openRead();
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setInput(fis, null);
+            int type;
+            while ((type = parser.next()) != XmlPullParser.START_TAG
+                    && type != XmlPullParser.END_DOCUMENT) {
+                ;
+            }
+
+            if (type != XmlPullParser.START_TAG) {
+                Slog.e(LOG_TAG, "Unable to read restrictions file "
+                        + restrictionsFile.getBaseFile());
+                return restrictions;
+            }
+
+            while ((type = parser.next()) != XmlPullParser.END_DOCUMENT) {
+                if (type == XmlPullParser.START_TAG && parser.getName().equals(TAG_ENTRY)) {
+                    String key = parser.getAttributeValue(null, ATTR_KEY);
+                    String valType = parser.getAttributeValue(null, ATTR_VALUE_TYPE);
+                    String multiple = parser.getAttributeValue(null, ATTR_MULTIPLE);
+                    if (multiple != null) {
+                        int count = Integer.parseInt(multiple);
+                        while (count > 0 && (type = parser.next()) != XmlPullParser.END_DOCUMENT) {
+                            if (type == XmlPullParser.START_TAG
+                                    && parser.getName().equals(TAG_VALUE)) {
+                                values.add(parser.nextText().trim());
+                                count--;
+                            }
+                        }
+                        String [] valueStrings = new String[values.size()];
+                        values.toArray(valueStrings);
+                        restrictions.putStringArray(key, valueStrings);
+                    } else if (ATTR_TYPE_BOOLEAN.equals(valType)) {
+                        restrictions.putBoolean(key, Boolean.parseBoolean(
+                                parser.nextText().trim()));
+                    } else {
+                        String value = parser.nextText().trim();
+                        restrictions.putString(key, value);
+                    }
+                }
+            }
+
+        } catch (IOException ioe) {
+        } catch (XmlPullParserException pe) {
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        return restrictions;
+    }
+
+    private void writeApplicationRestrictionsLocked(String packageName,
+            Bundle restrictions, int userId) {
+        FileOutputStream fos = null;
+        AtomicFile restrictionsFile = new AtomicFile(
+                new File(Environment.getUserSystemDirectory(userId),
+                        packageToRestrictionsFileName(packageName)));
+        try {
+            fos = restrictionsFile.startWrite();
+            final BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+            // XmlSerializer serializer = XmlUtils.serializerInstance();
+            final XmlSerializer serializer = new FastXmlSerializer();
+            serializer.setOutput(bos, "utf-8");
+            serializer.startDocument(null, true);
+            serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+
+            serializer.startTag(null, TAG_RESTRICTIONS);
+
+            for (String key : restrictions.keySet()) {
+                Object value = restrictions.get(key);
+                serializer.startTag(null, TAG_ENTRY);
+                serializer.attribute(null, ATTR_KEY, key);
+
+                if (value instanceof Boolean) {
+                    serializer.attribute(null, ATTR_VALUE_TYPE, ATTR_TYPE_BOOLEAN);
+                    serializer.text(value.toString());
+                } else if (value == null || value instanceof String) {
+                    serializer.attribute(null, ATTR_VALUE_TYPE, ATTR_TYPE_STRING);
+                    serializer.text(value != null ? (String) value : "");
+                } else {
+                    serializer.attribute(null, ATTR_VALUE_TYPE, ATTR_TYPE_STRING_ARRAY);
+                    String[] values = (String[]) value;
+                    serializer.attribute(null, ATTR_MULTIPLE, Integer.toString(values.length));
+                    for (String choice : values) {
+                        serializer.startTag(null, TAG_VALUE);
+                        serializer.text(choice != null ? choice : "");
+                        serializer.endTag(null, TAG_VALUE);
+                    }
+                }
+                serializer.endTag(null, TAG_ENTRY);
+            }
+
+            serializer.endTag(null, TAG_RESTRICTIONS);
+
+            serializer.endDocument();
+            restrictionsFile.finishWrite(fos);
+        } catch (Exception e) {
+            restrictionsFile.failWrite(fos);
+            Slog.e(LOG_TAG, "Error writing application restrictions list");
+        }
     }
 
     @Override
@@ -909,7 +1456,7 @@ public class UserManagerService extends IUserManager.Stub {
     }
 
     /**
-     * Make a note of the last started time of a user.
+     * Make a note of the last started time of a user and do some cleanup.
      * @param userId the user that was just foregrounded
      */
     public void userForeground(int userId) {
@@ -924,6 +1471,12 @@ public class UserManagerService extends IUserManager.Stub {
                 user.lastLoggedInTime = now;
                 writeUserLocked(user);
             }
+            // If this is not a restricted profile and there is no restrictions pin, clean up
+            // all restrictions files that might have been left behind, else clean up just the
+            // ones with uninstalled packages
+            RestrictionsPinState pinState = mRestrictionsPinStates.get(userId);
+            final long salt = pinState == null ? 0 : pinState.salt;
+            cleanAppRestrictions(userId, (!user.isRestricted() && salt == 0));
         }
     }
 
@@ -944,6 +1497,15 @@ public class UserManagerService extends IUserManager.Stub {
             }
             return i;
         }
+    }
+
+    private String packageToRestrictionsFileName(String packageName) {
+        return RESTRICTIONS_FILE_PREFIX + packageName + XML_SUFFIX;
+    }
+
+    private String restrictionsFileNameToPackage(String fileName) {
+        return fileName.substring(RESTRICTIONS_FILE_PREFIX.length(),
+                (int) (fileName.length() - XML_SUFFIX.length()));
     }
 
     @Override
@@ -990,4 +1552,17 @@ public class UserManagerService extends IUserManager.Stub {
             }
         }
     }
+
+    private PackageMonitor mUserPackageMonitor = new PackageMonitor() {
+        @Override
+        public void onPackageRemoved(String pkg, int uid) {
+            final int userId = this.getChangingUserId();
+            // Package could be disappearing because it is being blocked, so also check if
+            // it has been uninstalled.
+            final boolean uninstalled = isPackageDisappearing(pkg) == PACKAGE_PERMANENT_CHANGE;
+            if (uninstalled && userId >= 0 && !isPackageInstalled(pkg, userId)) {
+                cleanAppRestrictionsForPackage(pkg, userId);
+            }
+        }
+    };
 }

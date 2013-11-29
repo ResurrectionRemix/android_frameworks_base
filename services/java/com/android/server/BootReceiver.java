@@ -126,6 +126,8 @@ public class BootReceiver extends BroadcastReceiver {
                     -LOG_SIZE, "APANIC_CONSOLE");
             addFileToDropBox(db, prefs, headers, "/data/dontpanic/apanic_threads",
                     -LOG_SIZE, "APANIC_THREADS");
+            addAuditErrorsToDropBox(db, prefs, headers, -LOG_SIZE, "SYSTEM_AUDIT");
+            addFsckErrorsToDropBox(db, prefs, headers, -LOG_SIZE, "SYSTEM_FSCK");
         } else {
             if (db != null) db.addText("SYSTEM_RESTART", headers);
         }
@@ -173,5 +175,60 @@ public class BootReceiver extends BroadcastReceiver {
 
         Slog.i(TAG, "Copying " + filename + " to DropBox (" + tag + ")");
         db.addText(tag, headers + FileUtils.readTextFile(file, maxSize, "[[TRUNCATED]]\n"));
+    }
+
+    private static void addAuditErrorsToDropBox(DropBoxManager db,  SharedPreferences prefs,
+            String headers, int maxSize, String tag) throws IOException {
+        if (db == null || !db.isTagEnabled(tag)) return;  // Logging disabled
+        Slog.i(TAG, "Copying audit failures to DropBox");
+
+        File file = new File("/proc/last_kmsg");
+        long fileTime = file.lastModified();
+        if (fileTime <= 0) return;  // File does not exist
+
+        if (prefs != null) {
+            long lastTime = prefs.getLong(tag, 0);
+            if (lastTime == fileTime) return;  // Already logged this particular file
+            // TODO: move all these SharedPreferences Editor commits
+            // outside this function to the end of logBootEvents
+            prefs.edit().putLong(tag, fileTime).apply();
+        }
+
+        String log = FileUtils.readTextFile(file, maxSize, "[[TRUNCATED]]\n");
+        StringBuilder sb = new StringBuilder();
+        for (String line : log.split("\n")) {
+            if (line.contains("audit")) {
+                sb.append(line + "\n");
+            }
+        }
+        Slog.i(TAG, "Copied " + sb.toString().length() + " worth of audits to DropBox");
+        db.addText(tag, headers + sb.toString());
+    }
+
+    private static void addFsckErrorsToDropBox(DropBoxManager db,  SharedPreferences prefs,
+            String headers, int maxSize, String tag) throws IOException {
+        boolean upload_needed = false;
+        if (db == null || !db.isTagEnabled(tag)) return;  // Logging disabled
+        Slog.i(TAG, "Checking for fsck errors");
+
+        File file = new File("/dev/fscklogs/log");
+        long fileTime = file.lastModified();
+        if (fileTime <= 0) return;  // File does not exist
+
+        String log = FileUtils.readTextFile(file, maxSize, "[[TRUNCATED]]\n");
+        StringBuilder sb = new StringBuilder();
+        for (String line : log.split("\n")) {
+            if (line.contains("FILE SYSTEM WAS MODIFIED")) {
+                upload_needed = true;
+                break;
+            }
+        }
+
+        if (upload_needed) {
+            addFileToDropBox(db, prefs, headers, "/dev/fscklogs/log", maxSize, tag);
+        }
+
+        // Remove the file so we don't re-upload if the runtime restarts.
+        file.delete();
     }
 }

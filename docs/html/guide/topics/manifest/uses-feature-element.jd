@@ -1,6 +1,5 @@
 page.title=&lt;uses-feature&gt;
-parent.title=The AndroidManifest.xml File
-parent.link=manifest-intro.html
+page.tags="filtering","features","google play filters","permissions"
 @jd:body
 
 <div id="qv-wrapper">
@@ -164,8 +163,7 @@ feature</em>, if necessary. </li>
   <dd>The OpenGL ES version required by the application. The higher 16 bits
 represent the major number and the lower 16 bits represent the minor number. For
 example, to specify OpenGL ES version 2.0, you would set the value as
-"0x00020000". To specify OpenGL ES 2.1, if/when such a version were made
-available, you would set the value as "0x00020001".
+"0x00020000", or to specify OpenGL ES 3.0, you would set the value as "0x00030000".
 
   <p>An application should specify at most one <code>android:glEsVersion</code>
 attribute in its manifest. If it specifies more than one, the
@@ -184,6 +182,10 @@ that it requires OpenGL ES 2.0.</p>
   <p>An application that can work with any of several OpenGL ES versions should
 only specify the numerically lowest version of OpenGL ES that it requires. (It
 can check at run-time whether a higher level of OpenGL ES is available.)</p>
+
+  <p>For more information about using OpenGL ES, including how to check the supported OpenGL ES
+version at runtime, see the <a href="{@docRoot}guide/topics/graphics/opengl.html">OpenGL ES</a>
+API guide.</p>
   </dd>
 
 </dl>
@@ -237,7 +239,7 @@ Package Manager for the list of features available on the device by calling
 Store application then passes the features list up to Google Play
 when establishing the session for the user.</p>
 
-<p>Each time you upload an application to the Google Play publisher site,
+<p>Each time you upload an application to the Google Play Developer Console,
 Google Play scans the application's manifest file. It looks for
 <code>&lt;uses-feature&gt;</code> elements and evaluates them in combination
 with other elements, in some cases, such as <code>&lt;uses-sdk&gt;</code> and
@@ -550,8 +552,8 @@ is sensitive to delays or lag in sound input or output.</td>
        <td>Bluetooth</td>
        <td><code>android.hardware.bluetooth</td>
        <td>The application uses Bluetooth radio features in the device.</td>
-<td>
-</td>
+       <td>If your app uses Bluetooth Low Energy, also declare
+       {@code android.software.bluetooth_le}.</td>
     </tr>
     <tr>
        <td rowspan="5">Camera</td>
@@ -847,26 +849,49 @@ in a separate <code>&lt;uses-feature&gt;</code> element. </p>
   <th>Feature</th>
   <th>Attribute Value</th> 
   <th>Description</th>
-  <th>Comments</th>
+</tr>
+<tr>
+  <td>App Widgets</td>
+  <td><code>android.software.app_widgets</code></td>
+  <td>The application uses or provides App Widgets and should be installed only on devices
+  that include a Home screen or similar location where users can embed App Widgets.</td>
+</tr>
+<tr>
+  <td>Bluetooth Low Energy</td>
+  <td><code>android.software.bluetooth_le</code></td>
+  <td><p>The application uses Bluetooth Low Energy APIs and should be installed only on devices
+  that are capable of communicating with other devices via Bluetooth Low Energy.
+   <p>This implicitly also declares the {@code android.hardware.bluetooth} feature.</td>
+</tr>
+<tr>
+  <td>Home Screen</td>
+  <td><code>android.software.home_screen</code></td>
+  <td>The application behaves as a Home screen replacement and should be installed only on
+  devices that support third-party Home screen apps.</td>
+</tr>
+<tr>
+  <td>Input Method</td>
+  <td><code>android.software.input_methods</code></td>
+  <td>The application provides a custom input method and should be installed only on devices that
+  support third-party input methods.</td>
 </tr>
 <tr>
   <td>Live Wallpaper</td>
   <td><code>android.software.live_wallpaper</code></td>
-  <td>The application uses or provides Live Wallpapers.</td>
-  <td></td>
+  <td>The application uses or provides Live Wallpapers and should be installed only on devices that
+  support Live Wallpapers.</td>
 </tr>
 <tr>
   <td rowspan="2">SIP/VOIP</td>
   <td><code>android.software.sip</code></td>
-  <td>The application uses SIP service on the device.
+  <td>The application uses SIP service on the device and should be installed only on devices that
+  support SIP.
   </td>
-  <td></td>
 </tr>
 <tr>
   <td><code>android.software.sip.voip</code></td>
-  <td>Subfeature. The application uses SIP-based VOIP service on the device.
-  </td>
-  <td>This subfeature implicitly declares the <code>android.software.sip</code> parent feature,
+  <td><p>Subfeature. The application uses SIP-based VOIP service on the device.
+  <p>This subfeature implicitly declares the <code>android.software.sip</code> parent feature,
 unless declared with <code>android:required="false"</code>.</td>
 </tr>
   </table>

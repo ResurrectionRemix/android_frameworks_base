@@ -17,6 +17,8 @@
 package libcore.icu;
 
 import com.android.tools.layoutlib.annotations.LayoutlibDelegate;
+import com.ibm.icu.text.DateTimePatternGenerator;
+import com.ibm.icu.util.ULocale;
 
 import java.util.Locale;
 
@@ -42,6 +44,17 @@ public class ICU_Delegate {
     }
 
     // --- Native methods accessing ICU's database.
+
+    @LayoutlibDelegate
+    /*package*/ static String getBestDateTimePattern(String skeleton, String localeName) {
+        return DateTimePatternGenerator.getInstance(new ULocale(localeName))
+                .getBestPattern(skeleton);
+    }
+
+    @LayoutlibDelegate
+    /*package*/ static String getCldrVersion() {
+        return "22.1.1";      // TODO: check what the right value should be.
+    }
 
     @LayoutlibDelegate
     /*package*/ static String getIcuVersion() {

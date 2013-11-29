@@ -18,12 +18,18 @@ package android.accounts;
 import com.google.android.collect.Sets;
 
 import android.app.Activity;
+import android.app.ActivityManagerNative;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Parcelable;
+import android.os.RemoteException;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,7 +40,6 @@ import com.android.internal.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -104,6 +109,7 @@ public class ChooseTypeAndAccountActivity extends Activity
     private static final String KEY_INSTANCE_STATE_EXISTING_ACCOUNTS = "existingAccounts";
     private static final String KEY_INSTANCE_STATE_SELECTED_ACCOUNT_NAME = "selectedAccountName";
     private static final String KEY_INSTANCE_STATE_SELECTED_ADD_ACCOUNT = "selectedAddAccount";
+    private static final String KEY_INSTANCE_STATE_ACCOUNT_LIST = "accountList";
 
     private static final int SELECTED_ITEM_NONE = -1;
 
@@ -119,6 +125,10 @@ public class ChooseTypeAndAccountActivity extends Activity
     private Parcelable[] mExistingAccounts = null;
     private int mSelectedItemIndex;
     private Button mOkButton;
+    private int mCallingUid;
+    private String mCallingPackage;
+    private boolean mDisallowAddAccounts;
+    private boolean mDontShowPicker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +136,24 @@ public class ChooseTypeAndAccountActivity extends Activity
         if (Log.isLoggable(TAG, Log.VERBOSE)) {
             Log.v(TAG, "ChooseTypeAndAccountActivity.onCreate(savedInstanceState="
                     + savedInstanceState + ")");
+        }
+
+        String message = null;
+
+        try {
+            IBinder activityToken = getActivityToken();
+            mCallingUid = ActivityManagerNative.getDefault().getLaunchedFromUid(activityToken);
+            mCallingPackage = ActivityManagerNative.getDefault().getLaunchedFromPackage(
+                    activityToken);
+            if (mCallingUid != 0 && mCallingPackage != null) {
+                Bundle restrictions = UserManager.get(this)
+                        .getUserRestrictions(new UserHandle(UserHandle.getUserId(mCallingUid)));
+                mDisallowAddAccounts =
+                        restrictions.getBoolean(UserManager.DISALLOW_MODIFY_ACCOUNTS, false);
+            }
+        } catch (RemoteException re) {
+            // Couldn't figure out caller details
+            Log.w(getClass().getSimpleName(), "Unable to get caller identity \n" + re);
         }
 
         // save some items we use frequently
@@ -142,6 +170,7 @@ public class ChooseTypeAndAccountActivity extends Activity
 
             mSelectedAddNewAccount = savedInstanceState.getBoolean(
                     KEY_INSTANCE_STATE_SELECTED_ADD_ACCOUNT, false);
+            mAccounts = savedInstanceState.getParcelableArrayList(KEY_INSTANCE_STATE_ACCOUNT_LIST);
         } else {
             mPendingRequest = REQUEST_NULL;
             mExistingAccounts = null;
@@ -162,11 +191,23 @@ public class ChooseTypeAndAccountActivity extends Activity
         mSetOfRelevantAccountTypes = getReleventAccountTypes(intent);
         mAlwaysPromptForAccount = intent.getBooleanExtra(EXTRA_ALWAYS_PROMPT_FOR_ACCOUNT, false);
         mDescriptionOverride = intent.getStringExtra(EXTRA_DESCRIPTION_TEXT_OVERRIDE);
+
+        // Need to do this once here to request the window feature. Can't do it in onResume
+        mAccounts = getAcceptableAccountChoices(AccountManager.get(this));
+        if (mAccounts.isEmpty()
+                && mDisallowAddAccounts) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.app_not_authorized);
+            mDontShowPicker = true;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (mDontShowPicker) return;
+
         final AccountManager accountManager = AccountManager.get(this);
 
         mAccounts = getAcceptableAccountChoices(accountManager);
@@ -234,6 +275,7 @@ public class ChooseTypeAndAccountActivity extends Activity
                         mAccounts.get(mSelectedItemIndex).name);
             }
         }
+        outState.putParcelableArrayList(KEY_INSTANCE_STATE_ACCOUNT_LIST, mAccounts);
     }
 
     public void onCancelButtonClicked(View view) {
@@ -296,7 +338,8 @@ public class ChooseTypeAndAccountActivity extends Activity
                 }
 
                 if (accountName == null || accountType == null) {
-                    Account[] currentAccounts = AccountManager.get(this).getAccounts();
+                    Account[] currentAccounts = AccountManager.get(this).getAccountsForPackage(
+                            mCallingPackage, mCallingUid);
                     Set<Account> preExistingAccounts = new HashSet<Account>();
                     for (Parcelable accountParcel : mExistingAccounts) {
                         preExistingAccounts.add((Account) accountParcel);
@@ -347,7 +390,8 @@ public class ChooseTypeAndAccountActivity extends Activity
                     AccountManager.KEY_INTENT);
             if (intent != null) {
                 mPendingRequest = REQUEST_ADD_ACCOUNT;
-                mExistingAccounts = AccountManager.get(this).getAccounts();
+                mExistingAccounts = AccountManager.get(this).getAccountsForPackage(mCallingPackage,
+                        mCallingUid);
                 intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityForResult(intent, REQUEST_ADD_ACCOUNT);
                 return;
@@ -424,12 +468,14 @@ public class ChooseTypeAndAccountActivity extends Activity
     private String[] getListOfDisplayableOptions(ArrayList<Account> accounts) {
       // List of options includes all accounts found together with "Add new account" as the
       // last item in the list.
-      String[] listItems = new String[accounts.size() + 1];
+      String[] listItems = new String[accounts.size() + (mDisallowAddAccounts ? 0 : 1)];
       for (int i = 0; i < accounts.size(); i++) {
           listItems[i] = accounts.get(i).name;
       }
-      listItems[accounts.size()] = getResources().getString(
-              R.string.add_account_button_label);
+      if (!mDisallowAddAccounts) {
+          listItems[accounts.size()] = getResources().getString(
+                  R.string.add_account_button_label);
+      }
       return listItems;
     }
 
@@ -439,7 +485,8 @@ public class ChooseTypeAndAccountActivity extends Activity
      * allowable accounts, if provided.
      */
     private ArrayList<Account> getAcceptableAccountChoices(AccountManager accountManager) {
-      final Account[] accounts = accountManager.getAccounts();
+      final Account[] accounts = accountManager.getAccountsForPackage(mCallingPackage,
+              mCallingUid);
       ArrayList<Account> accountsToPopulate = new ArrayList<Account>(accounts.length);
       for (Account account : accounts) {
           if (mSetOfAllowableAccounts != null

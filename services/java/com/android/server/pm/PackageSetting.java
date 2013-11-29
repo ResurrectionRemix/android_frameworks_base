@@ -16,6 +16,7 @@
 
 package com.android.server.pm;
 
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageParser;
 
 import java.io.File;
@@ -51,5 +52,13 @@ final class PackageSetting extends PackageSettingBase {
         return "PackageSetting{"
             + Integer.toHexString(System.identityHashCode(this))
             + " " + name + "/" + appId + "}";
+    }
+
+    public int[] getGids() {
+        return sharedUser != null ? sharedUser.gids : gids;
+    }
+
+    public boolean isPrivileged() {
+        return (pkgFlags & ApplicationInfo.FLAG_PRIVILEGED) != 0;
     }
 }

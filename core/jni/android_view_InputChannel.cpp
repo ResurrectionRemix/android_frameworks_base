@@ -21,7 +21,7 @@
 #include <android_runtime/AndroidRuntime.h>
 #include <binder/Parcel.h>
 #include <utils/Log.h>
-#include <androidfw/InputTransport.h>
+#include <input/InputTransport.h>
 #include "android_view_InputChannel.h"
 #include "android_os_Parcel.h"
 #include "android_util_Binder.h"
@@ -246,6 +246,15 @@ static jstring android_view_InputChannel_nativeGetName(JNIEnv* env, jobject obj)
     return name;
 }
 
+static void android_view_InputChannel_nativeDup(JNIEnv* env, jobject obj, jobject otherObj) {
+    NativeInputChannel* nativeInputChannel =
+            android_view_InputChannel_getNativeInputChannel(env, obj);
+    if (nativeInputChannel) {
+        android_view_InputChannel_setNativeInputChannel(env, otherObj,
+                new NativeInputChannel(nativeInputChannel->getInputChannel()->dup()));
+    }
+}
+
 // ----------------------------------------------------------------------------
 
 static JNINativeMethod gInputChannelMethods[] = {
@@ -262,6 +271,8 @@ static JNINativeMethod gInputChannelMethods[] = {
             (void*)android_view_InputChannel_nativeWriteToParcel },
     { "nativeGetName", "()Ljava/lang/String;",
             (void*)android_view_InputChannel_nativeGetName },
+    { "nativeDup", "(Landroid/view/InputChannel;)V",
+            (void*)android_view_InputChannel_nativeDup },
 };
 
 #define FIND_CLASS(var, className) \

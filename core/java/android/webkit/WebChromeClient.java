@@ -69,7 +69,9 @@ public class WebChromeClient {
 
     /**
      * Notify the host application that the current page would
-     * like to show a custom View.
+     * like to show a custom View.  This is used for Fullscreen
+     * video playback; see "HTML5 Video support" documentation on
+     * {@link WebView}.
      * @param view is the View object to be shown.
      * @param callback is the callback to be invoked if and when the view
      * is dismissed.
@@ -84,7 +86,10 @@ public class WebChromeClient {
      * {@link ActivityInfo#screenOrientation ActivityInfo.screenOrientation}.
      * @param callback is the callback to be invoked if and when the view
      * is dismissed.
+     * @deprecated This method supports the obsolete plugin mechanism,
+     * and will not be invoked in future
      */
+    @Deprecated
     public void onShowCustomView(View view, int requestedOrientation,
             CustomViewCallback callback) {};
     
@@ -233,9 +238,10 @@ public class WebChromeClient {
     * @param totalQuota The total quota for all origins, in bytes
     * @param quotaUpdater An instance of {@link WebStorage.QuotaUpdater} which
     *                     must be used to inform the WebView of the new quota.
+    * @deprecated This method is no longer called; WebView now uses the HTML5 / JavaScript Quota
+    *             Management API.
     */
-    // Note that the callback must always be executed at some point to ensure
-    // that the sleeping WebCore thread is woken up.
+    @Deprecated
     public void onExceededDatabaseQuota(String url, String databaseIdentifier,
             long quota, long estimatedDatabaseSize, long totalQuota,
             WebStorage.QuotaUpdater quotaUpdater) {
@@ -258,9 +264,10 @@ public class WebChromeClient {
     * @param quota the current maximum Application Cache size, in bytes
     * @param quotaUpdater An instance of {@link WebStorage.QuotaUpdater} which
     *                     must be used to inform the WebView of the new quota.
+    * @deprecated This method is no longer called; WebView now uses the HTML5 / JavaScript Quota
+    *             Management API.
     */
-    // Note that the callback must always be executed at some point to ensure
-    // that the sleeping WebCore thread is woken up.
+    @Deprecated
     public void onReachedMaxAppCacheSize(long requiredStorage, long quota,
             WebStorage.QuotaUpdater quotaUpdater) {
         quotaUpdater.updateQuota(quota);

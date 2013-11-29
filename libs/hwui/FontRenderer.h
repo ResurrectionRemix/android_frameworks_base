@@ -17,7 +17,10 @@
 #ifndef ANDROID_HWUI_FONT_RENDERER_H
 #define ANDROID_HWUI_FONT_RENDERER_H
 
+#include <utils/Functor.h>
+#include <utils/LruCache.h>
 #include <utils/Vector.h>
+#include <utils/StrongPointer.h>
 
 #include <SkPaint.h>
 
@@ -27,13 +30,59 @@
 #include "font/CacheTexture.h"
 #include "font/CachedGlyphInfo.h"
 #include "font/Font.h"
+#include "utils/SortedList.h"
+#include "Matrix.h"
 #include "Properties.h"
+
+#ifdef ANDROID_ENABLE_RENDERSCRIPT
+#include "RenderScript.h"
+namespace RSC {
+    class Element;
+    class RS;
+    class ScriptIntrinsicBlur;
+    class sp;
+}
+#endif
+
+class Functor;
 
 namespace android {
 namespace uirenderer {
 
+class OpenGLRenderer;
+
 ///////////////////////////////////////////////////////////////////////////////
-// Renderer
+// TextSetupFunctor
+///////////////////////////////////////////////////////////////////////////////
+class TextSetupFunctor: public Functor {
+public:
+    struct Data {
+        Data(GLenum glyphFormat) : glyphFormat(glyphFormat) {
+        }
+
+        GLenum glyphFormat;
+    };
+
+    TextSetupFunctor(OpenGLRenderer* renderer, float x, float y, bool pureTranslate,
+            int alpha, SkXfermode::Mode mode, SkPaint* paint): Functor(),
+            renderer(renderer), x(x), y(y), pureTranslate(pureTranslate),
+            alpha(alpha), mode(mode), paint(paint) {
+    }
+    ~TextSetupFunctor() { }
+
+    status_t operator ()(int what, void* data);
+
+    OpenGLRenderer* renderer;
+    float x;
+    float y;
+    bool pureTranslate;
+    int alpha;
+    SkXfermode::Mode mode;
+    SkPaint* paint;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// FontRenderer
 ///////////////////////////////////////////////////////////////////////////////
 
 class FontRenderer {
@@ -41,25 +90,27 @@ public:
     FontRenderer();
     ~FontRenderer();
 
+    void flushLargeCaches(Vector<CacheTexture*>& cacheTextures);
     void flushLargeCaches();
 
     void setGammaTable(const uint8_t* gammaTable) {
         mGammaTable = gammaTable;
     }
 
-    void setFont(SkPaint* paint, uint32_t fontId, float fontSize);
+    void setFont(SkPaint* paint, const mat4& matrix);
 
-    void precache(SkPaint* paint, const char* text, int numGlyphs);
+    void precache(SkPaint* paint, const char* text, int numGlyphs, const mat4& matrix);
+    void endPrecaching();
 
-    // bounds is an out parameter
-    bool renderText(SkPaint* paint, const Rect* clip, const char *text, uint32_t startIndex,
-            uint32_t len, int numGlyphs, int x, int y, Rect* bounds);
     // bounds is an out parameter
     bool renderPosText(SkPaint* paint, const Rect* clip, const char *text, uint32_t startIndex,
-            uint32_t len, int numGlyphs, int x, int y, const float* positions, Rect* bounds);
+            uint32_t len, int numGlyphs, int x, int y, const float* positions, Rect* bounds,
+            Functor* functor, bool forceFinish = true);
+
     // bounds is an out parameter
     bool renderTextOnPath(SkPaint* paint, const Rect* clip, const char *text, uint32_t startIndex,
-            uint32_t len, int numGlyphs, SkPath* path, float hOffset, float vOffset, Rect* bounds);
+            uint32_t len, int numGlyphs, SkPath* path, float hOffset, float vOffset, Rect* bounds,
+            Functor* functor);
 
     struct DropShadow {
         DropShadow() { };
@@ -82,25 +133,11 @@ public:
     DropShadow renderDropShadow(SkPaint* paint, const char *text, uint32_t startIndex,
             uint32_t len, int numGlyphs, uint32_t radius, const float* positions);
 
-    GLuint getTexture(bool linearFiltering = false) {
-        checkInit();
-
-        mCurrentCacheTexture->setLinearFiltering(linearFiltering);
+    void setTextureFiltering(bool linearFiltering) {
         mLinearFiltering = linearFiltering;
-
-        return mCurrentCacheTexture->getTextureId();
     }
 
-    uint32_t getCacheSize() const {
-        uint32_t size = 0;
-        for (uint32_t i = 0; i < mCacheTextures.size(); i++) {
-            CacheTexture* cacheTexture = mCacheTextures[i];
-            if (cacheTexture && cacheTexture->getTexture()) {
-                size += cacheTexture->getWidth() * cacheTexture->getHeight();
-            }
-        }
-        return size;
-    }
+    uint32_t getCacheSize(GLenum format) const;
 
 private:
     friend class Font;
@@ -110,18 +147,19 @@ private:
     void allocateTextureMemory(CacheTexture* cacheTexture);
     void deallocateTextureMemory(CacheTexture* cacheTexture);
     void initTextTexture();
-    CacheTexture* createCacheTexture(int width, int height, bool allocate);
+    CacheTexture* createCacheTexture(int width, int height, GLenum format, bool allocate);
     void cacheBitmap(const SkGlyph& glyph, CachedGlyphInfo* cachedGlyph,
             uint32_t *retOriginX, uint32_t *retOriginY, bool precaching);
-    CacheTexture* cacheBitmapInTexture(const SkGlyph& glyph, uint32_t* startX, uint32_t* startY);
+    CacheTexture* cacheBitmapInTexture(Vector<CacheTexture*>& cacheTextures, const SkGlyph& glyph,
+            uint32_t* startX, uint32_t* startY);
 
     void flushAllAndInvalidate();
-    void initVertexArrayBuffers();
 
     void checkInit();
-    void initRender(const Rect* clip, Rect* bounds);
+    void initRender(const Rect* clip, Rect* bounds, Functor* functor);
     void finishRender();
 
+    void issueDrawCommand(Vector<CacheTexture*>& cacheTextures);
     void issueDrawCommand();
     void appendMeshQuadNoClip(float x1, float y1, float u1, float v1,
             float x2, float y2, float u2, float v2,
@@ -149,23 +187,17 @@ private:
     uint32_t mLargeCacheWidth;
     uint32_t mLargeCacheHeight;
 
-    Vector<CacheTexture*> mCacheTextures;
+    Vector<CacheTexture*> mACacheTextures;
+    Vector<CacheTexture*> mRGBACacheTextures;
 
     Font* mCurrentFont;
-    Vector<Font*> mActiveFonts;
+    LruCache<Font::FontDescription, Font*> mActiveFonts;
 
     CacheTexture* mCurrentCacheTexture;
-    CacheTexture* mLastCacheTexture;
 
     bool mUploadTexture;
 
-    // Pointer to vertex data to speed up frame to frame work
-    float* mTextMesh;
-    uint32_t mCurrentQuadIndex;
-    uint32_t mMaxNumberOfQuads;
-
-    uint32_t mIndexBufferID;
-
+    Functor* mFunctor;
     const Rect* mClip;
     Rect* mBounds;
     bool mDrawn;
@@ -174,13 +206,21 @@ private:
 
     bool mLinearFiltering;
 
-    /** We should consider multi-threading this code or using Renderscript **/
+#ifdef ANDROID_ENABLE_RENDERSCRIPT
+    // RS constructs
+    RSC::sp<RSC::RS> mRs;
+    RSC::sp<const RSC::Element> mRsElement;
+    RSC::sp<RSC::ScriptIntrinsicBlur> mRsScript;
+#endif
+
     static void computeGaussianWeights(float* weights, int32_t radius);
     static void horizontalBlur(float* weights, int32_t radius, const uint8_t *source, uint8_t *dest,
             int32_t width, int32_t height);
     static void verticalBlur(float* weights, int32_t radius, const uint8_t *source, uint8_t *dest,
             int32_t width, int32_t height);
-    static void blurImage(uint8_t* image, int32_t width, int32_t height, int32_t radius);
+
+    // the input image handle may have its pointer replaced (to avoid copies)
+    void blurImage(uint8_t** image, int32_t width, int32_t height, int32_t radius);
 };
 
 }; // namespace uirenderer

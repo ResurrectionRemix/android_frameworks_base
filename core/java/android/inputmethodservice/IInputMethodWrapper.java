@@ -20,8 +20,8 @@ import com.android.internal.os.HandlerCaller;
 import com.android.internal.os.SomeArgs;
 import com.android.internal.view.IInputContext;
 import com.android.internal.view.IInputMethod;
-import com.android.internal.view.IInputMethodCallback;
 import com.android.internal.view.IInputMethodSession;
+import com.android.internal.view.IInputSessionCallback;
 import com.android.internal.view.InputConnectionWrapper;
 
 import android.content.Context;
@@ -31,8 +31,8 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
-import android.provider.Settings;
 import android.util.Log;
+import android.view.InputChannel;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputBinding;
 import android.view.inputmethod.InputConnection;
@@ -54,8 +54,7 @@ import java.util.concurrent.TimeUnit;
 class IInputMethodWrapper extends IInputMethod.Stub
         implements HandlerCaller.Callback {
     private static final String TAG = "InputMethodWrapper";
-    private static final boolean DEBUG = false;
-    
+
     private static final int DO_DUMP = 1;
     private static final int DO_ATTACH_TOKEN = 10;
     private static final int DO_SET_INPUT_CONTEXT = 20;
@@ -68,8 +67,7 @@ class IInputMethodWrapper extends IInputMethod.Stub
     private static final int DO_SHOW_SOFT_INPUT = 60;
     private static final int DO_HIDE_SOFT_INPUT = 70;
     private static final int DO_CHANGE_INPUTMETHOD_SUBTYPE = 80;
-
-    private static Context mContext;
+   
     final WeakReference<AbstractInputMethodService> mTarget;
     final HandlerCaller mCaller;
     final WeakReference<InputMethod> mInputMethod;
@@ -80,19 +78,29 @@ class IInputMethodWrapper extends IInputMethod.Stub
     }
     
     // NOTE: we should have a cache of these.
-    static class InputMethodSessionCallbackWrapper implements InputMethod.SessionCallback {
-        final IInputMethodCallback mCb;
-        InputMethodSessionCallbackWrapper(Context context, IInputMethodCallback cb) {
+    static final class InputMethodSessionCallbackWrapper implements InputMethod.SessionCallback {
+        final Context mContext;
+        final InputChannel mChannel;
+        final IInputSessionCallback mCb;
+
+        InputMethodSessionCallbackWrapper(Context context, InputChannel channel,
+                IInputSessionCallback cb) {
             mContext = context;
+            mChannel = channel;
             mCb = cb;
         }
+
+        @Override
         public void sessionCreated(InputMethodSession session) {
             try {
                 if (session != null) {
                     IInputMethodSessionWrapper wrap =
-                            new IInputMethodSessionWrapper(mContext, session);
+                            new IInputMethodSessionWrapper(mContext, session, mChannel);
                     mCb.sessionCreated(wrap);
                 } else {
+                    if (mChannel != null) {
+                        mChannel.dispose();
+                    }
                     mCb.sessionCreated(null);
                 }
             } catch (RemoteException e) {
@@ -103,16 +111,17 @@ class IInputMethodWrapper extends IInputMethod.Stub
     public IInputMethodWrapper(AbstractInputMethodService context,
             InputMethod inputMethod) {
         mTarget = new WeakReference<AbstractInputMethodService>(context);
-        mCaller = new HandlerCaller(context.getApplicationContext(), this);
+        mCaller = new HandlerCaller(context.getApplicationContext(), null,
+                this, true /*asyncHandler*/);
         mInputMethod = new WeakReference<InputMethod>(inputMethod);
         mTargetSdkVersion = context.getApplicationInfo().targetSdkVersion;
-        mContext = context;
     }
 
     public InputMethod getInternalInputMethod() {
         return mInputMethod.get();
     }
 
+    @Override
     public void executeMessage(Message msg) {
         InputMethod inputMethod = mInputMethod.get();
         // Need a valid reference to the inputMethod for everything except a dump.
@@ -120,9 +129,6 @@ class IInputMethodWrapper extends IInputMethod.Stub
             Log.w(TAG, "Input method reference was null, ignoring message: " + msg.what);
             return;
         }
-
-        boolean formalText = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FORMAL_TEXT_INPUT, 0) == 1;
 
         switch (msg.what) {
             case DO_DUMP: {
@@ -162,7 +168,6 @@ class IInputMethodWrapper extends IInputMethod.Stub
                         ? new InputConnectionWrapper(inputContext) : null;
                 EditorInfo info = (EditorInfo)args.arg2;
                 info.makeCompatible(mTargetSdkVersion);
-                info.formalTextInput(formalText);
                 inputMethod.startInput(ic, info);
                 args.recycle();
                 return;
@@ -174,14 +179,16 @@ class IInputMethodWrapper extends IInputMethod.Stub
                         ? new InputConnectionWrapper(inputContext) : null;
                 EditorInfo info = (EditorInfo)args.arg2;
                 info.makeCompatible(mTargetSdkVersion);
-                info.formalTextInput(formalText);
                 inputMethod.restartInput(ic, info);
                 args.recycle();
                 return;
             }
             case DO_CREATE_SESSION: {
+                SomeArgs args = (SomeArgs)msg.obj;
                 inputMethod.createSession(new InputMethodSessionCallbackWrapper(
-                        mCaller.mContext, (IInputMethodCallback)msg.obj));
+                        mCaller.mContext, (InputChannel)args.arg1,
+                        (IInputSessionCallback)args.arg2));
+                args.recycle();
                 return;
             }
             case DO_SET_SESSION_ENABLED:
@@ -203,8 +210,9 @@ class IInputMethodWrapper extends IInputMethod.Stub
         }
         Log.w(TAG, "Unhandled message code: " + msg.what);
     }
-    
-    @Override protected void dump(FileDescriptor fd, PrintWriter fout, String[] args) {
+
+    @Override
+    protected void dump(FileDescriptor fd, PrintWriter fout, String[] args) {
         AbstractInputMethodService target = mTarget.get();
         if (target == null) {
             return;
@@ -230,10 +238,12 @@ class IInputMethodWrapper extends IInputMethod.Stub
         }
     }
 
+    @Override
     public void attachToken(IBinder token) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_ATTACH_TOKEN, token));
     }
-    
+
+    @Override
     public void bindInput(InputBinding binding) {
         InputConnection ic = new InputConnectionWrapper(
                 IInputContext.Stub.asInterface(binding.getConnectionToken()));
@@ -241,55 +251,73 @@ class IInputMethodWrapper extends IInputMethod.Stub
         mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_SET_INPUT_CONTEXT, nu));
     }
 
+    @Override
     public void unbindInput() {
         mCaller.executeOrSendMessage(mCaller.obtainMessage(DO_UNSET_INPUT_CONTEXT));
     }
 
+    @Override
     public void startInput(IInputContext inputContext, EditorInfo attribute) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageOO(DO_START_INPUT,
                 inputContext, attribute));
     }
 
+    @Override
     public void restartInput(IInputContext inputContext, EditorInfo attribute) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageOO(DO_RESTART_INPUT,
                 inputContext, attribute));
     }
 
-    public void createSession(IInputMethodCallback callback) {
-        mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_CREATE_SESSION, callback));
+    @Override
+    public void createSession(InputChannel channel, IInputSessionCallback callback) {
+        mCaller.executeOrSendMessage(mCaller.obtainMessageOO(DO_CREATE_SESSION,
+                channel, callback));
     }
 
+    @Override
     public void setSessionEnabled(IInputMethodSession session, boolean enabled) {
         try {
             InputMethodSession ls = ((IInputMethodSessionWrapper)
                     session).getInternalInputMethodSession();
+            if (ls == null) {
+                Log.w(TAG, "Session is already finished: " + session);
+                return;
+            }
             mCaller.executeOrSendMessage(mCaller.obtainMessageIO(
                     DO_SET_SESSION_ENABLED, enabled ? 1 : 0, ls));
         } catch (ClassCastException e) {
             Log.w(TAG, "Incoming session not of correct type: " + session, e);
         }
     }
-    
+
+    @Override
     public void revokeSession(IInputMethodSession session) {
         try {
             InputMethodSession ls = ((IInputMethodSessionWrapper)
                     session).getInternalInputMethodSession();
+            if (ls == null) {
+                Log.w(TAG, "Session is already finished: " + session);
+                return;
+            }
             mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_REVOKE_SESSION, ls));
         } catch (ClassCastException e) {
             Log.w(TAG, "Incoming session not of correct type: " + session, e);
         }
     }
-    
+
+    @Override
     public void showSoftInput(int flags, ResultReceiver resultReceiver) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageIO(DO_SHOW_SOFT_INPUT,
                 flags, resultReceiver));
     }
-    
+
+    @Override
     public void hideSoftInput(int flags, ResultReceiver resultReceiver) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageIO(DO_HIDE_SOFT_INPUT,
                 flags, resultReceiver));
     }
 
+    @Override
     public void changeInputMethodSubtype(InputMethodSubtype subtype) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_CHANGE_INPUTMETHOD_SUBTYPE,
                 subtype));

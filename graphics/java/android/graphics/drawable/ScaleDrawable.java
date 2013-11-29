@@ -177,6 +177,11 @@ public class ScaleDrawable extends Drawable implements Drawable.Callback {
     }
 
     @Override
+    public int getAlpha() {
+        return mScaleState.mDrawable.getAlpha();
+    }
+
+    @Override
     public void setColorFilter(ColorFilter cf) {
         mScaleState.mDrawable.setColorFilter(cf);
     }
@@ -276,6 +281,7 @@ public class ScaleDrawable extends Drawable implements Drawable.Callback {
                     mDrawable = orig.mDrawable.getConstantState().newDrawable();
                 }
                 mDrawable.setCallback(owner);
+                mDrawable.setLayoutDirection(orig.mDrawable.getLayoutDirection());
                 mScaleWidth = orig.mScaleWidth;
                 mScaleHeight = orig.mScaleHeight;
                 mGravity = orig.mGravity;

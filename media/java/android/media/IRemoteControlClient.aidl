@@ -17,6 +17,7 @@ package android.media;
 
 import android.graphics.Bitmap;
 import android.media.IRemoteControlDisplay;
+import android.media.Rating;
 
 /**
  * @hide
@@ -34,18 +35,28 @@ oneway interface IRemoteControlClient
      *   parameters are valid.
      * @param generationId
      * @param infoFlags
-     * @param artWidth if > 0, artHeight must be > 0 too.
-     * @param artHeight
      * FIXME: is infoFlags required? since the RCC pushes info, this might always be called
      *        with RC_INFO_ALL
      */
-    void onInformationRequested(int generationId, int infoFlags, int artWidth, int artHeight);
+    void onInformationRequested(int generationId, int infoFlags);
+
+    /**
+     * Notifies a remote control client that information for the given generation ID is
+     * requested for the given IRemoteControlDisplay alone.
+     * @param rcd the display to which current info should be sent
+     */
+    void informationRequestForDisplay(IRemoteControlDisplay rcd, int w, int h);
 
     /**
      * Sets the generation counter of the current client that is displayed on the remote control.
      */
     void setCurrentClientGenerationId(int clientGeneration);
 
-    void   plugRemoteControlDisplay(IRemoteControlDisplay rcd);
+    void   plugRemoteControlDisplay(IRemoteControlDisplay rcd, int w, int h);
     void unplugRemoteControlDisplay(IRemoteControlDisplay rcd);
+    void setBitmapSizeForDisplay(IRemoteControlDisplay rcd, int w, int h);
+    void setWantsSyncForDisplay(IRemoteControlDisplay rcd, boolean wantsSync);
+    void enableRemoteControlDisplay(IRemoteControlDisplay rcd, boolean enabled);
+    void seekTo(int clientGeneration, long timeMs);
+    void updateMetadata(int clientGeneration, int key, in Rating value);
 }

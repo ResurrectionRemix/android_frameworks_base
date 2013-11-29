@@ -65,10 +65,17 @@ public class ManageDialog extends AlertActivity implements
         }
 
         try {
-            mConfig = getIntent().getParcelableExtra("config");
 
             mService = IConnectivityManager.Stub.asInterface(
                     ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
+
+            mConfig = mService.getVpnConfig();
+
+            // mConfig can be null if we are a restricted user, in that case don't show this dialog
+            if (mConfig == null) {
+                finish();
+                return;
+            }
 
             View view = View.inflate(this, R.layout.manage, null);
             if (mConfig.session != null) {
@@ -134,21 +141,13 @@ public class ManageDialog extends AlertActivity implements
             finish();
         }
     }
-    
-    public static String humanReadableByteCount(long bytes, boolean si) {
-      int unit = si ? 1000 : 1024;
-      if (bytes < unit) return bytes + " B";
-      int exp = (int) (Math.log(bytes) / Math.log(unit));
-      String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
-      return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
-    }
 
     @Override
     public boolean handleMessage(Message message) {
         mHandler.removeMessages(0);
 
         if (!isFinishing()) {
-            if (mConfig.startTime != 0) {
+            if (mConfig.startTime != -1) {
                 long seconds = (SystemClock.elapsedRealtime() - mConfig.startTime) / 1000;
                 mDuration.setText(String.format("%02d:%02d:%02d",
                         seconds / 3600, seconds / 60 % 60, seconds % 60));
@@ -165,11 +164,11 @@ public class ManageDialog extends AlertActivity implements
 
                 // [1] and [2] are received data in bytes and packets.
                 mDataReceived.setText(getString(R.string.data_value_format,
-                        humanReadableByteCount(Long.parseLong(numbers[1]), true), numbers[2]));
+                        numbers[1], numbers[2]));
 
                 // [9] and [10] are transmitted data in bytes and packets.
                 mDataTransmitted.setText(getString(R.string.data_value_format,
-                        humanReadableByteCount(Long.parseLong(numbers[9]), true), numbers[10]));
+                        numbers[9], numbers[10]));
             }
             mHandler.sendEmptyMessageDelayed(0, 1000);
         }

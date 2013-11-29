@@ -34,6 +34,8 @@
 
 #include <cutils/compiler.h>
 
+#include <androidfw/ResourceTypes.h>
+
 #include "Debug.h"
 #include "Extensions.h"
 #include "Matrix.h"
@@ -43,16 +45,67 @@
 #include "Vertex.h"
 #include "SkiaShader.h"
 #include "SkiaColorFilter.h"
+#include "UvMapper.h"
 #include "Caches.h"
 
 namespace android {
 namespace uirenderer {
 
+struct DrawModifiers {
+    DrawModifiers() {
+        reset();
+    }
+
+    void reset() {
+        memset(this, 0, sizeof(DrawModifiers));
+    }
+
+    SkiaShader* mShader;
+    SkiaColorFilter* mColorFilter;
+    float mOverrideLayerAlpha;
+
+    // Drop shadow
+    bool mHasShadow;
+    float mShadowRadius;
+    float mShadowDx;
+    float mShadowDy;
+    int mShadowColor;
+
+    // Draw filters
+    bool mHasDrawFilter;
+    int mPaintFilterClearBits;
+    int mPaintFilterSetBits;
+};
+
+enum StateDeferFlags {
+    kStateDeferFlag_Draw = 0x1,
+    kStateDeferFlag_Clip = 0x2
+};
+
+enum DrawOpMode {
+    kDrawOpMode_Immediate,
+    kDrawOpMode_Defer,
+    kDrawOpMode_Flush
+};
+
+enum ClipSideFlags {
+    kClipSide_None = 0x0,
+    kClipSide_Left = 0x1,
+    kClipSide_Top = 0x2,
+    kClipSide_Right = 0x4,
+    kClipSide_Bottom = 0x8,
+    kClipSide_Full = 0xF,
+    kClipSide_ConservativeFull = 0x1F
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Renderer
 ///////////////////////////////////////////////////////////////////////////////
 
+class DeferredDisplayState;
 class DisplayList;
+class TextSetupFunctor;
+class VertexBuffer;
 
 /**
  * OpenGL renderer used to draw accelerated 2D graphics. The API is a
@@ -62,6 +115,19 @@ class OpenGLRenderer {
 public:
     ANDROID_API OpenGLRenderer();
     virtual ~OpenGLRenderer();
+
+    /**
+     * Sets the name of this renderer. The name is optional and
+     * empty by default. If the pointer is null the name is set
+     * to the empty string.
+     */
+    ANDROID_API void setName(const char* name);
+
+    /**
+     * Returns the name of this renderer as UTF8 string.
+     * The returned pointer is never null.
+     */
+    ANDROID_API const char* getName() const;
 
     /**
      * Read externally defined properties to control the behavior
@@ -133,44 +199,93 @@ public:
      */
     virtual void resume();
 
+    ANDROID_API void setCountOverdrawEnabled(bool enabled) {
+        mCountOverdraw = enabled;
+    }
+
+    ANDROID_API float getOverdraw() {
+        return mCountOverdraw ? mOverdraw : 0.0f;
+    }
+
     ANDROID_API status_t invokeFunctors(Rect& dirty);
     ANDROID_API void detachFunctor(Functor* functor);
     ANDROID_API void attachFunctor(Functor* functor);
     virtual status_t callDrawGLFunction(Functor* functor, Rect& dirty);
 
     ANDROID_API void pushLayerUpdate(Layer* layer);
+    ANDROID_API void cancelLayerUpdate(Layer* layer);
     ANDROID_API void clearLayerUpdates();
+    ANDROID_API void flushLayerUpdates();
 
     ANDROID_API int getSaveCount() const;
     virtual int save(int flags);
     virtual void restore();
     virtual void restoreToCount(int saveCount);
 
+    ANDROID_API int saveLayer(float left, float top, float right, float bottom,
+            SkPaint* paint, int flags) {
+        SkXfermode::Mode mode = SkXfermode::kSrcOver_Mode;
+        if (paint) mode = getXfermode(paint->getXfermode());
+        return saveLayer(left, top, right, bottom, paint ? paint->getAlpha() : 255, mode, flags);
+    }
+    ANDROID_API int saveLayerAlpha(float left, float top, float right, float bottom,
+            int alpha, int flags) {
+        return saveLayer(left, top, right, bottom, alpha, SkXfermode::kSrcOver_Mode, flags);
+    }
     virtual int saveLayer(float left, float top, float right, float bottom,
-            SkPaint* p, int flags);
-    virtual int saveLayerAlpha(float left, float top, float right, float bottom,
-            int alpha, int flags);
+            int alpha, SkXfermode::Mode mode, int flags);
+
+    int saveLayerDeferred(float left, float top, float right, float bottom,
+            int alpha, SkXfermode::Mode mode, int flags);
 
     virtual void translate(float dx, float dy);
     virtual void rotate(float degrees);
     virtual void scale(float sx, float sy);
     virtual void skew(float sx, float sy);
 
+    bool hasRectToRectTransform();
     ANDROID_API void getMatrix(SkMatrix* matrix);
     virtual void setMatrix(SkMatrix* matrix);
     virtual void concatMatrix(SkMatrix* matrix);
 
     ANDROID_API const Rect& getClipBounds();
-    ANDROID_API bool quickReject(float left, float top, float right, float bottom);
-    bool quickRejectNoScissor(float left, float top, float right, float bottom);
+
+    /**
+     * Performs a quick reject but adjust the bounds to account for stroke width if necessary,
+     * and handling snapOut for AA geometry.
+     */
+    bool quickRejectPreStroke(float left, float top, float right, float bottom, SkPaint* paint);
+
+    /**
+     * Returns false and sets scissor based upon bounds if drawing won't be clipped out
+     */
+    bool quickReject(float left, float top, float right, float bottom, bool snapOut = false);
+    bool quickReject(const Rect& bounds) {
+        return quickReject(bounds.left, bounds.top, bounds.right, bounds.bottom);
+    }
+
+    /**
+     * Same as quickReject, without the scissor, instead returning clipRequired through pointer.
+     * clipRequired will be only set if not rejected
+     */
+    ANDROID_API bool quickRejectNoScissor(float left, float top, float right, float bottom,
+            bool snapOut = false, bool* clipRequired = NULL);
+    bool quickRejectNoScissor(const Rect& bounds, bool* clipRequired = NULL) {
+        return quickRejectNoScissor(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                clipRequired);
+    }
+
     virtual bool clipRect(float left, float top, float right, float bottom, SkRegion::Op op);
+    virtual bool clipPath(SkPath* path, SkRegion::Op op);
+    virtual bool clipRegion(SkRegion* region, SkRegion::Op op);
     virtual Rect* getClipRect();
 
-    virtual status_t drawDisplayList(DisplayList* displayList, Rect& dirty, int32_t flags,
-            uint32_t level = 0);
-    virtual void outputDisplayList(DisplayList* displayList, uint32_t level = 0);
-    virtual status_t drawLayer(Layer* layer, float x, float y, SkPaint* paint);
+    virtual status_t drawDisplayList(DisplayList* displayList, Rect& dirty, int32_t replayFlags);
+    virtual void outputDisplayList(DisplayList* displayList);
+    virtual status_t drawLayer(Layer* layer, float x, float y);
     virtual status_t drawBitmap(SkBitmap* bitmap, float left, float top, SkPaint* paint);
+    status_t drawBitmaps(SkBitmap* bitmap, AssetAtlas::Entry* entry, int bitmapCount,
+            TextureVertex* vertices, bool pureTranslate, const Rect& bounds, SkPaint* paint);
     virtual status_t drawBitmap(SkBitmap* bitmap, SkMatrix* matrix, SkPaint* paint);
     virtual status_t drawBitmap(SkBitmap* bitmap, float srcLeft, float srcTop,
             float srcRight, float srcBottom, float dstLeft, float dstTop,
@@ -178,12 +293,12 @@ public:
     virtual status_t drawBitmapData(SkBitmap* bitmap, float left, float top, SkPaint* paint);
     virtual status_t drawBitmapMesh(SkBitmap* bitmap, int meshWidth, int meshHeight,
             float* vertices, int* colors, SkPaint* paint);
-    virtual status_t drawPatch(SkBitmap* bitmap, const int32_t* xDivs, const int32_t* yDivs,
-            const uint32_t* colors, uint32_t width, uint32_t height, int8_t numColors,
+    status_t drawPatches(SkBitmap* bitmap, AssetAtlas::Entry* entry,
+            TextureVertex* vertices, uint32_t indexCount, SkPaint* paint);
+    virtual status_t drawPatch(SkBitmap* bitmap, Res_png_9patch* patch,
             float left, float top, float right, float bottom, SkPaint* paint);
-    status_t drawPatch(SkBitmap* bitmap, const int32_t* xDivs, const int32_t* yDivs,
-            const uint32_t* colors, uint32_t width, uint32_t height, int8_t numColors,
-            float left, float top, float right, float bottom, int alpha, SkXfermode::Mode mode);
+    status_t drawPatch(SkBitmap* bitmap, const Patch* mesh, AssetAtlas::Entry* entry,
+            float left, float top, float right, float bottom, SkPaint* paint);
     virtual status_t drawColor(int color, SkXfermode::Mode mode);
     virtual status_t drawRect(float left, float top, float right, float bottom, SkPaint* paint);
     virtual status_t drawRoundRect(float left, float top, float right, float bottom,
@@ -200,7 +315,9 @@ public:
     virtual status_t drawPosText(const char* text, int bytesCount, int count,
             const float* positions, SkPaint* paint);
     virtual status_t drawText(const char* text, int bytesCount, int count, float x, float y,
-            const float* positions, SkPaint* paint, float length = -1.0f);
+            const float* positions, SkPaint* paint, float totalAdvance, const Rect& bounds,
+            DrawOpMode drawOpMode = kDrawOpMode_Immediate);
+    virtual status_t drawRects(const float* rects, int count, SkPaint* paint);
 
     virtual void resetShader();
     virtual void setupShader(SkiaShader* shader);
@@ -214,15 +331,52 @@ public:
     virtual void resetPaintFilter();
     virtual void setupPaintFilter(int clearBits, int setBits);
 
+    // If this value is set to < 1.0, it overrides alpha set on layer (see drawBitmap, drawLayer)
+    void setOverrideLayerAlpha(float alpha) { mDrawModifiers.mOverrideLayerAlpha = alpha; }
+
     SkPaint* filterPaint(SkPaint* paint);
 
     /**
-     * Sets the alpha on the current snapshot. This alpha value will be modulated
+     * Store the current display state (most importantly, the current clip and transform), and
+     * additionally map the state's bounds from local to window coordinates.
+     *
+     * Returns true if quick-rejected
+     */
+    bool storeDisplayState(DeferredDisplayState& state, int stateDeferFlags);
+    void restoreDisplayState(const DeferredDisplayState& state, bool skipClipRestore = false);
+    void setupMergedMultiDraw(const Rect* clipRect);
+
+    const DrawModifiers& getDrawModifiers() { return mDrawModifiers; }
+    void setDrawModifiers(const DrawModifiers& drawModifiers) { mDrawModifiers = drawModifiers; }
+
+    ANDROID_API bool isCurrentTransformSimple() {
+        return mSnapshot->transform->isSimple();
+    }
+
+    Caches& getCaches() {
+        return mCaches;
+    }
+
+    // simple rect clip
+    bool isCurrentClipSimple() {
+        return mSnapshot->clipRegion->isEmpty();
+    }
+
+    int getViewportWidth() { return getSnapshot()->viewport.getWidth(); }
+    int getViewportHeight() { return getSnapshot()->viewport.getHeight(); }
+
+    /**
+     * Scales the alpha on the current snapshot. This alpha value will be modulated
      * with other alpha values when drawing primitives.
      */
-    void setAlpha(float alpha) {
-        mSnapshot->alpha = alpha;
+    void scaleAlpha(float alpha) {
+        mSnapshot->alpha *= alpha;
     }
+
+    /**
+     * Inserts a named event marker in the stream of GL commands.
+     */
+    void eventMark(const char* name) const;
 
     /**
      * Inserts a named group marker in the stream of GL commands. This marker
@@ -239,28 +393,47 @@ public:
     /**
      * Gets the alpha and xfermode out of a paint object. If the paint is null
      * alpha will be 255 and the xfermode will be SRC_OVER. This method does
-     * not multiply the paint's alpha by the current snapshot's alpha.
+     * not multiply the paint's alpha by the current snapshot's alpha, and does
+     * not replace the alpha with the overrideLayerAlpha
      *
      * @param paint The paint to extract values from
      * @param alpha Where to store the resulting alpha
      * @param mode Where to store the resulting xfermode
      */
     static inline void getAlphaAndModeDirect(SkPaint* paint, int* alpha, SkXfermode::Mode* mode) {
-        if (paint) {
-            *mode = getXfermode(paint->getXfermode());
-
-            // Skia draws using the color's alpha channel if < 255
-            // Otherwise, it uses the paint's alpha
-            int color = paint->getColor();
-            *alpha = (color >> 24) & 0xFF;
-            if (*alpha == 255) {
-                *alpha = paint->getAlpha();
-            }
-        } else {
-            *mode = SkXfermode::kSrcOver_Mode;
-            *alpha = 255;
-        }
+        *mode = getXfermodeDirect(paint);
+        *alpha = getAlphaDirect(paint);
     }
+
+    static inline SkXfermode::Mode getXfermodeDirect(SkPaint* paint) {
+        if (!paint) return SkXfermode::kSrcOver_Mode;
+        return getXfermode(paint->getXfermode());
+    }
+
+    static inline int getAlphaDirect(const SkPaint* paint) {
+        if (!paint) return 255;
+        return paint->getAlpha();
+    }
+
+    /**
+     * Return the best transform to use to rasterize text given a full
+     * transform matrix.
+     */
+    mat4 findBestFontTransform(const mat4& transform) const;
+
+#if DEBUG_MERGE_BEHAVIOR
+    void drawScreenSpaceColorRect(float left, float top, float right, float bottom, int color) {
+        mCaches.setScissorEnabled(false);
+
+        // should only be called outside of other draw ops, so stencil can only be in test state
+        bool stencilWasEnabled = mCaches.stencil.isTestEnabled();
+        mCaches.stencil.disable();
+
+        drawColorRect(left, top, right, bottom, color, SkXfermode::kSrcOver_Mode, true);
+
+        if (stencilWasEnabled) mCaches.stencil.enableTest();
+    }
+#endif
 
 protected:
     /**
@@ -268,6 +441,18 @@ protected:
      * and stores the dimensions of the render target.
      */
     void initViewport(int width, int height);
+
+    /**
+     * Perform the setup specific to a frame. This method does not
+     * issue any OpenGL commands.
+     */
+    void setupFrameState(float left, float top, float right, float bottom, bool opaque);
+
+    /**
+     * Indicates the start of rendering. This method will setup the
+     * initial OpenGL state (viewport, clearing the buffer, etc.)
+     */
+    status_t startFrame();
 
     /**
      * Clears the underlying surface if needed.
@@ -278,6 +463,19 @@ protected:
      * Call this method after updating a layer during a drawing pass.
      */
     void resumeAfterLayer();
+
+    /**
+     * This method is called whenever a stencil buffer is required. Subclasses
+     * should override this method and call attachStencilBufferToLayer() on the
+     * appropriate layer(s).
+     */
+    virtual void ensureStencilBuffer();
+
+    /**
+     * Obtains a stencil render buffer (allocating it if necessary) and
+     * attaches it to the specified layer.
+     */
+    void attachStencilBufferToLayer(Layer* layer);
 
     /**
      * Compose the layer defined in the current snapshot with the layer
@@ -298,28 +496,28 @@ protected:
     /**
      * Returns the current snapshot.
      */
-    sp<Snapshot> getSnapshot() {
+    sp<Snapshot> getSnapshot() const {
         return mSnapshot;
     }
 
     /**
      * Returns the region of the current layer.
      */
-    virtual Region* getRegion() {
+    virtual Region* getRegion() const {
         return mSnapshot->region;
     }
 
     /**
      * Indicates whether rendering is currently targeted at a layer.
      */
-    virtual bool hasLayer() {
+    virtual bool hasLayer() const {
         return (mSnapshot->flags & Snapshot::kFlagFboTarget) && mSnapshot->region;
     }
 
     /**
      * Returns the name of the FBO this renderer is rendering into.
      */
-    virtual GLint getTargetFbo() {
+    virtual GLint getTargetFbo() const {
         return 0;
     }
 
@@ -333,13 +531,21 @@ protected:
 
     /**
      * Gets the alpha and xfermode out of a paint object. If the paint is null
-     * alpha will be 255 and the xfermode will be SRC_OVER.
+     * alpha will be 255 and the xfermode will be SRC_OVER. Accounts for both
+     * snapshot alpha, and overrideLayerAlpha
      *
      * @param paint The paint to extract values from
      * @param alpha Where to store the resulting alpha
      * @param mode Where to store the resulting xfermode
      */
-    inline void getAlphaAndMode(SkPaint* paint, int* alpha, SkXfermode::Mode* mode);
+    inline void getAlphaAndMode(SkPaint* paint, int* alpha, SkXfermode::Mode* mode) const;
+
+    /**
+     * Gets the alpha from a layer, accounting for snapshot alpha and overrideLayerAlpha
+     *
+     * @param layer The layer from which the alpha is extracted
+     */
+    inline float getLayerAlpha(Layer* layer) const;
 
     /**
      * Safely retrieves the mode from the specified xfermode. If the specified
@@ -356,15 +562,18 @@ protected:
     /**
      * Set to true to suppress error checks at the end of a frame.
      */
-    virtual bool suppressErrorChecks() {
+    virtual bool suppressErrorChecks() const {
         return false;
     }
 
-    Caches& getCaches() {
-        return mCaches;
-    }
-
 private:
+    /**
+     * Discards the content of the framebuffer if supported by the driver.
+     * This method should be called at the beginning of a frame to optimize
+     * rendering on some tiler architectures.
+     */
+    void discardFramebuffer(float left, float top, float right, float bottom);
+
     /**
      * Ensures the state of the renderer is the same as the state of
      * the GL context.
@@ -373,10 +582,19 @@ private:
 
     /**
      * Tells the GPU what part of the screen is about to be redrawn.
+     * This method will use the clip rect that we started drawing the
+     * frame with.
      * This method needs to be invoked every time getTargetFbo() is
      * bound again.
      */
     void startTiling(const sp<Snapshot>& snapshot, bool opaque = false);
+
+    /**
+     * Tells the GPU what part of the screen is about to be redrawn.
+     * This method needs to be invoked every time getTargetFbo() is
+     * bound again.
+     */
+    void startTiling(const Rect& clip, int windowHeight, bool opaque = false);
 
     /**
      * Tells the GPU that we are done drawing the frame or that we
@@ -409,16 +627,21 @@ private:
     void setScissorFromClip();
 
     /**
-     * Performs a quick reject but does not affect the scissor. Returns
-     * the transformed rect to test and the current clip.
+     * Sets the clipping region using the stencil buffer. The clip region
+     * is defined by the current snapshot's clipRegion member.
      */
-    bool quickRejectNoScissor(float left, float top, float right, float bottom,
-            Rect& transformed, Rect& clip);
+    void setStencilFromClip();
 
     /**
-     * Performs a quick reject but adjust the bounds to account for stroke width if necessary
+     * Given the local bounds of the layer, calculates ...
      */
-    bool quickRejectPreStroke(float left, float top, float right, float bottom, SkPaint* paint);
+    void calculateLayerBoundsAndClip(Rect& bounds, Rect& clip, bool fboLayer);
+
+    /**
+     * Given the local bounds + clip of the layer, updates current snapshot's empty/invisible
+     */
+    void updateSnapshotIgnoreForLayer(const Rect& bounds, const Rect& clip,
+            bool fboLayer, int alpha);
 
     /**
      * Creates a new layer stored in the specified snapshot.
@@ -486,7 +709,8 @@ private:
 
     /**
      * Draws a colored rectangle with the specified color. The specified coordinates
-     * are transformed by the current snapshot's transform matrix.
+     * are transformed by the current snapshot's transform matrix unless specified
+     * otherwise.
      *
      * @param left The left coordinate of the rectangle
      * @param top The top coordinate of the rectangle
@@ -498,6 +722,23 @@ private:
      */
     void drawColorRect(float left, float top, float right, float bottom,
             int color, SkXfermode::Mode mode, bool ignoreTransform = false);
+
+    /**
+     * Draws a series of colored rectangles with the specified color. The specified
+     * coordinates are transformed by the current snapshot's transform matrix unless
+     * specified otherwise.
+     *
+     * @param rects A list of rectangles, 4 floats (left, top, right, bottom)
+     *              per rectangle
+     * @param color The rectangles' ARGB color, defined as a packed 32 bits word
+     * @param mode The Skia xfermode to use
+     * @param ignoreTransform True if the current transform should be ignored
+     * @param dirty True if calling this method should dirty the current layer
+     * @param clip True if the rects should be clipped, false otherwise
+     */
+    status_t drawColorRects(const float* rects, int count, int color,
+            SkXfermode::Mode mode, bool ignoreTransform = false,
+            bool dirty = true, bool clip = true);
 
     /**
      * Draws the shape represented by the specified path texture.
@@ -524,12 +765,22 @@ private:
     void drawAlphaBitmap(Texture* texture, float left, float top, SkPaint* paint);
 
     /**
+     * Renders a strip of polygons with the specified paint, used for tessellated geometry.
+     *
+     * @param vertexBuffer The VertexBuffer to be drawn
+     * @param paint The paint to render with
+     * @param useOffset Offset the vertexBuffer (used in drawing non-AA lines)
+     */
+    status_t drawVertexBuffer(const VertexBuffer& vertexBuffer, SkPaint* paint,
+            bool useOffset = false);
+
+    /**
      * Renders the convex hull defined by the specified path as a strip of polygons.
      *
      * @param path The hull of the path to draw
      * @param paint The paint to render with
      */
-    void drawConvexPath(const SkPath& path, SkPaint* paint);
+    status_t drawConvexPath(const SkPath& path, SkPaint* paint);
 
     /**
      * Draws a textured rectangle with the specified texture. The specified coordinates
@@ -589,17 +840,35 @@ private:
             bool swapSrcDst = false, bool ignoreTransform = false, GLuint vbo = 0,
             bool ignoreScale = false, bool dirty = true);
 
+    void drawIndexedTextureMesh(float left, float top, float right, float bottom, GLuint texture,
+            float alpha, SkXfermode::Mode mode, bool blend,
+            GLvoid* vertices, GLvoid* texCoords, GLenum drawMode, GLsizei elementsCount,
+            bool swapSrcDst = false, bool ignoreTransform = false, GLuint vbo = 0,
+            bool ignoreScale = false, bool dirty = true);
+
+    void drawAlpha8TextureMesh(float left, float top, float right, float bottom,
+            GLuint texture, bool hasColor, int color, int alpha, SkXfermode::Mode mode,
+            GLvoid* vertices, GLvoid* texCoords, GLenum drawMode, GLsizei elementsCount,
+            bool ignoreTransform, bool ignoreScale = false, bool dirty = true);
+
+    /**
+     * Draws the specified list of vertices as quads using indexed GL_TRIANGLES.
+     * If the number of vertices to draw exceeds the number of indices we have
+     * pre-allocated, this method will generate several glDrawElements() calls.
+     */
+    void drawIndexedQuads(Vertex* mesh, GLsizei quadsCount);
+
     /**
      * Draws text underline and strike-through if needed.
      *
      * @param text The text to decor
      * @param bytesCount The number of bytes in the text
-     * @param length The length in pixels of the text, can be <= 0.0f to force a measurement
+     * @param totalAdvance The total advance in pixels, defines underline/strikethrough length
      * @param x The x coordinate where the text will be drawn
      * @param y The y coordinate where the text will be drawn
      * @param paint The paint to draw the text with
      */
-    void drawTextDecorations(const char* text, int bytesCount, float length,
+    void drawTextDecorations(const char* text, int bytesCount, float totalAdvance,
             float x, float y, SkPaint* paint);
 
    /**
@@ -645,11 +914,16 @@ private:
     void resetDrawTextureTexCoords(float u1, float v1, float u2, float v2);
 
     /**
+     * Returns true if the specified paint will draw invisible text.
+     */
+    bool canSkipText(const SkPaint* paint) const;
+
+    /**
      * Binds the specified texture. The texture unit must have been selected
      * prior to calling this method.
      */
     inline void bindTexture(GLuint texture) {
-        glBindTexture(GL_TEXTURE_2D, texture);
+        mCaches.bindTexture(texture);
     }
 
     /**
@@ -657,7 +931,7 @@ private:
      * prior to calling this method.
      */
     inline void bindExternalTexture(GLuint texture) {
-        glBindTexture(GL_TEXTURE_EXTERNAL_OES, texture);
+        mCaches.bindTexture(GL_TEXTURE_EXTERNAL_OES, texture);
     }
 
     /**
@@ -688,12 +962,10 @@ private:
      * Various methods to setup OpenGL rendering.
      */
     void setupDrawWithTexture(bool isAlpha8 = false);
+    void setupDrawWithTextureAndColor(bool isAlpha8 = false);
     void setupDrawWithExternalTexture();
     void setupDrawNoTexture();
     void setupDrawAA();
-    void setupDrawVertexShape();
-    void setupDrawPoint(float pointSize);
-    void setupDrawColor(int color);
     void setupDrawColor(int color, int alpha);
     void setupDrawColor(float r, float g, float b, float a);
     void setupDrawAlpha8Color(int color, int alpha);
@@ -711,7 +983,6 @@ private:
             bool ignoreTransform = false, bool ignoreModelView = false);
     void setupDrawModelViewTranslate(float left, float top, float right, float bottom,
             bool ignoreTransform = false);
-    void setupDrawPointUniforms();
     void setupDrawColorUniforms();
     void setupDrawPureColorUniforms();
     void setupDrawShaderIdentityUniforms();
@@ -724,16 +995,14 @@ private:
     void setupDrawTextureTransformUniforms(mat4& transform);
     void setupDrawTextGammaUniforms();
     void setupDrawMesh(GLvoid* vertices, GLvoid* texCoords = NULL, GLuint vbo = 0);
-    void setupDrawMeshIndices(GLvoid* vertices, GLvoid* texCoords);
-    void setupDrawVertices(GLvoid* vertices);
-    void setupDrawAALine(GLvoid* vertices, GLvoid* distanceCoords, GLvoid* lengthCoords,
-            float strokeWidth, int& widthSlot, int& lengthSlot);
-    void finishDrawAALine(const int widthSlot, const int lengthSlot);
-    void finishDrawTexture();
+    void setupDrawMesh(GLvoid* vertices, GLvoid* texCoords, GLvoid* colors);
+    void setupDrawMeshIndices(GLvoid* vertices, GLvoid* texCoords, GLuint vbo = 0);
+    void setupDrawIndexedVertices(GLvoid* vertices);
     void accountForClear(SkXfermode::Mode mode);
 
     bool updateLayer(Layer* layer, bool inFrame);
     void updateLayers();
+    void flushLayers();
 
     /**
      * Renders the specified region as a series of rectangles. This method
@@ -741,8 +1010,22 @@ private:
      */
     void drawRegionRects(const Region& region);
 
+    /**
+     * Renders the specified region as a series of rectangles. The region
+     * must be in screen-space coordinates.
+     */
+    void drawRegionRects(const SkRegion& region, int color, SkXfermode::Mode mode,
+            bool dirty = false);
+
+    /**
+     * Draws the current clip region if any. Only when DEBUG_CLIP_REGIONS
+     * is turned on.
+     */
+    void debugClip();
+
     void debugOverdraw(bool enable, bool clear);
     void renderOverdraw();
+    void countOverdraw();
 
     /**
      * Should be invoked every time the glScissor is modified.
@@ -750,6 +1033,21 @@ private:
     inline void dirtyClip() {
         mDirtyClip = true;
     }
+
+    inline mat4& currentTransform() const {
+        return *mSnapshot->transform;
+    }
+
+    inline const UvMapper& getMapper(const Texture* texture) {
+        return texture && texture->uvMapper ? *texture->uvMapper : mUvMapper;
+    }
+
+    /**
+     * Returns a texture object for the specified bitmap. The texture can
+     * come from the texture cache or an atlas. If this method returns
+     * NULL, the texture could not be found and/or allocated.
+     */
+    Texture* getTexture(SkBitmap* bitmap);
 
     // Dimensions of the drawing surface
     int mWidth, mHeight;
@@ -767,32 +1065,25 @@ private:
     // Current state
     sp<Snapshot> mSnapshot;
     // State used to define the clipping region
-    sp<Snapshot> mTilingSnapshot;
-
-    // Shaders
-    SkiaShader* mShader;
-
-    // Color filters
-    SkiaColorFilter* mColorFilter;
+    Rect mTilingClip;
+    // Is the target render surface opaque
+    bool mOpaque;
+    // Is a frame currently being rendered
+    bool mFrameStarted;
 
     // Used to draw textured quads
     TextureVertex mMeshVertices[4];
 
-    // Drop shadow
-    bool mHasShadow;
-    float mShadowRadius;
-    float mShadowDx;
-    float mShadowDy;
-    int mShadowColor;
+    // Default UV mapper
+    const UvMapper mUvMapper;
 
-    // Draw filters
-    bool mHasDrawFilter;
-    int mPaintFilterClearBits;
-    int mPaintFilterSetBits;
+    // shader, filters, and shadow
+    DrawModifiers mDrawModifiers;
     SkPaint mFilteredPaint;
 
     // Various caches
     Caches& mCaches;
+    Extensions& mExtensions;
 
     // List of rectangles to clear after saveLayer() is invoked
     Vector<Rect*> mLayers;
@@ -800,9 +1091,6 @@ private:
     SortedVector<Functor*> mFunctors;
     // List of layers to update at the beginning of a frame
     Vector<Layer*> mLayerUpdates;
-
-    // Indentity matrix
-    const mat4 mIdentity;
 
     // Indicates whether the clip must be restored
     bool mDirtyClip;
@@ -829,7 +1117,19 @@ private:
     // No-ops start/endTiling when set
     bool mSuppressTiling;
 
+    // If true, this renderer will setup drawing to emulate
+    // an increment stencil buffer in the color buffer
+    bool mCountOverdraw;
+    float mOverdraw;
+
+    // Optional name of the renderer
+    String8 mName;
+
     friend class DisplayListRenderer;
+    friend class Layer;
+    friend class TextSetupFunctor;
+    friend class DrawBitmapOp;
+    friend class DrawPatchOp;
 
 }; // class OpenGLRenderer
 

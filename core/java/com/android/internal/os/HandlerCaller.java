@@ -24,38 +24,32 @@ import android.os.Message;
 public class HandlerCaller {
 
     public final Context mContext;
-    
+
     final Looper mMainLooper;
     final Handler mH;
 
     final Callback mCallback;
 
     class MyHandler extends Handler {
-        MyHandler(Looper looper) {
-            super(looper);
+        MyHandler(Looper looper, boolean async) {
+            super(looper, null, async);
         }
-        
+
         @Override
         public void handleMessage(Message msg) {
             mCallback.executeMessage(msg);
         }
     }
-    
+
     public interface Callback {
         public void executeMessage(Message msg);
     }
-    
-    public HandlerCaller(Context context, Callback callback) {
-        mContext = context;
-        mMainLooper = context.getMainLooper();
-        mH = new MyHandler(mMainLooper);
-        mCallback = callback;
-    }
 
-    public HandlerCaller(Context context, Looper looper, Callback callback) {
+    public HandlerCaller(Context context, Looper looper, Callback callback,
+            boolean asyncHandler) {
         mContext = context;
-        mMainLooper = looper;
-        mH = new MyHandler(mMainLooper);
+        mMainLooper = looper != null ? looper : context.getMainLooper();
+        mH = new MyHandler(mMainLooper, asyncHandler);
         mCallback = callback;
     }
 
@@ -71,7 +65,11 @@ public class HandlerCaller {
         
         mH.sendMessage(msg);
     }
-    
+
+    public void sendMessageDelayed(Message msg, long delayMillis) {
+        mH.sendMessageDelayed(msg, delayMillis);
+    }
+
     public boolean hasMessages(int what) {
         return mH.hasMessages(what);
     }

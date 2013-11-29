@@ -36,11 +36,10 @@
 #include <errno.h>
 #include <assert.h>
 
-#include <androidfw/KeyLayoutMap.h>
-#include <androidfw/KeyCharacterMap.h>
-#include <androidfw/VirtualKeyMap.h>
+#include <input/KeyLayoutMap.h>
+#include <input/KeyCharacterMap.h>
+#include <input/VirtualKeyMap.h>
 
-#include <sha1.h>
 #include <string.h>
 #include <stdint.h>
 #include <dirent.h>
@@ -49,6 +48,7 @@
 #include <sys/epoll.h>
 #include <sys/ioctl.h>
 #include <sys/limits.h>
+#include <sys/sha1.h>
 
 /* this macro is used to tell if "bit" is set in "array"
  * it selects a byte from the array, and does a boolean AND
@@ -162,7 +162,8 @@ EventHub::Device::Device(int fd, int32_t id, const String8& path,
         next(NULL),
         fd(fd), id(id), path(path), identifier(identifier),
         classes(0), configuration(NULL), virtualKeyMap(NULL),
-        ffEffectPlaying(false), ffEffectId(-1) {
+        ffEffectPlaying(false), ffEffectId(-1), controllerNumber(0),
+        timestampOverrideSec(0), timestampOverrideUsec(0) {
     memset(keyBitmask, 0, sizeof(keyBitmask));
     memset(absBitmask, 0, sizeof(absBitmask));
     memset(relBitmask, 0, sizeof(relBitmask));
@@ -194,7 +195,7 @@ const int EventHub::EPOLL_SIZE_HINT;
 const int EventHub::EPOLL_MAX_EVENTS;
 
 EventHub::EventHub(void) :
-        mBuiltInKeyboardId(NO_BUILT_IN_KEYBOARD), mNextDeviceId(1),
+        mBuiltInKeyboardId(NO_BUILT_IN_KEYBOARD), mNextDeviceId(1), mControllerNumbers(),
         mOpeningDevices(0), mClosingDevices(0),
         mNeedToSendFinishedDeviceScan(false),
         mNeedToReopenDevices(false), mNeedToScanDevices(true),
@@ -266,6 +267,13 @@ uint32_t EventHub::getDeviceClasses(int32_t deviceId) const {
     Device* device = getDeviceLocked(deviceId);
     if (device == NULL) return 0;
     return device->classes;
+}
+
+int32_t EventHub::getDeviceControllerNumber(int32_t deviceId) const {
+    AutoMutex _l(mLock);
+    Device* device = getDeviceLocked(deviceId);
+    if (device == NULL) return 0;
+    return device->controllerNumber;
 }
 
 void EventHub::getConfiguration(int32_t deviceId, PropertyMap* outConfiguration) const {
@@ -766,11 +774,36 @@ size_t EventHub::getEvents(int timeoutMillis, RawEvent* buffer, size_t bufferSiz
 
                     size_t count = size_t(readSize) / sizeof(struct input_event);
                     for (size_t i = 0; i < count; i++) {
-                        const struct input_event& iev = readBuffer[i];
-                        ALOGV("%s got: t0=%d, t1=%d, type=%d, code=%d, value=%d",
+                        struct input_event& iev = readBuffer[i];
+                        ALOGV("%s got: time=%d.%06d, type=%d, code=%d, value=%d",
                                 device->path.string(),
                                 (int) iev.time.tv_sec, (int) iev.time.tv_usec,
                                 iev.type, iev.code, iev.value);
+
+                        // Some input devices may have a better concept of the time
+                        // when an input event was actually generated than the kernel
+                        // which simply timestamps all events on entry to evdev.
+                        // This is a custom Android extension of the input protocol
+                        // mainly intended for use with uinput based device drivers.
+                        if (iev.type == EV_MSC) {
+                            if (iev.code == MSC_ANDROID_TIME_SEC) {
+                                device->timestampOverrideSec = iev.value;
+                                continue;
+                            } else if (iev.code == MSC_ANDROID_TIME_USEC) {
+                                device->timestampOverrideUsec = iev.value;
+                                continue;
+                            }
+                        }
+                        if (device->timestampOverrideSec || device->timestampOverrideUsec) {
+                            iev.time.tv_sec = device->timestampOverrideSec;
+                            iev.time.tv_usec = device->timestampOverrideUsec;
+                            if (iev.type == EV_SYN && iev.code == SYN_REPORT) {
+                                device->timestampOverrideSec = 0;
+                                device->timestampOverrideUsec = 0;
+                            }
+                            ALOGV("applied override time %d.%06d",
+                                    int(iev.time.tv_sec), int(iev.time.tv_usec));
+                        }
 
 #ifdef HAVE_POSIX_CLOCKS
                         // Use the time specified in the event instead of the current time
@@ -829,8 +862,8 @@ size_t EventHub::getEvents(int timeoutMillis, RawEvent* buffer, size_t bufferSiz
                         event->code = iev.code;
                         event->value = iev.value;
                         event += 1;
+                        capacity -= 1;
                     }
-                    capacity -= count;
                     if (capacity == 0) {
                         // The result buffer is full.  Reset the pending event index
                         // so we will try to read the device again on the next iteration.
@@ -1183,6 +1216,12 @@ status_t EventHub::openDeviceLocked(const char *devicePath) {
                 break;
             }
         }
+
+        // Disable kernel key repeat since we handle it ourselves
+        unsigned int repeatRate[] = {0,0};
+        if (ioctl(fd, EVIOCSREP, repeatRate)) {
+            ALOGW("Unable to disable kernel key repeat for %s: %s", devicePath, strerror(errno));
+        }
     }
 
     // If the device isn't recognized as something we handle, don't monitor it.
@@ -1196,6 +1235,10 @@ status_t EventHub::openDeviceLocked(const char *devicePath) {
     // Determine whether the device is external or internal.
     if (isExternalDeviceLocked(device)) {
         device->classes |= INPUT_DEVICE_CLASS_EXTERNAL;
+    }
+
+    if (device->classes & (INPUT_DEVICE_CLASS_JOYSTICK | INPUT_DEVICE_CLASS_GAMEPAD)) {
+        device->controllerNumber = getNextControllerNumberLocked(device);
     }
 
     // Register with epoll.
@@ -1309,6 +1352,27 @@ bool EventHub::isExternalDeviceLocked(Device* device) {
     return device->identifier.bus == BUS_USB || device->identifier.bus == BUS_BLUETOOTH;
 }
 
+int32_t EventHub::getNextControllerNumberLocked(Device* device) {
+    if (mControllerNumbers.isFull()) {
+        ALOGI("Maximum number of controllers reached, assigning controller number 0 to device %s",
+                device->identifier.name.string());
+        return 0;
+    }
+    // Since the controller number 0 is reserved for non-controllers, translate all numbers up by
+    // one
+    return static_cast<int32_t>(mControllerNumbers.markFirstUnmarkedBit() + 1);
+}
+
+void EventHub::releaseControllerNumberLocked(Device* device) {
+    int32_t num = device->controllerNumber;
+    device->controllerNumber= 0;
+    if (num == 0) {
+        return;
+    }
+    mControllerNumbers.clearBit(static_cast<uint32_t>(num - 1));
+}
+
+
 bool EventHub::hasKeycodeLocked(Device* device, int keycode) const {
     if (!device->keyMap.haveKeyLayout() || !device->keyBitmask) {
         return false;
@@ -1359,6 +1423,8 @@ void EventHub::closeDeviceLocked(Device* device) {
             ALOGW("Could not remove device fd from epoll instance.  errno=%d", errno);
         }
     }
+
+    releaseControllerNumberLocked(device);
 
     mDevices.removeItem(device->id);
     device->close();
@@ -1489,6 +1555,7 @@ void EventHub::dump(String8& dump) {
             dump.appendFormat(INDENT3 "Path: %s\n", device->path.string());
             dump.appendFormat(INDENT3 "Descriptor: %s\n", device->identifier.descriptor.string());
             dump.appendFormat(INDENT3 "Location: %s\n", device->identifier.location.string());
+            dump.appendFormat(INDENT3 "ControllerNumber: %d\n", device->controllerNumber);
             dump.appendFormat(INDENT3 "UniqueId: %s\n", device->identifier.uniqueId.string());
             dump.appendFormat(INDENT3 "Identifier: bus=0x%04x, vendor=0x%04x, "
                     "product=0x%04x, version=0x%04x\n",

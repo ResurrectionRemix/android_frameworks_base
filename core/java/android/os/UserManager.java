@@ -15,14 +15,15 @@
  */
 package android.os;
 
-import com.android.internal.R;
-
 import android.app.ActivityManagerNative;
 import android.content.Context;
+import android.content.RestrictionEntry;
 import android.content.pm.UserInfo;
-import android.graphics.Bitmap;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.util.Log;
+
+import com.android.internal.R;
 
 import java.util.List;
 
@@ -34,6 +35,127 @@ public class UserManager {
     private static String TAG = "UserManager";
     private final IUserManager mService;
     private final Context mContext;
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from adding and removing
+     * accounts.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_MODIFY_ACCOUNTS = "no_modify_accounts";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from changing Wi-Fi
+     * access points.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_CONFIG_WIFI = "no_config_wifi";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from installing applications.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_INSTALL_APPS = "no_install_apps";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from uninstalling applications.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_UNINSTALL_APPS = "no_uninstall_apps";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from toggling location sharing.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+
+    public static final String DISALLOW_SHARE_LOCATION = "no_share_location";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from enabling the
+     * "Unknown Sources" setting, that allows installation of apps from unknown sources.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_INSTALL_UNKNOWN_SOURCES = "no_install_unknown_sources";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from configuring bluetooth.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_CONFIG_BLUETOOTH = "no_config_bluetooth";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from transferring files over
+     * USB. The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_USB_FILE_TRANSFER = "no_usb_file_transfer";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from configuring user
+     * credentials. The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_CONFIG_CREDENTIALS = "no_config_credentials";
+
+    /**
+     * Key for user restrictions. Specifies if a user is disallowed from removing users.
+     * The default value is <code>false</code>.
+     * <p/>
+     * Type: Boolean
+     * @see #setUserRestrictions(Bundle)
+     * @see #getUserRestrictions()
+     */
+    public static final String DISALLOW_REMOVE_USER = "no_remove_user";
+
+    /** @hide */
+    public static final int PIN_VERIFICATION_FAILED_INCORRECT = -3;
+    /** @hide */
+    public static final int PIN_VERIFICATION_FAILED_NOT_SET = -2;
+    /** @hide */
+    public static final int PIN_VERIFICATION_SUCCESS = -1;
+
+    private static UserManager sInstance = null;
+
+    /** @hide */
+    public synchronized static UserManager get(Context context) {
+        if (sInstance == null) {
+            sInstance = (UserManager) context.getSystemService(Context.USER_SERVICE);
+        }
+        return sInstance;
+    }
 
     /** @hide */
     public UserManager(Context context, IUserManager service) {
@@ -50,11 +172,11 @@ public class UserManager {
         return getMaxSupportedUsers() > 1;
     }
 
-    /** 
+    /**
      * Returns the user handle for the user that this application is running for.
      * @return the user handle of the user making this call.
      * @hide
-     * */
+     */
     public int getUserHandle() {
         return UserHandle.myUserId();
     }
@@ -77,12 +199,27 @@ public class UserManager {
    /**
      * Used to determine whether the user making this call is subject to
      * teleportations.
-     * @return whether the user making this call is a goat 
+     * @return whether the user making this call is a goat
      */
     public boolean isUserAGoat() {
         return false;
     }
- 
+
+    /**
+     * Used to check if the user making this call is linked to another user. Linked users may have
+     * a reduced number of available apps, app restrictions and account restrictions.
+     * @return whether the user making this call is a linked user
+     * @hide
+     */
+    public boolean isLinkedUser() {
+        try {
+            return mService.isRestricted();
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not check if user is limited ", re);
+            return false;
+        }
+    }
+
     /**
      * Return whether the given user is actively running.  This means that
      * the user is in the "started" state, not "stopped" -- it is currently
@@ -130,6 +267,98 @@ public class UserManager {
             Log.w(TAG, "Could not get user info", re);
             return null;
         }
+    }
+
+    /**
+     * Returns the user-wide restrictions imposed on this user.
+     * @return a Bundle containing all the restrictions.
+     */
+    public Bundle getUserRestrictions() {
+        return getUserRestrictions(Process.myUserHandle());
+    }
+
+    /**
+     * Returns the user-wide restrictions imposed on the user specified by <code>userHandle</code>.
+     * @param userHandle the UserHandle of the user for whom to retrieve the restrictions.
+     * @return a Bundle containing all the restrictions.
+     */
+    public Bundle getUserRestrictions(UserHandle userHandle) {
+        try {
+            return mService.getUserRestrictions(userHandle.getIdentifier());
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not get user restrictions", re);
+            return Bundle.EMPTY;
+        }
+    }
+
+    /**
+     * Sets all the user-wide restrictions for this user.
+     * Requires the MANAGE_USERS permission.
+     * @param restrictions the Bundle containing all the restrictions.
+     */
+    public void setUserRestrictions(Bundle restrictions) {
+        setUserRestrictions(restrictions, Process.myUserHandle());
+    }
+
+    /**
+     * Sets all the user-wide restrictions for the specified user.
+     * Requires the MANAGE_USERS permission.
+     * @param restrictions the Bundle containing all the restrictions.
+     * @param userHandle the UserHandle of the user for whom to set the restrictions.
+     */
+    public void setUserRestrictions(Bundle restrictions, UserHandle userHandle) {
+        try {
+            mService.setUserRestrictions(restrictions, userHandle.getIdentifier());
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not set user restrictions", re);
+        }
+    }
+
+    /**
+     * Sets the value of a specific restriction.
+     * Requires the MANAGE_USERS permission.
+     * @param key the key of the restriction
+     * @param value the value for the restriction
+     */
+    public void setUserRestriction(String key, boolean value) {
+        Bundle bundle = getUserRestrictions();
+        bundle.putBoolean(key, value);
+        setUserRestrictions(bundle);
+    }
+
+    /**
+     * @hide
+     * Sets the value of a specific restriction on a specific user.
+     * Requires the {@link android.Manifest.permission#MANAGE_USERS} permission.
+     * @param key the key of the restriction
+     * @param value the value for the restriction
+     * @param userHandle the user whose restriction is to be changed.
+     */
+    public void setUserRestriction(String key, boolean value, UserHandle userHandle) {
+        Bundle bundle = getUserRestrictions(userHandle);
+        bundle.putBoolean(key, value);
+        setUserRestrictions(bundle, userHandle);
+    }
+
+    /**
+     * @hide
+     * Returns whether the current user has been disallowed from performing certain actions
+     * or setting certain settings.
+     * @param restrictionKey the string key representing the restriction
+     */
+    public boolean hasUserRestriction(String restrictionKey) {
+        return hasUserRestriction(restrictionKey, Process.myUserHandle());
+    }
+
+    /**
+     * @hide
+     * Returns whether the given user has been disallowed from performing certain actions
+     * or setting certain settings.
+     * @param restrictionKey the string key representing the restriction
+     * @param userHandle the UserHandle of the user for whom to retrieve the restrictions.
+     */
+    public boolean hasUserRestriction(String restrictionKey, UserHandle userHandle) {
+        return getUserRestrictions(userHandle).getBoolean(restrictionKey, false);
     }
 
     /**
@@ -326,7 +555,7 @@ public class UserManager {
      * Returns the maximum number of users that can be created on this device. A return value
      * of 1 means that it is a single user device.
      * @hide
-     * @return a value greater than or equal to 1 
+     * @return a value greater than or equal to 1
      */
     public static int getMaxSupportedUsers() {
         // Don't allow multiple users on certain builds
@@ -367,5 +596,106 @@ public class UserManager {
             Log.w(TAG, "Could not get userHandle for user " + userSerialNumber);
         }
         return -1;
+    }
+
+    /**
+     * Returns a Bundle containing any saved application restrictions for this user, for the
+     * given package name. Only an application with this package name can call this method.
+     * @param packageName the package name of the calling application
+     * @return a Bundle with the restrictions as key/value pairs, or null if there are no
+     * saved restrictions. The values can be of type Boolean, String or String[], depending
+     * on the restriction type, as defined by the application.
+     */
+    public Bundle getApplicationRestrictions(String packageName) {
+        try {
+            return mService.getApplicationRestrictions(packageName);
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not get application restrictions for package " + packageName);
+        }
+        return null;
+    }
+
+    /**
+     * @hide
+     */
+    public Bundle getApplicationRestrictions(String packageName, UserHandle user) {
+        try {
+            return mService.getApplicationRestrictionsForUser(packageName, user.getIdentifier());
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not get application restrictions for user " + user.getIdentifier());
+        }
+        return null;
+    }
+
+    /**
+     * @hide
+     */
+    public void setApplicationRestrictions(String packageName, Bundle restrictions,
+            UserHandle user) {
+        try {
+            mService.setApplicationRestrictions(packageName, restrictions, user.getIdentifier());
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not set application restrictions for user " + user.getIdentifier());
+        }
+    }
+
+    /**
+     * Sets a new challenge PIN for restrictions. This is only for use by pre-installed
+     * apps and requires the MANAGE_USERS permission.
+     * @param newPin the PIN to use for challenge dialogs.
+     * @return Returns true if the challenge PIN was set successfully.
+     */
+    public boolean setRestrictionsChallenge(String newPin) {
+        try {
+            return mService.setRestrictionsChallenge(newPin);
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not change restrictions pin");
+        }
+        return false;
+    }
+
+    /**
+     * @hide
+     * @param pin The PIN to verify, or null to get the number of milliseconds to wait for before
+     * allowing the user to enter the PIN.
+     * @return Returns a positive number (including zero) for how many milliseconds before
+     * you can accept another PIN, when the input is null or the input doesn't match the saved PIN.
+     * Returns {@link #PIN_VERIFICATION_SUCCESS} if the input matches the saved PIN. Returns
+     * {@link #PIN_VERIFICATION_FAILED_NOT_SET} if there is no PIN set.
+     */
+    public int checkRestrictionsChallenge(String pin) {
+        try {
+            return mService.checkRestrictionsChallenge(pin);
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not check restrictions pin");
+        }
+        return PIN_VERIFICATION_FAILED_INCORRECT;
+    }
+
+    /**
+     * @hide
+     * Checks whether the user has restrictions that are PIN-protected. An application that
+     * participates in restrictions can check if the owner has requested a PIN challenge for
+     * any restricted operations. If there is a PIN in effect, the application should launch
+     * the PIN challenge activity {@link android.content.Intent#ACTION_RESTRICTIONS_CHALLENGE}.
+     * @see android.content.Intent#ACTION_RESTRICTIONS_CHALLENGE
+     * @return whether a restrictions PIN is in effect.
+     */
+    public boolean hasRestrictionsChallenge() {
+        try {
+            return mService.hasRestrictionsChallenge();
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not change restrictions pin");
+        }
+        return false;
+    }
+
+    /** @hide */
+    public void removeRestrictions() {
+        try {
+            mService.removeRestrictions();
+        } catch (RemoteException re) {
+            Log.w(TAG, "Could not change restrictions pin");
+        }
     }
 }

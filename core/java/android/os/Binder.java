@@ -17,6 +17,7 @@
 package android.os;
 
 import android.util.Log;
+import com.android.internal.util.FastPrintWriter;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -48,6 +49,11 @@ public class Binder implements IBinder {
      */
     private static final boolean FIND_POTENTIAL_LEAKS = false;
     private static final String TAG = "Binder";
+
+    /**
+     * Control whether dump() calls are allowed.
+     */
+    private static String sDumpDisabled = null;
 
     /* mObject is used by native code, do not remove or rename */
     private int mObject;
@@ -152,7 +158,15 @@ public class Binder implements IBinder {
      * not return until the current process is exiting.
      */
     public static final native void joinThreadPool();
-    
+
+    /**
+     * Returns true if the specified interface is a proxy.
+     * @hide
+     */
+    public static final boolean isProxy(IInterface iface) {
+        return iface.asBinder() != iface;
+    }
+
     /**
      * Default constructor initializes the object.
      */
@@ -216,7 +230,23 @@ public class Binder implements IBinder {
         }
         return null;
     }
-    
+
+    /**
+     * Control disabling of dump calls in this process.  This is used by the system
+     * process watchdog to disable incoming dump calls while it has detecting the system
+     * is hung and is reporting that back to the activity controller.  This is to
+     * prevent the controller from getting hung up on bug reports at this point.
+     * @hide
+     *
+     * @param msg The message to show instead of the dump; if null, dumps are
+     * re-enabled.
+     */
+    public static void setDumpDisabled(String msg) {
+        synchronized (Binder.class) {
+            sDumpDisabled = msg;
+        }
+    }
+
     /**
      * Default implementation is a stub that returns false.  You will want
      * to override this to do the appropriate unmarshalling of transactions.
@@ -259,9 +289,30 @@ public class Binder implements IBinder {
      */
     public void dump(FileDescriptor fd, String[] args) {
         FileOutputStream fout = new FileOutputStream(fd);
-        PrintWriter pw = new PrintWriter(fout);
+        PrintWriter pw = new FastPrintWriter(fout);
         try {
-            dump(fd, pw, args);
+            final String disabled;
+            synchronized (Binder.class) {
+                disabled = sDumpDisabled;
+            }
+            if (disabled == null) {
+                try {
+                    dump(fd, pw, args);
+                } catch (SecurityException e) {
+                    pw.println("Security exception: " + e.getMessage());
+                    throw e;
+                } catch (Throwable e) {
+                    // Unlike usual calls, in this case if an exception gets thrown
+                    // back to us we want to print it back in to the dump data, since
+                    // that is where the caller expects all interesting information to
+                    // go.
+                    pw.println();
+                    pw.println("Exception occurred while dumping:");
+                    e.printStackTrace(pw);
+                }
+            } else {
+                pw.println(sDumpDisabled);
+            }
         } finally {
             pw.flush();
         }
@@ -273,7 +324,7 @@ public class Binder implements IBinder {
      */
     public void dumpAsync(final FileDescriptor fd, final String[] args) {
         final FileOutputStream fout = new FileOutputStream(fd);
-        final PrintWriter pw = new PrintWriter(fout);
+        final PrintWriter pw = new FastPrintWriter(fout);
         Thread thr = new Thread("Binder.dumpAsync") {
             public void run() {
                 try {
@@ -347,17 +398,27 @@ public class Binder implements IBinder {
         // but all that does is rewind it, and we just got these from an IPC,
         // so we'll just call it directly.
         boolean res;
+        // Log any exceptions as warnings, don't silently suppress them.
+        // If the call was FLAG_ONEWAY then these exceptions disappear into the ether.
         try {
             res = onTransact(code, data, reply, flags);
         } catch (RemoteException e) {
+            if ((flags & FLAG_ONEWAY) != 0) {
+                Log.w(TAG, "Binder call failed.", e);
+            }
             reply.setDataPosition(0);
             reply.writeException(e);
             res = true;
         } catch (RuntimeException e) {
+            if ((flags & FLAG_ONEWAY) != 0) {
+                Log.w(TAG, "Caught a RuntimeException from the binder stub implementation.", e);
+            }
             reply.setDataPosition(0);
             reply.writeException(e);
             res = true;
         } catch (OutOfMemoryError e) {
+            // Unconditionally log this, since this is generally unrecoverable.
+            Log.e(TAG, "Caught an OutOfMemoryError from the binder stub implementation.", e);
             RuntimeException re = new RuntimeException("Out of memory", e);
             reply.setDataPosition(0);
             reply.writeException(re);
@@ -405,7 +466,6 @@ final class BinderProxy implements IBinder {
         data.writeStringArray(args);
         try {
             transact(DUMP_TRANSACTION, data, reply, FLAG_ONEWAY);
-            reply.readException();
         } finally {
             data.recycle();
             reply.recycle();

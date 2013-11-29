@@ -21,8 +21,6 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"Sist Arayüzü"</string>
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Temizle"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"Rahatsız etmeyin"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"Bildirimleri göster"</string>
     <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Listeden kaldır"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"Uygulama bilgileri"</string>
     <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Son uygulama yok"</string>
@@ -34,10 +32,10 @@
     <string name="status_bar_no_notifications_title" msgid="4755261167193833213">"Bildirim yok"</string>
     <string name="status_bar_ongoing_events_title" msgid="1682504513316879202">"Sürüyor"</string>
     <string name="status_bar_latest_events_title" msgid="6594767438577593172">"Bildirimler"</string>
-    <string name="battery_low_title" msgid="2783104807551211639">"Şarj cihazını bağla"</string>
+    <string name="battery_low_title" msgid="2783104807551211639">"Şarj cihazını takın"</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"Pil azalıyor."</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"<xliff:g id="NUMBER">%d%%</xliff:g> kaldı"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"USB üzerinden şarj desteklenmiyor."\n"Yalnızca ürünle birlikte verilen şarj cihazını kullanın."</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"USB üzerinden şarj desteklenmiyor.\nYalnızca ürünle birlikte verilen şarj cihazını kullanın."</string>
     <string name="battery_low_why" msgid="7279169609518386372">"Pil kullanımı"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"Ayarlar"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"Kablosuz"</string>
@@ -59,12 +57,10 @@
     <string name="always_use_device" msgid="1450287437017315906">"Bu USB cihazı için varsayılan olarak kullan"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"Bu USB aksesuar için varsayılan olarak kullan"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"USB hata ayıklamasına izin verilsin mi?"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"Bilgisayarın RSA anahtarı parmak izi:"\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"Bilgisayarın RSA anahtarı parmak izi:\n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"Bu bilgisayardan her zaman izin ver"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"Yakınlaştır (ekranı kaplasın)"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"Genişlet (ekran kapansın)"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"Uyumluluk yakınlaştırması"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"Uygulama küçük bir ekran için tasarlanmışsa saatin yanında bir yakınlaştırma denetimi görünür."</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"Ekran görüntüsü kaydediliyor..."</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"Ekran görüntüsü kaydediliyor..."</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"Ekran görüntüsü kaydediliyor."</string>
@@ -80,6 +76,8 @@
     <string name="accessibility_home" msgid="8217216074895377641">"Ana sayfa"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"Menü"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"Son uygulamalar"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"Ara"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"Kamera"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"Giriş yöntemini değiştirme düğmesi."</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"Uyumluluk zum düğmesi."</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"Daha büyük ekrana daha küçük yakınlaştır."</string>
@@ -127,6 +125,7 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3.5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
     <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Dolaşımda"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"Edge"</string>
@@ -159,21 +158,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"4G verileri devre dışı"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"Mobil veriler devre dışı"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"Veriler devre dışı"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Belirtilen veri kullanım limitine ulaştınız."\n\n"Verileri yeniden etkinleştirirseniz, operatör sizden ücret talep edebilir."</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Belirtilen veri kullanım limitine ulaştınız.\n\nVerileri yeniden etkinleştirirseniz, operatör sizden ücret talep edebilir."</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"Veriyi yeniden etkinleştir"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"İnternet bağlantısı yok"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"Kablosuz bağlandı"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"GPS aranıyor"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"Konum GPS ile belirlendi"</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"Konum bilgisi istekleri etkin"</string>
     <string name="accessibility_clear_all" msgid="5235938559247164925">"Tüm bildirimleri temizle"</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"Uygulama bilgileri"</string>
-    <string name="close_universe" msgid="3736513750241754348">"Kapat"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"Bildirimler kapalı"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"Bildirimleri tekrar açmak için buraya hafifçe vurun."</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"Ekran otomatik olarak dönecektir."</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"Ekran yatay yönde kilitlendi."</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"Ekran dikey yönde kilitlendi."</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Tatlı Kutusu"</string>
     <string name="start_dreams" msgid="7219575858348719790">"Hafif uyku"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"Ethernet"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"Uçak modu"</string>
@@ -186,7 +183,8 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"Otomatik Döndür"</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"Dönme Kilitlendi"</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"Giriş Yöntemi"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"Kullanılan konum"</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"Konum"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"Konum Bilgisi Kapalı"</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"Medya cihazı"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"RSSI"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"Yalnızca Acil Çağrılar İçin"</string>
@@ -201,6 +199,5 @@
     <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Kablosuz Ekran"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"Parlaklık"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"OTOMATİK"</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"Bildirimler burada görünür"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"Aşağıya hızlıca kaydırarak bunlara istediğiniz zaman erişebilirsiniz."\n"Sistem denetimleri için tekrar hızlıca aşağı kaydırın."</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"Ağ izleniyor\nolabilir"</string>
 </resources>

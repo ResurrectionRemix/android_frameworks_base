@@ -21,8 +21,6 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"Системен ПИ"</string>
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Изчистване"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"Не ме безпокойте"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"Показване на известията"</string>
     <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Премахване от списъка"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"Информация за приложението"</string>
     <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Няма скорошни приложения"</string>
@@ -37,7 +35,7 @@
     <string name="battery_low_title" msgid="2783104807551211639">"Включете зарядното устройство"</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"Батерията се изтощава."</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"Остава: <xliff:g id="NUMBER">%d%%</xliff:g>"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"Не се поддържа зареждане през USB."\n"Използвайте само доставеното зарядно устройство."</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"Не се поддържа зареждане през USB.\nИзползвайте само доставеното зарядно устройство."</string>
     <string name="battery_low_why" msgid="7279169609518386372">"Използване на батерията"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"Настройки"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"Wi-Fi"</string>
@@ -59,12 +57,10 @@
     <string name="always_use_device" msgid="1450287437017315906">"Използване по подразб. за това USB устройство"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"Използване по подразб. за този аксесоар за USB"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"Да се разреши ли отстраняването на грешки през USB?"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"Отпечатъкът на RSA ключа на компютъра е:"\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"Отпечатъкът на RSA ключа на компютъра е:\n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"Винаги да се разрешава от този компютър"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"Мащаб – запълва екрана"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"Разпъване – запълва екрана"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"Промяна на мащаба за съвместимост"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"Когато дадено приложение е създадено за по-малък екран, до часовника ще се покаже управление за промяна на мащаба."</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"Екранната снимка се запазва..."</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"Екранната снимка се запазва..."</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"Екранната снимка се запазва."</string>
@@ -80,6 +76,8 @@
     <string name="accessibility_home" msgid="8217216074895377641">"Начало"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"Меню"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"Скорошни приложения"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"Търсене"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"Камера"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"Бутон за превключване на метода на въвеждане."</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"Бутон за промяна на мащаба с цел съвместимост."</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"Промяна на мащаба на екрана от по-малък до по-голям."</string>
@@ -127,6 +125,7 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3.5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
     <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Роуминг"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"Edge"</string>
@@ -159,21 +158,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"4G данните са деактивирани"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"Мобилните данни са деактивирани"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"Трафикът на данни е деактивиран"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Достигнахте определеното ограничение за използване на данни."\n\n"Ако ги активирате отново, е възможно да бъдете таксувани от оператора."</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Достигнахте определеното ограничение за използване на данни.\n\nАко ги активирате отново, е възможно да бъдете таксувани от оператора."</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"Активиране на данните отново"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"Няма връзка с интернет"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"Wi-Fi: Има връзка"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"Търси се GPS"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"Местоположението е зададено от GPS"</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"Активни заявки за местоположение"</string>
     <string name="accessibility_clear_all" msgid="5235938559247164925">"Изчистване на всички известия."</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"Информация за приложението"</string>
-    <string name="close_universe" msgid="3736513750241754348">"Затваряне"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"Известията са изключени"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"Докоснете тук, за да включите отново известията."</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"Екранът ще се завърта автоматично."</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"Екранът е заключен в хоризонтална ориентация."</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"Екранът е заключен във вертикална ориентация."</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Витрина с десерти"</string>
     <string name="start_dreams" msgid="7219575858348719790">"Мечта"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"Ethernet"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"Самолетен режим"</string>
@@ -186,7 +183,8 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"Автоматична ориентация"</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"Ориентацията е заключена"</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"Метод на въвеждане"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"Използвано местоположение"</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"Местоположение"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"Местоположението е изключено"</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"Мултимедийно устройство"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"Индикатор за силата на получения сигнал (RSSI)"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"Само спешни обаждания"</string>
@@ -201,6 +199,5 @@
     <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Безжичен дисплей"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"Яркост"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"АВТ."</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"Известията се показват тук"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"Осъществявайте достъп до тях по всяко време, като прекарате пръст надолу."\n"Направете го отново за системните контроли."</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"Мрежата може\nда се наблюдава"</string>
 </resources>

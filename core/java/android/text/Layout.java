@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified. Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,9 +134,8 @@ public abstract class Layout {
                      int width, Alignment align, TextDirectionHeuristic textDir,
                      float spacingMult, float spacingAdd) {
 
-        if (width < 0) {
-            width = 0;
-        }
+        if (width < 0)
+            throw new IllegalArgumentException("Layout: " + width + " < 0");
 
         // Ensure paint doesn't have baselineShift set.
         // While normally we don't modify the paint the user passed in,
@@ -166,7 +164,7 @@ public abstract class Layout {
                               int width, Alignment align,
                               float spacingmult, float spacingadd) {
         if (width < 0) {
-            width = 0;
+            throw new IllegalArgumentException("Layout: " + width + " < 0");
         }
 
         mText = text;
@@ -794,8 +792,17 @@ public abstract class Layout {
      * the paragraph's primary direction.
      */
     public float getPrimaryHorizontal(int offset) {
+        return getPrimaryHorizontal(offset, false /* not clamped */);
+    }
+
+    /**
+     * Get the primary horizontal position for the specified text offset, but
+     * optionally clamp it so that it doesn't exceed the width of the layout.
+     * @hide
+     */
+    public float getPrimaryHorizontal(int offset, boolean clamped) {
         boolean trailing = primaryIsTrailingPrevious(offset);
-        return getHorizontal(offset, trailing);
+        return getHorizontal(offset, trailing, clamped);
     }
 
     /**
@@ -804,17 +811,26 @@ public abstract class Layout {
      * the direction other than the paragraph's primary direction.
      */
     public float getSecondaryHorizontal(int offset) {
-        boolean trailing = primaryIsTrailingPrevious(offset);
-        return getHorizontal(offset, !trailing);
+        return getSecondaryHorizontal(offset, false /* not clamped */);
     }
 
-    private float getHorizontal(int offset, boolean trailing) {
+    /**
+     * Get the secondary horizontal position for the specified text offset, but
+     * optionally clamp it so that it doesn't exceed the width of the layout.
+     * @hide
+     */
+    public float getSecondaryHorizontal(int offset, boolean clamped) {
+        boolean trailing = primaryIsTrailingPrevious(offset);
+        return getHorizontal(offset, !trailing, clamped);
+    }
+
+    private float getHorizontal(int offset, boolean trailing, boolean clamped) {
         int line = getLineForOffset(offset);
 
-        return getHorizontal(offset, trailing, line);
+        return getHorizontal(offset, trailing, line, clamped);
     }
 
-    private float getHorizontal(int offset, boolean trailing, int line) {
+    private float getHorizontal(int offset, boolean trailing, int line, boolean clamped) {
         int start = getLineStart(line);
         int end = getLineEnd(line);
         int dir = getParagraphDirection(line);
@@ -836,6 +852,9 @@ public abstract class Layout {
         float wid = tl.measure(offset - start, trailing, null);
         TextLine.recycle(tl);
 
+        if (clamped && wid > mWidth) {
+            wid = mWidth;
+        }
         int left = getParagraphLeft(line);
         int right = getParagraphRight(line);
 
@@ -1096,7 +1115,7 @@ public abstract class Layout {
 
         float dist = Math.abs(getPrimaryHorizontal(max) - horiz);
 
-        if (dist < bestdist) {
+        if (dist <= bestdist) {
             bestdist = dist;
             best = max;
         }
@@ -1259,6 +1278,23 @@ public abstract class Layout {
     }
 
     /**
+     * Determine whether we should clamp cursor position. Currently it's
+     * only robust for left-aligned displays.
+     * @hide
+     */
+    public boolean shouldClampCursor(int line) {
+        // Only clamp cursor position in left-aligned displays.
+        switch (getParagraphAlignment(line)) {
+            case ALIGN_LEFT:
+                return true;
+            case ALIGN_NORMAL:
+                return getParagraphDirection(line) > 0;
+            default:
+                return false;
+        }
+
+    }
+    /**
      * Fills in the specified Path with a representation of a cursor
      * at the specified offset.  This will often be a vertical line
      * but can be multiple discontinuous lines in text with multiple
@@ -1272,8 +1308,9 @@ public abstract class Layout {
         int top = getLineTop(line);
         int bottom = getLineTop(line+1);
 
-        float h1 = getPrimaryHorizontal(point) - 0.5f;
-        float h2 = isLevelBoundary(point) ? getSecondaryHorizontal(point) - 0.5f : h1;
+        boolean clamped = shouldClampCursor(line);
+        float h1 = getPrimaryHorizontal(point, clamped) - 0.5f;
+        float h2 = isLevelBoundary(point) ? getSecondaryHorizontal(point, clamped) - 0.5f : h1;
 
         int caps = TextKeyListener.getMetaState(editingBuffer, TextKeyListener.META_SHIFT_ON) |
                    TextKeyListener.getMetaState(editingBuffer, TextKeyListener.META_SELECTING);
@@ -1359,8 +1396,8 @@ public abstract class Layout {
                 int en = Math.min(end, there);
 
                 if (st != en) {
-                    float h1 = getHorizontal(st, false, line);
-                    float h2 = getHorizontal(en, true, line);
+                    float h1 = getHorizontal(st, false, line, false /* not clamped */);
+                    float h2 = getHorizontal(en, true, line, false /* not clamped */);
 
                     float left = Math.min(h1, h2);
                     float right = Math.max(h1, h2);

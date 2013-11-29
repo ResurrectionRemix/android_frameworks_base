@@ -21,11 +21,9 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"Графический интерфейс системы"</string>
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Очистить"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"Не беспокоить"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"Показать уведомления"</string>
-    <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Удаление из списка"</string>
+    <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Удалить из списка"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"О приложении"</string>
-    <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"В последнее время вы не запускали приложения."</string>
+    <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Список недавно использованных приложений пуст."</string>
     <string name="status_bar_accessibility_dismiss_recents" msgid="4576076075226540105">"Закрыть недавние приложения"</string>
   <plurals name="status_bar_accessibility_recent_apps">
     <item quantity="one" msgid="5854176083865845541">"Недавних приложений: 1"</item>
@@ -37,7 +35,7 @@
     <string name="battery_low_title" msgid="2783104807551211639">"Подключите зарядное устройство"</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"Батарея разряжена."</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"Осталось <xliff:g id="NUMBER">%d%%</xliff:g>"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"Зарядка через порт USB не поддерживается."\n"Используйте только зарядное устройство из комплекта поставки."</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"Зарядка через порт USB не поддерживается.\nИспользуйте только зарядное устройство из комплекта поставки."</string>
     <string name="battery_low_why" msgid="7279169609518386372">"Подробнее"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"Настройки"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"Wi-Fi"</string>
@@ -59,12 +57,10 @@
     <string name="always_use_device" msgid="1450287437017315906">"Использовать по умолчанию для этого USB-устройства"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"Использовать по умолчанию для этого USB-аксессуара"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"Отладка по USB"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"Цифровой отпечаток ключа RSA:"\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"Цифровой отпечаток ключа RSA:\n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"Всегда разрешать отладку с этого компьютера"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"Подогнать по размерам экрана"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"Растянуть на весь экран"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"Масштаб и совместимость"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"Если приложение рассчитано на экран меньших размеров, рядом с часами появятся средства масштабирования."</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"Сохранение..."</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"Сохранение..."</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"Сохранение..."</string>
@@ -77,9 +73,11 @@
     <string name="use_ptp_button_title" msgid="7517127540301625751">"Установить как камеру (PTP)"</string>
     <string name="installer_cd_button_title" msgid="2312667578562201583">"Установить приложение"</string>
     <string name="accessibility_back" msgid="567011538994429120">"Назад"</string>
-    <string name="accessibility_home" msgid="8217216074895377641">"Главная страница"</string>
+    <string name="accessibility_home" msgid="8217216074895377641">"Домой"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"Меню"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"Недавние приложения"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"Поиск"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"Камера"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"Кнопка переключения способа ввода."</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"Кнопка масштабирования (режим совместимости)"</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"Уменьшение изображения для увеличения свободного места на экране."</string>
@@ -118,8 +116,8 @@
     <string name="accessibility_two_bars" msgid="6437363648385206679">"два деления"</string>
     <string name="accessibility_three_bars" msgid="2648241415119396648">"три деления"</string>
     <string name="accessibility_signal_full" msgid="9122922886519676839">"надежный сигнал"</string>
-    <string name="accessibility_desc_on" msgid="2385254693624345265">"ВКЛ"</string>
-    <string name="accessibility_desc_off" msgid="6475508157786853157">"ВЫКЛ"</string>
+    <string name="accessibility_desc_on" msgid="2385254693624345265">"Вкл."</string>
+    <string name="accessibility_desc_off" msgid="6475508157786853157">"Выкл."</string>
     <string name="accessibility_desc_connected" msgid="8366256693719499665">"Подключено"</string>
     <string name="accessibility_data_connection_gprs" msgid="1606477224486747751">"GPRS"</string>
     <string name="accessibility_data_connection_1x" msgid="994133468120244018">"1 X"</string>
@@ -127,6 +125,7 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3,5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
     <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Роуминг"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"Edge"</string>
@@ -161,21 +160,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"Передача данных по каналу 4G отключена"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"Моб. Интернет отключен"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"Передача данных отключена"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Достигнут лимит трафика."\n\n"При восстановлении подключения оператор может взимать плату за передачу данных."</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Достигнут лимит трафика.\n\nПри восстановлении подключения оператор может взимать плату за передачу данных."</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"Восстановить подключение"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"Нет интернет-подключения"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"Wi-Fi подключено"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"Поиск GPS"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"Координаты по GPS"</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"Есть активные запросы на определение местоположения"</string>
     <string name="accessibility_clear_all" msgid="5235938559247164925">"Удалить все уведомления"</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"О приложении"</string>
-    <string name="close_universe" msgid="3736513750241754348">"Закрыть"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"Уведомления отключены"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"Нажмите здесь, чтобы снова включить уведомления."</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"Экран будет поворачиваться автоматически."</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"Выбрана только альбомная ориентация экрана."</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"Выбрана только книжная ориентация экрана."</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Коробка со сладостями"</string>
     <string name="start_dreams" msgid="7219575858348719790">"Заставка"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"Ethernet"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"Режим полета"</string>
@@ -190,7 +187,8 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"Автоповорот"</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"Автоповорот выкл."</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"Способ ввода"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"Геосервис вкл."</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"Передача геоданных"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"Местоположение выкл."</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"Режим медиа"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"RSSI"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"Экстр. вызов"</string>
@@ -202,119 +200,8 @@
     <string name="quick_settings_wifi_no_network" msgid="2221993077220856376">"Нет сети"</string>
     <string name="quick_settings_wifi_off_label" msgid="7558778100843885864">"Wi-Fi выкл."</string>
     <string name="quick_settings_wifi_display_label" msgid="6893592964463624333">"Проектор Wi-Fi"</string>
-    <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Беспроводной проектор"</string>
+    <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Wi-Fi-монитор"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"Яркость"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"АВТОНАСТРОЙКА"</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"Это панель уведомлений"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"Ее можно открыть, пролистнув экран вниз."\n"Чтобы открыть настройки, проведите пальцем вниз ещё раз."</string>
-    <string name="permdesc_screenshot">Сделать снимок экрана</string>
-    <string name="permlab_screenshot">Позволяет приложению использовать снимок экрана. Защищено SystemUI.</string>
-    <string name="accessibility_data_connection_HP">HSPA+</string>
-    <string name="accessibility_battery_level">Батарея %d процентов.</string>
-    <string name="quick_settings_battery_charged_label">Заряжено</string>
-    <string name="quick_settings_swagger">Swagger</string>
-    <string name="quick_settings_swaggersun">Swagger воскресенье</string>
-    <string name="quick_settings_fbgt">FBGT</string>
-    <string name="quick_settings_recording">Запись...</string>
-    <string name="quick_settings_recordingcap">Запись выполнена</string>
-    <string name="quick_settings_playing">Воспроизведение...</string>
-    <string name="quick_settings_quickrecord">Быстрая запись</string>
-    <string name="quick_settings_nofile">Длит. нажатие для записи</string>
-    <string name="quick_settings_sleep">Сон</string>
-    <string name="quick_settings_reboot">Перезагрузка</string>
-    <string name="quick_settings_reboot_message">Ваше устройство перезагружается</string>
-    <string name="quick_settings_stayawake_on">Бодрств.вкл</string>
-    <string name="quick_settings_stayawake_off">Бодрств.выкл</string>
-    <string name="close">Закрыть</string>
-    <string name="app_window">Приложения</string>
-    <string name="shortcut_label">Действия AOKP</string>
-    <string name="action_home">Домой</string>
-    <string name="action_back">Назад</string>
-    <string name="action_recents">Недавние</string>
-    <string name="action_screenshot">Снимок экрана</string>
-    <string name="action_menu">Меню</string>
-    <string name="action_ime">Переключатель IME</string>
-    <string name="action_kill">Завершить задачу</string>
-    <string name="action_power">Питание</string>
-    <string name="action_search">Поиск</string>
-    <string name="action_notifications">Уведомления</string>
-    <string name="action_lastapp">Посл.приложение</string>
-    <string name="action_none">Пусто</string>
-    <string name="widgets">Виджеты</string>
-    <string name="toggle_navbar">Переключение нав.панели</string>
-    <string name="toggle_statusbar">Переключение стр.состояния</string>
-    <string name="toggle_widgets">Переключение виджетов</string>
-    <string name="toggle_ring_vib">Переключение звук/вибр</string>
-    <string name="toggle_ring_silent">Переключение звук/без звука</string>
-    <string name="toggle_ring_vib_silent">Переключение звук/вибр/без звука</string>
-    <string name="app_killed_message">Приложение завершено</string>
-    <string name="recents_kill_all_button_text">Заверш.всё</string>
-    <string name="screenshot_toast">Снимок экрана через %1$d с</string>
-    <string name="quick_settings_vibrate_on_label">Вибр.вкл</string>
-    <string name="quick_settings_vibrate_off_label">Вибр.выкл</string>
-    <string name="quick_settings_silent_on_label">Без зв.вкл</string>
-    <string name="quick_settings_silent_off_label">Без зв.выкл</string>
-    <string name="quick_settings_fcharge_on_label">Быстр.зар.вкл</string>
-    <string name="quick_settings_fcharge_off_label">Быстр.зар.выкл</string>
-    <string name="quick_settings_torch_on_label">Фонарь вкл</string>
-    <string name="quick_settings_torch_off_label">Фонарь выкл</string>
-    <string name="quick_settings_nfc_on_label">NFC вкл</string>
-    <string name="quick_settings_nfc_off_label">NFC выкл</string>
-    <string name="quick_settings_wifi_tether_on_label">Модем Wifi вкл</string>
-    <string name="quick_settings_wifi_tether_off_label">Модем Wifi выкл</string>
-    <string name="quick_settings_bt_tether_on_label">Модем BT вкл</string>
-    <string name="quick_settings_bt_tether_off_label">Модем BT выкл</string>
-    <string name="quick_settings_usb_tether_on_label">Модем USB вкл</string>
-    <string name="quick_settings_usb_tether_off_label">Модем USB выкл</string>
-    <string name="quick_settings_sync_on_label">Синхр.вкл</string>
-    <string name="quick_settings_sync_off_label">Синхр.выкл</string>
-    <string name="quick_settings_twog_on_label">2g вкл</string>
-    <string name="quick_settings_twog_off_label">2g выкл</string>
-    <string name="quick_settings_lte_on_label">LTE вкл</string>
-    <string name="quick_settings_lte_off_label">LTE выкл</string>
-    <string name="quick_settings_gps_on_label">GPS вкл</string>
-    <string name="quick_settings_gps_off_label">GPS выкл</string>
-    <string name="quick_settings_data_on_label">Моб.данные вкл</string>
-    <string name="quick_settings_data_off_label">Моб.данные выкл</string>
-    <string name="quick_settings_navbar_hide_on_label">Скрыт.навиг.вкл</string>
-    <string name="quick_settings_navbar_hide_off_label">Скрыт.навиг.выкл</string>
-    <string name="quick_settings_quiet_hours_on_label">Тих.часы вкл</string>
-    <string name="quick_settings_quiet_hours_off_label">Тих.часы выкл</string>
-    <string name="quick_settings_sound_on">Звук вкл</string>
-    <string name="quick_settings_statusbar_on_label">Строка сост.вкл</string>
-    <string name="quick_settings_statusbar_off_label">Строка сост.выкл</string>
-    <string name="quick_settings_swaggersuntoast">#SwaggerВоскресенье</string>
-    <string name="quick_settings_screenshot">Снимок экрана</string>
-
-    <!--  RamBar -->
-    <string name="memory">RAM</string>
-    <!-- [CHAR LIMIT=10] Running services, summary of background processes -->
-    <string name="service_background_processes"><xliff:g id="memory">%1$s</xliff:g> свободно</string>
-    <!-- [CHAR LIMIT=10] Running services, summary of foreground processes -->
-    <string name="service_foreground_processes"><xliff:g id="memory">%1$s</xliff:g> занято</string>
-    <!-- Text to label a process entry with the process name. -->
-    <string name="service_process_name"><xliff:g id="process">%1$s</xliff:g></string>
-    <!-- Running services, description for a service in the started state -->
-    <string name="service_client_name"><xliff:g id="client_name">%1$s</xliff:g></string>
-    <!-- Running services, description for a service in the started state -->
-    <string name="service_started_by_app">Запущено прилож.</string>
-    <!-- Descriptive text of a running process: singular process, singular service. -->
-    <string name="running_processes_item_description_s_s"><xliff:g id="numprocess">%1$d</xliff:g>
-        процесс и <xliff:g id="numservices">%2$d</xliff:g> служба</string>
-    <!-- Descriptive text of a running process: singular process, plural service. -->
-    <string name="running_processes_item_description_s_p"><xliff:g id="numprocess">%1$d</xliff:g>
-        процесс и <xliff:g id="numservices">%2$d</xliff:g> служб</string>
-     <!-- Descriptive text of a running process: plural process, singular service. -->
-    <string name="running_processes_item_description_p_s"><xliff:g id="numprocess">%1$d</xliff:g>
-        процессов и <xliff:g id="numservices">%2$d</xliff:g> служба</string>
-    <!-- Descriptive text of a running process: plural process, plural service. -->
-    <string name="running_processes_item_description_p_p"><xliff:g id="numprocess">%1$d</xliff:g>
-        процессов и <xliff:g id="numservices">%2$d</xliff:g> служб</string>
-    <!-- [CHAR LIMIT=NONE] Label of a running process that represents another user -->
-    <string name="running_process_item_user_label">Пользователь: <xliff:g id="user_name">%1$s</xliff:g></string>
-
-    <string name="quick_settings_adb_on"><xliff:g id="ip" example="192.168.1.5">%s</xliff:g></string>
-    <string name="quick_settings_adb_off">Wireless ADB выкл</string>
-    <string name="toggles">Переключатели</string>
-    <string name="ribbon">Лента</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"Действия в сети\nмогут отслеживаться"</string>
 </resources>

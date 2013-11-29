@@ -42,7 +42,8 @@ class ComposingText implements NoCopySpan {
  * Base class for implementors of the InputConnection interface, taking care
  * of most of the common behavior for providing a connection to an Editable.
  * Implementors of this class will want to be sure to implement
- * {@link #getEditable} to provide access to their own editable object.
+ * {@link #getEditable} to provide access to their own editable object, and
+ * to refer to the documentation in {@link InputConnection}.
  */
 public class BaseInputConnection implements InputConnection {
     private static final boolean DEBUG = false;
@@ -268,8 +269,9 @@ public class BaseInputConnection implements InputConnection {
         if (content != null) {
             beginBatchEdit();
             removeComposingSpans(content);
-            endBatchEdit();
+            // Note: sendCurrentText does nothing unless mDummyMode is set
             sendCurrentText();
+            endBatchEdit();
         }
         return true;
     }
@@ -466,8 +468,9 @@ public class BaseInputConnection implements InputConnection {
             content.setSpan(COMPOSING, a, b,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE | Spanned.SPAN_COMPOSING);
 
-            endBatchEdit();
+            // Note: sendCurrentText does nothing unless mDummyMode is set
             sendCurrentText();
+            endBatchEdit();
         }
         return true;
     }

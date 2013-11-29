@@ -179,7 +179,6 @@ public class InputManagerService extends IInputManager.Stub
             InputChannel fromChannel, InputChannel toChannel);
     private static native void nativeSetPointerSpeed(int ptr, int speed);
     private static native void nativeSetShowTouches(int ptr, boolean enabled);
-    private static native void nativeSetStylusIconEnabled(int ptr, boolean enabled);
     private static native void nativeVibrate(int ptr, int deviceId, long[] pattern,
             int repeat, int token);
     private static native void nativeCancelVibrate(int ptr, int deviceId, int token);
@@ -270,7 +269,6 @@ public class InputManagerService extends IInputManager.Stub
 
         registerPointerSpeedSettingObserver();
         registerShowTouchesSettingObserver();
-        registerStylusIconEnabledSettingObserver();
 
         mContext.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -282,11 +280,10 @@ public class InputManagerService extends IInputManager.Stub
 
         updatePointerSpeedFromSettings();
         updateShowTouchesFromSettings();
-        updateStylusIconEnabledFromSettings();
     }
 
     // TODO(BT) Pass in paramter for bluetooth system
-    public void systemReady() {
+    public void systemRunning() {
         if (DEBUG) {
             Slog.d(TAG, "System ready.");
         }
@@ -1126,27 +1123,6 @@ public class InputManagerService extends IInputManager.Stub
         return speed;
     }
 
-    public void updateStylusIconEnabledFromSettings() {
-        nativeSetStylusIconEnabled(mPtr, getStylusIconEnabled());
-    }
-
-    public void registerStylusIconEnabledSettingObserver() {
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.STYLUS_ICON_ENABLED), false,
-                new ContentObserver(mHandler) {
-                    @Override
-                    public void onChange(boolean selfChange) {
-                        updateStylusIconEnabledFromSettings();
-                    }
-                });
-    }
-
-    private boolean getStylusIconEnabled() {
-        boolean result = Settings.System.getBoolean(mContext.getContentResolver(),
-                    Settings.System.STYLUS_ICON_ENABLED, true);
-        return result;
-    }
-
     public void updateShowTouchesFromSettings() {
         int setting = getShowTouchesSetting(0);
         nativeSetShowTouches(mPtr, setting != 0);
@@ -1316,8 +1292,9 @@ public class InputManagerService extends IInputManager.Stub
 
     // Native callback.
     private long notifyANR(InputApplicationHandle inputApplicationHandle,
-            InputWindowHandle inputWindowHandle) {
-        return mWindowManagerCallbacks.notifyANR(inputApplicationHandle, inputWindowHandle);
+            InputWindowHandle inputWindowHandle, String reason) {
+        return mWindowManagerCallbacks.notifyANR(
+                inputApplicationHandle, inputWindowHandle, reason);
     }
 
     // Native callback.
@@ -1501,7 +1478,7 @@ public class InputManagerService extends IInputManager.Stub
         public void notifyInputChannelBroken(InputWindowHandle inputWindowHandle);
 
         public long notifyANR(InputApplicationHandle inputApplicationHandle,
-                InputWindowHandle inputWindowHandle);
+                InputWindowHandle inputWindowHandle, String reason);
 
         public int interceptKeyBeforeQueueing(KeyEvent event, int policyFlags, boolean isScreenOn);
 

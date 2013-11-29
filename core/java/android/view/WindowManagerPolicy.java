@@ -135,6 +135,16 @@ public interface WindowManagerPolicy {
      */
     public interface WindowState {
         /**
+         * Return the uid of the app that owns this window.
+         */
+        int getOwningUid();
+
+        /**
+         * Return the package name of the app that owns this window.
+         */
+        String getOwningPackage();
+
+        /**
          * Perform standard frame computation.  The result can be obtained with
          * getFrame() if so desired.  Must be called with the window manager
          * lock held.
@@ -144,6 +154,8 @@ public interface WindowManagerPolicy {
          * @param displayFrame The frame of the overall display in which this
          * window can appear, used for constraining the overall dimensions
          * of the window.
+         * @param overlayFrame The frame within the display that is inside
+         * of the overlay region.
          * @param contentFrame The frame within the display in which we would
          * like active content to appear.  This will cause windows behind to
          * be resized to match the given content frame.
@@ -153,9 +165,11 @@ public interface WindowManagerPolicy {
          * This can be used as a hint for scrolling (avoiding resizing)
          * the window to make certain that parts of its content
          * are visible.
+         * @param decorFrame The decor frame specified by policy specific to this window,
+         * to use for proper cropping during animation.
          */
         public void computeFrameLw(Rect parentFrame, Rect displayFrame,
-                Rect contentFrame, Rect visibleFrame);
+                Rect overlayFrame, Rect contentFrame, Rect visibleFrame, Rect decorFrame);
 
         /**
          * Retrieve the current frame of the window that has been assigned by
@@ -181,6 +195,15 @@ public interface WindowManagerPolicy {
          * @return Rect The rectangle holding the display frame.
          */
         public Rect getDisplayFrameLw();
+
+        /**
+         * Retrieve the frame of the area inside the overscan region of the
+         * display that this window was last laid out in.  Must be called with the
+         * window manager lock held.
+         *
+         * @return Rect The rectangle holding the display overscan frame.
+         */
+        public Rect getOverscanFrameLw();
 
         /**
          * Retrieve the frame of the content area that this window was last
@@ -378,18 +401,13 @@ public interface WindowManagerPolicy {
          */
         public FakeWindow addFakeWindow(Looper looper,
                 InputEventReceiver.Factory inputEventReceiverFactory,
-                String name, int windowType, int layoutParamsFlags, boolean canReceiveKeys,
-                boolean hasFocus, boolean touchFullscreen);
+                String name, int windowType, int layoutParamsFlags, int layoutParamsPrivateFlags,
+                boolean canReceiveKeys, boolean hasFocus, boolean touchFullscreen);
 
         /**
          * Returns a code that describes the current state of the lid switch.
          */
         public int getLidState();
-
-        /**
-         * Creates an input channel that will receive all input from the input dispatcher.
-         */
-        public InputChannel monitorInput(String name);
 
         /**
          * Switch the keyboard layout for the given device.
@@ -398,65 +416,43 @@ public interface WindowManagerPolicy {
         public void switchKeyboardLayout(int deviceId, int direction);
 
         public void shutdown(boolean confirm);
-        public void reboot(String reason);
         public void rebootSafeMode(boolean confirm);
+        public void reboot();
+
+        /**
+         * Return the window manager lock needed to correctly call "Lw" methods.
+         */
+        public Object getWindowManagerLock();
+
+        /** Register a system listener for touch events */
+        void registerPointerEventListener(PointerEventListener listener);
+
+        /** Unregister a system listener for touch events */
+        void unregisterPointerEventListener(PointerEventListener listener);
     }
 
-    /**
-     * Bit mask that is set for all enter transition.
-     */
-    public final int TRANSIT_ENTER_MASK = 0x1000;
-    
-    /**
-     * Bit mask that is set for all exit transitions.
-     */
-    public final int TRANSIT_EXIT_MASK = 0x2000;
-    
-    /** Not set up for a transition. */
-    public final int TRANSIT_UNSET = -1;
-    /** No animation for transition. */
-    public final int TRANSIT_NONE = 0;
+    public interface PointerEventListener {
+        /**
+         * 1. onPointerEvent will be called on the service.UiThread.
+         * 2. motionEvent will be recycled after onPointerEvent returns so if it is needed later a
+         * copy() must be made and the copy must be recycled.
+         **/
+        public void onPointerEvent(MotionEvent motionEvent);
+    }
+
     /** Window has been added to the screen. */
-    public final int TRANSIT_ENTER = 1 | TRANSIT_ENTER_MASK;
+    public static final int TRANSIT_ENTER = 1;
     /** Window has been removed from the screen. */
-    public final int TRANSIT_EXIT = 2 | TRANSIT_EXIT_MASK;
+    public static final int TRANSIT_EXIT = 2;
     /** Window has been made visible. */
-    public final int TRANSIT_SHOW = 3 | TRANSIT_ENTER_MASK;
-    /** Window has been made invisible. */
-    public final int TRANSIT_HIDE = 4 | TRANSIT_EXIT_MASK;
+    public static final int TRANSIT_SHOW = 3;
+    /** Window has been made invisible.
+     * TODO: Consider removal as this is unused. */
+    public static final int TRANSIT_HIDE = 4;
     /** The "application starting" preview window is no longer needed, and will
      * animate away to show the real window. */
-    public final int TRANSIT_PREVIEW_DONE = 5;
-    /** A window in a new activity is being opened on top of an existing one
-     * in the same task. */
-    public final int TRANSIT_ACTIVITY_OPEN = 6 | TRANSIT_ENTER_MASK;
-    /** The window in the top-most activity is being closed to reveal the
-     * previous activity in the same task. */
-    public final int TRANSIT_ACTIVITY_CLOSE = 7 | TRANSIT_EXIT_MASK;
-    /** A window in a new task is being opened on top of an existing one
-     * in another activity's task. */
-    public final int TRANSIT_TASK_OPEN = 8 | TRANSIT_ENTER_MASK;
-    /** A window in the top-most activity is being closed to reveal the
-     * previous activity in a different task. */
-    public final int TRANSIT_TASK_CLOSE = 9 | TRANSIT_EXIT_MASK;
-    /** A window in an existing task is being displayed on top of an existing one
-     * in another activity's task. */
-    public final int TRANSIT_TASK_TO_FRONT = 10 | TRANSIT_ENTER_MASK;
-    /** A window in an existing task is being put below all other tasks. */
-    public final int TRANSIT_TASK_TO_BACK = 11 | TRANSIT_EXIT_MASK;
-    /** A window in a new activity that doesn't have a wallpaper is being
-     * opened on top of one that does, effectively closing the wallpaper. */
-    public final int TRANSIT_WALLPAPER_CLOSE = 12 | TRANSIT_EXIT_MASK;
-    /** A window in a new activity that does have a wallpaper is being
-     * opened on one that didn't, effectively opening the wallpaper. */
-    public final int TRANSIT_WALLPAPER_OPEN = 13 | TRANSIT_ENTER_MASK;
-    /** A window in a new activity is being opened on top of an existing one,
-     * and both are on top of the wallpaper. */
-    public final int TRANSIT_WALLPAPER_INTRA_OPEN = 14 | TRANSIT_ENTER_MASK;
-    /** The window in the top-most activity is being closed to reveal the
-     * previous activity, and both are on top of he wallpaper. */
-    public final int TRANSIT_WALLPAPER_INTRA_CLOSE = 15 | TRANSIT_EXIT_MASK;
-    
+    public static final int TRANSIT_PREVIEW_DONE = 5;
+
     // NOTE: screen off reasons are in order of significance, with more
     // important ones lower than less important ones.
     
@@ -485,21 +481,34 @@ public interface WindowManagerPolicy {
             WindowManagerFuncs windowManagerFuncs);
 
     /**
+     * @return true if com.android.internal.R.bool#config_forceDefaultOrientation is true.
+     */
+    public boolean isDefaultOrientationForced();
+
+    /**
      * Called by window manager once it has the initial, default native
      * display dimensions.
      */
     public void setInitialDisplaySize(Display display, int width, int height, int density);
 
     /**
+     * Called by window manager to set the overscan region that should be used for the
+     * given display.
+     */
+    public void setDisplayOverscan(Display display, int left, int top, int right, int bottom);
+
+    /**
      * Check permissions when adding a window.
      * 
-     * @param attrs The window's LayoutParams. 
+     * @param attrs The window's LayoutParams.
+     * @param outAppOp First element will be filled with the app op corresponding to
+     *                 this window, or OP_NONE.
      *  
      * @return {@link WindowManagerGlobal#ADD_OKAY} if the add can proceed;
      *      else an error code, usually
      *      {@link WindowManagerGlobal#ADD_PERMISSION_DENIED}, to abort the add.
      */
-    public int checkAddPermission(WindowManager.LayoutParams attrs);
+    public int checkAddPermission(WindowManager.LayoutParams attrs, int[] outAppOp);
 
     /**
      * Check permissions when adding a window.
@@ -577,12 +586,6 @@ public interface WindowManagerPolicy {
     public int getAboveUniverseLayer();
 
     /**
-     * Return true if the policy desires a full unified system nav bar.  Otherwise,
-     * it is a phone-style status bar with optional nav bar.
-     */
-    public boolean hasSystemNavBar();
-
-    /**
      * Return the display width available after excluding any screen
      * decorations that can never be removed.  That is, system bar or
      * button bar.
@@ -611,18 +614,6 @@ public interface WindowManagerPolicy {
      * that to account for more transient decoration like a status bar.
      */
     public int getConfigDisplayHeight(int fullWidth, int fullHeight, int rotation);
-
-    public int getWallpaperHeight(int rotation);
-
-    public int getWallpaperWidth(int rotation);
-
-    public int getWallpaperTop(int rot);
-
-    public int getWallpaperLeft(int rot);
-
-    public int getWallpaperBottom(int rot);
-
-    public int getWallpaperRight(int rot);
 
     /**
      * Return whether the given window should forcibly hide everything
@@ -663,7 +654,7 @@ public interface WindowManagerPolicy {
      */
     public View addStartingWindow(IBinder appToken, String packageName,
             int theme, CompatibilityInfo compatInfo, CharSequence nonLocalizedLabel,
-            int labelRes, int icon, int windowFlags);
+            int labelRes, int icon, int logo, int windowFlags);
 
     /**
      * Called when the first window of an application has been displayed, while
@@ -719,6 +710,31 @@ public interface WindowManagerPolicy {
      * @return Resource ID of the actual animation to use, or 0 for none.
      */
     public int selectAnimationLw(WindowState win, int transit);
+
+    /**
+     * Determine the animation to run for a rotation transition based on the
+     * top fullscreen windows {@link WindowManager.LayoutParams#rotationAnimation}
+     * and whether it is currently fullscreen and frontmost.
+     * 
+     * @param anim The exiting animation resource id is stored in anim[0], the 
+     * entering animation resource id is stored in anim[1].
+     */
+    public void selectRotationAnimationLw(int anim[]);
+
+    /**
+     * Validate whether the current top fullscreen has specified the same
+     * {@link WindowManager.LayoutParams#rotationAnimation} value as that
+     * being passed in from the previous top fullscreen window.
+     *
+     * @param exitAnimId exiting resource id from the previous window.
+     * @param enterAnimId entering resource id from the previous window.
+     * @param forceDefault For rotation animations only, if true ignore the
+     * animation values and just return false.
+     * @return true if the previous values are still valid, false if they
+     * should be replaced with the default.
+     */
+    public boolean validateRotationAnimationLw(int exitAnimId, int enterAnimId,
+            boolean forceDefault);
 
     /**
      * Create and return an animation to re-display a force hidden window.
@@ -802,19 +818,18 @@ public interface WindowManagerPolicy {
                               int displayRotation);
 
     /**
-     * Return the rectangle of the screen currently covered by system decorations.
-     * This will be called immediately after {@link #layoutWindowLw}.  It can
-     * fill in the rectangle to indicate any part of the screen that it knows
-     * for sure is covered by system decor such as the status bar.  The rectangle
-     * is initially set to the actual size of the screen, indicating nothing is
-     * covered.
-     *
-     * @param systemRect The rectangle of the screen that is not covered by
-     * system decoration.
-     * @return Returns the layer above which the system rectangle should
-     * not be applied.
+     * Returns the bottom-most layer of the system decor, above which no policy decor should
+     * be applied.
      */
-    public int getSystemDecorRectLw(Rect systemRect);
+    public int getSystemDecorLayerLw();
+
+    /**
+     * Return the rectangle of the screen that is available for applications to run in.
+     * This will be called immediately after {@link #beginLayoutLw}.
+     *
+     * @param r The rectangle to be filled with the boundaries available to applications.
+     */
+    public void getContentRectLw(Rect r);
 
     /**
      * Called for each window attached to the window manager as layout is
@@ -946,6 +961,7 @@ public interface WindowManagerPolicy {
      * @see android.app.KeyguardManager.KeyguardLock#disableKeyguard()
      * @see android.app.KeyguardManager.KeyguardLock#reenableKeyguard()
      */
+    @SuppressWarnings("javadoc")
     public void enableKeyguard(boolean enabled);
 
     /**
@@ -961,6 +977,7 @@ public interface WindowManagerPolicy {
      * @param callback Callback to send the result back.
      * @see android.app.KeyguardManager#exitKeyguardSecurely(android.app.KeyguardManager.OnKeyguardExitResult)
      */
+    @SuppressWarnings("javadoc")
     void exitKeyguardSecurely(OnKeyguardExitResult callback);
 
     /**
@@ -1095,6 +1112,16 @@ public interface WindowManagerPolicy {
     public void keepScreenOnStoppedLw();
 
     /**
+     * Gets the current user rotation mode. 
+     *
+     * @return The rotation mode.
+     *
+     * @see WindowManagerPolicy#USER_ROTATION_LOCKED
+     * @see WindowManagerPolicy#USER_ROTATION_FREE 
+     */
+    public int getUserRotationMode();
+
+    /**
      * Inform the policy that the user has chosen a preferred orientation ("rotation lock"). 
      *
      * @param mode One of {@link WindowManagerPolicy#USER_ROTATION_LOCKED} or
@@ -1130,14 +1157,6 @@ public interface WindowManagerPolicy {
     public void setLastInputMethodWindowLw(WindowState ime, WindowState target);
 
     /**
-     * Returns whether magnification can be applied to the given window type.
-     *
-     * @param attrs The window's LayoutParams.
-     * @return Whether magnification can be applied.
-     */
-    public boolean canMagnifyWindowLw(WindowManager.LayoutParams attrs);
-
-    /**
      * Called when the current user changes. Guaranteed to be called before the broadcast
      * of the new user id is made to all listeners.
      *
@@ -1156,8 +1175,28 @@ public interface WindowManagerPolicy {
     public void dump(String prefix, PrintWriter writer, String[] args);
 
     /**
-     * Ask keyguard to invoke the assist intent after dismissing keyguard
-     * {@link android.content.Intent#ACTION_ASSIST}
+     * Returns whether a given window type can be magnified.
+     *
+     * @param windowType The window type.
+     * @return True if the window can be magnified.
      */
-    public void showAssistant();
+    public boolean canMagnifyWindow(int windowType);
+
+    /**
+     * Returns whether a given window type is considered a top level one.
+     * A top level window does not have a container, i.e. attached window,
+     * or if it has a container it is laid out as a top-level window, not
+     * as a child of its container.
+     *
+     * @param windowType The window type.
+     * @return True if the window is a top level one.
+     */
+    public boolean isTopLevelWindow(int windowType);
+
+    /**
+     * Sets the current touch exploration state.
+     *
+     * @param enabled Whether touch exploration is enabled.
+     */
+    public void setTouchExplorationEnabled(boolean enabled);
 }

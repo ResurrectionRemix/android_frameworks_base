@@ -21,7 +21,8 @@ next.link=filters.html
 
 <h2>You should also read</h2>
 <ul>
-  <li><a href="{@docRoot}training/sharing/index.html">Sharing Content</a></li>
+    <li><a href="{@docRoot}training/sharing/index.html">Sharing Simple Data</a></li>
+    <li><a href="{@docRoot}training/secure-file-sharing/index.html">Sharing Files</a>
 </ul>
 
   </div>
@@ -62,7 +63,7 @@ app can properly identify the result and determine how to handle it.</p>
 static final int PICK_CONTACT_REQUEST = 1;  // The request code
 ...
 private void pickContact() {
-    Intent pickContactIntent = new Intent(Intent.ACTION_PICK, new Uri("content://contacts"));
+    Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
     pickContactIntent.setType(Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
     startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
 }
@@ -71,7 +72,7 @@ private void pickContact() {
 
 <h2 id="ReceiveResult">Receive the Result</h2>
 
-<p>When the user is done with the subsequent activity and returns, the system calls your activity's 
+<p>When the user is done with the subsequent activity and returns, the system calls your activity's
 {@link android.app.Activity#onActivityResult onActivityResult()} method. This method includes three
 arguments:</p>
 

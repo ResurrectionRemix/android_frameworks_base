@@ -36,7 +36,7 @@
     </family>
     <family>
         <fileset>
-            <file variant="compact">DroidNaskh-Regular-SystemUI.ttf</file>
+            <file variant="compact">DroidNaskhUI-Regular.ttf</file>
         </fileset>
     </family>
     <family>
@@ -52,7 +52,14 @@
     </family>
     <family>
         <fileset>
-            <file>DroidSansThai.ttf</file>
+            <file variant="elegant">NotoSansThai-Regular.ttf</file>
+            <file variant="elegant">NotoSansThai-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="compact">NotoSansThaiUI-Regular.ttf</file>
+            <file variant="compact">NotoSansThaiUI-Bold.ttf</file>
         </fileset>
     </family>
     <family>
@@ -67,28 +74,98 @@
     </family>
     <family>
         <fileset>
-            <file>DroidSansDevanagari-Regular.ttf</file>
+            <file variant="elegant">NotoSansDevanagari-Regular.ttf</file>
+            <file variant="elegant">NotoSansDevanagari-Bold.ttf</file>
         </fileset>
     </family>
     <family>
         <fileset>
-            <file>DroidSansTamil-Regular.ttf</file>
-            <file>DroidSansTamil-Bold.ttf</file>
+            <file variant="compact">NotoSansDevanagariUI-Regular.ttf</file>
+            <file variant="compact">NotoSansDevanagariUI-Bold.ttf</file>
         </fileset>
     </family>
     <family>
         <fileset>
-            <file>AnjaliNewLipi-light.ttf</file>
+            <file variant="elegant">NotoSansTamil-Regular.ttf</file>
+            <file variant="elegant">NotoSansTamil-Bold.ttf</file>
         </fileset>
     </family>
     <family>
         <fileset>
-            <file>Lohit-Bengali.ttf</file>
+            <file variant="compact">NotoSansTamilUI-Regular.ttf</file>
+            <file variant="compact">NotoSansTamilUI-Bold.ttf</file>
         </fileset>
     </family>
     <family>
         <fileset>
-            <file>Lohit-Kannada.ttf</file>
+            <file variant="elegant">NotoSansMalayalam-Regular.ttf</file>
+            <file variant="elegant">NotoSansMalayalam-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="compact">NotoSansMalayalamUI-Regular.ttf</file>
+            <file variant="compact">NotoSansMalayalamUI-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="elegant">NotoSansBengali-Regular.ttf</file>
+            <file variant="elegant">NotoSansBengali-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="compact">NotoSansBengaliUI-Regular.ttf</file>
+            <file variant="compact">NotoSansBengaliUI-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="elegant">NotoSansTelugu-Regular.ttf</file>
+            <file variant="elegant">NotoSansTelugu-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="compact">NotoSansTeluguUI-Regular.ttf</file>
+            <file variant="compact">NotoSansTeluguUI-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="elegant">NotoSansKannada-Regular.ttf</file>
+            <file variant="elegant">NotoSansKannada-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="compact">NotoSansKannadaUI-Regular.ttf</file>
+            <file variant="compact">NotoSansKannadaUI-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="elegant">NotoSansKhmer-Regular.ttf</file>
+            <file variant="elegant">NotoSansKhmer-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="compact">NotoSansKhmerUI-Regular.ttf</file>
+            <file variant="compact">NotoSansKhmerUI-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="elegant">NotoSansLao-Regular.ttf</file>
+            <file variant="elegant">NotoSansLao-Bold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file variant="compact">NotoSansLaoUI-Regular.ttf</file>
+            <file variant="compact">NotoSansLaoUI-Bold.ttf</file>
         </fileset>
     </family>
     <family>
@@ -98,12 +175,23 @@
     </family>
     <family>
         <fileset>
+            <file>Padauk-book.ttf</file>
+            <file>Padauk-bookbold.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
+            <file>NotoSansSymbols-Regular.ttf</file>
+        </fileset>
+    </family>
+    <family>
+        <fileset>
             <file>AndroidEmoji.ttf</file>
         </fileset>
     </family>
     <family>
         <fileset>
-            <file>Lohit-Telugu.ttf</file>
+            <file>NotoColorEmoji.ttf</file>
         </fileset>
     </family>
     <family>

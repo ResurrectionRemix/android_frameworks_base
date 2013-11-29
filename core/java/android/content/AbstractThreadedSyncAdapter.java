@@ -147,6 +147,7 @@ public abstract class AbstractThreadedSyncAdapter {
     }
 
     private class ISyncAdapterImpl extends ISyncAdapter.Stub {
+        @Override
         public void startSync(ISyncContext syncContext, String authority, Account account,
                 Bundle extras) {
             final SyncContext syncContextClient = new SyncContext(syncContext);
@@ -160,10 +161,13 @@ public abstract class AbstractThreadedSyncAdapter {
                     if (mAutoInitialize
                             && extras != null
                             && extras.getBoolean(ContentResolver.SYNC_EXTRAS_INITIALIZE, false)) {
-                        if (ContentResolver.getIsSyncable(account, authority) < 0) {
-                            ContentResolver.setIsSyncable(account, authority, 1);
+                        try {
+                            if (ContentResolver.getIsSyncable(account, authority) < 0) {
+                                ContentResolver.setIsSyncable(account, authority, 1);
+                            }
+                        } finally {
+                            syncContextClient.onFinished(new SyncResult());
                         }
-                        syncContextClient.onFinished(new SyncResult());
                         return;
                     }
                     SyncThread syncThread = new SyncThread(
@@ -184,6 +188,7 @@ public abstract class AbstractThreadedSyncAdapter {
             }
         }
 
+        @Override
         public void cancelSync(ISyncContext syncContext) {
             // synchronize to make sure that mSyncThreads doesn't change between when we
             // check it and when we use it

@@ -16,15 +16,26 @@
 
 package android.os;
 
+import android.util.Log;
+import android.util.Slog;
+
+import libcore.io.ErrnoException;
+import libcore.io.IoUtils;
+import libcore.io.Libcore;
+import libcore.io.OsConstants;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.regex.Pattern;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
@@ -34,6 +45,8 @@ import java.util.zip.CheckedInputStream;
  * @hide
  */
 public class FileUtils {
+    private static final String TAG = "FileUtils";
+
     public static final int S_IRWXU = 00700;
     public static final int S_IRUSR = 00400;
     public static final int S_IWUSR = 00200;
@@ -52,15 +65,85 @@ public class FileUtils {
     /** Regular expression for safe filenames: no spaces or metacharacters */
     private static final Pattern SAFE_FILENAME_PATTERN = Pattern.compile("[\\w%+,./=_-]+");
 
-    public static native int setPermissions(String file, int mode, int uid, int gid);
-
-    /** returns the UUID for the volume mounted
-     * at the given mount point, or -1 for failure
-     * @param mountPoint point for volume
-     * @return UUID or -1
+    /**
+     * Set owner and mode of of given {@link File}.
+     *
+     * @param mode to apply through {@code chmod}
+     * @param uid to apply through {@code chown}, or -1 to leave unchanged
+     * @param gid to apply through {@code chown}, or -1 to leave unchanged
+     * @return 0 on success, otherwise errno.
      */
-    public static native int getVolumeUUID(String mountPoint);
-    
+    public static int setPermissions(File path, int mode, int uid, int gid) {
+        return setPermissions(path.getAbsolutePath(), mode, uid, gid);
+    }
+
+    /**
+     * Set owner and mode of of given path.
+     *
+     * @param mode to apply through {@code chmod}
+     * @param uid to apply through {@code chown}, or -1 to leave unchanged
+     * @param gid to apply through {@code chown}, or -1 to leave unchanged
+     * @return 0 on success, otherwise errno.
+     */
+    public static int setPermissions(String path, int mode, int uid, int gid) {
+        try {
+            Libcore.os.chmod(path, mode);
+        } catch (ErrnoException e) {
+            Slog.w(TAG, "Failed to chmod(" + path + "): " + e);
+            return e.errno;
+        }
+
+        if (uid >= 0 || gid >= 0) {
+            try {
+                Libcore.os.chown(path, uid, gid);
+            } catch (ErrnoException e) {
+                Slog.w(TAG, "Failed to chown(" + path + "): " + e);
+                return e.errno;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Set owner and mode of of given {@link FileDescriptor}.
+     *
+     * @param mode to apply through {@code chmod}
+     * @param uid to apply through {@code chown}, or -1 to leave unchanged
+     * @param gid to apply through {@code chown}, or -1 to leave unchanged
+     * @return 0 on success, otherwise errno.
+     */
+    public static int setPermissions(FileDescriptor fd, int mode, int uid, int gid) {
+        try {
+            Libcore.os.fchmod(fd, mode);
+        } catch (ErrnoException e) {
+            Slog.w(TAG, "Failed to fchmod(): " + e);
+            return e.errno;
+        }
+
+        if (uid >= 0 || gid >= 0) {
+            try {
+                Libcore.os.fchown(fd, uid, gid);
+            } catch (ErrnoException e) {
+                Slog.w(TAG, "Failed to fchown(): " + e);
+                return e.errno;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Return owning UID of given path, otherwise -1.
+     */
+    public static int getUid(String path) {
+        try {
+            return Libcore.os.stat(path).st_uid;
+        } catch (ErrnoException e) {
+            return -1;
+        }
+    }
+
     /** returns the FAT file system volume ID for the volume mounted 
      * at the given mount point, or -1 for failure
      * @param mountPoint point for FAT volume
@@ -168,7 +251,8 @@ public class FileUtils {
             } else if (max < 0) {  // "tail" mode: keep the last N
                 int len;
                 boolean rolled = false;
-                byte[] last = null, data = null;
+                byte[] last = null;
+                byte[] data = null;
                 do {
                     if (last != null) rolled = true;
                     byte[] tmp = last; last = data; data = tmp;
@@ -241,6 +325,42 @@ public class FileUtils {
                     cis.close();
                 } catch (IOException e) {
                 }
+            }
+        }
+    }
+
+    /**
+     * Delete older files in a directory until only those matching the given
+     * constraints remain.
+     *
+     * @param minCount Always keep at least this many files.
+     * @param minAge Always keep files younger than this age.
+     */
+    public static void deleteOlderFiles(File dir, int minCount, long minAge) {
+        if (minCount < 0 || minAge < 0) {
+            throw new IllegalArgumentException("Constraints must be positive or 0");
+        }
+
+        final File[] files = dir.listFiles();
+        if (files == null) return;
+
+        // Sort with newest files first
+        Arrays.sort(files, new Comparator<File>() {
+            @Override
+            public int compare(File lhs, File rhs) {
+                return (int) (rhs.lastModified() - lhs.lastModified());
+            }
+        });
+
+        // Keep at least minCount files
+        for (int i = minCount; i < files.length; i++) {
+            final File file = files[i];
+
+            // Keep files newer than minAge
+            final long age = System.currentTimeMillis() - file.lastModified();
+            if (age > minAge) {
+                Log.d(TAG, "Deleting old file " + file);
+                file.delete();
             }
         }
     }

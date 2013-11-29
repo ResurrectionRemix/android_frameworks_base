@@ -41,12 +41,9 @@ public class WebStorage {
      * See
      * {@link WebChromeClient#onExceededDatabaseQuota} and
      * {@link WebChromeClient#onReachedMaxAppCacheSize}.
+     * @deprecated This class is obsolete and no longer used.
      */
-    // We primarily want this to allow us to call back the sleeping WebCore
-    // thread from outside the WebViewCore class (as the native call is
-    // private). It is imperative that the setDatabaseQuota method is
-    // executed after a decision to either allow or deny new quota is made,
-    // otherwise the WebCore thread will remain asleep.
+    @Deprecated
     public interface QuotaUpdater {
         /**
          * Provides a new quota, specified in bytes.
@@ -171,7 +168,9 @@ public class WebStorage {
      * The quota is specified in bytes and the origin is specified using its string
      * representation. Note that a quota is not enforced on a per-origin basis
      * for the Application Cache API.
+     * @deprecated Controlling quota per-origin will not be supported in future.
      */
+    @Deprecated
     public void setQuotaForOrigin(String origin, long quota) {
         // Must be a no-op for backward compatibility: see the hidden constructor for reason.
     }

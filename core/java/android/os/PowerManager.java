@@ -224,7 +224,7 @@ public final class PowerManager {
 
     /**
      * Flag for {@link WakeLock#release release(int)} to defer releasing a
-     * {@link #WAKE_BIT_PROXIMITY_SCREEN_OFF} wake lock until the proximity sensor returns
+     * {@link #PROXIMITY_SCREEN_OFF_WAKE_LOCK} wake lock until the proximity sensor returns
      * a negative value.
      *
      * {@hide}
@@ -420,7 +420,7 @@ public final class PowerManager {
      */
     public WakeLock newWakeLock(int levelAndFlags, String tag) {
         validateWakeLockParameters(levelAndFlags, tag);
-        return new WakeLock(levelAndFlags, tag);
+        return new WakeLock(levelAndFlags, tag, mContext.getOpPackageName());
     }
 
     /** @hide */
@@ -619,24 +619,6 @@ public final class PowerManager {
     }
 
     /**
-     * Boost the CPU. Boosts the cpu for the given duration in microseconds.
-     * Requires the {@link android.Manifest.permission#CPU_BOOST} permission.
-     *
-     * @param duration in microseconds to boost the CPU
-     *
-     * @hide
-     */
-    public void cpuBoost(int duration)
-    {
-        try {
-            if (mService != null) {
-                mService.cpuBoost(duration);
-            }
-        } catch (RemoteException e) {
-        }
-    }
-
-    /**
      * A wake lock is a mechanism to indicate that your application needs
      * to have the device stay on.
      * <p>
@@ -655,6 +637,7 @@ public final class PowerManager {
     public final class WakeLock {
         private final int mFlags;
         private final String mTag;
+        private final String mPackageName;
         private final IBinder mToken;
         private int mCount;
         private boolean mRefCounted = true;
@@ -667,9 +650,10 @@ public final class PowerManager {
             }
         };
 
-        WakeLock(int flags, String tag) {
+        WakeLock(int flags, String tag, String packageName) {
             mFlags = flags;
             mTag = tag;
+            mPackageName = packageName;
             mToken = new Binder();
         }
 
@@ -745,7 +729,7 @@ public final class PowerManager {
                 // been explicitly released by the keyguard.
                 mHandler.removeCallbacks(mReleaser);
                 try {
-                    mService.acquireWakeLock(mToken, mFlags, mTag, mWorkSource);
+                    mService.acquireWakeLock(mToken, mFlags, mTag, mPackageName, mWorkSource);
                 } catch (RemoteException e) {
                 }
                 mHeld = true;

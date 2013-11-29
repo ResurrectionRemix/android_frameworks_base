@@ -19,6 +19,7 @@ package com.android.internal.view;
 import com.android.internal.R;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -44,7 +45,7 @@ public class ActionBarPolicy {
     }
 
     public boolean showsOverflowMenuButton() {
-        return !ViewConfiguration.get(mContext).hasPermanentMenuKey();
+        return true;
     }
 
     public int getEmbeddedMenuWidthLimit() {

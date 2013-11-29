@@ -32,7 +32,6 @@ import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -569,29 +568,30 @@ public class Paint_Delegate {
 
     @LayoutlibDelegate
     /*package*/ static float native_measureText(Paint thisPaint, char[] text, int index,
-            int count) {
+            int count, int bidiFlags) {
         // get the delegate
         Paint_Delegate delegate = sManager.getDelegate(thisPaint.mNativePaint);
         if (delegate == null) {
             return 0;
         }
 
-        return delegate.measureText(text, index, count);
+        return delegate.measureText(text, index, count, isRtl(bidiFlags));
     }
 
     @LayoutlibDelegate
-    /*package*/ static float native_measureText(Paint thisPaint, String text, int start, int end) {
-        return native_measureText(thisPaint, text.toCharArray(), start, end - start);
+    /*package*/ static float native_measureText(Paint thisPaint, String text, int start, int end,
+        int bidiFlags) {
+        return native_measureText(thisPaint, text.toCharArray(), start, end - start, bidiFlags);
     }
 
     @LayoutlibDelegate
-    /*package*/ static float native_measureText(Paint thisPaint, String text) {
-        return native_measureText(thisPaint, text.toCharArray(), 0, text.length());
+    /*package*/ static float native_measureText(Paint thisPaint, String text, int bidiFlags) {
+        return native_measureText(thisPaint, text.toCharArray(), 0, text.length(), bidiFlags);
     }
 
     @LayoutlibDelegate
     /*package*/ static int native_breakText(Paint thisPaint, char[] text, int index, int count,
-            float maxWidth, float[] measuredWidth) {
+            float maxWidth, int bidiFlags, float[] measuredWidth) {
 
         // get the delegate
         Paint_Delegate delegate = sManager.getDelegate(thisPaint.mNativePaint);
@@ -614,7 +614,7 @@ public class Paint_Delegate {
             }
 
             // measure from start to end
-            float res = delegate.measureText(text, start, end - start + 1);
+            float res = delegate.measureText(text, start, end - start + 1, isRtl(bidiFlags));
 
             if (measuredWidth != null) {
                 measuredWidth[measureIndex] = res;
@@ -634,9 +634,9 @@ public class Paint_Delegate {
 
     @LayoutlibDelegate
     /*package*/ static int native_breakText(Paint thisPaint, String text, boolean measureForwards,
-            float maxWidth, float[] measuredWidth) {
+            float maxWidth, int bidiFlags, float[] measuredWidth) {
         return native_breakText(thisPaint, text.toCharArray(), 0, text.length(), maxWidth,
-                measuredWidth);
+                bidiFlags, measuredWidth);
     }
 
     @LayoutlibDelegate
@@ -921,7 +921,7 @@ public class Paint_Delegate {
 
     @LayoutlibDelegate
     /*package*/ static int native_getTextWidths(int native_object, char[] text, int index,
-            int count, float[] widths) {
+            int count, int bidiFlags, float[] widths) {
         // get the delegate from the native int.
         Paint_Delegate delegate = sManager.getDelegate(native_object);
         if (delegate == null) {
@@ -963,8 +963,9 @@ public class Paint_Delegate {
 
     @LayoutlibDelegate
     /*package*/ static int native_getTextWidths(int native_object, String text, int start,
-            int end, float[] widths) {
-        return native_getTextWidths(native_object, text.toCharArray(), start, end - start, widths);
+            int end, int bidiFlags, float[] widths) {
+        return native_getTextWidths(native_object, text.toCharArray(), start, end - start,
+                bidiFlags, widths);
     }
 
     @LayoutlibDelegate
@@ -977,58 +978,34 @@ public class Paint_Delegate {
     @LayoutlibDelegate
     /*package*/ static float native_getTextRunAdvances(int native_object,
             char[] text, int index, int count, int contextIndex, int contextCount,
-            int flags, float[] advances, int advancesIndex, int reserved) {
+            int flags, float[] advances, int advancesIndex) {
+
+        if (advances != null)
+            for (int i = advancesIndex; i< advancesIndex+count; i++)
+                advances[i]=0;
         // get the delegate from the native int.
         Paint_Delegate delegate = sManager.getDelegate(native_object);
-        if (delegate == null) {
+        if (delegate == null || delegate.mFonts == null || delegate.mFonts.size() == 0) {
             return 0.f;
         }
+        boolean isRtl = isRtl(flags);
 
-        if (delegate.mFonts.size() > 0) {
-            // FIXME: handle multi-char characters (see measureText)
-            float totalAdvance = 0;
-            for (int i = 0; i < count; i++) {
-                char c = text[i + index];
-                boolean found = false;
-                for (FontInfo info : delegate.mFonts) {
-                    if (info.mFont.canDisplay(c)) {
-                        float adv = info.mMetrics.charWidth(c);
-                        totalAdvance += adv;
-                        if (advances != null) {
-                            advances[i] = adv;
-                        }
-
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (found == false) {
-                    // no advance for this char.
-                    if (advances != null) {
-                        advances[i] = 0.f;
-                    }
-                }
-            }
-
-            return totalAdvance;
-        }
-
-        return 0;
-
+        int limit = index + count;
+        return new BidiRenderer(null, delegate, text).renderText(
+                index, limit, isRtl, advances, advancesIndex, false, 0, 0);
     }
 
     @LayoutlibDelegate
     /*package*/ static float native_getTextRunAdvances(int native_object,
             String text, int start, int end, int contextStart, int contextEnd,
-            int flags, float[] advances, int advancesIndex, int reserved) {
-        // FIXME: support contextStart, contextEnd and direction flag
+            int flags, float[] advances, int advancesIndex) {
+        // FIXME: support contextStart and contextEnd
         int count = end - start;
         char[] buffer = TemporaryBuffer.obtain(count);
         TextUtils.getChars(text, start, end, buffer, 0);
 
         return native_getTextRunAdvances(native_object, buffer, 0, count, contextStart,
-                contextEnd - contextStart, flags, advances, advancesIndex, reserved);
+                contextEnd - contextStart, flags, advances, advancesIndex);
     }
 
     @LayoutlibDelegate
@@ -1067,29 +1044,23 @@ public class Paint_Delegate {
 
     @LayoutlibDelegate
     /*package*/ static void nativeGetStringBounds(int nativePaint, String text, int start,
-            int end, Rect bounds) {
-        nativeGetCharArrayBounds(nativePaint, text.toCharArray(), start, end - start, bounds);
+            int end, int bidiFlags, Rect bounds) {
+        nativeGetCharArrayBounds(nativePaint, text.toCharArray(), start, end - start, bidiFlags,
+                bounds);
     }
 
     @LayoutlibDelegate
     /*package*/ static void nativeGetCharArrayBounds(int nativePaint, char[] text, int index,
-            int count, Rect bounds) {
+            int count, int bidiFlags, Rect bounds) {
 
         // get the delegate from the native int.
         Paint_Delegate delegate = sManager.getDelegate(nativePaint);
-        if (delegate == null) {
+        if (delegate == null || delegate.mFonts == null || delegate.mFonts.size() == 0) {
             return;
         }
-
-        // FIXME should test if the main font can display all those characters.
-        // See MeasureText
-        if (delegate.mFonts.size() > 0) {
-            FontInfo mainInfo = delegate.mFonts.get(0);
-
-            Rectangle2D rect = mainInfo.mFont.getStringBounds(text, index, index + count,
-                    delegate.mFontContext);
-            bounds.set(0, 0, (int) rect.getWidth(), (int) rect.getHeight());
-        }
+        int w = (int) delegate.measureText(text, index, count, isRtl(bidiFlags));
+        int h= delegate.getFonts().get(0).mMetrics.getHeight();
+        bounds.set(0, 0, w, h);
     }
 
     @LayoutlibDelegate
@@ -1173,6 +1144,7 @@ public class Paint_Delegate {
                     info.mFont = info.mFont.deriveFont(new AffineTransform(
                             mTextScaleX, mTextSkewX, 0, 1, 0, 0));
                 }
+                // The metrics here don't have anti-aliasing set.
                 info.mMetrics = Toolkit.getDefaultToolkit().getFontMetrics(info.mFont);
 
                 infoList.add(info);
@@ -1182,63 +1154,9 @@ public class Paint_Delegate {
         }
     }
 
-    /*package*/ float measureText(char[] text, int index, int count) {
-
-        // WARNING: the logic in this method is similar to Canvas_Delegate.native_drawText
-        // Any change to this method should be reflected there as well
-
-        if (mFonts.size() > 0) {
-            FontInfo mainFont = mFonts.get(0);
-            int i = index;
-            int lastIndex = index + count;
-            float total = 0f;
-            while (i < lastIndex) {
-                // always start with the main font.
-                int upTo = mainFont.mFont.canDisplayUpTo(text, i, lastIndex);
-                if (upTo == -1) {
-                    // shortcut to exit
-                    return total + mainFont.mMetrics.charsWidth(text, i, lastIndex - i);
-                } else if (upTo > 0) {
-                    total += mainFont.mMetrics.charsWidth(text, i, upTo - i);
-                    i = upTo;
-                    // don't call continue at this point. Since it is certain the main font
-                    // cannot display the font a index upTo (now ==i), we move on to the
-                    // fallback fonts directly.
-                }
-
-                // no char supported, attempt to read the next char(s) with the
-                // fallback font. In this case we only test the first character
-                // and then go back to test with the main font.
-                // Special test for 2-char characters.
-                boolean foundFont = false;
-                for (int f = 1 ; f < mFonts.size() ; f++) {
-                    FontInfo fontInfo = mFonts.get(f);
-
-                    // need to check that the font can display the character. We test
-                    // differently if the char is a high surrogate.
-                    int charCount = Character.isHighSurrogate(text[i]) ? 2 : 1;
-                    upTo = fontInfo.mFont.canDisplayUpTo(text, i, i + charCount);
-                    if (upTo == -1) {
-                        total += fontInfo.mMetrics.charsWidth(text, i, charCount);
-                        i += charCount;
-                        foundFont = true;
-                        break;
-
-                    }
-                }
-
-                // in case no font can display the char, measure it with the main font.
-                if (foundFont == false) {
-                    int size = Character.isHighSurrogate(text[i]) ? 2 : 1;
-                    total += mainFont.mMetrics.charsWidth(text, i, size);
-                    i += size;
-                }
-            }
-
-            return total;
-        }
-
-        return 0;
+    /*package*/ float measureText(char[] text, int index, int count, boolean isRtl) {
+        return new BidiRenderer(null, this, text).renderText(
+                index, index + count, isRtl, null, 0, false, 0, 0);
     }
 
     private float getFontMetrics(FontMetrics metrics) {
@@ -1277,4 +1195,14 @@ public class Paint_Delegate {
         }
     }
 
+    private static boolean isRtl(int flag) {
+        switch(flag) {
+        case Paint.BIDI_RTL:
+        case Paint.BIDI_FORCE_RTL:
+        case Paint.BIDI_DEFAULT_RTL:
+            return true;
+        default:
+            return false;
+        }
+    }
 }

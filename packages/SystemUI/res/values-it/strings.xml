@@ -21,15 +21,13 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"UI sistema"</string>
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Cancella"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"Non disturbare"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"Mostra notifiche"</string>
     <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Rimuovi dall\'elenco"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"Informazioni applicazione"</string>
-    <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Nessuna applicazione recente"</string>
-    <string name="status_bar_accessibility_dismiss_recents" msgid="4576076075226540105">"Ignora applicazioni recenti"</string>
+    <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Nessuna app recente"</string>
+    <string name="status_bar_accessibility_dismiss_recents" msgid="4576076075226540105">"Ignora app recenti"</string>
   <plurals name="status_bar_accessibility_recent_apps">
-    <item quantity="one" msgid="5854176083865845541">"1 applicazione recente"</item>
-    <item quantity="other" msgid="1040784359794890744">"Applicazioni recenti in %d"</item>
+    <item quantity="one" msgid="5854176083865845541">"1 app recente"</item>
+    <item quantity="other" msgid="1040784359794890744">"App recenti in %d"</item>
   </plurals>
     <string name="status_bar_no_notifications_title" msgid="4755261167193833213">"Nessuna notifica"</string>
     <string name="status_bar_ongoing_events_title" msgid="1682504513316879202">"In corso"</string>
@@ -37,7 +35,7 @@
     <string name="battery_low_title" msgid="2783104807551211639">"Collega il caricabatterie"</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"Batteria quasi scarica."</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"<xliff:g id="NUMBER">%d%%</xliff:g> rimanente"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"Ricarica tramite USB non supportata."\n"Utilizza solo il caricatore in dotazione."</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"Ricarica tramite USB non supportata.\nUtilizza solo il caricatore in dotazione."</string>
     <string name="battery_low_why" msgid="7279169609518386372">"Utilizzo batteria"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"Impostazioni"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"Wi-Fi"</string>
@@ -59,12 +57,10 @@
     <string name="always_use_device" msgid="1450287437017315906">"Usa per impostazione predef. per dispositivo USB"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"Usa per impostazione predef. per accessorio USB"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"Consentire debug USB?"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"Fingerprint della chiave RSA del computer: "\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"Fingerprint della chiave RSA del computer: \n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"Consenti sempre da questo computer"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"Zoom per riempire schermo"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"Estendi per riemp. schermo"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"Zoom compatibilità"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"Se un\'applicazione è stata progettata per uno schermo più piccolo, accanto all\'orologio viene visualizzato un controllo dello zoom."</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"Salvataggio screenshot..."</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"Salvataggio screenshot..."</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"Screenshot in corso di salvataggio."</string>
@@ -80,6 +76,8 @@
     <string name="accessibility_home" msgid="8217216074895377641">"Home"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"Menu"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"Applicazioni recenti"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"Cerca"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"Fotocamera"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"Pulsante per cambiare metodo di immissione."</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"Pulsante zoom compatibilità."</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"Zoom inferiore per schermo più grande."</string>
@@ -118,8 +116,8 @@
     <string name="accessibility_two_bars" msgid="6437363648385206679">"Due barre."</string>
     <string name="accessibility_three_bars" msgid="2648241415119396648">"Tre barre."</string>
     <string name="accessibility_signal_full" msgid="9122922886519676839">"Massimo segnale."</string>
-    <string name="accessibility_desc_on" msgid="2385254693624345265">"Attivo."</string>
-    <string name="accessibility_desc_off" msgid="6475508157786853157">"Non attivo."</string>
+    <string name="accessibility_desc_on" msgid="2385254693624345265">"ON"</string>
+    <string name="accessibility_desc_off" msgid="6475508157786853157">"OFF"</string>
     <string name="accessibility_desc_connected" msgid="8366256693719499665">"Connesso."</string>
     <string name="accessibility_data_connection_gprs" msgid="1606477224486747751">"GPRS"</string>
     <string name="accessibility_data_connection_1x" msgid="994133468120244018">"1 X"</string>
@@ -127,6 +125,7 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3.5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
     <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Roaming"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"Edge"</string>
@@ -149,7 +148,7 @@
     <string name="accessibility_notification_dismissed" msgid="854211387186306927">"Notifica eliminata."</string>
     <string name="accessibility_desc_notification_shade" msgid="4690274844447504208">"Area notifiche."</string>
     <string name="accessibility_desc_quick_settings" msgid="6186378411582437046">"Impostazioni rapide."</string>
-    <string name="accessibility_desc_recent_apps" msgid="9014032916410590027">"Applicazioni recenti."</string>
+    <string name="accessibility_desc_recent_apps" msgid="9014032916410590027">"App recenti"</string>
     <string name="accessibility_quick_settings_user" msgid="1104846699869476855">"Utente <xliff:g id="USER">%s</xliff:g>."</string>
     <string name="accessibility_quick_settings_wifi" msgid="6099781031669728709">"<xliff:g id="SIGNAL">%1$s</xliff:g>. <xliff:g id="NETWORK">%2$s</xliff:g>"</string>
     <string name="accessibility_quick_settings_mobile" msgid="4876806564086241341">"Cellulare: <xliff:g id="SIGNAL">%1$s</xliff:g>. <xliff:g id="TYPE">%2$s</xliff:g>. <xliff:g id="NETWORK">%3$s</xliff:g>."</string>
@@ -161,21 +160,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"Dati 4G disattivati"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"Dati mobili disattivati"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"Dati disabilati"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Hai raggiunto il limite di utilizzo dei dati specificato."\n\n"Se riattivi i dati, l\'operatore potrebbe addebitarti un costo."</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Hai raggiunto il limite di utilizzo dei dati specificato.\n\nSe riattivi i dati, l\'operatore potrebbe addebitarti un costo."</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"Riattiva dati"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"Nessuna connessione"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"Wi-Fi connesso"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"Ricerca del GPS"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"Posizione stabilita dal GPS"</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"Richieste di accesso alla posizione attive"</string>
     <string name="accessibility_clear_all" msgid="5235938559247164925">"Cancella tutte le notifiche."</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"Informazioni applicazione"</string>
-    <string name="close_universe" msgid="3736513750241754348">"Chiudi"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"Notifiche disattivate"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"Tocca qui per riattivare le notifiche."</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"Lo schermo ruoterà automaticamente."</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"Lo schermo è bloccato in orientamento orizzontale."</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"Lo schermo è bloccato in orientamento verticale."</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Vetrina di dolci"</string>
     <string name="start_dreams" msgid="7219575858348719790">"Daydream"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"Ethernet"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"Modalità aereo"</string>
@@ -188,7 +185,8 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"Rotazione autom."</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"Rotazione bloccata"</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"Metodo di immissione"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"Posizione in uso"</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"Geolocalizzazione"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"Posizione non attiva"</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"Dispositivo multimediale"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"RSSI"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"Solo chiamate di emergenza"</string>
@@ -203,6 +201,5 @@
     <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Visualizzazione wireless"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"Luminosità"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"AUTO"</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"Le notifiche vengono visualizzate qui"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"Puoi accedervi in qualsiasi momento scorrendo verso il basso."\n"Fai scorrere di nuovo verso il basso per visualizzare i controlli del sistema."</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"La rete potrebbe\nessere monitorata"</string>
 </resources>

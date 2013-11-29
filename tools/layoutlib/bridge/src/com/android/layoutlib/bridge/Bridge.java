@@ -35,6 +35,7 @@ import com.android.resources.ResourceType;
 import com.android.tools.layoutlib.create.MethodAdapter;
 import com.android.tools.layoutlib.create.OverrideMethod;
 import com.android.util.Pair;
+import com.ibm.icu.util.ULocale;
 
 import android.content.res.BridgeAssetManager;
 import android.graphics.Bitmap;
@@ -63,6 +64,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * {@link #createScene(SceneParams)}
  */
 public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
+
+    private static final String ICU_LOCALE_DIRECTION_RTL = "right-to-left";
 
     public static class StaticMethodNotImplementedException extends RuntimeException {
         private static final long serialVersionUID = 1L;
@@ -211,7 +214,8 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
                 Capability.ANIMATED_VIEW_MANIPULATION,
                 Capability.ADAPTER_BINDING,
                 Capability.EXTENDED_VIEWINFO,
-                Capability.FIXED_SCALABLE_NINE_PATCH);
+                Capability.FIXED_SCALABLE_NINE_PATCH,
+                Capability.RTL);
 
 
         BridgeAssetManager.initSystem();
@@ -411,6 +415,20 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
         throw new IllegalArgumentException("viewObject is not a View");
     }
 
+    @Override
+    public boolean isRtl(String locale) {
+        return isLocaleRtl(locale);
+    }
+
+    public static boolean isLocaleRtl(String locale) {
+        if (locale == null) {
+            locale = "";
+        }
+        ULocale uLocale = new ULocale(locale);
+        return uLocale.getCharacterOrientation().equals(ICU_LOCALE_DIRECTION_RTL) ?
+                true : false;
+    }
+
     /**
      * Returns the lock for the bridge
      */
@@ -428,7 +446,7 @@ public final class Bridge extends com.android.ide.common.rendering.api.Bridge {
         // we need to make sure the Looper has been initialized for this thread.
         // this is required for View that creates Handler objects.
         if (Looper.myLooper() == null) {
-            Looper.prepare();
+            Looper.prepareMainLooper();
         }
     }
 

@@ -32,8 +32,10 @@ import android.os.Messenger;
 import android.util.Log;
 import android.util.SparseArray;
 
+import java.net.InetAddress;
 import java.util.concurrent.CountDownLatch;
 
+import com.android.internal.R;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 
@@ -68,6 +70,18 @@ public class WifiManager {
      * The error code if there was a problem authenticating.
      */
     public static final int ERROR_AUTHENTICATING = 1;
+
+    /**
+     * Broadcast intent action indicating whether Wi-Fi scanning is allowed currently
+     * @hide
+     */
+    public static final String WIFI_SCAN_AVAILABLE = "wifi_scan_available";
+
+    /**
+     * Extra int indicating scan availability, WIFI_STATE_ENABLED and WIFI_STATE_DISABLED
+     * @hide
+     */
+     public static final String EXTRA_SCAN_AVAILABLE = "scan_enabled";
 
     /**
      * Broadcast intent action indicating that Wi-Fi has been enabled, disabled,
@@ -352,6 +366,14 @@ public class WifiManager {
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String SCAN_RESULTS_AVAILABLE_ACTION = "android.net.wifi.SCAN_RESULTS";
     /**
+     * A batch of access point scans has been completed and the results areavailable.
+     * Call {@link #getBatchedScanResults()} to obtain the results.
+     * @hide pending review
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String BATCHED_SCAN_RESULTS_AVAILABLE_ACTION =
+            "android.net.wifi.BATCHED_RESULTS";
+    /**
      * The RSSI (signal strength) has changed.
      * @see #EXTRA_NEW_RSSI
      */
@@ -391,6 +413,21 @@ public class WifiManager {
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String NETWORK_IDS_CHANGED_ACTION = "android.net.wifi.NETWORK_IDS_CHANGED";
+
+    /**
+     * Activity Action: Show a system activity that allows the user to enable
+     * scans to be available even with Wi-Fi turned off.
+     *
+     * <p>Notification of the result of this activity is posted using the
+     * {@link android.app.Activity#onActivityResult} callback. The
+     * <code>resultCode</code>
+     * will be {@link android.app.Activity#RESULT_OK} if scan always mode has
+     * been turned on or {@link android.app.Activity#RESULT_CANCELED} if the user
+     * has rejected the request or an error has occurred.
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_REQUEST_SCAN_ALWAYS_AVAILABLE =
+            "android.net.wifi.action.REQUEST_SCAN_ALWAYS_AVAILABLE";
 
     /**
      * Activity Action: Pick a Wi-Fi network to connect to.
@@ -499,16 +536,14 @@ public class WifiManager {
     IWifiManager mService;
 
     private static final int INVALID_KEY = 0;
-    private int mListenerKey = 1;
-    private final SparseArray mListenerMap = new SparseArray();
-    private final Object mListenerMapLock = new Object();
+    private static int sListenerKey = 1;
+    private static final SparseArray sListenerMap = new SparseArray();
+    private static final Object sListenerMapLock = new Object();
 
-    private AsyncChannel mAsyncChannel = new AsyncChannel();
-    private ServiceHandler mHandler;
-    private Messenger mWifiServiceMessenger;
-    private final CountDownLatch mConnected = new CountDownLatch(1);
+    private static AsyncChannel sAsyncChannel;
+    private static CountDownLatch sConnected;
 
-    private static Object sThreadRefLock = new Object();
+    private static final Object sThreadRefLock = new Object();
     private static int sThreadRefCount;
     private static HandlerThread sHandlerThread;
 
@@ -733,7 +768,18 @@ public class WifiManager {
      */
     public boolean startScan() {
         try {
-            mService.startScan(false);
+            final WorkSource workSource = null;
+            mService.startScan(workSource);
+            return true;
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /** @hide */
+    public boolean startScan(WorkSource workSource) {
+        try {
+            mService.startScan(workSource);
             return true;
         } catch (RemoteException e) {
             return false;
@@ -741,22 +787,86 @@ public class WifiManager {
     }
 
     /**
-     * Request a scan for access points. Returns immediately. The availability
-     * of the results is made known later by means of an asynchronous event sent
-     * on completion of the scan.
-     * This is a variant of startScan that forces an active scan, even if passive
-     * scans are the current default
-     * @return {@code true} if the operation succeeded, i.e., the scan was initiated
+     * Request a batched scan for access points.  To end your requested batched scan,
+     * call stopBatchedScan with the same Settings.
      *
+     * If there are mulitple requests for batched scans, the more demanding settings will
+     * take precidence.
+     *
+     * @param requested {@link BatchedScanSettings} the scan settings requested.
+     * @return false on known error
      * @hide
      */
-    public boolean startScanActive() {
+    public boolean requestBatchedScan(BatchedScanSettings requested) {
         try {
-            mService.startScan(true);
-            return true;
+            return mService.requestBatchedScan(requested, new Binder());
+        } catch (RemoteException e) { return false; }
+    }
+
+    /**
+     * Check if the Batched Scan feature is supported.
+     *
+     * @return false if not supported.
+     * @hide
+     */
+    public boolean isBatchedScanSupported() {
+        try {
+            return mService.isBatchedScanSupported();
+        } catch (RemoteException e) { return false; }
+    }
+
+    /**
+     * End a requested batch scan for this applicaiton.  Note that batched scan may
+     * still occur if other apps are using them.
+     *
+     * @param requested {@link BatchedScanSettings} the scan settings you previously requested
+     *        and now wish to stop.  A value of null here will stop all scans requested by the
+     *        calling App.
+     * @hide
+     */
+    public void stopBatchedScan(BatchedScanSettings requested) {
+        try {
+            mService.stopBatchedScan(requested);
+        } catch (RemoteException e) {}
+    }
+
+    /**
+     * Retrieve the latest batched scan result.  This should be called immediately after
+     * {@link BATCHED_SCAN_RESULTS_AVAILABLE_ACTION} is received.
+     * @hide
+     */
+    public List<BatchedScanResult> getBatchedScanResults() {
+        try {
+            return mService.getBatchedScanResults(mContext.getOpPackageName());
         } catch (RemoteException e) {
-            return false;
+            return null;
         }
+    }
+
+    /**
+     * Force a re-reading of batched scan results.  This will attempt
+     * to read more information from the chip, but will do so at the expense
+     * of previous data.  Rate limited to the current scan frequency.
+     *
+     * pollBatchedScan will always wait 1 period from the start of the batch
+     * before trying to read from the chip, so if your #scans/batch == 1 this will
+     * have no effect.
+     *
+     * If you had already waited 1 period before calling, this should have
+     * immediate (though async) effect.
+     *
+     * If you call before that 1 period is up this will set up a timer and fetch
+     * results when the 1 period is up.
+     *
+     * Servicing a pollBatchedScan request (immediate or after timed delay) starts a
+     * new batch, so if you were doing 10 scans/batch and called in the 4th scan, you
+     * would get data in the 4th and then again 10 scans later.
+     * @hide
+     */
+    public void pollBatchedScan() {
+        try {
+            mService.pollBatchedScan();
+        } catch (RemoteException e) { }
     }
 
     /**
@@ -777,9 +887,25 @@ public class WifiManager {
      */
     public List<ScanResult> getScanResults() {
         try {
-            return mService.getScanResults();
+            return mService.getScanResults(mContext.getOpPackageName());
         } catch (RemoteException e) {
             return null;
+        }
+    }
+
+    /**
+     * Check if scanning is always available.
+     *
+     * If this return {@code true}, apps can issue {@link #startScan} and fetch scan results
+     * even when Wi-Fi is turned off.
+     *
+     * To change this setting, see {@link #ACTION_REQUEST_SCAN_ALWAYS_AVAILABLE}.
+     */
+    public boolean isScanAlwaysAvailable() {
+        try {
+            return mService.isScanAlwaysAvailable();
+        } catch (RemoteException e) {
+            return false;
         }
     }
 
@@ -871,32 +997,6 @@ public class WifiManager {
     }
 
     /**
-     * Check if the chipset supports IBSS (Adhoc) mode
-     * @return {@code true} if supported, {@code false} otherwise.
-     * @hide
-     */
-    public boolean isIbssSupported() {
-        try {
-            return mService.isIbssSupported();
-        } catch (RemoteException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Get a list of supported channels / frequencies
-     * @return a List of WifiChannels
-     * @hide
-     */
-    public List<WifiChannel> getSupportedChannels() {
-        try {
-            return mService.getSupportedChannels();
-        } catch (RemoteException e) {
-            return null;
-        }
-    }
-
-    /**
      * Return the DHCP-assigned addresses from the last successful DHCP request,
      * if any.
      * @return the DHCP information
@@ -908,7 +1008,6 @@ public class WifiManager {
             return null;
         }
     }
-
 
     /**
      * Enable or disable Wi-Fi.
@@ -956,7 +1055,7 @@ public class WifiManager {
      */
     public void getTxPacketCount(TxPacketCountListener listener) {
         validateChannel();
-        mAsyncChannel.sendMessage(RSSI_PKTCNT_FETCH, 0, putListener(listener));
+        sAsyncChannel.sendMessage(RSSI_PKTCNT_FETCH, 0, putListener(listener));
     }
 
     /**
@@ -1148,6 +1247,49 @@ public class WifiManager {
         }
     }
 
+
+    /**
+     * Enable/Disable TDLS on a specific local route.
+     *
+     * <p>
+     * TDLS enables two wireless endpoints to talk to each other directly
+     * without going through the access point that is managing the local
+     * network. It saves bandwidth and improves quality of the link.
+     * </p>
+     * <p>
+     * This API enables/disables the option of using TDLS. If enabled, the
+     * underlying hardware is free to use TDLS or a hop through the access
+     * point. If disabled, existing TDLS session is torn down and
+     * hardware is restricted to use access point for transferring wireless
+     * packets. Default value for all routes is 'disabled', meaning restricted
+     * to use access point for transferring packets.
+     * </p>
+     *
+     * @param remoteIPAddress IP address of the endpoint to setup TDLS with
+     * @param enable true = setup and false = tear down TDLS
+     */
+    public void setTdlsEnabled(InetAddress remoteIPAddress, boolean enable) {
+        try {
+            mService.enableTdls(remoteIPAddress.getHostAddress(), enable);
+        } catch (RemoteException e) {
+            // Just ignore the exception
+        }
+    }
+
+    /**
+     * Similar to {@link #setTdlsEnabled(InetAddress, boolean) }, except
+     * this version allows you to specify remote endpoint with a MAC address.
+     * @param remoteMacAddress MAC address of the remote endpoint such as 00:00:0c:9f:f2:ab
+     * @param enable true = setup and false = tear down TDLS
+     */
+    public void setTdlsEnabledWithMacAddress(String remoteMacAddress, boolean enable) {
+        try {
+            mService.enableTdlsWithMacAddress(remoteMacAddress, enable);
+        } catch (RemoteException e) {
+            // Just ignore the exception
+        }
+    }
+
     /* TODO: deprecate synchronous API and open up the following API */
 
     private static final int BASE = Protocol.BASE_WIFI_MANAGER;
@@ -1204,12 +1346,6 @@ public class WifiManager {
     /** @hide */
     public static final int RSSI_PKTCNT_FETCH_FAILED        = BASE + 22;
 
-    /* For system use only */
-    /** @hide */
-    public static final int ENABLE_TRAFFIC_STATS_POLL       = BASE + 31;
-    /** @hide */
-    public static final int TRAFFIC_STATS_POLL              = BASE + 32;
-
 
     /**
      * Passed with {@link ActionListener#onFailure}.
@@ -1244,6 +1380,13 @@ public class WifiManager {
     public static final int WPS_AUTH_FAILURE            = 6;
     /** WPS timed out {@hide} */
     public static final int WPS_TIMED_OUT               = 7;
+
+    /**
+     * Passed with {@link ActionListener#onFailure}.
+     * Indicates that the operation failed due to invalid inputs
+     * @hide
+     */
+    public static final int INVALID_ARGS                = 8;
 
     /** Interface for callback invocation on an application action {@hide} */
     public interface ActionListener {
@@ -1288,7 +1431,7 @@ public class WifiManager {
         public void onFailure(int reason);
     }
 
-    private class ServiceHandler extends Handler {
+    private static class ServiceHandler extends Handler {
         ServiceHandler(Looper looper) {
             super(looper);
         }
@@ -1299,14 +1442,14 @@ public class WifiManager {
             switch (message.what) {
                 case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
                     if (message.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
-                        mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+                        sAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
                     } else {
                         Log.e(TAG, "Failed to set up channel connection");
                         // This will cause all further async API calls on the WifiManager
                         // to fail and throw an exception
-                        mAsyncChannel = null;
+                        sAsyncChannel = null;
                     }
-                    mConnected.countDown();
+                    sConnected.countDown();
                     break;
                 case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
                     // Ignore
@@ -1315,7 +1458,7 @@ public class WifiManager {
                     Log.e(TAG, "Channel connection lost");
                     // This will cause all further async API calls on the WifiManager
                     // to fail and throw an exception
-                    mAsyncChannel = null;
+                    sAsyncChannel = null;
                     getLooper().quit();
                     break;
                     /* ActionListeners grouped together */
@@ -1343,8 +1486,8 @@ public class WifiManager {
                         WpsResult result = (WpsResult) message.obj;
                         ((WpsListener) listener).onStartSuccess(result.pin);
                         //Listener needs to stay until completion or failure
-                        synchronized(mListenerMapLock) {
-                            mListenerMap.put(message.arg2, listener);
+                        synchronized(sListenerMapLock) {
+                            sListenerMap.put(message.arg2, listener);
                         }
                     }
                     break;
@@ -1379,52 +1522,54 @@ public class WifiManager {
         }
     }
 
-    private int putListener(Object listener) {
+    private static int putListener(Object listener) {
         if (listener == null) return INVALID_KEY;
         int key;
-        synchronized (mListenerMapLock) {
+        synchronized (sListenerMapLock) {
             do {
-                key = mListenerKey++;
+                key = sListenerKey++;
             } while (key == INVALID_KEY);
-            mListenerMap.put(key, listener);
+            sListenerMap.put(key, listener);
         }
         return key;
     }
 
-    private Object removeListener(int key) {
+    private static Object removeListener(int key) {
         if (key == INVALID_KEY) return null;
-        synchronized (mListenerMapLock) {
-            Object listener = mListenerMap.get(key);
-            mListenerMap.remove(key);
+        synchronized (sListenerMapLock) {
+            Object listener = sListenerMap.get(key);
+            sListenerMap.remove(key);
             return listener;
         }
     }
 
     private void init() {
-        mWifiServiceMessenger = getWifiServiceMessenger();
-        if (mWifiServiceMessenger == null) {
-            mAsyncChannel = null;
-            return;
-        }
-
         synchronized (sThreadRefLock) {
             if (++sThreadRefCount == 1) {
-                sHandlerThread = new HandlerThread("WifiManager");
-                sHandlerThread.start();
-            }
-        }
+                Messenger messenger = getWifiServiceMessenger();
+                if (messenger == null) {
+                    sAsyncChannel = null;
+                    return;
+                }
 
-        mHandler = new ServiceHandler(sHandlerThread.getLooper());
-        mAsyncChannel.connect(mContext, mHandler, mWifiServiceMessenger);
-        try {
-            mConnected.await();
-        } catch (InterruptedException e) {
-            Log.e(TAG, "interrupted wait at init");
+                sHandlerThread = new HandlerThread("WifiManager");
+                sAsyncChannel = new AsyncChannel();
+                sConnected = new CountDownLatch(1);
+
+                sHandlerThread.start();
+                Handler handler = new ServiceHandler(sHandlerThread.getLooper());
+                sAsyncChannel.connect(mContext, handler, messenger);
+                try {
+                    sConnected.await();
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "interrupted wait at init");
+                }
+            }
         }
     }
 
     private void validateChannel() {
-        if (mAsyncChannel == null) throw new IllegalStateException(
+        if (sAsyncChannel == null) throw new IllegalStateException(
                 "No permission to access and change wifi or a bad initialization");
     }
 
@@ -1449,7 +1594,7 @@ public class WifiManager {
         validateChannel();
         // Use INVALID_NETWORK_ID for arg1 when passing a config object
         // arg1 is used to pass network id when the network already exists
-        mAsyncChannel.sendMessage(CONNECT_NETWORK, WifiConfiguration.INVALID_NETWORK_ID,
+        sAsyncChannel.sendMessage(CONNECT_NETWORK, WifiConfiguration.INVALID_NETWORK_ID,
                 putListener(listener), config);
     }
 
@@ -1469,7 +1614,7 @@ public class WifiManager {
     public void connect(int networkId, ActionListener listener) {
         if (networkId < 0) throw new IllegalArgumentException("Network id cannot be negative");
         validateChannel();
-        mAsyncChannel.sendMessage(CONNECT_NETWORK, networkId, putListener(listener));
+        sAsyncChannel.sendMessage(CONNECT_NETWORK, networkId, putListener(listener));
     }
 
     /**
@@ -1493,7 +1638,7 @@ public class WifiManager {
     public void save(WifiConfiguration config, ActionListener listener) {
         if (config == null) throw new IllegalArgumentException("config cannot be null");
         validateChannel();
-        mAsyncChannel.sendMessage(SAVE_NETWORK, 0, putListener(listener), config);
+        sAsyncChannel.sendMessage(SAVE_NETWORK, 0, putListener(listener), config);
     }
 
     /**
@@ -1512,7 +1657,7 @@ public class WifiManager {
     public void forget(int netId, ActionListener listener) {
         if (netId < 0) throw new IllegalArgumentException("Network id cannot be negative");
         validateChannel();
-        mAsyncChannel.sendMessage(FORGET_NETWORK, netId, putListener(listener));
+        sAsyncChannel.sendMessage(FORGET_NETWORK, netId, putListener(listener));
     }
 
     /**
@@ -1527,7 +1672,7 @@ public class WifiManager {
     public void disable(int netId, ActionListener listener) {
         if (netId < 0) throw new IllegalArgumentException("Network id cannot be negative");
         validateChannel();
-        mAsyncChannel.sendMessage(DISABLE_NETWORK, netId, putListener(listener));
+        sAsyncChannel.sendMessage(DISABLE_NETWORK, netId, putListener(listener));
     }
 
     /**
@@ -1542,7 +1687,7 @@ public class WifiManager {
     public void startWps(WpsInfo config, WpsListener listener) {
         if (config == null) throw new IllegalArgumentException("config cannot be null");
         validateChannel();
-        mAsyncChannel.sendMessage(START_WPS, 0, putListener(listener), config);
+        sAsyncChannel.sendMessage(START_WPS, 0, putListener(listener), config);
     }
 
     /**
@@ -1555,7 +1700,7 @@ public class WifiManager {
      */
     public void cancelWps(ActionListener listener) {
         validateChannel();
-        mAsyncChannel.sendMessage(CANCEL_WPS, 0, putListener(listener));
+        sAsyncChannel.sendMessage(CANCEL_WPS, 0, putListener(listener));
     }
 
     /**
@@ -1733,13 +1878,16 @@ public class WifiManager {
                 boolean changed = true;
                 if (ws == null) {
                     mWorkSource = null;
-                } else if (mWorkSource == null) {
-                    changed = mWorkSource != null;
-                    mWorkSource = new WorkSource(ws);
                 } else {
-                    changed = mWorkSource.diff(ws);
-                    if (changed) {
-                        mWorkSource.set(ws);
+                    ws.clearNames();
+                    if (mWorkSource == null) {
+                        changed = mWorkSource != null;
+                        mWorkSource = new WorkSource(ws);
+                    } else {
+                        changed = mWorkSource.diff(ws);
+                        if (changed) {
+                            mWorkSource.set(ws);
+                        }
                     }
                 }
                 if (changed && mHeld) {
@@ -2031,8 +2179,8 @@ public class WifiManager {
     protected void finalize() throws Throwable {
         try {
             synchronized (sThreadRefLock) {
-                if (--sThreadRefCount == 0 && sHandlerThread != null) {
-                    sHandlerThread.getLooper().quit();
+                if (--sThreadRefCount == 0 && sAsyncChannel != null) {
+                    sAsyncChannel.disconnect();
                 }
             }
         } finally {

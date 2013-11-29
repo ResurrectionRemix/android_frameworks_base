@@ -21,7 +21,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
-import android.util.Slog;
+import android.util.Log;
 
 /**
  * Performs a number of miscellaneous, non-system-critical actions
@@ -39,8 +39,14 @@ public class BootReceiver extends BroadcastReceiver {
                 Intent loadavg = new Intent(context, com.android.systemui.LoadAverageService.class);
                 context.startService(loadavg);
             }
+            // Start the cpu info overlay, if activated
+            if (Settings.Global.getInt(res, Settings.Global.SHOW_CPU, 0) != 0) {
+                Intent cpuinfo = new Intent(context, com.android.systemui.CPUInfoService.class);
+                context.startService(cpuinfo);
+            }
+
         } catch (Exception e) {
-            Slog.e(TAG, "Can't start load average service", e);
+            Log.e(TAG, "Can't start load average service", e);
         }
     }
 }

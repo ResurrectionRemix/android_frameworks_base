@@ -1226,35 +1226,6 @@ public class SpannableStringBuilder implements CharSequence, GetChars, Spannable
     }
 
     /**
-     * Don't call this yourself -- exists for Paint to use internally.
-     * {@hide}
-     */
-    public float getTextRunAdvances(int start, int end, int contextStart, int contextEnd, int flags,
-            float[] advances, int advancesPos, Paint p, int reserved) {
-
-        float ret;
-
-        int contextLen = contextEnd - contextStart;
-        int len = end - start;
-
-        if (end <= mGapStart) {
-            ret = p.getTextRunAdvances(mText, start, len, contextStart, contextLen,
-                    flags, advances, advancesPos, reserved);
-        } else if (start >= mGapStart) {
-            ret = p.getTextRunAdvances(mText, start + mGapLength, len,
-                    contextStart + mGapLength, contextLen, flags, advances, advancesPos, reserved);
-        } else {
-            char[] buf = TextUtils.obtain(contextLen);
-            getChars(contextStart, contextEnd, buf, 0);
-            ret = p.getTextRunAdvances(buf, start - contextStart, len,
-                    0, contextLen, flags, advances, advancesPos, reserved);
-            TextUtils.recycle(buf);
-        }
-
-        return ret;
-    }
-
-    /**
      * Returns the next cursor position in the run.  This avoids placing the cursor between
      * surrogates, between characters that form conjuncts, between base characters and combining
      * marks, or within a reordering cluster.
@@ -1315,6 +1286,55 @@ public class SpannableStringBuilder implements CharSequence, GetChars, Spannable
     // Documentation from interface
     public InputFilter[] getFilters() {
         return mFilters;
+    }
+
+    // Same as SpannableStringInternal
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Spanned &&
+                toString().equals(o.toString())) {
+            Spanned other = (Spanned) o;
+            // Check span data
+            Object[] otherSpans = other.getSpans(0, other.length(), Object.class);
+            if (mSpanCount == otherSpans.length) {
+                for (int i = 0; i < mSpanCount; ++i) {
+                    Object thisSpan = mSpans[i];
+                    Object otherSpan = otherSpans[i];
+                    if (thisSpan == this) {
+                        if (other != otherSpan ||
+                                getSpanStart(thisSpan) != other.getSpanStart(otherSpan) ||
+                                getSpanEnd(thisSpan) != other.getSpanEnd(otherSpan) ||
+                                getSpanFlags(thisSpan) != other.getSpanFlags(otherSpan)) {
+                            return false;
+                        }
+                    } else if (!thisSpan.equals(otherSpan) ||
+                            getSpanStart(thisSpan) != other.getSpanStart(otherSpan) ||
+                            getSpanEnd(thisSpan) != other.getSpanEnd(otherSpan) ||
+                            getSpanFlags(thisSpan) != other.getSpanFlags(otherSpan)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Same as SpannableStringInternal
+    @Override
+    public int hashCode() {
+        int hash = toString().hashCode();
+        hash = hash * 31 + mSpanCount;
+        for (int i = 0; i < mSpanCount; ++i) {
+            Object span = mSpans[i];
+            if (span != this) {
+                hash = hash * 31 + span.hashCode();
+            }
+            hash = hash * 31 + getSpanStart(span);
+            hash = hash * 31 + getSpanEnd(span);
+            hash = hash * 31 + getSpanFlags(span);
+        }
+        return hash;
     }
 
     private static final InputFilter[] NO_FILTERS = new InputFilter[0];

@@ -17,7 +17,7 @@
 package com.android.internal.statusbar;
 
 import com.android.internal.statusbar.StatusBarIcon;
-import com.android.internal.statusbar.StatusBarNotification;
+import android.service.notification.StatusBarNotification;
 
 /** @hide */
 oneway interface IStatusBar
@@ -35,9 +35,9 @@ oneway interface IStatusBar
     void topAppWindowChanged(boolean menuVisible);
     void setImeWindowStatus(in IBinder token, int vis, int backDisposition);
     void setHardKeyboardStatus(boolean available, boolean enabled);
-    void toggleNotificationShade();
     void toggleRecentApps();
     void preloadRecentApps();
     void cancelPreloadRecentApps();
+    void setWindowState(int window, int state);
 }
 

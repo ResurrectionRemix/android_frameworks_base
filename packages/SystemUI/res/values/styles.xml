@@ -34,7 +34,7 @@
         <item name="android:wallpaperIntraOpenExitAnimation">@anim/wallpaper_recents_launch_from_launcher_exit</item>
     </style>
 
-    <style name="TextAppearance.StatusBar.IntruderAlert"
+    <style name="TextAppearance.StatusBar.HeadsUp"
         parent="@*android:style/TextAppearance.StatusBar">
     </style>
 
@@ -56,53 +56,14 @@
         <!-- Note: must be dp to fit in status bar -->
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@color/status_bar_clock_color</item>
     </style>
 
     <style name="TextAppearance.StatusBar.Traffic" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <!-- Note: must be dp to fit in status bar -->
         <item name="android:textSize">14dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.BatteryTextOnly" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <!-- Note: must be dp to fit in status bar -->
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.Date" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.BatteryTextOnly_Plugged" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <!-- Note: must be dp to fit in status bar -->
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_green_light</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.BatteryTextOnly_Low" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <!-- Note: must be dp to fit in status bar -->
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.WifiText" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.SignalText" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textColor">@color/status_bar_traffic_color</item>
     </style>
 
     <style name="TextAppearance.StatusBar.Expanded" parent="@*android:style/TextAppearance.StatusBar" />
@@ -121,22 +82,6 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="TextAppearance.SystemBar.Expanded" parent="@*android:style/TextAppearance.StatusBar" />
-
-    <style name="TextAppearance.SystemBar.Expanded.Clock">
-        <item name="android:textSize">44dp</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">#ffffff</item>
-    </style>
-
-    <style name="TextAppearance.SystemBar.Expanded.Date">
-        <item name="android:textSize">20dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">#cccccc</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
     <style name="TextAppearance.StatusBar.Expanded.Network" parent="@style/TextAppearance.StatusBar.Expanded.Date">
         <item name="android:textColor">#999999</item>
 	</style>
@@ -148,38 +93,20 @@
     <style name="TextAppearance.QuickSettings" />
 
     <style name="TextAppearance.QuickSettings.TileView">
-        <item name="android:paddingLeft">6dp</item>
-        <item name="android:paddingRight">6dp</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:drawablePadding">12dp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/toggle_text</item>
+        <item name="android:textColor">#CCCCCC</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:paddingEnd">6dp</item>
     </style>
 
-    <style name="Battery_Offset">
-      <item name="android:layout_marginRight">4dp</item>
-      <item name="android:paddingBottom">1dp</item>
-      <item name="android:layout_gravity">left|bottom</item>
-      <item name="android:textSize">11dp</item>
-      <item name="android:textStyle">bold</item>
-      <item name="android:shadowColor">#FF000000</item>
-      <item name="android:shadowDx">0</item>
-      <item name="android:shadowDy">0</item>
-      <item name="android:shadowRadius">2.5</item>
-    </style>
-
-    <style name="Battery_Center">
-      <item name="android:layout_marginRight">0dp</item>
-      <item name="android:layout_gravity">center</item>
-      <item name="android:textSize">9dp</item>
-      <item name="android:textStyle">bold</item>
-      <item name="android:shadowColor">#FF000000</item>
-      <item name="android:shadowDx">0</item>
-      <item name="android:shadowDy">0</item>
-      <item name="android:shadowRadius">2.5</item>
+    <style name="TextAppearance.QuickSettings.TileView.AllInOne" parent="@style/TextAppearance.QuickSettings.TileView">
+        <item name="android:lines">2</item>
+        <item name="android:gravity">top</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:drawablePadding">8dp</item>
     </style>
 
     <style name="TextAppearance.QuickSettings.Clock" parent="@style/TextAppearance.QuickSettings.TileView">
@@ -195,8 +122,17 @@
         <item name="android:textSize">14dp</item>
         <item name="android:textColor">#ff3a3b39</item>
     </style>
-    
-    
+
+    <style name="TextAppearance.QuickSettings.CaCertWarning" parent="@style/TextAppearance.QuickSettings.TileView">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.QuickSettings.TileView.User" parent="@style/TextAppearance.QuickSettings.TileView">
+        <item name="android:background">#CC000000</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fadingEdge">horizontal</item>
+    </style>
 
     <style name="BaseBrightnessDialogContainer">
         <item name="android:layout_width">match_parent</item>
@@ -205,6 +141,7 @@
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:padding">16dp</item>
     </style>
+    
     <style name="BrightnessDialogContainer" parent="@style/BaseBrightnessDialogContainer" />
 
     <style name="Animation" />
@@ -223,9 +160,9 @@
     <style name="Animation.StatusBar">
     </style>
 
-    <style name="Animation.StatusBar.IntruderAlert">
-        <item name="android:windowEnterAnimation">@anim/priority_alert_enter</item>
-        <item name="android:windowExitAnimation">@anim/priority_alert_exit</item>
+    <style name="Animation.StatusBar.HeadsUp">
+        <item name="android:windowEnterAnimation">@anim/heads_up_enter</item>
+        <item name="android:windowExitAnimation">@anim/heads_up_exit</item>
     </style>
 
     <style name="TextAppearance.StatusBar.PhoneTicker"
@@ -234,17 +171,6 @@
         <item name="android:textSize">14dp</item>
     </style>
 
-    <style name="TextAppearance.StatusBar.Toggle" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <item name="android:textSize">16dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
-    </style>
-
-     <style name="brucekey_icon">
-       <item name="android:layout_width">wrap_content</item>
-       <item name="android:layout_height">wrap_content</item>
-    </style>
-    
     <style name="ClingButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -253,8 +179,9 @@
         <item name="android:paddingLeft">35dp</item>
         <item name="android:paddingRight">35dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/cling_button_bg</item>
+        <!-- item name="android:background">@drawable/cling_bg</item -->
     </style>
+    
     <style name="ClingTitleText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -265,6 +192,7 @@
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">2.0</item>
     </style>
+    
     <style name="ClingText">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">#FFFFFF</item>
@@ -272,13 +200,6 @@
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">2.0</item>
         <item name="android:lineSpacingMultiplier">1.1</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.Battery" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <!-- Note: must be dp to fit in status bar -->
-        <item name="android:textSize">12dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/holo_blue_light</item>
     </style>
 
 </resources>

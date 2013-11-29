@@ -1,4 +1,5 @@
 page.title=SDK Tools
+excludeFromSuggestions=true
 @jd:body
 
 <p>SDK Tools is a downloadable component for the Android SDK. It includes the
@@ -25,9 +26,299 @@ Tools you are using, refer to the "Installed Packages" listing in the Android SD
 href="http://tools.android.com/knownissues">http://tools.android.com/knownissues</a>.</p>
 
 
+
 <div class="toggle-content opened">
   <p><a href="#" onclick="return toggleContent(this)">
     <img src="{@docRoot}assets/images/triangle-opened.png" class="toggle-content-img"
+      alt=""/>SDK Tools, Revision 22.2.1</a> <em>(September 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <dl>
+    <dt>Dependencies:</dt>
+    <dd>
+      <ul>
+        <li>Android SDK Platform-tools revision 16 or later.</li>
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
+          designed for use with ADT 22.2.1 and later. If you haven't already, update your
+        <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 22.2.1.</li>
+        <li>If you are developing outside Eclipse, you must have
+          <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
+      </ul>
+    </dd>
+
+    <dt>General Notes:</dt>
+    <dd>
+      <ul>
+        <li>Fixed problem with templates that causes the new project wizard to hang.
+         (<a href="http://b.android.com/60149">Issue 60149</a>)</li>
+        <li>Fixed crash when using the lint command line tool because of mis-matched library
+          dependency. (<a href="http://b.android.com/60190">Issue 60190</a>)</li>
+      </ul>
+    </dd>
+    </dl>
+  </div>
+</div>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png" class="toggle-content-img"
+      alt=""/>SDK Tools, Revision 22.2</a> <em>(September 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <dl>
+    <dt>Dependencies:</dt>
+    <dd>
+      <ul>
+        <li>Android SDK Platform-tools revision 16 or later.</li>
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
+          designed for use with ADT 22.2 and later. If you haven't already, update your
+        <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 22.2.</li>
+        <li>If you are developing outside Eclipse, you must have
+          <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
+      </ul>
+    </dd>
+
+    <dt>General Notes:</dt>
+    <dd>
+      <ul>
+        <li>Updated build tools to allow use of RenderScript on older versions of Android
+         using new features in the
+         <a href="{@docRoot}tools/support-library/features.html#v8">Support Library</a>.</li>
+        <li>Moved the Systrace tool to the {@code &gt;sdk&lt;/platform-tools/} directory. </li>
+        <li>Modified <a href="{@docRoot}tools/help/gltracer.html">Tracer for OpenGL ES</a> to
+          support OpenGL ES 3.0.</li>
+        <li>Lint
+          <ul>
+            <li>Fixed problem with lint not detecting custom namespaces.
+              (<a href="http://b.android.com/55673">Issue 55673</a>)</li>
+            <li>Fixed problem with the XML report including invalid characters.
+              (<a href="http://b.android.com/56205">Issue 56205</a>)</li>
+            <li>Fixed command-line execution of lint to work in headless mode to support execution
+              by build servers. (<a href="http://b.android.com/55820">Issue 55820</a>)</li>
+          </ul>
+        </li>
+        <li>Improved support for path names with spaces in the Windows command-line tools.</li>
+      </ul>
+    </dd>
+    </dl>
+  </div>
+</div>
+
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png" class="toggle-content-img"
+      alt=""/>SDK Tools, Revision 22.0.5</a> <em>(July 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <dl>
+    <dt>Dependencies:</dt>
+    <dd>
+      <ul>
+        <li>Android SDK Platform-tools revision 16 or later.</li>
+        <li>If you are developing in Eclipse with the
+          <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a>, note that this version of
+          SDK Tools is designed for use with ADT 22.0.5 and later. If you haven't already, update
+          ADT to 22.0.5.</li>
+        <li>If you are using <a href="{@docRoot}sdk/installing/studio.html">Android Studio</a>,
+          note that this version of the SDK Tools is designed to work with Android Studio
+          0.2.x and later.</li>
+        <li>If you are developing without an integrated development environment (IDE), you must have
+          <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
+      </ul>
+    </dd>
+
+    <dt>General Notes:</dt>
+    <dd>
+      <ul>
+        <li>Fixed RenderScript compilation issue for Windows platforms with ant.</li>
+        <li>Updated <a href="{@docRoot}tools/help/systrace.html">Systrace</a> to work with the
+          Android 4.3 platform image.</li>
+        <li>Fixed packaging of RenderScript compiler.</li>
+        <li>Build tools 18.0.0 is obsolete and 18.0.1 should be used instead.</li>
+      </ul>
+    </dd>
+    </dl>
+  </div>
+</div>
+
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png" class="toggle-content-img"
+      alt=""/>SDK Tools, Revision 22.0.4</a> <em>(July 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <dl>
+    <dt>Dependencies:</dt>
+    <dd>
+      <ul>
+        <li>Android SDK Platform-tools revision 16 or later.</li>
+        <li>If you are developing in Eclipse with the
+          <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a>, note that this version of
+          SDK Tools is designed for use with ADT 22.0.4 and later. If you haven't already, update
+          ADT to 22.0.4.</li>
+        <li>If you are using <a href="{@docRoot}sdk/installing/studio.html">Android Studio</a>,
+          note that this version of the SDK Tools is designed to work with Android Studio
+          0.2.x and later.</li>
+        <li>If you are developing without an integrated development environment (IDE), you must have
+          <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
+      </ul>
+    </dd>
+
+    <dt>General Notes:</dt>
+    <dd>
+      <ul>
+        <li>Fixed problem with compiling RenderScript code.</li>
+      </ul>
+    </dd>
+    </dl>
+  </div>
+</div>
+
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png" class="toggle-content-img"
+      alt=""/>SDK Tools, Revision 22.0.1</a> <em>(May 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <dl>
+    <dt>Dependencies:</dt>
+    <dd>
+      <ul>
+        <li>Android SDK Platform-tools revision 16 or later.</li>
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
+          designed for use with ADT 22.0.1 and later. If you haven't already, update your
+        <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 22.0.1.</li>
+        <li>If you are developing outside Eclipse, you must have
+          <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
+      </ul>
+    </dd>
+
+    <dt>General Notes:</dt>
+    <dd>
+      <ul>
+        <li>Fixed issue with Lint ServiceCast check and fully qualified class names.
+          (<a href="http://code.google.com/p/android/issues/detail?id=55403">Issue 55403</a>)</li>
+        <li>Fixed crash issue with Lint ArraySizeDetector check.
+          (<a href="http://code.google.com/p/android/issues/detail?id=54887">Issue 54887</a>)</li>
+        <li>Fixed a problem with the monkeyrunner tool failing to import standard python classes.
+          (<a href="http://code.google.com/p/android/issues/detail?id=55632">Issue 55632</a>)</li>
+        <li>Fixed a problem with DDMS monitor not opening heap and network statistics views due to
+          a class not found exception.
+          (<a href="http://code.google.com/p/android/issues/detail?id=55394">Issue 55394</a>)</li>
+      </ul>
+
+    </dd>
+    </dl>
+  </div>
+</div>
+
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png" class="toggle-content-img"
+      alt=""/>SDK Tools, Revision 22</a> <em>(May 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <dl>
+    <dt>Dependencies:</dt>
+    <dd>
+      <ul>
+        <li>Android SDK Platform-tools revision 16 or later.</li>
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
+          designed for use with ADT 22.0.0 and later. If you haven't already, update your
+        <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 22.0.0.</li>
+        <li>If you are developing outside Eclipse, you must have
+          <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
+    </ul>
+    </dd>
+
+    <dt>General Notes:</dt>
+    <dd>
+      <ul>
+        <li>Changed the structure of the SDK by adding a new build tool SDK Component, which is
+          based on the existing platform-tools component. This change decouples the build tools
+          versions from the IDE versions, allowing updates to the tools without requiring an
+          IDE update.</li>
+        <li>Updated tools to allow libraries to share the same package name as the applications
+          that use them.</li>
+        <li>Updated {@code draw9patch} tool to allow easier changing of markers.</li>
+        <li>Added new Lint checks, including checks for layout consistency,
+          {@link android.widget.RelativeLayout} siblings, {@link android.os.Parcel} creator,
+          JavaScript interfaces, {@link android.app.Service} casting, quantity strings, manifest
+          typos, orientation tags in layouts, overlapping names for 9-patches and images, and class
+          existence checks.</li>
+        <li>Updated build tools to sign applications using the BouncyCastle library instead of
+          relying on Sun JVM specific APIs.</li>
+        <li>Released some of the Android tools into <a href="http://www.maven.org">Maven
+          Central</a> to assist third-party tool developers. The following tools are available
+          in the repository: {@code manifest-merger}, {@code common/sdk_common}, {@code ddmlib},
+          {@code dvlib}, {@code layoutlib_api}, {@code sdklib}, and {@code lint}.</li>
+      </ul>
+    </dd>
+
+    <dt>Bug fixes:</dt>
+    <dd>
+      <ul>
+        <li>Fixed a number of minor bugs in the SDK and build system.</li>
+    </ul>
+    </dd>
+    </dl>
+  </div>
+</div>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png" class="toggle-content-img"
+      alt=""/>SDK Tools, Revision 21.1</a> <em>(February 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <dl>
+    <dt>Dependencies:</dt>
+    <dd>
+      <ul>
+        <li>Android SDK Platform-tools revision 16 or later.</li>
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
+          designed for use with ADT 21.1.0 and later. If you haven't already, update your
+        <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 21.1.0.</li>
+        <li>If you are developing outside Eclipse, you must have
+          <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
+    </ul>
+    </dd>
+
+    <dt>General Notes:</dt>
+    <dd>
+      <ul>
+        <li>Improved error reporting in {@code dx} when dex merging fails in the build
+          system.</li>
+        <li>Added more than 15 new Lint checks, including checks for overriding older APIs, XML
+          resource problems, graphic asset issues and manifest tags.</li>
+        <li>Added new aapt feature to compile resources.</li>
+      </ul>
+    </dd>
+    </dl>
+  </div>
+</div>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png" class="toggle-content-img"
       alt=""/>SDK Tools, Revision 21.0.1</a> <em>(December 2012)</em>
   </p>
 
@@ -38,9 +329,9 @@ href="http://tools.android.com/knownissues">http://tools.android.com/knownissues
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 16 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r21.0.1 is
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
           designed for use with ADT 21.0.1 and later. If you haven't already, update your
-        <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 21.0.0.</li>
+        <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 21.0.1.</li>
         <li>If you are developing outside Eclipse, you must have
           <a href="http://ant.apache.org/">Apache Ant</a> 1.8 or later.</li>
     </ul>
@@ -65,17 +356,17 @@ href="http://tools.android.com/knownissues">http://tools.android.com/knownissues
           </ul>
         </li>
 
-        <li>Renderscript
+        <li>RenderScript
           <ul>
             <li>Added support for
               <a href="{@docRoot}guide/topics/renderscript/compute.html#filterscript">Filterscript</a>
               compilation.</li>
-            <li>Added new project setting to control the Renderscript compilation target separately
+            <li>Added new project setting to control the RenderScript compilation target separately
               from an Android project. Adding the following line to a {@code project.properties}
-              file causes Renderscript code to be compiled for Android API Level 17, while the
+              file causes RenderScript code to be compiled for Android API Level 17, while the
               containing application can target a different (lower) API level:
               <pre>renderscript.target = 17</pre>
-              Previously, the Renderscript compilation target was tied to the
+              Previously, the RenderScript compilation target was tied to the
               {@code android:minSdkVersion} setting in the manifest.
               (<a href="http://code.google.com/p/android/issues/detail?id=40487">Issue 40487</a>)
             </li>
@@ -141,7 +432,7 @@ href="http://tools.android.com/knownissues">http://tools.android.com/knownissues
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 16 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r21 is designed
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed
         for use with ADT 21.0.0 and later. If you haven't already, update your
         <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 21.0.0.</li>
         <li>If you are developing outside Eclipse, you must have
@@ -227,7 +518,7 @@ href="http://tools.android.com/knownissues">http://tools.android.com/knownissues
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 12 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r20.0.3 is designed
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed
         for use with ADT 20.0.3 and later. If you haven't already, update your
         <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 20.0.3.</li>
         <li>If you are developing outside Eclipse, you must have
@@ -258,7 +549,7 @@ href="http://tools.android.com/knownissues">http://tools.android.com/knownissues
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 12 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r20.0.1 is designed
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed
         for use with ADT 20.0.1 and later. If you haven't already, update your
         <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 20.0.1.</li>
         <li>If you are developing outside Eclipse, you must have
@@ -274,7 +565,7 @@ with GPU acceleration.</li>
         <li>Improved resize algorithm for better rendering on scaled emulator windows.</li>
         <li>Fixed a bug in the {@code lint} check for unprotected broadcast receivers to ignore
 unprotected receivers for default Android actions.</li>
-        <li>Fixed build issue for projects using Renderscript.</li>
+        <li>Fixed build issue for projects using RenderScript.</li>
         <li>Fixed memory leak in the emulator.</li>
       </ul>
     </dd>
@@ -294,7 +585,7 @@ unprotected receivers for default Android actions.</li>
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 12 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r20 is designed for
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for
         use with ADT 20.0.0 and later. If you haven't already, we highly recommend updating your
         <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 20.0.0.</li>
         <li>If you are developing outside Eclipse, you must have
@@ -372,7 +663,7 @@ download and install this update.</p>
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 9 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r19 is designed for
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for
         use with ADT 18.0.0 and later. If you haven't already, we highly recommend updating your
         <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 18.0.0.</li>
         <li>If you are developing outside Eclipse, you must have
@@ -407,7 +698,7 @@ acceleration.</li>
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 9 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r18 is designed for
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for
         use with ADT 18.0.0 and later. If you haven't already, we highly recommend updating your
         <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 18.0.0.</li>
         <li>If you are developing outside Eclipse, you must have
@@ -449,7 +740,7 @@ in some cases.</li>
     <dd>
       <ul>
         <li>Android SDK Platform-tools revision 9 or later.</li>
-        <li>If you are developing in Eclipse with ADT, note that the SDK Tools r17 is designed for
+        <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for
         use with ADT 17.0.0 and later. If you haven't already, we highly recommend updating your
         <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 17.0.0.</li>
         <li>If you are developing outside Eclipse, you must have
@@ -553,7 +844,7 @@ ignore attribute. (<a
 <dd>
   <ul>
     <li>Android SDK Platform-tools revision 9 or later.</li>
-    <li>If you are developing in Eclipse with ADT, note that the SDK Tools r16 is designed for use
+    <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for use
     with ADT 16.0.0 and later. If you haven't already, we highly recommend updating your
     <a href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 16.0.0.</li>
     <li>If you are developing outside Eclipse, you must have <a href="http://ant.apache.org/">Apache
@@ -601,7 +892,7 @@ ignore attribute. (<a
 <dt>Dependencies:</dt>
 <dd>
   <ul><li>Android SDK Platform-tools revision 9 or later.</li>
-  <li>If you are developing in Eclipse with ADT, note that the SDK Tools r15 is designed for use
+  <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for use
   with ADT 15.0.0 and later. If you haven't already, we highly recommend updating your <a
   href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 15.0.0.</li>
   <li>If you are developing outside Eclipse, you must have <a href="http://ant.apache.org/">Apache
@@ -614,7 +905,7 @@ ignore attribute. (<a
     <li>Fixed emulator crash on Linux due to improper webcam detection
     (<a href="http://code.google.com/p/android/issues/detail?id=20952">Issue 20952</a>).</li>
     <li>Fixed emulator issue when using the <code>-wipe-data</code> argument.</li>
-    <li>Fixed build issue when using Renderscript in projects that target API levels 11-13
+    <li>Fixed build issue when using RenderScript in projects that target API levels 11-13
     (<a href="http://code.google.com/p/android/issues/detail?id=21006">Issue 21006</a>).</li>
     <li>Fixed issue when creating an AVD using the GoogleTV addon
     (<a href="http://code.google.com/p/android/issues/detail?id=20963">Issue 20963</a>).</li>
@@ -649,7 +940,7 @@ ignore attribute. (<a
 <dt>Dependencies:</dt>
 <dd>
   <ul><li>Android SDK Platform-tools revision 8 or later.</li>
-  <li>If you are developing in Eclipse with ADT, note that the SDK Tools r14 is designed for use
+  <li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for use
   with ADT 14.0.0 and later. If you haven't already, we highly recommend updating your <a
   href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 14.0.0.</li>
   <li>If you are developing outside Eclipse, you must have <a href="http://ant.apache.org/">Apache
@@ -699,7 +990,7 @@ site</a>.</p>
   <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that the SDK Tools r13 is designed for use with
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for use with
 ADT 12.0.0 and later. If you haven't already, we highly recommend updating your <a
 href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 12.0.0.</p>
 
@@ -730,7 +1021,7 @@ Ant</a> 1.8 or later.</p>
   <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that the SDK Tools r12 is designed for use with
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for use with
 ADT 12.0.0 and later. If you haven't already, we highly recommend updating your <a
 href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 12.0.0.</p>
 
@@ -758,7 +1049,7 @@ Ant</a> 1.8 or later.</p>
   <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that the SDK Tools r11 is designed for use with
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is designed for use with
 ADT 10.0.1 and later. If you haven't already, we highly recommend updating your <a
 href="{@docRoot}tools/sdk/eclipse-adt.html">ADT Plugin</a> to 10.0.1.</p>
 
@@ -786,7 +1077,7 @@ Ant</a> 1.8 or later.</p>
   <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that the SDK Tools r10 is
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
 designed for use with ADT 10.0.0 and later. After installing SDK Tools r10, we
 highly recommend updating your ADT Plugin to 10.0.0.</p>
 
@@ -817,7 +1108,7 @@ Ant</a> 1.8 or later.</p>
   <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that the SDK Tools r9 is
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
 designed for use with ADT 9.0.0 and later. After installing SDK Tools r9, we
 highly recommend updating your ADT Plugin to 9.0.0.</p>
 
@@ -876,7 +1167,7 @@ resolve the performance issues and it will improve in future releases.</li>
 <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that SDK Tools r8 is
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
 designed for use with ADT 8.0.0 and later. After installing SDK Tools r8, we
 highly recommend updating your ADT Plugin to 8.0.0.</p>
 
@@ -944,7 +1235,7 @@ documentation. </li>
 <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that SDK Tools r7 is
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
 designed for use with ADT 0.9.8 and later. After installing SDK Tools r7, we
 highly recommend updating your ADT Plugin to 0.9.8.</p>
 </dd>
@@ -978,7 +1269,7 @@ decimal point.</li>
 <dl>
 <dt>Dependencies:</dt>
 <dd>
-<p>If you are developing in Eclipse with ADT, note that SDK Tools r6 is
+<p>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
 designed for use with ADT 0.9.7 and later. After installing SDK Tools r6, we
 highly recommend updating your ADT Plugin to 0.9.7.</p>
 </dd>
@@ -1009,7 +1300,7 @@ provides the equivalent library project support.</p>
 <dl>
 <dt>Dependencies:</dt>
 <dd><ul>
-<li>If you are developing in Eclipse with ADT, note that SDK Tools r5 is
+<li>If you are developing in Eclipse with ADT, note that this version of SDK Tools is
 designed for use with ADT 0.9.6 and later. After installing SDK Tools r5, we
 highly recommend updating your ADT Plugin to 0.9.6.</li>
 <li>For Mac OS platforms, OS X 10.4.x (Tiger) is no longer
@@ -1057,7 +1348,7 @@ officially supported. </li>
   <div class="toggle-content-toggleme">
 <dl>
 <dt>Dependencies:</dt>
-<dd><p>SDK Tools r4 is compatible with ADT 0.9.5 and later, but not
+<dd><p>This version of SDK Tools is compatible with ADT 0.9.5 and later, but not
 compatible with earlier versions. If you are developing in Eclipse with ADT, you
 <strong>must</strong> update your ADT plugin to version 0.9.5 or higher if you
 install SDK Tools r4 in your SDK. </p></dd>
@@ -1107,7 +1398,7 @@ skin name specified.</li>
   <div class="toggle-content-toggleme">
 <dl>
 <dt>Dependencies:</dt>
-<dd><p>SDK Tools r3 is compatible with ADT 0.9.4 and later, but not
+<dd><p>This version of SDK Tools is compatible with ADT 0.9.4 and later, but not
 compatible with earlier versions. If you are developing in Eclipse with ADT, you
 <strong>must</strong> update your ADT plugin to version 0.9.4 or higher if you
 install SDK Tools r3 in your SDK.</p>
@@ -1161,4 +1452,3 @@ href="/tools/help/layoutopt.html">layoutopt</a>.</p>
 </dl>
 </div>
 </div>
-

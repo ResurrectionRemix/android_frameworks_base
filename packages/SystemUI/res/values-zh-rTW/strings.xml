@@ -21,8 +21,6 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"系統 UI"</string>
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"清除"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"勿干擾"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"顯示通知"</string>
     <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"從清單中移除"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"應用程式資訊"</string>
     <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"沒有最近使用的應用程式"</string>
@@ -37,7 +35,7 @@
     <string name="battery_low_title" msgid="2783104807551211639">"連接充電器"</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"電池電量即將不足。"</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"還剩 <xliff:g id="NUMBER">%d%%</xliff:g>"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"不支援 USB 充電。"\n"僅能使用隨附的充電器。"</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"不支援 USB 充電。\n僅能使用隨附的充電器。"</string>
     <string name="battery_low_why" msgid="7279169609518386372">"電池使用狀況"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"設定"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"Wi-Fi"</string>
@@ -59,12 +57,10 @@
     <string name="always_use_device" msgid="1450287437017315906">"預設用於這個 USB 裝置"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"預設用於這個 USB 配件"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"允許 USB 偵錯嗎？"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"這台電腦的 RSA 金鑰指紋如下："\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"這台電腦的 RSA 金鑰指紋如下：\n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"一律允許透過這台電腦進行"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"放大為全螢幕"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"放大為全螢幕"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"相容性縮放"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"執行專為較小螢幕設計的應用程式時，系統會在時鐘旁顯示縮放控制項。"</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"正在儲存螢幕擷取畫面…"</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"正在儲存螢幕擷取畫面…"</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"正在儲存螢幕擷取畫面。"</string>
@@ -80,6 +76,8 @@
     <string name="accessibility_home" msgid="8217216074895377641">"主螢幕"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"選單"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"最近使用的應用程式"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"搜尋"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"相機"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"切換輸入法按鈕。"</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"相容性縮放按鈕。"</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"將較小螢幕的畫面放大在較大螢幕上顯示。"</string>
@@ -100,12 +98,12 @@
     <string name="accessibility_data_two_bars" msgid="6166018492360432091">"數據網路訊號強度兩格。"</string>
     <string name="accessibility_data_three_bars" msgid="9167670452395038520">"數據網路訊號強度三格。"</string>
     <string name="accessibility_data_signal_full" msgid="2708384608124519369">"數據網路訊號滿格。"</string>
-    <string name="accessibility_wifi_off" msgid="3177380296697933627">"已關閉 WiFi。"</string>
-    <string name="accessibility_no_wifi" msgid="1425476551827924474">"WiFi 連線已中斷。"</string>
-    <string name="accessibility_wifi_one_bar" msgid="7735893178010724377">"WiFi 訊號強度一格。"</string>
-    <string name="accessibility_wifi_two_bars" msgid="4994274250497262434">"WiFi 訊號強度兩格。"</string>
-    <string name="accessibility_wifi_three_bars" msgid="3495755044276588384">"WiFi 訊號強度三格。"</string>
-    <string name="accessibility_wifi_signal_full" msgid="6853561303586480376">"WiFi 訊號滿格。"</string>
+    <string name="accessibility_wifi_off" msgid="3177380296697933627">"已關閉 Wi-Fi。"</string>
+    <string name="accessibility_no_wifi" msgid="1425476551827924474">"Wi-Fi 連線已中斷。"</string>
+    <string name="accessibility_wifi_one_bar" msgid="7735893178010724377">"Wi-Fi 訊號強度一格。"</string>
+    <string name="accessibility_wifi_two_bars" msgid="4994274250497262434">"Wi-Fi 訊號強度兩格。"</string>
+    <string name="accessibility_wifi_three_bars" msgid="3495755044276588384">"Wi-Fi 訊號強度三格。"</string>
+    <string name="accessibility_wifi_signal_full" msgid="6853561303586480376">"Wi-Fi 訊號滿格。"</string>
     <string name="accessibility_no_wimax" msgid="4329180129727630368">"沒有 WiMAX 訊號。"</string>
     <string name="accessibility_wimax_one_bar" msgid="4170994299011863648">"WiMAX 訊號一格。"</string>
     <string name="accessibility_wimax_two_bars" msgid="9176236858336502288">"WiMAX 訊號兩格。"</string>
@@ -127,6 +125,7 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3.5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
     <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"漫遊中"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"Edge"</string>
@@ -161,21 +160,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"已停用 4G 數據"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"已停用行動數據"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"數據已停用"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"您已達到指定的資料用量上限。"\n\n"如果您重新啟用數據傳輸，行動通訊業者可能會向您收費。"</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"您已達到指定的資料用量上限。\n\n如果您重新啟用數據傳輸，行動通訊業者可能會向您收費。"</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"重新啟用數據連線"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"沒有網際網路連線"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"Wi-Fi 已連線"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"正在搜尋 GPS"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"GPS 已定位"</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"有位置資訊要求"</string>
     <string name="accessibility_clear_all" msgid="5235938559247164925">"清除所有通知。"</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"應用程式資訊"</string>
-    <string name="close_universe" msgid="3736513750241754348">"關閉"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"關閉通知"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"輕按這裡即可重新開啟通知。"</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"螢幕會自動旋轉。"</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"螢幕已鎖定為橫向模式。"</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"螢幕已鎖定為垂直模式。"</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Dessert Case"</string>
     <string name="start_dreams" msgid="7219575858348719790">"休眠模式"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"乙太網路"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"飛航模式"</string>
@@ -188,21 +185,21 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"自動旋轉"</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"已鎖定螢幕旋轉功能"</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"輸入法"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"使用位置"</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"定位"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"定位服務已關閉"</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"媒體裝置"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"RSSI"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"僅可撥打緊急電話"</string>
     <string name="quick_settings_settings_label" msgid="5326556592578065401">"設定"</string>
     <string name="quick_settings_time_label" msgid="4635969182239736408">"時間"</string>
     <string name="quick_settings_user_label" msgid="5238995632130897840">"我"</string>
-    <string name="quick_settings_wifi_label" msgid="9135344704899546041">"WiFi"</string>
+    <string name="quick_settings_wifi_label" msgid="9135344704899546041">"Wi-Fi"</string>
     <string name="quick_settings_wifi_not_connected" msgid="7171904845345573431">"未連線"</string>
     <string name="quick_settings_wifi_no_network" msgid="2221993077220856376">"沒有網路"</string>
-    <string name="quick_settings_wifi_off_label" msgid="7558778100843885864">"關閉 WiFi"</string>
-    <string name="quick_settings_wifi_display_label" msgid="6893592964463624333">"WiFi 顯示裝置"</string>
+    <string name="quick_settings_wifi_off_label" msgid="7558778100843885864">"關閉 Wi-Fi"</string>
+    <string name="quick_settings_wifi_display_label" msgid="6893592964463624333">"Wi-Fi 顯示裝置"</string>
     <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"無線螢幕分享"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"亮度"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"自動"</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"系統會在這裡顯示通知"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"向下滑動即可隨時存取通知。"\n"再次向下滑動即可使用系統控制項。"</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"網路可能\n受到監控"</string>
 </resources>

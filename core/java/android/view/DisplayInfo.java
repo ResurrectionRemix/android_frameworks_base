@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,10 @@
 package android.view;
 
 import android.content.res.CompatibilityInfo;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
 import android.util.DisplayMetrics;
 
 import libcore.util.Objects;
@@ -110,6 +111,30 @@ public final class DisplayInfo implements Parcelable {
     public int logicalHeight;
 
     /**
+     * @hide
+     * Number of overscan pixels on the left side of the display.
+     */
+    public int overscanLeft;
+
+    /**
+     * @hide
+     * Number of overscan pixels on the top side of the display.
+     */
+    public int overscanTop;
+
+    /**
+     * @hide
+     * Number of overscan pixels on the right side of the display.
+     */
+    public int overscanRight;
+
+    /**
+     * @hide
+     * Number of overscan pixels on the bottom side of the display.
+     */
+    public int overscanBottom;
+
+    /**
      * The rotation of the display relative to its natural orientation.
      * May be one of {@link android.view.Surface#ROTATION_0},
      * {@link android.view.Surface#ROTATION_90}, {@link android.view.Surface#ROTATION_180},
@@ -154,6 +179,23 @@ public final class DisplayInfo implements Parcelable {
      */
     public float physicalYDpi;
 
+    /**
+     * The UID of the application that owns this display, or zero if it is owned by the system.
+     * <p>
+     * If the display is private, then only the owner can use it.
+     * </p>
+     */
+    public int ownerUid;
+
+    /**
+     * The package name of the application that owns this display, or null if it is
+     * owned by the system.
+     * <p>
+     * If the display is private, then only the owner can use it.
+     * </p>
+     */
+    public String ownerPackageName;
+
     public static final Creator<DisplayInfo> CREATOR = new Creator<DisplayInfo>() {
         @Override
         public DisplayInfo createFromParcel(Parcel source) {
@@ -197,11 +239,17 @@ public final class DisplayInfo implements Parcelable {
                 && largestNominalAppHeight == other.largestNominalAppHeight
                 && logicalWidth == other.logicalWidth
                 && logicalHeight == other.logicalHeight
+                && overscanLeft == other.overscanLeft
+                && overscanTop == other.overscanTop
+                && overscanRight == other.overscanRight
+                && overscanBottom == other.overscanBottom
                 && rotation == other.rotation
                 && refreshRate == other.refreshRate
                 && logicalDensityDpi == other.logicalDensityDpi
                 && physicalXDpi == other.physicalXDpi
-                && physicalYDpi == other.physicalYDpi;
+                && physicalYDpi == other.physicalYDpi
+                && ownerUid == other.ownerUid
+                && Objects.equal(ownerPackageName, other.ownerPackageName);
     }
 
     @Override
@@ -223,11 +271,17 @@ public final class DisplayInfo implements Parcelable {
         largestNominalAppHeight = other.largestNominalAppHeight;
         logicalWidth = other.logicalWidth;
         logicalHeight = other.logicalHeight;
+        overscanLeft = other.overscanLeft;
+        overscanTop = other.overscanTop;
+        overscanRight = other.overscanRight;
+        overscanBottom = other.overscanBottom;
         rotation = other.rotation;
         refreshRate = other.refreshRate;
         logicalDensityDpi = other.logicalDensityDpi;
         physicalXDpi = other.physicalXDpi;
         physicalYDpi = other.physicalYDpi;
+        ownerUid = other.ownerUid;
+        ownerPackageName = other.ownerPackageName;
     }
 
     public void readFromParcel(Parcel source) {
@@ -244,11 +298,17 @@ public final class DisplayInfo implements Parcelable {
         largestNominalAppHeight = source.readInt();
         logicalWidth = source.readInt();
         logicalHeight = source.readInt();
+        overscanLeft = source.readInt();
+        overscanTop = source.readInt();
+        overscanRight = source.readInt();
+        overscanBottom = source.readInt();
         rotation = source.readInt();
         refreshRate = source.readFloat();
         logicalDensityDpi = source.readInt();
         physicalXDpi = source.readFloat();
         physicalYDpi = source.readFloat();
+        ownerUid = source.readInt();
+        ownerPackageName = source.readString();
     }
 
     @Override
@@ -266,11 +326,17 @@ public final class DisplayInfo implements Parcelable {
         dest.writeInt(largestNominalAppHeight);
         dest.writeInt(logicalWidth);
         dest.writeInt(logicalHeight);
+        dest.writeInt(overscanLeft);
+        dest.writeInt(overscanTop);
+        dest.writeInt(overscanRight);
+        dest.writeInt(overscanBottom);
         dest.writeInt(rotation);
         dest.writeFloat(refreshRate);
         dest.writeInt(logicalDensityDpi);
         dest.writeFloat(physicalXDpi);
         dest.writeFloat(physicalYDpi);
+        dest.writeInt(ownerUid);
+        dest.writeString(ownerPackageName);
     }
 
     @Override
@@ -278,12 +344,22 @@ public final class DisplayInfo implements Parcelable {
         return 0;
     }
 
-    public void getAppMetrics(DisplayMetrics outMetrics, CompatibilityInfoHolder cih) {
-        getMetricsWithSize(outMetrics, cih, appWidth, appHeight);
+    public void getAppMetrics(DisplayMetrics outMetrics) {
+        getAppMetrics(outMetrics, CompatibilityInfo.DEFAULT_COMPATIBILITY_INFO, null);
     }
 
-    public void getLogicalMetrics(DisplayMetrics outMetrics, CompatibilityInfoHolder cih) {
-        getMetricsWithSize(outMetrics, cih, logicalWidth, logicalHeight);
+    public void getAppMetrics(DisplayMetrics outMetrics, DisplayAdjustments displayAdjustments) {
+        getMetricsWithSize(outMetrics, displayAdjustments.getCompatibilityInfo(),
+                displayAdjustments.getActivityToken(), appWidth, appHeight);
+    }
+
+    public void getAppMetrics(DisplayMetrics outMetrics, CompatibilityInfo ci, IBinder token) {
+        getMetricsWithSize(outMetrics, ci, token, appWidth, appHeight);
+    }
+
+    public void getLogicalMetrics(DisplayMetrics outMetrics, CompatibilityInfo compatInfo,
+            IBinder token) {
+        getMetricsWithSize(outMetrics, compatInfo, token, logicalWidth, logicalHeight);
     }
 
     public int getNaturalWidth() {
@@ -296,8 +372,15 @@ public final class DisplayInfo implements Parcelable {
                 logicalHeight : logicalWidth;
     }
 
-    private void getMetricsWithSize(DisplayMetrics outMetrics, CompatibilityInfoHolder cih,
-            int width, int height) {
+    /**
+     * Returns true if the specified UID has access to this display.
+     */
+    public boolean hasAccess(int uid) {
+        return Display.hasAccess(uid, flags, ownerUid);
+    }
+
+    private void getMetricsWithSize(DisplayMetrics outMetrics, CompatibilityInfo compatInfo,
+            IBinder token, int width, int height) {
         outMetrics.densityDpi = outMetrics.noncompatDensityDpi = logicalDensityDpi;
         outMetrics.noncompatWidthPixels  = outMetrics.widthPixels = width;
         outMetrics.noncompatHeightPixels = outMetrics.heightPixels = height;
@@ -307,33 +390,69 @@ public final class DisplayInfo implements Parcelable {
         outMetrics.scaledDensity = outMetrics.noncompatScaledDensity = outMetrics.density;
         outMetrics.xdpi = outMetrics.noncompatXdpi = physicalXDpi;
         outMetrics.ydpi = outMetrics.noncompatYdpi = physicalYDpi;
-        if (outMetrics.isHooked()) {
-            outMetrics.paranoidHook();
-        }
 
-        if (cih != null) {
-            CompatibilityInfo ci = cih.getIfNeeded();
-            if (ci != null) {
-                ci.applyToDisplayMetrics(outMetrics);
-            }
+        if (!compatInfo.equals(CompatibilityInfo.DEFAULT_COMPATIBILITY_INFO)) {
+            compatInfo.applyToDisplayMetrics(outMetrics);
         }
     }
 
     // For debugging purposes
     @Override
     public String toString() {
-        return "DisplayInfo{\"" + name + "\", app " + appWidth + " x " + appHeight
-                + ", real " + logicalWidth + " x " + logicalHeight
-                + ", largest app " + largestNominalAppWidth + " x " + largestNominalAppHeight
-                + ", smallest app " + smallestNominalAppWidth + " x " + smallestNominalAppHeight
-                + ", " + refreshRate + " fps"
-                + ", rotation " + rotation
-                + ", density " + logicalDensityDpi
-                + ", " + physicalXDpi + " x " + physicalYDpi + " dpi"
-                + ", layerStack " + layerStack
-                + ", type " + Display.typeToString(type)
-                + ", address " + address
-                + flagsToString(flags) + "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append("DisplayInfo{\"");
+        sb.append(name);
+        sb.append("\", app ");
+        sb.append(appWidth);
+        sb.append(" x ");
+        sb.append(appHeight);
+        sb.append(", real ");
+        sb.append(logicalWidth);
+        sb.append(" x ");
+        sb.append(logicalHeight);
+        if (overscanLeft != 0 || overscanTop != 0 || overscanRight != 0 || overscanBottom != 0) {
+            sb.append(", overscan (");
+            sb.append(overscanLeft);
+            sb.append(",");
+            sb.append(overscanTop);
+            sb.append(",");
+            sb.append(overscanRight);
+            sb.append(",");
+            sb.append(overscanBottom);
+            sb.append(")");
+        }
+        sb.append(", largest app ");
+        sb.append(largestNominalAppWidth);
+        sb.append(" x ");
+        sb.append(largestNominalAppHeight);
+        sb.append(", smallest app ");
+        sb.append(smallestNominalAppWidth);
+        sb.append(" x ");
+        sb.append(smallestNominalAppHeight);
+        sb.append(", ");
+        sb.append(refreshRate);
+        sb.append(" fps, rotation");
+        sb.append(rotation);
+        sb.append(", density ");
+        sb.append(logicalDensityDpi);
+        sb.append(" (");
+        sb.append(physicalXDpi);
+        sb.append(" x ");
+        sb.append(physicalYDpi);
+        sb.append(") dpi, layerStack ");
+        sb.append(layerStack);
+        sb.append(", type ");
+        sb.append(Display.typeToString(type));
+        if (address != null) {
+            sb.append(", address ").append(address);
+        }
+        if (ownerUid != 0 || ownerPackageName != null) {
+            sb.append(", owner ").append(ownerPackageName);
+            sb.append(" (uid ").append(ownerUid).append(")");
+        }
+        sb.append(flagsToString(flags));
+        sb.append("}");
+        return sb.toString();
     }
 
     private static String flagsToString(int flags) {
@@ -343,6 +462,12 @@ public final class DisplayInfo implements Parcelable {
         }
         if ((flags & Display.FLAG_SUPPORTS_PROTECTED_BUFFERS) != 0) {
             result.append(", FLAG_SUPPORTS_PROTECTED_BUFFERS");
+        }
+        if ((flags & Display.FLAG_PRIVATE) != 0) {
+            result.append(", FLAG_PRIVATE");
+        }
+        if ((flags & Display.FLAG_PRESENTATION) != 0) {
+            result.append(", FLAG_PRESENTATION");
         }
         return result.toString();
     }

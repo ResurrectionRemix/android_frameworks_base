@@ -34,5 +34,10 @@
          TETHER_DUN_APN.  Value is a comma separated series of strings:
          "name,apn,proxy,port,username,password,server,mmsc,mmsproxy,mmsport,mcc,mnc,auth,type"
          note that empty fields can be ommitted: "name,apn,,,,,,,,,310,260,,DUN" -->
-    <string translatable="false" name="config_tether_apndata">Fido Tethering,isp.fido.apn,,,,,,,,,302,370,,DUN</string>
+    <string translatable="false" name="config_tether_apndata">Fido LTE Tethering,ltedata.apn,,,,,,,,,302,370,,DUN</string>
+
+    <!-- Configure mobile network MTU. Carrier specific value is set here.
+    -->
+    <integer name="config_mobile_mtu">1410</integer>
+
 </resources>

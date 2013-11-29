@@ -152,8 +152,6 @@ public abstract class Window {
     
     private boolean mDestroyed;
 
-    public boolean mIsFloatingWindow = false;
-
     // The current window attributes.
     private final WindowManager.LayoutParams mWindowAttributes =
         new WindowManager.LayoutParams();
@@ -710,6 +708,11 @@ public abstract class Window {
     public void addFlags(int flags) {
         setFlags(flags, flags);
     }
+
+    /** @hide */
+    public void addPrivateFlags(int flags) {
+        setPrivateFlags(flags, flags);
+    }
     
     /**
      * Convenience function to clear the flag bits as specified in flags, as
@@ -742,16 +745,20 @@ public abstract class Window {
      * @see #clearFlags
      */
     public void setFlags(int flags, int mask) {
-        if ((flags & mask & WindowManager.LayoutParams.PREVENT_POWER_KEY) != 0){
-            mContext.enforceCallingOrSelfPermission("android.permission.PREVENT_POWER_KEY",
-                    "No permission to prevent power key");
-        }
         final WindowManager.LayoutParams attrs = getAttributes();
         attrs.flags = (attrs.flags&~mask) | (flags&mask);
         if ((mask&WindowManager.LayoutParams.FLAG_NEEDS_MENU_KEY) != 0) {
             attrs.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SET_NEEDS_MENU_KEY;
         }
         mForcedWindowFlags |= mask;
+        if (mCallback != null) {
+            mCallback.onWindowAttributesChanged(attrs);
+        }
+    }
+
+    private void setPrivateFlags(int flags, int mask) {
+        final WindowManager.LayoutParams attrs = getAttributes();
+        attrs.privateFlags = (attrs.privateFlags & ~mask) | (flags & mask);
         if (mCallback != null) {
             mCallback.onWindowAttributesChanged(attrs);
         }
@@ -785,10 +792,6 @@ public abstract class Window {
      *          current values.
      */
     public void setAttributes(WindowManager.LayoutParams a) {
-        if ((a.flags & WindowManager.LayoutParams.PREVENT_POWER_KEY) != 0) {
-            mContext.enforceCallingOrSelfPermission("android.permission.PREVENT_POWER_KEY",
-                    "No permission to prevent power key");
-        }
         mWindowAttributes.copyFrom(a);
         if (mCallback != null) {
             mCallback.onWindowAttributesChanged(mWindowAttributes);
@@ -1266,4 +1269,52 @@ public abstract class Window {
      * @param mask Flags specifying which options should be modified. Others will remain unchanged.
      */
     public void setUiOptions(int uiOptions, int mask) { }
+
+    /**
+     * Set the primary icon for this window.
+     *
+     * @param resId resource ID of a drawable to set
+     */
+    public void setIcon(int resId) { }
+
+    /**
+     * Set the default icon for this window.
+     * This will be overridden by any other icon set operation which could come from the
+     * theme or another explicit set.
+     *
+     * @hide
+     */
+    public void setDefaultIcon(int resId) { }
+
+    /**
+     * Set the logo for this window. A logo is often shown in place of an
+     * {@link #setIcon(int) icon} but is generally wider and communicates window title information
+     * as well.
+     *
+     * @param resId resource ID of a drawable to set
+     */
+    public void setLogo(int resId) { }
+
+    /**
+     * Set the default logo for this window.
+     * This will be overridden by any other logo set operation which could come from the
+     * theme or another explicit set.
+     *
+     * @hide
+     */
+    public void setDefaultLogo(int resId) { }
+
+    /**
+     * Set focus locally. The window should have the
+     * {@link WindowManager.LayoutParams#FLAG_LOCAL_FOCUS_MODE} flag set already.
+     * @param hasFocus Whether this window has focus or not.
+     * @param inTouchMode Whether this window is in touch mode or not.
+     */
+    public void setLocalFocus(boolean hasFocus, boolean inTouchMode) { }
+
+    /**
+     * Inject an event to window locally.
+     * @param event A key or touch event to inject to this window.
+     */
+    public void injectInputEvent(InputEvent event) { }
 }

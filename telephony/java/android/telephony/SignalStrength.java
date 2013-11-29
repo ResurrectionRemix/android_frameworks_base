@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemProperties;
-import android.util.Log;
+import android.telephony.Rlog;
 
 /**
  * Contains phone signal strength related information.
@@ -275,6 +275,33 @@ public class SignalStrength implements Parcelable {
     }
 
     /**
+     * Make a SignalStrength object from the given parcel as passed up by
+     * the ril which does not have isGsm. isGsm will be changed by ServiceStateTracker
+     * so the default is a don't care.
+     *
+     * @hide
+     */
+    public static SignalStrength makeSignalStrengthFromRilParcel(Parcel in) {
+        if (DBG) log("Size of signalstrength parcel:" + in.dataSize());
+
+        SignalStrength ss = new SignalStrength();
+        ss.mGsmSignalStrength = in.readInt();
+        ss.mGsmBitErrorRate = in.readInt();
+        ss.mCdmaDbm = in.readInt();
+        ss.mCdmaEcio = in.readInt();
+        ss.mEvdoDbm = in.readInt();
+        ss.mEvdoEcio = in.readInt();
+        ss.mEvdoSnr = in.readInt();
+        ss.mLteSignalStrength = in.readInt();
+        ss.mLteRsrp = in.readInt();
+        ss.mLteRsrq = in.readInt();
+        ss.mLteRssnr = in.readInt();
+        ss.mLteCqi = in.readInt();
+
+        return ss;
+    }
+
+    /**
      * {@link Parcelable#writeToParcel}
      */
     public void writeToParcel(Parcel out, int flags) {
@@ -336,7 +363,7 @@ public class SignalStrength implements Parcelable {
         mCdmaEcio = (mCdmaEcio > 0) ? -mCdmaEcio : -160;
 
         mEvdoDbm = (mEvdoDbm > 0) ? -mEvdoDbm : -120;
-        mEvdoEcio = (mEvdoEcio > 0) ? -mEvdoEcio : -1;
+        mEvdoEcio = (mEvdoEcio >= 0) ? -mEvdoEcio : -1;
         mEvdoSnr = ((mEvdoSnr > 0) && (mEvdoSnr <= 8)) ? mEvdoSnr : -1;
 
         // TS 36.214 Physical Layer Section 5.1.3, TS 36.331 RRC
@@ -412,7 +439,7 @@ public class SignalStrength implements Parcelable {
     }
 
     /** @hide */
-    public int getLteSignalStrenght() {
+    public int getLteSignalStrength() {
         return mLteSignalStrength;
     }
 
@@ -455,9 +482,11 @@ public class SignalStrength implements Parcelable {
         int level;
 
         if (isGsm) {
+            boolean lteChecks = (getLteRsrp() == INVALID && getLteRsrq() == INVALID && getLteRssnr() == INVALID && getLteSignalStrength() ==
+99);
             boolean oldRil = needsOldRilFeature("signalstrength");
             level = getLteLevel();
-            if (level == SIGNAL_STRENGTH_NONE_OR_UNKNOWN || oldRil) {
+            if ((level == SIGNAL_STRENGTH_NONE_OR_UNKNOWN && getGsmAsuLevel() != 99 && lteChecks) || oldRil) {
                 level = getGsmLevel();
             }
         } else {
@@ -487,7 +516,8 @@ public class SignalStrength implements Parcelable {
         int asuLevel;
         if (isGsm) {
             boolean oldRil = needsOldRilFeature("signalstrength");
-            if (getLteLevel() == SIGNAL_STRENGTH_NONE_OR_UNKNOWN || oldRil) {
+            boolean lteChecks = (getLteRsrp() == INVALID && getLteRsrq() == INVALID && getLteRssnr() == INVALID && getLteSignalStrength() == 99);
+            if ((getLteLevel() == SIGNAL_STRENGTH_NONE_OR_UNKNOWN && getGsmAsuLevel() != 99 && lteChecks) || oldRil) {
                 asuLevel = getGsmAsuLevel();
             } else {
                 asuLevel = getLteAsuLevel();
@@ -519,8 +549,9 @@ public class SignalStrength implements Parcelable {
         int dBm;
 
         if(isGsm()) {
-            boolean oldRil = needsOldRilFeature("signalstrength");
-            if (getLteLevel() == SIGNAL_STRENGTH_NONE_OR_UNKNOWN || oldRil) {
+           boolean oldRil = needsOldRilFeature("signalstrength");
+           boolean lteChecks = (getLteRsrp() == INVALID && getLteRsrq() == INVALID && getLteRssnr() == INVALID && getLteSignalStrength() == 99);
+           if ((getLteLevel() == SIGNAL_STRENGTH_NONE_OR_UNKNOWN && getGsmAsuLevel() != 99 && lteChecks) || oldRil) {
                 dBm = getGsmDbm();
             } else {
                 dBm = getLteDbm();
@@ -933,6 +964,6 @@ public class SignalStrength implements Parcelable {
      * log
      */
     private static void log(String s) {
-        Log.w(LOG_TAG, s);
+        Rlog.w(LOG_TAG, s);
     }
 }

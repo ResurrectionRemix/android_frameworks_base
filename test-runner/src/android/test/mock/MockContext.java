@@ -39,7 +39,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
-import android.view.CompatibilityInfoHolder;
+import android.view.DisplayAdjustments;
 import android.view.Display;
 
 import java.io.File;
@@ -103,6 +103,18 @@ public class MockContext extends Context {
 
     @Override
     public String getPackageName() {
+        throw new UnsupportedOperationException();
+    }
+
+    /** @hide */
+    @Override
+    public String getBasePackageName() {
+        throw new UnsupportedOperationException();
+    }
+
+    /** @hide */
+    @Override
+    public String getOpPackageName() {
         throw new UnsupportedOperationException();
     }
 
@@ -293,6 +305,12 @@ public class MockContext extends Context {
         throw new UnsupportedOperationException();
     }
 
+    /** @hide */
+    @Override
+    public void sendBroadcast(Intent intent, String receiverPermission, int appOp) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public void sendOrderedBroadcast(Intent intent,
             String receiverPermission) {
@@ -301,6 +319,14 @@ public class MockContext extends Context {
 
     @Override
     public void sendOrderedBroadcast(Intent intent, String receiverPermission,
+            BroadcastReceiver resultReceiver, Handler scheduler, int initialCode, String initialData,
+           Bundle initialExtras) {
+        throw new UnsupportedOperationException();
+    }
+
+    /** @hide */
+    @Override
+    public void sendOrderedBroadcast(Intent intent, String receiverPermission, int appOp,
             BroadcastReceiver resultReceiver, Handler scheduler, int initialCode, String initialData,
            Bundle initialExtras) {
         throw new UnsupportedOperationException();
@@ -411,7 +437,8 @@ public class MockContext extends Context {
 
     /** @hide */
     @Override
-    public boolean bindService(Intent service, ServiceConnection conn, int flags, int userId) {
+    public boolean bindServiceAsUser(Intent service, ServiceConnection conn, int flags,
+            UserHandle user) {
         throw new UnsupportedOperationException();
     }
 
@@ -428,12 +455,6 @@ public class MockContext extends Context {
 
     @Override
     public Object getSystemService(String name) {
-        throw new UnsupportedOperationException();
-    }
-
-    /** @hide */
-    @Override
-    public boolean isPrivacyGuardEnabled() {
         throw new UnsupportedOperationException();
     }
 
@@ -536,6 +557,12 @@ public class MockContext extends Context {
         throw new UnsupportedOperationException();
     }
 
+    /** {@hide} */
+    @Override
+    public int getUserId() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public Context createConfigurationContext(Configuration overrideConfiguration) {
         throw new UnsupportedOperationException();
@@ -553,7 +580,22 @@ public class MockContext extends Context {
 
     /** @hide */
     @Override
-    public CompatibilityInfoHolder getCompatibilityInfo(int displayId) {
+    public DisplayAdjustments getDisplayAdjustments(int displayId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public File[] getExternalFilesDirs(String type) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public File[] getObbDirs() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public File[] getExternalCacheDirs() {
         throw new UnsupportedOperationException();
     }
 }

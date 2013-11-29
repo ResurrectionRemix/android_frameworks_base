@@ -22,24 +22,21 @@
 #include <stddef.h>
 #include <utils/threads.h>
 #include <utils/String16.h>
-#include <utils/GenerationCache.h>
+#include <utils/LruCache.h>
 #include <utils/KeyedVector.h>
-#include <utils/Compare.h>
 #include <utils/RefBase.h>
 #include <utils/Singleton.h>
 
+#include <SkAutoKern.h>
 #include <SkPaint.h>
 #include <SkTemplates.h>
+#include <SkTypeface.h>
 #include <SkUtils.h>
-#include <SkAutoKern.h>
-#include <SkLanguage.h>
 
 #include <unicode/ubidi.h>
-#include <unicode/ushape.h>
 #include <unicode/unistr.h>
 
-#include "HarfbuzzSkia.h"
-#include "harfbuzz-shaper.h"
+#include <hb.h>
 
 #include <android_runtime/AndroidRuntime.h>
 
@@ -85,6 +82,15 @@ public:
 
     inline const UChar* getText() const { return textCopy.string(); }
 
+    bool operator==(const TextLayoutCacheKey& other) const {
+        return compare(*this, other) == 0;
+    }
+
+    bool operator!=(const TextLayoutCacheKey& other) const {
+        return compare(*this, other) != 0;
+    }
+
+    hash_t hash() const;
 private:
     String16 textCopy;
     size_t start;
@@ -97,8 +103,7 @@ private:
     SkScalar textScaleX;
     uint32_t flags;
     SkPaint::Hinting hinting;
-    SkPaint::FontVariant variant;
-    SkLanguage language;
+    SkPaintOptionsAndroid paintOpts;
 
 }; // TextLayoutCacheKey
 
@@ -108,6 +113,10 @@ inline int strictly_order_type(const TextLayoutCacheKey& lhs, const TextLayoutCa
 
 inline int compare_type(const TextLayoutCacheKey& lhs, const TextLayoutCacheKey& rhs) {
     return TextLayoutCacheKey::compare(lhs, rhs);
+}
+
+inline hash_t hash_type(const TextLayoutCacheKey& key) {
+    return key.hash();
 }
 
 /*
@@ -123,6 +132,7 @@ public:
     inline const jfloat* getAdvances() const { return mAdvances.array(); }
     inline size_t getAdvancesCount() const { return mAdvances.size(); }
     inline jfloat getTotalAdvance() const { return mTotalAdvance; }
+    inline const SkRect& getBounds() const { return mBounds; }
     inline const jchar* getGlyphs() const { return mGlyphs.array(); }
     inline size_t getGlyphsCount() const { return mGlyphs.size(); }
     inline const jfloat* getPos() const { return mPos.array(); }
@@ -137,6 +147,11 @@ public:
      * Total number of advances
      */
     jfloat mTotalAdvance;
+
+    /**
+     * Bounds containing all glyphs
+     */
+    SkRect mBounds;
 
     /**
      * Glyphs vector
@@ -176,14 +191,9 @@ public:
 
 private:
     /**
-     * Harfbuzz shaper item
+     * Harfbuzz buffer for shaping
      */
-    HB_ShaperItem mShaperItem;
-
-    /**
-     * Harfbuzz font
-     */
-    HB_FontRec mFontRec;
+    hb_buffer_t* mBuffer;
 
     /**
      * Skia Paint used for shaping
@@ -191,56 +201,29 @@ private:
     SkPaint mShapingPaint;
 
     /**
-     * Skia default typeface to be returned if we cannot resolve script
-     */
-    SkTypeface* mDefaultTypeface;
-
-    /**
      * Cache of Harfbuzz faces
      */
-    KeyedVector<SkFontID, HB_Face> mCachedHBFaces;
-
-    /**
-     * Cache of glyph array size
-     */
-    size_t mShaperItemGlyphArraySize;
-
-    /**
-     * Buffer for containing the ICU normalized form of a run
-     */
-    UnicodeString mNormalizedString;
-
-    /**
-     * Buffer for normalizing a piece of a run with ICU
-     */
-    UnicodeString mBuffer;
-
-    void init();
-    void unrefTypefaces();
+    KeyedVector<SkFontID, hb_face_t*> mCachedHBFaces;
 
     SkTypeface* typefaceForScript(const SkPaint* paint, SkTypeface* typeface,
-        HB_Script script);
+        hb_script_t script);
 
-    size_t shapeFontRun(const SkPaint* paint, bool isRTL);
+    size_t shapeFontRun(const SkPaint* paint);
 
     void computeValues(const SkPaint* paint, const UChar* chars,
             size_t start, size_t count, size_t contextCount, int dirFlags,
-            Vector<jfloat>* const outAdvances, jfloat* outTotalAdvance,
+            Vector<jfloat>* const outAdvances, jfloat* outTotalAdvance, SkRect* outBounds,
             Vector<jchar>* const outGlyphs, Vector<jfloat>* const outPos);
 
     void computeRunValues(const SkPaint* paint, const UChar* chars,
-            size_t count, bool isRTL,
-            Vector<jfloat>* const outAdvances, jfloat* outTotalAdvance,
+            size_t start, size_t count, size_t contextCount, bool isRTL,
+            Vector<jfloat>* const outAdvances, jfloat* outTotalAdvance, SkRect* outBounds,
             Vector<jchar>* const outGlyphs, Vector<jfloat>* const outPos);
 
-    SkTypeface* getCachedTypeface(SkTypeface** typeface, HB_Script script, SkTypeface::Style style);
-    HB_Face getCachedHBFace(SkTypeface* typeface);
+    SkTypeface* setCachedTypeface(SkTypeface** typeface, hb_script_t script, SkTypeface::Style style);
+    hb_face_t* referenceCachedHBFace(SkTypeface* typeface);
 
-    bool doShaping(size_t size);
-    void createShaperItemGlyphArrays(size_t size);
-    void deleteShaperItemGlyphArrays();
-    bool isComplexScript(HB_Script script);
-
+    bool isComplexScript(hb_script_t script);
 }; // TextLayoutShaper
 
 /**
@@ -276,7 +259,7 @@ private:
     Mutex mLock;
     bool mInitialized;
 
-    GenerationCache<TextLayoutCacheKey, sp<TextLayoutValue> > mCache;
+    LruCache<TextLayoutCacheKey, sp<TextLayoutValue> > mCache;
 
     uint32_t mSize;
     uint32_t mMaxSize;

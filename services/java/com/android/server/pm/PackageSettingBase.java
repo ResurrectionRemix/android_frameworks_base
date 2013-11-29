@@ -65,6 +65,8 @@ class PackageSettingBase extends GrantedPermissions {
     boolean permissionsFixed;
     boolean haveGids;
 
+    PackageKeySetData keySetData = new PackageKeySetData();
+
     private static final PackageUserState DEFAULT_USER_STATE = new PackageUserState();
 
     // Whether this package is currently stopped, thus can not be
@@ -120,6 +122,9 @@ class PackageSettingBase extends GrantedPermissions {
         origPackage = base.origPackage;
 
         installerPackageName = base.installerPackageName;
+
+        keySetData = new PackageKeySetData(base.keySetData);
+
     }
 
     void init(File codePath, File resourcePath, String nativeLibraryPathString,
@@ -158,10 +163,6 @@ class PackageSettingBase extends GrantedPermissions {
     public void copyFrom(PackageSettingBase base) {
         grantedPermissions = base.grantedPermissions;
         gids = base.gids;
-        revokedPermissions = base.revokedPermissions;
-        effectivePermissions = base.effectivePermissions;
-
-        revokedGids = base.revokedGids;
 
         timeStamp = base.timeStamp;
         firstInstallTime = base.firstInstallTime;
@@ -174,6 +175,7 @@ class PackageSettingBase extends GrantedPermissions {
             userState.put(base.userState.keyAt(i), base.userState.valueAt(i));
         }
         installStatus = base.installStatus;
+        keySetData = base.keySetData;
     }
 
     private PackageUserState modifyUserState(int userId) {
@@ -193,20 +195,18 @@ class PackageSettingBase extends GrantedPermissions {
         return DEFAULT_USER_STATE;
     }
 
-    void setEnabled(int state, int userId) {
-        modifyUserState(userId).enabled = state;
+    void setEnabled(int state, int userId, String callingPackage) {
+        PackageUserState st = modifyUserState(userId);
+        st.enabled = state;
+        st.lastDisableAppCaller = callingPackage;
     }
 
     int getEnabled(int userId) {
         return readUserState(userId).enabled;
     }
 
-    void setPrivacyGuard(boolean enabled, int userId) {
-        modifyUserState(userId).privacyGuard = enabled;
-    }
-
-    boolean isPrivacyGuard(int userId) {
-        return readUserState(userId).privacyGuard;
+    String getLastDisabledAppCaller(int userId) {
+        return readUserState(userId).lastDisableAppCaller;
     }
 
     void setInstalled(boolean inst, int userId) {
@@ -260,15 +260,25 @@ class PackageSettingBase extends GrantedPermissions {
         modifyUserState(userId).notLaunched = stop;
     }
 
+    boolean getBlocked(int userId) {
+        return readUserState(userId).blocked;
+    }
+
+    void setBlocked(boolean blocked, int userId) {
+        modifyUserState(userId).blocked = blocked;
+    }
+
     void setUserState(int userId, int enabled, boolean installed, boolean stopped,
-            boolean notLaunched, boolean privacyGuard, HashSet<String> enabledComponents,
+            boolean notLaunched, boolean blocked,
+            String lastDisableAppCaller, HashSet<String> enabledComponents,
             HashSet<String> disabledComponents) {
         PackageUserState state = modifyUserState(userId);
         state.enabled = enabled;
         state.installed = installed;
         state.stopped = stopped;
         state.notLaunched = notLaunched;
-        state.privacyGuard = privacyGuard;
+        state.blocked = blocked;
+        state.lastDisableAppCaller = lastDisableAppCaller;
         state.enabledComponents = enabledComponents;
         state.disabledComponents = disabledComponents;
     }

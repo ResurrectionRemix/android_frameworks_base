@@ -22,10 +22,6 @@
     <!-- no translation found for app_label (7164937344850004466) -->
     <skip />
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Stizzar"</string>
-    <!-- no translation found for status_bar_do_not_disturb_button (5812628897510997853) -->
-    <skip />
-    <!-- no translation found for status_bar_please_disturb_button (3345398298841572813) -->
-    <skip />
     <!-- no translation found for status_bar_recent_remove_item_title (6026395868129852968) -->
     <skip />
     <!-- no translation found for status_bar_recent_inspect_item_title (7793624864528818569) -->
@@ -96,10 +92,6 @@
     <skip />
     <!-- no translation found for compat_mode_off (4434467572461327898) -->
     <skip />
-    <!-- no translation found for compat_mode_help_header (7969493989397529910) -->
-    <skip />
-    <!-- no translation found for compat_mode_help_body (4946726776359270040) -->
-    <skip />
     <!-- no translation found for screenshot_saving_ticker (7403652894056693515) -->
     <skip />
     <!-- no translation found for screenshot_saving_title (8242282144535555697) -->
@@ -129,6 +121,10 @@
     <!-- no translation found for accessibility_menu (316839303324695949) -->
     <skip />
     <!-- no translation found for accessibility_recent (8571350598987952883) -->
+    <skip />
+    <!-- no translation found for accessibility_search_light (1103867596330271848) -->
+    <skip />
+    <!-- no translation found for accessibility_camera_button (8064671582820358152) -->
     <skip />
     <!-- no translation found for accessibility_ime_switch_button (5032926134740456424) -->
     <skip />
@@ -224,6 +220,8 @@
     <skip />
     <!-- no translation found for accessibility_data_connection_4g (7741000750630089612) -->
     <skip />
+    <!-- no translation found for accessibility_data_connection_lte (5413468808637540658) -->
+    <skip />
     <!-- no translation found for accessibility_data_connection_cdma (6132648193978823023) -->
     <skip />
     <!-- no translation found for accessibility_data_connection_roaming (5977362333466556094) -->
@@ -300,15 +298,11 @@
     <skip />
     <!-- no translation found for gps_notification_found_text (4619274244146446464) -->
     <skip />
+    <!-- no translation found for accessibility_location_active (2427290146138169014) -->
+    <skip />
     <!-- no translation found for accessibility_clear_all (5235938559247164925) -->
     <skip />
     <!-- no translation found for status_bar_notification_inspect_item_title (1163547729015390250) -->
-    <skip />
-    <!-- no translation found for close_universe (3736513750241754348) -->
-    <skip />
-    <!-- no translation found for notifications_off_title (8936620513608443224) -->
-    <skip />
-    <!-- no translation found for notifications_off_text (2529001315769385273) -->
     <skip />
     <!-- no translation found for accessibility_rotation_lock_off (4062780228931590069) -->
     <skip />
@@ -316,7 +310,7 @@
     <skip />
     <!-- no translation found for accessibility_rotation_lock_on_portrait (5809367521644012115) -->
     <skip />
-    <!-- no translation found for jelly_bean_dream_name (5992026543636816792) -->
+    <!-- no translation found for dessert_case (1295161776223959221) -->
     <skip />
     <!-- no translation found for start_dreams (7219575858348719790) -->
     <skip />
@@ -342,7 +336,9 @@
     <skip />
     <!-- no translation found for quick_settings_ime_label (7073463064369468429) -->
     <skip />
-    <!-- no translation found for quick_settings_location_label (3292451598267467545) -->
+    <!-- no translation found for quick_settings_location_label (5011327048748762257) -->
+    <skip />
+    <!-- no translation found for quick_settings_location_off_label (7464544086507331459) -->
     <skip />
     <!-- no translation found for quick_settings_media_device_label (1302906836372603762) -->
     <skip />
@@ -372,8 +368,6 @@
     <skip />
     <!-- no translation found for quick_settings_brightness_dialog_auto_brightness_label (5064982743784071218) -->
     <skip />
-    <!-- no translation found for status_bar_help_title (1199237744086469217) -->
-    <skip />
-    <!-- no translation found for status_bar_help_text (7874607155052076323) -->
+    <!-- no translation found for ssl_ca_cert_warning (9005954106902053641) -->
     <skip />
 </resources>

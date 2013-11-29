@@ -202,12 +202,26 @@ easier.
 
     <!-- Variant of {@link #Theme_DeviceDefault} with no action bar -->
     <style name="Theme.DeviceDefault.NoActionBar" parent="Theme.Holo.NoActionBar" >
-
     </style>
-    <!-- Variant of {@link #Theme_DeviceDefault} with no action bar and no status bar -->
+
+    <!-- Variant of {@link #Theme_DeviceDefault} with no action bar and no status bar.  This theme
+         sets {@link android.R.attr#windowFullscreen} to true.  -->
     <style name="Theme.DeviceDefault.NoActionBar.Fullscreen" parent="Theme.Holo.NoActionBar.Fullscreen" >
-
     </style>
+
+    <!-- Variant of {@link #Theme_DeviceDefault} with no action bar and no status bar and
+    extending in to overscan region.  This theme
+    sets {@link android.R.attr#windowFullscreen} and {@link android.R.attr#windowOverscan}
+    to true. -->
+    <style name="Theme.DeviceDefault.NoActionBar.Overscan" parent="Theme.Holo.NoActionBar.Overscan" >
+    </style>
+
+    <!-- Variant of {@link #Theme_DeviceDefault} that has no title bar and translucent
+         system decor.  This theme sets {@link android.R.attr#windowTranslucentStatus} and
+         {@link android.R.attr#windowTranslucentNavigation} to true. -->
+    <style name="Theme.DeviceDefault.NoActionBar.TranslucentDecor" parent="Theme.Holo.NoActionBar.TranslucentDecor" >
+    </style>
+
     <!-- Variant of {@link #Theme_DeviceDefault} with a light-colored style -->
     <style name="Theme.DeviceDefault.Light" parent="Theme.Holo.Light" >
         <!-- Text styles -->
@@ -356,11 +370,23 @@ easier.
     </style>
     <!-- Variant of {@link #Theme_DeviceDefault_Light} with no action bar -->
     <style name="Theme.DeviceDefault.Light.NoActionBar" parent="Theme.Holo.Light.NoActionBar" >
-
     </style>
-    <!-- Variant of {@link #Theme_DeviceDefault_Light} with no action bar and no status bar -->
+    <!-- Variant of {@link #Theme_DeviceDefault_Light} with no action bar and no status bar.
+         This theme sets {@link android.R.attr#windowFullscreen} to true.  -->
     <style name="Theme.DeviceDefault.Light.NoActionBar.Fullscreen" parent="Theme.Holo.Light.NoActionBar.Fullscreen" >
-
+    </style>
+    <!-- Variant of {@link #Theme_DeviceDefault_Light} with no action bar and no status bar
+    and extending in to overscan region.  This theme
+    sets {@link android.R.attr#windowFullscreen} and {@link android.R.attr#windowOverscan}
+    to true. -->
+    <style name="Theme.DeviceDefault.Light.NoActionBar.Overscan"
+           parent="Theme.Holo.Light.NoActionBar.Overscan" >
+    </style>
+    <!-- Variant of {@link #Theme_DeviceDefault_Light} that has no title bar and translucent
+         system decor.  This theme sets {@link android.R.attr#windowTranslucentStatus} and
+         {@link android.R.attr#windowTranslucentNavigation} to true. -->
+    <style name="Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor"
+           parent="Theme.Holo.Light.NoActionBar.TranslucentDecor" >
     </style>
     <!-- DeviceDefault theme for dialog windows and activities. This changes the window to be
     floating (not fill the entire screen), and puts a frame around its contents. You can set this
@@ -485,32 +511,8 @@ easier.
     decorations, so you basically have an empty rectangle in which to place your content. It makes
     the window floating, with a transparent background, and turns off dimming behind the window. -->
     <style name="Theme.DeviceDefault.Panel" parent="Theme.Holo.Panel" >
-    </style>
 
-    <style name="Theme.DeviceDefault.FloatingWindow">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowSoftInputMode">stateAlwaysHidden|adjustPan</item>
     </style>
-
-    <style name="Theme.DeviceDefault.FloatingWindowLight" parent="Theme.Holo.Light.Dialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowSoftInputMode">stateAlwaysHidden|adjustPan</item>
-    </style>
-
     <!-- DeviceDefault light theme for panel windows. This removes all extraneous window
     decorations, so you basically have an empty rectangle in which to place your content. It makes
     the window floating, with a transparent background, and turns off dimming behind the window. -->

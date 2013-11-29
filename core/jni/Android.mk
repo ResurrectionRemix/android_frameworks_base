@@ -11,14 +11,6 @@ else
 	LOCAL_CFLAGS += -DPACKED=""
 endif
 
-ifeq ($(WITH_JIT),true)
-	LOCAL_CFLAGS += -DWITH_JIT
-endif
-
-ifneq ($(USE_CUSTOM_RUNTIME_HEAP_MAX),)
-  LOCAL_CFLAGS += -DCUSTOM_RUNTIME_HEAP_MAX=$(USE_CUSTOM_RUNTIME_HEAP_MAX)
-endif
-
 ifeq ($(USE_OPENGL_RENDERER),true)
 	LOCAL_CFLAGS += -DUSE_OPENGL_RENDERER
 endif
@@ -33,11 +25,13 @@ LOCAL_SRC_FILES:= \
 	com_google_android_gles_jni_GLImpl.cpp.arm \
 	android_app_NativeActivity.cpp \
 	android_opengl_EGL14.cpp \
+	android_opengl_EGLExt.cpp \
 	android_opengl_GLES10.cpp \
 	android_opengl_GLES10Ext.cpp \
 	android_opengl_GLES11.cpp \
 	android_opengl_GLES11Ext.cpp \
 	android_opengl_GLES20.cpp \
+	android_opengl_GLES30.cpp \
 	android_database_CursorWindow.cpp \
 	android_database_SQLiteCommon.cpp \
 	android_database_SQLiteConnection.cpp \
@@ -46,14 +40,18 @@ LOCAL_SRC_FILES:= \
 	android_emoji_EmojiFactory.cpp \
 	android_view_DisplayEventReceiver.cpp \
 	android_view_Surface.cpp \
+	android_view_SurfaceControl.cpp \
 	android_view_SurfaceSession.cpp \
 	android_view_TextureView.cpp \
 	android_view_InputChannel.cpp \
 	android_view_InputDevice.cpp \
 	android_view_InputEventReceiver.cpp \
+	android_view_InputEventSender.cpp \
+	android_view_InputQueue.cpp \
 	android_view_KeyEvent.cpp \
 	android_view_KeyCharacterMap.cpp \
 	android_view_HardwareRenderer.cpp \
+	android_view_GraphicBuffer.cpp \
 	android_view_GLES20DisplayList.cpp \
 	android_view_GLES20Canvas.cpp \
 	android_view_MotionEvent.cpp \
@@ -65,7 +63,6 @@ LOCAL_SRC_FILES:= \
 	android_os_FileUtils.cpp \
 	android_os_MemoryFile.cpp \
 	android_os_MessageQueue.cpp \
-	android_os_ParcelFileDescriptor.cpp \
 	android_os_Parcel.cpp \
 	android_os_SELinux.cpp \
 	android_os_SystemClock.cpp \
@@ -75,20 +72,19 @@ LOCAL_SRC_FILES:= \
 	android_net_LocalSocketImpl.cpp \
 	android_net_NetUtils.cpp \
 	android_net_TrafficStats.cpp \
-	android_net_wifi_Wifi.cpp \
+	android_net_wifi_WifiNative.cpp \
 	android_nio_utils.cpp \
 	android_text_format_Time.cpp \
 	android_util_AssetManager.cpp \
 	android_util_Binder.cpp \
 	android_util_EventLog.cpp \
-    android_util_ExtendedPropertiesUtils.cpp \
 	android_util_Log.cpp \
 	android_util_FloatMath.cpp \
 	android_util_Process.cpp \
 	android_util_StringBlock.cpp \
 	android_util_XmlBlock.cpp \
-	android_util_PackageRedirectionMap.cpp \
 	android/graphics/AutoDecodeCancel.cpp \
+	android/graphics/Bitmap.cpp \
 	android/graphics/BitmapFactory.cpp \
 	android/graphics/Camera.cpp \
 	android/graphics/Canvas.cpp \
@@ -96,7 +92,7 @@ LOCAL_SRC_FILES:= \
 	android/graphics/DrawFilter.cpp \
 	android/graphics/CreateJavaOutputStreamAdaptor.cpp \
 	android/graphics/Graphics.cpp \
-	android/graphics/HarfbuzzSkia.cpp \
+	android/graphics/HarfBuzzNGFaceSkia.cpp \
 	android/graphics/Interpolator.cpp \
 	android/graphics/LayerRasterizer.cpp \
 	android/graphics/MaskFilter.cpp \
@@ -109,7 +105,6 @@ LOCAL_SRC_FILES:= \
 	android/graphics/Path.cpp \
 	android/graphics/PathMeasure.cpp \
 	android/graphics/PathEffect.cpp \
-	android_graphics_PixelFormat.cpp \
 	android/graphics/Picture.cpp \
 	android/graphics/PorterDuff.cpp \
 	android/graphics/BitmapRegionDecoder.cpp \
@@ -123,6 +118,7 @@ LOCAL_SRC_FILES:= \
 	android/graphics/Utils.cpp \
 	android/graphics/Xfermode.cpp \
 	android/graphics/YuvToJpegEncoder.cpp \
+	android/graphics/pdf/PdfDocument.cpp \
 	android_media_AudioRecord.cpp \
 	android_media_AudioSystem.cpp \
 	android_media_AudioTrack.cpp \
@@ -130,6 +126,7 @@ LOCAL_SRC_FILES:= \
 	android_media_RemoteDisplay.cpp \
 	android_media_ToneGenerator.cpp \
 	android_hardware_Camera.cpp \
+	android_hardware_camera2_CameraMetadata.cpp \
 	android_hardware_SensorManager.cpp \
 	android_hardware_SerialPort.cpp \
 	android_hardware_UsbDevice.cpp \
@@ -150,13 +147,8 @@ LOCAL_SRC_FILES:= \
 	android_app_backup_FullBackup.cpp \
 	android_content_res_ObbScanner.cpp \
 	android_content_res_Configuration.cpp \
-    android_animation_PropertyValuesHolder.cpp
-
-ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
-    LOCAL_CFLAGS += -DQCOM_HARDWARE
-    LOCAL_SRC_FILES += \
-	    com_android_internal_app_ActivityTrigger.cpp
-endif
+	android_animation_PropertyValuesHolder.cpp \
+	com_android_internal_net_NetworkStatsFactory.cpp
 
 LOCAL_C_INCLUDES += \
 	$(JNI_H_INCLUDE) \
@@ -166,13 +158,11 @@ LOCAL_C_INCLUDES += \
 	$(call include-path-for, bluedroid) \
 	$(call include-path-for, libhardware)/hardware \
 	$(call include-path-for, libhardware_legacy)/hardware_legacy \
- $(TOP)/frameworks/av/include \
-    external/e2fsprogs/lib \
-	external/skia/include/core \
-	external/skia/include/effects \
-	external/skia/include/images \
-	external/skia/include/ports \
-	external/skia/src/ports \
+	$(TOP)/frameworks/av/include \
+	$(TOP)/system/media/camera/include \
+	external/skia/src/core \
+	external/skia/src/pdf \
+	external/skia/src/images \
 	external/skia/include/utils \
 	external/sqlite/dist \
 	external/sqlite/android \
@@ -182,71 +172,46 @@ LOCAL_C_INCLUDES += \
 	external/icu4c/i18n \
 	external/icu4c/common \
 	external/jpeg \
-	external/harfbuzz/contrib \
-	external/harfbuzz/src \
+	external/harfbuzz_ng/src \
 	external/zlib \
 	frameworks/opt/emoji \
 	libcore/include
 
 LOCAL_SHARED_LIBRARIES := \
+	libmemtrack \
 	libandroidfw \
 	libexpat \
-	libext2_blkid \
 	libnativehelper \
+	liblog \
 	libcutils \
 	libutils \
 	libbinder \
 	libnetutils \
 	libui \
 	libgui \
+	libinput \
 	libcamera_client \
+	libcamera_metadata \
 	libskia \
 	libsqlite \
-	libdvm \
 	libEGL \
 	libGLESv1_CM \
 	libGLESv2 \
 	libETC1 \
 	libhardware \
 	libhardware_legacy \
+	libselinux \
 	libsonivox \
 	libcrypto \
 	libssl \
 	libicuuc \
 	libicui18n \
 	libmedia \
-	libmedia_native \
 	libwpa_client \
 	libjpeg \
 	libusbhost \
-	libharfbuzz \
+	libharfbuzz_ng \
 	libz
-
-ifeq ($(HAVE_SELINUX),true)
-LOCAL_C_INCLUDES += external/libselinux/include
-LOCAL_SHARED_LIBRARIES += libselinux
-LOCAL_CFLAGS += -DHAVE_SELINUX
-endif # HAVE_SELINUX
-
-ifeq ($(TARGET_ARCH), arm)
-  ifeq ($(TARGET_USE_KRAIT_BIONIC_OPTIMIZATION), true)
-    TARGET_arm_CFLAGS += -DUSE_NEON_BITMAP_OPTS -mvectorize-with-neon-quad
-    LOCAL_SRC_FILES+= \
-		android/graphics/Bitmap.cpp.arm
-  else
-    ifeq ($(TARGET_ARCH_VARIANT_CPU), cortex-a15)
-      TARGET_arm_CFLAGS += -DUSE_NEON_BITMAP_OPTS -mvectorize-with-neon-quad
-      LOCAL_SRC_FILES+= \
-		android/graphics/Bitmap.cpp.arm
-    else
-      LOCAL_SRC_FILES+= \
-		android/graphics/Bitmap.cpp
-    endif
-  endif
-else
-    LOCAL_SRC_FILES+= \
-		android/graphics/Bitmap.cpp
-endif
 
 ifeq ($(USE_OPENGL_RENDERER),true)
 	LOCAL_SHARED_LIBRARIES += libhwui
@@ -266,6 +231,7 @@ endif
 
 LOCAL_MODULE:= libandroid_runtime
 
+include external/stlport/libstlport.mk
 include $(BUILD_SHARED_LIBRARY)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))

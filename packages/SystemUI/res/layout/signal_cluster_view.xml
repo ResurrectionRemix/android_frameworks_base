@@ -20,21 +20,22 @@
 
 <com.android.systemui.statusbar.SignalClusterView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="wrap_content"
+    android:gravity="center"
     android:orientation="horizontal"
     >
     <FrameLayout
         android:id="@+id/wifi_combo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginRight="-6dp"
+        android:layout_marginEnd="-6dp"
         >
         <ImageView
             android:id="@+id/wifi_signal"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:scaleType="center"
             />
@@ -44,12 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center|bottom"
             />
-        <com.android.systemui.statusbar.policy.WifiText
-            android:id="@+id/wifi_signal_text"
-            android:textAppearance="@style/TextAppearance.StatusBar.WifiText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingRight="8dp" />
     </FrameLayout>
     <View
         android:layout_height="6dp"
@@ -57,6 +52,28 @@
         android:visibility="gone"
         android:id="@+id/spacer"
         />
+    <!--<FrameLayout
+        android:id="@+id/wimax_combo"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="-6dp"
+        >
+        <ImageView
+            android:id="@+id/wimax_signal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:scaleType="center"
+            />
+        <ImageView
+            android:id="@+id/wimax_inout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center|bottom"
+            />
+    </FrameLayout>
+    -->
     <FrameLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -80,20 +97,13 @@
                 android:id="@+id/mobile_type"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_gravity="left|top"
                 />
             <ImageView
                 android:id="@+id/mobile_inout"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_gravity="right|bottom"
+                android:layout_gravity="end|bottom"
                 />
-            <com.android.systemui.statusbar.policy.SignalText
-                android:id="@+id/signal_text"
-                android:textAppearance="@style/TextAppearance.StatusBar.SignalText"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="8dp" />
         </FrameLayout>
     </FrameLayout>
     <ImageView

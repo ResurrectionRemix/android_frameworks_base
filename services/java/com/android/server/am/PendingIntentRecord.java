@@ -31,7 +31,7 @@ import android.util.Slog;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
 
-class PendingIntentRecord extends IIntentSender.Stub {
+final class PendingIntentRecord extends IIntentSender.Stub {
     final ActivityManagerService owner;
     final Key key;
     final int uid;
@@ -246,11 +246,12 @@ class PendingIntentRecord extends IIntentSender.Stub {
                                 }
                                 allIntents[allIntents.length-1] = finalIntent;
                                 allResolvedTypes[allResolvedTypes.length-1] = resolvedType;
-                                owner.startActivitiesInPackage(uid, allIntents,
+                                owner.startActivitiesInPackage(uid, key.packageName, allIntents,
                                         allResolvedTypes, resultTo, options, userId);
                             } else {
-                                owner.startActivityInPackage(uid, finalIntent, resolvedType,
-                                        resultTo, resultWho, requestCode, 0, options, userId);
+                                owner.startActivityInPackage(uid, key.packageName, finalIntent,
+                                        resolvedType, resultTo, resultWho, requestCode, 0,
+                                        options, userId);
                             }
                         } catch (RuntimeException e) {
                             Slog.w(ActivityManagerService.TAG,
@@ -258,7 +259,7 @@ class PendingIntentRecord extends IIntentSender.Stub {
                         }
                         break;
                     case ActivityManager.INTENT_SENDER_ACTIVITY_RESULT:
-                        key.activity.stack.sendActivityResultLocked(-1, key.activity,
+                        key.activity.task.stack.sendActivityResultLocked(-1, key.activity,
                                 key.who, key.requestCode, code, finalIntent);
                         break;
                     case ActivityManager.INTENT_SENDER_BROADCAST:

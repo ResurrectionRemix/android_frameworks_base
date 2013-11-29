@@ -16,10 +16,9 @@
 
 package android.app;
 
+import android.os.Trace;
+import android.util.ArrayMap;
 import dalvik.system.PathClassLoader;
-
-import java.util.HashMap;
-import java.util.Map;
 
 class ApplicationLoaders
 {
@@ -54,18 +53,23 @@ class ApplicationLoaders
                     return loader;
                 }
     
+                Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, zip);
                 PathClassLoader pathClassloader =
                     new PathClassLoader(zip, libPath, parent);
-                
+                Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+
                 mLoaders.put(zip, pathClassloader);
                 return pathClassloader;
             }
 
-            return new PathClassLoader(zip, parent);
+            Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, zip);
+            PathClassLoader pathClassloader = new PathClassLoader(zip, parent);
+            Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+            return pathClassloader;
         }
     }
 
-    private final Map<String, ClassLoader> mLoaders = new HashMap<String, ClassLoader>();
+    private final ArrayMap<String, ClassLoader> mLoaders = new ArrayMap<String, ClassLoader>();
 
     private static final ApplicationLoaders gApplicationLoaders
         = new ApplicationLoaders();

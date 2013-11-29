@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +17,6 @@
 package android.util;
 
 import android.os.SystemProperties;
-import android.view.Surface;
 
 
 /**
@@ -28,7 +26,7 @@ import android.view.Surface;
  * <pre> DisplayMetrics metrics = new DisplayMetrics();
  * getWindowManager().getDefaultDisplay().getMetrics(metrics);</pre>
  */
-public class DisplayMetrics extends ExtendedPropertiesUtils {
+public class DisplayMetrics {
     /**
      * Standard quantized DPI for low-density screens.
      */
@@ -69,11 +67,28 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
     public static final int DENSITY_XHIGH = 320;
 
     /**
+     * Intermediate density for screens that sit somewhere between
+     * {@link #DENSITY_XHIGH} (320dpi) and {@link #DENSITY_XXHIGH} (480 dpi).
+     * This is not a density that applications should target, instead relying
+     * on the system to scale their {@link #DENSITY_XXHIGH} assets for them.
+     */
+    public static final int DENSITY_400 = 400;
+
+    /**
      * Standard quantized DPI for extra-extra-high-density screens.  Applications
      * should not generally worry about this density; relying on XHIGH graphics
      * being scaled up to it should be sufficient for almost all cases.
      */
     public static final int DENSITY_XXHIGH = 480;
+
+    /**
+     * Standard quantized DPI for extra-extra-extra-high-density screens.  Applications
+     * should not generally worry about this density; relying on XHIGH graphics
+     * being scaled up to it should be sufficient for almost all cases.  A typical
+     * use of this density would be 4K television screens -- 3840x2160, which
+     * is 2x a traditional HD 1920x1080 screen which runs at DENSITY_XHIGH.
+     */
+    public static final int DENSITY_XXXHIGH = 640;
 
     /**
      * The reference density used throughout the system.
@@ -94,12 +109,7 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
      * density for a display in {@link #densityDpi}.
      */
     @Deprecated
-    public static int DENSITY_DEVICE;
-
-    static {
-        DENSITY_DEVICE = SystemProperties.getInt("qemu.sf.lcd_density", SystemProperties
-            .getInt("ro.sf.lcd_density", DENSITY_DEFAULT));
-    }
+    public static int DENSITY_DEVICE = getDeviceDensity();
 
     /**
      * The absolute width of the display in pixels.
@@ -190,29 +200,6 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
      */
     public float noncompatYdpi;
 
-    /**
-     * Process DPI for current hook.
-     */
-    public void paranoidHook() {
-        if (getActive()) {
-
-            boolean isOrientationOk = true;
-            if (getLandscape() && mDisplay != null) {
-                final int rotation = mDisplay.getRotation();
-                isOrientationOk = (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270);
-            }
-
-            if (isOrientationOk) {
-                density = getDensity() == 0 ? density : getDensity();
-                scaledDensity = getScaledDensity() == 0 ? scaledDensity : getScaledDensity();
-                densityDpi = getDpi() == 0 ? densityDpi : getDpi();
-                noncompatDensity = densityDpi;
-                noncompatDensityDpi = densityDpi;
-                noncompatScaledDensity = scaledDensity;
-            }
-        }
-    }
-
     public DisplayMetrics() {
     }
     
@@ -231,7 +218,6 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
         noncompatScaledDensity = o.noncompatScaledDensity;
         noncompatXdpi = o.noncompatXdpi;
         noncompatYdpi = o.noncompatYdpi;
-        paranoidHook();
     }
     
     public void setToDefaults() {
@@ -305,7 +291,12 @@ public class DisplayMetrics extends ExtendedPropertiesUtils {
             ", xdpi=" + xdpi + ", ydpi=" + ydpi + "}";
     }
 
-    public static int getDeviceDensity() {
-        return mGlobalHook.dpi == 0 ? DENSITY_DEVICE : mGlobalHook.dpi;
+    private static int getDeviceDensity() {
+        // qemu.sf.lcd_density can be used to override ro.sf.lcd_density
+        // when running in the emulator, allowing for dynamic configurations.
+        // The reason for this is that ro.sf.lcd_density is write-once and is
+        // set by the init process when it parses build.prop before anything else.
+        return SystemProperties.getInt("qemu.sf.lcd_density",
+                SystemProperties.getInt("ro.sf.lcd_density", DENSITY_DEFAULT));
     }
 }

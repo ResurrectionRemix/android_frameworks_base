@@ -17,13 +17,18 @@
 package com.android.server.location;
 
 import android.app.AlarmManager;
+import android.app.AppOpsManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.hardware.location.GeofenceHardware;
+import android.hardware.location.GeofenceHardwareImpl;
 import android.location.Criteria;
+import android.location.FusedBatchOptions;
+import android.location.IGpsGeofenceHardware;
 import android.location.IGpsStatusListener;
 import android.location.IGpsStatusProvider;
 import android.location.ILocationManager;
@@ -32,14 +37,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.location.LocationRequest;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.BatteryStats;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.RemoteException;
@@ -55,6 +63,8 @@ import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 import android.util.NtpTrustedTime;
+
+import com.android.internal.app.IAppOpsService;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.location.GpsNetInitiatedHandler;
 import com.android.internal.location.ProviderProperties;
@@ -186,6 +196,17 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
     private static final String PROPERTIES_FILE = "/etc/gps.conf";
 
+    private static final int GPS_GEOFENCE_UNAVAILABLE = 1<<0L;
+    private static final int GPS_GEOFENCE_AVAILABLE = 1<<1L;
+
+    // GPS Geofence errors. Should match gps.h constants.
+    private static final int GPS_GEOFENCE_OPERATION_SUCCESS = 0;
+    private static final int GPS_GEOFENCE_ERROR_TOO_MANY_GEOFENCES = 100;
+    private static final int GPS_GEOFENCE_ERROR_ID_EXISTS  = -101;
+    private static final int GPS_GEOFENCE_ERROR_ID_UNKNOWN = -102;
+    private static final int GPS_GEOFENCE_ERROR_INVALID_TRANSITION = -103;
+    private static final int GPS_GEOFENCE_ERROR_GENERIC = -149;
+
     /** simpler wrapper for ProviderRequest + Worksource */
     private static class GpsRequest {
         public ProviderRequest request;
@@ -255,6 +276,9 @@ public class GpsLocationProvider implements LocationProviderInterface {
     // true if we started navigation
     private boolean mStarted;
 
+    // true if single shot request is in progress
+    private boolean mSingleShot;
+
     // capabilities of the GPS engine
     private int mEngineCapabilities;
 
@@ -304,10 +328,13 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private final PendingIntent mWakeupIntent;
     private final PendingIntent mTimeoutIntent;
 
+    private final IAppOpsService mAppOpsService;
     private final IBatteryStats mBatteryStats;
 
     // only modified on handler thread
-    private int[] mClientUids = new int[0];
+    private WorkSource mClientSource = new WorkSource();
+
+    private GeofenceHardwareImpl mGeofenceHardwareImpl;
 
     private final IGpsStatusProvider mGpsStatusProvider = new IGpsStatusProvider.Stub() {
         @Override
@@ -362,13 +389,17 @@ public class GpsLocationProvider implements LocationProviderInterface {
         return mGpsStatusProvider;
     }
 
+    public IGpsGeofenceHardware getGpsGeofenceProxy() {
+        return mGpsGeofenceBinder;
+    }
+
     private final BroadcastReceiver mBroadcastReciever = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
             if (action.equals(ALARM_WAKEUP)) {
                 if (DEBUG) Log.d(TAG, "ALARM_WAKEUP");
-                startNavigating();
+                startNavigating(false);
             } else if (action.equals(ALARM_TIMEOUT)) {
                 if (DEBUG) Log.d(TAG, "ALARM_TIMEOUT");
                 hibernate();
@@ -413,7 +444,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
         return native_is_supported();
     }
 
-    public GpsLocationProvider(Context context, ILocationManager ilocationManager) {
+    public GpsLocationProvider(Context context, ILocationManager ilocationManager,
+            Looper looper) {
         mContext = context;
         mNtpTime = NtpTrustedTime.getInstance(context);
         mILocationManager = ilocationManager;
@@ -432,8 +464,13 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
         mConnMgr = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        // App ops service to keep track of who is accessing the GPS
+        mAppOpsService = IAppOpsService.Stub.asInterface(ServiceManager.getService(
+                Context.APP_OPS_SERVICE));
+
         // Battery statistics service to be notified when GPS turns on or off
-        mBatteryStats = IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
+        mBatteryStats = IBatteryStats.Stub.asInterface(ServiceManager.getService(
+                BatteryStats.SERVICE_NAME));
 
         mProperties = new Properties();
         try {
@@ -466,7 +503,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
         }
 
         // construct handler, listen for events
-        mHandler = new ProviderHandler();
+        mHandler = new ProviderHandler(looper);
         listenForBroadcasts();
 
         // also listen for PASSIVE_PROVIDER updates
@@ -475,8 +512,21 @@ public class GpsLocationProvider implements LocationProviderInterface {
             public void run() {
                 LocationManager locManager =
                         (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-                locManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
-                        0, 0, new NetworkLocationListener(), mHandler.getLooper());                
+                final long minTime = 0;
+                final float minDistance = 0;
+                final boolean oneShot = false;
+                LocationRequest request = LocationRequest.createFromDeprecatedProvider(
+                        LocationManager.PASSIVE_PROVIDER,
+                        minTime,
+                        minDistance,
+                        oneShot);
+                // Don't keep track of this request since it's done on behalf of other clients
+                // (which are kept track of separately).
+                request.setHideFromAppOps(true);
+                locManager.requestLocationUpdates(
+                        request,
+                        new NetworkLocationListener(),
+                        mHandler.getLooper());
             }
         });
     }
@@ -694,16 +744,16 @@ public class GpsLocationProvider implements LocationProviderInterface {
      */
     @Override
     public void enable() {
+        synchronized (mLock) {
+            if (mEnabled) return;
+            mEnabled = true;
+        }
+
         sendMessage(ENABLE, 1, null);
     }
 
     private void handleEnable() {
         if (DEBUG) Log.d(TAG, "handleEnable");
-
-        synchronized (mLock) {
-            if (mEnabled) return;
-            mEnabled = true;
-        }
 
         boolean enabled = native_init();
 
@@ -730,16 +780,16 @@ public class GpsLocationProvider implements LocationProviderInterface {
      */
     @Override
     public void disable() {
+        synchronized (mLock) {
+            if (!mEnabled) return;
+            mEnabled = false;
+        }
+
         sendMessage(ENABLE, 0, null);
     }
 
     private void handleDisable() {
         if (DEBUG) Log.d(TAG, "handleDisable");
-
-        synchronized (mLock) {
-            if (!mEnabled) return;
-            mEnabled = false;
-        }
 
         stopNavigating();
         mAlarmManager.cancel(mWakeupIntent);
@@ -783,23 +833,26 @@ public class GpsLocationProvider implements LocationProviderInterface {
         sendMessage(SET_REQUEST, 0, new GpsRequest(request, source));
     }
 
-    @Override
-    public void switchUser(int userId) {
-        // nothing to do here
-    }
-
     private void handleSetRequest(ProviderRequest request, WorkSource source) {
+        boolean singleShot = false;
+
+        // see if the request is for a single update
+        if (request.locationRequests != null && request.locationRequests.size() > 0) {
+            // if any request has zero or more than one updates
+            // requested, then this is not single-shot mode
+            singleShot = true;
+
+            for (LocationRequest lr : request.locationRequests) {
+                if (lr.getNumUpdates() != 1) {
+                    singleShot = false;
+                }
+            }
+        }
+
         if (DEBUG) Log.d(TAG, "setRequest " + request);
-
-
-
         if (request.reportLocation) {
             // update client uids
-            int[] uids = new int[source.size()];
-            for (int i=0; i < source.size(); i++) {
-                uids[i] = source.get(i);
-            }
-            updateClientUids(uids);
+            updateClientUids(source);
 
             mFixInterval = (int) request.interval;
 
@@ -818,10 +871,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 }
             } else if (!mStarted) {
                 // start GPS
-                startNavigating();
+                startNavigating(singleShot);
             }
         } else {
-            updateClientUids(new int[0]);
+            updateClientUids(new WorkSource());
 
             stopNavigating();
             mAlarmManager.cancel(mWakeupIntent);
@@ -849,45 +902,50 @@ public class GpsLocationProvider implements LocationProviderInterface {
         }
     }
 
-    private void updateClientUids(int[] uids) {
-        // Find uid's that were not previously tracked
-        for (int uid1 : uids) {
-            boolean newUid = true;
-            for (int uid2 : mClientUids) {
-                if (uid1 == uid2) {
-                    newUid = false;
-                    break;
-                }
-            }
-            if (newUid) {
+    private void updateClientUids(WorkSource source) {
+        // Update work source.
+        WorkSource[] changes = mClientSource.setReturningDiffs(source);
+        if (changes == null) {
+            return;
+        }
+        WorkSource newWork = changes[0];
+        WorkSource goneWork = changes[1];
+
+        // Update sources that were not previously tracked.
+        if (newWork != null) {
+            int lastuid = -1;
+            for (int i=0; i<newWork.size(); i++) {
                 try {
-                    mBatteryStats.noteStartGps(uid1);
+                    int uid = newWork.get(i);
+                    mAppOpsService.startOperation(AppOpsManager.getToken(mAppOpsService),
+                            AppOpsManager.OP_GPS, uid, newWork.getName(i));
+                    if (uid != lastuid) {
+                        lastuid = uid;
+                        mBatteryStats.noteStartGps(uid);
+                    }
                 } catch (RemoteException e) {
                     Log.w(TAG, "RemoteException", e);
                 }
             }
         }
 
-        // Find uid'd that were tracked but have now disappeared
-        for (int uid1 : mClientUids) {
-            boolean oldUid = true;
-            for (int uid2 : uids) {
-                if (uid1 == uid2) {
-                    oldUid = false;
-                    break;
-                }
-            }
-            if (oldUid) {
+        // Update sources that are no longer tracked.
+        if (goneWork != null) {
+            int lastuid = -1;
+            for (int i=0; i<goneWork.size(); i++) {
                 try {
-                    mBatteryStats.noteStopGps(uid1);
+                    int uid = goneWork.get(i);
+                    mAppOpsService.finishOperation(AppOpsManager.getToken(mAppOpsService),
+                            AppOpsManager.OP_GPS, uid, goneWork.getName(i));
+                    if (uid != lastuid) {
+                        lastuid = uid;
+                        mBatteryStats.noteStopGps(uid);
+                    }
                 } catch (RemoteException e) {
                     Log.w(TAG, "RemoteException", e);
                 }
             }
         }
-
-        // save current uids
-        mClientUids = uids;
     }
 
     @Override
@@ -913,6 +971,31 @@ public class GpsLocationProvider implements LocationProviderInterface {
         Binder.restoreCallingIdentity(identity);
         return result;
     }
+
+    private IGpsGeofenceHardware mGpsGeofenceBinder = new IGpsGeofenceHardware.Stub() {
+        public boolean isHardwareGeofenceSupported() {
+            return native_is_geofence_supported();
+        }
+
+        public boolean addCircularHardwareGeofence(int geofenceId, double latitude,
+                double longitude, double radius, int lastTransition, int monitorTransitions,
+                int notificationResponsiveness, int unknownTimer) {
+            return native_add_geofence(geofenceId, latitude, longitude, radius,
+                    lastTransition, monitorTransitions, notificationResponsiveness, unknownTimer);
+        }
+
+        public boolean removeHardwareGeofence(int geofenceId) {
+            return native_remove_geofence(geofenceId);
+        }
+
+        public boolean pauseHardwareGeofence(int geofenceId) {
+            return native_pause_geofence(geofenceId);
+        }
+
+        public boolean resumeHardwareGeofence(int geofenceId, int monitorTransition) {
+            return native_resume_geofence(geofenceId, monitorTransition);
+        }
+    };
 
     private boolean deleteAidingData(Bundle extras) {
         int flags;
@@ -944,19 +1027,42 @@ public class GpsLocationProvider implements LocationProviderInterface {
         return false;
     }
 
-    private void startNavigating() {
+    private void startNavigating(boolean singleShot) {
         if (!mStarted) {
-            if (DEBUG) Log.d(TAG, "startNavigating");
+            if (DEBUG) Log.d(TAG, "startNavigating, singleShot is " + singleShot);
             mTimeToFirstFix = 0;
             mLastFixTime = 0;
             mStarted = true;
+            mSingleShot = singleShot;
             mPositionMode = GPS_POSITION_MODE_STANDALONE;
 
              if (Settings.Global.getInt(mContext.getContentResolver(),
                     Settings.Global.ASSISTED_GPS_ENABLED, 1) != 0) {
-                if (hasCapability(GPS_CAPABILITY_MSB)) {
+                if (singleShot && hasCapability(GPS_CAPABILITY_MSA)) {
+                    mPositionMode = GPS_POSITION_MODE_MS_ASSISTED;
+                } else if (hasCapability(GPS_CAPABILITY_MSB)) {
                     mPositionMode = GPS_POSITION_MODE_MS_BASED;
                 }
+            }
+
+            if (DEBUG) {
+                String mode;
+
+                switch(mPositionMode) {
+                    case GPS_POSITION_MODE_STANDALONE:
+                        mode = "standalone";
+                        break;
+                    case GPS_POSITION_MODE_MS_ASSISTED:
+                        mode = "MS_ASSISTED";
+                        break;
+                    case GPS_POSITION_MODE_MS_BASED:
+                        mode = "MS_BASED";
+                        break;
+                    default:
+                        mode = "unknown";
+                        break;
+                }
+                Log.d(TAG, "setting position_mode to " + mode);
             }
 
             int interval = (hasCapability(GPS_CAPABILITY_SCHEDULING) ? mFixInterval : 1000);
@@ -990,6 +1096,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
         if (DEBUG) Log.d(TAG, "stopNavigating");
         if (mStarted) {
             mStarted = false;
+            mSingleShot = false;
             native_stop();
             mTimeToFirstFix = 0;
             mLastFixTime = 0;
@@ -1012,6 +1119,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private boolean hasCapability(int capability) {
         return ((mEngineCapabilities & capability) != 0);
     }
+
 
     /**
      * called from native code to update our position.
@@ -1081,6 +1189,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
                     }
                 }
             }
+        }
+
+        if (mSingleShot) {
+            stopNavigating();
         }
 
         if (mStarted && mStatus != LocationProvider.AVAILABLE) {
@@ -1244,7 +1356,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
                     if (DEBUG) Log.d(TAG, "PhoneConstants.APN_REQUEST_STARTED");
                     // Nothing to do here
                 } else {
-                    if (DEBUG) Log.d(TAG, "startUsingNetworkFeature failed");
+                    if (DEBUG) Log.d(TAG, "startUsingNetworkFeature failed, value is " +
+                                     result);
                     mAGpsDataConnectionState = AGPS_DATA_CONNECTION_CLOSED;
                     native_agps_data_conn_failed();
                 }
@@ -1314,6 +1427,159 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private void xtraDownloadRequest() {
         if (DEBUG) Log.d(TAG, "xtraDownloadRequest");
         sendMessage(DOWNLOAD_XTRA_DATA, 0, null);
+    }
+
+    /**
+     * Helper method to construct a location object.
+     */
+    private Location buildLocation(
+            int flags,
+            double latitude,
+            double longitude,
+            double altitude,
+            float speed,
+            float bearing,
+            float accuracy,
+            long timestamp) {
+        Location location = new Location(LocationManager.GPS_PROVIDER);
+        if((flags & LOCATION_HAS_LAT_LONG) == LOCATION_HAS_LAT_LONG) {
+            location.setLatitude(latitude);
+            location.setLongitude(longitude);
+            location.setTime(timestamp);
+            location.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
+        }
+        if((flags & LOCATION_HAS_ALTITUDE) == LOCATION_HAS_ALTITUDE) {
+            location.setAltitude(altitude);
+        }
+        if((flags & LOCATION_HAS_SPEED) == LOCATION_HAS_SPEED) {
+            location.setSpeed(speed);
+        }
+        if((flags & LOCATION_HAS_BEARING) == LOCATION_HAS_BEARING) {
+            location.setBearing(bearing);
+        }
+        if((flags & LOCATION_HAS_ACCURACY) == LOCATION_HAS_ACCURACY) {
+            location.setAccuracy(accuracy);
+        }
+        return location;
+    }
+
+    /**
+     * Converts the GPS HAL status to the internal Geofence Hardware status.
+     */
+    private int getGeofenceStatus(int status) {
+        switch(status) {
+            case GPS_GEOFENCE_OPERATION_SUCCESS:
+                return GeofenceHardware.GEOFENCE_SUCCESS;
+            case GPS_GEOFENCE_ERROR_GENERIC:
+                return GeofenceHardware.GEOFENCE_FAILURE;
+            case GPS_GEOFENCE_ERROR_ID_EXISTS:
+                return GeofenceHardware.GEOFENCE_ERROR_ID_EXISTS;
+            case GPS_GEOFENCE_ERROR_INVALID_TRANSITION:
+                return GeofenceHardware.GEOFENCE_ERROR_INVALID_TRANSITION;
+            case GPS_GEOFENCE_ERROR_TOO_MANY_GEOFENCES:
+                return GeofenceHardware.GEOFENCE_ERROR_TOO_MANY_GEOFENCES;
+            case GPS_GEOFENCE_ERROR_ID_UNKNOWN:
+                return GeofenceHardware.GEOFENCE_ERROR_ID_UNKNOWN;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Called from native to report GPS Geofence transition
+     * All geofence callbacks are called on the same thread
+     */
+    private void reportGeofenceTransition(int geofenceId, int flags, double latitude,
+            double longitude, double altitude, float speed, float bearing, float accuracy,
+            long timestamp, int transition, long transitionTimestamp) {
+        if (mGeofenceHardwareImpl == null) {
+            mGeofenceHardwareImpl = GeofenceHardwareImpl.getInstance(mContext);
+        }
+        Location location = buildLocation(
+                flags,
+                latitude,
+                longitude,
+                altitude,
+                speed,
+                bearing,
+                accuracy,
+                timestamp);
+        mGeofenceHardwareImpl.reportGeofenceTransition(
+                geofenceId,
+                location,
+                transition,
+                transitionTimestamp,
+                GeofenceHardware.MONITORING_TYPE_GPS_HARDWARE,
+                FusedBatchOptions.SourceTechnologies.GNSS);
+    }
+
+    /**
+     * called from native code to report GPS status change.
+     */
+    private void reportGeofenceStatus(int status, int flags, double latitude,
+            double longitude, double altitude, float speed, float bearing, float accuracy,
+            long timestamp) {
+        if (mGeofenceHardwareImpl == null) {
+            mGeofenceHardwareImpl = GeofenceHardwareImpl.getInstance(mContext);
+        }
+        Location location = buildLocation(
+                flags,
+                latitude,
+                longitude,
+                altitude,
+                speed,
+                bearing,
+                accuracy,
+                timestamp);
+        int monitorStatus = GeofenceHardware.MONITOR_CURRENTLY_UNAVAILABLE;
+        if(status == GPS_GEOFENCE_AVAILABLE) {
+            monitorStatus = GeofenceHardware.MONITOR_CURRENTLY_AVAILABLE;
+        }
+        mGeofenceHardwareImpl.reportGeofenceMonitorStatus(
+                GeofenceHardware.MONITORING_TYPE_GPS_HARDWARE,
+                monitorStatus,
+                location,
+                FusedBatchOptions.SourceTechnologies.GNSS);
+    }
+
+    /**
+     * called from native code - Geofence Add callback
+     */
+    private void reportGeofenceAddStatus(int geofenceId, int status) {
+        if (mGeofenceHardwareImpl == null) {
+            mGeofenceHardwareImpl = GeofenceHardwareImpl.getInstance(mContext);
+        }
+        mGeofenceHardwareImpl.reportGeofenceAddStatus(geofenceId, getGeofenceStatus(status));
+    }
+
+    /**
+     * called from native code - Geofence Remove callback
+     */
+    private void reportGeofenceRemoveStatus(int geofenceId, int status) {
+        if (mGeofenceHardwareImpl == null) {
+            mGeofenceHardwareImpl = GeofenceHardwareImpl.getInstance(mContext);
+        }
+        mGeofenceHardwareImpl.reportGeofenceRemoveStatus(geofenceId, getGeofenceStatus(status));
+    }
+
+    /**
+     * called from native code - Geofence Pause callback
+     */
+    private void reportGeofencePauseStatus(int geofenceId, int status) {
+        if (mGeofenceHardwareImpl == null) {
+            mGeofenceHardwareImpl = GeofenceHardwareImpl.getInstance(mContext);
+        }
+        mGeofenceHardwareImpl.reportGeofencePauseStatus(geofenceId, getGeofenceStatus(status));
+    }
+
+    /**
+     * called from native code - Geofence Resume callback
+     */
+    private void reportGeofenceResumeStatus(int geofenceId, int status) {
+        if (mGeofenceHardwareImpl == null) {
+            mGeofenceHardwareImpl = GeofenceHardwareImpl.getInstance(mContext);
+        }
+        mGeofenceHardwareImpl.reportGeofenceResumeStatus(geofenceId, getGeofenceStatus(status));
     }
 
     //=============================================================
@@ -1452,11 +1718,11 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private void requestRefLocation(int flags) {
         TelephonyManager phone = (TelephonyManager)
                 mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        if (phone.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
+        final int phoneType = phone.getPhoneType();
+        if (phoneType == TelephonyManager.PHONE_TYPE_GSM) {
             GsmCellLocation gsm_cell = (GsmCellLocation) phone.getCellLocation();
-            if ((gsm_cell != null) && (phone.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) &&
-                    (phone.getNetworkOperator() != null) &&
-                        (phone.getNetworkOperator().length() > 3)) {
+            if ((gsm_cell != null) && (phone.getNetworkOperator() != null)
+                    && (phone.getNetworkOperator().length() > 3)) {
                 int type;
                 int mcc = Integer.parseInt(phone.getNetworkOperator().substring(0,3));
                 int mnc = Integer.parseInt(phone.getNetworkOperator().substring(3));
@@ -1471,13 +1737,12 @@ public class GpsLocationProvider implements LocationProviderInterface {
                     type = AGPS_REF_LOCATION_TYPE_GSM_CELLID;
                 }
                 native_agps_set_ref_location_cellid(type, mcc, mnc,
-                        gsm_cell.getLac(), gsm_cell.getCid());
+                        gsm_cell.getLac(), gsm_cell.getPsc(), gsm_cell.getCid());
             } else {
                 Log.e(TAG,"Error getting cell location info.");
             }
-        }
-        else {
-            Log.e(TAG,"CDMA not supported.");
+        } else if (phoneType == TelephonyManager.PHONE_TYPE_CDMA) {
+            Log.e(TAG, "CDMA not supported.");
         }
     }
 
@@ -1490,8 +1755,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
     }
 
     private final class ProviderHandler extends Handler {
-        public ProviderHandler() {
-            super(true /*async*/);
+        public ProviderHandler(Looper looper) {
+            super(looper, null, true /*async*/);
         }
 
         @Override
@@ -1642,9 +1907,18 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
     // AGPS ril suport
     private native void native_agps_set_ref_location_cellid(int type, int mcc, int mnc,
-            int lac, int cid);
+            int lac, int psc, int cid);
     private native void native_agps_set_id(int type, String setid);
 
     private native void native_update_network_state(boolean connected, int type,
             boolean roaming, boolean available, String extraInfo, String defaultAPN);
+
+    // Hardware Geofence support.
+    private static native boolean native_is_geofence_supported();
+    private static native boolean native_add_geofence(int geofenceId, double latitude,
+            double longitude, double radius, int lastTransition,int monitorTransitions,
+            int notificationResponsivenes, int unknownTimer);
+    private static native boolean native_remove_geofence(int geofenceId);
+    private static native boolean native_resume_geofence(int geofenceId, int transitions);
+    private static native boolean native_pause_geofence(int geofenceId);
 }

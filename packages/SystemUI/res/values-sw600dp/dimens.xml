@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (c) 2012, The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +24,9 @@
     <dimen name="notification_panel_margin_left">16dp</dimen>
 
     <!-- Gravity for the notification & quick settings panels -->
-    <!-- 0x33 = left|top ; 0x35 = right|top -->
-    <integer name="notification_panel_layout_gravity">0x33</integer>
-    <integer name="settings_panel_layout_gravity">0x35</integer>
+    <!-- 0x800033 = start|top ; 0x800035 = end|top -->
+    <integer name="notification_panel_layout_gravity">0x800033</integer>
+    <integer name="settings_panel_layout_gravity">0x800035</integer>
 
     <!-- Diameter of outer shape drawable shown in navbar search-->
     <dimen name="navbar_search_outerring_diameter">430dip</dimen>
@@ -37,6 +36,10 @@
 
     <!-- Height of search panel including navigation bar height -->
     <dimen name="navbar_search_panel_height">280dip</dimen>
+
+    <!-- Size of application thumbnail -->
+    <dimen name="status_bar_recents_thumbnail_width">200dp</dimen>
+    <dimen name="status_bar_recents_thumbnail_height">177dp</dimen>
 
     <!-- On tablet-sized devices, we allocate the rightmost third(ish) of the draggable status bar
          to quick settings. -->

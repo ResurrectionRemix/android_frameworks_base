@@ -19,12 +19,12 @@
 
 #include <SkBitmap.h>
 
+#include <utils/LruCache.h>
 #include <utils/Mutex.h>
 #include <utils/Vector.h>
 
 #include "Debug.h"
 #include "Texture.h"
-#include "utils/GenerationCache.h"
 
 namespace android {
 namespace uirenderer {
@@ -125,12 +125,12 @@ private:
     void generateTexture(SkBitmap* bitmap, Texture* texture, bool regenerate = false);
 
     void uploadLoFiTexture(bool resize, SkBitmap* bitmap, uint32_t width, uint32_t height);
-    void uploadToTexture(bool resize, GLenum format, GLsizei width, GLsizei height,
-            GLenum type, const GLvoid * data);
+    void uploadToTexture(bool resize, GLenum format, GLsizei stride,
+            GLsizei width, GLsizei height, GLenum type, const GLvoid * data);
 
     void init();
 
-    GenerationCache<SkBitmap*, Texture*> mCache;
+    LruCache<SkBitmap*, Texture*> mCache;
 
     uint32_t mSize;
     uint32_t mMaxSize;

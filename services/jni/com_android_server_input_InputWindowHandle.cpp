@@ -35,6 +35,7 @@ static struct {
     jfieldID inputChannel;
     jfieldID name;
     jfieldID layoutParamsFlags;
+    jfieldID layoutParamsPrivateFlags;
     jfieldID layoutParamsType;
     jfieldID dispatchingTimeoutNanos;
     jfieldID frameLeft;
@@ -109,6 +110,8 @@ bool NativeInputWindowHandle::updateInfo() {
 
     mInfo->layoutParamsFlags = env->GetIntField(obj,
             gInputWindowHandleClassInfo.layoutParamsFlags);
+    mInfo->layoutParamsPrivateFlags = env->GetIntField(obj,
+            gInputWindowHandleClassInfo.layoutParamsPrivateFlags);
     mInfo->layoutParamsType = env->GetIntField(obj,
             gInputWindowHandleClassInfo.layoutParamsType);
     mInfo->dispatchingTimeout = env->GetLongField(obj,
@@ -183,7 +186,7 @@ sp<NativeInputWindowHandle> android_server_InputWindowHandle_getHandle(
 
         jweak objWeak = env->NewWeakGlobalRef(inputWindowHandleObj);
         handle = new NativeInputWindowHandle(inputApplicationHandle, objWeak);
-        handle->incStrong(inputWindowHandleObj);
+        handle->incStrong((void*)android_server_InputWindowHandle_getHandle);
         env->SetIntField(inputWindowHandleObj, gInputWindowHandleClassInfo.ptr,
                 reinterpret_cast<int>(handle));
     }
@@ -201,7 +204,7 @@ static void android_server_InputWindowHandle_nativeDispose(JNIEnv* env, jobject 
         env->SetIntField(obj, gInputWindowHandleClassInfo.ptr, 0);
 
         NativeInputWindowHandle* handle = reinterpret_cast<NativeInputWindowHandle*>(ptr);
-        handle->decStrong(obj);
+        handle->decStrong((void*)android_server_InputWindowHandle_getHandle);
     }
 }
 
@@ -243,6 +246,9 @@ int register_android_server_InputWindowHandle(JNIEnv* env) {
 
     GET_FIELD_ID(gInputWindowHandleClassInfo.layoutParamsFlags, clazz,
             "layoutParamsFlags", "I");
+
+    GET_FIELD_ID(gInputWindowHandleClassInfo.layoutParamsPrivateFlags, clazz,
+            "layoutParamsPrivateFlags", "I");
 
     GET_FIELD_ID(gInputWindowHandleClassInfo.layoutParamsType, clazz,
             "layoutParamsType", "I");

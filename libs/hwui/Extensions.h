@@ -17,83 +17,53 @@
 #ifndef ANDROID_HWUI_EXTENSIONS_H
 #define ANDROID_HWUI_EXTENSIONS_H
 
+#include <cutils/compiler.h>
+
+#include <utils/Singleton.h>
 #include <utils/SortedVector.h>
 #include <utils/String8.h>
-
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-
-#include "Debug.h"
 
 namespace android {
 namespace uirenderer {
 
 ///////////////////////////////////////////////////////////////////////////////
-// Defines
-///////////////////////////////////////////////////////////////////////////////
-
-// Debug
-#if DEBUG_EXTENSIONS
-    #define EXT_LOGD(...) ALOGD(__VA_ARGS__)
-#else
-    #define EXT_LOGD(...)
-#endif
-
-///////////////////////////////////////////////////////////////////////////////
 // Classes
 ///////////////////////////////////////////////////////////////////////////////
 
-class Extensions {
+class ANDROID_API Extensions: public Singleton<Extensions> {
 public:
-    Extensions() {
-        const char* buffer = (const char*) glGetString(GL_EXTENSIONS);
-        const char* current = buffer;
-        const char* head = current;
-        EXT_LOGD("Available GL extensions:");
-        do {
-            head = strchr(current, ' ');
-            String8 s(current, head ? head - current : strlen(current));
-            if (s.length()) {
-                mExtensionList.add(s);
-                EXT_LOGD("  %s", s.string());
-            }
-            current = head + 1;
-        } while (head);
-
-        mHasNPot = hasExtension("GL_OES_texture_npot");
-        mHasFramebufferFetch = hasExtension("GL_NV_shader_framebuffer_fetch");
-        mHasDiscardFramebuffer = hasExtension("GL_EXT_discard_framebuffer");
-        mHasDebugMarker = hasExtension("GL_EXT_debug_marker");
-        mHasDebugLabel = hasExtension("GL_EXT_debug_label");
-        mHasTiledRendering = hasExtension("GL_QCOM_tiled_rendering");
-
-        mExtensions = strdup(buffer);
-    }
-
-    ~Extensions() {
-        free(mExtensions);
-    }
-
     inline bool hasNPot() const { return mHasNPot; }
     inline bool hasFramebufferFetch() const { return mHasFramebufferFetch; }
     inline bool hasDiscardFramebuffer() const { return mHasDiscardFramebuffer; }
     inline bool hasDebugMarker() const { return mHasDebugMarker; }
     inline bool hasDebugLabel() const { return mHasDebugLabel; }
     inline bool hasTiledRendering() const { return mHasTiledRendering; }
+    inline bool has1BitStencil() const { return mHas1BitStencil; }
+    inline bool has4BitStencil() const { return mHas4BitStencil; }
+    inline bool hasNvSystemTime() const { return mHasNvSystemTime; }
+    inline bool hasUnpackRowLength() const { return mVersionMajor >= 3; }
+    inline bool hasPixelBufferObjects() const { return mVersionMajor >= 3; }
+    inline bool hasOcclusionQueries() const { return mVersionMajor >= 3; }
+    inline bool hasFloatTextures() const { return mVersionMajor >= 3; }
 
-    bool hasExtension(const char* extension) const {
-        const String8 s(extension);
-        return mExtensionList.indexOf(s) >= 0;
-    }
+    inline int getMajorGlVersion() const { return mVersionMajor; }
+    inline int getMinorGlVersion() const { return mVersionMinor; }
 
-    void dump() {
-        ALOGD("Supported extensions:\n%s", mExtensions);
-    }
+    bool hasGlExtension(const char* extension) const;
+    bool hasEglExtension(const char* extension) const;
+
+    void dump() const;
 
 private:
-    SortedVector<String8> mExtensionList;
+    Extensions();
+    ~Extensions();
 
-    char* mExtensions;
+    void findExtensions(const char* extensions, SortedVector<String8>& list) const;
+
+    friend class Singleton<Extensions>;
+
+    SortedVector<String8> mGlExtensionList;
+    SortedVector<String8> mEglExtensionList;
 
     bool mHasNPot;
     bool mHasFramebufferFetch;
@@ -101,6 +71,12 @@ private:
     bool mHasDebugMarker;
     bool mHasDebugLabel;
     bool mHasTiledRendering;
+    bool mHas1BitStencil;
+    bool mHas4BitStencil;
+    bool mHasNvSystemTime;
+
+    int mVersionMajor;
+    int mVersionMinor;
 }; // class Extensions
 
 }; // namespace uirenderer

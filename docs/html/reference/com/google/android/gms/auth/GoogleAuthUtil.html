@@ -75,36 +75,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width" />
 
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <title>GoogleAuthUtil | Android Developers</title>
@@ -121,15 +97,9 @@ href="//fonts.googleapis.com/css?family=Roboto:regular,medium,thin,italic,medium
 <script src="/assets/js/android_3p-bundle.js" type="text/javascript"></script>
 <script type="text/javascript">
   var toRoot = "/";
-  
   var devsite = false;
-  
 </script>
 <script src="/assets/js/docs.js" type="text/javascript"></script>
-
-<script src="/gms_navtree_data.js" type="text/javascript"></script>
-<script src="/gcm_navtree_data.js" type="text/javascript"></script>
-
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -148,7 +118,8 @@ href="//fonts.googleapis.com/css?family=Roboto:regular,medium,thin,italic,medium
   <div id="doc-api-level" class="" style="display:none"></div>
   <a name="top"></a>
 
-  
+<a name="top"></a>
+
     <!-- Header -->
     <div id="header">
         <div class="wrap" id="header-wrap">
@@ -163,25 +134,25 @@ href="//fonts.googleapis.com/css?family=Roboto:regular,medium,thin,italic,medium
           </div>
             <ul class="nav-x col-9">
                 <li class="design">
-                  <a href="/design/index.html" 
-                  zh-TW-lang="設計"
-                  zh-CN-lang="设计"
+                  <a href="/design/index.html"
+                  zh-tw-lang="設計"
+                  zh-cn-lang="设计"
                   ru-lang="Проектирование"
                   ko-lang="디자인"
                   ja-lang="設計"
                   es-lang="Diseñar"               
                   >Design</a></li>
-                <li class="develop"><a href="/develop/index.html" class="selected"
-                  zh-TW-lang="開發"
-                  zh-CN-lang="开发"
+                <li class="develop"><a href="/develop/index.html"
+                  zh-tw-lang="開發"
+                  zh-cn-lang="开发"
                   ru-lang="Разработка"
                   ko-lang="개발"
                   ja-lang="開発"
                   es-lang="Desarrollar"               
                   >Develop</a></li>
-                <li class="distribute last"><a href="/distribute/index.html" 
-                  zh-TW-lang="發佈"
-                  zh-CN-lang="分发"
+                <li class="distribute last"><a href="/distribute/index.html"
+                  zh-tw-lang="發佈"
+                  zh-cn-lang="分发"
                   ru-lang="Распространение"
                   ko-lang="배포"
                   ja-lang="配布"
@@ -210,7 +181,6 @@ href="//fonts.googleapis.com/css?family=Roboto:regular,medium,thin,italic,medium
         <li><a href="http://source.android.com">Android Open Source Project</a></li>
       </ul>
       
-
       
       
         <div class="header">Language</div>
@@ -221,8 +191,8 @@ href="//fonts.googleapis.com/css?family=Roboto:regular,medium,thin,italic,medium
                 <option value="ja">日本語</option>
                 <option value="ko">한국어</option>
                 <option value="ru">Русский</option>
-                <option value="zh-CN">中文 (中国)</option>
-                <option value="zh-TW">中文 (台灣)</option>
+                <option value="zh-cn">中文 (中国)</option>
+                <option value="zh-tw">中文 (台灣)</option>
             </select>
           </div>
         <script type="text/javascript">
@@ -254,13 +224,34 @@ onkeyup="return search_changed(event, false, '/')" />
         <div class="right"></div>
     </div>
   </div>
-  <div id="search_filtered_wrapper">
-    <div id="search_filtered_div" class="no-display">
-        <ul id="search_filtered">
-        </ul>
+
+  <div class="search_filtered_wrapper reference">
+    <div class="suggest-card reference no-display">
+      <ul class="search_filtered">
+      </ul>
     </div>
   </div>
-  
+
+  <div class="search_filtered_wrapper docs">
+    <div class="suggest-card dummy no-display">&nbsp;</div>
+    <div class="suggest-card develop no-display">
+      <ul class="search_filtered">
+      </ul>
+      <div class="child-card guides no-display">
+      </div>
+      <div class="child-card training no-display">
+      </div>
+    </div>
+    <div class="suggest-card design no-display">
+      <ul class="search_filtered">
+      </ul>
+    </div>
+    <div class="suggest-card distribute no-display">
+      <ul class="search_filtered">
+      </ul>
+    </div>
+  </div>
+
   </div>
   <!-- /New Search>
           
@@ -281,32 +272,32 @@ onkeyup="return search_changed(event, false, '/')" />
                     <li class="develop">
                       <ul>
                         <li><a href="/training/index.html"
-                          zh-TW-lang="訓練課程"
-                          zh-CN-lang="培训"
+                          zh-tw-lang="訓練課程"
+                          zh-cn-lang="培训"
                           ru-lang="Курсы"
                           ko-lang="교육"
                           ja-lang="トレーニング"
                           es-lang="Capacitación"               
                           >Training</a></li>
                         <li><a href="/guide/components/index.html"
-                          zh-TW-lang="API 指南"
-                          zh-CN-lang="API 指南"
+                          zh-tw-lang="API 指南"
+                          zh-cn-lang="API 指南"
                           ru-lang="Руководства по API"
                           ko-lang="API 가이드"
                           ja-lang="API ガイド"
                           es-lang="Guías de la API"               
                           >API Guides</a></li>
                         <li><a href="/reference/packages.html"
-                          zh-TW-lang="參考資源"
-                          zh-CN-lang="参考"
+                          zh-tw-lang="參考資源"
+                          zh-cn-lang="参考"
                           ru-lang="Справочник"
                           ko-lang="참조문서"
                           ja-lang="リファレンス"
                           es-lang="Referencia"               
                           >Reference</a></li>
                         <li><a href="/tools/index.html"
-                          zh-TW-lang="相關工具"
-                          zh-CN-lang="工具"
+                          zh-tw-lang="相關工具"
+                          zh-cn-lang="工具"
                           ru-lang="Инструменты"
                           ko-lang="도구"
                           ja-lang="ツール"
@@ -316,6 +307,7 @@ onkeyup="return search_changed(event, false, '/')" />
                         </li>
                         <li><a href="/google/index.html">Google Services</a>
                         </li>
+                        
                       </ul>
                     </li>
                     <li class="distribute last">
@@ -342,55 +334,59 @@ onkeyup="return search_changed(event, false, '/')" />
   </div>
     
     
-    
-
+  
     <!-- Secondary x-nav -->
     <div id="nav-x">
         <div class="wrap">
             <ul class="nav-x col-9 develop" style="width:100%">
-                <li><a href="/training/index.html" 
-                  zh-TW-lang="訓練課程"
-                  zh-CN-lang="培训"
+                <li class="training"><a href="/training/index.html"
+                  zh-tw-lang="訓練課程"
+                  zh-cn-lang="培训"
                   ru-lang="Курсы"
                   ko-lang="교육"
                   ja-lang="トレーニング"
                   es-lang="Capacitación"               
                   >Training</a></li>
-                <li><a href="/guide/components/index.html" 
-                  zh-TW-lang="API 指南"
-                  zh-CN-lang="API 指南"
+                <li class="guide"><a href="/guide/components/index.html"
+                  zh-tw-lang="API 指南"
+                  zh-cn-lang="API 指南"
                   ru-lang="Руководства по API"
                   ko-lang="API 가이드"
                   ja-lang="API ガイド"
                   es-lang="Guías de la API"               
                   >API Guides</a></li>
-                <li><a href="/reference/packages.html" 
-                  zh-TW-lang="參考資源"
-                  zh-CN-lang="参考"
+                <li class="reference"><a href="/reference/packages.html"
+                  zh-tw-lang="參考資源"
+                  zh-cn-lang="参考"
                   ru-lang="Справочник"
                   ko-lang="참조문서"
                   ja-lang="リファレンス"
                   es-lang="Referencia"               
                   >Reference</a></li>
-                <li><a href="/tools/index.html" 
-                  zh-TW-lang="相關工具"
-                  zh-CN-lang="工具"
+                <li class="tools"><a href="/tools/index.html"
+                  zh-tw-lang="相關工具"
+                  zh-cn-lang="工具"
                   ru-lang="Инструменты"
                   ko-lang="도구"
                   ja-lang="ツール"
                   es-lang="Herramientas"
                   >Tools</a></li>
-                <li><a href="/google/index.html" class="selected"
+                <li class="google"><a href="/google/index.html"
                   >Google Services</a>
                 </li>
+                
             </ul>
         </div>
         
     </div>
     <!-- /Sendondary x-nav -->
+  
+
+
+
 
   
-  
+
 
   
   <div class="wrap clearfix" id="body-content">
@@ -401,11 +397,40 @@ onkeyup="return search_changed(event, false, '/')" />
 
 
 <ul id="nav">
+
   <li class="nav-section">
     <div class="nav-section-header empty"><a href="/google/index.html">
-        <span class="en">Overview</span>
+          <span class="en">Overview</span>
       </a></div>
   </li>
+
+  <li class="nav-section">
+    <div class="nav-section-header empty"><a href="/google/play-services/games.html">
+          <span class="en">Games</span>
+      </a></div>
+  </li>
+  <li class="nav-section">
+    <div class="nav-section-header empty"><a href="/google/play-services/location.html">
+          <span class="en">Location</span>
+      </a></div>
+  </li>
+  <li class="nav-section">
+    <div class="nav-section-header empty"><a href="/google/play-services/plus.html">
+          <span class="en">Google+</span>
+                </a></div>
+  </li>
+  <li class="nav-section">
+    <div class="nav-section-header empty"><a href="/google/play-services/maps.html">
+          <span class="en">Google Maps</span>
+      </a></div>
+  </li>
+  <li class="nav-section">
+    <div class="nav-section-header empty"><a href="/google/play-services/auth.html">
+          <span class="en">Authorization</span>
+      </a></div>
+  </li>
+
+
 
   <li class="nav-section">
     <div class="nav-section-header"><a href="/google/play-services/index.html">
@@ -415,19 +440,6 @@ onkeyup="return search_changed(event, false, '/')" />
       <li><a href="/google/play-services/setup.html">
           <span class="en">Setup</span></a>
       </li>
-
-      <li><a href="/google/play-services/auth.html">
-          <span class="en">Authorization</span></a>
-      </li>
-
-      <li><a href="/google/play-services/plus.html">
-          <span class="en">Google+</span></a>
-      </li>
-
-      <li><a href="/google/play-services/maps.html">
-          <span class="en">Google Maps</span></a>
-      </li>
-
       <li id="gms-tree-list" class="nav-section">
         <div class="nav-section-header">
           <a href="/reference/gms-packages.html">
@@ -435,7 +447,6 @@ onkeyup="return search_changed(event, false, '/')" />
           </a>
         <div>
       </li>
-
     </ul>
   </li>
 
@@ -468,6 +479,9 @@ onkeyup="return search_changed(event, false, '/')" />
               <span class="en">Reference</span></a></li>
               </ul>
       </li>
+      <li><a href="/google/play/billing/billing_subscriptions.html">
+              <span class="en">Subscriptions</span></a>
+      </li>
       <li><a href="/google/play/billing/billing_best_practices.html">
               <span class="en">Security and Design</span></a>
       </li>
@@ -477,10 +491,57 @@ onkeyup="return search_changed(event, false, '/')" />
       <li><a href="/google/play/billing/billing_admin.html">
               <span class="en">Administering In-app Billing</span></a>
       </li>
+      <li><a href="/google/play/billing/gp-purchase-status-api.html">
+              <span class="en">Purchase Status API</span></a>
+      </li>
       <li><a href="/google/play/billing/versions.html">
               <span class="en">Version Notes</span></a>
       </li>
     </ul>
+  </li>
+
+
+
+  <li class="nav-section">
+      <div class="nav-section-header"><a href="/google/gcm/index.html">
+        <span class="en">Google Cloud Messaging</span></a>
+      </div>
+      <ul>
+        <li><a href="/google/gcm/gcm.html">
+            <span class="en">Overview</span></a>
+        </li>
+        <li><a href="/google/gcm/gs.html">
+            <span class="en">Getting Started</span></a>
+        </li>
+        <li><a href="/google/gcm/client.html">
+            <span class="en">Implementing GCM Client</span></a>
+        </li>
+        <li class="nav-section"><div class="nav-section-header"><a href="/google/gcm/server.html">
+              <span class="en">Implementing GCM Server</span></a></div>
+              <ul>
+              <li><a href="/google/gcm/ccs.html">
+              <span class="en">CCS (XMPP)</span></a></li>
+              <li><a href="/google/gcm/http.html">
+              <span class="en">HTTP</span></a></li>
+              </ul>
+        </li>
+        <li><a href="/google/gcm/notifications.html">
+              <span class="en">User Notifications</span></a>
+        </li>
+        <li><a href="/google/gcm/adv.html">
+            <span class="en">Advanced Topics</span></a>
+        </li>
+        <li><a href="/google/gcm/c2dm.html">
+            <span class="en">Migration</span></a>
+        </li>
+        <li id="gcm-tree-list" class="nav-section">
+          <div class="nav-section-header">
+            <a href="/reference/gcm-packages.html">
+              <span class="en">Reference</span>
+            </a>
+          <div>
+        </li>
+      </ul>
   </li>
 
   <li class="nav-section">
@@ -517,39 +578,6 @@ onkeyup="return search_changed(event, false, '/')" />
           </li>
         </ul>
       </li>
-    </ul>
-  </li>
-
-  <li class="nav-section">
-      <div class="nav-section-header"><a href="/google/gcm/index.html">
-        <span class="en">Google Cloud Messaging</span></a>
-      </div>
-      <ul>
-        <li><a href="/google/gcm/gs.html">
-            <span class="en">Getting Started</span></a>
-        </li>
-        <li><a href="/google/gcm/gcm.html">
-            <span class="en">Architectural Overview</span></a>
-        </li>
-        <li><a href="/google/gcm/demo.html">
-            <span class="en">Demo App Tutorial</span></a>
-        </li>
-        <li><a href="/google/gcm/adv.html">
-            <span class="en">Advanced Topics</span></a>
-        </li>
-        <li><a href="/google/gcm/c2dm.html">
-            <span class="en">Migration</span></a>
-        </li>
-        <li id="gcm-tree-list" class="nav-section">
-          <div class="nav-section-header">
-            <a href="/reference/gcm-packages.html">
-              <span class="en">Reference</span>
-            </a>
-          <div>
-        </li>
-      </ul>
-  </li>
-
 
   <li class="nav-section">
     <div class="nav-section-header"><a href="/google/backup/index.html">
@@ -561,6 +589,12 @@ onkeyup="return search_changed(event, false, '/')" />
       </li>
     </ul>
   </li>
+
+  </ul>
+
+</li>
+
+
 
 </ul>
 
@@ -579,7 +613,6 @@ onkeyup="return search_changed(event, false, '/')" />
        showGoogleRefTree();
     
       </script>
-
     </div> <!-- end side-nav -->
     <script>
       $(document).ready(function() {
@@ -724,7 +757,7 @@ Summary:
        try {
           // Retrieve a token for the given account and scope. It will always return either
           // a non-empty String or throw an exception.
-          final String token = <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html">GoogleAuthUtil</a></code>.<code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String)">getToken(Context, String, String)</a></code>(context, email, scope);
+          final String token = GoogleAuthUtil.getToken(context, email, scope);
           // Do work with token.
           ...
           if (server indicates token is invalid) {
@@ -822,14 +855,32 @@ Summary:
     <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">String</td>
         <td class="jd-linkcol"><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#GOOGLE_ACCOUNT_TYPE">GOOGLE_ACCOUNT_TYPE</a></td>
-        <td class="jd-descrcol" width="100%"></td>
+        <td class="jd-descrcol" width="100%">Google Account type string.</td>
     </tr>
     
     
     <tr class=" api apilevel-" >
         <td class="jd-typecol">String</td>
-        <td class="jd-linkcol"><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#KEY_HANDLE_NOTIFICATION">KEY_HANDLE_NOTIFICATION</a></td>
-        <td class="jd-descrcol" width="100%"></td>
+        <td class="jd-linkcol"><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#KEY_REQUEST_ACTIONS">KEY_REQUEST_ACTIONS</a></td>
+        <td class="jd-descrcol" width="100%">Bundle key for specifying which user's app activity (moment) types can
+ be written to Google.</td>
+    </tr>
+    
+    
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">String</td>
+        <td class="jd-linkcol"><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#KEY_REQUEST_VISIBLE_ACTIVITIES">KEY_REQUEST_VISIBLE_ACTIVITIES</a></td>
+        <td class="jd-descrcol" width="100%">See <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#KEY_REQUEST_ACTIONS">KEY_REQUEST_ACTIONS</a></code>
+</td>
+    </tr>
+    
+    
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">String</td>
+        <td class="jd-linkcol"><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#KEY_SUPPRESS_PROGRESS_SCREEN">KEY_SUPPRESS_PROGRESS_SCREEN</a></td>
+        <td class="jd-descrcol" width="100%">Adding KEY_SUPPRESS_PROGRESS will suppress the progress screen shown
+ when getting a token when added as a boolean <code>true</code> option while
+ calling <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String, android.os.Bundle)">getToken(Context, String, String, Bundle)</a></code>.</td>
     </tr>
     
     
@@ -869,8 +920,7 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String)">getToken</a></span>(Context context, String accountName, String scope)</nobr>
         
-        <div class="jd-descrdiv">Authenticates the user and returns a valid Google authentication token,
- or throws an exception if there was an error getting a token.</div>
+        <div class="jd-descrdiv">See <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String, android.os.Bundle)">getToken(Context, String, String, Bundle)</a></code>.</div>
   
   </td></tr>
 
@@ -888,8 +938,8 @@ Summary:
         <td class="jd-linkcol" width="100%"><nobr>
         <span class="sympad"><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String, android.os.Bundle)">getToken</a></span>(Context context, String accountName, String scope, Bundle extras)</nobr>
         
-        <div class="jd-descrdiv">Authenticates the user and returns a valid Google authentication token, or throws an
- <code><a href="/reference/java/lang/Exception.html">Exception</a></code> if there was an error while getting the token.</div>
+        <div class="jd-descrdiv">Gets a token to be consumed by some specified services on behalf of a
+ specified user account.</div>
   
   </td></tr>
 
@@ -1234,7 +1284,8 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Google Account type string. Used for various calls to <code><a href="/reference/android/accounts/AccountManager.html">AccountManager</a></code>.
+</p></div>
 
     
         <div class="jd-tagdata">
@@ -1251,7 +1302,7 @@ From class
 
 
 
-<A NAME="KEY_HANDLE_NOTIFICATION"></A>
+<A NAME="KEY_REQUEST_ACTIONS"></A>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1261,7 +1312,7 @@ From class
         final 
         String
       </span>
-        KEY_HANDLE_NOTIFICATION
+        KEY_REQUEST_ACTIONS
     </h4>
       <div class="api-level">
         
@@ -1271,14 +1322,110 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Bundle key for specifying which user's app activity (moment) types can
+ be written to Google. The list of activity types are represented as a
+ space-separated string passed in the extras Bundle when calling <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String, android.os.Bundle)">getToken(Context, String, String, Bundle)</a></code>.
+
+ <p>
+ This bundle key should be included in the extras Bundle when calling
+ <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String, android.os.Bundle)">getToken(Context, String, String, Bundle)</a></code> and
+ should only be used when requesting the <code><a href="/reference/com/google/android/gms/common/Scopes.html#PLUS_LOGIN">PLUS_LOGIN</a></code> OAuth 2.0 scope.
+
+ See <a href="https://developers.google.com/+/api/moment-types">Types of
+ moments</a> for the full list of valid activity types. Example usage:
+ <pre>
+     Bundle bundle = new Bundle();
+     bundle.putString(GoogleAuthUtil.KEY_REQUEST_ACTIONS,
+              "http://schemas.google.com/AddActivity http://schemas.google.com/BuyActivity");
+     String token = GoogleAuthUtil.getToken(context, accountName, Scopes.PLUS_LOGIN, bundle);
+ </pre>
+</p></div>
 
     
         <div class="jd-tagdata">
         <span class="jd-tagtitle">Constant Value: </span>
         <span>
             
-                "handle_notification"
+                "request_visible_actions"
+            
+        </span>
+        </div>
+    
+    </div>
+</div>
+
+
+
+<A NAME="KEY_REQUEST_VISIBLE_ACTIVITIES"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+        static 
+        final 
+        String
+      </span>
+        KEY_REQUEST_VISIBLE_ACTIVITIES
+    </h4>
+      <div class="api-level">
+        
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>See <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#KEY_REQUEST_ACTIONS">KEY_REQUEST_ACTIONS</a></code>
+</p></div>
+
+    
+        <div class="jd-tagdata">
+        <span class="jd-tagtitle">Constant Value: </span>
+        <span>
+            
+                "request_visible_actions"
+            
+        </span>
+        </div>
+    
+    </div>
+</div>
+
+
+
+<A NAME="KEY_SUPPRESS_PROGRESS_SCREEN"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+        static 
+        final 
+        String
+      </span>
+        KEY_SUPPRESS_PROGRESS_SCREEN
+    </h4>
+      <div class="api-level">
+        
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Adding KEY_SUPPRESS_PROGRESS will suppress the progress screen shown
+ when getting a token when added as a boolean <code>true</code> option while
+ calling <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String, android.os.Bundle)">getToken(Context, String, String, Bundle)</a></code>. This is
+ useful for apps that provide their own splash screens on initialization.
+</p></div>
+
+    
+        <div class="jd-tagdata">
+        <span class="jd-tagtitle">Constant Value: </span>
+        <span>
+            
+                "suppressProgressScreen"
             
         </span>
         </div>
@@ -1331,121 +1478,22 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Authenticates the user and returns a valid Google authentication token,
- or throws an exception if there was an error getting a token.
- <p>
- The exception thrown depends upon the underlying error and support for
- recovery. <code><a href="/reference/java/io/IOException.html">IOException</a></code>s will be thrown if the underlying error
- might be solved by some intelligent retry strategy. Alternatively,
- <code><a href="/reference/com/google/android/gms/auth/GoogleAuthException.html">GoogleAuthException</a></code>s represent a broad class of
- <code><a href="/reference/java/lang/Exception.html">Exception</a></code>s that cannot be recovered from programmatically. Some
- may be fatal errors stemming from implementation errors while others may
- require user intervention. <code><a href="/reference/com/google/android/gms/auth/UserRecoverableAuthException.html">UserRecoverableAuthException</a></code>s are
- GoogleAuthExceptions that provide <code><a href="/reference/android/content/Intent.html">Intent</a></code>s which can be used to
- initiate any user intervention required to fix the underlying error. For
- example, a UserRecoverableAuthExceptions intent might lead to a request
- for a user's consent or present the user with a device policy manager
- download screen. <code><a href="/reference/com/google/android/gms/auth/GooglePlayServicesAvailabilityException.html">GooglePlayServicesAvailabilityException</a></code>s are
- UserRecoverableAuthExceptions along with a connection status code which
- allows clients to create a localized <code><a href="/reference/android/app/Dialog.html">Dialog</a></code> using
- <code><a href="/reference/com/google/android/gms/common/GooglePlayServicesUtil.html#getErrorDialog(int, android.app.Activity, int)">getErrorDialog(int, android.app.Activity, int)</a></code>.
- Finally, this method is blocking and shouldn't be called in the main
- event thread. If so an <code><a href="/reference/java/lang/IllegalStateException.html">IllegalStateException</a></code> will be thrown.
- <p>
- Which exceptions should be handled and how depends on the context of the
- code. For example in the case of an <code><a href="/reference/android/app/Activity.html">Activity</a></code> where
- the user is actively engaged:
-
- <pre>
- String token;
- try {
-     token = GoogleAuthUtil.getToken(context, accountName, scope);
- } catch (GooglePlayServicesAvailabilityException playEx) {
-     Dialog dialog = GooglePlayServicesUtil.getErrorDialog(
-         playEx.getConnectionStatusCode(),
-         Activity.this,
-         AUTH_REQUEST_CODE);
-     // Use the dialog to present to the user.
- } catch (UserRecoverableAutException recoverableException) {
-     Intent recoveryIntent = recoverableException.getIntent();
-     // Use the intent in a custom dialog or just startActivityForResult.
- } catch (GoogleAuthException authEx) {
-     // This is likely unrecoverable.
-     Log.e(TAG, "Unrecoverable authentication exception: " + authEx.getMesssage(), authEx);
- } catch (IOException ioEx) {
-     Log.i(TAG, "transient error encountered: " + ioEx.getMessage());
-     doExponentialBackoff();
- }
- </pre>
-
- On the other hand, explicitly handling a
- <code><a href="/reference/com/google/android/gms/auth/GooglePlayServicesAvailabilityException.html">GooglePlayServicesAvailabilityException</a></code> in the absence of a UI
- thread may not be worthwhile.  Instead a <code><a href="/reference/android/app/Notification.html">Notification</a></code>
- may be preferable.
-
- <pre>
- String token;
- try {
-     token = GoogleAuthUtil.getToken(context, accountName, scope);
- } catch (UserRecoverableAuthException recoverableException) {
-     Intent recoveryIntent = recoverableException.getIntent();
-     // Use the intent to create a Notification.
- } catch (GoogleAuthException authEx) {
-     // This is likely unrecoverable.
-     Log.e(TAG, "Unrecoverable authentication exception: " + authEx.getMessage(), authEx);
- } catch (IOException ioEx) {
-     Log.i(TAG, "transient error encountered: " + ioEx.getMessage());
-     doExponentialBackoff();
- }
- </pre></p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>context</td>
-          <td>Context associated with the desired token.</td>
-        </tr>
-        <tr>
-          <th>accountName</td>
-          <td>String representing the authenticating user account.</td>
-        </tr>
-        <tr>
-          <th>scope</td>
-          <td>String representing the authentication scope.</td>
-        </tr>
-      </table>
-  </div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Returns</h5>
-      <ul class="nolist"><li>String containing a valid token.</li></ul>
-  </div>
+  <div class="jd-tagdata jd-tagdescr"><p>See <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#getToken(android.content.Context, java.lang.String, java.lang.String, android.os.Bundle)">getToken(Context, String, String, Bundle)</a></code>.
+</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Throws</h5>
       <table class="jd-tagtable">  
         <tr>
-            <th><a href="/reference/com/google/android/gms/auth/GooglePlayServicesAvailabilityException.html">GooglePlayServicesAvailabilityException</a></td>
-            <td>containing the appropriate
-         connection status error code.</td>
+            <th>IOException</td>
+            <td></td>
         </tr>  
         <tr>
             <th><a href="/reference/com/google/android/gms/auth/UserRecoverableAuthException.html">UserRecoverableAuthException</a></td>
-            <td>wrapping an Intent for initiating
-         user intervention. The wrapped intent must be called with <code><a href="/reference/android/app/Activity.html#startActivityForResult(android.content.Intent, int)">startActivityForResult(Intent, int)</a></code>.</td>
+            <td></td>
         </tr>  
         <tr>
             <th><a href="/reference/com/google/android/gms/auth/GoogleAuthException.html">GoogleAuthException</a></td>
-            <td>signaling a potentially unrecoverable
-         authentication error.</td>
-        </tr>  
-        <tr>
-            <th>IOException</td>
-            <td>signaling a potentially transient error.</td>
-        </tr>  
-        <tr>
-            <th>IllegalArgumentException</td>
-            <td>if the method is invoked in the main
-         event thread.
-</td>
+            <td></td>
         </tr>
       </table>
   </div>
@@ -1477,33 +1525,31 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Authenticates the user and returns a valid Google authentication token, or throws an
- <code><a href="/reference/java/lang/Exception.html">Exception</a></code> if there was an error while getting the token.
+  <div class="jd-tagdata jd-tagdescr"><p>Gets a token to be consumed by some specified services on behalf of a
+ specified user account. How the token is consumed depends
+ on the scope string provided. Note that this method requires substantial
+ network IO and thus should be run off the UI thread.  In the event of an
+ error, one of several <code><a href="/reference/java/lang/Exception.html">Exception</a></code>s will be thrown.
  <p>
- The exception thrown depends upon the underlying error and support for
- recovery. <code><a href="/reference/java/io/IOException.html">IOException</a></code>s will be thrown if the underlying error
- might be solved by some intelligent retry strategy. Alternatively,
- <code><a href="/reference/com/google/android/gms/auth/GoogleAuthException.html">GoogleAuthException</a></code>s represent a broad class of
- <code><a href="/reference/java/lang/Exception.html">Exception</a></code>s that cannot be recovered from programmatically. Some
- may be fatal errors stemming from implementation errors while others may
- require user intervention. <code><a href="/reference/com/google/android/gms/auth/UserRecoverableAuthException.html">UserRecoverableAuthException</a></code>s are
- GoogleAuthExceptions that provide <code><a href="/reference/android/content/Intent.html">Intent</a></code>s which can be used to
- initiate any user intervention required to fix the underlying error. For
- example, a UserRecoverableAuthExceptions intent might lead to a request
- for a user's consent or present the user with a device policy manager
- download screen. <code><a href="/reference/com/google/android/gms/auth/GooglePlayServicesAvailabilityException.html">GooglePlayServicesAvailabilityException</a></code>s are
- UserRecoverableAuthExceptions along with a connection status code which
- allows clients to create a localized <code><a href="/reference/android/app/Dialog.html">Dialog</a></code> using
- <code><a href="/reference/com/google/android/gms/common/GooglePlayServicesUtil.html#getErrorDialog(int, android.app.Activity, int)">getErrorDialog(int, android.app.Activity, int)</a></code>.
- Finally, this method is blocking and shouldn't be called in the main
- event thread. If so an <code><a href="/reference/java/lang/IllegalStateException.html">IllegalStateException</a></code> will be thrown.
+ In the case of a transient (typically network related) error a
+ <code><a href="/reference/java/io/IOException.html">IOException</a></code> will be thrown. It is left to clients to implement
+ a backoff/abandonment strategy appropriate to their latency
+ requirements. If user intervention is required to provide consent, enter
+ a password, etc, a <code><a href="/reference/com/google/android/gms/auth/UserRecoverableAuthException.html">UserRecoverableAuthException</a></code> will be thrown.
+ To initiate the user recovery workflow, clients must start the
+ <code><a href="/reference/android/content/Intent.html">Intent</a></code> returned by
+ <code><a href="/reference/com/google/android/gms/auth/UserRecoverableAuthException.html#getIntent()">getIntent()</a></code> for result. Upon
+ successfully returning a client should invoke this method again to get
+ a token. In the cases of errors that are neither transient nor
+ recoverable by the the user, a <code><a href="/reference/com/google/android/gms/auth/GoogleAuthException.html">GoogleAuthException</a></code> will be
+ thrown.  These errors will typically result from client errors (e.g.
+ providing an invalid scope).
  <p>
- Which exceptions should be handled and how depends on the context of the
- code. For example in the case of an <code><a href="/reference/android/app/Activity.html">Activity</a></code> where
- the user is actively engaged:
-
+ By way of example, client code might have a block of code executing in a
+ locally declared implementation of <code><a href="/reference/java/lang/Thread.html">Thread</a></code> or
+ <code><a href="/reference/android/os/AsyncTask.html">AsyncTask</a></code> as follows:
  <pre>
- String token;
+ String token = null;
  try {
      token = GoogleAuthUtil.getToken(context, accountName, scope, bundle);
  } catch (GooglePlayServicesAvailabilityException playEx) {
@@ -1515,35 +1561,26 @@ From class
  } catch (UserRecoverableAutException recoverableException) {
      Intent recoveryIntent = recoverableException.getIntent();
      // Use the intent in a custom dialog or just startActivityForResult.
+     Activity.this.startActivityForResult(recoveryIntent, REQUEST_CODE);
  } catch (GoogleAuthException authEx) {
      // This is likely unrecoverable.
      Log.e(TAG, "Unrecoverable authentication exception: " + authEx.getMesssage(), authEx);
+     return;
  } catch (IOException ioEx) {
      Log.i(TAG, "transient error encountered: " + ioEx.getMessage());
      doExponentialBackoff();
+     return;
+ }
+ if (token != null) {
+     makeNetworkApiCallwithToken(token);
  }
  </pre>
-
- On the other hand, explicitly handling a
- <code><a href="/reference/com/google/android/gms/auth/GooglePlayServicesAvailabilityException.html">GooglePlayServicesAvailabilityException</a></code> in the absence of a UI
- thread may not be worthwhile.  Instead a <code><a href="/reference/android/app/Notification.html">Notification</a></code>
- may be preferable.
-
- <pre>
- String token;
- try {
-     token = GoogleAuthUtil.getToken(context, accountName, scope, bundle);
- } catch (UserRecoverableAutException recoverableException) {
-     Intent recoveryIntent = recoverableException.getIntent();
-     // Use the intent to create a Notification.
- } catch (GoogleAuthException authEx) {
-     // This is likely unrecoverable.
-     Log.e(TAG, "Unrecoverable authentication exception: " + authEx.getMesssage(), authEx);
- } catch (IOException ioEx) {
-     Log.i(TAG, "transient error encountered: " + ioEx.getMessage());
-     doExponentialBackoff();
- }
- </pre></p></div>
+ <p>
+ Those clients that have their own splash screens may wish to suppress
+ the progress screen provided by Google Play services.  The
+ "Signing in..." progress screen provided by Google Play services by
+ including setting <code><a href="/reference/com/google/android/gms/auth/GoogleAuthUtil.html#KEY_SUPPRESS_PROGRESS_SCREEN">KEY_SUPPRESS_PROGRESS_SCREEN</a></code> to true
+ in the supplied options <code><a href="/reference/android/os/Bundle.html">Bundle</a></code>.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
       <table class="jd-tagtable">
@@ -1557,7 +1594,9 @@ From class
         </tr>
         <tr>
           <th>scope</td>
-          <td>String representing the authentication scope.</td>
+          <td>String representing the authentication scope.  To specify
+        multiple scopes, separate them with a space (for example,
+        "oauth2:scope1 scope2 scope3").</td>
         </tr>
         <tr>
           <th>extras</td>
@@ -1670,7 +1709,8 @@ From class
         </tr>
         <tr>
           <th>scope</td>
-          <td>String representing the authentication scope.</td>
+          <td>String representing the authentication scope.  To specify multiple scopes,
+        separate them with a space (for example, "oauth2:scope1 scope2 scope3").</td>
         </tr>
         <tr>
           <th>extras</td>
@@ -1780,7 +1820,8 @@ From class
         </tr>
         <tr>
           <th>scope</td>
-          <td>String representing the authentication scope.</td>
+          <td>String representing the authentication scope.  To specify multiple scopes,
+        separate them with a space (for example, "oauth2:scope1 scope2 scope3").</td>
         </tr>
         <tr>
           <th>extras</td>
@@ -1898,7 +1939,8 @@ From class
         </tr>
         <tr>
           <th>scope</td>
-          <td>String representing the authentication scope.</td>
+          <td>String representing the authentication scope.  To specify multiple scopes,
+        separate them with a space (for example, "oauth2:scope1 scope2 scope3").</td>
         </tr>
         <tr>
           <th>extras</td>
@@ -2008,7 +2050,6 @@ From class
 <!-- ========= END OF CLASS DATA ========= -->
 <A NAME="navbar_top"></A>
 
-
 <div id="footer" class="wrap" >
         
 
@@ -2037,7 +2078,6 @@ From class
   </div>
 
 </div> <!-- end footer -->
-
 </div> <!-- jd-content -->
 
 </div><!-- end doc-content -->

@@ -16,8 +16,6 @@
 
 package android.renderscript;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
 /**
@@ -33,7 +31,10 @@ public final class ScriptIntrinsicConvolve3x3 extends ScriptIntrinsic {
     }
 
     /**
-     * Supported elements types are {@link Element#U8_4}
+     * Supported elements types are {@link Element#U8}, {@link
+     * Element#U8_2}, {@link Element#U8_3}, {@link Element#U8_4},
+     * {@link Element#F32}, {@link Element#F32_2}, {@link
+     * Element#F32_3}, and {@link Element#F32_4}
      *
      * The default coefficients are.
      *
@@ -43,14 +44,21 @@ public final class ScriptIntrinsicConvolve3x3 extends ScriptIntrinsic {
      * <p> [ 0,  0,  0 ]
      * </code>
      *
-     * @param rs The Renderscript context
+     * @param rs The RenderScript context
      * @param e Element type for intputs and outputs
      *
      * @return ScriptIntrinsicConvolve3x3
      */
     public static ScriptIntrinsicConvolve3x3 create(RenderScript rs, Element e) {
         float f[] = { 0, 0, 0, 0, 1, 0, 0, 0, 0};
-        if (e != Element.U8_4(rs)) {
+        if (!e.isCompatible(Element.U8(rs)) &&
+            !e.isCompatible(Element.U8_2(rs)) &&
+            !e.isCompatible(Element.U8_3(rs)) &&
+            !e.isCompatible(Element.U8_4(rs)) &&
+            !e.isCompatible(Element.F32(rs)) &&
+            !e.isCompatible(Element.F32_2(rs)) &&
+            !e.isCompatible(Element.F32_3(rs)) &&
+            !e.isCompatible(Element.F32_4(rs))) {
             throw new RSIllegalArgumentException("Unsuported element type.");
         }
         int id = rs.nScriptIntrinsicCreate(1, e.getID(rs));

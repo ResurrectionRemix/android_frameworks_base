@@ -24,7 +24,9 @@ import android.graphics.Insets;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.LogPrinter;
 import android.util.Pair;
+import android.util.Printer;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,6 +126,17 @@ import static java.lang.Math.min;
  * GridLayout's algorithms favour rows and columns that are closer to its <em>right</em>
  * and <em>bottom</em> edges.
  *
+ * <h4>Interpretation of GONE</h4>
+ *
+ * For layout purposes, GridLayout treats views whose visibility status is
+ * {@link View#GONE GONE}, as having zero width and height. This is subtly different from
+ * the policy of ignoring views that are marked as GONE outright. If, for example, a gone-marked
+ * view was alone in a column, that column would itself collapse to zero width if and only if
+ * no gravity was defined on the view. If gravity was defined, then the gone-marked
+ * view has no effect on the layout and the container should be laid out as if the view
+ * had never been added to it.
+ * These statements apply equally to rows as well as columns, and to groups of rows or columns.
+ *
  * <h5>Limitations</h5>
  *
  * GridLayout does not provide support for the principle of <em>weight</em>, as defined in
@@ -208,10 +221,15 @@ public class GridLayout extends ViewGroup {
 
     // Misc constants
 
-    static final String TAG = GridLayout.class.getName();
     static final int MAX_SIZE = 100000;
     static final int DEFAULT_CONTAINER_MARGIN = 0;
     static final int UNINITIALIZED_HASH = 0;
+    static final Printer LOG_PRINTER = new LogPrinter(Log.DEBUG, GridLayout.class.getName());
+    static final Printer NO_PRINTER = new Printer() {
+        @Override
+        public void println(String x) {
+        }
+    };
 
     // Defaults
 
@@ -233,13 +251,14 @@ public class GridLayout extends ViewGroup {
 
     // Instance variables
 
-    final Axis horizontalAxis = new Axis(true);
-    final Axis verticalAxis = new Axis(false);
-    int orientation = DEFAULT_ORIENTATION;
-    boolean useDefaultMargins = DEFAULT_USE_DEFAULT_MARGINS;
-    int alignmentMode = DEFAULT_ALIGNMENT_MODE;
-    int defaultGap;
-    int lastLayoutParamsHashCode = UNINITIALIZED_HASH;
+    final Axis mHorizontalAxis = new Axis(true);
+    final Axis mVerticalAxis = new Axis(false);
+    int mOrientation = DEFAULT_ORIENTATION;
+    boolean mUseDefaultMargins = DEFAULT_USE_DEFAULT_MARGINS;
+    int mAlignmentMode = DEFAULT_ALIGNMENT_MODE;
+    int mDefaultGap;
+    int mLastLayoutParamsHashCode = UNINITIALIZED_HASH;
+    Printer mPrinter = LOG_PRINTER;
 
     // Constructors
 
@@ -248,7 +267,7 @@ public class GridLayout extends ViewGroup {
      */
     public GridLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        defaultGap = context.getResources().getDimensionPixelOffset(R.dimen.default_gap);
+        mDefaultGap = context.getResources().getDimensionPixelOffset(R.dimen.default_gap);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GridLayout);
         try {
             setRowCount(a.getInt(ROW_COUNT, DEFAULT_COUNT));
@@ -290,7 +309,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_orientation
      */
     public int getOrientation() {
-        return orientation;
+        return mOrientation;
     }
 
     /**
@@ -330,8 +349,8 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_orientation
      */
     public void setOrientation(int orientation) {
-        if (this.orientation != orientation) {
-            this.orientation = orientation;
+        if (this.mOrientation != orientation) {
+            this.mOrientation = orientation;
             invalidateStructure();
             requestLayout();
         }
@@ -350,7 +369,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_rowCount
      */
     public int getRowCount() {
-        return verticalAxis.getCount();
+        return mVerticalAxis.getCount();
     }
 
     /**
@@ -365,7 +384,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_rowCount
      */
     public void setRowCount(int rowCount) {
-        verticalAxis.setCount(rowCount);
+        mVerticalAxis.setCount(rowCount);
         invalidateStructure();
         requestLayout();
     }
@@ -383,7 +402,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_columnCount
      */
     public int getColumnCount() {
-        return horizontalAxis.getCount();
+        return mHorizontalAxis.getCount();
     }
 
     /**
@@ -398,7 +417,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_columnCount
      */
     public void setColumnCount(int columnCount) {
-        horizontalAxis.setCount(columnCount);
+        mHorizontalAxis.setCount(columnCount);
         invalidateStructure();
         requestLayout();
     }
@@ -414,7 +433,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_useDefaultMargins
      */
     public boolean getUseDefaultMargins() {
-        return useDefaultMargins;
+        return mUseDefaultMargins;
     }
 
     /**
@@ -444,7 +463,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_useDefaultMargins
      */
     public void setUseDefaultMargins(boolean useDefaultMargins) {
-        this.useDefaultMargins = useDefaultMargins;
+        this.mUseDefaultMargins = useDefaultMargins;
         requestLayout();
     }
 
@@ -461,7 +480,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_alignmentMode
      */
     public int getAlignmentMode() {
-        return alignmentMode;
+        return mAlignmentMode;
     }
 
     /**
@@ -480,7 +499,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_alignmentMode
      */
     public void setAlignmentMode(int alignmentMode) {
-        this.alignmentMode = alignmentMode;
+        this.mAlignmentMode = alignmentMode;
         requestLayout();
     }
 
@@ -495,7 +514,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_rowOrderPreserved
      */
     public boolean isRowOrderPreserved() {
-        return verticalAxis.isOrderPreserved();
+        return mVerticalAxis.isOrderPreserved();
     }
 
     /**
@@ -515,7 +534,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_rowOrderPreserved
      */
     public void setRowOrderPreserved(boolean rowOrderPreserved) {
-        verticalAxis.setOrderPreserved(rowOrderPreserved);
+        mVerticalAxis.setOrderPreserved(rowOrderPreserved);
         invalidateStructure();
         requestLayout();
     }
@@ -531,7 +550,7 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_columnOrderPreserved
      */
     public boolean isColumnOrderPreserved() {
-        return horizontalAxis.isOrderPreserved();
+        return mHorizontalAxis.isOrderPreserved();
     }
 
     /**
@@ -551,9 +570,36 @@ public class GridLayout extends ViewGroup {
      * @attr ref android.R.styleable#GridLayout_columnOrderPreserved
      */
     public void setColumnOrderPreserved(boolean columnOrderPreserved) {
-        horizontalAxis.setOrderPreserved(columnOrderPreserved);
+        mHorizontalAxis.setOrderPreserved(columnOrderPreserved);
         invalidateStructure();
         requestLayout();
+    }
+
+    /**
+     * Return the printer that will log diagnostics from this layout.
+     *
+     * @see #setPrinter(android.util.Printer)
+     *
+     * @return the printer associated with this view
+     *
+     * @hide
+     */
+    public Printer getPrinter() {
+        return mPrinter;
+    }
+
+    /**
+     * Set the printer that will log diagnostics from this layout.
+     * The default value is created by {@link android.util.LogPrinter}.
+     *
+     * @param printer the printer associated with this layout
+     *
+     * @see #getPrinter()
+     *
+     * @hide
+     */
+    public void setPrinter(Printer printer) {
+        this.mPrinter = (printer == null) ? NO_PRINTER : printer;
     }
 
     // Static utility methods
@@ -601,19 +647,19 @@ public class GridLayout extends ViewGroup {
         if (c.getClass() == Space.class) {
             return 0;
         }
-        return defaultGap / 2;
+        return mDefaultGap / 2;
     }
 
     private int getDefaultMargin(View c, boolean isAtEdge, boolean horizontal, boolean leading) {
-        return isAtEdge ? DEFAULT_CONTAINER_MARGIN : getDefaultMargin(c, horizontal, leading);
+        return /*isAtEdge ? DEFAULT_CONTAINER_MARGIN :*/ getDefaultMargin(c, horizontal, leading);
     }
 
     private int getDefaultMargin(View c, LayoutParams p, boolean horizontal, boolean leading) {
-        if (!useDefaultMargins) {
+        if (!mUseDefaultMargins) {
             return 0;
         }
         Spec spec = horizontal ? p.columnSpec : p.rowSpec;
-        Axis axis = horizontal ? horizontalAxis : verticalAxis;
+        Axis axis = horizontal ? mHorizontalAxis : mVerticalAxis;
         Interval span = spec.span;
         boolean leading1 = (horizontal && isLayoutRtl()) ? !leading : leading;
         boolean isAtEdge = leading1 ? (span.min == 0) : (span.max == axis.getCount());
@@ -630,10 +676,10 @@ public class GridLayout extends ViewGroup {
     }
 
     private int getMargin(View view, boolean horizontal, boolean leading) {
-        if (alignmentMode == ALIGN_MARGINS) {
+        if (mAlignmentMode == ALIGN_MARGINS) {
             return getMargin1(view, horizontal, leading);
         } else {
-            Axis axis = horizontal ? horizontalAxis : verticalAxis;
+            Axis axis = horizontal ? mHorizontalAxis : mVerticalAxis;
             int[] margins = leading ? axis.getLeadingMargins() : axis.getTrailingMargins();
             LayoutParams lp = getLayoutParams(view);
             Spec spec = horizontal ? lp.columnSpec : lp.rowSpec;
@@ -680,8 +726,8 @@ public class GridLayout extends ViewGroup {
 
     // install default indices for cells that don't define them
     private void validateLayoutParams() {
-        final boolean horizontal = (orientation == HORIZONTAL);
-        final Axis axis = horizontal ? horizontalAxis : verticalAxis;
+        final boolean horizontal = (mOrientation == HORIZONTAL);
+        final Axis axis = horizontal ? mHorizontalAxis : mVerticalAxis;
         final int count = (axis.definedCount != UNDEFINED) ? axis.definedCount : 0;
 
         int major = 0;
@@ -737,9 +783,9 @@ public class GridLayout extends ViewGroup {
     }
 
     private void invalidateStructure() {
-        lastLayoutParamsHashCode = UNINITIALIZED_HASH;
-        horizontalAxis.invalidateStructure();
-        verticalAxis.invalidateStructure();
+        mLastLayoutParamsHashCode = UNINITIALIZED_HASH;
+        mHorizontalAxis.invalidateStructure();
+        mVerticalAxis.invalidateStructure();
         // This can end up being done twice. Better twice than not at all.
         invalidateValues();
     }
@@ -747,9 +793,9 @@ public class GridLayout extends ViewGroup {
     private void invalidateValues() {
         // Need null check because requestLayout() is called in View's initializer,
         // before we are set up.
-        if (horizontalAxis != null && verticalAxis != null) {
-            horizontalAxis.invalidateValues();
-            verticalAxis.invalidateValues();
+        if (mHorizontalAxis != null && mVerticalAxis != null) {
+            mHorizontalAxis.invalidateValues();
+            mVerticalAxis.invalidateValues();
         }
     }
 
@@ -780,7 +826,7 @@ public class GridLayout extends ViewGroup {
         if (span.min != UNDEFINED && span.min < 0) {
             handleInvalidParams(groupName + " indices must be positive");
         }
-        Axis axis = horizontal ? horizontalAxis : verticalAxis;
+        Axis axis = horizontal ? mHorizontalAxis : mVerticalAxis;
         int count = axis.definedCount;
         if (count != UNDEFINED) {
             if (span.max > count) {
@@ -824,13 +870,11 @@ public class GridLayout extends ViewGroup {
     // Draw grid
 
     private void drawLine(Canvas graphics, int x1, int y1, int x2, int y2, Paint paint) {
-        int dx = getPaddingLeft();
-        int dy = getPaddingTop();
         if (isLayoutRtl()) {
             int width = getWidth();
-            graphics.drawLine(width - dx - x1, dy + y1, width - dx - x2, dy + y2, paint);
+            graphics.drawLine(width - x1, y1, width - x2, y2, paint);
         } else {
-            graphics.drawLine(dx + x1, dy + y1, dx + x2, dy + y2, paint);
+            graphics.drawLine(x1, y1, x2, y2, paint);
         }
     }
 
@@ -838,18 +882,17 @@ public class GridLayout extends ViewGroup {
      * @hide
      */
     @Override
-    protected void onDebugDrawMargins(Canvas canvas) {
+    protected void onDebugDrawMargins(Canvas canvas, Paint paint) {
         // Apply defaults, so as to remove UNDEFINED values
         LayoutParams lp = new LayoutParams();
         for (int i = 0; i < getChildCount(); i++) {
             View c = getChildAt(i);
-            Insets insets = getLayoutMode() == OPTICAL_BOUNDS ? c.getOpticalInsets() : Insets.NONE;
             lp.setMargins(
-                    getMargin1(c, true, true) - insets.left,
-                    getMargin1(c, false, true) - insets.top,
-                    getMargin1(c, true, false) - insets.right,
-                    getMargin1(c, false, false) - insets.bottom);
-            lp.onDebugDraw(c, canvas);
+                    getMargin1(c, true, true),
+                    getMargin1(c, false, true),
+                    getMargin1(c, true, false),
+                    getMargin1(c, false, false));
+            lp.onDebugDraw(c, canvas, paint);
         }
     }
 
@@ -858,26 +901,30 @@ public class GridLayout extends ViewGroup {
      */
     @Override
     protected void onDebugDraw(Canvas canvas) {
-        int height = getHeight() - getPaddingTop() - getPaddingBottom();
-        int width = getWidth() - getPaddingLeft() - getPaddingRight();
-
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.argb(50, 255, 255, 255));
 
-        int[] xs = horizontalAxis.locations;
+        Insets insets = getOpticalInsets();
+
+        int top    =               getPaddingTop()    + insets.top;
+        int left   =               getPaddingLeft()   + insets.left;
+        int right  = getWidth()  - getPaddingRight()  - insets.right;
+        int bottom = getHeight() - getPaddingBottom() - insets.bottom;
+
+        int[] xs = mHorizontalAxis.locations;
         if (xs != null) {
             for (int i = 0, length = xs.length; i < length; i++) {
-                int x = xs[i];
-                drawLine(canvas, x, 0, x, height - 1, paint);
+                int x = left + xs[i];
+                drawLine(canvas, x, top, x, bottom, paint);
             }
         }
 
-        int[] ys = verticalAxis.locations;
+        int[] ys = mVerticalAxis.locations;
         if (ys != null) {
             for (int i = 0, length = ys.length; i < length; i++) {
-                int y = ys[i];
-                drawLine(canvas, 0, y, width - 1, y, paint);
+                int y = top + ys[i];
+                drawLine(canvas, left, y, right, y, paint);
             }
         }
 
@@ -914,7 +961,7 @@ public class GridLayout extends ViewGroup {
     protected void onChildVisibilityChanged(View child, int oldVisibility, int newVisibility) {
         super.onChildVisibilityChanged(child, oldVisibility, newVisibility);
         if (oldVisibility == GONE || newVisibility == GONE) {
-            invalidateStructure();
+        invalidateStructure();
         }
     }
 
@@ -930,12 +977,12 @@ public class GridLayout extends ViewGroup {
     }
 
     private void consistencyCheck() {
-        if (lastLayoutParamsHashCode == UNINITIALIZED_HASH) {
+        if (mLastLayoutParamsHashCode == UNINITIALIZED_HASH) {
             validateLayoutParams();
-            lastLayoutParamsHashCode = computeLayoutParamsHashCode();
-        } else if (lastLayoutParamsHashCode != computeLayoutParamsHashCode()) {
-            Log.w(TAG, "The fields of some layout parameters were modified in between layout " +
-                    "operations. Check the javadoc for GridLayout.LayoutParams#rowSpec.");
+            mLastLayoutParamsHashCode = computeLayoutParamsHashCode();
+        } else if (mLastLayoutParamsHashCode != computeLayoutParamsHashCode()) {
+            mPrinter.println("The fields of some layout parameters were modified in between "
+                    + "layout operations. Check the javadoc for GridLayout.LayoutParams#rowSpec.");
             invalidateStructure();
             consistencyCheck();
         }
@@ -943,15 +990,17 @@ public class GridLayout extends ViewGroup {
 
     // Measurement
 
+    // Note: padding has already been removed from the supplied specs
     private void measureChildWithMargins2(View child, int parentWidthSpec, int parentHeightSpec,
             int childWidth, int childHeight) {
         int childWidthSpec = getChildMeasureSpec(parentWidthSpec,
-                mPaddingLeft + mPaddingRight + getTotalMargin(child, true), childWidth);
+                getTotalMargin(child, true), childWidth);
         int childHeightSpec = getChildMeasureSpec(parentHeightSpec,
-                mPaddingTop + mPaddingBottom + getTotalMargin(child, false), childHeight);
+                getTotalMargin(child, false), childHeight);
         child.measure(childWidthSpec, childHeightSpec);
     }
 
+    // Note: padding has already been removed from the supplied specs
     private void measureChildrenWithMargins(int widthSpec, int heightSpec, boolean firstPass) {
         for (int i = 0, N = getChildCount(); i < N; i++) {
             View c = getChildAt(i);
@@ -960,11 +1009,11 @@ public class GridLayout extends ViewGroup {
             if (firstPass) {
                 measureChildWithMargins2(c, widthSpec, heightSpec, lp.width, lp.height);
             } else {
-                boolean horizontal = (orientation == HORIZONTAL);
+                boolean horizontal = (mOrientation == HORIZONTAL);
                 Spec spec = horizontal ? lp.columnSpec : lp.rowSpec;
                 if (spec.alignment == FILL) {
                     Interval span = spec.span;
-                    Axis axis = horizontal ? horizontalAxis : verticalAxis;
+                    Axis axis = horizontal ? mHorizontalAxis : mVerticalAxis;
                     int[] locations = axis.getLocations();
                     int cellSize = locations[span.max] - locations[span.min];
                     int viewSize = cellSize - getTotalMargin(c, horizontal);
@@ -978,6 +1027,11 @@ public class GridLayout extends ViewGroup {
         }
     }
 
+    static int adjust(int measureSpec, int delta) {
+        return makeMeasureSpec(
+                MeasureSpec.getSize(measureSpec + delta),  MeasureSpec.getMode(measureSpec));
+    }
+
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
         consistencyCheck();
@@ -986,39 +1040,38 @@ public class GridLayout extends ViewGroup {
          *  is  likely to have changed. We must invalidate if so. */
         invalidateValues();
 
-        measureChildrenWithMargins(widthSpec, heightSpec, true);
+        int hPadding = getPaddingLeft() + getPaddingRight();
+        int vPadding = getPaddingTop()  + getPaddingBottom();
 
-        int width, height;
+        int widthSpecSansPadding =  adjust( widthSpec, -hPadding);
+        int heightSpecSansPadding = adjust(heightSpec, -vPadding);
+
+        measureChildrenWithMargins(widthSpecSansPadding, heightSpecSansPadding, true);
+
+        int widthSansPadding;
+        int heightSansPadding;
 
         // Use the orientation property to decide which axis should be laid out first.
-        if (orientation == HORIZONTAL) {
-            width = horizontalAxis.getMeasure(widthSpec);
-            measureChildrenWithMargins(widthSpec, heightSpec, false);
-            height = verticalAxis.getMeasure(heightSpec);
+        if (mOrientation == HORIZONTAL) {
+            widthSansPadding = mHorizontalAxis.getMeasure(widthSpecSansPadding);
+            measureChildrenWithMargins(widthSpecSansPadding, heightSpecSansPadding, false);
+            heightSansPadding = mVerticalAxis.getMeasure(heightSpecSansPadding);
         } else {
-            height = verticalAxis.getMeasure(heightSpec);
-            measureChildrenWithMargins(widthSpec, heightSpec, false);
-            width = horizontalAxis.getMeasure(widthSpec);
+            heightSansPadding = mVerticalAxis.getMeasure(heightSpecSansPadding);
+            measureChildrenWithMargins(widthSpecSansPadding, heightSpecSansPadding, false);
+            widthSansPadding = mHorizontalAxis.getMeasure(widthSpecSansPadding);
         }
 
-        int hPadding = getPaddingLeft() + getPaddingRight();
-        int vPadding = getPaddingTop() + getPaddingBottom();
-
-        int measuredWidth = Math.max(hPadding + width, getSuggestedMinimumWidth());
-        int measuredHeight = Math.max(vPadding + height, getSuggestedMinimumHeight());
+        int measuredWidth  = Math.max(widthSansPadding  + hPadding, getSuggestedMinimumWidth());
+        int measuredHeight = Math.max(heightSansPadding + vPadding, getSuggestedMinimumHeight());
 
         setMeasuredDimension(
-                resolveSizeAndState(measuredWidth, widthSpec, 0),
+                resolveSizeAndState(measuredWidth,   widthSpec, 0),
                 resolveSizeAndState(measuredHeight, heightSpec, 0));
     }
 
     private int getMeasurement(View c, boolean horizontal) {
-        int result = horizontal ? c.getMeasuredWidth() : c.getMeasuredHeight();
-        if (getLayoutMode() == OPTICAL_BOUNDS) {
-            Insets insets = c.getOpticalInsets();
-            return result - (horizontal ? insets.left + insets.right : insets.top + insets.bottom);
-        }
-        return result;
+        return horizontal ? c.getMeasuredWidth() : c.getMeasuredHeight();
     }
 
     final int getMeasurementIncludingMargin(View c, boolean horizontal) {
@@ -1065,11 +1118,11 @@ public class GridLayout extends ViewGroup {
         int paddingRight = getPaddingRight();
         int paddingBottom = getPaddingBottom();
 
-        horizontalAxis.layout(targetWidth - paddingLeft - paddingRight);
-        verticalAxis.layout(targetHeight - paddingTop - paddingBottom);
+        mHorizontalAxis.layout(targetWidth - paddingLeft - paddingRight);
+        mVerticalAxis.layout(targetHeight - paddingTop - paddingBottom);
 
-        int[] hLocations = horizontalAxis.getLocations();
-        int[] vLocations = verticalAxis.getLocations();
+        int[] hLocations = mHorizontalAxis.getLocations();
+        int[] vLocations = mVerticalAxis.getLocations();
 
         for (int i = 0, N = getChildCount(); i < N; i++) {
             View c = getChildAt(i);
@@ -1096,8 +1149,8 @@ public class GridLayout extends ViewGroup {
             Alignment hAlign = getAlignment(columnSpec.alignment, true);
             Alignment vAlign = getAlignment(rowSpec.alignment, false);
 
-            Bounds boundsX = horizontalAxis.getGroupBounds().getValue(i);
-            Bounds boundsY = verticalAxis.getGroupBounds().getValue(i);
+            Bounds boundsX = mHorizontalAxis.getGroupBounds().getValue(i);
+            Bounds boundsY = mVerticalAxis.getGroupBounds().getValue(i);
 
             // Gravity offsets: the location of the alignment group relative to its cell group.
             int gravityOffsetX = hAlign.getGravityOffset(c, cellWidth - boundsX.size(true));
@@ -1124,14 +1177,6 @@ public class GridLayout extends ViewGroup {
                     targetWidth - width - paddingRight - rightMargin - dx;
             int cy = paddingTop + y1 + gravityOffsetY + alignmentOffsetY + topMargin;
 
-            boolean useLayoutBounds = getLayoutMode() == OPTICAL_BOUNDS;
-            if (useLayoutBounds) {
-                Insets insets = c.getOpticalInsets();
-                cx -= insets.left;
-                cy -= insets.top;
-                width += (insets.left + insets.right);
-                height += (insets.top + insets.bottom);
-            }
             if (width != c.getMeasuredWidth() || height != c.getMeasuredHeight()) {
                 c.measure(makeMeasureSpec(width, EXACTLY), makeMeasureSpec(height, EXACTLY));
             }
@@ -1247,6 +1292,7 @@ public class GridLayout extends ViewGroup {
             Assoc<Spec, Bounds> assoc = Assoc.of(Spec.class, Bounds.class);
             for (int i = 0, N = getChildCount(); i < N; i++) {
                 View c = getChildAt(i);
+                // we must include views that are GONE here, see introductory javadoc
                 LayoutParams lp = getLayoutParams(c);
                 Spec spec = horizontal ? lp.columnSpec : lp.rowSpec;
                 Bounds bounds = getAlignment(spec.alignment, horizontal).getBounds();
@@ -1262,6 +1308,7 @@ public class GridLayout extends ViewGroup {
             }
             for (int i = 0, N = getChildCount(); i < N; i++) {
                 View c = getChildAt(i);
+                // we must include views that are GONE here, see introductory javadoc
                 LayoutParams lp = getLayoutParams(c);
                 Spec spec = horizontal ? lp.columnSpec : lp.rowSpec;
                 groupBounds.getValue(i).include(GridLayout.this, c, spec, this);
@@ -1528,8 +1575,8 @@ public class GridLayout extends ViewGroup {
                     removed.add(arc);
                 }
             }
-            Log.d(TAG, axisName + " constraints: " + arcsToString(culprits) + " are inconsistent; "
-                    + "permanently removing: " + arcsToString(removed) + ". ");
+            mPrinter.println(axisName + " constraints: " + arcsToString(culprits) +
+                    " are inconsistent; permanently removing: " + arcsToString(removed) + ". ");
         }
 
         /*
@@ -1918,12 +1965,16 @@ public class GridLayout extends ViewGroup {
         }
 
         /**
-         * {@inheritDoc}
+         * Copy constructor. Clones the width, height, margin values, row spec,
+         * and column spec of the source.
+         *
+         * @param source The layout params to copy from.
          */
-        public LayoutParams(LayoutParams that) {
-            super(that);
-            this.rowSpec = that.rowSpec;
-            this.columnSpec = that.columnSpec;
+        public LayoutParams(LayoutParams source) {
+            super(source);
+
+            this.rowSpec = source.rowSpec;
+            this.columnSpec = source.columnSpec;
         }
 
         // AttributeSet constructors
@@ -2418,6 +2469,8 @@ public class GridLayout extends ViewGroup {
      *     <li> {@code spec.span = [start, start + size]} </li>
      *     <li> {@code spec.alignment = alignment} </li>
      * </ul>
+     * <p>
+     * To leave the start index undefined, use the value {@link #UNDEFINED}.
      *
      * @param start     the start
      * @param size      the size
@@ -2433,9 +2486,13 @@ public class GridLayout extends ViewGroup {
      *     <li> {@code spec.span = [start, start + 1]} </li>
      *     <li> {@code spec.alignment = alignment} </li>
      * </ul>
+     * <p>
+     * To leave the start index undefined, use the value {@link #UNDEFINED}.
      *
      * @param start     the start index
      * @param alignment the alignment
+     *
+     * @see #spec(int, int, Alignment)
      */
     public static Spec spec(int start, Alignment alignment) {
         return spec(start, 1, alignment);
@@ -2446,9 +2503,13 @@ public class GridLayout extends ViewGroup {
      * <ul>
      *     <li> {@code spec.span = [start, start + size]} </li>
      * </ul>
+     * <p>
+     * To leave the start index undefined, use the value {@link #UNDEFINED}.
      *
      * @param start     the start
      * @param size      the size
+     *
+     * @see #spec(int, Alignment)
      */
     public static Spec spec(int start, int size) {
         return spec(start, size, UNDEFINED_ALIGNMENT);
@@ -2459,8 +2520,12 @@ public class GridLayout extends ViewGroup {
      * <ul>
      *     <li> {@code spec.span = [start, start + 1]} </li>
      * </ul>
+     * <p>
+     * To leave the start index undefined, use the value {@link #UNDEFINED}.
      *
      * @param start     the start index
+     *
+     * @see #spec(int, int)
      */
     public static Spec spec(int start) {
         return spec(start, 1);
@@ -2653,15 +2718,11 @@ public class GridLayout extends ViewGroup {
 
         @Override
         public int getAlignmentValue(View view, int viewSize, int mode) {
-            int baseline = view.getBaseline();
-            if (baseline == -1) {
-                return UNDEFINED;
-            } else {
-                if (mode == OPTICAL_BOUNDS) {
-                    return baseline - view.getOpticalInsets().top;
-                }
-                return baseline;
+            if (view.getVisibility() == GONE) {
+                return 0;
             }
+            int baseline = view.getBaseline();
+            return baseline == -1 ? UNDEFINED : baseline;
         }
 
         @Override

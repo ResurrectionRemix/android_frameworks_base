@@ -26,11 +26,6 @@
     android:layout_width="match_parent"
     systemui:recentItemLayout="@layout/status_bar_recent_item"
     >
-    <View
-        android:id="@+id/recents_transition_background"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:visibility="invisible" />
     <FrameLayout
         android:id="@+id/recents_bg_protect"
         android:background="@drawable/status_bar_recents_background"
@@ -38,13 +33,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:clipToPadding="false"
-        android:clipChildren="false">
-
-        <ImageView
-            android:id="@+id/recents_transition_placeholder_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible" />   
+        android:clipChildren="false"
+        android:fitsSystemWindows="true">
 
         <com.android.systemui.recent.RecentsHorizontalScrollView android:id="@+id/recents_container"
             android:layout_width="wrap_content"
@@ -57,65 +47,22 @@
             <LinearLayout android:id="@+id/recents_linear_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layoutDirection="ltr"
+                android:layout_gravity="left"
+                android:orientation="horizontal"
+                android:fitsSystemWindows="true">
             </LinearLayout>
 
         </com.android.systemui.recent.RecentsHorizontalScrollView>
 
-        <Button android:id="@+id/recents_kill_all_button"
-            android:layout_gravity="bottom|right"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/recents_kill_all_button_text"/>
-
-    <view class="com.android.systemui.recent.LinearColorBar"
-            android:id="@+id/ram_usage_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-5dp"
-            android:orientation="horizontal"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingTop="30dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:paddingBottom="1dp"
-            android:layout_marginLeft="@*android:dimen/preference_fragment_padding_side"
-            android:layout_marginRight="@*android:dimen/preference_fragment_padding_side">
-        <TextView android:id="@+id/foregroundText"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:gravity="left|bottom"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse"
-            android:textColor="#000"
-            android:singleLine="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:layout_marginTop="-20dp"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse"
-            android:textColor="#ccc"
-            android:shadowColor="#000"
-            android:shadowRadius="5"
-            android:textStyle="bold"
-            android:singleLine="true"
-            android:text="@string/memory" />
-        <TextView android:id="@+id/backgroundText"
-            android:layout_gravity="center_vertical|right"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:gravity="right|bottom"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse"
-            android:textColor="#000"
-            android:singleLine="true" />
-    </view>
+    <ImageView
+            android:id="@+id/recents_clear"
+            android:clickable="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="center"
+            android:layout_gravity="top|right"
+            android:src="@drawable/ic_notify_clear" />
 
     </FrameLayout>
 

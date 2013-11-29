@@ -9,6 +9,7 @@ test_src_files := \
 
 shared_libraries := \
     libcutils \
+    liblog \
     libandroidfw \
     libutils \
     libhardware \
@@ -16,7 +17,8 @@ shared_libraries := \
     libui \
     libskia \
     libstlport \
-    libinput
+    libinput \
+    libinputservice
 
 static_libraries := \
     libgtest \
@@ -39,7 +41,7 @@ $(foreach file,$(test_src_files), \
     $(eval LOCAL_SRC_FILES := $(file)) \
     $(eval LOCAL_MODULE := $(notdir $(file:%.cpp=%))) \
     $(eval LOCAL_MODULE_TAGS := $(module_tags)) \
-    $(eval include $(BUILD_EXECUTABLE)) \
+    $(eval include $(BUILD_NATIVE_TEST)) \
 )
 
 # Build the manual test programs.

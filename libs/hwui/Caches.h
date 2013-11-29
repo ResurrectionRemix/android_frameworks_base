@@ -21,19 +21,26 @@
     #define LOG_TAG "OpenGLRenderer"
 #endif
 
+#include <GLES3/gl3.h>
+
+#include <utils/KeyedVector.h>
 #include <utils/Singleton.h>
+#include <utils/Vector.h>
 
 #include <cutils/compiler.h>
 
-#include "Extensions.h"
+#include "thread/TaskProcessor.h"
+#include "thread/TaskManager.h"
+
+#include "AssetAtlas.h"
 #include "FontRenderer.h"
 #include "GammaFontRenderer.h"
 #include "TextureCache.h"
 #include "LayerCache.h"
+#include "RenderBufferCache.h"
 #include "GradientCache.h"
 #include "PatchCache.h"
 #include "ProgramCache.h"
-#include "ShapeCache.h"
 #include "PathCache.h"
 #include "TextDropShadowCache.h"
 #include "FboCache.h"
@@ -48,9 +55,11 @@ namespace uirenderer {
 // Globals
 ///////////////////////////////////////////////////////////////////////////////
 
+// GL ES 2.0 defines that at least 16 texture units must be supported
 #define REQUIRED_TEXTURE_UNITS_COUNT 3
 
-#define REGION_MESH_QUAD_COUNT 512
+// Maximum number of quads that pre-allocated meshes can draw
+static const uint32_t gMaxNumberOfQuads = 2048;
 
 // Generates simple and textured vertices
 #define FV(x, y, u, v) { { x, y }, { u, v } }
@@ -66,13 +75,13 @@ static const TextureVertex gMeshVertices[] = {
 static const GLsizei gMeshStride = sizeof(TextureVertex);
 static const GLsizei gVertexStride = sizeof(Vertex);
 static const GLsizei gAlphaVertexStride = sizeof(AlphaVertex);
-static const GLsizei gAAVertexStride = sizeof(AAVertex);
 static const GLsizei gMeshTextureOffset = 2 * sizeof(float);
 static const GLsizei gVertexAlphaOffset = 2 * sizeof(float);
 static const GLsizei gVertexAAWidthOffset = 2 * sizeof(float);
 static const GLsizei gVertexAALengthOffset = 3 * sizeof(float);
 static const GLsizei gMeshCount = 4;
 
+// Must define as many texture units as specified by REQUIRED_TEXTURE_UNITS_COUNT
 static const GLenum gTextureUnits[] = {
     GL_TEXTURE0,
     GL_TEXTURE1,
@@ -112,7 +121,12 @@ public:
     /**
      * Initialize caches.
      */
-    void init();
+    bool init();
+
+    /**
+     * Initialize global system properties.
+     */
+    bool initProperties();
 
     /**
      * Flush the cache.
@@ -134,6 +148,12 @@ public:
     DebugLevel getDebugLevel() const {
         return mDebugLevel;
     }
+
+    /**
+     * Returns a non-premultiplied ARGB color for the specified
+     * amount of overdraw (1 for 1x, 2 for 2x, etc.)
+     */
+    uint32_t getOverdrawColor(uint32_t amount) const;
 
     /**
      * Call this on each frame to ensure that garbage is deleted from
@@ -166,8 +186,23 @@ public:
      */
     bool unbindMeshBuffer();
 
+    /**
+     * Binds a global indices buffer that can draw up to
+     * gMaxNumberOfQuads quads.
+     */
+    bool bindIndicesBuffer();
     bool bindIndicesBuffer(const GLuint buffer);
     bool unbindIndicesBuffer();
+
+    /**
+     * Binds the specified buffer as the current GL unpack pixel buffer.
+     */
+    bool bindPixelBuffer(const GLuint buffer);
+
+    /**
+     * Resets the current unpack pixel buffer to 0 (default value.)
+     */
+    bool unbindPixelBuffer();
 
     /**
      * Binds an attrib to the specified float vertex pointer.
@@ -179,7 +214,7 @@ public:
      * Binds an attrib to the specified float vertex pointer.
      * Assumes a stride of gMeshStride and a size of 2.
      */
-    void bindTexCoordsVertexPointer(bool force, GLvoid* vertices);
+    void bindTexCoordsVertexPointer(bool force, GLvoid* vertices, GLsizei stride = gMeshStride);
 
     /**
      * Resets the vertex pointers.
@@ -188,13 +223,45 @@ public:
     void resetTexCoordsVertexPointer();
 
     void enableTexCoordsVertexArray();
-    void disbaleTexCoordsVertexArray();
+    void disableTexCoordsVertexArray();
 
     /**
      * Activate the specified texture unit. The texture unit must
      * be specified using an integer number (0 for GL_TEXTURE0 etc.)
      */
     void activeTexture(GLuint textureUnit);
+
+    /**
+     * Invalidate the cached value of the active texture unit.
+     */
+    void resetActiveTexture();
+
+    /**
+     * Binds the specified texture as a GL_TEXTURE_2D texture.
+     * All texture bindings must be performed with this method or
+     * bindTexture(GLenum, GLuint).
+     */
+    void bindTexture(GLuint texture);
+
+    /**
+     * Binds the specified texture with the specified render target.
+     * All texture bindings must be performed with this method or
+     * bindTexture(GLuint).
+     */
+    void bindTexture(GLenum target, GLuint texture);
+
+    /**
+     * Deletes the specified texture and clears it from the cache
+     * of bound textures.
+     * All textures must be deleted using this method.
+     */
+    void deleteTexture(GLuint texture);
+
+    /**
+     * Signals that the cache of bound textures should be cleared.
+     * Other users of the context may have altered which textures are bound.
+     */
+    void resetBoundTextures();
 
     /**
      * Sets the scissor for the current surface.
@@ -210,7 +277,7 @@ public:
     bool disableScissor();
     void setScissorEnabled(bool enabled);
 
-    void startTiling(GLuint x, GLuint y, GLuint width, GLuint height, bool opaque);
+    void startTiling(GLuint x, GLuint y, GLuint width, GLuint height, bool discard);
     void endTiling();
 
     /**
@@ -236,27 +303,32 @@ public:
     Program* currentProgram;
     bool scissorEnabled;
 
+    bool drawDeferDisabled;
+    bool drawReorderDisabled;
+
     // VBO to draw with
     GLuint meshBuffer;
 
-    // GL extensions
-    Extensions extensions;
-
     // Misc
     GLint maxTextureSize;
+
+    // Debugging
     bool debugLayersUpdates;
     bool debugOverdraw;
 
+    enum StencilClipDebug {
+        kStencilHide,
+        kStencilShowHighlight,
+        kStencilShowRegion
+    };
+    StencilClipDebug debugStencilClip;
+
     TextureCache textureCache;
     LayerCache layerCache;
+    RenderBufferCache renderBufferCache;
     GradientCache gradientCache;
     ProgramCache programCache;
     PathCache pathCache;
-    RoundRectShapeCache roundRectShapeCache;
-    CircleShapeCache circleShapeCache;
-    OvalShapeCache ovalShapeCache;
-    RectShapeCache rectShapeCache;
-    ArcShapeCache arcShapeCache;
     PatchCache patchCache;
     TextDropShadowCache dropShadowCache;
     FboCache fboCache;
@@ -264,10 +336,14 @@ public:
 
     GammaFontRenderer* fontRenderer;
 
+    TaskManager tasks;
+
     Dither dither;
-#if STENCIL_BUFFER_SIZE
     Stencil stencil;
-#endif
+
+    AssetAtlas assetAtlas;
+
+    bool gpuPixelBuffersEnabled;
 
     // Debug methods
     PFNGLINSERTEVENTMARKEREXTPROC eventMark;
@@ -278,10 +354,15 @@ public:
     PFNGLGETOBJECTLABELEXTPROC getLabel;
 
 private:
+    enum OverdrawColorSet {
+        kColorSet_Default = 0,
+        kColorSet_Deuteranomaly
+    };
+
     void initFont();
     void initExtensions();
     void initConstraints();
-    void initProperties();
+    void initStaticProperties();
 
     static void eventMarkNull(GLsizei length, const GLchar* marker) { }
     static void startMarkNull(GLsizei length, const GLchar* marker) { }
@@ -297,9 +378,11 @@ private:
 
     GLuint mCurrentBuffer;
     GLuint mCurrentIndicesBuffer;
+    GLuint mCurrentPixelBuffer;
     void* mCurrentPositionPointer;
     GLsizei mCurrentPositionStride;
     void* mCurrentTexCoordsPointer;
+    GLsizei mCurrentTexCoordsStride;
 
     bool mTexCoordsArrayEnabled;
 
@@ -310,9 +393,13 @@ private:
     GLint mScissorWidth;
     GLint mScissorHeight;
 
+    Extensions& mExtensions;
+
     // Used to render layers
     TextureVertex* mRegionMesh;
-    GLuint mRegionMeshIndices;
+
+    // Global index buffer
+    GLuint mMeshIndices;
 
     mutable Mutex mGarbageLock;
     Vector<Layer*> mLayerGarbage;
@@ -322,6 +409,10 @@ private:
     bool mInitialized;
 
     uint32_t mFunctorsCount;
+
+    GLuint mBoundTextures[REQUIRED_TEXTURE_UNITS_COUNT];
+
+    OverdrawColorSet mOverdrawDebugColorSet;
 }; // class Caches
 
 }; // namespace uirenderer

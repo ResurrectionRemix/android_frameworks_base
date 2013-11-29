@@ -310,14 +310,19 @@
         <attr name="windowFrame" format="reference" />
         <!-- Flag indicating whether there should be no title on this window. -->
         <attr name="windowNoTitle" format="boolean" />
-        <!-- Flag indicating whether this window should fill the entire screen. -->
+        <!-- Flag indicating whether this window should fill the entire screen.  Corresponds
+             to {@link android.view.WindowManager.LayoutParams#FLAG_FULLSCREEN}. -->
         <attr name="windowFullscreen" format="boolean" />
+        <!-- Flag indicating whether this window should extend into overscan region.  Corresponds
+             to {@link android.view.WindowManager.LayoutParams#FLAG_LAYOUT_IN_OVERSCAN}. -->
+        <attr name="windowOverscan" format="boolean" />
         <!-- Flag indicating whether this is a floating window. -->
         <attr name="windowIsFloating" format="boolean" />
         <!-- Flag indicating whether this is a translucent window. -->
         <attr name="windowIsTranslucent" format="boolean" />
         <!-- Flag indicating that this window's background should be the
-           user's current wallpaper. -->
+             user's current wallpaper.  Corresponds
+             to {@link android.view.WindowManager.LayoutParams#FLAG_SHOW_WALLPAPER}. -->
         <attr name="windowShowWallpaper" format="boolean" />
         <!-- This Drawable is overlaid over the foreground of the Window's content area, usually
              to place a shadow below the title.  -->
@@ -353,7 +358,8 @@
         <attr name="windowSplitActionBar" format="boolean" />
 
         <!-- Defines the default soft input state that this window would
-             like when it is displayed. -->
+             like when it is displayed.  Corresponds
+             to {@link android.view.WindowManager.LayoutParams#softInputMode}. -->
         <attr name="windowSoftInputMode">
             <!-- Not specified, use what the system thinks is best.  This
                  is the default. -->
@@ -432,6 +438,14 @@
              that are targeting {@link android.os.Build.VERSION_CODES#HONEYCOMB}
              or later. -->
         <attr name="windowCloseOnTouchOutside" format="boolean" />
+
+        <!-- Flag indicating whether this window requests a translucent status bar.  Corresponds
+             to {@link android.view.WindowManager.LayoutParams#FLAG_TRANSLUCENT_STATUS}. -->
+        <attr name="windowTranslucentStatus" format="boolean" />
+
+        <!-- Flag indicating whether this window requests a translucent navigation bar.  Corresponds
+             to {@link android.view.WindowManager.LayoutParams#FLAG_TRANSLUCENT_NAVIGATION}. -->
+        <attr name="windowTranslucentNavigation" format="boolean" />
 
         <!-- ============ -->
         <!-- Alert Dialog styles -->
@@ -731,6 +745,14 @@
         <attr name="preferenceLayoutChild" format="reference" />
         <!-- Preference panel style -->
         <attr name="preferencePanelStyle" format="reference" />
+        <!-- Preference headers panel style -->
+        <attr name="preferenceHeaderPanelStyle" format="reference" />
+        <!-- Preference list style -->
+        <attr name="preferenceListStyle" format="reference" />
+        <!-- Preference fragment list style -->
+        <attr name="preferenceFragmentListStyle" format="reference" />
+        <!-- Preference fragment padding side -->
+        <attr name="preferenceFragmentPaddingSide" format="dimension" />
         <!-- Default style for switch preferences. -->
         <attr name="switchPreferenceStyle" format="reference" />
 
@@ -1541,6 +1563,10 @@
         <enum name="KEYCODE_YEN" value="216" />
         <enum name="KEYCODE_RO" value="217" />
         <enum name="KEYCODE_KANA" value="218" />
+        <enum name="KEYCODE_ASSIST" value="219" />
+        <enum name="KEYCODE_BRIGHTNESS_DOWN" value="220" />
+        <enum name="KEYCODE_BRIGHTNESS_UP" value="221" />
+        <enum name="KEYCODE_MEDIA_AUDIO_TRACK" value="222" />
     </attr>
 
     <!-- ***************************************************************** -->
@@ -1559,6 +1585,7 @@
         <attr name="windowFrame" />
         <attr name="windowNoTitle" />
         <attr name="windowFullscreen" />
+        <attr name="windowOverscan" />
         <attr name="windowIsFloating" />
         <attr name="windowIsTranslucent" />
         <attr name="windowShowWallpaper" />
@@ -1575,6 +1602,8 @@
         <attr name="windowSplitActionBar" />
         <attr name="windowEnableSplitTouch" />
         <attr name="windowCloseOnTouchOutside" />
+        <attr name="windowTranslucentStatus" />
+        <attr name="windowTranslucentNavigation" />
         <!-- The minimum width the window is allowed to be, along the major
              axis of the screen.  That is, when in landscape.  Can be either
              an absolute dimension or a fraction of the screen size in that
@@ -2082,11 +2111,11 @@
             <!-- Don't use a layer. -->
             <enum name="none" value="0" />
             <!-- Use a software layer. Refer to
-                 {@link android.view.View#setLayerType(int, android.graphics.Paint) for
+                 {@link android.view.View#setLayerType(int, android.graphics.Paint)} for
                  more information. -->
             <enum name="software" value="1" />
             <!-- Use a hardware layer. Refer to
-                 {@link android.view.View#setLayerType(int, android.graphics.Paint) for
+                 {@link android.view.View#setLayerType(int, android.graphics.Paint)} for
                  more information. -->
             <enum name="hardware" value="2" />
         </attr>
@@ -2163,6 +2192,21 @@
             <enum name="yes" value="1" />
             <!-- The view is not important for accessibility. -->
             <enum name="no" value="2" />
+            <!-- The view is not important for accessibility, nor are any of its descendant
+                 views. -->
+            <enum name="noHideDescendants" value="4" />
+        </attr>
+
+        <!-- Indicates to accessibility services whether the user should be notified when
+             this view changes. -->
+        <attr name="accessibilityLiveRegion" format="integer">
+            <!-- Accessibility services should not announce changes to this view. -->
+            <enum name="none" value="0" />
+            <!-- Accessibility services should announce changes to this view. -->
+            <enum name="polite" value="1" />
+            <!-- Accessibility services should interrupt ongoing speech to immediately
+                 announce changes to this view. -->
+            <enum name="assertive" value="2" />
         </attr>
 
         <!-- Specifies the id of a view for which this view serves as a label for
@@ -2246,6 +2290,14 @@
              See {@link android.view.ViewGroup#setMotionEventSplittingEnabled(boolean)}
              for more information. -->
         <attr name="splitMotionEvents" format="boolean" />
+
+        <!-- Defines the layout mode of this ViewGroup. -->
+        <attr name="layoutMode">
+            <!-- Use the children's clip bounds when laying out this container. -->
+            <enum name="clipBounds" value="0" />
+            <!-- Use the children's optical bounds when laying out this container. -->
+            <enum name="opticalBounds" value="1" />
+        </attr>
     </declare-styleable>
 
     <!-- A {@link android.view.ViewStub} lets you lazily include other XML layouts
@@ -2351,6 +2403,15 @@
         <!-- Set to true in all of the configurations for which this input
              method should be considered an option as the default. -->
         <attr name="isDefault" format="boolean" />
+        <!-- Set to true if this input method supports ways to switch to
+             a next input method (e.g. a globe key.). When this is true and
+             InputMethodManager#shouldOfferSwitchingToNextInputMethod() returns true,
+             the IME has to offer ways to to invoke InputMethodManager#switchToNextInputMethod()
+             accordingly.
+             <p> Note that the system determines the most appropriate next input method
+             and subtype in order to provide the consistent user experience in switching
+             between IMEs and subtypes. -->
+        <attr name="supportsSwitchingToNextInputMethod" format="boolean" />
     </declare-styleable>
 
     <!-- This is the subtype of InputMethod. Subtype can describe locales (e.g. en_US, fr_FR...)
@@ -2388,6 +2449,11 @@
              constructor or 0. Arrays.hashCode(new Object[] {locale, mode, extraValue,
              isAuxiliary, overridesImplicitlyEnabledSubtype}) will be used instead. -->
         <attr name="subtypeId" format="integer"/>
+        <!-- Set to true if this subtype is ASCII capable. If the subtype is ASCII
+             capable, it should guarantee that the user can input ASCII characters with
+             this subtype. This is important because many password fields only allow
+             ASCII-characters. -->
+        <attr name="isAsciiCapable" format="boolean" />
     </declare-styleable>
 
     <!-- Use <code>spell-checker</code> as the root tag of the XML resource that
@@ -2501,15 +2567,118 @@
             <flag name="flagIncludeNotImportantViews" value="0x00000002" />
             <!-- Has flag {@link android.accessibilityservice.AccessibilityServiceInfo#FLAG_REQUEST_TOUCH_EXPLORATION_MODE} -->
             <flag name="flagRequestTouchExplorationMode" value="0x00000004" />
+            <!-- Has flag {@link android.accessibilityservice.AccessibilityServiceInfo#FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY} -->
+            <flag name="flagRequestEnhancedWebAccessibility" value="0x00000008" />
+            <!-- Has flag {@link android.accessibilityservice.AccessibilityServiceInfo#FLAG_REPORT_VIEW_IDS} -->
+            <flag name="flagReportViewIds" value="0x00000010" />
+            <!-- Has flag {@link android.accessibilityservice.AccessibilityServiceInfo#FLAG_REQUEST_FILTER_KEY_EVENTS} -->
+            <flag name="flagRequestFilterKeyEvents" value="0x00000020" />
         </attr>
         <!-- Component name of an activity that allows the user to modify
              the settings for this service. This setting cannot be changed at runtime. -->
         <attr name="settingsActivity" />
-        <!-- Flag whether the accessibility service wants to be able to retrieve the
+        <!-- Attribute whether the accessibility service wants to be able to retrieve the
              active window content. This setting cannot be changed at runtime. -->
         <attr name="canRetrieveWindowContent" format="boolean" />
+        <!-- Attribute whether the accessibility service wants to be able to request touch
+             exploration mode in which touched items are spoken aloud and the UI can be
+             explored via gestures.
+             <p>
+             Required to allow setting the {@link android.accessibilityservice
+             #AccessibilityServiceInfo#FLAG_REQUEST_TOUCH_EXPLORATION_MODE} flag.
+             </p>
+         -->
+        <attr name="canRequestTouchExplorationMode" format="boolean" />
+        <!-- Attribute whether the accessibility service wants to be able to request enhanced
+             web accessibility enhancements. For example, installing scripts to make app
+             content more accessible.
+             <p>
+             Required to allow setting the {@link android.accessibilityservice
+             #AccessibilityServiceInfo#FLAG_REQUEST_ENHANCED_WEB_ACCESSIBILITY} flag.
+             </p>
+         -->
+        <attr name="canRequestEnhancedWebAccessibility" format="boolean" />
+        <!-- Attribute whether the accessibility service wants to be able to request to
+             filter key events.
+             <p>
+             Required to allow setting the {@link android.accessibilityservice
+             #AccessibilityServiceInfo#FLAG_REQUEST_FILTER_KEY_EVENTS} flag.
+             </p>
+         -->
+        <attr name="canRequestFilterKeyEvents" format="boolean" />
         <!-- Short description of the accessibility serivce purpose or behavior.-->
         <attr name="description" />
+    </declare-styleable>
+
+    <!-- Use <code>print-service</code> as the root tag of the XML resource that
+         describes an {@link android.printservice.PrintService} service, which is
+         referenced from its {@link android.printservice.PrintService#SERVICE_META_DATA}
+         meta-data entry. -->
+    <declare-styleable name="PrintService">
+        <!-- Fully qualified class name of an activity that allows the user to modify
+             the settings for this service. -->
+        <attr name="settingsActivity" />
+        <!-- Fully qualified class name of an activity that allows the user to manually
+             add printers to this print service. -->
+        <attr name="addPrintersActivity" format="string"/>
+        <!-- Fully qualified class name of an activity with advanced print options
+             specific to this print service. -->
+        <attr name="advancedPrintOptionsActivity" format="string"/>
+        <!-- The vendor name if this print service is vendor specific. -->
+        <attr name="vendor" format="string"/>
+    </declare-styleable>
+
+    <!-- Use <code>host-apdu-service</code> as the root tag of the XML resource that
+         describes an {@link android.nfc.cardemulation.HostApduService} service, which
+         is referenced from its {@link android.nfc.cardemulation.HostApduService#SERVICE_META_DATA}
+         entry. -->
+    <declare-styleable name="HostApduService">
+        <!-- Short description of the functionality the service implements. This attribute
+             is mandatory.-->
+        <attr name="description" />
+        <!-- Whether the device must be unlocked before routing data to this service.
+             The default is false.-->
+        <attr name="requireDeviceUnlock" format="boolean"/>
+        <!-- A drawable that can be rendered in Android's system UI for representing
+             the service. -->
+        <attr name="apduServiceBanner" format="reference"/>
+    </declare-styleable>
+
+    <!-- Use <code>offhost-apdu-service</code> as the root tag of the XML resource that
+         describes an {@link android.nfc.cardemulation.OffHostApduService}
+         service, which is referenced from its
+         {@link android.nfc.cardemulation.OffHostApduService#SERVICE_META_DATA} entry. -->
+    <declare-styleable name="OffHostApduService">
+        <!-- Short description of the functionality the service implements. This attribute
+             is mandatory.-->
+        <attr name="description" />
+        <!-- A drawable that can be rendered in Android's system UI for representing
+             the service. -->
+        <attr name="apduServiceBanner"/>
+    </declare-styleable>
+
+    <!-- Specify one or more <code>aid-group</code> elements inside a
+         <code>host-apdu-service</code> or <code>offhost-apdu-service</code>
+         element to define a group of ISO7816 Application ID (AIDs) that
+         your service can handle.-->
+    <declare-styleable name="AidGroup">
+        <!-- Short description of what the AID group implements. This attribute is mandatory.-->
+        <attr name="description" />
+        <!-- The category attribute will be used by the Android platform to present
+             multiple applications that register ISO 7816 Application IDs (AIDs) in the
+             same category uniformly.
+             Additionally, when a category is specified, Android will ensure that either
+             all AIDs in this group are routed to this application, or none at all.
+             This attribute is optional.-->
+        <attr name="category" format="string" />
+    </declare-styleable>
+
+    <!-- Specify one or more <code>aid-filter</code> elements inside a
+         <code>aid-group</code> element to specify an ISO7816 Application ID (AID)
+         your service can handle. -->
+    <declare-styleable name="AidFilter">
+        <!-- The ISO7816 Application ID. This attribute is mandatory. -->
+        <attr name="name" />
     </declare-styleable>
 
     <declare-styleable name="ActionMenuItemView">
@@ -2610,10 +2779,6 @@
              "MM:SS" or "H:MM:SS". -->
         <attr name="format" format="string" localization="suggested" />
     </declare-styleable>
-    <declare-styleable name="ColorPickerView">
-    </declare-styleable>
-    <declare-styleable name="ColorPickerPanelView">
-    </declare-styleable>
     <declare-styleable name="CompoundButton">
         <!-- Indicates the initial checked state of this button. -->
         <attr name="checked" format="boolean" />
@@ -2693,6 +2858,16 @@
              below and above child items.) The height of this will be the same as
              the height of the normal list item divider. -->
         <attr name="childDivider" format="reference|color" />
+        <!-- The start bound for an item's indicator. To specify a start bound specific to children,
+             use childIndicatorStart. -->
+        <attr name="indicatorStart" format="dimension" />
+        <!-- The end bound for an item's indicator. To specify a right bound specific to children,
+             use childIndicatorEnd. -->
+        <attr name="indicatorEnd" format="dimension" />
+        <!-- The start bound for a child's indicator. -->
+        <attr name="childIndicatorStart" format="dimension" />
+        <!-- The end bound for a child's indicator. -->
+        <attr name="childIndicatorEnd" format="dimension" />
     </declare-styleable>
     <declare-styleable name="Gallery">
         <attr name="gravity" />
@@ -2955,6 +3130,9 @@
         <!-- Timeout between frames of animation in milliseconds
              {@deprecated Not used by the framework.} -->
         <attr name="animationResolution" format="integer" />
+        <!-- Defines if the associated drawables need to be mirrored when in RTL mode.
+             Default is false -->
+        <attr name="mirrorForRtl" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="SeekBar">
@@ -3049,17 +3227,25 @@
         <attr name="textColorLink" />
         <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
         <attr name="textAllCaps" format="boolean" />
+        <!-- Place a shadow of the specified color behind the text. -->
+        <attr name="shadowColor" format="color" />
+        <!-- Horizontal offset of the shadow. -->
+        <attr name="shadowDx" format="float" />
+        <!-- Vertical offset of the shadow. -->
+        <attr name="shadowDy" format="float" />
+        <!-- Radius of the shadow. -->
+        <attr name="shadowRadius" format="float" />
     </declare-styleable>
     <declare-styleable name="TextClock">
         <!-- Specifies the formatting pattern used to show the time and/or date
              in 12-hour mode. Please refer to {@link android.text.format.DateFormat}
              for a complete description of accepted formatting patterns.
-             The default pattern is "h:mm aa". -->
+             The default pattern is a locale-appropriate equivalent of "h:mm a". -->
         <attr name="format12Hour" format="string"/>
         <!-- Specifies the formatting pattern used to show the time and/or date
              in 24-hour mode. Please refer to {@link android.text.format.DateFormat}
              for a complete description of accepted formatting patterns.
-             The default pattern is "k:mm". -->
+             The default pattern is a locale-appropriate equivalent of "H:mm". -->
         <attr name="format24Hour" format="string"/>
         <!-- Specifies the time zone to use. When this attribute is specified, the
              TextClock will ignore the time zone of the system. To use the user's
@@ -3183,13 +3369,13 @@
              specified number. -->
         <attr name="maxLength" format="integer" min="0" />
         <!-- Place a shadow of the specified color behind the text. -->
-        <attr name="shadowColor" format="color" />
+        <attr name="shadowColor" />
         <!-- Horizontal offset of the shadow. -->
-        <attr name="shadowDx" format="float" />
+        <attr name="shadowDx" />
         <!-- Vertical offset of the shadow. -->
-        <attr name="shadowDy" format="float" />
+        <attr name="shadowDy" />
         <!-- Radius of the shadow. -->
-        <attr name="shadowRadius" format="float" />
+        <attr name="shadowRadius" />
         <attr name="autoLink" />
         <!-- If set to false, keeps the movement method from being set
              to the link movement method even if autoLink causes links
@@ -3481,7 +3667,7 @@
         <attr name="dropDownWidth" />
         <!-- Reference to a layout to use for displaying a prompt in the dropdown for
              spinnerMode="dropdown". This layout must contain a TextView with the id
-             @android:id/text1 to be populated with the prompt text. -->
+             {@code @android:id/text1} to be populated with the prompt text. -->
         <attr name="popupPromptView" format="reference" />
         <!-- Gravity setting for positioning the currently selected item. -->
         <attr name="gravity" />
@@ -3785,6 +3971,10 @@
              value is false.  See
              {@link android.graphics.drawable.Drawable#setVisible}. -->
         <attr name="visible" format="boolean" />
+        <!-- Indicates if the drawable needs to be mirrored when its layout direction is
+             RTL (right-to-left).  See
+             {@link android.graphics.drawable.Drawable#setAutoMirrored}. -->
+        <attr name="autoMirrored" format="boolean" />
     </declare-styleable>
 
     <!-- Drawable used to render several states. Each state is represented by
@@ -3812,6 +4002,9 @@
         <attr name="enterFadeDuration" format="integer" />
         <!-- Amount of time (in milliseconds) to fade out an old state drawable. -->
         <attr name="exitFadeDuration" format="integer" />
+        <!-- Indicates if the drawable needs to be mirrored when its layout direction is
+             RTL (right-to-left). -->
+        <attr name="autoMirrored"/>
     </declare-styleable>
 
     <!-- Drawable used to render several animated frames. -->
@@ -3963,6 +4156,9 @@
             <!-- The layer has translucent pixels. -->
             <enum name="translucent" value="-3" />
         </attr>
+        <!-- Indicates if the drawable needs to be mirrored when its layout direction is
+             RTL (right-to-left). -->
+        <attr name="autoMirrored" />
     </declare-styleable>
 
     <!-- Describes an item (or child) of a LayerDrawable. -->
@@ -3987,10 +4183,6 @@
         <attr name="minLevel" format="integer" />
         <!-- The maximum level allowed for this item. -->
         <attr name="maxLevel" format="integer" />
-        <attr name="drawable" />
-    </declare-styleable>
-
-    <declare-styleable name="MipmapDrawableItem">
         <attr name="drawable" />
     </declare-styleable>
 
@@ -4026,20 +4218,21 @@
     <declare-styleable name="BitmapDrawable">
         <!-- Identifier of the bitmap file. This attribute is mandatory. -->
         <attr name="src" />
-        <!-- Enables or disables antialiasing. -->
+        <!-- Enables or disables antialiasing. Antialiasing can be used to smooth the
+             edges of a bitmap when rotated. Default value is false. -->
         <attr name="antialias" format="boolean" />
         <!-- Enables or disables bitmap filtering. Filtering is used when the bitmap is
-             shrunk or stretched to smooth its apperance. -->
+             shrunk or stretched to smooth its apperance. Default value is true. -->
         <attr name="filter" format="boolean" />
         <!-- Enables or disables dithering of the bitmap if the bitmap does not have the
              same pixel configuration as the screen (for instance: a ARGB 8888 bitmap with
-             an RGB 565 screen). -->
+             an RGB 565 screen). Default value is true. -->
         <attr name="dither" />
         <!-- Defines the gravity for the bitmap. The gravity indicates where to position
              the drawable in its container if the bitmap is smaller than the container. -->
         <attr name="gravity" />
         <!-- Defines the tile mode. When the tile mode is enabled, the bitmap is repeated.
-             Gravity is ignored when the tile mode is enabled. -->
+             Gravity is ignored when the tile mode is enabled. Default value is "disabled". -->
         <attr name="tileMode">
             <!-- Do not tile the bitmap. This is the default value. -->
             <enum name="disabled" value="-1" />
@@ -4051,6 +4244,13 @@
                  mirror images so that adjacent images always seam. -->
             <enum name="mirror" value="2" />
         </attr>
+        <!-- Enables or disables the mipmap hint. See
+            {@link android.graphics.Bitmap#setHasMipMap(boolean)} for more information.
+            Default value is false. -->
+        <attr name="mipMap" format="boolean" />
+        <!-- Indicates if the drawable needs to be mirrored when its layout direction is
+             RTL (right-to-left). -->
+        <attr name="autoMirrored" />
     </declare-styleable>
 
     <!-- Drawable used to draw 9-patches. -->
@@ -4061,6 +4261,9 @@
              same pixel configuration as the screen (for instance: a ARGB 8888 bitmap with
              an RGB 565 screen). -->
         <attr name="dither" />
+        <!-- Indicates if the drawable needs to be mirrored when its layout direction is
+             RTL (right-to-left). -->
+        <attr name="autoMirrored" />
     </declare-styleable>
 
     <!-- Drawable used to draw a single color. -->
@@ -4333,6 +4536,75 @@
         <attr name="tension" />
         <!-- This is the amount by which to multiply the tension. -->
         <attr name="extraTension" format="float" />
+    </declare-styleable>
+
+    <!-- ========================== -->
+    <!-- Transition attributes -->
+    <!-- ========================== -->
+    <eat-comment />
+
+    <!-- Use specific transition subclass names as the root tag of the XML resource that
+         describes a {@link android.transition.Transition Transition},
+         such as <code>move</code>, <code>fade</code>, and <code>set</code>. -->
+    <declare-styleable name="Transition">
+        <!-- Amount of time (in milliseconds) that the transition should run. -->
+        <attr name="duration" />
+        <!-- Delay in milliseconds before the transition starts. -->
+        <attr name="startDelay" format="integer" />
+        <!-- Interpolator to be used in the animations spawned by this transition. -->
+        <attr name="interpolator" />
+    </declare-styleable>
+
+    <!-- Use <code>fade</code>as the root tag of the XML resource that
+         describes a {@link android.transition.Fade Fade} transition.
+         The attributes of the {@link android.R.styleable#Transition Transition}
+         resource are available in addition to the specific attributes of Fade
+         described here. -->
+    <declare-styleable name="Fade">
+        <attr name="fadingMode">
+            <!-- Fade will only fade appearing items in. -->
+            <enum name="fade_in" value="1" />
+            <!-- Fade will only fade disappearing items out. -->
+            <enum name="fade_out" value="2" />
+            <!-- Fade will fade appearing items in and disappearing items out. -->
+            <enum name="fade_in_out" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <!-- Use <code>target</code> as the root tag of the XML resource that
+     describes a {@link android.transition.Transition#addTarget(int)
+     targetId} of a transition. There can be one or more targets inside
+     a <code>targets</code> tag, which is itself inside an appropriate
+     {@link android.R.styleable#Transition Transition} tag.
+     -->
+    <declare-styleable name="TransitionTarget">
+        <!-- The id of a target on which this transition will animate changes. -->
+        <attr name="targetId" format="reference" />
+    </declare-styleable>
+
+    <!-- Use <code>set</code> as the root tag of the XML resource that
+         describes a {@link android.transition.TransitionSet
+         TransitionSet} transition. -->
+    <declare-styleable name="TransitionSet">
+        <attr name="transitionOrdering">
+            <!-- child transitions should be played together. -->
+            <enum name="together" value="0" />
+            <!-- child transitions should be played sequentially, in the same order
+            as the xml. -->
+            <enum name="sequential" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!-- Use <code>transitionManager</code> as the root tag of the XML resource that
+         describes a {@link android.transition.TransitionManager
+         TransitionManager}. -->
+    <declare-styleable name="TransitionManager">
+        <!-- The id of a transition to be used in a particular scene change. -->
+        <attr name="transition" format="reference" />
+        <!-- The originating scene in this scene change. -->
+        <attr name="fromScene" format="reference" />
+        <!-- The destination scene in this scene change. -->
+        <attr name="toScene" format="reference" />
     </declare-styleable>
 
     <!-- ========================== -->
@@ -5001,10 +5273,6 @@
         <attr name="disableDependentsState" format="boolean" />
     </declare-styleable>
 
-    <!-- Base attributes available to ColorPickerPreference. -->
-    <declare-styleable name="ColorPickerPreference">
-    </declare-styleable>
-
     <!-- Base attributes available to DialogPreference. -->
     <declare-styleable name="DialogPreference">
         <!-- The title in the dialog. -->
@@ -5554,6 +5822,25 @@
     <declare-styleable name="SizeAdaptiveLayout" />
 
     <!-- =============================== -->
+    <!-- Location package class attributes -->
+    <!-- =============================== -->
+    <eat-comment />
+
+    <!-- Use <code>injected-location-setting</code> as the root tag of the XML resource that
+         describes an injected "Location services" setting. Note that the status value (subtitle)
+         for the setting is specified dynamically by a subclass of SettingInjectorService.
+     -->
+    <declare-styleable name="SettingInjectorService">
+        <!-- The title for the preference. -->
+        <attr name="title"/>
+        <!-- The icon for the preference, should refer to all apps covered by the setting. Typically
+             a generic icon for the developer. -->
+        <attr name="icon"/>
+        <!-- The activity to launch when the setting is clicked on. -->
+        <attr name="settingsActivity"/>
+    </declare-styleable>
+
+    <!-- =============================== -->
     <!-- LockPatternView class attributes -->
     <!-- =============================== -->
     <eat-comment />
@@ -5868,10 +6155,5 @@
         <attr name="digit" format="integer" />
         <attr name="textView" format="reference" />
     </declare-styleable>
-
-    <!-- Navigation drawer -->
-    <attr name="drawer_shadow" format="reference" />
-    <attr name="ic_drawer" format="reference" />
-    <attr name="drawer_background" format="reference" />
 
 </resources>

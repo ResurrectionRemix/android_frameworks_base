@@ -21,8 +21,6 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"Sys.gr.snitt"</string>
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Fjern"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"Ikke forstyrr"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"Vis varslinger"</string>
     <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Fjern fra listen"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"Info om app"</string>
     <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Ingen nylige apper"</string>
@@ -37,7 +35,7 @@
     <string name="battery_low_title" msgid="2783104807551211639">"Koble til lader"</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"Lavt batterinivå."</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"<xliff:g id="NUMBER">%d%%</xliff:g> gjenværende"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"USB-lading støttes ikke."\n"Bruk kun den medfølgende laderen."</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"USB-lading støttes ikke.\nBruk kun den medfølgende laderen."</string>
     <string name="battery_low_why" msgid="7279169609518386372">"Batteribruk"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"Innstillinger"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"Trådløse nettverk"</string>
@@ -59,12 +57,10 @@
     <string name="always_use_device" msgid="1450287437017315906">"Bruk som standard for denne USB-enheten"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"Bruk som standard for dette USB-tilbehøret"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"Vil du tillate USB-feilsøking?"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"Datamaskinens nøkkelfingeravtrykk for RSA er:"\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"Datamaskinens nøkkelfingeravtrykk for RSA er:\n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"Tillat alltid fra denne datamaskinen"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"Zoom for å fylle skjermen"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"Strekk for å fylle skjerm"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"Kompatibilitets-zooming"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"Når en app er utformet for en mindre skjerm, vises det en zoomkontroll ved klokken."</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"Lagrer skjermdumpen …"</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"Lagrer skjermdumpen …"</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"Skjermdumpen lagres."</string>
@@ -80,6 +76,8 @@
     <string name="accessibility_home" msgid="8217216074895377641">"Startside"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"Meny"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"Nylige apper"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"Søk"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"Kamera"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"Bytt knapp for inndatametode."</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"Zoomknapp for kompatibilitet."</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"Zoom fra mindre til større skjerm."</string>
@@ -127,8 +125,9 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3,5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
-    <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Datastreifing"</string>
+    <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Roaming"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"Edge"</string>
     <string name="accessibility_data_connection_wifi" msgid="2324496756590645221">"Wi-Fi"</string>
     <string name="accessibility_no_sim" msgid="8274017118472455155">"Uten SIM."</string>
@@ -159,21 +158,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"4G-data er deaktivert"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"Mobildata er deaktivert"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"Data deaktivert"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Du har nådd den angitte databruksgrensen."\n\n"Hvis du slår på igjen databruk, kan du bli belastet med kostnader av operatøren."</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Du har nådd den angitte databruksgrensen.\n\nHvis du slår på igjen databruk, kan du bli belastet med kostnader av operatøren."</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"Aktiver data på nytt"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"Ingen Internett-forbindelse"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"Wi-Fi tilkoblet"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"Søker etter GPS"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"Posisjon angitt av GPS"</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"Aktive stedsforespørsler"</string>
     <string name="accessibility_clear_all" msgid="5235938559247164925">"Fjern alle varslinger."</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"Info om app"</string>
-    <string name="close_universe" msgid="3736513750241754348">"Lukk"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"Varsler er deaktivert"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"Trykk her for å aktivere varsler på nytt."</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"Skjermen roterer automatisk."</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"Skjermen er låst i liggende retning."</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"Skjermen er låst i stående retning."</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Dessertmonter"</string>
     <string name="start_dreams" msgid="7219575858348719790">"Dagdrøm"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"Ethernet"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"Flymodus"</string>
@@ -186,7 +183,8 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"Automatisk rotasjon"</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"Rotasjon er låst"</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"Inndatametode"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"Posisjon i bruk"</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"Sted"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"Posisjon av"</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"Medieenhet"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"RSSI"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"Bare nødanrop"</string>
@@ -201,6 +199,5 @@
     <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Trådløs skjerm"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"Lysstyrke"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"AUTO"</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"Varslene vises her"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"Bruk dem når som helst ved å sveipe nedover."\n"Sveip nedover igjen for å gå til systemkontrollene."</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"Nettverket kan\nvære overvåket"</string>
 </resources>

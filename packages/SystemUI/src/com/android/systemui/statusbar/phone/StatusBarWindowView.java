@@ -16,17 +16,17 @@
 
 package com.android.systemui.statusbar.phone;
 
+import android.app.StatusBarManager;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewRootImpl;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
-import android.widget.TextSwitcher;
 
 import com.android.systemui.ExpandHelper;
 import com.android.systemui.R;
@@ -63,6 +63,13 @@ public class StatusBarWindowView extends FrameLayout
         mExpandHelper = new ExpandHelper(mContext, latestItems, minHeight, maxHeight);
         mExpandHelper.setEventSource(this);
         mExpandHelper.setScrollView(mScrollView);
+
+        // We really need to be able to animate while window animations are going on
+        // so that activities may be started asynchronously from panel animations
+        final ViewRootImpl root = getViewRootImpl();
+        if (root != null) {
+            root.setDrawDuringWindowsAnimating(true);
+        }
     }
 
     @Override
@@ -104,6 +111,10 @@ public class StatusBarWindowView extends FrameLayout
         }
         if (!handled) {
             handled = super.onTouchEvent(ev);
+        }
+        final int action = ev.getAction();
+        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+            mService.setInteracting(StatusBarManager.WINDOW_STATUS_BAR, false);
         }
         return handled;
     }

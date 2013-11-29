@@ -18,7 +18,8 @@ package android.security;
 
 import com.android.org.bouncycastle.x509.X509V3CertificateGenerator;
 
-import org.apache.harmony.xnet.provider.jsse.OpenSSLEngine;
+import com.android.org.conscrypt.NativeCrypto;
+import com.android.org.conscrypt.OpenSSLEngine;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -33,7 +34,10 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.DSAParameterSpec;
+import java.security.spec.ECParameterSpec;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAKeyGenParameterSpec;
 import java.security.spec.X509EncodedKeySpec;
 
 /**
@@ -49,18 +53,15 @@ import java.security.spec.X509EncodedKeySpec;
  *
  * {@hide}
  */
-@SuppressWarnings("deprecation")
 public class AndroidKeyPairGenerator extends KeyPairGeneratorSpi {
-    public static final String NAME = "AndroidKeyPairGenerator";
-
     private android.security.KeyStore mKeyStore;
 
-    private AndroidKeyPairGeneratorSpec mSpec;
+    private KeyPairGeneratorSpec mSpec;
 
     /**
      * Generate a KeyPair which is backed by the Android keystore service. You
      * must call {@link KeyPairGenerator#initialize(AlgorithmParameterSpec)}
-     * with an {@link AndroidKeyPairGeneratorSpec} as the {@code params}
+     * with an {@link KeyPairGeneratorSpec} as the {@code params}
      * argument before calling this otherwise an {@code IllegalStateException}
      * will be thrown.
      * <p>
@@ -76,15 +77,28 @@ public class AndroidKeyPairGenerator extends KeyPairGeneratorSpi {
     public KeyPair generateKeyPair() {
         if (mKeyStore == null || mSpec == null) {
             throw new IllegalStateException(
-                    "Must call initialize with an AndroidKeyPairGeneratorSpec first");
+                    "Must call initialize with an android.security.KeyPairGeneratorSpec first");
+        }
+
+        if (((mSpec.getFlags() & KeyStore.FLAG_ENCRYPTED) != 0)
+                && (mKeyStore.state() != KeyStore.State.UNLOCKED)) {
+            throw new IllegalStateException(
+                    "Android keystore must be in initialized and unlocked state "
+                            + "if encryption is required");
         }
 
         final String alias = mSpec.getKeystoreAlias();
 
         Credentials.deleteAllTypesForAlias(mKeyStore, alias);
 
+        final int keyType = KeyStore.getKeyTypeForAlgorithm(mSpec.getKeyType());
+        byte[][] args = getArgsForKeyType(keyType, mSpec.getAlgorithmParameterSpec());
+
         final String privateKeyAlias = Credentials.USER_PRIVATE_KEY + alias;
-        mKeyStore.generate(privateKeyAlias);
+        if (!mKeyStore.generate(privateKeyAlias, KeyStore.UID_SELF, keyType,
+                mSpec.getKeySize(), mSpec.getFlags(), args)) {
+            throw new IllegalStateException("could not generate key in keystore");
+        }
 
         final PrivateKey privKey;
         final OpenSSLEngine engine = OpenSSLEngine.getInstance("keystore");
@@ -98,10 +112,10 @@ public class AndroidKeyPairGenerator extends KeyPairGeneratorSpi {
 
         final PublicKey pubKey;
         try {
-            final KeyFactory keyFact = KeyFactory.getInstance("RSA");
+            final KeyFactory keyFact = KeyFactory.getInstance(mSpec.getKeyType());
             pubKey = keyFact.generatePublic(new X509EncodedKeySpec(pubKeyBytes));
         } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("Can't instantiate RSA key generator", e);
+            throw new IllegalStateException("Can't instantiate key generator", e);
         } catch (InvalidKeySpecException e) {
             throw new IllegalStateException("keystore returned invalid key encoding", e);
         }
@@ -113,7 +127,7 @@ public class AndroidKeyPairGenerator extends KeyPairGeneratorSpi {
         certGen.setIssuerDN(mSpec.getSubjectDN());
         certGen.setNotBefore(mSpec.getStartDate());
         certGen.setNotAfter(mSpec.getEndDate());
-        certGen.setSignatureAlgorithm("sha1WithRSA");
+        certGen.setSignatureAlgorithm(getDefaultSignatureAlgorithmForKeyType(mSpec.getKeyType()));
 
         final X509Certificate cert;
         try {
@@ -131,12 +145,44 @@ public class AndroidKeyPairGenerator extends KeyPairGeneratorSpi {
             throw new IllegalStateException("Can't get encoding of certificate", e);
         }
 
-        if (!mKeyStore.put(Credentials.USER_CERTIFICATE + alias, certBytes)) {
+        if (!mKeyStore.put(Credentials.USER_CERTIFICATE + alias, certBytes, KeyStore.UID_SELF,
+                mSpec.getFlags())) {
             Credentials.deleteAllTypesForAlias(mKeyStore, alias);
             throw new IllegalStateException("Can't store certificate in AndroidKeyStore");
         }
 
         return new KeyPair(pubKey, privKey);
+    }
+
+    private static String getDefaultSignatureAlgorithmForKeyType(String keyType) {
+        if ("RSA".equalsIgnoreCase(keyType)) {
+            return "sha256WithRSA";
+        } else if ("DSA".equalsIgnoreCase(keyType)) {
+            return "sha1WithDSA";
+        } else if ("EC".equalsIgnoreCase(keyType)) {
+            return "sha256WithECDSA";
+        } else {
+            throw new IllegalArgumentException("Unsupported key type " + keyType);
+        }
+    }
+
+    private static byte[][] getArgsForKeyType(int keyType, AlgorithmParameterSpec spec) {
+        switch (keyType) {
+            case NativeCrypto.EVP_PKEY_RSA:
+                if (spec instanceof RSAKeyGenParameterSpec) {
+                    RSAKeyGenParameterSpec rsaSpec = (RSAKeyGenParameterSpec) spec;
+                    return new byte[][] { rsaSpec.getPublicExponent().toByteArray() };
+                }
+                break;
+            case NativeCrypto.EVP_PKEY_DSA:
+                if (spec instanceof DSAParameterSpec) {
+                    DSAParameterSpec dsaSpec = (DSAParameterSpec) spec;
+                    return new byte[][] { dsaSpec.getG().toByteArray(),
+                            dsaSpec.getP().toByteArray(), dsaSpec.getQ().toByteArray() };
+                }
+                break;
+        }
+        return null;
     }
 
     @Override
@@ -149,13 +195,13 @@ public class AndroidKeyPairGenerator extends KeyPairGeneratorSpi {
             throws InvalidAlgorithmParameterException {
         if (params == null) {
             throw new InvalidAlgorithmParameterException(
-                    "must supply params of type AndroidKeyPairGenericSpec");
-        } else if (!(params instanceof AndroidKeyPairGeneratorSpec)) {
+                    "must supply params of type android.security.KeyPairGeneratorSpec");
+        } else if (!(params instanceof KeyPairGeneratorSpec)) {
             throw new InvalidAlgorithmParameterException(
-                    "params must be of type AndroidKeyPairGeneratorSpec");
+                    "params must be of type android.security.KeyPairGeneratorSpec");
         }
 
-        AndroidKeyPairGeneratorSpec spec = (AndroidKeyPairGeneratorSpec) params;
+        KeyPairGeneratorSpec spec = (KeyPairGeneratorSpec) params;
 
         mSpec = spec;
         mKeyStore = android.security.KeyStore.getInstance();

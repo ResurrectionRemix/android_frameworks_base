@@ -1,6 +1,20 @@
-package android.app;
+/*
+ * Copyright (C) 2010 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import com.android.internal.view.IInputMethodSession;
+package android.app;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -10,22 +24,18 @@ import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.util.AttributeSet;
-import android.view.InputChannel;
 import android.view.InputQueue;
-import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 
 /**
  * Convenience for implementing an activity that will be implemented
@@ -65,7 +75,6 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
 
     private NativeContentView mNativeContentView;
     private InputMethodManager mIMM;
-    private InputMethodCallback mInputMethodCallback;
 
     private int mNativeHandle;
     
@@ -100,11 +109,9 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
             int format, int width, int height);
     private native void onSurfaceRedrawNeededNative(int handle, Surface surface);
     private native void onSurfaceDestroyedNative(int handle);
-    private native void onInputChannelCreatedNative(int handle, InputChannel channel);
-    private native void onInputChannelDestroyedNative(int handle, InputChannel channel);
+    private native void onInputQueueCreatedNative(int handle, int queuePtr);
+    private native void onInputQueueDestroyedNative(int handle, int queuePtr);
     private native void onContentRectChangedNative(int handle, int x, int y, int w, int h);
-    private native void dispatchKeyEventNative(int handle, KeyEvent event);
-    private native void finishPreDispatchKeyEventNative(int handle, int seq, boolean handled);
 
     static class NativeContentView extends View {
         NativeActivity mActivity;
@@ -117,22 +124,6 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
             super(context, attrs);
         }
     }
-    
-    static final class InputMethodCallback implements InputMethodManager.FinishedEventCallback {
-        WeakReference<NativeActivity> mNa;
-
-        InputMethodCallback(NativeActivity na) {
-            mNa = new WeakReference<NativeActivity>(na);
-        }
-
-        @Override
-        public void finishedEvent(int seq, boolean handled) {
-            NativeActivity na = mNa.get();
-            if (na != null) {
-                na.finishPreDispatchKeyEventNative(na.mNativeHandle, seq, handled);
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +132,6 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
         ActivityInfo ai;
         
         mIMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        mInputMethodCallback = new InputMethodCallback(this);
 
         getWindow().takeSurface(this);
         getWindow().takeInputQueue(this);
@@ -185,14 +175,18 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
                 ? savedInstanceState.getByteArray(KEY_NATIVE_SAVED_STATE) : null;
 
         mNativeHandle = loadNativeCode(path, funcname, Looper.myQueue(),
-                 getFilesDir().toString(), getObbDir().toString(),
-                 Environment.getExternalStorageAppFilesDirectory(ai.packageName).toString(),
-                 Build.VERSION.SDK_INT, getAssets(), nativeSavedState);
-        
+                getAbsolutePath(getFilesDir()), getAbsolutePath(getObbDir()),
+                getAbsolutePath(getExternalFilesDir(null)),
+                Build.VERSION.SDK_INT, getAssets(), nativeSavedState);
+
         if (mNativeHandle == 0) {
             throw new IllegalArgumentException("Unable to load native library: " + path);
         }
         super.onCreate(savedInstanceState);
+    }
+
+    private static String getAbsolutePath(File file) {
+        return (file != null) ? file.getAbsolutePath() : null;
     }
 
     @Override
@@ -203,7 +197,7 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
             mCurSurfaceHolder = null;
         }
         if (mCurInputQueue != null) {
-            onInputChannelDestroyedNative(mNativeHandle, mCurInputQueue.getInputChannel());
+            onInputQueueDestroyedNative(mNativeHandle, mCurInputQueue.getNativePtr());
             mCurInputQueue = null;
         }
         unloadNativeCode(mNativeHandle);
@@ -267,18 +261,6 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
         }
     }
     
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (mDispatchingUnhandledKey) {
-            return super.dispatchKeyEvent(event);
-        } else {
-            // Key events from the IME do not go through the input channel;
-            // we need to intercept them here to hand to the application.
-            dispatchKeyEventNative(mNativeHandle, event);
-            return true;
-        }
-    }
-
     public void surfaceCreated(SurfaceHolder holder) {
         if (!mDestroyed) {
             mCurSurfaceHolder = holder;
@@ -310,14 +292,14 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
     public void onInputQueueCreated(InputQueue queue) {
         if (!mDestroyed) {
             mCurInputQueue = queue;
-            onInputChannelCreatedNative(mNativeHandle, queue.getInputChannel());
+            onInputQueueCreatedNative(mNativeHandle, queue.getNativePtr());
         }
     }
     
     public void onInputQueueDestroyed(InputQueue queue) {
-        mCurInputQueue = null;
         if (!mDestroyed) {
-            onInputChannelDestroyedNative(mNativeHandle, queue.getInputChannel());
+            onInputQueueDestroyedNative(mNativeHandle, queue.getNativePtr());
+            mCurInputQueue = null;
         }
     }
     
@@ -336,25 +318,6 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
                         mLastContentY, mLastContentWidth, mLastContentHeight);
             }
         }
-    }
-
-    boolean dispatchUnhandledKeyEvent(KeyEvent event) {
-        try {
-            mDispatchingUnhandledKey = true;
-            View decor = getWindow().getDecorView();
-            if (decor != null) {
-                return decor.dispatchKeyEvent(event);
-            } else {
-                return false;
-            }
-        } finally {
-            mDispatchingUnhandledKey = false;
-        }
-    }
-    
-    void preDispatchKeyEvent(KeyEvent event, int seq) {
-        mIMM.dispatchKeyEvent(this, seq, event,
-                mInputMethodCallback);
     }
 
     void setWindowFlags(int flags, int mask) {

@@ -37,6 +37,8 @@ interface IBatteryStats {
     void noteStartWakelockFromSource(in WorkSource ws, int pid, String name, int type);
     void noteStopWakelockFromSource(in WorkSource ws, int pid, String name, int type);
 
+    void noteVibratorOn(int uid, long durationMillis);
+    void noteVibratorOff(int uid);
     void noteStartGps(int uid);
     void noteStopGps(int uid);
     void noteScreenOn();
@@ -69,6 +71,7 @@ interface IBatteryStats {
     void noteWifiMulticastEnabledFromSource(in WorkSource ws);
     void noteWifiMulticastDisabledFromSource(in WorkSource ws);
     void noteNetworkInterfaceType(String iface, int type);
+    void noteNetworkStatsEnabled();
     void setBatteryState(int status, int health, int plugType, int level, int temp, int volt);
     long getAwakeTimeBattery();
     long getAwakeTimePlugged();

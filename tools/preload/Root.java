@@ -132,22 +132,16 @@ public class Root implements Serializable {
      * Writes this graph to a file.
      */
     void toFile(String fileName) throws IOException {
-        FileOutputStream out = null;
-        ObjectOutputStream oout = null;
-        try {
-            out = new FileOutputStream(fileName);
-            oout = new ObjectOutputStream(
+        FileOutputStream out = new FileOutputStream(fileName);
+        ObjectOutputStream oout = new ObjectOutputStream(
                 new BufferedOutputStream(out));
-            System.err.println("Writing object model...");
-            oout.writeObject(this);
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-            if (oout != null) {
-                oout.close();
-            }
-        }
+
+        System.err.println("Writing object model...");
+
+        oout.writeObject(this);
+
+        oout.close();
+
         System.err.println("Done!");
     }
 
@@ -156,20 +150,14 @@ public class Root implements Serializable {
      */
     static Root fromFile(String fileName)
             throws IOException, ClassNotFoundException {
-        FileInputStream fin = null;
-        ObjectInputStream oin = null;
-        try {
-                fin = new FileInputStream(fileName);
-                oin = new ObjectInputStream(
-                        new BufferedInputStream(fin));
-                return (Root) oin.readObject();
-        } finally {
-            if (fin != null) {
-                fin.close();
-            }
-            if (oin != null) {
-                oin.close();
-            }
-        }
+        FileInputStream fin = new FileInputStream(fileName);
+        ObjectInputStream oin = new ObjectInputStream(
+                new BufferedInputStream(fin));
+
+        Root root = (Root) oin.readObject();
+
+        oin.close();
+
+        return root;
     }
 }

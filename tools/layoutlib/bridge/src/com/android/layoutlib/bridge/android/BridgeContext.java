@@ -67,8 +67,8 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.BridgeInflater;
-import android.view.CompatibilityInfoHolder;
 import android.view.Display;
+import android.view.DisplayAdjustments;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -132,7 +132,8 @@ public final class BridgeContext extends Context {
             RenderResources renderResources,
             IProjectCallback projectCallback,
             Configuration config,
-            int targetSdkVersion) {
+            int targetSdkVersion,
+            boolean hasRtlSupport) {
         mProjectKey = projectKey;
         mMetrics = metrics;
         mProjectCallback = projectCallback;
@@ -142,6 +143,9 @@ public final class BridgeContext extends Context {
 
         mApplicationInfo = new ApplicationInfo();
         mApplicationInfo.targetSdkVersion = targetSdkVersion;
+        if (hasRtlSupport) {
+            mApplicationInfo.flags = mApplicationInfo.flags | ApplicationInfo.FLAG_SUPPORTS_RTL;
+        }
 
         mWindowManager = new WindowManagerImpl(mMetrics);
     }
@@ -888,12 +892,6 @@ public final class BridgeContext extends Context {
     }
 
     @Override
-    public boolean isPrivacyGuardEnabled() {
-        // pass
-        return false;
-    }
-
-    @Override
     public int checkPermission(String arg0, int arg1, int arg2) {
         // pass
         return 0;
@@ -1086,6 +1084,18 @@ public final class BridgeContext extends Context {
     }
 
     @Override
+    public String getBasePackageName() {
+        // pass
+        return null;
+    }
+
+    @Override
+    public String getOpPackageName() {
+        // pass
+        return null;
+    }
+
+    @Override
     public ApplicationInfo getApplicationInfo() {
         return mApplicationInfo;
     }
@@ -1206,6 +1216,11 @@ public final class BridgeContext extends Context {
     }
 
     @Override
+    public void sendBroadcast(Intent intent, String receiverPermission, int appOp) {
+        // pass
+    }
+
+    @Override
     public void sendOrderedBroadcast(Intent arg0, String arg1) {
         // pass
 
@@ -1217,6 +1232,13 @@ public final class BridgeContext extends Context {
             Bundle arg6) {
         // pass
 
+    }
+
+    @Override
+    public void sendOrderedBroadcast(Intent intent, String receiverPermission, int appOp,
+            BroadcastReceiver resultReceiver, Handler scheduler, int initialCode,
+            String initialData, Bundle initialExtras) {
+        // pass
     }
 
     @Override
@@ -1382,8 +1404,34 @@ public final class BridgeContext extends Context {
     }
 
     @Override
-    public CompatibilityInfoHolder getCompatibilityInfo(int displayId) {
+    public DisplayAdjustments getDisplayAdjustments(int displayId) {
         // pass
         return null;
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public int getUserId() {
+        return 0; // not used
+    }
+
+    @Override
+    public File[] getExternalFilesDirs(String type) {
+        // pass
+        return new File[0];
+    }
+
+    @Override
+    public File[] getObbDirs() {
+        // pass
+        return new File[0];
+    }
+
+    @Override
+    public File[] getExternalCacheDirs() {
+        // pass
+        return new File[0];
     }
 }

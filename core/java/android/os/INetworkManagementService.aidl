@@ -19,6 +19,7 @@ package android.os;
 
 import android.net.InterfaceConfiguration;
 import android.net.INetworkManagementEventObserver;
+import android.net.LinkAddress;
 import android.net.NetworkStats;
 import android.net.RouteInfo;
 import android.net.wifi.WifiConfiguration;
@@ -117,6 +118,11 @@ interface INetworkManagementService
     void removeSecondaryRoute(String iface, in RouteInfo route);
 
     /**
+     * Set the specified MTU size
+     */
+    void setMtu(String iface, int mtu);
+
+    /**
      * Shuts down the service
      */
     void shutdown();
@@ -150,16 +156,6 @@ interface INetworkManagementService
      * Returns true if tethering services are started
      */
     boolean isTetheringStarted();
-
-    /**
-     * Start bluetooth reverse tethering services
-     */
-    void startReverseTethering(in String iface);
-
-    /**
-     * Stop currently running bluetooth reserse tethering services
-     */
-    void stopReverseTethering();
 
     /**
      * Tethers the specified interface
@@ -264,11 +260,9 @@ interface INetworkManagementService
     NetworkStats getNetworkStatsUidDetail(int uid);
 
     /**
-     * Return summary of network statistics for the requested pairs of
-     * tethering interfaces.  Even indexes are remote interface, and odd
-     * indexes are corresponding local interfaces.
+     * Return summary of network statistics all tethering interfaces.
      */
-    NetworkStats getNetworkStatsTethering(in String[] ifacePairs);
+    NetworkStats getNetworkStatsTethering();
 
     /**
      * Set quota for an interface.
@@ -306,23 +300,6 @@ interface INetworkManagementService
     boolean isBandwidthControlEnabled();
 
     /**
-     * Configures bandwidth throttling on an interface.
-     */
-    void setInterfaceThrottle(String iface, int rxKbps, int txKbps);
-
-    /**
-     * Returns the currently configured RX throttle values
-     * for the specified interface
-     */
-    int getInterfaceRxThrottle(String iface);
-
-    /**
-     * Returns the currently configured TX throttle values
-     * for the specified interface
-     */
-    int getInterfaceTxThrottle(String iface);
-
-    /**
      * Sets idletimer for an interface.
      *
      * This either initializes a new idletimer or increases its
@@ -351,7 +328,7 @@ interface INetworkManagementService
     /**
      * Bind name servers to an interface in the DNS resolver.
      */
-    void setDnsServersForInterface(String iface, in String[] servers);
+    void setDnsServersForInterface(String iface, in String[] servers, String domains);
 
     /**
      * Flush the DNS cache associated with the default interface.
@@ -369,4 +346,99 @@ interface INetworkManagementService
     void setFirewallEgressSourceRule(String addr, boolean allow);
     void setFirewallEgressDestRule(String addr, int port, boolean allow);
     void setFirewallUidRule(int uid, boolean allow);
+
+    /**
+     * Set all packets from users [uid_start,uid_end] to go through interface iface
+     * iface must already be set for marked forwarding by {@link setMarkedForwarding}
+     */
+    void setUidRangeRoute(String iface, int uid_start, int uid_end);
+
+    /**
+     * Clears the special routing rules for users [uid_start,uid_end]
+     */
+    void clearUidRangeRoute(String iface, int uid_start, int uid_end);
+
+    /**
+     * Setup an interface for routing packets marked by {@link setUidRangeRoute}
+     *
+     * This sets up a dedicated routing table for packets marked for {@code iface} and adds
+     * source-NAT rules so that the marked packets have the correct source address.
+     */
+    void setMarkedForwarding(String iface);
+
+    /**
+     * Removes marked forwarding for an interface
+     */
+    void clearMarkedForwarding(String iface);
+
+    /**
+     * Get the SO_MARK associated with routing packets for user {@code uid}
+     */
+    int getMarkForUid(int uid);
+
+    /**
+     * Get the SO_MARK associated with protecting packets from VPN routing rules
+     */
+    int getMarkForProtect();
+
+    /**
+     * Route all traffic in {@code route} to {@code iface} setup for marked forwarding
+     */
+    void setMarkedForwardingRoute(String iface, in RouteInfo route);
+
+    /**
+     * Clear routes set by {@link setMarkedForwardingRoute}
+     */
+    void clearMarkedForwardingRoute(String iface, in RouteInfo route);
+
+    /**
+     * Exempts {@code host} from the routing set up by {@link setMarkedForwardingRoute}
+     * All connects to {@code host} will use the global routing table
+     */
+    void setHostExemption(in LinkAddress host);
+
+    /**
+     * Clears an exemption set by {@link setHostExemption}
+     */
+    void clearHostExemption(in LinkAddress host);
+
+    /**
+     * Set a process (pid) to use the name servers associated with the specified interface.
+     */
+    void setDnsInterfaceForPid(String iface, int pid);
+
+    /**
+     * Clear a process (pid) from being associated with an interface.
+     */
+    void clearDnsInterfaceForPid(int pid);
+
+    /**
+    * Set a range of user ids to use the name servers associated with the specified interface.
+    */
+    void setDnsInterfaceForUidRange(String iface, int uid_start, int uid_end);
+
+    /**
+    * Clear a user range from being associated with an interface.
+    */
+    void clearDnsInterfaceForUidRange(int uid_start, int uid_end);
+
+    /**
+    * Clear the mappings from pid to Dns interface and from uid range to Dns interface.
+    */
+    void clearDnsInterfaceMaps();
+
+    /**
+     * Start the clatd (464xlat) service
+     */
+    void startClatd(String interfaceName);
+
+    /**
+     * Stop the clatd (464xlat) service
+     */
+    void stopClatd();
+
+    /**
+     * Determine whether the clatd (464xlat) service has been started
+     */
+    boolean isClatdStarted();
 }

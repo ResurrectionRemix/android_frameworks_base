@@ -1,7 +1,5 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
- * This code has been modified.  Portions copyright (C) 2012, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,17 +17,10 @@
 package android.content.res;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Point;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import android.util.ExtendedPropertiesUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.Surface;
-import android.util.Log;
-import android.os.SystemProperties;
-import android.text.TextUtils;
 
 import java.util.Locale;
 
@@ -43,7 +34,7 @@ import java.util.Locale;
  * with {@link android.app.Activity#getResources}:</p>
  * <pre>Configuration config = getResources().getConfiguration();</pre>
  */
-public final class Configuration extends ExtendedPropertiesUtils implements Parcelable, Comparable<Configuration> {
+public final class Configuration implements Parcelable, Comparable<Configuration> {
     /** @hide */
     public static final Configuration EMPTY = new Configuration();
 
@@ -63,21 +54,23 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
     /**
      * IMSI MNC (Mobile Network Code), corresponding to
      * <a href="{@docRoot}guide/topics/resources/providing-resources.html#MccQualifier">mnc</a>
-     * resource qualifier.  0 if undefined.
+     * resource qualifier.  0 if undefined. Note that the actual MNC may be 0; in order to check
+     * for this use the {@link #MNC_ZERO} symbol.
      */
     public int mnc;
-    
+
+    /**
+     * Constant used to to represent MNC (Mobile Network Code) zero.
+     * 0 cannot be used, since it is used to represent an undefined MNC.
+     */
+    public static final int MNC_ZERO = 0xffff;
+
     /**
      * Current user preference for the locale, corresponding to
      * <a href="{@docRoot}guide/topics/resources/providing-resources.html#LocaleQualifier">locale</a>
      * resource qualifier.
      */
     public Locale locale;
-
-    /**
-     * @hide
-     */
-    public CustomTheme customTheme;
 
     /**
      * Locale should persist on setting.  This is hidden because it is really
@@ -410,63 +403,12 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
     public static final int ORIENTATION_LANDSCAPE = 2;
     /** @deprecated Not currently supported or used. */
     @Deprecated public static final int ORIENTATION_SQUARE = 3;
-
-
-    /**
-     * @hide
-     */
-    public static final int THEME_UNDEFINED = 0;
-
-    /**
-     * @hide
-     */
-    public static final String THEME_ID_PERSISTENCE_PROPERTY = "persist.sys.themeId";
-
-    /**
-     * @hide
-     */
-    public static final String THEME_PACKAGE_NAME_PERSISTENCE_PROPERTY = "persist.sys.themePackageName";
     
     /**
      * Overall orientation of the screen.  May be one of
      * {@link #ORIENTATION_LANDSCAPE}, {@link #ORIENTATION_PORTRAIT}.
      */
     public int orientation;
-
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * inverted framework
-     * resource qualifier.
-     * value indicating that no mode has been set.
-    */
-    public static final int UI_INVERTED_MODE_UNDEFINED = 0;
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * inverted framework
-     * resource qualifier.
-    */
-    public static final int UI_INVERTED_MODE_NORMAL = 1;
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * inverted framework
-     * resource qualifier.
-    */
-    public static final int UI_INVERTED_MODE_YES = 2;
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * none inverted framework
-     * resource qualifier.
-    */
-    public static final int UI_INVERTED_MODE_NO = 3;
-
-    /**
-     * Bit for the ui inverted mode.
-     * This may be one of {@link #UI_INVERTED_MODE_UNDEFINED},
-     * {@link #UI_INVERTED_MODE_NORMAL},
-     * {@link #UI_INVERTED_MODE_YES}, {@link #UI_INVERTED_MODE_NO},
-     */
-    public int uiInvertedMode;
-
 
     /** Constant for {@link #uiMode}: bits that encode the mode type. */
     public static final int UI_MODE_TYPE_MASK = 0x0f;
@@ -520,8 +462,8 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
      * <p>The {@link #UI_MODE_TYPE_MASK} bits define the overall ui mode of the
      * device. They may be one of {@link #UI_MODE_TYPE_UNDEFINED},
      * {@link #UI_MODE_TYPE_NORMAL}, {@link #UI_MODE_TYPE_DESK},
-     * {@link #UI_MODE_TYPE_CAR}, {@link #UI_MODE_TYPE_TELEVISION},
-     * {@link #UI_MODE_TYPE_APPLIANCE}
+     * {@link #UI_MODE_TYPE_CAR}, {@link #UI_MODE_TYPE_TELEVISION}, or
+     * {@link #UI_MODE_TYPE_APPLIANCE}.
      *
      * <p>The {@link #UI_MODE_NIGHT_MASK} defines whether the screen
      * is in a special mode. They may be one of {@link #UI_MODE_NIGHT_UNDEFINED},
@@ -603,37 +545,39 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
      */
     public int seq;
 
-    public boolean active;
+    /** @hide Native-specific bit mask for MCC config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_MCC = 0x0001;
+    /** @hide Native-specific bit mask for MNC config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_MNC = 0x0002;
+    /** @hide Native-specific bit mask for LOCALE config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_LOCALE = 0x0004;
+    /** @hide Native-specific bit mask for TOUCHSCREEN config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_TOUCHSCREEN = 0x0008;
+    /** @hide Native-specific bit mask for KEYBOARD config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_KEYBOARD = 0x0010;
+    /** @hide Native-specific bit mask for KEYBOARD_HIDDEN config; DO NOT USE UNLESS YOU
+     * ARE SURE. */
+    public static final int NATIVE_CONFIG_KEYBOARD_HIDDEN = 0x0020;
+    /** @hide Native-specific bit mask for NAVIGATION config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_NAVIGATION = 0x0040;
+    /** @hide Native-specific bit mask for ORIENTATION config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_ORIENTATION = 0x0080;
+    /** @hide Native-specific bit mask for DENSITY config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_DENSITY = 0x0100;
+    /** @hide Native-specific bit mask for SCREEN_SIZE config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_SCREEN_SIZE = 0x0200;
+    /** @hide Native-specific bit mask for VERSION config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_VERSION = 0x0400;
+    /** @hide Native-specific bit mask for SCREEN_LAYOUT config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_SCREEN_LAYOUT = 0x0800;
+    /** @hide Native-specific bit mask for UI_MODE config; DO NOT USE UNLESS YOU ARE SURE. */
+    public static final int NATIVE_CONFIG_UI_MODE = 0x1000;
+    /** @hide Native-specific bit mask for SMALLEST_SCREEN_SIZE config; DO NOT USE UNLESS YOU
+     * ARE SURE. */
+    public static final int NATIVE_CONFIG_SMALLEST_SCREEN_SIZE = 0x2000;
+    /** @hide Native-specific bit mask for LAYOUTDIR config ; DO NOT USE UNLESS YOU ARE SURE.*/
+    public static final int NATIVE_CONFIG_LAYOUTDIR = 0x4000;
 
-    /**
-     * Process layout changes for current hook
-     */
-    public void paranoidHook() {        
-        if (active) {
-
-            boolean isOrientationOk = true;
-            if (getLandscape() && mDisplay != null) {
-                final int rotation = mDisplay.getRotation();
-                isOrientationOk = (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270);
-            }
-
-            if (getLayout() != 0 && isOrientationOk) {
-                Point size = new Point();
-                mDisplay.getSize(size);
-                float factor = (float)Math.max(size.x, size.y) / (float)Math.min(size.x, size.y);
-                screenWidthDp = getLayout();
-                screenHeightDp = (int)(screenWidthDp * factor);
-                smallestScreenWidthDp = getLayout();           
-                if (getLarge()) {
-                    screenLayout |= SCREENLAYOUT_SIZE_XLARGE;
-                }
-                compatScreenWidthDp = screenWidthDp;
-                compatScreenHeightDp = screenHeightDp;
-                compatSmallestScreenWidthDp = smallestScreenWidthDp;
-            }
-        }
-    }
-    
     /**
      * Construct an invalid Configuration.  You must call {@link #setToDefaults}
      * for this object to be valid.  {@more}
@@ -665,7 +609,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         navigationHidden = o.navigationHidden;
         orientation = o.orientation;
         screenLayout = o.screenLayout;
-        uiInvertedMode = o.uiInvertedMode;
         uiMode = o.uiMode;
         screenWidthDp = o.screenWidthDp;
         screenHeightDp = o.screenHeightDp;
@@ -675,10 +618,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         compatScreenHeightDp = o.compatScreenHeightDp;
         compatSmallestScreenWidthDp = o.compatSmallestScreenWidthDp;
         seq = o.seq;
-        paranoidHook();
-        if (o.customTheme != null) {
-            customTheme = (CustomTheme) o.customTheme.clone();
-        }
     }
     
     public String toString() {
@@ -754,13 +693,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
             case ORIENTATION_PORTRAIT: sb.append(" port"); break;
             default: sb.append(" orien="); sb.append(orientation); break;
         }
-        switch (uiInvertedMode) {
-            case UI_INVERTED_MODE_UNDEFINED: sb.append(" ?uiInvertedmode"); break;
-            case UI_INVERTED_MODE_NORMAL: break;
-            case UI_INVERTED_MODE_YES: sb.append(" inverted"); break;
-            case UI_INVERTED_MODE_NO: sb.append(" notinverted"); break;
-            default: sb.append(" uiInvertedmode="); sb.append(uiInvertedMode); break;
-        }
         switch ((uiMode&UI_MODE_TYPE_MASK)) {
             case UI_MODE_TYPE_UNDEFINED: sb.append(" ?uimode"); break;
             case UI_MODE_TYPE_NORMAL: /* normal is not interesting to print */ break;
@@ -821,8 +753,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
             sb.append(" s.");
             sb.append(seq);
         }
-        sb.append(" themeResource=");
-        sb.append(customTheme);
         sb.append('}');
         return sb.toString();
     }
@@ -843,14 +773,12 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         navigationHidden = NAVIGATIONHIDDEN_UNDEFINED;
         orientation = ORIENTATION_UNDEFINED;
         screenLayout = SCREENLAYOUT_UNDEFINED;
-        uiInvertedMode = UI_INVERTED_MODE_UNDEFINED;
         uiMode = UI_MODE_TYPE_UNDEFINED;
         screenWidthDp = compatScreenWidthDp = SCREEN_WIDTH_DP_UNDEFINED;
         screenHeightDp = compatScreenHeightDp = SCREEN_HEIGHT_DP_UNDEFINED;
         smallestScreenWidthDp = compatSmallestScreenWidthDp = SMALLEST_SCREEN_WIDTH_DP_UNDEFINED;
         densityDpi = DENSITY_DPI_UNDEFINED;
         seq = 0;
-        customTheme = null;
     }
 
     /** {@hide} */
@@ -891,10 +819,16 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
             // 2 most significant bits in screenLayout).
             setLayoutDirection(locale);
         }
+        final int deltaScreenLayoutDir = delta.screenLayout & SCREENLAYOUT_LAYOUTDIR_MASK;
+        if (deltaScreenLayoutDir != SCREENLAYOUT_LAYOUTDIR_UNDEFINED &&
+                deltaScreenLayoutDir != (screenLayout & SCREENLAYOUT_LAYOUTDIR_MASK)) {
+            screenLayout = (screenLayout & ~SCREENLAYOUT_LAYOUTDIR_MASK) | deltaScreenLayoutDir;
+            changed |= ActivityInfo.CONFIG_LAYOUT_DIRECTION;
+        }
         if (delta.userSetLocale && (!userSetLocale || ((changed & ActivityInfo.CONFIG_LOCALE) != 0)))
         {
-            userSetLocale = true;
             changed |= ActivityInfo.CONFIG_LOCALE;
+            userSetLocale = true;
         }
         if (delta.touchscreen != TOUCHSCREEN_UNDEFINED
                 && touchscreen != delta.touchscreen) {
@@ -943,11 +877,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
                 screenLayout = delta.screenLayout;
             }
         }
-        if (delta.uiInvertedMode != UI_INVERTED_MODE_UNDEFINED
-                && uiInvertedMode != delta.uiInvertedMode) {
-            changed |= ActivityInfo.CONFIG_UI_INVERTED_MODE;
-            uiInvertedMode = delta.uiInvertedMode;
-        }
         if (delta.uiMode != (UI_MODE_TYPE_UNDEFINED|UI_MODE_NIGHT_UNDEFINED)
                 && uiMode != delta.uiMode) {
             changed |= ActivityInfo.CONFIG_UI_MODE;
@@ -970,11 +899,13 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
             changed |= ActivityInfo.CONFIG_SCREEN_SIZE;
             screenHeightDp = delta.screenHeightDp;
         }
-        if (delta.smallestScreenWidthDp != SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) {
-            changed |= ActivityInfo.CONFIG_SCREEN_SIZE;
+        if (delta.smallestScreenWidthDp != SMALLEST_SCREEN_WIDTH_DP_UNDEFINED
+                && smallestScreenWidthDp != delta.smallestScreenWidthDp) {
+            changed |= ActivityInfo.CONFIG_SMALLEST_SCREEN_SIZE;
             smallestScreenWidthDp = delta.smallestScreenWidthDp;
         }
-        if (delta.densityDpi != DENSITY_DPI_UNDEFINED) {
+        if (delta.densityDpi != DENSITY_DPI_UNDEFINED &&
+                densityDpi != delta.densityDpi) {
             changed |= ActivityInfo.CONFIG_DENSITY;
             densityDpi = delta.densityDpi;
         }
@@ -990,13 +921,7 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         if (delta.seq != 0) {
             seq = delta.seq;
         }
-
-        if (delta.customTheme != null
-                && (customTheme == null || !customTheme.equals(delta.customTheme))) {
-            changed |= ActivityInfo.CONFIG_THEME_RESOURCE;
-            customTheme = (CustomTheme)delta.customTheme.clone();
-        }
-
+        
         return changed;
     }
 
@@ -1047,6 +972,11 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
             changed |= ActivityInfo.CONFIG_LOCALE;
             changed |= ActivityInfo.CONFIG_LAYOUT_DIRECTION;
         }
+        final int deltaScreenLayoutDir = delta.screenLayout & SCREENLAYOUT_LAYOUTDIR_MASK;
+        if (deltaScreenLayoutDir != SCREENLAYOUT_LAYOUTDIR_UNDEFINED &&
+                deltaScreenLayoutDir != (screenLayout & SCREENLAYOUT_LAYOUTDIR_MASK)) {
+            changed |= ActivityInfo.CONFIG_LAYOUT_DIRECTION;
+        }
         if (delta.touchscreen != TOUCHSCREEN_UNDEFINED
                 && touchscreen != delta.touchscreen) {
             changed |= ActivityInfo.CONFIG_TOUCHSCREEN;
@@ -1081,10 +1011,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
                     getScreenLayoutNoDirection(delta.screenLayout)) {
             changed |= ActivityInfo.CONFIG_SCREEN_LAYOUT;
         }
-        if (delta.uiInvertedMode != UI_INVERTED_MODE_UNDEFINED
-                && uiInvertedMode != delta.uiInvertedMode) {
-            changed |= ActivityInfo.CONFIG_UI_INVERTED_MODE;
-        }
         if (delta.uiMode != (UI_MODE_TYPE_UNDEFINED|UI_MODE_NIGHT_UNDEFINED)
                 && uiMode != delta.uiMode) {
             changed |= ActivityInfo.CONFIG_UI_MODE;
@@ -1105,10 +1031,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
                 && densityDpi != delta.densityDpi) {
             changed |= ActivityInfo.CONFIG_DENSITY;
         }
-        if (delta.customTheme != null &&
-                (customTheme == null || !customTheme.equals(delta.customTheme))) {
-            changed |= ActivityInfo.CONFIG_THEME_RESOURCE;
-        }
 
         return changed;
     }
@@ -1125,11 +1047,9 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
      * @return Return true if the resource needs to be loaded, else false.
      */
     public static boolean needNewResources(int configChanges, int interestingChanges) {
-        return (configChanges & (interestingChanges |
-                ActivityInfo.CONFIG_FONT_SCALE |
-                ActivityInfo.CONFIG_THEME_RESOURCE)) != 0;
+        return (configChanges & (interestingChanges|ActivityInfo.CONFIG_FONT_SCALE)) != 0;
     }
-    
+
     /**
      * @hide Return true if the sequence of 'other' is better than this.  Assumes
      * that 'this' is your current sequence and 'other' is a new one you have
@@ -1191,7 +1111,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         dest.writeInt(navigationHidden);
         dest.writeInt(orientation);
         dest.writeInt(screenLayout);
-        dest.writeInt(uiInvertedMode);
         dest.writeInt(uiMode);
         dest.writeInt(screenWidthDp);
         dest.writeInt(screenHeightDp);
@@ -1201,14 +1120,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         dest.writeInt(compatScreenHeightDp);
         dest.writeInt(compatSmallestScreenWidthDp);
         dest.writeInt(seq);
-
-        if (customTheme == null) {
-            dest.writeInt(0);
-        } else {
-            dest.writeInt(1);
-            dest.writeString(customTheme.getThemeId());
-            dest.writeString(customTheme.getThemePackageName());
-        }
     }
 
     public void readFromParcel(Parcel source) {
@@ -1228,7 +1139,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         navigationHidden = source.readInt();
         orientation = source.readInt();
         screenLayout = source.readInt();
-        uiInvertedMode = source.readInt();
         uiMode = source.readInt();
         screenWidthDp = source.readInt();
         screenHeightDp = source.readInt();
@@ -1238,12 +1148,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         compatScreenHeightDp = source.readInt();
         compatSmallestScreenWidthDp = source.readInt();
         seq = source.readInt();
-
-        if (source.readInt() != 0) {
-            String themeId = source.readString();
-            String themePackage = source.readString();
-            customTheme = new CustomTheme(themeId, themePackage);
-        }
     }
     
     public static final Parcelable.Creator<Configuration> CREATOR
@@ -1302,8 +1206,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         if (n != 0) return n;
         n = this.screenLayout - that.screenLayout;
         if (n != 0) return n;
-        n = this.uiInvertedMode - that.uiInvertedMode;
-        if (n != 0) return n;
         n = this.uiMode - that.uiMode;
         if (n != 0) return n;
         n = this.screenWidthDp - that.screenWidthDp;
@@ -1314,17 +1216,6 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         if (n != 0) return n;
         n = this.densityDpi - that.densityDpi;
         //if (n != 0) return n;
-        if (this.customTheme == null) {
-            if (that.customTheme != null) return 1;
-        } else if (that.customTheme == null) {
-            return -1;
-        } else {
-            n = this.customTheme.getThemeId().compareTo(that.customTheme.getThemeId());
-            if (n != 0) return n;
-            n = this.customTheme.getThemePackageName().compareTo(that.customTheme.getThemePackageName());
-            if (n != 0) return n;
-        }
-
         return n;
     }
 
@@ -1356,14 +1247,11 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
         result = 31 * result + navigationHidden;
         result = 31 * result + orientation;
         result = 31 * result + screenLayout;
-        result = 31 * result + uiInvertedMode;
         result = 31 * result + uiMode;
         result = 31 * result + screenWidthDp;
         result = 31 * result + screenHeightDp;
         result = 31 * result + smallestScreenWidthDp;
         result = 31 * result + densityDpi;
-        result = 31 * result + (this.customTheme != null ?
-                                  this.customTheme.hashCode() : 0);
         return result;
     }
 
@@ -1384,12 +1272,12 @@ public final class Configuration extends ExtendedPropertiesUtils implements Parc
      * Return the layout direction. Will be either {@link View#LAYOUT_DIRECTION_LTR} or
      * {@link View#LAYOUT_DIRECTION_RTL}.
      *
-     * @return the layout direction
+     * @return Returns {@link View#LAYOUT_DIRECTION_RTL} if the configuration
+     * is {@link #SCREENLAYOUT_LAYOUTDIR_RTL}, otherwise {@link View#LAYOUT_DIRECTION_LTR}.
      */
     public int getLayoutDirection() {
-        // We need to substract one here as the configuration values are using "0" as undefined thus
-        // having LRT set to "1" and RTL set to "2"
-        return ((screenLayout&SCREENLAYOUT_LAYOUTDIR_MASK) >> SCREENLAYOUT_LAYOUTDIR_SHIFT) - 1;
+        return (screenLayout&SCREENLAYOUT_LAYOUTDIR_MASK) == SCREENLAYOUT_LAYOUTDIR_RTL
+                ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR;
     }
 
     /**

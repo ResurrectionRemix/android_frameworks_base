@@ -26,7 +26,6 @@ import android.util.Slog;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class LightsService {
     private static final String TAG = "LightsService";
@@ -143,20 +142,13 @@ public class LightsService {
         private static final String FLASHLIGHT_FILE = "/sys/class/leds/spotlight/brightness";
 
         public boolean getFlashlightEnabled() {
-            FileInputStream fis = null;
             try {
-                fis = new FileInputStream(FLASHLIGHT_FILE);
+                FileInputStream fis = new FileInputStream(FLASHLIGHT_FILE);
                 int result = fis.read();
+                fis.close();
                 return (result != '0');
             } catch (Exception e) {
                 return false;
-            } finally {
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException ignored) {
-                    }
-                }
             }
         }
 
@@ -167,22 +159,15 @@ public class LightsService {
                     != PackageManager.PERMISSION_GRANTED) {
                 throw new SecurityException("Requires FLASHLIGHT or HARDWARE_TEST permission");
             }
-            FileOutputStream fos = null;
             try {
-                fos = new FileOutputStream(FLASHLIGHT_FILE);
+                FileOutputStream fos = new FileOutputStream(FLASHLIGHT_FILE);
                 byte[] bytes = new byte[2];
                 bytes[0] = (byte)(on ? '1' : '0');
                 bytes[1] = '\n';
                 fos.write(bytes);
+                fos.close();
             } catch (Exception e) {
                 // fail silently
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException ignored) {
-                    }
-                }
             }
         }
     };

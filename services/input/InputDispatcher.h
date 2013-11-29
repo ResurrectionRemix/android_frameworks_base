@@ -17,8 +17,8 @@
 #ifndef _UI_INPUT_DISPATCHER_H
 #define _UI_INPUT_DISPATCHER_H
 
-#include <androidfw/Input.h>
-#include <androidfw/InputTransport.h>
+#include <input/Input.h>
+#include <input/InputTransport.h>
 #include <utils/KeyedVector.h>
 #include <utils/Vector.h>
 #include <utils/threads.h>
@@ -165,6 +165,8 @@ struct InputTarget {
  * Input dispatcher configuration.
  *
  * Specifies various options that modify the behavior of the input dispatcher.
+ * The values provided here are merely defaults. The actual values will come from ViewConfiguration
+ * and are passed into the dispatcher during initialization.
  */
 struct InputDispatcherConfiguration {
     // The key repeat initial timeout.
@@ -200,7 +202,8 @@ public:
     /* Notifies the system that an application is not responding.
      * Returns a new timeout to continue waiting, or 0 to abort dispatch. */
     virtual nsecs_t notifyANR(const sp<InputApplicationHandle>& inputApplicationHandle,
-            const sp<InputWindowHandle>& inputWindowHandle) = 0;
+            const sp<InputWindowHandle>& inputWindowHandle,
+            const String8& reason) = 0;
 
     /* Notifies the system that an input channel is unrecoverably broken. */
     virtual void notifyInputChannelBroken(const sp<InputWindowHandle>& inputWindowHandle) = 0;
@@ -594,6 +597,7 @@ private:
         KeyEntry* keyEntry;
         sp<InputApplicationHandle> inputApplicationHandle;
         sp<InputWindowHandle> inputWindowHandle;
+        String8 reason;
         int32_t userActivityEventType;
         uint32_t seq;
         bool handled;
@@ -844,6 +848,7 @@ private:
 
     EventEntry* mPendingEvent;
     Queue<EventEntry> mInboundQueue;
+    Queue<EventEntry> mRecentQueue;
     Queue<CommandEntry> mCommandQueue;
 
     void dispatchOnceInnerLocked(nsecs_t* nextWakeupTime);
@@ -853,6 +858,9 @@ private:
 
     // Cleans up input state when dropping an inbound event.
     void dropInboundEventLocked(EventEntry* entry, DropReason dropReason);
+
+    // Adds an event to a queue of recent events for debugging purposes.
+    void addRecentEventLocked(EventEntry* entry);
 
     // App switch latency optimization.
     bool mAppSwitchSawKeyDown;

@@ -27,6 +27,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
+import java.util.Locale;
 
 /**
  * Stores SSID octets and handles conversion.
@@ -86,11 +87,6 @@ public class WifiSsid implements Parcelable {
             switch (c) {
                 case '\\':
                     i++;
-                    if (i >= asciiEncoded.length()) {
-                        octets.write('\\');
-                        break;
-                    }
-
                     switch(asciiEncoded.charAt(i)) {
                         case '\\':
                             octets.write('\\');
@@ -204,7 +200,7 @@ public class WifiSsid implements Parcelable {
         String out = "0x";
         byte[] ssidbytes = getOctets();
         for (int i = 0; i < octets.size(); i++) {
-            out += String.format("%02x", ssidbytes[i]);
+            out += String.format(Locale.US, "%02x", ssidbytes[i]);
         }
         return out;
     }

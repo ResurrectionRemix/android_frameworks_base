@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2005 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +23,6 @@
 #include <androidfw/Asset.h>
 #include <utils/ByteOrder.h>
 #include <utils/Errors.h>
-#include <androidfw/PackageRedirectionMap.h>
 #include <utils/String16.h>
 #include <utils/Vector.h>
 
@@ -481,7 +479,7 @@ private:
     const uint32_t*             mEntries;
     const uint32_t*             mEntryStyles;
     const void*                 mStrings;
-    char16_t**                  mCache;
+    char16_t mutable**          mCache;
     uint32_t                    mStringPoolSize;    // number of uint16_t
     const uint32_t*             mStyles;
     uint32_t                    mStylePoolSize;    // number of uint32_t
@@ -680,11 +678,15 @@ public:
     // Returns -1 if no namespace, -2 if idx out of range.
     int32_t getAttributeNamespaceID(size_t idx) const;
     const uint16_t* getAttributeNamespace(size_t idx, size_t* outLen) const;
-    
+
     int32_t getAttributeNameID(size_t idx) const;
     const uint16_t* getAttributeName(size_t idx, size_t* outLen) const;
     uint32_t getAttributeNameResID(size_t idx) const;
-    
+
+    // These will work only if the underlying string pool is UTF-8.
+    const char* getAttributeNamespace8(size_t idx, size_t* outLen) const;
+    const char* getAttributeName8(size_t idx, size_t* outLen) const;
+
     int32_t getAttributeValueStringID(size_t idx) const;
     const uint16_t* getAttributeStringValue(size_t idx, size_t* outLen) const;
     
@@ -857,6 +859,7 @@ struct ResTable_config
         DENSITY_HIGH = ACONFIGURATION_DENSITY_HIGH,
         DENSITY_XHIGH = ACONFIGURATION_DENSITY_XHIGH,
         DENSITY_XXHIGH = ACONFIGURATION_DENSITY_XXHIGH,
+        DENSITY_XXXHIGH = ACONFIGURATION_DENSITY_XXXHIGH,
         DENSITY_NONE = ACONFIGURATION_DENSITY_NONE
     };
     
@@ -1003,15 +1006,6 @@ struct ResTable_config
         uint32_t screenSizeDp;
     };
 
-    enum {
-        // uiMode bits for inverted mode.
-        UI_INVERTED_MODE_ANY = ACONFIGURATION_UI_INVERTED_MODE_ANY,
-        UI_INVERTED_MODE_NORMAL = ACONFIGURATION_UI_INVERTED_MODE_NORMAL,
-        UI_INVERTED_MODE_YES = ACONFIGURATION_UI_INVERTED_MODE_YES,
-        UI_INVERTED_MODE_NO = ACONFIGURATION_UI_INVERTED_MODE_NO,
-    };
-    uint8_t uiInvertedMode;
-
     void copyFromDeviceNoSwap(const ResTable_config& o);
     
     void copyFromDtoH(const ResTable_config& o);
@@ -1038,7 +1032,6 @@ struct ResTable_config
         CONFIG_SMALLEST_SCREEN_SIZE = ACONFIGURATION_SMALLEST_SCREEN_SIZE,
         CONFIG_VERSION = ACONFIGURATION_VERSION,
         CONFIG_SCREEN_LAYOUT = ACONFIGURATION_SCREEN_LAYOUT,
-        CONFIG_UI_INVERTED_MODE = ACONFIGURATION_UI_INVERTED_MODE,
         CONFIG_UI_MODE = ACONFIGURATION_UI_MODE,
         CONFIG_LAYOUTDIR = ACONFIGURATION_LAYOUTDIR,
     };
@@ -1296,9 +1289,6 @@ public:
                  bool copyData=false, const void* idmap = NULL);
     status_t add(ResTable* src);
 
-    void addRedirections(PackageRedirectionMap* resMap);
-    void clearRedirections();
-
     status_t getError() const;
 
     void uninit();
@@ -1308,12 +1298,14 @@ public:
         const char16_t* package;
         size_t packageLen;
         const char16_t* type;
+        const char* type8;
         size_t typeLen;
         const char16_t* name;
+        const char* name8;
         size_t nameLen;
     };
 
-    bool getResourceName(uint32_t resID, resource_name* outName) const;
+    bool getResourceName(uint32_t resID, bool allowUtf8, resource_name* outName) const;
 
     /**
      * Retrieve the value of a resource.  If the resource is found, returns a
@@ -1345,8 +1337,6 @@ public:
                              uint32_t* outLastRef = NULL,
                              uint32_t* inoutTypeSpecFlags = NULL,
                              ResTable_config* outConfig = NULL) const;
-
-    uint32_t lookupRedirectionMap(uint32_t resID) const;
 
     enum {
         TMP_BUFFER_SIZE = 16
@@ -1568,12 +1558,9 @@ public:
     // IDMAP_HEADER_SIZE_BYTES) bytes of an idmap file.
     static bool getIdmapInfo(const void* idmap, size_t size,
                              uint32_t* pOriginalCrc, uint32_t* pOverlayCrc);
-    void removeAssetsByCookie(const String8 &packageName, void* cookie);
 
-#ifndef HAVE_ANDROID_OS
     void print(bool inclValues) const;
     static String8 normalizeForOutput(const char* input);
-#endif
 
 private:
     struct Header;
@@ -1611,11 +1598,6 @@ private:
     // Mapping from resource package IDs to indices into the internal
     // package array.
     uint8_t                     mPackageMap[256];
-
-    // Resource redirection mapping provided by the applied theme (if there is
-    // one).  Resources requested which are found in this map will be
-    // automatically redirected to the appropriate themed value.
-    Vector<PackageRedirectionMap*> mRedirectionMap;
 };
 
 }   // namespace android

@@ -17,8 +17,10 @@ LOCAL_SRC_FILES:= \
     storage_manager.cpp
 
 LOCAL_SHARED_LIBRARIES := \
+    liblog \
     libcutils \
     libandroidfw \
+    libinput \
     libutils \
     libbinder \
     libui \

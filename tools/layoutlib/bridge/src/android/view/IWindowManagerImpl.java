@@ -16,12 +16,14 @@
 
 package android.view;
 
+import android.graphics.Point;
 import com.android.internal.view.IInputContext;
 import com.android.internal.view.IInputMethodClient;
 
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IRemoteCallback;
@@ -30,13 +32,11 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.IApplicationToken;
-import android.view.IDisplayContentChangeListener;
 import android.view.IInputFilter;
 import android.view.IOnKeyguardExitResult;
 import android.view.IRotationWatcher;
 import android.view.IWindowManager;
 import android.view.IWindowSession;
-import android.view.WindowInfo;
 
 import java.util.List;
 
@@ -49,15 +49,13 @@ public class IWindowManagerImpl implements IWindowManager {
     private final Configuration mConfig;
     private final DisplayMetrics mMetrics;
     private final int mRotation;
-    private final boolean mHasSystemNavBar;
     private final boolean mHasNavigationBar;
 
     public IWindowManagerImpl(Configuration config, DisplayMetrics metrics, int rotation,
-            boolean hasSystemNavBar, boolean hasNavigationBar) {
+            boolean hasNavigationBar) {
         mConfig = config;
         mMetrics = metrics;
         mRotation = rotation;
-        mHasSystemNavBar = hasSystemNavBar;
         mHasNavigationBar = hasNavigationBar;
     }
 
@@ -79,16 +77,11 @@ public class IWindowManagerImpl implements IWindowManager {
         return mHasNavigationBar;
     }
 
-    @Override
-    public boolean hasSystemNavBar() throws RemoteException {
-        return mHasSystemNavBar;
-    }
-
     // ---- unused implementation of IWindowManager ----
 
     @Override
-    public void addAppToken(int arg0, int arg1p5, IApplicationToken arg1, int arg2, int arg3, boolean arg4,
-                            boolean arg5)
+    public void addAppToken(int arg0, IApplicationToken arg1, int arg2, int arg3, int arg4,
+            boolean arg5, boolean arg6, int arg7)
             throws RemoteException {
         // TODO Auto-generated method stub
 
@@ -107,6 +100,12 @@ public class IWindowManagerImpl implements IWindowManager {
 
     @Override
     public void clearForcedDisplayDensity(int displayId) throws RemoteException {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void setOverscan(int displayId, int left, int top, int right, int bottom)
+            throws RemoteException {
         // TODO Auto-generated method stub
     }
 
@@ -205,24 +204,6 @@ public class IWindowManagerImpl implements IWindowManager {
     }
 
     @Override
-    public void moveAppToken(int arg0, IBinder arg1) throws RemoteException {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void moveAppTokensToBottom(List<IBinder> arg0) throws RemoteException {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void moveAppTokensToTop(List<IBinder> arg0) throws RemoteException {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public IWindowSession openSession(IInputMethodClient arg0, IInputContext arg1)
             throws RemoteException {
         // TODO Auto-generated method stub
@@ -285,8 +266,8 @@ public class IWindowManagerImpl implements IWindowManager {
     }
 
     @Override
-    public Bitmap screenshotApplications(IBinder arg0, int displayId, int arg1, int arg2)
-            throws RemoteException {
+    public Bitmap screenshotApplications(IBinder arg0, int displayId, int arg1,
+            int arg2, boolean arg3) throws RemoteException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -316,7 +297,7 @@ public class IWindowManagerImpl implements IWindowManager {
 
     @Override
     public void setAppStartingWindow(IBinder arg0, String arg1, int arg2, CompatibilityInfo arg3,
-            CharSequence arg4, int arg5, int arg6, int arg7, IBinder arg8, boolean arg9)
+            CharSequence arg4, int arg5, int arg6, int arg7, int arg8, IBinder arg9, boolean arg10)
             throws RemoteException {
         // TODO Auto-generated method stub
     }
@@ -343,8 +324,28 @@ public class IWindowManagerImpl implements IWindowManager {
     }
 
     @Override
+    public void getInitialDisplaySize(int displayId, Point size) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void getBaseDisplaySize(int displayId, Point size) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
     public void setForcedDisplaySize(int displayId, int arg0, int arg1) throws RemoteException {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public int getInitialDisplayDensity(int displayId) {
+        return -1;
+    }
+
+    @Override
+    public int getBaseDisplayDensity(int displayId) {
+        return -1;
     }
 
     @Override
@@ -423,6 +424,10 @@ public class IWindowManagerImpl implements IWindowManager {
     }
 
     @Override
+    public void removeRotationWatcher(IRotationWatcher arg0) throws RemoteException {
+    }
+
+    @Override
     public boolean waitForWindowDrawn(IBinder token, IRemoteCallback callback) {
         return false;
     }
@@ -446,15 +451,10 @@ public class IWindowManagerImpl implements IWindowManager {
     public void lockNow(Bundle options) {
         // TODO Auto-generated method stub
     }
-    
+
     @Override
     public boolean isSafeModeEnabled() {
         return false;
-    }
-
-    @Override
-    public void showAssistant() {
-
     }
 
     @Override
@@ -464,43 +464,38 @@ public class IWindowManagerImpl implements IWindowManager {
     }
 
     @Override
-    public float getWindowCompatibilityScale(IBinder windowToken) throws RemoteException {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
     public void setInputFilter(IInputFilter filter) throws RemoteException {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void magnifyDisplay(int dipslayId, float scale, float offsetX, float offsetY)
-            throws RemoteException {
+    public void getWindowFrame(IBinder token, Rect outFrame) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void addDisplayContentChangeListener(int displayId,
-            IDisplayContentChangeListener listener) throws RemoteException {
+    public void setMagnificationCallbacks(IMagnificationCallbacks callbacks) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void removeDisplayContentChangeListener(int displayId,
-            IDisplayContentChangeListener listener) throws RemoteException {
+    public void setMagnificationSpec(MagnificationSpec spec) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public WindowInfo getWindowInfo(IBinder token) throws RemoteException {
+    public MagnificationSpec getCompatibleMagnificationSpecForWindow(IBinder windowToken) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void getVisibleWindowsForDisplay(int displayId, List<WindowInfo> outInfos)
-            throws RemoteException {
+    public boolean isRotationFrozen() throws RemoteException {
         // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void setTouchExplorationEnabled(boolean enabled) {
     }
 }

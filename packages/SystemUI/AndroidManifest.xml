@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
         package="com.android.systemui"
+        android:sharedUserId="android.uid.systemui"
         coreApp="true">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -8,14 +9,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_ALL_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.REBOOT" />
+
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
+    <uses-permission android:name="android.permission.DUMP" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-permission android:name="android.permission.STATUS_BAR_SERVICE" />
     <uses-permission android:name="android.permission.STATUS_BAR" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.REMOTE_AUDIO_PLAYBACK" />
 
     <uses-permission android:name="android.permission.MANAGE_USERS" />
@@ -23,12 +24,15 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CONFIGURE_WIFI_DISPLAY" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_APP_OPS_STATS" />
+
+    <!-- Screen recording -->
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
     <!-- Networking and telephony -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -38,7 +42,6 @@
     <uses-permission android:name="android.permission.MANAGE_USB" />
     <uses-permission android:name="android.permission.DEVICE_POWER" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.UPDATE_DEVICE_STATS" />
     <uses-permission android:name="android.permission.MASTER_CLEAR" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -51,7 +54,7 @@
     <uses-permission android:name="android.permission.SET_SCREEN_COMPATIBILITY" />
     <uses-permission android:name="android.permission.START_ANY_ACTIVITY" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
-    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO" />
 
     <!-- WindowManager -->
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
@@ -65,21 +68,14 @@
     <uses-permission android:name="android.permission.READ_DREAM_STATE" />
     <uses-permission android:name="android.permission.WRITE_DREAM_STATE" />
 
-    <!-- AOKP extra permissions -->
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.NFC" />
+    <!-- Alarm clocks -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
-    <!-- Secure Screenshot -->
-    <protected-broadcast android:name="android.permission.SCREENSHOT" />
-    <protected-broadcast android:name="android.intent.action.SCREENSHOT" />
+    <!-- Keyguard -->
+    <uses-permission android:name="android.permission.CONTROL_KEYGUARD" />
 
-    <permission android:name="android.permission.SCREENSHOT"
-                android:protectionLevel="signatureOrSystem"
-                android:description="@string/permdesc_screenshot"
-                android:label="@string/permlab_screenshot" />
+    <!-- Active display -->
+    <uses-permission android:name="android.permission.SYSTEM_NOTIFICATION_LISTENER" />
 
     <application
         android:persistent="true"
@@ -87,7 +83,9 @@
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:label="@string/app_label"
-        android:icon="@*android:drawable/platlogo">
+        android:icon="@*android:drawable/platlogo"
+        android:process="com.android.systemui"
+        android:supportsRtl="true">
 
         <!-- Broadcast receiver that gets the broadcast at boot time and starts
              up everything else.
@@ -97,19 +95,22 @@
             android:exported="true"
             />
 
+        <!-- started from PhoneWindowManager
+             TODO: Should have an android:permission attribute -->
         <service android:name=".screenshot.TakeScreenshotService"
             android:process=":screenshot"
-            android:permission="android.permission.SCREENSHOT"
-            android:exported="false">
-            <intent-filter>
-               <android name="android.intent.action.SCREENSHOT"/>
-            </intent-filter>
-        </service>
-        
-        <receiver android:name=".screenshot.TrashScreenshot"
-                android:exported="true" />
+            android:exported="false" />
+
+        <!-- started from PhoneWindowManager
+             TODO: Should have an android:permission attribute -->
+        <service android:name=".omni.screenrecord.TakeScreenrecordService"
+            android:process=":screenrecord"
+            android:exported="false" />
 
         <service android:name=".LoadAverageService"
+                android:exported="true" />
+
+        <service android:name=".CPUInfoService"
                 android:exported="true" />
 
         <service android:name=".ImageWallpaper"
@@ -121,6 +122,9 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".screenshot.TrashScreenshot"
+                android:exported="true" />
 
         <activity android:name=".usb.UsbStorageActivity"
                   android:label="@*android:string/usb_storage_activity_title"
@@ -148,12 +152,6 @@
             <intent-filter>
                 <action android:name="com.android.systemui.recent.action.PRELOAD" />
                 <action android:name="com.android.systemui.recent.action.CANCEL_PRELOAD" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".aokp.AwesomeReceiver">
-            <intent-filter>
-                <action android:name="com.android.systemui.aokp.LAUNCH_ACTION" />
             </intent-filter>
         </receiver>
 
@@ -212,154 +210,31 @@
             android:taskAffinity="com.android.systemui.net"
             android:excludeFromRecents="true" />
 
-        <!-- started from ... somewhere -->
+        <!-- platform logo easter egg activity -->
         <activity
-            android:name=".BeanBag"
+            android:name=".DessertCase"
             android:exported="true"
-            android:label="BeanBag"
-            android:icon="@drawable/redbean2"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"
+            android:label="@string/dessert_case"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"
+            android:screenOrientation="locked"
+            android:process=":sweetsweetdesserts"
             android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.android.internal.category.PLATLOGO" />
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
 
-	<!-- also ... started from ... somewhere -->
-        <activity
-            android:name=".UnicornSack"
-            android:exported="true"
-            android:label="UnicornSack"
-            android:icon="@drawable/redunicorn"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"
-            android:hardwareAccelerated="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.android.internal.category.AOKPLOGO" />
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name="com.android.systemui.aokp.QuietHoursShortcut"
-            android:label="@string/toggle_quiethours"
-            android:icon="@drawable/toggle_quiethours"
-            android:theme="@android:style/Theme.Holo.Panel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="com.android.systemui.INTENT_QUIETHOURS_TOGGLE" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.aokp.NavbarToggle"
-            android:label="@string/toggle_navbar"
-            android:icon="@drawable/toggle_navbar"
-            android:theme="@android:style/Theme.Holo.Panel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="com.android.systemui.INTENT_NAVBAR_TOGGLE" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.aokp.StatusbarToggleShortcut"
-            android:label="@string/toggle_statusbar"
-            android:icon="@drawable/toggle_statusbar"
-            android:theme="@android:style/Theme.Holo.Panel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="com.android.systemui.INTENT_STATUSBAR_TOGGLE" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.aokp.WidgetToggle"
-            android:label="@string/toggle_widgets"
-            android:icon="@drawable/ic_sysbar_widget"
-            android:theme="@android:style/Theme.Holo.Panel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="com.android.systemui.INTENT_WIDGET_TOGGLE" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.aokp.RingVibToggle"
-            android:label="@string/toggle_ring_vib"
-            android:icon="@drawable/ic_lockscreen_vib"
-            android:theme="@android:style/Theme.Holo.Panel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="com.android.systemui.INTENT_RING_VIB_TOGGLE" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.aokp.RingSilentToggle"
-            android:label="@string/toggle_ring_silent"
-            android:icon="@drawable/ic_lockscreen_silent"
-            android:theme="@android:style/Theme.Holo.Panel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="com.android.systemui.INTENT_RING_SILENT_TOGGLE" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.aokp.RingVibSilentToggle"
-            android:label="@string/toggle_ring_vib_silent"
-            android:icon="@drawable/ic_lockscreen_soundon"
-            android:theme="@android:style/Theme.Holo.Panel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="com.android.systemui.INTENT_RING_VIB_SILENT_TOGGLE" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.CreateShortcut"
-            android:label="@string/shortcut_label"
-            android:icon="@drawable/ic_sysbar_null">
-            <intent-filter>
-                <action android:name="android.intent.action.CREATE_SHORTCUT" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.android.systemui.WidgetSelectActivity"
-            android:excludeFromRecents="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <!-- Beans in space -->
+        <!-- a gallery of delicious treats -->
         <service
-            android:name=".BeanBagDream"
+            android:name=".DessertCaseDream"
             android:exported="true"
-            android:label="@string/jelly_bean_dream_name"
+            android:label="@string/dessert_case"
             android:enabled="false"
+            android:process=":sweetsweetdesserts"
             >
             <intent-filter>
                 <action android:name="android.service.dreams.DreamService" />
@@ -374,6 +249,12 @@
             android:exported="true"
             android:excludeFromRecents="true"
             >
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -381,7 +262,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.android.systemui.Transparent"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".statusbar.policy.activedisplay.DummyActivity"
+                  android:label=""
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:exported="true"
+                  android:theme="@style/Theme.DummyActivity">
+        </activity>
+
     </application>
 </manifest>

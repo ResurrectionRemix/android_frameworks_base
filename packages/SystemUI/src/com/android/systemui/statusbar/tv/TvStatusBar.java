@@ -16,15 +16,14 @@
 
 package com.android.systemui.statusbar.tv;
 
-import com.android.internal.statusbar.StatusBarIcon;
-import com.android.internal.statusbar.StatusBarNotification;
-import com.android.systemui.statusbar.BaseStatusBar;
-
 import android.os.IBinder;
-import android.view.MotionEvent;
+import android.service.notification.StatusBarNotification;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+
+import com.android.internal.statusbar.StatusBarIcon;
+import com.android.systemui.statusbar.BaseStatusBar;
 
 /*
  * Status bar implementation for "large screen" products that mostly present no on-screen nav
@@ -66,10 +65,6 @@ public class TvStatusBar extends BaseStatusBar {
     }
 
     @Override
-    public void animateCollapsePanels() {
-    }
-
-    @Override
     public void animateCollapsePanels(int flags) {
     }
 
@@ -90,22 +85,6 @@ public class TvStatusBar extends BaseStatusBar {
     }
 
     @Override
-    public void toggleNotificationShade() {
-    }
-
-    @Override
-    protected void onBarTouchEvent(MotionEvent ev) {
-    }
-
-    @Override
-    protected void showBar(boolean showSearch){
-    }
-
-    @Override
-    protected void setSearchLightOn(boolean on){
-    }
-
-    @Override
     public void toggleRecentApps() {
     }
 
@@ -113,14 +92,12 @@ public class TvStatusBar extends BaseStatusBar {
     public void setNavigationIconHints(int hints) {
     }
 
-    @Override
-    protected void createAndAddWindows() {
+    @Override // CommandQueue
+    public void setWindowState(int window, int state) {
     }
 
     @Override
-    protected WindowManager.LayoutParams getRecentsLayoutParams(
-            LayoutParams layoutParams) {
-        return null;
+    protected void createAndAddWindows() {
     }
 
     @Override
@@ -164,6 +141,15 @@ public class TvStatusBar extends BaseStatusBar {
     }
 
     @Override
+    public void resetHeadsUpDecayTimer() {
+    }
+
+    @Override
     public void animateExpandSettingsPanel() {
     }
+
+    @Override
+    protected void refreshLayout(int layoutDirection) {
+    }
+
 }

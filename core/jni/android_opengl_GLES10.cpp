@@ -17,27 +17,14 @@
 
 // This source file is automatically generated
 
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+
 #include "jni.h"
 #include "JNIHelp.h"
 #include <android_runtime/AndroidRuntime.h>
 #include <utils/misc.h>
-
 #include <assert.h>
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-
-/* special calls implemented in Android's GLES wrapper used to more
- * efficiently bound-check passed arrays */
-extern "C" {
-GL_API void GL_APIENTRY glColorPointerBounds(GLint size, GLenum type, GLsizei stride,
-        const GLvoid *ptr, GLsizei count);
-GL_API void GL_APIENTRY glNormalPointerBounds(GLenum type, GLsizei stride,
-        const GLvoid *pointer, GLsizei count);
-GL_API void GL_APIENTRY glTexCoordPointerBounds(GLint size, GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count);
-GL_API void GL_APIENTRY glVertexPointerBounds(GLint size, GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count);
-}
 
 static int initialized = 0;
 
@@ -49,6 +36,40 @@ static jmethodID getBaseArrayOffsetID;
 static jfieldID positionID;
 static jfieldID limitID;
 static jfieldID elementSizeShiftID;
+
+
+/* special calls implemented in Android's GLES wrapper used to more
+ * efficiently bound-check passed arrays */
+extern "C" {
+#ifdef GL_VERSION_ES_CM_1_1
+GL_API void GL_APIENTRY glColorPointerBounds(GLint size, GLenum type, GLsizei stride,
+        const GLvoid *ptr, GLsizei count);
+GL_API void GL_APIENTRY glNormalPointerBounds(GLenum type, GLsizei stride,
+        const GLvoid *pointer, GLsizei count);
+GL_API void GL_APIENTRY glTexCoordPointerBounds(GLint size, GLenum type,
+        GLsizei stride, const GLvoid *pointer, GLsizei count);
+GL_API void GL_APIENTRY glVertexPointerBounds(GLint size, GLenum type,
+        GLsizei stride, const GLvoid *pointer, GLsizei count);
+GL_API void GL_APIENTRY glPointSizePointerOESBounds(GLenum type,
+        GLsizei stride, const GLvoid *pointer, GLsizei count);
+GL_API void GL_APIENTRY glMatrixIndexPointerOESBounds(GLint size, GLenum type,
+        GLsizei stride, const GLvoid *pointer, GLsizei count);
+GL_API void GL_APIENTRY glWeightPointerOESBounds(GLint size, GLenum type,
+        GLsizei stride, const GLvoid *pointer, GLsizei count);
+#endif
+#ifdef GL_ES_VERSION_2_0
+static void glVertexAttribPointerBounds(GLuint indx, GLint size, GLenum type,
+        GLboolean normalized, GLsizei stride, const GLvoid *pointer, GLsizei count) {
+    glVertexAttribPointer(indx, size, type, normalized, stride, pointer);
+}
+#endif
+#ifdef GL_ES_VERSION_3_0
+static void glVertexAttribIPointerBounds(GLuint indx, GLint size, GLenum type,
+        GLsizei stride, const GLvoid *pointer, GLsizei count) {
+    glVertexAttribIPointer(indx, size, type, stride, pointer);
+}
+#endif
+}
 
 /* Cache method IDs each time the class is loaded. */
 
@@ -105,7 +126,7 @@ static void
 releasePointer(JNIEnv *_env, jarray array, void *data, jboolean commit)
 {
     _env->ReleasePrimitiveArrayCritical(array, data,
-					   commit ? 0 : JNI_ABORT);
+                       commit ? 0 : JNI_ABORT);
 }
 
 static void *
@@ -122,11 +143,184 @@ getDirectBufferPointer(JNIEnv *_env, jobject buffer) {
     return (void*) buf;
 }
 
-static int
-getNumCompressedTextureFormats() {
-    int numCompressedTextureFormats = 0;
-    glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &numCompressedTextureFormats);
-    return numCompressedTextureFormats;
+// --------------------------------------------------------------------------
+
+/*
+ * returns the number of values glGet returns for a given pname.
+ *
+ * The code below is written such that pnames requiring only one values
+ * are the default (and are not explicitely tested for). This makes the
+ * checking code much shorter/readable/efficient.
+ *
+ * This means that unknown pnames (e.g.: extensions) will default to 1. If
+ * that unknown pname needs more than 1 value, then the validation check
+ * is incomplete and the app may crash if it passed the wrong number params.
+ */
+static int getNeededCount(GLint pname) {
+    int needed = 1;
+#ifdef GL_ES_VERSION_2_0
+    // GLES 2.x pnames
+    switch (pname) {
+        case GL_ALIASED_LINE_WIDTH_RANGE:
+        case GL_ALIASED_POINT_SIZE_RANGE:
+            needed = 2;
+            break;
+
+        case GL_BLEND_COLOR:
+        case GL_COLOR_CLEAR_VALUE:
+        case GL_COLOR_WRITEMASK:
+        case GL_SCISSOR_BOX:
+        case GL_VIEWPORT:
+            needed = 4;
+            break;
+
+        case GL_COMPRESSED_TEXTURE_FORMATS:
+            glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &needed);
+            break;
+
+        case GL_SHADER_BINARY_FORMATS:
+            glGetIntegerv(GL_NUM_SHADER_BINARY_FORMATS, &needed);
+            break;
+    }
+#endif
+
+#ifdef GL_VERSION_ES_CM_1_1
+    // GLES 1.x pnames
+    switch (pname) {
+        case GL_ALIASED_LINE_WIDTH_RANGE:
+        case GL_ALIASED_POINT_SIZE_RANGE:
+        case GL_DEPTH_RANGE:
+        case GL_SMOOTH_LINE_WIDTH_RANGE:
+        case GL_SMOOTH_POINT_SIZE_RANGE:
+            needed = 2;
+            break;
+
+        case GL_CURRENT_NORMAL:
+        case GL_POINT_DISTANCE_ATTENUATION:
+            needed = 3;
+            break;
+
+        case GL_COLOR_CLEAR_VALUE:
+        case GL_COLOR_WRITEMASK:
+        case GL_CURRENT_COLOR:
+        case GL_CURRENT_TEXTURE_COORDS:
+        case GL_FOG_COLOR:
+        case GL_LIGHT_MODEL_AMBIENT:
+        case GL_SCISSOR_BOX:
+        case GL_VIEWPORT:
+            needed = 4;
+            break;
+
+        case GL_MODELVIEW_MATRIX:
+        case GL_PROJECTION_MATRIX:
+        case GL_TEXTURE_MATRIX:
+            needed = 16;
+            break;
+
+        case GL_COMPRESSED_TEXTURE_FORMATS:
+            glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &needed);
+            break;
+    }
+#endif
+    return needed;
+}
+
+template <typename JTYPEARRAY, typename CTYPE, void GET(GLenum, CTYPE*)>
+static void
+get
+  (JNIEnv *_env, jobject _this, jint pname, JTYPEARRAY params_ref, jint offset) {
+    jint _exception = 0;
+    const char * _exceptionType;
+    const char * _exceptionMessage;
+    CTYPE *params_base = (CTYPE *) 0;
+    jint _remaining;
+    CTYPE *params = (CTYPE *) 0;
+    int _needed = 0;
+
+    if (!params_ref) {
+        _exception = 1;
+        _exceptionType = "java/lang/IllegalArgumentException";
+        _exceptionMessage = "params == null";
+        goto exit;
+    }
+    if (offset < 0) {
+        _exception = 1;
+        _exceptionType = "java/lang/IllegalArgumentException";
+        _exceptionMessage = "offset < 0";
+        goto exit;
+    }
+    _remaining = _env->GetArrayLength(params_ref) - offset;
+    _needed = getNeededCount(pname);
+    // if we didn't find this pname, we just assume the user passed
+    // an array of the right size -- this might happen with extensions
+    // or if we forget an enum here.
+    if (_remaining < _needed) {
+        _exception = 1;
+        _exceptionType = "java/lang/IllegalArgumentException";
+        _exceptionMessage = "length - offset < needed";
+        goto exit;
+    }
+    params_base = (CTYPE *)
+        _env->GetPrimitiveArrayCritical(params_ref, (jboolean *)0);
+    params = params_base + offset;
+
+    GET(
+        (GLenum)pname,
+        (CTYPE *)params
+    );
+
+exit:
+    if (params_base) {
+        _env->ReleasePrimitiveArrayCritical(params_ref, params_base,
+            _exception ? JNI_ABORT: 0);
+    }
+    if (_exception) {
+        jniThrowException(_env, _exceptionType, _exceptionMessage);
+    }
+}
+
+
+template <typename CTYPE, void GET(GLenum, CTYPE*)>
+static void
+getarray
+  (JNIEnv *_env, jobject _this, jint pname, jobject params_buf) {
+    jint _exception = 0;
+    const char * _exceptionType;
+    const char * _exceptionMessage;
+    jarray _array = (jarray) 0;
+    jint _bufferOffset = (jint) 0;
+    jint _remaining;
+    CTYPE *params = (CTYPE *) 0;
+    int _needed = 0;
+
+    params = (CTYPE *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
+    _remaining /= sizeof(CTYPE);    // convert from bytes to item count
+    _needed = getNeededCount(pname);
+    // if we didn't find this pname, we just assume the user passed
+    // an array of the right size -- this might happen with extensions
+    // or if we forget an enum here.
+    if (_needed>0 && _remaining < _needed) {
+        _exception = 1;
+        _exceptionType = "java/lang/IllegalArgumentException";
+        _exceptionMessage = "remaining() < needed";
+        goto exit;
+    }
+    if (params == NULL) {
+        char * _paramsBase = (char *)_env->GetPrimitiveArrayCritical(_array, (jboolean *) 0);
+        params = (CTYPE *) (_paramsBase + _bufferOffset);
+    }
+    GET(
+        (GLenum)pname,
+        (CTYPE *)params
+    );
+
+exit:
+    if (_array) {
+        releasePointer(_env, _array, params, _exception ? JNI_FALSE : JNI_TRUE);
+    }
+    if (_exception) {
+        jniThrowException(_env, _exceptionType, _exceptionMessage);
+    }
 }
 
 // --------------------------------------------------------------------------
@@ -413,8 +607,8 @@ static void
 android_glDeleteTextures__I_3II
   (JNIEnv *_env, jobject _this, jint n, jintArray textures_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLuint *textures_base = (GLuint *) 0;
     jint _remaining;
     GLuint *textures = (GLuint *) 0;
@@ -462,8 +656,8 @@ static void
 android_glDeleteTextures__ILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint n, jobject textures_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -566,8 +760,8 @@ static void
 android_glDrawElements__IIILjava_nio_Buffer_2
   (JNIEnv *_env, jobject _this, jint mode, jint count, jint type, jobject indices_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -647,8 +841,8 @@ static void
 android_glFogfv__I_3FI
   (JNIEnv *_env, jobject _this, jint pname, jfloatArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfloat *params_base = (GLfloat *) 0;
     jint _remaining;
     GLfloat *params = (GLfloat *) 0;
@@ -668,27 +862,13 @@ android_glFogfv__I_3FI
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_FOG_MODE)
-        case GL_FOG_MODE:
-#endif // defined(GL_FOG_MODE)
-#if defined(GL_FOG_DENSITY)
-        case GL_FOG_DENSITY:
-#endif // defined(GL_FOG_DENSITY)
-#if defined(GL_FOG_START)
-        case GL_FOG_START:
-#endif // defined(GL_FOG_START)
-#if defined(GL_FOG_END)
-        case GL_FOG_END:
-#endif // defined(GL_FOG_END)
-            _needed = 1;
-            break;
 #if defined(GL_FOG_COLOR)
         case GL_FOG_COLOR:
 #endif // defined(GL_FOG_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -721,8 +901,8 @@ static void
 android_glFogfv__ILjava_nio_FloatBuffer_2
   (JNIEnv *_env, jobject _this, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -731,27 +911,13 @@ android_glFogfv__ILjava_nio_FloatBuffer_2
     params = (GLfloat *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_FOG_MODE)
-        case GL_FOG_MODE:
-#endif // defined(GL_FOG_MODE)
-#if defined(GL_FOG_DENSITY)
-        case GL_FOG_DENSITY:
-#endif // defined(GL_FOG_DENSITY)
-#if defined(GL_FOG_START)
-        case GL_FOG_START:
-#endif // defined(GL_FOG_START)
-#if defined(GL_FOG_END)
-        case GL_FOG_END:
-#endif // defined(GL_FOG_END)
-            _needed = 1;
-            break;
 #if defined(GL_FOG_COLOR)
         case GL_FOG_COLOR:
 #endif // defined(GL_FOG_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -793,8 +959,8 @@ static void
 android_glFogxv__I_3II
   (JNIEnv *_env, jobject _this, jint pname, jintArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfixed *params_base = (GLfixed *) 0;
     jint _remaining;
     GLfixed *params = (GLfixed *) 0;
@@ -814,27 +980,13 @@ android_glFogxv__I_3II
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_FOG_MODE)
-        case GL_FOG_MODE:
-#endif // defined(GL_FOG_MODE)
-#if defined(GL_FOG_DENSITY)
-        case GL_FOG_DENSITY:
-#endif // defined(GL_FOG_DENSITY)
-#if defined(GL_FOG_START)
-        case GL_FOG_START:
-#endif // defined(GL_FOG_START)
-#if defined(GL_FOG_END)
-        case GL_FOG_END:
-#endif // defined(GL_FOG_END)
-            _needed = 1;
-            break;
 #if defined(GL_FOG_COLOR)
         case GL_FOG_COLOR:
 #endif // defined(GL_FOG_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -867,8 +1019,8 @@ static void
 android_glFogxv__ILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -877,27 +1029,13 @@ android_glFogxv__ILjava_nio_IntBuffer_2
     params = (GLfixed *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_FOG_MODE)
-        case GL_FOG_MODE:
-#endif // defined(GL_FOG_MODE)
-#if defined(GL_FOG_DENSITY)
-        case GL_FOG_DENSITY:
-#endif // defined(GL_FOG_DENSITY)
-#if defined(GL_FOG_START)
-        case GL_FOG_START:
-#endif // defined(GL_FOG_START)
-#if defined(GL_FOG_END)
-        case GL_FOG_END:
-#endif // defined(GL_FOG_END)
-            _needed = 1;
-            break;
 #if defined(GL_FOG_COLOR)
         case GL_FOG_COLOR:
 #endif // defined(GL_FOG_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -966,8 +1104,8 @@ static void
 android_glGenTextures__I_3II
   (JNIEnv *_env, jobject _this, jint n, jintArray textures_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLuint *textures_base = (GLuint *) 0;
     jint _remaining;
     GLuint *textures = (GLuint *) 0;
@@ -1015,8 +1153,8 @@ static void
 android_glGenTextures__ILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint n, jobject textures_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -1053,755 +1191,21 @@ android_glGetError__
   (JNIEnv *_env, jobject _this) {
     GLenum _returnValue;
     _returnValue = glGetError();
-    return _returnValue;
+    return (jint)_returnValue;
 }
 
 /* void glGetIntegerv ( GLenum pname, GLint *params ) */
 static void
 android_glGetIntegerv__I_3II
   (JNIEnv *_env, jobject _this, jint pname, jintArray params_ref, jint offset) {
-    jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
-    GLint *params_base = (GLint *) 0;
-    jint _remaining;
-    GLint *params = (GLint *) 0;
-
-    if (!params_ref) {
-        _exception = 1;
-        _exceptionType = "java/lang/IllegalArgumentException";
-        _exceptionMessage = "params == null";
-        goto exit;
-    }
-    if (offset < 0) {
-        _exception = 1;
-        _exceptionType = "java/lang/IllegalArgumentException";
-        _exceptionMessage = "offset < 0";
-        goto exit;
-    }
-    _remaining = _env->GetArrayLength(params_ref) - offset;
-    int _needed;
-    switch (pname) {
-#if defined(GL_ALPHA_BITS)
-        case GL_ALPHA_BITS:
-#endif // defined(GL_ALPHA_BITS)
-#if defined(GL_ALPHA_TEST_FUNC)
-        case GL_ALPHA_TEST_FUNC:
-#endif // defined(GL_ALPHA_TEST_FUNC)
-#if defined(GL_ALPHA_TEST_REF)
-        case GL_ALPHA_TEST_REF:
-#endif // defined(GL_ALPHA_TEST_REF)
-#if defined(GL_BLEND_DST)
-        case GL_BLEND_DST:
-#endif // defined(GL_BLEND_DST)
-#if defined(GL_BLUE_BITS)
-        case GL_BLUE_BITS:
-#endif // defined(GL_BLUE_BITS)
-#if defined(GL_COLOR_ARRAY_BUFFER_BINDING)
-        case GL_COLOR_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_COLOR_ARRAY_BUFFER_BINDING)
-#if defined(GL_COLOR_ARRAY_SIZE)
-        case GL_COLOR_ARRAY_SIZE:
-#endif // defined(GL_COLOR_ARRAY_SIZE)
-#if defined(GL_COLOR_ARRAY_STRIDE)
-        case GL_COLOR_ARRAY_STRIDE:
-#endif // defined(GL_COLOR_ARRAY_STRIDE)
-#if defined(GL_COLOR_ARRAY_TYPE)
-        case GL_COLOR_ARRAY_TYPE:
-#endif // defined(GL_COLOR_ARRAY_TYPE)
-#if defined(GL_CULL_FACE)
-        case GL_CULL_FACE:
-#endif // defined(GL_CULL_FACE)
-#if defined(GL_DEPTH_BITS)
-        case GL_DEPTH_BITS:
-#endif // defined(GL_DEPTH_BITS)
-#if defined(GL_DEPTH_CLEAR_VALUE)
-        case GL_DEPTH_CLEAR_VALUE:
-#endif // defined(GL_DEPTH_CLEAR_VALUE)
-#if defined(GL_DEPTH_FUNC)
-        case GL_DEPTH_FUNC:
-#endif // defined(GL_DEPTH_FUNC)
-#if defined(GL_DEPTH_WRITEMASK)
-        case GL_DEPTH_WRITEMASK:
-#endif // defined(GL_DEPTH_WRITEMASK)
-#if defined(GL_FOG_DENSITY)
-        case GL_FOG_DENSITY:
-#endif // defined(GL_FOG_DENSITY)
-#if defined(GL_FOG_END)
-        case GL_FOG_END:
-#endif // defined(GL_FOG_END)
-#if defined(GL_FOG_MODE)
-        case GL_FOG_MODE:
-#endif // defined(GL_FOG_MODE)
-#if defined(GL_FOG_START)
-        case GL_FOG_START:
-#endif // defined(GL_FOG_START)
-#if defined(GL_FRONT_FACE)
-        case GL_FRONT_FACE:
-#endif // defined(GL_FRONT_FACE)
-#if defined(GL_GREEN_BITS)
-        case GL_GREEN_BITS:
-#endif // defined(GL_GREEN_BITS)
-#if defined(GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES)
-        case GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES:
-#endif // defined(GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES)
-#if defined(GL_IMPLEMENTATION_COLOR_READ_TYPE_OES)
-        case GL_IMPLEMENTATION_COLOR_READ_TYPE_OES:
-#endif // defined(GL_IMPLEMENTATION_COLOR_READ_TYPE_OES)
-#if defined(GL_LIGHT_MODEL_COLOR_CONTROL)
-        case GL_LIGHT_MODEL_COLOR_CONTROL:
-#endif // defined(GL_LIGHT_MODEL_COLOR_CONTROL)
-#if defined(GL_LIGHT_MODEL_LOCAL_VIEWER)
-        case GL_LIGHT_MODEL_LOCAL_VIEWER:
-#endif // defined(GL_LIGHT_MODEL_LOCAL_VIEWER)
-#if defined(GL_LIGHT_MODEL_TWO_SIDE)
-        case GL_LIGHT_MODEL_TWO_SIDE:
-#endif // defined(GL_LIGHT_MODEL_TWO_SIDE)
-#if defined(GL_LINE_SMOOTH_HINT)
-        case GL_LINE_SMOOTH_HINT:
-#endif // defined(GL_LINE_SMOOTH_HINT)
-#if defined(GL_LINE_WIDTH)
-        case GL_LINE_WIDTH:
-#endif // defined(GL_LINE_WIDTH)
-#if defined(GL_LOGIC_OP_MODE)
-        case GL_LOGIC_OP_MODE:
-#endif // defined(GL_LOGIC_OP_MODE)
-#if defined(GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES)
-        case GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES)
-#if defined(GL_MATRIX_INDEX_ARRAY_SIZE_OES)
-        case GL_MATRIX_INDEX_ARRAY_SIZE_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_SIZE_OES)
-#if defined(GL_MATRIX_INDEX_ARRAY_STRIDE_OES)
-        case GL_MATRIX_INDEX_ARRAY_STRIDE_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_STRIDE_OES)
-#if defined(GL_MATRIX_INDEX_ARRAY_TYPE_OES)
-        case GL_MATRIX_INDEX_ARRAY_TYPE_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_TYPE_OES)
-#if defined(GL_MATRIX_MODE)
-        case GL_MATRIX_MODE:
-#endif // defined(GL_MATRIX_MODE)
-#if defined(GL_MAX_CLIP_PLANES)
-        case GL_MAX_CLIP_PLANES:
-#endif // defined(GL_MAX_CLIP_PLANES)
-#if defined(GL_MAX_ELEMENTS_INDICES)
-        case GL_MAX_ELEMENTS_INDICES:
-#endif // defined(GL_MAX_ELEMENTS_INDICES)
-#if defined(GL_MAX_ELEMENTS_VERTICES)
-        case GL_MAX_ELEMENTS_VERTICES:
-#endif // defined(GL_MAX_ELEMENTS_VERTICES)
-#if defined(GL_MAX_LIGHTS)
-        case GL_MAX_LIGHTS:
-#endif // defined(GL_MAX_LIGHTS)
-#if defined(GL_MAX_MODELVIEW_STACK_DEPTH)
-        case GL_MAX_MODELVIEW_STACK_DEPTH:
-#endif // defined(GL_MAX_MODELVIEW_STACK_DEPTH)
-#if defined(GL_MAX_PALETTE_MATRICES_OES)
-        case GL_MAX_PALETTE_MATRICES_OES:
-#endif // defined(GL_MAX_PALETTE_MATRICES_OES)
-#if defined(GL_MAX_PROJECTION_STACK_DEPTH)
-        case GL_MAX_PROJECTION_STACK_DEPTH:
-#endif // defined(GL_MAX_PROJECTION_STACK_DEPTH)
-#if defined(GL_MAX_TEXTURE_SIZE)
-        case GL_MAX_TEXTURE_SIZE:
-#endif // defined(GL_MAX_TEXTURE_SIZE)
-#if defined(GL_MAX_TEXTURE_STACK_DEPTH)
-        case GL_MAX_TEXTURE_STACK_DEPTH:
-#endif // defined(GL_MAX_TEXTURE_STACK_DEPTH)
-#if defined(GL_MAX_TEXTURE_UNITS)
-        case GL_MAX_TEXTURE_UNITS:
-#endif // defined(GL_MAX_TEXTURE_UNITS)
-#if defined(GL_MAX_VERTEX_UNITS_OES)
-        case GL_MAX_VERTEX_UNITS_OES:
-#endif // defined(GL_MAX_VERTEX_UNITS_OES)
-#if defined(GL_MODELVIEW_STACK_DEPTH)
-        case GL_MODELVIEW_STACK_DEPTH:
-#endif // defined(GL_MODELVIEW_STACK_DEPTH)
-#if defined(GL_NORMAL_ARRAY_BUFFER_BINDING)
-        case GL_NORMAL_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_NORMAL_ARRAY_BUFFER_BINDING)
-#if defined(GL_NORMAL_ARRAY_STRIDE)
-        case GL_NORMAL_ARRAY_STRIDE:
-#endif // defined(GL_NORMAL_ARRAY_STRIDE)
-#if defined(GL_NORMAL_ARRAY_TYPE)
-        case GL_NORMAL_ARRAY_TYPE:
-#endif // defined(GL_NORMAL_ARRAY_TYPE)
-#if defined(GL_NUM_COMPRESSED_TEXTURE_FORMATS)
-        case GL_NUM_COMPRESSED_TEXTURE_FORMATS:
-#endif // defined(GL_NUM_COMPRESSED_TEXTURE_FORMATS)
-#if defined(GL_PACK_ALIGNMENT)
-        case GL_PACK_ALIGNMENT:
-#endif // defined(GL_PACK_ALIGNMENT)
-#if defined(GL_PERSPECTIVE_CORRECTION_HINT)
-        case GL_PERSPECTIVE_CORRECTION_HINT:
-#endif // defined(GL_PERSPECTIVE_CORRECTION_HINT)
-#if defined(GL_POINT_SIZE)
-        case GL_POINT_SIZE:
-#endif // defined(GL_POINT_SIZE)
-#if defined(GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES)
-        case GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES:
-#endif // defined(GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES)
-#if defined(GL_POINT_SIZE_ARRAY_STRIDE_OES)
-        case GL_POINT_SIZE_ARRAY_STRIDE_OES:
-#endif // defined(GL_POINT_SIZE_ARRAY_STRIDE_OES)
-#if defined(GL_POINT_SIZE_ARRAY_TYPE_OES)
-        case GL_POINT_SIZE_ARRAY_TYPE_OES:
-#endif // defined(GL_POINT_SIZE_ARRAY_TYPE_OES)
-#if defined(GL_POINT_SMOOTH_HINT)
-        case GL_POINT_SMOOTH_HINT:
-#endif // defined(GL_POINT_SMOOTH_HINT)
-#if defined(GL_POLYGON_OFFSET_FACTOR)
-        case GL_POLYGON_OFFSET_FACTOR:
-#endif // defined(GL_POLYGON_OFFSET_FACTOR)
-#if defined(GL_POLYGON_OFFSET_UNITS)
-        case GL_POLYGON_OFFSET_UNITS:
-#endif // defined(GL_POLYGON_OFFSET_UNITS)
-#if defined(GL_PROJECTION_STACK_DEPTH)
-        case GL_PROJECTION_STACK_DEPTH:
-#endif // defined(GL_PROJECTION_STACK_DEPTH)
-#if defined(GL_RED_BITS)
-        case GL_RED_BITS:
-#endif // defined(GL_RED_BITS)
-#if defined(GL_SHADE_MODEL)
-        case GL_SHADE_MODEL:
-#endif // defined(GL_SHADE_MODEL)
-#if defined(GL_STENCIL_BITS)
-        case GL_STENCIL_BITS:
-#endif // defined(GL_STENCIL_BITS)
-#if defined(GL_STENCIL_CLEAR_VALUE)
-        case GL_STENCIL_CLEAR_VALUE:
-#endif // defined(GL_STENCIL_CLEAR_VALUE)
-#if defined(GL_STENCIL_FAIL)
-        case GL_STENCIL_FAIL:
-#endif // defined(GL_STENCIL_FAIL)
-#if defined(GL_STENCIL_FUNC)
-        case GL_STENCIL_FUNC:
-#endif // defined(GL_STENCIL_FUNC)
-#if defined(GL_STENCIL_PASS_DEPTH_FAIL)
-        case GL_STENCIL_PASS_DEPTH_FAIL:
-#endif // defined(GL_STENCIL_PASS_DEPTH_FAIL)
-#if defined(GL_STENCIL_PASS_DEPTH_PASS)
-        case GL_STENCIL_PASS_DEPTH_PASS:
-#endif // defined(GL_STENCIL_PASS_DEPTH_PASS)
-#if defined(GL_STENCIL_REF)
-        case GL_STENCIL_REF:
-#endif // defined(GL_STENCIL_REF)
-#if defined(GL_STENCIL_VALUE_MASK)
-        case GL_STENCIL_VALUE_MASK:
-#endif // defined(GL_STENCIL_VALUE_MASK)
-#if defined(GL_STENCIL_WRITEMASK)
-        case GL_STENCIL_WRITEMASK:
-#endif // defined(GL_STENCIL_WRITEMASK)
-#if defined(GL_SUBPIXEL_BITS)
-        case GL_SUBPIXEL_BITS:
-#endif // defined(GL_SUBPIXEL_BITS)
-#if defined(GL_TEXTURE_BINDING_2D)
-        case GL_TEXTURE_BINDING_2D:
-#endif // defined(GL_TEXTURE_BINDING_2D)
-#if defined(GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING)
-        case GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING)
-#if defined(GL_TEXTURE_COORD_ARRAY_SIZE)
-        case GL_TEXTURE_COORD_ARRAY_SIZE:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_SIZE)
-#if defined(GL_TEXTURE_COORD_ARRAY_STRIDE)
-        case GL_TEXTURE_COORD_ARRAY_STRIDE:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_STRIDE)
-#if defined(GL_TEXTURE_COORD_ARRAY_TYPE)
-        case GL_TEXTURE_COORD_ARRAY_TYPE:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_TYPE)
-#if defined(GL_TEXTURE_STACK_DEPTH)
-        case GL_TEXTURE_STACK_DEPTH:
-#endif // defined(GL_TEXTURE_STACK_DEPTH)
-#if defined(GL_UNPACK_ALIGNMENT)
-        case GL_UNPACK_ALIGNMENT:
-#endif // defined(GL_UNPACK_ALIGNMENT)
-#if defined(GL_VERTEX_ARRAY_BUFFER_BINDING)
-        case GL_VERTEX_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_VERTEX_ARRAY_BUFFER_BINDING)
-#if defined(GL_VERTEX_ARRAY_SIZE)
-        case GL_VERTEX_ARRAY_SIZE:
-#endif // defined(GL_VERTEX_ARRAY_SIZE)
-#if defined(GL_VERTEX_ARRAY_STRIDE)
-        case GL_VERTEX_ARRAY_STRIDE:
-#endif // defined(GL_VERTEX_ARRAY_STRIDE)
-#if defined(GL_VERTEX_ARRAY_TYPE)
-        case GL_VERTEX_ARRAY_TYPE:
-#endif // defined(GL_VERTEX_ARRAY_TYPE)
-#if defined(GL_WEIGHT_ARRAY_BUFFER_BINDING_OES)
-        case GL_WEIGHT_ARRAY_BUFFER_BINDING_OES:
-#endif // defined(GL_WEIGHT_ARRAY_BUFFER_BINDING_OES)
-#if defined(GL_WEIGHT_ARRAY_SIZE_OES)
-        case GL_WEIGHT_ARRAY_SIZE_OES:
-#endif // defined(GL_WEIGHT_ARRAY_SIZE_OES)
-#if defined(GL_WEIGHT_ARRAY_STRIDE_OES)
-        case GL_WEIGHT_ARRAY_STRIDE_OES:
-#endif // defined(GL_WEIGHT_ARRAY_STRIDE_OES)
-#if defined(GL_WEIGHT_ARRAY_TYPE_OES)
-        case GL_WEIGHT_ARRAY_TYPE_OES:
-#endif // defined(GL_WEIGHT_ARRAY_TYPE_OES)
-            _needed = 1;
-            break;
-#if defined(GL_ALIASED_POINT_SIZE_RANGE)
-        case GL_ALIASED_POINT_SIZE_RANGE:
-#endif // defined(GL_ALIASED_POINT_SIZE_RANGE)
-#if defined(GL_ALIASED_LINE_WIDTH_RANGE)
-        case GL_ALIASED_LINE_WIDTH_RANGE:
-#endif // defined(GL_ALIASED_LINE_WIDTH_RANGE)
-#if defined(GL_DEPTH_RANGE)
-        case GL_DEPTH_RANGE:
-#endif // defined(GL_DEPTH_RANGE)
-#if defined(GL_MAX_VIEWPORT_DIMS)
-        case GL_MAX_VIEWPORT_DIMS:
-#endif // defined(GL_MAX_VIEWPORT_DIMS)
-#if defined(GL_SMOOTH_LINE_WIDTH_RANGE)
-        case GL_SMOOTH_LINE_WIDTH_RANGE:
-#endif // defined(GL_SMOOTH_LINE_WIDTH_RANGE)
-#if defined(GL_SMOOTH_POINT_SIZE_RANGE)
-        case GL_SMOOTH_POINT_SIZE_RANGE:
-#endif // defined(GL_SMOOTH_POINT_SIZE_RANGE)
-            _needed = 2;
-            break;
-#if defined(GL_COLOR_CLEAR_VALUE)
-        case GL_COLOR_CLEAR_VALUE:
-#endif // defined(GL_COLOR_CLEAR_VALUE)
-#if defined(GL_COLOR_WRITEMASK)
-        case GL_COLOR_WRITEMASK:
-#endif // defined(GL_COLOR_WRITEMASK)
-#if defined(GL_FOG_COLOR)
-        case GL_FOG_COLOR:
-#endif // defined(GL_FOG_COLOR)
-#if defined(GL_LIGHT_MODEL_AMBIENT)
-        case GL_LIGHT_MODEL_AMBIENT:
-#endif // defined(GL_LIGHT_MODEL_AMBIENT)
-#if defined(GL_SCISSOR_BOX)
-        case GL_SCISSOR_BOX:
-#endif // defined(GL_SCISSOR_BOX)
-#if defined(GL_VIEWPORT)
-        case GL_VIEWPORT:
-#endif // defined(GL_VIEWPORT)
-            _needed = 4;
-            break;
-#if defined(GL_MODELVIEW_MATRIX)
-        case GL_MODELVIEW_MATRIX:
-#endif // defined(GL_MODELVIEW_MATRIX)
-#if defined(GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES)
-        case GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES:
-#endif // defined(GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES)
-#if defined(GL_PROJECTION_MATRIX)
-        case GL_PROJECTION_MATRIX:
-#endif // defined(GL_PROJECTION_MATRIX)
-#if defined(GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES)
-        case GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES:
-#endif // defined(GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES)
-#if defined(GL_TEXTURE_MATRIX)
-        case GL_TEXTURE_MATRIX:
-#endif // defined(GL_TEXTURE_MATRIX)
-#if defined(GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES)
-        case GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES:
-#endif // defined(GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES)
-            _needed = 16;
-            break;
-#if defined(GL_COMPRESSED_TEXTURE_FORMATS)
-        case GL_COMPRESSED_TEXTURE_FORMATS:
-#endif // defined(GL_COMPRESSED_TEXTURE_FORMATS)
-            _needed = getNumCompressedTextureFormats();
-            break;
-        default:
-            _needed = 0;
-            break;
-    }
-    if (_remaining < _needed) {
-        _exception = 1;
-        _exceptionType = "java/lang/IllegalArgumentException";
-        _exceptionMessage = "length - offset < needed";
-        goto exit;
-    }
-    params_base = (GLint *)
-        _env->GetPrimitiveArrayCritical(params_ref, (jboolean *)0);
-    params = params_base + offset;
-
-    glGetIntegerv(
-        (GLenum)pname,
-        (GLint *)params
-    );
-
-exit:
-    if (params_base) {
-        _env->ReleasePrimitiveArrayCritical(params_ref, params_base,
-            _exception ? JNI_ABORT: 0);
-    }
-    if (_exception) {
-        jniThrowException(_env, _exceptionType, _exceptionMessage);
-    }
+    get<jintArray, GLint, glGetIntegerv>(_env, _this, pname, params_ref, offset);
 }
 
 /* void glGetIntegerv ( GLenum pname, GLint *params ) */
 static void
 android_glGetIntegerv__ILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint pname, jobject params_buf) {
-    jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
-    jarray _array = (jarray) 0;
-    jint _bufferOffset = (jint) 0;
-    jint _remaining;
-    GLint *params = (GLint *) 0;
-
-    params = (GLint *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
-    int _needed;
-    switch (pname) {
-#if defined(GL_ALPHA_BITS)
-        case GL_ALPHA_BITS:
-#endif // defined(GL_ALPHA_BITS)
-#if defined(GL_ALPHA_TEST_FUNC)
-        case GL_ALPHA_TEST_FUNC:
-#endif // defined(GL_ALPHA_TEST_FUNC)
-#if defined(GL_ALPHA_TEST_REF)
-        case GL_ALPHA_TEST_REF:
-#endif // defined(GL_ALPHA_TEST_REF)
-#if defined(GL_BLEND_DST)
-        case GL_BLEND_DST:
-#endif // defined(GL_BLEND_DST)
-#if defined(GL_BLUE_BITS)
-        case GL_BLUE_BITS:
-#endif // defined(GL_BLUE_BITS)
-#if defined(GL_COLOR_ARRAY_BUFFER_BINDING)
-        case GL_COLOR_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_COLOR_ARRAY_BUFFER_BINDING)
-#if defined(GL_COLOR_ARRAY_SIZE)
-        case GL_COLOR_ARRAY_SIZE:
-#endif // defined(GL_COLOR_ARRAY_SIZE)
-#if defined(GL_COLOR_ARRAY_STRIDE)
-        case GL_COLOR_ARRAY_STRIDE:
-#endif // defined(GL_COLOR_ARRAY_STRIDE)
-#if defined(GL_COLOR_ARRAY_TYPE)
-        case GL_COLOR_ARRAY_TYPE:
-#endif // defined(GL_COLOR_ARRAY_TYPE)
-#if defined(GL_CULL_FACE)
-        case GL_CULL_FACE:
-#endif // defined(GL_CULL_FACE)
-#if defined(GL_DEPTH_BITS)
-        case GL_DEPTH_BITS:
-#endif // defined(GL_DEPTH_BITS)
-#if defined(GL_DEPTH_CLEAR_VALUE)
-        case GL_DEPTH_CLEAR_VALUE:
-#endif // defined(GL_DEPTH_CLEAR_VALUE)
-#if defined(GL_DEPTH_FUNC)
-        case GL_DEPTH_FUNC:
-#endif // defined(GL_DEPTH_FUNC)
-#if defined(GL_DEPTH_WRITEMASK)
-        case GL_DEPTH_WRITEMASK:
-#endif // defined(GL_DEPTH_WRITEMASK)
-#if defined(GL_FOG_DENSITY)
-        case GL_FOG_DENSITY:
-#endif // defined(GL_FOG_DENSITY)
-#if defined(GL_FOG_END)
-        case GL_FOG_END:
-#endif // defined(GL_FOG_END)
-#if defined(GL_FOG_MODE)
-        case GL_FOG_MODE:
-#endif // defined(GL_FOG_MODE)
-#if defined(GL_FOG_START)
-        case GL_FOG_START:
-#endif // defined(GL_FOG_START)
-#if defined(GL_FRONT_FACE)
-        case GL_FRONT_FACE:
-#endif // defined(GL_FRONT_FACE)
-#if defined(GL_GREEN_BITS)
-        case GL_GREEN_BITS:
-#endif // defined(GL_GREEN_BITS)
-#if defined(GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES)
-        case GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES:
-#endif // defined(GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES)
-#if defined(GL_IMPLEMENTATION_COLOR_READ_TYPE_OES)
-        case GL_IMPLEMENTATION_COLOR_READ_TYPE_OES:
-#endif // defined(GL_IMPLEMENTATION_COLOR_READ_TYPE_OES)
-#if defined(GL_LIGHT_MODEL_COLOR_CONTROL)
-        case GL_LIGHT_MODEL_COLOR_CONTROL:
-#endif // defined(GL_LIGHT_MODEL_COLOR_CONTROL)
-#if defined(GL_LIGHT_MODEL_LOCAL_VIEWER)
-        case GL_LIGHT_MODEL_LOCAL_VIEWER:
-#endif // defined(GL_LIGHT_MODEL_LOCAL_VIEWER)
-#if defined(GL_LIGHT_MODEL_TWO_SIDE)
-        case GL_LIGHT_MODEL_TWO_SIDE:
-#endif // defined(GL_LIGHT_MODEL_TWO_SIDE)
-#if defined(GL_LINE_SMOOTH_HINT)
-        case GL_LINE_SMOOTH_HINT:
-#endif // defined(GL_LINE_SMOOTH_HINT)
-#if defined(GL_LINE_WIDTH)
-        case GL_LINE_WIDTH:
-#endif // defined(GL_LINE_WIDTH)
-#if defined(GL_LOGIC_OP_MODE)
-        case GL_LOGIC_OP_MODE:
-#endif // defined(GL_LOGIC_OP_MODE)
-#if defined(GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES)
-        case GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES)
-#if defined(GL_MATRIX_INDEX_ARRAY_SIZE_OES)
-        case GL_MATRIX_INDEX_ARRAY_SIZE_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_SIZE_OES)
-#if defined(GL_MATRIX_INDEX_ARRAY_STRIDE_OES)
-        case GL_MATRIX_INDEX_ARRAY_STRIDE_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_STRIDE_OES)
-#if defined(GL_MATRIX_INDEX_ARRAY_TYPE_OES)
-        case GL_MATRIX_INDEX_ARRAY_TYPE_OES:
-#endif // defined(GL_MATRIX_INDEX_ARRAY_TYPE_OES)
-#if defined(GL_MATRIX_MODE)
-        case GL_MATRIX_MODE:
-#endif // defined(GL_MATRIX_MODE)
-#if defined(GL_MAX_CLIP_PLANES)
-        case GL_MAX_CLIP_PLANES:
-#endif // defined(GL_MAX_CLIP_PLANES)
-#if defined(GL_MAX_ELEMENTS_INDICES)
-        case GL_MAX_ELEMENTS_INDICES:
-#endif // defined(GL_MAX_ELEMENTS_INDICES)
-#if defined(GL_MAX_ELEMENTS_VERTICES)
-        case GL_MAX_ELEMENTS_VERTICES:
-#endif // defined(GL_MAX_ELEMENTS_VERTICES)
-#if defined(GL_MAX_LIGHTS)
-        case GL_MAX_LIGHTS:
-#endif // defined(GL_MAX_LIGHTS)
-#if defined(GL_MAX_MODELVIEW_STACK_DEPTH)
-        case GL_MAX_MODELVIEW_STACK_DEPTH:
-#endif // defined(GL_MAX_MODELVIEW_STACK_DEPTH)
-#if defined(GL_MAX_PALETTE_MATRICES_OES)
-        case GL_MAX_PALETTE_MATRICES_OES:
-#endif // defined(GL_MAX_PALETTE_MATRICES_OES)
-#if defined(GL_MAX_PROJECTION_STACK_DEPTH)
-        case GL_MAX_PROJECTION_STACK_DEPTH:
-#endif // defined(GL_MAX_PROJECTION_STACK_DEPTH)
-#if defined(GL_MAX_TEXTURE_SIZE)
-        case GL_MAX_TEXTURE_SIZE:
-#endif // defined(GL_MAX_TEXTURE_SIZE)
-#if defined(GL_MAX_TEXTURE_STACK_DEPTH)
-        case GL_MAX_TEXTURE_STACK_DEPTH:
-#endif // defined(GL_MAX_TEXTURE_STACK_DEPTH)
-#if defined(GL_MAX_TEXTURE_UNITS)
-        case GL_MAX_TEXTURE_UNITS:
-#endif // defined(GL_MAX_TEXTURE_UNITS)
-#if defined(GL_MAX_VERTEX_UNITS_OES)
-        case GL_MAX_VERTEX_UNITS_OES:
-#endif // defined(GL_MAX_VERTEX_UNITS_OES)
-#if defined(GL_MODELVIEW_STACK_DEPTH)
-        case GL_MODELVIEW_STACK_DEPTH:
-#endif // defined(GL_MODELVIEW_STACK_DEPTH)
-#if defined(GL_NORMAL_ARRAY_BUFFER_BINDING)
-        case GL_NORMAL_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_NORMAL_ARRAY_BUFFER_BINDING)
-#if defined(GL_NORMAL_ARRAY_STRIDE)
-        case GL_NORMAL_ARRAY_STRIDE:
-#endif // defined(GL_NORMAL_ARRAY_STRIDE)
-#if defined(GL_NORMAL_ARRAY_TYPE)
-        case GL_NORMAL_ARRAY_TYPE:
-#endif // defined(GL_NORMAL_ARRAY_TYPE)
-#if defined(GL_NUM_COMPRESSED_TEXTURE_FORMATS)
-        case GL_NUM_COMPRESSED_TEXTURE_FORMATS:
-#endif // defined(GL_NUM_COMPRESSED_TEXTURE_FORMATS)
-#if defined(GL_PACK_ALIGNMENT)
-        case GL_PACK_ALIGNMENT:
-#endif // defined(GL_PACK_ALIGNMENT)
-#if defined(GL_PERSPECTIVE_CORRECTION_HINT)
-        case GL_PERSPECTIVE_CORRECTION_HINT:
-#endif // defined(GL_PERSPECTIVE_CORRECTION_HINT)
-#if defined(GL_POINT_SIZE)
-        case GL_POINT_SIZE:
-#endif // defined(GL_POINT_SIZE)
-#if defined(GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES)
-        case GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES:
-#endif // defined(GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES)
-#if defined(GL_POINT_SIZE_ARRAY_STRIDE_OES)
-        case GL_POINT_SIZE_ARRAY_STRIDE_OES:
-#endif // defined(GL_POINT_SIZE_ARRAY_STRIDE_OES)
-#if defined(GL_POINT_SIZE_ARRAY_TYPE_OES)
-        case GL_POINT_SIZE_ARRAY_TYPE_OES:
-#endif // defined(GL_POINT_SIZE_ARRAY_TYPE_OES)
-#if defined(GL_POINT_SMOOTH_HINT)
-        case GL_POINT_SMOOTH_HINT:
-#endif // defined(GL_POINT_SMOOTH_HINT)
-#if defined(GL_POLYGON_OFFSET_FACTOR)
-        case GL_POLYGON_OFFSET_FACTOR:
-#endif // defined(GL_POLYGON_OFFSET_FACTOR)
-#if defined(GL_POLYGON_OFFSET_UNITS)
-        case GL_POLYGON_OFFSET_UNITS:
-#endif // defined(GL_POLYGON_OFFSET_UNITS)
-#if defined(GL_PROJECTION_STACK_DEPTH)
-        case GL_PROJECTION_STACK_DEPTH:
-#endif // defined(GL_PROJECTION_STACK_DEPTH)
-#if defined(GL_RED_BITS)
-        case GL_RED_BITS:
-#endif // defined(GL_RED_BITS)
-#if defined(GL_SHADE_MODEL)
-        case GL_SHADE_MODEL:
-#endif // defined(GL_SHADE_MODEL)
-#if defined(GL_STENCIL_BITS)
-        case GL_STENCIL_BITS:
-#endif // defined(GL_STENCIL_BITS)
-#if defined(GL_STENCIL_CLEAR_VALUE)
-        case GL_STENCIL_CLEAR_VALUE:
-#endif // defined(GL_STENCIL_CLEAR_VALUE)
-#if defined(GL_STENCIL_FAIL)
-        case GL_STENCIL_FAIL:
-#endif // defined(GL_STENCIL_FAIL)
-#if defined(GL_STENCIL_FUNC)
-        case GL_STENCIL_FUNC:
-#endif // defined(GL_STENCIL_FUNC)
-#if defined(GL_STENCIL_PASS_DEPTH_FAIL)
-        case GL_STENCIL_PASS_DEPTH_FAIL:
-#endif // defined(GL_STENCIL_PASS_DEPTH_FAIL)
-#if defined(GL_STENCIL_PASS_DEPTH_PASS)
-        case GL_STENCIL_PASS_DEPTH_PASS:
-#endif // defined(GL_STENCIL_PASS_DEPTH_PASS)
-#if defined(GL_STENCIL_REF)
-        case GL_STENCIL_REF:
-#endif // defined(GL_STENCIL_REF)
-#if defined(GL_STENCIL_VALUE_MASK)
-        case GL_STENCIL_VALUE_MASK:
-#endif // defined(GL_STENCIL_VALUE_MASK)
-#if defined(GL_STENCIL_WRITEMASK)
-        case GL_STENCIL_WRITEMASK:
-#endif // defined(GL_STENCIL_WRITEMASK)
-#if defined(GL_SUBPIXEL_BITS)
-        case GL_SUBPIXEL_BITS:
-#endif // defined(GL_SUBPIXEL_BITS)
-#if defined(GL_TEXTURE_BINDING_2D)
-        case GL_TEXTURE_BINDING_2D:
-#endif // defined(GL_TEXTURE_BINDING_2D)
-#if defined(GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING)
-        case GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING)
-#if defined(GL_TEXTURE_COORD_ARRAY_SIZE)
-        case GL_TEXTURE_COORD_ARRAY_SIZE:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_SIZE)
-#if defined(GL_TEXTURE_COORD_ARRAY_STRIDE)
-        case GL_TEXTURE_COORD_ARRAY_STRIDE:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_STRIDE)
-#if defined(GL_TEXTURE_COORD_ARRAY_TYPE)
-        case GL_TEXTURE_COORD_ARRAY_TYPE:
-#endif // defined(GL_TEXTURE_COORD_ARRAY_TYPE)
-#if defined(GL_TEXTURE_STACK_DEPTH)
-        case GL_TEXTURE_STACK_DEPTH:
-#endif // defined(GL_TEXTURE_STACK_DEPTH)
-#if defined(GL_UNPACK_ALIGNMENT)
-        case GL_UNPACK_ALIGNMENT:
-#endif // defined(GL_UNPACK_ALIGNMENT)
-#if defined(GL_VERTEX_ARRAY_BUFFER_BINDING)
-        case GL_VERTEX_ARRAY_BUFFER_BINDING:
-#endif // defined(GL_VERTEX_ARRAY_BUFFER_BINDING)
-#if defined(GL_VERTEX_ARRAY_SIZE)
-        case GL_VERTEX_ARRAY_SIZE:
-#endif // defined(GL_VERTEX_ARRAY_SIZE)
-#if defined(GL_VERTEX_ARRAY_STRIDE)
-        case GL_VERTEX_ARRAY_STRIDE:
-#endif // defined(GL_VERTEX_ARRAY_STRIDE)
-#if defined(GL_VERTEX_ARRAY_TYPE)
-        case GL_VERTEX_ARRAY_TYPE:
-#endif // defined(GL_VERTEX_ARRAY_TYPE)
-#if defined(GL_WEIGHT_ARRAY_BUFFER_BINDING_OES)
-        case GL_WEIGHT_ARRAY_BUFFER_BINDING_OES:
-#endif // defined(GL_WEIGHT_ARRAY_BUFFER_BINDING_OES)
-#if defined(GL_WEIGHT_ARRAY_SIZE_OES)
-        case GL_WEIGHT_ARRAY_SIZE_OES:
-#endif // defined(GL_WEIGHT_ARRAY_SIZE_OES)
-#if defined(GL_WEIGHT_ARRAY_STRIDE_OES)
-        case GL_WEIGHT_ARRAY_STRIDE_OES:
-#endif // defined(GL_WEIGHT_ARRAY_STRIDE_OES)
-#if defined(GL_WEIGHT_ARRAY_TYPE_OES)
-        case GL_WEIGHT_ARRAY_TYPE_OES:
-#endif // defined(GL_WEIGHT_ARRAY_TYPE_OES)
-            _needed = 1;
-            break;
-#if defined(GL_ALIASED_POINT_SIZE_RANGE)
-        case GL_ALIASED_POINT_SIZE_RANGE:
-#endif // defined(GL_ALIASED_POINT_SIZE_RANGE)
-#if defined(GL_ALIASED_LINE_WIDTH_RANGE)
-        case GL_ALIASED_LINE_WIDTH_RANGE:
-#endif // defined(GL_ALIASED_LINE_WIDTH_RANGE)
-#if defined(GL_DEPTH_RANGE)
-        case GL_DEPTH_RANGE:
-#endif // defined(GL_DEPTH_RANGE)
-#if defined(GL_MAX_VIEWPORT_DIMS)
-        case GL_MAX_VIEWPORT_DIMS:
-#endif // defined(GL_MAX_VIEWPORT_DIMS)
-#if defined(GL_SMOOTH_LINE_WIDTH_RANGE)
-        case GL_SMOOTH_LINE_WIDTH_RANGE:
-#endif // defined(GL_SMOOTH_LINE_WIDTH_RANGE)
-#if defined(GL_SMOOTH_POINT_SIZE_RANGE)
-        case GL_SMOOTH_POINT_SIZE_RANGE:
-#endif // defined(GL_SMOOTH_POINT_SIZE_RANGE)
-            _needed = 2;
-            break;
-#if defined(GL_COLOR_CLEAR_VALUE)
-        case GL_COLOR_CLEAR_VALUE:
-#endif // defined(GL_COLOR_CLEAR_VALUE)
-#if defined(GL_COLOR_WRITEMASK)
-        case GL_COLOR_WRITEMASK:
-#endif // defined(GL_COLOR_WRITEMASK)
-#if defined(GL_FOG_COLOR)
-        case GL_FOG_COLOR:
-#endif // defined(GL_FOG_COLOR)
-#if defined(GL_LIGHT_MODEL_AMBIENT)
-        case GL_LIGHT_MODEL_AMBIENT:
-#endif // defined(GL_LIGHT_MODEL_AMBIENT)
-#if defined(GL_SCISSOR_BOX)
-        case GL_SCISSOR_BOX:
-#endif // defined(GL_SCISSOR_BOX)
-#if defined(GL_VIEWPORT)
-        case GL_VIEWPORT:
-#endif // defined(GL_VIEWPORT)
-            _needed = 4;
-            break;
-#if defined(GL_MODELVIEW_MATRIX)
-        case GL_MODELVIEW_MATRIX:
-#endif // defined(GL_MODELVIEW_MATRIX)
-#if defined(GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES)
-        case GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES:
-#endif // defined(GL_MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES)
-#if defined(GL_PROJECTION_MATRIX)
-        case GL_PROJECTION_MATRIX:
-#endif // defined(GL_PROJECTION_MATRIX)
-#if defined(GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES)
-        case GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES:
-#endif // defined(GL_PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES)
-#if defined(GL_TEXTURE_MATRIX)
-        case GL_TEXTURE_MATRIX:
-#endif // defined(GL_TEXTURE_MATRIX)
-#if defined(GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES)
-        case GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES:
-#endif // defined(GL_TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES)
-            _needed = 16;
-            break;
-#if defined(GL_COMPRESSED_TEXTURE_FORMATS)
-        case GL_COMPRESSED_TEXTURE_FORMATS:
-#endif // defined(GL_COMPRESSED_TEXTURE_FORMATS)
-            _needed = getNumCompressedTextureFormats();
-            break;
-        default:
-            _needed = 0;
-            break;
-    }
-    if (_remaining < _needed) {
-        _exception = 1;
-        _exceptionType = "java/lang/IllegalArgumentException";
-        _exceptionMessage = "remaining() < needed";
-        goto exit;
-    }
-    if (params == NULL) {
-        char * _paramsBase = (char *)_env->GetPrimitiveArrayCritical(_array, (jboolean *) 0);
-        params = (GLint *) (_paramsBase + _bufferOffset);
-    }
-    glGetIntegerv(
-        (GLenum)pname,
-        (GLint *)params
-    );
-
-exit:
-    if (_array) {
-        releasePointer(_env, _array, params, _exception ? JNI_FALSE : JNI_TRUE);
-    }
-    if (_exception) {
-        jniThrowException(_env, _exceptionType, _exceptionMessage);
-    }
+    getarray<GLint, glGetIntegerv>(_env, _this, pname, params_buf);
 }
 
 /* const GLubyte * glGetString ( GLenum name ) */
@@ -1834,8 +1238,8 @@ static void
 android_glLightModelfv__I_3FI
   (JNIEnv *_env, jobject _this, jint pname, jfloatArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfloat *params_base = (GLfloat *) 0;
     jint _remaining;
     GLfloat *params = (GLfloat *) 0;
@@ -1855,18 +1259,13 @@ android_glLightModelfv__I_3FI
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_LIGHT_MODEL_TWO_SIDE)
-        case GL_LIGHT_MODEL_TWO_SIDE:
-#endif // defined(GL_LIGHT_MODEL_TWO_SIDE)
-            _needed = 1;
-            break;
 #if defined(GL_LIGHT_MODEL_AMBIENT)
         case GL_LIGHT_MODEL_AMBIENT:
 #endif // defined(GL_LIGHT_MODEL_AMBIENT)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -1899,8 +1298,8 @@ static void
 android_glLightModelfv__ILjava_nio_FloatBuffer_2
   (JNIEnv *_env, jobject _this, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -1909,18 +1308,13 @@ android_glLightModelfv__ILjava_nio_FloatBuffer_2
     params = (GLfloat *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_LIGHT_MODEL_TWO_SIDE)
-        case GL_LIGHT_MODEL_TWO_SIDE:
-#endif // defined(GL_LIGHT_MODEL_TWO_SIDE)
-            _needed = 1;
-            break;
 #if defined(GL_LIGHT_MODEL_AMBIENT)
         case GL_LIGHT_MODEL_AMBIENT:
 #endif // defined(GL_LIGHT_MODEL_AMBIENT)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -1962,8 +1356,8 @@ static void
 android_glLightModelxv__I_3II
   (JNIEnv *_env, jobject _this, jint pname, jintArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfixed *params_base = (GLfixed *) 0;
     jint _remaining;
     GLfixed *params = (GLfixed *) 0;
@@ -1983,18 +1377,13 @@ android_glLightModelxv__I_3II
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_LIGHT_MODEL_TWO_SIDE)
-        case GL_LIGHT_MODEL_TWO_SIDE:
-#endif // defined(GL_LIGHT_MODEL_TWO_SIDE)
-            _needed = 1;
-            break;
 #if defined(GL_LIGHT_MODEL_AMBIENT)
         case GL_LIGHT_MODEL_AMBIENT:
 #endif // defined(GL_LIGHT_MODEL_AMBIENT)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2027,8 +1416,8 @@ static void
 android_glLightModelxv__ILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -2037,18 +1426,13 @@ android_glLightModelxv__ILjava_nio_IntBuffer_2
     params = (GLfixed *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_LIGHT_MODEL_TWO_SIDE)
-        case GL_LIGHT_MODEL_TWO_SIDE:
-#endif // defined(GL_LIGHT_MODEL_TWO_SIDE)
-            _needed = 1;
-            break;
 #if defined(GL_LIGHT_MODEL_AMBIENT)
         case GL_LIGHT_MODEL_AMBIENT:
 #endif // defined(GL_LIGHT_MODEL_AMBIENT)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2091,8 +1475,8 @@ static void
 android_glLightfv__II_3FI
   (JNIEnv *_env, jobject _this, jint light, jint pname, jfloatArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfloat *params_base = (GLfloat *) 0;
     jint _remaining;
     GLfloat *params = (GLfloat *) 0;
@@ -2112,23 +1496,6 @@ android_glLightfv__II_3FI
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_SPOT_EXPONENT)
-        case GL_SPOT_EXPONENT:
-#endif // defined(GL_SPOT_EXPONENT)
-#if defined(GL_SPOT_CUTOFF)
-        case GL_SPOT_CUTOFF:
-#endif // defined(GL_SPOT_CUTOFF)
-#if defined(GL_CONSTANT_ATTENUATION)
-        case GL_CONSTANT_ATTENUATION:
-#endif // defined(GL_CONSTANT_ATTENUATION)
-#if defined(GL_LINEAR_ATTENUATION)
-        case GL_LINEAR_ATTENUATION:
-#endif // defined(GL_LINEAR_ATTENUATION)
-#if defined(GL_QUADRATIC_ATTENUATION)
-        case GL_QUADRATIC_ATTENUATION:
-#endif // defined(GL_QUADRATIC_ATTENUATION)
-            _needed = 1;
-            break;
 #if defined(GL_SPOT_DIRECTION)
         case GL_SPOT_DIRECTION:
 #endif // defined(GL_SPOT_DIRECTION)
@@ -2149,7 +1516,7 @@ android_glLightfv__II_3FI
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2183,8 +1550,8 @@ static void
 android_glLightfv__IILjava_nio_FloatBuffer_2
   (JNIEnv *_env, jobject _this, jint light, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -2193,23 +1560,6 @@ android_glLightfv__IILjava_nio_FloatBuffer_2
     params = (GLfloat *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_SPOT_EXPONENT)
-        case GL_SPOT_EXPONENT:
-#endif // defined(GL_SPOT_EXPONENT)
-#if defined(GL_SPOT_CUTOFF)
-        case GL_SPOT_CUTOFF:
-#endif // defined(GL_SPOT_CUTOFF)
-#if defined(GL_CONSTANT_ATTENUATION)
-        case GL_CONSTANT_ATTENUATION:
-#endif // defined(GL_CONSTANT_ATTENUATION)
-#if defined(GL_LINEAR_ATTENUATION)
-        case GL_LINEAR_ATTENUATION:
-#endif // defined(GL_LINEAR_ATTENUATION)
-#if defined(GL_QUADRATIC_ATTENUATION)
-        case GL_QUADRATIC_ATTENUATION:
-#endif // defined(GL_QUADRATIC_ATTENUATION)
-            _needed = 1;
-            break;
 #if defined(GL_SPOT_DIRECTION)
         case GL_SPOT_DIRECTION:
 #endif // defined(GL_SPOT_DIRECTION)
@@ -2230,7 +1580,7 @@ android_glLightfv__IILjava_nio_FloatBuffer_2
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2274,8 +1624,8 @@ static void
 android_glLightxv__II_3II
   (JNIEnv *_env, jobject _this, jint light, jint pname, jintArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfixed *params_base = (GLfixed *) 0;
     jint _remaining;
     GLfixed *params = (GLfixed *) 0;
@@ -2295,23 +1645,6 @@ android_glLightxv__II_3II
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_SPOT_EXPONENT)
-        case GL_SPOT_EXPONENT:
-#endif // defined(GL_SPOT_EXPONENT)
-#if defined(GL_SPOT_CUTOFF)
-        case GL_SPOT_CUTOFF:
-#endif // defined(GL_SPOT_CUTOFF)
-#if defined(GL_CONSTANT_ATTENUATION)
-        case GL_CONSTANT_ATTENUATION:
-#endif // defined(GL_CONSTANT_ATTENUATION)
-#if defined(GL_LINEAR_ATTENUATION)
-        case GL_LINEAR_ATTENUATION:
-#endif // defined(GL_LINEAR_ATTENUATION)
-#if defined(GL_QUADRATIC_ATTENUATION)
-        case GL_QUADRATIC_ATTENUATION:
-#endif // defined(GL_QUADRATIC_ATTENUATION)
-            _needed = 1;
-            break;
 #if defined(GL_SPOT_DIRECTION)
         case GL_SPOT_DIRECTION:
 #endif // defined(GL_SPOT_DIRECTION)
@@ -2332,7 +1665,7 @@ android_glLightxv__II_3II
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2366,8 +1699,8 @@ static void
 android_glLightxv__IILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint light, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -2376,23 +1709,6 @@ android_glLightxv__IILjava_nio_IntBuffer_2
     params = (GLfixed *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_SPOT_EXPONENT)
-        case GL_SPOT_EXPONENT:
-#endif // defined(GL_SPOT_EXPONENT)
-#if defined(GL_SPOT_CUTOFF)
-        case GL_SPOT_CUTOFF:
-#endif // defined(GL_SPOT_CUTOFF)
-#if defined(GL_CONSTANT_ATTENUATION)
-        case GL_CONSTANT_ATTENUATION:
-#endif // defined(GL_CONSTANT_ATTENUATION)
-#if defined(GL_LINEAR_ATTENUATION)
-        case GL_LINEAR_ATTENUATION:
-#endif // defined(GL_LINEAR_ATTENUATION)
-#if defined(GL_QUADRATIC_ATTENUATION)
-        case GL_QUADRATIC_ATTENUATION:
-#endif // defined(GL_QUADRATIC_ATTENUATION)
-            _needed = 1;
-            break;
 #if defined(GL_SPOT_DIRECTION)
         case GL_SPOT_DIRECTION:
 #endif // defined(GL_SPOT_DIRECTION)
@@ -2413,7 +1729,7 @@ android_glLightxv__IILjava_nio_IntBuffer_2
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2471,8 +1787,8 @@ static void
 android_glLoadMatrixf___3FI
   (JNIEnv *_env, jobject _this, jfloatArray m_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfloat *m_base = (GLfloat *) 0;
     jint _remaining;
     GLfloat *m = (GLfloat *) 0;
@@ -2535,8 +1851,8 @@ static void
 android_glLoadMatrixx___3II
   (JNIEnv *_env, jobject _this, jintArray m_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfixed *m_base = (GLfixed *) 0;
     jint _remaining;
     GLfixed *m = (GLfixed *) 0;
@@ -2619,8 +1935,8 @@ static void
 android_glMaterialfv__II_3FI
   (JNIEnv *_env, jobject _this, jint face, jint pname, jfloatArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfloat *params_base = (GLfloat *) 0;
     jint _remaining;
     GLfloat *params = (GLfloat *) 0;
@@ -2640,11 +1956,6 @@ android_glMaterialfv__II_3FI
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_SHININESS)
-        case GL_SHININESS:
-#endif // defined(GL_SHININESS)
-            _needed = 1;
-            break;
 #if defined(GL_AMBIENT)
         case GL_AMBIENT:
 #endif // defined(GL_AMBIENT)
@@ -2663,7 +1974,7 @@ android_glMaterialfv__II_3FI
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2697,8 +2008,8 @@ static void
 android_glMaterialfv__IILjava_nio_FloatBuffer_2
   (JNIEnv *_env, jobject _this, jint face, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -2707,11 +2018,6 @@ android_glMaterialfv__IILjava_nio_FloatBuffer_2
     params = (GLfloat *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_SHININESS)
-        case GL_SHININESS:
-#endif // defined(GL_SHININESS)
-            _needed = 1;
-            break;
 #if defined(GL_AMBIENT)
         case GL_AMBIENT:
 #endif // defined(GL_AMBIENT)
@@ -2730,7 +2036,7 @@ android_glMaterialfv__IILjava_nio_FloatBuffer_2
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2774,8 +2080,8 @@ static void
 android_glMaterialxv__II_3II
   (JNIEnv *_env, jobject _this, jint face, jint pname, jintArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfixed *params_base = (GLfixed *) 0;
     jint _remaining;
     GLfixed *params = (GLfixed *) 0;
@@ -2795,11 +2101,6 @@ android_glMaterialxv__II_3II
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_SHININESS)
-        case GL_SHININESS:
-#endif // defined(GL_SHININESS)
-            _needed = 1;
-            break;
 #if defined(GL_AMBIENT)
         case GL_AMBIENT:
 #endif // defined(GL_AMBIENT)
@@ -2818,7 +2119,7 @@ android_glMaterialxv__II_3II
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2852,8 +2153,8 @@ static void
 android_glMaterialxv__IILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint face, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -2862,11 +2163,6 @@ android_glMaterialxv__IILjava_nio_IntBuffer_2
     params = (GLfixed *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_SHININESS)
-        case GL_SHININESS:
-#endif // defined(GL_SHININESS)
-            _needed = 1;
-            break;
 #if defined(GL_AMBIENT)
         case GL_AMBIENT:
 #endif // defined(GL_AMBIENT)
@@ -2885,7 +2181,7 @@ android_glMaterialxv__IILjava_nio_IntBuffer_2
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -2927,8 +2223,8 @@ static void
 android_glMultMatrixf___3FI
   (JNIEnv *_env, jobject _this, jfloatArray m_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfloat *m_base = (GLfloat *) 0;
     jint _remaining;
     GLfloat *m = (GLfloat *) 0;
@@ -2991,8 +2287,8 @@ static void
 android_glMultMatrixx___3II
   (JNIEnv *_env, jobject _this, jintArray m_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfixed *m_base = (GLfixed *) 0;
     jint _remaining;
     GLfixed *m = (GLfixed *) 0;
@@ -3397,8 +2693,8 @@ static void
 android_glTexEnvfv__II_3FI
   (JNIEnv *_env, jobject _this, jint target, jint pname, jfloatArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfloat *params_base = (GLfloat *) 0;
     jint _remaining;
     GLfloat *params = (GLfloat *) 0;
@@ -3418,24 +2714,13 @@ android_glTexEnvfv__II_3FI
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_TEXTURE_ENV_MODE)
-        case GL_TEXTURE_ENV_MODE:
-#endif // defined(GL_TEXTURE_ENV_MODE)
-#if defined(GL_COMBINE_RGB)
-        case GL_COMBINE_RGB:
-#endif // defined(GL_COMBINE_RGB)
-#if defined(GL_COMBINE_ALPHA)
-        case GL_COMBINE_ALPHA:
-#endif // defined(GL_COMBINE_ALPHA)
-            _needed = 1;
-            break;
 #if defined(GL_TEXTURE_ENV_COLOR)
         case GL_TEXTURE_ENV_COLOR:
 #endif // defined(GL_TEXTURE_ENV_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -3469,8 +2754,8 @@ static void
 android_glTexEnvfv__IILjava_nio_FloatBuffer_2
   (JNIEnv *_env, jobject _this, jint target, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -3479,24 +2764,13 @@ android_glTexEnvfv__IILjava_nio_FloatBuffer_2
     params = (GLfloat *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_TEXTURE_ENV_MODE)
-        case GL_TEXTURE_ENV_MODE:
-#endif // defined(GL_TEXTURE_ENV_MODE)
-#if defined(GL_COMBINE_RGB)
-        case GL_COMBINE_RGB:
-#endif // defined(GL_COMBINE_RGB)
-#if defined(GL_COMBINE_ALPHA)
-        case GL_COMBINE_ALPHA:
-#endif // defined(GL_COMBINE_ALPHA)
-            _needed = 1;
-            break;
 #if defined(GL_TEXTURE_ENV_COLOR)
         case GL_TEXTURE_ENV_COLOR:
 #endif // defined(GL_TEXTURE_ENV_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -3540,8 +2814,8 @@ static void
 android_glTexEnvxv__II_3II
   (JNIEnv *_env, jobject _this, jint target, jint pname, jintArray params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     GLfixed *params_base = (GLfixed *) 0;
     jint _remaining;
     GLfixed *params = (GLfixed *) 0;
@@ -3561,24 +2835,13 @@ android_glTexEnvxv__II_3II
     _remaining = _env->GetArrayLength(params_ref) - offset;
     int _needed;
     switch (pname) {
-#if defined(GL_TEXTURE_ENV_MODE)
-        case GL_TEXTURE_ENV_MODE:
-#endif // defined(GL_TEXTURE_ENV_MODE)
-#if defined(GL_COMBINE_RGB)
-        case GL_COMBINE_RGB:
-#endif // defined(GL_COMBINE_RGB)
-#if defined(GL_COMBINE_ALPHA)
-        case GL_COMBINE_ALPHA:
-#endif // defined(GL_COMBINE_ALPHA)
-            _needed = 1;
-            break;
 #if defined(GL_TEXTURE_ENV_COLOR)
         case GL_TEXTURE_ENV_COLOR:
 #endif // defined(GL_TEXTURE_ENV_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {
@@ -3612,8 +2875,8 @@ static void
 android_glTexEnvxv__IILjava_nio_IntBuffer_2
   (JNIEnv *_env, jobject _this, jint target, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
+    const char * _exceptionType = NULL;
+    const char * _exceptionMessage = NULL;
     jarray _array = (jarray) 0;
     jint _bufferOffset = (jint) 0;
     jint _remaining;
@@ -3622,24 +2885,13 @@ android_glTexEnvxv__IILjava_nio_IntBuffer_2
     params = (GLfixed *)getPointer(_env, params_buf, &_array, &_remaining, &_bufferOffset);
     int _needed;
     switch (pname) {
-#if defined(GL_TEXTURE_ENV_MODE)
-        case GL_TEXTURE_ENV_MODE:
-#endif // defined(GL_TEXTURE_ENV_MODE)
-#if defined(GL_COMBINE_RGB)
-        case GL_COMBINE_RGB:
-#endif // defined(GL_COMBINE_RGB)
-#if defined(GL_COMBINE_ALPHA)
-        case GL_COMBINE_ALPHA:
-#endif // defined(GL_COMBINE_ALPHA)
-            _needed = 1;
-            break;
 #if defined(GL_TEXTURE_ENV_COLOR)
         case GL_TEXTURE_ENV_COLOR:
 #endif // defined(GL_TEXTURE_ENV_COLOR)
             _needed = 4;
             break;
         default:
-            _needed = 0;
+            _needed = 1;
             break;
     }
     if (_remaining < _needed) {

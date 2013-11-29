@@ -20,25 +20,9 @@
     <!-- Name of the status bar as seen in the applications info settings page. [CHAR LIMIT=12] -->
     <string name="app_label">System UI</string>
 
-    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permdesc_screenshot">Capture screenshot</string>
-    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permlab_screenshot">Allows the app to cature a screenshot. This is protected by SystemUI.</string>
-
     <!-- The text for the button in the notification window-shade that clears
          all of the currently visible notifications. [CHAR LIMIT=10]-->
     <string name="status_bar_clear_all_button">Clear</string>
-
-    <!-- The text for the button in the notification window-shade that turns
-         on do not disturb mode, where notifications no longer show their ticker,
-         no sound plays, and no icons are visible.  The windowshade continues to show
-         the notifications. [CHAR LIMIT=25]-->
-    <string name="status_bar_do_not_disturb_button">Do not disturb</string>
-
-    <!-- The text for the button in the notification window-shade that turns
-         off do not disturb mode.  After clicking this, notifications will be
-         shown again. [CHAR LIMIT=25] -->
-    <string name="status_bar_please_disturb_button">Show notifications</string>
 
     <!-- Title shown in recents popup for removing an application from the list -->
     <string name="status_bar_recent_remove_item_title">Remove from list</string>
@@ -176,12 +160,6 @@
          [CHAR LIMIT=25] -->
     <string name="compat_mode_off">Stretch to fill screen</string>
 
-    <!-- Compatibility mode help screen: header text. [CHAR LIMIT=50] -->
-    <string name="compat_mode_help_header">Compatibility zoom</string>
-
-    <!-- Compatibility mode help screen: body text. [CHAR LIMIT=150] -->
-    <string name="compat_mode_help_body">When an app was designed for a smaller screen, a zoom control will appear by the clock.</string>
-
     <!-- Notification ticker displayed when a screenshot is being saved to the Gallery. [CHAR LIMIT=30] -->
     <string name="screenshot_saving_ticker">Saving screenshot\u2026</string>
     <!-- Notification title displayed when a screenshot is being saved to the Gallery. [CHAR LIMIT=50] -->
@@ -214,6 +192,10 @@
     <string name="accessibility_menu">Menu</string>
     <!-- Content description of the recents button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_recent">Recent apps</string>
+    <!-- Content description of the search button for accessibility. [CHAR LIMIT=NONE] -->
+    <string name="accessibility_search_light">Search</string>
+    <!-- Content description of the camera button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_camera_button">Camera</string>
 
     <!-- Content description of the switch input method button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_ime_switch_button">Switch input method button.</string>
@@ -322,14 +304,14 @@
     <!-- Content description of the data connection type 3.5G for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_data_connection_3.5g">3.5G</string>
 
-    <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_data_connection_HP">HSPA+</string>
-
-    <!-- Content description of the data connection type DC-HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_data_connection_DC">DCHSPAP</string>
+     <!-- Content description of the data connection type HSPA+ for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+     <string name="accessibility_data_connection_HP">HSPA+</string>
 
     <!-- Content description of the data connection type 4G for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_data_connection_4g">4G</string>
+
+    <!-- Content description of the data connection type LTE for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_connection_lte">LTE</string>
 
     <!-- Content description of the data connection type CDMA for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_data_connection_cdma">CDMA</string>
@@ -437,8 +419,8 @@
     <!-- Notification text: when GPS has found a fix [CHAR LIMIT=50] -->
     <string name="gps_notification_found_text">Location set by GPS</string>
 
-    <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_halo">Create notification halo.</string>
+    <!-- Accessibility text describing the presence of active location requests by one or more apps -->
+    <string name="accessibility_location_active">Location requests active</string>
 
     <!-- Content description of the clear button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_clear_all">Clear all notifications.</string>
@@ -446,16 +428,6 @@
     <!-- Title shown in notification popup for inspecting the responsible
          application -->
     <string name="status_bar_notification_inspect_item_title">App info</string>
-
-    <!-- [CHAR LIMIT=NONE] -->
-    <string name="close_universe">Close</string>
-
-    <!-- Title for the pseudo-notification shown when notifications are disabled (do-not-disturb
-         mode) -->
-    <string name="notifications_off_title">Notifications off</string>
-
-    <!-- Content text for do-not-disturb mode notification -->
-    <string name="notifications_off_text">Tap here to turn notifications back on.</string>
 
     <!-- Description of the button in the phone-style notification panel that controls auto-rotation, when auto-rotation is on. [CHAR LIMIT=NONE] -->
     <string name="accessibility_rotation_lock_off">Screen will rotate automatically.</string>
@@ -466,8 +438,8 @@
     <!-- Description of the button in the phone-style notification panel that controls auto-rotation, when auto-rotation is off. [CHAR LIMIT=NONE] -->
     <string name="accessibility_rotation_lock_on_portrait">Screen is locked in portrait orientation.</string>
 
-    <!-- Name of the Jelly Bean platlogo screensaver -->
-    <string name="jelly_bean_dream_name">BeanFlinger</string>
+    <!-- Name of the K-release easter egg: a display case for all our tastiest desserts. [CHAR LIMIT=30] -->
+    <string name="dessert_case">Dessert Case</string>
 
     <!-- Name of the launcher shortcut icon that allows dreams to be started immediately [CHAR LIMIT=20] -->
     <string name="start_dreams">Daydream</string>
@@ -496,7 +468,9 @@
     <!-- QuickSettings: IME [CHAR LIMIT=NONE] -->
     <string name="quick_settings_ime_label">Input Method</string>
     <!-- QuickSettings: Location [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_label">Location in use</string>
+    <string name="quick_settings_location_label">Location</string>
+    <!-- QuickSettings: Location (Off) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_off_label">Location Off</string>
     <!-- QuickSettings: Media device [CHAR LIMIT=NONE] -->
     <string name="quick_settings_media_device_label">Media device</string>
     <!-- QuickSettings: RSSI [CHAR LIMIT=NONE] -->
@@ -525,149 +499,15 @@
     <string name="quick_settings_brightness_dialog_title">Brightness</string>
     <!-- QuickSettings: Brightness dialog auto brightness button [CHAR LIMIT=NONE] -->
     <string name="quick_settings_brightness_dialog_auto_brightness_label">AUTO</string>
-    <string name="quick_settings_swagger">Swagger</string>
-    <string name="quick_settings_swaggersun">Swagger Sunday</string>
-    <string name="quick_settings_fbgt">FBGT</string>
-    <string name="quick_settings_recording">Recording...</string>
-    <string name="quick_settings_recordingcap">Recording Captured</string>
-    <string name="quick_settings_playing">Playing...</string>
-    <string name="quick_settings_quickrecord">Quick Record</string>
-    <string name="quick_settings_nofile">Long Press To Record</string>
-    <string name="quick_settings_sleep">Sleep</string>
-    <string name="quick_settings_reboot">Reboot</string>
-    <string name="quick_settings_reboot_message">Your device is rebooting</string>
-    <string name="quick_settings_stayawake_on">Stay Awake On</string>
-    <string name="quick_settings_stayawake_off">Stay Awake Off</string>
-    <string name="quick_settings_adb_on"><xliff:g id="ip" example="192.168.1.5">%s</xliff:g></string>
-    <string name="quick_settings_adb_off">Wireless ADB Off</string>
-    <string name="quick_settings_hybrid">Hybrid</string>
 
-    <!-- Title of help text shown when the notification panel is pulled down for the very first time. [CHAR LIMIT=NONE] -->
-    <string name="status_bar_help_title">Notifications appear here</string>
-    <!-- Body of help text shown when the notification panel is pulled down for the very first time. [CHAR LIMIT=NONE] -->
-    <string name="status_bar_help_text">Access them anytime by swiping down.\nSwipe down again for system controls.</string>
 
-    <!--  AOKP Strings can go here... -->
+    <!-- Glyph to be overlaid atop the battery when the level is extremely low. Do not translate. -->
+    <string name="battery_meter_very_low_overlay_symbol">!</string>
 
-    <!--  App window Strings -->
-    <string name="close">Close</string>
-    <string name="app_window">Applications</string>
-    <string name="toggles">Toggles</string>
-    <string name="ribbon">Ribbon</string>
+    <!-- Shows up when there is a user SSL CA Cert installed on the
+         device.  Indicates to the user that SSL traffic can be intercepted.
+         If the text fits on one line (~14 chars), it should start with a
+         linebreak to position it correctly.  [CHAR LIMIT=45] -->
+    <string name="ssl_ca_cert_warning">Network may\nbe monitored</string>
 
-    <!--  Target/Action Strings -->
-    <string name="shortcut_label">AOKP Actions</string>
-    <string name="action_home">Home</string>
-    <string name="action_back">Back</string>
-    <string name="action_recents">Recents</string>
-    <string name="action_screenshot">Screenshot</string>
-    <string name="action_menu">Menu</string>
-    <string name="action_ime">Open IME Switcher</string>
-    <string name="action_kill">Kill task</string>
-    <string name="action_power">Power</string>
-    <string name="action_search">Search</string>
-    <string name="action_notifications">Notifications</string>
-    <string name="action_lastapp">Last App</string>
-    <string name="action_none">Empty</string>
-
-    <string name="widgets">Widgets</string>
-    <string name="toggle_quiethours">QuietHours - Toggle</string>
-    <string name="toggle_navbar">NavBar - Toggle</string>
-    <string name="toggle_statusbar">StatusBar - Toggle</string>
-    <string name="toggle_widgets">Widgets - Toggle</string>
-    <string name="toggle_ring_vib">Ring/Vib - Toggle</string>
-    <string name="toggle_ring_silent">Ring/Silent - Toggle</string>
-    <string name="toggle_ring_vib_silent">Ring/Vib/Silent - Toggle</string>
-    <string name="app_killed_message">App Killed</string>
-    <string name="recents_kill_all_button_text">Kill all</string>
-    <string name="screenshot_toast">Screenshot in %1$d seconds</string>
-
-    <!--  Quick Settings -->
-    <string name="quick_settings_vibrate_on_label">Vibrate On</string>
-    <string name="quick_settings_vibrate_off_label">Vibrate Off</string>
-    <string name="quick_settings_silent_on_label">Silent On</string>
-    <string name="quick_settings_silent_off_label">Silent Off</string>
-    <string name="quick_settings_fcharge_on_label">F-Charge On</string>
-    <string name="quick_settings_fcharge_off_label">F-Charge Off</string>
-    <string name="quick_settings_torch_on_label">Torch On</string>
-    <string name="quick_settings_torch_off_label">Torch Off</string>
-    <string name="quick_settings_nfc_on_label">NFC On</string>
-    <string name="quick_settings_nfc_off_label">NFC Off</string>
-    <string name="quick_settings_wifi_tether_on_label">Wifi Tether On</string>
-    <string name="quick_settings_wifi_tether_off_label">Wifi Tether Off</string>
-    <string name="quick_settings_bt_tether_on_label">BT Tether On</string>
-    <string name="quick_settings_bt_tether_off_label">BT Tether Off</string>
-    <string name="quick_settings_usb_tether_on_label">USB Tether On</string>
-    <string name="quick_settings_usb_tether_off_label">USB Tether Off</string>
-    <string name="quick_settings_sync_on_label">Sync On</string>
-    <string name="quick_settings_sync_off_label">Sync Off</string>
-    <string name="quick_settings_twog_on_label">2g On</string>
-    <string name="quick_settings_twog_off_label">2g Off</string>
-    <string name="quick_settings_lte_on_label">LTE On</string>
-    <string name="quick_settings_lte_off_label">LTE Off</string>
-    <string name="quick_settings_gps_on_label">GPS On</string>
-    <string name="quick_settings_gps_off_label">GPS Off</string>
-    <string name="quick_settings_data_on_label">Data On</string>
-    <string name="quick_settings_data_off_label">Data Off</string>
-    <string name="quick_settings_navbar_hide_on_label">NavBar Hide On</string>
-    <string name="quick_settings_navbar_hide_off_label">NavBar Hide Off</string>
-    <string name="quick_settings_quiet_hours_on_label">QuietHours On</string>
-    <string name="quick_settings_quiet_hours_off_label">QuietHours Off</string>
-    <string name="quick_settings_sound_on">Sound on</string>
-    <string name="quick_settings_statusbar_on_label">StatusBar On</string>
-    <string name="quick_settings_statusbar_off_label">StatusBar Off</string>
-    <string name="quick_settings_swaggersuntoast">#SwaggerSunday</string>
-    <string name="quick_settings_screenshot">Screenshot</string>
-    <string name="quick_settings_halo_on_label">Halo On</string>
-    <string name="quick_settings_halo_off_label">Halo Off</string>
-
-    <!--  RamBar -->
-    <string name="memory">RAM</string>
-    <!-- [CHAR LIMIT=10] Running services, summary of background processes -->
-    <string name="service_background_processes"><xliff:g id="memory">%1$s</xliff:g> free</string>
-    <!-- [CHAR LIMIT=10] Running services, summary of foreground processes -->
-    <string name="service_foreground_processes"><xliff:g id="memory">%1$s</xliff:g> used</string>
-    <!-- Text to label a process entry with the process name. -->
-    <string name="service_process_name"><xliff:g id="process">%1$s</xliff:g></string>
-    <!-- Running services, description for a service in the started state -->
-    <string name="service_client_name"><xliff:g id="client_name">%1$s</xliff:g></string>
-    <!-- Running services, description for a service in the started state -->
-    <string name="service_started_by_app">Started by app.</string>
-    <!-- Descriptive text of a running process: singular process, singular service. -->
-    <string name="running_processes_item_description_s_s"><xliff:g id="numprocess">%1$d</xliff:g>
-        process and <xliff:g id="numservices">%2$d</xliff:g> service</string>
-    <!-- Descriptive text of a running process: singular process, plural service. -->
-    <string name="running_processes_item_description_s_p"><xliff:g id="numprocess">%1$d</xliff:g>
-        process and <xliff:g id="numservices">%2$d</xliff:g> services</string>
-     <!-- Descriptive text of a running process: plural process, singular service. -->
-    <string name="running_processes_item_description_p_s"><xliff:g id="numprocess">%1$d</xliff:g>
-        processes and <xliff:g id="numservices">%2$d</xliff:g> service</string>
-    <!-- Descriptive text of a running process: plural process, plural service. -->
-    <string name="running_processes_item_description_p_p"><xliff:g id="numprocess">%1$d</xliff:g>
-        processes and <xliff:g id="numservices">%2$d</xliff:g> services</string>
-    <!-- [CHAR LIMIT=NONE] Label of a running process that represents another user -->
-    <string name="running_process_item_user_label">User: <xliff:g id="user_name">%1$s</xliff:g></string>
-
-    <!-- PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE PIE -->
-    <string name="pie_date_format">ccc, dd MMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
-    
-    
-    <string name="quick_settings_rr_dark_on_label">Pitch Black On</string>
-    <string name="quick_settings_rr_dark_off_label">Pitch Black Off</string>
-    
-
-    <string name="halo_dismiss">Dismiss notification</string>
-    <string name="halo_hide">Hide HALO</string>
-    <string name="halo_clear_all">Clear all notifications</string>
-    <string name="halo_silence">Hide and silence until woken</string>
-    
-    <string name="halo_tutorial1">This is HALO.</string>
-    <string name="halo_tutorial2">Double-tap-drag to move it around, drag to task.</string>
-    <string name="halo_tutorial3">Change behavior in the settings.</string>
-    
-    <string name="quick_settings_music_play">Play</string>
-    <string name="quick_settings_music_pause">Pause</string>
 </resources>

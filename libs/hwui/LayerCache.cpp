@@ -21,7 +21,6 @@
 #include <utils/Log.h>
 
 #include "Caches.h"
-#include "Debug.h"
 #include "LayerCache.h"
 #include "Properties.h"
 
@@ -66,6 +65,14 @@ void LayerCache::setMaxSize(uint32_t maxSize) {
 ///////////////////////////////////////////////////////////////////////////////
 // Caching
 ///////////////////////////////////////////////////////////////////////////////
+
+int LayerCache::LayerEntry::compare(const LayerCache::LayerEntry& lhs,
+        const LayerCache::LayerEntry& rhs) {
+    int deltaInt = int(lhs.mWidth) - int(rhs.mWidth);
+    if (deltaInt != 0) return deltaInt;
+
+    return int(lhs.mHeight) - int(rhs.mHeight);
+}
 
 void LayerCache::deleteLayer(Layer* layer) {
     if (layer) {
@@ -128,31 +135,6 @@ void LayerCache::dump() {
     }
 }
 
-bool LayerCache::resize(Layer* layer, const uint32_t width, const uint32_t height) {
-    // TODO: We should be smarter and see if we have a texture of the appropriate
-    //       size already in the cache, and reuse it instead of creating a new one
-
-    LayerEntry entry(width, height);
-    if (entry.mWidth <= layer->getWidth() && entry.mHeight <= layer->getHeight()) {
-        return true;
-    }
-
-    uint32_t oldWidth = layer->getWidth();
-    uint32_t oldHeight = layer->getHeight();
-
-    Caches::getInstance().activeTexture(0);
-    layer->bindTexture();
-    layer->setSize(entry.mWidth, entry.mHeight);
-    layer->allocateTexture(GL_RGBA, GL_UNSIGNED_BYTE);
-
-    if (glGetError() != GL_NO_ERROR) {
-        layer->setSize(oldWidth, oldHeight);
-        return false;
-    }
-
-    return true;
-}
-
 bool LayerCache::put(Layer* layer) {
     if (!layer->isCacheable()) return false;
 
@@ -173,9 +155,7 @@ bool LayerCache::put(Layer* layer) {
                     victim->layer.getHeight());
         }
 
-        layer->deferredUpdateScheduled = false;
-        layer->renderer = NULL;
-        layer->displayList = NULL;
+        layer->cancelDefer();
 
         LayerEntry entry(layer);
 

@@ -21,15 +21,13 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="7164937344850004466">"Uhlelo lwe-UI"</string>
     <string name="status_bar_clear_all_button" msgid="7774721344716731603">"Sula"</string>
-    <string name="status_bar_do_not_disturb_button" msgid="5812628897510997853">"Ungaphazamisi"</string>
-    <string name="status_bar_please_disturb_button" msgid="3345398298841572813">"Bonisa izaziso"</string>
     <string name="status_bar_recent_remove_item_title" msgid="6026395868129852968">"Susa ohlwini"</string>
     <string name="status_bar_recent_inspect_item_title" msgid="7793624864528818569">"Ulwazi lwensiza"</string>
     <string name="status_bar_no_recent_apps" msgid="6576392951053994640">"Azikho izinhlelo zokusebenza zakamuva"</string>
-    <string name="status_bar_accessibility_dismiss_recents" msgid="4576076075226540105">"Susa izinsiza zakamumva"</string>
+    <string name="status_bar_accessibility_dismiss_recents" msgid="4576076075226540105">"Susa izinhlelo zokusebenza zakamumva"</string>
   <plurals name="status_bar_accessibility_recent_apps">
     <item quantity="one" msgid="5854176083865845541">"Insiza eyi-1 yakamumva"</item>
-    <item quantity="other" msgid="1040784359794890744">"%d izinsiza zakamumva"</item>
+    <item quantity="other" msgid="1040784359794890744">"%d izinhlelo zokusebenza zakamumva"</item>
   </plurals>
     <string name="status_bar_no_notifications_title" msgid="4755261167193833213">"Azikho izaziso"</string>
     <string name="status_bar_ongoing_events_title" msgid="1682504513316879202">"Okuqhubekayo"</string>
@@ -37,7 +35,7 @@
     <string name="battery_low_title" msgid="2783104807551211639">"Xhuma ishaja."</string>
     <string name="battery_low_subtitle" msgid="1752040062087829196">"Ibhetri iya ngokuphela."</string>
     <string name="battery_low_percent_format" msgid="1077244949318261761">"<xliff:g id="NUMBER">%d%%</xliff:g> okusele"</string>
-    <string name="invalid_charger" msgid="4549105996740522523">"Ukushaja i-USB akusekelwe."\n"Sebenzisa kuphela ishaja enikeziwe."</string>
+    <string name="invalid_charger" msgid="4549105996740522523">"Ukushaja i-USB akusekelwe.\nSebenzisa kuphela ishaja enikeziwe."</string>
     <string name="battery_low_why" msgid="7279169609518386372">"Ukusebenzisa ibhetri"</string>
     <string name="status_bar_settings_settings_button" msgid="3023889916699270224">"Izilungiselelo"</string>
     <string name="status_bar_settings_wifi_button" msgid="1733928151698311923">"I-Wi-Fi"</string>
@@ -49,22 +47,20 @@
     <string name="bluetooth_tethered" msgid="7094101612161133267">"Ukusebenzisa i-Bluetooth njengemodemu"</string>
     <string name="status_bar_input_method_settings_configure_input_methods" msgid="3504292471512317827">"Izilungiselelo zezindlela zokufakwayo"</string>
     <string name="status_bar_use_physical_keyboard" msgid="7551903084416057810">"Ukwakheka kwekhibhodi"</string>
-    <string name="usb_device_permission_prompt" msgid="834698001271562057">"Vumela insiza <xliff:g id="APPLICATION">%1$s</xliff:g> ukuthi ufinyelele ezintweni eziphuma ne-USB?"</string>
-    <string name="usb_accessory_permission_prompt" msgid="5171775411178865750">"Vumela insiza <xliff:g id="APPLICATION">%1$s</xliff:g> ukuthi ufinyelele ezintweni eziphuma ne-USB?"</string>
+    <string name="usb_device_permission_prompt" msgid="834698001271562057">"Vumela uhlelo lokusebenza <xliff:g id="APPLICATION">%1$s</xliff:g> ukuthi ufinyelele ezintweni eziphuma ne-USB?"</string>
+    <string name="usb_accessory_permission_prompt" msgid="5171775411178865750">"Vumela uhlelo lokusebenza <xliff:g id="APPLICATION">%1$s</xliff:g> ukuthi ufinyelele ezintweni eziphuma ne-USB?"</string>
     <string name="usb_device_confirm_prompt" msgid="5161205258635253206">"Vula <xliff:g id="ACTIVITY">%1$s</xliff:g> uma ledivayisi ye-USB ixhunyiwe?"</string>
     <string name="usb_accessory_confirm_prompt" msgid="3808984931830229888">"Vula <xliff:g id="ACTIVITY">%1$s</xliff:g> uma le-accessory ye-USB ixhunyiwe"</string>
-    <string name="usb_accessory_uri_prompt" msgid="513450621413733343">"Azikho izinsiza ezisebenze ngezinto ze-USB. Funda okwengeziwe ngalento kwi <xliff:g id="URL">%1$s</xliff:g>"</string>
+    <string name="usb_accessory_uri_prompt" msgid="513450621413733343">"Azikho izinhlelo zokusebenza ezisebenze ngezinto ze-USB. Funda okwengeziwe ngale into kwi <xliff:g id="URL">%1$s</xliff:g>"</string>
     <string name="title_usb_accessory" msgid="4966265263465181372">"ama-accessory e-USB"</string>
     <string name="label_view" msgid="6304565553218192990">"Buka"</string>
     <string name="always_use_device" msgid="1450287437017315906">"Sebenzisa ngokuzenzakalelayo yale divayisi ye-USB"</string>
     <string name="always_use_accessory" msgid="1210954576979621596">"Sebenzisa ngokuzenzakalelayo kule-accessory ye-USB"</string>
     <string name="usb_debugging_title" msgid="4513918393387141949">"Vumela ukulungisa iphutha le-USB?"</string>
-    <string name="usb_debugging_message" msgid="2220143855912376496">"Izigxivizo zeminwe zokhiye we-RSA wekhompyutha ngu:"\n"<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
+    <string name="usb_debugging_message" msgid="2220143855912376496">"Izigxivizo zeminwe zokhiye we-RSA wekhompyutha ngu:\n<xliff:g id="FINGERPRINT">%1$s</xliff:g>"</string>
     <string name="usb_debugging_always" msgid="303335496705863070">"Hlala uvumela njalo kusuka kule khompyutha"</string>
     <string name="compat_mode_on" msgid="6623839244840638213">"Sondeza ukugcwalisa isikrini"</string>
     <string name="compat_mode_off" msgid="4434467572461327898">"Nweba ukugcwalisa isikrini"</string>
-    <string name="compat_mode_help_header" msgid="7969493989397529910">"Ukuhambelana Kokusondeza"</string>
-    <string name="compat_mode_help_body" msgid="4946726776359270040">"Uma uhlelo lokusebenza lwenzelwe isikrini ezincane, isilawuli sokusondeza sizovela ngakuyiwashi."</string>
     <string name="screenshot_saving_ticker" msgid="7403652894056693515">"Ilondoloz umfanekiso weskrini..."</string>
     <string name="screenshot_saving_title" msgid="8242282144535555697">"Ilondoloz umfanekiso weskrini..."</string>
     <string name="screenshot_saving_text" msgid="2419718443411738818">"Umfanekiso weskrini uyalondolozwa."</string>
@@ -75,11 +71,13 @@
     <string name="usb_preference_title" msgid="6551050377388882787">"Okukhethwa kokudluliswa kwefayela ye-USB"</string>
     <string name="use_mtp_button_title" msgid="4333504413563023626">"Lengisa njengesidlali semediya (MTP)"</string>
     <string name="use_ptp_button_title" msgid="7517127540301625751">"Lengisa ikhamera (PTP)"</string>
-    <string name="installer_cd_button_title" msgid="2312667578562201583">"Faka insiza yokudluliswa Kwefayela ye-Android kwi-Mac"</string>
+    <string name="installer_cd_button_title" msgid="2312667578562201583">"Faka uhlelo lokusebenza yokudluliswa Kwefayela ye-Android kwi-Mac"</string>
     <string name="accessibility_back" msgid="567011538994429120">"Emuva"</string>
     <string name="accessibility_home" msgid="8217216074895377641">"Ekhaya"</string>
     <string name="accessibility_menu" msgid="316839303324695949">"Imenyu"</string>
     <string name="accessibility_recent" msgid="8571350598987952883">"Izinhlelo zokusebenza zakamuva"</string>
+    <string name="accessibility_search_light" msgid="1103867596330271848">"Sesha"</string>
+    <string name="accessibility_camera_button" msgid="8064671582820358152">"Ikhamela"</string>
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">"Vula indlela yokungena yenkinobho"</string>
     <string name="accessibility_compatibility_zoom_button" msgid="8461115318742350699">"Inkinobho evumelekile yokusondeza"</string>
     <string name="accessibility_compatibility_zoom_example" msgid="4220687294564945780">"Sondeza kancane esikrinini esikhudlwana"</string>
@@ -100,12 +98,12 @@
     <string name="accessibility_data_two_bars" msgid="6166018492360432091">"Amabha amabili edatha"</string>
     <string name="accessibility_data_three_bars" msgid="9167670452395038520">"Amabha amathathu edatha"</string>
     <string name="accessibility_data_signal_full" msgid="2708384608124519369">"Igcwele i-signal yedatha"</string>
-    <string name="accessibility_wifi_off" msgid="3177380296697933627">"I-Wifi ivaliwe."</string>
-    <string name="accessibility_no_wifi" msgid="1425476551827924474">"I-Wifi ayixhunywanga."</string>
-    <string name="accessibility_wifi_one_bar" msgid="7735893178010724377">"Ibha elilodwa le-WiFi."</string>
-    <string name="accessibility_wifi_two_bars" msgid="4994274250497262434">"Amabha amabili we-WiFi."</string>
-    <string name="accessibility_wifi_three_bars" msgid="3495755044276588384">"Amabha amathathu we-WiFi."</string>
-    <string name="accessibility_wifi_signal_full" msgid="6853561303586480376">"Isiginali ye-WiFi igcwele."</string>
+    <string name="accessibility_wifi_off" msgid="3177380296697933627">"I-Wi-Fi ivaliwe."</string>
+    <string name="accessibility_no_wifi" msgid="1425476551827924474">"I-Wi-Fi ayixhunywanga."</string>
+    <string name="accessibility_wifi_one_bar" msgid="7735893178010724377">"Ibha elilodwa le-Wi-Fi."</string>
+    <string name="accessibility_wifi_two_bars" msgid="4994274250497262434">"Amabha amabili we-Wi-Fi."</string>
+    <string name="accessibility_wifi_three_bars" msgid="3495755044276588384">"Amabha amathathu we-Wi-Fi."</string>
+    <string name="accessibility_wifi_signal_full" msgid="6853561303586480376">"Isiginali ye-Wi-Fi igcwele."</string>
     <string name="accessibility_no_wimax" msgid="4329180129727630368">"Ayikho i-WiMAX."</string>
     <string name="accessibility_wimax_one_bar" msgid="4170994299011863648">"Ibha eyodwa ye-WiMAX."</string>
     <string name="accessibility_wimax_two_bars" msgid="9176236858336502288">"Amabha amabili we-WiMAX."</string>
@@ -127,6 +125,7 @@
     <string name="accessibility_data_connection_3g" msgid="8628562305003568260">"3G"</string>
     <string name="accessibility_data_connection_3.5g" msgid="8664845609981692001">"3.5G"</string>
     <string name="accessibility_data_connection_4g" msgid="7741000750630089612">"4G"</string>
+    <string name="accessibility_data_connection_lte" msgid="5413468808637540658">"I-LTE"</string>
     <string name="accessibility_data_connection_cdma" msgid="6132648193978823023">"CDMA"</string>
     <string name="accessibility_data_connection_roaming" msgid="5977362333466556094">"Iyazulazula"</string>
     <string name="accessibility_data_connection_edge" msgid="4477457051631979278">"Ekucupheleni"</string>
@@ -159,21 +158,19 @@
     <string name="data_usage_disabled_dialog_4g_title" msgid="4789143363492682629">"Idatha ye-4G ivimbelwe"</string>
     <string name="data_usage_disabled_dialog_mobile_title" msgid="1046047248844821202">"Idatha yefoni ivimbelwe"</string>
     <string name="data_usage_disabled_dialog_title" msgid="2086815304858964954">"Idatha ivimbelwe"</string>
-    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Usufike emkhawulweni wokusebenzisa i-ata. "\n\n"Uma uqla kabusha ukusebenza kwe-ata, kungenzek umhlinzeki akukhokhise."</string>
+    <string name="data_usage_disabled_dialog" msgid="3853117269051806280">"Usufike emkhawulweni wokusebenzisa i-ata. \n\nUma uqla kabusha ukusebenza kwe-ata, kungenzek umhlinzeki akukhokhise."</string>
     <string name="data_usage_disabled_dialog_enable" msgid="7729772039208664606">"Vumela futhi idatha"</string>
     <string name="status_bar_settings_signal_meter_disconnected" msgid="1940231521274147771">"Alukho uxhumano lwe-Inthanethi"</string>
     <string name="status_bar_settings_signal_meter_wifi_nossid" msgid="6557486452774597820">"I-Wi-Fi ixhunyiwe"</string>
     <string name="gps_notification_searching_text" msgid="8574247005642736060">"Isesha i-GPS"</string>
     <string name="gps_notification_found_text" msgid="4619274244146446464">"Indawo ihlelwe i-GPS"</string>
+    <string name="accessibility_location_active" msgid="2427290146138169014">"Izicelo zendawo ziyasebenza"</string>
     <string name="accessibility_clear_all" msgid="5235938559247164925">"Susa zonke izaziso."</string>
     <string name="status_bar_notification_inspect_item_title" msgid="1163547729015390250">"Ulwazi lohlelo lokusebenza"</string>
-    <string name="close_universe" msgid="3736513750241754348">"Vala"</string>
-    <string name="notifications_off_title" msgid="8936620513608443224">"Izaziso zivaliwe"</string>
-    <string name="notifications_off_text" msgid="2529001315769385273">"Thepha lapha ukuvula futhi izaziso."</string>
     <string name="accessibility_rotation_lock_off" msgid="4062780228931590069">"Isikrini sizophenduka ngokuzenzakalela."</string>
     <string name="accessibility_rotation_lock_on_landscape" msgid="6731197337665366273">"Isikrini sikhiyelwe ngomumo we-landscape."</string>
     <string name="accessibility_rotation_lock_on_portrait" msgid="5809367521644012115">"Isikrini sikhiyelwe ngomumo we-portrait."</string>
-    <string name="jelly_bean_dream_name" msgid="5992026543636816792">"I-BeanFlinger"</string>
+    <string name="dessert_case" msgid="1295161776223959221">"Isikhwama soswidi"</string>
     <string name="start_dreams" msgid="7219575858348719790">"Ukuphupha emini"</string>
     <string name="ethernet_label" msgid="7967563676324087464">"I-Ethernet"</string>
     <string name="quick_settings_airplane_mode_label" msgid="5510520633448831350">"Isimo sendiza"</string>
@@ -186,7 +183,8 @@
     <string name="quick_settings_rotation_unlocked_label" msgid="336054930362580584">"Ukuphendula ngokuzenzakalela"</string>
     <string name="quick_settings_rotation_locked_label" msgid="8058646447242565486">"Ukuphendula kukhiyiwe"</string>
     <string name="quick_settings_ime_label" msgid="7073463064369468429">"Indlela yokungenayo"</string>
-    <string name="quick_settings_location_label" msgid="3292451598267467545">"Indawo iyasetshenziswa"</string>
+    <string name="quick_settings_location_label" msgid="5011327048748762257">"Indawo"</string>
+    <string name="quick_settings_location_off_label" msgid="7464544086507331459">"Indawo ivaliwe"</string>
     <string name="quick_settings_media_device_label" msgid="1302906836372603762">"Idivayisi yemidiya"</string>
     <string name="quick_settings_rssi_label" msgid="7725671335550695589">"RSSI"</string>
     <string name="quick_settings_rssi_emergency_only" msgid="2713774041672886750">"Amakholi aphuthumayo kuphela"</string>
@@ -201,6 +199,5 @@
     <string name="quick_settings_wifi_display_no_connection_label" msgid="2355298740765736918">"Ukubonisa okungenazintambo"</string>
     <string name="quick_settings_brightness_dialog_title" msgid="8599674057673605368">"Ukugqama"</string>
     <string name="quick_settings_brightness_dialog_auto_brightness_label" msgid="5064982743784071218">"OKUZENZAKALELAYO"</string>
-    <string name="status_bar_help_title" msgid="1199237744086469217">"Izaziso zivela lapha"</string>
-    <string name="status_bar_help_text" msgid="7874607155052076323">"Kufinyelele noma kunini ngokuswayiphela phansi."\n"Swayiphela phansi futhi ngezilawuli zesistimu."</string>
+    <string name="ssl_ca_cert_warning" msgid="9005954106902053641">"Kungenzeka inethiwekhi\niqashiwe"</string>
 </resources>
