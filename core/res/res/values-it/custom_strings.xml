@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="global_action_reboot">Riavvia</string>
+    <string name="reboot_reboot">Riavvia</string>
+    <string name="reboot_progress">Riavvio in corso…</string>
+    <string name="reboot_system" product="tablet">Riavvia il tablet</string>
+    <string name="reboot_system" product="default">Riavvia il telefono</string>
+    <string name="reboot_confirm" product="tablet">Il tablet sarà riavviato.</string>
+    <string name="reboot_confirm" product="default">Il telefono sarà riavviato.</string>
+</resources>
