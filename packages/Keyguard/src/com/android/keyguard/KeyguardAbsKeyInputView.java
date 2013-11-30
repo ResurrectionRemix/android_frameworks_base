@@ -49,7 +49,7 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     private Drawable mBouncerFrame;
     protected boolean mEnableHaptics;
     private boolean mQuickUnlock;
-
+    protected abstract boolean getQuickUnlockAllowed();
     // To avoid accidental lockout due to events while the device in in the pocket, ignore
     // any passwords with length less than or equal to this length.
     protected static final int MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT = 3;
@@ -132,20 +132,13 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
                 if (mCallback != null) {
                     mCallback.userActivity(0);
                 }
-<<<<<<< HEAD
-                if (mQuickUnlock) {
-                    String entry = mPasswordEntry.getText().toString();
-                    if (entry.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT &&
-                            mLockPatternUtils.checkPassword(entry)) {
-                        mCallback.reportSuccessfulUnlockAttempt();
-                        mCallback.dismiss(true);
-=======
+                
                 if (getQuickUnlockAllowed()) {
                     if (s.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT &&
                             mLockPatternUtils.checkPassword(s.toString())) {
                         mCallback.dismiss(true);
                         mCallback.reportSuccessfulUnlockAttempt();
->>>>>>> 8ad03d9... Lock Screen: quick unlock feature
+
                     }
                 }
             }
