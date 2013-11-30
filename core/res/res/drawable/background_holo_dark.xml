@@ -14,7 +14,9 @@
      limitations under the License.
 -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_activated="true" android:drawable="@android:drawable/list_activated_holo" />
-    <item android:drawable="@color/transparent" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+            android:startColor="#ff000000"
+            android:endColor="#ff272d33"
+            android:angle="270" />
 </selector>
