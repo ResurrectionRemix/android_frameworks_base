@@ -2788,7 +2788,6 @@ public final class Settings {
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
 
         /**
-<<<<<<< HEAD
          * Whether or not to launch default music player when headset is connected
          * @hide
          */
@@ -2796,19 +2795,16 @@ public final class Settings {
 
         /**
          * volume rocker wake
-=======
-         * Allows to show the background activity back the lockscreen
-         * @hide
-         */
-        public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
-
-        /**
-         * Whether to wake the screen with the volume keys, the value is boolean.
->>>>>>> 7ff7711... Lockscreen: See through (1/2)
          * @hide
          */
         public static final String VOLUME_WAKE_SCREEN = "volume_wake_screen";
 
+        /**
+        * Allows to show the background activity back the lockscreen
+        * @hide
+        */
+        public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
+        
         /**
          * show clear all recents button
          *  @hide
