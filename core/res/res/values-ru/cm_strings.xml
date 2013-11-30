@@ -45,6 +45,7 @@
     <string name="toast_rotation_unlocked">Поворот экрана разблокирован</string>
     <string name="toast_rotation_locked">Поворот экрана заблокирован</string>
     <string name="stylus_app_not_installed">%s не установлено</string>
+<<<<<<< HEAD
 
     <!-- Privacy Guard -->
     <string name="permlab_changePrivacyGuardState">включать или выключать режим инкогнито</string>
@@ -53,10 +54,17 @@
     <string name="privacy_guard_notification_detail"><xliff:g id="app">%1$s</xliff:g> не сможет получать доступ к персональным данным</string>
 
     <!-- The title of the profile picker dialog. -->
+=======
+    <string name="permlab_changePrivacyGuardState">Включение или выключение защищённого режима</string>
+    <string name="permdesc_changePrivacyGuardState">Приложение может выбрать, будет ли другое приложение работать в защищённом режиме. Когда приложение запущено в защищённом режиме, оно не получает доступ к персональным данным, таким как контакты, сообщения или журнал звонков.</string>
+    <string name="privacy_guard_notification">Защищённый режим включён</string>
+    <string name="privacy_guard_notification_detail">«<xliff:g id="app">%1$s</xliff:g>» не имеет доступа к персональным данным</string>
+>>>>>>> 5655bc0... Core & SystemUI: RU translation
     <string name="profile_picker_title">Профили</string>
 
     <!-- The item label for the no profile selection item. -->
     <string name="profile_none">Не выбран</string>
+<<<<<<< HEAD
 
     <string name="permlab_cancelNotifications">отключать уведомления</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
@@ -65,6 +73,11 @@
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_interceptSmsSent">перехват исходящих SMS</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+=======
+    <string name="permlab_cancelNotifications">Удаление уведомлений</string>
+    <string name="permdesc_cancelNotifications">Разрешить приложению удалять уведомления, созданные другими приложениями.</string>
+    <string name="permlab_interceptSmsSent">Перехват исходящих SMS</string>
+>>>>>>> 5655bc0... Core & SystemUI: RU translation
     <string name="permdesc_interceptSmsSent">Разрешить приложению перехватывать исходящие SMS. Вредоносные приложения смогут использовать это, чтобы препятствовать отправке SMS-сообщений.</string>
 
     <string name="policylab_enforceSelinux">Переключение режимов SELinux</string>
