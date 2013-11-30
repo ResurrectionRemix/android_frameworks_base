@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
- * This code has been modified. Portions copyright (C) 2013, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -132,20 +131,12 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
                 if (mCallback != null) {
                     mCallback.userActivity(0);
                 }
-<<<<<<< HEAD
                 if (mQuickUnlock) {
                     String entry = mPasswordEntry.getText().toString();
                     if (entry.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT &&
                             mLockPatternUtils.checkPassword(entry)) {
                         mCallback.reportSuccessfulUnlockAttempt();
                         mCallback.dismiss(true);
-=======
-                if (getQuickUnlockAllowed()) {
-                    if (s.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT &&
-                            mLockPatternUtils.checkPassword(s.toString())) {
-                        mCallback.dismiss(true);
-                        mCallback.reportSuccessfulUnlockAttempt();
->>>>>>> 8ad03d9... Lock Screen: quick unlock feature
                     }
                 }
             }
