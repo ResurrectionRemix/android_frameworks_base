@@ -3424,6 +3424,12 @@ public final class Settings {
         */
         public static final String NOTIFICATION_BACKGROUND_ALPHA = "notification_background_alpha";
 
+       /**
+        * Sets the alpha (transparency) of the notification
+        * @hide
+        */
+        public static final String NOTIFICATION_ALPHA = "notification_alpha";
+
         /**
          * Volume key controls ringtone or media sound stream
          *

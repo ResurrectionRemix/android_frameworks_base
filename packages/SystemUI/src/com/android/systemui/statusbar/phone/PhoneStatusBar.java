@@ -1353,6 +1353,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mPile.removeView(remove);
         }
 
+        setNotificationAlpha();
         for (int i=0; i<toShow.size(); i++) {
             View v = toShow.get(i);
             if (v.getParent() == null) {
@@ -3533,11 +3534,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     inflateRibbon();
                     mRibbonView.setVisibility(View.VISIBLE);
                 }
-            }  else if (uri != null && uri.equals(Settings.System.getUriFor(
+            } else if (uri != null && uri.equals(Settings.System.getUriFor(
                     Settings.System.QUICK_SETTINGS_RIBBON_TILES))) {
                     cleanupRibbon();
                     inflateRibbon();
                     mRibbonView.setVisibility(View.VISIBLE);
+<<<<<<< HEAD
             } else if (uri != null && uri.equals(Settings.System.getUriFor(
                     Settings.System.QUICK_SETTINGS_HIDE_LABELS))) {
                 if (mSettingsContainer != null) {
@@ -3545,6 +3547,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     mSettingsContainer.updateResources();
                 }
             }else if (uri.equals(Settings.System.getUriFor(
+=======
+            } else if (uri.equals(Settings.System.getUriFor(
+>>>>>>> fa8ada8... fb: notification transparency (1/2)
                     Settings.System.NOTIFICATION_BACKGROUND))
                 || uri.equals(Settings.System.getUriFor(
                     Settings.System.NOTIFICATION_BACKGROUND_LANDSCAPE))
@@ -3555,7 +3560,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 }
                 if (mSettingsPanel != null) {
                     mSettingsPanel.setBackgroundDrawables();
+<<<<<<< HEAD
               }
+=======
+                }
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NOTIFICATION_ALPHA))) {
+                setNotificationAlpha();
+>>>>>>> fa8ada8... fb: notification transparency (1/2)
             } else if (mSettingsContainer != null) {
                 mQS.setupQuickSettings();
                 if (mQuickAccessLayoutLinked && mRibbonQS != null) {
@@ -3626,6 +3638,87 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.getUriFor(Settings.System.NOTIFICATION_BACKGROUND_ALPHA),
                     false, this, UserHandle.USER_ALL);
 
+            cr.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NOTIFICATION_ALPHA),
+                    false, this, UserHandle.USER_ALL);
+
         }
     }
+<<<<<<< HEAD
+=======
+
+    private static String SHA1(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.update(text.getBytes("iso-8859-1"), 0, text.length());
+            byte[] sha1hash = md.digest();
+            return convertToHex(sha1hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String convertToHex(byte[] data) {
+        StringBuilder buf = new StringBuilder();
+        for (byte b : data) {
+            int halfbyte = (b >>> 4) & 0x0F;
+            int two_halfs = 0;
+            do {
+                buf.append((0 <= halfbyte) && (halfbyte <= 9) ? (char) ('0' + halfbyte) : (char) ('a' + (halfbyte - 10)));
+                halfbyte = b & 0x0F;
+            } while (two_halfs++ < 1);
+        }
+        return buf.toString();
+    }
+
+    private boolean findApp(String packageName) {
+        List<ResolveInfo> packages = mContext.getPackageManager().queryIntentActivities(new Intent(Intent.ACTION_MAIN, null), 0);
+        for (ResolveInfo info : packages) {
+            if (SHA1(info.activityInfo.applicationInfo.packageName).equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isDate(int year, int month, int day) {
+        Calendar currDate = Calendar.getInstance();
+        Calendar checkDate = Calendar.getInstance();
+        checkDate.set(year, (month - 1), day);
+        if (currDate.getTimeInMillis() > checkDate.getTimeInMillis()) {
+            return true;
+        }
+        return false;
+    }
+
+    private void setNotificationAlpha() {
+        if (mPile == null || mNotificationData == null) {
+            return;
+        }
+        float notifAlpha = Settings.System.getFloatForUser(
+            mContext.getContentResolver(), Settings.System.NOTIFICATION_ALPHA,
+            0.0f, UserHandle.USER_CURRENT);
+        int alpha = (int) ((1 - notifAlpha) * 255);
+        int dataSize = mNotificationData.size();
+        for (int i = 0; i < dataSize; i++) {
+            Entry ent = mNotificationData.get(dataSize - i - 1);
+            View expanded = ent.expanded;
+            if (expanded !=null && expanded.getBackground() != null) {
+                expanded.getBackground().setAlpha(alpha);
+            }
+            View expandedBig = ent.getBigContentView();
+            if (expandedBig != null && expandedBig.getBackground() != null) {
+                expandedBig.getBackground().setAlpha(alpha);
+            }
+            StatusBarIconView icon = ent.icon;
+            if (icon !=null && icon.getBackground() != null) {
+                icon.getBackground().setAlpha(alpha);
+            }
+        }
+    }
+>>>>>>> fa8ada8... fb: notification transparency (1/2)
 }
