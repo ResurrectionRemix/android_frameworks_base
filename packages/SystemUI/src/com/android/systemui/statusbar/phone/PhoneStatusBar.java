@@ -385,31 +385,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
         }
     };
-
-    final private ContentObserver mHeadsUpObserver = new ContentObserver(mHandler) {
-        @Override
-        public void onChange(boolean selfChange) {
-            boolean wasUsing = mUseHeadsUp;
-            mUseHeadsUp = ENABLE_HEADS_UP && 0 != Settings.Global.getInt(
-                    mContext.getContentResolver(), SETTING_HEADS_UP, 0);
-            Log.d(TAG, "heads up is " + (mUseHeadsUp ? "enabled" : "disabled"));
-            if (wasUsing != mUseHeadsUp) {
-                if (!mUseHeadsUp) {
-                    Log.d(TAG, "dismissing any existing heads up notification on disable event");
-                    mHandler.sendEmptyMessage(MSG_HIDE_HEADS_UP);
-                    removeHeadsUpView();
-                } else {
-                    addHeadsUpView();
-                }
-            }
-        }
-    };
-
     private final class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
         }
-
         void observe() {
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_STYLE), false, this);
@@ -455,9 +434,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         super.start(); // calls createAndAddWindows()
 
         addNavigationBar();
-
-        SettingsObserver observer = new SettingsObserver(mHandler);
-        observer.observe();
 
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext);
