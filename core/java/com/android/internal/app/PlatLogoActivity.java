@@ -79,7 +79,7 @@ public class PlatLogoActivity extends Activity {
         letter.setTextSize(200);
         letter.setTextColor(0xffff4444);
         letter.setGravity(Gravity.CENTER);
-        letter.setText("RR-KK");
+        letter.setText("RRKK");
 
         final int p = (int)(4 * metrics.density);
 
