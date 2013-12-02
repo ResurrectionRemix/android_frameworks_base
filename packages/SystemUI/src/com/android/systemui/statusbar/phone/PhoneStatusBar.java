@@ -772,12 +772,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         // listen for USER_SETUP_COMPLETE setting (per-user)
         resetUserSetupObserver();
 
-<<<<<<< HEAD
         mVelocityTracker = VelocityTracker.obtain();
-=======
+        
         mBattery = (BatteryMeterView) mStatusBarView.findViewById(R.id.battery);
         mCircleBattery = (BatteryCircleMeterView) mStatusBarView.findViewById(R.id.circle_battery);
->>>>>>> 231b07a... [1/2] Frameworks: Optional statusbar battery icons
 
         return mStatusBarView;
     }
