@@ -310,20 +310,9 @@ class QuickSettings {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mContext.startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
         collapsePanels();
-        }
-        
-       public void updateBattery() {
-         if (mBattery == null || mModel == null) {
-             return;
-        }
-        mBatteryStyle = Settings.System.getInt(mContext.getContentResolver(),
-        Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
-        mCircleBattery.updateSettings();
-        mBattery.updateSettings();
-        mModel.refreshBatteryTile();
-        
-        }
+    }
 
+<<<<<<< HEAD
     private void addUserTiles(ViewGroup parent, LayoutInflater inflater) {
         QuickSettingsTileView userTile = (QuickSettingsTileView)
                 inflater.inflate(R.layout.quick_settings_tile, parent, false);
@@ -361,6 +350,61 @@ class QuickSettings {
         });
         parent.addView(userTile);
         mDynamicSpannedTiles.add(userTile);
+=======
+    public void updateBattery() {
+        if (mBattery == null || mModel == null) {
+            return;
+        }
+        mBatteryStyle = Settings.System.getInt(mContext.getContentResolver(),
+                                Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
+        mCircleBattery.updateSettings();
+        mBattery.updateSettings();
+        mModel.refreshBatteryTile();
+    }
+
+    private void addTiles(ViewGroup parent, LayoutInflater inflater, boolean addMissing) {
+        // Load all the customizable tiles. If not yet modified by the user, load default ones.
+        // After enabled tiles are loaded, proceed to load missing tiles and set them to View.GONE.
+        // If all the tiles were deleted, they are still loaded, but their visibility is changed
+        String tileContainer = Settings.System.getString(mContext.getContentResolver(),
+                Settings.System.QUICK_SETTINGS_TILES);
+        if(tileContainer == null) tileContainer = DEFAULT_TILES;
+        Tile[] allTiles = Tile.values();
+        String[] storedTiles = tileContainer.split(DELIMITER);
+        List<String> allTilesArray = enumToStringArray(allTiles);
+        List<String> storedTilesArray = Arrays.asList(storedTiles);
+
+        for(String tile : addMissing ? allTilesArray : storedTilesArray) {
+            boolean addTile = storedTilesArray.contains(tile);
+            if(addMissing) addTile = !addTile;
+            if(addTile) {
+                if(Tile.USER.toString().equals(tile.toString())) { // User
+                    QuickSettingsTileView userTile = (QuickSettingsTileView)
+                            inflater.inflate(R.layout.quick_settings_tile, parent, false);
+                    userTile.setContent(R.layout.quick_settings_tile_user, inflater);
+                    userTile.setTileId(Tile.USER);
+                    userTile.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            collapsePanels();
+                            final UserManager um = UserManager.get(mContext);
+                            if (um.getUsers(true).size() > 1) {
+                                try {
+                                    WindowManagerGlobal.getWindowManagerService().lockNow(null);
+                                } catch (RemoteException e) {
+                                    Log.e(TAG, "Couldn't show user switcher", e);
+                                }
+                            } else {
+                                Intent intent = ContactsContract.QuickContact
+                                        .composeQuickContactsIntent(mContext, v,
+                                        ContactsContract.Profile.CONTENT_URI,
+                                        ContactsContract.QuickContact.MODE_LARGE, null);
+                                mContext.startActivityAsUser(intent,
+                                        new UserHandle(UserHandle.USER_CURRENT));
+                            }
+                        }
+                    });
+>>>>>>> 231b07a... [1/2] Frameworks: Optional statusbar battery icons
 
         // Brightness
         final QuickSettingsBasicTile brightnessTile
@@ -548,7 +592,7 @@ class QuickSettings {
                     } else {
                         iov.setImageDrawable(null);
                     }
-
+<<<<<<< HEAD
                     setActivity(view, rssiState);
 
                     tv.setText(state.label);
@@ -575,28 +619,9 @@ class QuickSettings {
             });
             mModel.addRotationLockTile(rotationLockTile, mRotationLockController,
                     new QuickSettingsModel.RefreshCallback() {
-						
-                        @Override
-                        public void refreshView(QuickSettingsTileView view, State state) {
-                            QuickSettingsModel.RotationLockState rotationLockState =
-                                    (QuickSettingsModel.RotationLockState) state;
-                            view.setVisibility(rotationLockState.visible
-                                    ? View.VISIBLE : View.GONE);
-                            if (state.iconId != 0) {
-                                // needed to flush any cached IDs
-                                rotationLockTile.setImageDrawable(null);
-                                rotationLockTile.setImageResource(state.iconId);
-                            }
-                            if (state.label != null) {
-                                rotationLockTile.setText(state.label);
-                            }
-                        }
-                    });
-            parent.addView(rotationLockTile);
-        }
-
-        // Battery
-                   mBatteryTile = (QuickSettingsTileView)
+=======
+                } else if(Tile.BATTERY.toString().equals(tile.toString())) { // Battery
+                    mBatteryTile = (QuickSettingsTileView)
                             inflater.inflate(R.layout.quick_settings_tile, parent, false);
                     mBatteryTile.setTileId(Tile.BATTERY);
                     mBatteryTile.setContent(R.layout.quick_settings_tile_battery, inflater);
@@ -606,18 +631,18 @@ class QuickSettings {
                             mBatteryTile.findViewById(R.id.circle_battery);
                     updateBattery();
                     mBatteryTile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startSettingsActivity(Intent.ACTION_POWER_USAGE_SUMMARY);
-            }
-        });
-       mModel.addBatteryTile(mBatteryTile, new QuickSettingsModel.RefreshCallback() {
-            @Override
-            public void refreshView(QuickSettingsTileView unused, State state) {
-                QuickSettingsModel.BatteryState batteryState =
-                        (QuickSettingsModel.BatteryState) state;
-                String t;
-                             if (batteryState.batteryLevel == 100) {
+                        @Override
+                        public void onClick(View v) {
+                            startSettingsActivity(Intent.ACTION_POWER_USAGE_SUMMARY);
+                        }
+                    });
+                    mModel.addBatteryTile(mBatteryTile, new QuickSettingsModel.RefreshCallback() {
+                        @Override
+                        public void refreshView(QuickSettingsTileView unused, State state) {
+                            QuickSettingsModel.BatteryState batteryState =
+                                    (QuickSettingsModel.BatteryState) state;
+                            String t;
+                            if (batteryState.batteryLevel == 100) {
                                 t = mContext.getString(
                                         R.string.quick_settings_battery_charged_label);
                             } else {
@@ -641,6 +666,64 @@ class QuickSettings {
                     });
                     parent.addView(mBatteryTile);
                     if(addMissing) mBatteryTile.setVisibility(View.GONE);
+                } else if(Tile.AIRPLANE.toString().equals(tile.toString())) { // Airplane Mode
+                    final QuickSettingsBasicTile airplaneTile
+                            = new QuickSettingsBasicTile(mContext);
+                    airplaneTile.setTileId(Tile.AIRPLANE);
+                    mModel.addAirplaneModeTile(airplaneTile,
+                            new QuickSettingsModel.RefreshCallback() {
+>>>>>>> 231b07a... [1/2] Frameworks: Optional statusbar battery icons
+                        @Override
+                        public void refreshView(QuickSettingsTileView view, State state) {
+                            QuickSettingsModel.RotationLockState rotationLockState =
+                                    (QuickSettingsModel.RotationLockState) state;
+                            view.setVisibility(rotationLockState.visible
+                                    ? View.VISIBLE : View.GONE);
+                            if (state.iconId != 0) {
+                                // needed to flush any cached IDs
+                                rotationLockTile.setImageDrawable(null);
+                                rotationLockTile.setImageResource(state.iconId);
+                            }
+                            if (state.label != null) {
+                                rotationLockTile.setText(state.label);
+                            }
+                        }
+                    });
+            parent.addView(rotationLockTile);
+        }
+
+        // Battery
+        final QuickSettingsTileView batteryTile = (QuickSettingsTileView)
+                inflater.inflate(R.layout.quick_settings_tile, parent, false);
+        batteryTile.setContent(R.layout.quick_settings_tile_battery, inflater);
+        batteryTile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSettingsActivity(Intent.ACTION_POWER_USAGE_SUMMARY);
+            }
+        });
+        mModel.addBatteryTile(batteryTile, new QuickSettingsModel.RefreshCallback() {
+            @Override
+            public void refreshView(QuickSettingsTileView unused, State state) {
+                QuickSettingsModel.BatteryState batteryState =
+                        (QuickSettingsModel.BatteryState) state;
+                String t;
+                if (batteryState.batteryLevel == 100) {
+                    t = mContext.getString(R.string.quick_settings_battery_charged_label);
+                } else {
+                    t = batteryState.pluggedIn
+                        ? mContext.getString(R.string.quick_settings_battery_charging_label,
+                                batteryState.batteryLevel)
+                        : mContext.getString(R.string.status_bar_settings_battery_meter_format,
+                                batteryState.batteryLevel);
+                }
+                ((TextView)batteryTile.findViewById(R.id.text)).setText(t);
+                batteryTile.setContentDescription(
+                        mContext.getString(R.string.accessibility_quick_settings_battery, t));
+            }
+        });
+        parent.addView(batteryTile);
+
         // Airplane Mode
         final QuickSettingsBasicTile airplaneTile
                 = new QuickSettingsBasicTile(mContext);
