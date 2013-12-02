@@ -2972,7 +2972,6 @@ public final class Settings {
         public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
 
         /**
-<<<<<<< HEAD
          * Volume key controls ringtone or media sound stream
          *
          * @hide
@@ -2980,8 +2979,6 @@ public final class Settings {
         public static final String VOLUME_KEYS_DEFAULT = "volume_keys_default";
 
         /**
-=======
->>>>>>> 75604a2... [1/2] SystemUI: Add time-context headers to the notification header
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
