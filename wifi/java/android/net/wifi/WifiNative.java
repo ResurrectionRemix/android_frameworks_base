@@ -966,8 +966,6 @@ public class WifiNative {
         // Note: optional feature on the driver. It is ok for this to fail.
         doBooleanCommand("DRIVER MIRACAST " + mode);
     }
-<<<<<<< HEAD
-=======
 
     public boolean getModeCapability(String mode) {
         String ret = doStringCommand("GET_CAPABILITY modes");
@@ -980,7 +978,4 @@ public class WifiNative {
         }
         return false;
     }
-
-    public native static boolean setMode(int mode);
->>>>>>> be6570f... Wifi: Add IBSS supported method
 }
