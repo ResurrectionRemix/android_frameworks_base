@@ -729,12 +729,9 @@ public class AudioService extends IAudioService.Stub {
         mLinkNotificationWithVolume = Settings.System.getIntForUser(cr,
                 Settings.System.VOLUME_LINK_NOTIFICATION, 1, UserHandle.USER_CURRENT) == 1;
 
-<<<<<<< HEAD
         mVolumeKeysDefault = Settings.System.getInt(cr,
                 Settings.System.VOLUME_KEYS_DEFAULT, 1);
 
-=======
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
         mMuteAffectedStreams = System.getIntForUser(cr,
                 System.MUTE_STREAMS_AFFECTED,
                 ((1 << AudioSystem.STREAM_MUSIC)|
@@ -3755,11 +3752,8 @@ public class AudioService extends IAudioService.Stub {
                 Settings.Global.DOCK_AUDIO_MEDIA_ENABLED), false, this);
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
                 Settings.System.VOLUME_LINK_NOTIFICATION), false, this);
-<<<<<<< HEAD
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
                 Settings.System.VOLUME_KEYS_DEFAULT), false, this);
-=======
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
         }
 
         @Override
@@ -3781,11 +3775,8 @@ public class AudioService extends IAudioService.Stub {
 
                 mLinkNotificationWithVolume = Settings.System.getIntForUser(mContentResolver,
                         Settings.System.VOLUME_LINK_NOTIFICATION, 1, UserHandle.USER_CURRENT) == 1;
-<<<<<<< HEAD
                 mVolumeKeysDefault = Settings.System.getInt(mContentResolver,
                     Settings.System.VOLUME_KEYS_DEFAULT, 1);
-=======
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
                 if (mLinkNotificationWithVolume) {
                     mStreamVolumeAlias[AudioSystem.STREAM_NOTIFICATION] = AudioSystem.STREAM_RING;
                 } else {

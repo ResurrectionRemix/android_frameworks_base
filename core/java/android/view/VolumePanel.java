@@ -104,14 +104,10 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
     private static final int STREAM_MASTER = -100;
     // Pseudo stream type for remote volume is defined in AudioService.STREAM_REMOTE_MUSIC
 
-<<<<<<< HEAD
     public static final int VOLUME_OVERLAY_SINGLE = 0;
     public static final int VOLUME_OVERLAY_EXPANDABLE = 1;
     public static final int VOLUME_OVERLAY_EXPANDED = 2;
     public static final int VOLUME_OVERLAY_NONE = 3;
-=======
-    public static final int VOLUME_OVERLAY_EXPANDABLE = 1;
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
 
     protected Context mContext;
     private AudioManager mAudioManager;
@@ -234,12 +230,9 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         public void onChange(boolean selfChange) {
             mVolumeLinkNotification = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
-<<<<<<< HEAD
             int overlayStyle = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.MODE_VOLUME_OVERLAY, VOLUME_OVERLAY_EXPANDABLE);
             changeOverlayStyle(overlayStyle);
-=======
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
         }
     };
 
@@ -352,23 +345,16 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         // Get the user's preferences
         mVolumeLinkNotification = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
-<<<<<<< HEAD
         int chosenStyle = Settings.System.getInt(context.getContentResolver(),
                 Settings.System.MODE_VOLUME_OVERLAY, VOLUME_OVERLAY_EXPANDABLE);
-=======
-        int chosenStyle = VOLUME_OVERLAY_EXPANDABLE;
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
         changeOverlayStyle(chosenStyle);
 
         context.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.VOLUME_LINK_NOTIFICATION), false,
                 mSettingsObserver);
-<<<<<<< HEAD
         context.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.MODE_VOLUME_OVERLAY), false,
                 mSettingsObserver);
-=======
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
 
         boolean masterVolumeKeySounds = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_useVolumeKeySounds);
@@ -384,22 +370,18 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         // Don't change to the same style
         if (newStyle == mCurrentOverlayStyle) return;
         switch (newStyle) {
-<<<<<<< HEAD
             case VOLUME_OVERLAY_SINGLE :
                 mMoreButton.setVisibility(View.GONE);
                 mDivider.setVisibility(View.GONE);
                 mShowCombinedVolumes = false;
                 mCurrentOverlayStyle = VOLUME_OVERLAY_SINGLE;
                 break;
-=======
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
             case VOLUME_OVERLAY_EXPANDABLE :
                 mMoreButton.setVisibility(View.VISIBLE);
                 mDivider.setVisibility(View.VISIBLE);
                 mShowCombinedVolumes = true;
                 mCurrentOverlayStyle = VOLUME_OVERLAY_EXPANDABLE;
                 break;
-<<<<<<< HEAD
             case VOLUME_OVERLAY_EXPANDED :
                 mMoreButton.setVisibility(View.GONE);
                 mDivider.setVisibility(View.GONE);
@@ -414,8 +396,6 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
                 mShowCombinedVolumes = false;
                 mCurrentOverlayStyle = VOLUME_OVERLAY_NONE;
                 break;
-=======
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
         }
     }
 
@@ -833,11 +813,7 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         }
 
         // Only Show if style needs it
-<<<<<<< HEAD
         if (!mDialog.isShowing() && mCurrentOverlayStyle != VOLUME_OVERLAY_NONE) {
-=======
-        if (!mDialog.isShowing()) {
->>>>>>> 72cfe0e... [1/2] base: expandable volume panel and tweaks
             int stream = (streamType == AudioService.STREAM_REMOTE_MUSIC) ? -1 : streamType;
             // when the stream is for remote playback, use -1 to reset the stream type evaluation
             mAudioManager.forceVolumeControlStream(stream);
