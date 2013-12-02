@@ -2793,11 +2793,7 @@ public final class Settings {
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
 
         /**
-<<<<<<< HEAD
          * Whether or not to launch default music player when headset is connected
-=======
-         * Show the content behind the lockscreen
->>>>>>> 231b07a... [1/2] Frameworks: Optional statusbar battery icons
          * @hide
          */
         public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
@@ -2981,13 +2977,6 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_KEYS_DEFAULT = "volume_keys_default";
-
-        /**
-
-         * Setting to show the battery percentage text
-         * @hide
-         */
-        public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
