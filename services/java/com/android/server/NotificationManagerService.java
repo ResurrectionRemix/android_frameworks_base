@@ -68,7 +68,6 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.util.AtomicFile;
 import android.util.EventLog;
 import android.util.Log;
@@ -170,11 +169,7 @@ public class NotificationManagerService extends INotificationManager.Stub
     private boolean mWasScreenOn = true;
     private boolean mInCall = false;
     private boolean mNotificationPulseEnabled;
-<<<<<<< HEAD
     private HashMap<String, NotificationLedValues> mNotificationPulseCustomLedValues;
-=======
-    private ArrayMap<String, NotificationLedValues> mNotificationPulseCustomLedValues;
->>>>>>> 4711488... Notification LED Control (1/2).
     private Map<String, String> mPackageNameMappings;
 
     // used as a mutex for access to all active notifications & listeners
@@ -1349,41 +1344,26 @@ public class NotificationManagerService extends INotificationManager.Stub
 
         public void update(Uri uri) {
             ContentResolver resolver = mContext.getContentResolver();
-<<<<<<< HEAD
 
             // LED enabled
             mNotificationPulseEnabled = Settings.System.getIntForUser(resolver,
                     Settings.System.NOTIFICATION_LIGHT_PULSE, 0, UserHandle.USER_CURRENT) != 0;
 
-=======
-            // LED enabled
-            mNotificationPulseEnabled = Settings.System.getIntForUser(resolver,
-                    Settings.System.NOTIFICATION_LIGHT_PULSE, 0, UserHandle.USER_CURRENT) != 0;
->>>>>>> 4711488... Notification LED Control (1/2).
             // LED default color
             mDefaultNotificationColor = Settings.System.getIntForUser(resolver,
                     Settings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR, mDefaultNotificationColor,
                     UserHandle.USER_CURRENT);
-<<<<<<< HEAD
 
-=======
->>>>>>> 4711488... Notification LED Control (1/2).
             // LED default on MS
             mDefaultNotificationLedOn = Settings.System.getIntForUser(resolver,
                     Settings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON, mDefaultNotificationLedOn,
                     UserHandle.USER_CURRENT);
-<<<<<<< HEAD
 
-=======
->>>>>>> 4711488... Notification LED Control (1/2).
             // LED default off MS
             mDefaultNotificationLedOff = Settings.System.getIntForUser(resolver,
                     Settings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF, mDefaultNotificationLedOff,
                     UserHandle.USER_CURRENT);
-<<<<<<< HEAD
 
-=======
->>>>>>> 4711488... Notification LED Control (1/2).
             // LED custom notification colors
             mNotificationPulseCustomLedValues.clear();
             if (Settings.System.getIntForUser(resolver,
@@ -1453,15 +1433,9 @@ public class NotificationManagerService extends INotificationManager.Stub
                 VIBRATE_PATTERN_MAXLEN,
                 DEFAULT_VIBRATE_PATTERN);
 
-<<<<<<< HEAD
         mNotificationPulseCustomLedValues = new HashMap<String, NotificationLedValues>();
 
         mPackageNameMappings = new HashMap<String, String>();
-=======
-        mNotificationPulseCustomLedValues = new ArrayMap<String, NotificationLedValues>();
-
-        mPackageNameMappings = new ArrayMap<String, String>();
->>>>>>> 4711488... Notification LED Control (1/2).
         for (String mapping : resources.getStringArray(
                  com.android.internal.R.array.notification_light_package_mapping)) {
             String[] map = mapping.split("\\|");
@@ -2387,10 +2361,7 @@ public class NotificationManagerService extends INotificationManager.Stub
             int ledARGB = ledno.ledARGB;
             int ledOnMS = ledno.ledOnMS;
             int ledOffMS = ledno.ledOffMS;
-<<<<<<< HEAD
 
-=======
->>>>>>> 4711488... Notification LED Control (1/2).
             if (ledValues != null) {
                 ledARGB = ledValues.color != 0 ? ledValues.color : mDefaultNotificationColor;
                 ledOnMS = ledValues.onMS >= 0 ? ledValues.onMS : mDefaultNotificationLedOn;
@@ -2405,50 +2376,6 @@ public class NotificationManagerService extends INotificationManager.Stub
             mNotificationLight.setFlashing(ledARGB, LightsService.LIGHT_FLASH_TIMED,
                     ledOnMS, ledOffMS);
         }
-    }
-
-    private void parseNotificationPulseCustomValuesString(String customLedValuesString) {
-        if (TextUtils.isEmpty(customLedValuesString)) {
-            return;
-        }
-
-        for (String packageValuesString : customLedValuesString.split("\\|")) {
-            String[] packageValues = packageValuesString.split("=");
-            if (packageValues.length != 2) {
-                Log.e(TAG, "Error parsing custom led values for unknown package");
-                continue;
-            }
-            String packageName = packageValues[0];
-            String[] values = packageValues[1].split(";");
-            if (values.length != 3) {
-                Log.e(TAG, "Error parsing custom led values '"
-                        + packageValues[1] + "' for " + packageName);
-                continue;
-            }
-            NotificationLedValues ledValues = new NotificationLedValues();
-            try {
-                ledValues.color = Integer.parseInt(values[0]);
-                ledValues.onMS = Integer.parseInt(values[1]);
-                ledValues.offMS = Integer.parseInt(values[2]);
-            } catch (Exception e) {
-                Log.e(TAG, "Error parsing custom led values '"
-                        + packageValues[1] + "' for " + packageName);
-                continue;
-            }
-            mNotificationPulseCustomLedValues.put(packageName, ledValues);
-        }
-    }
-
-    private NotificationLedValues getLedValuesForNotification(NotificationRecord ledNotification) {
-        final String packageName = ledNotification.sbn.getPackageName();
-        return mNotificationPulseCustomLedValues.get(mapPackage(packageName));
-    }
-
-    private String mapPackage(String pkg) {
-        if(!mPackageNameMappings.containsKey(pkg)) {
-            return pkg;
-        }
-        return mPackageNameMappings.get(pkg);
     }
 
     private void parseNotificationPulseCustomValuesString(String customLedValuesString) {
