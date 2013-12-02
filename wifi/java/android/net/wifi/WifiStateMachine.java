@@ -3182,9 +3182,6 @@ public class WifiStateMachine extends StateMachine {
                         mWifiNative.startTdls(remoteAddress, enable);
                     }
                     break;
-                case CMD_GET_IBSS_SUPPORTED:
-                    replyToMessage(message, message.what, mIbssSupported ? 1 : 0);
-                    break;
                 default:
                     return NOT_HANDLED;
             }
