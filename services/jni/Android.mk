@@ -58,6 +58,10 @@ ifeq ($(BOARD_HAVE_NEW_QC_GPS),true)
     LOCAL_CFLAGS += -DNEW_QC_GPS
 endif
 
+ifeq ($(BOARD_HAVE_SAMSUNG_GPS),true)
+	LOCAL_CFLAGS += -DSAMSUNG_GPS
+endif
+
 ifeq ($(WITH_MALLOC_LEAK_CHECK),true)
     LOCAL_CFLAGS += -DMALLOC_LEAK_CHECK
 endif

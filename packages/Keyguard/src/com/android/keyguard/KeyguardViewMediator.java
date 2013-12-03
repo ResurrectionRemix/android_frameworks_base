@@ -25,6 +25,8 @@ import android.app.Activity;
 import android.app.ActivityManagerNative;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Profile;
+import android.app.ProfileManager;
 import android.app.SearchManager;
 import android.app.StatusBarManager;
 import android.content.BroadcastReceiver;
@@ -55,8 +57,8 @@ import android.view.WindowManager;
 import android.view.WindowManagerPolicy;
 
 import com.android.internal.telephony.IccCardConstants;
+import com.android.internal.util.cm.QuietHoursUtils;
 import com.android.internal.widget.LockPatternUtils;
-
 
 /**
  * Mediates requests related to the keyguard.  This includes queries about the
@@ -246,6 +248,8 @@ public class KeyguardViewMediator {
     private int mLockSoundId;
     private int mUnlockSoundId;
     private int mLockSoundStreamId;
+
+    private ProfileManager mProfileManager;
 
     /**
      * The volume applied to the lock/unlock sounds.
@@ -492,6 +496,7 @@ public class KeyguardViewMediator {
         mLockPatternUtils.setCurrentUser(UserHandle.USER_OWNER);
 
         WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        mProfileManager = (ProfileManager) context.getSystemService(Context.PROFILE_SERVICE);
 
         mKeyguardViewManager = new KeyguardViewManager(context, wm, mViewMediatorCallback,
                 mLockPatternUtils);
@@ -571,7 +576,7 @@ public class KeyguardViewMediator {
             // This also "locks" the device when not secure to provide easy access to the
             // camera while preventing unwanted input.
             final boolean lockImmediately =
-                mLockPatternUtils.getPowerButtonInstantlyLocks();
+                mLockPatternUtils.getPowerButtonInstantlyLocks() || !mLockPatternUtils.isSecure();
 
             if (mExitSecureCallback != null) {
                 if (DEBUG) Log.d(TAG, "pending exit secure callback cancelled");
@@ -903,6 +908,16 @@ public class KeyguardViewMediator {
             return;
         }
 
+        // if the current profile has disabled us, don't show
+        Profile profile = mProfileManager.getActiveProfile();
+        if (profile != null) {
+            if (!lockedOrMissing
+                    && profile.getScreenLockMode() == Profile.LockMode.DISABLE) {
+                if (DEBUG) Log.d(TAG, "doKeyguard: not showing because of profile override");
+                return;
+            }
+        }
+
         if (DEBUG) Log.d(TAG, "doKeyguard: showing the lock screen");
         showLocked(options);
     }
@@ -1162,6 +1177,10 @@ public class KeyguardViewMediator {
             return;
         }
 
+        if (QuietHoursUtils.inQuietHours(mContext, Settings.System.QUIET_HOURS_SYSTEM)) {
+            return;
+        }
+
         final ContentResolver cr = mContext.getContentResolver();
         if (Settings.System.getInt(cr, Settings.System.LOCKSCREEN_SOUNDS_ENABLED, 1) == 1) {
             final int whichSound = locked
@@ -1205,6 +1224,12 @@ public class KeyguardViewMediator {
                 if (DEBUG) Log.d(TAG, "handleShow");
             }
 
+            new Thread(new Runnable() {
+                public void run() {
+                    playSounds(true);
+                }
+            }).start();
+
             mKeyguardViewManager.show(options);
             mShowing = true;
             mKeyguardDonePending = false;
@@ -1215,9 +1240,6 @@ public class KeyguardViewMediator {
                 ActivityManagerNative.getDefault().closeSystemDialogs("lock");
             } catch (RemoteException e) {
             }
-
-            // Do this at the end to not slow down display of the keyguard.
-            playSounds(true);
 
             mShowKeyguardWakeLock.release();
         }

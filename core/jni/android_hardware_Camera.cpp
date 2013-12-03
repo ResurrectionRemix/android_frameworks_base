@@ -385,6 +385,62 @@ void JNICameraContext::setCallbackMode(JNIEnv *env, bool installed, bool manualM
     }
 }
 
+static void android_hardware_Camera_setLongshot(JNIEnv *env, jobject thiz, jboolean enable)
+{
+    ALOGV("setLongshot");
+#ifdef QCOM_HARDWARE
+    JNICameraContext* context;
+    status_t rc;
+    sp<Camera> camera = get_native_camera(env, thiz, &context);
+    if (camera == 0) return;
+
+    if ( enable ) {
+        rc = camera->sendCommand(CAMERA_CMD_LONGSHOT_ON, 0, 0);
+    } else {
+        rc = camera->sendCommand(CAMERA_CMD_LONGSHOT_OFF, 0, 0);
+    }
+
+    if (rc != NO_ERROR) {
+       jniThrowException(env, "java/lang/RuntimeException", "enabling longshot mode failed");
+    }
+#endif
+}
+
+static void android_hardware_Camera_sendHistogramData(JNIEnv *env, jobject thiz)
+ {
+   ALOGV("sendHistogramData" );
+#ifdef QCOM_HARDWARE
+   JNICameraContext* context;
+   status_t rc;
+   sp<Camera> camera = get_native_camera(env, thiz, &context);
+   if (camera == 0) return;
+
+   rc = camera->sendCommand(CAMERA_CMD_HISTOGRAM_SEND_DATA, 0, 0);
+
+   if (rc != NO_ERROR) {
+      jniThrowException(env, "java/lang/RuntimeException", "send histogram data failed");
+    }
+#endif
+ }
+ static void android_hardware_Camera_setHistogramMode(JNIEnv *env, jobject thiz, jboolean mode)
+ {
+   ALOGV("setHistogramMode: mode:%d", (int)mode);
+#ifdef QCOM_HARDWARE
+   JNICameraContext* context;
+   status_t rc;
+   sp<Camera> camera = get_native_camera(env, thiz, &context);
+   if (camera == 0) return;
+
+   if(mode == true)
+      rc = camera->sendCommand(CAMERA_CMD_HISTOGRAM_ON, 0, 0);
+   else
+      rc = camera->sendCommand(CAMERA_CMD_HISTOGRAM_OFF, 0, 0);
+
+   if (rc != NO_ERROR) {
+      jniThrowException(env, "java/lang/RuntimeException", "set histogram mode failed");
+     }
+#endif
+ }
 void JNICameraContext::addCallbackBuffer(
         JNIEnv *env, jbyteArray cbb, int msgType)
 {
@@ -651,6 +707,24 @@ static void android_hardware_Camera_setHasPreviewCallback(JNIEnv *env, jobject t
     context->setCallbackMode(env, installed, manualBuffer);
 }
 
+static void android_hardware_Camera_setMetadataCb(JNIEnv *env, jobject thiz, jboolean mode)
+{
+    ALOGV("setMetadataCb: mode:%d", (int)mode);
+    JNICameraContext* context;
+    status_t rc;
+    sp<Camera> camera = get_native_camera(env, thiz, &context);
+    if (camera == 0) return;
+
+    if(mode == true)
+        rc = camera->sendCommand(CAMERA_CMD_METADATA_ON, 0, 0);
+    else
+        rc = camera->sendCommand(CAMERA_CMD_METADATA_OFF, 0, 0);
+
+    if (rc != NO_ERROR) {
+        jniThrowException(env, "java/lang/RuntimeException", "set metadata mode failed");
+    }
+}
+
 static void android_hardware_Camera_addCallbackBuffer(JNIEnv *env, jobject thiz, jbyteArray bytes, int msgType) {
     ALOGV("addCallbackBuffer: 0x%x", msgType);
 
@@ -872,11 +946,26 @@ static void android_hardware_Camera_stopFaceDetection(JNIEnv *env, jobject thiz)
 static void android_hardware_Camera_enableFocusMoveCallback(JNIEnv *env, jobject thiz, jint enable)
 {
     ALOGV("enableFocusMoveCallback");
+#ifdef ICS_CAMERA_BLOB
+    return;
+#else
     sp<Camera> camera = get_native_camera(env, thiz, NULL);
     if (camera == 0) return;
 
     if (camera->sendCommand(CAMERA_CMD_ENABLE_FOCUS_MOVE_MSG, enable, 0) != NO_ERROR) {
         jniThrowRuntimeException(env, "enable focus move callback failed");
+    }
+#endif
+}
+
+static void android_hardware_Camera_sendRawCommand(JNIEnv *env, jobject thiz, jint arg1, jint arg2, jint arg3)
+{
+    ALOGV("sendRawCommand %d, %d, %d", arg1, arg2, arg3);
+    sp<Camera> camera = get_native_camera(env, thiz, NULL);
+    if (camera == 0) return;
+
+    if (camera->sendCommand(arg1, arg2, arg3) != NO_ERROR) {
+        jniThrowRuntimeException(env, "send raw command failed");
     }
 }
 
@@ -928,6 +1017,18 @@ static JNINativeMethod camMethods[] = {
   { "native_takePicture",
     "(I)V",
     (void *)android_hardware_Camera_takePicture },
+  { "native_setHistogramMode",
+    "(Z)V",
+     (void *)android_hardware_Camera_setHistogramMode },
+  { "native_setMetadataCb",
+    "(Z)V",
+    (void *)android_hardware_Camera_setMetadataCb },
+  { "native_sendHistogramData",
+    "()V",
+     (void *)android_hardware_Camera_sendHistogramData },
+ { "native_setLongshot",
+     "(Z)V",
+      (void *)android_hardware_Camera_setLongshot },
   { "native_setParameters",
     "(Ljava/lang/String;)V",
     (void *)android_hardware_Camera_setParameters },
@@ -964,6 +1065,9 @@ static JNINativeMethod camMethods[] = {
   { "enableFocusMoveCallback",
     "(I)V",
     (void *)android_hardware_Camera_enableFocusMoveCallback},
+  { "sendRawCommand",
+    "(III)V",
+    (void *)android_hardware_Camera_sendRawCommand},
 };
 
 struct field {

@@ -127,16 +127,18 @@ public class BridgePowerManager implements IPowerManager {
     }
 
     @Override
-    public int getCurrentScreenBrightnessValue(){
-        return -1;
+    public void cpuBoost(int duration) throws RemoteException {
+        // pass for now
     }
 
     @Override
-    public int getCurrentButtonBrightnessValue(){
-        return -1;
+    public void setKeyboardVisibility(boolean visible) {
+        
     }
 
     @Override
-    public void setButtonBrightness(int brightness){
+    public void setKeyboardLight(boolean on, int key) {
+        // pass for now
     }
+
 }

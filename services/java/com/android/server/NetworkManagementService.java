@@ -1,5 +1,9 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (c) 2010-2013, The Linux Foundation. All rights reserved.
+ *
+ * Not a Contribution. Apache license notifications and license are
+ * retained for attribution purposes only.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +20,7 @@
 
 package com.android.server;
 
+import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
 import static android.Manifest.permission.DUMP;
 import static android.Manifest.permission.SHUTDOWN;
@@ -36,6 +41,7 @@ import static com.android.server.NetworkManagementService.NetdResponseCode.TtyLi
 import static com.android.server.NetworkManagementSocketTagger.PROP_QTAGUID_ENABLED;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.INetworkManagementEventObserver;
 import android.net.InterfaceConfiguration;
 import android.net.LinkAddress;
@@ -54,9 +60,12 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseBooleanArray;
+import java.util.List;
 
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.net.NetworkStatsFactory;
@@ -75,10 +84,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -120,6 +131,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         public static final int TtyListResult             = 113;
         public static final int TetheringStatsListResult  = 114;
 
+        public static final int CommandOkay               = 200;
         public static final int TetherStatusResult        = 210;
         public static final int IpFwdStatusResult         = 211;
         public static final int InterfaceGetCfgResult     = 213;
@@ -131,6 +143,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         public static final int DnsProxyQueryResult       = 222;
         public static final int ClatdStatusResult         = 223;
         public static final int GetMarkResult             = 225;
+        public static final int V6RtrAdvResult            = 227;
 
         public static final int InterfaceChange           = 600;
         public static final int BandwidthControl          = 601;
@@ -559,6 +572,37 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                     mConnector.executeForList("interface", "list"), InterfaceListResult);
         } catch (NativeDaemonConnectorException e) {
             throw e.rethrowAsParcelableException();
+        }
+    }
+
+    @Override
+    public void addUpstreamV6Interface(String iface) throws IllegalStateException {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.ACCESS_NETWORK_STATE, "NetworkManagementService");
+
+        Slog.d(TAG, "addUpstreamInterface("+ iface + ")");
+        try {
+            final Command cmd = new Command("tether", "interface", "add_upstream");
+            cmd.appendArg(iface);
+            mConnector.execute(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            throw new IllegalStateException("Cannot add upstream interface");
+        }
+    }
+
+    @Override
+    public void removeUpstreamV6Interface(String iface) throws IllegalStateException {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.ACCESS_NETWORK_STATE, "NetworkManagementService");
+
+        Slog.d(TAG, "removeUpstreamInterface(" + iface + ")");
+
+        try {
+            final Command cmd = new Command("tether", "interface", "remove_upstream");
+            cmd.appendArg(iface);
+            mConnector.execute(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            throw new IllegalStateException("Cannot remove upstream interface");
         }
     }
 
@@ -1075,8 +1119,10 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             WifiConfiguration wifiConfig, String wlanIface) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            wifiFirmwareReload(wlanIface, "AP");
-
+            if (mContext.getResources().getBoolean(
+                        com.android.internal.R.bool.config_wifiApFirmwareReload)) {
+                wifiFirmwareReload(wlanIface, "AP");
+            }
             if (mContext.getResources().getBoolean(
                         com.android.internal.R.bool.config_wifiApStartInterface)) {
                 mConnector.execute("softap", "start", wlanIface);
@@ -1777,5 +1823,139 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
 
         pw.print("Firewall enabled: "); pw.println(mFirewallEnabled);
+    }
+
+    @Override
+    public boolean replaceSrcRoute(String iface, byte[] ip, byte[] gateway, int routeId) {
+        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        final NativeDaemonEvent rsp;
+        InetAddress ipAddr;
+
+        if (TextUtils.isEmpty(iface)) {
+            Log.e(TAG,"route cmd failed - iface is invalid");
+            return false;
+        }
+
+        try {
+            ipAddr = InetAddress.getByAddress(ip);
+        } catch (UnknownHostException e) {
+            Log.e(TAG,"route cmd failed because of unknown src ip", e);
+            return false;
+        }
+
+        final Command cmd = new Command("route", "replace", "src");
+
+        if (ipAddr instanceof Inet4Address)
+            cmd.appendArg("v4");
+        else
+            cmd.appendArg("v6");
+
+        cmd.appendArg(iface);
+        cmd.appendArg(ipAddr.getHostAddress());
+        cmd.appendArg(routeId);
+
+        try {
+            InetAddress gatewayAddr = InetAddress.getByAddress(gateway);
+            // check validity of gw address - add route without gw if its invalid
+            if ((ipAddr instanceof Inet4Address && gatewayAddr instanceof Inet4Address) ||
+                    (ipAddr instanceof Inet6Address && gatewayAddr instanceof Inet6Address))
+            {
+                cmd.appendArg(gatewayAddr.getHostAddress());
+            }
+        } catch (UnknownHostException e) {
+            Log.w(TAG,"route cmd did not obtain valid gw; adding route without gw");
+        }
+
+        try {
+            rsp = mConnector.execute(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            Log.w(TAG,"route cmd failed: ", e);
+            return false;
+        }
+        if (DBG) {
+            Slog.v(TAG, "replace src route response is " + rsp.toString());
+        }
+        return true;
+    }
+
+    @Override
+    public boolean delSrcRoute(byte[] ip, int routeId) {
+        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        final NativeDaemonEvent rsp;
+        InetAddress ipAddr;
+
+        try {
+            ipAddr = InetAddress.getByAddress(ip);
+        } catch (UnknownHostException e) {
+            Log.e(TAG,"route cmd failed due to invalid src ip", e);
+            return false; //cannot remove src route without valid src prefix
+        }
+
+        final Command cmd = new Command("route", "del", "src");
+
+        if (ipAddr instanceof Inet4Address) {
+            cmd.appendArg("v4");
+        } else {
+            cmd.appendArg("v6");
+        }
+
+        cmd.appendArg(routeId);
+
+        try {
+            rsp = mConnector.execute(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            Log.w(TAG,"route cmd failed: ", e);
+            return false;
+        }
+        if (DBG) {
+            Slog.v(TAG, "del src route response is " + rsp.toString());
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addRouteWithMetric(String iface, int metric, RouteInfo route) {
+        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
+        final NativeDaemonEvent rsp;
+
+        if (TextUtils.isEmpty(iface)) {
+            Log.e(TAG,"route cmd failed - iface is invalid");
+            return false;
+        }
+
+        final Command cmd = new Command("route", "add");
+        if (route.isDefaultRoute()) {
+            cmd.appendArg("def");
+        } else {
+            cmd.appendArg("dst");
+        }
+
+        InetAddress gateway = route.getGateway();
+        if (gateway instanceof Inet4Address) {
+            cmd.appendArg("v4");
+        } else {
+            cmd.appendArg("v6");
+        }
+
+        cmd.appendArg(iface);
+        cmd.appendArg(metric);
+
+        if (route.isHostRoute()) {
+            cmd.appendArg(route.getDestination().getAddress().getHostAddress());
+        }
+
+        cmd.appendArg(gateway.getHostAddress());
+
+        try {
+            rsp = mConnector.execute(cmd);
+        } catch (NativeDaemonConnectorException e) {
+            Log.w(TAG,"route cmd failed: ", e);
+            return false;
+        }
+
+        if (DBG) {
+            Slog.v(TAG, "add metric route response is " + rsp.toString());
+        }
+        return true;
     }
 }

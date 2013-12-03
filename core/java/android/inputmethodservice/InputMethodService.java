@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2007-2008 The Android Open Source Project
- * This code has been modified. Portions copyright (C) 2013, ParanoidAndroid Project.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -249,6 +248,20 @@ public class InputMethodService extends AbstractInputMethodService {
      * The IME is visible.
      */
     public static final int IME_VISIBLE = 0x2;
+
+    int mVolumeKeyCursorControl = 0;
+    /**
+     * @hide
+     */
+    public static final int VOLUME_CURSOR_OFF = 0;
+    /**
+     * @hide
+     */
+    public static final int VOLUME_CURSOR_ON = 1;
+    /**
+     * @hide
+     */
+    public static final int VOLUME_CURSOR_ON_REVERSE = 2;
 
     InputMethodManager mImm;
     
@@ -880,7 +893,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * is currently running in fullscreen mode.
      */
     public void updateFullscreenMode() {
-        boolean isFullscreen = false;
+        boolean isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
         boolean changed = mLastShowInputRequested != mShowInputRequested;
         if (mIsFullscreen != isFullscreen || !mFullscreenApplied) {
             changed = true;
@@ -1774,6 +1787,26 @@ public class InputMethodService extends AbstractInputMethodService {
             }
             return false;
         }
+        if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
+            mVolumeKeyCursorControl = Settings.System.getInt(getContentResolver(),
+                    Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0);
+            if (isInputViewShown() && (mVolumeKeyCursorControl != VOLUME_CURSOR_OFF)) {
+                sendDownUpKeyEvents((mVolumeKeyCursorControl == VOLUME_CURSOR_ON_REVERSE)
+                        ? KeyEvent.KEYCODE_DPAD_RIGHT : KeyEvent.KEYCODE_DPAD_LEFT);
+                return true;
+            }
+            return false;
+        }
+        if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            mVolumeKeyCursorControl = Settings.System.getInt(getContentResolver(),
+                    Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0);
+            if (isInputViewShown() && (mVolumeKeyCursorControl != VOLUME_CURSOR_OFF)) {
+                sendDownUpKeyEvents((mVolumeKeyCursorControl == VOLUME_CURSOR_ON_REVERSE)
+                        ? KeyEvent.KEYCODE_DPAD_LEFT : KeyEvent.KEYCODE_DPAD_RIGHT);
+                return true;
+            }
+            return false;
+        }
         return doMovementKey(keyCode, event, MOVEMENT_DOWN);
     }
 
@@ -1819,7 +1852,15 @@ public class InputMethodService extends AbstractInputMethodService {
                 && !event.isCanceled()) {
             return handleBack(true);
         }
-        
+        if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP
+                 || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            mVolumeKeyCursorControl = Settings.System.getInt(getContentResolver(),
+                    Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0);
+            if (isInputViewShown() && (mVolumeKeyCursorControl != VOLUME_CURSOR_OFF)) {
+                return true;
+            }
+            return false;
+        }
         return doMovementKey(keyCode, event, MOVEMENT_UP);
     }
 

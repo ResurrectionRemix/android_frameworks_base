@@ -462,6 +462,10 @@ public class WifiNative {
     }
 
     public boolean setCountryCode(String countryCode) {
+        if (countryCode == null) {
+            // Ping the driver
+            return doBooleanCommand("DRIVER COUNTRY");
+        }
         return doBooleanCommand("DRIVER COUNTRY " + countryCode.toUpperCase(Locale.ROOT));
     }
 
@@ -966,4 +970,48 @@ public class WifiNative {
         // Note: optional feature on the driver. It is ok for this to fail.
         doBooleanCommand("DRIVER MIRACAST " + mode);
     }
+
+    public boolean getModeCapability(String mode) {
+        String ret = doStringCommand("GET_CAPABILITY modes");
+        if (!TextUtils.isEmpty(ret)) {
+            String[] tokens = ret.split(" ");
+            for (String t : tokens) {
+                if (t.compareTo(mode) == 0)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public List<WifiChannel> getSupportedChannels() {
+        boolean ibssAllowed;
+        List<WifiChannel> channels = new ArrayList<WifiChannel>();
+        String ret = doStringCommand("GET_CAPABILITY freq");
+
+        if (!TextUtils.isEmpty(ret)) {
+            String[] lines = ret.split("\n");
+            for (String l : lines) {
+               if (l.startsWith("Mode") || TextUtils.isEmpty(l)) continue;
+
+               String[] tokens = l.split(" ");
+               if (tokens.length < 4) continue;
+
+               if (tokens.length == 6 && tokens[5].contains("NO_IBSS"))
+                   ibssAllowed = false;
+               else
+                   ibssAllowed = true;
+
+               try {
+                   WifiChannel ch = new WifiChannel(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[3]), ibssAllowed);
+                   if (!channels.contains(ch))
+                       channels.add(ch);
+               } catch (java.lang.NumberFormatException e) {
+                   Log.d(mTAG, "Can't parse: " + l);
+               }
+            }
+        }
+        return channels;
+    }
+
+    public native static boolean setMode(int mode);
 }

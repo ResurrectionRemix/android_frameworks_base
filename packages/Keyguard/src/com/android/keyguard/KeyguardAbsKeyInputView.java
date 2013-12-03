@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
- * This code has been modified. Portions copyright (C) 2013, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +48,7 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     private Drawable mBouncerFrame;
     protected boolean mEnableHaptics;
     private boolean mQuickUnlock;
-    protected abstract boolean getQuickUnlockAllowed();
+
     // To avoid accidental lockout due to events while the device in in the pocket, ignore
     // any passwords with length less than or equal to this length.
     protected static final int MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT = 3;
@@ -107,6 +106,8 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
         mPasswordEntry = (TextView) findViewById(getPasswordTextViewId());
         mPasswordEntry.setOnEditorActionListener(this);
         mPasswordEntry.addTextChangedListener(this);
+        mQuickUnlock = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 0) == 1);
 
         // Set selected property on so the view can send accessibility events.
         mPasswordEntry.setSelected(true);
@@ -117,9 +118,6 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
                 mCallback.userActivity(0); // TODO: customize timeout for text?
             }
         });
-
-        mQuickUnlock = (Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 0) == 1);
 
         mPasswordEntry.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -132,13 +130,12 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
                 if (mCallback != null) {
                     mCallback.userActivity(0);
                 }
-                
-                if (getQuickUnlockAllowed()) {
-                    if (s.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT &&
-                            mLockPatternUtils.checkPassword(s.toString())) {
-                        mCallback.dismiss(true);
+                if (mQuickUnlock) {
+                    String entry = mPasswordEntry.getText().toString();
+                    if (entry.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT
+                            && mLockPatternUtils.checkPassword(entry)) {
                         mCallback.reportSuccessfulUnlockAttempt();
-
+                        mCallback.dismiss(true);
                     }
                 }
             }

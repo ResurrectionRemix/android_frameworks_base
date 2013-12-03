@@ -20,7 +20,7 @@
     android:clickable="true"
     android:focusable="false"
     android:textAppearance="?android:attr/textAppearanceLarge"
-    android:background="@drawable/btn_keyboard_key_trans"
+    android:background="@drawable/btn_keyboard_key_ics_simple"
     android:textColor="#FFFFFFFF"
 />
 

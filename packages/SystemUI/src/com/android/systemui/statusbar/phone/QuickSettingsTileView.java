@@ -16,8 +16,6 @@
 
 package com.android.systemui.statusbar.phone;
 
-import com.android.systemui.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -28,7 +26,7 @@ import android.widget.FrameLayout;
 /**
  *
  */
-class QuickSettingsTileView extends FrameLayout {
+public class QuickSettingsTileView extends FrameLayout {
     private static final String TAG = "QuickSettingsTileView";
 
     private int mContentLayoutId;
@@ -51,7 +49,7 @@ class QuickSettingsTileView extends FrameLayout {
         return mColSpan;
     }
 
-    void setContent(int layoutId, LayoutInflater inflater) {
+    public void setContent(int layoutId, LayoutInflater inflater) {
         mContentLayoutId = layoutId;
         inflater.inflate(layoutId, this);
     }
@@ -63,11 +61,6 @@ class QuickSettingsTileView extends FrameLayout {
         } else {
             Log.e(TAG, "Not reinflating content: No layoutId set");
         }
-    }
-
-    void setLoading(boolean loading) {
-        findViewById(R.id.loading).setVisibility(loading ? View.VISIBLE : View.GONE);
-        findViewById(R.id.image).setVisibility(loading ? View.GONE : View.VISIBLE);
     }
 
     @Override

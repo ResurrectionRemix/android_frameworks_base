@@ -264,15 +264,26 @@ void OpenGLRenderer::discardFramebuffer(float left, float top, float right, floa
 }
 
 status_t OpenGLRenderer::clear(float left, float top, float right, float bottom, bool opaque) {
+#ifdef QCOM_HARDWARE
+    mCaches.enableScissor();
+    mCaches.setScissor(left, mSnapshot->height - bottom, right - left, bottom - top);
+    glClear(GL_COLOR_BUFFER_BIT);
+    if (opaque && !mCountOverdraw) {
+        mCaches.resetScissor();
+        return DrawGlInfo::kStatusDone;
+    }
+    return DrawGlInfo::kStatusDrew;  
+#else
     if (!opaque || mCountOverdraw) {
         mCaches.enableScissor();
         mCaches.setScissor(left, mSnapshot->height - bottom, right - left, bottom - top);
         glClear(GL_COLOR_BUFFER_BIT);
+
         return DrawGlInfo::kStatusDrew;
     }
-
     mCaches.resetScissor();
     return DrawGlInfo::kStatusDone;
+#endif
 }
 
 void OpenGLRenderer::syncState() {
@@ -1076,7 +1087,17 @@ void OpenGLRenderer::composeLayer(sp<Snapshot> current, sp<Snapshot> previous) {
         }
     } else if (!rect.isEmpty()) {
         dirtyLayer(rect.left, rect.top, rect.right, rect.bottom);
+
+#ifdef QCOM_HARDWARE
+        save(0);
+        // the layer contains screen buffer content that shouldn't be alpha modulated
+        // (and any necessary alpha modulation was handled drawing into the layer)
+        mSnapshot->alpha = 1.0f;
+#endif
         composeLayerRect(layer, rect, true);
+#ifdef QCOM_HARDWARE
+        restore();
+#endif
     }
 
     dirtyClip();
@@ -1744,6 +1765,12 @@ void OpenGLRenderer::setupDraw(bool clear) {
             setScissorFromClip();
         }
         setStencilFromClip();
+#ifdef QCOM_HARDWARE
+    } else {
+        // Disable stencil test in case setStencilFromClip()
+        // enabled the stencil test but didn't disable it
+        glDisable(GL_STENCIL_TEST);
+#endif
     }
 
     mDescription.reset();

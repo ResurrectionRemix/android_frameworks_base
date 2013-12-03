@@ -1564,26 +1564,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (upgradeVersion != currentVersion) {
             Log.w(TAG, "Got stuck trying to upgrade from version " + upgradeVersion
                     + ", must wipe the settings provider");
-            db.execSQL("DROP TABLE IF EXISTS global");
-            db.execSQL("DROP TABLE IF EXISTS globalIndex1");
-            db.execSQL("DROP TABLE IF EXISTS system");
-            db.execSQL("DROP INDEX IF EXISTS systemIndex1");
-            db.execSQL("DROP TABLE IF EXISTS secure");
-            db.execSQL("DROP INDEX IF EXISTS secureIndex1");
-            db.execSQL("DROP TABLE IF EXISTS gservices");
-            db.execSQL("DROP INDEX IF EXISTS gservicesIndex1");
-            db.execSQL("DROP TABLE IF EXISTS bluetooth_devices");
-            db.execSQL("DROP TABLE IF EXISTS bookmarks");
-            db.execSQL("DROP INDEX IF EXISTS bookmarksIndex1");
-            db.execSQL("DROP INDEX IF EXISTS bookmarksIndex2");
-            db.execSQL("DROP TABLE IF EXISTS favorites");
-            onCreate(db);
-
-            // Added for diagnosing settings.db wipes after the fact
-            String wipeReason = oldVersion + "/" + upgradeVersion + "/" + currentVersion;
-            db.execSQL("INSERT INTO secure(name,value) values('" +
-                    "wiped_db_reason" + "','" + wipeReason + "');");
+            wipeDB(db, oldVersion, upgradeVersion, currentVersion);
         }
+    }
+
+    private void wipeDB(SQLiteDatabase db, int oldVersion, int upgradeVersion,
+     int currentVersion) {
+        db.execSQL("DROP TABLE IF EXISTS global");
+        db.execSQL("DROP TABLE IF EXISTS globalIndex1");
+        db.execSQL("DROP TABLE IF EXISTS system");
+        db.execSQL("DROP INDEX IF EXISTS systemIndex1");
+        db.execSQL("DROP TABLE IF EXISTS secure");
+        db.execSQL("DROP INDEX IF EXISTS secureIndex1");
+        db.execSQL("DROP TABLE IF EXISTS gservices");
+        db.execSQL("DROP INDEX IF EXISTS gservicesIndex1");
+        db.execSQL("DROP TABLE IF EXISTS bluetooth_devices");
+        db.execSQL("DROP TABLE IF EXISTS bookmarks");
+        db.execSQL("DROP INDEX IF EXISTS bookmarksIndex1");
+        db.execSQL("DROP INDEX IF EXISTS bookmarksIndex2");
+        db.execSQL("DROP TABLE IF EXISTS favorites");
+        onCreate(db);
+
+        // Added for diagnosing settings.db wipes after the fact
+        String wipeReason = oldVersion + "/" + upgradeVersion + "/" + currentVersion;
+        db.execSQL("INSERT INTO secure(name,value) values('" +
+                "wiped_db_reason" + "','" + wipeReason + "');");
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Not much can be done here - wipe database completely and create anew
+        // otherwise an exception will be thrown on boot preventing startup.
+        wipeDB(db, oldVersion, newVersion, oldVersion);
     }
 
     private String[] hashsetToStringArray(HashSet<String> set) {
@@ -1981,6 +1993,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Set default tty mode
             loadSetting(stmt, Settings.System.TTY_MODE, 0);
 
+            // Set default noise suppression value
+            loadSetting(stmt, Settings.System.NOISE_SUPPRESSION, 0);
+
             loadIntegerSetting(stmt, Settings.System.SCREEN_BRIGHTNESS,
                     R.integer.def_screen_brightness);
 
@@ -2001,6 +2016,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             loadIntegerSetting(stmt, Settings.System.POINTER_SPEED,
                     R.integer.def_pointer_speed);
+
+            loadIntegerSetting(stmt, Settings.System.STATUS_BAR_BATTERY,
+                    R.integer.def_battery_style);
+
+            loadIntegerSetting(stmt, Settings.System.STATUS_BAR_NOTIF_COUNT,
+                    R.integer.def_notif_count);
+
+            loadIntegerSetting(stmt, Settings.System.QS_QUICK_PULLDOWN,
+                    R.integer.def_qs_quick_pulldown);
+
+            loadStringSetting(stmt, Settings.System.LOCKSCREEN_TARGETS,
+                    R.string.def_lockscreen_targets);
         } finally {
             if (stmt != null) stmt.close();
         }
@@ -2013,7 +2040,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 R.bool.def_sound_effects_enabled);
         loadBooleanSetting(stmt, Settings.System.HAPTIC_FEEDBACK_ENABLED,
                 R.bool.def_haptic_feedback);
-
         loadIntegerSetting(stmt, Settings.System.LOCKSCREEN_SOUNDS_ENABLED,
             R.integer.def_lockscreen_sounds_enabled);
     }
@@ -2244,9 +2270,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     R.string.def_car_undock_sound);
             loadStringSetting(stmt, Settings.Global.WIRELESS_CHARGING_STARTED_SOUND,
                     R.string.def_wireless_charging_started_sound);
-
             loadIntegerSetting(stmt, Settings.Global.DOCK_AUDIO_MEDIA_ENABLED,
                     R.integer.def_dock_audio_media_enabled);
+
+            loadBooleanSetting(stmt, Settings.Global.POWER_NOTIFICATIONS_ENABLED,
+                    R.bool.def_power_notifications_enabled);
+            loadBooleanSetting(stmt, Settings.Global.POWER_NOTIFICATIONS_VIBRATE,
+                    R.bool.def_power_notifications_vibrate);
+            loadStringSetting(stmt, Settings.Global.POWER_NOTIFICATIONS_RINGTONE,
+                    R.string.def_power_notifications_ringtone);
 
             loadSetting(stmt, Settings.Global.SET_INSTALL_LOCATION, 0);
             loadSetting(stmt, Settings.Global.DEFAULT_INSTALL_LOCATION,
@@ -2275,6 +2307,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     R.integer.def_low_battery_sound_timeout);
 
             // --- New global settings start here
+            loadIntegerSetting(stmt, Settings.Global.TETHER_DUN_REQUIRED,
+                    R.integer.def_tether_dun_required);
+
         } finally {
             if (stmt != null) stmt.close();
         }

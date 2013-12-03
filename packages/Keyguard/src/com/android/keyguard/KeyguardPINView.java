@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
- * This code has been modified. Portions copyright (C) 2013, ParanoidAndroid Project.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +17,6 @@
 package com.android.keyguard;
 
 import android.content.Context;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -57,11 +54,6 @@ public class KeyguardPINView extends KeyguardAbsKeyInputView
     }
 
     @Override
-    protected boolean getQuickUnlockAllowed() {
-        return true;
-    }
-
-    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
@@ -77,28 +69,6 @@ public class KeyguardPINView extends KeyguardAbsKeyInputView
                 }
             });
             ok.setOnHoverListener(new LiftToActivateListener(getContext()));
-        }
-
-
-        final int randomDigitMode = Settings.Secure.getIntForUser(
-            mContext.getContentResolver(), Settings.Secure.LOCK_NUMPAD_RANDOM,
-            0, UserHandle.USER_CURRENT);
-
-        if (randomDigitMode > 0) {
-            final View randomButton = findViewById(R.id.key_random);
-            if (randomDigitMode == 1) {
-                buildRandomNumPadKey();
-            }
-            if (randomButton != null) {
-                randomButton.setVisibility(View.VISIBLE);
-                randomButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        doHapticKeyClick();
-                        buildRandomNumPadKey();
-                    }
-                });
-            }
         }
 
         // The delete button is of the PIN keyboard itself in some (e.g. tablet) layouts,
@@ -135,22 +105,6 @@ public class KeyguardPINView extends KeyguardAbsKeyInputView
                 | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
 
         mPasswordEntry.requestFocus();
-    }
-
-
-    private void buildRandomNumPadKey() {
-        NumPadKey button;
-        for (int i = 0; i < 10; i++) {
-            button = (NumPadKey) findViewById(
-                mContext.getResources()
-                    .getIdentifier("com.android.keyguard:id/key" + i, null, null));
-            if (button != null) {
-                if (i == 0) {
-                    button.initNumKeyPad();
-                }
-                button.createNumKeyPad(true);
-            }
-        }
     }
 
     @Override

@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-	android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true">
 
         <com.android.systemui.recent.RecentsVerticalScrollView
             android:id="@+id/recents_container"
@@ -65,9 +65,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="center"
-            android:layout_gravity="bottom|left"
+            android:layout_gravity="top|right"
             android:src="@drawable/ic_notify_clear" />
-
 
     </FrameLayout>
 

@@ -21,6 +21,11 @@ LOCAL_SRC_FILES:= \
     android_mtp_MtpDevice.cpp \
     android_mtp_MtpServer.cpp \
 
+ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+    LOCAL_SRC_FILES += \
+    android_media_ExtMediaPlayer.cpp
+endif
+
 LOCAL_SHARED_LIBRARIES := \
     libandroid_runtime \
     libnativehelper \
@@ -55,8 +60,15 @@ LOCAL_C_INCLUDES += \
     frameworks/av/media/libstagefright/codecs/amrnb/enc/src \
     frameworks/av/media/libstagefright/codecs/amrnb/common \
     frameworks/av/media/libstagefright/codecs/amrnb/common/include \
-    frameworks/av/media/mtp \
-    frameworks/native/include/media/openmax \
+    frameworks/av/media/mtp
+
+ifneq ($(TI_CUSTOM_DOMX_PATH),)
+LOCAL_C_INCLUDES += $(TI_CUSTOM_DOMX_PATH)/omx_core/inc
+else
+LOCAL_C_INCLUDES += frameworks/native/include/media/openmax
+endif
+
+LOCAL_C_INCLUDES += \
     $(call include-path-for, libhardware)/hardware \
     system/media/camera/include \
     $(PV_INCLUDES) \

@@ -55,7 +55,7 @@
 
         </com.android.systemui.recent.RecentsHorizontalScrollView>
 
-    <ImageView
+        <ImageView
             android:id="@+id/recents_clear"
             android:clickable="true"
             android:layout_width="50dp"

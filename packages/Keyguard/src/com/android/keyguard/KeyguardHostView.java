@@ -50,6 +50,7 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Slog;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -72,7 +73,7 @@ public class KeyguardHostView extends KeyguardViewBase {
 
     // Use this to debug all of keyguard
     public static boolean DEBUG = KeyguardViewMediator.DEBUG;
-    public static boolean DEBUGXPORT = true; // debug music transport control
+    public static boolean DEBUGXPORT = false; // debug music transport control
 
     // Found in KeyguardAppWidgetPickActivity.java
     static final int APPWIDGET_HOST_ID = 0x4B455947;
@@ -89,6 +90,8 @@ public class KeyguardHostView extends KeyguardViewBase {
     private boolean mEnableFallback; // TODO: This should get the value from KeyguardPatternView
     private SecurityMode mCurrentSecuritySelection = SecurityMode.Invalid;
     private int mAppWidgetToShow;
+
+    private View mExpandChallengeView;
 
     protected OnDismissAction mDismissAction;
 
@@ -399,7 +402,24 @@ public class KeyguardHostView extends KeyguardViewBase {
         updateSecurityViews();
         enableUserSelectorIfNecessary();
         minimizeChallengeIfDesired();
+
+        mExpandChallengeView = (View) findViewById(R.id.expand_challenge_handle);
+        if (mExpandChallengeView != null) {
+            mExpandChallengeView.setOnLongClickListener(mFastUnlockClickListener);
+        }
     }
+
+    private final OnLongClickListener mFastUnlockClickListener = new OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            if (mLockPatternUtils.isTactileFeedbackEnabled()) {
+                v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS,
+                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            }
+            showNextSecurityScreenOrFinish(false);
+            return true;
+        }
+    };
 
     private void updateAndAddWidgets() {
         cleanupAppWidgetIds();
@@ -1105,10 +1125,8 @@ public class KeyguardHostView extends KeyguardViewBase {
         if (mSlidingChallengeLayout == null) {
             return;
         }
-
         int setting = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, 0, UserHandle.USER_CURRENT);
-
         if (setting == 1) {
             mSlidingChallengeLayout.showChallenge(false);
         }

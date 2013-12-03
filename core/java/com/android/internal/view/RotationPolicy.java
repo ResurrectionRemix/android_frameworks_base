@@ -64,7 +64,8 @@ public final class RotationPolicy {
      * settings.
      */
     public static boolean isRotationLockToggleSupported(Context context) {
-        return isRotationSupported(context);
+        return isRotationSupported(context)
+                && context.getResources().getConfiguration().smallestScreenWidthDp >= 600;
     }
 
     /**
@@ -74,7 +75,9 @@ public final class RotationPolicy {
         return isRotationLockToggleSupported(context) &&
                 Settings.System.getIntForUser(context.getContentResolver(),
                         Settings.System.HIDE_ROTATION_LOCK_TOGGLE_FOR_ACCESSIBILITY, 0,
-                        UserHandle.USER_CURRENT) == 0;
+                        UserHandle.USER_CURRENT) == 0 &&
+                !context.getResources().getBoolean(com.android
+                        .internal.R.bool.config_hasRotationLockSwitch);
     }
 
     /**

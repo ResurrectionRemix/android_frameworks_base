@@ -27,6 +27,8 @@ import android.util.TimeUtils;
 import android.view.IWindowId;
 
 import com.android.internal.app.IBatteryStats;
+import com.android.internal.app.ThemeUtils;
+
 import com.android.internal.policy.PolicyManager;
 import com.android.internal.policy.impl.PhoneWindowManager;
 import com.android.internal.util.FastPrintWriter;
@@ -295,6 +297,12 @@ public class WindowManagerService extends IWindowManager.Stub
 
     private final boolean mHeadless;
 
+    private BroadcastReceiver mThemeChangeReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            mUiContext = null;
+        }
+    };
+
     final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -544,6 +552,8 @@ public class WindowManagerService extends IWindowManager.Stub
     final DisplayManagerService mDisplayManagerService;
     final DisplayManager mDisplayManager;
 
+    private boolean mForceDisableHardwareKeyboard = false;
+
     // Who is holding the screen on.
     Session mHoldingScreenOn;
     PowerManager.WakeLock mHoldingScreenWakeLock;
@@ -786,6 +796,9 @@ public class WindowManagerService extends IWindowManager.Stub
 
         mAnimator = new WindowAnimator(this);
 
+        mForceDisableHardwareKeyboard = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_forceDisableHardwareKeyboard);
+
         initPolicy(UiThread.getHandler());
 
         // Add ourself to the Watchdog monitors.
@@ -799,15 +812,20 @@ public class WindowManagerService extends IWindowManager.Stub
         } finally {
             SurfaceControl.closeTransaction();
         }
+
+        ThemeUtils.registerThemeChangeReceiver(mContext, mThemeChangeReceiver);
+    }
+
+    private Context getUiContext() {
+        if (mUiContext == null) {
+            mUiContext = ThemeUtils.createUiContext(mContext);
+        }
+        return mUiContext != null ? mUiContext : mContext;
     }
 
     public InputMonitor getInputMonitor() {
         return mInputMonitor;
     }
-
-    private Context getUiContext() {
-       return mContext;
-   }
 
     @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
@@ -5179,13 +5197,13 @@ public class WindowManagerService extends IWindowManager.Stub
     // Called by window manager policy.  Not exposed externally.
     @Override
     public void shutdown(boolean confirm) {
-        ShutdownThread.shutdown(mContext, confirm);
+        ShutdownThread.shutdown(getUiContext(), confirm);
     }
 
     // Called by window manager policy.  Not exposed externally.
     @Override
     public void rebootSafeMode(boolean confirm) {
-        ShutdownThread.rebootSafeMode(mContext, confirm);
+        ShutdownThread.rebootSafeMode(getUiContext(), confirm);
     }
 
     @Override
@@ -5632,11 +5650,6 @@ public class WindowManagerService extends IWindowManager.Stub
                     if (ws.mAppToken != null && ws.mAppToken.token == appToken &&
                             ws.isDisplayedLw()) {
                         screenshotReady = true;
-                    }
-
-                    if (fullscreen) {
-                        // No point in continuing down through windows.
-                        break;
                     }
                 }
 
@@ -6742,7 +6755,10 @@ public class WindowManagerService extends IWindowManager.Stub
             }
 
             // Determine whether a hard keyboard is available and enabled.
-            boolean hardKeyboardAvailable = config.keyboard != Configuration.KEYBOARD_NOKEYS;
+            boolean hardKeyboardAvailable = false;
+            if (!mForceDisableHardwareKeyboard) {
+                hardKeyboardAvailable = config.keyboard != Configuration.KEYBOARD_NOKEYS;
+            }
             if (hardKeyboardAvailable != mHardKeyboardAvailable) {
                 mHardKeyboardAvailable = hardKeyboardAvailable;
                 mHardKeyboardEnabled = hardKeyboardAvailable;
@@ -10171,6 +10187,11 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     @Override
+    public boolean hasMenuKeyEnabled() {
+        return mPolicy.hasMenuKeyEnabled();
+    }
+
+    @Override
     public void lockNow(Bundle options) {
         mPolicy.lockNow(options);
     }
@@ -10850,5 +10871,10 @@ public class WindowManagerService extends IWindowManager.Stub
     @Override
     public Object getWindowManagerLock() {
         return mWindowMap;
+    }
+
+    @Override
+    public void addSystemUIVisibilityFlag(int flag) {
+        mLastStatusBarVisibility |= flag;
     }
 }

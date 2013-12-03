@@ -88,6 +88,11 @@ public interface TelephonyProperties
      */
     static final String PROPERTY_LTE_ON_CDMA_DEVICE = "telephony.lteOnCdmaDevice";
 
+    /**
+     * {@see BaseCommands#getLteOnGsmMode()}
+     */
+    static final String PROPERTY_LTE_ON_GSM_DEVICE = "telephony.lteOnGsmDevice";
+
     static final String CURRENT_ACTIVE_PHONE = "gsm.current.phone-type";
 
     //****** SIM Card
@@ -187,4 +192,15 @@ public interface TelephonyProperties
      * Ignore RIL_UNSOL_NITZ_TIME_RECEIVED completely, used for debugging/testing.
      */
     static final String PROPERTY_IGNORE_NITZ = "telephony.test.ignore.nitz";
+
+    /**
+     * Set to true to indicates support for simultaneous voice and EvDo.
+     */
+    static final String PROPERTY_SVDO = "ro.ril.svdo";
+
+    /**
+     * Property to control alpha ID display for proactive commands
+     * Type: boolean ( true = alpha display enabled, false = alpha display disabled)
+     */
+    static final String PROPERTY_ALPHA_USRCNF = "persist.atel.noalpha.usrcnf";
 }

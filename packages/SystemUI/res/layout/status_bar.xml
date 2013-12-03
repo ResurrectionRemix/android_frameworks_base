@@ -76,16 +76,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <com.android.systemui.statusbar.policy.Traffic
-                android:id="@+id/traffic"
-                android:textAppearance="@style/TextAppearance.StatusBar.Traffic"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:singleLine="true"
-                android:layout_marginRight="4dp"
-                android:gravity="left|center_vertical"/>
-
-           <LinearLayout android:id="@+id/statusIcons"
+            <LinearLayout android:id="@+id/statusIcons"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -111,6 +102,16 @@
                     android:layout_width="10.5dp"
                     android:layout_marginBottom="2px"
                     android:layout_marginStart="4dip"
+                    />
+                <com.android.systemui.statusbar.policy.CircleBattery
+                    android:id="@+id/circle_battery"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dip"
+                    android:layout_marginBottom="2px"
+                    android:textAppearance="@style/TextAppearance.StatusBar.Battery"
+                    android:singleLine="true"
+                    android:gravity="bottom"
                     />
             </LinearLayout>
     

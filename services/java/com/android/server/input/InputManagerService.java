@@ -144,7 +144,9 @@ public class InputManagerService extends IInputManager.Stub
     // State for the currently installed input filter.
     final Object mInputFilterLock = new Object();
     IInputFilter mInputFilter; // guarded by mInputFilterLock
-    InputFilterHost mInputFilterHost; // guarded by mInputFilterLock
+    ChainedInputFilterHost mInputFilterHost; // guarded by mInputFilterLock
+    ArrayList<ChainedInputFilterHost> mInputFilterChain =
+            new ArrayList<ChainedInputFilterHost>(); // guarded by mInputFilterLock
 
     private static native int nativeInit(InputManagerService service,
             Context context, MessageQueue messageQueue);
@@ -179,6 +181,8 @@ public class InputManagerService extends IInputManager.Stub
             InputChannel fromChannel, InputChannel toChannel);
     private static native void nativeSetPointerSpeed(int ptr, int speed);
     private static native void nativeSetShowTouches(int ptr, boolean enabled);
+    private static native void nativeSetStylusIconEnabled(int ptr, boolean enabled);
+    private static native void nativeSetVolumeKeysRotation(int ptr, int mode);
     private static native void nativeVibrate(int ptr, int deviceId, long[] pattern,
             int repeat, int token);
     private static native void nativeCancelVibrate(int ptr, int deviceId, int token);
@@ -269,6 +273,8 @@ public class InputManagerService extends IInputManager.Stub
 
         registerPointerSpeedSettingObserver();
         registerShowTouchesSettingObserver();
+        registerStylusIconEnabledSettingObserver();
+        registerVolumeKeysRotationSettingObserver();
 
         mContext.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -280,6 +286,8 @@ public class InputManagerService extends IInputManager.Stub
 
         updatePointerSpeedFromSettings();
         updateShowTouchesFromSettings();
+        updateStylusIconEnabledFromSettings();
+        updateVolumeKeysRotationFromSettings();
     }
 
     // TODO(BT) Pass in paramter for bluetooth system
@@ -478,8 +486,8 @@ public class InputManagerService extends IInputManager.Stub
             }
 
             if (oldFilter != null) {
-                mInputFilter = null;
                 mInputFilterHost.disconnectLocked();
+                mInputFilterChain.remove(mInputFilterHost);
                 mInputFilterHost = null;
                 try {
                     oldFilter.uninstall();
@@ -489,17 +497,64 @@ public class InputManagerService extends IInputManager.Stub
             }
 
             if (filter != null) {
-                mInputFilter = filter;
-                mInputFilterHost = new InputFilterHost();
-                try {
-                    filter.install(mInputFilterHost);
-                } catch (RemoteException re) {
-                    /* ignore */
-                }
+                ChainedInputFilterHost head = mInputFilterChain.isEmpty() ? null :
+                    mInputFilterChain.get(0);
+                mInputFilterHost = new ChainedInputFilterHost(filter, head);
+                mInputFilterHost.connectLocked();
+                mInputFilterChain.add(0, mInputFilterHost);
             }
 
-            nativeSetInputFilterEnabled(mPtr, filter != null);
+            nativeSetInputFilterEnabled(mPtr, !mInputFilterChain.isEmpty());
         }
+    }
+
+    /**
+     * Registers a secondary input filter. These filters are always behind the "original"
+     * input filter. This ensures that all input events will be filtered by the
+     * {@code AccessibilityManagerService} first.
+     * <p>
+     * <b>Note:</b> Even though this implementation using AIDL interfaces, it is designed to only
+     * provide direct access. Therefore, any filter registering should reside in the
+     * system server DVM only!
+     *
+     * @param filter The input filter to register.
+     */
+    public void registerSecondaryInputFilter(IInputFilter filter) {
+        synchronized (mInputFilterLock) {
+            ChainedInputFilterHost host = new ChainedInputFilterHost(filter, null);
+            if (!mInputFilterChain.isEmpty()) {
+                mInputFilterChain.get(mInputFilterChain.size() - 1).mNext = host;
+            }
+            host.connectLocked();
+            mInputFilterChain.add(host);
+
+            nativeSetInputFilterEnabled(mPtr, !mInputFilterChain.isEmpty());
+        }
+    }
+
+    public void unregisterSecondaryInputFilter(IInputFilter filter) {
+        synchronized (mInputFilterLock) {
+            int index = findInputFilterIndexLocked(filter);
+            if (index >= 0) {
+                ChainedInputFilterHost host = mInputFilterChain.get(index);
+                host.disconnectLocked();
+                if (index >= 1) {
+                    mInputFilterChain.get(index - 1).mNext = host.mNext;
+                }
+                mInputFilterChain.remove(index);
+            }
+
+            nativeSetInputFilterEnabled(mPtr, !mInputFilterChain.isEmpty());
+        }
+    }
+
+    private int findInputFilterIndexLocked(IInputFilter filter) {
+        for (int i = 0; i < mInputFilterChain.size(); i++) {
+            if (mInputFilterChain.get(i).mInputFilter == filter) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override // Binder call
@@ -1123,6 +1178,49 @@ public class InputManagerService extends IInputManager.Stub
         return speed;
     }
 
+    public void updateStylusIconEnabledFromSettings() {
+        int enabled = getStylusIconEnabled(0);
+        nativeSetStylusIconEnabled(mPtr, enabled != 0);
+    }
+
+    public void registerStylusIconEnabledSettingObserver() {
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.STYLUS_ICON_ENABLED), false,
+                new ContentObserver(mHandler) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        updateStylusIconEnabledFromSettings();
+                    }
+                });
+    }
+
+    private int getStylusIconEnabled(int defaultValue) {
+        int result = defaultValue;
+        try {
+            result = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STYLUS_ICON_ENABLED);
+        } catch (SettingNotFoundException snfe) {
+        }
+        return result;
+    }
+
+    public void updateVolumeKeysRotationFromSettings() {
+        int mode = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0);
+        nativeSetVolumeKeysRotation(mPtr, mode);
+    }
+
+    public void registerVolumeKeysRotationSettingObserver() {
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION), false,
+                new ContentObserver(mHandler) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        updateVolumeKeysRotationFromSettings();
+                    }
+                });
+    }
+
     public void updateShowTouchesFromSettings() {
         int setting = getShowTouchesSetting(0);
         nativeSetShowTouches(mPtr, setting != 0);
@@ -1299,15 +1397,22 @@ public class InputManagerService extends IInputManager.Stub
 
     // Native callback.
     final boolean filterInputEvent(InputEvent event, int policyFlags) {
+        ChainedInputFilterHost head = null;
         synchronized (mInputFilterLock) {
-            if (mInputFilter != null) {
-                try {
-                    mInputFilter.filterInputEvent(event, policyFlags);
-                } catch (RemoteException e) {
-                    /* ignore */
-                }
-                return false;
+            if (!mInputFilterChain.isEmpty()) {
+                head = mInputFilterChain.get(0);
             }
+        }
+        // call filter input event outside of the lock.
+        // this is safe, because we know that mInputFilter never changes.
+        // we may loose a event, but this does not differ from the original implementation.
+        if (head != null) {
+            try {
+                head.mInputFilter.filterInputEvent(event, policyFlags);
+            } catch (RemoteException e) {
+                /* ignore */
+            }
+            return false;
         }
         event.recycle();
         return true;
@@ -1551,6 +1656,66 @@ public class InputManagerService extends IInputManager.Stub
                     nativeInjectInputEvent(mPtr, event, 0, 0,
                             InputManager.INJECT_INPUT_EVENT_MODE_ASYNC, 0,
                             policyFlags | WindowManagerPolicy.FLAG_FILTERED);
+                }
+            }
+        }
+    }
+
+    /**
+     * Hosting interface for input filters to call back into the input manager.
+     */
+    private final class ChainedInputFilterHost extends IInputFilterHost.Stub {
+        private final IInputFilter mInputFilter;
+        private ChainedInputFilterHost mNext;
+        private boolean mDisconnected;
+
+        private ChainedInputFilterHost(IInputFilter filter, ChainedInputFilterHost next) {
+            mInputFilter = filter;
+            mNext = next;
+            mDisconnected = false;
+        }
+
+        public void connectLocked() {
+            try {
+                mInputFilter.install(this);
+            } catch (RemoteException re) {
+                /* ignore */
+            }
+        }
+
+        public void disconnectLocked() {
+            try {
+                mInputFilter.uninstall();
+            } catch (RemoteException re) {
+                /* ignore */
+            }
+            // DO NOT set mInputFilter to null here! mInputFilter is used outside of the lock!
+            mDisconnected = true;
+        }
+
+        @Override
+        public void sendInputEvent(InputEvent event, int policyFlags) {
+            if (event == null) {
+                throw new IllegalArgumentException("event must not be null");
+            }
+
+            synchronized (mInputFilterLock) {
+                if (!mDisconnected) {
+                    if (mNext == null) {
+                        nativeInjectInputEvent(mPtr, event, 0, 0,
+                                InputManager.INJECT_INPUT_EVENT_MODE_ASYNC, 0,
+                                policyFlags | WindowManagerPolicy.FLAG_FILTERED);
+                    } else {
+                        try {
+                            // We need to pass a copy into filterInputEvent as it assumes
+                            // the callee takes responsibility and recycles it - in case
+                            // multiple filters are chained, calling into the second filter
+                            // will cause event to be recycled twice
+                            mNext.mInputFilter.filterInputEvent(event.copy(), policyFlags);
+                        } catch (RemoteException e) {
+                            /* ignore */
+                        }
+                    }
                 }
             }
         }

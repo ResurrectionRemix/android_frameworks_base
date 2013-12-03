@@ -429,6 +429,9 @@ public interface WindowManagerPolicy {
 
         /** Unregister a system listener for touch events */
         void unregisterPointerEventListener(PointerEventListener listener);
+
+        /** Fast way to post time-critical systemui flags to window manaegr*/
+        void addSystemUIVisibilityFlag(int flag);
     }
 
     public interface PointerEventListener {
@@ -1065,11 +1068,6 @@ public interface WindowManagerPolicy {
     public void systemBooted();
 
     /**
-     * name of package being worked on during boot time message
-     */
-    public void setPackageName(String pkgName);
-
-    /**
      * Show boot time message to the user.
      */
     public void showBootMessage(final CharSequence msg, final boolean always);
@@ -1143,6 +1141,11 @@ public interface WindowManagerPolicy {
      * Specifies whether there is an on-screen navigation bar separate from the status bar.
      */
     public boolean hasNavigationBar();
+
+    /**
+     * Specifies whether device can generate KEY_ACTION_MENU keypress
+     */
+    public boolean hasMenuKeyEnabled();
 
     /**
      * Lock the device now.

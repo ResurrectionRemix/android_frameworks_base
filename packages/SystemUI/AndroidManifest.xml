@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_ALL_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
     <uses-permission android:name="android.permission.DUMP" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -26,9 +26,6 @@
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="android.permission.GET_APP_OPS_STATS" />
 
-    <!-- Screen recording -->
-    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
-
     <!-- Networking and telephony -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -37,6 +34,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.MANAGE_NETWORK_POLICY" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="com.android.phone.CHANGE_NETWORK_MODE" />
 
     <!-- Physical hardware -->
     <uses-permission android:name="android.permission.MANAGE_USB" />
@@ -74,8 +73,9 @@
     <!-- Keyguard -->
     <uses-permission android:name="android.permission.CONTROL_KEYGUARD" />
 
-    <!-- Active display -->
-    <uses-permission android:name="android.permission.SYSTEM_NOTIFICATION_LISTENER" />
+    <!-- Sync -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
     <application
         android:persistent="true"
@@ -101,16 +101,7 @@
             android:process=":screenshot"
             android:exported="false" />
 
-        <!-- started from PhoneWindowManager
-             TODO: Should have an android:permission attribute -->
-        <service android:name=".omni.screenrecord.TakeScreenrecordService"
-            android:process=":screenrecord"
-            android:exported="false" />
-
         <service android:name=".LoadAverageService"
-                android:exported="true" />
-
-        <service android:name=".CPUInfoService"
                 android:exported="true" />
 
         <service android:name=".ImageWallpaper"
@@ -122,9 +113,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".screenshot.TrashScreenshot"
-                android:exported="true" />
 
         <activity android:name=".usb.UsbStorageActivity"
                   android:label="@*android:string/usb_storage_activity_title"
@@ -261,14 +249,5 @@
                 <category android:name="android.intent.category.DESK_DOCK" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".statusbar.policy.activedisplay.DummyActivity"
-                  android:label=""
-                  android:taskAffinity=""
-                  android:excludeFromRecents="true"
-                  android:exported="true"
-                  android:theme="@style/Theme.DummyActivity">
-        </activity>
-
     </application>
 </manifest>

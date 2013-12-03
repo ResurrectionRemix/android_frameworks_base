@@ -149,6 +149,7 @@ public final class PowerManagerService extends IPowerManager.Stub
     // This is subtracted from the end of the screen off timeout so the
     // minimum screen off timeout should be longer than this.
     private static final int SCREEN_DIM_DURATION = 7 * 1000;
+    private static final int DEFAULT_BUTTON_ON_DURATION = 5 * 1000;
 
     // The maximum screen dim time expressed as a ratio relative to the screen
     // off timeout.  If the screen off timeout is very short then we want the
@@ -167,6 +168,9 @@ public final class PowerManagerService extends IPowerManager.Stub
     // effectively and terminate the dream.
     private static final int DREAM_BATTERY_LEVEL_DRAIN_CUTOFF = 5;
 
+    // Max time (microseconds) to allow a CPU boost for
+    private static final int MAX_CPU_BOOST_TIME = 5000000;
+
     private Context mContext;
     private LightsService mLightsService;
     private BatteryService mBatteryService;
@@ -181,7 +185,18 @@ public final class PowerManagerService extends IPowerManager.Stub
     private WirelessChargerDetector mWirelessChargerDetector;
     private SettingsObserver mSettingsObserver;
     private DreamManagerService mDreamManager;
+    private AutoBrightnessHandler mAutoBrightnessHandler;
     private LightsService.Light mAttentionLight;
+    private LightsService.Light mButtonsLight;
+    private LightsService.Light mKeyboardLight;
+    private LightsService.Light mCapsLight;
+    private LightsService.Light mFnLight;
+
+    private int mButtonTimeout;
+    private int mButtonBrightness;
+    private int mButtonBrightnessSettingDefault;
+    private int mKeyboardBrightness;
+    private int mKeyboardBrightnessSettingDefault;
 
     private final Object mLock = new Object();
 
@@ -283,7 +298,7 @@ public final class PowerManagerService extends IPowerManager.Stub
     // The current dock state.
     private int mDockState = Intent.EXTRA_DOCK_STATE_UNDOCKED;
 
-    // True if the device should wake up when plugged or unplugged.
+    // True if the device should wake up when plugged or unplugged (default from config.xml)
     private boolean mWakeUpWhenPluggedOrUnpluggedConfig;
 
     // True if the device should suspend when the screen is off due to proximity.
@@ -321,6 +336,9 @@ public final class PowerManagerService extends IPowerManager.Stub
     // A bitfield of battery conditions under which to make the screen stay on.
     private int mStayOnWhilePluggedInSetting;
 
+    // True if the device should wake up when plugged or unplugged
+    private int mWakeUpWhenPluggedOrUnpluggedSetting;
+
     // True if the device should stay on.
     private boolean mStayOn;
 
@@ -352,6 +370,11 @@ public final class PowerManagerService extends IPowerManager.Stub
     // Use -1 to disable.
     private int mScreenBrightnessOverrideFromWindowManager = -1;
 
+    // The button brightness setting override from the window manager
+    // to allow the current foreground activity to override the button brightness.
+    // Use -1 to disable.
+    private int mButtonBrightnessOverrideFromWindowManager = -1;
+
     // The user activity timeout override from the window manager
     // to allow the current foreground activity to override the user activity timeout.
     // Use -1 to disable.
@@ -371,9 +394,6 @@ public final class PowerManagerService extends IPowerManager.Stub
     // Time when we last logged a warning about calling userActivity() without permission.
     private long mLastWarningAboutUserActivityPermission = Long.MIN_VALUE;
 
-    // timeout for button backlight automatic turning off
-    private int mButtonTimeout;
-
     private native void nativeInit();
 
     private static native void nativeSetPowerState(boolean screenOn, boolean screenBright);
@@ -381,6 +401,8 @@ public final class PowerManagerService extends IPowerManager.Stub
     private static native void nativeReleaseSuspendBlocker(String name);
     private static native void nativeSetInteractive(boolean enable);
     private static native void nativeSetAutoSuspend(boolean enable);
+    private static native void nativeCpuBoost(int duration);
+    private boolean mKeyboardVisible = false;
 
     public PowerManagerService() {
         synchronized (mLock) {
@@ -425,6 +447,9 @@ public final class PowerManagerService extends IPowerManager.Stub
         // activity manager is not running when the constructor is called, so we
         // have to defer setting the screen state until this point.
         mDisplayBlanker.unblankAllDisplays();
+
+        mAutoBrightnessHandler = new AutoBrightnessHandler(context);
+
     }
 
     public void setPolicy(WindowManagerPolicy policy) {
@@ -442,6 +467,9 @@ public final class PowerManagerService extends IPowerManager.Stub
             mScreenBrightnessSettingMinimum = pm.getMinimumScreenBrightnessSetting();
             mScreenBrightnessSettingMaximum = pm.getMaximumScreenBrightnessSetting();
             mScreenBrightnessSettingDefault = pm.getDefaultScreenBrightnessSetting();
+
+            mButtonBrightnessSettingDefault = pm.getDefaultButtonBrightness();
+            mKeyboardBrightnessSettingDefault = pm.getDefaultKeyboardBrightness();
 
             SensorManager sensorManager = new SystemSensorManager(mContext, mHandler.getLooper());
 
@@ -463,6 +491,10 @@ public final class PowerManagerService extends IPowerManager.Stub
                     mHandler);
             mSettingsObserver = new SettingsObserver(mHandler);
             mAttentionLight = mLightsService.getLight(LightsService.LIGHT_ID_ATTENTION);
+            mButtonsLight = mLightsService.getLight(LightsService.LIGHT_ID_BUTTONS);
+            mKeyboardLight = mLightsService.getLight(LightsService.LIGHT_ID_KEYBOARD);
+            mCapsLight = mLightsService.getLight(LightsService.LIGHT_ID_CAPS);
+            mFnLight = mLightsService.getLight(LightsService.LIGHT_ID_FUNC);
 
             // Register for broadcasts from other components of the system.
             IntentFilter filter = new IntentFilter();
@@ -503,6 +535,9 @@ public final class PowerManagerService extends IPowerManager.Stub
             resolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.STAY_ON_WHILE_PLUGGED_IN),
                     false, mSettingsObserver, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED),
+                    false, mSettingsObserver, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS),
                     false, mSettingsObserver, UserHandle.USER_ALL);
@@ -511,6 +546,12 @@ public final class PowerManagerService extends IPowerManager.Stub
                     false, mSettingsObserver, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.AUTO_BRIGHTNESS_RESPONSIVENESS),
+                    false, mSettingsObserver, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BUTTON_BRIGHTNESS),
+                    false, mSettingsObserver, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.KEYBOARD_BRIGHTNESS),
                     false, mSettingsObserver, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BUTTON_BACKLIGHT_TIMEOUT),
@@ -561,6 +602,9 @@ public final class PowerManagerService extends IPowerManager.Stub
                 UserHandle.USER_CURRENT);
         mStayOnWhilePluggedInSetting = Settings.Global.getInt(resolver,
                 Settings.Global.STAY_ON_WHILE_PLUGGED_IN, BatteryManager.BATTERY_PLUGGED_AC);
+        mWakeUpWhenPluggedOrUnpluggedSetting = Settings.Global.getInt(resolver,
+                Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
+                (mWakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0));
 
         final int oldScreenBrightnessSetting = mScreenBrightnessSetting;
         mScreenBrightnessSetting = Settings.System.getIntForUser(resolver,
@@ -579,9 +623,14 @@ public final class PowerManagerService extends IPowerManager.Stub
             mTemporaryScreenAutoBrightnessAdjustmentSettingOverride = Float.NaN;
         }
 
+        final int oldScreenBrightnessModeSetting =
+                mScreenBrightnessModeSetting;
         mScreenBrightnessModeSetting = Settings.System.getIntForUser(resolver,
                 Settings.System.SCREEN_BRIGHTNESS_MODE,
                 Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL, UserHandle.USER_CURRENT);
+        if (oldScreenBrightnessModeSetting != mScreenBrightnessModeSetting) {
+            mAutoBrightnessHandler.onAutoBrightnessChanged(mScreenBrightnessModeSetting);
+        }
 
         final float newAutoBrightnessResponsitivityFactor = Settings.System.getFloatForUser(resolver,
                 Settings.System.AUTO_BRIGHTNESS_RESPONSIVENESS, 1.0f,
@@ -591,7 +640,14 @@ public final class PowerManagerService extends IPowerManager.Stub
 
         mButtonTimeout = Settings.System.getIntForUser(resolver,
                 Settings.System.BUTTON_BACKLIGHT_TIMEOUT,
-                0, UserHandle.USER_CURRENT) * 1000;
+                DEFAULT_BUTTON_ON_DURATION, UserHandle.USER_CURRENT);
+
+        mButtonBrightness = Settings.System.getIntForUser(resolver,
+                Settings.System.BUTTON_BRIGHTNESS, mButtonBrightnessSettingDefault,
+                UserHandle.USER_CURRENT);
+        mKeyboardBrightness = Settings.System.getIntForUser(resolver,
+                Settings.System.KEYBOARD_BRIGHTNESS, mKeyboardBrightnessSettingDefault,
+                UserHandle.USER_CURRENT);
 
         mDirty |= DIRTY_SETTINGS;
     }
@@ -949,6 +1005,42 @@ public final class PowerManagerService extends IPowerManager.Stub
     }
 
     @Override // Binder call
+    public void setKeyboardVisibility(boolean visible) {
+        synchronized (mLock) {
+            if (DEBUG_SPEW) {
+                Slog.d(TAG, "setKeyboardVisibility: " + visible);
+            }
+            if (mKeyboardVisible != visible) {
+                mKeyboardVisible = visible;
+                if (!visible) {
+                    // If hiding keyboard, turn off leds
+                    setKeyboardLight(false, 1);
+                    setKeyboardLight(false, 2);
+                }
+                synchronized (mLock) {
+                    mDirty |= DIRTY_USER_ACTIVITY;
+                    updatePowerStateLocked();
+                }
+            }
+        }
+    }
+
+    @Override // Binder call
+    public void setKeyboardLight(boolean on, int key) {
+        if (key == 1) {
+            if (on)
+                mCapsLight.setColor(0x00ffffff);
+            else
+                mCapsLight.turnOff();
+        } else if (key == 2) {
+            if (on)
+                mFnLight.setColor(0x00ffffff);
+            else
+                mFnLight.turnOff();
+        }
+    }
+
+    @Override // Binder call
     public void wakeUp(long eventTime) {
         if (eventTime > SystemClock.uptimeMillis()) {
             throw new IllegalArgumentException("event time must not be in the future");
@@ -1241,8 +1333,9 @@ public final class PowerManagerService extends IPowerManager.Stub
 
     private boolean shouldWakeUpWhenPluggedOrUnpluggedLocked(
             boolean wasPowered, int oldPlugType, boolean dockedOnWirelessCharger) {
-        // Don't wake when powered unless configured to do so.
-        if (!mWakeUpWhenPluggedOrUnpluggedConfig) {
+
+        // Don't wake when powered if disabled in settings.
+        if (mWakeUpWhenPluggedOrUnpluggedSetting == 0) {
             return false;
         }
 
@@ -1372,19 +1465,30 @@ public final class PowerManagerService extends IPowerManager.Stub
                     nextTimeout = mLastUserActivityTime
                             + screenOffTimeout - screenDimDuration;
                     if (now < nextTimeout) {
-                        if (mSystemReady && mButtonTimeout != 0){
-                            if (now > mLastUserActivityTime + mButtonTimeout) {
-                                mDisplayPowerController.setButtonTimout(true);
-                            } else {
-                                mDisplayPowerController.setButtonTimout(false);
+                        int buttonBrightness, keyboardBrightness;
+                        if (mButtonBrightnessOverrideFromWindowManager >= 0) {
+                            buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
+                            keyboardBrightness = mButtonBrightnessOverrideFromWindowManager;
+                        } else {
+                            buttonBrightness = mButtonBrightness;
+                            keyboardBrightness = mKeyboardBrightness;
+                        }
+
+                        mKeyboardLight.setBrightness(mKeyboardVisible ? keyboardBrightness : 0);
+                        if (mButtonTimeout != 0 && now > mLastUserActivityTime + mButtonTimeout) {
+                            mButtonsLight.setBrightness(0);
+                        } else {
+                            mButtonsLight.setBrightness(buttonBrightness);
+                            if (buttonBrightness != 0 && mButtonTimeout != 0) {
                                 nextTimeout = now + mButtonTimeout;
                             }
                         }
-
                         mUserActivitySummary |= USER_ACTIVITY_SCREEN_BRIGHT;
                     } else {
                         nextTimeout = mLastUserActivityTime + screenOffTimeout;
                         if (now < nextTimeout) {
+                            mButtonsLight.setBrightness(0);
+                            mKeyboardLight.setBrightness(0);
                             mUserActivitySummary |= USER_ACTIVITY_SCREEN_DIM;
                         }
                     }
@@ -1937,6 +2041,20 @@ public final class PowerManagerService extends IPowerManager.Stub
         }
     }
 
+    /**
+     * Boost the CPU
+     * @param duration Duration to boost the CPU for, in milliseconds.
+     * @hide
+     */
+    @Override // Binder call
+    public void cpuBoost(int duration) {
+        if (duration > 0 && duration <= MAX_CPU_BOOST_TIME) {
+            nativeCpuBoost(duration);
+        } else {
+            Log.e(TAG, "Invalid boost duration: " + duration);
+        }
+    }
+
     private void shutdownOrRebootInternal(final boolean shutdown, final boolean confirm,
             final String reason, boolean wait) {
         if (mHandler == null || !mSystemReady) {
@@ -2141,9 +2259,24 @@ public final class PowerManagerService extends IPowerManager.Stub
      * @param brightness The overridden brightness, or -1 to disable the override.
      */
     public void setButtonBrightnessOverrideFromWindowManager(int brightness) {
-        // Do nothing.
-        // Button lights are not currently supported in the new implementation.
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.DEVICE_POWER, null);
+
+        final long ident = Binder.clearCallingIdentity();
+        try {
+            setButtonBrightnessOverrideFromWindowManagerInternal(brightness);
+        } finally {
+            Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    private void setButtonBrightnessOverrideFromWindowManagerInternal(int brightness) {
+        synchronized (mLock) {
+            if (mButtonBrightnessOverrideFromWindowManager != brightness) {
+                mButtonBrightnessOverrideFromWindowManager = brightness;
+                mDirty |= DIRTY_SETTINGS;
+                updatePowerStateLocked();
+            }
+        }
     }
 
     /**
@@ -2752,20 +2885,5 @@ public final class PowerManagerService extends IPowerManager.Stub
                 return "blanked=" + mBlanked;
             }
         }
-    }
-
-    @Override
-    public int getCurrentScreenBrightnessValue(){
-        return mDisplayPowerController.getCurrentScreenBrightnessValue();
-    }
-
-    @Override
-    public int getCurrentButtonBrightnessValue(){
-        return mDisplayPowerController.getCurrentButtonBrightnessValue();
-    }
-
-    @Override
-    public void setButtonBrightness(int brightness){
-        mDisplayPowerController.setButtonBrightness(brightness);
     }
 }

@@ -349,20 +349,20 @@ public final class PowerManager {
 
     /**
      * Returns true if the screen auto-brightness adjustment setting should
-     * be available in the UI.  This setting is experimental and disabled by default.
+     * be available in the UI.
      * @hide
      */
     public static boolean useScreenAutoBrightnessAdjustmentFeature() {
-        return SystemProperties.getBoolean("persist.power.useautobrightadj", false);
+        return true;
     }
 
     /**
-     * Returns true if the twilight service should be used to adjust screen brightness
-     * policy.  This setting is experimental and disabled by default.
+     * Returns true if the twilight service should be used to adjust
+     * screen brightness policy.
      * @hide
      */
     public static boolean useTwilightAdjustmentFeature() {
-        return SystemProperties.getBoolean("persist.power.usetwilightadj", false);
+        return true;
     }
 
     /**
@@ -619,6 +619,24 @@ public final class PowerManager {
     }
 
     /**
+     * Boost the CPU. Boosts the cpu for the given duration in microseconds.
+     * Requires the {@link android.Manifest.permission#CPU_BOOST} permission.
+     *
+     * @param duration in microseconds to boost the CPU
+     *
+     * @hide
+     */
+    public void cpuBoost(int duration)
+    {
+        try {
+            if (mService != null) {
+                mService.cpuBoost(duration);
+            }
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
      * A wake lock is a mechanism to indicate that your application needs
      * to have the device stay on.
      * <p>
@@ -838,5 +856,52 @@ public final class PowerManager {
                     + " held=" + mHeld + ", refCount=" + mCount + "}";
             }
         }
+    }
+
+    /**
+     * @hide
+     */
+    public void setKeyboardVisibility(boolean visible)
+    {
+        try {
+            if (mService != null) {
+                mService.setKeyboardVisibility(visible);
+            }
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
+     * sets the keyboard LED state
+     *
+     * @param on boolean state
+     * @param key 1 for caps, 2 for fn
+     *
+     * {@hide}
+     */
+    public void setKeyboardLight(boolean on, int key)
+    {
+        try {
+            mService.setKeyboardLight(on, key);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
+     * Gets the default button brightness value.
+     * @hide
+     */
+    public int getDefaultButtonBrightness() {
+        return mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
+    }
+
+    /**
+     * Gets the default keyboard brightness value.
+     * @hide
+     */
+    public int getDefaultKeyboardBrightness() {
+        return mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_keyboardBrightnessSettingDefault);
     }
 }
