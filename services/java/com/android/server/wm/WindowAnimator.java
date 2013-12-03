@@ -247,7 +247,7 @@ public class WindowAnimator {
                     }
                     if (win.isReadyForDisplay()) {
                         if (Settings.System.getInt(mContext.getContentResolver(),
-                                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 0) {
+                                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1) {
                             if (nowAnimating) {
                                 if (winAnimator.mAnimationIsEntrance) {
                                     mForceHiding = KEYGUARD_ANIMATING_IN;
