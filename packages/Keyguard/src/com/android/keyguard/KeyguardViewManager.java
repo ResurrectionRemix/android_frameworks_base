@@ -106,14 +106,16 @@ public class KeyguardViewManager {
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.LOCKSCREEN_SEE_THROUGH), false, this);
+                    Settings.System.LOCKSCREEN_SEE_THROUGH), false, this);
         }
+
         @Override
         public void onChange(boolean selfChange) {
             setKeyguardParams();
             mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
         }
-}
+    }
+
     /**
      * @param context Used to create views.
      * @param viewManager Keyguard will be attached to this.
