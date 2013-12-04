@@ -76,10 +76,10 @@ public class PlatLogoActivity extends Activity {
         final TextView letter = new TextView(this);
 
         letter.setTypeface(bold);
-        letter.setTextSize(300);
-        letter.setTextColor(0xFFFFFFFF);
+        letter.setTextSize(150);
+        letter.setTextColor(0xffff4444));
         letter.setGravity(Gravity.CENTER);
-        letter.setText(String.valueOf(Build.ID).substring(0, 1));
+        letter.setText("RRKK");
 
         final int p = (int)(4 * metrics.density);
 
