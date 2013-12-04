@@ -77,7 +77,7 @@ public class PlatLogoActivity extends Activity {
 
         letter.setTypeface(bold);
         letter.setTextSize(150);
-        letter.setTextColor(0xffff4444));
+        letter.setTextColor(0xffff4444);
         letter.setGravity(Gravity.CENTER);
         letter.setText("RR KK");
 
