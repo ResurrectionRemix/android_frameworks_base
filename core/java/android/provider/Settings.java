@@ -3097,31 +3097,19 @@ public final class Settings {
         public static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
 
         /**
-<<<<<<< HEAD
          * Show the pending notification counts as overlays on the status bar
-=======
-<<<<<<< HEAD
-         * Whether or not to launch default music player when headset is connected
->>>>>>> 1eb9c7f... Lockscreen: See through (1/2)
          * @hide
          */
         public static final String SYSTEM_PROFILES_ENABLED = "system_profiles_enabled";
 
         /**
-<<<<<<< HEAD
          * Whether the power menu reboot menu is enabled
-=======
-         * volume rocker wake
-=======
          * Allows to show the background activity back the lockscreen
          * @hide
          */
         public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
 
         /**
-         * Whether to wake the screen with the volume keys, the value is boolean.
->>>>>>> 7ff7711... Lockscreen: See through (1/2)
->>>>>>> 1eb9c7f... Lockscreen: See through (1/2)
          * @hide
          */
         public static final String POWER_MENU_REBOOT_ENABLED = "power_menu_reboot_enabled";
