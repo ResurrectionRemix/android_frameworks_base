@@ -119,9 +119,6 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
             }
         });
 
-        mQuickUnlock = (Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 0) == 1);
-
         mPasswordEntry.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
@@ -135,13 +132,9 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
                 }
                 if (mQuickUnlock) {
                     String entry = mPasswordEntry.getText().toString();
-<<<<<<< HEAD
+
                     if (entry.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT
                             && mLockPatternUtils.checkPassword(entry)) {
-=======
-                    if (entry.length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT &&
-                            mLockPatternUtils.checkPassword(entry)) {
->>>>>>> f6b74ff... [2/2] frameworks/base: Enable quick unlock
                         mCallback.reportSuccessfulUnlockAttempt();
                         mCallback.dismiss(true);
                     }
