@@ -303,7 +303,7 @@ class LoaderManagerImpl extends LoaderManager {
                 }
             }
 
-            if (mStarted && mHaveData && !mReportNextStart) {
+            if (mStarted && mHaveData && !mDeliveredData && !mReportNextStart) {
                 // This loader has retained its data, either completely across
                 // a configuration change or just whatever the last data set
                 // was after being restarted from a stop, and now at the point of
