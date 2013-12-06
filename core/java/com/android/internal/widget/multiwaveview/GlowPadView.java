@@ -1454,7 +1454,6 @@ public class GlowPadView extends View {
         return replaced;
     }
 
-<<<<<<< HEAD
     public void setHandleDrawable(Drawable handle) {
         Resources res = mContext.getResources();
         if (handle != null) {
@@ -1463,10 +1462,10 @@ public class GlowPadView extends View {
             mHandleDrawable = new TargetDrawable(res, 0);
         }
         mHandleDrawable.setState(TargetDrawable.STATE_INACTIVE);
-=======
+ }
     public void setArc(float angle, int color) {
         mArcAngle = angle;
         mArcPaint.setColor(color);
->>>>>>> 38c8b19... [1/2] Add battery level around unlock ring
+
     }
 }
