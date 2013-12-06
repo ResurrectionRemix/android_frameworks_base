@@ -1703,7 +1703,9 @@ public class KeyguardHostView extends KeyguardViewBase {
         final boolean configDisabled = res.getBoolean(R.bool.config_disableMenuKeyInLockScreen);
         final boolean isTestHarness = ActivityManager.isRunningInTestHarness();
         final boolean fileOverride = (new File(ENABLE_MENU_KEY_FILE)).exists();
-        return !configDisabled || isTestHarness || fileOverride;
+        final boolean settingsEnabled = Settings.System.getInt(getContext().getContentResolver(), Settings.System.MENU_UNLOCK_SCREEN, configDisabled ? 0 : 1) == 1;
+
+        return settingsEnabled || isTestHarness || fileOverride;
     }
 
     public void goToWidget(int appWidgetId) {
