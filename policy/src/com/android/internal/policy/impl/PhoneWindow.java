@@ -1981,6 +1981,8 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         private View mNavigationGuard;
         private SettingsObserver mSettingsObserver;
 
+        private SettingsObserver mSettingsObserver;
+
         public DecorView(Context context, int featureId) {
             super(context);
             mFeatureId = featureId;
@@ -2193,10 +2195,13 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                     return;
             }
 
+<<<<<<< HEAD
             if (setting == null) {
                 return;
             }
 
+=======
+>>>>>>> d787e60... [1/2]Base: Stylus Gestures
             try {
                 int value = Integer.valueOf(setting);
                 if (value == StylusGestureFilter.KEY_NO_ACTION) {

@@ -1448,4 +1448,11 @@
          performance profiles  -->
     <string name="config_perf_profile_default_entry" translatable="false"></string>
 
+<<<<<<< HEAD
+=======
+    <integer name="config_backKillTimeout">2000</integer>
+
+    <!-- Boolean to enable Stylus gestures -->
+    <bool name="config_stylusGestures">false</bool>
+>>>>>>> d787e60... [1/2]Base: Stylus Gestures
 </resources>
