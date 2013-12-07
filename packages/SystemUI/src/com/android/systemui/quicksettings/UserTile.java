@@ -43,9 +43,7 @@ public class UserTile extends QuickSettingsTile {
                 mQsc.mBar.collapseAllPanels(true);
                 final UserManager um =
                         (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-<<<<<<< HEAD
                 if (um.getUsers(true).size() > 1) {
-=======
                 int numUsers = um.getUsers(true).size();
                 if (numUsers <= 1) {
                     final Cursor cursor = mContext.getContentResolver().query(
@@ -60,7 +58,6 @@ public class UserTile extends QuickSettingsTile {
                     }
                     cursor.close();
                 } else {
->>>>>>> 6909f21... Fix showing owner info creation from UserTile if no owner is set
                     try {
                         WindowManagerGlobal.getWindowManagerService().lockNow(
                                 null);
