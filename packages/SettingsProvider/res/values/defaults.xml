@@ -173,15 +173,13 @@
     <!-- Default for Settings.Secure.USER_SETUP_COMPLETE -->
     <bool name="def_user_setup_complete">false</bool>
 
-    <!-- Default for Settings.Global.LOW_BATTERY_SOUND_TIMEOUT.
-         0 means no timeout; battery sounds will always play
-         >0 is milliseconds of screen-off time after which battery sounds will not play -->
-    <integer name="def_low_battery_sound_timeout">0</integer>
-    <!-- Default for Settings.System.STATUS_BAR_BATTERY -->
+    <!-- Default for Settings.System.STATUS_BAR_BATTERY.
+    0. Icon
+    1. Percentage
+    2. Circle
+    3. Circle with Percentage
+    4. None/Hidden -->
     <integer name="def_battery_style">0</integer>
-
-    <!-- Default for Settings.Global.TETHER_DUN_REQUIRED -->
-    <integer name="def_tether_dun_required">0</integer>
 
     <!-- Default for Settings.System.STATUS_BAR_NOTIF_COUNT. -->
    <integer name="def_notif_count">0</integer>
@@ -192,6 +190,13 @@
     2. Left -->
     <integer name="def_qs_quick_pulldown">0</integer>
 
-    <!-- Default for Settings.System.LOCKSCREEN_TARGETS. -->
+    <!-- Defaults for Settings.System.LOCKSCREEN_TARGETS. -->
     <string name="def_lockscreen_targets" translatable="false"></string>
+    <string name="def_lockscreen_targets_no_telephony" translatable="false"></string>
+
+    <!-- Default for Settings.System.UI_FORCE_OVERFLOW_BUTTON. -->
+    <integer name="def_force_overflow_button">0</integer>
+
+    <!-- Default for Settings.Secure.DIALPAD_AUTOCOMPLETE. -->
+    <integer name="def_dialpad_autocomplete">1</integer>
 </resources>
