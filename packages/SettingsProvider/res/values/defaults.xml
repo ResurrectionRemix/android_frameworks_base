@@ -192,16 +192,6 @@
     2. Left -->
     <integer name="def_qs_quick_pulldown">0</integer>
 
-    <!-- Defaults for Settings.System.LOCKSCREEN_TARGETS. -->
+    <!-- Default for Settings.System.LOCKSCREEN_TARGETS. -->
     <string name="def_lockscreen_targets" translatable="false"></string>
-<<<<<<< HEAD
-=======
-    <string name="def_lockscreen_targets_no_telephony" translatable="false"></string>
-
-    <!-- Default for Settings.System.UI_FORCE_OVERFLOW_BUTTON. -->
-    <integer name="def_force_overflow_button">0</integer>
-
-    <!-- Default for Settings.Secure.DIALPAD_AUTOCOMPLETE. -->
-    <integer name="def_dialpad_autocomplete">1</integer>
->>>>>>> 7ab6784... Don't show phone unlock targets for devices without voice (1/2)
 </resources>
