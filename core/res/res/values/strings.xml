@@ -3802,7 +3802,6 @@
     <string name="find_next">Find next</string>
     <!-- ActionBar action to find the previous match in the page [CHAR LIMIT=24] -->
     <string name="find_previous">Find previous</string>
-    <string name="trash">Trash</string>
 
     <!-- Network positioning notification ticker. The name of the user (e.g. John Doe) who sent
          the request is shown as a dynamic string. -->
