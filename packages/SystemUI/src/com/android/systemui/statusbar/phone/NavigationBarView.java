@@ -101,6 +101,61 @@ public class NavigationBarView extends LinearLayout {
     // used to disable the camera icon in navbar when disabled by DPM
     private boolean mCameraDisabledByDpm;
 
+<<<<<<< HEAD
+=======
+    // performs manual animation in sync with layout transitions
+    private final NavTransitionListener mTransitionListener = new NavTransitionListener();
+
+    private class NavTransitionListener implements TransitionListener {
+        private boolean mBackTransitioning;
+        private boolean mHomeAppearing;
+        private long mStartDelay;
+        private long mDuration;
+        private TimeInterpolator mInterpolator;
+
+        @Override
+        public void startTransition(LayoutTransition transition, ViewGroup container,
+                View view, int transitionType) {
+            if (view == findViewWithTag(NavbarEditor.NAVBAR_BACK)) {
+                mBackTransitioning = true;
+            } else if (view ==  findViewWithTag(NavbarEditor.NAVBAR_HOME)
+                    && transitionType == LayoutTransition.APPEARING) {
+                mHomeAppearing = true;
+                mStartDelay = transition.getStartDelay(transitionType);
+                mDuration = transition.getDuration(transitionType);
+                mInterpolator = transition.getInterpolator(transitionType);
+            }
+        }
+
+        @Override
+        public void endTransition(LayoutTransition transition, ViewGroup container,
+                View view, int transitionType) {
+            if (view == findViewWithTag(NavbarEditor.NAVBAR_BACK)) {
+                mBackTransitioning = false;
+            } else if (view ==  findViewWithTag(NavbarEditor.NAVBAR_HOME)
+                    && transitionType == LayoutTransition.APPEARING) {
+                mHomeAppearing = false;
+            }
+        }
+
+        public void onBackAltCleared() {
+            // When dismissing ime during unlock, force the back button to run the same appearance
+            // animation as home (if we catch this condition early enough).
+            View backView = findViewWithTag(NavbarEditor.NAVBAR_BACK);
+            View homeView = findViewWithTag(NavbarEditor.NAVBAR_HOME);
+            if (!mBackTransitioning && backView != null && backView.getVisibility() == VISIBLE
+                    && mHomeAppearing && homeView != null && homeView.getAlpha() == 0) {
+                findViewWithTag(NavbarEditor.NAVBAR_BACK).setAlpha(0);
+                ValueAnimator a = ObjectAnimator.ofFloat(backView, "alpha", 0, 1);
+                a.setStartDelay(mStartDelay);
+                a.setDuration(mDuration);
+                a.setInterpolator(mInterpolator);
+                a.start();
+            }
+        }
+    }
+
+>>>>>>> 040f51d... Properly null check all button usages.
     // simplified click handler to be used when device is in accessibility mode
     private final OnClickListener mAccessibilityClickListener = new OnClickListener() {
         @Override
@@ -361,6 +416,7 @@ public class NavigationBarView extends LinearLayout {
 
         mNavigationIconHints = hints;
 
+<<<<<<< HEAD
         View button = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_HOME);
         if (button != null) {
             button.setAlpha(
@@ -383,6 +439,19 @@ public class NavigationBarView extends LinearLayout {
         button = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_RECENT);
         if (button != null) {
             ((ImageView) button).setImageDrawable(mVertical ? mRecentLandIcon : mRecentIcon);
+=======
+        ImageView backView = (ImageView) findViewWithTag(NavbarEditor.NAVBAR_BACK);
+        ImageView recentView = (ImageView) findViewWithTag(NavbarEditor.NAVBAR_RECENT);
+
+        if (backView != null) {
+            backView.setImageDrawable(backAlt
+                    ? (mVertical ? mBackAltLandIcon : mBackAltIcon)
+                    : (mVertical ? mBackLandIcon : mBackIcon));
+        }
+
+        if (recentView != null) {
+            recentView.setImageDrawable(mVertical ? mRecentLandIcon : mRecentIcon);
+>>>>>>> 040f51d... Properly null check all button usages.
         }
 
         setDisabledFlags(mDisabledFlags, true);
