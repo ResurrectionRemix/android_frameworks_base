@@ -109,11 +109,7 @@
                     android:id="@+id/battery"
                     android:layout_height="16dp"
                     android:layout_width="10.5dp"
-<<<<<<< HEAD
-                    android:layout_marginBottom="2px"
-=======
                     android:layout_marginBottom="@dimen/status_bar_battery_bottom_padding"
->>>>>>> c7f1c3f... SystemUI: Fix battery indicator alignment
                     android:layout_marginStart="4dip"
                     />
                 <com.android.systemui.statusbar.policy.CircleBattery
