@@ -70,7 +70,6 @@ import android.os.UserHandle;
 import android.os.Vibrator;
 import android.provider.Settings;
 
-import com.android.internal.app.ThemeUtils;
 import com.android.internal.util.cm.DevUtils;
 
 import android.service.dreams.DreamService;
@@ -244,7 +243,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private final Object mQuickBootLock = new Object();
 
     Context mContext;
-    Context mUiContext;
     IWindowManager mWindowManager;
     WindowManagerFuncs mWindowManagerFuncs;
     PowerManager mPowerManager;
@@ -1028,7 +1026,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // Do the switch
             final AudioManager am = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
             final int ringerMode = am.getRingerMode();
-            final VolumePanel volumePanel = new VolumePanel(ThemeUtils.createUiContext(mContext),
+            final VolumePanel volumePanel = new VolumePanel(mContext,
                                                               (AudioService) getAudioService());
             if (ringerMode == AudioManager.RINGER_MODE_NORMAL) {
                 boolean vibrateSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -2099,14 +2097,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (DEBUG_STARTING_WINDOW) Slog.d(TAG, "addStartingWindow " + packageName
                     + ": nonLocalizedLabel=" + nonLocalizedLabel + " theme="
                     + Integer.toHexString(theme));
-
-            try {
-                context = context.createPackageContext(packageName, 0);
-                if (theme != context.getThemeResId()) {
+            if (theme != context.getThemeResId() || labelRes != 0) {
+                try {
+                    context = context.createPackageContext(packageName, 0);
                     context.setTheme(theme);
+                } catch (PackageManager.NameNotFoundException e) {
+                    // Ignore
                 }
-            } catch (PackageManager.NameNotFoundException e) {
-                // Ignore
             }
 
             // Construct the Toast
@@ -5179,12 +5176,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     updateSystemUiVisibilityLw();
                 }
             }
-        }
-    };
-
-    BroadcastReceiver mThemeChangeReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            mUiContext = null;
         }
     };
 
