@@ -160,13 +160,6 @@
 
     <!-- Left padding of num pad key on keyguard -->
     <dimen name="kg_num_pad_key_padding_left">20dp</dimen>
-<<<<<<< HEAD
-=======
-
-    <!-- EmergencyCarrierArea overlap - amount to overlap the emergency button and carrier text.
-         Should be 0 on devices with plenty of room (e.g. tablets) -->
-    <dimen name="eca_overlap">-10dip</dimen>
->>>>>>> fa06992... keyguard: fix layout for sw320dp devices
 
     <!-- Default clock parameters -->
     <dimen name="bottom_text_spacing_digital">-8dp</dimen>
