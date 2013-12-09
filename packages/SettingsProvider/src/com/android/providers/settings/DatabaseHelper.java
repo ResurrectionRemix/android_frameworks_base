@@ -1,8 +1,5 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (c) 2013 The Linux Foundation. All rights reserved.
- *
- * Not a Contribution.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +39,6 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.provider.Settings.Secure;
-import android.telephony.MSimTelephonyManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -51,6 +47,7 @@ import com.android.internal.content.PackageHelper;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.RILConstants;
+import com.android.internal.telephony.cdma.CdmaSubscriptionSourceManager;
 import com.android.internal.util.XmlUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.LockPatternView;
@@ -681,8 +678,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
            String[] settingsToMove = {
                    Secure.LOCK_PATTERN_ENABLED,
                    Secure.LOCK_PATTERN_VISIBLE,
-                   Secure.LOCK_SHOW_ERROR_PATH,
-                   Secure.LOCK_DOTS_VISIBLE,
                    Secure.LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED,
                    "lockscreen.password_type",
                    "lockscreen.lockoutattemptdeadline",
@@ -1435,7 +1430,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     };
                     String[] secureToGlobal = {
                             Settings.Global.PREFERRED_NETWORK_MODE,
-                            Settings.Global.PREFERRED_CDMA_SUBSCRIPTION,
+                            Settings.Global.CDMA_SUBSCRIPTION_MODE,
                     };
 
                     moveSettingsToNewTable(db, TABLE_SYSTEM, TABLE_GLOBAL, systemToGlobal, true);
@@ -1547,15 +1542,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         if (upgradeVersion == 97) {
-            // Add Default Dialer AutoComplete setting
             if (mUserHandle == UserHandle.USER_OWNER) {
                 db.beginTransaction();
                 SQLiteStatement stmt = null;
                 try {
-                    stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
+                    stmt = db.compileStatement("INSERT OR REPLACE INTO global(name,value)"
                             + " VALUES(?,?);");
-                    loadIntegerSetting(stmt, Settings.Secure.DIALPAD_AUTOCOMPLETE,
-                            R.integer.def_dialpad_autocomplete);
+                    loadIntegerSetting(stmt, Settings.Global.LOW_BATTERY_SOUND_TIMEOUT,
+                            R.integer.def_low_battery_sound_timeout);
                     db.setTransactionSuccessful();
                 } finally {
                     db.endTransaction();
@@ -1692,7 +1686,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 try {
                     LockPatternUtils lpu = new LockPatternUtils(mContext);
                     List<LockPatternView.Cell> cellPattern =
-                            lpu.stringToPattern(lockPattern);
+                            LockPatternUtils.stringToPattern(lockPattern);
                     lpu.saveLockPattern(cellPattern);
                 } catch (IllegalArgumentException e) {
                     // Don't want corrupted lock pattern to hang the reboot process
@@ -2032,17 +2026,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.System.QS_QUICK_PULLDOWN,
                     R.integer.def_qs_quick_pulldown);
 
-            if (mContext.getResources()
-                    .getBoolean(com.android.internal.R.bool.config_voice_capable)) {
-                loadStringSetting(stmt, Settings.System.LOCKSCREEN_TARGETS,
-                        R.string.def_lockscreen_targets);
-            } else {
-                loadStringSetting(stmt, Settings.System.LOCKSCREEN_TARGETS,
-                        R.string.def_lockscreen_targets_no_telephony);
-            }
-
-            loadIntegerSetting(stmt, Settings.System.UI_FORCE_OVERFLOW_BUTTON,
-                    R.integer.def_force_overflow_button);
+            loadStringSetting(stmt, Settings.System.LOCKSCREEN_TARGETS,
+                    R.string.def_lockscreen_targets);
         } finally {
             if (stmt != null) stmt.close();
         }
@@ -2155,9 +2140,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             loadBooleanSetting(stmt, Settings.Secure.USER_SETUP_COMPLETE,
                     R.bool.def_user_setup_complete);
-
-            loadIntegerSetting(stmt, Settings.Secure.DIALPAD_AUTOCOMPLETE,
-                    R.integer.def_dialpad_autocomplete);
         } finally {
             if (stmt != null) stmt.close();
         }
@@ -2308,22 +2290,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Set default cdma call auto retry
             loadSetting(stmt, Settings.Global.CALL_AUTO_RETRY, 0);
 
-            // Set the preferred network mode to 0 = Global, CDMA default
+            // Set the preferred network mode to target desired value or Default
+            // value defined in RILConstants
             int type;
-            if (TelephonyManager.getLteOnCdmaModeStatic() == PhoneConstants.LTE_ON_CDMA_TRUE) {
-                type = Phone.NT_MODE_GLOBAL;
-            } else {
-                type = SystemProperties.getInt("ro.telephony.default_network",
+            type = SystemProperties.getInt("ro.telephony.default_network",
                         RILConstants.PREFERRED_NETWORK_MODE);
-            }
+            loadSetting(stmt, Settings.Global.PREFERRED_NETWORK_MODE, type);
 
-            String val = Integer.toString(type);
-            if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-                val = type + "," + type;
-            }
-            loadSetting(stmt, Settings.Global.PREFERRED_NETWORK_MODE, val);
+            // Set the preferred cdma subscription source to target desired value or default
+            // value defined in CdmaSubscriptionSourceManager
+            type = SystemProperties.getInt("ro.telephony.default_cdma_sub",
+                        CdmaSubscriptionSourceManager.PREFERRED_CDMA_SUBSCRIPTION);
+            loadSetting(stmt, Settings.Global.CDMA_SUBSCRIPTION_MODE, type);
+
+            loadIntegerSetting(stmt, Settings.Global.LOW_BATTERY_SOUND_TIMEOUT,
+                    R.integer.def_low_battery_sound_timeout);
 
             // --- New global settings start here
+            loadIntegerSetting(stmt, Settings.Global.TETHER_DUN_REQUIRED,
+                    R.integer.def_tether_dun_required);
+
         } finally {
             if (stmt != null) stmt.close();
         }

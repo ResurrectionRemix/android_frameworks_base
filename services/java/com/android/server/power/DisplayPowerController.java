@@ -316,6 +316,10 @@ final class DisplayPowerController {
     // True if mAmbientLux holds a valid value.
     private boolean mAmbientLuxValid;
 
+    // The ambient light level threshold at which to brighten or darken the screen.
+    private float mBrighteningLuxThreshold;
+    private float mDarkeningLuxThreshold;
+
     // The most recent light sample.
     private float mLastObservedLux;
 
@@ -361,12 +365,6 @@ final class DisplayPowerController {
     // Twilight changed.  We might recalculate auto-brightness values.
     private boolean mTwilightChanged;
     private boolean mAutoBrightnessSettingsChanged;
-
-    // Screen-off animation
-    private static final int SCREEN_OFF_FADE = 0;
-    private static final int SCREEN_OFF_CRT = 1;
-    private static final int SCREEN_OFF_SCALE = 2;
-    private int mScreenOffAnimation;
 
     /**
      * Creates the display power controller.
@@ -434,27 +432,6 @@ final class DisplayPowerController {
 
         mElectronBeamFadesConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_animateScreenLights);
-
-        if (!mElectronBeamFadesConfig) {
-            final ContentResolver cr = mContext.getContentResolver();
-            final ContentObserver observer = new ContentObserver(mHandler) {
-                @Override
-                public void onChange(boolean selfChange, Uri uri) {
-                    mScreenOffAnimation = Settings.System.getIntForUser(cr,
-                        Settings.System.SCREEN_OFF_ANIMATION,
-                        SCREEN_OFF_CRT, UserHandle.USER_CURRENT);
-                    Slog.e("XPLOD", "Set screen off to " + mScreenOffAnimation);
-                }
-            };
-
-            cr.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SCREEN_OFF_ANIMATION),
-                    false, observer, UserHandle.USER_ALL);
-
-            mScreenOffAnimation = Settings.System.getIntForUser(cr,
-                    Settings.System.SCREEN_OFF_ANIMATION,
-                    SCREEN_OFF_CRT, UserHandle.USER_CURRENT);
-        }
 
         if (!DEBUG_PRETEND_PROXIMITY_SENSOR_ABSENT) {
             mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -829,24 +806,17 @@ final class DisplayPowerController {
             } else {
                 // Want screen off.
                 // Wait for previous on animation to complete beforehand.
-                int electronBeamMode = ElectronBeam.MODE_FADE;
-                if (!mElectronBeamFadesConfig) {
-                    switch (mScreenOffAnimation) {
-                    case SCREEN_OFF_CRT:
-                        electronBeamMode = ElectronBeam.MODE_COOL_DOWN;
-                        break;
-                    case SCREEN_OFF_SCALE:
-                        electronBeamMode = ElectronBeam.MODE_SCALE_DOWN;
-                        break;
-                    }
-                }
-
                 if (!mElectronBeamOnAnimator.isStarted()) {
                     if (!mElectronBeamOffAnimator.isStarted()) {
                         if (mPowerState.getElectronBeamLevel() == 0.0f) {
                             setScreenOn(false);
-                        } else if (mPowerState.prepareElectronBeam(electronBeamMode)
-                                && mPowerState.isScreenOn()) {
+                            unblockScreenOn();
+                        } else if (mPowerState.prepareElectronBeam(
+                                mElectronBeamFadesConfig ?
+                                        ElectronBeam.MODE_FADE :
+                                        ElectronBeam.MODE_COOL_DOWN)
+                                && mPowerState.isScreenOn()
+                                && useScreenOffAnimation()) {
                             mElectronBeamOffAnimator.start();
                         } else {
                             mElectronBeamOffAnimator.end();
@@ -1092,12 +1062,24 @@ final class DisplayPowerController {
         mLastObservedLuxTime = time;
     }
 
+    private void setAmbientLux(float lux) {
+        mAmbientLux = lux;
+        mBrighteningLuxThreshold = mAmbientLux * (1.0f + BRIGHTENING_LIGHT_HYSTERESIS);
+        mDarkeningLuxThreshold = mAmbientLux * (1.0f - DARKENING_LIGHT_HYSTERESIS);
+    }
+
     private void updateAmbientLux(long time) {
         // If the light sensor was just turned on then immediately update our initial
         // estimate of the current ambient light level.
-        if (!mAmbientLuxValid
-                || (time - mLightSensorEnableTime) < mLightSensorWarmUpTimeConfig) {
-            mAmbientLux = mRecentShortTermAverageLux;
+        if (!mAmbientLuxValid) {
+            final long timeWhenSensorWarmedUp =
+                mLightSensorWarmUpTimeConfig + mLightSensorEnableTime;
+            if (time < timeWhenSensorWarmedUp) {
+                mHandler.sendEmptyMessageAtTime(MSG_LIGHT_SENSOR_DEBOUNCED,
+                        timeWhenSensorWarmedUp);
+                return;
+            }
+            setAmbientLux(mRecentShortTermAverageLux);
             mAmbientLuxValid = true;
             mDebounceLuxDirection = 0;
             mDebounceLuxTime = time;
@@ -1108,13 +1090,10 @@ final class DisplayPowerController {
                         + ", mAmbientLux=" + mAmbientLux);
             }
             updateAutoBrightness(true);
-            return;
-        }
 
         // Determine whether the ambient environment appears to be brightening.
-        float brighteningLuxThreshold = mAmbientLux * (1.0f + BRIGHTENING_LIGHT_HYSTERESIS);
-        if (mRecentShortTermAverageLux > brighteningLuxThreshold
-                && mRecentLongTermAverageLux > brighteningLuxThreshold) {
+        } else if (mRecentShortTermAverageLux > mBrighteningLuxThreshold
+                && mRecentLongTermAverageLux > mBrighteningLuxThreshold) {
             long debounceDelay;
 
             if (mRecentShortTermAverageLux - mRecentLongTermAverageLux > BRIGHTENING_FAST_THRESHOLD) {
@@ -1130,89 +1109,83 @@ final class DisplayPowerController {
                 if (DEBUG) {
                     Slog.d(TAG, "updateAmbientLux: Possibly brightened, waiting for "
                             + debounceDelay + " ms: "
-                            + "brighteningLuxThreshold=" + brighteningLuxThreshold
+                            + "brighteningLuxThreshold=" + mBrighteningLuxThreshold
                             + ", mRecentShortTermAverageLux=" + mRecentShortTermAverageLux
                             + ", mRecentLongTermAverageLux=" + mRecentLongTermAverageLux
                             + ", mAmbientLux=" + mAmbientLux);
                 }
             }
-
             long debounceTime = mDebounceLuxTime + debounceDelay;
-
-            if (time >= debounceTime) {
-                mAmbientLux = mRecentShortTermAverageLux;
-                if (DEBUG) {
-                    Slog.d(TAG, "updateAmbientLux: Brightened: "
-                            + "brighteningLuxThreshold=" + brighteningLuxThreshold
-                            + ", mRecentShortTermAverageLux=" + mRecentShortTermAverageLux
-                            + ", mRecentLongTermAverageLux=" + mRecentLongTermAverageLux
-                            + ", mAmbientLux=" + mAmbientLux);
-                }
-                updateAutoBrightness(true);
-            } else {
+            if (time < debounceTime) {
                 mHandler.sendEmptyMessageAtTime(MSG_LIGHT_SENSOR_DEBOUNCED, debounceTime);
+                return;
             }
-            return;
-        }
-
-        // Determine whether the ambient environment appears to be darkening.
-        float darkeningLuxThreshold = mAmbientLux * (1.0f - DARKENING_LIGHT_HYSTERESIS);
-        if (mRecentShortTermAverageLux < darkeningLuxThreshold
-                && mRecentLongTermAverageLux < darkeningLuxThreshold) {
+            setAmbientLux(mRecentShortTermAverageLux);
+            if (DEBUG) {
+                Slog.d(TAG, "updateAmbientLux: Brightened: "
+                        + "mBrighteningLuxThreshold=" + mBrighteningLuxThreshold
+                        + ", mRecentShortTermAverageLux=" + mRecentShortTermAverageLux
+                        + ", mRecentLongTermAverageLux=" + mRecentLongTermAverageLux
+                        + ", mAmbientLux=" + mAmbientLux);
+            }
+            updateAutoBrightness(true);
+        } else if (mRecentShortTermAverageLux < mDarkeningLuxThreshold
+                && mRecentLongTermAverageLux < mDarkeningLuxThreshold) {
             long debounceDelay = (long)
                     (mPowerRequest.responsitivityFactor * DARKENING_LIGHT_DEBOUNCE);
+            // The ambient environment appears to be darkening.
             if (mDebounceLuxDirection >= 0) {
                 mDebounceLuxDirection = -1;
                 mDebounceLuxTime = time;
                 if (DEBUG) {
                     Slog.d(TAG, "updateAmbientLux: Possibly darkened, waiting for "
                             + debounceDelay + " ms: "
-                            + "darkeningLuxThreshold=" + darkeningLuxThreshold
+                            + "mDarkeningLuxThreshold=" + mDarkeningLuxThreshold
                             + ", mRecentShortTermAverageLux=" + mRecentShortTermAverageLux
                             + ", mRecentLongTermAverageLux=" + mRecentLongTermAverageLux
                             + ", mAmbientLux=" + mAmbientLux);
                 }
             }
             long debounceTime = mDebounceLuxTime + debounceDelay;
-            if (time >= debounceTime) {
-                // Be conservative about reducing the brightness, only reduce it a little bit
-                // at a time to avoid having to bump it up again soon.
-                mAmbientLux = Math.max(mRecentShortTermAverageLux, mRecentLongTermAverageLux);
-                if (DEBUG) {
-                    Slog.d(TAG, "updateAmbientLux: Darkened: "
-                            + "darkeningLuxThreshold=" + darkeningLuxThreshold
-                            + ", mRecentShortTermAverageLux=" + mRecentShortTermAverageLux
-                            + ", mRecentLongTermAverageLux=" + mRecentLongTermAverageLux
-                            + ", mAmbientLux=" + mAmbientLux);
-                }
-                updateAutoBrightness(true);
-            } else {
+            if (time < debounceTime) {
                 mHandler.sendEmptyMessageAtTime(MSG_LIGHT_SENSOR_DEBOUNCED, debounceTime);
+                return;
             }
-            return;
-        }
-
-        // No change or change is within the hysteresis thresholds.
-        if (mDebounceLuxDirection != 0) {
+            // Be conservative about reducing the brightness, only reduce it a little bit
+            // at a time to avoid having to bump it up again soon.
+            setAmbientLux(Math.max(mRecentShortTermAverageLux, mRecentLongTermAverageLux));
+            if (DEBUG) {
+                Slog.d(TAG, "updateAmbientLux: Darkened: "
+                        + "mDarkeningLuxThreshold=" + mDarkeningLuxThreshold
+                        + ", mRecentShortTermAverageLux=" + mRecentShortTermAverageLux
+                        + ", mRecentLongTermAverageLux=" + mRecentLongTermAverageLux
+                        + ", mAmbientLux=" + mAmbientLux);
+            }
+            updateAutoBrightness(true);
+        } else if (mDebounceLuxDirection != 0) {
+            // No change or change is within the hysteresis thresholds.
             mDebounceLuxDirection = 0;
             mDebounceLuxTime = time;
             if (DEBUG) {
                 Slog.d(TAG, "updateAmbientLux: Canceled debounce: "
-                        + "brighteningLuxThreshold=" + brighteningLuxThreshold
-                        + ", darkeningLuxThreshold=" + darkeningLuxThreshold
+                        + "mBrighteningLuxThreshold=" + mBrighteningLuxThreshold
+                        + ", mDarkeningLuxThreshold=" + mDarkeningLuxThreshold
                         + ", mRecentShortTermAverageLux=" + mRecentShortTermAverageLux
                         + ", mRecentLongTermAverageLux=" + mRecentLongTermAverageLux
                         + ", mAmbientLux=" + mAmbientLux);
             }
         }
 
-        // If the light level does not change, then the sensor may not report
-        // a new value.  This can cause problems for the auto-brightness algorithm
-        // because the filters might not be updated.  To work around it, we want to
-        // make sure to update the filters whenever the observed light level could
-        // possibly exceed one of the hysteresis thresholds.
-        if (mLastObservedLux > brighteningLuxThreshold
-                || mLastObservedLux < darkeningLuxThreshold) {
+        // Now that we've done all of that, we haven't yet posted a debounce
+        // message. So consider the case where current lux is beyond the
+        // threshold. It's possible that the light sensor may not report values
+        // if the light level does not change, so we need to occasionally
+        // synthesize sensor readings in order to make sure the brightness is
+        // adjusted accordingly. Note these thresholds may have changed since
+        // we entered the function because we called setAmbientLux and
+        // updateAutoBrightness along the way.
+        if (mLastObservedLux > mBrighteningLuxThreshold
+                || mLastObservedLux < mDarkeningLuxThreshold) {
             long synthesizedDelay = (long)
                     (mPowerRequest.responsitivityFactor * SYNTHETIC_LIGHT_SENSOR_RATE_MILLIS);
             mHandler.sendEmptyMessageAtTime(MSG_LIGHT_SENSOR_DEBOUNCED, time + synthesizedDelay);
