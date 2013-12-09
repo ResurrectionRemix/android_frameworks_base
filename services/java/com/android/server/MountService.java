@@ -216,6 +216,7 @@ class MountService extends IMountService.Stub
     private final CountDownLatch mConnectedSignal = new CountDownLatch(1);
     private final CountDownLatch mAsecsScanned = new CountDownLatch(1);
     private boolean                               mSendUmsConnectedOnBoot = false;
+    private boolean                               mUmsSupported = false;
 
     /**
      * Private hash of currently mounted secure containers.
@@ -1272,6 +1273,7 @@ class MountService extends IMountService.Stub
                             mVolumeStates.put(volume.getPath(), Environment.MEDIA_UNMOUNTED);
                             volume.setState(Environment.MEDIA_UNMOUNTED);
                         }
+                        mUmsSupported |= allowMassStorage;
                     }
 
                     a.recycle();
@@ -1371,9 +1373,8 @@ class MountService extends IMountService.Stub
         userFilter.addAction(Intent.ACTION_USER_REMOVED);
         mContext.registerReceiver(mUserReceiver, userFilter, null, mHandler);
 
-        // Watch for USB changes on primary volume
-        final StorageVolume primary = getPrimaryPhysicalVolume();
-        if (primary != null && primary.allowMassStorage()) {
+        // Watch for USB changes
+        if (mUmsSupported) {
             mContext.registerReceiver(
                     mUsbReceiver, new IntentFilter(UsbManager.ACTION_USB_STATE), null, mHandler);
         }
@@ -1544,9 +1545,6 @@ class MountService extends IMountService.Stub
     public void setUsbMassStorageEnabled(boolean enable) {
         waitForReady();
         validatePermission(android.Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
-
-        final StorageVolume primary = getPrimaryPhysicalVolume();
-        if (primary == null) return;
 
         // TODO: Add support for multiple share methods
 
