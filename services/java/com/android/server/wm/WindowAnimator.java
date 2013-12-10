@@ -252,11 +252,7 @@ public class WindowAnimator {
                                 mForceHiding = KEYGUARD_SHOWN;
                             }
                         } else {
-<<<<<<< HEAD
-                            mForceHiding = win.isDrawnLw() ? KEYGUARD_SHOWN : KEYGUARD_NOT_SHOWN;
-=======
                             mForceHiding = KEYGUARD_NOT_SHOWN;
->>>>>>> 104b69b... Lockscreen: See through (1/2)
                         }
                     }
                     if (WindowManagerService.DEBUG_VISIBILITY) Slog.v(TAG,
