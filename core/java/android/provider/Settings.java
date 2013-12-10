@@ -3077,18 +3077,14 @@ public final class Settings {
          * Whether to attempt to dim the LED color during quiet hours.
          * @hide
          */
-<<<<<<< HEAD
-        public static final String QUIET_HOURS_DIM = "quiet_hours_dim";
-=======
-        public static final String BATTERY_LIGHT_FULL_COLOR = "battery_light_full_color";
 
+        public static final String QUIET_HOURS_DIM = "quiet_hours_dim";
+        
+        /**
         /* Network speed indicator
          * @hide
          */
         public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
-
-        /**
->>>>>>> 4268d2d... [1/2] SystemUI: Network speed indicator
 
         /**
          * Sets the lockscreen background style
