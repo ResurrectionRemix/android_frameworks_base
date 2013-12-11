@@ -3081,9 +3081,6 @@ public final class Settings {
         public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
 
         /**
-<<<<<<< HEAD
-         * Sets the lockscreen background style
-=======
          * Whether to display notifications on screen when screen is off
          * @hide
          */
@@ -3150,11 +3147,9 @@ public final class Settings {
          * @hide
          */
         public static final String ACTIVE_DISPLAY_EXCLUDED_APPS = "active_display_excluded_apps";
-
-        /**
-         * @deprecated Use {@link android.provider.Settings.Global#LOW_BATTERY_SOUND}
-         * instead
->>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
+        
+         /**
+         * Sets the lockscreen background style
          * @hide
          */
         public static final String LOCKSCREEN_BACKGROUND = "lockscreen_background";
