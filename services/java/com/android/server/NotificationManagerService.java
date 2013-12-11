@@ -648,10 +648,8 @@ public class NotificationManagerService extends INotificationManager.Stub
         for (NotificationListenerInfo info : toRemove) {
             final ComponentName component = info.component;
             final int oldUser = info.userid;
-            if (!info.isSystem) {
-                Slog.v(TAG, "disabling notification listener for user " + oldUser + ": " + component);
-                unregisterListenerService(component, info.userid);
-            }
+            Slog.v(TAG, "disabling notification listener for user " + oldUser + ": " + component);
+            unregisterListenerService(component, info.userid);
         }
 
         final int N = toAdd.size();
@@ -672,10 +670,7 @@ public class NotificationManagerService extends INotificationManager.Stub
     @Override
     public void registerListener(final INotificationListener listener,
             final ComponentName component, final int userid) {
-        final int permission = mContext.checkCallingPermission(
-                android.Manifest.permission.SYSTEM_NOTIFICATION_LISTENER);
-        if (permission == PackageManager.PERMISSION_DENIED)
-            checkCallerIsSystem();
+        checkCallerIsSystem();
 
         synchronized (mNotificationList) {
             try {
@@ -902,33 +897,6 @@ public class NotificationManagerService extends INotificationManager.Stub
     }
 
     /**
-     * Allow an INotificationListener to simulate clearing (dismissing) a single notification.
-     *
-     * {@see com.android.server.StatusBarManagerService.NotificationCallbacks#onNotificationClear}
-     *
-     * @param token The binder for the listener, to check that the caller is allowed
-     *
-     * @hide
-     */
-    public void cancelNotificationFromSystemListener(INotificationListener token, String pkg, String tag, int id) {
-        final int permission = mContext.checkCallingPermission(
-                android.Manifest.permission.SYSTEM_NOTIFICATION_LISTENER);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            throw new SecurityException("Disallowed call");
-        }
-
-        long identity = Binder.clearCallingIdentity();
-        try {
-            cancelNotification(pkg, tag, id, 0,
-                    Notification.FLAG_ONGOING_EVENT | Notification.FLAG_FOREGROUND_SERVICE,
-                    true,
-                    UserHandle.USER_ALL);
-        } finally {
-            Binder.restoreCallingIdentity(identity);
-        }
-    }
-
-    /**
      * Allow an INotificationListener to request the list of outstanding notifications seen by
      * the current user. Useful when starting up, after which point the listener callbacks should
      * be used.
@@ -947,34 +915,6 @@ public class NotificationManagerService extends INotificationManager.Stub
                 if (info.enabledAndUserMatches(sbn)) {
                     list.add(sbn);
                 }
-            }
-        }
-        return list.toArray(result);
-    }
-
-    /**
-     * Allow an INotificationListener to request the list of outstanding notifications seen by
-     * the current user. Useful when starting up, after which point the listener callbacks should
-     * be used.
-     *
-     * @param token The binder for the listener, to check that the caller is allowed
-     *
-     * @hide
-     */
-    public StatusBarNotification[] getActiveNotificationsFromSystemListener(INotificationListener token) {
-        final int permission = mContext.checkCallingPermission(
-                android.Manifest.permission.SYSTEM_NOTIFICATION_LISTENER);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            throw new SecurityException("Disallowed call");
-        }
-
-        StatusBarNotification[] result = new StatusBarNotification[0];
-        ArrayList<StatusBarNotification> list = new ArrayList<StatusBarNotification>();
-        synchronized (mNotificationList) {
-            final int N = mNotificationList.size();
-            for (int i=0; i<N; i++) {
-                StatusBarNotification sbn = mNotificationList.get(i).sbn;
-                list.add(sbn);
             }
         }
         return list.toArray(result);
