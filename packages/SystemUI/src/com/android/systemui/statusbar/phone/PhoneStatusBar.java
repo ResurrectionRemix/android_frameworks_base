@@ -696,6 +696,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mNetworkController.addSignalCluster(signalCluster);
         signalCluster.setNetworkController(mNetworkController);
 
+<<<<<<< HEAD
         final boolean isAPhone = mNetworkController.hasVoiceCallingFeature();
         if (isAPhone) {
             mEmergencyCallLabel =
@@ -708,18 +709,36 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     @Override
                     public void onLayoutChange(View v, int left, int top, int right, int bottom,
                             int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                        updateCarrierAndWifiLabelVisibility(false);
+                        updateCarrierLabelVisibility(false);
                     }});
             }
-
+=======
+        mEmergencyCallLabel = (TextView)mStatusBarWindow.findViewById(R.id.emergency_calls_only);
+        if (mEmergencyCallLabel != null) {
+            mNetworkController.addEmergencyLabelView(mEmergencyCallLabel);
+            mEmergencyCallLabel.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) { }});
+            mEmergencyCallLabel.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                        int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    updateCarrierAndWifiLabelVisibility(false);
+                }});
+>>>>>>> 66eb4ed... Show connected WiFi network in notification drawer 2/2
+        }
         mCarrierAndWifiView = mStatusBarWindow.findViewById(R.id.carrier_wifi);
         mWifiView = mStatusBarWindow.findViewById(R.id.wifi_view);
-       
+        
         mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
         mShowCarrierInPanel = (mCarrierLabel != null);
-
+<<<<<<< HEAD
+        if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
+        if (mShowCarrierInPanel) {
+            mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.INVISIBLE);
+=======
          if (DEBUG) Slog.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
          if (mShowCarrierInPanel) {
+>>>>>>> 66eb4ed... Show connected WiFi network in notification drawer 2/2
 
             // for mobile devices, we always show mobile connection info here (SPN/PLMN)
             // for other devices, we show whatever network is connected
@@ -1302,12 +1321,22 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
         }
     }
-     protected void updateCarrierAndWifiLabelVisibility(boolean force) {
+
+<<<<<<< HEAD
+    protected void updateCarrierLabelVisibility(boolean force) {
+        if (!mShowCarrierInPanel) return;
+        // The idea here is to only show the carrier label when there is enough room to see it,
+        // i.e. when there aren't enough notifications to fill the panel.
         if (SPEW) {
             Log.d(TAG, String.format("pileh=%d scrollh=%d carrierh=%d",
+                    mPile.getHeight(), mScrollView.getHeight(), mCarrierLabelHeight));
+=======
+
+    protected void updateCarrierAndWifiLabelVisibility(boolean force) {
+        if (DEBUG) {
+            Slog.d(TAG, String.format("pileh=%d scrollh=%d carrierh=%d",
                     mPile.getHeight(), mScrollView.getHeight(), mCarrierAndWifiViewHeight));
-
-
+>>>>>>> 66eb4ed... Show connected WiFi network in notification drawer 2/2
         }
 
         final boolean emergencyCallsShownElsewhere = mEmergencyCallLabel != null;
@@ -1315,10 +1344,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             !(emergencyCallsShownElsewhere && mNetworkController.isEmergencyOnly())
             && mPile.getHeight() < (mNotificationPanel.getHeight() - mCarrierAndWifiViewHeight - mNotificationHeaderHeight)
             && mScrollView.getVisibility() == View.VISIBLE;
+<<<<<<< HEAD
 
+        if (force || mCarrierLabelVisible != makeVisible) {
+            mCarrierLabelVisible = makeVisible;
+=======
+        
         if (force || mCarrierAndWifiViewVisible != makeVisible) {
             mCarrierAndWifiViewVisible = makeVisible;
-
+>>>>>>> 66eb4ed... Show connected WiFi network in notification drawer 2/2
             if (DEBUG) {
                 Log.d(TAG, "making carrier label " + (makeVisible?"visible":"invisible"));
             }
@@ -2714,14 +2748,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mSettingsPanel.setLayoutParams(lp);
         }
 
+<<<<<<< HEAD
         if (ENABLE_HEADS_UP && mHeadsUpNotificationView != null) {
             mHeadsUpNotificationView.setMargin(mNotificationPanelMarginPx);
             mPile.getLocationOnScreen(mPilePosition);
             mHeadsUpVerticalOffset = mPilePosition[1] - mNaturalBarHeight;
         }
 
+        updateCarrierLabelVisibility(false);
+=======
                 updateCarrierAndWifiLabelVisibility(false);
-        
+>>>>>>> 66eb4ed... Show connected WiFi network in notification drawer 2/2
     }
 
     // called by makeStatusbar and also by PhoneStatusBarView
