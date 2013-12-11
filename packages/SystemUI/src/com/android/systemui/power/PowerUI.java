@@ -19,10 +19,7 @@ package com.android.systemui.power;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
-<<<<<<< HEAD
-=======
 import android.app.PendingIntent;
->>>>>>> ed98a5c... Advanced low battery indicator options (1/2)
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
