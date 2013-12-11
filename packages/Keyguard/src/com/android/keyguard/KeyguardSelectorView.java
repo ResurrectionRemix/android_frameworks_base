@@ -27,7 +27,6 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-<<<<<<< HEAD
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
@@ -36,9 +35,7 @@ import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-=======
 import android.graphics.Color;
->>>>>>> 38c8b19... [1/2] Add battery level around unlock ring
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -78,13 +75,10 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
     private LockPatternUtils mLockPatternUtils;
     private SecurityMessageDisplay mSecurityMessageDisplay;
     private Drawable mBouncerFrame;
-<<<<<<< HEAD
     private String[] mStoredTargets;
     private int mTargetOffset;
     private boolean mIsScreenLarge;
-=======
     private float mBatteryLevel;
->>>>>>> 38c8b19... [1/2] Add battery level around unlock ring
 
     OnTriggerListener mOnTriggerListener = new OnTriggerListener() {
 
