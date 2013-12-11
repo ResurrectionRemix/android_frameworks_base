@@ -849,18 +849,8 @@ final class DisplayPowerController {
                     if (!mElectronBeamOffAnimator.isStarted()) {
                         if (mPowerState.getElectronBeamLevel() == 0.0f) {
                             setScreenOn(false);
-<<<<<<< HEAD
-                            unblockScreenOn();
-                        } else if (mPowerState.prepareElectronBeam(
-                                mElectronBeamFadesConfig ?
-                                        ElectronBeam.MODE_FADE :
-                                        ElectronBeam.MODE_COOL_DOWN)
-                                && mPowerState.isScreenOn()
-                                && useScreenOffAnimation()) {
-=======
                         } else if (mPowerState.prepareElectronBeam(electronBeamMode)
                                 && mPowerState.isScreenOn()) {
->>>>>>> 89dd596... [1/2] ElectronBeam: Add an alternative screen-off animation
                             mElectronBeamOffAnimator.start();
                         } else {
                             mElectronBeamOffAnimator.end();
@@ -869,6 +859,7 @@ final class DisplayPowerController {
                 }
             }
         }
+
 
         // Report whether the display is ready for use.
         // We mostly care about the screen state here, ignoring brightness changes
