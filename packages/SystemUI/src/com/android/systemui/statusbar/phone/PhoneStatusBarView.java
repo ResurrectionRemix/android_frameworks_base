@@ -245,12 +245,6 @@ public class PhoneStatusBarView extends PanelBar {
         if (panel.getAlpha() != alpha) {
             panel.setAlpha(alpha);
         }
-<<<<<<< HEAD
-=======
-        updateBackgroundAlpha(frac);
-        mBar.updateCarrierAndWifiLabelVisibility(false);
-    }
->>>>>>> 66eb4ed... Show connected WiFi network in notification drawer 2/2
 
         mBar.animateHeadsUp(mNotificationPanel == panel, mPanelExpandedFractionSum);
 
