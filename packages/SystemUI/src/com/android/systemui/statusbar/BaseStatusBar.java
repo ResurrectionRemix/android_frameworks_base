@@ -16,7 +16,24 @@
 
 package com.android.systemui.statusbar;
 
+<<<<<<< HEAD
+=======
+import android.service.notification.StatusBarNotification;
+import android.content.res.Configuration;
+import com.android.internal.statusbar.IStatusBarService;
+import com.android.internal.statusbar.StatusBarIcon;
+import com.android.internal.statusbar.StatusBarIconList;
+import com.android.internal.widget.SizeAdaptiveLayout;
+import com.android.systemui.R;
+import com.android.systemui.SearchPanelView;
+import com.android.systemui.SystemUI;
+import com.android.systemui.recent.RecentTasksLoader;
+import com.android.systemui.recent.RecentsActivity;
+import com.android.systemui.recent.TaskDescription;
+import com.android.systemui.statusbar.policy.NotificationRowLayout;
+import com.android.systemui.statusbar.policy.activedisplay.ActiveDisplayView;
 import android.app.Activity;
+>>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.Notification;
@@ -173,10 +190,12 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     private RecentsComponent mRecents;
 
+<<<<<<< HEAD
     private int mExpandedDesktopStyle = 0;
-
+=======
     protected ActiveDisplayView mActiveDisplayView;
-    
+>>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
+
     public IStatusBarService getStatusBarService() {
         return mBarService;
     }

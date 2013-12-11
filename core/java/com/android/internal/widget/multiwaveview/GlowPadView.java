@@ -655,6 +655,7 @@ public class GlowPadView extends View {
         }
     }
 
+<<<<<<< HEAD
     private void internalSetTargetResources(ArrayList<TargetDrawable> targets) {
         if (targets == null || targets.size() == 0) {
             throw new IllegalStateException("Must specify at least one target drawable");
@@ -679,13 +680,14 @@ public class GlowPadView extends View {
             updatePointCloudPosition(mWaveCenterX, mWaveCenterY);
             hideTargets(false, false);
         }
- }
+=======
     private void internalSetTargetResources(ArrayList<TargetDrawable> drawList) {
         mTargetResourceId = 0;
         mTargetDrawables = drawList;
         updateTargetPositions(mWaveCenterX, mWaveCenterY);
         updatePointCloudPosition(mWaveCenterX, mWaveCenterY);
         hideTargets(false, false);
+>>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
     }
 
     /**
@@ -715,9 +717,10 @@ public class GlowPadView extends View {
         return mTargetResourceId;
     }
 
+<<<<<<< HEAD
     public ArrayList<TargetDrawable> getTargetDrawables() {
         return mTargetDrawables;
- }
+=======
     public void setTargetResources(ArrayList<TargetDrawable> drawList) {
         if (mAnimatingTargets) {
             // postpone this change until we return to the initial state
@@ -725,7 +728,7 @@ public class GlowPadView extends View {
         } else {
             internalSetTargetResources(drawList);
         }
-
+>>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
     }
 
     /**
