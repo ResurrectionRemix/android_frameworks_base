@@ -116,7 +116,6 @@ import com.android.systemui.statusbar.policy.OnSizeChangedListener;
 import com.android.systemui.statusbar.policy.RotationLockController;
 
 import com.android.systemui.omni.StatusHeaderMachine;
-
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -294,7 +293,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     // to some other configuration change).
     CustomTheme mCurrentTheme;
     private boolean mRecreating = false;
-
+	private StatusHeaderMachine mStatusHeaderMachine;
+    private Runnable mStatusHeaderUpdater;
+    
     private boolean mBrightnessControl;
     private float mScreenWidth;
     private int mMinBrightness;
@@ -304,13 +305,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     int mInitialTouchX;
     int mInitialTouchY;
 
-<<<<<<< HEAD
-=======
-    private boolean mRecreating = false;
-    private StatusHeaderMachine mStatusHeaderMachine;
-    private Runnable mStatusHeaderUpdater;
-
->>>>>>> 75604a2... [1/2] SystemUI: Add time-context headers to the notification header
     // for disabling the status bar
     int mDisabled = 0;
 
@@ -370,35 +364,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-<<<<<<< HEAD
                     Settings.System.STATUS_BAR_BATTERY), false, this);
-            updateSettings();
-=======
+	            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CUSTOM_HEADER), false, this);
-            update();
->>>>>>> 75604a2... [1/2] SystemUI: Add time-context headers to the notification header
+            updateSettings();
         }
 
         @Override
         public void onChange(boolean selfChange) {
-<<<<<<< HEAD
             updateSettings();
-=======
-            update();
-        }
-
-        public void update() {
-            final ContentResolver resolver = mContext.getContentResolver();
-
-            boolean autoBrightness = Settings.System.getInt(
-                    resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, 0) ==
-                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
-            mBrightnessControl = !autoBrightness && Settings.System.getInt(
-                    resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1;
-
-            updateCustomHeaderStatus();
-
->>>>>>> 75604a2... [1/2] SystemUI: Add time-context headers to the notification header
         }
     }
 
@@ -642,10 +616,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mExpandedContents = mPile; // was: expanded.findViewById(R.id.notificationLinearLayout);
 
         mNotificationPanelHeader = mStatusBarWindow.findViewById(R.id.header);
-
-        mStatusHeaderMachine = new StatusHeaderMachine(mContext);
+        
+	    mStatusHeaderMachine = new StatusHeaderMachine(mContext);
         updateCustomHeaderStatus();
-
+        
         mClearButton = mStatusBarWindow.findViewById(R.id.clear_all_button);
         mClearButton.setOnClickListener(mClearButtonListener);
         mClearButton.setAlpha(0f);
@@ -856,7 +830,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         return mStatusBarView;
     }
-
     private void updateCustomHeaderStatus() {
         ContentResolver resolver = mContext.getContentResolver();
         boolean customHeader = Settings.System.getInt(
@@ -907,7 +880,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mNotificationPanelHeader.setBackgroundDrawable(transitionDrawable);
         transitionDrawable.startTransition(1000);
     }
-
+    
     @Override
     protected void onShowSearchPanel() {
         if (mNavigationBarView != null) {
@@ -2954,7 +2927,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     }
 
     private void updateSettings() {
-        ContentResolver resolver = mContext.getContentResolver();
+       final  ContentResolver resolver = mContext.getContentResolver();
         //XXX: multi-user correct?
         boolean autoBrightness = Settings.System.getInt(
                 resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, 0) ==
@@ -2962,6 +2935,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mBrightnessControl = !autoBrightness && Settings.System.getInt(
                 resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1;
 
+            updateCustomHeaderStatus();
+            
         int batteryStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_BATTERY, BATTERY_STYLE_NORMAL);
         boolean meterVisible = batteryStyle == BATTERY_STYLE_NORMAL;
