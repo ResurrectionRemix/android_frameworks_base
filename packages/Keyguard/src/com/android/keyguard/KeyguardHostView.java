@@ -1703,9 +1703,21 @@ public class KeyguardHostView extends KeyguardViewBase {
         final boolean configDisabled = res.getBoolean(R.bool.config_disableMenuKeyInLockScreen);
         final boolean isTestHarness = ActivityManager.isRunningInTestHarness();
         final boolean fileOverride = (new File(ENABLE_MENU_KEY_FILE)).exists();
+<<<<<<< HEAD
         final boolean settingsEnabled = Settings.System.getInt(getContext().getContentResolver(), Settings.System.MENU_UNLOCK_SCREEN, configDisabled ? 0 : 1) == 1;
 
         return settingsEnabled || isTestHarness || fileOverride;
+=======
+        final boolean menuOverride = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.MENU_UNLOCK_SCREEN, 0) == 1;
+        return !configDisabled || isTestHarness || fileOverride || menuOverride;
+    }
+
+    private boolean shouldEnableHomeKey() {
+        final boolean homeOverride = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.HOME_UNLOCK_SCREEN, 0) == 1;
+        return homeOverride;
+>>>>>>> d446b05... Forward port CM Screen Security settings (1/2)
     }
 
     public void goToWidget(int appWidgetId) {
@@ -1716,6 +1728,15 @@ public class KeyguardHostView extends KeyguardViewBase {
     public boolean handleMenuKey() {
         // The following enables the MENU key to work for testing automation
         if (shouldEnableMenuKey()) {
+            showNextSecurityScreenOrFinish(false);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean handleHomeKey() {
+        // The following enables the HOME key to work for testing automation
+        if (shouldEnableHomeKey()) {
             showNextSecurityScreenOrFinish(false);
             return true;
         }
