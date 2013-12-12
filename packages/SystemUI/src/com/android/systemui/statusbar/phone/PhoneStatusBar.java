@@ -594,11 +594,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
 
         // figure out which pixel-format to use for the status bar.
-<<<<<<< HEAD
         mPixelFormat = PixelFormat.OPAQUE;
-=======
-        updateTranslucentStatus();
->>>>>>> 7c0ae53... [1/2] Setting for translucent statusbar on lockscreen
 
         mSystemIconArea = (LinearLayout) mStatusBarView.findViewById(R.id.system_icon_area);
         mStatusIcons = (LinearLayout)mStatusBarView.findViewById(R.id.statusIcons);
@@ -1008,11 +1004,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                     | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                     | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
-<<<<<<< HEAD
                 PixelFormat.TRANSLUCENT);
-=======
-                PixelFormat.OPAQUE);
->>>>>>> 7c0ae53... [1/2] Setting for translucent statusbar on lockscreen
         // this will allow the navbar to run in an overlay on devices that support this
         if (ActivityManager.isHighEndGfx()) {
             lp.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
@@ -2829,7 +2821,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 // work around problem where mDisplay.getRotation() is not stable while screen is off (bug 7086018)
                 repositionNavigationBar();
                 notifyNavigationBarScreenOn(true);
-                updateTranslucentStatus();
             }
             else if (ACTION_DEMO.equals(action)) {
                 Bundle bundle = intent.getExtras();
@@ -2994,19 +2985,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         updateExpandedViewPos(EXPANDED_LEAVE_ALONE);
         mRecreating = false;
-    }
-
-    public void updateTranslucentStatus() {
-        boolean translucent = false;
-        try {
-            translucent = mWindowManagerService.isBarTranslucent();
-        } catch (RemoteException ex) {
-            // do nothing
-        }
-        Log.e(TAG, "Translucent? " + translucent);
-        mPixelFormat = translucent ? PixelFormat.TRANSLUCENT : PixelFormat.OPAQUE;
-
-        mStatusBarView.getBackground().setAlpha(translucent ? 128 : 255);
     }
 
     /**
