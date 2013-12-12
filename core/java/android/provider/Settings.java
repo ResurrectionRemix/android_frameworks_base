@@ -2617,6 +2617,15 @@ public final class Settings {
 
         /**
          * Stores values for custom lockscreen targets
+<<<<<<< HEAD
+=======
+         * @hide
+         */
+        public static final String LOCKSCREEN_TARGETS = "lockscreen_targets";
+
+        /**
+         * Whether to display notifications on screen when screen is off
+>>>>>>> 69aee5c... Base: [1/3] Customizable lockscreen & navring targets
          * @hide
          */
         public static final String LOCKSCREEN_TARGETS = "lockscreen_targets";
@@ -3408,6 +3417,17 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
+
+        /**
+         * Custom navring actions
+         *
+         * @hide
+         */
+        public static final String[] NAVIGATION_RING_TARGETS = new String[] {
+            "navigation_ring_targets_0",
+            "navigation_ring_targets_1",
+            "navigation_ring_targets_2",
+        };
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
