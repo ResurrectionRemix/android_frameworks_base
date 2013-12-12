@@ -231,9 +231,6 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         public void onChange(boolean selfChange) {
             mVolumeLinkNotification = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
-            final int overlayStyle = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.MODE_VOLUME_OVERLAY, VOLUME_OVERLAY_EXPANDABLE);
-            changeOverlayStyle(overlayStyle);
         }
     };
 
@@ -345,14 +342,8 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         // Get the user's preferences
         mVolumeLinkNotification = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
-<<<<<<< HEAD
         final int chosenStyle = Settings.System.getInt(context.getContentResolver(),
                 Settings.System.MODE_VOLUME_OVERLAY, VOLUME_OVERLAY_EXPANDABLE);
-=======
-        mVolumeAdjustSound = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.VOLUME_ADJUST_SOUNDS_ENABLED, 1) == 1;
-        int chosenStyle = VOLUME_OVERLAY_EXPANDABLE;
->>>>>>> 8199eec... Move volume adjust sound option to more native place (1/2).
         changeOverlayStyle(chosenStyle);
 
         context.getContentResolver().registerContentObserver(
