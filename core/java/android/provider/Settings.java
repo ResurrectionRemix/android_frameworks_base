@@ -3155,50 +3155,22 @@ public final class Settings {
         public static final String GESTURES_LEFT_SWIPE = "gestures_left_swipe";
 
         /**
-<<<<<<< HEAD
          * Right Swipe Action
          *
          * @hide
-=======
-         * Show clear all recents button
-         *  @hide
->>>>>>> 9cec35b... Add a circlular memory indicator to the recent panel view (1/2)
          */
         public static final String GESTURES_RIGHT_SWIPE = "gestures_right_swipe";
 
         /**
-<<<<<<< HEAD
          * Up Swipe Action
          *
-=======
-         * Location of the clear all recents button
->>>>>>> 9cec35b... Add a circlular memory indicator to the recent panel view (1/2)
          * @hide
          */
         public static final String GESTURES_UP_SWIPE = "gestures_up_swipe";
 
         /**
-<<<<<<< HEAD
          * down Swipe Action
          *
-=======
-         * Show circle memory indicator in recents panel view
-         *  @hide
-         */
-        public static final String SHOW_RECENTS_MEMORY_INDICATOR = "show_recents_memory_indicator";
-
-        /**
-         * Location of the memory indicator
-         * @hide
-         */
-        public static final String RECENTS_MEMORY_INDICATOR_LOCATION =
-                "recents_memory_indicator_location";
-
-        /**
-         * Immersive mode global actions switch
-         * 0 = no
-         * 1 = yes
->>>>>>> 9cec35b... Add a circlular memory indicator to the recent panel view (1/2)
          * @hide
          */
         public static final String GESTURES_DOWN_SWIPE = "gestures_down_swipe";
