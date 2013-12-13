@@ -416,7 +416,6 @@ final class DisplayPowerController {
         mDisplayBlanker = displayBlanker;
         mCallbacks = callbacks;
         mCallbackHandler = callbackHandler;
-
         mLights = lights;
         mTwilight = twilight;
         mSensorManager = sensorManager;
