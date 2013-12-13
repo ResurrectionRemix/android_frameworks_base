@@ -25,12 +25,16 @@ import com.android.server.display.DisplayManagerService;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+<<<<<<< HEAD
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
+=======
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+>>>>>>> 61194ba... [1/2] Frameworks: Lockscreen Blur
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.hardware.Sensor;
@@ -383,6 +387,8 @@ final class DisplayPowerController {
     private static final int SCREEN_OFF_SCALE = 2;
     private int mScreenOffAnimation;
 
+    private Context mContext;
+
     private KeyguardServiceWrapper mKeyguardService;
 
     private final ServiceConnection mKeyguardConnection = new ServiceConnection() {
@@ -414,6 +420,7 @@ final class DisplayPowerController {
         mDisplayBlanker = displayBlanker;
         mCallbacks = callbacks;
         mCallbackHandler = callbackHandler;
+        mContext = context;
 
         mLights = lights;
         mTwilight = twilight;
