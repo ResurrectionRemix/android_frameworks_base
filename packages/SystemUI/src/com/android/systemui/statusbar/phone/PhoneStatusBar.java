@@ -363,13 +363,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.SCREEN_BRIGHTNESS_MODE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY), false, this);
-<<<<<<< HEAD
 	            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CUSTOM_HEADER), false, this);
-=======
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT), false, this);
->>>>>>> fafcb82... base: Add dock battery support
             updateSettings();
         }
 
@@ -2938,15 +2935,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mBrightnessControl = !autoBrightness && Settings.System.getInt(
                 resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1;
 
-<<<<<<< HEAD
             updateCustomHeaderStatus();
             
-        int batteryStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_BATTERY, BATTERY_STYLE_NORMAL);
-        boolean meterVisible = batteryStyle == BATTERY_STYLE_NORMAL;
-        boolean circleVisible = batteryStyle == BATTERY_STYLE_CIRCLE
-                || batteryStyle == BATTERY_STYLE_CIRCLE_PERCENT;
-=======
         int batteryStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_BATTERY, 0);
         BatteryMeterMode mode = BatteryMeterMode.BATTERY_METER_ICON_PORTRAIT;
         switch (batteryStyle) {
@@ -2965,11 +2955,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             default:
                 break;
         }
-
         boolean showPercent = Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT, 0) == 1;
->>>>>>> fafcb82... base: Add dock battery support
-
+                
         mBatteryView.setMode(mode);
         mBatteryController.onBatteryMeterModeChanged(mode);
         mBatteryView.setShowPercent(showPercent);
