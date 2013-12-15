@@ -3357,7 +3357,6 @@ public final class Settings {
         public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
 
         /**
-<<<<<<< HEAD
          * Performance profile
          * @see config_perf_profile_prop in frameworks/base/core/res/res/values/config.xml
          * @hide
@@ -3365,8 +3364,6 @@ public final class Settings {
         public static final String PERFORMANCE_PROFILE = "performance_profile";
 
         /**
-         * Show the pending notification counts as overlays on the status bar
-=======
          * Should call status sounds be player
          *
          * @hide
@@ -3374,8 +3371,8 @@ public final class Settings {
         public static final String CALL_END_SOUND = "call_end_sound";
 
         /**
-         * Setting to show the battery percentage text
->>>>>>> 1e9a7eb... [1/2] base: allow disabling call end sound
+         * Show the pending notification counts as overlays on the status bar
+         * 
          * @hide
          */
         public static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
