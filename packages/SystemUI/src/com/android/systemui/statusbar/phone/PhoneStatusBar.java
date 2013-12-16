@@ -73,10 +73,6 @@ import android.util.Pair;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
-<<<<<<< HEAD
-=======
-import android.view.KeyEvent;
->>>>>>> 62596e0... Status bar brightness control from CM10 (Frameworks portion)
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -160,9 +156,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     private static final int STATUS_OR_NAV_TRANSIENT =
             View.STATUS_BAR_TRANSIENT | View.NAVIGATION_BAR_TRANSIENT;
     private static final long AUTOHIDE_TIMEOUT_MS = 3000;
-    private static final float BRIGHTNESS_CONTROL_PADDING = 0.15f;
-    private static final int BRIGHTNESS_CONTROL_LONG_PRESS_TIMEOUT = 750; // ms
-    private static final int BRIGHTNESS_CONTROL_LINGER_THRESHOLD = 20;
 
     private static final float BRIGHTNESS_CONTROL_PADDING = 0.15f;
     private static final int BRIGHTNESS_CONTROL_LONG_PRESS_TIMEOUT = 750; // ms
@@ -311,16 +304,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     int mInitialTouchX;
     int mInitialTouchY;
 
-    private Animator mLightsOutAnimation;
-    private Animator mLightsOnAnimation;
-
-    private boolean mBrightnessControl = true;
-    private float mScreenWidth;
-    private int mMinBrightness;
-    int mLinger;
-    int mInitialTouchX;
-    int mInitialTouchY;
-
     // for disabling the status bar
     int mDisabled = 0;
 
@@ -346,11 +329,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     };
 
-<<<<<<< HEAD
     private final Runnable mLongPressBrightnessChange = new Runnable() {
-=======
-    Runnable mLongPressBrightnessChange = new Runnable() {
->>>>>>> 62596e0... Status bar brightness control from CM10 (Frameworks portion)
         @Override
         public void run() {
             mStatusBarView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
@@ -359,7 +338,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     };
 
-<<<<<<< HEAD
     private final Runnable mNotifyClearAll = new Runnable() {
         @Override
         public void run() {
@@ -373,8 +351,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     };
 
-=======
->>>>>>> 62596e0... Status bar brightness control from CM10 (Frameworks portion)
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -386,7 +362,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE), false, this);
-<<<<<<< HEAD
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY), false, this);
 	            resolver.registerContentObserver(Settings.System.getUriFor(
@@ -394,34 +369,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT), false, this);
             updateSettings();
-=======
-            update();
->>>>>>> 62596e0... Status bar brightness control from CM10 (Frameworks portion)
         }
 
         @Override
         public void onChange(boolean selfChange) {
-<<<<<<< HEAD
             updateSettings();
         }
     }
 
-=======
-            update();
-        }
-
-        public void update() {
-            ContentResolver resolver = mContext.getContentResolver();
-            boolean autoBrightness = Settings.System.getInt(
-                    resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, 0) ==
-                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
-            mBrightnessControl = !autoBrightness && Settings.System.getInt(
-                    resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1;
-        }
-    }
-
-
->>>>>>> 62596e0... Status bar brightness control from CM10 (Frameworks portion)
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
     private ContentObserver mUserSetupObserver = new ContentObserver(new Handler()) {
@@ -873,8 +828,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         // listen for USER_SETUP_COMPLETE setting (per-user)
         resetUserSetupObserver();
-
-        mVelocityTracker = VelocityTracker.obtain();
 
         return mStatusBarView;
     }
@@ -2189,7 +2142,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     }
 
-<<<<<<< HEAD
     private void brightnessControl(MotionEvent event) {
         final int action = event.getAction();
         final int x = (int) event.getRawX();
@@ -2228,49 +2180,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         } else if (action == MotionEvent.ACTION_UP
                 || action == MotionEvent.ACTION_CANCEL) {
             mHandler.removeCallbacks(mLongPressBrightnessChange);
-=======
-    private void brightnessControl(MotionEvent event)
-    {
-        if (mBrightnessControl)
-        {
-            final int action = event.getAction();
-            final int x = (int)event.getRawX();
-            final int y = (int)event.getRawY();
-            if (action == MotionEvent.ACTION_DOWN) {
-                mLinger = 0;
-                mInitialTouchX = x;
-                mInitialTouchY = y;
-                mHandler.removeCallbacks(mLongPressBrightnessChange);
-                if (y < mNotificationHeaderHeight) {
-                    mHandler.postDelayed(mLongPressBrightnessChange,
-                            BRIGHTNESS_CONTROL_LONG_PRESS_TIMEOUT);
-                }
-            } else if (action == MotionEvent.ACTION_MOVE) {
-                if (y < mNotificationHeaderHeight) {
-                    mVelocityTracker.computeCurrentVelocity(1000);
-                    float yVel = mVelocityTracker.getYVelocity();
-                    yVel = Math.abs(yVel);
-                    if (yVel < 50.0f) {
-                        if (mLinger > BRIGHTNESS_CONTROL_LINGER_THRESHOLD) {
-                            adjustBrightness(x);
-                        } else {
-                            mLinger++;
-                        }
-                    }
-                    int touchSlop = ViewConfiguration.get(mContext).getScaledTouchSlop();
-                    if (Math.abs(x - mInitialTouchX) > touchSlop ||
-                            Math.abs(y - mInitialTouchY) > touchSlop) {
-                        mHandler.removeCallbacks(mLongPressBrightnessChange);
-                    }
-                } else {
-                    mHandler.removeCallbacks(mLongPressBrightnessChange);
-                }
-            } else if (action == MotionEvent.ACTION_UP
-                    || action == MotionEvent.ACTION_CANCEL) {
-                mHandler.removeCallbacks(mLongPressBrightnessChange);
-                mLinger = 0;
-            }
->>>>>>> 62596e0... Status bar brightness control from CM10 (Frameworks portion)
         }
     }
 
@@ -2316,9 +2225,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
             }
         }
-
-        brightnessControl(event);
-
         return false;
     }
 
