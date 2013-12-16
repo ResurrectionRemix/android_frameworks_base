@@ -1847,7 +1847,6 @@
   <java-symbol type="bool" name="config_stylusGestures" />
   <java-symbol type="string" name="stylus_app_not_installed" />
 
-<<<<<<< HEAD
   <!-- Panel auto brightness -->
   <java-symbol type="integer" name="config_panelAutoBrightnessValue" />
 
@@ -1868,8 +1867,6 @@
   <!-- LED flashlight -->
   <java-symbol type="bool" name="config_enableTorch" />
 
-=======
->>>>>>> 69aee5c... Base: [1/3] Customizable lockscreen & navring targets
   <!-- Navigation Ring -->
   <java-symbol type="drawable" name="ic_navigation_ring_blank_normal" />
   <java-symbol type="drawable" name="ic_navigation_ring_blank_activated" />
@@ -1883,7 +1880,6 @@
   <java-symbol type="drawable" name="ic_navigation_ring_torch_on" />
   <java-symbol type="drawable" name="ic_navigation_ring_torch_off" />
   <java-symbol type="drawable" name="ic_navigation_ring_vibrate" />
-<<<<<<< HEAD
 
   <!-- Performance Profiles -->
   <java-symbol type="string" name="config_perf_profile_prop" />
@@ -1949,6 +1945,4 @@
   <java-symbol type="string" name="symbol_picker_z" />
   <java-symbol type="string" name="symbol_picker_Z" />
 
-=======
->>>>>>> 69aee5c... Base: [1/3] Customizable lockscreen & navring targets
 </resources>
