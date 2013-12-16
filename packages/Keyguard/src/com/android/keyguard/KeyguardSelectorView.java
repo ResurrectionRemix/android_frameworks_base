@@ -34,12 +34,8 @@ import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-<<<<<<< HEAD
 import android.graphics.drawable.BitmapDrawable;
-=======
->>>>>>> 69aee5c... Base: [1/3] Customizable lockscreen & navring targets
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -83,9 +79,6 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
     private int mTargetOffset;
     private boolean mIsScreenLarge;
     private float mBatteryLevel;
-    private String[] mStoredTargets;
-    private int mTargetOffset;
-    private boolean mIsScreenLarge;
 
     OnTriggerListener mOnTriggerListener = new OnTriggerListener() {
 

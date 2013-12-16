@@ -1469,13 +1469,4 @@ public class GlowPadView extends View {
 
     }
 
-    public void setHandleDrawable(Drawable handle) {
-        Resources res = mContext.getResources();
-        if (handle != null) {
-            mHandleDrawable = new TargetDrawable(res, handle);
-        } else {
-            mHandleDrawable = new TargetDrawable(res, 0);
-        }
-        mHandleDrawable.setState(TargetDrawable.STATE_INACTIVE);
-    }
 }
