@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Profile;
 import android.app.ProfileManager;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContentResolver;
@@ -296,6 +297,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         final ContentResolver cr = mContext.getContentResolver();
         mItems = new ArrayList<Action>();
 
+        final boolean quickbootEnabled = Settings.System.getInt(
+                mContext.getContentResolver(), "enable_quickboot", 0) == 1;
         // first: power off
         mItems.add(
             new SinglePressAction(
@@ -303,6 +306,12 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     R.string.global_action_power_off) {
 
                 public void onPress() {
+                    // goto quickboot mode
+                    if (quickbootEnabled) {
+                        startQuickBoot();
+                        return;
+                    }
+
                     // shutdown by making sure radio and power are handled accordingly.
                     mWindowManagerFuncs.shutdown(true);
                 }
@@ -1298,6 +1307,16 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 mContext.getContentResolver(),
                 Settings.System.EXPANDED_DESKTOP_STATE,
                 on ? 1 : 0, UserHandle.USER_CURRENT);
+    }
+
+    private void startQuickBoot() {
+
+        Intent intent = new Intent("org.codeaurora.action.QUICKBOOT");
+        intent.putExtra("mode", 0);
+        try {
+            mContext.startActivityAsUser(intent,UserHandle.CURRENT);
+        } catch (ActivityNotFoundException e) {
+        }
     }
 
     private static final class GlobalActionsDialog extends Dialog implements DialogInterface {
