@@ -16,6 +16,11 @@
 
 package com.android.internal.policy.impl.keyguard;
 
+<<<<<<< HEAD
+=======
+import android.content.Intent;
+import android.graphics.Bitmap;
+>>>>>>> 67b0808... Lockscreen transparency, blur and rotation
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -188,6 +193,25 @@ public class KeyguardServiceWrapper implements IKeyguardService {
         }
     }
 
+<<<<<<< HEAD
+=======
+    public void showCustomIntent(Intent intent) {
+        try {
+            mService.showCustomIntent(intent);
+        } catch (RemoteException e) {
+            Slog.w(TAG , "Remote Exception", e);
+        }
+    }
+
+    public void setBackgroundBitmap(Bitmap bmp) {
+    	try {
+    		mService.setBackgroundBitmap(bmp);
+    	} catch (RemoteException e) {
+    		Slog.w(TAG, "Remote Exception", e);
+    	}
+    }
+    
+>>>>>>> 67b0808... Lockscreen transparency, blur and rotation
     public void showAssistant() {
         // Not used by PhoneWindowManager
     }
