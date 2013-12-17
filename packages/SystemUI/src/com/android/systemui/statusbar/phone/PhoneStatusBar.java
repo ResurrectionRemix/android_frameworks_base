@@ -3104,6 +3104,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mode = BatteryMeterMode.BATTERY_METER_ICON_LANDSCAPE;
                 break;
 
+            case 6:
+                mode = BatteryMeterMode.BATTERY_METER_TEXT;
+                break;
+
             default:
                 break;
         }
