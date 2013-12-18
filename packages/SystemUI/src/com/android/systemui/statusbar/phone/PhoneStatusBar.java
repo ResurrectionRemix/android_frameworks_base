@@ -206,7 +206,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
     // right-hand icons
     LinearLayout mSystemIconArea;
-    LinearLayout mCenterClockLayout;
+
     // left-hand icons
     LinearLayout mStatusIcons;
     // the icons themselves
@@ -612,7 +612,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mMoreIcon = mStatusBarView.findViewById(R.id.moreIcon);
         mNotificationIcons.setOverflowIndicator(mMoreIcon);
         mStatusBarContents = (LinearLayout)mStatusBarView.findViewById(R.id.status_bar_contents);
-
         mTickerView = mStatusBarView.findViewById(R.id.ticker);
 
         mPile = (NotificationRowLayout)mStatusBarWindow.findViewById(R.id.latestItems);
@@ -2565,12 +2564,27 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mCenterClockLayout.startAnimation(
                     loadAnim(com.android.internal.R.anim.push_up_out,
                     null));
+            }
         }
- }
+
         @Override
-        
         public void tickerDone() {
-            if (!mHaloActive) {
+
+      if (!mHaloActive) {
+                mStatusBarContents.setVisibility(View.VISIBLE);
+                 mCenterClockLayout.setVisibility(View.VISIBLE);
+                 mTickerView.setVisibility(View.GONE);
+                 mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_down_in, null));
+                 mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_down_out,
+                             mTickingDoneListener));
+                 mCenterClockLayout.startAnimation(
+                     loadAnim(com.android.internal.R.anim.push_down_in,
+                     null));
+       }
+    }
+        public void tickerHalting() {
+
+	    if (!mHaloActive) {
                 mStatusBarContents.setVisibility(View.VISIBLE);
                 mCenterClockLayout.setVisibility(View.VISIBLE);
                 mTickerView.setVisibility(View.GONE);
@@ -2580,17 +2594,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mCenterClockLayout.startAnimation(
                     loadAnim(com.android.internal.R.anim.push_down_in,
                     null));
-
-       }
-    }
-        public void tickerHalting() {
-            if (!mHaloActive) {
-                mStatusBarContents.setVisibility(View.VISIBLE);
-                mCenterClockLayout.setVisibility(View.VISIBLE);
-                mTickerView.setVisibility(View.GONE);
-                mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-                mCenterClockLayout.startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-                // we do not animate the ticker away at this point, just get rid of it (b/6992707)
 	       }
         }
      }
