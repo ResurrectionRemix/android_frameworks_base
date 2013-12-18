@@ -44,14 +44,11 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings;
-<<<<<<< HEAD
 import android.renderscript.Allocation;
 import android.renderscript.Allocation.MipmapControl;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-=======
->>>>>>> edbf7b0... Add lockscreen rotation as an optional rotation setting (1/2)
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
