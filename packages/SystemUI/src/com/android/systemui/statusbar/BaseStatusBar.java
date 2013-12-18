@@ -33,9 +33,7 @@ import android.content.pm.IPackageDataObserver;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-<<<<<<< HEAD
 import android.database.ContentObserver;
-=======
 import android.content.res.Resources;
 import android.content.ServiceConnection;
 import android.database.ContentObserver;
@@ -43,7 +41,6 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
->>>>>>> 86aebb1... [2/2] Frameworks: HALO
 import android.graphics.Rect;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuffXfermode;
@@ -92,11 +89,8 @@ import com.android.systemui.R;
 import com.android.systemui.RecentsComponent;
 import com.android.systemui.SearchPanelView;
 import com.android.systemui.SystemUI;
-<<<<<<< HEAD
 import com.android.systemui.statusbar.phone.KeyguardTouchDelegate;
-=======
 import com.android.systemui.statusbar.halo.Halo;
->>>>>>> 86aebb1... [2/2] Frameworks: HALO
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
 
 import java.util.ArrayList;

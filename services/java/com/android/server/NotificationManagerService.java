@@ -80,11 +80,8 @@ import android.widget.Toast;
 import com.android.internal.R;
 
 import com.android.internal.notification.NotificationScorer;
-<<<<<<< HEAD
 import com.android.internal.util.cm.QuietHoursUtils;
-=======
 import com.android.internal.util.FastXmlSerializer;
->>>>>>> 86aebb1... [2/2] Frameworks: HALO
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -796,10 +793,6 @@ public class NotificationManagerService extends INotificationManager.Stub
             final ComponentName component = info.component;
             final int oldUser = info.userid;
             Slog.v(TAG, "disabling notification listener for user " + oldUser + ": " + component);
-<<<<<<< HEAD
-            unregisterListenerService(component, info.userid);
-        }
-=======
             // Do not un-register HALO, we un-register only when HALO is closed
             // Halo
 	    if (!component.getPackageName().equals("HaloComponent")) unregisterListenerService(component, info.userid);
@@ -809,7 +802,6 @@ public class NotificationManagerService extends INotificationManager.Stub
                 unregisterListenerService(component, info.userid);
             }        
 	}
->>>>>>> 86aebb1... [2/2] Frameworks: HALO
 
         final int N = toAdd.size();
         for (int i=0; i<N; i++) {
@@ -829,10 +821,6 @@ public class NotificationManagerService extends INotificationManager.Stub
     @Override
     public void registerListener(final INotificationListener listener,
             final ComponentName component, final int userid) {
-<<<<<<< HEAD
-        checkCallerIsSystem();
-
-=======
 	// Halo
 	if (!component.getPackageName().equals("HaloComponent")) checkCallerIsSystem();        
 	// Active display	
@@ -841,8 +829,6 @@ public class NotificationManagerService extends INotificationManager.Stub
         if (permission == PackageManager.PERMISSION_DENIED) {
             checkCallerIsSystem();
 	}
-        
->>>>>>> 86aebb1... [2/2] Frameworks: HALO
         synchronized (mNotificationList) {
             try {
                 NotificationListenerInfo info
