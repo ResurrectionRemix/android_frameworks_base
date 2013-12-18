@@ -59,8 +59,11 @@ import android.util.AttributeSet;
 import android.util.EventLog;
 import android.util.DisplayMetrics;
 import android.util.Log;
+<<<<<<< HEAD
 import android.util.PrintWriterPrinter;
+=======
 import android.util.TypedValue;
+>>>>>>> 86aebb1... [2/2] Frameworks: HALO
 import android.util.Slog;
 import android.util.SparseArray;
 import android.view.ActionMode;
