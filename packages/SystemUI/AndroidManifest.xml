@@ -73,9 +73,6 @@
 
     <!-- Keyguard -->
     <uses-permission android:name="android.permission.CONTROL_KEYGUARD" />
- 
-    <!--Halo-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <!-- Sync -->
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
@@ -266,20 +263,5 @@
                 <category android:name="android.intent.category.DESK_DOCK" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
-
-        <activity android:name=".statusbar.policy.activedisplay.DummyActivity"
-                  android:label=""
-                  android:taskAffinity=""
-                  android:excludeFromRecents="true"
-                  android:exported="true"
-                  android:theme="@style/Theme.DummyActivity">
-        </activity>
-
-        <activity android:name="com.android.systemui.Transparent"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
->>>>>>> 86aebb1... [2/2] Frameworks: HALO
     </application>
 </manifest>
