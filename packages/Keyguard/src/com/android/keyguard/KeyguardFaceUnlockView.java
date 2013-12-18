@@ -91,9 +91,7 @@ public class KeyguardFaceUnlockView extends LinearLayout implements KeyguardSecu
         mEcaView = findViewById(R.id.keyguard_selector_fade_container);
         View bouncerFrameView = findViewById(R.id.keyguard_bouncer_frame);
         if (bouncerFrameView != null) {
-            mBouncerFrame =
-                    KeyguardSecurityViewHelper.colorizeFrame(mContext,
-                    bouncerFrameView.getBackground());
+            mBouncerFrame = bouncerFrameView.getBackground();
         }
     }
 

@@ -31,7 +31,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.UserHandle;
@@ -102,8 +101,6 @@ public class GlowPadView extends View {
     private AnimationBundle mGlowAnimations = new AnimationBundle();
     private ArrayList<String> mTargetDescriptions;
     private ArrayList<String> mDirectionDescriptions;
-    private Drawable mPointDrawable;
-    private Drawable mPadDrawable;
     private OnTriggerListener mOnTriggerListener;
     private TargetDrawable mHandleDrawable;
     private TargetDrawable mOuterRing;
@@ -239,7 +236,6 @@ public class GlowPadView extends View {
                 mFeedbackCount);
         mAllowScaling = a.getBoolean(R.styleable.GlowPadView_allowScaling, false);
         TypedValue handle = a.peekValue(R.styleable.GlowPadView_handleDrawable);
-        mPadDrawable = a.getDrawable(R.styleable.GlowPadView_handleDrawable);
         mHandleDrawable = new TargetDrawable(res, handle != null ? handle.resourceId : 0);
         mHandleDrawable.setState(TargetDrawable.STATE_INACTIVE);
         mOuterRing = new TargetDrawable(res,
@@ -249,7 +245,7 @@ public class GlowPadView extends View {
         mMagneticTargets = a.getBoolean(R.styleable.GlowPadView_magneticTargets, mMagneticTargets);
 
         int pointId = getResourceId(a, R.styleable.GlowPadView_pointDrawable);
-        mPointDrawable = pointId != 0 ? res.getDrawable(pointId) : null;
+        Drawable pointDrawable = pointId != 0 ? res.getDrawable(pointId) : null;
         mGlowRadius = a.getDimension(R.styleable.GlowPadView_glowRadius, 0.0f);
 
         TypedValue outValue = new TypedValue();
@@ -285,7 +281,7 @@ public class GlowPadView extends View {
 
         assignDefaultsIfNeeded();
 
-        mPointCloud = new PointCloud(mPointDrawable);
+        mPointCloud = new PointCloud(pointDrawable);
         mPointCloud.makePointCloud(mInnerRadius, mOuterRadius);
         mPointCloud.glowManager.setRadius(mGlowRadius);
 
@@ -418,30 +414,6 @@ public class GlowPadView extends View {
         }
     }
 
-    public void setColoredIcons(int lockColor, int dotColor, Drawable custom) {
-        if (custom != null) {
-            if (lockColor != -2) {
-                custom.setColorFilter(null);
-                custom.setColorFilter(lockColor, PorterDuff.Mode.SRC_ATOP);
-            }
-            setHandleDrawable(custom);
-        } else {
-            if (lockColor != -2 && mPadDrawable != null) {
-                mPadDrawable.setColorFilter(null);
-                mPadDrawable.setColorFilter(lockColor, PorterDuff.Mode.SRC_ATOP);
-                setHandleDrawable(mPadDrawable);
-            }
-        }
-
-        if (dotColor != -2 && mPointDrawable != null) {
-            mPointDrawable.setColorFilter(null);
-            mPointDrawable.setColorFilter(dotColor, PorterDuff.Mode.SRC_ATOP);
-        } else {
-            if (mPointDrawable != null) {
-                mPointDrawable.setColorFilter(null);
-            }
-        }
-    }
     private void showGlow(int duration, int delay, float finalAlpha,
             AnimatorListener finishListener) {
         mGlowAnimations.cancel();
