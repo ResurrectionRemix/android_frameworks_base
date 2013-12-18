@@ -38,12 +38,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
-<<<<<<< HEAD
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.StateListDrawable;
-=======
 import android.net.Uri;
->>>>>>> 13b1b3a... Frameworks: Lockscreen Colors and Lock Image [1/2]
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.UserHandle;
@@ -210,8 +207,6 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-<<<<<<< HEAD
-=======
 
         Resources res = getResources();
 
@@ -321,7 +316,6 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
                 ecaContainer.bringToFront();
             }
         }
->>>>>>> 13b1b3a... Frameworks: Lockscreen Colors and Lock Image [1/2]
     }
 
     public void setCarrierArea(View carrierArea) {
