@@ -3422,7 +3422,6 @@ public final class Settings {
         public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
 
         /**
-<<<<<<< HEAD
          * ListView Animations
          * 0 == None
          * 1 == Wave (Left)
@@ -3450,7 +3449,8 @@ public final class Settings {
          * @hide
          */
          public static final String LISTVIEW_INTERPOLATOR = "listview_interpolator";
-=======
+         
+         /**
          * Width and height of output vide expressed in WxH
          * @hide
          */
@@ -3461,7 +3461,6 @@ public final class Settings {
          * @hide
          */
         public static final String SCREEN_RECORDER_BITRATE = "screen_recorder_bitrate";
->>>>>>> 8595f45... Add native java screen recorder [1/2]
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
