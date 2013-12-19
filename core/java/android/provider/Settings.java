@@ -1795,13 +1795,7 @@ public final class Settings {
          * Scaling factor for fonts, float.
          */
         public static final String FONT_SCALE = "font_scale";
-        
-        /**
-          * Whether to use the custom quick unlock screen control
-          * @hide
-          */
-        public static final String LOCKSCREEN_COLOR_ALPHA = "lockscreen_color_alpha";
-        
+
         /**
          * Name of an application package to be debugged.
          *

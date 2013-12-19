@@ -17,7 +17,7 @@
 
 package com.android.keyguard;
 
-import android.graphics.Bitmap; 
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
 import com.android.internal.policy.IKeyguardShowCallback;
@@ -75,9 +75,7 @@ public class KeyguardViewManager {
     private final int BLUR_RADIUS = 14;
     private final int MAX_BLUR_WIDTH = 900;
     private final int MAX_BLUR_HEIGHT = 1600;
-    private final int defaultBgColor = 0x70000000;
-    private final int bgColor;
-    
+
     // Delay dismissing keyguard to allow animations to complete.
     private static final int HIDE_KEYGUARD_DELAY = 500;
 
@@ -268,7 +266,7 @@ public class KeyguardViewManager {
         private Drawable mCustomBackground;
 
         // This is a faster way to draw the background on devices without hardware acceleration
-        Drawable mBackgroundDrawable = new Drawable() {
+        private final Drawable mBackgroundDrawable = new Drawable() {
             @Override
             public void draw(Canvas canvas) {
                 if (mCustomBackground != null) {
@@ -282,7 +280,7 @@ public class KeyguardViewManager {
                     mCustomBackground.draw(canvas);
                     canvas.restoreToCount(restore);
                 } else {
-                    canvas.drawColor(bgColor, PorterDuff.Mode.SRC);
+                    canvas.drawColor(BACKGROUND_COLOR, PorterDuff.Mode.SRC);
                 }
             }
 
@@ -502,11 +500,7 @@ public class KeyguardViewManager {
         return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
     }
-    private boolean bgColor() {
-        return Settings.System.boolean(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_COLOR_ALPHA, defaultBgColor);
-                resetBackground();
-    }
+
     void updateShowWallpaper(boolean show) {
         if (isSeeThroughEnabled()) {
             return;
