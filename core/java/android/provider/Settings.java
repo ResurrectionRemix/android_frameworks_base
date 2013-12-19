@@ -2813,8 +2813,14 @@ public final class Settings {
          *
          * @hide
          */
-        public static final String QUICK_SETTINGS_RIBBON_TILES = "quick_settings_ribbon_tiles";
-
+         public static final String QUICK_SETTINGS_RIBBON_TILES = "quick_settings_ribbon_tiles";
+         
+       /**
+         * QuickSettings music tile mode
+         * @hide
+         */
+         public static final String MUSIC_TILE_MODE = "music_tile_mode";
+         
         /**
          * Whether to hide the notification screen after clicking on a widget
          * button
