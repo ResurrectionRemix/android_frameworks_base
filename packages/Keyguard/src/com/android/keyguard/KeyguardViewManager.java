@@ -19,15 +19,12 @@ package com.android.keyguard;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-<<<<<<< HEAD
 
-=======
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.*;
 import android.provider.Settings;
 import android.view.*;
->>>>>>> 1f64ac6... Keyguard: smooth background change.
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
