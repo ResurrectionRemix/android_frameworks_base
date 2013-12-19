@@ -48,6 +48,7 @@ public class MusicTile extends QuickSettingsTile {
     private final String TAG = "MusicTile";
     private final boolean DBG = false;
 
+
     private boolean mActive = false;
     private boolean mClientIdLost = true;
     private int mMusicTileMode;
