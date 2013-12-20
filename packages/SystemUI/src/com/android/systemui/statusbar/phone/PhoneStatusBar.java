@@ -368,12 +368,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.SCREEN_BRIGHTNESS_MODE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY), false, this);
-	        resolver.registerContentObserver(Settings.System.getUriFor(
+	            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CUSTOM_HEADER), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT), false, this);
+<<<<<<< HEAD
+=======
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.APP_SIDEBAR_POSITION), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CENTER_CLOCK), false, this);
+>>>>>>> 594ac97... Add center clock (1/2)
             updateSettings();
         }
 
@@ -2998,14 +3003,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mDockBatteryController.onBatteryMeterModeChanged(mode);
         mDockBatteryView.setShowPercent(showPercent);
         mDockBatteryController.onBatteryMeterShowPercent(showPercent);
- 
+<<<<<<< HEAD
+=======
+
+        int sidebarPosition = Settings.System.getInt(
+                resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
+        if (sidebarPosition != mSidebarPosition) {
+            mSidebarPosition = sidebarPosition;
+            mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
+        }
+
         boolean useCenterClock = Settings.System.getInt(
                 resolver, Settings.System.STATUS_BAR_CENTER_CLOCK, 0) == 1;
         if (mUseCenterClock != useCenterClock) {
             mUseCenterClock = useCenterClock;
             recreateStatusBar();
-   }
-}
+>>>>>>> 594ac97... Add center clock (1/2)
+    }
+
     private void resetUserSetupObserver() {
         mContext.getContentResolver().unregisterContentObserver(mUserSetupObserver);
         mUserSetupObserver.onChange(false);
