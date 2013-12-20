@@ -2899,14 +2899,7 @@ public final class Settings {
         * @hide
         */
         public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
-        
-        /**
-         * Whether or not to use a center clock in phone status bar
-         *
-         * @hide
-         */
-         public static final String STATUS_BAR_CENTER_CLOCK = "status_bar_center_clock";
- 
+
         /**
          * Display style of AM/PM next to clock in status bar
          * 0: Normal display (Eclair stock)
@@ -2921,7 +2914,6 @@ public final class Settings {
         *
         * @hide       
         */
-
         public static final String QUICK_SETTINGS_TILES_FLIP = "quick_settings_tiles_flip";
 
         /**
