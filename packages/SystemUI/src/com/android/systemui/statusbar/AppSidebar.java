@@ -634,13 +634,6 @@ public class AppSidebar extends FrameLayout {
                 mBarAlpha = barAlpha;
             }
 
-            int position = Settings.System.getInt(
-                    resolver, Settings.System.APP_SIDEBAR_POSITION, SIDEBAR_POSITION_LEFT);
-            if (position != mPosition) {
-                mPosition = position;
-                createSidebarAnimations(position);
-            }
-
             boolean hideLabels = Settings.System.getInt(
                     resolver, Settings.System.APP_SIDEBAR_DISABLE_LABELS, 0) == 1;
             if (hideLabels != mHideTextLabels) {
@@ -662,6 +655,14 @@ public class AppSidebar extends FrameLayout {
                 showTriggerRegion();
             else
                 hideTriggerRegion();
+            int position = Settings.System.getInt(
+                     resolver, Settings.System.APP_SIDEBAR_POSITION, SIDEBAR_POSITION_LEFT);
+             if (position != mPosition) {
+                 mPosition = position;
+                 createSidebarAnimations(position);
+                 setTriggerWidth(1);
+                 setTriggerWidth(width);
+             }
         }
     }
 
