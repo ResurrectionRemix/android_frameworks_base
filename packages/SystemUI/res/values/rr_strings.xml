@@ -64,6 +64,4 @@ wn on the screen). [CHAR LIMIT=NONE] -->
     <string name="halo_signal_bars_2">TWO BARS</string>
     <string name="halo_signal_bars_1">ONE BAR</string>
     <string name="halo_signal_bars_none">NO BARS</string>
-        <!-- Title shown in notification popup for launching notification in floating mode -->
-    <string name="status_bar_notification_floating_item_title">Floating mode</string>
 </resources>
