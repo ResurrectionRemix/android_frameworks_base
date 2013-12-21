@@ -75,15 +75,7 @@ import com.android.systemui.statusbar.StatusBarPanel;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
-import java.util.HashSet;
-import java.util.Set;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.Runtime;
->>>>>>> 48c0236... Force clear cache on 'clear all'
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
         StatusBarPanel, Animator.AnimatorListener {
