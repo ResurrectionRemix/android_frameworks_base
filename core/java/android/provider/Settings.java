@@ -2936,13 +2936,6 @@ public final class Settings {
                 "status_bar_battery_show_percent";
 
         /**
-         * Whether or not to display battery percentage
-         *
-         * @hide
-         */
-        public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
-
-        /**
          * Whether or not to use the app sidebar
          *
          * @hide
