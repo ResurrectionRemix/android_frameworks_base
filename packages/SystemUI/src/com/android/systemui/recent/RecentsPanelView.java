@@ -76,7 +76,6 @@ import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.util.ArrayList;
 import java.lang.Runtime;
-import java.io.OutputStreamWriter;
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
         StatusBarPanel, Animator.AnimatorListener {
@@ -472,12 +471,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 public boolean onLongClick(View v) {
                     clearAllNonLocked();
                     try {
-                        ProcessBuilder pb = new ProcessBuilder("su", "-c", "/system/bin/sh");
-                         OutputStreamWriter osw = new OutputStreamWriter(pb.start().getOutputStream());
-                         osw.write("sync" + "\n" + "echo 3 > /proc/sys/vm/drop_caches" + "\n");
-                         osw.write("\nexit\n");
-                         osw.flush();
-                         osw.close();
+                        Runtime.getRuntime().exec("su -c sync");
+                        Runtime.getRuntime().exec("su -c echo 3 > /proc/sys/vm/drop_caches");
                     } catch (Exception e) {
                         Log.d(TAG, "Flush caches failed!");
                     }
