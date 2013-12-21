@@ -75,15 +75,6 @@ import com.android.systemui.statusbar.StatusBarPanel;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
-import java.util.HashSet;
-import java.util.Set;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.Runtime;
->>>>>>> 48c0236... Force clear cache on 'clear all'
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
         StatusBarPanel, Animator.AnimatorListener {
@@ -472,19 +463,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 @Override
                 public void onClick(View v) {
                     mRecentsContainer.removeAllViewsInLayout();
-                }
-            });
-            mClearRecents.setOnLongClickListener(new OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    clearAllNonLocked();
-                    try {
-                        Runtime.getRuntime().exec("su -c sync");
-                        Runtime.getRuntime().exec("su -c echo 3 > /proc/sys/vm/drop_caches");
-                    } catch (Exception e) {
-                        Log.d(TAG, "Flush caches failed!");
-                    }
-                    return true;
                 }
             });
         }
