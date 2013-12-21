@@ -655,7 +655,6 @@ public class AppSidebar extends FrameLayout {
                 showTriggerRegion();
             else
                 hideTriggerRegion();
-<<<<<<< HEAD
             int position = Settings.System.getInt(
                      resolver, Settings.System.APP_SIDEBAR_POSITION, SIDEBAR_POSITION_LEFT);
              if (position != mPosition) {
@@ -664,17 +663,6 @@ public class AppSidebar extends FrameLayout {
                  setTriggerWidth(1);
                  setTriggerWidth(width);
              }
-=======
-
-            int position = Settings.System.getInt(
-                    resolver, Settings.System.APP_SIDEBAR_POSITION, SIDEBAR_POSITION_LEFT);
-            if (position != mPosition) {
-                mPosition = position;
-                createSidebarAnimations(position);
-                setTriggerWidth(1);
-                setTriggerWidth(width);
-            }
->>>>>>> 04b8819... Attempt to fix disappearing Appbar
         }
     }
 
