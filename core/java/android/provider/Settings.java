@@ -3238,8 +3238,10 @@ public final class Settings {
          *
          * @hide
          */
-                 
+<<<<<<< HEAD
         public static final String ENABLE_STYLUS_GESTURES = "enable_stylus_gestures";
+=======
+        public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
 
        /**
         * Sets the portrait background of notification drawer
@@ -3258,6 +3260,7 @@ public final class Settings {
         * @hide
         */
         public static final String NOTIFICATION_BACKGROUND_ALPHA = "notification_background_alpha";
+>>>>>>> 8259ced... Frameworks: notification drawer background (1/2)
 
         /**
          * Left Swipe Action
