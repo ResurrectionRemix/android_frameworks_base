@@ -16,7 +16,6 @@
 
 package com.android.systemui.statusbar.phone;
 
-<<<<<<< HEAD
 import static com.android.internal.util.cm.QSConstants.TILES_DEFAULT;
 import static com.android.internal.util.cm.QSConstants.TILE_AIRPLANE;
 import static com.android.internal.util.cm.QSConstants.TILE_AUTOROTATE;
@@ -42,47 +41,14 @@ import static com.android.internal.util.cm.QSConstants.TILE_SCREENTIMEOUT;
 import static com.android.internal.util.cm.QSConstants.TILE_SETTINGS;
 import static com.android.internal.util.cm.QSConstants.TILE_SLEEP;
 import static com.android.internal.util.cm.QSConstants.TILE_SYNC;
+import static com.android.internal.util.cm.QSConstants.TILE_THEME;
 import static com.android.internal.util.cm.QSConstants.TILE_TORCH;
 import static com.android.internal.util.cm.QSConstants.TILE_USER;
 import static com.android.internal.util.cm.QSConstants.TILE_VOLUME;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFI;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFIAP;
 import static com.android.internal.util.cm.QSConstants.TILE_WIMAX;
-=======
-import static com.android.internal.util.slim.QSConstants.TILES_DEFAULT;
-import static com.android.internal.util.slim.QSConstants.DYNAMIC_TILES_DEFAULT;
-import static com.android.internal.util.slim.QSConstants.TILE_AIRPLANE;
-import static com.android.internal.util.slim.QSConstants.TILE_ALARM;
-import static com.android.internal.util.slim.QSConstants.TILE_AUTOROTATE;
-import static com.android.internal.util.slim.QSConstants.TILE_BATTERY;
-import static com.android.internal.util.slim.QSConstants.TILE_BLUETOOTH;
-import static com.android.internal.util.slim.QSConstants.TILE_BRIGHTNESS;
-import static com.android.internal.util.slim.QSConstants.TILE_BUGREPORT;
-import static com.android.internal.util.slim.QSConstants.TILE_DELIMITER;
-import static com.android.internal.util.slim.QSConstants.TILE_EXPANDEDDESKTOP;
-import static com.android.internal.util.slim.QSConstants.TILE_IMESWITCHER;
-import static com.android.internal.util.slim.QSConstants.TILE_LOCATION;
-import static com.android.internal.util.slim.QSConstants.TILE_LOCKSCREEN;
-import static com.android.internal.util.slim.QSConstants.TILE_LTE;
-import static com.android.internal.util.slim.QSConstants.TILE_MOBILEDATA;
-import static com.android.internal.util.slim.QSConstants.TILE_MUSIC;
-import static com.android.internal.util.slim.QSConstants.TILE_NETWORKMODE;
-import static com.android.internal.util.slim.QSConstants.TILE_NFC;
-import static com.android.internal.util.slim.QSConstants.TILE_QUIETHOURS;
-import static com.android.internal.util.slim.QSConstants.TILE_RINGER;
-import static com.android.internal.util.slim.QSConstants.TILE_SCREENTIMEOUT;
-import static com.android.internal.util.slim.QSConstants.TILE_SETTINGS;
-import static com.android.internal.util.slim.QSConstants.TILE_SLEEP;
-import static com.android.internal.util.slim.QSConstants.TILE_SYNC;
-import static com.android.internal.util.slim.QSConstants.TILE_THEME;
-import static com.android.internal.util.slim.QSConstants.TILE_TORCH;
-import static com.android.internal.util.slim.QSConstants.TILE_USBTETHER;
-import static com.android.internal.util.slim.QSConstants.TILE_USER;
-import static com.android.internal.util.slim.QSConstants.TILE_VOLUME;
-import static com.android.internal.util.slim.QSConstants.TILE_WIFI;
-import static com.android.internal.util.slim.QSConstants.TILE_WIFIAP;
-import static com.android.internal.util.slim.QSConstants.TILE_REBOOT;
->>>>>>> b302904... QS: add theme switcher tile (TRDS) 1/2
+
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -315,15 +281,9 @@ public class QuickSettingsController {
                     qs = new NetworkAdbTile(mContext, this);
                 }
             } else if (tile.equals(TILE_MUSIC)) {
-<<<<<<< HEAD
                  qs = new MusicTile(mContext, this);
-=======
-                qs = new MusicTile(mContext, this);
-            } else if (tile.equals(TILE_REBOOT)) {
-                qs = new RebootTile(mContext, this);
             } else if (tile.equals(TILE_THEME)) {
                 qs = new ThemeTile(mContext, this);
->>>>>>> b302904... QS: add theme switcher tile (TRDS) 1/2
             }
 
             if (qs != null) {

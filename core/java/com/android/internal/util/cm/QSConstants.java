@@ -33,18 +33,7 @@ public class QSConstants {
         public static final String TILE_CAMERA = "toggleCamera";
         public static final String TILE_NETWORKADB = "toggleNetworkAdb";
         public static final String TILE_MUSIC = "toggleMusic";
-<<<<<<< HEAD:core/java/com/android/internal/util/cm/QSConstants.java
-=======
-        public static final String TILE_REBOOT = "toggleReboot";
         public static final String TILE_THEME = "toggleTheme";
-
-        // dynamic tiles
-        public static final String TILE_ALARM = "toggleAlarm";
-        public static final String TILE_BUGREPORT = "toggleBugReport";
-        public static final String TILE_IMESWITCHER = "toggleImeSwitcher";
-        public static final String TILE_USBTETHER = "toggleUsbTether";
-
->>>>>>> b302904... QS: add theme switcher tile (TRDS) 1/2:core/java/com/android/internal/util/slim/QSConstants.java
         public static final String TILE_DELIMITER = "|";
         public static ArrayList<String> TILES_DEFAULT = new ArrayList<String>();
 

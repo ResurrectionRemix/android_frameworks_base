@@ -19,4 +19,6 @@
     <string name="quick_settings_music_play">Play</string>
     <string name="quick_settings_music_pause">Pause</string>
 
+    <string name="quick_settings_theme_switch_dark">Pitch Black On</string>
+    <string name="quick_settings_theme_switch_light">Pitch Black Off</string>
 </resources>
