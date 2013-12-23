@@ -25,11 +25,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-<<<<<<< HEAD
-=======
 import android.graphics.PorterDuff.Mode;
 import android.net.Uri;
->>>>>>> 8259ced... Frameworks: notification drawer background (1/2)
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
