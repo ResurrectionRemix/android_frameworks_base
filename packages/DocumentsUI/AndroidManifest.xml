@@ -48,7 +48,11 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/menu_settings"
+<<<<<<< HEAD
             android:theme="@style/SettingsTheme"
+=======
+            android:theme="@style/DialogWhenLarge"
+>>>>>>> 388806c... TRDS: Dark DocumentsUI
             android:exported="false" />
 
         <provider

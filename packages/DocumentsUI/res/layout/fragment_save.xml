@@ -23,7 +23,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+<<<<<<< HEAD
         android:background="@color/title_background" />
+=======
+        android:background="@color/bg3" />
+>>>>>>> 388806c... TRDS: Dark DocumentsUI
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +35,11 @@
         android:orientation="horizontal"
         android:baselineAligned="false"
         android:gravity="center_vertical"
+<<<<<<< HEAD
         android:background="@color/save_background"
+=======
+        android:background="@color/bg2"
+>>>>>>> 388806c... TRDS: Dark DocumentsUI
         android:minHeight="?android:attr/listPreferredItemHeightSmall">
 
         <ImageView
