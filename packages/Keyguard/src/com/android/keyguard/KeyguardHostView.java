@@ -1704,8 +1704,6 @@ public class KeyguardHostView extends KeyguardViewBase {
         final boolean isTestHarness = ActivityManager.isRunningInTestHarness();
         final boolean fileOverride = (new File(ENABLE_MENU_KEY_FILE)).exists();
         final boolean settingsEnabled = Settings.System.getInt(getContext().getContentResolver(), Settings.System.MENU_UNLOCK_SCREEN, configDisabled ? 0 : 1) == 1;
-
-        return settingsEnabled || isTestHarness || fileOverride;
         final boolean menuOverride = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.MENU_UNLOCK_SCREEN, 0) == 1;
         return !configDisabled || isTestHarness || fileOverride || menuOverride;
