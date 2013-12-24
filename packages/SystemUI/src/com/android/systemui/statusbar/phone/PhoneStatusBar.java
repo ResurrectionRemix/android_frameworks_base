@@ -590,11 +590,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         updateShowSearchHoldoff();
 
-
+<<<<<<< HEAD
+        try {
+            boolean showNav = mWindowManagerService.hasNavigationBar();
+            if (DEBUG) Log.v(TAG, "hasNavigationBar=" + showNav);
+            if (showNav && !mRecreating) {
+                mNavigationBarView =
+                    (NavigationBarView) View.inflate(context, R.layout.navigation_bar, null);
+=======
         if (mNavigationBarView == null) {
             mNavigationBarView =
                 (NavigationBarView) View.inflate(context, R.layout.navigation_bar, null);
         }
+>>>>>>> 2c6ef8f... fb: enable navbar for hw key devices
 
         mNavigationBarView.setDisabledFlags(mDisabled);
         mNavigationBarView.setBar(this);
