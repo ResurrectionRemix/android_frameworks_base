@@ -3877,17 +3877,6 @@ public final class Settings {
         @Deprecated
         public static final String WIFI_WATCHDOG_PING_TIMEOUT_MS =
             Secure.WIFI_WATCHDOG_PING_TIMEOUT_MS;
-<<<<<<< HEAD
-=======
-
-        /**
-         * MediaScanner behavior on boot.
-         * 0 = enabled
-         * 1 = ask (notification)
-         * 2 = disabled
-         * @hide
-         */
-        public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
 
         /**
          * Holds the text for the Carrier label. An empty string
@@ -3895,7 +3884,6 @@ public final class Settings {
          * @hide
          */
         public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
->>>>>>> 0bea6e8... Custom carrier text [1/2]
     }
 
     /**
