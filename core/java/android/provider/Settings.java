@@ -3446,7 +3446,6 @@ public final class Settings {
         public static final String PERFORMANCE_PROFILE = "performance_profile";
 
         /**
-<<<<<<< HEAD
          * Should call status sounds be player
          *
          * @hide
@@ -3540,7 +3539,6 @@ public final class Settings {
           
          public static final String SCREEN_RECORDER_RECORD_AUDIO = "screen_recorder_record_audio";
         /**
-=======
          * Whether to unlock the screen with the home key.  The value is boolean (1 or 0).
          * @hide
          */
@@ -3553,7 +3551,6 @@ public final class Settings {
         public static final String LOCKSCREEN_VIBRATE_ENABLED = "lockscreen.vibrate_enabled";
 
         /**
->>>>>>> d446b05... Forward port CM Screen Security settings (1/2)
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
