@@ -38,7 +38,10 @@ import com.android.systemui.statusbar.policy.RotationLockController;
 public class SettingsPanelView extends PanelView {
     public static final boolean DEBUG_GESTURES = true;
 
+<<<<<<< HEAD
     private QuickSettingsController mQS;
+=======
+>>>>>>> d697a27... toggles forward port
     private QuickSettingsContainerView mQSContainer;
 
     Drawable mHandleBar;
@@ -61,6 +64,7 @@ public class SettingsPanelView extends PanelView {
         mHandleView = findViewById(R.id.handle);
     }
 
+<<<<<<< HEAD
     public void setQuickSettings(QuickSettingsController qs) {
         mQS = qs;
     }
@@ -89,10 +93,9 @@ public class SettingsPanelView extends PanelView {
         }
     }
 
+=======
+>>>>>>> d697a27... toggles forward port
     void updateResources() {
-        if (mQS != null) {
-            mQS.updateResources();
-        }
         if (mQSContainer != null) {
             mQSContainer.updateResources();
         }
@@ -108,12 +111,6 @@ public class SettingsPanelView extends PanelView {
                 "settings,v=" + vel);
         }
         super.fling(vel, always);
-    }
-
-    public void setService(PhoneStatusBar phoneStatusBar) {
-        if (mQS != null) {
-            mQS.setService(phoneStatusBar);
-        }
     }
 
     @Override

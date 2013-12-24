@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/qs_tile_background"
+    android:paddingBottom="2.0dp" >
+
+    <ImageView
+        android:id="@id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_qs_default_user" />
+
+    <TextView
+        android:id="@id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.StatusBar.Toggle"
+        android:visibility="gone" />
+
+    <!--
+         <ToggleButton
+        android:id="@id/toggle"
+        style="@style/brucekey_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="top"
+        android:textOff=""
+        android:textOn="" />
+    -->
+
+</RelativeLayout>

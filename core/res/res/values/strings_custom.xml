@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (c) 2013, The Android Open Kang Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Reboot -->
+    <string name="reboot">Reboot</string>
+
+    <!-- Reboot recovery option -->
+    <string name="reboot_recovery">Recovery</string>
+
+    <!-- Reboot recovery option -->
+    <string name="reboot_download">Download</string>
+
+    <!-- Reboot recovery option -->
+    <string name="reboot_bootloader">Bootloader</string>
+
+    <!-- Rebooting message -->
+    <string name="reboot_progress">Your device is rebooting</string>
+
+    <!-- Rotation lock message -->
+    <string name="rotation_lock_toggled">Rotation lock toggled</string>
+
+    <!-- Awesome Action Stuff-->
+    <string name="action_home">Home</string>
+    <string name="action_back">Back</string>
+    <string name="action_recents">Recents</string>
+    <string name="action_recents_gb">Recents (GB style)</string>
+    <string name="action_search">Search</string>
+    <string name="action_screenshot">Screenshot</string>
+    <string name="action_menu">Menu</string>
+    <string name="action_ime">Open IME Switcher</string>
+    <string name="action_kill">Kill task</string>
+    <string name="action_lastapp">Last app</string>
+    <string name="action_power">Power</string>
+    <string name="action_notifications">Notifications</string>
+    <string name="action_assist">Search (Google Now)</string>
+    <string name="action_clockoptions">Clock options</string>
+    <string name="action_voiceassist">Voice search</string>
+    <string name="action_torch">Torch</string>
+    <string name="action_silent">Ring/Silent</string>
+    <string name="action_vib">Ring/Vibrate</string>
+    <string name="action_silent_vib">Ring/Vibrate/Silent</string>
+    <string name="action_event">Event</string>
+    <string name="action_today">Today</string>
+    <string name="action_alarm">Alarm</string>
+    <string name="action_unlock">Unlock</string>
+    <string name="action_camera">Camera</string>
+    <string name="action_null">Blank</string>
+    <string name="action_widgets">Nav Widgets</string>
+    <string name="action_app_window">App Window</string>
+    <string name="action_ribbon">AOKP Ribbon</string>
+    <string name="action_app">Custom App/Shortcut</string>
+    <!-- Long-press back kill application -->
+    <string name="app_killed_message">Application killed</string>
+
+</resources>

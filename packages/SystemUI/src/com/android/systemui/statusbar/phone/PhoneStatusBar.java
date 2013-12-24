@@ -53,6 +53,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.inputmethodservice.InputMethodService;
+import android.net.Uri;
 import android.os.Bundle;
 import android.net.Uri;
 import android.os.Handler;
@@ -121,6 +122,7 @@ import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
 import com.android.systemui.statusbar.policy.OnSizeChangedListener;
 import com.android.systemui.statusbar.policy.RotationLockController;
+import com.android.systemui.statusbar.toggles.ToggleManager;
 
 import com.android.systemui.omni.StatusHeaderMachine;
 import java.io.FileDescriptor;
@@ -228,8 +230,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     boolean mNotificationPanelIsFullScreenWidth;
     TextView mNotificationPanelDebugText;
 
+    SettingsObserver mSettingsObserver;
+
     // settings
+<<<<<<< HEAD
     QuickSettingsController mQS;
+=======
+    ToggleManager mToggleManager;
+    int mToggleStyle;
+>>>>>>> d697a27... toggles forward port
     boolean mHasSettingsPanel, mHasFlipSettings;
     SettingsPanelView mSettingsPanel;
     View mFlipSettingsView;
@@ -487,6 +496,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mContext.getContentResolver().registerContentObserver(
                     Settings.Global.getUriFor(SETTING_HEADS_UP), true,
                     mHeadsUpObserver);
+            mSettingsObserver = new SettingsObserver(new Handler());
+            mSettingsObserver.observe();
+            updateSettings();
         }
     }
 
@@ -830,14 +842,31 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             // wherever you find it, Quick Settings needs a container to survive
             mSettingsContainer = (QuickSettingsContainerView)
                     mStatusBarWindow.findViewById(R.id.quick_settings_container);
+
+            if(mToggleManager == null) {
+                mToggleManager = new ToggleManager(mContext);
+            }
+            mToggleManager.setControllers(mBluetoothController, mNetworkController,
+                    mBatteryController,
+                    mLocationController, null);
+
+            mToggleManager.setContainer((LinearLayout) mNotificationPanel.findViewById(R.id.quick_toggles),
+                    ToggleManager.STYLE_SCROLLABLE);
+            mToggleManager.setContainer((LinearLayout) mNotificationPanel.findViewById(R.id.quick_toggles),
+                ToggleManager.STYLE_TRADITIONAL);
             if (mSettingsContainer != null) {
+<<<<<<< HEAD
                 mQS = new QuickSettingsController(mContext, mSettingsContainer, this,
                         Settings.System.QUICK_SETTINGS_TILES, false);
+=======
+                mToggleManager.setContainer(mSettingsContainer, ToggleManager.STYLE_TILE);
+>>>>>>> d697a27... toggles forward port
                 if (!mNotificationPanelIsFullScreenWidth) {
                     mSettingsContainer.setSystemUiVisibility(
                             View.STATUS_BAR_DISABLE_NOTIFICATION_TICKER
                             | View.STATUS_BAR_DISABLE_SYSTEM_INFO);
                 }
+<<<<<<< HEAD
                 if (mSettingsPanel != null) {
                     mSettingsPanel.setQuickSettings(mQS);
                 }
@@ -864,6 +893,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mRibbonView = null;
                 inflateRibbon();
             }
+=======
+            }
+            mToggleManager.updateSettings();
+>>>>>>> d697a27... toggles forward port
         }
 
         PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -1997,6 +2030,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         // Settings are not available in setup
         if (!mUserSetup) return;
 
+        if(mToggleManager != null && !mToggleManager.shouldFlipToSettings()) {
+            return;
+        }
+        
         if (mFlipSettingsViewAnim != null) mFlipSettingsViewAnim.cancel();
         if (mScrollViewAnim != null) mScrollViewAnim.cancel();
         if (mRibbonViewAnim != null) mRibbonViewAnim.cancel();
@@ -2562,7 +2599,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         setNavigationIconHints(
                 altBack ? (mNavigationIconHints | NAVIGATION_HINT_BACK_ALT)
                         : (mNavigationIconHints & ~NAVIGATION_HINT_BACK_ALT));
-        if (mQS != null) mQS.setImeWindowStatus(vis > 0);
     }
 
     @Override
@@ -3231,10 +3267,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
             loadDimens();
         }
-
-        // Update the QuickSettings container
-        if (mQS != null) mQS.updateResources();
-
     }
 
     protected void loadDimens() {
@@ -3389,6 +3421,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mWindowManager.removeViewImmediate(mNavigationBarView);
         }
         mContext.unregisterReceiver(mBroadcastReceiver);
+        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
+        mToggleManager.cleanup();
     }
 
     private boolean mDemoModeAllowed;
@@ -3454,6 +3488,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     }
 
+<<<<<<< HEAD
     /**
      *  ContentObserver to watch for Quick Settings tiles changes
      * @author dvtonder
@@ -3467,10 +3502,27 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         @Override
         public void onChange(boolean selfChange) {
             onChange(selfChange, null);
+=======
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.AOKP.getUriFor(
+                    Settings.AOKP.TOGGLES_STYLE), false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+>>>>>>> d697a27... toggles forward port
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+<<<<<<< HEAD
             if (uri != null && uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_QUICK_ACCESS))) {
                 final ContentResolver resolver = mContext.getContentResolver();
@@ -3550,4 +3602,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     false, this, UserHandle.USER_ALL);
         }
     }
+=======
+            updateSettings();
+            if(uri != null && uri.equals(Settings.AOKP.getUriFor(Settings.AOKP.TOGGLES_STYLE))) {
+                recreateStatusBar();
+            }
+        }
+    }
+
+    private void updateSettings() {
+        ContentResolver cr = mContext.getContentResolver();
+        mToggleStyle = Settings.System.getInt(cr, Settings.AOKP.TOGGLES_STYLE,ToggleManager.STYLE_TILE);
+        if(mToggleManager != null) {
+            mToggleManager.updateSettings();
+        }
+    }
+
+>>>>>>> d697a27... toggles forward port
 }
