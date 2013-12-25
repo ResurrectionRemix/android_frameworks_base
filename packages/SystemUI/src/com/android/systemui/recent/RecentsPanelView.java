@@ -25,7 +25,6 @@ import android.app.ActivityOptions;
 import android.app.TaskStackBuilder;
 import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
-<<<<<<< HEAD
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,24 +32,18 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageDataObserver;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-=======
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
->>>>>>> cebd591... Multi-window support
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-<<<<<<< HEAD
+
 import android.graphics.Rect;
-=======
+
 import android.graphics.Point;
->>>>>>> cebd591... Multi-window support
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -998,7 +991,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     } else {
                         throw new IllegalStateException("Oops, no tag on view " + selectedView);
                     }
-<<<<<<< HEAD
+
                 } else if (item.getItemId() == R.id.recent_force_stop) {
                     ViewHolder viewHolder = (ViewHolder) selectedView.getTag();
                     if (viewHolder != null) {
@@ -1022,13 +1015,13 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     } else {
                         throw new IllegalStateException("Oops, no tag on view " + selectedView);
                     }
-=======
+
                 } else if (item.getItemId() == R.id.recent_add_split_view) {
                     // Either start a new activity in split view, or move the current task
                     // to front, but resized
                     ViewHolder holder = (ViewHolder)selectedView.getTag();
                     openInSplitView(holder, -1);
->>>>>>> cebd591... Multi-window support
+
                 } else {
                     return false;
                 }
