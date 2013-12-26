@@ -34,17 +34,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
-<<<<<<< HEAD
 import android.graphics.PixelFormat;
-=======
 import android.content.res.Resources;
 import android.content.ServiceConnection;
-import android.database.ContentObserver;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
->>>>>>> cae85a4... Frameworks: HALO
 import android.graphics.Rect;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuffXfermode;
@@ -200,11 +196,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     private int mExpandedDesktopStyle = 0;
 
-<<<<<<< HEAD
-    // App sidebar
-    protected AppSidebar mAppSidebar;
-    protected int mSidebarPosition;
-=======
     public Ticker getTicker() {
         return mTicker;
     }
@@ -216,7 +207,11 @@ public abstract class BaseStatusBar extends SystemUI implements
     public NotificationData getNotificationData() {
         return mNotificationData;
     }
->>>>>>> cae85a4... Frameworks: HALO
+    
+    // App sidebar
+    protected AppSidebar mAppSidebar;
+    protected int mSidebarPosition;
+
 
     public IStatusBarService getStatusBarService() {
         return mBarService;
@@ -410,10 +405,10 @@ public abstract class BaseStatusBar extends SystemUI implements
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_USER_SWITCHED);
         mContext.registerReceiver(mBroadcastReceiver, filter);
-<<<<<<< HEAD
+
         SidebarObserver observer = new SidebarObserver(mHandler);
         observer.observe();
-=======
+
 
         // Listen for HALO state
         mContext.getContentResolver().registerContentObserver(
@@ -479,7 +474,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                 mHalo = null;
             }
         }
->>>>>>> cae85a4... Frameworks: HALO
     }
 
     public void userSwitched(int newUserId) {

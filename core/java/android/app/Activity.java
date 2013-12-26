@@ -68,13 +68,9 @@ import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextThemeWrapper;
-<<<<<<< HEAD
 import android.view.Gravity;
 import android.view.IWindowManager;
-=======
 import android.view.Display;
-import android.view.Gravity;
->>>>>>> cae85a4... Frameworks: HALO
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1517,8 +1513,8 @@ public class Activity extends ContextThemeWrapper
             // Pass the configuration changed event to the window
             mWindow.onConfigurationChanged(newConfig);
             if (mWindow.mIsFloatingWindow) {
-                scaleFloatingWindow(null);
-            }
+                 scaleFloatingWindow(null);
+             }
         }
 
         if (mActionBar != null) {
@@ -5214,16 +5210,10 @@ public class Activity extends ContextThemeWrapper
         attachBaseContext(context);
 
         mFragments.attachActivity(this, mContainer, null);
-<<<<<<< HEAD
 
-        mWindow = PolicyManager.makeNewWindow(this);
-=======
-        
         if (makeNewWindow(context, intent, info)) {
-            parent = null;
-        }
-
->>>>>>> cae85a4... Frameworks: HALO
+             parent = null;
+         }
         mWindow.setCallback(this);
         mWindow.getLayoutInflater().setPrivateFactory(this);
         if (info.softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED) {

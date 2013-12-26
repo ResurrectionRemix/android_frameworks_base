@@ -3431,14 +3431,13 @@ public final class Settings {
          public static final String KEY_APP_SWITCH_LONG_PRESS_ACTION = "key_app_switch_long_press_action";
 
         /**
-<<<<<<< HEAD
          * Control the display of the action overflow button within app UI.
          * 0 = use system default
          * 1 = force on
          * @hide
          */
         public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
-=======
+        /**
          * HALO, should default to 0 (no, do not show)
          * @hide
          */
@@ -3498,7 +3497,6 @@ public final class Settings {
          * @hide
          */
         public static final String HALO_UNLOCK_PING = "halo_unlock_ping";
->>>>>>> cae85a4... Frameworks: HALO
 
         /**
          * Performance profile
