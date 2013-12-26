@@ -67,12 +67,9 @@ import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextThemeWrapper;
-<<<<<<< HEAD
 import android.view.Gravity;
 import android.view.IWindowManager;
 import android.view.Display;
-=======
->>>>>>> parent of 56209ff... Multi-window support
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -5201,15 +5198,11 @@ public class Activity extends ContextThemeWrapper
         attachBaseContext(context);
 
         mFragments.attachActivity(this, mContainer, null);
-<<<<<<< HEAD
 
         if (makeNewWindow(context, intent, info)) {
              parent = null;
          }
-=======
-        
-        mWindow = PolicyManager.makeNewWindow(this);
->>>>>>> parent of 56209ff... Multi-window support
+
         mWindow.setCallback(this);
         mWindow.getLayoutInflater().setPrivateFactory(this);
         if (info.softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED) {
