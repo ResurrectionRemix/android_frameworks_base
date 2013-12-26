@@ -10948,12 +10948,12 @@ public class WindowManagerService extends IWindowManager.Stub
         return mWindowMap;
     }
 
-
+<<<<<<< HEAD
     @Override
     public void addSystemUIVisibilityFlag(int flag) {
         mLastStatusBarVisibility |= flag;
     }
-
+=======
     /** SPLIT VIEW **/
 
     private int mSplitViewTasks[];
@@ -11133,4 +11133,5 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     /** END SPLIT VIEW **/
+>>>>>>> cebd591... Multi-window support
 }
