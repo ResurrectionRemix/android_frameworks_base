@@ -56,6 +56,7 @@ import android.util.Log;
 import com.android.internal.widget.ILockSettings;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -7233,7 +7234,51 @@ public final class Settings {
         public static final String DOCK_AUDIO_MEDIA_ENABLED = "dock_audio_media_enabled";
 
         /**
+<<<<<<< HEAD
          * Persisted safe headphone volume management state by AudioService
+=======
+         * @hide
+         * Methods to handle storing and retrieving arraylists
+         *
+         * @param cr The ContentResolver to access.
+         * @param name The name of the setting to modify.
+         * @param value The new value for the setting.
+         * @return true if the value was set, false on database errors
+         */
+        public static boolean putArrayList(ContentResolver cr, String name, ArrayList<String> list) {
+            return putArrayListForUser(cr, name, list, UserHandle.myUserId());
+        }
+
+        public static boolean putArrayListForUser(ContentResolver cr, String name, ArrayList<String> list, int userHandle) {
+            if (list != null && list.size() > 0) {
+                String joined = TextUtils.join("|",list);
+                return putStringForUser(cr, name, joined, userHandle);
+            } else {
+                return putStringForUser(cr, name, "", userHandle);
+            }
+        }
+
+        public static ArrayList<String> getArrayList(ContentResolver cr, String name) {
+            return getArrayListForUser(cr, name,  UserHandle.myUserId());
+        }
+
+        public static ArrayList<String> getArrayListForUser(ContentResolver cr, String name, int userHandle) {
+            String v = getStringForUser(cr, name, userHandle);
+            ArrayList<String> list = new ArrayList<String>();
+            if (v != null) {
+                if (!v.isEmpty()){
+                    String[] split = v.split("\\|");
+                    for (String i : split) {
+                        list.add(i);
+                    }
+                }
+            }
+            return list;
+        }
+
+        /**
+         * Whether to enable quiet hours.
+>>>>>>> b94dd0e... Custom Navigation Ring FW part
          * @hide
          */
         public static final String AUDIO_SAFE_VOLUME_STATE = "audio_safe_volume_state";
@@ -7379,11 +7424,70 @@ public final class Settings {
             return getStringForUser(resolver, name, UserHandle.myUserId());
         }
 
+<<<<<<< HEAD
         /** @hide */
         public static String getStringForUser(ContentResolver resolver, String name,
                 int userHandle) {
             return sNameValueCache.getStringForUser(resolver, name, userHandle);
         }
+=======
+       /**
+        *
+        * @hide
+        */
+        public static final String SYSTEMUI_NAVRING_AMOUNT = "systemui_navring_amount";
+
+       /**
+        *
+        * @hide
+        */
+        public static final String SYSTEMUI_NAVRING_LONG_ENABLE = "systemui_navring_long_enable";
+
+        /**
+         * Custom navring actions
+         *
+         * @hide
+         */
+        public static final String[] SYSTEMUI_NAVRING = new String[] {
+                "navring_0",
+                "navring_1",
+                "navring_2",
+                "navring_3",
+                "navring_4",
+        };
+
+        /**
+         * Custom navring long press actions
+         *
+         * @hide
+         */
+        public static final String[] SYSTEMUI_NAVRING_LONG = new String[] {
+                "navring_long_0",
+                "navring_long_1",
+                "navring_long_2",
+                "navring_long_3",
+                "navring_long_4",
+        };
+
+        /**
+         * Custom navring icons
+         *
+         * @hide
+         */
+        public static final String[] SYSTEMUI_NAVRING_ICON = new String[] {
+                "navring_icon_0",
+                "navring_icon_1",
+                "navring_icon_2",
+                "navring_icon_3",
+                "navring_icon_4",
+        };
+
+        /**
+         * Statusbar toggles style
+         * @hide
+         */
+        public static final String TOGGLES_STYLE = "statusbar_toggles_style";
+>>>>>>> b94dd0e... Custom Navigation Ring FW part
 
         /**
          * Store a name/value pair into the database.

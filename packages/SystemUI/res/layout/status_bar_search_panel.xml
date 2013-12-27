@@ -18,7 +18,7 @@
 */
 -->
 
-<com.android.systemui.SearchPanelView
+<com.android.systemui.AOKPSearchPanelView
     xmlns:prvandroid="http://schemas.android.com/apk/prv/res/android"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/search_panel_container"
@@ -64,4 +64,4 @@
 
     </RelativeLayout>
 
-</com.android.systemui.SearchPanelView>
+</com.android.systemui.AOKPSearchPanelView>

@@ -18,7 +18,7 @@
 */
 -->
 
-<com.android.systemui.SearchPanelView
+<com.android.systemui.AOKPSearchPanelView
     xmlns:prvandroid="http://schemas.android.com/apk/prv/res/android"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/search_panel_container"
@@ -45,4 +45,4 @@
         prvandroid:glowRadius="@*android:dimen/glowpadview_glow_radius"
         prvandroid:pointDrawable="@*android:drawable/ic_lockscreen_glowdot"/>
 
-</com.android.systemui.SearchPanelView>
+</com.android.systemui.AOKPSearchPanelView>

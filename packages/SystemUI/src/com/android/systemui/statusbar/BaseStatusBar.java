@@ -88,7 +88,7 @@ import com.android.systemui.statusbar.phone.Ticker;
 import com.android.internal.widget.SizeAdaptiveLayout;
 import com.android.systemui.R;
 import com.android.systemui.RecentsComponent;
-import com.android.systemui.SearchPanelView;
+import com.android.systemui.AOKPSearchPanelView;
 import com.android.systemui.SystemUI;
 import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.phone.KeyguardTouchDelegate;
@@ -144,7 +144,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected boolean mPanelSlightlyVisible;
 
     // Search panel
-    protected SearchPanelView mSearchPanelView;
+    protected AOKPSearchPanelView mSearchPanelView;
 
     protected PopupMenu mNotificationBlamePopup;
 
@@ -724,7 +724,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         // Provide SearchPanel with a temporary parent to allow layout params to work.
         LinearLayout tmpRoot = new LinearLayout(mContext);
-        mSearchPanelView = (SearchPanelView) LayoutInflater.from(mContext).inflate(
+        mSearchPanelView = (AOKPSearchPanelView) LayoutInflater.from(mContext).inflate(
                  R.layout.status_bar_search_panel, tmpRoot, false);
         mSearchPanelView.setOnTouchListener(
                  new TouchOutsideListener(MSG_CLOSE_SEARCH_PANEL, mSearchPanelView));
