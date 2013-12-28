@@ -2956,6 +2956,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     };
 
+<<<<<<< HEAD
     private View.OnClickListener mHaloButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
             // Activate HALO
@@ -2981,6 +2982,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     };
 
+=======
+>>>>>>> 7884fdb... Fix touch feedback and areas for status bar date & time actions
     private View.OnClickListener mNotificationButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
             animateExpandNotificationsPanel();
