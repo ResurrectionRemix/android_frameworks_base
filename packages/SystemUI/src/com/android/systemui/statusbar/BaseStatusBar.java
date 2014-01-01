@@ -645,12 +645,9 @@ public abstract class BaseStatusBar extends SystemUI implements
                                     .getSystemService(Context.ACTIVITY_SERVICE);
                             am.clearApplicationUserData(packageNameF,
                                     new FakeClearUserDataObserver());
-<<<<<<< HEAD
                         } else if (item.getItemId() == R.id.notification_floating_item) {
                             launchFloating(contentIntent);
                             animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
-=======
->>>>>>> 016664a... Development shortcut in StatusBar and Recent Panel
                         } else {
                             return false;
                         }
