@@ -49,7 +49,6 @@ interface INotificationManager
 
     StatusBarNotification[] getActiveNotificationsFromListener(in INotificationListener token);
 
-<<<<<<< HEAD
     // Halo
     void setHaloPolicyBlack(boolean state);
     void setHaloStatus(String pkg, boolean status);
@@ -57,8 +56,4 @@ interface INotificationManager
     void setHaloWhitelistStatus(String pkg, boolean status);
     boolean isHaloPolicyBlack();
     boolean isPackageAllowedForHalo(String pkg);
-=======
-    StatusBarNotification[] getActiveNotificationsFromSystemListener(in INotificationListener token);
-    void cancelNotificationFromSystemListener(in INotificationListener token, String pkg, String tag, int id);
->>>>>>> b7b1555... [1/3] Base: Squashed commits for 4.4 active display
 }
