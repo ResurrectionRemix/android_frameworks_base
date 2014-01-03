@@ -197,18 +197,6 @@
     <!-- The padding between each tile within the QuickSettings layout -->
     <dimen name="quick_settings_cell_gap">4dp</dimen>
 
-    <!-- The fixed height of each row of toggles -->
-    <dimen name="toggle_row_height">38dp</dimen>
-
-    <!-- The fixed width of traditional toggles -->
-    <dimen name="toggle_traditional_width">64dp</dimen>
-
-     <!-- The fixed height of traditional toggles -->
-    <dimen name="toggle_traditional_height">64dp</dimen>
-
-    <!-- The fixed height of traditional toggles -->
-    <dimen name="toggle_traditional_padding">6dp</dimen>
-
     <!-- Minimum fraction of the screen that should be taken up by the notification panel.
          Not used at this screen size. -->
     <item type="dimen" name="notification_panel_min_height_frac">0%</item>

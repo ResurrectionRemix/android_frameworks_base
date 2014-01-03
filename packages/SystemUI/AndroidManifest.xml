@@ -88,20 +88,8 @@
     <!-- Wifi Display -->
     <uses-permission android:name="android.permission.CONFIGURE_WIFI_DISPLAY" />
 
-<<<<<<< HEAD
     <!-- AppSidebar -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
-=======
-    <!-- Sync toggle -->
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-
-    <!--  Record toggle -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <!-- USB Tether toggle , 2G/4G toggles -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
->>>>>>> d697a27... toggles forward port
 
     <application
         android:persistent="true"

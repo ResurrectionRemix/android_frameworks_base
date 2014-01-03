@@ -35,17 +35,10 @@
     <color name="batterymeter_charge_color">#FFFFFFFF</color>
     <color name="batterymeter_bolt_color">#B2000000</color><!-- 70% black -->
     <color name="status_bar_clock_color">#FFFFFFFF</color>
-<<<<<<< HEAD
     <color name="status_bar_traffic_color">#FFFFFFFF</color>
 
 
     <!-- app sidebar trigger region color -->
     <color name="trigger_region_color">#8015a0e5</color>
 
-=======
-    <color name="qs_tile_user_label">#CC000000</color>
-    <color name="toggle_text">#ffffffff</color>
-	<color name="toggle_text_changing_state_color">#ff787878</color>
-	<color name="toggle_image_changing_state_overlay">@color/toggle_text_changing_state_color</color>
->>>>>>> d697a27... toggles forward port
 </resources>

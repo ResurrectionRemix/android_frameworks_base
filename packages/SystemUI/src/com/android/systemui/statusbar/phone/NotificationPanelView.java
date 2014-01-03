@@ -20,10 +20,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-<<<<<<< HEAD
 import android.os.UserHandle;
-=======
->>>>>>> d697a27... toggles forward port
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.EventLog;
@@ -50,7 +47,6 @@ public class NotificationPanelView extends PanelView {
     int mFingers;
     PhoneStatusBar mStatusBar;
     boolean mOkToFlip;
-    int mToggleStyle;
 
     private float mGestureStartX;
     private float mGestureStartY;
@@ -61,8 +57,6 @@ public class NotificationPanelView extends PanelView {
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mToggleStyle = Settings.AOKP.getInt(context.getContentResolver(),
-                Settings.AOKP.TOGGLES_STYLE, 0);
     }
 
     public void setStatusBar(PhoneStatusBar bar) {
@@ -143,7 +137,6 @@ public class NotificationPanelView extends PanelView {
                         // Pointer is at the handle portion of the view?
                         mGestureStartY > getHeight() - mHandleBarHeight - getPaddingBottom();
                     mOkToFlip = getExpandedHeight() == 0;
-<<<<<<< HEAD
                     if (event.getX(0) > getWidth() * (1.0f - STATUS_BAR_SETTINGS_RIGHT_PERCENTAGE) &&
                             Settings.System.getIntForUser(getContext().getContentResolver(),
                                     Settings.System.QS_QUICK_PULLDOWN, 0, UserHandle.USER_CURRENT) == 1) {
@@ -152,12 +145,6 @@ public class NotificationPanelView extends PanelView {
                             Settings.System.getIntForUser(getContext().getContentResolver(),
                                     Settings.System.QS_QUICK_PULLDOWN, 0, UserHandle.USER_CURRENT) == 2) {
                         flip = true;
-=======
-                    if (mToggleStyle != 0) {
-                        // don't allow settings panel with non-tile toggles
-                        mOkToFlip = false;
-                        break;
->>>>>>> d697a27... toggles forward port
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:

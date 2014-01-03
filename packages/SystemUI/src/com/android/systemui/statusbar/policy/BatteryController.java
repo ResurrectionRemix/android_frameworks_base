@@ -27,12 +27,6 @@ import com.android.systemui.BatteryMeterView.BatteryMeterMode;
 import java.util.ArrayList;
 
 public class BatteryController extends BroadcastReceiver {
-<<<<<<< HEAD
-=======
-    private static final String TAG = "StatusBar.BatteryController";
-    private static int sBatteryLevel = 50;
-    private static boolean sBatteryCharging = false;
->>>>>>> d697a27... toggles forward port
 
     protected ArrayList<BatteryStateChangeCallback> mChangeCallbacks =
             new ArrayList<BatteryStateChangeCallback>();
@@ -92,7 +86,6 @@ public class BatteryController extends BroadcastReceiver {
             mBatteryStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS,
                     BatteryManager.BATTERY_STATUS_UNKNOWN);
 
-<<<<<<< HEAD
             for (BatteryStateChangeCallback cb : mChangeCallbacks) {
                 cb.onBatteryLevelChanged(mBatteryPresent, mBatteryLevel, mBatteryPlugged,
                         mBatteryStatus);
@@ -114,28 +107,6 @@ public class BatteryController extends BroadcastReceiver {
     public void onBatteryMeterShowPercent(boolean showPercent) {
         for (BatteryStateChangeCallback cb : mChangeCallbacks) {
             cb.onBatteryMeterShowPercent(showPercent);
-=======
-            boolean plugged = false;
-            switch (status) {
-                case BatteryManager.BATTERY_STATUS_CHARGING:
-                case BatteryManager.BATTERY_STATUS_FULL:
-                    plugged = true;
-                    break;
-            }
-            sBatteryLevel = level;
-            sBatteryCharging = plugged;
-            updateCallbacks();
-        }
-    }
-
-    public void updateCallback(BatteryStateChangeCallback cb) {
-        cb.onBatteryLevelChanged(sBatteryLevel, sBatteryCharging);
-    }
-
-    public void updateCallbacks() {
-        for (BatteryStateChangeCallback cb : mChangeCallbacks) {
-            cb.onBatteryLevelChanged(sBatteryLevel, sBatteryCharging);
->>>>>>> d697a27... toggles forward port
         }
     }
 }

@@ -16,46 +16,6 @@
 */
 -->
 <resources>
-<<<<<<< HEAD:packages/SystemUI/res/values-mdpi/dimens.xml
     <!-- Padding under status bar battery icon -->
     <dimen name="status_bar_battery_bottom_padding">0px</dimen>
-=======
-    <java-symbol type="array" name="reboot_options" />
-    <java-symbol type="array" name="reboot_values" />
-    <java-symbol type="drawable" name="ic_lock_reboot" />
-    <java-symbol type="string" name="reboot" />
-    <java-symbol type="string" name="reboot_progress" />
-    <java-symbol type="string" name="rotation_lock_toggled" />
-     <!--  Awesome Action -->
-    <java-symbol type="string" name="action_home"/>
-    <java-symbol type="string" name="action_back"/>
-    <java-symbol type="string" name="action_recents"/>
-    <java-symbol type="string" name="action_recents_gb"/>
-    <java-symbol type="string" name="action_search"/>
-    <java-symbol type="string" name="action_screenshot"/>
-    <java-symbol type="string" name="action_menu"/>
-    <java-symbol type="string" name="action_ime"/>
-    <java-symbol type="string" name="action_kill"/>
-    <java-symbol type="string" name="action_lastapp"/>
-    <java-symbol type="string" name="action_power"/>
-    <java-symbol type="string" name="action_notifications"/>
-    <java-symbol type="string" name="action_assist"/>
-    <java-symbol type="string" name="action_clockoptions"/>
-    <java-symbol type="string" name="action_voiceassist"/>
-    <java-symbol type="string" name="action_torch"/>
-    <java-symbol type="string" name="action_silent"/>
-    <java-symbol type="string" name="action_vib"/>
-    <java-symbol type="string" name="action_silent_vib"/>
-    <java-symbol type="string" name="action_event"/>
-    <java-symbol type="string" name="action_today"/>
-    <java-symbol type="string" name="action_alarm"/>
-    <java-symbol type="string" name="action_unlock"/>
-    <java-symbol type="string" name="action_camera"/>
-    <java-symbol type="string" name="action_null"/>
-    <java-symbol type="string" name="action_app"/>
-    <java-symbol type="string" name="action_ribbon"/>
-    <java-symbol type="string" name="action_widgets"/>
-    <java-symbol type="string" name="action_app_window"/>
-    <java-symbol type="string" name="app_killed_message"/>
->>>>>>> d697a27... toggles forward port:core/res/res/values/symbols_custom.xml
 </resources>

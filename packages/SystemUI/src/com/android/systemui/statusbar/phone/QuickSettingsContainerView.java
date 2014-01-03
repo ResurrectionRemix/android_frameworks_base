@@ -19,11 +19,7 @@ package com.android.systemui.statusbar.phone;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.Resources;
-<<<<<<< HEAD
 import android.content.res.TypedArray;
-=======
-import android.provider.Settings;
->>>>>>> d697a27... toggles forward port
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +59,7 @@ public class QuickSettingsContainerView extends FrameLayout {
     void updateResources() {
         Resources r = getContext().getResources();
         mCellGap = r.getDimension(R.dimen.quick_settings_cell_gap);
-        mNumColumns = Settings.AOKP.getInt(
-                mContext.getContentResolver(), Settings.AOKP.QUICK_TOGGLES_PER_ROW, 
-                r.getInteger(R.integer.quick_settings_num_columns));
+        mNumColumns = r.getInteger(R.integer.quick_settings_num_columns);
         requestLayout();
     }
 
@@ -179,12 +173,4 @@ public class QuickSettingsContainerView extends FrameLayout {
             }
         }
     }
-<<<<<<< HEAD
 }
-=======
-
-    public void setColumnCount(int num) {
-        mNumColumns = num;
-    }
-}
->>>>>>> d697a27... toggles forward port
