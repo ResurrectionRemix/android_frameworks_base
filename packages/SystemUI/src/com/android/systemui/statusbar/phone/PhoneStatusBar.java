@@ -300,11 +300,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     // last theme that was applied in order to detect theme change (as opposed
     // to some other configuration change).
     CustomTheme mCurrentTheme;
-
+<<<<<<< HEAD
+    private boolean mRecreating = false;
 	private StatusHeaderMachine mStatusHeaderMachine;
     private Runnable mStatusHeaderUpdater;
     
+=======
+    
     // status bar brightness control
+>>>>>>> cf802dd... Active display [squashed] (1/2)
     private boolean mBrightnessControl;
     private float mScreenWidth;
     private int mMinBrightness;
@@ -619,14 +623,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
 
         if (mRecreating) {
+<<<<<<< HEAD
 	    removeSidebarView();
         }
 	addSidebarView();
-	
-	    if (mRecreating) {
+=======
         } else {
             addActiveDisplayView();
         }
+>>>>>>> cf802dd... Active display [squashed] (1/2)
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;

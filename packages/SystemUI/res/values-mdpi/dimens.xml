@@ -16,9 +16,18 @@
 */
 -->
 <resources>
-	
+<<<<<<< HEAD:packages/SystemUI/res/values-mdpi/dimens.xml
     <!-- Padding under status bar battery icon -->
     <dimen name="status_bar_battery_bottom_padding">0px</dimen>
+=======
+
+    <!-- Network stats text size -->
+    <dimen name="network_stats_text_size">9dp</dimen>
+
+    <!-- Notification Shortcuts -->
+    <dimen name="notification_shortcuts_close_handle_height">28dp</dimen>
+    <dimen name="notification_shortcuts_spacing_height">88dp</dimen>
+    <dimen name="notification_shortcuts_drawer_margin">56dp</dimen> 
 
     <!-- Top margin for overflow notifications container shown in the P.O.R.N. view -->
     <dimen name="glowpad_overflow_notifications_margin_top">64dp</dimen>
@@ -47,4 +56,5 @@
     <!-- AM/PM size in active display -->
     <dimen name="ad_ampm_font_size">32dp</dimen>   
 
+>>>>>>> cf802dd... Active display [squashed] (1/2):packages/SystemUI/res/values/cr_dimens.xml
 </resources>
