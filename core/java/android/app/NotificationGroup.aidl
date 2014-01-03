@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD:core/java/android/app/NotificationGroup.aidl
 package android.app;
 
 parcelable NotificationGroup;
+=======
+    <!--ScreenShot Trash-->
+    <string name="screenshot_notification_delete">Delete</string>
+    <string name="screenshot_delete_confirmation">Screenshot deleted.</string>
+</resources>
+>>>>>>> 120aed0... Show confirmation for deleted screenshot.:packages/SystemUI/res/values/slim_strings.xml
