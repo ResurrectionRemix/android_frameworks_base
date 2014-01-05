@@ -4249,6 +4249,12 @@ public final class Settings {
          */
         public static final String RECENTS_FULL_SCREEN_DATE = "recents_full_screen_date";
 
+	/*
+         * Settings for clock font style
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
+
          /**
          * Shows custom date before clock time
          * 0 - No Date
