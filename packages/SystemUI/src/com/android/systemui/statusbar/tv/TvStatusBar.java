@@ -92,10 +92,6 @@ public class TvStatusBar extends BaseStatusBar {
     public void setWindowState(int window, int state) {
     }
 
-    @Override // CommandQueue
-    public void setAutoRotate(boolean enabled) {
-    }
-
     @Override
     protected void createAndAddWindows() {
     }
