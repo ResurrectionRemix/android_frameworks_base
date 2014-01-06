@@ -3494,7 +3494,19 @@ public final class Settings {
         public static final String HALO_NOTIFY_COUNT = "halo_notify_count";
 
         /**
+<<<<<<< HEAD
          * HALO message box animation?, should default to 2 (flip animation)
+=======
+         * Should Flip to Silence be used
+         *
+         * @hide
+         */
+        public static final String FLIP_ACTION_KEY = "flip_action";
+
+        /**
+         * Should call status sounds be player
+         *
+>>>>>>> c613e07... [1/3] Base: Flip to Mute/Reject Call
          * @hide
          */
         public static final String HALO_MSGBOX_ANIMATION = "halo_msgbox_animation";
