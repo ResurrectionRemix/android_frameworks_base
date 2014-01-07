@@ -396,8 +396,12 @@ public final class UsageStatsService extends IUsageStats.Stub {
             XmlPullParser parser = Xml.newPullParser();
             parser.setInput(fis, null);
             int eventType = parser.getEventType();
+<<<<<<< HEAD
             while (eventType != XmlPullParser.START_TAG &&
                     eventType != XmlPullParser.END_DOCUMENT) {
+=======
+            while (eventType != XmlPullParser.START_TAG) {
+>>>>>>> b1a0aa2... Revert "Fix a bootloop problem when /data/system/usagestats/usage-history.xml is empty. This often occurs after an incomplete reboot/shutdown or battery pull."
                 eventType = parser.next();
             }
             if (eventType == XmlPullParser.END_DOCUMENT) {
