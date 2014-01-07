@@ -2060,6 +2060,7 @@
   <java-symbol type="color" name="holo_red_dark" />
   <java-symbol type="bool" name="use_motion_accel" />
   <java-symbol type="bool" name="config_setup_mms_data" />
+  <java-symbol type="string" name="config_partial_segment_expire_age" />
 
   <!--Camera flash-->
   <java-symbol type="bool" name="config_device_has_camera_flash" />
