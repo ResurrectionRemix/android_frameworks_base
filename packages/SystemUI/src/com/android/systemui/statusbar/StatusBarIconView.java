@@ -24,15 +24,10 @@ import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.UserHandle;
-<<<<<<< HEAD
-import android.os.Handler;
-=======
->>>>>>> fd7cd5c... Forward port Status Bar interface (1/2)
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -59,10 +54,7 @@ public class StatusBarIconView extends AnimatedImageView {
     private String mNumberText;
     private Notification mNotification;
     private boolean mShowNotificationCount;
-<<<<<<< HEAD
-=======
     private GlobalSettingsObserver mObserver;
->>>>>>> fd7cd5c... Forward port Status Bar interface (1/2)
 
     public StatusBarIconView(Context context, String slot, Notification notification) {
         super(context);
@@ -77,22 +69,12 @@ public class StatusBarIconView extends AnimatedImageView {
         mNumberPain.setTypeface(Typeface.DEFAULT_BOLD);
         mNumberPain.setTextSize(scaledPx);
         mNotification = notification;
-<<<<<<< HEAD
-        mShowNotificationCount = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_NOTIF_COUNT, mContext.getResources().getBoolean(
-                        R.bool.config_statusBarShowNumber) ? 1 : 0) == 1;
-        setContentDescription(notification);
-
-        SettingsObserver observer = new SettingsObserver(new Handler());
-        observer.observe();
-=======
         mShowNotificationCount = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_NOTIF_COUNT, 0, UserHandle.USER_CURRENT) == 1;
         setContentDescription(notification);
 
         mObserver = GlobalSettingsObserver.getInstance(context);
 
->>>>>>> fd7cd5c... Forward port Status Bar interface (1/2)
         // We do not resize and scale system icons (on the right), only notification icons (on the
         // left).
         if (notification != null) {
@@ -343,12 +325,6 @@ public class StatusBarIconView extends AnimatedImageView {
             + " notification=" + mNotification + ")";
     }
 
-<<<<<<< HEAD
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-=======
     static class GlobalSettingsObserver extends ContentObserver {
         private static GlobalSettingsObserver sInstance;
         private ArrayList<StatusBarIconView> mIconViews = new ArrayList<StatusBarIconView>();
@@ -380,24 +356,11 @@ public class StatusBarIconView extends AnimatedImageView {
             }
         }
 
->>>>>>> fd7cd5c... Forward port Status Bar interface (1/2)
         void observe() {
             mContext.getContentResolver().registerContentObserver(
                     Settings.System.getUriFor(Settings.System.STATUS_BAR_NOTIF_COUNT),
                     false, this);
         }
-<<<<<<< HEAD
-        void unobserve() {
-            mContext.getContentResolver().unregisterContentObserver(this);
-        }
-        @Override
-        public void onChange(boolean selfChange) {
-            mShowNotificationCount = Settings.System.getInt(
-                    mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_NOTIF_COUNT, mContext.getResources().getBoolean(
-                        R.bool.config_statusBarShowNumber) ? 1 : 0) == 1;
-            set(mIcon, true);
-=======
 
         void unobserve() {
             mContext.getContentResolver().unregisterContentObserver(this);
@@ -411,7 +374,6 @@ public class StatusBarIconView extends AnimatedImageView {
                 sbiv.mShowNotificationCount = showIconCount;
                 sbiv.set(sbiv.mIcon, true);
             }
->>>>>>> fd7cd5c... Forward port Status Bar interface (1/2)
         }
     }
 }

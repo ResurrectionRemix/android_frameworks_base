@@ -382,15 +382,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.STATUS_BAR_CUSTOM_HEADER), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT), false, this);
-<<<<<<< HEAD
-	    resolver.registerContentObserver(Settings.System.getUriFor(
+	        resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.APP_SIDEBAR_POSITION), false, this, UserHandle.USER_ALL);
-=======
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SIGNAL_TEXT), false, this);
->>>>>>> fd7cd5c... Forward port Status Bar interface (1/2)
             updateSettings();
         }
 
@@ -3121,14 +3118,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mDockBatteryView.setShowPercent(showPercent);
         mDockBatteryController.onBatteryMeterShowPercent(showPercent);
 
-<<<<<<< HEAD
-        int sidebarPosition = Settings.System.getInt(
-                resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
-        if (sidebarPosition != mSidebarPosition) {
-            mSidebarPosition = sidebarPosition;
-            mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
-        }
-=======
         mClockEnabled = Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_CLOCK, 1) != 0;
         updateClockVisibility();
@@ -3137,7 +3126,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 Settings.System.STATUS_BAR_SIGNAL_TEXT, SignalClusterView.STYLE_NORMAL);
         mSignalClusterView.setStyle(signalStyle);
         mSignalTextView.setStyle(signalStyle);
->>>>>>> fd7cd5c... Forward port Status Bar interface (1/2)
+        
+        int sidebarPosition = Settings.System.getInt(
+                resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
+        if (sidebarPosition != mSidebarPosition) {
+            mSidebarPosition = sidebarPosition;
+            mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
+        }
+
     }
 
     private void resetUserSetupObserver() {
