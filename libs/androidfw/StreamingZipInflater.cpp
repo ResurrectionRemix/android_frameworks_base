@@ -88,11 +88,14 @@ StreamingZipInflater::StreamingZipInflater(FileMap* dataMap, size_t uncompSize) 
 StreamingZipInflater::~StreamingZipInflater() {
     // tear down the in-flight zip state just in case
     ::inflateEnd(&mInflateState);
+    memset(&mInflateState, 0, sizeof(mInflateState));
 
     if (mDataMap == NULL) {
         delete [] mInBuf;
+        mInBuf = NULL;
     }
     delete [] mOutBuf;
+    mOutBuf = NULL;
 }
 
 void StreamingZipInflater::initInflateState() {
