@@ -3077,33 +3077,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     }
 
     private void updateSettings() {
-<<<<<<< HEAD
-       final  ContentResolver resolver = mContext.getContentResolver();
-        //XXX: multi-user correct?
-        boolean autoBrightness = Settings.System.getInt(
-                resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, 0) ==
-                Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
-        mBrightnessControl = !autoBrightness && Settings.System.getInt(
-                resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1;
-
-            updateCustomHeaderStatus();
-            
-        int batteryStyle = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_BATTERY, 0);
-=======
         ContentResolver resolver = mContext.getContentResolver();
         int autoBrightnessSetting = Settings.System.getIntForUser(
-                resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, 0, mCurrentUserId);
-
-        if (autoBrightnessSetting == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
-            mBrightnessControl = false;
-        } else {
-            mBrightnessControl = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0, mCurrentUserId) == 1;
-        }
-
-        int batteryStyle = Settings.System.getIntForUser(resolver,
-                Settings.System.STATUS_BAR_BATTERY, 0, mCurrentUserId);
->>>>>>> 635030b... Fix multi-user issues.
+                 resolver, Settings.System.SCREEN_BRIGHTNESS_MODE, 0, mCurrentUserId);
+ 
+         if (autoBrightnessSetting == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+             mBrightnessControl = false;
+         } else {
+             mBrightnessControl = Settings.System.getIntForUser(resolver,
+                     Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0, mCurrentUserId) == 1;
+         }
+ 
+         int batteryStyle = Settings.System.getIntForUser(resolver,
+                 Settings.System.STATUS_BAR_BATTERY, 0, mCurrentUserId);
         BatteryMeterMode mode = BatteryMeterMode.BATTERY_METER_ICON_PORTRAIT;
         switch (batteryStyle) {
             case 2:
@@ -3121,16 +3107,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             default:
                 break;
         }
-<<<<<<< HEAD
-        boolean showPercent = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT, 0) == 1;
-                
-=======
 
         boolean showPercent = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT, 0, mCurrentUserId) == 1;
 
->>>>>>> 635030b... Fix multi-user issues.
         mBatteryView.setMode(mode);
         mBatteryController.onBatteryMeterModeChanged(mode);
         mBatteryView.setShowPercent(showPercent);
