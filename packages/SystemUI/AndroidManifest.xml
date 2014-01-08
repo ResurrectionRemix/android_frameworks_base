@@ -90,7 +90,10 @@
 
     <!-- AppSidebar -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
-
+    
+    <!-- Record Audio QuickRecord -->
+     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+     
     <application
         android:persistent="true"
         android:allowClearUserData="false"
