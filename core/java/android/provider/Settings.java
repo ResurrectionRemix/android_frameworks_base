@@ -3356,30 +3356,8 @@ public final class Settings {
         public static final String VOLUME_KEYS_CONTROL_RING_STREAM = "volume_keys_control_ring_stream";
 
         /**
-<<<<<<< HEAD
          * Whether to enable custom rebindings of the actions performed on
          * certain key press events.
-=======
-         * Action for long-pressing back button on lock screen
-         * @hide
-         */
-        public static final String LOCKSCREEN_LONG_BACK_ACTION = "lockscreen_long_back_action";
-
-        /**
-         * Action for long-pressing home button on lock screen
-         * @hide
-         */
-        public static final String LOCKSCREEN_LONG_HOME_ACTION = "lockscreen_long_home_action";
-
-        /**
-         * Action for long-pressing menu button on lock screen
-         * @hide
-         */
-        public static final String LOCKSCREEN_LONG_MENU_ACTION = "lockscreen_long_menu_action";
-
-        /**
-         * Expanded desktop on/off state
->>>>>>> e6649cc... LockScreen: allow long-press actions from hardware keys (1/2)
          * @hide
          */
         public static final String HARDWARE_KEY_REBINDING = "hardware_key_rebinding";
