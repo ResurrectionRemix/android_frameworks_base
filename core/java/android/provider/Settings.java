@@ -3474,6 +3474,19 @@ public final class Settings {
         */
         public static final String LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE = "lockscreen_notifications_privacy_mode";
 
+       /**
+        * Enables dynamic with for shown notifications on devices >= xxhdpi
+        * @hide
+        */
+        public static final String LOCKSCREEN_NOTIFICATIONS_DYNAMIC_WIDTH = "lockscreen_notifications_dynamic_width";
+
+       /**
+        * A list of packages to exclude from being displayed as lockscreen notifications.
+        * This should be a string of packages separated by |
+        * @hide
+        */
+        public static final String LOCKSCREEN_NOTIFICATIONS_EXCLUDED_APPS = "lockscreen_notifications_excluded_apps";
+
         /**
          * Expanded desktop on/off state
          * @hide
