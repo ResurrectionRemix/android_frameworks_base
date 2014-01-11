@@ -51,7 +51,11 @@ enabled.
     <View android:id="@+id/titleDivider"
             android:layout_width="match_parent"
             android:layout_height="1dip"
+<<<<<<< HEAD
             android:background="@android:color/holo_blue_light" />
+=======
+            android:background="@android:color/default_dialog_divider_holo_dark" />
+>>>>>>> fa214b2... Fix remaining dialog dividers
 
     <FrameLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
