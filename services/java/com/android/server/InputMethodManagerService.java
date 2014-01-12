@@ -80,6 +80,7 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.text.TextUtils;
 import android.text.style.SuggestionSpan;
 import android.util.AtomicFile;
@@ -407,11 +408,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                     Settings.Secure.SELECTED_INPUT_METHOD_SUBTYPE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_IME_SWITCHER),
-                    false, new ContentObserver(mHandler) {
-                        public void onChange(boolean selfChange) {
-                            updateFromSettingsLocked(true);
-                        }
-                    });
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override public void onChange(boolean selfChange) {
