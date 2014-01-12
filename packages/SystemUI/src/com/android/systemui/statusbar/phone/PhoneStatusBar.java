@@ -120,6 +120,7 @@ import com.android.systemui.ReminderMessageView;
 import com.android.systemui.service.ReminderService;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.statusbar.BaseStatusBar;
+import com.android.systemui.omni.StatusHeaderMachine;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.GestureRecorder;
 import com.android.systemui.statusbar.NotificationData;
@@ -147,6 +148,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.List;
+import java.net.URISyntaxException;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -3246,8 +3248,23 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
     private View.OnClickListener mClockClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            startActivityDismissingKeyguard(
-                     new Intent(AlarmClock.ACTION_SHOW_ALARMS), true);
+            Intent clockShortcutIntent = null;
+            String clockShortcutIntentUri = Settings.System.getStringForUser(
+                    mContext.getContentResolver(), Settings.System.CLOCK_SHORTCUT, UserHandle.USER_CURRENT);
+            if(clockShortcutIntentUri != null) {
+                try {
+                    clockShortcutIntent = Intent.parseUri(clockShortcutIntentUri, 0);
+                } catch (URISyntaxException e) {
+                    clockShortcutIntent = null;
+                }
+            }
+
+            if(clockShortcutIntent != null) {
+                startActivityDismissingKeyguard(clockShortcutIntent, true);
+            } else {
+                startActivityDismissingKeyguard(
+                        new Intent(AlarmClock.ACTION_SHOW_ALARMS), true); // have fun, everyone
+            }
          }
      };
  
@@ -3257,17 +3274,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
              startActivityDismissingKeyguard(
                      new Intent(AlarmClock.ACTION_SET_ALARM), true);
              return true;
-         }
-     };
- 
-     private View.OnClickListener mDateClickListener = new View.OnClickListener() {
-         public void onClick(View v) {
-             Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
-             builder.appendPath("time");
-             ContentUris.appendId(builder, System.currentTimeMillis());
-             Intent intent = new Intent(Intent.ACTION_VIEW);
-             intent.setData(builder.build());
-             startActivityDismissingKeyguard(intent, true);
          }
      };
  
@@ -3281,6 +3287,28 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     };
 
+    private View.OnClickListener mDateClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            Intent calendarShortcutIntent = null;
+            String calendarShortcutIntentUri = Settings.System.getStringForUser(
+                    mContext.getContentResolver(), Settings.System.CALENDAR_SHORTCUT, UserHandle.USER_CURRENT);
+            if(calendarShortcutIntentUri != null) {
+                try {
+                    calendarShortcutIntent = Intent.parseUri(calendarShortcutIntentUri, 0);
+                } catch (URISyntaxException e) {
+                    calendarShortcutIntent = null;
+                }
+            }
+
+            if(calendarShortcutIntent != null) {
+                startActivityDismissingKeyguard(calendarShortcutIntent, true);
+            } else {
+                Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR);
+                startActivityDismissingKeyguard(intent,true);
+            }
+        }
+    };
+    
     private View.OnClickListener mNotificationButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
             animateExpandNotificationsPanel();
