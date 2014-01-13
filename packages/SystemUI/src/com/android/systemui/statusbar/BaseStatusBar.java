@@ -667,7 +667,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                     }
                 }
 
-                mNotificationBlamePopup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.notification_inspect_item) {
                             startApplicationDetailsActivity(packageNameF);
@@ -685,10 +684,11 @@ public abstract class BaseStatusBar extends SystemUI implements
                         } else if (item.getItemId() == R.id.notification_floating_item) {
                             launchFloating(contentIntent);
                             animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
+                            
                         } else if (item.getItemId() == R.id.notification_hide_icon_packages) {
-                            item.setChecked(!item.isChecked());
-                            setIconHiddenByUser(packageNameF, item.isChecked());
-                            updateNotificationIcons();
+                             item.setChecked(!item.isChecked());
+                             setIconHiddenByUser(packageNameF, item.isChecked());
+                             updateNotificationIcons();
                         } else {
                             return false;
                         }
