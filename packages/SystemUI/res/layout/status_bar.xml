@@ -138,7 +138,28 @@
                 />
         </LinearLayout>
     </LinearLayout>
+<<<<<<< HEAD
         
+=======
+
+    <LinearLayout
+        android:id="@+id/center_clock_layout"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.android.systemui.statusbar.policy.ClockCenter
+            android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+            android:gravity="center"
+            android:id="@+id/center_clock"
+            android:paddingLeft="6dip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:singleLine="true" />
+    </LinearLayout>
+
+>>>>>>> 27d83b0... [1/2] Clock mode
     <LinearLayout android:id="@+id/ticker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
