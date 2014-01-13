@@ -92,11 +92,8 @@ import com.android.systemui.SearchPanelView;
 import com.android.systemui.SystemUI;
 import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.phone.KeyguardTouchDelegate;
-<<<<<<< HEAD
 import com.android.systemui.statusbar.halo.Halo;
-=======
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
->>>>>>> 4f87de2... Base: Allow hiding notification icons
 import com.android.systemui.statusbar.policy.NotificationRowLayout;
 
 import java.util.ArrayList;
@@ -685,16 +682,13 @@ public abstract class BaseStatusBar extends SystemUI implements
                                     .getSystemService(Context.ACTIVITY_SERVICE);
                             am.clearApplicationUserData(packageNameF,
                                     new FakeClearUserDataObserver());
-<<<<<<< HEAD
                         } else if (item.getItemId() == R.id.notification_floating_item) {
                             launchFloating(contentIntent);
                             animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
-=======
                         } else if (item.getItemId() == R.id.notification_hide_icon_packages) {
                             item.setChecked(!item.isChecked());
                             setIconHiddenByUser(packageNameF, item.isChecked());
                             updateNotificationIcons();
->>>>>>> 4f87de2... Base: Allow hiding notification icons
                         } else {
                             return false;
                         }
