@@ -116,7 +116,7 @@
             android:id="@+id/recents_clear"
             android:clickable="true"
             android:layout_width="50dp"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:scaleType="center"
             android:layout_gravity="bottom|left"
             android:src="@drawable/ic_recents_clear" />
