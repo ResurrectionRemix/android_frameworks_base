@@ -30,9 +30,9 @@ import android.widget.LinearLayout;
 
 public class LinearColorBar extends LinearLayout {
 
-    static final int USED_MEM_COLOR = 0xff8d8d8d;
-    static final int USED_CACHE_COLOR = 0xff00aa00;
-    static final int USED_ACTIVE_APPS_COLOR = 0xff33b5e5;
+    static final int USED_ACTIVE_APPS_COLOR = 0xffffffff;
+    static final int USED_CACHE_COLOR = 0xffdddddd;
+    static final int USED_MEM_COLOR = 0xffbbbbbb;
     static final int FREE_COLOR = 0xffaaaaaa;
 
     private float mRamBarMode;
@@ -73,7 +73,7 @@ public class LinearColorBar extends LinearLayout {
 
     private void updateModeAndColors() {
         mRamBarMode = (Settings.System.getInt(mContext.getContentResolver(),
-                             Settings.System.RECENTS_RAM_BAR_MODE, 0));
+                             Settings.System.RECENTS_RAM_BAR_MODE, 1));
         mUsedMemColor = (Settings.System.getInt(mContext.getContentResolver(),
                                Settings.System.RECENTS_RAM_BAR_MEM_COLOR, USED_MEM_COLOR));
         mUsedCacheMemColor = (Settings.System.getInt(mContext.getContentResolver(),

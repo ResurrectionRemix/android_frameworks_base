@@ -3631,13 +3631,13 @@ public final class Settings {
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
         /**
-<<<<<<< HEAD
          * Should the non-intrsive incall ui be used
          *
          * @hide
          */
         public static final String NON_INTRUSIVE_INCALL = "non_intrusive_incall";
-=======
+        
+        /**
          * whether which Ram Usage Bar mode is used on recent switcher
          * 0 = none, 1 = only app use, 2 = app and cache use, 3 = app, cache and system use
          * @hide
@@ -3664,7 +3664,6 @@ public final class Settings {
          * @hide
          */
         public static final String RECENTS_RAM_BAR_ACTIVE_APPS_COLOR = "recents_ram_bar_active_apps_color";
->>>>>>> c933cb4... RAM bar (1/2)
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
