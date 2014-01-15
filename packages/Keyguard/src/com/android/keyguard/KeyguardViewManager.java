@@ -20,15 +20,13 @@ package com.android.keyguard;
 import android.app.PendingIntent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-<<<<<<< HEAD
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.*;
 import android.provider.Settings;
 import android.view.*;
-=======
->>>>>>> parent of a789e04... [1/2] Frameworks: Lockscreen Blur
+
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
@@ -334,11 +332,8 @@ public class KeyguardViewManager {
             if (bgAspect > vAspect) {
                 background.setBounds(0, 0, (int) (vHeight * bgAspect), vHeight);
             } else {
-<<<<<<< HEAD
                 background.setBounds(0, 0, vWidth, (int) (vWidth * (vAspect >= 1 ? bgAspect : (1 / bgAspect))));
-=======
                 mCustomBackground.setBounds(0, 0, vWidth, (int) (vWidth / bgAspect));
->>>>>>> parent of a789e04... [1/2] Frameworks: Lockscreen Blur
             }
         }
 
