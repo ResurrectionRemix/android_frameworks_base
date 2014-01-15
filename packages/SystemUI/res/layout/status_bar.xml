@@ -138,6 +138,9 @@
                 />
         </LinearLayout>
     </LinearLayout>
+<<<<<<< HEAD
+        
+=======
 
     <LinearLayout
         android:id="@+id/center_clock_layout"
@@ -156,6 +159,7 @@
             android:singleLine="true" />
     </LinearLayout>
 
+>>>>>>> 27d83b0... [1/2] Clock mode
     <LinearLayout android:id="@+id/ticker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

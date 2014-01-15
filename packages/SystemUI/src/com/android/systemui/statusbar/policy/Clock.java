@@ -26,9 +26,11 @@ import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.provider.AlarmClock;
+=======
 import android.os.Handler;
-
+>>>>>>> 27d83b0... [1/2] Clock mode
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -37,14 +39,20 @@ import android.text.style.CharacterStyle;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-
+=======
+>>>>>>> 27d83b0... [1/2] Clock mode
 import android.widget.TextView;
 
 import com.android.systemui.DemoMode;
 
+<<<<<<< HEAD
 import com.android.internal.R;
+=======
+import com.android.systemui.R;
+>>>>>>> 27d83b0... [1/2] Clock mode
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -129,17 +137,17 @@ public class Clock extends TextView implements DemoMode, OnClickListener, OnLong
             filter.addAction(Intent.ACTION_USER_SWITCHED);
 
             getContext().registerReceiver(mIntentReceiver, filter, null, getHandler());
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE),
+            resolver.registerContentObserver(Settings.AOKP
+                    .getUriFor(Settings.AOKP.STATUSBAR_CLOCK_AM_PM_STYLE),
                     false, mSettingsObserver);
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_STYLE),
+            resolver.registerContentObserver(Settings.AOKP
+                    .getUriFor(Settings.AOKP.STATUSBAR_CLOCK_STYLE),
                     false, mSettingsObserver);
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_COLOR),
+            resolver.registerContentObserver(Settings.AOKP
+                    .getUriFor(Settings.AOKP.STATUSBAR_CLOCK_COLOR),
                     false, mSettingsObserver);
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.STATUSBAR_CLOCK_WEEKDAY),
+            resolver.registerContentObserver(Settings.AOKP
+                    .getUriFor(Settings.AOKP.STATUSBAR_CLOCK_WEEKDAY),
                     false, mSettingsObserver);
         }
 
@@ -259,14 +267,14 @@ public class Clock extends TextView implements DemoMode, OnClickListener, OnLong
         ContentResolver resolver = mContext.getContentResolver();
         int defaultColor = getResources().getColor(R.color.status_bar_clock_color);
 
-        mAmPmStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_GONE);
-        mClockStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_STYLE, STYLE_CLOCK_RIGHT);
-        mWeekdayStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_WEEKDAY, WEEKDAY_STYLE_GONE);
-        mClockColor = Settings.System.getInt(resolver,
-                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor);
+        mAmPmStyle = Settings.AOKP.getInt(resolver,
+                Settings.AOKP.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_GONE);
+        mClockStyle = Settings.AOKP.getInt(resolver,
+                Settings.AOKP.STATUSBAR_CLOCK_STYLE, STYLE_CLOCK_RIGHT);
+        mWeekdayStyle = Settings.AOKP.getInt(resolver,
+                Settings.AOKP.STATUSBAR_CLOCK_WEEKDAY, WEEKDAY_STYLE_GONE);
+        mClockColor = Settings.AOKP.getInt(resolver,
+                Settings.AOKP.STATUSBAR_CLOCK_COLOR, defaultColor);
         if (mClockColor == Integer.MIN_VALUE) {
             // flag to reset the color
             mClockColor = defaultColor;
