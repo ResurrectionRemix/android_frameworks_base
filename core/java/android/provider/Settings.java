@@ -2617,12 +2617,6 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_SOUNDS_ENABLED = "lockscreen_sounds_enabled";
 
-	/**  
-         * Allows to show the background activity back the lockscreen
-         * @hide
-         */
-        public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
-
         /**
          * Whether the lockscreen should be completely disabled.
          * @hide
@@ -3607,7 +3601,6 @@ public final class Settings {
         public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
 
         /**
-<<<<<<< HEAD
          * ListView Animations
          * 0 == None
          * 1 == Wave (Left)
@@ -3618,17 +3611,6 @@ public final class Settings {
          * 6 == Stack (Bottom)
          * 7 == Translate (Left)
          * 8 == Translate (Right)
-=======
-         * Allows blurring the lockscreen background
-         * @hide
-         */
-        public static final String LOCKSCREEN_BLUR_BEHIND = "lockscreen_blur_behind";
-        public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
-
-        /**
-         * Should call status sounds be player
-         *
->>>>>>> 67b0808... Lockscreen transparency, blur and rotation
          * @hide
          */
          public static final String LISTVIEW_ANIMATION = "listview_animation";

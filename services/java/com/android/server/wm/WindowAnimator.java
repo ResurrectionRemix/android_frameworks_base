@@ -240,22 +240,14 @@ public class WindowAnimator {
                         mService.mFocusMayChange = true;
                     }
                     if (win.isReadyForDisplay()) {
-<<<<<<< HEAD
                         if (Settings.System.getInt(mContext.getContentResolver(),
-=======
-                        if(Settings.System.getInt(mContext.getContentResolver(),
->>>>>>> 67b0808... Lockscreen transparency, blur and rotation
                                 Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 0) {
                             if (nowAnimating) {
                                 if (winAnimator.mAnimationIsEntrance) {
                                     mForceHiding = KEYGUARD_ANIMATING_IN;
                                 } else {
                                     mForceHiding = KEYGUARD_ANIMATING_OUT;
-<<<<<<< HEAD
                                 }
-=======
-                                }                       
->>>>>>> 67b0808... Lockscreen transparency, blur and rotation
                             } else {
                                 mForceHiding = KEYGUARD_SHOWN;
                             }
