@@ -670,22 +670,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.HARDWARE_KEY_REBINDING), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-<<<<<<< HEAD
                      Settings.System.NAVIGATION_BAR_HEIGHT), false, this,
                      UserHandle.USER_ALL);
-=======
-                    Settings.System.NAVIGATION_BAR_SHOW), false, this,
-                    UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ACCELEROMETER_ROTATION_ANGLES), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LCD_DENSITY), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ENABLE_FAST_TORCH), false, this,
-                    UserHandle.USER_ALL);
->>>>>>> f06dd78... FastTorch [1/2]
+                     Settings.System.ENABLE_FAST_TORCH), false, this,
+                     UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -4658,14 +4647,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 result &= ~ACTION_PASS_TO_USER;
                 if (down) {
-<<<<<<< HEAD
-                    if (mExpandedDesktopStyle == 0) {
-=======
                     if(!isScreenOn && mEnableFastTorch) {
-                        handleChangeTorchState(true);
-                    }
-                    if (mExpandedDesktopMode == 0) {
->>>>>>> f06dd78... FastTorch [1/2]
+                         handleChangeTorchState(true);
+                     }
+                    if (mExpandedDesktopStyle == 0) {
+
                         mImmersiveModeConfirmation.onPowerKeyDown(isScreenOn, event.getDownTime(),
                                 isImmersiveMode(mLastSystemUiFlags));
                     }
