@@ -94,6 +94,9 @@ public class SearchPanelView extends FrameLayout implements
         public void onReleased(View v, int handle) {
         }
 
+        public void onTargetChange(View v, final int target) {
+        }
+
         public void onGrabbedStateChange(View v, int handle) {
             if (!mWaitingForLaunch && OnTriggerListener.NO_HANDLE == handle) {
                 mBar.hideSearchPanel();
