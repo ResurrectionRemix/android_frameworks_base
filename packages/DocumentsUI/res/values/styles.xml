@@ -37,11 +37,7 @@
         <item name="android:src">@drawable/ic_menu_overflow</item>
     </style>
 
-<<<<<<< HEAD
     <style name="SettingsTheme" parent="@android:style/Theme.Holo.Light.DialogWhenLarge">
     </style>
-=======
-    <style name="DialogWhenLarge" parent="@android:style/Theme.Holo.Light.DialogWhenLarge" />
->>>>>>> 388806c... TRDS: Dark DocumentsUI
 
 </resources>

@@ -31,11 +31,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginBottom="6dp"
-<<<<<<< HEAD
             android:background="@color/grid_item_background"
-=======
-            android:background="@color/bg1"
->>>>>>> 388806c... TRDS: Dark DocumentsUI
             android:foreground="@drawable/ic_grid_gradient_bg"
             android:foregroundGravity="fill">
 
