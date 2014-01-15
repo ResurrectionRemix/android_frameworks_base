@@ -17,6 +17,7 @@
 
 package com.android.keyguard;
 
+<<<<<<< HEAD
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -28,7 +29,9 @@ import android.view.*;
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
+=======
 import android.app.Activity;
+>>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -37,10 +40,13 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+<<<<<<< HEAD
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+=======
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+>>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
@@ -57,11 +63,14 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings;
+<<<<<<< HEAD
 import android.renderscript.Allocation;
 import android.renderscript.Allocation.MipmapControl;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+=======
+>>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -112,8 +121,11 @@ public class KeyguardViewManager {
 
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
+<<<<<<< HEAD
     private Drawable mCustomBackground = null;
+=======
     private AudioManager mAudioManager;
+>>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -160,12 +172,14 @@ public class KeyguardViewManager {
         mViewManager = viewManager;
         mViewMediatorCallback = callback;
         mLockPatternUtils = lockPatternUtils;
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+<<<<<<< HEAD
 
         SettingsObserver observer = new SettingsObserver(new Handler());
         observer.observe();
         if(!isSeeThroughEnabled()) mCustomBackground = null;
-
+=======
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+>>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
     }
 
     /**
@@ -327,6 +341,7 @@ public class KeyguardViewManager {
         }
 
         public void setCustomBackground(Drawable d) {
+<<<<<<< HEAD
             if (!ActivityManager.isHighEndGfx()) {
                 mCustomBackground = d;
                 if (d != null) {
@@ -346,6 +361,7 @@ public class KeyguardViewManager {
                     computeCustomBackgroundBounds(old);
                 }
 
+=======
             if (mAudioManager.isMusicActive()) {
                 mCustomBackground = d;
             } else {
@@ -381,7 +397,7 @@ public class KeyguardViewManager {
                 }
             }
             if (d != null) {
-
+>>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
                 d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
                 mCustomBackground = d;
                 computeCustomBackgroundBounds(d);
