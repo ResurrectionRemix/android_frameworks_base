@@ -25,15 +25,10 @@ import com.android.server.display.DisplayManagerService;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-<<<<<<< HEAD
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.content.ComponentName;
-=======
-import android.content.ComponentName;
-import android.content.Context;
->>>>>>> 19d74a9... Lockscreen Blur
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
@@ -406,26 +401,6 @@ final class DisplayPowerController {
 
     };
 
-    private Context mContext;
-
-    private KeyguardServiceWrapper mKeyguardService;
-
-    private final ServiceConnection mKeyguardConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            if (DEBUG) Log.v(TAG, "*** Keyguard connected (yay!)");
-            mKeyguardService = new KeyguardServiceWrapper(
-                    IKeyguardService.Stub.asInterface(service));
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            if (DEBUG) Log.v(TAG, "*** Keyguard disconnected (boo!)");
-            mKeyguardService = null;
-        }
-
-    };
-
     /**
      * Creates the display power controller.
      */
@@ -441,11 +416,6 @@ final class DisplayPowerController {
         mDisplayBlanker = displayBlanker;
         mCallbacks = callbacks;
         mCallbackHandler = callbackHandler;
-<<<<<<< HEAD
-=======
-        mContext = context;
-
->>>>>>> 19d74a9... Lockscreen Blur
         mLights = lights;
         mTwilight = twilight;
         mSensorManager = sensorManager;
@@ -543,7 +513,6 @@ final class DisplayPowerController {
         } else {
             Log.e(TAG, "*** Keyguard started");
         }
-<<<<<<< HEAD
     }
 
     private void updateAutomaticBrightnessSettings() {
@@ -604,8 +573,6 @@ final class DisplayPowerController {
         }
 
         return values;
-=======
->>>>>>> 19d74a9... Lockscreen Blur
     }
 
     private static Spline createAutoBrightnessSpline(int[] lux, int[] brightness) {
