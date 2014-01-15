@@ -214,8 +214,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
     // left-hand icons
     LinearLayout mStatusIcons;
-    // layout for center clock
-    LinearLayout mCenterClockLayout;
     // the icons themselves
     IconMerger mNotificationIcons;
     // [+>
@@ -640,7 +638,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mMoreIcon = mStatusBarView.findViewById(R.id.moreIcon);
         mNotificationIcons.setOverflowIndicator(mMoreIcon);
         mStatusBarContents = (LinearLayout)mStatusBarView.findViewById(R.id.status_bar_contents);
-        mCenterClockLayout = (LinearLayout)mStatusBarView.findViewById(R.id.center_clock_layout);
         mTickerView = mStatusBarView.findViewById(R.id.ticker);
 
         mPile = (NotificationRowLayout)mStatusBarWindow.findViewById(R.id.latestItems);
@@ -1536,21 +1533,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     private void updateClockVisibility() {
         if (mStatusBarView == null) return;
         View clock = mStatusBarView.findViewById(R.id.clock);
-<<<<<<< HEAD
         if (clock != null) {
             clock.setVisibility(mClockEnabled && mShowClock ? View.VISIBLE : View.GONE);
-=======
-        View cclock = mStatusBarView.findViewById(R.id.center_clock);
-        boolean rightClock = (Settings.AOKP.getInt(mContext.getContentResolver(),
-                Settings.AOKP.STATUSBAR_CLOCK_STYLE, 1) == 1);
-        boolean centerClock = (Settings.AOKP.getInt(mContext.getContentResolver(),
-                Settings.AOKP.STATUSBAR_CLOCK_STYLE, 1) == 2);
-        if (rightClock && clock != null) {
-            clock.setVisibility(show ? View.VISIBLE : View.GONE);
->>>>>>> 27d83b0... [1/2] Clock mode
-        }
-        if (centerClock && cclock != null) {
-            cclock.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -2633,7 +2617,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         @Override
         public void tickerStarting() {
-<<<<<<< HEAD
 	    if (!mHaloActive) {
                 mTicking = true;
                 mStatusBarContents.setVisibility(View.GONE);
@@ -2641,20 +2624,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
                 mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, null));
             }
-=======
-            mTicking = true;
-            mStatusBarContents.setVisibility(View.GONE);
-            mCenterClockLayout.setVisibility(View.GONE);
-            mTickerView.setVisibility(View.VISIBLE);
-            mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
-            mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, null));
-            mCenterClockLayout.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, null));
->>>>>>> 27d83b0... [1/2] Clock mode
         }
 
         @Override
         public void tickerDone() {
-<<<<<<< HEAD
 	    if (!mHaloActive) {
                 mStatusBarContents.setVisibility(View.VISIBLE);
                 mTickerView.setVisibility(View.GONE);
@@ -2674,27 +2647,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mTickerView.setVisibility(View.GONE);
                 // we do not animate the ticker away at this point, just get rid of it (b/6992707)
 	    }
-=======
-            mStatusBarContents.setVisibility(View.VISIBLE);
-            mCenterClockLayout.setVisibility(View.VISIBLE);
-            mTickerView.setVisibility(View.GONE);
-            mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_down_in, null));
-            mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_down_out,
-                        mTickingDoneListener));
-            mCenterClockLayout.startAnimation(loadAnim(com.android.internal.R.anim.push_down_in, null));
-        }
-
-        public void tickerHalting() {
-            if (mStatusBarContents.getVisibility() != View.VISIBLE) {
-                mStatusBarContents.setVisibility(View.VISIBLE);
-                mStatusBarContents
-                        .startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-            }
-            mTickerView.setVisibility(View.GONE);
-            mCenterClockLayout.setVisibility(View.VISIBLE);
-            mCenterClockLayout.startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-            // we do not animate the ticker away at this point, just get rid of it (b/6992707)
->>>>>>> 27d83b0... [1/2] Clock mode
         }
     }
 
