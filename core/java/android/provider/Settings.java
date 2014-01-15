@@ -3183,20 +3183,7 @@ public final class Settings {
          * Sets the lockscreen background style
          * @hide
          */
-        public static final String LOCKSCREEN_BACKGROUND_STYLE = "lockscreen_background_style";
-
-        /**
-         * Color for lockscreen background when set to color fill
-         * @hide
-         */
-        public static final String LOCKSCREEN_BACKGROUND_COLOR = "lockscreen_background_color";
-
-        /**
-         * Alpha value for custom image on lockscreen background
-         * when set to custom image
-         * @hide
-         */
-        public static final String LOCKSCREEN_WALLPAPER_ALPHA = "lockscreen_wallpaper_alpha";
+        public static final String LOCKSCREEN_BACKGROUND = "lockscreen_background";
 
         /**
          * Expanded desktop on/off state

@@ -17,7 +17,6 @@
 
 package com.android.keyguard;
 
-<<<<<<< HEAD
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -29,33 +28,20 @@ import android.view.*;
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
-=======
-import android.app.Activity;
->>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 import android.app.ActivityManager;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-<<<<<<< HEAD
 import android.content.ContentResolver;
 import android.database.ContentObserver;
-=======
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
->>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -63,14 +49,11 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings;
-<<<<<<< HEAD
 import android.renderscript.Allocation;
 import android.renderscript.Allocation.MipmapControl;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-=======
->>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -82,11 +65,6 @@ import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-
-import com.android.internal.policy.IKeyguardShowCallback;
-import com.android.internal.widget.LockPatternUtils;
-
-import java.io.File;
 
 /**
  * Manages creating, showing, hiding and resetting the keyguard.  Calls back
@@ -121,11 +99,7 @@ public class KeyguardViewManager {
 
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
-<<<<<<< HEAD
     private Drawable mCustomBackground = null;
-=======
-    private AudioManager mAudioManager;
->>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -172,14 +146,10 @@ public class KeyguardViewManager {
         mViewManager = viewManager;
         mViewMediatorCallback = callback;
         mLockPatternUtils = lockPatternUtils;
-<<<<<<< HEAD
 
         SettingsObserver observer = new SettingsObserver(new Handler());
         observer.observe();
         if(!isSeeThroughEnabled()) mCustomBackground = null;
-=======
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
->>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
     }
 
     /**
@@ -341,7 +311,6 @@ public class KeyguardViewManager {
         }
 
         public void setCustomBackground(Drawable d) {
-<<<<<<< HEAD
             if (!ActivityManager.isHighEndGfx()) {
                 mCustomBackground = d;
                 if (d != null) {
@@ -361,43 +330,6 @@ public class KeyguardViewManager {
                     computeCustomBackgroundBounds(old);
                 }
 
-=======
-            if (mAudioManager.isMusicActive()) {
-                mCustomBackground = d;
-            } else {
-                int mBackgroundStyle = Settings.System.getInt(getContext().getContentResolver(),
-                    Settings.System.LOCKSCREEN_BACKGROUND_STYLE, 2);
-                int mBackgroundColor = Settings.System.getInt(getContext().getContentResolver(),
-                    Settings.System.LOCKSCREEN_BACKGROUND_COLOR, 0x00000000);
-                float mWallpaperAlpha = Settings.System.getFloat(getContext().getContentResolver(),
-                    Settings.System.LOCKSCREEN_WALLPAPER_ALPHA, 1.0f);
-
-                switch (mBackgroundStyle) {
-                    case 0:
-                        d = new ColorDrawable(mBackgroundColor);
-                        mCustomBackground = d;
-                        break;
-                    case 1:
-                        try {
-                            Context settingsContext = getContext().createPackageContext(
-                                    "com.android.settings", 0);
-                            String wallpaperFile = settingsContext.getFilesDir() + "/lockwallpaper";
-                            Bitmap mBitmapWallpaper = BitmapFactory.decodeFile(wallpaperFile);
-                            d = new BitmapDrawable(getContext().getResources(), mBitmapWallpaper);
-                            d.setAlpha((int) (mWallpaperAlpha *255));
-                            mCustomBackground = d;
-                        } catch (NameNotFoundException e) {
-                        }
-                        break;
-                    case 2:
-                    default:
-                        d = null;
-                        mCustomBackground = d;
-                        break;
-                }
-            }
-            if (d != null) {
->>>>>>> 2c4e025... Lockscreen custom wallpaper (1/2)
                 d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
                 mCustomBackground = d;
                 computeCustomBackgroundBounds(d);
