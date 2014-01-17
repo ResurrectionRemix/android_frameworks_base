@@ -4716,15 +4716,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 result &= ~ACTION_PASS_TO_USER;
                 if (down) {
-<<<<<<< HEAD
                     if(!isScreenOn && mEnableFastTorch) {
                          handleChangeTorchState(true);
                      }
                     if (mExpandedDesktopStyle == 0) {
 
-=======
-                    if (mExpandedDesktopStyle == 0) {
->>>>>>> dd2a454... Update immersive confirmation.
                         mImmersiveModeConfirmation.onPowerKeyDown(isScreenOn, event.getDownTime(),
                                 isImmersiveMode(mLastSystemUiFlags));
                     }
