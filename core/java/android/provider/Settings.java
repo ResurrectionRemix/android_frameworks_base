@@ -2556,57 +2556,7 @@ public final class Settings {
          */
         public static final String BATTERY_LIGHT_FULL_COLOR = "battery_light_full_color";
 
-<<<<<<< HEAD
         /** Sprint MWI Quirk: Show message wait indicator notifications
-=======
-        /**
-         * What color to use for the battery LED while charging - really full (100%)
-         * @hide
-         */
-        public static final String BATTERY_LIGHT_REALLY_FULL_COLOR = "battery_light_really_full_color";
-
-        /**
-         * Network speed indicator
-         * 0 = disabled
-         * 1 = show bits per second
-         * 2 = show Bytes per second
-         * @hide
-         */
-        public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
-
-        /**
-         * Show Screenshot in Power Menu
-         * @hide
-         */
-        public static final String SCREENSHOT_IN_POWER_MENU = "screenshot_in_power_menu";
-
-        /**
-         * Show ScreenRecord in Power Menu
-         * @hide
-         */
-        public static final String SCREENRECORD_IN_POWER_MENU = "screenrecord_in_power_menu";
-
-        /**
-         * Show AirplaneMode in Power Menu
-         * @hide
-         */
-        public static final String AIRPLANE_MODE_IN_POWER_MENU = "airplane_mode_in_power_menu";
-
-        /**
-         * Show SoundToggle in Power Menu
-         * @hide
-         */
-        public static final String SOUND_TOGGLES_IN_POWER_MENU = "sound_toggles_in_power_menu";
-
-        /**
-         * Show MobileData in Power Menu
-         * @hide
-         */
-        public static final String MOBILE_DATA_IN_POWER_MENU = "mobile_data_in_power_menu";
-
-        /**
-         * Sprint MWI Quirk: Show message wait indicator notifications
->>>>>>> 12daeeb... [1/2] SystemUI: Update network traffic indicator
          * @hide
          */
         public static final String ENABLE_MWI_NOTIFICATION = "enable_mwi_notification";
@@ -3232,10 +3182,14 @@ public final class Settings {
 
         public static final String QUIET_HOURS_DIM = "quiet_hours_dim";
         
-        /**
-        /* Network speed indicator
-         * @hide
-         */
+         /**
+          * Network speed indicator
+          * 0 = disabled
+          * 1 = show bits per second
+          * 2 = show Bytes per second
+          * @hide
+          */
+          
         public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
 
         /**
