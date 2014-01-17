@@ -683,19 +683,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
-<<<<<<< HEAD
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HARDWARE_KEY_REBINDING), false, this,
-                    UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.NAVIGATION_BAR_HEIGHT), false, this,
                      UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.ENABLE_FAST_TORCH), false, this,
                      UserHandle.USER_ALL);
-=======
 
->>>>>>> 97e968c... Remove 'Allow custom buttons' checkbox (1/2)
             updateSettings();
         }
 
