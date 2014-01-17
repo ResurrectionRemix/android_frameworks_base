@@ -30,11 +30,6 @@
         android:id="@+id/datetime"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-<<<<<<< HEAD
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-=======
->>>>>>> 7884fdb... Fix touch feedback and areas for status bar date & time actions
         android:enabled="false"
         >
         <com.android.systemui.statusbar.policy.Clock
