@@ -3529,23 +3529,19 @@ public final class Settings {
         public static final String HALO_NOTIFY_COUNT = "halo_notify_count";
 
         /**
-<<<<<<< HEAD
          * HALO message box animation?, should default to 2 (flip animation)
-=======
+         * @hide
+         */
+        public static final String HALO_MSGBOX_ANIMATION = "halo_msgbox_animation";
+        
+        /**
          * @hide
          * Show Wifi network name in notification drawer
          * 0 - don't show
          * 1 - show
          */
         public static final String NOTIFICATION_SHOW_WIFI_SSID = "notification_show_wifi_ssid";
-
-        /**
-         * Give SMS notifications a breathing effect
->>>>>>> 1b109cd... Add option to enable/disable wifi name from notification drawer (2/2)
-         * @hide
-         */
-        public static final String HALO_MSGBOX_ANIMATION = "halo_msgbox_animation";
-        
+                
          /**
          * Should Flip to Silence be used
          *
