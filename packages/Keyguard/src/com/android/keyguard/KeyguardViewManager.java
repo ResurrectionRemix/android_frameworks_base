@@ -25,6 +25,8 @@ import android.os.*;
 import android.provider.Settings;
 import android.view.*;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
@@ -110,7 +112,7 @@ public class KeyguardViewManager {
     private boolean mUnlockKeyDown = false;
     private NotificationHostView mNotificationView;
     private NotificationViewManager mNotificationViewManager;
-    private boolean mLockscreenNotifications = false;
+    private boolean mLockscreenNotifications = true;
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -147,22 +149,25 @@ public class KeyguardViewManager {
                 mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
             } catch(IllegalArgumentException e) {
                 // Call yo mom call yo dad!
-            }       
+            }
+            
         }
     }
+    
     private void updateSettings() {
         mLockscreenNotifications = Settings.System.getInt(mContext.getContentResolver(),
-                 Settings.System.LOCKSCREEN_NOTIFICATIONS, 0) == 1;
-         if(mLockscreenNotifications && mNotificationViewManager == null) {
-             mNotificationViewManager = new NotificationViewManager(mContext, this);
-         } else if(!mLockscreenNotifications && mNotificationViewManager != null) {
-             mNotificationViewManager.unregisterListeners();
-             mNotificationViewManager = null;
-         }
+                Settings.System.LOCKSCREEN_NOTIFICATIONS, 0) == 1;
+        if(mLockscreenNotifications && mNotificationViewManager == null) {
+            mNotificationViewManager = new NotificationViewManager(mContext, this);
+        } else if(!mLockscreenNotifications && mNotificationViewManager != null) {
+            mNotificationViewManager.unregisterListeners();
+            mNotificationViewManager = null;
+        }
+
         mSeeThroughEnabled = Settings.System.getInt(mContext.getContentResolver(),
                             Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
         if(!mSeeThroughEnabled) mCustomBackground = null;
-        }
+    }
     /**
      * @param context Used to create views.
      * @param viewManager Keyguard will be attached to this.
