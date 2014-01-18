@@ -40,7 +40,7 @@ public class NotificationViewManager {
     private final static String TAG = "Keyguard:NotificationViewManager";
 
     private final static int MIN_TIME_COVERED = 5000;
-    private static final int ANIMATION_MAX_DURATION = 300;
+    private static final int ANIMATION_MAX_DURATION = 500;
 
     public static NotificationListenerWrapper NotificationListener = null;
     private static ProximityListener ProximityListener = null;
@@ -166,10 +166,9 @@ public class NotificationViewManager {
         @Override
         public void onNotificationPosted(final StatusBarNotification sbn) {
             boolean screenOffAndNotCovered = !mIsScreenOn && mTimeCovered == 0;
-            boolean ongoingAndReposted = sbn.isOngoing() && mHostView.containsNotification(sbn);
-            if (mHostView.addNotification(sbn, (screenOffAndNotCovered || mIsScreenOn) && !ongoingAndReposted,
-                        config.forceExpandedView) && config.wakeOnNotification && screenOffAndNotCovered
-                        && !ongoingAndReposted) {
+            if (mHostView.addNotification(sbn, screenOffAndNotCovered || mIsScreenOn,
+                config.forceExpandedView) && config.wakeOnNotification && screenOffAndNotCovered
+                && (!sbn.isOngoing() || !mHostView.containsNotification(sbn))) {
                 wakeDevice();
             }
         }
@@ -256,6 +255,7 @@ public class NotificationViewManager {
         if (mHostView != null) mHostView.hideAllNotifications();
         if (NotificationListener == null) {
             registerListeners();
+            mHostView.addNotifications();
         }
     }
 
