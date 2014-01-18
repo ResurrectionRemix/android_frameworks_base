@@ -724,15 +724,17 @@ public class KeyguardViewManager {
     }
 
     void updateShowWallpaper(boolean show) {
-        if (mSeeThroughEnabled) show = false;
-
-        if (show) {
-            mWindowLayoutParams.flags |= WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
+        if (mSeeThroughEnabled) {
+            return;
         } else {
-            mWindowLayoutParams.flags &= ~WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
-        }
+            if (show) {
+                mWindowLayoutParams.flags |= WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
+            } else {
+                mWindowLayoutParams.flags &= ~WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
+            }
 
-        mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
+            mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
+        }
     }
 
     public void setNeedsInput(boolean needsInput) {
