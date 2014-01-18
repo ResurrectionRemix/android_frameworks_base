@@ -193,11 +193,7 @@ public class NotificationHostView extends FrameLayout {
                             | Intent.FLAG_ACTIVITY_SINGLE_TOP
                             | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         if (i.isActivity()) ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
-<<<<<<< HEAD
                             i.send();
-=======
-                        i.send();
->>>>>>> ba649af... Lockscreen Notifications: several fixes
                     } catch (CanceledException ex) {
                         Log.e(TAG, "intent canceled!");
                     } catch (RemoteException ex) {
@@ -355,14 +351,9 @@ public class NotificationHostView extends FrameLayout {
         }
     }
 
-<<<<<<< HEAD
     private void handleAddNotification(final boolean showNotification, boolean forceBigContentView)
     {
         final NotificationView nv = mNotificationsToAdd.poll();
-=======
-    private void handleAddNotification(final boolean showNotification, boolean forceBigContentView) {
-        NotificationView nv = mNotificationsToAdd.poll();
->>>>>>> ba649af... Lockscreen Notifications: several fixes
         Log.d(TAG, "Add: " + describeNotification(nv.statusBarNotification));
         final StatusBarNotification sbn = nv.statusBarNotification;
         mDismissedNotifications.remove(describeNotification(sbn));
@@ -474,11 +465,7 @@ public class NotificationHostView extends FrameLayout {
             if (!sbn.isClearable()) {
                 mDismissedNotifications.put(describeNotification(sbn), sbn);
             }
-<<<<<<< HEAD
             int duration = getDurationFromDistance(v.getChildAt(0), v.shown ? -mDisplayWidth : mDisplayWidth, 0);
-=======
-            int duration =  getDurationFromDistance(v.getChildAt(0), v.shown ? -mDisplayWidth : mDisplayWidth, 0);
->>>>>>> ba649af... Lockscreen Notifications: several fixes
             v.getChildAt(0).animate().setDuration(duration).alpha(0).start();
             mNotifications.remove(describeNotification(sbn));
             animateTranslation(v.getChildAt(0), v.shown ? -mDisplayWidth : mDisplayWidth, 0,
@@ -486,7 +473,6 @@ public class NotificationHostView extends FrameLayout {
                     new AnimatorListener() {
                         public void onAnimationStart(Animator animation) {}
                         public void onAnimationEnd(Animator animation) {
-<<<<<<< HEAD
                         if (dismiss) {
                             INotificationManager nm = INotificationManager.Stub.asInterface(
                                     ServiceManager.getService(Context.NOTIFICATION_SERVICE));
@@ -501,22 +487,6 @@ public class NotificationHostView extends FrameLayout {
                     }
                     public void onAnimationCancel(Animator animation) {}
                     public void onAnimationRepeat(Animator animation) {}
-=======
-                            if (dismiss) {
-                                INotificationManager nm = INotificationManager.Stub.asInterface(
-                                        ServiceManager.getService(Context.NOTIFICATION_SERVICE));
-                                try {
-                                    nm.cancelNotificationFromListener(NotificationViewManager.NotificationListener, sbn.getPackageName(), sbn.getTag(), sbn.getId());
-                                } catch (RemoteException ex) {
-                                    Log.e(TAG, "Failed to cancel notification: " + sbn.getPackageName());
-                                }
-                            }
-                            mNotifView.removeView(v);
-                            mNotifView.requestLayout();
-                        }
-                        public void onAnimationCancel(Animator animation) {}
-                        public void onAnimationRepeat(Animator animation) {}
->>>>>>> ba649af... Lockscreen Notifications: several fixes
             });
         }
     }
@@ -545,7 +515,6 @@ public class NotificationHostView extends FrameLayout {
     }
 
     private void hideNotification(NotificationView nv) {
-<<<<<<< HEAD
         View v = nv.getChildAt(0);
         int targetX = Math.round(mDisplayWidth - mNotificationMinHeight);
         int duration = getDurationFromDistance(v, targetX, (int)v.getY(), Math.abs(nv.speedX));
@@ -553,17 +522,6 @@ public class NotificationHostView extends FrameLayout {
         if (mShownNotifications == 0) animateBackgroundColor(0, duration);
         animateTranslation(v, targetX, 0, duration);
         nv.shown = false;
-=======
-        if (nv.shown) {
-            View v = nv.getChildAt(0);
-            int targetX = Math.round(mDisplayWidth - mNotificationMinHeight);
-            int duration = getDurationFromDistance(v, targetX, (int)v.getY(), Math.abs(nv.speedX));
-            if (mShownNotifications > 0 && nv.shown) mShownNotifications--;
-            if (mShownNotifications == 0) animateBackgroundColor(0, duration);
-            animateTranslation(v, targetX, 0, duration);
-            nv.shown = false;
-        }
->>>>>>> ba649af... Lockscreen Notifications: several fixes
     }
 
     public void showAllNotifications() {
