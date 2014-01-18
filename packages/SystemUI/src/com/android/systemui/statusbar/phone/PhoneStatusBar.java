@@ -3223,7 +3223,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         makeStatusBarView();
         repositionNavigationBar();
-        mNavigationBarView.updateResources();
+        try {
+             if (mWindowManagerService.hasNavigationBar()) {
+                 mNavigationBarView.updateResources();
+             }
+         } catch (RemoteException ex) {
+             // Window manager isn't here?
+             // Well you're fucked... BYE!
+         }
 
         // recreate StatusBarIconViews.
         for (int i = 0; i < nIcons; i++) {
