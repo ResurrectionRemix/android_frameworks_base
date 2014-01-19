@@ -17,19 +17,16 @@
 
 package com.android.keyguard;
 
-<<<<<<< HEAD
-import android.app.PendingIntent;
+
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.*;
 import android.provider.Settings;
 import android.view.*;
-=======
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 
->>>>>>> c5dd2d1... Frameworks: Lockscreen Blur
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
@@ -147,20 +144,13 @@ public class KeyguardViewManager {
         @Override
         public void onChange(boolean selfChange) {
             setKeyguardParams();
-<<<<<<< HEAD
+            updateSettings();
             try {
                 mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
             } catch(IllegalArgumentException e) {
                 // Call yo mom call yo dad!
             }
             
-<<<<<<< HEAD
-=======
-=======
-            updateSettings();
->>>>>>> c5dd2d1... Frameworks: Lockscreen Blur
-            mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
->>>>>>> parent of 3f032ff... clear conflicts
         }
     }
     

@@ -377,13 +377,12 @@ final class DisplayPowerController {
     private boolean mTwilightChanged;
     private boolean mAutoBrightnessSettingsChanged;
 
-<<<<<<< HEAD
     // Screen-off animation
     private static final int SCREEN_OFF_FADE = 0;
     private static final int SCREEN_OFF_CRT = 1;
     private static final int SCREEN_OFF_SCALE = 2;
     private int mScreenOffAnimation;
-=======
+
     private KeyguardServiceWrapper mKeyguardService;
 
     private final ServiceConnection mKeyguardConnection = new ServiceConnection() {
@@ -399,7 +398,6 @@ final class DisplayPowerController {
         }
 
     };
->>>>>>> c5dd2d1... Frameworks: Lockscreen Blur
 
     /**
      * Creates the display power controller.
