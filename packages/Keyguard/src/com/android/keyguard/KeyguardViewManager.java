@@ -109,10 +109,17 @@ public class KeyguardViewManager {
     private LockPatternUtils mLockPatternUtils;
     private Drawable mCustomBackground = null;
 
+<<<<<<< HEAD
     private boolean mUnlockKeyDown = false;
+=======
     private NotificationHostView mNotificationView;
     private NotificationViewManager mNotificationViewManager;
+<<<<<<< HEAD
     private boolean mLockscreenNotifications = true;
+=======
+    private boolean mLockscreenNotifications = false;
+>>>>>>> 4c6df9f... [1/2] FW: LockScreen Notifications by AOSPAL
+>>>>>>> parent of 6a50448... clear conflicts
 
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -144,6 +151,16 @@ public class KeyguardViewManager {
         @Override
         public void onChange(boolean selfChange) {
             setKeyguardParams();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            if(!isSeeThroughEnabled()) mCustomBackground = null;
+            mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
+        }
+    }
+
+=======
+>>>>>>> parent of 6a50448... clear conflicts
             updateSettings();
             try {
                 mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
@@ -164,10 +181,27 @@ public class KeyguardViewManager {
             mNotificationViewManager = null;
         }
 
+<<<<<<< HEAD
+=======
+    private void updateSettings() {
+        mLockscreenNotifications = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_NOTIFICATIONS, 0) == 1;
+        if(mLockscreenNotifications && mNotificationViewManager == null) {
+            mNotificationViewManager = new NotificationViewManager(mContext, this);
+        } else if(!mLockscreenNotifications && mNotificationViewManager != null) {
+            mNotificationViewManager.unregisterListeners();
+            mNotificationViewManager = null;
+        }
+
+>>>>>>> parent of 6a50448... clear conflicts
         mSeeThroughEnabled = Settings.System.getInt(mContext.getContentResolver(),
                             Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
         if(!mSeeThroughEnabled) mCustomBackground = null;
     }
+<<<<<<< HEAD
+=======
+>>>>>>> 4c6df9f... [1/2] FW: LockScreen Notifications by AOSPAL
+>>>>>>> parent of 6a50448... clear conflicts
     /**
      * @param context Used to create views.
      * @param viewManager Keyguard will be attached to this.
