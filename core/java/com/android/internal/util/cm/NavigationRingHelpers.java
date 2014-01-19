@@ -124,6 +124,8 @@ public class NavigationRingHelpers {
             resourceId = getRingerDrawableResId(context);
         } else if (action.equals(ACTION_KILL)) {
             resourceId = com.android.internal.R.drawable.ic_navigation_ring_killtask;
+        } else if (action.equals(ACTION_LAST_APP)) {
+            resourceId = com.android.internal.R.drawable.ic_navigation_ring_lastapp;
         } else if (action.equals(ACTION_POWER)) {
             resourceId = com.android.internal.R.drawable.ic_navigation_ring_power;
         } else if (action.equals(ACTION_TORCH)) {

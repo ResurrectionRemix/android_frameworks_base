@@ -1885,6 +1885,7 @@
   <java-symbol type="drawable" name="ic_navigation_ring_torch_on" />
   <java-symbol type="drawable" name="ic_navigation_ring_torch_off" />
   <java-symbol type="drawable" name="ic_navigation_ring_vibrate" />
+  <java-symbol type="drawable" name="ic_navigation_ring_lastapp" />
 
   <!-- Performance Profiles -->
   <java-symbol type="string" name="config_perf_profile_prop" />

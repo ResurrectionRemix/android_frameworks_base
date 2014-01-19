@@ -34,4 +34,5 @@ public class NavigationRingConstants {
     public static final String ACTION_TORCH =                 "torch";
     public static final String ACTION_NONE =                  "none";
     public static final String ACTION_APP =                   "app";
+    public static final String ACTION_LAST_APP =              "lastApp";
 }
