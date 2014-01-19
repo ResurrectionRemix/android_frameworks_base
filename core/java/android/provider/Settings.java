@@ -3221,11 +3221,8 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_LONG_BACK_ACTION = "lockscreen_long_back_action";
-
+        
         /**
-<<<<<<< HEAD
-         * Action for long-pressing home button on lock screen
-=======
          * Enables/disables lockscreen notifications
          * @hide
          */
@@ -3300,7 +3297,8 @@ public final class Settings {
 
         /**
          * Expanded desktop on/off state
->>>>>>> 4c6df9f... [1/2] FW: LockScreen Notifications by AOSPAL
+        /**
+         * Action for long-pressing home button on lock screen
          * @hide
          */
         public static final String LOCKSCREEN_LONG_HOME_ACTION = "lockscreen_long_home_action";
