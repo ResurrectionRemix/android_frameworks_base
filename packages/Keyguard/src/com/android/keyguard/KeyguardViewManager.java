@@ -148,19 +148,15 @@ public class KeyguardViewManager {
         public void onChange(boolean selfChange) {
             setKeyguardParams();
 <<<<<<< HEAD
+            updateSettings();
             try {
                 mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
             } catch(IllegalArgumentException e) {
                 // Call yo mom call yo dad!
             }
             
-<<<<<<< HEAD
-=======
-=======
-            updateSettings();
->>>>>>> c5dd2d1... Frameworks: Lockscreen Blur
+
             mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
->>>>>>> parent of 3f032ff... clear conflicts
         }
     }
     
