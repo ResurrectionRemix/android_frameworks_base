@@ -18,14 +18,9 @@ package com.android.systemui.statusbar.phone;
 
 import android.content.Context;
 import android.content.res.Resources;
-<<<<<<< HEAD
-=======
-import android.content.ContentResolver;
 import android.content.res.Configuration;
-import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
->>>>>>> 6b3fd90... Frameworks: notification drawer background (1/2)
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;

@@ -3538,13 +3538,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     cleanupRibbon();
                     inflateRibbon();
                     mRibbonView.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
             } else if (uri != null && uri.equals(Settings.System.getUriFor(
                     Settings.System.QUICK_SETTINGS_HIDE_LABELS))) {
                 if (mSettingsContainer != null) {
                     mQS.setupQuickSettings();
                     mSettingsContainer.updateResources();
-=======
+                }
             }else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NOTIFICATION_BACKGROUND))
                 || uri.equals(Settings.System.getUriFor(
@@ -3556,8 +3555,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 }
                 if (mSettingsPanel != null) {
                     mSettingsPanel.setBackgroundDrawables();
->>>>>>> 6b3fd90... Frameworks: notification drawer background (1/2)
-                }
+              }
             } else if (mSettingsContainer != null) {
                 mQS.setupQuickSettings();
                 if (mQuickAccessLayoutLinked && mRibbonQS != null) {
@@ -3612,8 +3610,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.getUriFor(Settings.System.QUICK_SETTINGS_HIDE_LABELS),
                     false, this, UserHandle.USER_ALL);
 
-<<<<<<< HEAD
-=======
             cr.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.APP_SIDEBAR_POSITION),
                     false, this, UserHandle.USER_ALL);
@@ -3630,7 +3626,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.getUriFor(Settings.System.NOTIFICATION_BACKGROUND_ALPHA),
                     false, this, UserHandle.USER_ALL);
 
->>>>>>> 6b3fd90... Frameworks: notification drawer background (1/2)
         }
     }
 }
