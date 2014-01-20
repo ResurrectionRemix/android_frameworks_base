@@ -11297,6 +11297,14 @@ package android.graphics {
     ctor public ColorFilter();
   }
 
+  public class ColorFilterMaker {
+    ctor public ColorFilterMaker();
+    method public static android.graphics.ColorFilter changeBWColor(int, float);
+    method public static android.graphics.ColorFilter changeColor(int, float);
+    method public static android.graphics.ColorFilter changeColorAlpha(int, float, float);
+    method public static android.graphics.ColorFilter changeHue(int, int);
+  }
+
   public class ColorMatrix {
     ctor public ColorMatrix();
     ctor public ColorMatrix(float[]);

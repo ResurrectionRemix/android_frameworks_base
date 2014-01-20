@@ -24,6 +24,7 @@ import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.ColorFilter;
+import android.graphics.ColorFilterMaker;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.os.BatteryManager;
@@ -96,7 +97,7 @@ public class HaloProperties extends FrameLayout {
     protected Drawable mHaloSpeechL, mHaloSpeechR, mHaloSpeechLD, mHaloSpeechRD;
 
     protected View mHaloBubble;
-    protected ImageView mHaloBg, mHaloIcon, mHaloOverlay;
+    protected ImageView mHaloBg, mHaloBgCustom, mHaloIcon, mHaloOverlay;
 
     protected View mHaloContentView, mHaloTickerContent, mHaloTickerWrapper;
     protected TextView mHaloTextView;
@@ -139,6 +140,7 @@ public class HaloProperties extends FrameLayout {
 
         mHaloBubble = mInflater.inflate(R.layout.halo_bubble, null);
         mHaloBg = (ImageView) mHaloBubble.findViewById(R.id.halo_bg);
+        mHaloBgCustom = (ImageView) mHaloBubble.findViewById(R.id.halo_bg_custom);
         mHaloIcon = (ImageView) mHaloBubble.findViewById(R.id.app_icon);
         mHaloOverlay = (ImageView) mHaloBubble.findViewById(R.id.halo_overlay);
 
@@ -147,6 +149,8 @@ public class HaloProperties extends FrameLayout {
         mHaloTickerContent = mHaloContentView.findViewById(R.id.ticker);
         mHaloTextView = (TextView) mHaloContentView.findViewById(R.id.bubble);
         mHaloTextView.setAlpha(1f);
+
+        updateColorView();
 
         mHaloNumberView = mInflater.inflate(R.layout.halo_number, null);
         mHaloNumberContainer = (RelativeLayout)mHaloNumberView.findViewById(R.id.container);
@@ -172,6 +176,7 @@ public class HaloProperties extends FrameLayout {
         final int newBubbleSize = (int)(mContext.getResources().getDimensionPixelSize(R.dimen.halo_bubble_size) * fraction);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(newBubbleSize, newBubbleSize);
         mHaloBg.setLayoutParams(layoutParams);
+        mHaloBgCustom.setLayoutParams(layoutParams);
         mHaloIcon.setLayoutParams(layoutParams);
         mHaloOverlay.setLayoutParams(layoutParams);
 
@@ -199,6 +204,7 @@ public class HaloProperties extends FrameLayout {
         mHaloNumberIcon.setLayoutParams(layoutParams4);
 
         updateResources(mLastContentStateLeft);
+        updateColorView();
     }
 
     public void setHaloX(int value) {
@@ -427,4 +433,20 @@ public class HaloProperties extends FrameLayout {
 
         mLastContentStateLeft = contentLeft;
     }
+
+    private void updateColorView() {
+        int haloColor = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.HALO_COLOR, 0xffbbbbbb);
+
+        if (haloColor != 0xffbbbbbb) {
+           mHaloBgCustom.setBackgroundResource(R.drawable.halo_bg_custom);
+           mHaloBgCustom.getBackground().setColorFilter(ColorFilterMaker.
+                            changeColorAlpha(haloColor, .32f, 0f)); 
+           mHaloBg.setVisibility(View.GONE);
+           mHaloBgCustom.setVisibility(View.VISIBLE);
+        } else {
+           mHaloBg.setVisibility(View.VISIBLE);
+           mHaloBgCustom.setVisibility(View.GONE);
+        }
+}
 }
