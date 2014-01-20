@@ -190,6 +190,8 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
     private float initialY = 0;
     private float mHaloSize = 1.0f;
 
+    private int mHaloColor = 0xffbbbbbb;
+
     // Halo dock position
     SharedPreferences preferences;
     private String KEY_HALO_POSITION_Y = "halo_position_y";
@@ -278,6 +280,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         mHaloHide =
                 Settings.Secure.getInt(resolver, Settings.Secure.HALO_HIDE, 0) == 1;
         mHaloSize = Settings.Secure.getFloat(resolver, Settings.Secure.HALO_SIZE, 1.0f);
+        mHaloColor = Settings.System.getInt(resolver, Settings.Secure.HALO_COLOR, 0xffbbbbbb);
         mHapticFeedback = Settings.System.getInt(resolver,
                     Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0;
         mIconSize = (int)(mContext.getResources()
@@ -287,7 +290,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
 
         // Init colors
         mPaintHoloGrey.setAntiAlias(true);
-        mPaintHoloGrey.setColor(0xffbbbbbb);
+        mPaintHoloGrey.setColor(mHaloColor);
         mPaintWhite.setAntiAlias(true);
         mPaintWhite.setColor(0xfff0f0f0);
         mPaintHoloRed.setAntiAlias(true);

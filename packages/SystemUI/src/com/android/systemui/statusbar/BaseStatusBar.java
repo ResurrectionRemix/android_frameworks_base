@@ -849,6 +849,13 @@ public abstract class BaseStatusBar extends SystemUI implements
                 restartHalo();
             }});
 
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.Secure.HALO_COLOR), false, new ContentObserver(new Handler()) {
+            @Override
+            public void onChange(boolean selfChange) {
+                restartHalo();
+            }});
+
         updateHalo();
     }
 
