@@ -144,7 +144,4 @@
     <color name="volume_icon_color">#ffffffff</color>
     <color name="volume_settings_icon_color">#7fffffff</color>
     <color name="volume_slider_inactive">#FFB0BEC5</color><!-- blue grey 200 -->
-
-    <!-- Network speed indicator -->
-    <color name="status_bar_traffic_color">#FFFFFFFF</color>
 </resources>
