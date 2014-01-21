@@ -3606,7 +3606,6 @@ public final class Settings {
         public static final String HALO_NOTIFY_COUNT = "halo_notify_count";
 
         /**
-<<<<<<< HEAD
          * HALO message box animation?, should default to 2 (flip animation)
          * @hide
          */
@@ -3632,18 +3631,12 @@ public final class Settings {
          * @hide
          */
         public static final String HALO_UNLOCK_PING = "halo_unlock_ping";
-=======
+        /**
          * Give SMS notifications a breathing effect
          * @hide
          */
-        public static final String KEY_SMS_BREATH = "sms_breath";
-
-        /**
-         * Give Missed call notifications a breathing effect
-         * @hide
-         */
+         
         public static final String KEY_MISSED_CALL_BREATH = "missed_call_breath";
->>>>>>> 4ba9c16... Breathing Missed Call notifications (3/3)
 
         /**
          * Performance profile
