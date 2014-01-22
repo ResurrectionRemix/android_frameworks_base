@@ -98,18 +98,11 @@ public final class BluetoothSap implements BluetoothProfile {
             Log.w(TAG,"Unable to register BluetoothStateChangeCallback",re);
         }
         Log.d(TAG, "BluetoothSap() call bindService");
-        doBind();
-    }
-
-    boolean doBind() {
-        Intent intent = new Intent(IBluetoothSap.class.getName());
-        ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
-        intent.setComponent(comp);
-        if (comp == null || !mContext.bindService(intent, mConnection, 0)) {
-            Log.e(TAG, "Could not bind to Bluetooth Sap Service with " + intent);
-            return false;
+        if (!context.bindService(new Intent(IBluetoothSap.class.getName()),
+                                 mConnection, 0)) {
+            Log.e(TAG, "Could not bind to Bluetooth SAP Service");
         }
-        return true;
+        Log.d(TAG, "BluetoothSap(), bindService called");
     }
 
     /*package*/ void close() {
@@ -143,20 +136,15 @@ public final class BluetoothSap implements BluetoothProfile {
     private IBluetoothStateChangeCallback mStateChangeCallback = new IBluetoothStateChangeCallback.Stub() {
 
         @Override
-        public void onBluetoothStateChange(boolean on) {
+        public void onBluetoothStateChange(boolean on) throws RemoteException {
             //Handle enable request to bind again.
-            Log.d(TAG, "onBluetoothStateChange on: " + on);
             if (on) {
-                try {
-                    if (mSapService == null) {
-                        Log.d(TAG, "onBluetoothStateChange call bindService");
-                        doBind();
-                    }
-                } catch (IllegalStateException e) {
-                    Log.e(TAG,"onBluetoothStateChange: could not bind to SAP service: ", e);
-                } catch (SecurityException e) {
-                    Log.e(TAG,"onBluetoothStateChange: could not bind to SAP service: ", e);
+                Log.d(TAG, "onBluetoothStateChange(on) call bindService");
+                if (!mContext.bindService(new Intent(IBluetoothSap.class.getName()),
+                                     mConnection, 0)) {
+                    Log.e(TAG, "Could not bind to Bluetooth SAP Service");
                 }
+                Log.d(TAG, "BluetoothSap(), bindService called");
             } else {
                 if (VDBG) Log.d(TAG,"Unbinding service...");
                 synchronized (mConnection) {

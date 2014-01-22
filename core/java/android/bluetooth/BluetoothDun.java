@@ -98,20 +98,12 @@ public final class BluetoothDun implements BluetoothProfile {
             Log.w(TAG,"Unable to register BluetoothStateChangeCallback",re);
         }
         Log.d(TAG, "BluetoothDun() call bindService");
-        doBind();
-    }
-
-    boolean doBind() {
-        Intent intent = new Intent(IBluetoothDun.class.getName());
-        ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
-        intent.setComponent(comp);
-        if (comp == null || !mContext.bindService(intent, mConnection, 0)) {
-            Log.e(TAG, "Could not bind to Bluetooth Dun Service with " + intent);
-            return false;
+        if (!context.bindService(new Intent(IBluetoothDun.class.getName()),
+                                 mConnection, 0)) {
+            Log.e(TAG, "Could not bind to Bluetooth DUN Service");
         }
-        return true;
+        Log.d(TAG, "BluetoothDun(), bindService called");
     }
-
 
     /*package*/ void close() {
         if (VDBG) log("close()");
@@ -145,20 +137,15 @@ public final class BluetoothDun implements BluetoothProfile {
                                     new IBluetoothStateChangeCallback.Stub() {
 
         @Override
-        public void onBluetoothStateChange(boolean on) {
+        public void onBluetoothStateChange(boolean on) throws RemoteException {
             //Handle enable request to bind again.
-            Log.d(TAG, "onBluetoothStateChange on: " + on);
             if (on) {
-                try {
-                    if (mDunService == null) {
-                        Log.d(TAG, "onBluetoothStateChange call bindService");
-                        doBind();
-                    }
-                } catch (IllegalStateException e) {
-                    Log.e(TAG,"onBluetoothStateChange: could not bind to DUN service: ", e);
-                } catch (SecurityException e) {
-                    Log.e(TAG,"onBluetoothStateChange: could not bind to DUN service: ", e);
+                Log.d(TAG, "onBluetoothStateChange(on) call bindService");
+                if (!mContext.bindService(new Intent(IBluetoothDun.class.getName()),
+                                     mConnection, 0)) {
+                    Log.e(TAG, "Could not bind to Bluetooth DUN Service");
                 }
+                Log.d(TAG, "BluetoothDun(), bindService called");
             } else {
                 if (VDBG) Log.d(TAG,"Unbinding service...");
                 synchronized (mConnection) {
