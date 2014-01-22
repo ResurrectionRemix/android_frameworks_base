@@ -5636,7 +5636,8 @@ public class WindowManagerService extends IWindowManager.Stub
 
                     // We keep on including windows until we go past a full-screen
                     // window.
-                    including = !ws.mIsImWindow && !ws.isFullscreen(dw, dh);
+                    boolean fullscreen = ws.isFullscreen(dw, dh);
+                    including = !ws.mIsImWindow && !fullscreen;
 
                     final WindowStateAnimator winAnim = ws.mWinAnimator;
                     if (maxLayer < winAnim.mSurfaceLayer) {
