@@ -3392,53 +3392,41 @@ public final class Settings {
         public static final String POWER_MENU_SOUND_ENABLED = "power_menu_silent_enabled";
 
         /**
-<<<<<<< HEAD
          * Swap volume buttons when the screen is rotated
          * 0 - Disabled
          * 1 - Enabled (screen is rotated by 90 or 180 degrees: phone, hybrid)
          * 2 - Enabled (screen is rotated by 180 or 270 degrees: tablet)
          * @hide
          */
-=======
-          * Swap volume buttons when the screen is rotated
-          * 0 - Disabled
-          * 1 - Enabled (screen is rotated by 90 or 180 degrees: phone, hybrid)
-          * 2 - Enabled (screen is rotated by 180 or 270 degrees: tablet)
-          * @hide
-          */
->>>>>>> 95c3215... [1/2] FB: Slim IME options
+         
         public static final String SWAP_VOLUME_KEYS_ON_ROTATION = "swap_volume_keys_on_rotation";
 
         /**
-         * Volume keys control cursor in text fields (default is 0)
-         * 0 - Disabled
-         * 1 - Volume up/down moves cursor left/right
-         * 2 - Volume up/down moves cursor right/left
-         * @hide
-         */
-        public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
-<<<<<<< HEAD
-=======
-
-        /**
-         * Override and forcefully disable the fullscreen keyboard
-         * @hide
-         */
-        public static final String DISABLE_FULLSCREEN_KEYBOARD = "disable_fullscreen_keyboard";
-
-        /**
-         * Automatic keyboard rotation timeout.  0 to disable completely.
-         * @hide
-         */
-        public static final String KEYBOARD_ROTATION_TIMEOUT = "keyboard_rotation_timeout";
-
-        /**
-         * Forces formal text input.  1 to replace emoticon key with enter key.
-         * @hide
-         */
-        public static final String FORMAL_TEXT_INPUT = "formal_text_input";
->>>>>>> 95c3215... [1/2] FB: Slim IME options
-
+          * Volume keys control cursor in text fields (default is 0)
+          * 0 - Disabled
+          * 1 - Volume up/down moves cursor left/right
+          * 2 - Volume up/down moves cursor right/left
+          * @hide
+          */
+         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
+ 
+         /**
+          * Override and forcefully disable the fullscreen keyboard
+          * @hide
+          */
+         public static final String DISABLE_FULLSCREEN_KEYBOARD = "disable_fullscreen_keyboard";
+ 
+         /**
+          * Automatic keyboard rotation timeout.  0 to disable completely.
+          * @hide
+          */
+         public static final String KEYBOARD_ROTATION_TIMEOUT = "keyboard_rotation_timeout";
+ 
+         /**
+          * Forces formal text input.  1 to replace emoticon key with enter key.
+          * @hide
+          */
+         public static final String FORMAL_TEXT_INPUT = "formal_text_input";
         /**
          * toggle to "fix" the following: (found in NotificationManagerService)
          *  new in 4.2: if there was supposed to be a sound and we're in vibrate mode,
