@@ -1460,23 +1460,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 .start();
         }
     }
-
-<<<<<<< HEAD
-=======
-
-    protected void updateNotificationShortcutsVisibility(boolean vis) {
-        updateNotificationShortcutsVisibility(vis, false);
-    }
-
+    
     protected boolean hasVisibleNotifications() {
-        return mNotificationData.hasVisibleItems();
-    }
-
-    protected boolean hasClearableNotifications() {
-        return mNotificationData.hasClearableItems();
-    }
-
->>>>>>> c9603a5... Return: Smart Pulldown [1/2]
+         return mNotificationData.hasVisibleItems();
+     }
+ 
+     protected boolean hasClearableNotifications() {
+         return mNotificationData.hasClearableItems();
+     }
     @Override
     protected void setAreThereNotifications() {
         final boolean any = mNotificationData.size() > 0;
