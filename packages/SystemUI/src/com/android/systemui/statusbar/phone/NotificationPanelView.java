@@ -155,20 +155,33 @@ public class NotificationPanelView extends PanelView {
                     mGestureStartY = event.getY(0);
                     mTrackingSwipe = isFullyExpanded();
                     mOkToFlip = getExpandedHeight() == 0;
-                    int quickPulldownMode = Settings.System.getIntForUser(
-                             getContext().getContentResolver(), Settings.System.QS_QUICK_PULLDOWN,
-                             0, UserHandle.USER_CURRENT);
-                     int smartPulldownMode = Settings.System.getIntForUser(
-                             getContext().getContentResolver(), Settings.System.QS_SMART_PULLDOWN,
-                             0, UserHandle.USER_CURRENT);
-                     if (smartPulldownMode == 1 && !mStatusBar.hasClearableNotifications()) {
+<<<<<<< HEAD
+                    if (event.getX(0) > getWidth() * (1.0f - STATUS_BAR_SETTINGS_RIGHT_PERCENTAGE) &&
+                            Settings.System.getIntForUser(getContext().getContentResolver(),
+                                    Settings.System.QS_QUICK_PULLDOWN, 0, UserHandle.USER_CURRENT) == 1) {
                         flip = true;
-                     } else if (event.getX(0) < getWidth() * (1.0f - STATUS_BAR_SETTINGS_LEFT_PERCENTAGE) &&
-                              Settings.System.getIntForUser(getContext().getContentResolver(),
-                                      Settings.System.QS_QUICK_PULLDOWN, 0, UserHandle.USER_CURRENT) == 2) {
-						 flip = true;				  
-                     } else if (smartPulldownMode == 2 && !mStatusBar.hasVisibleNotifications()) {
-                         flip = true;
+                    } else if (event.getX(0) < getWidth() * (1.0f - STATUS_BAR_SETTINGS_LEFT_PERCENTAGE) &&
+                            Settings.System.getIntForUser(getContext().getContentResolver(),
+                                    Settings.System.QS_QUICK_PULLDOWN, 0, UserHandle.USER_CURRENT) == 2) {
+=======
+                    int quickPulldownMode = Settings.System.getIntForUser(
+                            getContext().getContentResolver(), Settings.System.QS_QUICK_PULLDOWN,
+                            0, UserHandle.USER_CURRENT);
+                    int smartPulldownMode = Settings.System.getIntForUser(
+                            getContext().getContentResolver(), Settings.System.QS_SMART_PULLDOWN,
+                            0, UserHandle.USER_CURRENT);
+                    if (smartPulldownMode == 1 && !mStatusBar.hasClearableNotifications()) {
+                        flip = true;
+                    } else if (smartPulldownMode == 2 && !mStatusBar.hasVisibleNotifications()) {
+                        flip = true;
+                    } else if (quickPulldownMode == 1
+                            && mGestureStartX > getWidth() * (1.0f - STATUS_BAR_RIGHT_PERCENTAGE)) {
+                        flip = true;
+                    } else if (quickPulldownMode == 2
+                            && mGestureStartX < getWidth() * (1.0f - STATUS_BAR_LEFT_PERCENTAGE)) {
+>>>>>>> c9603a5... Return: Smart Pulldown [1/2]
+                        flip = true;
+                    }
                     break;
                 case MotionEvent.ACTION_MOVE:
                     final float deltaX = Math.abs(event.getX(0) - mGestureStartX);
