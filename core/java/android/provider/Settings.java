@@ -3104,19 +3104,7 @@ public final class Settings {
         public static final String MENU_UNLOCK_SCREEN = "menu_unlock_screen";
 
         /**
-<<<<<<< HEAD
          * Whether to wake the screen with the home key, the value is boolean.
-=======
-         * Quick Settings Smart Pulldown
-         *
-         * @hide
-         */
-        public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
-
-        /**
-         * Display style of the status bar battery information
-         * default: 0
->>>>>>> c9603a5... Return: Smart Pulldown [1/2]
          * @hide
          */
         public static final String HOME_WAKE_SCREEN = "home_wake_screen";
