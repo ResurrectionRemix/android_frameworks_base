@@ -541,6 +541,171 @@ public class NavigationBarView extends LinearLayout {
         mCurrentView = mRotatedViews[mContext.getResources().getConfiguration().orientation];
 
         watchForAccessibilityChanges();
+<<<<<<< HEAD
+=======
+        setupNavigationButtons();
+        setDisabledFlags(mDisabledFlags);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_BUTTONS),
+                false, mSettingsObserver);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
+    }
+
+    private void readUserConfig() {
+        mNavButtons.clear();
+        String buttons = Settings.System.getString(getContext().getContentResolver(), Settings.System.NAVIGATION_BAR_BUTTONS);
+        if (buttons == null || buttons.isEmpty()) {
+            // use default buttons
+            mNavButtons.add(new AwesomeButtonInfo(
+                    AwesomeConstant.ACTION_BACK.value(),    /* short press */
+                    null,                                   /* double press */
+                    null,                                   /* long press */
+                    null                                    /* icon */
+            ));
+            mNavButtons.add(new AwesomeButtonInfo(
+                    AwesomeConstant.ACTION_HOME.value(),           /* short press */
+                    null,                                          /* double press */
+                    null,                                          /* long press */
+                    null                                           /* icon */
+            ));
+            mNavButtons.add(new AwesomeButtonInfo(
+                    AwesomeConstant.ACTION_RECENTS.value(),        /* short press */
+                    null,                                          /* double press */
+                    null,                                          /* long press */
+                    null                                           /* icon */
+            ));
+        } else {
+            /**
+             * Format:
+             *
+             * singleTapAction,doubleTapAction,longPressAction,iconUri|singleTap...
+             */
+            String[] userButtons = buttons.split("\\|");
+            if (userButtons != null) {
+                for (String button : userButtons) {
+                    String[] actions = button.split(",", 4);
+                    mNavButtons.add(new AwesomeButtonInfo(actions[0], actions[1], actions[2], actions[3]));
+                }
+            }
+        }
+    }
+
+    private void setupNavigationButtons() {
+        readUserConfig();
+        final boolean stockThreeButtonLayout = mNavButtons.size() == 3;
+        int separatorSize = (int) mMenuButtonWidth;
+
+        for (int i = 0; i <= 1; i++) {
+            boolean landscape = (i == 1);
+
+            LinearLayout navButtons = (LinearLayout) (landscape ? mRotatedViews[Surface.ROTATION_90]
+                    .findViewById(R.id.nav_buttons) : mRotatedViews[Surface.ROTATION_0]
+                    .findViewById(R.id.nav_buttons));
+            LinearLayout lightsOut = (LinearLayout) (landscape ? mRotatedViews[Surface.ROTATION_90]
+                    .findViewById(R.id.lights_out) : mRotatedViews[Surface.ROTATION_0]
+                    .findViewById(R.id.lights_out));
+
+            navButtons.removeAllViews();
+            lightsOut.removeAllViews();
+
+            if (mTablet) {
+                // offset menu button
+                addSeparator(navButtons, landscape, (int) mMenuButtonWidth, 0f);
+                addSeparator(lightsOut, landscape, (int) mMenuButtonWidth, 0f);
+
+                // eats up that extra mTablet space
+                addSeparator(navButtons, landscape, 0, stockThreeButtonLayout ? 1f : 0.5f);
+                addSeparator(lightsOut, landscape, 0, stockThreeButtonLayout ? 1f : 0.5f);
+            } else {
+                // on phone ui this offsets the right side menu button
+                addSeparator(navButtons, landscape, separatorSize, 0f);
+                addSeparator(lightsOut, landscape, separatorSize, 0f);
+            }
+
+            for (int j = 0; j < mNavButtons.size(); j++) {
+                // create the button
+                AwesomeButtonInfo info = mNavButtons.get(j);
+                KeyButtonView button = new KeyButtonView(getContext(), null);
+                button.setButtonActions(info);
+                if (mTablet) {
+                    if (mNavButtons.size() <= 4) {
+                        // use stock tablet button spacing, even with 4 buttons it seems to work
+                        int padding = getResources().getDimensionPixelSize(landscape
+                                ? R.dimen.navigation_tablet_key_padding_land
+                                : R.dimen.navigation_tablet_key_padding
+                        );
+                        int width = getResources().getDimensionPixelSize(landscape
+                                ? R.dimen.navigation_tablet_key_width_land
+                                : R.dimen.navigation_tablet_key_width
+                        );
+                        button.setLayoutParams(getLayoutParams(landscape, width, 0f));
+                        button.setPaddingRelative(padding, 0, padding, 0);
+                    } else {
+                        // 5 or more buttons don't fit in portrait, so spread them all out equally
+                        button.setLayoutParams(getLayoutParams(landscape, mButtonWidth, 1f));
+                    }
+
+                    button.setGlowBackground(R.drawable.ic_sysbar_highlight);
+                } else {
+                    button.setLayoutParams(getLayoutParams(landscape, mButtonWidth, stockThreeButtonLayout ? 0f : 0.5f));
+                    button.setGlowBackground(landscape ? R.drawable.ic_sysbar_highlight_land
+                            : R.drawable.ic_sysbar_highlight);
+                }
+
+                // add button
+                addButton(navButtons, button, landscape);
+                addLightsOutButton(lightsOut, button, landscape, false);
+
+                if (!mTablet && stockThreeButtonLayout && j != (mNavButtons.size() - 1)) {
+                    // in the case of a 'stock' 3-button layout, the buttons need to be spaced further out apart
+                    addSeparator(navButtons, landscape, separatorSize, 0.5f);
+                    addSeparator(lightsOut, landscape, separatorSize, 0.5f);
+                }
+            }
+
+            // legacy menu button
+            AwesomeButtonInfo menuButtonInfo = new AwesomeButtonInfo(AwesomeConstant.ACTION_MENU.value(),
+                    null, null, null);
+            KeyButtonView menuButton = new KeyButtonView(getContext(), null);
+            menuButton.setButtonActions(menuButtonInfo);
+            menuButton.setImageResource(R.drawable.ic_sysbar_menu);
+            menuButton.setLayoutParams(getLayoutParams(landscape, mMenuButtonWidth, 0f));
+            menuButton.setGlowBackground(landscape ? R.drawable.ic_sysbar_highlight_land
+                    : R.drawable.ic_sysbar_highlight);
+            menuButton.setVisibility(mShowMenu ? View.VISIBLE : View.INVISIBLE);
+            if (mMenuButtonId == 0) {
+                // assign the same id for layout and horizontal buttons
+                mMenuButtonId = View.generateViewId();
+            }
+            menuButton.setId(mMenuButtonId);
+            // MENU BUTTON NOT YET ADDED ANYWHERE!
+
+            if (mTablet) {
+                // om nom
+                addSeparator(navButtons, landscape, 0,  stockThreeButtonLayout ? 1f : 0.5f);
+                addSeparator(lightsOut, landscape, 0,  stockThreeButtonLayout ? 1f : 0.5f);
+
+                // add the button last so it hangs on the edge
+                addButton(navButtons, menuButton, landscape);
+                addLightsOutButton(lightsOut, menuButton, landscape, true);
+            } else {
+                addButton(navButtons, menuButton, landscape);
+                addLightsOutButton(lightsOut, menuButton, landscape, true);
+            }
+        }
+        invalidate();
+>>>>>>> 8e946ef... SystemUI: fix nav bar alignment with 4+ buttons
     }
 
     private void watchForAccessibilityChanges() {
