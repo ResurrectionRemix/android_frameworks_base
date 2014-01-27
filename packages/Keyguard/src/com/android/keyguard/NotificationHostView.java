@@ -38,6 +38,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.service.notification.StatusBarNotification;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -77,7 +78,6 @@ public class NotificationHostView extends FrameLayout {
     private int mNotificationMaxHeight, mNotificationMaxRowHeight;
     private int mDisplayWidth, mDisplayHeight;
     private int mShownNotifications = 0;
-    private boolean mDynamicWidth;
 
     private ViewMediatorCallback mViewMediatorCallback;
     private LinearLayout mNotifView;
@@ -139,13 +139,10 @@ public class NotificationHostView extends FrameLayout {
         private static final int CLICK_THRESHOLD = 10;
 
         private StatusBarNotification statusBarNotification;
-        private Runnable onActionUp;
-        private Runnable onAnimationEnd;
-        private int animations = 0;
-        private boolean swipeGesture = false;
-        private boolean pointerDown = false;
-        private boolean bigContentView;
-        private boolean switchView = false;
+        private int animationCount = 0;
+        private long animationEndTime = 0;
+        private boolean animating = false;
+        private boolean preventClick = false;
         private float initialX;
         private float delta;
         private boolean shown = false;
@@ -153,34 +150,40 @@ public class NotificationHostView extends FrameLayout {
         private float previousTime = 0;
         private float speedX = 0;
         private float count = 0;
+        private boolean swipeGesture = false;
 
         public NotificationView(Context context, StatusBarNotification sbn) {
             super(context);
             statusBarNotification = sbn;
         }
 
-        public ViewPropertyAnimator animateChild() {
-            final ViewPropertyAnimator animation = getChildAt(0).animate();
+        public ViewPropertyAnimator animate() {
+            final ViewPropertyAnimator animation = super.animate();
             animation.withEndAction(new Runnable() {
                public void run() {
-                   animations--;
-                   if (animations == 0 && onAnimationEnd != null){
-                       onAnimationEnd.run();
-                       onAnimationEnd = null;
+                   animationCount--;
+                   if (animationCount == 0) {
+                       animationEndTime = 0;
+                       animating = false;
                    }
                }
             });
             animation.withStartAction(new Runnable() {
                 public void run() {
-                    animations++;
+                    animating = true;
+                    animationCount++;
+                    long endTime = System.currentTimeMillis() + animation.getDuration();
+                    if (endTime > animationEndTime) {
+                        animationEndTime = endTime;
+                    }
                 }
-            });
+             });
             return animation;
         }
 
         @Override
         public void onClick(View v) {
-            if (!swipeGesture) {
+            if (!preventClick) {
                 PendingIntent i = statusBarNotification.getNotification().contentIntent;
                 if (i != null) {
                     try {
@@ -190,7 +193,7 @@ public class NotificationHostView extends FrameLayout {
                             | Intent.FLAG_ACTIVITY_NEW_TASK
                             | Intent.FLAG_ACTIVITY_SINGLE_TOP
                             | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
+                        if (i.isActivity()) ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
                         i.send();
                     } catch (CanceledException ex) {
                         Log.e(TAG, "intent canceled!");
@@ -209,7 +212,7 @@ public class NotificationHostView extends FrameLayout {
                     case MotionEvent.ACTION_DOWN:
                         initialX = event.getX();
                         delta = initialX - v.getX();
-                        pointerDown = true;
+                        preventClick = false;
                         break;
                     case MotionEvent.ACTION_MOVE:
                         float time = System.nanoTime() / 1000000.0f;
@@ -227,6 +230,7 @@ public class NotificationHostView extends FrameLayout {
                                     (int)(Math.abs(xr) / v.getWidth() * MAX_ALPHA), 0, 0, 0));
                         if (swipeGesture  || Math.abs(event.getX() - initialX) > CLICK_THRESHOLD) {
                             swipeGesture = true;
+                            preventClick = true;
                             v.cancelPendingInputEvents();
                             mScrollView.requestDisallowInterceptTouchEvent(true);
                             v.setTranslationX(x);
@@ -234,35 +238,23 @@ public class NotificationHostView extends FrameLayout {
                         break;
                     case MotionEvent.ACTION_UP:
                         speedX /= count;
-                        actionUp();
+                        if (v.getX() - (mDisplayWidth - v.getWidth())< -SWIPE * mDisplayWidth &&
+                                (NotificationViewManager.config.dismissAll || statusBarNotification.isClearable())) {
+                            removeNotification(statusBarNotification);
+                        } else if (v.getX() < (SWIPE * mDisplayWidth)) {
+                            showNotification(this);
+                        } else if (v.getX() < ((1 - SWIPE) * mDisplayWidth) && speedX < 0) {
+                            showNotification(this);
+                        } else {
+                            hideNotification(this);
+                        }
+                        speedX = 0;
+                        count = 0;
+                        swipeGesture = false;
                         break;
                 }
             }
             return false;
-        }
-
-        private void actionUp() {
-            View v = getChildAt(0);
-            if (v != null && swipeGesture) {
-                if (v.getX() - (mDisplayWidth - v.getWidth())< -SWIPE * mDisplayWidth &&
-                        (NotificationViewManager.config.dismissAll || statusBarNotification.isClearable())) {
-                    removeNotification(statusBarNotification);
-                } else if (v.getX() < (SWIPE * mDisplayWidth)) {
-                    showNotification(this);
-                    onAnimationEnd = onActionUp;
-                } else if (v.getX() < ((1 - SWIPE) * mDisplayWidth) && speedX < 0) {
-                    showNotification(this);
-                    onAnimationEnd = onActionUp;
-                } else {
-                    hideNotification(this);
-                    onAnimationEnd = onActionUp;
-                }
-            }
-            onActionUp = null;
-            speedX = 0;
-            count = 0;
-            swipeGesture = false;
-            pointerDown = false;
         }
 
         @Override
@@ -282,7 +274,6 @@ public class NotificationHostView extends FrameLayout {
         mNotificationMaxRowHeight = mContext.getResources().getDimensionPixelSize(R.dimen.notification_row_max_height);
         mNotificationManager = INotificationManager.Stub.asInterface(
                 ServiceManager.getService(Context.NOTIFICATION_SERVICE));
-        mDynamicWidth = getResources().getBoolean(R.bool.config_lnDynamicWidth);
     }
 
     @Override
@@ -363,16 +354,7 @@ public class NotificationHostView extends FrameLayout {
             }
         }
     }
-    View.OnLayoutChangeListener mLayoutListener = new View.OnLayoutChangeListener() {
-        public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                int oldLeft, int oldTop, int oldRight, int oldBottom) {
-            NotificationView nv = (NotificationView) v;
-            if (nv != null && nv.shown) {
-                nv.getChildAt(0).setX(mDisplayWidth - nv.getChildAt(0).getWidth());
-            }
-            v.removeOnLayoutChangeListener(this);
-        }
-    };
+
     private void handleAddNotification(final boolean showNotification, boolean forceBigContentView) {
         final NotificationView nv = mNotificationsToAdd.poll();
         Log.d(TAG, "Add: " + describeNotification(nv.statusBarNotification));
@@ -385,17 +367,13 @@ public class NotificationHostView extends FrameLayout {
             }
             forceBigContentView = true;
         }
-        final NotificationView oldView = mNotifications.get(describeNotification(sbn));
-        final boolean reposted = oldView != null;
-        if (reposted && oldView.bigContentView) forceBigContentView = true;
-        boolean bigContentView = (reposted && oldView.bigContentView) ||
-                (sbn.getNotification().bigContentView != null &&
-                (NotificationViewManager.config.expandedView || sbn.getNotification().contentView == null));
-        nv.bigContentView = bigContentView && forceBigContentView;
-        RemoteViews rv = nv.bigContentView ? sbn.getNotification().bigContentView : sbn.getNotification().contentView;
+        boolean bigContentView = sbn.getNotification().bigContentView != null &&
+                (NotificationViewManager.config.expandedView || sbn.getNotification().contentView == null);
+        RemoteViews rv = forceBigContentView && bigContentView ? sbn.getNotification().bigContentView : sbn.getNotification().contentView;
         final View remoteView = rv.apply(mContext, null);
         remoteView.setBackgroundColor(0x33ffffff);
-        remoteView.setLayoutParams(new LayoutParams(mDynamicWidth ? LayoutParams.WRAP_CONTENT : LayoutParams.MATCH_PARENT,
+        boolean dynamicWidth = getResources().getBoolean(R.bool.config_lnDynamicWidth);
+        remoteView.setLayoutParams(new LayoutParams(dynamicWidth ? LayoutParams.WRAP_CONTENT : LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT));
         remoteView.setX(mDisplayWidth - mNotificationMinHeight);
         if (bigContentView && forceBigContentView) {
@@ -403,47 +381,49 @@ public class NotificationHostView extends FrameLayout {
         }
         remoteView.setAlpha(1f);
         if (bigContentView && sbn.getNotification().contentView != null) {
-            final boolean bc = !forceBigContentView;
-            final NotificationView notifView = reposted ? oldView : nv;
-            remoteView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    notifView.onActionUp = null;
-                    notifView.onAnimationEnd = null;
-                    notifView.bigContentView = bc;
-                    notifView.switchView = true;
-                    notifView.pointerDown = false;
-                    notifView.swipeGesture = false;
-                    notifView.speedX = 0;
-                    notifView.count = 0;
-                    addNotification(sbn, false, bc);
-                    return true;
-                }
-            });
+            if (forceBigContentView) {
+                remoteView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        addNotification(sbn, false, false);
+                        return true;
+                    }
+                });
+            } else {
+                remoteView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        addNotification(sbn, false, true);
+                        return true;
+                    }
+                });
+            }
         }
 
-        if (reposted){
+        if (mNotifications.containsKey(describeNotification(sbn))){
             //The notification already exists, so it was just changed. Remove the old view and add the new one
-            Runnable replaceView = new Runnable() {
+            final NotificationView oldView = (NotificationView) mNotifications.get(describeNotification(sbn));
+            Runnable r = new Runnable() {
                 public void run() {
-                    float oldX = oldView.getChildAt(0).getX();
-                    final float oldRelX = oldX - (mDisplayWidth - oldView.getChildAt(0).getWidth());
+                    final float oldX = oldView.getChildAt(0).getX() - (mDisplayWidth - oldView.getChildAt(0).getWidth());
                     oldView.removeAllViews();
                     oldView.addView(remoteView);
-                    oldView.addOnLayoutChangeListener(mLayoutListener);
                     oldView.statusBarNotification = sbn;
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            remoteView.setX(oldX + (mDisplayWidth - remoteView.getWidth()));
+                            if (showNotification) {
+                                showNotification(oldView);
+                            }
+                        }
+                    });
                 }
             };
-            if (oldView.animations > 0 || (!oldView.shown && showNotification && !oldView.pointerDown)) {
-                if (showNotification) showNotification(sbn);
-                oldView.onAnimationEnd = replaceView;
-            } else if ((oldView.pointerDown && !oldView.switchView) || oldView.swipeGesture) {
-                oldView.onActionUp = replaceView;
+            if (oldView.animating) {
+                mHandler.postDelayed(r, System.currentTimeMillis() - oldView.animationEndTime);
             } else {
-                replaceView.run();
+                r.run();
             }
-            oldView.bigContentView = nv.bigContentView;
-            oldView.switchView = false;
             return;
         }
 
@@ -456,15 +436,11 @@ public class NotificationHostView extends FrameLayout {
         if (showNotification) {
             // showNotification uses v.getWidth but until the layout is done, this just returns 0.
             // by using mHandler.post, we wait until getWidth returns the real width
-            if (mDynamicWidth) {
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        showNotification(nv);
-                    }
-                });
-            } else {
-                showNotification(nv);
-            }
+            mHandler.post(new Runnable() {
+                public void run() {
+                    showNotification(nv);
+                }
+            });
         }
     }
 
@@ -495,9 +471,9 @@ public class NotificationHostView extends FrameLayout {
                 mDismissedNotifications.put(describeNotification(sbn), sbn);
             }
             int duration =  getDurationFromDistance(v.getChildAt(0), v.shown ? -mDisplayWidth : mDisplayWidth, 0);
-            v.animateChild().setDuration(duration).alpha(0).start();
+            v.getChildAt(0).animate().setDuration(duration).alpha(0).start();
             mNotifications.remove(describeNotification(sbn));
-            animateTranslation(v, v.shown ? -mDisplayWidth : mDisplayWidth, 0,
+            animateTranslation(v.getChildAt(0), v.shown ? -mDisplayWidth : mDisplayWidth, 0,
                     duration,
                     new AnimatorListener() {
                         public void onAnimationStart(Animator animation) {}
@@ -527,10 +503,10 @@ public class NotificationHostView extends FrameLayout {
     private void showNotification(NotificationView nv) {
         if (!NotificationViewManager.config.privacyMode) {
             View v = nv.getChildAt(0);
-            int targetX = mDynamicWidth ? (mDisplayWidth - v.getWidth()) : 0;
+            int targetX = mDisplayWidth - v.getWidth();
             int duration = getDurationFromDistance(v, targetX, 0, Math.abs(nv.speedX));
-            nv.animateChild().setDuration(duration).alpha(1);
-            animateTranslation(nv, targetX, 0, duration);
+            v.animate().setDuration(duration).alpha(1);
+            animateTranslation(v, targetX, 0, duration);
             if (mShownNotifications == 0 ||
                     (mShownNotifications == 1 && nv.shown)) {
                 animateBackgroundColor(Color.argb(MAX_ALPHA, 0, 0, 0), duration);
@@ -549,7 +525,7 @@ public class NotificationHostView extends FrameLayout {
         int duration = getDurationFromDistance(v, targetX, (int)v.getY(), Math.abs(nv.speedX));
         if (mShownNotifications > 0 && nv.shown) mShownNotifications--;
         if (mShownNotifications == 0) animateBackgroundColor(0, duration);
-        animateTranslation(nv, targetX, 0, duration);
+        animateTranslation(v, targetX, 0, duration);
         nv.shown = false;
     }
 
@@ -587,12 +563,12 @@ public class NotificationHostView extends FrameLayout {
         }
     }
 
-    private void animateTranslation(final NotificationView v, final float targetX, final float targetY, final int duration) {
+    private void animateTranslation(final View v, final float targetX, final float targetY, final int duration) {
         animateTranslation(v, targetX, targetY, duration, null);
     }
 
-    private void animateTranslation(final NotificationView v, final float targetX, final float targetY, final int duration, final AnimatorListener al) {
-        ViewPropertyAnimator vpa = v.animateChild();
+    private void animateTranslation(final View v, final float targetX, final float targetY, final int duration, final AnimatorListener al) {
+        ViewPropertyAnimator vpa = v.animate();
         if (al != null) {
             vpa.setListener(al);
         }
@@ -606,13 +582,6 @@ public class NotificationHostView extends FrameLayout {
 
     public boolean containsNotification(StatusBarNotification sbn) {
         return mNotifications.containsKey(describeNotification(sbn));
-    }
-
-    public Notification getNotification(StatusBarNotification sbn) {
-        if (containsNotification(sbn))
-            return mNotifications.get(describeNotification(sbn)).statusBarNotification.getNotification();
-        else
-            return null;
     }
 
     private String describeNotification(StatusBarNotification sbn) {
