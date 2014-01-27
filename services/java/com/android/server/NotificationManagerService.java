@@ -817,11 +817,15 @@ public class NotificationManagerService extends INotificationManager.Stub
     @Override
     public void registerListener(final INotificationListener listener,
             final ComponentName component, final int userid) {
+<<<<<<< HEAD
+	if (!component.getPackageName().equals("HaloComponent")) checkCallerIsSystem();        
+=======
         final int permission = mContext.checkCallingPermission(
                 android.Manifest.permission.SYSTEM_NOTIFICATION_LISTENER);
         if (permission == PackageManager.PERMISSION_DENIED) {
             if (!component.getPackageName().equals("HaloComponent")) checkCallerIsSystem();
         }
+>>>>>>> 99d865b... Lockscreen Notifications [1/2]
 
         synchronized (mNotificationList) {
             try {
