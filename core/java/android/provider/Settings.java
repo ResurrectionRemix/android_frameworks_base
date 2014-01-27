@@ -3824,14 +3824,6 @@ public final class Settings {
         public static final String RECENTS_RAM_BAR_ACTIVE_APPS_COLOR = "recents_ram_bar_active_apps_color";
 
         /**
-         *
-         * Whether to enable torch by long pressing power from a screen off state
-         *
-         * @hide
-         */
-        public static final String ENABLE_FAST_TORCH = "enable_fast_torch";
-
-        /**
          * Whether to show the battery bar
          * @hide
          */
