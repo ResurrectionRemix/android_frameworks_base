@@ -3837,11 +3837,10 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
 
         /**
-<<<<<<< HEAD
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_THICKNESS = "statusbar_battery_bar_thickness";
-=======
+         /**
          * Enables/disables lockscreen notifications
          * @hide
          */
@@ -3920,7 +3919,6 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_NOTIFICATIONS_EXCLUDED_APPS = "lockscreen_notifications_excluded_apps";
->>>>>>> 99d865b... Lockscreen Notifications [1/2]
 
         /**
          * @hide
