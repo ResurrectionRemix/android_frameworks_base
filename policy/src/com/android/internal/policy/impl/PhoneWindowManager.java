@@ -684,12 +684,34 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+<<<<<<< HEAD
+=======
+                    Settings.System.HARDWARE_KEY_REBINDING), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+<<<<<<< HEAD
+>>>>>>> parent of 4d42841... fix
                      Settings.System.NAVIGATION_BAR_HEIGHT), false, this,
                      UserHandle.USER_ALL);
+=======
+                    Settings.System.NAVIGATION_BAR_SHOW), false, this,
+                    UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+<<<<<<< HEAD
                      Settings.System.ENABLE_FAST_TORCH), false, this,
                      UserHandle.USER_ALL);
 
+=======
+                    Settings.System.ACCELEROMETER_ROTATION_ANGLES), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LCD_DENSITY), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ENABLE_FAST_TORCH), false, this,
+                    UserHandle.USER_ALL);
+>>>>>>> f06dd78... FastTorch [1/2]
+>>>>>>> parent of 4d42841... fix
             updateSettings();
         }
 
@@ -4716,11 +4738,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 result &= ~ACTION_PASS_TO_USER;
                 if (down) {
-                    if(!isScreenOn && mEnableFastTorch) {
-                         handleChangeTorchState(true);
-                     }
+<<<<<<< HEAD
                     if (mExpandedDesktopStyle == 0) {
-
+=======
+                    if(!isScreenOn && mEnableFastTorch) {
+                        handleChangeTorchState(true);
+                    }
+                    if (mExpandedDesktopMode == 0) {
+>>>>>>> f06dd78... FastTorch [1/2]
                         mImmersiveModeConfirmation.onPowerKeyDown(isScreenOn, event.getDownTime(),
                                 isImmersiveMode(mLastSystemUiFlags));
                     }
