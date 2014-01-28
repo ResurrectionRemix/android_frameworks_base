@@ -1422,19 +1422,23 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     }
-    
+
+<<<<<<< HEAD
+    protected void updateCarrierAndWifiLabelVisibility(boolean force) {
+        if (!mShowCarrierInPanel || mCarrierAndWifiView == null) {
+            return;
+        }
+=======
     /**
      * Listen for UI updates and refresh layout.
      */
     public void onUpdateUI() {
         updateCarrierLabelVisibility(true);
     }
-    
-    protected void updateCarrierAndWifiLabelVisibility(boolean force) {
-        if (!mShowCarrierInPanel || mCarrierAndWifiView == null) {
-            return;
-        }
 
+    protected void updateCarrierLabelVisibility(boolean force) {
+        if (!mShowCarrierInPanel) return;
+>>>>>>> cc72a69... UI not updated correctly in expanded statusbar
         // The idea here is to only show the carrier label when there is enough room to see it,
         // i.e. when there aren't enough notifications to fill the panel.
         if (SPEW) {
