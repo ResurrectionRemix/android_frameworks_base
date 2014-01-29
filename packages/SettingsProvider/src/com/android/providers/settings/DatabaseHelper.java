@@ -2367,9 +2367,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     R.integer.def_wifi_suspend_optimizations_enabled);
 
             // --- New global settings start here
-            loadIntegerSetting(stmt, Settings.Global.TETHER_DUN_REQUIRED,
-                    R.integer.def_tether_dun_required);
-
         } finally {
             if (stmt != null) stmt.close();
         }
