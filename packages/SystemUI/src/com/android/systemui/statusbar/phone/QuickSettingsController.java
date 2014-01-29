@@ -379,10 +379,7 @@ public class QuickSettingsController {
         loadTiles();
         setupBroadcastReceiver();
         setupContentObserver();
-        ContentResolver resolver = mContext.getContentResolver();
-        boolean showLabels = Settings.System.getIntForUser(resolver,
-                Settings.System.QUICK_SETTINGS_HIDE_LABELS, 0, UserHandle.USER_CURRENT) == 0;
-        if (mRibbonMode || !showLabels) {
+        if (mRibbonMode) {
             for (QuickSettingsTile t : mQuickSettingsTiles) {
                 t.switchToRibbonMode();
             }
