@@ -2363,9 +2363,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE,
                     R.integer.def_wifi_scan_always_available);
 
-            loadIntegerSetting(stmt, Settings.Global.WIFI_SUSPEND_OPTIMIZATIONS_ENABLED,
-                    R.integer.def_wifi_suspend_optimizations_enabled);
-
             // --- New global settings start here
         } finally {
             if (stmt != null) stmt.close();
