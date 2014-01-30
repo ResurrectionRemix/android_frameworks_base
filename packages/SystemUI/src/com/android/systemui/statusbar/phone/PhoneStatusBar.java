@@ -3642,6 +3642,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     Settings.System.getUriFor(Settings.System.NOTIFICATION_ALPHA),
                     false, this, UserHandle.USER_ALL);
 
+            cr.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.QUICK_TILES_PER_ROW),
+                    false, this, UserHandle.USER_ALL);
+
+            cr.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.QUICK_TILES_PER_ROW_DUPLICATE_LANDSCAPE),
+                    false, this, UserHandle.USER_ALL);
+
             }
 
         }

@@ -2774,6 +2774,18 @@ public final class Settings {
          * @hide
          */
         public static final String QS_DYNAMIC_BUGREPORT = "qs_dyanmic_bugreport";
+	/**
+         * Number of QuickSettings tiles per row
+         * @hide
+         */
+        public static final String QUICK_TILES_PER_ROW = "quick_tiles_per_row";
+
+        /**
+         * Whether on landscape tiles quantity per row are duplicated
+         * @hide
+         */
+        public static final String QUICK_TILES_PER_ROW_DUPLICATE_LANDSCAPE =
+                "quick_tiles_per_row_duplicate_landscape";
 
         /**
          * Quick Settings Panel Dynamic Tiles
