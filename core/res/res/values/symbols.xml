@@ -1970,6 +1970,7 @@
   <java-symbol type="string" name="animation_grow_shrink_bottom"/>
   <java-symbol type="string" name="animation_grow_shrink_left"/>
   <java-symbol type="string" name="animation_grow_shrink_right"/>
+  <java-symbol type="string" name="animation_blank"/>
   <java-symbol type="anim" name="shrink_fade_out_ribbon" />
   <java-symbol type="anim" name="shrink_fade_out_center_ribbon" />
   <java-symbol type="anim" name="shrink_fade_out_right_ribbon" />
@@ -1996,5 +1997,4 @@
   <java-symbol type="anim" name="slide_out_left_no_fade" />
   <java-symbol type="anim" name="slide_in_left_no_fade" />
   <java-symbol type="anim" name="slide_out_right_no_fade" />
-
 </resources>

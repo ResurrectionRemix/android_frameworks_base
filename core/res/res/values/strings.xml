@@ -342,7 +342,6 @@
     <string name="reboot_safemode_confirm">Do you want to reboot into safe mode?
          This will disable all third party applications you have installed.
          They will be restored when you reboot again.</string>
-
     <!-- Recent Tasks dialog: title
      TODO: this should move to SystemUI.apk, but the code for the old
             recent dialog is still in the framework

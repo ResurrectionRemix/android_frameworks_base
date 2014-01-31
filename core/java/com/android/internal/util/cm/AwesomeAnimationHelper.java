@@ -168,7 +168,7 @@ public class AwesomeAnimationHelper {
                 value = res.getString(com.android.internal.R.string.animation_grow_shrink);
                 break;
             default:
-                value = res.getString(com.android.internal.R.string.action_null);
+                value = res.getString(com.android.internal.R.string.animation_blank);
                 break;
 
         }
