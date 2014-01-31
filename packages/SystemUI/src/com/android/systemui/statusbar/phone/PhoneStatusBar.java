@@ -1973,7 +1973,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mClearButton.setVisibility(View.GONE);
         
         mAnimatingFlip = true;
-        updateCarrierLabelVisibility(false);
+        updateCarrierAndWifiLabelVisibility(false);
     }
 
     public boolean isShowingSettings() {
@@ -2097,7 +2097,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mAnimatingFlip = false;
             }
         }, FLIP_DURATION - 150);
-         updateCarrierLabelVisibility(false);
+         updateCarrierAndWifiLabelVisibility(false);
     }
 
     public void flipPanels() {
