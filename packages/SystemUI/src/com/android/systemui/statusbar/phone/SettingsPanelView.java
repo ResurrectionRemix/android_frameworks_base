@@ -98,9 +98,9 @@ public class SettingsPanelView extends PanelView {
     public void setup(NetworkController networkController, BluetoothController bluetoothController,
             BatteryController batteryController, LocationController locationController,
             RotationLockController rotationLockController) {
-        if (mQS != null) {
-            /*mQS.setup(networkController, bluetoothController, batteryController,
-                    locationController, rotationLockController);*/
+        if (mQS != null) {		
+            /*mQS.setup(networkController, bluetoothController, batteryController,		
+                    locationController, rotationLockController);*/		
         }
     }
 
