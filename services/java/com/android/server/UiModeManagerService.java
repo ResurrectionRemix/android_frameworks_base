@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.ThemeUtils;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.os.BatteryManager;
@@ -50,7 +51,6 @@ import java.io.PrintWriter;
 import com.android.internal.R;
 import com.android.internal.app.DisableCarModeActivity;
 import com.android.server.TwilightService.TwilightState;
-import com.android.internal.app.ThemeUtils;
 
 final class UiModeManagerService extends IUiModeManager.Stub {
     private static final String TAG = UiModeManager.class.getSimpleName();
