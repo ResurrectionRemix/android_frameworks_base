@@ -2826,7 +2826,34 @@ public final class Settings {
          */
         public static final String QUICK_TILES_PER_ROW_DUPLICATE_LANDSCAPE =
                 "quick_tiles_per_row_duplicate_landscape";
-
+         /**
+          * Color of QuickSettings tiles text
+          * @hide
+          */
+         public static final String QUICK_TILES_TEXT_COLOR = "quick_tiles_text_color";
+ 
+ 
+         /**
+          * QuickSettings tiles background color
+          *
+          * @hide
+          */
+         public static final String QUICK_TILES_BG_COLOR = "quick_tiles_bg_color";
+ 
+         /**
+          * QuickSettings tiles background color on pressed
+          *
+          * @hide
+          */
+         public static final String QUICK_TILES_BG_PRESSED_COLOR = "quick_tiles_bg_pressed_color";
+ 
+         /**
+          * QuickSettings tiles background alpha
+          *
+          * @hide
+          */
+         public static final String QUICK_TILES_BG_ALPHA = "quick_tiles_bg_alpha";
+         
         /**
          * Quick Settings Panel Dynamic Tiles
          *

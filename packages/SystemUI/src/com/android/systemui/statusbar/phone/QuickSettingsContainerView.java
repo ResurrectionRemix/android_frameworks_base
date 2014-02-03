@@ -245,4 +245,11 @@ public class QuickSettingsContainerView extends FrameLayout {
                 return mResources.getDimensionPixelSize(R.dimen.qs_tile_margin_below_icon);
         }
     }
+
+    public int getTileTextColor() {
+        int tileTextColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QUICK_TILES_TEXT_COLOR, -2, UserHandle.USER_CURRENT);
+        return tileTextColor;
+    }
+
 }
