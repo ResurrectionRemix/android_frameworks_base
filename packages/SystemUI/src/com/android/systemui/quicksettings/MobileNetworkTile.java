@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.TypedValue;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.QuickSettingsController;
@@ -126,10 +127,13 @@ public class MobileNetworkTile extends NetworkTile {
     void updateQuickSettings() {
         TextView tv = (TextView) mTile.findViewById(R.id.text);
         ImageView iv = (ImageView) mTile.findViewById(R.id.rssi_image);
-
+	if (tv != null) {
+            tv.setText(mLabel);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTileTextSize);
+            tv.setPadding(0, mTileTextPadding, 0, 0);
+        }
         iv.setImageResource(mDrawable);
         updateOverlayImage(mDataTypeIconId);
-        tv.setText(mLabel);
         mTile.setContentDescription(mContext.getResources().getString(
                 R.string.accessibility_quick_settings_mobile,
                 signalContentDescription, dataContentDescription,
