@@ -2076,11 +2076,6 @@ public final class Settings {
          */
         public static final String SAFE_HEADSET_VOLUME = "safe_headset_volume";
         
-         /**
-          * Height of navigation bar buttons
-          * @hide
-          */
-         public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
         /**
          * Master volume (float in the range 0.0f to 1.0f).
          * @hide
