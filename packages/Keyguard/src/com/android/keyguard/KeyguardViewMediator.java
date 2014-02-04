@@ -731,13 +731,33 @@ public class KeyguardViewMediator {
     }
 
     private void maybeSendUserPresentBroadcast() {
-        if (mSystemReady && mLockPatternUtils.isLockScreenDisabled()
-                && mUserManager.getUsers(true).size() == 1) {
-            // Lock screen is disabled because the user has set the preference to "None".
-            // In this case, send out ACTION_USER_PRESENT here instead of in
-            // handleKeyguardDone()
-            sendUserPresentBroadcast();
+        if (mSystemReady && isKeyguardDisabled()) {
+            // Keyguard can be showing even if disabled in case the SIM PIN entry
+            // screen is showing; so make sure to not send user present if it's
+            // actually showing
+            if (!mShowing && !mShowKeyguardWakeLock.isHeld()) {
+                sendUserPresentBroadcast();
+            }
         }
+    }
+
+    private boolean isKeyguardDisabled() {
+        if (!mExternallyEnabled) {
+            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled externally");
+            return true;
+        }
+        if (mLockPatternUtils.isLockScreenDisabled() && mUserManager.getUsers(true).size() == 1) {
+            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by setting");
+            return true;
+        }
+        Profile profile = mProfileManager.getActiveProfile();
+        if (profile != null) {
+            if (profile.getScreenLockMode() == Profile.LockMode.DISABLE) {
+                if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by profile");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -923,6 +943,7 @@ public class KeyguardViewMediator {
      * Enable the keyguard if the settings are appropriate.
      */
     private void doKeyguardLocked(Bundle options) {
+<<<<<<< HEAD
         // if another app is disabling us, don't show
         if (!mExternallyEnabled) {
             if (DEBUG) Log.d(TAG, "doKeyguard: not showing because externally disabled");
@@ -977,6 +998,36 @@ public class KeyguardViewMediator {
             }
         }
 
+=======
+        // if the keyguard is already showing, don't bother
+        if (mKeyguardViewManager.isShowing()) {
+            if (DEBUG) Log.d(TAG, "doKeyguard: not showing because it is already showing");
+            return;
+        }
+
+        // if the setup wizard hasn't run yet, don't show
+        final boolean provisioned = mUpdateMonitor.isDeviceProvisioned();
+        int numPhones = MSimTelephonyManager.getDefault().getPhoneCount();
+        final IccCardConstants.State []state = new IccCardConstants.State[numPhones];
+        boolean lockedOrMissing = false;
+        for (int i = 0; i < numPhones; i++) {
+            state[i] = mUpdateMonitor.getSimState(i);
+            lockedOrMissing = lockedOrMissing || isLockedOrMissing(state[i]);
+            if (lockedOrMissing) break;
+        }
+
+        if (!lockedOrMissing && !provisioned) {
+            if (DEBUG) Log.d(TAG, "doKeyguard: not showing because device isn't provisioned"
+                    + " and the sim is not locked or missing");
+            return;
+        }
+
+        if (isKeyguardDisabled() && !lockedOrMissing) {
+            if (DEBUG) Log.d(TAG, "doKeyguard: not showing because disabled");
+            return;
+        }
+
+>>>>>>> 2c93da2... Send out USER_PRESENT broadcast on screen on if lockscreen is disabled.
         if (DEBUG) Log.d(TAG, "doKeyguard: showing the lock screen");
         showLocked(options);
     }
