@@ -3042,7 +3042,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                      "com.android.settings.Settings$QuickSettingsConfigActivity");
              startActivityDismissingKeyguard(intent, true);
          }
-     };
+     }:
      
     private View.OnClickListener mNotificationButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
