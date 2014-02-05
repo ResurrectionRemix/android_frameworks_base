@@ -1859,6 +1859,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     final int FLIP_DURATION = (FLIP_DURATION_IN + FLIP_DURATION_OUT);
 
     Animator mScrollViewAnim, mFlipSettingsViewAnim, mNotificationButtonAnim,
+
         mSettingsButtonAnim, mHaloButtonAnim, mClearButtonAnim, mRibbonViewAnim, mAddTileButtonAnim;
 
     @Override
@@ -3029,18 +3030,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         public void onClick(View v) {
             Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR);
             startActivityDismissingKeyguard(intent,true);
-         }
-      };
-      
-    private View.OnClickListener mAddTileButtonListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            Intent intent = new Intent();
-            intent.setClassName("com.android.settings",
-                    "com.android.settings.Settings$QuickSettingsConfigActivity");
-            startActivityDismissingKeyguard(intent, true);
+            
         }
     };
-
+    
+    private View.OnClickListener mAddTileButtonListener = new View.OnClickListener() {
+         public void onClick(View v) {
+             Intent intent = new Intent();
+             intent.setClassName("com.android.settings",
+                     "com.android.settings.Settings$QuickSettingsConfigActivity");
+             startActivityDismissingKeyguard(intent, true);
+         }
+     };
+     
     private View.OnClickListener mNotificationButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
             animateExpandNotificationsPanel();
