@@ -1860,11 +1860,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     final int FLIP_DURATION = (FLIP_DURATION_IN + FLIP_DURATION_OUT);
 
     Animator mScrollViewAnim, mFlipSettingsViewAnim, mNotificationButtonAnim,
-<<<<<<< HEAD
-        mSettingsButtonAnim, mHaloButtonAnim, mClearButtonAnim, mRibbonViewAnim;
-=======
-        mSettingsButtonAnim, mClearButtonAnim, mRibbonViewAnim, mAddTileButtonAnim;
->>>>>>> 1bc87e7... Better expose 'QS Tiles and layout' function
+
+        mSettingsButtonAnim, mHaloButtonAnim, mClearButtonAnim, mRibbonViewAnim, mAddTileButtonAnim;
 
     @Override
     public void animateExpandNotificationsPanel() {
@@ -3012,7 +3009,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     };
 
-<<<<<<< HEAD
     private View.OnClickListener mHaloButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
             // Activate HALO
@@ -3035,17 +3031,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         public void onClick(View v) {
             Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR);
             startActivityDismissingKeyguard(intent,true);
-=======
-    private View.OnClickListener mAddTileButtonListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            Intent intent = new Intent();
-            intent.setClassName("com.android.settings",
-                    "com.android.settings.Settings$QuickSettingsConfigActivity");
-            startActivityDismissingKeyguard(intent, true);
->>>>>>> 1bc87e7... Better expose 'QS Tiles and layout' function
+            
         }
     };
-
+    
+    private View.OnClickListener mAddTileButtonListener = new View.OnClickListener() {
+         public void onClick(View v) {
+             Intent intent = new Intent();
+             intent.setClassName("com.android.settings",
+                     "com.android.settings.Settings$QuickSettingsConfigActivity");
+             startActivityDismissingKeyguard(intent, true);
+         }
+     }:
+     
     private View.OnClickListener mNotificationButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
             animateExpandNotificationsPanel();
