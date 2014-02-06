@@ -1030,11 +1030,6 @@ public class NotificationManagerService extends INotificationManager.Stub
      */
     public void cancelNotificationFromListener(INotificationListener token, String pkg, String tag, int id) {
         NotificationListenerInfo info = checkListenerToken(token);
-	final int permission = mContext.checkCallingPermission(
-                android.Manifest.permission.SYSTEM_NOTIFICATION_LISTENER);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            throw new SecurityException("Disallowed call");
-        }
         long identity = Binder.clearCallingIdentity();
         try {
             cancelNotification(pkg, tag, id, 0,
@@ -1082,13 +1077,7 @@ public class NotificationManagerService extends INotificationManager.Stub
      */
     public StatusBarNotification[] getActiveNotificationsFromListener(INotificationListener token) {
         NotificationListenerInfo info = checkListenerToken(token);
-	final int permission = mContext.checkCallingPermission(
-                android.Manifest.permission.SYSTEM_NOTIFICATION_LISTENER);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            throw new SecurityException("Disallowed call");
-        }
-
-        StatusBarNotification[] result = new StatusBarNotification[0];
+	StatusBarNotification[] result = new StatusBarNotification[0];
         ArrayList<StatusBarNotification> list = new ArrayList<StatusBarNotification>();
         synchronized (mNotificationList) {
             final int N = mNotificationList.size();
