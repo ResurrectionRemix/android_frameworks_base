@@ -257,4 +257,6 @@
     <dimen name="qs_4_column_text_size">10sp</dimen>
     <!-- Quick Settings tile geometry: text size for 5 tile per row-->
     <dimen name="qs_5_column_text_size">9sp</dimen>
+    <!-- Network stats text size -->
+    <dimen name="network_stats_text_size">10dp</dimen>
 </resources>
