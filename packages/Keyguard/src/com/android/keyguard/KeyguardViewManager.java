@@ -238,7 +238,8 @@ public class KeyguardViewManager {
 
     private boolean shouldEnableTranslucentDecor() {
         Resources res = mContext.getResources();
-        return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor);
+        return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor)
+		&& res.getBoolean(R.bool.config_enableTranslucentDecor);
     }
 
     public void setBackgroundBitmap(Bitmap bmp) {
@@ -582,7 +583,9 @@ public class KeyguardViewManager {
             int flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
                     | WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
                     | WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN
-                    | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
+                    | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
+		     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 
             if (!mNeedsInput) {
                 flags |= WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;

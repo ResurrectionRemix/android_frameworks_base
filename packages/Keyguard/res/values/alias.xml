@@ -46,6 +46,10 @@
     <!-- Alias used to reference framework configuration for translucent decor.  -->
     <item type="bool" name="config_enableLockScreenTranslucentDecor">@*android:bool/config_enableLockScreenTranslucentDecor</item>
 
+    <!-- Alias used to reference framework configuration for translucent decor.  -->
+    <item type="bool" name="config_enableTranslucentDecor">@*android:bool/config_enableTranslucentDecor</item>
+
+
     <!-- Alias used to reference framework activity duration.  -->
     <item type="integer" name="config_activityDefaultDur">@*android:integer/config_activityDefaultDur</item>
 
