@@ -44,8 +44,4 @@
     <!-- app sidebar trigger region color -->
     <color name="trigger_region_color">#8015a0e5</color>
 
-    <!-- Quick Settings -->
-    <color name="qs_background_color">#FF212121</color>
-    <color name="qs_background_pressed_color">#FF161616</color>
-
 </resources>

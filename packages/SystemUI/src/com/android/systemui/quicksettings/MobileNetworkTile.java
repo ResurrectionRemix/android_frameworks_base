@@ -131,9 +131,6 @@ public class MobileNetworkTile extends NetworkTile {
             tv.setText(mLabel);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTileTextSize);
             tv.setPadding(0, mTileTextPadding, 0, 0);
-            if (mTileTextColor != -2) {
-                tv.setTextColor(mTileTextColor);
-            }
         }
         iv.setImageResource(mDrawable);
         updateOverlayImage(mDataTypeIconId);
