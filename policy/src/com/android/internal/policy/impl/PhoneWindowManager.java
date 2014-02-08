@@ -679,14 +679,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-<<<<<<< HEAD
-                     Settings.System.NAVIGATION_BAR_HEIGHT), false, this,
-                     UserHandle.USER_ALL);
-
-=======
+                    Settings.System.NAVIGATION_BAR_HEIGHT), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this,
                     UserHandle.USER_ALL);
->>>>>>> a6fb5ad... [2/2] Left handed navbar during landscape mode
             updateSettings();
         }
 
