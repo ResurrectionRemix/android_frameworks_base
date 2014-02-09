@@ -682,6 +682,7 @@ public class ActiveDisplayView extends FrameLayout {
     }
 
     private void handleDismissNotification() {
+	if (mNotification != null && mNotification.isClearable()) {
         try {
             mNM.cancelNotificationFromSystemListener(mNotificationListener,
                     mNotification.getPackageName(), mNotification.getTag(),
@@ -695,6 +696,7 @@ public class ActiveDisplayView extends FrameLayout {
             userActivity();
             return;
         }
+	}
         // no other notifications to display so turn screen off
         turnScreenOff();
     }
