@@ -15,13 +15,13 @@
 -->
 
 <resources>
-    <color name="chip">#222</color>
+    <color name="chip">#121212</color>
     <color name="item_root_pressed">#33333333</color>
     <color name="item_root_focused">#66333333</color>
 
     <!-- background colors from layout -->
-    <color name="bg1">#000</color>
-    <color name="bg2">#222</color>
-    <color name="bg3">#333</color>
+    <color name="bg1">#121212</color>
+    <color name="bg2">#121212</color>
+    <color name="bg3">#121212</color>
 
 </resources>
