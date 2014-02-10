@@ -44,7 +44,7 @@ public class PlatLogoActivity extends Activity {
     FrameLayout mContent;
     int mCount;
     final Handler mHandler = new Handler();
-    static final int BGCOLOR = 0xffed1d24;
+    static final int BGCOLOR = 0xFDF8F2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,9 @@ public class PlatLogoActivity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         Typeface bold = Typeface.create("sans-serif", Typeface.BOLD);
+        Typeface condensed = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
         Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
-
+        
         mContent = new FrameLayout(this);
         mContent.setBackgroundColor(0xC0000000);
         
@@ -84,13 +85,13 @@ public class PlatLogoActivity extends Activity {
         final int p = (int)(4 * metrics.density);
 
         final TextView tv = new TextView(this);
-        if (light != null) tv.setTypeface(light);
-        tv.setTextSize(30);
+        if (condensed != null) tv.setTypeface(condensed);
+        tv.setTextSize(23);
         tv.setPadding(p, p, p, p);
         tv.setTextColor(0xFFFFFFFF);
         tv.setGravity(Gravity.CENTER);
         tv.setTransformationMethod(new AllCapsTransformationMethod(this));
-        tv.setText("Android " + Build.VERSION.RELEASE);
+        tv.setText("Resurrection Remix KitKat");
         tv.setVisibility(View.INVISIBLE);
 
         mContent.addView(bg);
