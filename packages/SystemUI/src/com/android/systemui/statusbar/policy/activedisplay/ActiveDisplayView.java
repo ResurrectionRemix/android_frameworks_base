@@ -761,8 +761,8 @@ public class ActiveDisplayView extends FrameLayout {
         if (!mDisplayNotifications
             || mNotification == null
             || inQuietHoursDim()) return;
-        showNotificationView();
         handleShowNotificationView();
+	setActiveNotification(mNotification, true);
         inflateRemoteView(mNotification);
         if (!isScreenOn()) {
             turnScreenOn();
