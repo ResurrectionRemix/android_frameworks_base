@@ -431,6 +431,7 @@ private:
     bool mHasSampler;
 
     mat4 mProjection;
+    bool mProjectionOffset;
 }; // class Program
 
 }; // namespace uirenderer

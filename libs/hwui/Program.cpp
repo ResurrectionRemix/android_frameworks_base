@@ -34,6 +34,7 @@ Program::Program(const ProgramDescription& description, const char* vertex, cons
     mHasColorUniform = false;
     mHasSampler = false;
     mUse = false;
+    mProjectionOffset = false;
 
     // No need to cache compiled shaders, rely instead on Android's
     // persistent shaders cache
@@ -163,7 +164,7 @@ GLuint Program::buildShader(const char* source, GLenum type) {
 
 void Program::set(const mat4& projectionMatrix, const mat4& modelViewMatrix,
         const mat4& transformMatrix, bool offset) {
-    if (projectionMatrix != mProjection) {
+    if (offset != mProjectionOffset || projectionMatrix != mProjection) {
         if (CC_LIKELY(!offset)) {
             glUniformMatrix4fv(projection, 1, GL_FALSE, &projectionMatrix.data[0]);
         } else {
@@ -177,6 +178,7 @@ void Program::set(const mat4& projectionMatrix, const mat4& modelViewMatrix,
             glUniformMatrix4fv(projection, 1, GL_FALSE, &p.data[0]);
         }
         mProjection = projectionMatrix;
+        mProjectionOffset = offset;
     }
 
     mat4 t(transformMatrix);
