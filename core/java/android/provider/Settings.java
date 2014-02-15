@@ -3101,14 +3101,6 @@ public final class Settings {
          */
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
 
- /**
-         * Whether or not to use a center clock in phone status bar
-         *
-         * @hide
-         */
-        public static final String STATUS_BAR_CENTER_CLOCK = "status_bar_center_clock";
-
-
         /**
          * Whether to show the IME switcher in the status bar
          * @hide
