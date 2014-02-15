@@ -17,16 +17,14 @@
 package com.android.systemui.statusbar.policy;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.provider.AlarmClock;
-=======
 import android.os.Handler;
 import android.os.UserHandle;
->>>>>>> ca9fe52... Frameworks: Statusbar clock and date customizations
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -69,9 +67,6 @@ public class Clock extends TextView implements DemoMode {
     public static final int CLOCK_DATE_DISPLAY_SMALL = 1;
     public static final int CLOCK_DATE_DISPLAY_NORMAL = 2;
 
-<<<<<<< HEAD
-    private static final int AM_PM_STYLE = AM_PM_STYLE_GONE;
-=======
     public static final int CLOCK_DATE_STYLE_REGULAR = 0;
     public static final int CLOCK_DATE_STYLE_LOWERCASE = 1;
     public static final int CLOCK_DATE_STYLE_UPPERCASE = 2;
@@ -124,7 +119,6 @@ public class Clock extends TextView implements DemoMode {
             updateSettings();
         }
     }
->>>>>>> ca9fe52... Frameworks: Statusbar clock and date customizations
 
     public Clock(Context context) {
         this(context, null);
@@ -136,14 +130,6 @@ public class Clock extends TextView implements DemoMode {
 
     public Clock(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-<<<<<<< HEAD
-
-        if (isClickable()) {
-            setOnClickListener(this);
-            setOnLongClickListener(this);
-        }
-=======
->>>>>>> ca9fe52... Frameworks: Statusbar clock and date customizations
     }
 
     @Override
@@ -200,13 +186,9 @@ public class Clock extends TextView implements DemoMode {
                 final Locale newLocale = getResources().getConfiguration().locale;
                 if (! newLocale.equals(mLocale)) {
                     mLocale = newLocale;
-                    mClockFormatString = ""; // force refresh
                 }
-<<<<<<< HEAD
-=======
                 updateSettings();
                 return;
->>>>>>> ca9fe52... Frameworks: Statusbar clock and date customizations
             }
             updateClock();
         }
@@ -234,7 +216,7 @@ public class Clock extends TextView implements DemoMode {
              * add dummy characters around it to let us find it again after
              * formatting and change its size.
              */
-            if (AM_PM_STYLE != AM_PM_STYLE_NORMAL) {
+            if (mAmPmStyle != AM_PM_STYLE_NORMAL) {
                 int a = -1;
                 boolean quoted = false;
                 for (int i = 0; i < format.length(); i++) {
@@ -269,14 +251,6 @@ public class Clock extends TextView implements DemoMode {
 
         String result = sdf.format(mCalendar.getTime());
 
-<<<<<<< HEAD
-        if (AM_PM_STYLE != AM_PM_STYLE_NORMAL) {
-            int magic1 = result.indexOf(MAGIC1);
-            int magic2 = result.indexOf(MAGIC2);
-            if (magic1 >= 0 && magic2 > magic1) {
-                SpannableStringBuilder formatted = new SpannableStringBuilder(result);
-                if (AM_PM_STYLE == AM_PM_STYLE_GONE) {
-=======
         if (mClockDateDisplay != CLOCK_DATE_DISPLAY_GONE) {
             Date now = new Date();
 
@@ -306,10 +280,9 @@ public class Clock extends TextView implements DemoMode {
             int magic2 = result.indexOf(MAGIC2);
             if (magic1 >= 0 && magic2 > magic1) {
                 if (mAmPmStyle == AM_PM_STYLE_GONE) {
->>>>>>> ca9fe52... Frameworks: Statusbar clock and date customizations
                     formatted.delete(magic1, magic2+1);
                 } else {
-                    if (AM_PM_STYLE == AM_PM_STYLE_SMALL) {
+                    if (mAmPmStyle == AM_PM_STYLE_SMALL) {
                         CharacterStyle style = new RelativeSizeSpan(0.7f);
                         formatted.setSpan(style, magic1, magic2,
                                           Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
