@@ -86,8 +86,10 @@ public final class NavigationBarTransitions extends BarTransitions {
         setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_MENU_BIG, alpha, animate);
         setKeyButtonViewQuiescentAlpha(mView.getSearchLight(), KEYGUARD_QUIESCENT_ALPHA, animate);
         setKeyButtonViewQuiescentAlpha(mView.getCameraButton(), KEYGUARD_QUIESCENT_ALPHA, animate);
+<<<<<<< HEAD
+=======
         setKeyButtonViewQuiescentAlpha(mView.getNotifsButton(), KEYGUARD_QUIESCENT_ALPHA, animate);
-
+>>>>>>> 48810be... FW: LS Notifications: Add "Show all notif" NavBar Button
         applyBackButtonQuiescentAlpha(mode, animate);
 
         // apply to lights out
@@ -110,7 +112,7 @@ public final class NavigationBarTransitions extends BarTransitions {
 
     public void applyBackButtonQuiescentAlpha(int mode, boolean animate) {
         float backAlpha = 0;
-
+<<<<<<< HEAD
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getSearchLight());
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getCameraButton());
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.findViewWithTag(NavbarEditor.NAVBAR_HOME));
@@ -118,7 +120,17 @@ public final class NavigationBarTransitions extends BarTransitions {
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.findViewWithTag(NavbarEditor.NAVBAR_CONDITIONAL_MENU));
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.findViewWithTag(NavbarEditor.NAVBAR_ALWAYS_MENU));
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.findViewWithTag(NavbarEditor.NAVBAR_MENU_BIG));
+=======
+        View[] views = mView.getAllButtons();
+        for(View v : views) {
+            if (AwesomeConstant.ACTION_BACK.value().equals(v.getTag())) {
+                // back button was skipped in original calculations
+                continue;
+            }
+            backAlpha = maxVisibleQuiescentAlpha(backAlpha, v);
+        }
         backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getNotifsButton());
+>>>>>>> 48810be... FW: LS Notifications: Add "Show all notif" NavBar Button
         if (backAlpha > 0) {
             setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_BACK, backAlpha, animate);
         }
