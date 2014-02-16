@@ -646,10 +646,10 @@ public class ActiveDisplayView extends FrameLayout {
         mContext.sendBroadcastAsUser(u, UserHandle.ALL);
     }
 
-
     private final Runnable runSystemUiVisibilty = new Runnable() {
-         public void run() {
-             adjustStatusBarLocked(1);
+        @Override
+        public void run() {
+            adjustStatusBarLocked(1);
         }
     };
 
