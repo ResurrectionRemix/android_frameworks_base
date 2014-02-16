@@ -62,7 +62,7 @@ public class NotificationHostView extends FrameLayout {
 
     private static final float SWIPE = 0.2f;
     private static final int ANIMATION_MAX_DURATION = 300;
-    private static final int PPS = 2000;
+    private static final int PPS = 3000;
     private static final int MAX_ALPHA = 150;
 
     //Here we store dimissed notifications so we don't add them again in onFinishInflate
