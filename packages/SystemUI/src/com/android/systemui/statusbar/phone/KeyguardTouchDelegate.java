@@ -114,21 +114,6 @@ public class KeyguardTouchDelegate {
         return false;
     }
 
-    public void dispatchButtonClick(int buttonId) {
-        final IKeyguardService service = mService;
-        if (service != null) {
-            try {
-                Slog.e(TAG, "dispatch!");
-                service.dispatchButtonClick(buttonId);
-            } catch (RemoteException e) {
-                // What to do?
-                Slog.e(TAG, "RemoteException sending event to keyguard!", e);
-            }
-        } else {
-            Slog.w(TAG, "dispatchButtonClick(buttonId): NO SERVICE!");
-        }
-    }
-
     public boolean isInputRestricted() {
         final IKeyguardService service = mService;
         if (service != null) {
