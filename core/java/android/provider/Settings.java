@@ -2981,7 +2981,13 @@ public final class Settings {
         * @hide
         */
         public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
-
+        
+         /**
+          * Configurable LTE or 4G icon - up to per user defined
+          * @hide
+          */
+         public static final String SHOW_LTE_OR_FOURGEE = "show_lte_or_fourgee";
+         
         /**
          * Display style of AM/PM next to clock in status bar
          * 0: Normal display (Eclair stock)
