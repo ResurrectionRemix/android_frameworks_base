@@ -350,7 +350,11 @@ public class NavigationBarView extends LinearLayout {
         return mCurrentView.findViewById(R.id.camera_button);
     }
 
-<<<<<<< HEAD
+    // used for lockscreen notifications
+     public View getNotifsButton() {
+         return mCurrentView.findViewById(R.id.show_notifs);
+     }
+     
     private void getIcons(Resources res) {
         mBackIcon = res.getDrawable(R.drawable.ic_sysbar_back);
         mBackLandIcon = res.getDrawable(R.drawable.ic_sysbar_back_land);
@@ -362,11 +366,7 @@ public class NavigationBarView extends LinearLayout {
 
     protected void updateResources() {
         getIcons(mContext.getResources());
-=======
-    // used for lockscreen notifications
-    public View getNotifsButton() {
-        return mCurrentView.findViewById(R.id.show_notifs);
->>>>>>> 48810be... FW: LS Notifications: Add "Show all notif" NavBar Button
+
     }
 
     @Override
