@@ -4047,7 +4047,75 @@ public final class Settings {
          * @hide
          */
          public static final String LISTVIEW_ANIMATION = "listview_animation";
-
+	/**
+ 	*
+ 	* SMOOTH PROGRESS BAR Mirror
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_MIRROR = "progressbar_mirror";
+ 
+ 	/**
+ 	*
+ 	* SMOOTH PROGRESS BAR Reverse
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_REVERSE = "progressbar_reverse";
+ 
+ 	/**
+ 	*
+ 	* SMOOTH PROGRESS BAR Speed
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_SPEED = "progressbar_speed";
+ 
+        /**
+ 	*
+ 	* SMOOTH PROGRESS BAR Width
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_WIDTH = "progressbar_width";
+ 
+         /**
+ 	*
+ 	* SMOOTH PROGRESS BAR Length
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_LENGTH = "progressbar_length";
+ 
+         /**
+ 	*
+ 	* SMOOTH PROGRESS BAR Count
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_COUNT = "progressbar_count";
+ 
+         /**
+ 	*
+ 	* SMOOTH PROGRESS BAR Color_1
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_COLOR_1 = "progressbar_color_1";
+ 
+         /**
+ 	*
+ 	* SMOOTH PROGRESS BAR Color_2
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_COLOR_2 = "progressbar_color_2";
+ 
+         /**
+ 	*
+ 	* SMOOTH PROGRESS BAR Color_3
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_COLOR_3 = "progressbar_color_3";
+ 
+         /**
+ 	*
+ 	* SMOOTH PROGRESS BAR Color_4
+ 	* @hide
+ 	*/
+         public static final String PROGRESSBAR_COLOR_4 = "progressbar_color_4";
         /**
          * ListView Interpolators
          * 0 == None

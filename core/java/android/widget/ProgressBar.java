@@ -37,6 +37,7 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Pools.SynchronizedPool;
 import android.view.Gravity;
@@ -294,12 +295,38 @@ public class ProgressBar extends View {
 
         drawable = a.getDrawable(R.styleable.ProgressBar_indeterminateDrawable);
 	if (String.valueOf(drawable).contains("android.graphics.drawable.AnimationDrawabl")) {
+	 boolean IsMirrorMode = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_MIRROR, 0) == 1;
+	 boolean IsReversed = Settings.System.getInt(mContext.getContentResolver(),
+		 Settings.System.PROGRESSBAR_REVERSE, 0) == 1;
+	 int tmpSpeed = Settings.System.getInt(mContext.getContentResolver(),
+		 Settings.System.PROGRESSBAR_SPEED, 0);
+	 float Speed = ((float) tmpSpeed+1 ) / 10;
+	 int Width = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_WIDTH, 4);
+         int Length = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_LENGTH, 10);
+         int Count = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COUNT, 6);
+         int Color1 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_1, -1);
+         int Color2 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_2, -1);
+         int Color3 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_3, -1);
+         int Color4 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_4, -1);
+
+	int Colors[] = { Color1, Color2, Color3, Color4 };
          Builder abc = new SmoothProgressDrawable.Builder(context);
                 drawable = (abc
-                .colors(getResources().getIntArray(R.array.pgcolors))
-                .speed((float)0.2)
-                .sectionsCount(6)
-                .mirrorMode(true)
+                .colors(Colors)
+		.speed(Speed)
+		.strokeWidth(Width)
+		.separatorLength(Length)
+                .sectionsCount(Count+1)
+		.reversed(IsReversed)
+                .mirrorMode(IsMirrorMode)
                 .build());
 	}
         if (drawable != null) {
@@ -1023,7 +1050,7 @@ public class ProgressBar extends View {
             }
             mIndeterminateDrawable.setBounds(left, top, right, bottom);
         }
-        
+
         if (mProgressDrawable != null) {
             mProgressDrawable.setBounds(0, 0, right, bottom);
         }
@@ -1082,20 +1109,20 @@ public class ProgressBar extends View {
         setMeasuredDimension(resolveSizeAndState(dw, widthMeasureSpec, 0),
                 resolveSizeAndState(dh, heightMeasureSpec, 0));
     }
-    
+
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
         updateDrawableState();
     }
-        
+
     private void updateDrawableState() {
         int[] state = getDrawableState();
-        
+
         if (mProgressDrawable != null && mProgressDrawable.isStateful()) {
             mProgressDrawable.setState(state);
         }
-        
+
         if (mIndeterminateDrawable != null && mIndeterminateDrawable.isStateful()) {
             mIndeterminateDrawable.setState(state);
         }
@@ -1104,14 +1131,14 @@ public class ProgressBar extends View {
     static class SavedState extends BaseSavedState {
         int progress;
         int secondaryProgress;
-        
+
         /**
          * Constructor called from {@link ProgressBar#onSaveInstanceState()}
          */
         SavedState(Parcelable superState) {
             super(superState);
         }
-        
+
         /**
          * Constructor called from {@link #CREATOR}
          */
@@ -1145,10 +1172,10 @@ public class ProgressBar extends View {
         // Force our ancestor class to save its state
         Parcelable superState = super.onSaveInstanceState();
         SavedState ss = new SavedState(superState);
-        
+
         ss.progress = mProgress;
         ss.secondaryProgress = mSecondaryProgress;
-        
+
         return ss;
     }
 
@@ -1156,7 +1183,7 @@ public class ProgressBar extends View {
     public void onRestoreInstanceState(Parcelable state) {
         SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
-        
+
         setProgress(ss.progress);
         setSecondaryProgress(ss.secondaryProgress);
     }
