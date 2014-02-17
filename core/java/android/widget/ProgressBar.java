@@ -292,6 +292,42 @@ public class ProgressBar extends View {
                 a.getInt(R.styleable.ProgressBar_secondaryProgress, mSecondaryProgress));
 
         drawable = a.getDrawable(R.styleable.ProgressBar_indeterminateDrawable);
+	if (String.valueOf(drawable).contains("android.graphics.drawable.AnimationDrawabl")) {
+	 boolean IsMirrorMode = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_MIRROR, 0) == 1;
+	 boolean IsReversed = Settings.System.getInt(mContext.getContentResolver(),
+		 Settings.System.PROGRESSBAR_REVERSE, 0) == 1;
+	 int tmpSpeed = Settings.System.getInt(mContext.getContentResolver(),
+		 Settings.System.PROGRESSBAR_SPEED, 0);
+	 float Speed = ((float) tmpSpeed+1 ) / 10;
+	 int Width = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_WIDTH, 4);
+         int Length = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_LENGTH, 10);
+         int Count = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COUNT, 6);
+         int Color1 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_1, -1);
+         int Color2 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_2, -1);
+         int Color3 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_3, -1);
+         int Color4 = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.PROGRESSBAR_COLOR_4, -1);
+
+	int Colors[] = { Color1, Color2, Color3, Color4 };
+         Builder abc = new SmoothProgressDrawable.Builder(context);
+                drawable = (abc
+                .colors(Colors)
+		.speed(Speed)
+		.strokeWidth(Width)
+		.separatorLength(Length)
+                .sectionsCount(Count+1)
+		.reversed(IsReversed)
+                .mirrorMode(IsMirrorMode)
+                .build());
+	}
+>>>>>>> 41f7d03... SmoothProgressBar: Turn off mirror and reversed by default
         if (drawable != null) {
             drawable = tileifyIndeterminate(drawable);
             setIndeterminateDrawable(drawable);
