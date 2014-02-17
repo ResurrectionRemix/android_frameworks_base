@@ -3609,11 +3609,19 @@ public final class Settings {
         * @hide
         */    
         public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
+        
+         /**
+          * Allows blurring the lockscreen background
+          * @hide
+          */
+ 
+         public static final String LOCKSCREEN_BLUR_BEHIND = "lockscreen_blur_behind";
+         public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
+         
         /**
          * Whether the power menu reboot menu is enabled
          * @hide
-         */
-        
+         */       
         
         public static final String POWER_MENU_REBOOT_ENABLED = "power_menu_reboot_enabled";
 
