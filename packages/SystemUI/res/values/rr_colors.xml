@@ -26,6 +26,7 @@
     <color name="gesture_color">@android:color/holo_blue_light</color>
 
     <!-- app sidebar trigger region color -->
+
      <color name="trigger_region_color">#8015a0e5</color>
      <!-- app sidebar item text color -->
      <color name="sidebar_item_text_color">#ffffffff</color>
@@ -36,4 +37,19 @@
      <color name="lockscreen_bottom_shorcut_phone_background">@*android:color/accent_material_light</color>
      <!-- Lockscreen bottom shorcut info text color -->
      <color name="lockscreen_bottom_shorcut_info_text_color">@*android:color/secondary_text_default_material_light</color>
+
+    <!-- Slim recent -->
+    <color name="recent_background">#80000000</color>
+    <color name="recents_empty_dark_color">#ff4d4d4d</color>
+    <color name="recents_empty_light_color">#ffb3b3b3</color>
+
+    <!-- Card Color -->
+    <color name="card_background">#ffffffff</color>
+    <color name="card_background_header">#00ffffff</color>
+    <color name="card_backgroundExpand">#00ffffff</color>
+    <color name="card_text_color_header">#ff000000</color>
+
+    <!-- Used by selector -->
+    <color name="card_pressed">#7e3c3c3c</color>
+
 </resources>

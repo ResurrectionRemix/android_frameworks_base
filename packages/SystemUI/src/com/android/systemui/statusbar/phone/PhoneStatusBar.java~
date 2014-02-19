@@ -539,13 +539,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+<<<<<<< HEAD
                     Settings.System.STATUS_BAR_CUSTOM_HEADER_DEFAULT), 
                     false, this, UserHandle.USER_ALL);
+    	   resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
+=======
+                    Settings.System.STATUS_BAR_CARRIER), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.USE_SLIM_RECENTS), false, this,
                     UserHandle.USER_ALL);
-    	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
+>>>>>>> baf10d2... Frameworks: Slim Recents app screen (1/2)
             update();
         }
 
@@ -568,6 +572,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_SIZE))
                     || uri.equals(Settings.System.getUriFor(
+<<<<<<< HEAD
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))) {
                	    recreateStatusBar();
                     updateRowStates();
@@ -581,10 +586,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     updateSpeedbump();
                     updateClearAll();
                     updateEmptyShadeView();
-
+=======
+                    Settings.System.ACCELEROMETER_ROTATION))) {
+                mStatusBarWindowManager.updateKeyguardScreenRotation();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.USE_SLIM_RECENTS))) {
                 updateRecents();
+>>>>>>> baf10d2... Frameworks: Slim Recents app screen (1/2)
             }
 
             update();
@@ -1197,6 +1205,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         addGestureAnywhereView();
         addSidebarView();
+        addAppCircleSidebar();
 
 
         mAssistManager = new AssistManager(this, context);
