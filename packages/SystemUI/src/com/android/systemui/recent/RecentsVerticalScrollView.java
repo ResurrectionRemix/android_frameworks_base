@@ -185,7 +185,7 @@ public class RecentsVerticalScrollView extends ScrollView
     public void removeViewInLayout(final View view) {
         dismissChild(view);
     }
-
+/*
     @Override
     public void removeAllViewsInLayout() {
         int count = mLinearLayout.getChildCount();
@@ -201,6 +201,22 @@ public class RecentsVerticalScrollView extends ScrollView
                     dismissChild(child);
                 }
             }, delayCounter * 150);
+        }
+    }
+*/
+
+     @Override
+      public void removeAllViewsInLayout() {
+        smoothScrollTo(0, 0);
+        int count = mLinearLayout.getChildCount();
+        for (int i = 0; i < count; i++) {
+            final View child = mLinearLayout.getChildAt(i);
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dismissChild(child);
+               }
+            }, i * 150);
         }
     }
 
