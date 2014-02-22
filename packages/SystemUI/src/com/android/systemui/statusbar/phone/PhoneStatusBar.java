@@ -3223,6 +3223,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
         }
 
+		updateCustomHeaderStatus();
+
     }
 
     private void resetUserSetupObserver() {
