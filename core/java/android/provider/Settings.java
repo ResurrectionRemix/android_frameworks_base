@@ -1,8 +1,7 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- * This code has been modified. Portions copyright (C) 2013, ParanoidAndroid Project.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * This code has been modified. Portions copyright (C) 2013,
+ * licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -2997,6 +2996,13 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
+        
+        /**
+         * ToastAnimation
+         * @hide
+         */
+        public static final String TOAST_ANIMATION = "toast_animation";
+                
        /**
         * Animate-flip Quick Settings Panel Tiles on click
         *
