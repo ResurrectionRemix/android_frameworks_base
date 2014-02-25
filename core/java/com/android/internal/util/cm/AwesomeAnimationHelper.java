@@ -63,6 +63,10 @@ public class AwesomeAnimationHelper {
     }
 
     public static int[] getAnimations(int mAnim) {
+        return getAnimations(mAnim, false);
+    }
+
+    public static int[] getAnimations(int mAnim, boolean enterOnly) {
         int[] anim = new int[2];
         switch (mAnim) {
             case ANIMATION_FADE:
@@ -118,8 +122,6 @@ public class AwesomeAnimationHelper {
                 anim[1] = com.android.internal.R.anim.grow_fade_in_from_bottom_ribbon;
                 break;
         }
-<<<<<<< HEAD:core/java/com/android/internal/util/cm/AwesomeAnimationHelper.java
-=======
         if (enterOnly) anim[0] = 0;
         return anim;
     }
@@ -181,7 +183,6 @@ public class AwesomeAnimationHelper {
                 break;
         }
         if (enterOnly) anim[0] = com.android.internal.R.anim.no_animation;
->>>>>>> b8532a5... Animations fix black space with enter only and translucent reverse exit:core/java/com/android/internal/util/aokp/AwesomeAnimationHelper.java
         return anim;
     }
 
@@ -232,7 +233,7 @@ public class AwesomeAnimationHelper {
                 value = res.getString(com.android.internal.R.string.animation_grow_shrink);
                 break;
             default:
-                value = res.getString(com.android.internal.R.string.animation_blank);
+                value = res.getString(com.android.internal.R.string.action_null);
                 break;
 
         }
