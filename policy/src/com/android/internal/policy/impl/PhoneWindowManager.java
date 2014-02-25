@@ -1124,7 +1124,32 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (mHomeDoubleTapPending) {
                 cancelPreloadRecentApps();
                 mHomeDoubleTapPending = false;
+<<<<<<< HEAD
                 launchHomeFromHotKey();
+=======
+                mDisableVibration = maybeDisableVibration(mPressOnHomeBehavior);
+                processAction(mPressOnHomeBehavior);
+            }
+            if (mMenuDoubleTapPending) {
+                mMenuDoubleTapPending = false;
+                mDisableVibration = maybeDisableVibration(mPressOnMenuBehavior);
+                processAction(mPressOnMenuBehavior);
+            }
+            if (mBackDoubleTapPending) {
+                mBackDoubleTapPending = false;
+                mDisableVibration = maybeDisableVibration(mPressOnBackBehavior);
+                processAction(mPressOnBackBehavior);
+            }
+            if (mAppSwitchDoubleTapPending) {
+                mAppSwitchDoubleTapPending = false;
+                mDisableVibration = maybeDisableVibration(mPressOnAppSwitchBehavior);
+                processAction(mPressOnAppSwitchBehavior);
+            }
+            if (mAssistDoubleTapPending) {
+                mAssistDoubleTapPending = false;
+                mDisableVibration = maybeDisableVibration(mPressOnAssistBehavior);
+                processAction(mPressOnAssistBehavior);
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
             }
         }
     };
@@ -2570,7 +2595,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     return -1;
                 }
 
+<<<<<<< HEAD
                 // Go home!
+=======
+                if (!virtualKey
+                        && !mPressOnHomeBehavior.equals(ButtonsConstants.ACTION_HOME)) {
+                    mDisableVibration = maybeDisableVibration(mPressOnHomeBehavior);
+                    processAction(mPressOnHomeBehavior);
+                    return -1;
+                }
+
+                // Go home
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
                 launchHomeFromHotKey();
                 return -1;
             }
@@ -2617,8 +2653,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 if (!keyguardOn && !mHomeConsumed &&
                         mLongPressOnHomeBehavior != KEY_ACTION_NOTHING) {
                     mHomePressed = true;
+<<<<<<< HEAD
                     if (mLongPressOnHomeBehavior != KEY_ACTION_APP_SWITCH) {
                         cancelPreloadRecentApps();
+=======
+                    if (mHomeDoubleTapPending) {
+                        mHomeDoubleTapPending = false;
+                        mDisableVibration = false;
+                        mHomeConsumed = true;
+                        mHandler.removeCallbacks(mDoubleTapTimeoutRunnable);
+                        processAction(mDoubleTapOnHomeBehavior);
+                    }
+                } else if (longPress) {
+                    if (!keyguardOn
+                            && !mLongPressOnHomeBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                        performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
+                        processAction(mLongPressOnHomeBehavior);
+                        mHomeConsumed = true;
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
                     }
                     performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
                     performKeyAction(mLongPressOnHomeBehavior);
@@ -2631,9 +2683,63 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // Hijack modified menu keys for debugging features
             final int chordBug = KeyEvent.META_SHIFT_ON;
 
+<<<<<<< HEAD
             if (virtualKey || keyguardOn) {
                 // Let the app handle the key
                 return 0;
+=======
+            // If we have released the menu key, and didn't do anything else
+            // while it was pressed, then it is time to process the menu action!
+            if (!down && mMenuPressed) {
+                mMenuPressed = false;
+                if (mMenuConsumed) {
+                    mMenuConsumed = false;
+                    return -1;
+                }
+
+                if (canceled) {
+                    Log.i(TAG, "Ignoring MENU; event canceled.");
+                    return -1;
+                }
+
+                if (mEnableShiftMenuBugReports && (metaState & chordBug) == chordBug) {
+                    Intent intent = new Intent(Intent.ACTION_BUG_REPORT);
+                    mContext.sendOrderedBroadcast(intent, null);
+                    return -1;
+                } else if (SHOW_PROCESSES_ON_ALT_MENU &&
+                        (metaState & KeyEvent.META_ALT_ON) == KeyEvent.META_ALT_ON) {
+                    Intent service = new Intent();
+                    service.setClassName(mContext, "com.android.server.LoadAverageService");
+                    ContentResolver res = mContext.getContentResolver();
+                    boolean shown = Settings.Global.getInt(
+                            res, Settings.Global.SHOW_PROCESSES, 0) != 0;
+                    if (!shown) {
+                        mContext.startService(service);
+                    } else {
+                        mContext.stopService(service);
+                    }
+                    Settings.Global.putInt(
+                            res, Settings.Global.SHOW_PROCESSES, shown ? 0 : 1);
+                    return -1;
+                }
+
+                // Delay handling menu if a double-tap is possible.
+                if (!virtualKey
+                        && !mDoubleTapOnMenuBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                    mHandler.removeCallbacks(mDoubleTapTimeoutRunnable); // just in case
+                    mDisableVibration = false; // just in case
+                    mMenuDoubleTapPending = true;
+                    mHandler.postDelayed(mDoubleTapTimeoutRunnable,
+                            ViewConfiguration.getDoubleTapTimeout());
+                    return -1;
+                }
+
+                if (!virtualKey) {
+                    mDisableVibration = maybeDisableVibration(mPressOnMenuBehavior);
+                    processAction(mPressOnMenuBehavior);
+                    return -1;
+                }
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
             }
 
             if (down) {
@@ -2643,6 +2749,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 if (repeatCount == 0) {
                     mMenuPressed = true;
+<<<<<<< HEAD
                     if (mEnableShiftMenuBugReports && (metaState & chordBug) == chordBug) {
                         Intent intent = new Intent(Intent.ACTION_BUG_REPORT);
                         mContext.sendOrderedBroadcast(intent, null);
@@ -2672,6 +2779,22 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         performKeyAction(mLongPressOnMenuBehavior);
                         // Do not perform action when key is released
                         mMenuPressed = false;
+=======
+                    if (mMenuDoubleTapPending) {
+                        mMenuDoubleTapPending = false;
+                        mDisableVibration = false;
+                        mMenuConsumed = true;
+                        mHandler.removeCallbacks(mDoubleTapTimeoutRunnable);
+                        processAction(mDoubleTapOnMenuBehavior);
+                        return -1;
+                    }
+                } else if (longPress) {
+                    if (!keyguardOn
+                            && !mLongPressOnMenuBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                        performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
+                        processAction(mLongPressOnMenuBehavior);
+                        mMenuConsumed = true;
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
                         return -1;
                     }
                 }
@@ -2688,6 +2811,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 return -1;
             } else {
+<<<<<<< HEAD
                 if (!down) {
                     if (mMenuPressed) {
                         mMenuPressed = false;
@@ -2696,6 +2820,50 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         return -1;
                     }
                 }
+=======
+                mSearchKeyShortcutPending = false;
+                if (mConsumeSearchKeyUp) {
+                    mConsumeSearchKeyUp = false;
+                    return -1;
+                }
+            }
+            return 0;
+        } else if (keyCode == KeyEvent.KEYCODE_APP_SWITCH) {
+            // If we have released the app switch key, and didn't do anything else
+            // while it was pressed, then it is time to process the app switch action!
+            if (!down && mAppSwitchPressed) {
+                mAppSwitchPressed = false;
+                if (mAppSwitchConsumed) {
+                    mAppSwitchConsumed = false;
+                    return -1;
+                }
+
+                if (canceled) {
+                    Log.i(TAG, "Ignoring APPSWITCH; event canceled.");
+                    return -1;
+                }
+
+                // Delay handling AppSwitch if a double-tap is possible.
+                if (!virtualKey
+                        && !mDoubleTapOnAppSwitchBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                    mHandler.removeCallbacks(mDoubleTapTimeoutRunnable); // just in case
+                    mDisableVibration = false; // just in case
+                    mAppSwitchDoubleTapPending = true;
+                    mHandler.postDelayed(mDoubleTapTimeoutRunnable,
+                            ViewConfiguration.getDoubleTapTimeout());
+                    return -1;
+                }
+
+                if (!virtualKey) {
+                    mDisableVibration = maybeDisableVibration(mPressOnAppSwitchBehavior);
+                    processAction(mPressOnAppSwitchBehavior);
+                    return -1;
+                }
+
+                // Nothing happened execute default action
+                processAction(HwKeyHelper.getPressOnAppSwitchBehavior(mContext, true));
+                return -1;
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
             }
         } else if (keyCode == KeyEvent.KEYCODE_SEARCH) {
             if (down) {
@@ -2718,6 +2886,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     preloadRecentApps();
                 }
                 if (repeatCount == 0) {
+<<<<<<< HEAD
                     mAppSwitchLongPressed = false;
                 } else if (longPress) {
                     if (!keyguardOn && mLongPressOnAppSwitchBehavior != KEY_ACTION_NOTHING) {
@@ -2740,6 +2909,62 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         performKeyAction(mPressOnAppSwitchBehavior);
                     }
                 }
+=======
+                    mAppSwitchPressed = true;
+                    if (mAppSwitchDoubleTapPending) {
+                        mAppSwitchDoubleTapPending = false;
+                        mDisableVibration = false;
+                        mAppSwitchConsumed = true;
+                        mHandler.removeCallbacks(mDoubleTapTimeoutRunnable);
+                        processAction(mDoubleTapOnAppSwitchBehavior);
+                    }
+                } else if (longPress) {
+                    if (!keyguardOn
+                            && !mLongPressOnAppSwitchBehavior.equals(
+                                    ButtonsConstants.ACTION_NULL)) {
+                        performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
+                        processAction(mLongPressOnAppSwitchBehavior);
+                        mAppSwitchConsumed = true;
+                    }
+                }
+            }
+            return -1;
+        } else if (keyCode == KeyEvent.KEYCODE_ASSIST) {
+            // If we have released the assistant key, and didn't do anything else
+            // while it was pressed, then it is time to process the assistant action!
+            if (!down && mAssistPressed) {
+                mAssistPressed = false;
+                if (mAssistConsumed) {
+                    mAssistConsumed = false;
+                    return -1;
+                }
+
+                if (canceled) {
+                    Log.i(TAG, "Ignoring ASSIST; event canceled.");
+                    return -1;
+                }
+
+                // Delay handling assistant if a double-tap is possible.
+                if (!virtualKey
+                        && !mDoubleTapOnAssistBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                    mHandler.removeCallbacks(mDoubleTapTimeoutRunnable); // just in case
+                    mDisableVibration = false; // just in case
+                    mAssistDoubleTapPending = true;
+                    mHandler.postDelayed(mDoubleTapTimeoutRunnable,
+                            ViewConfiguration.getDoubleTapTimeout());
+                    return -1;
+                }
+
+                if (!virtualKey) {
+                    mDisableVibration = maybeDisableVibration(mPressOnAssistBehavior);
+                    processAction(mPressOnAssistBehavior);
+                    return -1;
+                }
+
+                // Nothing happened execute default action
+                processAction(HwKeyHelper.getPressOnAssistBehavior(mContext, true));
+                return -1;
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
             }
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_ASSIST) {
@@ -2749,6 +2974,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     preloadRecentApps();
                 }
                 if (repeatCount == 0) {
+<<<<<<< HEAD
                     mAssistKeyLongPressed = false;
                 } else if (longPress) {
                     if (!keyguardOn && mLongPressOnAssistBehavior != KEY_ACTION_NOTHING) {
@@ -2769,6 +2995,22 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                     if (!canceled && !keyguardOn) {
                         performKeyAction(mPressOnAssistBehavior);
+=======
+                    mAssistPressed = true;
+                    if (mAssistDoubleTapPending) {
+                        mAssistDoubleTapPending = false;
+                        mDisableVibration = false;
+                        mAssistConsumed = true;
+                        mHandler.removeCallbacks(mDoubleTapTimeoutRunnable);
+                        processAction(mDoubleTapOnAssistBehavior);
+                    }
+                } else if (longPress) {
+                    if (!keyguardOn
+                            && !mLongPressOnAssistBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                        performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
+                        processAction(mLongPressOnAssistBehavior);
+                        mAssistConsumed = true;
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
                     }
                 }
             }
@@ -2822,6 +3064,74 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT_OR_SELF);
             }
             return -1;
+<<<<<<< HEAD
+=======
+        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // If we have released the back key, and didn't do anything else
+            // while it was pressed, then it is time to process the back action!
+            if (!down && mBackPressed) {
+                mBackPressed = false;
+                if (mBackConsumed) {
+                    mBackConsumed = false;
+                    return -1;
+                }
+
+                if (canceled) {
+                    Log.i(TAG, "Ignoring BACK; event canceled.");
+                    return -1;
+                }
+
+                // Delay handling back if a double-tap is possible.
+                if (!virtualKey
+                        && !mDoubleTapOnBackBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                    mHandler.removeCallbacks(mDoubleTapTimeoutRunnable); // just in case
+                    mDisableVibration = false; // just in case
+                    mBackDoubleTapPending = true;
+                    mHandler.postDelayed(mDoubleTapTimeoutRunnable,
+                            ViewConfiguration.getDoubleTapTimeout());
+                    return -1;
+                }
+
+                if (!virtualKey) {
+                    mDisableVibration = maybeDisableVibration(mPressOnBackBehavior);
+                    processAction(mPressOnBackBehavior);
+                    return -1;
+                }
+            }
+
+            if (virtualKey && down) {
+                mBackPressed = true;
+                mBackConsumed = false;
+            } else if (down) {
+                // Remember that back is pressed and handle special actions.
+                if (!mPreloadedRecentApps &&
+                        (mLongPressOnBackBehavior.equals(ButtonsConstants.ACTION_RECENTS)
+                         || mDoubleTapOnBackBehavior.equals(ButtonsConstants.ACTION_RECENTS)
+                         || mPressOnBackBehavior.equals(ButtonsConstants.ACTION_RECENTS))) {
+                    preloadRecentApps();
+                }
+                if (repeatCount == 0) {
+                    mBackPressed = true;
+                    if (mBackDoubleTapPending) {
+                        mBackDoubleTapPending = false;
+                        mDisableVibration = false;
+                        mBackConsumed = true;
+                        mHandler.removeCallbacks(mDoubleTapTimeoutRunnable);
+                        processAction(mDoubleTapOnBackBehavior);
+                    }
+                } else if (longPress) {
+                    if (!keyguardOn
+                            && !mLongPressOnBackBehavior.equals(ButtonsConstants.ACTION_NULL)) {
+                        performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
+                        processAction(mLongPressOnBackBehavior);
+                        mBackConsumed = true;
+                    }
+                }
+            }
+            if (!virtualKey) {
+                return -1;
+            }
+>>>>>>> 84f4310... Frameworks: Do proper recent preload on hw key rebinding.
         }
 
         // Shortcuts are invoked through Search+key, so intercept those here
@@ -2935,6 +3245,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         // Let the application handle the key.
         return 0;
+    }
+
+    private void processAction(String action) {
+        if (action == null) {
+            return;
+        }
+        if (!action.equals(ButtonsConstants.ACTION_RECENTS)) {
+            cancelPreloadRecentApps();
+        }
+        // Reset the check flag for preloading to give it free
+        // for next preload call.
+        mPreloadedRecentApps = false;
+        SlimActions.processAction(mContext, action, false);
     }
 
     /** {@inheritDoc} */
