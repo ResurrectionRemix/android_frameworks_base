@@ -18,5 +18,7 @@
 
     <!-- Color for the "No recent apps" text in the recent apps list. -->
     <color name="no_recent_apps">#bebebe</color>
-
+    <!-- Quick Settings -->
+    <color name="qs_background_color">#FF212121</color>
+    <color name="qs_background_pressed_color">#FF161616</color>
 </resources>

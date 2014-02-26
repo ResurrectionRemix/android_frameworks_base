@@ -45,7 +45,8 @@ public class QuickSettingsTile implements OnClickListener {
     protected PhoneStatusBar mStatusbarService;
     protected QuickSettingsController mQsc;
     protected SharedPreferences mPrefs;
-
+    protected int mTileTextColor;
+    
     private Handler mHandler = new Handler();
 
     public QuickSettingsTile(Context context, QuickSettingsController qsc) {
@@ -64,6 +65,7 @@ public class QuickSettingsTile implements OnClickListener {
 
     public void setupQuickSettingsTile(LayoutInflater inflater,
             QuickSettingsContainerView container) {
+		mTileTextColor = container.getTileTextColor();
         container.updateResources();
         mTileTextSize = container.getTileTextSize();
         mTileTextPadding = container.getTileTextPadding();
@@ -83,6 +85,9 @@ public class QuickSettingsTile implements OnClickListener {
         TextView tv = (TextView) mTile.findViewById(R.id.text);
         if (tv != null) {
             tv.setVisibility(View.GONE);
+            if (mTileTextColor != -2) {
+                tv.setTextColor(mTileTextColor);
+            }
         }
         View image = mTile.findViewById(R.id.image);
         if (image != null) {

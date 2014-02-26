@@ -394,6 +394,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SIGNAL_TEXT), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QUICK_TILES_TEXT_COLOR),
+                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QUICK_TILES_BG_COLOR),
+                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.QUICK_TILES_BG_PRESSED_COLOR),
+                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.QUICK_TILES_BG_ALPHA),
+                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this);
             updateSettings();
         }
@@ -3594,6 +3606,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QUICK_TILES_TEXT_COLOR))
+                 || uri.equals(Settings.System.getUriFor(
+                     Settings.System.QUICK_TILES_BG_COLOR))
+                 || uri.equals(Settings.System.getUriFor(
+                     Settings.System.QUICK_TILES_BG_PRESSED_COLOR))
+                 || uri.equals(Settings.System.getUriFor(
+                     Settings.System.QUICK_TILES_BG_ALPHA))) {
+                 if (mQS != null) {
+                     mQS.setupQuickSettings();
+                 }
+             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QUICK_SETTINGS_TILES))
                 || uri.equals(Settings.System.getUriFor(
                     Settings.System.QUICK_TILES_PER_ROW))

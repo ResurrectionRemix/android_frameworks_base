@@ -134,6 +134,9 @@ public class MobileNetworkTile extends NetworkTile {
         }
         iv.setImageResource(mDrawable);
         updateOverlayImage(mDataTypeIconId);
+        if (mTileTextColor != -2) {
+            tv.setTextColor(mTileTextColor);
+        }
         mTile.setContentDescription(mContext.getResources().getString(
                 R.string.accessibility_quick_settings_mobile,
                 signalContentDescription, dataContentDescription,

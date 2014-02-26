@@ -122,18 +122,18 @@ public class QuickSettingsContainerView extends FrameLayout {
                 lp.width = (int) ((colSpan * cellWidth) + (colSpan - 1) * cellGap);
                 
                 lp.height = cellHeight;
-		
+
 
                 // Measure the child
                 int newWidthSpec = MeasureSpec.makeMeasureSpec(lp.width, MeasureSpec.EXACTLY);
                 int newHeightSpec = MeasureSpec.makeMeasureSpec(lp.height, MeasureSpec.EXACTLY);
                 v.measure(newWidthSpec, newHeightSpec);
-		
+
 
                 cursor += colSpan;
                 
                 totalWidth += v.getMeasuredWidth() + cellGap;
-		
+
             }
         }
 
@@ -219,7 +219,11 @@ public class QuickSettingsContainerView extends FrameLayout {
 		return Resources.getSystem().getConfiguration().orientation
 			== Configuration.ORIENTATION_LANDSCAPE;
     }
-
+    public int getTileTextColor() {
+        int tileTextColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QUICK_TILES_TEXT_COLOR, -2, UserHandle.USER_CURRENT);
+        return tileTextColor;
+    }
     public int getTileTextSize() {
         // get tile text size based on column count
         switch (mNumColumns) {
