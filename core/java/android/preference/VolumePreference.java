@@ -246,6 +246,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
         private static final int MSG_SET_STREAM_VOLUME = 0;
         private static final int MSG_START_SAMPLE = 1;
         private static final int MSG_STOP_SAMPLE = 2;
+        private static final int MSG_GET_RINGTONE = 3;
         private static final int CHECK_RINGTONE_PLAYBACK_DELAY_MS = 1000;
 
         private ContentObserver mVolumeObserver = new ContentObserver(mHandler) {
@@ -276,6 +277,14 @@ public class VolumePreference extends SeekBarDialogPreference implements
             initSeekBar(seekBar, defaultUri);
         }
 
+        private void getRingtone(Uri defaultUri) {
+            mRingtone = RingtoneManager.getRingtone(mContext, defaultUri);
+
+            if (mRingtone != null) {
+                mRingtone.setStreamType(mStreamType);
+            }
+        }
+
         private void initSeekBar(SeekBar seekBar, Uri defaultUri) {
             seekBar.setMax(mAudioManager.getStreamMaxVolume(mStreamType));
             mOriginalStreamVolume = mAudioManager.getStreamVolume(mStreamType);
@@ -296,11 +305,7 @@ public class VolumePreference extends SeekBarDialogPreference implements
                 }
             }
 
-            mRingtone = RingtoneManager.getRingtone(mContext, defaultUri);
-
-            if (mRingtone != null) {
-                mRingtone.setStreamType(mStreamType);
-            }
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_GET_RINGTONE, defaultUri));
         }
 
         @Override
@@ -314,6 +319,9 @@ public class VolumePreference extends SeekBarDialogPreference implements
                     break;
                 case MSG_STOP_SAMPLE:
                     onStopSample();
+                    break;
+                case MSG_GET_RINGTONE:
+                    getRingtone((Uri)msg.obj);
                     break;
                 default:
                     Log.e(TAG, "invalid SeekBarVolumizer message: "+msg.what);
