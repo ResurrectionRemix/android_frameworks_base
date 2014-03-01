@@ -395,9 +395,7 @@ void PathCache::clearGarbage() {
         Mutex::Autolock l(mLock);
         size_t count = mGarbage.size();
         for (size_t i = 0; i < count; i++) {
-            const path_pair_t& pair = mGarbage.itemAt(i);
-            remove(pathsToRemove, pair);
-            delete pair.getFirst();
+            remove(pathsToRemove, mGarbage.itemAt(i));
         }
         mGarbage.clear();
     }
