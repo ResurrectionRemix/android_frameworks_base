@@ -3955,21 +3955,7 @@ public class PackageManagerService extends IPackageManager.Stub {
             ExecutorService executorService = Executors.newFixedThreadPool(sNThreads);
             final long start = System.currentTimeMillis();
             for (PackageParser.Package pkg : pkgs) {
-<<<<<<< HEAD
                 final PackageParser.Package p = pkg;
-=======
-                if (!isFirstBoot()) {
-                    i++;
-                    try {
-                        ActivityManagerNative.getDefault().showBootMessage(
-                                mContext.getResources().getString(
-                                        com.android.internal.R.string.android_upgrading_apk,
-                                        i, pkgs.size()), true);
-                    } catch (RemoteException e) {
-                    }
-                }
-                PackageParser.Package p = pkg;
->>>>>>> parent of 56137aa... BootMessage: show more info in boot dialog
                 synchronized (mInstallLock) {
                     if (!p.mDidDexOpt) {
                         executorService.submit(new Runnable() {
