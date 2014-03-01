@@ -146,6 +146,7 @@ public class NotificationPanelView extends PanelView {
             }
         }
         if (PhoneStatusBar.SETTINGS_DRAG_SHORTCUT && mStatusBar.mHasFlipSettings) {
+	    boolean shouldFlip = false;
             boolean flip = false;
             boolean swipeFlipJustFinished = false;
             boolean swipeFlipJustStarted = false;
@@ -196,6 +197,9 @@ public class NotificationPanelView extends PanelView {
                         mSwipeTriggered = true;
                         swipeFlipJustStarted = true;
                     }
+		    if (mStatusBar.skipToSettingsPanel()) {
+                        shouldFlip = true;
+                    }
                     break;
                 case MotionEvent.ACTION_POINTER_DOWN:
                     flip = true;
@@ -215,12 +219,7 @@ public class NotificationPanelView extends PanelView {
                     if (y > maxy) maxy = y;
                 }
                 if (maxy - miny < mHandleBarHeight) {
-                    if (mJustPeeked || getExpandedHeight() < mHandleBarHeight) {
-                        mStatusBar.switchToSettings();
-                    } else {
-                        mStatusBar.flipToSettings();
-                    }
-                    mOkToFlip = false;
+                    shouldFlip = true;
                 }
             } else if (mSwipeTriggered) {
                 final float deltaX = (event.getX(0) - mGestureStartX) * mSwipeDirection;
@@ -232,6 +231,15 @@ public class NotificationPanelView extends PanelView {
             } else if (swipeFlipJustFinished) {
                 mStatusBar.completePartialFlip();
             }
+		
+	if(mOkToFlip && shouldFlip) {
+		if (mJustPeeked || getExpandedHeight() < mHandleBarHeight) {
+                        mStatusBar.switchToSettings();
+                    } else {
+                        mStatusBar.flipToSettings();
+                    }
+                    mOkToFlip = false;
+	}
 
             if (swipeFlipJustStarted || swipeFlipJustFinished) {
                 // Made up event: finger at the middle bottom of the view.
