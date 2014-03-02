@@ -2040,4 +2040,8 @@
   <java-symbol type="color" name="holo_purple_dark" />
   <java-symbol type="color" name="holo_red_dark" />
   <java-symbol type="bool" name="use_motion_accel" />
+
+  <!--Camera flash-->
+  <java-symbol type="bool" name="config_device_has_camera_flash" />
+
 </resources>
