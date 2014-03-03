@@ -1469,7 +1469,4 @@
     <!-- Camera flash -->
     <bool name="config_device_has_camera_flash">false</bool>
 
-    <!-- set to false if we dont need to consider data
-         service state to display signal strength bars -->
-    <bool name="config_combined_signal">true</bool>
 </resources>

@@ -57,8 +57,8 @@ import java.util.Locale;
 public class NetworkController extends BroadcastReceiver implements DemoMode {
     // debug
     static final String TAG = "StatusBar.NetworkController";
-    static final boolean DEBUG = true;
-    static final boolean CHATTY = true; // additional diagnostics, but not logspew
+    static final boolean DEBUG = false;
+    static final boolean CHATTY = false; // additional diagnostics, but not logspew
 
     private static final int FLIGHT_MODE_ICON = R.drawable.stat_sys_signal_flightmode;
 
@@ -123,7 +123,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     private int mWimaxSignal = 0;
     private int mWimaxState = 0;
     private int mWimaxExtraState = 0;
-    private int mDataServiceState = ServiceState.STATE_OUT_OF_SERVICE;
+
     // data connectivity (regardless of state, can we access the internet?)
     // state of inet connection - 0 not connected, 100 connected
     private boolean mConnected = false;
@@ -492,17 +492,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                         + " dataState=" + state.getDataRegState());
             }
             mServiceState = state;
-            if (mContext.getResources().getBoolean(
-                    com.android.internal.R.bool.config_combined_signal)) {
-                /*
-                 * if combined_signal is set to true only then consider data
-                 * service state for signal display
-                 */
-                mDataServiceState = mServiceState.getDataRegState();
-                if (DEBUG) {
-                    Log.d(TAG, "Combining data service state " + mDataServiceState + " for signal");
-                }
-            }
             updateTelephonySignalStrength();
             updateDataNetType();
             updateDataIcon();
@@ -604,18 +593,14 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     }
 
     private final void updateTelephonySignalStrength() {
-        if (!hasService() &&
-                (mDataServiceState != ServiceState.STATE_IN_SERVICE)) {
-            if (DEBUG) Log.d(TAG, " No service");
+        if (!hasService()) {
+            if (CHATTY) Log.d(TAG, "updateTelephonySignalStrength: !hasService()");
             mPhoneSignalIconId = R.drawable.stat_sys_signal_null;
             mQSPhoneSignalIconId = R.drawable.ic_qs_signal_no_signal;
             mDataSignalIconId = R.drawable.stat_sys_signal_null;
         } else {
-            if ((mSignalStrength == null) || (mServiceState == null)) {
-                if (DEBUG) {
-                    Log.d(TAG, " Null object, mSignalStrength= " + mSignalStrength
-                            + " mServiceState " + mServiceState);
-                }
+            if (mSignalStrength == null) {
+                if (CHATTY) Log.d(TAG, "updateTelephonySignalStrength: mSignalStrength == null");
                 mPhoneSignalIconId = R.drawable.stat_sys_signal_null;
                 mQSPhoneSignalIconId = R.drawable.ic_qs_signal_no_signal;
                 mDataSignalIconId = R.drawable.stat_sys_signal_null;
@@ -633,13 +618,20 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     mLastSignalLevel = iconLevel = mSignalStrength.getLevel();
                 }
 
-                // Though mPhone is a Manager, this call is not an IPC
-                if ((isCdma() && isCdmaEri()) || mPhone.isNetworkRoaming()) {
-                    iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH_ROAMING[mInetCondition];
+                if (isCdma()) {
+                    if (isCdmaEri()) {
+                        iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH_ROAMING[mInetCondition];
+                    } else {
+                        iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH[mInetCondition];
+                    }
                 } else {
-                    iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH[mInetCondition];
+                    // Though mPhone is a Manager, this call is not an IPC
+                    if (mPhone.isNetworkRoaming()) {
+                        iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH_ROAMING[mInetCondition];
+                    } else {
+                        iconList = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH[mInetCondition];
+                    }
                 }
-
                 mPhoneSignalIconId = iconList[iconLevel];
                 mQSPhoneSignalIconId =
                         TelephonyIcons.QS_TELEPHONY_SIGNAL_STRENGTH[mInetCondition][iconLevel];
@@ -661,9 +653,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         } else {
             switch (mDataNetType) {
                 case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                    if (DEBUG) {
-                        Log.e(TAG, "updateDataNetType NETWORK_TYPE_UNKNOWN");
-                    }
                     if (!mShowAtLeastThreeGees) {
                         mDataIconList = TelephonyIcons.DATA_G[mInetCondition];
                         mDataTypeIconId = 0;
@@ -768,7 +757,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                                 R.string.accessibility_data_connection_lte);
                     }
                     break;
-                case TelephonyManager.NETWORK_TYPE_GPRS:
+                default:
                     if (!mShowAtLeastThreeGees) {
                         mDataIconList = TelephonyIcons.DATA_G[mInetCondition];
                         mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_g;
@@ -782,13 +771,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                         mContentDescriptionDataType = mContext.getString(
                                 R.string.accessibility_data_connection_3g);
                     }
-                    break;
-                default:
-                    if (DEBUG) {
-                        Log.e(TAG, "updateDataNetType unknown radio:" + mDataNetType);
-                    }
-                    mDataNetType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
-                    mDataTypeIconId = 0;
                     break;
             }
         }
@@ -805,8 +787,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     }
 
     boolean isCdmaEri() {
-        if ((mServiceState != null)
-                && (hasService() || (mDataServiceState == ServiceState.STATE_IN_SERVICE))) {
+        if (mServiceState != null) {
             final int iconIndex = mServiceState.getCdmaEriIconIndex();
             if (iconIndex != EriInfo.ROAMING_INDICATOR_OFF) {
                 final int iconMode = mServiceState.getCdmaEriIconMode();
@@ -820,16 +801,14 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     }
 
     private final void updateDataIcon() {
-        int iconId = 0;
+        int iconId;
         boolean visible = true;
-        if (mDataNetType == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
-            // If data network type is unknown do not display data icon
-            visible = false;
-        } else if (!isCdma()) {
+
+        if (!isCdma()) {
             // GSM case, we have to check also the sim state
             if (mSimState == IccCardConstants.State.READY ||
                     mSimState == IccCardConstants.State.UNKNOWN) {
-                if (mDataState == TelephonyManager.DATA_CONNECTED) {
+                if (hasService() && mDataState == TelephonyManager.DATA_CONNECTED) {
                     switch (mDataActivity) {
                         case TelephonyManager.DATA_ACTIVITY_IN:
                             iconId = mDataIconList[1];
@@ -855,7 +834,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             }
         } else {
             // CDMA case, mDataActivity can be also DATA_ACTIVITY_DORMANT
-            if (mDataState == TelephonyManager.DATA_CONNECTED) {
+            if (hasService() && mDataState == TelephonyManager.DATA_CONNECTED) {
                 switch (mDataActivity) {
                     case TelephonyManager.DATA_ACTIVITY_IN:
                         iconId = mDataIconList[1];
