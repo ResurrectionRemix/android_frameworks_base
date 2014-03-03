@@ -4054,6 +4054,12 @@ public final class Settings {
          */
         public static final String BUTTON_BACKLIGHT_ENABLE = "button_backlight_enable";
 
+        /**
+         * Toast animations
+         *
+         * @hide
+         */
+        public static final String TOAST_ANIMATION = "toast_animation";
 
         /**
          * Whether to display the reboot option in the power menu
