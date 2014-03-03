@@ -690,15 +690,10 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             case MATCH_MOBILE_ALL:
                 // mobile templates are relevant when SIM is ready and
                 // subscriberId matches.
-<<<<<<< HEAD
-                if (tele.getSimState() == SIM_STATE_READY) {
-                    return Objects.equal(tele.getSubscriberId(), template.getSubscriberId());
-=======
                 if (NetworkIdentity.isDdsReady()) {
                     // multi sim data traffic statistics
                     return Objects.equal(NetworkIdentity.getDdsSubscriberId(),
                             template.getSubscriberId());
->>>>>>> c979105... Telephony(MSIM): Add support for MultiSim
                 } else {
                     return false;
                 }
@@ -953,14 +948,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             case MATCH_MOBILE_ALL:
                 // TODO: offer more granular control over radio states once
                 // 4965893 is available.
-<<<<<<< HEAD
-                if (tele.getSimState() == SIM_STATE_READY
-                        && Objects.equal(tele.getSubscriberId(), template.getSubscriberId())) {
-=======
                 if (NetworkIdentity.isDdsReady()
                         && Objects.equal(NetworkIdentity.getDdsSubscriberId(),
                                 template.getSubscriberId())) {
->>>>>>> c979105... Telephony(MSIM): Add support for MultiSim
                     setPolicyDataEnable(TYPE_MOBILE, enabled);
                     setPolicyDataEnable(TYPE_WIMAX, enabled);
                 }
