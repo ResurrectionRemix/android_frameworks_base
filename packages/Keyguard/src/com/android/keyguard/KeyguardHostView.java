@@ -1162,10 +1162,6 @@ public class KeyguardHostView extends KeyguardViewBase {
             case Password: return R.id.keyguard_password_view;
             case Biometric: return R.id.keyguard_face_unlock_view;
             case Account: return R.id.keyguard_account_view;
-<<<<<<< HEAD
-            case SimPin: return R.id.keyguard_sim_pin_view;
-            case SimPuk: return R.id.keyguard_sim_puk_view;
-=======
             case Gesture: return R.id.keyguard_gesture_view;
             case SimPin:
                 if (KeyguardUpdateMonitor.sIsMultiSimEnabled) {
@@ -1177,7 +1173,6 @@ public class KeyguardHostView extends KeyguardViewBase {
                     return R.id.msim_keyguard_sim_puk_view;
                 }
                 return R.id.keyguard_sim_puk_view;
->>>>>>> acceb59... Telephony(MSIM): MultiSim support for PIN/PUK & Operator Name.
         }
         return 0;
     }
@@ -1190,10 +1185,6 @@ public class KeyguardHostView extends KeyguardViewBase {
             case Password: return R.layout.keyguard_password_view;
             case Biometric: return R.layout.keyguard_face_unlock_view;
             case Account: return R.layout.keyguard_account_view;
-<<<<<<< HEAD
-            case SimPin: return R.layout.keyguard_sim_pin_view;
-            case SimPuk: return R.layout.keyguard_sim_puk_view;
-=======
             case Gesture: return R.layout.keyguard_gesture_view;
             case SimPin:
                 if (KeyguardUpdateMonitor.sIsMultiSimEnabled) {
@@ -1205,7 +1196,6 @@ public class KeyguardHostView extends KeyguardViewBase {
                     return R.layout.msim_keyguard_sim_puk_view;
                 }
                 return R.layout.keyguard_sim_puk_view;
->>>>>>> acceb59... Telephony(MSIM): MultiSim support for PIN/PUK & Operator Name.
             default:
                 return 0;
         }
