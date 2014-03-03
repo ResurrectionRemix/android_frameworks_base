@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
  * Copyright (C) 2011 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,8 +24,8 @@ import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.telephony.MSimTelephonyManager;
 import android.telephony.TelephonyManager;
+
 import com.android.internal.util.Objects;
 
 /**
@@ -150,12 +148,13 @@ public class NetworkIdentity {
         boolean roaming = false;
 
         if (isNetworkTypeMobile(type)) {
-            roaming = isDdsRoaming();
+            final TelephonyManager telephony = (TelephonyManager) context.getSystemService(
+                    Context.TELEPHONY_SERVICE);
+            roaming = telephony.isNetworkRoaming();
             if (state.subscriberId != null) {
                 subscriberId = state.subscriberId;
             } else {
-                //used for dual sim data traffic statistics
-                subscriberId = getDdsSubscriberId();
+                subscriberId = telephony.getSubscriberId();
             }
 
         } else if (type == TYPE_WIFI) {
@@ -170,36 +169,5 @@ public class NetworkIdentity {
         }
 
         return new NetworkIdentity(type, subType, subscriberId, networkId, roaming);
-    }
-
-    private static boolean isDdsRoaming() {
-        MSimTelephonyManager mtm = MSimTelephonyManager.getDefault();
-        TelephonyManager tm = TelephonyManager.getDefault();
-        if (mtm.isMultiSimEnabled()) {
-            return mtm.isNetworkRoaming(mtm.getPreferredDataSubscription());
-        } else {
-            return tm.isNetworkRoaming();
-        }
-    }
-
-    public static String getDdsSubscriberId() {
-        MSimTelephonyManager mtm = MSimTelephonyManager.getDefault();
-        TelephonyManager tm = TelephonyManager.getDefault();
-        if (mtm.isMultiSimEnabled()) {
-            return mtm.getSubscriberId(mtm.getPreferredDataSubscription());
-        } else {
-            return tm.getSubscriberId();
-        }
-    }
-
-    public static boolean isDdsReady() {
-        MSimTelephonyManager mtm = MSimTelephonyManager.getDefault();
-        TelephonyManager tm = TelephonyManager.getDefault();
-        if (mtm.isMultiSimEnabled()) {
-            return mtm.getSimState(mtm.getPreferredDataSubscription())
-                    == TelephonyManager.SIM_STATE_READY;
-        } else {
-            return tm.getSimState() == TelephonyManager.SIM_STATE_READY;
-        }
     }
 }

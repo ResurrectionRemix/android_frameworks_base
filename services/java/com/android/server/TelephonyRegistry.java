@@ -32,7 +32,6 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.telephony.CellLocation;
-import android.telephony.MSimTelephonyManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -641,10 +640,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     //
 
     private void broadcastServiceStateChanged(ServiceState state) {
-        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-        // Return from here as this intent will be sent anyway from MSimTelephonyRegistry
-            return;
-        }
         long ident = Binder.clearCallingIdentity();
         try {
             mBatteryStats.notePhoneState(state.getState());
@@ -662,10 +657,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     }
 
     private void broadcastSignalStrengthChanged(SignalStrength signalStrength) {
-        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-        // Return from here as this intent will be sent anyway from MSimTelephonyRegistry
-            return;
-        }
         long ident = Binder.clearCallingIdentity();
         try {
             mBatteryStats.notePhoneSignalStrength(signalStrength);
@@ -684,10 +675,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     }
 
     private void broadcastCallStateChanged(int state, String incomingNumber) {
-        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-        // Return from here as this intent will be sent anyway from MSimDefaultPhoneNotifier
-            return;
-        }
         long ident = Binder.clearCallingIdentity();
         try {
             if (state == TelephonyManager.CALL_STATE_IDLE) {
@@ -715,10 +702,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             boolean isDataConnectivityPossible,
             String reason, String apn, String apnType, LinkProperties linkProperties,
             LinkCapabilities linkCapabilities, boolean roaming) {
-        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-        // Return from here as this intent will be sent anyway from MSimTelephonyRegistry
-            return;
-        }
         // Note: not reporting to the battery stats service here, because the
         // status bar takes care of that after taking into account all of the
         // required info.
@@ -749,10 +732,6 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     }
 
     private void broadcastDataConnectionFailed(String reason, String apnType) {
-        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-        // Return from here as this intent will be sent anyway from MSimTelephonyRegistry
-            return;
-        }
         Intent intent = new Intent(TelephonyIntents.ACTION_DATA_CONNECTION_FAILED);
         intent.putExtra(PhoneConstants.FAILURE_REASON_KEY, reason);
         intent.putExtra(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
