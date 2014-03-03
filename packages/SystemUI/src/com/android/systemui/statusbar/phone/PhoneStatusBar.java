@@ -610,25 +610,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
         mStatusBarView.setBar(this);
 
-<<<<<<< HEAD
-        PanelHolder holder = (PanelHolder) mStatusBarWindow.findViewById(R.id.panel_holder);
-=======
-        // Weather
-        final ContentResolver cr = mContext.getContentResolver();
-        mWeatherPanel = (WeatherPanel) mStatusBarWindow.findViewById(R.id.weatherpanel);
-        mWeatherPanel.setOnClickListener(mWeatherPanelListener);
-        mWeatherPanelEnabled = (Settings.System.getInt(cr,
-                Settings.System.STATUSBAR_WEATHER_STYLE, 2) == 1)
-                && (Settings.System.getBoolean(cr, Settings.System.USE_WEATHER, false));
-        mWeatherPanel.setVisibility(mWeatherPanelEnabled ? View.VISIBLE : View.GONE);
-
         PanelHolder holder;
         if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
             holder = (PanelHolder) mStatusBarWindow.findViewById(R.id.msim_panel_holder);
         } else {
             holder = (PanelHolder) mStatusBarWindow.findViewById(R.id.panel_holder);
         }
->>>>>>> defd8cf... Telephony(MSIM): Add StatusBar support for MultiSim.
         mStatusBarView.setPanelHolder(holder);
 
         mNotificationPanel = (NotificationPanelView) mStatusBarWindow.findViewById(R.id.notification_panel);
@@ -841,21 +828,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     }});
             }
 
-<<<<<<< HEAD
-	mCarrierAndWifiView = mStatusBarWindow.findViewById(R.id.carrier_wifi);
-        mWifiView = mStatusBarWindow.findViewById(R.id.wifi_view);
-        mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
-        mShowCarrierInPanel = (mCarrierLabel != null);
-        if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
-        if (mShowCarrierInPanel) {
-            // for mobile devices, we always show mobile connection info here (SPN/PLMN)
-            // for other devices, we show whatever network is connected
-            if (mNetworkController.hasMobileDataFeature()) {
-                mNetworkController.addMobileLabelView(mCarrierLabel);
-            } else {
-                mNetworkController.addCombinedLabelView(mCarrierLabel);
-=======
-
             mCarrierAndWifiView = mStatusBarWindow.findViewById(R.id.carrier_wifi);
             mWifiView = mStatusBarWindow.findViewById(R.id.wifi_view);
             mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
@@ -908,7 +880,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                             updateCarrierLabelVisibility(false);
                         }});
                 }
->>>>>>> defd8cf... Telephony(MSIM): Add StatusBar support for MultiSim.
             }
 	}
 
