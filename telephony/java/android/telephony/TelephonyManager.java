@@ -620,8 +620,6 @@ public class TelephonyManager {
     public static final int NETWORK_TYPE_EHRPD = 14;
     /** Current network is HSPA+ */
     public static final int NETWORK_TYPE_HSPAP = 15;
-    /** Current network is GSM {@hide} */
-    public static final int NETWORK_TYPE_GSM = 16;
 
     /**
      * @return the NETWORK_TYPE_xxxx for current data connection.
@@ -724,7 +722,6 @@ public class TelephonyManager {
     public static int getNetworkClass(int networkType) {
         switch (networkType) {
             case NETWORK_TYPE_GPRS:
-            case NETWORK_TYPE_GSM:
             case NETWORK_TYPE_EDGE:
             case NETWORK_TYPE_CDMA:
             case NETWORK_TYPE_1xRTT:
@@ -791,8 +788,6 @@ public class TelephonyManager {
                 return "iDEN";
             case NETWORK_TYPE_HSPAP:
                 return "HSPA+";
-            case NETWORK_TYPE_GSM:
-                return "GSM";
             default:
                 return "UNKNOWN";
         }
