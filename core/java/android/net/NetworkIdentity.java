@@ -31,8 +31,6 @@ import android.telephony.TelephonyManager;
 
 import com.android.internal.util.Objects;
 
-import com.android.internal.util.Objects;
-
 /**
  * Network definition that includes strong identity. Analogous to combining
  * {@link NetworkInfo} and an IMSI.
