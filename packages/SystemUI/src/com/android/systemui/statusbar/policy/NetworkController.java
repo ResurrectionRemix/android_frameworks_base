@@ -233,7 +233,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 com.android.internal.R.string.lockscreen_carrier_default);
         mNetworkName = mNetworkNameDefault;
 
-<<<<<<< HEAD
         // wifi
         mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         Handler handler = new WifiHandler();
@@ -243,8 +242,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             mWifiChannel.connect(mContext, handler, wifiMessenger);
         }
 
-=======
->>>>>>> 7063121... telephony: Cleanup after QCRIL merge
         // broadcasts
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.android.settings.LABEL_CHANGED");
@@ -309,20 +306,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
 
     public void addDataTypeIconView(ImageView v) {
         mDataTypeIconViews.add(v);
-<<<<<<< HEAD
-=======
-    }
-
-    protected void registerPhoneStateListener(Context context) {
-        // telephony
-        mPhone = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-        mPhone.listen(mPhoneStateListener,
-                          PhoneStateListener.LISTEN_SERVICE_STATE
-                        | PhoneStateListener.LISTEN_SIGNAL_STRENGTHS
-                        | PhoneStateListener.LISTEN_CALL_STATE
-                        | PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
-                        | PhoneStateListener.LISTEN_DATA_ACTIVITY);
->>>>>>> 7063121... telephony: Cleanup after QCRIL merge
     }
 
     public void addCombinedLabelView(TextView v) {
