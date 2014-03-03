@@ -136,6 +136,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.ArraySet;
 import android.util.Pair;
 import android.util.PrintWriterPrinter;
@@ -900,7 +901,6 @@ public class DisplayPolicy {
                 attrs.hideTimeoutMilliseconds = mAccessibilityManager.getRecommendedTimeoutMillis(
                         (int) attrs.hideTimeoutMilliseconds,
                         AccessibilityManager.FLAG_CONTENT_TEXT);
-                attrs.windowAnimations = com.android.internal.R.style.Animation_Toast;
                 // Toast can show with below conditions when the screen is locked.
                 if (canToastShowWhenLocked(callingPid)) {
                     attrs.flags |= WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
@@ -908,6 +908,59 @@ public class DisplayPolicy {
                 // Toasts can't be clickable
                 attrs.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
                 break;
+
+                switch(Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.TOAST_ANIMATION, 1, UserHandle.USER_CURRENT)) {
+                    case 0:
+                        attrs.windowAnimations = -1;
+                        break;
+                    case 1:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast;
+                        break;
+                    case 2:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Fade;
+                        break;
+                    case 3:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideRight;
+                        break;
+                    case 4:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideLeft;
+                        break;
+                    case 5:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Xylon;
+                        break;
+                    case 6:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Toko;
+                        break;
+                    case 7:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Tn;
+                        break;
+                    case 8:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Honami;
+                        break;
+                    case 9:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_FastFade;
+                        break;
+                    case 10:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_GrowFade;
+                        break;
+                    case 11:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_GrowFadeCenter;
+                        break;
+                    case 12:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_GrowFadeBottom;
+                        break;
+                    case 13:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_Translucent;
+                        break;
+                    case 14:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideLeftRight;
+                        break;
+                    case 15:
+                        attrs.windowAnimations = com.android.internal.R.style.Animation_Toast_SlideRightLeft;
+                        break;
+                }
+>>>>>>> c7987aced43... FW_Base - XuiMod: Toast Animations [1/2]
         }
 
         if (attrs.type != TYPE_STATUS_BAR) {
