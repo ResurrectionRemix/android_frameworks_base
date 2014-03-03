@@ -73,13 +73,10 @@ import android.provider.AlarmClock;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.service.notification.StatusBarNotification;
-<<<<<<< HEAD
 import android.text.Editable;
 import android.text.TextWatcher;
-=======
 import android.telephony.MSimTelephonyManager;
 import android.telephony.TelephonyManager;
->>>>>>> 402644e... Telephony(MSIM): Add StatusBar support for MultiSim.
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
@@ -276,17 +273,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
     // carrier/wifi label
     private TextView mCarrierLabel;
-<<<<<<< HEAD
     private TextView mWifiLabel;
     private View mWifiView;
     private View mCarrierAndWifiView;
     private boolean mCarrierAndWifiViewVisible = false;
     private int mCarrierAndWifiViewHeight;
-=======
     private TextView mSubsLabel;
-    private boolean mCarrierLabelVisible = false;
-    private int mCarrierLabelHeight;
->>>>>>> 402644e... Telephony(MSIM): Add StatusBar support for MultiSim.
     private TextView mEmergencyCallLabel;
     private int mNotificationHeaderHeight;
 
@@ -836,7 +828,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     }});
             }
 
-<<<<<<< HEAD
 	mCarrierAndWifiView = mStatusBarWindow.findViewById(R.id.carrier_wifi);
         mWifiView = mStatusBarWindow.findViewById(R.id.wifi_view);
         mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
@@ -849,58 +840,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mNetworkController.addMobileLabelView(mCarrierLabel);
             } else {
                 mNetworkController.addCombinedLabelView(mCarrierLabel);
-=======
-            mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
-            mSubsLabel = (TextView)mStatusBarWindow.findViewById(R.id.subs_label);
-            mShowCarrierInPanel = (mCarrierLabel != null);
 
-            if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" +
-                                    mShowCarrierInPanel + "operator label=" + mSubsLabel);
-            if (mShowCarrierInPanel) {
-                mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.INVISIBLE);
-
-                // for mobile devices, we always show mobile connection info here (SPN/PLMN)
-                // for other devices, we show whatever network is connected
-                if (mMSimNetworkController.hasMobileDataFeature()) {
-                    mMSimNetworkController.addMobileLabelView(mCarrierLabel);
-                } else {
-                    mMSimNetworkController.addCombinedLabelView(mCarrierLabel);
-                }
-                mSubsLabel.setVisibility(View.VISIBLE);
-                mMSimNetworkController.addSubsLabelView(mSubsLabel);
-                // set up the dynamic hide/show of the label
-                mPile.setOnSizeChangedListener(new OnSizeChangedListener() {
-                    @Override
-                    public void onSizeChanged(View view, int w, int h, int oldw, int oldh) {
-                        updateCarrierLabelVisibility(false);
-                    }
-                });
-            }
-        } else {
-            mNetworkController = new NetworkController(mContext);
-            final SignalClusterView signalCluster =
-                (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
-
-            mNetworkController.addSignalCluster(signalCluster);
-            signalCluster.setNetworkController(mNetworkController);
-
-            final boolean isAPhone = mNetworkController.hasVoiceCallingFeature();
-            if (isAPhone) {
-                mEmergencyCallLabel = (TextView)mStatusBarWindow.findViewById(
-                                                       R.id.emergency_calls_only);
-                if (mEmergencyCallLabel != null) {
-                    mNetworkController.addEmergencyLabelView(mEmergencyCallLabel);
-                    mEmergencyCallLabel.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) { }});
-                    mEmergencyCallLabel.addOnLayoutChangeListener(
-                                                    new View.OnLayoutChangeListener() {
-                        @Override
-                        public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                            updateCarrierLabelVisibility(false);
-                        }});
-                }
->>>>>>> 402644e... Telephony(MSIM): Add StatusBar support for MultiSim.
             }
 	}
 

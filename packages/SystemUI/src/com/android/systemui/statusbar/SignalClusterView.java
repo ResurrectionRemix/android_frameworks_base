@@ -57,11 +57,9 @@ public class SignalClusterView
     private String mWifiDescription, mMobileDescription, mMobileTypeDescription, mEtherDescription;
 
     ViewGroup mWifiGroup, mMobileGroup;
-<<<<<<< HEAD
-    ImageView mWifi, mMobile, mWifiActivity, mMobileActivity, mMobileType, mAirplane, mEther;
-=======
+
     ImageView mWifi, mMobile, mWifiActivity, mMobileActivity, mMobileType, mAirplane, mNoSimSlot;
->>>>>>> 402644e... Telephony(MSIM): Add StatusBar support for MultiSim.
+
     View mSpacer;
 
     public SignalClusterView(Context context) {
@@ -237,7 +235,6 @@ public class SignalClusterView
             mAirplane.setVisibility(View.GONE);
         }
 
-<<<<<<< HEAD
         if (mEtherVisible) {
             mEther.setVisibility(View.VISIBLE);
             mEther.setImageResource(mEtherIconId);
@@ -246,11 +243,8 @@ public class SignalClusterView
             mEther.setVisibility(View.GONE);
         }
 
-        if (mMobileVisible && mWifiVisible && mIsAirplaneMode) {
-=======
         if (mMobileVisible && mWifiVisible &&
                 ((mIsAirplaneMode) || (mNoSimIconId != 0))) {
->>>>>>> 402644e... Telephony(MSIM): Add StatusBar support for MultiSim.
             mSpacer.setVisibility(View.INVISIBLE);
         } else {
             mSpacer.setVisibility(View.GONE);
