@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
  * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,12 +48,10 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
     private static final boolean DEBUG = KeyguardViewMediator.DEBUG;
     public static final String TAG = "KeyguardSimPinView";
 
-    protected ProgressDialog mSimUnlockProgressDialog = null;
+    private ProgressDialog mSimUnlockProgressDialog = null;
     private CheckSimPin mCheckSimPinThread;
 
     private AlertDialog mRemainingAttemptsDialog;
-    
-    protected volatile boolean mSimCheckInProgress;
 
     public KeyguardSimPinView(Context context) {
         this(context, null);
@@ -63,18 +59,6 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
 
     public KeyguardSimPinView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    protected void showCancelButton() {
-        final View cancel = findViewById(R.id.key_cancel);
-        if (cancel != null) {
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    doHapticKeyClick();
-                }
-            });
-        }
     }
 
     public void resetState() {
@@ -124,7 +108,6 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
                 }
             });
         }
-        showCancelButton();
 
         // The delete button is of the PIN keyboard itself in some (e.g. tablet) layouts,
         // not a separate view
@@ -207,7 +190,7 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
         }
     }
 
-    protected Dialog getSimUnlockProgressDialog() {
+    private Dialog getSimUnlockProgressDialog() {
         if (mSimUnlockProgressDialog == null) {
             mSimUnlockProgressDialog = new ProgressDialog(mContext);
             mSimUnlockProgressDialog.setMessage(
