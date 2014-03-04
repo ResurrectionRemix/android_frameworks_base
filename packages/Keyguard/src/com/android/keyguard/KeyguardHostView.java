@@ -1162,7 +1162,6 @@ public class KeyguardHostView extends KeyguardViewBase {
             case Password: return R.id.keyguard_password_view;
             case Biometric: return R.id.keyguard_face_unlock_view;
             case Account: return R.id.keyguard_account_view;
-            case Gesture: return R.id.keyguard_gesture_view;
             case SimPin:
                 if (KeyguardUpdateMonitor.sIsMultiSimEnabled) {
                     return R.id.msim_keyguard_sim_pin_view;
@@ -1185,7 +1184,6 @@ public class KeyguardHostView extends KeyguardViewBase {
             case Password: return R.layout.keyguard_password_view;
             case Biometric: return R.layout.keyguard_face_unlock_view;
             case Account: return R.layout.keyguard_account_view;
-            case Gesture: return R.layout.keyguard_gesture_view;
             case SimPin:
                 if (KeyguardUpdateMonitor.sIsMultiSimEnabled) {
                     return R.layout.msim_keyguard_sim_pin_view;

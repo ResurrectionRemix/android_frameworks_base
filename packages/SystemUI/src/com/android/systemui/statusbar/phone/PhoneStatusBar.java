@@ -856,6 +856,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 });
             }
         } else {
+		    mNetworkController = new NetworkController(mContext);
+            final SignalClusterView signalCluster =
+                (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
+                
             mNetworkController = new NetworkController(mContext);
             signalCluster.setNetworkController(mNetworkController);
 
@@ -892,9 +896,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.NOTIFICATION_SHOW_WIFI_SSID, 0) == 1 &&
                         count > 0) {
-                        mWifiView.setVisibility(View.VISIBLE);
+                        if (mWifiView != null)
+                            mWifiView.setVisibility(View.VISIBLE);
                     } else {
-                        mWifiView.setVisibility(View.GONE);
+                        if (mWifiView != null)
+                            mWifiView.setVisibility(View.GONE);
                     }
                 }
             });
