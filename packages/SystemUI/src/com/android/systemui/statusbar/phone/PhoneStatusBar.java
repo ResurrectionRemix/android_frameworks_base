@@ -882,7 +882,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
 	}
 
-        mWifiLabel = (TextView)mStatusBarWindow.findViewById(R.id.wifi_text);
+   mWifiLabel = (TextView)mStatusBarWindow.findViewById(R.id.wifi_text);
         if (mWifiLabel != null) {
             mNetworkController.addWifiLabelView(mWifiLabel);
             mWifiLabel.addTextChangedListener(new TextWatcher() {
@@ -896,11 +896,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.NOTIFICATION_SHOW_WIFI_SSID, 0) == 1 &&
                         count > 0) {
-                        if (mWifiView != null)
-                            mWifiView.setVisibility(View.VISIBLE);
+                        mWifiView.setVisibility(View.VISIBLE);
                     } else {
-                        if (mWifiView != null)
-                            mWifiView.setVisibility(View.GONE);
+                        mWifiView.setVisibility(View.GONE);
                     }
                 }
             });
