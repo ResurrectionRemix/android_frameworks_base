@@ -1540,15 +1540,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     }
 
-    /**
-     * Listen for UI updates and refresh layout.
-     */
-    public void onUpdateUI() {
-        updateCarrierAndWifiLabelVisibility(true);
-    }
-
     protected void updateCarrierAndWifiLabelVisibility(boolean force) {
-        if (!mShowCarrierInPanel || mCarrierAndWifiView == null) return;
+        if (!mShowCarrierInPanel || mCarrierAndWifiView == null) {
+            return;
+        }
         // The idea here is to only show the carrier label when there is enough room to see it,
         // i.e. when there aren't enough notifications to fill the panel.
         if (SPEW) {
