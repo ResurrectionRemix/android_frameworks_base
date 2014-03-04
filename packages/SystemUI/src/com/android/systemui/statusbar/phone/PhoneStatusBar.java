@@ -837,7 +837,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" +
                                     mShowCarrierInPanel + "operator label=" + mSubsLabel);
             if (mShowCarrierInPanel) {
-                mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.INVISIBLE);
 
                 // for mobile devices, we always show mobile connection info here (SPN/PLMN)
                 // for other devices, we show whatever network is connected
@@ -852,16 +851,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mPile.setOnSizeChangedListener(new OnSizeChangedListener() {
                     @Override
                     public void onSizeChanged(View view, int w, int h, int oldw, int oldh) {
-                        updateCarrierLabelVisibility(false);
+                        updateCarrierAndWifiLabelVisibility(false);
                     }
                 });
             }
         } else {
             mNetworkController = new NetworkController(mContext);
-            final SignalClusterView signalCluster =
-                (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
-
-            mNetworkController.addSignalCluster(signalCluster);
             signalCluster.setNetworkController(mNetworkController);
 
             final boolean isAPhone = mNetworkController.hasVoiceCallingFeature();
@@ -877,7 +872,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                         @Override
                         public void onLayoutChange(View v, int left, int top, int right, int bottom,
                             int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                            updateCarrierLabelVisibility(false);
+                            updateCarrierAndWifiLabelVisibility(false);
                         }});
                 }
             }
@@ -909,7 +904,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" +
                                                                   mShowCarrierInPanel);
             if (mShowCarrierInPanel) {
-                mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.INVISIBLE);
 
                 // for mobile devices, we always show mobile connection info here (SPN/PLMN)
                 // for other devices, we show whatever network is connected
