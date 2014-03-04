@@ -852,7 +852,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mPile.setOnSizeChangedListener(new OnSizeChangedListener() {
                     @Override
                     public void onSizeChanged(View view, int w, int h, int oldw, int oldh) {
-                        updateCarrierAndWifiLabelVisibility(false);
+                        updateCarrierLabelVisibility(false);
                     }
                 });
             }
@@ -881,7 +881,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                         @Override
                         public void onLayoutChange(View v, int left, int top, int right, int bottom,
                             int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                            updateCarrierAndWifiLabelVisibility(false);
+                            updateCarrierLabelVisibility(false);
                         }});
                 }
             }
