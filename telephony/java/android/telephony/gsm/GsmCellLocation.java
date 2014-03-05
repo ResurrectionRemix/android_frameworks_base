@@ -23,14 +23,17 @@ import android.telephony.CellLocation;
  * Represents the cell location on a GSM phone.
  */
 public class GsmCellLocation extends CellLocation {
-    private int mLac = -1;
-    private int mCid = -1;
-    private int mPsc = -1;
+    private int mLac;
+    private int mCid;
+    private int mPsc;
 
     /**
-     * Empty constructor.
+     * Empty constructor.  Initializes the LAC and CID to -1.
      */
     public GsmCellLocation() {
+        mLac = -1;
+        mCid = -1;
+        mPsc = -1;
     }
 
     /**

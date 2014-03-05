@@ -931,13 +931,13 @@
     <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_getAppOpsStats">Allows the app to retrieve
         collected application operation statistics. Not for use by normal apps.</string>
-
+    
     <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_updateAppOpsStats">modify app ops statistics</string>
     <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_updateAppOpsStats">Allows the app to modify
         collected application operation statistics. Not for use by normal apps.</string>
-
+    
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_backup">control system backup and restore</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
@@ -2274,9 +2274,6 @@
          to unlock the keyguard.  Displayed in one line in a large font.  -->
     <string name="keyguard_password_wrong_pin_code">Incorrect PIN code.</string>
 
-    <!-- Displayed when a SIM PIN/PUK is entered incorrectly. -->
-    <string name="pinpuk_attempts">\nAttempts Remaining :</string>
-
     <!-- Instructions telling the user how to unlock the phone. -->
     <string name="keyguard_label_text">To unlock, press Menu then 0.</string>
 
@@ -2356,8 +2353,6 @@
 
     <!-- Shown in the lock screen when there is emergency calls only mode. -->
     <string name="emergency_calls_only" msgid="2485604591272668370">Emergency calls only</string>
-    <!-- Shown in the lock screen when there is SIM card IO error. -->
-    <string name="lockscreen_sim_error_message_short">Invalid Card.</string>
 
     <!-- When the user inserts a sim card from an unsupported network, it becomes network
          locked -->
@@ -2368,18 +2363,15 @@
          PUK locked (Pin Unlock Kode) -->
     <string name="lockscreen_sim_puk_locked_message">SIM card is PUK-locked.</string>
     <!-- Shown in the lock screen when the SIM has become PUK locked and the user must call customer care to unlock it. -->
-    <string name="lockscreen_sim_puk_locked_instructions">PIN1 Blocked. Enter PUK1\nor\nPlease see the User Guide or contact Customer Care.</string>
+    <string name="lockscreen_sim_puk_locked_instructions">See the User Guide or contact Customer Care.</string>
 
-    <!-- Shown in the lock screen to tell the user that their SIM/RUIM is locked and they must unlock it. -->
-    <string name="lockscreen_sim_locked_message">SIM/RUIM card is locked.</string>
+    <!-- Shown in the lock screen to tell the user that their SIM is locked and they must unlock it. -->
+    <string name="lockscreen_sim_locked_message">SIM card is locked.</string>
 
     <!-- For the unlock screen, When the user enters a sim unlock code, it takes a little while to check
          whether it is valid, and to unlock the sim if it is valid.  we display a
          progress dialog in the meantime.  this is the emssage. -->
     <string name="lockscreen_sim_unlock_progress_dialog_message">Unlocking SIM card\u2026</string>
-
-    <!-- Shown in the lock screen to tell the user that phone is in airplane mode-->
-    <string name="lockscreen_airplane_mode_on">Airplane Mode</string>
 
     <!-- For the unlock screen, Information message shown in dialog when user has too many failed attempts at
          drawing the unlock pattern -->
@@ -4200,7 +4192,7 @@
     <!-- Message shown when the user enters an invalid SIM pin password in PUK screen -->
     <string name="kg_invalid_sim_pin_hint">Type a PIN that is 4 to 8 numbers.</string>
     <!-- Message shown when the user enters an invalid PUK code in the PUK screen -->
-    <string name="kg_invalid_sim_puk_hint">PUK code should be 8 numbers.</string>
+    <string name="kg_invalid_sim_puk_hint">PUK code should be 8 numbers or more.</string>
     <!-- Message shown when the user enters an invalid PUK code -->
     <string name="kg_invalid_puk">Re-enter the correct PUK code. Repeated attempts will permanently disable the SIM.</string>
       <!-- String shown in PUK screen when PIN codes don't match -->
@@ -4533,13 +4525,4 @@
     <!-- Longer version of toast bar message when hiding the transient navigation bar (if room) -->
     <string name="transient_navigation_confirmation_long">Swipe from edge of screen to reveal system bar</string>
     <add-resource type="bool" name="config_hotswapCapable"></add-resource>
-
-    <!-- Displayed when the USSD/SS request is modified by STK CC to a
-    different request. This will be displayed in a toast. -->
-    <string name="stk_cc_ussd_to_dial">USSD request is modified to DIAL request.</string>
-    <string name="stk_cc_ussd_to_ss">USSD request is modified to SS request.</string>
-    <string name="stk_cc_ussd_to_ussd">USSD request is modified to new USSD request.</string>
-    <string name="stk_cc_ss_to_dial">SS request is modified to DIAL request.</string>
-    <string name="stk_cc_ss_to_ussd">SS request is modified to USSD request.</string>
-    <string name="stk_cc_ss_to_ss">SS request is modified to new SS request.</string>
 </resources>

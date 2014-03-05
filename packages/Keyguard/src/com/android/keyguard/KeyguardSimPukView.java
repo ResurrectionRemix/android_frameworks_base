@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
  * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,20 +47,19 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
     private static final boolean DEBUG = KeyguardViewMediator.DEBUG;
     public static final String TAG = "KeyguardSimPukView";
 
-    protected ProgressDialog mSimUnlockProgressDialog = null;
-    protected CheckSimPuk mCheckSimPukThread;
-    protected String mPukText;
-    protected String mPinText;
-    protected StateMachine mStateMachine = new StateMachine();
-    protected AlertDialog mRemainingAttemptsDialog;
-    protected volatile boolean mCheckInProgress;
+    private ProgressDialog mSimUnlockProgressDialog = null;
+    private CheckSimPuk mCheckSimPukThread;
+    private String mPukText;
+    private String mPinText;
+    private StateMachine mStateMachine = new StateMachine();
+    private AlertDialog mRemainingAttemptsDialog;
 
-    protected class StateMachine {
+    private class StateMachine {
         final int ENTER_PUK = 0;
         final int ENTER_PIN = 1;
         final int CONFIRM_PIN = 2;
         final int DONE = 3;
-        protected int state = ENTER_PUK;
+        private int state = ENTER_PUK;
 
         public void next() {
             int msg = 0;
@@ -244,7 +241,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         }
     }
 
-    protected Dialog getSimUnlockProgressDialog() {
+    private Dialog getSimUnlockProgressDialog() {
         if (mSimUnlockProgressDialog == null) {
             mSimUnlockProgressDialog = new ProgressDialog(mContext);
             mSimUnlockProgressDialog.setMessage(
@@ -259,7 +256,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         return mSimUnlockProgressDialog;
     }
 
-    protected Dialog getPukRemainingAttemptsDialog(int remaining) {
+    private Dialog getPukRemainingAttemptsDialog(int remaining) {
         String msg = getPukPasswordErrorMessage(remaining);
         if (mRemainingAttemptsDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -275,16 +272,16 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         return mRemainingAttemptsDialog;
     }
 
-    protected boolean checkPuk() {
+    private boolean checkPuk() {
         // make sure the puk is at least 8 digits long.
-        if (mPasswordEntry.getText().length() == 8) {
+        if (mPasswordEntry.getText().length() >= 8) {
             mPukText = mPasswordEntry.getText().toString();
             return true;
         }
         return false;
     }
 
-    protected boolean checkPin() {
+    private boolean checkPin() {
         // make sure the PIN is between 4 and 8 digits
         int length = mPasswordEntry.getText().length();
         if (length >= 4 && length <= 8) {
@@ -298,7 +295,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         return mPinText.equals(mPasswordEntry.getText().toString());
     }
 
-    protected void updateSim() {
+    private void updateSim() {
         getSimUnlockProgressDialog().show();
 
         if (mCheckSimPukThread == null) {
