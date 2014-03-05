@@ -638,11 +638,7 @@
   <java-symbol type="string" name="orgTypeOther" />
   <java-symbol type="string" name="orgTypeWork" />
   <java-symbol type="string" name="passwordIncorrect" />
-<<<<<<< HEAD
-=======
-  <java-symbol type="string" name="enablePin" />
   <java-symbol type="string" name="permission" />
->>>>>>> 6e936d1... app ops: New ops, features, and modes
   <java-symbol type="string" name="perms_description_app" />
   <java-symbol type="string" name="perms_new_perm_prefix" />
   <java-symbol type="string" name="petabyteShort" />
