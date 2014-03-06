@@ -59,7 +59,7 @@ import java.util.List;
 public class RecentPanelView {
 
     private static final String TAG = "RecentPanelView";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static final int DISPLAY_TASKS = 20;
     public static final int MAX_TASKS = DISPLAY_TASKS + 1; // allow extra for non-apps
@@ -87,6 +87,7 @@ public class RecentPanelView {
 
     private boolean mCancelledByUser;
     private boolean mTasksLoaded;
+    private boolean mIsLoading;
     private int mTasksSize;
 
     public interface OnExitListener {
@@ -339,8 +340,11 @@ public class RecentPanelView {
      * Load all tasks we want.
      */
     protected void loadTasks() {
+        if (isTasksLoaded() || mIsLoading) {
+            return;
+        }
         if (DEBUG) Log.v(TAG, "loading tasks");
-        mTasksLoaded = false;
+        mIsLoading = true;
         updateExpandedTaskStates();
         mTasks.clear();
 
@@ -349,9 +353,10 @@ public class RecentPanelView {
         mContext.getSystemService(Context.ACTIVITY_SERVICE);
 
         final List<ActivityManager.RecentTaskInfo> recentTasks =
-                am.getRecentTasks(MAX_TASKS, ActivityManager.RECENT_IGNORE_UNAVAILABLE
+                am.getRecentTasksForUser(MAX_TASKS, ActivityManager.RECENT_IGNORE_UNAVAILABLE
                         | ActivityManager.RECENT_WITH_EXCLUDED
-                        | ActivityManager.RECENT_DO_NOT_COUNT_EXCLUDED);
+                        | ActivityManager.RECENT_DO_NOT_COUNT_EXCLUDED,
+                        UserHandle.CURRENT.getIdentifier());
         final int numTasks = recentTasks.size();
         ActivityInfo homeInfo = new Intent(Intent.ACTION_MAIN)
                 .addCategory(Intent.CATEGORY_HOME).resolveActivityInfo(pm, 0);
@@ -365,6 +370,7 @@ public class RecentPanelView {
         for (int i = first, index = 0; i < numTasks && (index < MAX_TASKS); ++i) {
             if (mCancelledByUser) {
                 if (DEBUG) Log.v(TAG, "loading tasks cancelled");
+                mIsLoading = false;
                 return;
             }
             final ActivityManager.RecentTaskInfo recentInfo = recentTasks.get(i);
@@ -521,8 +527,12 @@ public class RecentPanelView {
     protected void setCancelledByUser(boolean cancelled) {
         mCancelledByUser = cancelled;
         if (cancelled) {
-            mTasksLoaded = false;
+            setTasksLoaded(false);
         }
+    }
+
+    protected void setTasksLoaded(boolean loaded) {
+        mTasksLoaded = loaded;
     }
 
     protected boolean isCancelledByUser() {
@@ -538,7 +548,8 @@ public class RecentPanelView {
      */
     private void tasksLoaded() {
         if (mOnTasksLoadedListener != null) {
-            mTasksLoaded = true;
+            setTasksLoaded(true);
+            mIsLoading = false;
             mOnTasksLoadedListener.onTasksLoaded();
         }
     }
@@ -549,7 +560,6 @@ public class RecentPanelView {
     private void exit() {
         if (mOnExitListener != null) {
             mOnExitListener.onExit();
-            mTasksLoaded = false;
         }
     }
 
