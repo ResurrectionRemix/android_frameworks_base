@@ -34,7 +34,4 @@
 
     <!-- Enable the "flip settings" panel -->
     <bool name="config_hasFlipSettingsPanel">false</bool>
-
-    <!-- Default value how much apps show the app screenshot on recents view entry -->
-    <integer name="expanded_items_default">3</integer>
 </resources>

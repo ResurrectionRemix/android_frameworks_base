@@ -113,13 +113,4 @@
 
     <!-- configurable width dimension for the app sidebar trigger area -->
     <dimen name="config_app_sidebar_trigger_width">8dip</dimen> 
-
-    <!-- Sensivity of pie gestures controlls.
-        Must be minimum 1 and maximum 10 (See @EdgeServiceConstants.java).
-        Default for pie is high sensivity -->
-    <integer name="pie_gesture_sensivity">8</integer>
-
-    <!-- Default value how much apps show the app screenshot on recents view entry -->
-    <integer name="expanded_items_default">2</integer>
-    
 </resources>
