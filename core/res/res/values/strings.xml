@@ -2277,6 +2277,12 @@
          to unlock the keyguard.  Displayed in one line in a large font.  -->
     <string name="keyguard_password_wrong_pin_code">Incorrect PIN code.</string>
 
+<<<<<<< HEAD
+=======
+    <!-- Displayed when a SIM PIN/PUK is entered incorrectly. -->
+    <string name="pinpuk_attempts">\nAttempts remaining:</string>
+
+>>>>>>> d58063d... Core/Keyguard: Cleanup CAF additions
     <!-- Instructions telling the user how to unlock the phone. -->
     <string name="keyguard_label_text">To unlock, press Menu then 0.</string>
 
@@ -2356,6 +2362,11 @@
 
     <!-- Shown in the lock screen when there is emergency calls only mode. -->
     <string name="emergency_calls_only" msgid="2485604591272668370">Emergency calls only</string>
+<<<<<<< HEAD
+=======
+    <!-- Shown in the lock screen when there is SIM card IO error. -->
+    <string name="lockscreen_sim_error_message_short">Invalid card.</string>
+>>>>>>> d58063d... Core/Keyguard: Cleanup CAF additions
 
     <!-- When the user inserts a sim card from an unsupported network, it becomes network
          locked -->
@@ -2376,6 +2387,12 @@
          progress dialog in the meantime.  this is the emssage. -->
     <string name="lockscreen_sim_unlock_progress_dialog_message">Unlocking SIM card\u2026</string>
 
+<<<<<<< HEAD
+=======
+    <!-- Shown in the lock screen to tell the user that phone is in airplane mode-->
+    <string name="lockscreen_airplane_mode_on">Airplane mode</string>
+
+>>>>>>> d58063d... Core/Keyguard: Cleanup CAF additions
     <!-- For the unlock screen, Information message shown in dialog when user has too many failed attempts at
          drawing the unlock pattern -->
     <string name="lockscreen_too_many_failed_attempts_dialog_message">
