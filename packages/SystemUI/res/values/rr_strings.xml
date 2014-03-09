@@ -71,5 +71,22 @@
     <!-- Description of an application permission that lets lets an application access the ThemeManagerService -->
     <string name="permdesc_accessThemeService">Allows an application to set/reset themes. Not for use by normal applications.</string>
 
+     <!-- Notification Reminder Slim Roms -->
+    <string name="quick_settings_reminder">Reminder</string>
+    <string name="quick_settings_reminder_title">Title:</string>
+    <string name="quick_settings_reminder_message">Message:</string>
+    <string name="quick_settings_reminder_time">Reminder Time</string>
+    <string name="quick_settings_reminder_set">Set Time</string>
+    <string name="quick_settings_reminder_update">Update Time</string>
+    <string name="quick_settings_reminder_no_expire">No notification</string>
+    <string name="quick_settings_reminder_dismiss">Clear Reminder</string>
+    <string name="quick_settings_reminder_dismiss_message">Clear current reminder?</string>
+    <string name="quick_settings_reminder_help_title">Touch:</string>
+    <string name="quick_settings_reminder_help_message">Touch here to set a reminder. Long-press to clear the current reminder.</string>
     
+    <!--General String-->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dlg_ok">Ok</string>
+    <string name="cancel">Cancel</string>   
 </resources>

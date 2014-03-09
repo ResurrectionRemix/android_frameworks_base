@@ -184,6 +184,7 @@ public class PhoneStatusBarView extends PanelBar {
         if (DEBUG) {
             Log.v(TAG, "start opening: " + panel + " shouldfade=" + mShouldFade);
         }
+        mBar.toggleReminderFlipper(true);
         mFadingPanel = panel;
     }
 

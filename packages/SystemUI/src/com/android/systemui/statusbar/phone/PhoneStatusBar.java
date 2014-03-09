@@ -33,7 +33,9 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
+import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.content.BroadcastReceiver;
@@ -41,10 +43,14 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.CustomTheme;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
@@ -71,6 +77,7 @@ import android.provider.AlarmClock;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.service.notification.StatusBarNotification;
+import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -101,13 +108,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-
+import android.widget.ViewFlipper;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.BatteryMeterView.BatteryMeterMode;
 import com.android.systemui.DemoMode;
 import com.android.systemui.DockBatteryMeterView;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.R;
+import com.android.systemui.ReminderMessageView;
+import com.android.systemui.service.ReminderService;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.BaseStatusBar;
@@ -131,6 +140,13 @@ import com.android.systemui.statusbar.policy.OnSizeChangedListener;
 import com.android.systemui.statusbar.policy.RotationLockController;
 
 import com.android.systemui.omni.StatusHeaderMachine;
+//import com.android.internal.util.slim.QuietHoursHelper; (Notification Reminder 1/2)
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.List;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -149,6 +165,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     // additional instrumentation for testing purposes; intended to be left on during development
     public static final boolean CHATTY = DEBUG;
 
+    private static final String KEY_REMINDER_ACTION =
+            "key_reminder_action";
+
+    private static final String SCHEDULE_REMINDER_NOTIFY =
+            "com.android.systemui.SCHEDULE_REMINDER_NOTIFY";
+
     public static final String ACTION_STATUSBAR_START
             = "com.android.internal.policy.statusbar.START";
 
@@ -156,6 +178,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     private static final int MSG_CLOSE_PANELS = 1001;
     private static final int MSG_OPEN_SETTINGS_PANEL = 1002;
     // 1020-1030 reserved for BaseStatusBar
+
+    private static final int NOTI_ID = 254;
 
     private static final boolean CLOSE_PANEL_WHEN_EMPTIED = true;
 
@@ -222,6 +246,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     // left-hand icons
     LinearLayout mStatusIcons;
     LinearLayout mCenterClockLayout;
+
+    LinearLayout mReminder;
+
     // the icons themselves
     IconMerger mNotificationIcons;
     // [+>
@@ -229,7 +256,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     
     ClockCenter mClockCenter;
     View mCenterSpacer;
-    
+    ViewFlipper mFlipper;
+
     // expanded notifications
     NotificationPanelView mNotificationPanel; // the sliding/resizing panel within the notification window
     ScrollView mScrollView;
@@ -239,6 +267,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     float mNotificationPanelMinHeightFrac;
     boolean mNotificationPanelIsFullScreenWidth;
     TextView mNotificationPanelDebugText;
+    TextView mReminderTitle;
 
     // settings
     QuickSettingsController mQS;
@@ -262,6 +291,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     View mClockViewExpanded;
     View mDateViewExpanded;    
     View mClearButton;
+    View mSpacer;
     ImageView mSettingsButton, mNotificationButton;
 
     // carrier/wifi label
@@ -322,6 +352,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     private float mScreenWidth;
     private int mMinBrightness;
     private int mPeekHeight;
+    private int mReminderEnabled;
     private boolean mJustPeeked;
     int mLinger;
     int mInitialTouchX;
@@ -334,6 +365,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     int mSystemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
 
     DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+
+    private SharedPreferences mShared;
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
@@ -411,12 +444,108 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                      false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.REMINDER_ALERT_ENABLED), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
+        }
+    }
+
+    public void updateReminder() {
+        if (mSpacer != null && mReminder != null && mReminderTitle != null) {
+            boolean reminderActive = mShared.getBoolean("scheduled", false);
+            String title = mShared.getString("title", null);
+            mFlipper.removeAllViews();
+            if (mReminderEnabled == 1) {
+                String message = mShared.getString("message", null);
+                ArrayList<String> arrayMessage = new ArrayList<String>();
+                if (title != null && message != null
+                        && (!title.isEmpty() || !message.isEmpty())) {
+                    final int dpi = mContext.getResources().getDisplayMetrics().densityDpi;
+                    final int maxChar = (int) (-7 * dpi) / 60 + (373 / 6);
+                    final int maxTitle = (int) (-1 * dpi) / 15 + (113 / 3);
+                    if (title.length() > maxTitle) {
+                        // User changed DPI since setting
+                        title = title.substring(0, maxTitle);
+                    }
+                    mReminderTitle.setText(title);
+                    arrayMessage = splitString(message, maxChar);
+                    for (String split : arrayMessage) {
+                        ReminderMessageView entry =
+                                new ReminderMessageView(mContext, split);
+                        mFlipper.addView(entry);
+                    }
+                } else {
+                    // Rather than pad this view or anything fancy
+                    // that would inflate it's size too much
+                    // just make a decent button for the user to click
+                    // if no reminder is set
+                    mReminderTitle.setText("                   ");
+                }
+                mReminder.setVisibility(View.VISIBLE);
+                mReminder.setEnabled(true);
+            } else {
+                mReminder.setVisibility(View.GONE);
+                mReminder.setEnabled(false);
+            }
+            if (title != null && mReminderEnabled == 1) {
+                mSpacer.setVisibility(View.VISIBLE);
+            } else {
+                mSpacer.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private ArrayList<String>splitString(String message, final int maxChar) {
+        ArrayList<String> split = new ArrayList<String>();
+        String[] parts = message.split("\\s+");
+        String combined = "";
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].length() + combined.length() <= maxChar) {
+                if (combined.length() + parts[i].length() <= maxChar) {
+                    if (combined.equals("")) {
+                        combined = parts[i];
+                    } else {
+                        combined += " " + parts[i];
+                    }
+                }
+            } else {
+                if (!combined.equals("")) {
+                    split.add(combined);
+                    combined = "";
+                }
+                if (parts[i].length() >= maxChar) {
+                    for (int j = 0; j < parts[i].length(); j += maxChar) {
+                        split.add(parts[i].substring(j, Math.min(parts[i].length(), j + maxChar)));
+                    }
+                } else {
+                    // Just re-reun this, we've added all previous strings up already
+                    --i;
+                }
+            }
+        }
+        if (!combined.equals("")) {
+            split.add(combined);
+        }
+        // Just a blank roll at the end to quickly see the message is over
+        split.add("");
+        return split;
+    }
+
+    public void toggleReminderFlipper(boolean active) {
+        if (mReminderEnabled == 1 && mFlipper != null) {
+            mFlipper.setDisplayedChild(0);
+            if (mFlipper.getChildCount() <= 2 || !active) {
+                mFlipper.stopFlipping();
+            } else {
+                mFlipper.setFlipInterval(1500);
+                mFlipper.startFlipping();
+            }
         }
     }
 
@@ -679,7 +808,29 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         
 	    mStatusHeaderMachine = new StatusHeaderMachine(mContext);
         updateCustomHeaderStatus();
-        
+
+        mReminderTitle = (TextView) mNotificationPanelHeader.findViewById(R.id.title);
+        mFlipper = (ViewFlipper) mNotificationPanelHeader.findViewById(R.id.message);
+        mFlipper.setSelfMaintained(true);
+
+        mSpacer = mNotificationPanelHeader.findViewById(R.id.spacer);
+        mSpacer.setVisibility(View.INVISIBLE);
+        mSpacer.setEnabled(true);
+
+        mReminder = (LinearLayout) mNotificationPanelHeader.findViewById(R.id.reminder);
+        mReminder.setOnClickListener(mReminderButtonListener);
+        mReminder.setOnLongClickListener(mReminderLongButtonListener);
+        mReminder.setVisibility(View.INVISIBLE);
+        mReminder.setEnabled(true);
+
+        mReminderEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.REMINDER_ALERT_ENABLED, 0, UserHandle.USER_CURRENT);
+
+        mShared = mContext.getSharedPreferences(
+                    KEY_REMINDER_ACTION, Context.MODE_PRIVATE);
+
+        updateReminder();
+
         mClearButton = mStatusBarWindow.findViewById(R.id.clear_all_button);
         mClearButton.setOnClickListener(mClearButtonListener);
         mClearButton.setAlpha(0f);
@@ -927,6 +1078,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(ACTION_DEMO);
+        filter.addAction(SCHEDULE_REMINDER_NOTIFY);
         context.registerReceiver(mBroadcastReceiver, filter);
 
         // listen for USER_SETUP_COMPLETE setting (per-user)
@@ -1355,7 +1507,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mNotificationButton.setImageDrawable(null);
             mNotificationButton.setImageResource(R.drawable.ic_notifications);
         }
-
+        updateReminder();
         refreshAllStatusBarIcons();
     }
 
@@ -2215,6 +2367,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         // Close any "App info" popups that might have snuck on-screen
         dismissPopups();
+        toggleReminderFlipper(false);
         setInteracting(StatusBarManager.WINDOW_STATUS_BAR, false);
     }
 
@@ -3022,6 +3175,39 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         animateCollapsePanels();
     }
 
+
+    private View.OnClickListener mWeatherPanelListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            vibrate();
+            animateCollapsePanels();
+            Intent weatherintent = new Intent("com.aokp.romcontrol.INTENT_WEATHER_REQUEST");
+            weatherintent.putExtra("com.aokp.romcontrol.INTENT_EXTRA_TYPE", "updateweather");
+            weatherintent.putExtra("com.aokp.romcontrol.INTENT_EXTRA_ISMANUAL", true);
+            mContext.sendBroadcast(weatherintent);
+        }
+    };
+
+    private View.OnClickListener mReminderButtonListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            startActivityDismissingKeyguard(new Intent(
+                    "com.android.systemui.timedialog.ReminderTimeDialog"), true);
+        }
+    };
+
+    private View.OnLongClickListener mReminderLongButtonListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+             String message = mShared.getString("message", null);
+             if (message != null) {
+                Intent intent = new Intent(
+                        "com.android.systemui.timedialog.ReminderTimeDialog");
+                intent.putExtra("clear", true);
+                startActivityDismissingKeyguard(intent, true);
+            }
+            return true;
+        }
+    };
+
     private View.OnClickListener mSettingsButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
             if (mHasSettingsPanel) {
@@ -3134,6 +3320,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 repositionNavigationBar();
                 notifyNavigationBarScreenOn(true);
             }
+            else if (SCHEDULE_REMINDER_NOTIFY.equals(action)) {
+                updateAndNotifyReminder();
+            }
             else if (ACTION_DEMO.equals(action)) {
                 Bundle bundle = intent.getExtras();
                 if (bundle != null) {
@@ -3177,6 +3366,61 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mNavigationBarView.updateSettings();
         }
         super.userSwitched(newUserId);
+    }
+
+    private void updateAndNotifyReminder() {
+        boolean reminderActive = mShared.getBoolean("scheduled", false);
+        if (!reminderActive) {
+            mShared.edit().putBoolean("scheduled", true).commit();
+            updateReminder();
+        } else {
+            String title = mShared.getString("title", null);
+            String message = mShared.getString("message", null);
+            if (mReminderEnabled == 1 && title != null && message != null) {
+                Bitmap bm = BitmapFactory.decodeResource(
+                        mContext.getResources(), R.drawable.ic_qs_alarm_on);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext)
+                        .setTicker(title)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setAutoCancel(true)
+                        .setOngoing(true)
+                        .setSmallIcon(R.drawable.ic_qs_alarm_on)
+                        .setLargeIcon(bm)
+                        .setDefaults(Notification.DEFAULT_LIGHTS
+                                | Notification.DEFAULT_VIBRATE)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(message));
+
+                int alertMode = Settings.System.getIntForUser(
+                            mContext.getContentResolver(),
+                            Settings.System.REMINDER_ALERT_NOTIFY,
+                            0, UserHandle.USER_CURRENT);
+                PendingIntent result = null;
+                Intent serviceIntent = new Intent(mContext, ReminderService.class);
+                if (alertMode != 0
+                        /*&& !QuietHoursHelper.inQuietHours(
+                        mContext, Settings.System.QUIET_HOURS_MUTE)*/) {
+                    mContext.startService(serviceIntent);
+                }
+
+                serviceIntent.putExtra("stopSelf", true);
+                result = PendingIntent.getService(
+                    mContext, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+                builder.setContentIntent(result);
+                NotificationManager manager = (NotificationManager)
+                    mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.notify(NOTI_ID, builder.build());
+            }
+            mShared.edit().putBoolean("scheduled", false).commit();
+            mShared.edit().putInt("hours", -1).commit();
+            mShared.edit().putInt("minutes", -1).commit();
+            mShared.edit().putInt("day", -1).commit();
+            mShared.edit().putString("title", null).commit();
+            mShared.edit().putString("message", null).commit();
+            updateReminder();
+        }
     }
 
     private void updateSettings() {
@@ -3248,6 +3492,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
 
 		updateCustomHeaderStatus();
+
+        int reminderHolder= Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.REMINDER_ALERT_ENABLED, 0, UserHandle.USER_CURRENT);
+            if (reminderHolder != mReminderEnabled && reminderHolder == 1) {
+                if (mShared.getString("title", null) == null) {
+                    mShared.edit().putString("title",
+                            mContext.getResources().getString(
+                            R.string.quick_settings_reminder_help_title)).commit();
+                    mShared.edit().putString("message",
+                            mContext.getResources().getString(
+                            R.string.quick_settings_reminder_help_message)).commit();
+                }
+            }
+        mReminderEnabled = reminderHolder;
+        updateReminder();
 
     }
 
