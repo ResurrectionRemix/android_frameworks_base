@@ -3631,6 +3631,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
             mCurrentTheme = (CustomTheme)newTheme.clone();
             recreateStatusBar();
+            rebuildRecentsScreen();
         } else {
 
             if (mClearButton instanceof TextView) {
