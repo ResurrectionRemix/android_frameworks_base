@@ -55,8 +55,8 @@
             android:id="@+id/clock"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingStart="8dp"
-            android:paddingEnd="4dp"
+            android:paddingStart="7dp"
+            android:paddingEnd="3dp"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Clock"
             android:background="@drawable/ic_notify_button_bg"
@@ -71,8 +71,8 @@
             android:layout_toEndOf="@id/clock"
             android:background="@drawable/ic_notify_button_bg"
             android:gravity="center_vertical"
-            android:paddingStart="4dp"
-            android:paddingEnd="8dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="7dp"
             />
     </RelativeLayout>
 
@@ -82,8 +82,8 @@
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
         android:background="@android:drawable/divider_horizontal_dark"
         />
 
@@ -91,8 +91,8 @@
         android:id="@+id/reminder"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingStart="2dp"
-        android:paddingEnd="2dp"
+        android:paddingStart="1dp"
+        android:paddingEnd="1dp"
         android:background="@drawable/ic_notify_button_bg"
         android:orientation="vertical"
         >
@@ -106,7 +106,7 @@
             android:scrollHorizontally="true"
             android:paddingBottom="1dp"
             android:textAllCaps="true"
-            android:textSize="12dp"
+            android:textSize="11dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -130,13 +130,13 @@
             android:paddingBottom="8dp"
             />
     </LinearLayout>
-
+    
     <Space
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         />
-
+        
     <TextView
         android:id="@+id/header_debug_info"
         android:visibility="invisible"
@@ -144,12 +144,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:fontFamily="sans-serif-condensed"
-        android:textSize="11dp"
+        android:textSize="10dp"
         android:textStyle="bold"
         android:textColor="#00A040"
-        android:padding="2dp"
+        android:padding="1dp"
         />
-        
+                
         <ImageView android:id="@+id/clear_all_button"
             android:layout_width="28dp"
             android:layout_height="50dp"
@@ -159,19 +159,10 @@
             android:contentDescription="@string/accessibility_clear_all"
             />
 
-    <ImageView android:id="@+id/halo_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:visibility="gone"
-        android:scaleType="center"
-        android:src="@drawable/ic_notify_halo"
-        android:contentDescription="@string/accessibility_halo"
-        />
-    
     <FrameLayout android:id="@+id/settings_button_holder"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="0dp"
         >
         <ImageView android:id="@+id/settings_button"
             android:layout_width="50dp"

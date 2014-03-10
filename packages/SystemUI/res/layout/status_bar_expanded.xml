@@ -77,9 +77,18 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="invisible"
             />
-
+            
+    <ImageView android:id="@+id/halo_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:scaleType="center"
+        android:src="@drawable/ic_notify_halo"
+        android:contentDescription="@string/accessibility_halo"
+        />           
+         
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
