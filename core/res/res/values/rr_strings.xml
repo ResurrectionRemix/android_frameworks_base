@@ -80,4 +80,8 @@
 
     <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
     <string name="resurrection_start_title">Upgrade in Progress\u2026</string>
+
+    <!-- label for item that takes On-The-Go in the phone options dialog -->
+    <string name="global_action_onthego">On-The-Go Mode</string>
+
 </resources>
