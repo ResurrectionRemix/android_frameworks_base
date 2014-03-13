@@ -118,6 +118,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.Environment.UserEnvironment;
 import android.os.UserManager;
+import android.provider.Settings.Global;
 import android.provider.Settings.Secure;
 import android.security.KeyStore;
 import android.security.SystemKeyStore;
@@ -3720,6 +3721,7 @@ public class PackageManagerService extends IPackageManager.Stub {
             updatedPkg = mSettings.getDisabledSystemPkgLPr(ps != null ? ps.name : pkg.packageName);
             if (DEBUG_INSTALL && updatedPkg != null) Slog.d(TAG, "updatedPkg = " + updatedPkg);
         }
+        boolean updatedPkgBetter = false;
         // First check if this is a system package that may involve an update
         if (updatedPkg != null && (parseFlags&PackageParser.PARSE_IS_SYSTEM) != 0) {
             if (ps != null && !ps.codePath.equals(scanFile)) {
@@ -3774,6 +3776,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                     synchronized (mPackages) {
                         mSettings.enableSystemPackageLPw(ps.name);
                     }
+                    updatedPkgBetter = true;
                 }
             }
         }
@@ -3850,7 +3853,7 @@ public class PackageManagerService extends IPackageManager.Stub {
 
         String codePath = null;
         String resPath = null;
-        if ((parseFlags & PackageParser.PARSE_FORWARD_LOCK) != 0) {
+        if ((parseFlags & PackageParser.PARSE_FORWARD_LOCK) != 0 && !updatedPkgBetter) {
             if (ps != null && ps.resourcePathString != null) {
                 resPath = ps.resourcePathString;
             } else {
@@ -6768,6 +6771,17 @@ public class PackageManagerService extends IPackageManager.Stub {
             filteredFlags = flags | PackageManager.INSTALL_FROM_ADB;
         } else {
             filteredFlags = flags & ~PackageManager.INSTALL_FROM_ADB;
+        }
+
+        // Check if unknown sources allowed
+        if (android.app.AppOpsManager.isStrictEnable() &&
+            ((filteredFlags & PackageManager.INSTALL_FROM_ADB) != 0) &&
+            Global.getInt(mContext.getContentResolver(), Global.INSTALL_NON_MARKET_APPS, 0) <= 0) {
+            try {
+                observer.packageInstalled("", PackageManager.INSTALL_FAILED_UNKNOWN_SOURCES);
+            } catch (RemoteException re) {
+            }
+            return;
         }
 
         verificationParams.setInstallerUid(uid);

@@ -152,11 +152,6 @@ interface ITelephony {
     boolean supplyPin(String pin);
 
     /**
-     * Gets the number of attempts remaining for PIN1/PUK1 unlock.
-     */
-    int getIccPin1RetryCount();
-
-    /**
      * Supply puk to unlock the SIM and set SIM pin to new pin.
      *  Blocks until a result is determined.
      * @param puk The puk to check.
@@ -337,5 +332,11 @@ interface ITelephony {
     void setCellInfoListRate(int rateInMillis);
 
     int getLteOnGsmMode();
-}
 
+    /**
+     * Toggle between 2G and 3G (NT_MODE_GSM, NT_MODE_WCDMA_PREF)
+     * @param boolean to turn on and off 2G
+     * @hide
+     */
+     void toggle2G(boolean on);
+}

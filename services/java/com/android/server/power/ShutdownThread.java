@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
  * Copyright (C) 2008 The Android Open Source Project
  * Copyright (C) 2013 The CyanogenMod Project
  *
@@ -46,10 +44,8 @@ import android.os.SystemVibrator;
 import android.os.storage.IMountService;
 import android.os.storage.IMountShutdownObserver;
 import android.provider.Settings;
-import android.telephony.MSimTelephonyManager;
 
 import com.android.internal.telephony.ITelephony;
-import com.android.internal.telephony.msim.ITelephonyMSim;
 
 import android.util.Log;
 import android.view.WindowManager;
@@ -499,28 +495,10 @@ public final class ShutdownThread extends Thread {
                 }
 
                 try {
-                    radioOff = true;
-                    if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-                        final ITelephonyMSim mphone = ITelephonyMSim.Stub.asInterface(
-                                ServiceManager.checkService("phone_msim"));
-                        if (mphone != null) {
-                            //radio off indication should be sent for both subscriptions
-                            //in case of DSDS.
-                            for (int i = 0; i < MSimTelephonyManager.getDefault().
-                                    getPhoneCount(); i++) {
-                                radioOff = radioOff && !mphone.isRadioOn(i);
-                                if (mphone.isRadioOn(i)) {
-                                    Log.w(TAG, "Turning off radio on Subscription :" + i);
-                                    mphone.setRadio(false, i);
-                                }
-                            }
-                        }
-                    } else {
-                        radioOff = phone == null || !phone.isRadioOn();
-                        if (!radioOff) {
-                            Log.w(TAG, "Turning off radio...");
-                            phone.setRadio(false);
-                        }
+                    radioOff = phone == null || !phone.isRadioOn();
+                    if (!radioOff) {
+                        Log.w(TAG, "Turning off radio...");
+                        phone.setRadio(false);
                     }
                 } catch (RemoteException ex) {
                     Log.e(TAG, "RemoteException during radio shutdown", ex);
@@ -543,18 +521,7 @@ public final class ShutdownThread extends Thread {
                     }
                     if (!radioOff) {
                         try {
-                            boolean subRadioOff = true;
-                            if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-                                final ITelephonyMSim mphone = ITelephonyMSim.Stub.asInterface(
-                                        ServiceManager.checkService("phone_msim"));
-                                for (int i = 0; i < MSimTelephonyManager.getDefault().
-                                        getPhoneCount(); i++) {
-                                    subRadioOff = subRadioOff && !mphone.isRadioOn(i);
-                                }
-                                radioOff = subRadioOff;
-                            } else {
-                                radioOff = !phone.isRadioOn();
-                            }
+                            radioOff = !phone.isRadioOn();
                         } catch (RemoteException ex) {
                             Log.e(TAG, "RemoteException during radio shutdown", ex);
                             radioOff = true;

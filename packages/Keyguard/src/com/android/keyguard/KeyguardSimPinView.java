@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
  * Copyright (C) 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,12 +48,10 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
     private static final boolean DEBUG = KeyguardViewMediator.DEBUG;
     public static final String TAG = "KeyguardSimPinView";
 
-    protected ProgressDialog mSimUnlockProgressDialog = null;
+    private ProgressDialog mSimUnlockProgressDialog = null;
     private CheckSimPin mCheckSimPinThread;
 
     private AlertDialog mRemainingAttemptsDialog;
-    
-    protected volatile boolean mSimCheckInProgress;
 
     public KeyguardSimPinView(Context context) {
         this(context, null);
@@ -65,33 +61,8 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
         super(context, attrs);
     }
 
-    protected void showCancelButton() {
-        final View cancel = findViewById(R.id.key_cancel);
-        if (cancel != null) {
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    doHapticKeyClick();
-                }
-            });
-        }
-    }
-
     public void resetState() {
-        String  displayMessage = "";
-        try {
-            int attemptsRemaining = ITelephony.Stub.asInterface(ServiceManager
-                    .checkService("phone")).getIccPin1RetryCount();
-            if (attemptsRemaining >= 0) {
-                displayMessage = getContext().getString(R.string.keyguard_password_wrong_pin_code)
-                        + getContext().getString(R.string.pinpuk_attempts)
-                        + attemptsRemaining + ". ";
-            }
-        } catch (RemoteException ex) {
-            displayMessage = getContext().getString(R.string.keyguard_password_pin_failed);
-        }
-        displayMessage = displayMessage + getContext().getString(R.string.kg_sim_pin_instructions) ;
-        mSecurityMessageDisplay.setMessage(displayMessage, true);
+        mSecurityMessageDisplay.setMessage(R.string.kg_sim_pin_instructions, true);
         mPasswordEntry.setEnabled(true);
     }
 
@@ -137,7 +108,6 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
                 }
             });
         }
-        showCancelButton();
 
         // The delete button is of the PIN keyboard itself in some (e.g. tablet) layouts,
         // not a separate view
@@ -220,7 +190,7 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
         }
     }
 
-    protected Dialog getSimUnlockProgressDialog() {
+    private Dialog getSimUnlockProgressDialog() {
         if (mSimUnlockProgressDialog == null) {
             mSimUnlockProgressDialog = new ProgressDialog(mContext);
             mSimUnlockProgressDialog.setMessage(
@@ -272,8 +242,6 @@ public class KeyguardSimPinView extends KeyguardAbsKeyInputView
                                 mSimUnlockProgressDialog.hide();
                             }
                             if (result == PhoneConstants.PIN_RESULT_SUCCESS) {
-                                // before closing the keyguard, report back that the sim is unlocked
-                                // so it knows right away.
                                 KeyguardUpdateMonitor.getInstance(getContext()).reportSimUnlocked();
                                 mCallback.dismiss(true);
                             } else {
