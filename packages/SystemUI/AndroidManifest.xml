@@ -190,6 +190,13 @@
         <receiver android:name=".screenshot.TrashScreenshot"
                 android:exported="true" />
 
+ 	<!-- started from PhoneWindowManager
+             TODO: Should have an android:permission attribute -->
+        <service android:name=".nameless.onthego.OnTheGoService"
+            android:process=":onthego"
+            android:exported="false" />
+
+
         <!-- started from PhoneWindowManager
              TODO: Should have an android:permission attribute -->
         <service android:name=".omni.screenrecord.TakeScreenrecordService"
@@ -473,3 +480,4 @@
 
     </application>
 </manifest>
+
