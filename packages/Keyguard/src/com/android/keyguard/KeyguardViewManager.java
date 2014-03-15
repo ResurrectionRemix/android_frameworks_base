@@ -340,23 +340,26 @@ public class KeyguardViewManager {
                 int mBackgroundColor = Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.LOCKSCREEN_BACKGROUND_COLOR, 0x00000000);
                 switch (mBackgroundStyle) {
-                    case 0:
+	                    case 0:
                         d = new ColorDrawable(mBackgroundColor);
                         d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
                         mCustomBackground = d;
                         break;
                     case 1:
                         try {
-                            String wallpaper = WALLPAPER_IMAGE_PATH;
+	                        Context settingsCtx = mContext.createPackageContext(
+			                          "com.android.settings", 0);
+                            String wallpaper = settingsCtx.getFilesDir() + "/lockwallpaper";
                             Bitmap bitmap = BitmapFactory.decodeFile(wallpaper);
-                            d = new BitmapDrawable(mContext.getResources(), bitmap);
-                            mCustomBackground = d;
+	                        d = new BitmapDrawable(mContext.getResources(), bitmap);
+                            d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
                         } catch (Exception e) {
                         }
                         break;
                     case 2:
                     default:
                         mCustomBackground = d;
+                        break;
                 }
                 computeCustomBackgroundBounds(mCustomBackground);
                 setBackground(mBackgroundDrawable);
