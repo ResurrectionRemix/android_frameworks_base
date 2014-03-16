@@ -549,8 +549,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mFlipper.startFlipping();
             }
         }
-    }
-    
+
     class DevForceNavbarObserver extends ContentObserver {
         DevForceNavbarObserver(Handler handler) {
             super(handler);
@@ -586,9 +585,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mNavigationBarView.setDisabledFlags(mDisabled);
         mNavigationBarView.setBar(this);
         addNavigationBar();
-        
-      }
-      
+    }
+
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
     private ContentObserver mUserSetupObserver = new ContentObserver(new Handler()) {
