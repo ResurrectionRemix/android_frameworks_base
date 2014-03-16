@@ -458,6 +458,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     }
 
+<<<<<<< HEAD
     public void updateReminder() {
         if (mSpacer != null && mReminder != null && mReminderTitle != null) {
             boolean reminderActive = mShared.getBoolean("scheduled", false);
@@ -549,7 +550,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mFlipper.startFlipping();
             }
         }
-
+=======
     class DevForceNavbarObserver extends ContentObserver {
         DevForceNavbarObserver(Handler handler) {
             super(handler);
@@ -585,6 +586,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mNavigationBarView.setDisabledFlags(mDisabled);
         mNavigationBarView.setBar(this);
         addNavigationBar();
+>>>>>>> b6a1eb3... Runtime toggle of navbar
     }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
