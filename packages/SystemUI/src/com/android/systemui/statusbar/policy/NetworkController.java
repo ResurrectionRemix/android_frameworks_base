@@ -96,7 +96,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     String mContentDescriptionWimax;
     String mContentDescriptionCombinedSignal;
     String mContentDescriptionDataType;
+<<<<<<< HEAD
     String mContentDescriptionEther;
+=======
+    String mContentDescriptionEthernet;
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
 
     // wifi
     final WifiManager mWifiManager;
@@ -139,9 +143,15 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     private Locale mLastLocale = null;
 
     //ethernet
+<<<<<<< HEAD
     private boolean mEtherConnected = false;
     private int mEtherIconId = 0;
     private int mLastEtherIconId = 0;
+=======
+    private boolean mEthernetConnected = false;
+    private int mEthernetIconId = 0;
+    private int mLastEthernetIconId = 0;
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
 
     // our ui
     Context mContext;
@@ -180,7 +190,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         void setMobileDataIndicators(boolean visible, int strengthIcon, int activityIcon,
                 int typeIcon, String contentDescription, String typeContentDescription);
         void setIsAirplaneMode(boolean is, int airplaneIcon);
+<<<<<<< HEAD
         void setEtherIndicators(boolean visible, int etherIcon, String contentDescription);
+=======
+        void setEthernetIndicators(boolean visible, int ethernetIcon, String contentDescription);
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
     }
 
     public interface NetworkSignalChangedCallback {
@@ -356,11 +370,19 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 mWifiActivityIconId,
                 mContentDescriptionWifi);
 
+<<<<<<< HEAD
             cluster.setEtherIndicators(
                 // only show ethernet in the cluster if connected
                 mEtherConnected,
                 mEtherIconId,
                 mContentDescriptionEther);
+=======
+        cluster.setEthernetIndicators(
+                // only show ethernet in the cluster if connected
+                mEthernetConnected,
+                mEthernetIconId,
+                mContentDescriptionEthernet);
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
 
         if (mIsWimaxEnabled && mWimaxConnected) {
             // wimax is special
@@ -1068,6 +1090,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         }
 
         if (info != null && info.getType() == ConnectivityManager.TYPE_ETHERNET) {
+<<<<<<< HEAD
             mEtherConnected = info.isConnected();
             mEtherIconId = (mInetCondition == 1
                     ? R.drawable.stat_sys_ether_fully
@@ -1075,6 +1098,15 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         } else {
             mEtherConnected = false;
             mEtherIconId = 0;
+=======
+            mEthernetConnected = info.isConnected();
+            mEthernetIconId = (mInetCondition == 1
+                    ? R.drawable.stat_sys_ethernet_fully
+                    : R.drawable.stat_sys_ethernet);
+        } else {
+            mEthernetConnected = false;
+            mEthernetIconId = 0;
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
         }
 
         // We want to update all the icons, all at once, for any condition change
@@ -1198,9 +1230,16 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     R.string.accessibility_bluetooth_tether);
         }
 
+<<<<<<< HEAD
         mEtherConnected = (mConnectedNetworkType == ConnectivityManager.TYPE_ETHERNET);
         if (mEtherConnected) {
             mContentDescriptionEther = combinedLabel = mContext.getString(R.string.ethernet_label);
+=======
+        mEthernetConnected = (mConnectedNetworkType == ConnectivityManager.TYPE_ETHERNET);
+        if (mEthernetConnected) {
+            mContentDescriptionEthernet = combinedLabel = mContext.getString(
+                    R.string.ethernet_label);
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
         }
 
         if (mAirplaneMode &&
@@ -1230,10 +1269,19 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 combinedSignalIconId = mDataSignalIconId;
             }
         }
+<<<<<<< HEAD
         else if (!mDataConnected && !mWifiConnected && !mBluetoothTethered && !mWimaxConnected && !mEtherConnected) {
             // pretty much totally disconnected
 
             combinedLabel = mContext.getString(R.string.status_bar_settings_signal_meter_disconnected);
+=======
+        else if (!mDataConnected && !mWifiConnected && !mBluetoothTethered && !mWimaxConnected
+                && !mEthernetConnected) {
+            // pretty much totally disconnected
+
+            combinedLabel = mContext.getString(
+                    R.string.status_bar_settings_signal_meter_disconnected);
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
             // On devices without mobile radios, we want to show the wifi icon
             combinedSignalIconId =
                 mHasMobileDataFeature ? mDataSignalIconId : mWifiIconId;
@@ -1287,6 +1335,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     + " mQSDataTypeIconId=0x" + Integer.toHexString(mQSDataTypeIconId)
                     + " mWifiIconId=0x" + Integer.toHexString(mWifiIconId)
                     + " mQSWifiIconId=0x" + Integer.toHexString(mQSWifiIconId)
+                    + " mEthernetIconId=0x" + Integer.toHexString(mEthernetIconId)
                     + " mBluetoothTetherIconId=0x" + Integer.toHexString(mBluetoothTetherIconId));
         }
 
@@ -1304,7 +1353,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
          || mLastWifiIconId                 != mWifiIconId
          || mLastWimaxIconId                != mWimaxIconId
          || mLastDataTypeIconId             != mDataTypeIconId
+<<<<<<< HEAD
          || mLastEtherIconId                != mEtherIconId
+=======
+         || mLastEthernetIconId             != mEthernetIconId
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
          || mLastAirplaneMode               != mAirplaneMode
          || mLastLocale                     != mLocale)
         {
@@ -1392,8 +1445,13 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         }
 
         // the ethernet icon
+<<<<<<< HEAD
         if (mLastEtherIconId != mEtherIconId) {
             mLastEtherIconId = mEtherIconId;
+=======
+        if (mLastEthernetIconId != mEthernetIconId) {
+            mLastEthernetIconId = mEthernetIconId;
+>>>>>>> 559cf0f... Add an ethernet network icon to the statusbar network area. Merge of r44948 into cm-11.0 with updated icons.
         }
 
         // the data network type overlay
@@ -1574,6 +1632,10 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         pw.print("  mBtReverseTethered=");
         pw.println(mBluetoothTethered);
 
+        pw.println("  - Ethernet -----");
+        pw.print("  mEthernetConnected=");
+        pw.println(mEthernetConnected);
+
         pw.println("  - connectivity ------");
         pw.print("  mInetCondition=");
         pw.println(mInetCondition);
@@ -1605,6 +1667,10 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         pw.println(getResourceName(mLastDataTypeIconId));
         pw.print("  mLastCombinedLabel=");
         pw.print(mLastCombinedLabel);
+        pw.print("  mLastEthernetIconId=0x");
+        pw.print(Integer.toHexString(mLastEthernetIconId));
+        pw.print("/");
+        pw.println(getResourceName(mLastEthernetIconId));
         pw.println("");
     }
 
@@ -1703,6 +1769,16 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                             mDemoDataTypeIconId,
                             "Demo",
                             "Demo");
+                }
+            }
+            String ethernet = args.getString("ethernet");
+            if (ethernet != null) {
+                boolean show = ethernet.equals("show");
+                for (SignalCluster cluster : mSignalClusters) {
+                    int mDemoEthernetIconId = (mDemoInetCondition == 1
+                            ? R.drawable.stat_sys_ethernet_fully
+                            : R.drawable.stat_sys_ethernet);
+                    cluster.setEthernetIndicators(show, mDemoEthernetIconId, "Demo");
                 }
             }
         }
