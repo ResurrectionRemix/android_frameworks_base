@@ -288,7 +288,7 @@ public class KeyguardViewManager {
 
         private Drawable mCustomBackground;
         private Configuration mLastConfiguration;
-        
+
         // This is a faster way to draw the background on devices without hardware acceleration
         private final Drawable mBackgroundDrawable = new Drawable() {
             @Override
