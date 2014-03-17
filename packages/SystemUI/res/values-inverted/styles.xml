@@ -29,7 +29,10 @@
         <item name="android:textColor">#cccccc</item>
         <item name="android:textAllCaps">true</item>
     </style>
-
+    
+    <style name="RecentBaseStyle"  parent="@*android:style/Theme.Holo">
+        <item name="android:popupMenuStyle">@*android:style/Widget.Holo.ListPopupWindow</item>
+    </style>
 
     <style name="TextAppearance.StatusBar.Expanded.Network" parent="@style/TextAppearance.StatusBar.Expanded.Date">
 	<item name="android:textColor">#ffff4444</item>

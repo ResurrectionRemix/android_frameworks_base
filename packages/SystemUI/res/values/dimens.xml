@@ -258,10 +258,4 @@
     <!-- Quick Settings tile geometry: text size for 5 tile per row-->
     <dimen name="qs_5_column_text_size">9sp</dimen>
 
-
-    <!-- Slim recent -->
-    <dimen name="recent_width">230dp</dimen>
-    <dimen name="recent_app_icon_size">48dp</dimen>
-    <dimen name="recent_thumbnail_width">198dp</dimen>
-    <dimen name="recent_thumbnail_height">140dp</dimen>
 </resources>
