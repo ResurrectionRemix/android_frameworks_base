@@ -260,7 +260,7 @@ public class KeyguardViewManager {
         if (bmp != null && mSeeThrough && mBlurRadius > 0) {
             mBlurredImage = blurBitmap(bmp, mBlurRadius);
          } else {
-             mBlurredImage = null;
+             mBlurredImage = bmp;
          }
      }
  
@@ -976,4 +976,3 @@ public class KeyguardViewManager {
         }
     }
 }
-

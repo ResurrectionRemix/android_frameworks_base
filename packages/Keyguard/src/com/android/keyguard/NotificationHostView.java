@@ -283,7 +283,7 @@ public class NotificationHostView extends FrameLayout {
                 ServiceManager.getService(Context.NOTIFICATION_SERVICE));
         mDynamicWidth = getResources().getBoolean(R.bool.config_lnDynamicWidth);
     }
- }
+
     @Override
     public void onFinishInflate() {
         if (NotificationViewManager.config != null) {
@@ -320,11 +320,9 @@ public class NotificationHostView extends FrameLayout {
                 StatusBarNotification[] sbns = mNotificationManager.getActiveNotificationsFromListener(NotificationViewManager.NotificationListener);
                 StatusBarNotification dismissedSbn;
                 for (StatusBarNotification sbn : sbns) {
-
                     if ((dismissedSbn = mDismissedNotifications.get(describeNotification(sbn))) == null || dismissedSbn.getPostTime() != sbn.getPostTime())
                         addNotification(sbn);
                 }
-                setButtonDrawable();
                 bringToFront();
             } catch (RemoteException e) {
                 Log.e(TAG, "Failed to get active notifications!");
