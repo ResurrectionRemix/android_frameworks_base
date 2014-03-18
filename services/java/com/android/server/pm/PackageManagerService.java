@@ -3958,29 +3958,7 @@ public class PackageManagerService extends IPackageManager.Stub {
             ExecutorService executorService = Executors.newFixedThreadPool(sNThreads);
             final long start = System.currentTimeMillis();
             for (PackageParser.Package pkg : pkgs) {
-<<<<<<< HEAD
-                PackageParser.Package p = pkg;
-                if (!isFirstBoot()) {
-                    i++;
-                    try {
-                        // give the packagename to the PhoneWindowManager
-                        ApplicationInfo ai;
-                        try {
-                            ai = mContext.getPackageManager().getApplicationInfo(p.packageName, 0);
-                        } catch (Exception e) {
-                            ai = null;
-                        }
-                        mPolicy.setPackageName((String) (ai != null ? mContext.getPackageManager().getApplicationLabel(ai) : p.packageName));
-                        ActivityManagerNative.getDefault().showBootMessage(
-                                mContext.getResources().getString(
-                                        com.android.internal.R.string.android_upgrading_apk,
-                                        i, pkgs.size()), true);
-                    } catch (RemoteException e) {
-                    }
-                }
-=======
                 final PackageParser.Package p = pkg;
->>>>>>> f800c5b... [1/2] Speed up booting on multicore devices.
                 synchronized (mInstallLock) {
                     if (!p.mDidDexOpt) {
                         executorService.submit(new Runnable() {
