@@ -283,7 +283,7 @@ public class NotificationHostView extends FrameLayout {
                 ServiceManager.getService(Context.NOTIFICATION_SERVICE));
         mDynamicWidth = getResources().getBoolean(R.bool.config_lnDynamicWidth);
     }
-
+ }
     @Override
     public void onFinishInflate() {
         if (NotificationViewManager.config != null) {
