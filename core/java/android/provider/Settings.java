@@ -2595,6 +2595,11 @@ public final class Settings {
          */
         public static final String BATTERY_LIGHT_FULL_COLOR = "battery_light_full_color";
 
+       /**
+         * @hide
+         */
+        public static final String SMART_PHONE_CALLER = "smart_phone_caller";
+        
         /** Sprint MWI Quirk: Show message wait indicator notifications
          * @hide
          */
