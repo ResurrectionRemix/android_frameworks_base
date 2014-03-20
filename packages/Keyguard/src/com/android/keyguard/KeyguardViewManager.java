@@ -688,12 +688,7 @@ public class KeyguardViewManager {
                 inflateKeyguardView(options);
                 mKeyguardView.requestFocus();
         }
-        
-        updateUserActivityTimeoutInWindowLayoutParams();
-        mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
-
-        mKeyguardHost.restoreHierarchyState(mStateContainer);
-        
+                
         if(mBlurredImage != null || (mSeeThrough && mBlurRadius == 0)) {
              if (mBlurredImage != null) {
                  int currentRotation = mKeyguardView.getDisplay().getRotation() * 90;
@@ -707,13 +702,13 @@ public class KeyguardViewManager {
          } else {
             mIsCoverflow = true;
          }
-
+         
         updateUserActivityTimeoutInWindowLayoutParams();
         mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
 
         mKeyguardHost.restoreHierarchyState(mStateContainer);
     }
-    
+        
     private Bitmap rotateBmp(Bitmap bmp, int degrees) {
          Matrix m = new Matrix();
          m.postRotate(degrees);
