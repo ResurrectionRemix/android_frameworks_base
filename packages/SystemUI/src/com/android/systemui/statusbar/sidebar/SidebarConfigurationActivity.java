@@ -40,12 +40,10 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils.TruncateAt;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -188,6 +186,8 @@ public class SidebarConfigurationActivity extends Activity {
             }
             sendBroadcast(new Intent(AppSidebar.ACTION_SIDEBAR_ITEMS_CHANGED));
             Toast.makeText(this, R.string.toast_items_saved, Toast.LENGTH_SHORT).show();
+            mSidebarContents.removeAllViews();
+            populateSidebar();
             return true;
             case android.R.id.home:
                 onBackPressed();
