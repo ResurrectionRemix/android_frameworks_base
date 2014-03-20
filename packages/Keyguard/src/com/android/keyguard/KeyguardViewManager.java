@@ -688,7 +688,12 @@ public class KeyguardViewManager {
                 inflateKeyguardView(options);
                 mKeyguardView.requestFocus();
         }
+        
+        updateUserActivityTimeoutInWindowLayoutParams();
+        mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
 
+        mKeyguardHost.restoreHierarchyState(mStateContainer);
+        
         if(mBlurredImage != null || (mSeeThrough && mBlurRadius == 0)) {
              if (mBlurredImage != null) {
                  int currentRotation = mKeyguardView.getDisplay().getRotation() * 90;
