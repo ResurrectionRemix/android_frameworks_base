@@ -4031,27 +4031,4 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             }
         }
     }
-
-    public boolean skipToSettingsPanel() {
-        if (mPile == null || mNotificationData == null) {
-            return false;
-        }
-
-        int N = mNotificationData.size();
-        for (int i = 0; i < N; i++) {
-            Entry ent = mNotificationData.get(i);
-            if (ent != null
-                    && ent.notification != null
-                    && notificationIsForCurrentUser(ent.notification)) {
-                // ignore adb icon and Tasker
-                if (ent.notification.getId() == com.android.internal.R.string.adb_active_notification_title
-                        || "net.dinglisch.android.taskerm"
-                                .equals(ent.notification.getPackageName())) {
-                    continue;
-                }
-                return false;
-            }
-        }
-        return true;
-    }
 }
