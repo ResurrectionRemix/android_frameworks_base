@@ -3281,7 +3281,13 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
-
+       
+        /**
+         * Disable FC Notifications
+         * @hide
+         */
+         
+        public static final String DISABLE_FC_NOTIFICATIONS = "disable_fc_notifications";
         /**
          * Whether to unlock the menu key.  The value is boolean (1 or 0).
          * @hide
