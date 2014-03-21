@@ -48,6 +48,9 @@ public class StatusHeaderMachine {
     // Afternoon starts at 12:00
     private static final int TIME_AFTERNOON = 12;
     private static final int DRAWABLE_AFTERNOON = R.drawable.notifhead_afternoon;
+    // Evening starts at 18:00
+    private static final int TIME_EVENING = 18;
+    private static final int DRAWABLE_EVENING = R.drawable.notifhead_evening;
 
     // Special events
     // Christmas is on Dec 25th
@@ -107,9 +110,12 @@ public class StatusHeaderMachine {
         } else if (hour >= TIME_MORNING && hour < TIME_AFTERNOON) {
             // It's morning, or before afternoon
             return loadOrFetch(DRAWABLE_MORNING);
-        } else if (hour >= TIME_AFTERNOON && hour < TIME_NIGHT) {
-            // It's afternoon
+        } else if (hour >= TIME_AFTERNOON && hour < TIME_EVENING) {
+            // It's afternoon, or before evening
             return loadOrFetch(DRAWABLE_AFTERNOON);
+        } else if (hour >= TIME_EVENING && hour < TIME_NIGHT) {
+            // It's evening, or before night
+            return loadOrFetch(DRAWABLE_EVENING);
         }
 
         // When all else fails, just be yourself
