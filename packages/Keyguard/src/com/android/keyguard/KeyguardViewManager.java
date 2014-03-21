@@ -681,7 +681,12 @@ public class KeyguardViewManager {
 
             KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mBackgroundChanger);
         }
+        
+        updateUserActivityTimeoutInWindowLayoutParams();
+        mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
 
+        mKeyguardHost.restoreHierarchyState(mStateContainer);
+        
             if (force || mKeyguardView == null) {
                 mKeyguardHost.setCustomBackground(null);
                 mKeyguardHost.removeAllViews();
@@ -701,12 +706,7 @@ public class KeyguardViewManager {
              } 
          } else {
             mIsCoverflow = true;
-         }
-         
-        updateUserActivityTimeoutInWindowLayoutParams();
-        mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
-
-        mKeyguardHost.restoreHierarchyState(mStateContainer);
+         }         
     }
         
     private Bitmap rotateBmp(Bitmap bmp, int degrees) {
