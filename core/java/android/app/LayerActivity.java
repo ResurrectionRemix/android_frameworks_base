@@ -22,6 +22,7 @@ import android.os.Bundle;
 public class LayerActivity extends Activity {
 
     private Bundle mSavedInstanceState;
+    private boolean mRestarted = false;
     private boolean mShouldFinish = false;
 
     @Override
@@ -31,9 +32,15 @@ public class LayerActivity extends Activity {
     }
 
     @Override
+    public void onRestart() {
+        super.onRestart();
+        mRestarted = true;
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
-        mShouldFinish = false;
+        mShouldFinish = mRestarted;
     }
 
     @Override
