@@ -78,6 +78,7 @@ import com.android.internal.util.cm.TorchConstants;
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.widget.LockPatternUtils;
 
+import java.io.FileNotFoundException;
 import java.io.File;
 
 /**
