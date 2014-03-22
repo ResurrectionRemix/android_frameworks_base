@@ -2966,12 +2966,6 @@ public final class Settings {
         public static final String WIDGET_BUTTONS_TABLET = "expanded_widget_buttons_tablet";
 
         /**
-         * multiuser pref
-         * @hide
-         */
-        public static final String ALLOW_MULTIUSER = "allow_multiuser";
-
-        /**
          * Navigation controls to Use
          *
          * @hide

@@ -153,8 +153,6 @@ public class KeyguardHostView extends KeyguardViewBase {
     public KeyguardHostView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        new UserManager(mContext);
-
         if (DEBUG) Log.e(TAG, "KeyguardHostView()");
 
         mLockPatternUtils = new LockPatternUtils(context);

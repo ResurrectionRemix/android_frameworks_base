@@ -21,7 +21,6 @@ import android.content.RestrictionEntry;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.provider.Settings;
 import android.util.Log;
 
 import com.android.internal.R;
@@ -159,22 +158,9 @@ public class UserManager {
     }
 
     /** @hide */
-    public UserManager(Context context) {
-        this(context, null);
-    }
-
-    /** @hide */
     public UserManager(Context context, IUserManager service) {
-        if (service != null)
-            mService = service;
-        else if (sInstance.mService != null)
-            mService = sInstance.mService;
-        else
-            mService = null;
-
+        mService = service;
         mContext = context;
-        if (sInstance == null)
-            sInstance = this;
     }
 
     /**
@@ -572,12 +558,6 @@ public class UserManager {
      * @return a value greater than or equal to 1
      */
     public static int getMaxSupportedUsers() {
-        // check for forced multi-user
-        if (sInstance != null && Settings.System.getIntForUser(sInstance.mContext.getContentResolver(),
-                Settings.System.ALLOW_MULTIUSER, 0, UserHandle.USER_OWNER) == 1) {
-            return 3;
-        }
-
         // Don't allow multiple users on certain builds
         if (android.os.Build.ID.startsWith("JVP")) return 1;
         return SystemProperties.getInt("fw.max_users",
