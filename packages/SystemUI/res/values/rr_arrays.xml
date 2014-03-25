@@ -16,7 +16,7 @@
 */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
+	
     <!-- Active display -->
     <array name="ad_targets_unlock_only">
         <item>@drawable/ic_ad_target_unlock</item>

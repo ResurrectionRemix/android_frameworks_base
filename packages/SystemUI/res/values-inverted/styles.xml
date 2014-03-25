@@ -15,44 +15,24 @@
 -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <style name="RecentsStyle" parent="@android:style/Theme.Holo.Wallpaper.NoTitleBar">
-        <item name="android:windowAnimationStyle">@style/Animation.RecentsActivity</item>
+	
+    <style name="TextAppearance.StatusBar.Expanded.Clock">
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#ffffff</item>
     </style>
+    <style name="TextAppearance.StatusBar.Expanded.Date">
+        <item name="android:textSize">10dp</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#cccccc</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    
     <style name="RecentBaseStyle"  parent="@*android:style/Theme.Holo">
-        <item name="android:popupMenuStyle">@style/RecentPopupMenu</item>
+        <item name="android:popupMenuStyle">@*android:style/Widget.Holo.ListPopupWindow</item>
     </style>
-
-    <style name="RecentPopupMenu" parent="@*android:style/Widget.Holo.ListPopupWindow" />
-    <!-- Animations for a non-full-screen window or activity. -->
-    <style name="Animation.RecentsActivity" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/recents_launch_from_launcher_enter</item>
-        <item name="android:activityOpenExitAnimation">@anim/recents_launch_from_launcher_exit</item>
-        <item name="android:taskOpenEnterAnimation">@anim/recents_launch_from_launcher_enter</item>
-        <item name="android:taskOpenExitAnimation">@anim/recents_launch_from_launcher_exit</item>
-        <item name="android:taskToFrontEnterAnimation">@anim/recents_launch_from_launcher_enter</item>
-        <item name="android:taskToFrontExitAnimation">@anim/recents_launch_from_launcher_exit</item>
-        <item name="android:wallpaperOpenEnterAnimation">@anim/recents_launch_from_launcher_enter</item>
-        <item name="android:wallpaperOpenExitAnimation">@anim/recents_launch_from_launcher_exit</item>
-        <item name="android:wallpaperIntraOpenEnterAnimation">@anim/wallpaper_recents_launch_from_launcher_enter</item>
-        <item name="android:wallpaperIntraOpenExitAnimation">@anim/wallpaper_recents_launch_from_launcher_exit</item>
-    </style>
-
-    <style name="TextAppearance.QuickSettings.TileView.User" parent="@style/TextAppearance.QuickSettings.TileView">
-        <item name="android:background">#000000</item>
-        <item name="android:padding">4dp</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:fadingEdge">horizontal</item>
-    </style>
-    <style name="TextAppearance.StatusBar.Traffic" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <!-- Note: must be dp to fit in status bar -->
-        <item name="android:textSize">14dp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/status_bar_traffic_color</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.Expanded" parent="@*android:style/TextAppearance.StatusBar" />
-
 
     <style name="TextAppearance.StatusBar.Expanded.Network" parent="@style/TextAppearance.StatusBar.Expanded.Date">
 	<item name="android:textColor">#ffff4444</item>

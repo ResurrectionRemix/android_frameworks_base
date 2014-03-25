@@ -599,11 +599,6 @@ public class AppSidebar extends FrameLayout {
         }
     }
 
-    public void setPosition(int position) {
-        mPosition = position;
-        createSidebarAnimations(position);
-    }
-
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);

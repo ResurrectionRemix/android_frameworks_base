@@ -118,7 +118,6 @@ import com.android.systemui.R;
 import com.android.systemui.ReminderMessageView;
 import com.android.systemui.service.ReminderService;
 import com.android.systemui.BatteryMeterView;
-import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.GestureRecorder;
@@ -425,8 +424,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_SHOW_PERCENT), false, this);
 	        resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.APP_SIDEBAR_POSITION), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SIGNAL_TEXT), false, this);
@@ -1653,11 +1650,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         }
     }
 
+    protected boolean hasVisibleNotifications() {
+        return mNotificationData.hasVisibleItems();
+    }
+
+    protected boolean hasClearableNotifications() {
+        return mNotificationData.hasClearableItems();
+    }
+
     @Override
     protected void setAreThereNotifications() {
         final boolean any = mNotificationData.size() > 0;
 
-        final boolean clearable = any && mNotificationData.hasClearableItems();
+        final boolean clearable = any && hasClearableNotifications();
 
         if (SPEW) {
             Log.d(TAG, "setAreThereNotifications: N=" + mNotificationData.size()
@@ -2676,8 +2681,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     private void checkBarModes() {
         if (mDemoMode) return;
         int sbMode = mStatusBarMode;
-        if (panelsEnabled() && (mInteractingWindows & StatusBarManager.WINDOW_STATUS_BAR) != 0) {
-            // if panels are expandable, force the status bar opaque on any interaction
+        if (panelsEnabled() && !mHasFlipSettings &&
+        (mInteractingWindows & StatusBarManager.WINDOW_STATUS_BAR) != 0) {
+            // if dual panels are expandable, force the status bar opaque on any interaction
             sbMode = MODE_OPAQUE;
         }
         checkBarMode(sbMode, mStatusBarWindowState, mStatusBarView.getBarTransitions());
@@ -3296,24 +3302,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 notifyHeadsUpScreenOn(false);
                 finishBarAnimations();
             }
-            else if (Intent.ACTION_CONFIGURATION_CHANGED.equals(action)) {
-                Configuration config = mContext.getResources().getConfiguration();
-                try {
-                    // position app sidebar on left if in landscape orientation and device has a navbar
-                    if (mWindowManagerService.hasNavigationBar() &&
-                            config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        mWindowManager.updateViewLayout(mAppSidebar,
-                                getAppSidebarLayoutParams(AppSidebar.SIDEBAR_POSITION_LEFT));
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAppSidebar.setPosition(AppSidebar.SIDEBAR_POSITION_LEFT);
-                            }
-                        }, 500);
-                    }
-                } catch (RemoteException e) {
-                }
-            }
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 mScreenOn = true;
                 // work around problem where mDisplay.getRotation() is not stable while screen is off (bug 7086018)
@@ -3483,13 +3471,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 SignalClusterView.STYLE_NORMAL, mCurrentUserId);
         mSignalClusterView.setStyle(signalStyle);
         mSignalTextView.setStyle(signalStyle);
-        
-        int sidebarPosition = Settings.System.getInt(
-                resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
-        if (sidebarPosition != mSidebarPosition) {
-            mSidebarPosition = sidebarPosition;
-            mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
-        }
 
 		updateCustomHeaderStatus();
 
@@ -4057,28 +4038,5 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 icon.getBackground().setAlpha(alpha);
             }
         }
-    }
-
-    public boolean skipToSettingsPanel() {
-        if (mPile == null || mNotificationData == null) {
-            return false;
-        }
-
-        int N = mNotificationData.size();
-        for (int i = 0; i < N; i++) {
-            Entry ent = mNotificationData.get(i);
-            if (ent != null
-                    && ent.notification != null
-                    && notificationIsForCurrentUser(ent.notification)) {
-                // ignore adb icon and Tasker
-                if (ent.notification.getId() == com.android.internal.R.string.adb_active_notification_title
-                        || "net.dinglisch.android.taskerm"
-                                .equals(ent.notification.getPackageName())) {
-                    continue;
-                }
-                return false;
-            }
-        }
-        return true;
     }
 }

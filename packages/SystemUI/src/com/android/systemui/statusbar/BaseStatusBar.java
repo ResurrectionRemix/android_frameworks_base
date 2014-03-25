@@ -356,7 +356,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                         mContext.getContentResolver(), Settings.System.CUSTOM_RECENT_TOGGLE, false);
 
         if (mCustomRecent) {
-            slimRecents = new RecentController(mContext);
+            slimRecents = new RecentController(mContext, mLayoutDirection);
         } else {
             stockRecents = getComponent(RecentsComponent.class);
         }
@@ -1633,7 +1633,8 @@ public abstract class BaseStatusBar extends SystemUI implements
                     resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
             if (sidebarPosition != mSidebarPosition) {
                 mSidebarPosition = sidebarPosition;
-                mWindowManager.updateViewLayout(mAppSidebar, getAppSidebarLayoutParams(sidebarPosition));
+                 removeSidebarView();
+                 addSidebarView();
             }
         }
     }

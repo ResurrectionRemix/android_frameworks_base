@@ -4605,7 +4605,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // to wake the device but don't pass the key to the application.
             result = 0;
             if (down && isWakeKey && isWakeKeyWhenScreenOff(keyCode)) {
-                result |= ACTION_WAKE_UP;
+                mPowerManager.wakeUp(SystemClock.uptimeMillis());
             }
         }
 
@@ -4844,7 +4844,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                 telephonyService.silenceRinger();
                             } else if ((mIncallPowerBehavior
                                     & Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_HANGUP) != 0
-                                    && telephonyService.isOffhook()) {
+                                    && telephonyService.isOffhook() && isScreenOn) {
                                 // Otherwise, if "Power button ends call" is enabled,
                                 // the Power button will hang up any current active call.
                                 hungUp = telephonyService.endCall();

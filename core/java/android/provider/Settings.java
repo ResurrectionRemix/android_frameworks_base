@@ -2080,6 +2080,14 @@ public final class Settings {
           * @hide
           */
          public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
+
+	/**
+         * Quick Settings Smart Pulldown
+         *
+         * @hide
+         */
+        public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
+
         /**
          * Master volume (float in the range 0.0f to 1.0f).
          * @hide
@@ -2595,6 +2603,11 @@ public final class Settings {
          */
         public static final String BATTERY_LIGHT_FULL_COLOR = "battery_light_full_color";
 
+       /**
+         * @hide
+         */
+        public static final String SMART_PHONE_CALLER = "smart_phone_caller";
+        
         /** Sprint MWI Quirk: Show message wait indicator notifications
          * @hide
          */
@@ -2953,6 +2966,12 @@ public final class Settings {
         public static final String WIDGET_BUTTONS_TABLET = "expanded_widget_buttons_tablet";
 
         /**
+         * multiuser pref
+         * @hide
+         */
+        public static final String ALLOW_MULTIUSER = "allow_multiuser";
+
+        /**
          * Navigation controls to Use
          *
          * @hide
@@ -3270,7 +3289,13 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
-
+       
+        /**
+         * Disable FC Notifications
+         * @hide
+         */
+         
+        public static final String DISABLE_FC_NOTIFICATIONS = "disable_fc_notifications";
         /**
          * Whether to unlock the menu key.  The value is boolean (1 or 0).
          * @hide
@@ -3919,6 +3944,18 @@ public final class Settings {
         public static final String QUICK_TILES_BG_ALPHA = "quick_tiles_bg_alpha";
         
         /**
+         * Sets the lockscreen background style
+         * @hide
+         */
+        public static final String LOCKSCREEN_BACKGROUND_STYLE = "lockscreen_background_style";
+
+        /**
+         * Color for lockscreen background when set to color fill
+         * @hide
+         */
+        public static final String LOCKSCREEN_BACKGROUND_COLOR = "lockscreen_background_color";
+
+        /**
          * Volume key controls ringtone or media sound stream
          *
          * @hide
@@ -4369,6 +4406,24 @@ public final class Settings {
          */
         public static final String CLEAR_RECENTS_BUTTON_LOCATION = "clear_recents_button_location";
 
+
+        /**
+         * Whether recent panel gravity is left or right (default = Gravity.RIGHT).
+         * @hide
+         */
+        public static final String RECENT_PANEL_GRAVITY = "recent_panel_gravity";
+
+        /**
+         * Size of recent panel view in percent (default = 100).
+         * @hide
+         */
+        public static final String RECENT_PANEL_SCALE_FACTOR = "recent_panel_scale_factor";
+
+        /**
+         * User favorite tasks for recent panel.
+         * @hide
+         */
+        public static final String RECENT_PANEL_FAVORITES = "recent_panel_favorites";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
