@@ -422,8 +422,9 @@ final class RemotePrintSpooler {
             mRemoteInstance.setClient(null);
         } catch (RemoteException re) {
             Slog.d(LOG_TAG, "Error clearing print spooler client", re);
+        } catch (NullPointerException ne) {
+            Slog.d(LOG_TAG, "Already cleared.", ne);
         }
-
     }
 
     private void throwIfDestroyedLocked() {
