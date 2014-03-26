@@ -68,13 +68,10 @@ import android.view.WindowManagerPolicy;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
-=======
 import java.util.List;
->>>>>>> 7edef93... Squashed commit of QuickBoot feature from Qualcomm
 
 import libcore.util.Objects;
 
