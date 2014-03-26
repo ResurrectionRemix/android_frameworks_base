@@ -90,7 +90,7 @@ public class CustomObjectAnimator {
                     if (!canceled) executeAfter.run();
                 }});
         }
-        
+
         animator.start();
     }
 
