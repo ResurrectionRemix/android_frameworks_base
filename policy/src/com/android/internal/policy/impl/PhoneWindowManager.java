@@ -1232,9 +1232,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mTranslucentDecorEnabled = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_enableTranslucentDecor);
         mHasRemovableLid = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_hasRemovableLid);
-        mBackKillTimeout = mContext.getResources().getInteger(
-                com.android.internal.R.integer.config_backKillTimeout);
+                com.android.internal.R.bool.config_hasRemovableLid);;
         mDeviceHardwareKeys = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
         mSingleStageCameraKey = mContext.getResources().getBoolean(
@@ -2777,6 +2775,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.KILL_APP_LONGPRESS_BACK, 0, UserHandle.USER_CURRENT) == 1) {
                 if (down && repeatCount == 0) {
+                    mBackKillTimeout = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                        Settings.Secure.KILL_APP_LONGPRESS_TIMEOUT, 0, UserHandle.USER_CURRENT);
                     mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
                 }
             }

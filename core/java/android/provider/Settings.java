@@ -6603,7 +6603,13 @@ public final class Settings {
          * @hide
          */
         public static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
-
+        
+         /**
+          * Timeout of long-pressing the Back button
+          * @hide
+          */
+          
+         public static final String KILL_APP_LONGPRESS_TIMEOUT = "kill_app_longpress_timeout";
         /**
          * Whether to include options in power menu for rebooting into recovery or bootloader
          * @hide
