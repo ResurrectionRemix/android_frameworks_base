@@ -4540,7 +4540,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
-<<<<<<< HEAD
     final Object mScreenRecordLock = new Object();
     ServiceConnection mScreenRecordConnection = null;
 
@@ -4558,7 +4557,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void performScreenRecord() {
         final Intent recordIntent = new Intent("org.chameleonos.action.NOTIFY_RECORD_SERVICE");
         mContext.sendBroadcast(recordIntent, Manifest.permission.RECORD_SCREEN);
-=======
+    }
+
     private final Runnable mQuickBootPowerLongPress = new Runnable() {
 
         public void run() {
@@ -4588,30 +4588,29 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     "android.permission.DEVICE_POWER",null);
 
             synchronized (mQuickBootLock) {
-                try {
-                    mQuickBootLock.wait(QUICKBOOT_LAUNCH_TIMEOUT);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            releaseQuickBootWakeLock();
-        }
-    };
-
-    private void acquireQuickBootWakeLock() {
-        if (!mQuickBootWakeLock.isHeld())  {
-            mQuickBootWakeLock.acquire();
-        }
-    }
-
-    private void releaseQuickBootWakeLock() {
-        if (mQuickBootWakeLock.isHeld()) {
-            mQuickBootWakeLock.release();
-        }
->>>>>>> 7edef93... Squashed commit of QuickBoot feature from Qualcomm
-    }
-
+                 try {
+                     mQuickBootLock.wait(QUICKBOOT_LAUNCH_TIMEOUT);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+             }
+ 
+             releaseQuickBootWakeLock();
+         }
+     };
+ 
+     private void acquireQuickBootWakeLock() {
+         if (!mQuickBootWakeLock.isHeld())  {
+             mQuickBootWakeLock.acquire();
+         }
+     }
+ 
+     private void releaseQuickBootWakeLock() {
+         if (mQuickBootWakeLock.isHeld()) {
+             mQuickBootWakeLock.release();
+         }
+     }
+     
     /** {@inheritDoc} */
     @Override
     public int interceptKeyBeforeQueueing(KeyEvent event, int policyFlags, boolean isScreenOn) {
