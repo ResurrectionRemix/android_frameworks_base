@@ -654,12 +654,7 @@ public class TelephonyManager {
      * @see #NETWORK_TYPE_LTE
      * @see #NETWORK_TYPE_EHRPD
      * @see #NETWORK_TYPE_HSPAP
-<<<<<<< HEAD
-     *
-=======
-     * @see #NETWORK_TYPE_TD_SCDMA
      * @see #NETWORK_TYPE_DCHSPAP
->>>>>>> eed8a49... frameworks/base: forward port DC-HSPAP support from cm-10
      * @hide
      */
     public int getDataNetworkType() {
@@ -746,11 +741,7 @@ public class TelephonyManager {
             case NETWORK_TYPE_EVDO_B:
             case NETWORK_TYPE_EHRPD:
             case NETWORK_TYPE_HSPAP:
-<<<<<<< HEAD
-=======
-            case NETWORK_TYPE_TD_SCDMA:
             case NETWORK_TYPE_DCHSPAP:
->>>>>>> eed8a49... frameworks/base: forward port DC-HSPAP support from cm-10
                 return NETWORK_CLASS_3_G;
             case NETWORK_TYPE_LTE:
                 return NETWORK_CLASS_4_G;
@@ -803,17 +794,8 @@ public class TelephonyManager {
                 return "iDEN";
             case NETWORK_TYPE_HSPAP:
                 return "HSPA+";
-<<<<<<< HEAD
-=======
-            case NETWORK_TYPE_GSM:
-                return "GSM";
-            case NETWORK_TYPE_TD_SCDMA:
-                return "TD-SCDMA";
-            case NETWORK_TYPE_IWLAN:
-                return "IWLAN";
             case NETWORK_TYPE_DCHSPAP:
                 return "DC-HSPA+";
->>>>>>> eed8a49... frameworks/base: forward port DC-HSPAP support from cm-10
             default:
                 return "UNKNOWN";
         }
