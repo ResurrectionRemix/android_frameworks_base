@@ -45,6 +45,8 @@ public class IconMerger extends LinearLayout {
     private int mAvailWidth;
     private boolean mShowCenterClock;
     private int mIconHPadding;
+    private Clock mDate;
+    private boolean mShowDate;
 
     public IconMerger(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -86,6 +88,10 @@ public class IconMerger extends LinearLayout {
         mMoreView = v;
     }
 
+    public void setDate(Clock date) {
+        mDate = date;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -111,6 +117,8 @@ public class IconMerger extends LinearLayout {
     private void recalcSize() {
         if (mShowCenterClock){
             mAvailWidth = mTotalWidth/2 - mClockCenter.getMeasuredWidth()/2 - mIconSize/2;
+        } else if (mShowCenterClock && mShowDate) {
+            mAvailWidth = mTotalWidth/2 - mClockCenter.getMeasuredWidth()/2 - mDate.getMeasuredWidth()/2 - mIconSize/2;
         } else {
             mAvailWidth = getMeasuredWidth();
         }
