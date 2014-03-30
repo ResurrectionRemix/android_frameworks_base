@@ -20,6 +20,7 @@ public class GPSTile extends QuickSettingsTile implements LocationSettingsChange
     private LocationController mLocationController;
     private boolean mLocationEnabled;
     private int mLocationMode;
+    private int textResId;
 
     public GPSTile(Context context, QuickSettingsController qsc) {
         super(context, qsc);
@@ -67,19 +68,21 @@ public class GPSTile extends QuickSettingsTile implements LocationSettingsChange
         switch (mLocationMode) {
             case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
                 mDrawable = R.drawable.ic_qs_location_on_gps;
+                textResId = R.string.location_mode_sensors_only_title;
                 break;
             case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
                 mDrawable = R.drawable.ic_qs_location_on_wifi;
+                textResId = R.string.location_mode_battery_saving_title;
                 break;
             case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
                 mDrawable = R.drawable.ic_qs_location_on;
+                textResId = R.string.location_mode_high_accuracy_title;
                 break;
             case Settings.Secure.LOCATION_MODE_OFF:
                 mDrawable = R.drawable.ic_qs_location_off;
+                textResId = R.string.quick_settings_location_off_label;
                 break;
         }
-        int textResId = mLocationEnabled ? R.string.quick_settings_location_label
-                : R.string.quick_settings_location_off_label;
         mLabel = mContext.getText(textResId).toString();
     }
 
