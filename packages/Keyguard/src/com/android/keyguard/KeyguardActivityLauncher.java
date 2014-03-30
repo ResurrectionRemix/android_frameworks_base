@@ -178,7 +178,7 @@ public abstract class KeyguardActivityLauncher {
         boolean isSecure = lockPatternUtils.isSecure();
         if (!isSecure || showsWhileLocked) {
             if (!isSecure) {
-                getCallback().dismiss(false);
+                dismissKeyguardOnNextActivity();
             }
             try {
                 if (DEBUG) Log.d(TAG, String.format("Starting activity for intent %s at %s",
@@ -203,7 +203,7 @@ public abstract class KeyguardActivityLauncher {
         }
     }
 
-    private void dismissKeyguardOnNextActivity() {
+    protected void dismissKeyguardOnNextActivity() {
         try {
             ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
         } catch (RemoteException e) {
