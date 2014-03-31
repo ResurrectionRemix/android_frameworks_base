@@ -1460,12 +1460,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
     // This is the android ticker callback
     public void updateTicker(StatusBarNotification notification, String text) {
         mTickerUpdated = true;
-        boolean allowed = false; // default off
-        try {
-            allowed = mNotificationManager.isPackageAllowedForHalo(notification.getPackageName());
-        } catch (android.os.RemoteException ex) {
-            // System is dead
-        }
+        boolean allowed = isPackageAllowedForHalo(notification);
         if (allowed) {
             for (int i = 0; i < mNotificationData.size(); i++) {
                 NotificationData.Entry entry = mNotificationData.get(i);
@@ -1517,12 +1512,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
 
         for(int i = 0; i < mNotificationData.size(); i++) {
             notification = mNotificationData.get(i).notification;
-            try {
-                if (!mNotificationManager
-                        .isPackageAllowedForHalo(notification.getPackageName())) continue;
-            } catch (android.os.RemoteException ex) {
-                // System is dead
-            }
+            if (!isPackageAllowedForHalo(notification)) continue;
             msgs += 1;
         }
         return msgs;
@@ -1534,12 +1524,8 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
 
         for (int i = 0; i < mNotificationData.size(); i++){
             notification = mNotificationData.get(i).notification;
-            try { //ignore blacklisted notifications
-                if (!mNotificationManager
-                        .isPackageAllowedForHalo(notification.getPackageName())) continue;
-            } catch (android.os.RemoteException ex) {
-                // System is dead
-            }
+            //ignore blacklisted notifications
+            if (!isPackageAllowedForHalo(notification)) continue;
             //if notifying the user on unlock, ignore persistent notifications
             if (notifyOnUnlock && !notification.isClearable()) continue;
 
@@ -1560,13 +1546,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
             StatusBarNotification statusNotify = entry.notification;
             if (statusNotify == null) continue;
 
-            try {
-                allowed = mNotificationManager
-                            .isPackageAllowedForHalo(mNotificationData
-                                                        .get(i).notification.getPackageName());
-            } catch (android.os.RemoteException ex) {
-                // System is dead
-            }
+            allowed = isPackageAllowedForHalo(mNotificationData.get(i).notification);
             persistent = !mNotificationData.get(i).notification.isClearable();
             // persistent notifications that were not blacklisted and pinned apps
             boolean hide = (statusNotify.getPackageName().equals("com.paranoid.halo")
@@ -1574,6 +1554,16 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
             if (hide) ignore++;
         }
         return ignore;
+    }
+
+    private boolean isPackageAllowedForHalo(StatusBarNotification notification) {
+        try {
+            return mNotificationManager
+                        .isPackageAllowedForHalo(notification.getPackageName());
+        } catch (android.os.RemoteException ex) {
+            // System is dead
+            return false;
+        }
     }
 
     private class HaloReceiver extends INotificationListener.Stub {
@@ -1584,32 +1574,24 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         @Override
         public void onNotificationPosted(StatusBarNotification notification) throws RemoteException {
             final StatusBarNotification n = notification;
-            boolean allowed = false;
+            final boolean allowed = isPackageAllowedForHalo(n);
 
-            if (mKeyguardManager.isKeyguardLocked() && notification.isClearable()) {
-                try {
-                    allowed = mNotificationManager
-                                .isPackageAllowedForHalo(notification.getPackageName());
-                } catch (android.os.RemoteException ex) {
-                    // System is dead
-                }
-                if (allowed) mPingNewcomer = true;
-            }
+            if (mKeyguardManager.isKeyguardLocked() && n.isClearable() && allowed)
+                mPingNewcomer = true;
 
             mHandler.postDelayed(new Runnable() {
                 public void run() {
-                    ApplicationInfo ai;
                     NotificationData.Entry entry = null;
 
                     // if notification received and not registered by HALO ...
-                    if(!mTickerUpdated){
+                    if(!mTickerUpdated && allowed){
                         for (int i = 0; i < mNotificationData.size(); i++) {
                             if(mNotificationData.get(i).notification.toString().equals(n.toString()))
                                 entry = mNotificationData.get(i);
                         }
 
                         if(entry != null){
-                            mPingNewcomer = false;
+                            mPingNewcomer = true;
                             tick(entry, 0, 0, false, false);
                             mEffect.refresh();
                         }
