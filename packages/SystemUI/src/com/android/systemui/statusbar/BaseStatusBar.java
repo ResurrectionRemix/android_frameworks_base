@@ -462,12 +462,8 @@ public abstract class BaseStatusBar extends SystemUI implements
             public void onChange(boolean selfChange) {
                 updateHalo();
             }});
-            
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                updateHalo();
-            }}, 10000);
 
+        updateHalo();
     }
 
     public void setHaloTaskerActive(boolean haloTaskerActive, boolean updateNotificationIcons) {
