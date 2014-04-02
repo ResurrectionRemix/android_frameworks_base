@@ -1317,7 +1317,7 @@ final class ActivityStack {
                         break;
                     }
                 }
-            } else if (prevTask != topTask() && !prev.floatingWindow) {
+            } else if (prevTask != topTask()) {
                 // This task is going away but it was supposed to return to the home task.
                 // Now the task above it has to return to the home task instead.
                 final int taskNdx = mTaskHistory.indexOf(prevTask) + 1;
