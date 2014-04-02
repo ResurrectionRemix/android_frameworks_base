@@ -616,12 +616,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                 null, UserHandle.CURRENT);
     }
 
-    private void launchFloating(PendingIntent pIntent, String mPkg) {
-        if (!"android".equals(mPkg)) {
-            Intent transparent = new Intent(mContext, com.android.systemui.Transparent.class);
-            transparent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_FLOATING_WINDOW | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-            mContext.startActivity(transparent);
-        }
+    private void launchFloating(PendingIntent pIntent) {
         Intent overlay = new Intent();
         overlay.addFlags(Intent.FLAG_FLOATING_WINDOW | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         try {
@@ -654,7 +649,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
                 //Long click menu broken on PIE mode...pop up menu is useless (auto-launch on long click)
                 if (expanded) {
-                    launchFloating(contentIntent, packageNameF);
+                    launchFloating(contentIntent);
                     animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
                     return true;
                 }
@@ -705,7 +700,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                             am.clearApplicationUserData(packageNameF,
                                     new FakeClearUserDataObserver());
                         } else if (item.getItemId() == R.id.notification_floating_item) {
-                            launchFloating(contentIntent, packageNameF);
+                            launchFloating(contentIntent);
                             animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
                         } else {
                             return false;
@@ -1087,7 +1082,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
                  if (mFloat && !"android".equals(mPkg)) {
                     Intent transparent = new Intent(mContext, com.android.systemui.Transparent.class);
-                    transparent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_FLOATING_WINDOW | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                    transparent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_FLOATING_WINDOW);
                     mContext.startActivity(transparent);
                 }
 
