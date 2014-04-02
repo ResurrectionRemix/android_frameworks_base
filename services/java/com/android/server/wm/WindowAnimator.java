@@ -14,6 +14,7 @@ import static com.android.server.wm.WindowManagerService.LayoutFields.SET_WALLPA
 
 import android.content.Context;
 import android.os.Debug;
+import android.media.AudioManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
@@ -76,6 +77,8 @@ public class WindowAnimator {
     static final int KEYGUARD_SHOWN         = 2;
     static final int KEYGUARD_ANIMATING_OUT = 3;
     int mForceHiding = KEYGUARD_NOT_SHOWN;
+    
+    private AudioManager mAudioManager;
 
     private String forceHidingToString() {
         switch (mForceHiding) {
@@ -91,6 +94,8 @@ public class WindowAnimator {
         mService = service;
         mContext = service.mContext;
         mPolicy = service.mPolicy;
+        
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
         mAnimationRunnable = new Runnable() {
             @Override
@@ -246,7 +251,8 @@ public class WindowAnimator {
                         mService.mFocusMayChange = true;
                     }
                     if (win.isReadyForDisplay()) {
-                        if (Settings.System.getInt(mContext.getContentResolver(),
+                        if (mAudioManager.isMusicActive() || Settings.System.getInt(
+                                mContext.getContentResolver(),
                                 Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 0) {
                             if (nowAnimating) {
                                 if (winAnimator.mAnimationIsEntrance) {
