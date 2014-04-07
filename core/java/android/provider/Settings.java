@@ -2716,6 +2716,12 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_GLOWPAD_TORCH = "lockscreen_glowpad_torch";
+        
+        /**
+         * Whether to enable the modlock keyguard
+         * @hide
+         */
+        public static final String LOCKSCREEN_MODLOCK_ENABLED = "lockscreen_modlock_enabled";
 
         /**
          * @deprecated Use {@link android.provider.Settings.Global#LOW_BATTERY_SOUND}
@@ -4583,6 +4589,7 @@ public final class Settings {
             POWER_MENU_SOUND_ENABLED,
             POWER_MENU_USER_ENABLED,
             LOCKSCREEN_BATTERY_VISIBILITY,
+            LOCKSCREEN_MODLOCK_ENABLED,
             PHONE_BLACKLIST_ENABLED,
             PHONE_BLACKLIST_NOTIFY_ENABLED,
             PHONE_BLACKLIST_PRIVATE_NUMBER_MODE,
