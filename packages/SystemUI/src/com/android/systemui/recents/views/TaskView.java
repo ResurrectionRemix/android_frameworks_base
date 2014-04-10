@@ -21,6 +21,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.*;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityManager;
 import android.view.View;
@@ -45,6 +46,7 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
         public void onTaskViewAppIconClicked(TaskView tv);
         public void onTaskViewAppInfoClicked(TaskView tv);
         public void onTaskViewLongClicked(TaskView tv);
+        public void onTaskFloatClicked(TaskView tv);
         public void onTaskViewClicked(TaskView tv, Task task, boolean lockToTask);
         public void onTaskViewDismissed(TaskView tv);
         public void onTaskViewClipStateChanged(TaskView tv);
@@ -667,9 +669,11 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
                 mHeaderView.mApplicationIcon.setOnClickListener(this);
             }
             mHeaderView.mDismissButton.setOnClickListener(this);
-            if (mConfig.multiStackEnabled) {
+            boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 0) == 1;
+            if (floatingswitch) {
                 mHeaderView.mMoveTaskButton.setOnClickListener(this);
             }
+            mHeaderView.mFloatButton.setOnClickListener(this);
             mActionButtonView.setOnClickListener(this);
             mHeaderView.mApplicationIcon.setOnLongClickListener(this);
         }
@@ -686,9 +690,11 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
             // Unbind any listeners
             mHeaderView.mApplicationIcon.setOnClickListener(null);
             mHeaderView.mDismissButton.setOnClickListener(null);
-            if (mConfig.multiStackEnabled) {
+            boolean floatingswitch = Settings.System.getInt(mContext.getContentResolver(), Settings.System.FLOATING_WINDOW_MODE, 0) == 1;
+            if (floatingswitch) {
                 mHeaderView.mMoveTaskButton.setOnClickListener(null);
             }
+            mHeaderView.mFloatButton.setOnClickListener(this);
             mActionButtonView.setOnClickListener(null);
             mHeaderView.mApplicationIcon.setOnLongClickListener(null);
         }
@@ -734,6 +740,8 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
                         if (mCb != null) {
                             mCb.onTaskResize(tv);
                         }
+                    } else if (v == mHeaderView.mFloatButton) {
+                        mCb.onTaskFloatClicked(tv);
                     }
                 }
             }, 125);

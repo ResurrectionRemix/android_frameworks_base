@@ -216,7 +216,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 
     /** Gets the next task in the stack - or if the last - the top task */
     public Task getNextTaskOrTopTask(Task taskToSearch) {
-        Task returnTask = null; 
+        Task returnTask = null;
         boolean found = false;
         List<TaskStackView> stackViews = getTaskStackViews();
         int stackCount = stackViews.size();
@@ -1279,6 +1279,18 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
         TaskStackBuilder.create(getContext())
                 .addNextIntentWithParentStack(intent).startActivities(null,
                 new UserHandle(t.key.userId));
+    }
+
+    @Override
+    public void onTaskFloatClicked(Task t) {
+        Intent baseIntent = t.key.baseIntent;
+        // Hide and go home
+        onRecentsHidden();
+        mCb.onTaskLaunchFailed();
+        // Launch task in floating mode
+        baseIntent.setFlags(Intent.FLAG_FLOATING_WINDOW
+                  | Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(baseIntent);
     }
 
     @Override

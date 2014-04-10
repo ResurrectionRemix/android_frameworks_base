@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 CarbonROM
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="192dp"
+    android:height="192dp"
+    android:viewportWidth="192"
+    android:viewportHeight="192">
+
+    <group
+        android:translateY="-860.36216">
+        <path
+            android:fillColor="@color/recents_task_bar_dark_dismiss_color"
+            android:pathData="M62.917,878.075
+c-9.094,0-16.414,7.322-16.414,16.416v123.742c0,9.094,7.32,16.416,16.414,16.416h66.166c9.094,0,16.414-7.322,16.414-16.416
+V894.491c0-9.094-7.32-16.416-16.414-16.416H62.917z
+M61.146,907.003h69.709v98.717H61.146V907.003z M87.653,931.753v3.535h27.253
+v40.127h3.581v-43.662H87.653z
+M80.835,938.571v3.535h27.253v40.127h3.581v-43.662H80.835z
+M73.765,945.39v43.664h30.832V945.39 H73.765z" />
+    </group>
+</vector>

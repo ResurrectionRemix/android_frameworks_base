@@ -3319,6 +3319,7 @@ package android.app {
     method public void finishAndRemoveTask();
     method public void finishFromChild(android.app.Activity);
     method public android.app.ActionBar getActionBar();
+    method public void finishFloating();
     method public final android.app.Application getApplication();
     method public android.content.ComponentName getCallingActivity();
     method public java.lang.String getCallingPackage();
@@ -3524,6 +3525,7 @@ package android.app {
     field public static final int RESULT_CANCELED = 0; // 0x0
     field public static final int RESULT_FIRST_USER = 1; // 0x1
     field public static final int RESULT_OK = -1; // 0xffffffff
+    field public boolean mIsFullscreenApp;
   }
 
   public deprecated class ActivityGroup extends android.app.Activity {
@@ -5352,6 +5354,7 @@ package android.app {
     method public android.app.PendingIntent getPendingIntent(int, int);
     method public android.app.PendingIntent getPendingIntent(int, int, android.os.Bundle);
     method public void startActivities();
+    method public void setTaskOnHome(boolean);
     method public void startActivities(android.os.Bundle);
   }
 
@@ -37279,6 +37282,7 @@ package android.view {
     field public static final int PROGRESS_VISIBILITY_OFF = -2; // 0xfffffffe
     field public static final int PROGRESS_VISIBILITY_ON = -1; // 0xffffffff
     field public static final java.lang.String STATUS_BAR_BACKGROUND_TRANSITION_NAME = "android:status:background";
+    field public boolean mIsFloatingWindow;
   }
 
   public static abstract interface Window.Callback {

@@ -300,6 +300,13 @@ interface IWindowManager
      */
     int getSystemUIVisibility();
 
+
     
     void setLiveLockscreenEdgeDetector(boolean enable);
+
+    /** FLOAT VIEW **/
+    Rect getAppFullscreenViewRect();
+    Rect getAppMinimumViewRect();
+    Rect getFloatViewRect();
+    void notifyFloatActivityTouched(IBinder token, boolean force);
 }

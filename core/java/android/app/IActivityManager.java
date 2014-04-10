@@ -147,6 +147,7 @@ public interface IActivityManager extends IInterface {
     public int getFocusedStackId() throws RemoteException;
     public void registerTaskStackListener(ITaskStackListener listener) throws RemoteException;
     public int getTaskForActivity(IBinder token, boolean onlyRoot) throws RemoteException;
+    public IBinder getActivityForTask(int task, boolean onlyRoot) throws RemoteException;
     public ContentProviderHolder getContentProvider(IApplicationThread caller,
             String name, int userId, boolean stable) throws RemoteException;
     public ContentProviderHolder getContentProviderExternal(String name, int userId, IBinder token)
@@ -806,8 +807,8 @@ public interface IActivityManager extends IInterface {
     int GET_ACTIVITY_DISPLAY_ID_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+184;
     int DELETE_ACTIVITY_CONTAINER_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+185;
     int SET_PROCESS_MEMORY_TRIM_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+186;
-
-
+    /* FLOAT VIEW */
+    int GET_ACTIVITY_FOR_TASK_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+200;
     // Start of L transactions
     int GET_TAG_FOR_INTENT_SENDER_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+210;
     int START_USER_IN_BACKGROUND_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+211;

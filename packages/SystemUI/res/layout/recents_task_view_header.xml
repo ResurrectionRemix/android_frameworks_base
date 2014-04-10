@@ -47,7 +47,7 @@
         android:id="@+id/move_task"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="100dp"
         android:layout_gravity="center_vertical|end"
         android:padding="12dp"
         android:background="@drawable/recents_button_bg"
@@ -63,14 +63,24 @@
         android:background="@drawable/recents_button_bg"
         android:visibility="gone"
         android:src="@drawable/recents_dismiss_light" />
-  <com.android.systemui.recents.views.FixedSizeImageView 
+    <com.android.systemui.recents.views.FixedSizeImageView
+        android:id="@+id/float_task"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="70dp"
+        android:layout_gravity="center_vertical|end"
+        android:padding="8dp"
+        android:background="@drawable/recents_button_bg"
+        android:visibility="invisible"
+        android:src="@drawable/ic_floating_on" />
+    <com.android.systemui.recents.views.FixedSizeImageView 
         android:id="@+id/lock_to_app_fab" 
         android:layout_width="48.0dip" 
         android:layout_height="48.0dip" 
-        android:layout_marginEnd="40.0dip"
+        android:layout_marginEnd="35.0dip"
         android:layout_gravity="end|center" 
-        android:padding="10dip" 
+        android:padding="12dip" 
         android:background="@drawable/recents_button_bg" 
-        android:visibility="gone"
+        android:visibility="invisible"
         android:src="@drawable/ic_pin" />
 </com.android.systemui.recents.views.TaskViewHeader>

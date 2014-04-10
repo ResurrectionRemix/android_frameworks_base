@@ -238,6 +238,7 @@ public class QsTuner extends Fragment implements Callback {
         else if (mSpec.equals("lockscreen")) return R.string.quick_settings_lockscreen_label;
         else if (mSpec.equals("pulse")) return R.string.quick_settings_pulse_label;
         else if (mSpec.equals("pie")) return R.string.quick_settings_pie;
+        else if (mSpec.equals("float_mode")) return R.string.recent_float_mode_title;
         return 0;
     }
 
@@ -495,6 +496,7 @@ public class QsTuner extends Fragment implements Callback {
 	    else if (mSpec.equals("lockscreen")) return R.drawable.ic_qs_lock_screen_on;
 	    else if (mSpec.equals("pulse")) return R.drawable.ic_qs_pulse;
 	    else if (mSpec.equals("pie")) return R.drawable.ic_qs_pie;
+	    else if (mSpec.equals("float_mode")) return R.drawable.ic_qs_floating_on;
             return R.drawable.android;
         }
 

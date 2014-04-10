@@ -57,7 +57,7 @@
   <java-symbol type="anim" name="slow_fade_in" />
   <java-symbol type="anim" name="slow_fade_out" />
   <java-symbol type="anim" name="slide_in_up_ribbon" />
-  <java-symbol type="anim" name="slide_out_down_ribbon" /> 
+  <java-symbol type="anim" name="slide_out_down_ribbon" />
   <java-symbol type="anim" name="slide_in_right_no_fade" />
   <java-symbol type="anim" name="slide_out_left_no_fade" />
   <java-symbol type="anim" name="slide_in_left_no_fade" />
@@ -145,11 +145,11 @@
   <java-symbol type="bool" name="config_hwKeysPref" />
 
   <java-symbol type="integer" name="config_notificationsBatteryReallyFullARGB" />
-  
+
    <!-- Last app switch animations -->
   <java-symbol type="anim" name="last_app_in" />
   <java-symbol type="anim" name="last_app_out" />
-  
+
    <!-- Hardware key binding -->
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
   
@@ -169,5 +169,26 @@
   <java-symbol type="id" name="dexopt_message" />
   <java-symbol type="id" name="dexopt_message_detail" />
   <java-symbol type="id" name="dexopt_progress" />
-  
+
+
+  <!-- Floating Window -->
+  <java-symbol type="drawable" name="ic_floating_window_close" />
+  <java-symbol type="drawable" name="ic_floating_window_max" />
+  <java-symbol type="drawable" name="ic_floating_window_min" />
+  <java-symbol type="drawable" name="ic_floating_window_more" />
+  <java-symbol type="id" name="floating_window_background" />
+  <java-symbol type="id" name="floating_window_titlebar" />
+  <java-symbol type="id" name="floating_window_close" />
+  <java-symbol type="id" name="floating_window_label" />
+  <java-symbol type="id" name="floating_window_max" />
+  <java-symbol type="id" name="floating_window_min" />
+  <java-symbol type="id" name="floating_window_more" />
+  <java-symbol type="id" name="floating_window_line" />
+  <java-symbol type="layout" name="floating_window_layout" />
+  <java-symbol type="string" name="floating_window_snap_top"/>
+  <java-symbol type="string" name="floating_window_snap_bottom"/>
+  <java-symbol type="string" name="floating_window_snap_left"/>
+  <java-symbol type="string" name="floating_window_snap_right"/>
+  <java-symbol type="string" name="floating_window_minimize"/>
+
 </resources>

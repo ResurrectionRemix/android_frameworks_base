@@ -328,6 +328,9 @@ public class NotificationPanelView extends PanelView implements
             }
         }
 
+        public void onChildTriggered(View v) {
+        }
+
         @Override
         public boolean updateSwipeProgress(View animView, boolean dismissable, float swipeProgress) {
             // Let live lockscreen know of swipe progress to allow

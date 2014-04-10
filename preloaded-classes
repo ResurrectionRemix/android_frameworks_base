@@ -2265,6 +2265,7 @@ com.android.internal.os.ZygoteConnection$Arguments
 com.android.internal.os.ZygoteInit
 com.android.internal.os.ZygoteInit$MethodAndArgsCaller
 com.android.internal.os.ZygoteSecurityException
+com.android.internal.policy.IPolicy
 com.android.internal.policy.PhoneFallbackEventHandler
 com.android.internal.policy.PhoneLayoutInflater
 com.android.internal.policy.PhoneWindow
@@ -2278,6 +2279,8 @@ com.android.internal.policy.PhoneWindow$PanelFeatureState$SavedState
 com.android.internal.policy.PhoneWindow$PanelFeatureState$SavedState$1
 com.android.internal.policy.PhoneWindow$RotationWatcher
 com.android.internal.policy.PhoneWindow$RotationWatcher$1
+com.android.internal.policy.Policy
+com.android.internal.policy.PolicyManager
 com.android.internal.telephony.ISub
 com.android.internal.telephony.ISub$Stub
 com.android.internal.telephony.ISub$Stub$Proxy
