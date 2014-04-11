@@ -25,7 +25,6 @@ public class GPSTile extends QuickSettingsTile implements LocationSettingsChange
         super(context, qsc);
 
         mQsc = qsc;
-        mContentResolver = mContext.getContentResolver();
         mLocationController = lc;
         mLocationController.addSettingsChangedCallback(this);
         mLocationMode = mLocationController.getLocationMode();
