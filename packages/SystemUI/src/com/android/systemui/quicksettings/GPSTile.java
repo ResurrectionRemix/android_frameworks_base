@@ -24,13 +24,9 @@ public class GPSTile extends QuickSettingsTile implements LocationSettingsChange
     public GPSTile(Context context, QuickSettingsController qsc, LocationController lc) {
         super(context, qsc);
 
-<<<<<<< HEAD
         mQsc = qsc;
-        mLocationController = new LocationController(mContext);
-=======
         mContentResolver = mContext.getContentResolver();
         mLocationController = lc;
->>>>>>> 07c549e... SysUI: Use LocationController from status bar service for GPSTile.
         mLocationController.addSettingsChangedCallback(this);
         mLocationMode = mLocationController.getLocationMode();
         mLocationEnabled = mLocationController.isLocationEnabled();
