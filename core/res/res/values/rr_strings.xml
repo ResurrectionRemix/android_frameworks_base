@@ -35,15 +35,9 @@
     <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
     <string name="animation_grow_shrink_left">Grow in (Left)</string>
     <string name="animation_grow_shrink_right">Grow in (Right)</string> 
-
     <!-- Title of an application permission that lets an application view/edit revoked permissions. -->
     <string name="permlab_revokePermissions">Allows view and edit of revoked permissions. Not for use by normal applications.</string>
     <!-- Description of an application permission that lets lets an application view/edit revoked permissions. -->
     <string name="permdesc_revokePermissions">Allows read and write for revoked permissions. Not for use by normal applications.</string>
-
-    <!-- Title of an application permission that lets an application access the ThemeManagerService. -->
-    <string name="permlab_accessThemeService">Allows accessing the theme manager service. Not for use by normal applications.</string>
-    <!-- Description of an application permission that lets lets an application access the ThemeManagerService -->
-    <string name="permdesc_accessThemeService">Allows an application to set/reset themes. Not for use by normal applications.</string>
  
 </resources>
