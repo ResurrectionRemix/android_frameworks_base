@@ -201,4 +201,7 @@
     <!-- Defaults for Settings.System.LOCKSCREEN_TARGETS. -->
     <string name="def_lockscreen_targets" translatable="false"></string>
     <string name="def_lockscreen_targets_no_telephony" translatable="false"></string>
+
+    <!-- Default value of Settings.System.NOISE_SUPPRESSION -->
+    <bool name="def_noise_suppression">false</bool>
 </resources>
