@@ -4483,7 +4483,6 @@ public final class Settings {
         public static final String RECENT_PANEL_FAVORITES = "recent_panel_favorites";
 
         /**
-
          * Recent panel expanded mode (auto = 0, always = 1, never = 2).
          * default = 0.
          *
@@ -4493,7 +4492,6 @@ public final class Settings {
 
         /**
          * Whether to enable voice wakeup.  The value is boolean (1 or 0).
-         * Width and height of output vide expressed in WxH
          * @hide
          */
         public static final String VOICE_WAKEUP = "voice_wakeup";
