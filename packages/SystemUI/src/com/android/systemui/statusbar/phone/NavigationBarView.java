@@ -107,6 +107,9 @@ public class NavigationBarView extends LinearLayout {
     private DeadZone mDeadZone;
     private final NavigationBarTransitions mBarTransitions;
 
+    private boolean mModLockDisabled = true;
+    private SettingsObserver mObserver;
+
     // workaround for LayoutTransitions leaving the nav buttons in a weird state (bug 5549288)
     final static boolean WORKAROUND_INVALID_LAYOUT = true;
     final static int MSG_CHECK_INVALID_LAYOUT = 8686;
@@ -513,8 +516,8 @@ public class NavigationBarView extends LinearLayout {
         final boolean showCamera = showSearch && !mCameraDisabledByDpm
                 && mLockUtils.getCameraEnabled();
 
-        setVisibleOrGone(getSearchLight(), showSearch);
-        setVisibleOrGone(getCameraButton(), showCamera && mModLockDisabled);
+        setVisibleOrGone(getSearchLight(), showSearch && mModLockDisabled);
+        setVisibleOrGone(getCameraButton(), showCamera);
 
         mBarTransitions.applyBackButtonQuiescentAlpha(mBarTransitions.getMode(), true /*animate*/);
     }
@@ -584,11 +587,11 @@ public class NavigationBarView extends LinearLayout {
         super.onAttachedToWindow();
 
         final Bundle keyguard_metadata = NavigationBarView
-                    .getApplicationMetadata(mContext, "com.android.keyguard");
-                if (null != keyguard_metadata &&
-                    keyguard_metadata.getBoolean("com.cyanogenmod.keyguard", false)) {
-                        mObserver.observe();
-                }
+                .getApplicationMetadata(mContext, "com.android.keyguard");
+        if (null != keyguard_metadata &&
+                keyguard_metadata.getBoolean("com.cyanogenmod.keyguard", false)) {
+            mObserver.observe();
+        }
     }
 
     @Override
