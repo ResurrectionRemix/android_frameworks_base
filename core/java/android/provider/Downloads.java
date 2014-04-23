@@ -597,11 +597,6 @@ public final class Downloads {
           * @hide
           */
         public static final int STATUS_PAUSED_BY_MANUAL = 197;
-         
-        /**
-         * This download is paused by manual.
-         */
-        public static final int STATUS_PAUSED_BY_MANUAL = 197;
 
         /**
          * This download couldn't be completed due to insufficient storage
