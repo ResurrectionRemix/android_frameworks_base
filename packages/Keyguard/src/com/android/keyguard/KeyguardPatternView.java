@@ -50,7 +50,7 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
     private static final boolean DEBUG = false;
 
     // how long before we clear the wrong pattern
-    private static final int PATTERN_CLEAR_TIMEOUT_MS = 2000;
+    private static final int PATTERN_CLEAR_TIMEOUT_MS = 1000;
 
     // how long we stay awake after each key beyond MIN_PATTERN_BEFORE_POKE_WAKELOCK
     private static final int UNLOCK_PATTERN_WAKE_INTERVAL_MS = 7000;

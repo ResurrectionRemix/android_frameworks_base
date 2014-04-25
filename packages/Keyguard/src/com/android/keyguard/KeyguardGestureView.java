@@ -48,10 +48,10 @@ public class KeyguardGestureView extends LinearLayout implements KeyguardSecurit
     private static final boolean DEBUG = false;
 
     // how long before we clear the wrong gesture
-    private static final int GESTURE_CLEAR_TIMEOUT_MS = 2000;
+    private static final int GESTURE_CLEAR_TIMEOUT_MS = 1000;
 
     // how long we stay awake after touch events
-    private static final int UNLOCK_GESTURE_WAKE_INTERVAL_MS = 2000;
+    private static final int UNLOCK_GESTURE_WAKE_INTERVAL_MS = 3000;
 
     private int mFailedGestureAttemptsSinceLastTimeout = 0;
     private int mTotalFailedGestureAttempts = 0;
