@@ -21,6 +21,7 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -49,6 +50,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.systemui.R;
 import com.android.systemui.bliss.TriggerOverlayView;
@@ -436,7 +438,11 @@ public class AppSidebar extends TriggerOverlayView {
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setComponent(cn);
-        mContext.startActivity(intent);
+        try {
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(mContext, R.string.toast_not_installed, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private OnClickListener mItemClickedListener = new OnClickListener() {
