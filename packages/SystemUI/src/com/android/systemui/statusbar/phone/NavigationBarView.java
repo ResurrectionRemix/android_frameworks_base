@@ -517,7 +517,7 @@ public class NavigationBarView extends LinearLayout {
                 && mLockUtils.getCameraEnabled();
 
         setVisibleOrGone(getSearchLight(), showSearch && mModLockDisabled);
-        setVisibleOrGone(getCameraButton(), showCamera);
+        setVisibleOrGone(getCameraButton(), showCamera && mModLockDisabled);
 
         mBarTransitions.applyBackButtonQuiescentAlpha(mBarTransitions.getMode(), true /*animate*/);
     }
