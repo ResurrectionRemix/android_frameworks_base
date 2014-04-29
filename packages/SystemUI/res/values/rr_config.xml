@@ -27,4 +27,9 @@
     <!-- The min animation duration for animating the task bar out. -->
     <integer name="recents_animate_task_bar_exit_duration">125</integer>
 
+
+   <!-- configurable width dimension for the app sidebar trigger area -->
+   <dimen name="config_app_sidebar_trigger_width">8dip</dimen>
+
+
 </resources>

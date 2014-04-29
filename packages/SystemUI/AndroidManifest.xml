@@ -396,6 +396,21 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".statusbar.sidebar.SidebarConfigurationActivity"
+             android:label="@string/title_activity_sidebar_configuration"
+             android:taskAffinity=""
+             android:excludeFromRecents="true"
+             android:exported="true">
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+             </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".statusbar.sidebar.SidebarContentProvider"
+            android:authorities="org.chameleonos.sidebar.contentprovider" >
+        </provider>
+
         <activity
             android:name=".settings.BrightnessDialog"
             android:label="@string/quick_settings_brightness_dialog_title"
