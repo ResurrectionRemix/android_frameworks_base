@@ -83,20 +83,12 @@ public class WallpaperCropActivity extends Activity {
         }
     }
 
-<<<<<<< HEAD
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mCropView != null) {
             mCropView.destroy();
         }
-=======
-   @Override
-   protected void onDestroy(){
-        super.onDestroy();
-        mCropView.destroy();
->>>>>>> 8c6ba03... wallpapercropper: OOM issue while opening *.bmp image
-    }
 
     protected void init() {
         setContentView(R.layout.wallpaper_cropper);
