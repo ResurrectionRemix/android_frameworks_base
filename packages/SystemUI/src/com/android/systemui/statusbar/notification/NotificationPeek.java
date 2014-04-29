@@ -316,31 +316,31 @@ public class NotificationPeek implements SensorActivityHandler.SensorChangedCall
 
         // turn on screen task
         mHandler.postDelayed(new Runnable() {
-		    @Override
-		    public void run() {
+            @Override
+            public void run() {
                 if(DEBUG) Log.d(TAG, "Turning screen on");
                 mPowerManager.wakeUp(SystemClock.uptimeMillis());
-		    }
-	    }, SCREEN_ON_START_DELAY);
+            }
+        }, SCREEN_ON_START_DELAY);
 
         // turn off screen task
         mHandler.postDelayed(new Runnable() {
-		    @Override
-		    public void run() {
+            @Override
+            public void run() {
                 if(mShowing) {
                     if(DEBUG) Log.d(TAG, "Turning screen off");
                     mPowerManager.goToSleep(SystemClock.uptimeMillis());
                 }
-		    }
-	    }, SCREEN_ON_START_DELAY + NOTIFICATION_PEEK_TIME);
+            }
+        }, SCREEN_ON_START_DELAY + NOTIFICATION_PEEK_TIME);
 
         // remove view task (make sure screen is off by delaying a bit)
         mHandler.postDelayed(new Runnable() {
-		    @Override
-		    public void run() {
+            @Override
+            public void run() {
                 dismissNotification();
-		    }
-	    }, SCREEN_ON_START_DELAY + (NOTIFICATION_PEEK_TIME * (long) 1.3));
+            }
+        }, SCREEN_ON_START_DELAY + (NOTIFICATION_PEEK_TIME * (long) 1.3));
     }
 
     public void showNotification(StatusBarNotification n, boolean update) {
