@@ -315,7 +315,7 @@ static void SurfaceTexture_releaseTexImage(JNIEnv* env, jobject thiz)
         jniThrowException(env, IllegalStateException, "Unable to release texture contents (see "
                 "logcat for details)");
     } else if (err < 0) {
-        jniThrowRuntimeException(env, "Error during updateTexImage (see logcat for details)");
+        jniThrowRuntimeException(env, "Error during releaseTexImage (see logcat for details)");
     }
 }
 
