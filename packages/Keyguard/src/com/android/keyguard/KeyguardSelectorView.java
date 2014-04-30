@@ -350,6 +350,14 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
             mGlowPadView.setDirectionDescriptionsResourceId(R.array.lockscreen_direction_descriptions);
         } else {
             mStoredTargets = storedTargets.split("\\|");
+
+            // Temporarily hide all targets if bouncing a widget
+            if (mIsBouncing) {
+                for (int i = 0; i < mStoredTargets.length; i++) {
+                    mStoredTargets[i] = LockscreenTargetUtils.EMPTY_TARGET;
+                }
+            }
+
             ArrayList<TargetDrawable> storedDrawables = new ArrayList<TargetDrawable>();
 
             final Resources res = getResources();
@@ -539,6 +547,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
     @Override
     public void showBouncer(int duration) {
         mIsBouncing = true;
+        updateResources();
         KeyguardSecurityViewHelper.
                 showBouncer(mSecurityMessageDisplay, mFadeView, mBouncerFrame, duration);
     }
@@ -546,6 +555,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
     @Override
     public void hideBouncer(int duration) {
         mIsBouncing = false;
+        updateResources();
         KeyguardSecurityViewHelper.
                 hideBouncer(mSecurityMessageDisplay, mFadeView, mBouncerFrame, duration);
     }
