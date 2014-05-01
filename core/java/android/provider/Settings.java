@@ -4522,6 +4522,14 @@ public final class Settings {
          */
         public static final String VOICE_WAKEUP = "voice_wakeup";
 
+	/**
+         * Either if notification peek is enabled of disabled
+         * 0 = disabled (default)
+         * 1 = enabled
+         * @hide
+         */
+        public static final String PEEK_STATE = "peek_state";
+
         /**
          * An intent (a flattened Uri String) to launch when user voice launch
          * action is detected. An empty or null string will launch the default
