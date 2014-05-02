@@ -988,8 +988,8 @@ public class ActiveDisplayView extends FrameLayout
     }
 
     private boolean inQuietHours() {
-        boolean isQuietHourDim = QuietHoursHelper.inQuietHours(mContext, Settings.System.QUIET_HOURS_DIM);
-        boolean isQuietHourMute = QuietHoursHelper.inQuietHours(mContext, Settings.System.QUIET_HOURS_MUTE);
+        boolean isQuietHourDim = QuietHoursUtils.inQuietHours(mContext, Settings.System.QUIET_HOURS_DIM);
+        boolean isQuietHourMute = QuietHoursUtils.inQuietHours(mContext, Settings.System.QUIET_HOURS_MUTE);
         return isQuietHourDim || isQuietHourMute;
     }
 
