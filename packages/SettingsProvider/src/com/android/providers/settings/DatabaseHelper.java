@@ -2038,14 +2038,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+
     private void loadScreenAnimationStyle(SQLiteDatabase db) {
-         db.beginTransaction();
+        db.beginTransaction();
         SQLiteStatement stmt = null;
-       try {
+        try {
             stmt = db.compileStatement("INSERT OR REPLACE INTO system(name,value)"
                     + " VALUES(?,?);");
-            loadIntegerSetting(stmt, Settings.System.SYSTEM_POWER_CRT_MODE,
-                    R.integer.def_screen_power_crt_mode);
+            loadIntegerSetting(stmt, Settings.System.SCREEN_OFF_ANIMATION,
+                    R.integer.def_screen_animation_style);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
