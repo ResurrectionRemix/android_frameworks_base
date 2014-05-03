@@ -92,24 +92,8 @@ public class LteTile extends QuickSettingsTile {
     private void toggleLteState() {
         TelephonyManager tm = (TelephonyManager)
             mContext.getSystemService(Context.TELEPHONY_SERVICE);
-<<<<<<< HEAD
-        int network = getCurrentPreferredNetworkMode(mContext);
-        switch(network) {
-            case Phone.NT_MODE_GLOBAL:
-            case Phone.NT_MODE_LTE_CDMA_AND_EVDO:
-            case Phone.NT_MODE_LTE_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_CMDA_EVDO_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_ONLY:
-            case Phone.NT_MODE_LTE_WCDMA:
-                tm.toggleLTE(false);
-                break;
-            default:
-                tm.toggleLTE(true);
-                break;
-        }
-=======
+
         tm.toggleLTE(true);
->>>>>>> 6f651d2... QS: Add TD-SCDMA support to the LTE toggle tile
     }
 
     private static int getCurrentPreferredNetworkMode(Context context) {
