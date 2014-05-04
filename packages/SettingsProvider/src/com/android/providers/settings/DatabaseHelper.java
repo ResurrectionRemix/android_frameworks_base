@@ -1611,7 +1611,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             upgradeVersion = 99;
         }
-<<<<<<< HEAD
         
         if (upgradeVersion == 99) {
             if (mUserHandle == UserHandle.USER_OWNER) {
@@ -1620,7 +1619,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
              upgradeVersion = 100;
          }
          
-=======
 
         if (upgradeVersion == 99) {
             if (mUserHandle == UserHandle.USER_OWNER) {
@@ -1644,7 +1642,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             upgradeVersion = 101;
         }
 
->>>>>>> a8c8918... settingsprovider: Set default value of animator duration scale
         // *** Remember to update DATABASE_VERSION above!
 
         if (upgradeVersion != currentVersion) {
