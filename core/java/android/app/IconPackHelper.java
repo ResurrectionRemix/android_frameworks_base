@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.pm.PackageInfo;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -28,6 +27,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ThemeUtils;
 import android.content.res.AssetManager;
@@ -125,25 +125,14 @@ public class IconPackHelper {
     }
 
     public static Resources createIconResource(Context context, String packageName) throws NameNotFoundException {
-        PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
-        String themeApk = info.applicationInfo.publicSourceDir;
-
-        String prefixPath;
-        String iconApkPath;
-        String iconResPath;
-        if (info.isLegacyIconPackApk) {
-            iconResPath = "";
-            iconApkPath = "";
-            prefixPath = "";
-        } else {
-            prefixPath = ThemeUtils.ICONS_PATH; //path inside APK
-            iconApkPath = ThemeUtils.getIconPackApkPath(packageName);
-            iconResPath = ThemeUtils.getIconPackResPath(packageName);
-        }
+        ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, 0);
+        String themeApk = info.publicSourceDir;
 
         AssetManager assets = new AssetManager();
-        assets.addIconPath(themeApk, iconResPath, iconApkPath,
-                prefixPath, Resources.THEME_ICON_PKG_ID);
+        String prefixPath = ThemeUtils.ICONS_PATH; //path inside APK
+        String iconApkPath = ThemeUtils.getIconPackApkPath(packageName);
+        String iconResPath = ThemeUtils.getIconPackResPath(packageName); //ThemeUtils.getResDir(piTarget.packageName, piTheme);
+        int cookie = assets.addIconPath(themeApk, iconResPath, iconApkPath, prefixPath);
 
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         Configuration config = context.getResources().getConfiguration();
