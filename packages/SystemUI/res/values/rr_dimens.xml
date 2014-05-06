@@ -35,7 +35,10 @@
     <dimen name="ad_notification_margin">4dp</dimen>
 
     <!-- Active display overflow notification icon size -->
-    <dimen name="overflow_icon_size">28dp</dimen>
+    <dimen name="overflow_icon_size">32dp</dimen>
+
+    <!-- Active display overflow background notification icon size -->
+    <dimen name="overflow_background_icon_size">56dp</dimen>
 
     <!-- Active display Handle notification icon size -->
     <dimen name="handle_icon_size">42dp</dimen>
@@ -88,5 +91,8 @@
     <dimen name="notification_text_width">300dp</dimen>
     <dimen name="clock_padding">10dp</dimen>
     <dimen name="clock_size">15dp</dimen>
-    
+
+    <dimen name="notification_large_icon_width">64dp</dimen>
+    <dimen name="notification_large_icon_height">64dp</dimen>
+    <dimen name="notification_subtext_size">12dp</dimen>
 </resources>

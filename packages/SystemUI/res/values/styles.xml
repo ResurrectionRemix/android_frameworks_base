@@ -245,6 +245,11 @@
           <item name="android:windowContentOverlay">@null</item>
           <item name="android:background">@android:color/transparent</item>
       </style>
+
+    <style name="TextAppearance.StatusBar.Time" parent="@*android:style/TextAppearance.StatusBar">
+        <item name="android:textSize">@dimen/notification_subtext_size</item>
+        <item name="android:textColor">#999999</item>
+    </style>
       
     <style name="card.card_header_app_icon">
         <item name="android:layout_width">@dimen/recent_app_icon_size</item>

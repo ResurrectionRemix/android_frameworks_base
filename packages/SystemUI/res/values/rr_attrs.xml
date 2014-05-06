@@ -17,10 +17,6 @@
 -->
 
 <resources>
-    <declare-styleable name="BatteryIcon">
-        <attr name="batteryView" format="string" />
-    </declare-styleable>
-
     <declare-styleable name="RoundedImageView">
         <attr name="corner_radius" format="dimension" />
         <attr name="border_width" format="dimension" />
