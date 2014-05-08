@@ -509,9 +509,8 @@ static jint android_content_AssetManager_addAssetPath(JNIEnv* env, jobject clazz
 }
 
 static jint android_content_AssetManager_addIconPath(JNIEnv* env, jobject clazz,
-                                                     jstring packagePath, jstring resArscPath,
-                                                     jstring resApkPath, jstring prefixPath,
-                                                     jint pkgIdOverride)
+                                                     jstring packagePath, jstring resArscPath, jstring resApkPath,
+                                                     jstring prefixPath)
 {
     ScopedUtfChars packagePath8(env, packagePath);
     if (packagePath8.c_str() == NULL) {
@@ -539,10 +538,8 @@ static jint android_content_AssetManager_addIconPath(JNIEnv* env, jobject clazz,
     }
 
     void* cookie;
-    bool res = am->addIconPath(String8(packagePath8.c_str()), &cookie,
-                               String8(resArscPath8.c_str()),
-                               String8(resApkPath8.c_str()),
-                               String8(prefixPath8.c_str()), pkgIdOverride);
+    bool res = am->addIconPath(String8(packagePath8.c_str()), &cookie, String8(resArscPath8.c_str()),
+            String8(resApkPath8.c_str()), String8(prefixPath8.c_str()));
 
     return (res) ? (jint)cookie : 0;
 }
@@ -585,9 +582,8 @@ static jint android_content_AssetManager_addCommonOverlayPath(JNIEnv* env, jobje
 }
 
 static jint android_content_AssetManager_addOverlayPath(JNIEnv* env, jobject clazz,
-                                                     jstring packagePath, jstring resArscPath,
-                                                     jstring resApkPath, jstring targetPkgPath,
-                                                     jstring prefixPath)
+                                                     jstring packagePath, jstring resArscPath, jstring resApkPath,
+                                                     jstring targetPkgPath, jstring prefixPath)
 {
     ScopedUtfChars packagePath8(env, packagePath);
     if (packagePath8.c_str() == NULL) {
@@ -1897,7 +1893,7 @@ static JNINativeMethod gAssetManagerMethods[] = {
         (void*) android_content_AssetManager_getBasePackageName },
     { "getBasePackageId", "(I)I",
         (void*) android_content_AssetManager_getBasePackageId },
-    { "addIconPath",   "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)I",
+    { "addIconPath",   "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
         (void*) android_content_AssetManager_addIconPath },
     { "addCommonOverlayPath",   "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
         (void*) android_content_AssetManager_addCommonOverlayPath },
