@@ -601,6 +601,17 @@ public class WallpaperCropActivity extends Activity {
                         mCropBounds.bottom /= scaleDownSampleSize;
                         mCropBounds.right /= scaleDownSampleSize;
                         mCropBounds.roundOut(roundedTrueCrop);
+<<<<<<< HEAD
+                        if (roundedTrueCrop.right > mCropBounds.right) {
+                             roundedTrueCrop.set(roundedTrueCrop.left, roundedTrueCrop.top,
+                                     (int) mCropBounds.right, roundedTrueCrop.bottom);
+                         }
+                         if (roundedTrueCrop.bottom > mCropBounds.bottom) {
+                             roundedTrueCrop.set(roundedTrueCrop.left, roundedTrueCrop.top,
+                                     roundedTrueCrop.right, (int) mCropBounds.bottom);
+                         }
+=======
+>>>>>>> d5bcd2a... Add wallpaper pickers to seperate package [1/2]
 
                         crop = Bitmap.createBitmap(fullSize, roundedTrueCrop.left,
                                 roundedTrueCrop.top, roundedTrueCrop.width(),
