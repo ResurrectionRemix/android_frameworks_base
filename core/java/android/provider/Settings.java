@@ -3144,7 +3144,13 @@ public final class Settings {
          * @hide
          */
         public static final String TOAST_ANIMATION = "toast_animation";
-                
+ 
+        /**
+         * Display second in the Clock
+         * @hide
+         */
+        public static final String CLOCK_USE_SECOND = "clock_use_second";
+                        
        /**
         * Animate-flip Quick Settings Panel Tiles on click
         *
