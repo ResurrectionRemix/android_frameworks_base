@@ -35,16 +35,12 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -75,11 +71,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.android.internal.util.cm.TorchConstants;
-import com.android.internal.policy.IKeyguardShowCallback;
-import com.android.internal.widget.LockPatternUtils;
 
 import java.io.FileNotFoundException;
-import java.io.File;
 
 /**
  * Manages creating, showing, hiding and resetting the keyguard.  Calls back
@@ -114,7 +107,6 @@ public class KeyguardViewManager {
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
     private Drawable mCustomBackground = null;
-    private AudioManager mAudioManager;
 
     private boolean mUnlockKeyDown = false;
 
@@ -125,9 +117,6 @@ public class KeyguardViewManager {
     private int mBlurRadius = 12;
     private boolean mSeeThrough = false;
     private boolean mIsCoverflow = true;
-
-    private static final String WALLPAPER_IMAGE_PATH =
-            "/data/data/com.android.settings/files/lockscreen_wallpaper";
     private KeyguardUpdateMonitorCallback mBackgroundChanger = new KeyguardUpdateMonitorCallback() {
         @Override
          public void onSetBackground(Bitmap bmp) {
@@ -196,7 +185,6 @@ public class KeyguardViewManager {
         mViewManager = viewManager;
         mViewMediatorCallback = callback;
         mLockPatternUtils = lockPatternUtils;
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
 
          SettingsObserver observer = new SettingsObserver(new Handler());
@@ -336,38 +324,6 @@ public class KeyguardViewManager {
          }
          
         public void setCustomBackground(Drawable d) {
-            if (!mAudioManager.isMusicActive()) {
-
-                int mBackgroundStyle = Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.LOCKSCREEN_BACKGROUND_STYLE, 2);
-                int mBackgroundColor = Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.LOCKSCREEN_BACKGROUND_COLOR, 0x00000000);
-                switch (mBackgroundStyle) {
-	                    case 0:
-                        d = new ColorDrawable(mBackgroundColor);
-                        d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
-                        mCustomBackground = d;
-                        break;
-                    case 1:
-                        try {
-	                        Context settingsCtx = mContext.createPackageContext(
-			                          "com.android.settings", 0);
-                            String wallpaper = settingsCtx.getFilesDir() + "/lockwallpaper";
-                            Bitmap bitmap = BitmapFactory.decodeFile(wallpaper);
-	                        d = new BitmapDrawable(mContext.getResources(), bitmap);
-                            d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
-                        } catch (Exception e) {
-                        }
-                        break;
-                    case 2:
-                    default:
-                        mCustomBackground = d;
-                        break;
-                }
-                computeCustomBackgroundBounds(mCustomBackground);
-                setBackground(mBackgroundDrawable);
-            }
-            
 			if (!ActivityManager.isHighEndGfx() || !mScreenOn) {
                 mCustomBackground = d;
                 if (d != null) {
@@ -376,9 +332,6 @@ public class KeyguardViewManager {
                 computeCustomBackgroundBounds(mCustomBackground);
                 setBackground(mBackgroundDrawable);
             } else {
-                if (getWidth() == 0 || getHeight() == 0) {
-                    d = null;
-                }
                 Drawable old = mCustomBackground;
                 if (old == null && d == null) {
                     return;
@@ -407,16 +360,10 @@ public class KeyguardViewManager {
 
                 mTransitionBackground.startTransition(200);
 
-                mCustomBackground = dd;
-                invalidate();
-        }
-
-            if (d != null) {
-                d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
-              }
-            computeCustomBackgroundBounds(mCustomBackground);                
+                mCustomBackground = newIsNull ? null : dd;
+                
+            }
           invalidate();
-
         }
 
         private void computeCustomBackgroundBounds(Drawable background) {
