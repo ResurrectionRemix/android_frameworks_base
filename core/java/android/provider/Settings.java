@@ -3623,12 +3623,6 @@ public final class Settings {
          */
         public static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
 
-        /**
-         * Sets the lockscreen background style
-         * @hide
-         */
-        public static final String LOCKSCREEN_BACKGROUND = "lockscreen_background";
-
          /**
          * Action for long-pressing back button on lock screen
          * @hide
@@ -4100,18 +4094,6 @@ public final class Settings {
          */
         public static final String QUICK_TILES_BG_ALPHA = "quick_tiles_bg_alpha";
         
-        /**
-         * Sets the lockscreen background style
-         * @hide
-         */
-        public static final String LOCKSCREEN_BACKGROUND_STYLE = "lockscreen_background_style";
-
-        /**
-         * Color for lockscreen background when set to color fill
-         * @hide
-         */
-        public static final String LOCKSCREEN_BACKGROUND_COLOR = "lockscreen_background_color";
-
         /**
          * Volume key controls ringtone or media sound stream
          *

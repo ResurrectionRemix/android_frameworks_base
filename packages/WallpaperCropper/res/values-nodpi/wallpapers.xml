@@ -1,5 +1,6 @@
-/*
- * Copyright (C) 2008 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2009 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,25 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ -->
 
-package android.app;
-
-/**
- * Callback interface used by IWallpaperManager to send asynchronous 
- * notifications back to its clients.  Note that this is a
- * one-way interface so the server does not block waiting for the client.
- *
- * @hide
- */
-oneway interface IWallpaperManagerCallback {
-    /**
-     * Called when the wallpaper has changed
-     */
-    void onWallpaperChanged();
-
-    /**
-     * Called when the keygaurd wallpaper has changed
-     */
-     void onKeyguardWallpaperChanged();
-}
+<resources>
+    <string-array name="wallpapers" translatable="false">
+    </string-array>
+</resources>
