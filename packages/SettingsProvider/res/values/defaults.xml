@@ -95,7 +95,7 @@
 
     <!-- Default for Settings.Secure.ACCESSIBILITY_SPEAK_PASSWORD -->
     <bool name="def_accessibility_speak_password">false</bool>
-
+c65b0e61fb222e8ae1002f0af13ee110a1bb9b52
     <!-- Default for Settings.Secure.ACCESSIBILITY_WEB_CONTENT_KEY_BINDINGS -->
     <string name="def_accessibility_web_content_key_bindings" translatable="false">
             <!-- DPAD/Trackball UP - traverse previous on current axis and send an event. -->
@@ -206,4 +206,8 @@
 
     <!-- Default value of Settings.System.NOISE_SUPPRESSION -->
     <bool name="def_noise_suppression">false</bool>
+
+    <!-- Default theme -->
+    <string name="def_theme_package"></string>
+    <string name="def_theme_components"></string>
 </resources>
