@@ -273,7 +273,7 @@ public class Clock extends TextView implements DemoMode {
         
         if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_USE_SECOND, 0) == 1) {
             String temp = result;
-            result = String.format("%s:%02d", temp, new GregorianCalendar().get(Calendar.SECOND));
+            result = String.format("%s:%02d", temp, mCalendar.get(Calendar.SECOND));
         }
 
         if (mClockDateDisplay != CLOCK_DATE_DISPLAY_GONE) {
