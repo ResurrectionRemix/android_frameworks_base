@@ -2166,16 +2166,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 loadStringSetting(stmt, Settings.System.LOCKSCREEN_TARGETS,
                         R.string.def_lockscreen_targets_no_telephony);
             }
-<<<<<<< HEAD
-=======
-
-            loadIntegerSetting(stmt, Settings.System.DEV_FORCE_SHOW_NAVBAR,
-                    R.integer.def_force_disable_navkeys);
-
             loadIntegerSetting(stmt, Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
                     R.integer.def_double_tap_sleep_gesture);
 
->>>>>>> 1bb82a7... settings: Enable the status bar double-tap to sleep gesture
         } finally {
             if (stmt != null) stmt.close();
         }
