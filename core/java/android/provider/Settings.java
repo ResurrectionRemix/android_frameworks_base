@@ -6803,13 +6803,6 @@ public final class Settings {
                 "default_theme_applied_on_first_boot";
 
         /**
-         * Performance profile
-         * @see config_perf_profile_prop in frameworks/base/core/res/res/values/config.xml
-         * @hide
-         */
-        public static final String PERFORMANCE_PROFILE = "performance_profile";
-
-        /**
          * App-based performance profile selection
          * @hide
          */
