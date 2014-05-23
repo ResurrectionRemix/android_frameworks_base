@@ -4578,8 +4578,13 @@ public final class Settings {
          * @hide
          */
         public static final String VOICE_WAKEUP = "voice_wakeup";
-
-	/**
+        
+        /**
+         * Set the timeout of peek when pikcing up the device
+         * @hide
+         */
+        public static final String PEEK_PICKUP_TIMEOUT = "peek_pickup_timeout";
+	    /**
          * Either if notification peek is enabled of disabled
          * 0 = disabled (default)
          * 1 = enabled
@@ -4607,6 +4612,13 @@ public final class Settings {
          * @hide
          */
         public static final String WHITELIST_APP_CIRCLE_BAR = "whitelist_app_circle_bar";
+
+        /**
+         * Time to show notification
+         * 5000ms = default
+         * @hide
+         */
+        public static final String PEEK_WAKE_TIMEOUT = "peek_wake_timeout";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
