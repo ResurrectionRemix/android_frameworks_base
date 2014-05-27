@@ -358,7 +358,7 @@ public class KeyguardViewManager {
                 if (old == null && d == null && mUserBackground == null) {
                     return;
                 }
-                boolean newIsNull = false;
+                boolean newIsNull = mUserBackground == null;
                 if (old == null) {
                     old = new ColorDrawable(BACKGROUND_COLOR);
                     old.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
@@ -369,7 +369,6 @@ public class KeyguardViewManager {
                 // no user wallpaper set
                 if (d == null) {
                     d = new ColorDrawable(BACKGROUND_COLOR);
-                    newIsNull = true;
                 }
                 d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
                 computeCustomBackgroundBounds(d);
