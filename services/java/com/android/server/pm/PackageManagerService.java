@@ -5387,7 +5387,6 @@ public class PackageManagerService extends IPackageManager.Stub {
             // We must compile resources here because during the initial boot process we may get
             // here before a default theme has had a chance to compile its resources
             if (pkg.mOverlayTargets.isEmpty() && mOverlays.containsKey(pkg.packageName)) {
-<<<<<<< HEAD
                 HashMap<String, PackageParser.Package> themes = mOverlays.get(pkg.packageName);
                 for(PackageParser.Package themePkg : themes.values()) {
                     try {
@@ -5398,10 +5397,6 @@ public class PackageManagerService extends IPackageManager.Stub {
                         Log.e(TAG, "Unable to compile " + themePkg.packageName
                                 + " for target " + pkg.packageName, e);
                     }
-=======
-                if (!createIdmapsForPackageLI(pkg)) {
-                    Log.w(TAG, "Failed to create idmaps for " + pkg);
->>>>>>> a97b0d3... Avoid app install failures from malformed themes
                 }
             }
 
