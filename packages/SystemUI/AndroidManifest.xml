@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.DUMP" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
@@ -120,6 +121,12 @@
              TODO: Should have an android:permission attribute -->
         <service android:name=".screenshot.TakeScreenshotService"
             android:process=":screenshot"
+            android:exported="false" />
+
+        <!-- started from PhoneWindowManager
+             TODO: Should have an android:permission attribute -->
+        <service android:name=".nameless.onthego.OnTheGoService"
+            android:process=":onthego"
             android:exported="false" />
 
         <service android:name=".LoadAverageService"
@@ -324,6 +331,19 @@
                   android:excludeFromRecents="true"
                   android:exported="true"
                   android:theme="@style/Theme.DummyActivity">
+        </activity>
+
+        <activity
+            android:name="com.android.systemui.vanir.OnTheGoActivity"
+            android:label="@string/onthego_activity"
+            android:icon="@drawable/ic_onthego"
+            android:theme="@android:style/Theme.Holo.Panel"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="com.android.systemui.INTENT_ONTHEGO_TOGGLE" />
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
 
     </application>
