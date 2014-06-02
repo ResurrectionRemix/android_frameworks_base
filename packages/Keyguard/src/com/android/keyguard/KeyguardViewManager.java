@@ -353,6 +353,7 @@ public class KeyguardViewManager {
                     d = new ColorDrawable(BACKGROUND_COLOR);
                 }
                 d.setColorFilter(BACKGROUND_COLOR, PorterDuff.Mode.SRC_OVER);
+                mCustomBackground = d;
                 computeCustomBackgroundBounds(mCustomBackground);
                 setBackground(mBackgroundDrawable);
             } else {
