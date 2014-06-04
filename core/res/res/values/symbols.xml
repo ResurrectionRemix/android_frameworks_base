@@ -250,7 +250,8 @@
   <java-symbol type="attr" name="windowFixedHeightMajor" />
   <java-symbol type="attr" name="windowFixedHeightMinor" />
   <java-symbol type="attr" name="accessibilityFocusedDrawable"/>
-
+  <!-- HW Keys enable/disable -->
+  <java-symbol type="bool" name="config_hwKeysOnNavBar" />
   <java-symbol type="bool" name="action_bar_embed_tabs" />
   <java-symbol type="bool" name="action_bar_embed_tabs_pre_jb" />
   <java-symbol type="bool" name="action_bar_expanded_action_views_exclusive" />

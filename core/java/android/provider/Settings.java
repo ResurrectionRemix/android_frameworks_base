@@ -2083,12 +2083,6 @@ public final class Settings {
          * @hide
          */
         public static final String SAFE_HEADSET_VOLUME = "safe_headset_volume";
-        
-         /**
-          * Height of navigation bar buttons
-          * @hide
-          */
-         public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
 
        /**
          * Quick Settings Smart Pulldown
@@ -3126,7 +3120,24 @@ public final class Settings {
          * @hide
          */
         public static final String NAV_BUTTONS = "nav_buttons";
+	    /**
+         * Wether navigation bar is enabled or not
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_SHOW = "navigation_bar_show";
 
+	    /**
+         * Navigation bar height when it is on protrait
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
+
+        /**
+         * Navigation bar height when it is on landscape at the right
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_WIDTH = "navigation_bar_width";
+        
         /**
          * Whether navigation bar is placed on the left side in landscape mode
          *
@@ -4140,6 +4151,27 @@ public final class Settings {
             "navigation_ring_targets_2",
         };
 
+        /**
+         * Enable Menu key
+         *
+         * @hide
+         */
+        public static final String KEY_MENU_ENABLED = "key_menu_enabled";
+
+        /**
+         * Enable Back key
+         *
+         * @hide
+         */
+        public static final String KEY_BACK_ENABLED = "key_back_enabled";
+
+        /**
+         * Enable Home key
+         *
+         * @hide
+         */
+        public static final String KEY_HOME_ENABLED = "key_home_enabled";
+        
        /**
         * Sets the portrait background of notification drawer
         * @hide

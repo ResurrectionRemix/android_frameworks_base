@@ -54,7 +54,8 @@
          connected.  If you use the ims apn DCT will block
          any other apn from connecting until ims apn is connected-->
     <bool name="ImsConnectedDefaultValue">false</bool>
-
+    <!-- Enable or disable hardware keys when nav bar is up -->
+    <bool name="config_hwKeysOnNavBar">false</bool>
     <!-- Flag indicating whether the surface flinger is inefficient
          at performing a blur.  Used by parts of the UI to turn off
          the blur effect where it isn't worth the performance hit.
