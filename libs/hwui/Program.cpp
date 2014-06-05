@@ -164,7 +164,11 @@ GLuint Program::buildShader(const char* source, GLenum type) {
 
 void Program::set(const mat4& projectionMatrix, const mat4& modelViewMatrix,
         const mat4& transformMatrix, bool offset) {
+<<<<<<< HEAD
     if (offset != mProjectionOffset || projectionMatrix != mProjection) {
+=======
+    if (projectionMatrix != mProjection || offset != mOffset) {
+>>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
         if (CC_LIKELY(!offset)) {
             glUniformMatrix4fv(projection, 1, GL_FALSE, &projectionMatrix.data[0]);
         } else {
@@ -178,7 +182,11 @@ void Program::set(const mat4& projectionMatrix, const mat4& modelViewMatrix,
             glUniformMatrix4fv(projection, 1, GL_FALSE, &p.data[0]);
         }
         mProjection = projectionMatrix;
+<<<<<<< HEAD
         mProjectionOffset = offset;
+=======
+        mOffset = offset;
+>>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
     }
 
     mat4 t(transformMatrix);

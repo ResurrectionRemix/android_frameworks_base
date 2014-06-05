@@ -806,7 +806,6 @@ final class DisplayPowerController {
                         && mProximity == PROXIMITY_POSITIVE) {
                     mScreenOffBecauseOfProximity = true;
                     sendOnProximityPositiveWithWakelock();
-                    setScreenOn(false);
                 }
             } else if (mWaitingForNegativeProximity
                     && mScreenOffBecauseOfProximity
@@ -866,6 +865,7 @@ final class DisplayPowerController {
             mUsingScreenAutoBrightness = false;
         }
 
+<<<<<<< HEAD
         // Animate the screen on or off.
         if (!mScreenOffBecauseOfProximity) {
             if (wantScreenOn(mPowerRequest.screenState)) {
@@ -896,13 +896,48 @@ final class DisplayPowerController {
                                 } else {
                                     mElectronBeamOnAnimator.end();
                                 }
+=======
+        // Animate the screen on or off unless blocked.
+        if (mScreenOffBecauseOfProximity) {
+            // Screen off due to proximity.
+            setScreenOn(false);
+            unblockScreenOn();
+        } else if (wantScreenOn(mPowerRequest.screenState)) {
+            // Want screen on.
+            // Wait for previous off animation to complete beforehand.
+            // It is relatively short but if we cancel it and switch to the
+            // on animation immediately then the results are pretty ugly.
+            if (!mElectronBeamOffAnimator.isStarted()) {
+                // Turn the screen on.  The contents of the screen may not yet
+                // be visible if the electron beam has not been dismissed because
+                // its last frame of animation is solid black.
+                setScreenOn(true);
+
+                if (mPowerRequest.blockScreenOn
+                        && mPowerState.getElectronBeamLevel() == 0.0f) {
+                    blockScreenOn();
+                } else {
+                    unblockScreenOn();
+                    if (USE_ELECTRON_BEAM_ON_ANIMATION) {
+                        if (!mElectronBeamOnAnimator.isStarted()) {
+                            if (mPowerState.getElectronBeamLevel() == 1.0f) {
+                                mPowerState.dismissElectronBeam();
+                            } else if (mPowerState.prepareElectronBeam(
+                                    mElectronBeamFadesConfig() ?
+                                            ElectronBeam.MODE_FADE :
+                                                    ElectronBeam.MODE_WARM_UP)) {
+                                mElectronBeamOnAnimator.start();
+                            } else {
+                                mElectronBeamOnAnimator.end();
+>>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
                             }
-                        } else {
-                            mPowerState.setElectronBeamLevel(1.0f);
-                            mPowerState.dismissElectronBeam();
                         }
+                    } else {
+                        mPowerState.setElectronBeamLevel(1.0f);
+                        mPowerState.dismissElectronBeam();
                     }
                 }
+<<<<<<< HEAD
             } else {
                 // Want screen off.
                 // Wait for previous on animation to complete beforehand.
@@ -928,6 +963,25 @@ final class DisplayPowerController {
                         } else {
                             mElectronBeamOffAnimator.end();
                         }
+=======
+            }
+        } else {
+            // Want screen off.
+            // Wait for previous on animation to complete beforehand.
+            unblockScreenOn();
+            if (!mElectronBeamOnAnimator.isStarted()) {
+                if (!mElectronBeamOffAnimator.isStarted()) {
+                    if (mPowerState.getElectronBeamLevel() == 0.0f) {
+                        setScreenOn(false);
+                    } else if (mPowerState.prepareElectronBeam(
+                            mElectronBeamFadesConfig() ?
+                                    ElectronBeam.MODE_FADE :
+                                            ElectronBeam.MODE_COOL_DOWN)
+                            && mPowerState.isScreenOn()) {
+                        mElectronBeamOffAnimator.start();
+                    } else {
+                        mElectronBeamOffAnimator.end();
+>>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
                     }
                 }
             }
@@ -968,15 +1022,15 @@ final class DisplayPowerController {
     private void unblockScreenOn() {
         if (mScreenOnWasBlocked) {
             mScreenOnWasBlocked = false;
-            if (DEBUG) {
-                Slog.d(TAG, "Unblocked screen on after " +
-                        (SystemClock.elapsedRealtime() - mScreenOnBlockStartRealTime) + " ms");
+            long delay = SystemClock.elapsedRealtime() - mScreenOnBlockStartRealTime;
+            if (delay > 1000 || DEBUG) {
+                Slog.d(TAG, "Unblocked screen on after " + delay + " ms");
             }
         }
     }
 
     private void setScreenOn(boolean on) {
-        if (!mPowerState.isScreenOn() == on) {
+        if (mPowerState.isScreenOn() != on) {
             mPowerState.setScreenOn(on);
             if (on) {
                 mNotifier.onScreenOn();

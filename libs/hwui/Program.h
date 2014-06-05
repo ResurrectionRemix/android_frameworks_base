@@ -431,7 +431,11 @@ private:
     bool mHasSampler;
 
     mat4 mProjection;
+<<<<<<< HEAD
     bool mProjectionOffset;
+=======
+    bool mOffset;
+>>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
 }; // class Program
 
 }; // namespace uirenderer
