@@ -1296,23 +1296,8 @@ final class ActivityStack {
         if (prevTask != null && prevTask.mOnTopOfHome && prev.finishing && prev.frontOfTask) {
             if (DEBUG_STACK)  mStackSupervisor.validateTopActivitiesLocked();
             if (prevTask == nextTask) {
-<<<<<<< HEAD
-                ArrayList<ActivityRecord> activities = prevTask.mActivities;
-                final int numActivities = activities.size();
-                for (int activityNdx = 0; activityNdx < numActivities; ++activityNdx) {
-                    final ActivityRecord r = activities.get(activityNdx);
-                    // r is usually the same as next, but what if two activities were launched
-                    // before prev finished?
-                    if (!r.finishing) {
-                        r.frontOfTask = true;
-                        break;
-                    }
-                }
-            } else if (prevTask != topTask() && !prev.floatingWindow) {
-=======
                 prevTask.setFrontOfTask();
             } else if (prevTask != topTask()) {
->>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
                 // This task is going away but it was supposed to return to the home task.
                 // Now the task above it has to return to the home task instead.
                 final int taskNdx = mTaskHistory.indexOf(prevTask) + 1;

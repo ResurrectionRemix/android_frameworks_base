@@ -334,9 +334,6 @@ interface ITelephony {
      */
     void setCellInfoListRate(int rateInMillis);
 
-<<<<<<< HEAD
-    int getLteOnGsmMode();
-=======
     /**
      * Put a call on hold.
      */
@@ -381,8 +378,6 @@ interface ITelephony {
       void removeListener(ITelephonyListener listener);
 
       int getLteOnGsmMode();
-}
->>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
 
     /**
      * Toggle between 2G and 3G (NT_MODE_GSM, NT_MODE_WCDMA_PREF)

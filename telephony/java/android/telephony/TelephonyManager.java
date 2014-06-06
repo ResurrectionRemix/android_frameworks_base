@@ -27,12 +27,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.telephony.Rlog;
-<<<<<<< HEAD
-=======
-import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
->>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
 
 import com.android.internal.telephony.IPhoneSubInfo;
 import com.android.internal.telephony.ITelephony;
@@ -1530,16 +1525,7 @@ public class TelephonyManager {
         return mContext.getResources().getString(
                 com.android.internal.R.string.config_mms_user_agent_profile_url);
     }
-
-<<<<<<< HEAD
-    /**
-     * @hide
-     */
-    public void toggle2G(boolean twoGees) {
-        try {
-            getITelephony().toggle2G(twoGees);
-        } catch (RemoteException e) {
-=======
+    
     /** @hide */
     @PrivateApi
     public void dial(String number) {
@@ -1930,7 +1916,17 @@ public class TelephonyManager {
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling ITelephony#removeListener", e);
->>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
+        }
+    }
+    
+    /**
+     * @hide
+     */
+    public void toggle2G(boolean twoGees) {
+        try {
+            getITelephony().toggle2G(twoGees);
+        } catch (RemoteException e) {
+
         }
     }
 }

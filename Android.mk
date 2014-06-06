@@ -284,16 +284,9 @@ LOCAL_SRC_FILES += \
 	telephony/java/com/android/internal/telephony/IPhoneStateListener.aidl \
 	telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl \
 	telephony/java/com/android/internal/telephony/ITelephony.aidl \
-<<<<<<< HEAD
-	telephony/java/com/android/internal/telephony/ISms.aidl \
-	telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl \
-=======
-	telephony/java/com/android/internal/telephony/msim/ITelephonyMSim.aidl \
 	telephony/java/com/android/internal/telephony/ITelephonyListener.aidl \
-	telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl \
-	telephony/java/com/android/internal/telephony/ITelephonyRegistryMSim.aidl \
 	telephony/java/com/android/internal/telephony/ISms.aidl \
->>>>>>> 169a6c9... Merge tag '4.4.3_r1.1' into HEAD
+	telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl \
 	telephony/java/com/android/internal/telephony/IWapPushManager.aidl \
 	wifi/java/android/net/wifi/IWifiManager.aidl \
 	wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl \
