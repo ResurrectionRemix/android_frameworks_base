@@ -238,6 +238,7 @@ private:
     PathTexture* addTexture(const PathDescription& entry,
             const SkPath *path, const SkPaint* paint);
     PathTexture* addTexture(const PathDescription& entry, SkBitmap* bitmap);
+    PathTexture* addOneTimeTexture(const PathDescription& entry, const SkPath *path, const SkPaint* paint, SkBitmap* bitmap);
 
     /**
      * Generates the texture from a bitmap into the specified texture structure.

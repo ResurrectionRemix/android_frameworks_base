@@ -256,6 +256,22 @@ PathTexture* PathCache::addTexture(const PathDescription& entry, const SkPath *p
     return texture;
 }
 
+PathTexture* PathCache::addOneTimeTexture(const PathDescription& entry, const SkPath* path, const SkPaint* paint, SkBitmap* bitmap){
+    ATRACE_CALL();
+
+    float left, top, offset;
+    uint32_t width, height;
+    computePathBounds(path, paint, left, top, offset, width, height);
+
+    PathTexture* texture = createTexture(left, top, offset, width, height,
+            path->getGenerationID());
+
+    generateTexture(entry, bitmap, texture);
+
+    return texture;
+
+}
+
 void PathCache::generateTexture(const PathDescription& entry, SkBitmap* bitmap,
         PathTexture* texture, bool addToCache) {
     generateTexture(*bitmap, texture);
@@ -384,11 +400,17 @@ PathTexture* PathCache::get(const SkPath* path, const SkPaint* paint) {
         if (task != nullptr) {
             // But we must first wait for the worker thread to be done
             // producing the bitmap, so let's wait
+            uint32_t size = texture->width * texture-> height;
+            bool MaxSizeCheck = size < mMaxSize;
             SkBitmap* bitmap = task->getResult();
-            if (bitmap) {
+            if (bitmap && MaxSizeCheck) {
                 generateTexture(entry, bitmap, texture, false);
                 texture->clearTask();
-            } else {
+            } else if(bitmap && !MaxSizeCheck){
+                texture = addOneTimeTexture(entry, path, paint, bitmap);
+                mCache.remove(entry);
+            }
+              else {
                 ALOGW("Path too large to be rendered into a texture");
                 texture->clearTask();
                 texture = nullptr;
