@@ -1634,16 +1634,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     };
 
-    Runnable mBackLongPress = new Runnable() {
-        public void run() {
-            if (DevUtils.killForegroundApplication(mContext)) {
-                performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
-                Toast.makeText(mContext, R.string.app_killed_message, Toast.LENGTH_SHORT).show();
-                // Do nothing; just let it go.
-            }
-        }
-    };
-
     @Override
     public void showGlobalActions() {
         mHandler.removeMessages(MSG_DISPATCH_SHOW_GLOBAL_ACTIONS);
