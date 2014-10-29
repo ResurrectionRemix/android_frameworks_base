@@ -2926,12 +2926,12 @@ public class AudioService extends IAudioService.Stub {
             List<BluetoothDevice> deviceList;
             switch(profile) {
             case BluetoothProfile.A2DP:
+                synchronized (mConnectedDevices) {
                 synchronized (mA2dpAvrcpLock) {
                     mA2dp = (BluetoothA2dp) proxy;
                     deviceList = mA2dp.getConnectedDevices();
                     if (deviceList.size() > 0) {
                         btDevice = deviceList.get(0);
-                        synchronized (mConnectedDevices) {
                             int state = mA2dp.getConnectionState(btDevice);
                             int delay = checkSendBecomingNoisyIntent(
                                                 AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
@@ -3023,9 +3023,9 @@ public class AudioService extends IAudioService.Stub {
             Log.d(TAG, "onServiceDisconnected: Bluetooth profile: " + profile);
             switch(profile) {
             case BluetoothProfile.A2DP:
+                synchronized (mConnectedDevices) {
                 synchronized (mA2dpAvrcpLock) {
                     mA2dp = null;
-                    synchronized (mConnectedDevices) {
                         if (mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP)) {
                             Log.d(TAG, "A2dp service disconnects, pause music player");
                             BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
