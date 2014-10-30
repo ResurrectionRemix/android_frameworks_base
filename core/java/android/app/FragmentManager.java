@@ -1752,7 +1752,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
                 FragmentState fs = new FragmentState(f);
                 active[i] = fs;
                 
-                if (f.mState > Fragment.INITIALIZING && fs.mSavedFragmentState == null) {
+                if (f.mState > Fragment.INITIALIZING && (f.mSavedFragmentState == null || f.mView != null)) {
                     fs.mSavedFragmentState = saveFragmentBasicState(f);
 
                     if (f.mTarget != null) {
