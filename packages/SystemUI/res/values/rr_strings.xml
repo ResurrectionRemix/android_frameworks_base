@@ -21,5 +21,5 @@
     <string name="heads_up_snooze_button_title">Snooze heads up</string>
     <string name="notification_inspect_heads_up_title_enabled">Enable heads up for this application</string>
     <string name="notification_inspect_heads_up_title_disabled">Disable heads up for this application</string>
-    <string name="gestures_message">Draw your gesture here</string>
+    <string name="gestures_message">Draw gestures here</string>
 </resources>
