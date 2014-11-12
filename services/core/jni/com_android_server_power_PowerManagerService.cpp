@@ -208,6 +208,7 @@ static JNINativeMethod gPowerManagerServiceMethods[] = {
 int register_android_server_PowerManagerService(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/power/PowerManagerService",
             gPowerManagerServiceMethods, NELEM(gPowerManagerServiceMethods));
+    (void) res;  // Faked use when LOG_NDEBUG.
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 
     // Callbacks
