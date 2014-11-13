@@ -86,7 +86,7 @@ public class PlatLogoActivity extends Activity {
 
         im.setBackground(new RippleDrawable(
                 ColorStateList.valueOf(0xFFFFFFFF),
-                getDrawable(com.android.internal.R.drawable.platlogo),
+                getDrawable(com.android.internal.R.drawable.platlogo_rr),
                 null));
 //        im.setOutlineProvider(new ViewOutlineProvider() {
 //            @Override
