@@ -2991,7 +2991,13 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CLOCK = "status_bar_clock";
-
+        
+        /**
+         * Display second in the Clock
+         * @hide
+         */
+         
+        public static final String CLOCK_USE_SECOND = "clock_use_second";
         /**
          * AM/PM Style for clock options
          * 0 - Normal AM/PM
@@ -2999,6 +3005,7 @@ public final class Settings {
          * 2 - No AM/PM
          * @hide
          */
+         
         public static final String STATUSBAR_CLOCK_AM_PM_STYLE = "statusbar_clock_am_pm_style";
 
         /**

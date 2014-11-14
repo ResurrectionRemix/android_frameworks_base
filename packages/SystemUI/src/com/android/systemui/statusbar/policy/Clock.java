@@ -33,6 +33,7 @@ import android.text.format.DateFormat;
 import android.text.style.CharacterStyle;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
+import java.util.GregorianCalendar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -44,7 +45,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import libcore.icu.LocaleData;
 
 /**
@@ -120,7 +122,10 @@ public class Clock extends TextView implements DemoMode {
             updateSettings();
         }
     }
-
+    
+    private final Handler handler = new Handler();
+    TimerTask second;
+    
     public Clock(Context context) {
         this(context, null);
     }
@@ -260,6 +265,12 @@ public class Clock extends TextView implements DemoMode {
         CharSequence dateString = null;
 
         String result = sdf.format(mCalendar.getTime());
+        
+        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_USE_SECOND, 0) == 1) {
+            String temp = result;
+            result = String.format("%s:%02d", temp, mCalendar.get(Calendar.SECOND));
+
+        }
 
         if (mClockDateDisplay != CLOCK_DATE_DISPLAY_GONE) {
             Date now = new Date();
@@ -333,7 +344,25 @@ public class Clock extends TextView implements DemoMode {
                 UserHandle.USER_CURRENT);
         mAmPmStyle = is24hour ? AM_PM_STYLE_GONE : amPmStyle;
         mClockFormatString = "";
-
+        
+        second = new TimerTask()
+       {
+           @Override
+            public void run()
+             {
+                Runnable updater = new Runnable()
+                  {
+                   public void run()
+                   {
+                       updateClock();
+                   }
+                  };
+                handler.post(updater);
+             }
+        };
+        Timer timer = new Timer();
+        timer.schedule(second, 0, 1001);
+        
         mClockStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUSBAR_CLOCK_STYLE, STYLE_CLOCK_RIGHT,
                 UserHandle.USER_CURRENT);
