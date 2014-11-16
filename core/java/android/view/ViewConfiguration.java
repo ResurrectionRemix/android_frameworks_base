@@ -61,6 +61,7 @@ public class ViewConfiguration {
      * Defines the default duration in milliseconds before a press turns into
      * a long press
      */
+
     private static final int DEFAULT_LONG_PRESS_TIMEOUT = 500;
 
     /**
@@ -73,6 +74,7 @@ public class ViewConfiguration {
      * appropriate button to bring up the global actions dialog (power off,
      * lock screen, etc).
      */
+
     private static final int GLOBAL_ACTIONS_KEY_TIMEOUT = 500;
 
     /**
@@ -87,6 +89,7 @@ public class ViewConfiguration {
      * is a jump tap. If the user does not complete the jump tap within this interval, it is
      * considered to be a tap.
      */
+
     private static final int JUMP_TAP_TIMEOUT = 500;
 
     /**
@@ -121,11 +124,14 @@ public class ViewConfiguration {
      * Defines the duration in milliseconds we want to display zoom controls in response
      * to a user panning within an application.
      */
+
     private static final int ZOOM_CONTROLS_TIMEOUT = 3000;
+
 
     /**
      * Inset in dips to look for touchable content when the user touches the edge of the screen
      */
+
     private static final int EDGE_SLOP = 12;
 
     /**
@@ -180,7 +186,8 @@ public class ViewConfiguration {
     /**
      * Maximum velocity to initiate a fling, as measured in dips per second
      */
-    private static final int MAXIMUM_FLING_VELOCITY = 8000;
+
+    private static final int MAXIMUM_FLING_VELOCITY = 15000;
 
     /**
      * Delay before dispatching a recurring accessibility event in milliseconds.
@@ -200,7 +207,9 @@ public class ViewConfiguration {
     /**
      * The coefficient of friction applied to flings/scrolls.
      */
+
     private static final float SCROLL_FRICTION = 0.015f;
+
 
     /**
      * Max distance in dips to overscroll for edge effects
