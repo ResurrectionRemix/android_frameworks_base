@@ -26,18 +26,11 @@
         android:scaleType="fitXY"
         android:src="@drawable/recents_status_gradient" />
 
-    <LinearLayout
+    <com.android.systemui.recents.views.RecentsView
+        android:id="@+id/recents_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
-
-        <!-- Recents View -->
-        <com.android.systemui.recents.views.RecentsView
-            android:id="@+id/recents_view"
-            android:layout_width="match_parent" 
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:focusable="true" />
+        android:focusable="true" />
 
     <include layout="@layout/recents_membar" />
 

@@ -42,8 +42,12 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowManagerGlobal;
 import android.widget.FrameLayout;
+<<<<<<< HEAD
 import android.widget.ProgressBar;
 import android.widget.TextView;
+=======
+import android.widget.LinearLayout;
+>>>>>>> b584417... Fix - place Clear Recents button above the nav bar
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.R;
@@ -381,6 +385,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         Rect taskStackBounds = new Rect();
         mConfig.getAvailableTaskStackBounds(width, height, mConfig.systemInsets.top,
                 mConfig.systemInsets.right, searchBarSpaceBounds, taskStackBounds);
+
 
         if (mFloatingButton != null && showClearAllRecents) {
             int clearRecentsLocation = Settings.System.getInt(resolver,
