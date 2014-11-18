@@ -229,6 +229,8 @@ public final class ShutdownThread extends Thread {
         if (confirm) {
             final CloseDialogReceiver closer = new CloseDialogReceiver(context);
             final boolean advancedReboot = isAdvancedRebootPossible(context);
+            final boolean instant = Settings.Secure.getInt(context.getContentResolver(),
+                    Settings.Secure.ADVANCED_REBOOT_ONECLICK, 0) == 1;
             final Context uiContext = getUiContext(context);
 
             if (sConfirmDialog != null) {
@@ -245,42 +247,34 @@ public final class ShutdownThread extends Thread {
             if (!advancedReboot || mRebootSafeMode) {
                 confirmDialogBuilder.setMessage(resourceId);
             } else {
-                confirmDialogBuilder
-                      .setSingleChoiceItems(com.android.internal.R.array.shutdown_reboot_options,
-                              0, null);
+                if (instant) {
+                    confirmDialogBuilder.setItems(
+                            com.android.internal.R.array.shutdown_reboot_options,
+                            new DialogInterface.OnClickListener() {
+                                @Override public void onClick(DialogInterface dialog, int which) {
+                                    handleDialog(context, which, advancedReboot);
+                                }
+                            });
+                } else {
+                    confirmDialogBuilder.setSingleChoiceItems(
+                            com.android.internal.R.array.shutdown_reboot_options, 0, null);
+                }
             }
 
-            confirmDialogBuilder.setPositiveButton(com.android.internal.R.string.yes,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (!mRebootSafeMode && advancedReboot) {
-                                boolean softReboot = false;
-                                ListView reasonsList = ((AlertDialog)dialog).getListView();
-                                int selected = reasonsList.getCheckedItemPosition();
-                                if (selected != ListView.INVALID_POSITION) {
-                                    String actions[] = context.getResources().getStringArray(
-                                            com.android.internal.R.array.shutdown_reboot_actions);
-                                    if (actions[selected].equals(SYSTEMUI_REBOOT)) {
-                                        mRebootReason = actions[selected];
-                                        doSystemUIReboot();
-                                        return;
-                                    } else if (selected >= 0 && selected < actions.length) {
-                                        mRebootReason = actions[selected];
-                                        if (actions[selected].equals(SOFT_REBOOT)) {
-                                            doSoftReboot();
-                                            return;
-                                        }
-                                    }
-                                }
-
-                                mReboot = true;
+            if (!instant) {
+                confirmDialogBuilder.setPositiveButton(com.android.internal.R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ListView reasonsList = ((AlertDialog) dialog).getListView();
+                                final int selected = reasonsList.getCheckedItemPosition();
+                                handleDialog(context, selected, advancedReboot);
                             }
-                            beginShutdownSequence(context);
-                      }
-                  });
+                        });
 
-            confirmDialogBuilder.setNegativeButton(com.android.internal.R.string.no, null);
+                confirmDialogBuilder.setNegativeButton(com.android.internal.R.string.no, null);
+            }
+
             sConfirmDialog = confirmDialogBuilder.create();
 
             closer.dialog = sConfirmDialog;
@@ -370,6 +364,26 @@ public final class ShutdownThread extends Thread {
         double dDim = mRebootDialogDim / 100.0;
         float dim = (float) dDim;
         return dim;
+    }
+
+    private static void handleDialog(Context context, int selected, boolean advancedReboot) {
+        if (advancedReboot) {
+
+            if (selected != ListView.INVALID_POSITION) {
+                String actions[] = context.getResources().getStringArray(
+                        com.android.internal.R.array.shutdown_reboot_actions);
+                if (selected >= 0 && selected < actions.length) {
+                    mRebootReason = actions[selected];
+                    if (actions[selected].equals(SOFT_REBOOT)) {
+                        doSoftReboot();
+                        return;
+                    }
+                }
+            }
+
+            mReboot = true;
+        }
+        beginShutdownSequence(context);
     }
 
     private static void doSoftReboot() {

@@ -8541,6 +8541,13 @@ public final class Settings {
         public static final String STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD = "status_bar_locked_on_secure_keyguard";
 
         /**
+         * Whether the reboot submenu at the power menu should trigger actions with a
+         * single click or with a confirmation.
+         * @hide
+         */
+        public static final String ADVANCED_REBOOT_ONECLICK = "advanced_reboot_oneclick";
+
+        /**
          * @hide
          */
         public static final String NAVIGATION_BAR_HEIGHT_LANDSCAPE = "navigation_bar_height_landscape";
