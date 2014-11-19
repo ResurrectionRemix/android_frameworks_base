@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 /* Copyright (c) 2013, The Linux Foundation. All rights reserved.
 ** Not a Contribution.
@@ -276,14 +276,11 @@
 
     <!-- If the mobile hotspot feature requires provisioning, a package name and class name
         can be provided to launch a supported application that provisions the devices.
-
         Example Usage:
-
         String[] appDetails = getStringArray(R.array.config_mobile_hotspot_provision_app);
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName(appDetails[0], appDetails[1]);
         startActivityForResult(intent, 0);
-
         public void onActivityResult(int requestCode, int resultCode, Intent intent) {
             super.onActivityResult(requestCode, resultCode, intent);
             if (requestCode == 0) {
@@ -293,7 +290,6 @@
                     //Mobile hotspot provisioning failed
                 }
             }
-
         See src/com/android/settings/TetherSettings.java for more details.
         -->
     <!-- The first element is the package name and the second element is the class name
@@ -835,22 +831,18 @@
     <!-- Array of light sensor LUX values to define our levels for auto backlight brightness support.
          The N entries of this array define N + 1 control points as follows:
          (1-based arrays)
-
          Point 1:            (0, value[1]):             lux <= 0
          Point 2:     (level[1], value[2]):  0        < lux <= level[1]
          Point 3:     (level[2], value[3]):  level[2] < lux <= level[3]
          ...
          Point N+1: (level[N], value[N+1]):  level[N] < lux
-
          The control points must be strictly increasing.  Each control point
          corresponds to an entry in the brightness backlight values arrays.
          For example, if LUX == level[1] (first element of the levels array)
          then the brightness will be determined by value[2] (second element
          of the brightness values array).
-
          Spline interpolation is used to determine the auto-brightness
          backlight values for LUX levels between these control points.
-
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
     </integer-array>
@@ -1079,7 +1071,6 @@
          allowed to display the in-call UI while a cellular voice call is
          active.  This can be overridden to false for "data only" devices
          which can't make voice calls and don't support any in-call UI.
-
          Note: this flag is subtly different from the
          PackageManager.FEATURE_TELEPHONY system feature, which is
          available on *any* device with a telephony radio, even if the
@@ -1091,7 +1082,6 @@
          receiving sms via the telephony network.
          This can be overridden to false for "data only" devices
          which can't send and receive sms message.
-
          Note: Disable SMS also disable voicemail waiting sms,
                cell broadcasting sms, and MMS. -->
     <bool name="config_sms_capable">true</bool>
@@ -1338,7 +1328,6 @@
          When true, the system will allow the user to configure dreams (screensavers)
          to launch when a user activity timeout occurs or the system is told to nap.
          When false, the dreams feature will be disabled (this does not affect dozing).
-
          Consider setting this resource to false or disabling dreams by default when a
          doze component is specified below since dreaming will supercede dozing and
          will prevent the system from entering a low power state until the dream ends. -->
@@ -1372,7 +1361,6 @@
          to put the display into a low power state and allow the application processor
          to be suspended.  When the dream ends, the system will go to sleep as usual.
          Specify the component name or an empty string if none.
-
          Note that doze dreams are not subject to the same start conditions as ordinary dreams.
          Doze dreams will run whenever the power manager is in a dozing state. -->
     <string name="config_dozeComponent"></string>
@@ -1383,81 +1371,65 @@
 
     <!-- Power Management: Specifies whether to decouple the auto-suspend state of the
          device from the display on/off state.
-
          When false, autosuspend_disable() will be called before the display is turned on
          and autosuspend_enable() will be called after the display is turned off.
          This mode provides best compatibility for devices using legacy power management
          features such as early suspend / late resume.
-
          When true, autosuspend_display() and autosuspend_enable() will be called
          independently of whether the display is being turned on or off.  This mode
          enables the power manager to suspend the application processor while the
          display is on.
-
          This resource should be set to "true" when a doze component has been specified
          to maximize power savings but not all devices support it.
-
          Refer to autosuspend.h for details.
     -->
     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
 
     <!-- Power Management: Specifies whether to decouple the interactive state of the
          device from the display on/off state.
-
          When false, setInteractive(..., true) will be called before the display is turned on
          and setInteractive(..., false) will be called after the display is turned off.
          This mode provides best compatibility for devices that expect the interactive
          state to be tied to the display state.
-
          When true, setInteractive(...) will be called independently of whether the display
          is being turned on or off.  This mode enables the power manager to reduce
          clocks and disable the touch controller while the display is on.
-
          This resource should be set to "true" when a doze component has been specified
          to maximize power savings but not all devices support it.
-
          Refer to power.h for details.
     -->
     <bool name="config_powerDecoupleInteractiveModeFromDisplay">false</bool>
 
     <!-- User activity timeout: Minimum screen off timeout in milliseconds.
-
          Sets a lower bound for the {@link Settings.System#SCREEN_OFF_TIMEOUT} setting
          which determines how soon the device will go to sleep when there is no
          user activity.
-
          This value must be greater than zero, otherwise the device will immediately
          fall asleep again as soon as it is awoken.
     -->
     <integer name="config_minimumScreenOffTimeout">10000</integer>
 
     <!-- User activity timeout: Maximum screen dim duration in milliseconds.
-
          Sets an upper bound for how long the screen will dim before the device goes
          to sleep when there is no user activity.  The dim duration is subtracted from
          the overall screen off timeout to determine the screen dim timeout.
          When the screen dim timeout expires, the screen will dim, shortly thereafter
          the device will go to sleep.
-
          If the screen off timeout is very short, the dim duration may be reduced
          proportionally.  See config_maximumScreenDimRatio.
-
          This value may be zero in which case the screen will not dim before the
          device goes to sleep.
     -->
     <integer name="config_maximumScreenDimDuration">7000</integer>
 
     <!-- User activity timeout: Maximum screen dim duration as a percentage of screen off timeout.
-
          This resource is similar to config_maximumScreenDimDuration but the maximum
          screen dim duration is defined as a ratio of the overall screen off timeout
          instead of as an absolute value in milliseconds.  This is useful for reducing
          the dim duration when the screen off timeout is very short.
-
          When computing the screen dim duration, the power manager uses the lesser
          of the effective durations expressed by config_maximumScreenDimDuration and
          config_maximumScreenDimRatio.
-
          This value must be between 0% and 100%.  If the value is zero, the screen will not
          dim before the device goes to sleep.
     -->
@@ -1509,7 +1481,6 @@
     <!-- Minimum span needed to begin a touch scaling gesture.
          If the span is equal to or greater than this size, a scaling gesture
          will begin, where supported. (See android.view.ScaleGestureDetector)
-
          This also takes into account the size of any active touch points.
          Devices with screens that deviate too far from their assigned density
          bucket should consider tuning this value in a device-specific overlay.
@@ -1574,11 +1545,9 @@
          in gralloc protected buffers.  For this to be true, there must exist
          a protected hardware path for surface flinger to composite and send
          protected buffers to the wifi display video encoder.
-
          If this flag is false, we advise applications not to use protected
          buffers (if possible) when presenting content to a wifi display because
          the content may be blanked.
-
          This flag controls whether the {@link Display#FLAG_SUPPORTS_PROTECTED_BUFFERS}
          flag is set for wifi displays.
     -->
@@ -1942,6 +1911,7 @@
     <bool name="config_switch_phone_on_voice_reg_state_change">true</bool>
 
     <bool name="config_sms_force_7bit_encoding">false</bool>
+
     <!-- Configuartion to support 7bit Ascii encoding and decoding
          for long messages. -->
     <bool name="config_ascii_7bit_support_for_long_message">false</bool>
@@ -2109,7 +2079,7 @@
 
     <!-- Timeout in MS for how long you have to long-press the back key to
          kill the foreground app. -->
-    <integer name="config_backKillTimeout">1500</integer>
+    <integer name="config_backKillTimeout">2000</integer>
 
     <!-- Setting to false will disable CM's IME switcher implementation for tablets -->
     <bool name="config_show_cmIMESwitcher">true</bool>
@@ -2117,4 +2087,20 @@
     <!-- Support for disabling to fetch APN from OMH card
          for some cdma carriers -->
     <bool name="config_fetch_apn_from_omh_card">true</bool>
+
+    <!-- This config is used to check if the carrier requires converting destination
+         number before sending out a SMS.
+         Formats for this configuration as below:
+         [true or false][;optional gid]
+         The logic to pick up the configuration:
+         (1) If the "config_sms_convert_destination_number_support" array has no gid
+             special item, the last one will be picked
+         (2) If the "config_sms_convert_destination_number_support" array has gid special
+             item and it matches the current sim's gid, it will be picked.
+         (3) If the "config_sms_convert_destination_number_support" array has gid special
+             item but it doesn't match the current sim's gid, the last one without gid
+             will be picked -->
+    <string-array translatable="false" name="config_sms_convert_destination_number_support">
+        <item>false</item>
+    </string-array>
 </resources>

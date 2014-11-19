@@ -50,11 +50,17 @@
         <item>"*86:+1MDN,"</item>
     </string-array>
 
+<<<<<<< HEAD
     <!-- Configuration that determines if ACTIVATE_REJECT_GGSN is to be
          treated as a permanent error -->
     <bool name="config_reject_ggsn_perm_failure">false</bool>
     <!-- Configuration that determines if PROTOCOL_ERRORS is to be treated as
          a permamnent error -->
     <bool name="config_protocol_errors_perm_failure">false</bool>
+=======
+    <string-array translatable="false" name="config_sms_convert_destination_number_support">
+        <item>true</item>
+    </string-array>
+>>>>>>> 9e3db14... Add configuration to control converting sms destination number
 
 </resources>
