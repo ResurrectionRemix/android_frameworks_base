@@ -26,7 +26,7 @@ import junit.framework.TestCase;
  * Test for AsyncChannel.
  */
 public class AsyncChannelTest extends TestCase {
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private static final boolean WAIT_FOR_DEBUGGER = false;
     private static final String TAG = "AsyncChannelTest";
 
