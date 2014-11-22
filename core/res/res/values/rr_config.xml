@@ -30,7 +30,4 @@
     <!-- Wether doze feature is enabled by default in settings. -->
     <bool name="config_doze_enabled_by_default">true</bool>
 
-    <!-- kill app long press back -->
-    <integer name="config_backKillTimeout">1000</integer>
-
 </resources>
