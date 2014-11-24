@@ -154,7 +154,7 @@ class DragState {
             Slog.e(WindowManagerService.TAG, "Unregister of nonexistent drag input channel");
         } else {
             mService.mInputManager.unregisterInputChannel(mServerChannel);
-            mInputEventReceiver.dispose();
+            mInputEventReceiver.requestDispose();
             mInputEventReceiver = null;
             mClientChannel.dispose();
             mServerChannel.dispose();

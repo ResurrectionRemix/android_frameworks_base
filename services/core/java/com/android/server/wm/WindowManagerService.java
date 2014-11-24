@@ -717,6 +717,8 @@ public class WindowManagerService extends IWindowManager.Stub
 
     private WindowContentFrameStats mTempWindowRenderStats;
 
+    private boolean mDragStateDisposed;
+
     final class DragInputEventReceiver extends InputEventReceiver {
         // Set, if stylus button was down at the start of the drag.
         private boolean mStylusButtonDownAtStart;
@@ -727,12 +729,26 @@ public class WindowManagerService extends IWindowManager.Stub
             super(inputChannel, looper);
         }
 
+        public void requestDispose() {
+            mDragStateDisposed = true;
+            if (mH.getLooper().isCurrentThread()) {
+                dispose();
+            } else {
+                mH.post(new Runnable() {
+                    public void run() {
+                        dispose();
+                    }
+                });
+            }
+        }
+
         @Override
         public void onInputEvent(InputEvent event) {
             boolean handled = false;
             try {
                 if (event instanceof MotionEvent
                         && (event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0
+                        && !mDragStateDisposed
                         && mDragState != null) {
                     final MotionEvent motionEvent = (MotionEvent)event;
                     boolean endDrag = false;
