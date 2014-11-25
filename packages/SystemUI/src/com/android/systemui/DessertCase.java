@@ -23,6 +23,11 @@ import android.util.Slog;
 
 public class DessertCase extends Activity {
     DessertCaseView mView;
+    private final Runnable mRunnable = new Runnable() {
+        public void run() {
+            DessertCase.this.mView.start();
+        }
+    };
 
     @Override
     public void onStart() {
@@ -49,16 +54,13 @@ public class DessertCase extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        mView.postDelayed(new Runnable() {
-            public void run() {
-                mView.start();
-            }
-        }, 1000);
+        mView.postDelayed(mRunnable, 1000);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        mView.removeCallbacks(mRunnable);
         mView.stop();
     }
 }

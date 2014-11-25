@@ -21,6 +21,11 @@ import android.service.dreams.DreamService;
 public class DessertCaseDream extends DreamService {
     private DessertCaseView mView;
     private DessertCaseView.RescalingContainer mContainer;
+    private final Runnable mRunnable = new Runnable() {
+        public void run() {
+            DessertCaseDream.this.mView.start();
+        }
+    };
 
     @Override
     public void onAttachedToWindow() {
@@ -39,16 +44,13 @@ public class DessertCaseDream extends DreamService {
     @Override
     public void onDreamingStarted() {
         super.onDreamingStarted();
-        mView.postDelayed(new Runnable() {
-            public void run() {
-                mView.start();
-            }
-        }, 1000);
+        mView.postDelayed(mRunnable, 1000);
     }
 
     @Override
     public void onDreamingStopped() {
         super.onDreamingStopped();
+        mView.removeCallbacks(mRunnable);
         mView.stop();
     }
 }
