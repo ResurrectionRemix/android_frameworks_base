@@ -48,6 +48,7 @@ public class BatteryMeterDrawableBase extends Drawable {
     // Values for the different battery styles
     public static final int BATTERY_STYLE_PORTRAIT = 0;
     public static final int BATTERY_STYLE_CIRCLE = 1;
+    public static final int BATTERY_STYLE_TEXT = 2;
 
     protected final Context mContext;
     protected final Paint mFramePaint;
