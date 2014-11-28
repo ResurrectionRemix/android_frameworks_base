@@ -49,12 +49,6 @@ public class DeleteScreenshot extends BroadcastReceiver {
         NotificationManager notificationManager =
                 (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(GlobalScreenshot.SCREENSHOT_NOTIFICATION_ID);
-<<<<<<< HEAD
-=======
-
-        Toast.makeText(context, R.string.screenshot_delete_confirmation, Toast.LENGTH_SHORT).show();
-    }
->>>>>>> 120aed0... Show confirmation for deleted screenshot.
 
         Toast.makeText(context, R.string.screenshot_delete_confirmation, Toast.LENGTH_SHORT).show();
     }
