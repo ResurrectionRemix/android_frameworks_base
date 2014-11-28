@@ -739,10 +739,7 @@ public final class BatteryService extends SystemService {
                 Slog.w(TAG, "updateLightsLocked: mBatteryProps is null; skipping");
                 return;
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> a66b14b... BatteryService: fix FC on boot until battery stat is present
             final int level = mBatteryProps.batteryLevel;
             final int status = mBatteryProps.batteryStatus;
             if (!mLightEnabled) {
