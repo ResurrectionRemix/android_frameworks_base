@@ -25,6 +25,7 @@ commonSources := \
     ObbFile.cpp \
     ResourceTypes.cpp \
     StreamingZipInflater.cpp \
+    TypeWrappers.cpp \
     ZipFileRO.cpp \
     ZipUtils.cpp
 
@@ -53,7 +54,7 @@ LOCAL_CFLAGS += -DSTATIC_ANDROIDFW_FOR_TOOLS
 LOCAL_C_INCLUDES := \
 	external/zlib
 
-LOCAL_STATIC_LIBRARIES := liblog
+LOCAL_STATIC_LIBRARIES := liblog libziparchive-host libutils
 
 include $(BUILD_HOST_STATIC_LIBRARY)
 
@@ -72,9 +73,11 @@ LOCAL_SHARED_LIBRARIES := \
 	libutils \
 	libz
 
+LOCAL_STATIC_LIBRARIES := libziparchive
+
 LOCAL_C_INCLUDES := \
-    external/icu4c/common \
-	external/zlib
+    external/zlib \
+    system/core/include
 
 LOCAL_MODULE:= libandroidfw
 

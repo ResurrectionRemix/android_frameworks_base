@@ -19,18 +19,27 @@ package android.net.http;
 import com.android.org.conscrypt.SSLParametersImpl;
 import com.android.org.conscrypt.TrustManagerImpl;
 
+import android.util.Slog;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.security.GeneralSecurityException;
-import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import javax.net.ssl.DefaultHostnameVerifier;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 /**
@@ -39,28 +48,54 @@ import javax.net.ssl.X509TrustManager;
  * {@hide}
  */
 public class CertificateChainValidator {
+    private static final String TAG = "CertificateChainValidator";
 
-    /**
-     * The singleton instance of the certificate chain validator
-     */
-    private static final CertificateChainValidator sInstance
-            = new CertificateChainValidator();
+    private static class NoPreloadHolder {
+        /**
+         * The singleton instance of the certificate chain validator.
+         */
+        private static final CertificateChainValidator sInstance = new CertificateChainValidator();
 
-    private static final DefaultHostnameVerifier sVerifier
-            = new DefaultHostnameVerifier();
+        /**
+         * The singleton instance of the hostname verifier.
+         */
+        private static final HostnameVerifier sVerifier = HttpsURLConnection
+                .getDefaultHostnameVerifier();
+    }
+
+    private X509TrustManager mTrustManager;
 
     /**
      * @return The singleton instance of the certificates chain validator
      */
     public static CertificateChainValidator getInstance() {
-        return sInstance;
+        return NoPreloadHolder.sInstance;
     }
 
     /**
      * Creates a new certificate chain validator. This is a private constructor.
      * If you need a Certificate chain validator, call getInstance().
      */
-    private CertificateChainValidator() {}
+    private CertificateChainValidator() {
+        try {
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("X.509");
+            tmf.init((KeyStore) null);
+            for (TrustManager tm : tmf.getTrustManagers()) {
+                if (tm instanceof X509TrustManager) {
+                    mTrustManager = (X509TrustManager) tm;
+                }
+            }
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("X.509 TrustManagerFactory must be available", e);
+        } catch (KeyStoreException e) {
+            throw new RuntimeException("X.509 TrustManagerFactory cannot be initialized", e);
+        }
+
+        if (mTrustManager == null) {
+            throw new RuntimeException(
+                    "None of the X.509 TrustManagers are X509TrustManager");
+        }
+    }
 
     /**
      * Performs the handshake and server certificates validation
@@ -136,14 +171,31 @@ public class CertificateChainValidator {
      * Handles updates to credential storage.
      */
     public static void handleTrustStorageUpdate() {
-
+        TrustManagerFactory tmf;
         try {
-            X509TrustManager x509TrustManager = SSLParametersImpl.getDefaultTrustManager();
-            if( x509TrustManager instanceof TrustManagerImpl ) {
-                TrustManagerImpl trustManager = (TrustManagerImpl) x509TrustManager;
-                trustManager.handleTrustStorageUpdate();
+            tmf = TrustManagerFactory.getInstance("X.509");
+            tmf.init((KeyStore) null);
+        } catch (NoSuchAlgorithmException e) {
+            Slog.w(TAG, "Couldn't find default X.509 TrustManagerFactory");
+            return;
+        } catch (KeyStoreException e) {
+            Slog.w(TAG, "Couldn't initialize default X.509 TrustManagerFactory", e);
+            return;
+        }
+
+        TrustManager[] tms = tmf.getTrustManagers();
+        boolean sentUpdate = false;
+        for (TrustManager tm : tms) {
+            try {
+                Method updateMethod = tm.getClass().getDeclaredMethod("handleTrustStorageUpdate");
+                updateMethod.setAccessible(true);
+                updateMethod.invoke(tm);
+                sentUpdate = true;
+            } catch (Exception e) {
             }
-        } catch (KeyManagementException ignored) {
+        }
+        if (!sentUpdate) {
+            Slog.w(TAG, "Didn't find a TrustManager to handle CA list update");
         }
     }
 
@@ -166,7 +218,8 @@ public class CertificateChainValidator {
 
         boolean valid = domain != null
                 && !domain.isEmpty()
-                && sVerifier.verify(domain, currCertificate);
+                && NoPreloadHolder.sVerifier.verify(domain,
+                        new DelegatingSSLSession.CertificateWrap(currCertificate));
         if (!valid) {
             if (HttpLog.LOGV) {
                 HttpLog.v("certificate not for this host: " + domain);
@@ -175,7 +228,7 @@ public class CertificateChainValidator {
         }
 
         try {
-            X509TrustManager x509TrustManager = SSLParametersImpl.getDefaultTrustManager();
+            X509TrustManager x509TrustManager = SSLParametersImpl.getDefaultX509TrustManager();
             if (x509TrustManager instanceof TrustManagerImpl) {
                 TrustManagerImpl trustManager = (TrustManagerImpl) x509TrustManager;
                 trustManager.checkServerTrusted(chain, authType, domain);
@@ -192,6 +245,12 @@ public class CertificateChainValidator {
         }
     }
 
+    /**
+     * Returns the platform default {@link X509TrustManager}.
+     */
+    private X509TrustManager getTrustManager() {
+        return mTrustManager;
+    }
 
     private void closeSocketThrowException(
             SSLSocket socket, String errorMessage, String defaultErrorMessage)

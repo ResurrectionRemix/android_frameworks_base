@@ -37,7 +37,6 @@ package android.bluetooth;
  */
 
 interface IQBluetoothAdapterCallback {
-    void onScanResult(in String address, in int rssi, in byte[] advData);
     void onWriteRssiThreshold(in String address, in int status);
     void onReadRssiThreshold(in String address, in int low, in int upper,
                              in int alert, in int status);

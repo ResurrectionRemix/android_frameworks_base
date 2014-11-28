@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +16,21 @@
 
 package android.content.res;
 
+import com.android.internal.util.XmlUtils;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
+
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
-import android.util.Log;
-import android.os.SystemProperties;
-import android.text.TextUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -75,11 +80,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * resource qualifier.
      */
     public Locale locale;
-
-    /**
-     * @hide
-     */
-    public CustomTheme customTheme;
 
     /**
      * Locale should persist on setting.  This is hidden because it is really
@@ -412,73 +412,12 @@ public final class Configuration implements Parcelable, Comparable<Configuration
     public static final int ORIENTATION_LANDSCAPE = 2;
     /** @deprecated Not currently supported or used. */
     @Deprecated public static final int ORIENTATION_SQUARE = 3;
-
-
-    /**
-     * @hide
-     */
-    public static final int THEME_UNDEFINED = 0;
-
-    /**
-     * @hide
-     */
-    public static final String THEME_PACKAGE_NAME_PERSISTENCE_PROPERTY = "persist.sys.themePackageName";
-
-    /**
-     * @hide
-     */
-    public static final String THEME_SYSTEMUI_PACKAGE_NAME_PERSISTENCE_PROPERTY = "persist.sys.themeSysUiPkgName";
-
-    /**
-     * @hide
-     */
-    public static final String THEME_ICONPACK_PACKAGE_NAME_PERSISTENCE_PROPERTY = "themeIconPackPkgName";
-
-    /**
-     * @hide
-     */
-    public static final String THEME_FONT_PACKAGE_NAME_PERSISTENCE_PROPERTY = "themeFontPackPkgName";
-
+    
     /**
      * Overall orientation of the screen.  May be one of
      * {@link #ORIENTATION_LANDSCAPE}, {@link #ORIENTATION_PORTRAIT}.
      */
     public int orientation;
-
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * inverted framework
-     * resource qualifier.
-     * value indicating that no mode has been set.
-    */
-    public static final int UI_INVERTED_MODE_UNDEFINED = 0;
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * inverted framework
-     * resource qualifier.
-    */
-    public static final int UI_INVERTED_MODE_NORMAL = 1;
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * inverted framework
-     * resource qualifier.
-    */
-    public static final int UI_INVERTED_MODE_YES = 2;
-    /** Constant for {@link #uiInvertedMode}
-     * value that corresponds to the
-     * none inverted framework
-     * resource qualifier.
-    */
-    public static final int UI_INVERTED_MODE_NO = 3;
-
-    /**
-     * Bit for the ui inverted mode.
-     * This may be one of {@link #UI_INVERTED_MODE_UNDEFINED},
-     * {@link #UI_INVERTED_MODE_NORMAL},
-     * {@link #UI_INVERTED_MODE_YES}, {@link #UI_INVERTED_MODE_NO},
-     */
-    public int uiInvertedMode;
-
 
     /** Constant for {@link #uiMode}: bits that encode the mode type. */
     public static final int UI_MODE_TYPE_MASK = 0x0f;
@@ -510,6 +449,11 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * <a href="{@docRoot}guide/topics/resources/providing-resources.html#UiModeQualifier">appliance</a>
      * resource qualifier. */
     public static final int UI_MODE_TYPE_APPLIANCE = 0x05;
+    /** Constant for {@link #uiMode}: a {@link #UI_MODE_TYPE_MASK}
+     * value that corresponds to the
+     * <a href="{@docRoot}guide/topics/resources/providing-resources.html#UiModeQualifier">watch</a>
+     * resource qualifier. */
+    public static final int UI_MODE_TYPE_WATCH = 0x06;
 
     /** Constant for {@link #uiMode}: bits that encode the night mode. */
     public static final int UI_MODE_NIGHT_MASK = 0x30;
@@ -533,7 +477,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * device. They may be one of {@link #UI_MODE_TYPE_UNDEFINED},
      * {@link #UI_MODE_TYPE_NORMAL}, {@link #UI_MODE_TYPE_DESK},
      * {@link #UI_MODE_TYPE_CAR}, {@link #UI_MODE_TYPE_TELEVISION},
-     * {@link #UI_MODE_TYPE_APPLIANCE}
+     * {@link #UI_MODE_TYPE_APPLIANCE}, or {@link #UI_MODE_TYPE_WATCH}.
      *
      * <p>The {@link #UI_MODE_NIGHT_MASK} defines whether the screen
      * is in a special mode. They may be one of {@link #UI_MODE_NIGHT_UNDEFINED},
@@ -595,6 +539,18 @@ public final class Configuration implements Parcelable, Comparable<Configuration
     public static final int DENSITY_DPI_UNDEFINED = 0;
 
     /**
+     * Value for {@link #densityDpi} for resources that scale to any density (vector drawables).
+     * {@hide}
+     */
+    public static final int DENSITY_DPI_ANY = 0xfffe;
+
+    /**
+     * Value for {@link #densityDpi} for resources that are not meant to be scaled.
+     * {@hide}
+     */
+    public static final int DENSITY_DPI_NONE = 0xffff;
+
+    /**
      * The target screen density being rendered to,
      * corresponding to
      * <a href="{@docRoot}guide/topics/resources/providing-resources.html#DensityQualifier">density</a>
@@ -640,9 +596,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
     public static final int NATIVE_CONFIG_VERSION = 0x0400;
     /** @hide Native-specific bit mask for SCREEN_LAYOUT config; DO NOT USE UNLESS YOU ARE SURE. */
     public static final int NATIVE_CONFIG_SCREEN_LAYOUT = 0x0800;
-    /** @hide Native-specific bit mask for UI_INVERTED_MODE config; DO NOT USE UNLESS YOU
-     * ARE SURE. */
-    public static final int NATIVE_CONFIG_UI_INVERTED_MODE = 0x8000;
     /** @hide Native-specific bit mask for UI_MODE config; DO NOT USE UNLESS YOU ARE SURE. */
     public static final int NATIVE_CONFIG_UI_MODE = 0x1000;
     /** @hide Native-specific bit mask for SMALLEST_SCREEN_SIZE config; DO NOT USE UNLESS YOU
@@ -682,7 +635,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         navigationHidden = o.navigationHidden;
         orientation = o.orientation;
         screenLayout = o.screenLayout;
-        uiInvertedMode = o.uiInvertedMode;
         uiMode = o.uiMode;
         screenWidthDp = o.screenWidthDp;
         screenHeightDp = o.screenHeightDp;
@@ -692,11 +644,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         compatScreenHeightDp = o.compatScreenHeightDp;
         compatSmallestScreenWidthDp = o.compatSmallestScreenWidthDp;
         seq = o.seq;
-        if (o.customTheme != null) {
-            customTheme = (CustomTheme) o.customTheme.clone();
-        }
     }
-
+    
     public String toString() {
         StringBuilder sb = new StringBuilder(128);
         sb.append("{");
@@ -770,13 +719,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
             case ORIENTATION_PORTRAIT: sb.append(" port"); break;
             default: sb.append(" orien="); sb.append(orientation); break;
         }
-        switch (uiInvertedMode) {
-            case UI_INVERTED_MODE_UNDEFINED: sb.append(" ?uiInvertedmode"); break;
-            case UI_INVERTED_MODE_NORMAL: break;
-            case UI_INVERTED_MODE_YES: sb.append(" inverted"); break;
-            case UI_INVERTED_MODE_NO: sb.append(" notinverted"); break;
-            default: sb.append(" uiInvertedmode="); sb.append(uiInvertedMode); break;
-        }
         switch ((uiMode&UI_MODE_TYPE_MASK)) {
             case UI_MODE_TYPE_UNDEFINED: sb.append(" ?uimode"); break;
             case UI_MODE_TYPE_NORMAL: /* normal is not interesting to print */ break;
@@ -784,6 +726,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
             case UI_MODE_TYPE_CAR: sb.append(" car"); break;
             case UI_MODE_TYPE_TELEVISION: sb.append(" television"); break;
             case UI_MODE_TYPE_APPLIANCE: sb.append(" appliance"); break;
+            case UI_MODE_TYPE_WATCH: sb.append(" watch"); break;
             default: sb.append(" uimode="); sb.append(uiMode&UI_MODE_TYPE_MASK); break;
         }
         switch ((uiMode&UI_MODE_NIGHT_MASK)) {
@@ -837,8 +780,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
             sb.append(" s.");
             sb.append(seq);
         }
-        sb.append(" themeResource=");
-        sb.append(customTheme);
         sb.append('}');
         return sb.toString();
     }
@@ -859,14 +800,12 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         navigationHidden = NAVIGATIONHIDDEN_UNDEFINED;
         orientation = ORIENTATION_UNDEFINED;
         screenLayout = SCREENLAYOUT_UNDEFINED;
-        uiInvertedMode = UI_INVERTED_MODE_UNDEFINED;
         uiMode = UI_MODE_TYPE_UNDEFINED;
         screenWidthDp = compatScreenWidthDp = SCREEN_WIDTH_DP_UNDEFINED;
         screenHeightDp = compatScreenHeightDp = SCREEN_HEIGHT_DP_UNDEFINED;
         smallestScreenWidthDp = compatSmallestScreenWidthDp = SMALLEST_SCREEN_WIDTH_DP_UNDEFINED;
         densityDpi = DENSITY_DPI_UNDEFINED;
         seq = 0;
-        customTheme = null;
     }
 
     /** {@hide} */
@@ -965,11 +904,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                 screenLayout = delta.screenLayout;
             }
         }
-        if (delta.uiInvertedMode != UI_INVERTED_MODE_UNDEFINED
-                && uiInvertedMode != delta.uiInvertedMode) {
-            changed |= ActivityInfo.CONFIG_UI_INVERTED_MODE;
-            uiInvertedMode = delta.uiInvertedMode;
-        }
         if (delta.uiMode != (UI_MODE_TYPE_UNDEFINED|UI_MODE_NIGHT_UNDEFINED)
                 && uiMode != delta.uiMode) {
             changed |= ActivityInfo.CONFIG_UI_MODE;
@@ -1014,13 +948,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         if (delta.seq != 0) {
             seq = delta.seq;
         }
-
-        if (delta.customTheme != null
-                && (customTheme == null || !customTheme.equals(delta.customTheme))) {
-            changed |= ActivityInfo.CONFIG_THEME_RESOURCE;
-            customTheme = (CustomTheme)delta.customTheme.clone();
-        }
-
+        
         return changed;
     }
 
@@ -1110,10 +1038,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                     getScreenLayoutNoDirection(delta.screenLayout)) {
             changed |= ActivityInfo.CONFIG_SCREEN_LAYOUT;
         }
-        if (delta.uiInvertedMode != UI_INVERTED_MODE_UNDEFINED
-                && uiInvertedMode != delta.uiInvertedMode) {
-            changed |= ActivityInfo.CONFIG_UI_INVERTED_MODE;
-        }
         if (delta.uiMode != (UI_MODE_TYPE_UNDEFINED|UI_MODE_NIGHT_UNDEFINED)
                 && uiMode != delta.uiMode) {
             changed |= ActivityInfo.CONFIG_UI_MODE;
@@ -1134,10 +1058,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                 && densityDpi != delta.densityDpi) {
             changed |= ActivityInfo.CONFIG_DENSITY;
         }
-        if (delta.customTheme != null &&
-                (customTheme == null || !customTheme.equals(delta.customTheme))) {
-            changed |= ActivityInfo.CONFIG_THEME_RESOURCE;
-        }
+
         return changed;
     }
 
@@ -1153,9 +1074,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * @return Return true if the resource needs to be loaded, else false.
      */
     public static boolean needNewResources(int configChanges, int interestingChanges) {
-        return (configChanges & (interestingChanges |
-                ActivityInfo.CONFIG_FONT_SCALE |
-                ActivityInfo.CONFIG_THEME_RESOURCE)) != 0;
+        return (configChanges & (interestingChanges|ActivityInfo.CONFIG_FONT_SCALE)) != 0;
     }
 
     /**
@@ -1219,7 +1138,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         dest.writeInt(navigationHidden);
         dest.writeInt(orientation);
         dest.writeInt(screenLayout);
-        dest.writeInt(uiInvertedMode);
         dest.writeInt(uiMode);
         dest.writeInt(screenWidthDp);
         dest.writeInt(screenHeightDp);
@@ -1229,7 +1147,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         dest.writeInt(compatScreenHeightDp);
         dest.writeInt(compatSmallestScreenWidthDp);
         dest.writeInt(seq);
-        dest.writeParcelable(customTheme, flags);
     }
 
     public void readFromParcel(Parcel source) {
@@ -1249,7 +1166,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         navigationHidden = source.readInt();
         orientation = source.readInt();
         screenLayout = source.readInt();
-        uiInvertedMode = source.readInt();
         uiMode = source.readInt();
         screenWidthDp = source.readInt();
         screenHeightDp = source.readInt();
@@ -1259,7 +1175,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         compatScreenHeightDp = source.readInt();
         compatSmallestScreenWidthDp = source.readInt();
         seq = source.readInt();
-        customTheme = source.readParcelable(CustomTheme.class.getClassLoader());
     }
     
     public static final Parcelable.Creator<Configuration> CREATOR
@@ -1318,8 +1233,6 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         if (n != 0) return n;
         n = this.screenLayout - that.screenLayout;
         if (n != 0) return n;
-        n = this.uiInvertedMode - that.uiInvertedMode;
-        if (n != 0) return n;
         n = this.uiMode - that.uiMode;
         if (n != 0) return n;
         n = this.screenWidthDp - that.screenWidthDp;
@@ -1329,12 +1242,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         n = this.smallestScreenWidthDp - that.smallestScreenWidthDp;
         if (n != 0) return n;
         n = this.densityDpi - that.densityDpi;
-        if (n != 0) return n;
-        if (this.customTheme == null) {
-            if (that.customTheme != null) return 1;
-        } else {
-            n = this.customTheme.compareTo(that.customTheme);
-        }
+        //if (n != 0) return n;
         return n;
     }
 
@@ -1366,14 +1274,11 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         result = 31 * result + navigationHidden;
         result = 31 * result + orientation;
         result = 31 * result + screenLayout;
-        result = 31 * result + uiInvertedMode;
         result = 31 * result + uiMode;
         result = 31 * result + screenWidthDp;
         result = 31 * result + screenHeightDp;
         result = 31 * result + smallestScreenWidthDp;
         result = 31 * result + densityDpi;
-        result = 31 * result + (this.customTheme != null ?
-                                  this.customTheme.hashCode() : 0);
         return result;
     }
 
@@ -1421,5 +1326,475 @@ public final class Configuration implements Parcelable, Comparable<Configuration
 
     private static int getScreenLayoutNoDirection(int screenLayout) {
         return screenLayout&~SCREENLAYOUT_LAYOUTDIR_MASK;
+    }
+
+    /**
+     *
+     * @hide
+     */
+    public static String localeToResourceQualifier(Locale locale) {
+        StringBuilder sb = new StringBuilder();
+        boolean l = (locale.getLanguage().length() != 0);
+        boolean c = (locale.getCountry().length() != 0);
+        boolean s = (locale.getScript().length() != 0);
+        boolean v = (locale.getVariant().length() != 0);
+
+        if (l) {
+            sb.append(locale.getLanguage());
+            if (c) {
+                sb.append("-r").append(locale.getCountry());
+                if (s) {
+                    sb.append("-s").append(locale.getScript());
+                    if (v) {
+                        sb.append("-v").append(locale.getVariant());
+                    }
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
+    /**
+     * Returns a string representation of the configuration that can be parsed
+     * by build tools (like AAPT).
+     *
+     * @hide
+     */
+    public static String resourceQualifierString(Configuration config) {
+        ArrayList<String> parts = new ArrayList<String>();
+
+        if (config.mcc != 0) {
+            parts.add(config.mcc + "mcc");
+            if (config.mnc != 0) {
+                parts.add(config.mnc + "mnc");
+            }
+        }
+
+        if (!config.locale.getLanguage().isEmpty()) {
+            parts.add(localeToResourceQualifier(config.locale));
+        }
+
+        switch (config.screenLayout & Configuration.SCREENLAYOUT_LAYOUTDIR_MASK) {
+            case Configuration.SCREENLAYOUT_LAYOUTDIR_LTR:
+                parts.add("ldltr");
+                break;
+            case Configuration.SCREENLAYOUT_LAYOUTDIR_RTL:
+                parts.add("ldrtl");
+                break;
+            default:
+                break;
+        }
+
+        if (config.smallestScreenWidthDp != 0) {
+            parts.add("sw" + config.smallestScreenWidthDp + "dp");
+        }
+
+        if (config.screenWidthDp != 0) {
+            parts.add("w" + config.screenWidthDp + "dp");
+        }
+
+        if (config.screenHeightDp != 0) {
+            parts.add("h" + config.screenHeightDp + "dp");
+        }
+
+        switch (config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) {
+            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                parts.add("small");
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                parts.add("normal");
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                parts.add("large");
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+                parts.add("xlarge");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.screenLayout & Configuration.SCREENLAYOUT_LONG_MASK) {
+            case Configuration.SCREENLAYOUT_LONG_YES:
+                parts.add("long");
+                break;
+            case Configuration.SCREENLAYOUT_LONG_NO:
+                parts.add("notlong");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE:
+                parts.add("land");
+                break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                parts.add("port");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.uiMode & Configuration.UI_MODE_TYPE_MASK) {
+            case Configuration.UI_MODE_TYPE_APPLIANCE:
+                parts.add("appliance");
+                break;
+            case Configuration.UI_MODE_TYPE_DESK:
+                parts.add("desk");
+                break;
+            case Configuration.UI_MODE_TYPE_TELEVISION:
+                parts.add("television");
+                break;
+            case Configuration.UI_MODE_TYPE_CAR:
+                parts.add("car");
+                break;
+            case Configuration.UI_MODE_TYPE_WATCH:
+                parts.add("watch");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                parts.add("night");
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                parts.add("notnight");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.densityDpi) {
+            case DENSITY_DPI_UNDEFINED:
+                break;
+            case 120:
+                parts.add("ldpi");
+                break;
+            case 160:
+                parts.add("mdpi");
+                break;
+            case 213:
+                parts.add("tvdpi");
+                break;
+            case 240:
+                parts.add("hdpi");
+                break;
+            case 320:
+                parts.add("xhdpi");
+                break;
+            case 480:
+                parts.add("xxhdpi");
+                break;
+            case 640:
+                parts.add("xxxhdpi");
+                break;
+            case DENSITY_DPI_ANY:
+                parts.add("anydpi");
+                break;
+            case DENSITY_DPI_NONE:
+                parts.add("nodpi");
+            default:
+                parts.add(config.densityDpi + "dpi");
+                break;
+        }
+
+        switch (config.touchscreen) {
+            case Configuration.TOUCHSCREEN_NOTOUCH:
+                parts.add("notouch");
+                break;
+            case Configuration.TOUCHSCREEN_FINGER:
+                parts.add("finger");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.keyboardHidden) {
+            case Configuration.KEYBOARDHIDDEN_NO:
+                parts.add("keysexposed");
+                break;
+            case Configuration.KEYBOARDHIDDEN_YES:
+                parts.add("keyshidden");
+                break;
+            case Configuration.KEYBOARDHIDDEN_SOFT:
+                parts.add("keyssoft");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.keyboard) {
+            case Configuration.KEYBOARD_NOKEYS:
+                parts.add("nokeys");
+                break;
+            case Configuration.KEYBOARD_QWERTY:
+                parts.add("qwerty");
+                break;
+            case Configuration.KEYBOARD_12KEY:
+                parts.add("12key");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.navigationHidden) {
+            case Configuration.NAVIGATIONHIDDEN_NO:
+                parts.add("navexposed");
+                break;
+            case Configuration.NAVIGATIONHIDDEN_YES:
+                parts.add("navhidden");
+                break;
+            default:
+                break;
+        }
+
+        switch (config.navigation) {
+            case Configuration.NAVIGATION_NONAV:
+                parts.add("nonav");
+                break;
+            case Configuration.NAVIGATION_DPAD:
+                parts.add("dpad");
+                break;
+            case Configuration.NAVIGATION_TRACKBALL:
+                parts.add("trackball");
+                break;
+            case Configuration.NAVIGATION_WHEEL:
+                parts.add("wheel");
+                break;
+            default:
+                break;
+        }
+
+        parts.add("v" + Build.VERSION.RESOURCES_SDK_INT);
+        return TextUtils.join("-", parts);
+    }
+
+    /**
+     * Generate a delta Configuration between <code>base</code> and <code>change</code>. The
+     * resulting delta can be used with {@link #updateFrom(Configuration)}.
+     * <p />
+     * Caveat: If the any of the Configuration's members becomes undefined, then
+     * {@link #updateFrom(Configuration)} will treat it as a no-op and not update that member.
+     *
+     * This is fine for device configurations as no member is ever undefined.
+     * {@hide}
+     */
+    public static Configuration generateDelta(Configuration base, Configuration change) {
+        final Configuration delta = new Configuration();
+        if (base.fontScale != change.fontScale) {
+            delta.fontScale = change.fontScale;
+        }
+
+        if (base.mcc != change.mcc) {
+            delta.mcc = change.mcc;
+        }
+
+        if (base.mnc != change.mnc) {
+            delta.mnc = change.mnc;
+        }
+
+        if ((base.locale == null && change.locale != null) ||
+                (base.locale != null && !base.locale.equals(change.locale)))  {
+            delta.locale = change.locale;
+        }
+
+        if (base.touchscreen != change.touchscreen) {
+            delta.touchscreen = change.touchscreen;
+        }
+
+        if (base.keyboard != change.keyboard) {
+            delta.keyboard = change.keyboard;
+        }
+
+        if (base.keyboardHidden != change.keyboardHidden) {
+            delta.keyboardHidden = change.keyboardHidden;
+        }
+
+        if (base.navigation != change.navigation) {
+            delta.navigation = change.navigation;
+        }
+
+        if (base.navigationHidden != change.navigationHidden) {
+            delta.navigationHidden = change.navigationHidden;
+        }
+
+        if (base.orientation != change.orientation) {
+            delta.orientation = change.orientation;
+        }
+
+        if ((base.screenLayout & SCREENLAYOUT_SIZE_MASK) !=
+                (change.screenLayout & SCREENLAYOUT_SIZE_MASK)) {
+            delta.screenLayout |= change.screenLayout & SCREENLAYOUT_SIZE_MASK;
+        }
+
+        if ((base.screenLayout & SCREENLAYOUT_LAYOUTDIR_MASK) !=
+                (change.screenLayout & SCREENLAYOUT_LAYOUTDIR_MASK)) {
+            delta.screenLayout |= change.screenLayout & SCREENLAYOUT_LAYOUTDIR_MASK;
+        }
+
+        if ((base.screenLayout & SCREENLAYOUT_LONG_MASK) !=
+                (change.screenLayout & SCREENLAYOUT_LONG_MASK)) {
+            delta.screenLayout |= change.screenLayout & SCREENLAYOUT_LONG_MASK;
+        }
+
+        if ((base.uiMode & UI_MODE_TYPE_MASK) != (change.uiMode & UI_MODE_TYPE_MASK)) {
+            delta.uiMode |= change.uiMode & UI_MODE_TYPE_MASK;
+        }
+
+        if ((base.uiMode & UI_MODE_NIGHT_MASK) != (change.uiMode & UI_MODE_NIGHT_MASK)) {
+            delta.uiMode |= change.uiMode & UI_MODE_NIGHT_MASK;
+        }
+
+        if (base.screenWidthDp != change.screenWidthDp) {
+            delta.screenWidthDp = change.screenWidthDp;
+        }
+
+        if (base.screenHeightDp != change.screenHeightDp) {
+            delta.screenHeightDp = change.screenHeightDp;
+        }
+
+        if (base.smallestScreenWidthDp != change.smallestScreenWidthDp) {
+            delta.smallestScreenWidthDp = change.smallestScreenWidthDp;
+        }
+
+        if (base.densityDpi != change.densityDpi) {
+            delta.densityDpi = change.densityDpi;
+        }
+        return delta;
+    }
+
+    private static final String XML_ATTR_FONT_SCALE = "fs";
+    private static final String XML_ATTR_MCC = "mcc";
+    private static final String XML_ATTR_MNC = "mnc";
+    private static final String XML_ATTR_LOCALE = "locale";
+    private static final String XML_ATTR_TOUCHSCREEN = "touch";
+    private static final String XML_ATTR_KEYBOARD = "key";
+    private static final String XML_ATTR_KEYBOARD_HIDDEN = "keyHid";
+    private static final String XML_ATTR_HARD_KEYBOARD_HIDDEN = "hardKeyHid";
+    private static final String XML_ATTR_NAVIGATION = "nav";
+    private static final String XML_ATTR_NAVIGATION_HIDDEN = "navHid";
+    private static final String XML_ATTR_ORIENTATION = "ori";
+    private static final String XML_ATTR_SCREEN_LAYOUT = "scrLay";
+    private static final String XML_ATTR_UI_MODE = "ui";
+    private static final String XML_ATTR_SCREEN_WIDTH = "width";
+    private static final String XML_ATTR_SCREEN_HEIGHT = "height";
+    private static final String XML_ATTR_SMALLEST_WIDTH = "sw";
+    private static final String XML_ATTR_DENSITY = "density";
+
+    /**
+     * Reads the attributes corresponding to Configuration member fields from the Xml parser.
+     * The parser is expected to be on a tag which has Configuration attributes.
+     *
+     * @param parser The Xml parser from which to read attributes.
+     * @param configOut The Configuration to populate from the Xml attributes.
+     * {@hide}
+     */
+    public static void readXmlAttrs(XmlPullParser parser, Configuration configOut)
+            throws XmlPullParserException, IOException {
+        configOut.fontScale = Float.intBitsToFloat(
+                XmlUtils.readIntAttribute(parser, XML_ATTR_FONT_SCALE, 0));
+        configOut.mcc = XmlUtils.readIntAttribute(parser, XML_ATTR_MCC, 0);
+        configOut.mnc = XmlUtils.readIntAttribute(parser, XML_ATTR_MNC, 0);
+
+        final String localeStr = XmlUtils.readStringAttribute(parser, XML_ATTR_LOCALE);
+        if (localeStr != null) {
+            configOut.locale = Locale.forLanguageTag(localeStr);
+        }
+
+        configOut.touchscreen = XmlUtils.readIntAttribute(parser, XML_ATTR_TOUCHSCREEN,
+                TOUCHSCREEN_UNDEFINED);
+        configOut.keyboard = XmlUtils.readIntAttribute(parser, XML_ATTR_KEYBOARD,
+                KEYBOARD_UNDEFINED);
+        configOut.keyboardHidden = XmlUtils.readIntAttribute(parser, XML_ATTR_KEYBOARD_HIDDEN,
+                KEYBOARDHIDDEN_UNDEFINED);
+        configOut.hardKeyboardHidden =
+                XmlUtils.readIntAttribute(parser, XML_ATTR_HARD_KEYBOARD_HIDDEN,
+                        HARDKEYBOARDHIDDEN_UNDEFINED);
+        configOut.navigation = XmlUtils.readIntAttribute(parser, XML_ATTR_NAVIGATION,
+                NAVIGATION_UNDEFINED);
+        configOut.navigationHidden = XmlUtils.readIntAttribute(parser, XML_ATTR_NAVIGATION_HIDDEN,
+                NAVIGATIONHIDDEN_UNDEFINED);
+        configOut.orientation = XmlUtils.readIntAttribute(parser, XML_ATTR_ORIENTATION,
+                ORIENTATION_UNDEFINED);
+        configOut.screenLayout = XmlUtils.readIntAttribute(parser, XML_ATTR_SCREEN_LAYOUT,
+                SCREENLAYOUT_UNDEFINED);
+        configOut.uiMode = XmlUtils.readIntAttribute(parser, XML_ATTR_UI_MODE, 0);
+        configOut.screenWidthDp = XmlUtils.readIntAttribute(parser, XML_ATTR_SCREEN_WIDTH,
+                SCREEN_WIDTH_DP_UNDEFINED);
+        configOut.screenHeightDp = XmlUtils.readIntAttribute(parser, XML_ATTR_SCREEN_HEIGHT,
+                SCREEN_HEIGHT_DP_UNDEFINED);
+        configOut.smallestScreenWidthDp =
+                XmlUtils.readIntAttribute(parser, XML_ATTR_SMALLEST_WIDTH,
+                        SMALLEST_SCREEN_WIDTH_DP_UNDEFINED);
+        configOut.densityDpi = XmlUtils.readIntAttribute(parser, XML_ATTR_DENSITY,
+                DENSITY_DPI_UNDEFINED);
+    }
+
+
+    /**
+     * Writes the Configuration's member fields as attributes into the XmlSerializer.
+     * The serializer is expected to have already started a tag so that attributes can be
+     * immediately written.
+     *
+     * @param xml The serializer to which to write the attributes.
+     * @param config The Configuration whose member fields to write.
+     * {@hide}
+     */
+    public static void writeXmlAttrs(XmlSerializer xml, Configuration config) throws IOException {
+        XmlUtils.writeIntAttribute(xml, XML_ATTR_FONT_SCALE,
+                Float.floatToIntBits(config.fontScale));
+        if (config.mcc != 0) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_MCC, config.mcc);
+        }
+        if (config.mnc != 0) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_MNC, config.mnc);
+        }
+        if (config.locale != null) {
+            XmlUtils.writeStringAttribute(xml, XML_ATTR_LOCALE, config.locale.toLanguageTag());
+        }
+        if (config.touchscreen != TOUCHSCREEN_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_TOUCHSCREEN, config.touchscreen);
+        }
+        if (config.keyboard != KEYBOARD_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_KEYBOARD, config.keyboard);
+        }
+        if (config.keyboardHidden != KEYBOARDHIDDEN_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_KEYBOARD_HIDDEN, config.keyboardHidden);
+        }
+        if (config.hardKeyboardHidden != HARDKEYBOARDHIDDEN_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_HARD_KEYBOARD_HIDDEN,
+                    config.hardKeyboardHidden);
+        }
+        if (config.navigation != NAVIGATION_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_NAVIGATION, config.navigation);
+        }
+        if (config.navigationHidden != NAVIGATIONHIDDEN_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_NAVIGATION_HIDDEN, config.navigationHidden);
+        }
+        if (config.orientation != ORIENTATION_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_ORIENTATION, config.orientation);
+        }
+        if (config.screenLayout != SCREENLAYOUT_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_SCREEN_LAYOUT, config.screenLayout);
+        }
+        if (config.uiMode != 0) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_UI_MODE, config.uiMode);
+        }
+        if (config.screenWidthDp != SCREEN_WIDTH_DP_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_SCREEN_WIDTH, config.screenWidthDp);
+        }
+        if (config.screenHeightDp != SCREEN_HEIGHT_DP_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_SCREEN_HEIGHT, config.screenHeightDp);
+        }
+        if (config.smallestScreenWidthDp != SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_SMALLEST_WIDTH, config.smallestScreenWidthDp);
+        }
+        if (config.densityDpi != DENSITY_DPI_UNDEFINED) {
+            XmlUtils.writeIntAttribute(xml, XML_ATTR_DENSITY, config.densityDpi);
+        }
     }
 }

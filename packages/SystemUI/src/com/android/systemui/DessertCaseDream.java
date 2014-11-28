@@ -25,12 +25,11 @@ public class DessertCaseDream extends DreamService {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        setInteractive(true);
-        setFullscreen(true);
+        setInteractive(false);
 
         mView = new DessertCaseView(this);
 
-        mContainer = new DessertCaseView.RescalingContainer(this, true);
+        mContainer = new DessertCaseView.RescalingContainer(this);
 
         mContainer.setView(mView);
 

@@ -34,6 +34,12 @@ public class ToneGenerator
      * the enum in ToneGenerator C++ class.     */
 
     /**
+     * Default value for an unknown or unspecified tone.
+     * @hide
+     */
+    public static final int TONE_UNKNOWN = -1;
+
+    /**
      * DTMF tone for key 0: 1336Hz, 941Hz, continuous</p>
      *
      * @see #ToneGenerator(int, int)
@@ -746,7 +752,6 @@ public class ToneGenerator
     /** Minimum volume setting, for use with {@link #ToneGenerator(int,int)} */
     public static final int MIN_VOLUME = 0;
 
-
     /**
      * ToneGenerator class contructor specifying output stream type and volume.
      *
@@ -905,5 +910,5 @@ public class ToneGenerator
     protected void finalize() { native_finalize(); }
 
     @SuppressWarnings("unused")
-    private int mNativeContext; // accessed by native methods
+    private long mNativeContext; // accessed by native methods
 }

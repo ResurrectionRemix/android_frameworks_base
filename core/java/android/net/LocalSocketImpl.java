@@ -22,9 +22,9 @@ import java.io.InputStream;
 import java.io.FileDescriptor;
 import java.net.SocketOptions;
 
-import libcore.io.ErrnoException;
-import libcore.io.Libcore;
-import libcore.io.OsConstants;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.system.OsConstants;
 
 /**
  * Socket implementation used for android.net.LocalSocket and
@@ -42,6 +42,8 @@ class LocalSocketImpl
     /** whether fd is created internally */
     private boolean mFdCreatedInternally;
 
+    private boolean mFdCreatedExternally = false;
+
     // These fields are accessed by native code;
     /** file descriptor array received during a previous read */
     FileDescriptor[] inboundFileDescriptors;
@@ -56,7 +58,10 @@ class LocalSocketImpl
         /** {@inheritDoc} */
         @Override
         public int available() throws IOException {
-            return available_native(fd);
+            FileDescriptor myFd = fd;
+            if (myFd == null) throw new IOException("socket closed");
+
+            return available_native(myFd);
         }
 
         /** {@inheritDoc} */
@@ -248,7 +253,7 @@ class LocalSocketImpl
                     throw new IllegalStateException("unknown sockType");
             }
             try {
-                fd = Libcore.os.socket(OsConstants.AF_UNIX, osType, 0);
+                fd = Os.socket(OsConstants.AF_UNIX, osType, 0);
                 mFdCreatedInternally = true;
             } catch (ErrnoException e) {
                 e.rethrowAsIOException();
@@ -263,12 +268,13 @@ class LocalSocketImpl
      */
     public void close() throws IOException {
         synchronized (LocalSocketImpl.this) {
-            if ((fd == null) || (mFdCreatedInternally == false)) {
+            if ((fd == null) || ((mFdCreatedInternally == false) &&
+                                 (mFdCreatedExternally == false))) {
                 fd = null;
                 return;
             }
             try {
-                Libcore.os.close(fd);
+                Os.close(fd);
             } catch (ErrnoException e) {
                 e.rethrowAsIOException();
             }
@@ -369,6 +375,21 @@ class LocalSocketImpl
 
             return fos;
         }
+    }
+
+    /**
+     * Set the flag to close the fd which was opened
+     * externally.
+     *
+     * @return none
+     * @throws IOException if socket has been closed
+     */
+    protected void closeExternalFd() throws IOException
+    {
+        if (fd == null) {
+            throw new IOException("socket not created");
+        }
+        mFdCreatedExternally = true;
     }
 
     /**

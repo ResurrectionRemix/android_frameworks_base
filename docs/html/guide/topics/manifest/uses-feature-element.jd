@@ -1,5 +1,5 @@
 page.title=&lt;uses-feature&gt;
-page.tags="filtering","features","google play filters","permissions"
+page.tags=filtering,features,google play filters,permissions
 @jd:body
 
 <div id="qv-wrapper">
@@ -62,7 +62,7 @@ below.</p>
 href="{@docRoot}guide/topics/manifest/manifest-element.html">&lt;manifest&gt;</a></code></dd>
 
 <dt>description:</dt>
-<dd>Declares a single hardware or software feature that is used by the
+<dd itemprop="description">Declares a single hardware or software feature that is used by the
 application.
 
 <p>The purpose of a <code>&lt;uses-feature&gt;</code> declaration is to inform
@@ -136,7 +136,7 @@ device compatibility.</p>
   <dd>Specifies a single hardware or software feature used by the application,
 as a descriptor string. Valid descriptor values are listed in the <a
 href="#hw-features">Hardware features</a> and <a href="#sw-features">Software
-features</a> tables, below. </dd>
+features</a> tables, below. Descriptor string values are case-sensitive.</dd>
 
   <dt><a name="required"></a><code>android:required</code></dt>  <!-- added in api level 5 -->
   <dd>Boolean value that indicates whether the application requires
@@ -549,11 +549,15 @@ is sensitive to delays or lag in sound input or output.</td>
 </td>
     </tr>
     <tr>
-       <td>Bluetooth</td>
-       <td><code>android.hardware.bluetooth</td>
+       <td rowspan="2">Bluetooth</td>
+       <td><code>android.hardware.bluetooth</code></td>
        <td>The application uses Bluetooth radio features in the device.</td>
-       <td>If your app uses Bluetooth Low Energy, also declare
-       {@code android.software.bluetooth_le}.</td>
+       <td></td>
+    </tr>
+    <tr>
+       <td><code>android.hardware.bluetooth_le</code></td>
+       <td>The application uses Bluetooth Low Energy radio features in the device.</td>
+       <td></td>
     </tr>
     <tr>
        <td rowspan="5">Camera</td>
@@ -580,9 +584,21 @@ is sensitive to delays or lag in sound input or output.</td>
 </tr>
 <tr>
   <td><code>android.hardware.camera.any</code></td>
-  <td>The application uses at least one camera facing in any direction. Use this
-in preference to <code>android.hardware.camera</code> if a back-facing camera is
-not required.</td>
+  <td>The application uses at least one camera facing in any direction, or an
+external camera device if one is connected. Use this in preference to
+<code>android.hardware.camera</code> if a back-facing camera is not required.
+  </td>
+</tr>
+<tr>
+  <td><code>android.hardware.camera.external</code></td>
+  <td>The application uses an external camera device if one is connected.</td>
+</tr>
+
+<tr>
+  <td>Infrared</td>
+  <td><code>android.hardware.consumerir</code></td>
+  <td>The application uses the consumer IR capabilities on the device.</td>
+  <td></td>
 </tr>
 
 <tr>
@@ -613,13 +629,18 @@ from a Global Positioning System receiver on the device. </td>
   <td></td>
 </tr>
 <tr>
-  <td>NFC</td>
+  <td rowspan="2">NFC</td>
   <td><code>android.hardware.nfc</td>
   <td>The application uses Near Field Communications radio features in the device.</td>
   <td></td>
 </tr>
 <tr>
-  <td rowspan="6">Sensors</td>
+  <td><code>android.hardware.nfc.hce</code></td>
+  <td>The application uses the NFC card emulation feature in the device.</td>
+  <td></td>
+</tr>
+<tr>
+  <td rowspan="8">Sensors</td>
   <td><code>android.hardware.sensor.accelerometer</code></td>
   <td>The application uses motion readings from an accelerometer on the
 device.</td>
@@ -651,6 +672,16 @@ the device.</td>
   <td>The application uses the device's proximity sensor.</td>
   <td></td>
 </tr>
+<tr>
+  <td><code>android.hardware.sensor.stepcounter</code></td>
+  <td>The application uses the device's step counter.</td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>android.hardware.sensor.stepdetector</code></td>
+  <td>The application uses the device's step detector.</td>
+  <td></td>
+</tr>
 
 <tr>
   <td rowspan="2">Screen</td>
@@ -658,7 +689,7 @@ the device.</td>
   <td>The application requires landscape orientation.</td>
   <td rowspan="2">
      <p>For example, if your app requires portrait orientation, you should declare
-<code>&lt;uses-feature android:name="android.hardware.screen.portrait"/></code> so that only devices
+<code>&lt;uses-feature android:name="android.hardware.screen.portrait"/&gt;</code> so that only devices
 that support portrait orientation (whether always or by user choice) can install your app. If your
 application <em>supports</em> both orientations, then you don't need to declare either.</p>
     <p>Both orientations are assumed <em>not required</em>, by default, so your app may be installed
@@ -828,10 +859,14 @@ hosts).</td>
 </tr>
 
 <tr>
-  <td>Wifi</td>
+  <td rowspan="2">Wi-Fi</td>
   <td><code>android.hardware.wifi</code></td>
-  <td>The application uses 802.11 networking (wifi) features on the device.</td>
+  <td>The application uses 802.11 networking (Wi-Fi) features on the device.</td>
   <td></td>
+</tr>
+<tr>
+  <td><code>android.hardware.wifi.direct</code></td>
+  <td>The application uses the Wi-Fi Direct networking features on the device.</td>
 </tr>
 
   </table>
@@ -857,11 +892,9 @@ in a separate <code>&lt;uses-feature&gt;</code> element. </p>
   that include a Home screen or similar location where users can embed App Widgets.</td>
 </tr>
 <tr>
-  <td>Bluetooth Low Energy</td>
-  <td><code>android.software.bluetooth_le</code></td>
-  <td><p>The application uses Bluetooth Low Energy APIs and should be installed only on devices
-  that are capable of communicating with other devices via Bluetooth Low Energy.
-   <p>This implicitly also declares the {@code android.hardware.bluetooth} feature.</td>
+  <td>Device Management</td>
+  <td><code>android.software.device_admin</code></td>
+  <td>The application uses device policy enforcement via device administrators.</td>
 </tr>
 <tr>
   <td>Home Screen</td>
@@ -1056,7 +1089,7 @@ filtering based on the <code>CAMERA</code> permission, you would add this
 </tr>
 
 <tr>
-  <td rowspan="3">Wifi</td>
+  <td rowspan="3">Wi-Fi</td>
   <td><code>ACCESS_WIFI_STATE</code></td>
   <td><code>android.hardware.wifi</code></td>
 <!--  <td></td> -->

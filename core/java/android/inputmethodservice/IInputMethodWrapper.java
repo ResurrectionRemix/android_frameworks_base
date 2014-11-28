@@ -31,8 +31,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.InputChannel;
 import android.view.inputmethod.EditorInfo;
@@ -71,6 +69,7 @@ class IInputMethodWrapper extends IInputMethod.Stub
     private static final int DO_CHANGE_INPUTMETHOD_SUBTYPE = 80;
    
     final WeakReference<AbstractInputMethodService> mTarget;
+    final Context mContext;
     final HandlerCaller mCaller;
     final WeakReference<InputMethod> mInputMethod;
     final int mTargetSdkVersion;
@@ -113,8 +112,8 @@ class IInputMethodWrapper extends IInputMethod.Stub
     public IInputMethodWrapper(AbstractInputMethodService context,
             InputMethod inputMethod) {
         mTarget = new WeakReference<AbstractInputMethodService>(context);
-        mCaller = new HandlerCaller(context.getApplicationContext(), null,
-                this, true /*asyncHandler*/);
+        mContext = context.getApplicationContext();
+        mCaller = new HandlerCaller(mContext, null, this, true /*asyncHandler*/);
         mInputMethod = new WeakReference<InputMethod>(inputMethod);
         mTargetSdkVersion = context.getApplicationInfo().targetSdkVersion;
     }
@@ -131,9 +130,6 @@ class IInputMethodWrapper extends IInputMethod.Stub
             Log.w(TAG, "Input method reference was null, ignoring message: " + msg.what);
             return;
         }
-
-        boolean formalText = Settings.System.getIntForUser(mCaller.mContext.getContentResolver(),
-                Settings.System.FORMAL_TEXT_INPUT, 0, UserHandle.USER_CURRENT_OR_SELF) == 1;
 
         switch (msg.what) {
             case DO_DUMP: {
@@ -173,7 +169,6 @@ class IInputMethodWrapper extends IInputMethod.Stub
                         ? new InputConnectionWrapper(inputContext) : null;
                 EditorInfo info = (EditorInfo)args.arg2;
                 info.makeCompatible(mTargetSdkVersion);
-                info.formalTextInput(formalText);
                 inputMethod.startInput(ic, info);
                 args.recycle();
                 return;
@@ -185,7 +180,6 @@ class IInputMethodWrapper extends IInputMethod.Stub
                         ? new InputConnectionWrapper(inputContext) : null;
                 EditorInfo info = (EditorInfo)args.arg2;
                 info.makeCompatible(mTargetSdkVersion);
-                info.formalTextInput(formalText);
                 inputMethod.restartInput(ic, info);
                 args.recycle();
                 return;
@@ -193,7 +187,7 @@ class IInputMethodWrapper extends IInputMethod.Stub
             case DO_CREATE_SESSION: {
                 SomeArgs args = (SomeArgs)msg.obj;
                 inputMethod.createSession(new InputMethodSessionCallbackWrapper(
-                        mCaller.mContext, (InputChannel)args.arg1,
+                        mContext, (InputChannel)args.arg1,
                         (IInputSessionCallback)args.arg2));
                 args.recycle();
                 return;

@@ -17,24 +17,34 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="4469836075319831821">"印刷スプーラ"</string>
-    <string name="advanced_settings_button" msgid="5764225091289415632">"プリンタの設定"</string>
-    <string name="print_button" msgid="645164566271246268">"印刷"</string>
-    <string name="save_button" msgid="1921310454071758999">"保存"</string>
+    <string name="more_options_button" msgid="2243228396432556771">"その他のオプション"</string>
     <string name="label_destination" msgid="9132510997381599275">"印刷先"</string>
     <string name="label_copies" msgid="3634531042822968308">"部数"</string>
-    <string name="label_paper_size" msgid="8681895607876809323">"用紙サイズ"</string>
-    <string name="label_color" msgid="1108690305218188969">"色"</string>
+    <string name="label_copies_summary" msgid="3861966063536529540">"部数:"</string>
+    <string name="label_paper_size" msgid="908654383827777759">"用紙サイズ"</string>
+    <string name="label_paper_size_summary" msgid="5668204981332138168">"用紙サイズ:"</string>
+    <string name="label_color" msgid="1108690305218188969">"カラー選択"</string>
     <string name="label_orientation" msgid="2853142581990496477">"方向"</string>
-    <string name="label_pages" msgid="6300874667546617333">"ページ（<xliff:g id="PAGE_COUNT">%1$s</xliff:g>）"</string>
+    <string name="label_pages" msgid="7768589729282182230">"ページ"</string>
+    <string name="template_all_pages" msgid="3322235982020148762">"<xliff:g id="PAGE_COUNT">%1$s</xliff:g>ページすべて"</string>
+    <string name="template_page_range" msgid="428638530038286328">"<xliff:g id="PAGE_COUNT">%1$s</xliff:g>ページ分"</string>
     <string name="pages_range_example" msgid="8558694453556945172">"例: 1-5,8,11-13"</string>
     <string name="print_preview" msgid="8010217796057763343">"印刷プレビュー"</string>
     <string name="install_for_print_preview" msgid="6366303997385509332">"プレビュー用PDFビューアをインストール"</string>
     <string name="printing_app_crashed" msgid="854477616686566398">"印刷アプリでの障害発生"</string>
-    <string name="page_count_unknown" msgid="6058852665954511124">"ページ数"</string>
     <string name="generating_print_job" msgid="3119608742651698916">"印刷ジョブを生成しています"</string>
     <string name="save_as_pdf" msgid="5718454119847596853">"PDF形式で保存"</string>
     <string name="all_printers" msgid="5018829726861876202">"すべてのプリンタ…"</string>
     <string name="print_dialog" msgid="32628687461331979">"印刷ダイアログ"</string>
+    <string name="current_page_template" msgid="1386638343571771292">"<xliff:g id="CURRENT_PAGE">%1$d</xliff:g>/<xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="page_description_template" msgid="6831239682256197161">"<xliff:g id="CURRENT_PAGE">%1$d</xliff:g>/<xliff:g id="PAGE_COUNT">%2$d</xliff:g>ページ"</string>
+    <string name="summary_template" msgid="8899734908625669193">"概要、部数<xliff:g id="COPIES">%1$s</xliff:g>、用紙サイズ<xliff:g id="PAPER_SIZE">%2$s</xliff:g>"</string>
+    <string name="expand_handle" msgid="7282974448109280522">"展開ハンドル"</string>
+    <string name="collapse_handle" msgid="6886637989442507451">"折りたたみハンドル"</string>
+    <string name="print_button" msgid="645164566271246268">"印刷"</string>
+    <string name="savetopdf_button" msgid="2976186791686924743">"PDFに保存"</string>
+    <string name="print_options_expanded" msgid="6944679157471691859">"印刷オプションを展開しました"</string>
+    <string name="print_options_collapsed" msgid="7455930445670414332">"印刷オプションを折りたたみました"</string>
     <string name="search" msgid="5421724265322228497">"検索"</string>
     <string name="all_printers_label" msgid="3178848870161526399">"すべてのプリンタ"</string>
     <string name="add_print_service_label" msgid="5356702546188981940">"サービスを追加"</string>
@@ -59,21 +69,21 @@
     <item quantity="other" msgid="8746611264734222865">"<xliff:g id="PRINT_JOB_NAME">%1$d</xliff:g>の印刷ジョブ"</item>
   </plurals>
     <string name="cancel" msgid="4373674107267141885">"キャンセル"</string>
-    <string name="restart" msgid="2472034227037808749">"再起動"</string>
+    <string name="restart" msgid="2472034227037808749">"再試行"</string>
     <string name="no_connection_to_printer" msgid="2159246915977282728">"プリンタに接続されていません"</string>
     <string name="reason_unknown" msgid="5507940196503246139">"不明"</string>
     <string name="printer_unavailable" msgid="2434170617003315690">"<xliff:g id="PRINT_JOB_NAME">%1$s</xliff:g>–使用不可"</string>
-    <string name="print_error_default_message" msgid="8568506918983980567">"印刷ジョブを生成できませんでした"</string>
   <string-array name="color_mode_labels">
     <item msgid="7602948745415174937">"モノクロ"</item>
-    <item msgid="2762241247228983754">"色"</item>
+    <item msgid="2762241247228983754">"カラー"</item>
   </string-array>
   <string-array name="orientation_labels">
     <item msgid="4061931020926489228">"縦向き"</item>
     <item msgid="3199660090246166812">"横向き"</item>
   </string-array>
-  <string-array name="page_options_labels">
-    <item msgid="7421377442011699994">"すべて"</item>
-    <item msgid="6812869625222503603">"範囲"</item>
-  </string-array>
+    <string name="print_write_error_message" msgid="5787642615179572543">"ファイルに書き込めませんでした"</string>
+    <string name="print_error_default_message" msgid="8602678405502922346">"エラーです。もう一度お試しください。"</string>
+    <string name="print_error_retry" msgid="1426421728784259538">"再試行"</string>
+    <string name="print_error_printer_unavailable" msgid="8985614415253203381">"現在このプリンターは使用できません。"</string>
+    <string name="print_preparing_preview" msgid="3939930735671364712">"プレビューを準備しています…"</string>
 </resources>

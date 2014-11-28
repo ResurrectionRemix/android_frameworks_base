@@ -17,13 +17,11 @@
 package android.media;
 
 import android.media.MediaCodec.BufferInfo;
-
 import dalvik.system.CloseGuard;
 
-import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
@@ -65,8 +63,6 @@ import java.util.Map;
 
 final public class MediaMuxer {
 
-    private int mNativeContext;
-
     static {
         System.loadLibrary("media_jni");
     }
@@ -81,19 +77,20 @@ final public class MediaMuxer {
         private OutputFormat() {}
         /** MPEG4 media file format*/
         public static final int MUXER_OUTPUT_MPEG_4 = 0;
+        public static final int MUXER_OUTPUT_WEBM   = 1;
     };
 
     // All the native functions are listed here.
-    private static native int nativeSetup(FileDescriptor fd, int format);
-    private static native void nativeRelease(int nativeObject);
-    private static native void nativeStart(int nativeObject);
-    private static native void nativeStop(int nativeObject);
-    private static native int nativeAddTrack(int nativeObject, String[] keys,
+    private static native long nativeSetup(FileDescriptor fd, int format);
+    private static native void nativeRelease(long nativeObject);
+    private static native void nativeStart(long nativeObject);
+    private static native void nativeStop(long nativeObject);
+    private static native int nativeAddTrack(long nativeObject, String[] keys,
             Object[] values);
-    private static native void nativeSetOrientationHint(int nativeObject,
+    private static native void nativeSetOrientationHint(long nativeObject,
             int degrees);
-    private static native void nativeSetLocation(int nativeObject, int latitude, int longitude);
-    private static native void nativeWriteSampleData(int nativeObject,
+    private static native void nativeSetLocation(long nativeObject, int latitude, int longitude);
+    private static native void nativeWriteSampleData(long nativeObject,
             int trackIndex, ByteBuffer byteBuf,
             int offset, int size, long presentationTimeUs, int flags);
 
@@ -108,7 +105,7 @@ final public class MediaMuxer {
     private final CloseGuard mCloseGuard = CloseGuard.get();
     private int mLastTrackIndex = -1;
 
-    private int mNativeObject;
+    private long mNativeObject;
 
     /**
      * Constructor.
@@ -122,20 +119,22 @@ final public class MediaMuxer {
         if (path == null) {
             throw new IllegalArgumentException("path must not be null");
         }
-        if (format != OutputFormat.MUXER_OUTPUT_MPEG_4) {
+        if (format != OutputFormat.MUXER_OUTPUT_MPEG_4 &&
+                format != OutputFormat.MUXER_OUTPUT_WEBM) {
             throw new IllegalArgumentException("format is invalid");
         }
-        FileOutputStream fos = null;
+        // Use RandomAccessFile so we can open the file with RW access;
+        // RW access allows the native writer to memory map the output file.
+        RandomAccessFile file = null;
         try {
-            File file = new File(path);
-            fos = new FileOutputStream(file);
-            FileDescriptor fd = fos.getFD();
+            file = new RandomAccessFile(path, "rws");
+            FileDescriptor fd = file.getFD();
             mNativeObject = nativeSetup(fd, format);
             mState = MUXER_STATE_INITIALIZED;
             mCloseGuard.open("release");
         } finally {
-            if (fos != null) {
-                fos.close();
+            if (file != null) {
+                file.close();
             }
         }
     }

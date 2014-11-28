@@ -48,7 +48,6 @@ public class RecentsActivity extends Activity {
     private IntentFilter mIntentFilter;
     private boolean mShowing;
     private boolean mForeground;
-    protected boolean mBackPressed;
 
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
@@ -116,7 +115,7 @@ public class RecentsActivity extends Activity {
 
     public static boolean forceOpaqueBackground(Context context) {
         return WallpaperManager.getInstance(context).getWallpaperInfo() != null
-		&& !ActivityManager.isHighEndGfx();
+                && !ActivityManager.isHighEndGfx();
     }
 
     @Override
@@ -145,12 +144,7 @@ public class RecentsActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        mBackPressed = true;
-        try {
-            dismissAndGoBack();
-        } finally {
-            mBackPressed = false;
-        }
+        dismissAndGoBack();
     }
 
     public void dismissAndGoHome() {
@@ -171,11 +165,11 @@ public class RecentsActivity extends Activity {
             final List<ActivityManager.RecentTaskInfo> recentTasks =
                     am.getRecentTasks(2,
                             ActivityManager.RECENT_WITH_EXCLUDED |
-                            ActivityManager.RECENT_IGNORE_UNAVAILABLE);
+                            ActivityManager.RECENT_IGNORE_UNAVAILABLE |
+                            ActivityManager.RECENT_INCLUDE_PROFILES);
             if (recentTasks.size() > 1 &&
                     mRecentsPanel.simulateClick(recentTasks.get(1).persistentId)) {
                 // recents panel will take care of calling show(false) through simulateClick
-                finish();
                 return;
             }
             mRecentsPanel.show(false);
@@ -185,10 +179,8 @@ public class RecentsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addPrivateFlags(
+                WindowManager.LayoutParams.PRIVATE_FLAG_INHERIT_TRANSLUCENT_DECOR);
         setContentView(R.layout.status_bar_recent_panel);
         mRecentsPanel = (RecentsPanelView) findViewById(R.id.recents_root);
         mRecentsPanel.setOnTouchListener(new TouchOutsideListener(mRecentsPanel));

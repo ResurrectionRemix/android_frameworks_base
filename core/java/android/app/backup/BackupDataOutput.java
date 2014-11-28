@@ -16,7 +16,9 @@
 
 package android.app.backup;
 
+import android.annotation.SystemApi;
 import android.os.ParcelFileDescriptor;
+import android.os.Process;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -62,9 +64,10 @@ import java.io.IOException;
  * @see BackupAgent
  */
 public class BackupDataOutput {
-    int mBackupWriter;
+    long mBackupWriter;
 
     /** @hide */
+    @SystemApi
     public BackupDataOutput(FileDescriptor fd) {
         if (fd == null) throw new NullPointerException();
         mBackupWriter = ctor(fd);
@@ -76,7 +79,8 @@ public class BackupDataOutput {
     /**
      * Mark the beginning of one record in the backup data stream. This must be called before
      * {@link #writeEntityData}.
-     * @param key A string key that uniquely identifies the data record within the application
+     * @param key A string key that uniquely identifies the data record within the application.
+     *    Keys whose first character is \uFF00 or higher are not valid.
      * @param dataSize The size in bytes of this record's data.  Passing a dataSize
      *    of -1 indicates that the record under this key should be deleted.
      * @return The number of bytes written to the backup stream
@@ -113,6 +117,7 @@ public class BackupDataOutput {
     }
 
     /** @hide */
+    @Override
     protected void finalize() throws Throwable {
         try {
             dtor(mBackupWriter);
@@ -121,11 +126,11 @@ public class BackupDataOutput {
         }
     }
 
-    private native static int ctor(FileDescriptor fd);
-    private native static void dtor(int mBackupWriter);
+    private native static long ctor(FileDescriptor fd);
+    private native static void dtor(long mBackupWriter);
 
-    private native static int writeEntityHeader_native(int mBackupWriter, String key, int dataSize);
-    private native static int writeEntityData_native(int mBackupWriter, byte[] data, int size);
-    private native static void setKeyPrefix_native(int mBackupWriter, String keyPrefix);
+    private native static int writeEntityHeader_native(long mBackupWriter, String key, int dataSize);
+    private native static int writeEntityData_native(long mBackupWriter, byte[] data, int size);
+    private native static void setKeyPrefix_native(long mBackupWriter, String keyPrefix);
 }
 

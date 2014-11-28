@@ -4,8 +4,10 @@
 #include "JNIHelp.h"
 #include "GraphicsJNI.h"
 
+#include "Canvas.h"
 #include "SkCanvas.h"
 #include "SkDevice.h"
+#include "SkMath.h"
 #include "SkPicture.h"
 #include "SkRegion.h"
 #include <android_runtime/AndroidRuntime.h>
@@ -166,6 +168,7 @@ static jfieldID gCanvas_nativeInstanceID;
 
 static jclass   gPaint_class;
 static jfieldID gPaint_nativeInstanceID;
+static jfieldID gPaint_nativeTypefaceID;
 
 static jclass   gPicture_class;
 static jfieldID gPicture_nativeInstanceID;
@@ -173,6 +176,12 @@ static jfieldID gPicture_nativeInstanceID;
 static jclass   gRegion_class;
 static jfieldID gRegion_nativeInstanceID;
 static jmethodID gRegion_constructorMethodID;
+
+static jclass    gByte_class;
+static jobject   gVMRuntime;
+static jclass    gVMRuntime_class;
+static jmethodID gVMRuntime_newNonMovableArray;
+static jmethodID gVMRuntime_addressOf;
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -221,10 +230,10 @@ SkRect* GraphicsJNI::jrectf_to_rect(JNIEnv* env, jobject obj, SkRect* r)
 {
     SkASSERT(env->IsInstanceOf(obj, gRectF_class));
 
-    r->set(SkFloatToScalar(env->GetFloatField(obj, gRectF_leftFieldID)),
-           SkFloatToScalar(env->GetFloatField(obj, gRectF_topFieldID)),
-           SkFloatToScalar(env->GetFloatField(obj, gRectF_rightFieldID)),
-           SkFloatToScalar(env->GetFloatField(obj, gRectF_bottomFieldID)));
+    r->set(env->GetFloatField(obj, gRectF_leftFieldID),
+           env->GetFloatField(obj, gRectF_topFieldID),
+           env->GetFloatField(obj, gRectF_rightFieldID),
+           env->GetFloatField(obj, gRectF_bottomFieldID));
     return r;
 }
 
@@ -270,8 +279,8 @@ SkPoint* GraphicsJNI::jpointf_to_point(JNIEnv* env, jobject obj, SkPoint* point)
 {
     SkASSERT(env->IsInstanceOf(obj, gPointF_class));
 
-    point->set(SkFloatToScalar(env->GetIntField(obj, gPointF_xFieldID)),
-               SkFloatToScalar(env->GetIntField(obj, gPointF_yFieldID)));
+    point->set(env->GetIntField(obj, gPointF_xFieldID),
+               env->GetIntField(obj, gPointF_yFieldID));
     return point;
 }
 
@@ -283,54 +292,100 @@ void GraphicsJNI::point_to_jpointf(const SkPoint& r, JNIEnv* env, jobject obj)
     env->SetFloatField(obj, gPointF_yFieldID, SkScalarToFloat(r.fY));
 }
 
+// This enum must keep these int values, to match the int values
+// in the java Bitmap.Config enum.
+enum LegacyBitmapConfig {
+    kNo_LegacyBitmapConfig          = 0,
+    kA8_LegacyBitmapConfig          = 1,
+    kIndex8_LegacyBitmapConfig      = 2,
+    kRGB_565_LegacyBitmapConfig     = 3,
+    kARGB_4444_LegacyBitmapConfig   = 4,
+    kARGB_8888_LegacyBitmapConfig   = 5,
+
+    kLastEnum_LegacyBitmapConfig = kARGB_8888_LegacyBitmapConfig
+};
+
+jint GraphicsJNI::colorTypeToLegacyBitmapConfig(SkColorType colorType) {
+    switch (colorType) {
+        case kN32_SkColorType:
+            return kARGB_8888_LegacyBitmapConfig;
+        case kARGB_4444_SkColorType:
+            return kARGB_4444_LegacyBitmapConfig;
+        case kRGB_565_SkColorType:
+            return kRGB_565_LegacyBitmapConfig;
+        case kIndex_8_SkColorType:
+            return kIndex8_LegacyBitmapConfig;
+        case kAlpha_8_SkColorType:
+            return kA8_LegacyBitmapConfig;
+        case kUnknown_SkColorType:
+        default:
+            break;
+    }
+    return kNo_LegacyBitmapConfig;
+}
+
+SkColorType GraphicsJNI::legacyBitmapConfigToColorType(jint legacyConfig) {
+    const uint8_t gConfig2ColorType[] = {
+        kUnknown_SkColorType,
+        kAlpha_8_SkColorType,
+        kIndex_8_SkColorType,
+        kRGB_565_SkColorType,
+        kARGB_4444_SkColorType,
+        kN32_SkColorType
+    };
+
+    if (legacyConfig < 0 || legacyConfig > kLastEnum_LegacyBitmapConfig) {
+        legacyConfig = kNo_LegacyBitmapConfig;
+    }
+    return static_cast<SkColorType>(gConfig2ColorType[legacyConfig]);
+}
+
 SkBitmap* GraphicsJNI::getNativeBitmap(JNIEnv* env, jobject bitmap) {
     SkASSERT(env);
     SkASSERT(bitmap);
     SkASSERT(env->IsInstanceOf(bitmap, gBitmap_class));
-    SkBitmap* b = (SkBitmap*)env->GetIntField(bitmap, gBitmap_nativeInstanceID);
+    jlong bitmapHandle = env->GetLongField(bitmap, gBitmap_nativeInstanceID);
+    SkBitmap* b = reinterpret_cast<SkBitmap*>(bitmapHandle);
     SkASSERT(b);
     return b;
 }
 
-SkBitmap::Config GraphicsJNI::getNativeBitmapConfig(JNIEnv* env,
-                                                    jobject jconfig) {
+SkColorType GraphicsJNI::getNativeBitmapColorType(JNIEnv* env, jobject jconfig) {
     SkASSERT(env);
     if (NULL == jconfig) {
-        return SkBitmap::kNo_Config;
+        return kUnknown_SkColorType;
     }
     SkASSERT(env->IsInstanceOf(jconfig, gBitmapConfig_class));
     int c = env->GetIntField(jconfig, gBitmapConfig_nativeInstanceID);
-    if (c < 0 || c >= SkBitmap::kConfigCount) {
-        c = SkBitmap::kNo_Config;
-    }
-    return static_cast<SkBitmap::Config>(c);
+    return legacyBitmapConfigToColorType(c);
 }
 
 SkCanvas* GraphicsJNI::getNativeCanvas(JNIEnv* env, jobject canvas) {
     SkASSERT(env);
     SkASSERT(canvas);
     SkASSERT(env->IsInstanceOf(canvas, gCanvas_class));
-    SkCanvas* c = (SkCanvas*)env->GetIntField(canvas, gCanvas_nativeInstanceID);
+    jlong canvasHandle = env->GetLongField(canvas, gCanvas_nativeInstanceID);
+    SkCanvas* c = reinterpret_cast<android::Canvas*>(canvasHandle)->getSkCanvas();
     SkASSERT(c);
     return c;
 }
 
-SkPaint* GraphicsJNI::getNativePaint(JNIEnv* env, jobject paint) {
+android::Paint* GraphicsJNI::getNativePaint(JNIEnv* env, jobject paint) {
     SkASSERT(env);
     SkASSERT(paint);
     SkASSERT(env->IsInstanceOf(paint, gPaint_class));
-    SkPaint* p = (SkPaint*)env->GetIntField(paint, gPaint_nativeInstanceID);
+    jlong paintHandle = env->GetLongField(paint, gPaint_nativeInstanceID);
+    android::Paint* p = reinterpret_cast<android::Paint*>(paintHandle);
     SkASSERT(p);
     return p;
 }
 
-SkPicture* GraphicsJNI::getNativePicture(JNIEnv* env, jobject picture)
-{
+android::TypefaceImpl* GraphicsJNI::getNativeTypeface(JNIEnv* env, jobject paint) {
     SkASSERT(env);
-    SkASSERT(picture);
-    SkASSERT(env->IsInstanceOf(picture, gPicture_class));
-    SkPicture* p = (SkPicture*)env->GetIntField(picture, gPicture_nativeInstanceID);
-    SkASSERT(p);
+    SkASSERT(paint);
+    SkASSERT(env->IsInstanceOf(paint, gPaint_class));
+    jlong typefaceHandle = env->GetLongField(paint, gPaint_nativeTypefaceID);
+    android::TypefaceImpl* p = reinterpret_cast<android::TypefaceImpl*>(typefaceHandle);
     return p;
 }
 
@@ -339,38 +394,54 @@ SkRegion* GraphicsJNI::getNativeRegion(JNIEnv* env, jobject region)
     SkASSERT(env);
     SkASSERT(region);
     SkASSERT(env->IsInstanceOf(region, gRegion_class));
-    SkRegion* r = (SkRegion*)env->GetIntField(region, gRegion_nativeInstanceID);
+    jlong regionHandle = env->GetLongField(region, gRegion_nativeInstanceID);
+    SkRegion* r = reinterpret_cast<SkRegion*>(regionHandle);
     SkASSERT(r);
     return r;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+// Assert that bitmap's SkAlphaType is consistent with isPremultiplied.
+static void assert_premultiplied(const SkBitmap& bitmap, bool isPremultiplied) {
+    // kOpaque_SkAlphaType and kIgnore_SkAlphaType mean that isPremultiplied is
+    // irrelevant. This just tests to ensure that the SkAlphaType is not
+    // opposite of isPremultiplied.
+    if (isPremultiplied) {
+        SkASSERT(bitmap.alphaType() != kUnpremul_SkAlphaType);
+    } else {
+        SkASSERT(bitmap.alphaType() != kPremul_SkAlphaType);
+    }
+}
+
 jobject GraphicsJNI::createBitmap(JNIEnv* env, SkBitmap* bitmap, jbyteArray buffer,
-        int bitmapCreateFlags, jbyteArray ninepatch, jintArray layoutbounds, int density)
+        int bitmapCreateFlags, jbyteArray ninePatchChunk, jobject ninePatchInsets, int density)
 {
     SkASSERT(bitmap);
     SkASSERT(bitmap->pixelRef());
+    SkASSERT(!env->ExceptionCheck());
     bool isMutable = bitmapCreateFlags & kBitmapCreateFlag_Mutable;
     bool isPremultiplied = bitmapCreateFlags & kBitmapCreateFlag_Premultiplied;
 
+    // The caller needs to have already set the alpha type properly, so the
+    // native SkBitmap stays in sync with the Java Bitmap.
+    assert_premultiplied(*bitmap, isPremultiplied);
+
     jobject obj = env->NewObject(gBitmap_class, gBitmap_constructorMethodID,
-            static_cast<jint>(reinterpret_cast<uintptr_t>(bitmap)), buffer,
+            reinterpret_cast<jlong>(bitmap), buffer,
             bitmap->width(), bitmap->height(), density, isMutable, isPremultiplied,
-            ninepatch, layoutbounds);
+            ninePatchChunk, ninePatchInsets);
     hasException(env); // For the side effect of logging.
     return obj;
-}
-
-jobject GraphicsJNI::createBitmap(JNIEnv* env, SkBitmap* bitmap, int bitmapCreateFlags,
-        jbyteArray ninepatch, int density)
-{
-    return createBitmap(env, bitmap, NULL, bitmapCreateFlags, ninepatch, NULL, density);
 }
 
 void GraphicsJNI::reinitBitmap(JNIEnv* env, jobject javaBitmap, SkBitmap* bitmap,
         bool isPremultiplied)
 {
+    // The caller needs to have already set the alpha type properly, so the
+    // native SkBitmap stays in sync with the Java Bitmap.
+    assert_premultiplied(*bitmap, isPremultiplied);
+
     env->CallVoidMethod(javaBitmap, gBitmap_reinitMethodID,
             bitmap->width(), bitmap->height(), isPremultiplied);
 }
@@ -386,7 +457,7 @@ jobject GraphicsJNI::createBitmapRegionDecoder(JNIEnv* env, SkBitmapRegionDecode
 
     jobject obj = env->NewObject(gBitmapRegionDecoder_class,
             gBitmapRegionDecoder_constructorMethodID,
-            static_cast<jint>(reinterpret_cast<uintptr_t>(bitmap)));
+            reinterpret_cast<jlong>(bitmap));
     hasException(env); // For the side effect of logging.
     return obj;
 }
@@ -395,7 +466,7 @@ jobject GraphicsJNI::createRegion(JNIEnv* env, SkRegion* region)
 {
     SkASSERT(region != NULL);
     jobject obj = env->NewObject(gRegion_class, gRegion_constructorMethodID,
-            static_cast<jint>(reinterpret_cast<uintptr_t>(region)), 0);
+                                 reinterpret_cast<jlong>(region), 0);
     hasException(env); // For the side effect of logging.
     return obj;
 }
@@ -413,8 +484,9 @@ static JNIEnv* vm2env(JavaVM* vm)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-AndroidPixelRef::AndroidPixelRef(JNIEnv* env, void* storage, size_t size, jbyteArray storageObj,
-        SkColorTable* ctable) : SkMallocPixelRef(storage, size, ctable, (storageObj == NULL)),
+AndroidPixelRef::AndroidPixelRef(JNIEnv* env, const SkImageInfo& info, void* storage,
+        size_t rowBytes, jbyteArray storageObj, SkColorTable* ctable) :
+        SkMallocPixelRef(info, storage, rowBytes, ctable, (storageObj == NULL)),
         fWrappedPixelRef(NULL) {
     SkASSERT(storage);
     SkASSERT(env);
@@ -432,10 +504,11 @@ AndroidPixelRef::AndroidPixelRef(JNIEnv* env, void* storage, size_t size, jbyteA
 
 }
 
-AndroidPixelRef::AndroidPixelRef(AndroidPixelRef& wrappedPixelRef, SkColorTable* ctable) :
-        SkMallocPixelRef(wrappedPixelRef.getAddr(), wrappedPixelRef.getSize(), ctable, false),
+AndroidPixelRef::AndroidPixelRef(AndroidPixelRef& wrappedPixelRef, const SkImageInfo& info,
+        size_t rowBytes, SkColorTable* ctable) :
+        SkMallocPixelRef(info, wrappedPixelRef.getAddr(), rowBytes, ctable, false),
         fWrappedPixelRef(wrappedPixelRef.fWrappedPixelRef ?
-            wrappedPixelRef.fWrappedPixelRef : &wrappedPixelRef)
+                wrappedPixelRef.fWrappedPixelRef : &wrappedPixelRef)
 {
     SkASSERT(fWrappedPixelRef);
     SkSafeRef(fWrappedPixelRef);
@@ -529,30 +602,33 @@ void AndroidPixelRef::globalUnref() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-extern "C" jbyte* jniGetNonMovableArrayElements(C_JNIEnv* env, jarray arrayObj);
-
 jbyteArray GraphicsJNI::allocateJavaPixelRef(JNIEnv* env, SkBitmap* bitmap,
                                              SkColorTable* ctable) {
-    Sk64 size64 = bitmap->getSize64();
-    if (size64.isNeg() || !size64.is32()) {
-        jniThrowException(env, "java/lang/IllegalArgumentException",
-                          "bitmap size exceeds 32bits");
+    const SkImageInfo& info = bitmap->info();
+    if (info.fColorType == kUnknown_SkColorType) {
+        doThrowIAE(env, "unknown bitmap configuration");
         return NULL;
     }
 
-    size_t size = size64.get32();
-    jbyteArray arrayObj = env->NewByteArray(size);
-    if (arrayObj) {
-        // TODO: make this work without jniGetNonMovableArrayElements
-        jbyte* addr = jniGetNonMovableArrayElements(&env->functions, arrayObj);
-        if (addr) {
-            SkPixelRef* pr = new AndroidPixelRef(env, (void*) addr, size, arrayObj, ctable);
-            bitmap->setPixelRef(pr)->unref();
-            // since we're already allocated, we lockPixels right away
-            // HeapAllocator behaves this way too
-            bitmap->lockPixels();
-        }
+    const size_t size = bitmap->getSize();
+    jbyteArray arrayObj = (jbyteArray) env->CallObjectMethod(gVMRuntime,
+                                                             gVMRuntime_newNonMovableArray,
+                                                             gByte_class, size);
+    if (env->ExceptionCheck() != 0) {
+        return NULL;
     }
+    SkASSERT(arrayObj);
+    jbyte* addr = (jbyte*) env->CallLongMethod(gVMRuntime, gVMRuntime_addressOf, arrayObj);
+    if (env->ExceptionCheck() != 0) {
+        return NULL;
+    }
+    SkASSERT(addr);
+    SkPixelRef* pr = new AndroidPixelRef(env, info, (void*) addr,
+            bitmap->rowBytes(), arrayObj, ctable);
+    bitmap->setPixelRef(pr)->unref();
+    // since we're already allocated, we lockPixels right away
+    // HeapAllocator behaves this way too
+    bitmap->lockPixels();
 
     return arrayObj;
 }
@@ -601,7 +677,7 @@ static jclass make_globalref(JNIEnv* env, const char classname[])
 {
     jclass c = env->FindClass(classname);
     SkASSERT(c);
-    return (jclass)env->NewGlobalRef(c);
+    return (jclass) env->NewGlobalRef(c);
 }
 
 static jfieldID getFieldIDCheck(JNIEnv* env, jclass clazz,
@@ -638,30 +714,42 @@ int register_android_graphics_Graphics(JNIEnv* env)
     gPointF_yFieldID = getFieldIDCheck(env, gPointF_class, "y", "F");
 
     gBitmap_class = make_globalref(env, "android/graphics/Bitmap");
-    gBitmap_nativeInstanceID = getFieldIDCheck(env, gBitmap_class, "mNativeBitmap", "I");
-    gBitmap_constructorMethodID = env->GetMethodID(gBitmap_class, "<init>", "(I[BIIIZZ[B[I)V");
+    gBitmap_nativeInstanceID = getFieldIDCheck(env, gBitmap_class, "mNativeBitmap", "J");
+    gBitmap_constructorMethodID = env->GetMethodID(gBitmap_class, "<init>", "(J[BIIIZZ[BLandroid/graphics/NinePatch$InsetStruct;)V");
     gBitmap_reinitMethodID = env->GetMethodID(gBitmap_class, "reinit", "(IIZ)V");
     gBitmap_getAllocationByteCountMethodID = env->GetMethodID(gBitmap_class, "getAllocationByteCount", "()I");
     gBitmapRegionDecoder_class = make_globalref(env, "android/graphics/BitmapRegionDecoder");
-    gBitmapRegionDecoder_constructorMethodID = env->GetMethodID(gBitmapRegionDecoder_class, "<init>", "(I)V");
+    gBitmapRegionDecoder_constructorMethodID = env->GetMethodID(gBitmapRegionDecoder_class, "<init>", "(J)V");
 
     gBitmapConfig_class = make_globalref(env, "android/graphics/Bitmap$Config");
     gBitmapConfig_nativeInstanceID = getFieldIDCheck(env, gBitmapConfig_class,
                                                      "nativeInt", "I");
 
     gCanvas_class = make_globalref(env, "android/graphics/Canvas");
-    gCanvas_nativeInstanceID = getFieldIDCheck(env, gCanvas_class, "mNativeCanvas", "I");
+    gCanvas_nativeInstanceID = getFieldIDCheck(env, gCanvas_class, "mNativeCanvasWrapper", "J");
 
     gPaint_class = make_globalref(env, "android/graphics/Paint");
-    gPaint_nativeInstanceID = getFieldIDCheck(env, gPaint_class, "mNativePaint", "I");
+    gPaint_nativeInstanceID = getFieldIDCheck(env, gPaint_class, "mNativePaint", "J");
+    gPaint_nativeTypefaceID = getFieldIDCheck(env, gPaint_class, "mNativeTypeface", "J");
 
     gPicture_class = make_globalref(env, "android/graphics/Picture");
-    gPicture_nativeInstanceID = getFieldIDCheck(env, gPicture_class, "mNativePicture", "I");
+    gPicture_nativeInstanceID = getFieldIDCheck(env, gPicture_class, "mNativePicture", "J");
 
     gRegion_class = make_globalref(env, "android/graphics/Region");
-    gRegion_nativeInstanceID = getFieldIDCheck(env, gRegion_class, "mNativeRegion", "I");
+    gRegion_nativeInstanceID = getFieldIDCheck(env, gRegion_class, "mNativeRegion", "J");
     gRegion_constructorMethodID = env->GetMethodID(gRegion_class, "<init>",
-        "(II)V");
+        "(JI)V");
+
+    c = env->FindClass("java/lang/Byte");
+    gByte_class = (jclass) env->NewGlobalRef(
+        env->GetStaticObjectField(c, env->GetStaticFieldID(c, "TYPE", "Ljava/lang/Class;")));
+
+    gVMRuntime_class = make_globalref(env, "dalvik/system/VMRuntime");
+    m = env->GetStaticMethodID(gVMRuntime_class, "getRuntime", "()Ldalvik/system/VMRuntime;");
+    gVMRuntime = env->NewGlobalRef(env->CallStaticObjectMethod(gVMRuntime_class, m));
+    gVMRuntime_newNonMovableArray = env->GetMethodID(gVMRuntime_class, "newNonMovableArray",
+                                                     "(Ljava/lang/Class;I)Ljava/lang/Object;");
+    gVMRuntime_addressOf = env->GetMethodID(gVMRuntime_class, "addressOf", "(Ljava/lang/Object;)J");
 
     return 0;
 }

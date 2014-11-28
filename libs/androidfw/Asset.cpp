@@ -72,7 +72,7 @@ String8 Asset::getAssetAllocations()
         }
         cur = cur->mNext;
     }
-    
+
     return res;
 }
 
@@ -84,18 +84,18 @@ Asset::Asset(void)
     mNext = mPrev = NULL;
     if (gTail == NULL) {
         gHead = gTail = this;
-  	} else {
-  	    mPrev = gTail;
-  	    gTail->mNext = this;
-  	    gTail = this;
-  	}
+    } else {
+        mPrev = gTail;
+        gTail->mNext = this;
+        gTail = this;
+    }
     //ALOGI("Creating Asset %p #%d\n", this, gCount);
 }
 
 Asset::~Asset(void)
 {
     AutoMutex _l(gAssetLock);
-	gCount--;
+    gCount--;
     if (gHead == this) {
         gHead = mNext;
     }
@@ -409,7 +409,7 @@ status_t _FileAsset::openChunk(const char* fileName, int fd, off64_t offset, siz
     }
 
     mFileName = fileName != NULL ? strdup(fileName) : NULL;
-    
+
     return NO_ERROR;
 }
 
@@ -538,7 +538,7 @@ void _FileAsset::close(void)
         free(mFileName);
         mFileName = NULL;
     }
-    
+
     if (mFp != NULL) {
         // can only be NULL when called from destructor
         // (otherwise we would never return this object)
@@ -843,7 +843,7 @@ void _CompressedAsset::close(void)
  * The first time this is called, we expand the compressed data into a
  * buffer.
  */
-const void* _CompressedAsset::getBuffer(bool wordAligned)
+const void* _CompressedAsset::getBuffer(bool)
 {
     unsigned char* buf = NULL;
 
@@ -860,7 +860,7 @@ const void* _CompressedAsset::getBuffer(bool wordAligned)
     }
 
     if (mMap != NULL) {
-        if (!ZipFileRO::inflateBuffer(buf, mMap->getDataPtr(),
+        if (!ZipUtils::inflateToBuffer(mMap->getDataPtr(), buf,
                 mUncompressedLen, mCompressedLen))
             goto bail;
     } else {

@@ -1,6 +1,5 @@
 //
 // Copyright 2006 The Android Open Source Project
-// This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
 //
 // Build resource files from raw assets.
 //
@@ -13,12 +12,14 @@
 
 #include <androidfw/ResourceTypes.h>
 #include <utils/ByteOrder.h>
+#include <utils/TypeHelpers.h>
 #include <stdarg.h>
-#include <stdlib.h>
 
 #define NOISY(x) //x
 
-status_t compileXmlFile(const sp<AaptAssets>& assets,
+status_t compileXmlFile(const Bundle* bundle,
+                        const sp<AaptAssets>& assets,
+                        const String16& resourceName,
                         const sp<AaptFile>& target,
                         ResourceTable* table,
                         int options)
@@ -27,11 +28,13 @@ status_t compileXmlFile(const sp<AaptAssets>& assets,
     if (root == NULL) {
         return UNKNOWN_ERROR;
     }
-    
-    return compileXmlFile(assets, root, target, table, options);
+
+    return compileXmlFile(bundle, assets, resourceName, root, target, table, options);
 }
 
-status_t compileXmlFile(const sp<AaptAssets>& assets,
+status_t compileXmlFile(const Bundle* bundle,
+                        const sp<AaptAssets>& assets,
+                        const String16& resourceName,
                         const sp<AaptFile>& target,
                         const sp<AaptFile>& outTarget,
                         ResourceTable* table,
@@ -42,10 +45,12 @@ status_t compileXmlFile(const sp<AaptAssets>& assets,
         return UNKNOWN_ERROR;
     }
     
-    return compileXmlFile(assets, root, outTarget, table, options);
+    return compileXmlFile(bundle, assets, resourceName, root, outTarget, table, options);
 }
 
-status_t compileXmlFile(const sp<AaptAssets>& assets,
+status_t compileXmlFile(const Bundle* bundle,
+                        const sp<AaptAssets>& assets,
+                        const String16& resourceName,
                         const sp<XMLNode>& root,
                         const sp<AaptFile>& target,
                         ResourceTable* table,
@@ -76,6 +81,10 @@ status_t compileXmlFile(const sp<AaptAssets>& assets,
     }
 
     if (hasErrors) {
+        return UNKNOWN_ERROR;
+    }
+
+    if (table->modifyForCompat(bundle, resourceName, target, root) != NO_ERROR) {
         return UNKNOWN_ERROR;
     }
     
@@ -486,15 +495,6 @@ static status_t compileAttribute(const sp<AaptFile>& in,
                 attr.hasErrors = true;
             }
 
-            // Make sure an id is defined for this enum/flag identifier...
-            if (!attr.hasErrors && !outTable->hasBagOrEntry(itemIdent, &id16, &myPackage)) {
-                err = outTable->startBag(SourcePos(in->getPrintableSource(), block.getLineNumber()),
-                                         myPackage, id16, itemIdent, String16(), NULL);
-                if (err != NO_ERROR) {
-                    attr.hasErrors = true;
-                }
-            }
-
             if (!attr.hasErrors) {
                 if (enumOrFlagsComment.size() == 0) {
                     enumOrFlagsComment.append(mayOrMust(attr.type,
@@ -579,13 +579,13 @@ status_t parseAndAddBag(Bundle* bundle,
                         int32_t curFormat,
                         bool isFormatted,
                         const String16& product,
-                        bool pseudolocalize,
+                        PseudolocalizationMethod pseudolocalize,
                         const bool overwrite,
                         ResourceTable* outTable)
 {
     status_t err;
     const String16 item16("item");
-    
+
     String16 str;
     Vector<StringPool::entry_style_span> spans;
     err = parseStyledString(bundle, in->getPrintableSource().string(),
@@ -674,7 +674,7 @@ status_t parseAndAddEntry(Bundle* bundle,
                         int32_t curFormat,
                         bool isFormatted,
                         const String16& product,
-                        bool pseudolocalize,
+                        PseudolocalizationMethod pseudolocalize,
                         const bool overwrite,
                         KeyedVector<type_ident_pair_t, bool>* skippedResourceNames,
                         ResourceTable* outTable)
@@ -823,7 +823,6 @@ status_t compileResourceFile(Bundle* bundle,
     const String16 myPackage(assets->getPackage());
 
     bool hasErrors = false;
-    bool errorOnWarning = getenv("AAPT_ERROR_ON_WARNING") != NULL ? true : false;
 
     bool fileIsTranslatable = true;
     if (strstr(in->getPrintableSource().string(), "donottranslate") != NULL) {
@@ -857,10 +856,31 @@ status_t compileResourceFile(Bundle* bundle,
     ResTable_config curParams(defParams);
 
     ResTable_config pseudoParams(curParams);
-        pseudoParams.language[0] = 'z';
-        pseudoParams.language[1] = 'z';
-        pseudoParams.country[0] = 'Z';
-        pseudoParams.country[1] = 'Z';
+        pseudoParams.language[0] = 'e';
+        pseudoParams.language[1] = 'n';
+        pseudoParams.country[0] = 'X';
+        pseudoParams.country[1] = 'A';
+
+    ResTable_config pseudoBidiParams(curParams);
+        pseudoBidiParams.language[0] = 'a';
+        pseudoBidiParams.language[1] = 'r';
+        pseudoBidiParams.country[0] = 'X';
+        pseudoBidiParams.country[1] = 'B';
+
+    // We should skip resources for pseudolocales if they were
+    // already added automatically. This is a fix for a transition period when
+    // manually pseudolocalized resources may be expected.
+    // TODO: remove this check after next SDK version release.
+    if ((bundle->getPseudolocalize() & PSEUDO_ACCENTED &&
+         curParams.locale == pseudoParams.locale) ||
+        (bundle->getPseudolocalize() & PSEUDO_BIDI &&
+         curParams.locale == pseudoBidiParams.locale)) {
+        SourcePos(in->getPrintableSource(), 0).warning(
+                "Resource file %s is skipped as pseudolocalization"
+                " was done automatically.",
+                in->getPrintableSource().string());
+        return NO_ERROR;
+    }
 
     while ((code=block.next()) != ResXMLTree::END_DOCUMENT && code != ResXMLTree::BAD_DOCUMENT) {
         if (code == ResXMLTree::START_TAG) {
@@ -1295,8 +1315,8 @@ status_t compileResourceFile(Bundle* bundle,
                 curIsStyled = true;
             } else if (strcmp16(block.getElementName(&len), string16.string()) == 0) {
                 // Note the existence and locale of every string we process
-                char rawLocale[16];
-                curParams.getLocale(rawLocale);
+                char rawLocale[RESTABLE_MAX_LOCALE_LEN];
+                curParams.getBcp47Locale(rawLocale);
                 String8 locale(rawLocale);
                 String16 name;
                 String16 translatable;
@@ -1320,13 +1340,11 @@ status_t compileResourceFile(Bundle* bundle,
                         curIsFormatted = false;
                         // Untranslatable strings must only exist in the default [empty] locale
                         if (locale.size() > 0) {
-                            fprintf(stderr, "aapt: warning: string '%s' in %s marked untranslatable but exists"
-                                    " in locale '%s'\n", String8(name).string(),
-                                    bundle->getResourceSourceDirs()[0],
+                            SourcePos(in->getPrintableSource(), block.getLineNumber()).warning(
+                                    "string '%s' marked untranslatable but exists in locale '%s'\n",
+                                    String8(name).string(),
                                     locale.string());
-                            if (errorOnWarning) {
-                                hasErrors = localHasErrors = true;
-                            }
+                            // hasErrors = localHasErrors = true;
                         } else {
                             // Intentionally empty block:
                             //
@@ -1335,7 +1353,10 @@ status_t compileResourceFile(Bundle* bundle,
                             // having no default translation.
                         }
                     } else {
-                        outTable->addLocalization(name, locale);
+                        outTable->addLocalization(
+                                name,
+                                locale,
+                                SourcePos(in->getPrintableSource(), block.getLineNumber()));
                     }
 
                     if (formatted == false16) {
@@ -1347,7 +1368,7 @@ status_t compileResourceFile(Bundle* bundle,
                 curType = string16;
                 curFormat = ResTable_map::TYPE_REFERENCE|ResTable_map::TYPE_STRING;
                 curIsStyled = true;
-                curIsPseudolocalizable = true;
+                curIsPseudolocalizable = fileIsTranslatable && (translatable != false16);
             } else if (strcmp16(block.getElementName(&len), drawable16.string()) == 0) {
                 curTag = &drawable16;
                 curType = drawable16;
@@ -1391,6 +1412,7 @@ status_t compileResourceFile(Bundle* bundle,
                 curTag = &plurals16;
                 curType = plurals16;
                 curIsBag = true;
+                curIsPseudolocalizable = fileIsTranslatable;
             } else if (strcmp16(block.getElementName(&len), array16.string()) == 0) {
                 curTag = &array16;
                 curType = array16;
@@ -1410,35 +1432,25 @@ status_t compileResourceFile(Bundle* bundle,
                     }
                 }
             } else if (strcmp16(block.getElementName(&len), string_array16.string()) == 0) {
-                // Note the existence and locale of every string we process
-                char rawLocale[16];
-                curParams.getLocale(rawLocale);
-                String8 locale(rawLocale);
-                String16 name;
                 // Check whether these strings need valid formats.
                 // (simplified form of what string16 does above)
+                bool isTranslatable = false;
                 size_t n = block.getAttributeCount();
+
+                // Pseudolocalizable by default, unless this string array isn't
+                // translatable.
                 for (size_t i = 0; i < n; i++) {
                     size_t length;
                     const uint16_t* attr = block.getAttributeName(i, &length);
-                    if (strcmp16(attr, name16.string()) == 0) {
-                        name.setTo(block.getAttributeStringValue(i, &length));
-                    } else if (strcmp16(attr, translatable16.string()) == 0
-                            || strcmp16(attr, formatted16.string()) == 0) {
+                    if (strcmp16(attr, formatted16.string()) == 0) {
                         const uint16_t* value = block.getAttributeStringValue(i, &length);
                         if (strcmp16(value, false16.string()) == 0) {
                             curIsFormatted = false;
-                            // Untranslatable strings must only exist in the default [empty] locale
-                            if (locale.size() > 0) {
-                                fprintf(stderr, "aapt: warning: string-array '%s' in %s marked untranslatable but exists"
-                                        " in locale '%s'\n", String8(name).string(),
-                                        bundle->getResourceSourceDirs()[0],
-                                        locale.string());
-                                if (errorOnWarning) {
-                                    hasErrors = localHasErrors = true;
-                                }
-                            }
-                            break;
+                        }
+                    } else if (strcmp16(attr, translatable16.string()) == 0) {
+                        const uint16_t* value = block.getAttributeStringValue(i, &length);
+                        if (strcmp16(value, false16.string()) == 0) {
+                            isTranslatable = false;
                         }
                     }
                 }
@@ -1448,7 +1460,7 @@ status_t compileResourceFile(Bundle* bundle,
                 curFormat = ResTable_map::TYPE_REFERENCE|ResTable_map::TYPE_STRING;
                 curIsBag = true;
                 curIsBagReplaceOnOverwrite = true;
-                curIsPseudolocalizable = true;
+                curIsPseudolocalizable = isTranslatable && fileIsTranslatable;
             } else if (strcmp16(block.getElementName(&len), integer_array16.string()) == 0) {
                 curTag = &integer_array16;
                 curType = array16;
@@ -1570,19 +1582,29 @@ status_t compileResourceFile(Bundle* bundle,
 
                         err = parseAndAddBag(bundle, in, &block, curParams, myPackage, curType,
                                 ident, parentIdent, itemIdent, curFormat, curIsFormatted,
-                                product, false, overwrite, outTable);
+                                product, NO_PSEUDOLOCALIZATION, overwrite, outTable);
                         if (err == NO_ERROR) {
                             if (curIsPseudolocalizable && localeIsDefined(curParams)
-                                    && bundle->getPseudolocalize()) {
+                                    && bundle->getPseudolocalize() > 0) {
                                 // pseudolocalize here
-#if 1
-                                block.setPosition(parserPosition);
-                                err = parseAndAddBag(bundle, in, &block, pseudoParams, myPackage,
-                                        curType, ident, parentIdent, itemIdent, curFormat,
-                                        curIsFormatted, product, true, overwrite, outTable);
-#endif
+                                if ((PSEUDO_ACCENTED & bundle->getPseudolocalize()) ==
+                                   PSEUDO_ACCENTED) {
+                                    block.setPosition(parserPosition);
+                                    err = parseAndAddBag(bundle, in, &block, pseudoParams, myPackage,
+                                            curType, ident, parentIdent, itemIdent, curFormat,
+                                            curIsFormatted, product, PSEUDO_ACCENTED,
+                                            overwrite, outTable);
+                                }
+                                if ((PSEUDO_BIDI & bundle->getPseudolocalize()) ==
+                                   PSEUDO_BIDI) {
+                                    block.setPosition(parserPosition);
+                                    err = parseAndAddBag(bundle, in, &block, pseudoBidiParams, myPackage,
+                                            curType, ident, parentIdent, itemIdent, curFormat,
+                                            curIsFormatted, product, PSEUDO_BIDI,
+                                            overwrite, outTable);
+                                }
                             }
-                        } 
+                        }
                         if (err != NO_ERROR) {
                             hasErrors = localHasErrors = true;
                         }
@@ -1603,20 +1625,31 @@ status_t compileResourceFile(Bundle* bundle,
 
                 err = parseAndAddEntry(bundle, in, &block, curParams, myPackage, curType, ident,
                         *curTag, curIsStyled, curFormat, curIsFormatted,
-                        product, false, overwrite, &skippedResourceNames, outTable);
+                        product, NO_PSEUDOLOCALIZATION, overwrite, &skippedResourceNames, outTable);
 
                 if (err < NO_ERROR) { // Why err < NO_ERROR instead of err != NO_ERROR?
                     hasErrors = localHasErrors = true;
                 }
                 else if (err == NO_ERROR) {
                     if (curIsPseudolocalizable && localeIsDefined(curParams)
-                            && bundle->getPseudolocalize()) {
+                            && bundle->getPseudolocalize() > 0) {
                         // pseudolocalize here
-                        block.setPosition(parserPosition);
-                        err = parseAndAddEntry(bundle, in, &block, pseudoParams, myPackage, curType,
-                                ident, *curTag, curIsStyled, curFormat,
-                                curIsFormatted, product,
-                                true, overwrite, &skippedResourceNames, outTable);
+                        if ((PSEUDO_ACCENTED & bundle->getPseudolocalize()) ==
+                           PSEUDO_ACCENTED) {
+                            block.setPosition(parserPosition);
+                            err = parseAndAddEntry(bundle, in, &block, pseudoParams, myPackage, curType,
+                                    ident, *curTag, curIsStyled, curFormat,
+                                    curIsFormatted, product,
+                                    PSEUDO_ACCENTED, overwrite, &skippedResourceNames, outTable);
+                        }
+                        if ((PSEUDO_BIDI & bundle->getPseudolocalize()) ==
+                           PSEUDO_BIDI) {
+                            block.setPosition(parserPosition);
+                            err = parseAndAddEntry(bundle, in, &block, pseudoBidiParams,
+                                    myPackage, curType, ident, *curTag, curIsStyled, curFormat,
+                                    curIsFormatted, product,
+                                    PSEUDO_BIDI, overwrite, &skippedResourceNames, outTable);
+                        }
                         if (err != NO_ERROR) {
                             hasErrors = localHasErrors = true;
                         }
@@ -1682,12 +1715,49 @@ status_t compileResourceFile(Bundle* bundle,
     return hasErrors ? UNKNOWN_ERROR : NO_ERROR;
 }
 
-ResourceTable::ResourceTable(Bundle* bundle, const String16& assetsPackage)
-    : mAssetsPackage(assetsPackage), mNextPackageId(1), mHaveAppPackage(false),
-      mIsAppPackage(!bundle->getExtending()),
-      mNumLocal(0),
-      mBundle(bundle)
+ResourceTable::ResourceTable(Bundle* bundle, const String16& assetsPackage, ResourceTable::PackageType type)
+    : mAssetsPackage(assetsPackage)
+    , mPackageType(type)
+    , mTypeIdOffset(0)
+    , mNumLocal(0)
+    , mBundle(bundle)
 {
+    ssize_t packageId = -1;
+    switch (mPackageType) {
+        case App:
+        case AppFeature:
+            packageId = 0x7f;
+            break;
+
+        case System:
+            packageId = 0x01;
+            break;
+
+        case SharedLibrary:
+            packageId = 0x00;
+            break;
+
+        default:
+            assert(0);
+            break;
+    }
+    sp<Package> package = new Package(mAssetsPackage, packageId);
+    mPackages.add(assetsPackage, package);
+    mOrderedPackages.add(package);
+
+    // Every resource table always has one first entry, the bag attributes.
+    const SourcePos unknown(String8("????"), 0);
+    getType(mAssetsPackage, String16("attr"), unknown);
+}
+
+static uint32_t findLargestTypeIdForPackage(const ResTable& table, const String16& packageName) {
+    const size_t basePackageCount = table.getBasePackageCount();
+    for (size_t i = 0; i < basePackageCount; i++) {
+        if (packageName == table.getBasePackageName(i)) {
+            return table.getLastTypeIdForPackage(i);
+        }
+    }
+    return 0;
 }
 
 status_t ResourceTable::addIncludedResources(Bundle* bundle, const sp<AaptAssets>& assets)
@@ -1697,58 +1767,22 @@ status_t ResourceTable::addIncludedResources(Bundle* bundle, const sp<AaptAssets
         return err;
     }
 
-    // For future reference to included resources.
     mAssets = assets;
+    mTypeIdOffset = findLargestTypeIdForPackage(assets->getIncludedResources(), mAssetsPackage);
 
-    const ResTable& incl = assets->getIncludedResources();
-
-    // Retrieve all the packages.
-    const size_t N = incl.getBasePackageCount();
-    for (size_t phase=0; phase<2; phase++) {
-        for (size_t i=0; i<N; i++) {
-            String16 name(incl.getBasePackageName(i));
-            uint32_t id = incl.getBasePackageId(i);
-            // First time through: only add base packages (id
-            // is not 0); second time through add the other
-            // packages.
-            if (phase != 0) {
-                if (id != 0) {
-                    // Skip base packages -- already one.
-                    id = 0;
-                } else {
-                    // Assign a dynamic id.
-                    id = mNextPackageId;
-                }
-            } else if (id != 0) {
-                if (id == 127) {
-                    if (mHaveAppPackage) {
-                        fprintf(stderr, "Included resources have two application packages!\n");
-                        return UNKNOWN_ERROR;
-                    }
-                    mHaveAppPackage = true;
-                }
-                if (mNextPackageId > id) {
-                    fprintf(stderr, "Included base package ID %d already in use!\n", id);
-                    return UNKNOWN_ERROR;
-                }
-            }
-            if (id != 0) {
-                NOISY(printf("Including package %s with ID=%d\n",
-                             String8(name).string(), id));
-                sp<Package> p = new Package(name, id);
-                mPackages.add(name, p);
-                mOrderedPackages.add(p);
-
-                if (id >= mNextPackageId) {
-                    mNextPackageId = id+1;
-                }
-            }
+    const String8& featureAfter = bundle->getFeatureAfterPackage();
+    if (!featureAfter.isEmpty()) {
+        AssetManager featureAssetManager;
+        if (!featureAssetManager.addAssetPath(featureAfter, NULL)) {
+            fprintf(stderr, "ERROR: Feature package '%s' not found.\n",
+                    featureAfter.string());
+            return UNKNOWN_ERROR;
         }
-    }
 
-    // Every resource table always has one first entry, the bag attributes.
-    const SourcePos unknown(String8("????"), 0);
-    sp<Type> attr = getType(mAssetsPackage, String16("attr"), unknown);
+        const ResTable& featureTable = featureAssetManager.getResources(false);
+        mTypeIdOffset = max(mTypeIdOffset,
+                findLargestTypeIdForPackage(featureTable, mAssetsPackage)); 
+    }
 
     return NO_ERROR;
 }
@@ -1788,24 +1822,16 @@ status_t ResourceTable::addEntry(const SourcePos& sourcePos,
                                  const int32_t format,
                                  const bool overwrite)
 {
-    // Check for adding entries in other packages...  for now we do
-    // nothing.  We need to do the right thing here to support skinning.
     uint32_t rid = mAssets->getIncludedResources()
         .identifierForName(name.string(), name.size(),
                            type.string(), type.size(),
                            package.string(), package.size());
     if (rid != 0) {
-        return NO_ERROR;
+        sourcePos.error("Resource entry %s/%s is already defined in package %s.",
+                String8(type).string(), String8(name).string(), String8(package).string());
+        return UNKNOWN_ERROR;
     }
     
-#if 0
-    if (name == String16("left")) {
-        printf("Adding entry left: file=%s, line=%d, type=%s, value=%s\n",
-               sourcePos.file.string(), sourcePos.line, String8(type).string(),
-               String8(value).string());
-    }
-#endif
-
     sp<Entry> e = getEntry(package, type, name, sourcePos, overwrite,
                            params, doSetIndex);
     if (e == NULL) {
@@ -1836,15 +1862,11 @@ status_t ResourceTable::startBag(const SourcePos& sourcePos,
                        type.string(), type.size(),
                        package.string(), package.size());
     if (rid != 0) {
-        return NO_ERROR;
+        sourcePos.error("Resource entry %s/%s is already defined in package %s.",
+                String8(type).string(), String8(name).string(), String8(package).string());
+        return UNKNOWN_ERROR;
     }
-    
-#if 0
-    if (name == String16("left")) {
-        printf("Adding bag left: file=%s, line=%d, type=%s\n",
-               sourcePos.file.striing(), sourcePos.line, String8(type).string());
-    }
-#endif
+
     if (overlay && !mBundle->getAutoAddOverlay() && !hasBagOrEntry(package, type, name)) {
         bool canAdd = false;
         sp<Package> p = mPackages.valueFor(package);
@@ -2063,10 +2085,11 @@ bool ResourceTable::hasResources() const {
     return mNumLocal > 0;
 }
 
-sp<AaptFile> ResourceTable::flatten(Bundle* bundle)
+sp<AaptFile> ResourceTable::flatten(Bundle* bundle, const sp<const ResourceFilter>& filter,
+        const bool isBase)
 {
     sp<AaptFile> data = new AaptFile(String8(), AaptGroupEntry(), String8());
-    status_t err = flatten(bundle, data);
+    status_t err = flatten(bundle, filter, data, isBase);
     return err == NO_ERROR ? data : NULL;
 }
 
@@ -2085,9 +2108,6 @@ uint32_t ResourceTable::getResId(const String16& package,
     uint32_t id = ResourceIdCache::lookup(package, type, name, onlyPublic);
     if (id != 0) return id;     // cache hit
 
-    sp<Package> p = mPackages.valueFor(package);
-    if (p == NULL) return 0;
-
     // First look for this in the included resources...
     uint32_t specFlags = 0;
     uint32_t rid = mAssets->getIncludedResources()
@@ -2102,13 +2122,11 @@ uint32_t ResourceTable::getResId(const String16& package,
             }
         }
         
-        if (Res_INTERNALID(rid)) {
-            return ResourceIdCache::store(package, type, name, onlyPublic, rid);
-        }
-        return ResourceIdCache::store(package, type, name, onlyPublic,
-                Res_MAKEID(p->getAssignedId()-1, Res_GETTYPE(rid), Res_GETENTRY(rid)));
+        return ResourceIdCache::store(package, type, name, onlyPublic, rid);
     }
 
+    sp<Package> p = mPackages.valueFor(package);
+    if (p == NULL) return 0;
     sp<Type> t = p->getTypes().valueFor(type);
     if (t == NULL) return 0;
     sp<ConfigList> c =  t->getConfigs().valueFor(name);
@@ -2260,8 +2278,17 @@ uint32_t ResourceTable::getCustomResourceWithCreation(
     if (resId != 0 || !createIfNotFound) {
         return resId;
     }
-    String16 value("false");
 
+    if (mAssetsPackage != package) {
+        mCurrentXmlPos.error("creating resource for external package %s: %s/%s.",
+                String8(package).string(), String8(type).string(), String8(name).string());
+        if (package == String16("android")) {
+            mCurrentXmlPos.printf("did you mean to use @+id instead of @+android:id?");
+        }
+        return 0;
+    }
+
+    String16 value("false");
     status_t status = addEntry(mCurrentXmlPos, package, type, name, value, NULL, NULL, true);
     if (status == NO_ERROR) {
         resId = getResId(package, type, name);
@@ -2441,6 +2468,7 @@ status_t ResourceTable::assignResourceIds()
             continue;
         }
 
+        // This has no sense for packages being built as AppFeature (aka with a non-zero offset).
         status_t err = p->applyPublicTypeOrder();
         if (err != NO_ERROR && firstError == NO_ERROR) {
             firstError = err;
@@ -2474,22 +2502,29 @@ status_t ResourceTable::assignResourceIds()
             }
         }
 
+        uint32_t typeIdOffset = 0;
+        if (mPackageType == AppFeature && p->getName() == mAssetsPackage) {
+            typeIdOffset = mTypeIdOffset;
+        }
+
         const SourcePos unknown(String8("????"), 0);
         sp<Type> attr = p->getType(String16("attr"), unknown);
 
         // Assign indices...
-        for (ti=0; ti<N; ti++) {
+        const size_t typeCount = p->getOrderedTypes().size();
+        for (size_t ti = 0; ti < typeCount; ti++) {
             sp<Type> t = p->getOrderedTypes().itemAt(ti);
             if (t == NULL) {
                 continue;
             }
+
             err = t->applyPublicEntryOrder();
             if (err != NO_ERROR && firstError == NO_ERROR) {
                 firstError = err;
             }
 
             const size_t N = t->getOrderedConfigs().size();
-            t->setIndex(ti+1);
+            t->setIndex(ti + 1 + typeIdOffset);
 
             LOG_ALWAYS_FATAL_IF(ti == 0 && attr != t,
                                 "First type is not attr!");
@@ -2504,7 +2539,7 @@ status_t ResourceTable::assignResourceIds()
         }
 
         // Assign resource IDs to keys in bags...
-        for (ti=0; ti<N; ti++) {
+        for (size_t ti = 0; ti < typeCount; ti++) {
             sp<Type> t = p->getOrderedTypes().itemAt(ti);
             if (t == NULL) {
                 continue;
@@ -2550,8 +2585,12 @@ status_t ResourceTable::addSymbols(const sp<AaptSymbols>& outSymbols) {
                 continue;
             }
             const size_t N = t->getOrderedConfigs().size();
-            sp<AaptSymbols> typeSymbols;
-            typeSymbols = outSymbols->addNestedSymbol(String8(t->getName()), t->getPos());
+            sp<AaptSymbols> typeSymbols =
+                    outSymbols->addNestedSymbol(String8(t->getName()), t->getPos());
+            if (typeSymbols == NULL) {
+                return UNKNOWN_ERROR;
+            }
+
             for (size_t ci=0; ci<N; ci++) {
                 sp<ConfigList> c = t->getOrderedConfigs().itemAt(ci);
                 if (c == NULL) {
@@ -2561,7 +2600,7 @@ status_t ResourceTable::addSymbols(const sp<AaptSymbols>& outSymbols) {
                 if (rid == 0) {
                     return UNKNOWN_ERROR;
                 }
-                if (Res_GETPACKAGE(rid) == (size_t)(p->getAssignedId()-1)) {
+                if (Res_GETPACKAGE(rid) + 1 == p->getAssignedId()) {
                     typeSymbols->addSymbol(String8(c->getName()), rid, c->getPos());
                     
                     String16 comment(c->getComment());
@@ -2570,11 +2609,6 @@ status_t ResourceTable::addSymbols(const sp<AaptSymbols>& outSymbols) {
                     //        String8(c->getName()).string(), String8(comment).string());
                     comment = c->getTypeComment();
                     typeSymbols->appendTypeComment(String8(c->getName()), comment);
-                } else {
-#if 0
-                    printf("**** NO MATCH: 0x%08x vs 0x%08x\n",
-                           Res_GETPACKAGE(rid), p->getAssignedId());
-#endif
                 }
             }
         }
@@ -2584,9 +2618,9 @@ status_t ResourceTable::addSymbols(const sp<AaptSymbols>& outSymbols) {
 
 
 void
-ResourceTable::addLocalization(const String16& name, const String8& locale)
+ResourceTable::addLocalization(const String16& name, const String8& locale, const SourcePos& src)
 {
-    mLocalizations[name].insert(locale);
+    mLocalizations[name][locale] = src;
 }
 
 
@@ -2594,9 +2628,9 @@ ResourceTable::addLocalization(const String16& name, const String8& locale)
  * Flag various sorts of localization problems.  '+' indicates checks already implemented;
  * '-' indicates checks that will be implemented in the future.
  *
- * + A localized string for which no default-locale version exists => warning or error
+ * + A localized string for which no default-locale version exists => warning
  * + A string for which no version in an explicitly-requested locale exists => warning
- * + A localized translation of an translateable="false" string => warning or error
+ * + A localized translation of an translateable="false" string => warning
  * - A localized string not provided in every locale used by the table
  */
 status_t
@@ -2604,37 +2638,35 @@ ResourceTable::validateLocalizations(void)
 {
     status_t err = NO_ERROR;
     const String8 defaultLocale;
-    bool errorOnWarning = getenv("AAPT_ERROR_ON_WARNING") != NULL ? true : false;
 
     // For all strings...
-    for (map<String16, set<String8> >::iterator nameIter = mLocalizations.begin();
+    for (map<String16, map<String8, SourcePos> >::iterator nameIter = mLocalizations.begin();
          nameIter != mLocalizations.end();
          nameIter++) {
-        const set<String8>& configSet = nameIter->second;   // naming convenience
+        const map<String8, SourcePos>& configSrcMap = nameIter->second;
 
-#ifdef SHOW_DEFAULT_TRANSLATION_WARNINGS
         // Look for strings with no default localization
-        if (configSet.count(defaultLocale) == 0) {
-            fprintf(stderr, "aapt: warning: string '%s' has no default translation in %s; found:",
-                    String8(nameIter->first).string(), mBundle->getResourceSourceDirs()[0]);
-            for (set<String8>::const_iterator locales = configSet.begin();
-                 locales != configSet.end();
-                 locales++) {
-                fprintf(stderr, " %s", (*locales).string());
+        if (configSrcMap.count(defaultLocale) == 0) {
+            SourcePos().warning("string '%s' has no default translation.",
+                    String8(nameIter->first).string());
+            if (mBundle->getVerbose()) {
+                for (map<String8, SourcePos>::const_iterator locales = configSrcMap.begin();
+                    locales != configSrcMap.end();
+                    locales++) {
+                    locales->second.printf("locale %s found", locales->first.string());
+                }
             }
-            fprintf(stderr, "\n");
-            if (errorOnWarning) {
-                err = BAD_VALUE;
-            }
+            // !!! TODO: throw an error here in some circumstances
         }
-#endif
-#ifdef SHOW_LOCALIZATION_WARNINGS
+
         // Check that all requested localizations are present for this string
-        if (mBundle->getConfigurations() != NULL && mBundle->getRequireLocalization()) {
-            const char* allConfigs = mBundle->getConfigurations();
+        if (mBundle->getConfigurations().size() > 0 && mBundle->getRequireLocalization()) {
+            const char* allConfigs = mBundle->getConfigurations().string();
             const char* start = allConfigs;
             const char* comma;
             
+            set<String8> missingConfigs;
+            AaptLocaleValue locale;
             do {
                 String8 config;
                 comma = strchr(start, ',');
@@ -2645,42 +2677,48 @@ ResourceTable::validateLocalizations(void)
                     config.setTo(start);
                 }
 
-                // don't bother with the pseudolocale "zz_ZZ"
-                if (config != "zz_ZZ") {
-                    if (configSet.find(config) == configSet.end()) {
+                if (!locale.initFromFilterString(config)) {
+                    continue;
+                }
+
+                // don't bother with the pseudolocale "en_XA" or "ar_XB"
+                if (config != "en_XA" && config != "ar_XB") {
+                    if (configSrcMap.find(config) == configSrcMap.end()) {
                         // okay, no specific localization found.  it's possible that we are
                         // requiring a specific regional localization [e.g. de_DE] but there is an
                         // available string in the generic language localization [e.g. de];
                         // consider that string to have fulfilled the localization requirement.
                         String8 region(config.string(), 2);
-                        if (configSet.find(region) == configSet.end()) {
-                            if (configSet.count(defaultLocale) == 0) {
-                                fprintf(stdout, "aapt: warning: "
-                                        "**** string '%s' has no default or required localization "
-                                        "for '%s' in %s\n",
-                                        String8(nameIter->first).string(),
-                                        config.string(),
-                                        mBundle->getResourceSourceDirs()[0]);
-                            }
+                        if (configSrcMap.find(region) == configSrcMap.end() &&
+                                configSrcMap.count(defaultLocale) == 0) {
+                            missingConfigs.insert(config);
                         }
                     }
                 }
-           } while (comma != NULL);
+            } while (comma != NULL);
+
+            if (!missingConfigs.empty()) {
+                String8 configStr;
+                for (set<String8>::iterator iter = missingConfigs.begin();
+                     iter != missingConfigs.end();
+                     iter++) {
+                    configStr.appendFormat(" %s", iter->string());
+                }
+                SourcePos().warning("string '%s' is missing %u required localizations:%s",
+                        String8(nameIter->first).string(),
+                        (unsigned int)missingConfigs.size(),
+                        configStr.string());
+            }
         }
-#endif
     }
 
     return err;
 }
 
-status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
+status_t ResourceTable::flatten(Bundle* bundle, const sp<const ResourceFilter>& filter,
+        const sp<AaptFile>& dest,
+        const bool isBase)
 {
-    ResourceFilter filter;
-    status_t err = filter.parse(bundle->getConfigurations());
-    if (err != NO_ERROR) {
-        return err;
-    }
-
     const ConfigDescription nullConfig;
 
     const size_t N = mOrderedPackages.size();
@@ -2690,6 +2728,19 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
 
     bool useUTF8 = !bundle->getUTF16StringsOption();
 
+    // The libraries this table references.
+    Vector<sp<Package> > libraryPackages;
+    const ResTable& table = mAssets->getIncludedResources();
+    const size_t basePackageCount = table.getBasePackageCount();
+    for (size_t i = 0; i < basePackageCount; i++) {
+        size_t packageId = table.getBasePackageId(i);
+        String16 packageName(table.getBasePackageName(i));
+        if (packageId > 0x01 && packageId != 0x7f &&
+                packageName != String16("android")) {
+            libraryPackages.add(sp<Package>(new Package(packageName, packageId)));
+        }
+    }
+
     // Iterate through all data, collecting all values (strings,
     // references, etc).
     StringPool valueStrings(useUTF8);
@@ -2697,22 +2748,30 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
     for (pi=0; pi<N; pi++) {
         sp<Package> p = mOrderedPackages.itemAt(pi);
         if (p->getTypes().size() == 0) {
-            // Empty, skip!
             continue;
         }
 
         StringPool typeStrings(useUTF8);
         StringPool keyStrings(useUTF8);
 
+        ssize_t stringsAdded = 0;
         const size_t N = p->getOrderedTypes().size();
         for (size_t ti=0; ti<N; ti++) {
             sp<Type> t = p->getOrderedTypes().itemAt(ti);
             if (t == NULL) {
                 typeStrings.add(String16("<empty>"), false);
+                stringsAdded++;
                 continue;
             }
+
+            while (stringsAdded < t->getIndex() - 1) {
+                typeStrings.add(String16("<empty>"), false);
+                stringsAdded++;
+            }
+
             const String16 typeName(t->getName());
             typeStrings.add(typeName, false);
+            stringsAdded++;
 
             // This is a hack to tweak the sorting order of the final strings,
             // to put stuff that is generally not language-specific first.
@@ -2727,6 +2786,13 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                 configTypeName = "2value";
             }
 
+            // mipmaps don't get filtered, so they will
+            // allways end up in the base. Make sure they
+            // don't end up in a split.
+            if (typeName == mipmap16 && !isBase) {
+                continue;
+            }
+
             const bool filterable = (typeName != mipmap16);
 
             const size_t N = t->getOrderedConfigs().size();
@@ -2738,7 +2804,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                 const size_t N = c->getEntries().size();
                 for (size_t ei=0; ei<N; ei++) {
                     ConfigDescription config = c->getEntries().keyAt(ei);
-                    if (filterable && !filter.match(config)) {
+                    if (filterable && !filter->match(config)) {
                         continue;
                     }
                     sp<Entry> e = c->getEntries().valueAt(ei);
@@ -2781,7 +2847,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
     }
 
     ssize_t strAmt = 0;
-    
+
     // Now build the array of package chunks.
     Vector<sp<AaptFile> > flatPackages;
     for (pi=0; pi<N; pi++) {
@@ -2805,7 +2871,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
         memset(header, 0, sizeof(*header));
         header->header.type = htods(RES_TABLE_PACKAGE_TYPE);
         header->header.headerSize = htods(sizeof(*header));
-        header->id = htodl(p->getAssignedId());
+        header->id = htodl(static_cast<uint32_t>(p->getAssignedId()));
         strcpy16_htod(header->name, p->getName().string());
 
         // Write the string blocks.
@@ -2830,6 +2896,14 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
             return amt;
         }
 
+        if (isBase) {
+            status_t err = flattenLibraryTable(data, libraryPackages);
+            if (err != NO_ERROR) {
+                fprintf(stderr, "ERROR: failed to write library table\n");
+                return err;
+            }
+        }
+
         // Build the type chunks inside of this package.
         for (size_t ti=0; ti<N; ti++) {
             // Retrieve them in the same order as the type string block.
@@ -2839,8 +2913,11 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
             LOG_ALWAYS_FATAL_IF(t == NULL && typeName != String16("<empty>"),
                                 "Type name %s not found",
                                 String8(typeName).string());
-
+            if (t == NULL) {
+                continue;
+            }
             const bool filterable = (typeName != mipmap16);
+            const bool skipEntireType = (typeName == mipmap16 && !isBase);
 
             const size_t N = t != NULL ? t->getOrderedConfigs().size() : 0;
 
@@ -2878,13 +2955,18 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                     if (cl->getPublic()) {
                         typeSpecFlags[ei] |= htodl(ResTable_typeSpec::SPEC_PUBLIC);
                     }
+
+                    if (skipEntireType) {
+                        continue;
+                    }
+
                     const size_t CN = cl->getEntries().size();
                     for (size_t ci=0; ci<CN; ci++) {
-                        if (filterable && !filter.match(cl->getEntries().keyAt(ci))) {
+                        if (filterable && !filter->match(cl->getEntries().keyAt(ci))) {
                             continue;
                         }
                         for (size_t cj=ci+1; cj<CN; cj++) {
-                            if (filterable && !filter.match(cl->getEntries().keyAt(cj))) {
+                            if (filterable && !filter->match(cl->getEntries().keyAt(cj))) {
                                 continue;
                             }
                             typeSpecFlags[ei] |= htodl(
@@ -2894,6 +2976,10 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                 }
             }
             
+            if (skipEntireType) {
+                continue;
+            }
+
             // We need to write one type chunk for each configuration for
             // which we have entries in this type.
             const size_t NC = t->getUniqueConfigs().size();
@@ -2904,7 +2990,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                 ConfigDescription config = t->getUniqueConfigs().itemAt(ci);
 
                 NOISY(printf("Writing config %d config: imsi:%d/%d lang:%c%c cnt:%c%c "
-                     "orien:%d uiInverted:%d ui:%d touch:%d density:%d key:%d inp:%d nav:%d sz:%dx%d "
+                     "orien:%d ui:%d touch:%d density:%d key:%d inp:%d nav:%d sz:%dx%d "
                      "sw%ddp w%ddp h%ddp dir:%d\n",
                       ti+1,
                       config.mcc, config.mnc,
@@ -2913,7 +2999,6 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                       config.country[0] ? config.country[0] : '-',
                       config.country[1] ? config.country[1] : '-',
                       config.orientation,
-                      config.uiInvertedMode,
                       config.uiMode,
                       config.touchscreen,
                       config.density,
@@ -2927,7 +3012,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                       config.screenHeightDp,
                       config.layoutDirection));
                       
-                if (filterable && !filter.match(config)) {
+                if (filterable && !filter->match(config)) {
                     continue;
                 }
                 
@@ -2948,7 +3033,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                 tHeader->entriesStart = htodl(typeSize);
                 tHeader->config = config;
                 NOISY(printf("Writing type %d config: imsi:%d/%d lang:%c%c cnt:%c%c "
-                     "orien:%d uiInverted:%d ui:%d touch:%d density:%d key:%d inp:%d nav:%d sz:%dx%d "
+                     "orien:%d ui:%d touch:%d density:%d key:%d inp:%d nav:%d sz:%dx%d "
                      "sw%ddp w%ddp h%ddp dir:%d\n",
                       ti+1,
                       tHeader->config.mcc, tHeader->config.mnc,
@@ -2957,7 +3042,6 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                       tHeader->config.country[0] ? tHeader->config.country[0] : '-',
                       tHeader->config.country[1] ? tHeader->config.country[1] : '-',
                       tHeader->config.orientation,
-                      tHeader->config.uiInvertedMode,
                       tHeader->config.uiMode,
                       tHeader->config.touchscreen,
                       tHeader->config.density,
@@ -3001,11 +3085,24 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
                 tHeader->header.size = htodl(data->getSize()-typeStart);
             }
 
-            for (size_t i = 0; i < N; ++i) {
-                if (!validResources[i]) {
-                    sp<ConfigList> c = t->getOrderedConfigs().itemAt(i);
-                    fprintf(stderr, "warning: no entries written for %s/%s\n",
-                            String8(typeName).string(), String8(c->getName()).string());
+            // If we're building splits, then each invocation of the flattening
+            // step will have 'missing' entries. Don't warn/error for this case.
+            if (bundle->getSplitConfigurations().isEmpty()) {
+                bool missing_entry = false;
+                const char* log_prefix = bundle->getErrorOnMissingConfigEntry() ?
+                        "error" : "warning";
+                for (size_t i = 0; i < N; ++i) {
+                    if (!validResources[i]) {
+                        sp<ConfigList> c = t->getOrderedConfigs().itemAt(i);
+                        fprintf(stderr, "%s: no entries written for %s/%s (0x%08x)\n", log_prefix,
+                                String8(typeName).string(), String8(c->getName()).string(),
+                                Res_MAKEID(p->getAssignedId() - 1, ti, i));
+                        missing_entry = true;
+                    }
+                }
+                if (bundle->getErrorOnMissingConfigEntry() && missing_entry) {
+                    fprintf(stderr, "Error: Missing entries, quit!\n");
+                    return NOT_ENOUGH_DATA;
                 }
             }
         }
@@ -3039,7 +3136,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
     }
     
     ssize_t strStart = dest->getSize();
-    err = valueStrings.writeStringBlock(dest);
+    status_t err = valueStrings.writeStringBlock(dest);
     if (err != NO_ERROR) {
         return err;
     }
@@ -3050,7 +3147,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
     fprintf(stderr, "**** value strings: %d\n", amt);
     fprintf(stderr, "**** total strings: %d\n", strAmt);
     #endif
-    
+
     for (pi=0; pi<flatPackages.size(); pi++) {
         err = dest->writeData(flatPackages[pi]->getData(),
                               flatPackages[pi]->getSize());
@@ -3072,6 +3169,40 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
         dest->getSize(), (strAmt*100)/dest->getSize());
     #endif
     
+    return NO_ERROR;
+}
+
+status_t ResourceTable::flattenLibraryTable(const sp<AaptFile>& dest, const Vector<sp<Package> >& libs) {
+    // Write out the library table if necessary
+    if (libs.size() > 0) {
+        NOISY(fprintf(stderr, "Writing library reference table\n"));
+
+        const size_t libStart = dest->getSize();
+        const size_t count = libs.size();
+        ResTable_lib_header* libHeader = (ResTable_lib_header*) dest->editDataInRange(
+                libStart, sizeof(ResTable_lib_header));
+
+        memset(libHeader, 0, sizeof(*libHeader));
+        libHeader->header.type = htods(RES_TABLE_LIBRARY_TYPE);
+        libHeader->header.headerSize = htods(sizeof(*libHeader));
+        libHeader->header.size = htodl(sizeof(*libHeader) + (sizeof(ResTable_lib_entry) * count));
+        libHeader->count = htodl(count);
+
+        // Write the library entries
+        for (size_t i = 0; i < count; i++) {
+            const size_t entryStart = dest->getSize();
+            sp<Package> libPackage = libs[i];
+            NOISY(fprintf(stderr, "  Entry %s -> 0x%02x\n",
+                        String8(libPackage->getName()).string(),
+                        (uint8_t)libPackage->getAssignedId()));
+
+            ResTable_lib_entry* entry = (ResTable_lib_entry*) dest->editDataInRange(
+                    entryStart, sizeof(ResTable_lib_entry));
+            memset(entry, 0, sizeof(*entry));
+            entry->packageId = htodl(libPackage->getAssignedId());
+            strcpy16_htod(entry->packageName, libPackage->getName().string());
+        }
+    }
     return NO_ERROR;
 }
 
@@ -3167,6 +3298,31 @@ ResourceTable::Item::Item(const SourcePos& _sourcePos,
     }
 }
 
+ResourceTable::Entry::Entry(const Entry& entry)
+    : RefBase()
+    , mName(entry.mName)
+    , mParent(entry.mParent)
+    , mType(entry.mType)
+    , mItem(entry.mItem)
+    , mItemFormat(entry.mItemFormat)
+    , mBag(entry.mBag)
+    , mNameIndex(entry.mNameIndex)
+    , mParentId(entry.mParentId)
+    , mPos(entry.mPos) {}
+
+ResourceTable::Entry& ResourceTable::Entry::operator=(const Entry& entry) {
+    mName = entry.mName;
+    mParent = entry.mParent;
+    mType = entry.mType;
+    mItem = entry.mItem;
+    mItemFormat = entry.mItemFormat;
+    mBag = entry.mBag;
+    mNameIndex = entry.mNameIndex;
+    mParentId = entry.mParentId;
+    mPos = entry.mPos;
+    return *this;
+}
+
 status_t ResourceTable::Entry::makeItABag(const SourcePos& sourcePos)
 {
     if (mType == TYPE_BAG) {
@@ -3192,11 +3348,16 @@ status_t ResourceTable::Entry::setItem(const SourcePos& sourcePos,
     Item item(sourcePos, false, value, style);
 
     if (mType == TYPE_BAG) {
-        const Item& item(mBag.valueAt(0));
-        sourcePos.error("Resource entry %s is already defined as a bag.\n"
-                        "%s:%d: Originally defined here.\n",
-                        String8(mName).string(),
-                        item.sourcePos.file.string(), item.sourcePos.line);
+        if (mBag.size() == 0) {
+            sourcePos.error("Resource entry %s is already defined as a bag.",
+                    String8(mName).string());
+        } else {
+            const Item& item(mBag.valueAt(0));
+            sourcePos.error("Resource entry %s is already defined as a bag.\n"
+                            "%s:%d: Originally defined here.\n",
+                            String8(mName).string(),
+                            item.sourcePos.file.string(), item.sourcePos.line);
+        }
         return UNKNOWN_ERROR;
     }
     if ( (mType != TYPE_UNKNOWN) && (overwrite == false) ) {
@@ -3247,6 +3408,17 @@ status_t ResourceTable::Entry::addToBag(const SourcePos& sourcePos,
     return NO_ERROR;
 }
 
+status_t ResourceTable::Entry::removeFromBag(const String16& key) {
+    if (mType != Entry::TYPE_BAG) {
+        return NO_ERROR;
+    }
+
+    if (mBag.removeItem(key) >= 0) {
+        return NO_ERROR;
+    }
+    return UNKNOWN_ERROR;
+}
+
 status_t ResourceTable::Entry::emptyBag(const SourcePos& sourcePos)
 {
     status_t err = makeItABag(sourcePos);
@@ -3270,6 +3442,9 @@ status_t ResourceTable::Entry::generateAttributes(ResourceTable* table,
         if (it.isId) {
             if (!table->hasBagOrEntry(key, &id16, &package)) {
                 String16 value("false");
+                NOISY(fprintf(stderr, "Generating %s:id/%s\n",
+                        String8(package).string(),
+                        String8(key).string()));
                 status_t err = table->addEntry(SourcePos(String8("<generated>"), 0), package,
                                                id16, key, value);
                 if (err != NO_ERROR) {
@@ -3717,8 +3892,8 @@ status_t ResourceTable::Type::applyPublicEntryOrder()
     return hasError ? UNKNOWN_ERROR : NO_ERROR;
 }
 
-ResourceTable::Package::Package(const String16& name, ssize_t includedId)
-    : mName(name), mIncludedId(includedId),
+ResourceTable::Package::Package(const String16& name, size_t packageId)
+    : mName(name), mPackageId(packageId),
       mTypeStringsMapping(0xffffffff),
       mKeyStringsMapping(0xffffffff)
 {
@@ -3744,22 +3919,30 @@ sp<ResourceTable::Type> ResourceTable::Package::getType(const String16& type,
 
 status_t ResourceTable::Package::setTypeStrings(const sp<AaptFile>& data)
 {
-    mTypeStringsData = data;
     status_t err = setStrings(data, &mTypeStrings, &mTypeStringsMapping);
     if (err != NO_ERROR) {
         fprintf(stderr, "ERROR: Type string data is corrupt!\n");
+        return err;
     }
-    return err;
+
+    // Retain a reference to the new data after we've successfully replaced
+    // all uses of the old reference (in setStrings() ).
+    mTypeStringsData = data;
+    return NO_ERROR;
 }
 
 status_t ResourceTable::Package::setKeyStrings(const sp<AaptFile>& data)
 {
-    mKeyStringsData = data;
     status_t err = setStrings(data, &mKeyStrings, &mKeyStringsMapping);
     if (err != NO_ERROR) {
         fprintf(stderr, "ERROR: Key string data is corrupt!\n");
+        return err;
     }
-    return err;
+
+    // Retain a reference to the new data after we've successfully replaced
+    // all uses of the old reference (in setStrings() ).
+    mKeyStringsData = data;
+    return NO_ERROR;
 }
 
 status_t ResourceTable::Package::setStrings(const sp<AaptFile>& data,
@@ -3835,35 +4018,10 @@ status_t ResourceTable::Package::applyPublicTypeOrder()
 
 sp<ResourceTable::Package> ResourceTable::getPackage(const String16& package)
 {
-    sp<Package> p = mPackages.valueFor(package);
-    if (p == NULL) {
-        if (mIsAppPackage) {
-            if (mHaveAppPackage) {
-                fprintf(stderr, "Adding multiple application package resources; only one is allowed.\n"
-                                "Use -x to create extended resources.\n");
-                return NULL;
-            }
-            mHaveAppPackage = true;
-            p = new Package(package, 127);
-        } else {
-            int extendedPackageId = mBundle->getExtendedPackageId();
-            if (extendedPackageId != 0) {
-                if ((uint32_t)extendedPackageId < mNextPackageId) {
-                    fprintf(stderr, "Package ID %d already in use!\n", mNextPackageId);
-                    return NULL;
-                }
-                p = new Package(package, extendedPackageId);
-            } else {
-                p = new Package(package, mNextPackageId);
-            }
-        }
-        //printf("*** NEW PACKAGE: \"%s\" id=%d\n",
-        //       String8(package).string(), p->getAssignedId());
-        mPackages.add(package, p);
-        mOrderedPackages.add(p);
-        mNextPackageId++;
+    if (package != mAssetsPackage) {
+        return NULL;
     }
-    return p;
+    return mPackages.valueFor(package);
 }
 
 sp<ResourceTable::Type> ResourceTable::getType(const String16& package,
@@ -3893,14 +4051,46 @@ sp<ResourceTable::Entry> ResourceTable::getEntry(const String16& package,
     return t->getEntry(name, sourcePos, config, doSetIndex, overlay, mBundle->getAutoAddOverlay());
 }
 
+sp<ResourceTable::ConfigList> ResourceTable::getConfigList(const String16& package,
+        const String16& type, const String16& name) const
+{
+    const size_t packageCount = mOrderedPackages.size();
+    for (size_t pi = 0; pi < packageCount; pi++) {
+        const sp<Package>& p = mOrderedPackages[pi];
+        if (p == NULL || p->getName() != package) {
+            continue;
+        }
+
+        const Vector<sp<Type> >& types = p->getOrderedTypes();
+        const size_t typeCount = types.size();
+        for (size_t ti = 0; ti < typeCount; ti++) {
+            const sp<Type>& t = types[ti];
+            if (t == NULL || t->getName() != type) {
+                continue;
+            }
+
+            const Vector<sp<ConfigList> >& configs = t->getOrderedConfigs();
+            const size_t configCount = configs.size();
+            for (size_t ci = 0; ci < configCount; ci++) {
+                const sp<ConfigList>& cl = configs[ci];
+                if (cl == NULL || cl->getName() != name) {
+                    continue;
+                }
+
+                return cl;
+            }
+        }
+    }
+    return NULL;
+}
+
 sp<const ResourceTable::Entry> ResourceTable::getEntry(uint32_t resID,
                                                        const ResTable_config* config) const
 {
-    int pid = Res_GETPACKAGE(resID)+1;
+    size_t pid = Res_GETPACKAGE(resID)+1;
     const size_t N = mOrderedPackages.size();
-    size_t i;
     sp<Package> p;
-    for (i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         sp<Package> check = mOrderedPackages[i];
         if (check->getAssignedId() == pid) {
             p = check;
@@ -4002,4 +4192,297 @@ bool ResourceTable::getItemValue(
         item->evaluating = false;
     }
     return res;
+}
+
+/**
+ * Returns true if the given attribute ID comes from
+ * a platform version from or after L.
+ */
+bool ResourceTable::isAttributeFromL(uint32_t attrId) {
+    const uint32_t baseAttrId = 0x010103f7;
+    if ((attrId & 0xffff0000) != (baseAttrId & 0xffff0000)) {
+        return false;
+    }
+
+    uint32_t specFlags;
+    if (!mAssets->getIncludedResources().getResourceFlags(attrId, &specFlags)) {
+        return false;
+    }
+
+    return (specFlags & ResTable_typeSpec::SPEC_PUBLIC) != 0 &&
+        (attrId & 0x0000ffff) >= (baseAttrId & 0x0000ffff);
+}
+
+static bool isMinSdkVersionLOrAbove(const Bundle* bundle) {
+    if (bundle->getMinSdkVersion() != NULL && strlen(bundle->getMinSdkVersion()) > 0) {
+        const char firstChar = bundle->getMinSdkVersion()[0];
+        if (firstChar >= 'L' && firstChar <= 'Z') {
+            // L is the code-name for the v21 release.
+            return true;
+        }
+
+        const int minSdk = atoi(bundle->getMinSdkVersion());
+        if (minSdk >= SDK_L) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Modifies the entries in the resource table to account for compatibility
+ * issues with older versions of Android.
+ *
+ * This primarily handles the issue of private/public attribute clashes
+ * in framework resources.
+ *
+ * AAPT has traditionally assigned resource IDs to public attributes,
+ * and then followed those public definitions with private attributes.
+ *
+ * --- PUBLIC ---
+ * | 0x01010234 | attr/color
+ * | 0x01010235 | attr/background
+ *
+ * --- PRIVATE ---
+ * | 0x01010236 | attr/secret
+ * | 0x01010237 | attr/shhh
+ *
+ * Each release, when attributes are added, they take the place of the private
+ * attributes and the private attributes are shifted down again.
+ *
+ * --- PUBLIC ---
+ * | 0x01010234 | attr/color
+ * | 0x01010235 | attr/background
+ * | 0x01010236 | attr/shinyNewAttr
+ * | 0x01010237 | attr/highlyValuedFeature
+ *
+ * --- PRIVATE ---
+ * | 0x01010238 | attr/secret
+ * | 0x01010239 | attr/shhh
+ *
+ * Platform code may look for private attributes set in a theme. If an app
+ * compiled against a newer version of the platform uses a new public
+ * attribute that happens to have the same ID as the private attribute
+ * the older platform is expecting, then the behavior is undefined.
+ *
+ * We get around this by detecting any newly defined attributes (in L),
+ * copy the resource into a -v21 qualified resource, and delete the
+ * attribute from the original resource. This ensures that older platforms
+ * don't see the new attribute, but when running on L+ platforms, the
+ * attribute will be respected.
+ */
+status_t ResourceTable::modifyForCompat(const Bundle* bundle) {
+    if (isMinSdkVersionLOrAbove(bundle)) {
+        // If this app will only ever run on L+ devices,
+        // we don't need to do any compatibility work.
+        return NO_ERROR;
+    }
+
+    const String16 attr16("attr");
+
+    const size_t packageCount = mOrderedPackages.size();
+    for (size_t pi = 0; pi < packageCount; pi++) {
+        sp<Package> p = mOrderedPackages.itemAt(pi);
+        if (p == NULL || p->getTypes().size() == 0) {
+            // Empty, skip!
+            continue;
+        }
+
+        const size_t typeCount = p->getOrderedTypes().size();
+        for (size_t ti = 0; ti < typeCount; ti++) {
+            sp<Type> t = p->getOrderedTypes().itemAt(ti);
+            if (t == NULL) {
+                continue;
+            }
+
+            const size_t configCount = t->getOrderedConfigs().size();
+            for (size_t ci = 0; ci < configCount; ci++) {
+                sp<ConfigList> c = t->getOrderedConfigs().itemAt(ci);
+                if (c == NULL) {
+                    continue;
+                }
+
+                Vector<key_value_pair_t<ConfigDescription, sp<Entry> > > entriesToAdd;
+                const DefaultKeyedVector<ConfigDescription, sp<Entry> >& entries =
+                        c->getEntries();
+                const size_t entryCount = entries.size();
+                for (size_t ei = 0; ei < entryCount; ei++) {
+                    sp<Entry> e = entries.valueAt(ei);
+                    if (e == NULL || e->getType() != Entry::TYPE_BAG) {
+                        continue;
+                    }
+
+                    const ConfigDescription& config = entries.keyAt(ei);
+                    if (config.sdkVersion >= SDK_L) {
+                        // We don't need to do anything if the resource is
+                        // already qualified for version 21 or higher.
+                        continue;
+                    }
+
+                    Vector<String16> attributesToRemove;
+                    const KeyedVector<String16, Item>& bag = e->getBag();
+                    const size_t bagCount = bag.size();
+                    for (size_t bi = 0; bi < bagCount; bi++) {
+                        const Item& item = bag.valueAt(bi);
+                        const uint32_t attrId = getResId(bag.keyAt(bi), &attr16);
+                        if (isAttributeFromL(attrId)) {
+                            attributesToRemove.add(bag.keyAt(bi));
+                        }
+                    }
+
+                    if (attributesToRemove.isEmpty()) {
+                        continue;
+                    }
+
+                    // Duplicate the entry under the same configuration
+                    // but with sdkVersion == SDK_L.
+                    ConfigDescription newConfig(config);
+                    newConfig.sdkVersion = SDK_L;
+                    entriesToAdd.add(key_value_pair_t<ConfigDescription, sp<Entry> >(
+                            newConfig, new Entry(*e)));
+
+                    // Remove the attribute from the original.
+                    for (size_t i = 0; i < attributesToRemove.size(); i++) {
+                        e->removeFromBag(attributesToRemove[i]);
+                    }
+                }
+
+                const size_t entriesToAddCount = entriesToAdd.size();
+                for (size_t i = 0; i < entriesToAddCount; i++) {
+                    if (entries.indexOfKey(entriesToAdd[i].key) >= 0) {
+                        // An entry already exists for this config.
+                        // That means that any attributes that were
+                        // defined in L in the original bag will be overriden
+                        // anyways on L devices, so we do nothing.
+                        continue;
+                    }
+
+                    if (bundle->getVerbose()) {
+                        entriesToAdd[i].value->getPos()
+                                .printf("using v%d attributes; synthesizing resource %s:%s/%s for configuration %s.",
+                                        SDK_L,
+                                        String8(p->getName()).string(),
+                                        String8(t->getName()).string(),
+                                        String8(entriesToAdd[i].value->getName()).string(),
+                                        entriesToAdd[i].key.toString().string());
+                    }
+
+                    sp<Entry> newEntry = t->getEntry(c->getName(),
+                            entriesToAdd[i].value->getPos(),
+                            &entriesToAdd[i].key);
+
+                    *newEntry = *entriesToAdd[i].value;
+                }
+            }
+        }
+    }
+    return NO_ERROR;
+}
+
+status_t ResourceTable::modifyForCompat(const Bundle* bundle,
+                                        const String16& resourceName,
+                                        const sp<AaptFile>& target,
+                                        const sp<XMLNode>& root) {
+    if (isMinSdkVersionLOrAbove(bundle)) {
+        return NO_ERROR;
+    }
+
+    if (target->getResourceType() == "" || target->getGroupEntry().toParams().sdkVersion >= SDK_L) {
+        // Skip resources that have no type (AndroidManifest.xml) or are already version qualified with v21
+        // or higher.
+        return NO_ERROR;
+    }
+
+    Vector<key_value_pair_t<sp<XMLNode>, size_t> > attrsToRemove;
+
+    Vector<sp<XMLNode> > nodesToVisit;
+    nodesToVisit.push(root);
+    while (!nodesToVisit.isEmpty()) {
+        sp<XMLNode> node = nodesToVisit.top();
+        nodesToVisit.pop();
+
+        const Vector<XMLNode::attribute_entry>& attrs = node->getAttributes();
+        const size_t attrCount = attrs.size();
+        for (size_t i = 0; i < attrCount; i++) {
+            const XMLNode::attribute_entry& attr = attrs[i];
+            if (isAttributeFromL(attr.nameResId)) {
+                attrsToRemove.add(key_value_pair_t<sp<XMLNode>, size_t>(node, i));
+            }
+        }
+
+        // Schedule a visit to the children.
+        const Vector<sp<XMLNode> >& children = node->getChildren();
+        const size_t childCount = children.size();
+        for (size_t i = 0; i < childCount; i++) {
+            nodesToVisit.push(children[i]);
+        }
+    }
+
+    if (attrsToRemove.isEmpty()) {
+        return NO_ERROR;
+    }
+
+    ConfigDescription newConfig(target->getGroupEntry().toParams());
+    newConfig.sdkVersion = SDK_L;
+
+    // Look to see if we already have an overriding v21 configuration.
+    sp<ConfigList> cl = getConfigList(String16(mAssets->getPackage()),
+            String16(target->getResourceType()), resourceName);
+    //if (cl == NULL) {
+    //    fprintf(stderr, "fuuuuck\n");
+    //}
+    if (cl->getEntries().indexOfKey(newConfig) < 0) {
+        // We don't have an overriding entry for v21, so we must duplicate this one.
+        sp<XMLNode> newRoot = root->clone();
+        sp<AaptFile> newFile = new AaptFile(target->getSourceFile(),
+                AaptGroupEntry(newConfig), target->getResourceType());
+        String8 resPath = String8::format("res/%s/%s",
+                newFile->getGroupEntry().toDirName(target->getResourceType()).string(),
+                target->getSourceFile().getPathLeaf().string());
+        resPath.convertToResPath();
+
+        // Add a resource table entry.
+        if (bundle->getVerbose()) {
+            SourcePos(target->getSourceFile(), -1).printf(
+                    "using v%d attributes; synthesizing resource %s:%s/%s for configuration %s.",
+                    SDK_L,
+                    mAssets->getPackage().string(),
+                    newFile->getResourceType().string(),
+                    String8(resourceName).string(),
+                    newConfig.toString().string());
+        }
+
+        addEntry(SourcePos(),
+                String16(mAssets->getPackage()),
+                String16(target->getResourceType()),
+                resourceName,
+                String16(resPath),
+                NULL,
+                &newConfig);
+
+        // Schedule this to be compiled.
+        CompileResourceWorkItem item;
+        item.resourceName = resourceName;
+        item.resPath = resPath;
+        item.file = newFile;
+        mWorkQueue.push(item);
+    }
+
+    const size_t removeCount = attrsToRemove.size();
+    for (size_t i = 0; i < removeCount; i++) {
+        sp<XMLNode> node = attrsToRemove[i].key;
+        size_t attrIndex = attrsToRemove[i].value;
+        const XMLNode::attribute_entry& ae = node->getAttributes()[attrIndex];
+        if (bundle->getVerbose()) {
+            SourcePos(node->getFilename(), node->getStartLineNumber()).printf(
+                    "removing attribute %s%s%s from <%s>",
+                    String8(ae.ns).string(),
+                    (ae.ns.size() == 0 ? "" : ":"),
+                    String8(ae.name).string(),
+                    String8(node->getElementName()).string());
+        }
+        node->removeAttribute(attrIndex);
+    }
+
+    return NO_ERROR;
 }

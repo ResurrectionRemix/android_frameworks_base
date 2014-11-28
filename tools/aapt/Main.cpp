@@ -1,6 +1,5 @@
 //
 // Copyright 2006 The Android Open Source Project
-// This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
 //
 // Android Asset Packaging Tool main entry point.
 //
@@ -15,7 +14,6 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <assert.h>
-#include <ctype.h>
 
 using namespace android;
 
@@ -49,7 +47,7 @@ void usage(void)
         " %s l[ist] [-v] [-a] file.{zip,jar,apk}\n"
         "   List contents of Zip-compatible archive.\n\n", gProgName);
     fprintf(stderr,
-        " %s d[ump] [--values] WHAT file.{apk} [asset [asset ...]]\n"
+        " %s d[ump] [--values] [--include-meta-data] WHAT file.{apk} [asset [asset ...]]\n"
         "   strings          Print the contents of the resource table string pool in the APK.\n"
         "   badging          Print the label and icon for the app declared in APK.\n"
         "   permissions      Print the permissions from the APK.\n"
@@ -58,7 +56,7 @@ void usage(void)
         "   xmltree          Print the compiled xmls in the given assets.\n"
         "   xmlstrings       Print the strings of the given compiled xml assets.\n\n", gProgName);
     fprintf(stderr,
-        " %s p[ackage] [-d][-f][-m][-u][-v][-x[ extending-resource-id]][-z][-M AndroidManifest.xml] \\\n"
+        " %s p[ackage] [-d][-f][-m][-u][-v][-x][-z][-M AndroidManifest.xml] \\\n"
         "        [-0 extension [-0 extension ...]] [-g tolerance] [-j jarfile] \\\n"
         "        [--debug-mode] [--min-sdk-version VAL] [--target-sdk-version VAL] \\\n"
         "        [--app-version VAL] [--app-version-name TEXT] [--custom-package VAL] \\\n"
@@ -72,6 +70,8 @@ void usage(void)
         "        [-F apk-file] [-J R-file-dir] \\\n"
         "        [--product product1,product2,...] \\\n"
         "        [-c CONFIGS] [--preferred-configurations CONFIGS] \\\n"
+        "        [--split CONFIGS [--split CONFIGS]] \\\n"
+        "        [--feature-of package [--feature-after package]] \\\n"
         "        [raw-files-dir [raw-files-dir] ...] \\\n"
         "        [--output-text-symbols DIR]\n"
         "\n"
@@ -106,23 +106,15 @@ void usage(void)
         "            en\n"
         "            port,en\n"
         "            port,land,en_US\n"
-        "       If you put the special locale, zz_ZZ on the list, it will perform\n"
-        "       pseudolocalization on the default locale, modifying all of the\n"
-        "       strings so you can look for strings that missed the\n"
-        "       internationalization process.  For example:\n"
-        "            port,land,zz_ZZ\n"
         "   -d  one or more device assets to include, separated by commas\n"
         "   -f  force overwrite of existing files\n"
         "   -g  specify a pixel tolerance to force images to grayscale, default 0\n"
         "   -j  specify a jar or zip file containing classes to include\n"
         "   -k  junk path of file(s) added\n"
         "   -m  make package directories under location specified by -J\n"
-#if 0
-        "   -p  pseudolocalize the default configuration\n"
-#endif
         "   -u  update existing packages (add new, replace older, remove deleted files)\n"
         "   -v  verbose output\n"
-        "   -x  either create or assign (if specified) extending (non-application) resource IDs\n"
+        "   -x  create extending (non-application) resource IDs\n"
         "   -z  require localization of resource attributes marked with\n"
         "       localization=\"suggested\"\n"
         "   -A  additional directory in which to find raw asset files\n"
@@ -140,6 +132,10 @@ void usage(void)
         "   --debug-mode\n"
         "       inserts android:debuggable=\"true\" in to the application node of the\n"
         "       manifest, making the application debuggable even on production devices.\n"
+        "   --include-meta-data\n"
+        "       when used with \"dump badging\" also includes meta-data tags.\n"
+        "   --pseudo-localize\n"
+        "       generate resources for pseudo-locales (en-XA and ar-XB).\n"
         "   --min-sdk-version\n"
         "       inserts android:minSdkVersion in to manifest.  If the version is 7 or\n"
         "       higher, the default encoding for resources will be in UTF-8.\n"
@@ -153,6 +149,11 @@ void usage(void)
         "       inserts android:versionCode in to manifest.\n"
         "   --version-name\n"
         "       inserts android:versionName in to manifest.\n"
+        "   --replace-version\n"
+        "       If --version-code and/or --version-name are specified, these\n"
+        "       values will replace any value already in the manifest. By\n"
+        "       default, nothing is changed if the manifest already defines\n"
+        "       these attributes.\n"
         "   --custom-package\n"
         "       generates R.java into a different package.\n"
         "   --extra-packages\n"
@@ -161,10 +162,20 @@ void usage(void)
         "       generate dependency files in the same directories for R.java and resource package\n"
         "   --auto-add-overlay\n"
         "       Automatically add resources that are only in overlays.\n"
-        "   --preferred-configurations\n"
-        "       Like the -c option for filtering out unneeded configurations, but\n"
-        "       only expresses a preference.  If there is no resource available with\n"
-        "       the preferred configuration then it will not be stripped.\n"
+        "   --preferred-density\n"
+        "       Specifies a preference for a particular density. Resources that do not\n"
+        "       match this density and have variants that are a closer match are removed.\n"
+        "   --split\n"
+        "       Builds a separate split APK for the configurations listed. This can\n"
+        "       be loaded alongside the base APK at runtime.\n"
+        "   --feature-of\n"
+        "       Builds a split APK that is a feature of the apk specified here. Resources\n"
+        "       in the base APK can be referenced from the the feature APK.\n"
+        "   --feature-after\n"
+        "       An app can have multiple Feature Split APKs which must be totally ordered.\n"
+        "       If --feature-of is specified, this flag specifies which Feature Split APK\n"
+        "       comes before this one. The first Feature Split APK should not define\n"
+        "       anything here.\n"
         "   --rename-manifest-package\n"
         "       Rewrite the manifest so that its package name is the package name\n"
         "       given here.  Relative class names (for example .Foo) will be\n"
@@ -185,11 +196,16 @@ void usage(void)
         "       Make the resources ID non constant. This is required to make an R java class\n"
         "       that does not contain the final value but is used to make reusable compiled\n"
         "       libraries that need to access resources.\n"
+        "   --shared-lib\n"
+        "       Make a shared library resource package that can be loaded by an application\n"
+        "       at runtime to access the libraries resources. Implies --non-constant-id.\n"
         "   --error-on-failed-insert\n"
         "       Forces aapt to return an error if it fails to insert values into the manifest\n"
         "       with --debug-mode, --min-sdk-version, --target-sdk-version --version-code\n"
         "       and --version-name.\n"
         "       Insertion typically fails if the manifest already defines the attribute.\n"
+        "   --error-on-missing-config-entry\n"
+        "       Forces aapt to return an error if it fails to find an entry for a configuration.\n"
         "   --output-text-symbols\n"
         "       Generates a text file containing the resource symbols of the R class in the\n"
         "       specified folder.\n"
@@ -218,6 +234,7 @@ int handleCommand(Bundle* bundle)
     case kCommandPackage:      return doPackage(bundle);
     case kCommandCrunch:       return doCrunch(bundle);
     case kCommandSingleCrunch: return doSingleCrunch(bundle);
+    case kCommandDaemon:       return runInDaemonMode(bundle);
     default:
         fprintf(stderr, "%s: requested command not yet supported\n", gProgName);
         return 1;
@@ -259,6 +276,8 @@ int main(int argc, char* const argv[])
         bundle.setCommand(kCommandCrunch);
     else if (argv[1][0] == 's')
         bundle.setCommand(kCommandSingleCrunch);
+    else if (argv[1][0] == 'm')
+        bundle.setCommand(kCommandDaemon);
     else {
         fprintf(stderr, "ERROR: Unknown command '%s'\n", argv[1]);
         wantUsage = true;
@@ -323,14 +342,6 @@ int main(int argc, char* const argv[])
                 break;
             case 'x':
                 bundle.setExtending(true);
-                argc--;
-                argv++;
-                if (!argc || !isdigit(argv[0][0])) {
-                    argc++;
-                    argv--;
-                } else {
-                    bundle.setExtendedPackageId(atoi(argv[0]));
-                }
                 break;
             case 'z':
                 bundle.setRequireLocalization(true);
@@ -355,7 +366,7 @@ int main(int argc, char* const argv[])
                     goto bail;
                 }
                 convertPath(argv[0]);
-                bundle.setAssetSourceDir(argv[0]);
+                bundle.addAssetSourceDir(argv[0]);
                 break;
             case 'G':
                 argc--;
@@ -411,17 +422,6 @@ int main(int argc, char* const argv[])
                 }
                 convertPath(argv[0]);
                 bundle.setAndroidManifestFile(argv[0]);
-                break;
-            case 'X':
-                argc--;
-                argv++;
-                if (!argc) {
-                    fprintf(stderr, "ERROR: No argument supplied for '-X' option\n");
-                    wantUsage = true;
-                    goto bail;
-                }
-                convertPath(argv[0]);
-                bundle.setInternalZipPath(argv[0]);
                 break;
             case 'P':
                 argc--;
@@ -492,39 +492,6 @@ int main(int argc, char* const argv[])
                     bundle.setCompressionMethod(ZipEntry::kCompressStored);
                 }
                 break;
-            case 'Z':
-                argc--;
-                argv++;
-                if (!argc) {
-                    fprintf(stderr, "ERROR: No argument supplied for '-Z' option\n");
-                    wantUsage = true;
-                    goto bail;
-                }
-                convertPath(argv[0]);
-                bundle.setInputAPKFile(argv[0]);
-                break;
-            case 'R':
-                argc--;
-                argv++;
-                if (!argc) {
-                    fprintf(stderr, "ERROR: No argument supplied for '-R' option\n");
-                    wantUsage = true;
-                    goto bail;
-                }
-                convertPath(argv[0]);
-                bundle.setOutputResDir(argv[0]);
-                break;
-            case 'r':
-                argc--;
-                argv++;
-                if (!argc) {
-                    fprintf(stderr, "ERROR: No argument supplied for '-r' option\n");
-                    wantUsage = true;
-                    goto bail;
-                }
-                convertPath(argv[0]);
-                bundle.setOutputResApk(argv[0]);
-                break;
             case '-':
                 if (strcmp(cp, "-debug-mode") == 0) {
                     bundle.setDebugMode(true);
@@ -582,8 +549,12 @@ int main(int argc, char* const argv[])
                         goto bail;
                     }
                     bundle.setVersionName(argv[0]);
+                } else if (strcmp(cp, "-replace-version") == 0) {
+                    bundle.setReplaceVersion(true);
                 } else if (strcmp(cp, "-values") == 0) {
                     bundle.setValues(true);
+                } else if (strcmp(cp, "-include-meta-data") == 0) {
+                    bundle.setIncludeMetaData(true);
                 } else if (strcmp(cp, "-custom-package") == 0) {
                     argc--;
                     argv++;
@@ -606,15 +577,42 @@ int main(int argc, char* const argv[])
                     bundle.setGenDependencies(true);
                 } else if (strcmp(cp, "-utf16") == 0) {
                     bundle.setWantUTF16(true);
-                } else if (strcmp(cp, "-preferred-configurations") == 0) {
+                } else if (strcmp(cp, "-preferred-density") == 0) {
                     argc--;
                     argv++;
                     if (!argc) {
-                        fprintf(stderr, "ERROR: No argument supplied for '--preferred-configurations' option\n");
+                        fprintf(stderr, "ERROR: No argument supplied for '--preferred-density' option\n");
                         wantUsage = true;
                         goto bail;
                     }
-                    bundle.addPreferredConfigurations(argv[0]);
+                    bundle.setPreferredDensity(argv[0]);
+                } else if (strcmp(cp, "-split") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--split' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    bundle.addSplitConfigurations(argv[0]);
+                } else if (strcmp(cp, "-feature-of") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--feature-of' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    bundle.setFeatureOfPackage(argv[0]);
+                } else if (strcmp(cp, "-feature-after") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--feature-after' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    bundle.setFeatureAfterPackage(argv[0]);
                 } else if (strcmp(cp, "-rename-manifest-package") == 0) {
                     argc--;
                     argv++;
@@ -637,6 +635,8 @@ int main(int argc, char* const argv[])
                     bundle.setAutoAddOverlay(true);
                 } else if (strcmp(cp, "-error-on-failed-insert") == 0) {
                     bundle.setErrorOnFailedInsert(true);
+                } else if (strcmp(cp, "-error-on-missing-config-entry") == 0) {
+                    bundle.setErrorOnMissingConfigEntry(true);
                 } else if (strcmp(cp, "-output-text-symbols") == 0) {
                     argc--;
                     argv++;
@@ -657,6 +657,9 @@ int main(int argc, char* const argv[])
                     bundle.setProduct(argv[0]);
                 } else if (strcmp(cp, "-non-constant-id") == 0) {
                     bundle.setNonConstantId(true);
+                } else if (strcmp(cp, "-shared-lib") == 0) {
+                    bundle.setNonConstantId(true);
+                    bundle.setBuildSharedLibrary(true);
                 } else if (strcmp(cp, "-no-crunch") == 0) {
                     bundle.setUseCrunchCache(true);
                 } else if (strcmp(cp, "-ignore-assets") == 0) {
@@ -668,6 +671,8 @@ int main(int argc, char* const argv[])
                         goto bail;
                     }
                     gUserIgnoreAssets = argv[0];
+                } else if (strcmp(cp, "-pseudo-localize") == 0) {
+                    bundle.setPseudolocalize(PSEUDO_ACCENTED | PSEUDO_BIDI);
                 } else {
                     fprintf(stderr, "ERROR: Unknown option '-%s'\n", cp);
                     wantUsage = true;

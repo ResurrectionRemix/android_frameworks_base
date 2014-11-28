@@ -17,24 +17,34 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="4469836075319831821">"Print Spooler"</string>
-    <string name="advanced_settings_button" msgid="5764225091289415632">"Mga setting ng printer"</string>
-    <string name="print_button" msgid="645164566271246268">"I-print"</string>
-    <string name="save_button" msgid="1921310454071758999">"I-save"</string>
+    <string name="more_options_button" msgid="2243228396432556771">"Higit pang mga opsyon"</string>
     <string name="label_destination" msgid="9132510997381599275">"Patutunguhan"</string>
     <string name="label_copies" msgid="3634531042822968308">"Mga Kopya"</string>
-    <string name="label_paper_size" msgid="8681895607876809323">"Laki ng Papel"</string>
+    <string name="label_copies_summary" msgid="3861966063536529540">"Dami ng kopya:"</string>
+    <string name="label_paper_size" msgid="908654383827777759">"Laki ng papel"</string>
+    <string name="label_paper_size_summary" msgid="5668204981332138168">"Laki ng papel:"</string>
     <string name="label_color" msgid="1108690305218188969">"Kulay"</string>
     <string name="label_orientation" msgid="2853142581990496477">"Oryentasyon"</string>
-    <string name="label_pages" msgid="6300874667546617333">"Mga Pahina (<xliff:g id="PAGE_COUNT">%1$s</xliff:g>)"</string>
+    <string name="label_pages" msgid="7768589729282182230">"Mga Page"</string>
+    <string name="template_all_pages" msgid="3322235982020148762">"Lahat ng <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
+    <string name="template_page_range" msgid="428638530038286328">"Hanay ng <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
     <string name="pages_range_example" msgid="8558694453556945172">"hal. 1—5,8,11—13"</string>
     <string name="print_preview" msgid="8010217796057763343">"Preview sa pag-print"</string>
     <string name="install_for_print_preview" msgid="6366303997385509332">"Mag-install ng PDF viewer para sa pag-preview"</string>
     <string name="printing_app_crashed" msgid="854477616686566398">"Nag-crash ang app sa pag-print"</string>
-    <string name="page_count_unknown" msgid="6058852665954511124">"Mga Pahina"</string>
     <string name="generating_print_job" msgid="3119608742651698916">"Gumagawa ng pag-print"</string>
     <string name="save_as_pdf" msgid="5718454119847596853">"I-save bilang PDF"</string>
     <string name="all_printers" msgid="5018829726861876202">"Lahat ng printer…"</string>
     <string name="print_dialog" msgid="32628687461331979">"Dialog ng pag-print"</string>
+    <string name="current_page_template" msgid="1386638343571771292">"<xliff:g id="CURRENT_PAGE">%1$d</xliff:g> /<xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="page_description_template" msgid="6831239682256197161">"Page <xliff:g id="CURRENT_PAGE">%1$d</xliff:g> ng <xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="summary_template" msgid="8899734908625669193">"Buod, mga kopya <xliff:g id="COPIES">%1$s</xliff:g>, laki ng papel <xliff:g id="PAPER_SIZE">%2$s</xliff:g>"</string>
+    <string name="expand_handle" msgid="7282974448109280522">"Palakihin ang handle"</string>
+    <string name="collapse_handle" msgid="6886637989442507451">"Paliitin ang handle"</string>
+    <string name="print_button" msgid="645164566271246268">"I-print"</string>
+    <string name="savetopdf_button" msgid="2976186791686924743">"I-save sa PDF"</string>
+    <string name="print_options_expanded" msgid="6944679157471691859">"Pinalaki ang mga opsyon sa pag-print"</string>
+    <string name="print_options_collapsed" msgid="7455930445670414332">"Pinaliit ang mga opsyon sa pag-print"</string>
     <string name="search" msgid="5421724265322228497">"Hanapin"</string>
     <string name="all_printers_label" msgid="3178848870161526399">"Lahat ng printer"</string>
     <string name="add_print_service_label" msgid="5356702546188981940">"Magdagdag ng serbisyo"</string>
@@ -63,7 +73,6 @@
     <string name="no_connection_to_printer" msgid="2159246915977282728">"Hindi nakakonekta sa printer"</string>
     <string name="reason_unknown" msgid="5507940196503246139">"hindi alam"</string>
     <string name="printer_unavailable" msgid="2434170617003315690">"<xliff:g id="PRINT_JOB_NAME">%1$s</xliff:g> – hindi available"</string>
-    <string name="print_error_default_message" msgid="8568506918983980567">"Hindi mabuo ang pag-print"</string>
   <string-array name="color_mode_labels">
     <item msgid="7602948745415174937">"Black &amp; White"</item>
     <item msgid="2762241247228983754">"Kulay"</item>
@@ -72,8 +81,9 @@
     <item msgid="4061931020926489228">"Portrait"</item>
     <item msgid="3199660090246166812">"Landscape"</item>
   </string-array>
-  <string-array name="page_options_labels">
-    <item msgid="7421377442011699994">"Lahat"</item>
-    <item msgid="6812869625222503603">"Sakop"</item>
-  </string-array>
+    <string name="print_write_error_message" msgid="5787642615179572543">"Hindi makapag-write sa file"</string>
+    <string name="print_error_default_message" msgid="8602678405502922346">"Paumanhin, hindi iyon gumana. Subukang muli."</string>
+    <string name="print_error_retry" msgid="1426421728784259538">"Subukang muli"</string>
+    <string name="print_error_printer_unavailable" msgid="8985614415253203381">"Hindi available ang printer na ito sa ngayon."</string>
+    <string name="print_preparing_preview" msgid="3939930735671364712">"Inihahanda ang preview…"</string>
 </resources>

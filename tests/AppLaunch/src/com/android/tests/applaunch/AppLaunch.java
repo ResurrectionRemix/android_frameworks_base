@@ -22,6 +22,7 @@ import android.app.ActivityManager.ProcessErrorStateInfo;
 import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
 import android.app.IActivityManager.WaitResult;
+import android.app.UiAutomation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -72,6 +73,18 @@ public class AppLaunch extends InstrumentationTestCase {
     private Bundle mResult = new Bundle();
     private Set<String> mRequiredAccounts;
 
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        getInstrumentation().getUiAutomation().setRotation(UiAutomation.ROTATION_FREEZE_0);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        getInstrumentation().getUiAutomation().setRotation(UiAutomation.ROTATION_UNFREEZE);
+        super.tearDown();
+    }
+
     public void testMeasureStartUpTime() throws RemoteException, NameNotFoundException {
         InstrumentationTestRunner instrumentation =
                 (InstrumentationTestRunner)getInstrumentation();
@@ -85,11 +98,13 @@ public class AppLaunch extends InstrumentationTestCase {
         // do initial app launch, without force stopping
         for (String app : mNameToResultKey.keySet()) {
             long launchTime = startApp(app, false);
-            if (launchTime <=0 ) {
+            if (launchTime <= 0) {
                 mNameToLaunchTime.put(app, -1L);
                 // simply pass the app if launch isn't successful
                 // error should have already been logged by startApp
                 continue;
+            } else {
+                mNameToLaunchTime.put(app, launchTime);
             }
             sleep(INITIAL_LAUNCH_IDLE_TIMEOUT);
             closeApp(app, false);
@@ -98,9 +113,9 @@ public class AppLaunch extends InstrumentationTestCase {
         // do the real app launch now
         for (int i = 0; i < mLaunchIterations; i++) {
             for (String app : mNameToResultKey.keySet()) {
-                long totalLaunchTime = mNameToLaunchTime.get(app);
+                long prevLaunchTime = mNameToLaunchTime.get(app);
                 long launchTime = 0;
-                if (totalLaunchTime < 0) {
+                if (prevLaunchTime < 0) {
                     // skip if the app has previous failures
                     continue;
                 }
@@ -110,18 +125,19 @@ public class AppLaunch extends InstrumentationTestCase {
                     mNameToLaunchTime.put(app, -1L);
                     continue;
                 }
-                totalLaunchTime += launchTime;
-                mNameToLaunchTime.put(app, totalLaunchTime);
+                // keep the min launch time
+                if (launchTime < prevLaunchTime) {
+                    mNameToLaunchTime.put(app, launchTime);
+                }
                 sleep(POST_LAUNCH_IDLE_TIMEOUT);
                 closeApp(app, true);
                 sleep(BETWEEN_LAUNCH_SLEEP_TIMEOUT);
             }
         }
         for (String app : mNameToResultKey.keySet()) {
-            long totalLaunchTime = mNameToLaunchTime.get(app);
-            if (totalLaunchTime != -1) {
-                mResult.putDouble(mNameToResultKey.get(app),
-                        ((double) totalLaunchTime) / mLaunchIterations);
+            long launchTime = mNameToLaunchTime.get(app);
+            if (launchTime != -1) {
+                mResult.putLong(mNameToResultKey.get(app), launchTime);
             }
         }
         instrumentation.sendStatus(0, mResult);
@@ -328,7 +344,7 @@ public class AppLaunch extends InstrumentationTestCase {
                 }
 
                 mResult = mAm.startActivityAndWait(null, null, mLaunchIntent, mimeType,
-                        null, null, 0, mLaunchIntent.getFlags(), null, null, null,
+                        null, null, 0, mLaunchIntent.getFlags(), null, null,
                         UserHandle.USER_CURRENT);
             } catch (RemoteException e) {
                 Log.w(TAG, "Error launching app", e);

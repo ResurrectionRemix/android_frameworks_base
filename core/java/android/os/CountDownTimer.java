@@ -54,10 +54,10 @@ public abstract class CountDownTimer {
     private final long mCountdownInterval;
 
     private long mStopTimeInFuture;
-
+    
     /**
-     * boolean representing if the timer was cancelled
-     */
+    * boolean representing if the timer was cancelled
+    */
     private boolean mCancelled = false;
 
     /**

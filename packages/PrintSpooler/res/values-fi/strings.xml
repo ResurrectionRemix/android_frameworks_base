@@ -17,24 +17,34 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="4469836075319831821">"Taustatulostus"</string>
-    <string name="advanced_settings_button" msgid="5764225091289415632">"Tulostimen asetukset"</string>
-    <string name="print_button" msgid="645164566271246268">"Tulosta"</string>
-    <string name="save_button" msgid="1921310454071758999">"Tallenna"</string>
+    <string name="more_options_button" msgid="2243228396432556771">"Lisäasetukset"</string>
     <string name="label_destination" msgid="9132510997381599275">"Kohde"</string>
     <string name="label_copies" msgid="3634531042822968308">"Kopiot"</string>
-    <string name="label_paper_size" msgid="8681895607876809323">"Paperikoko"</string>
+    <string name="label_copies_summary" msgid="3861966063536529540">"Kopiot:"</string>
+    <string name="label_paper_size" msgid="908654383827777759">"Paperikoko"</string>
+    <string name="label_paper_size_summary" msgid="5668204981332138168">"Paperikoko:"</string>
     <string name="label_color" msgid="1108690305218188969">"Väri"</string>
     <string name="label_orientation" msgid="2853142581990496477">"Suunta"</string>
-    <string name="label_pages" msgid="6300874667546617333">"Sivut (<xliff:g id="PAGE_COUNT">%1$s</xliff:g>)"</string>
+    <string name="label_pages" msgid="7768589729282182230">"Sivut"</string>
+    <string name="template_all_pages" msgid="3322235982020148762">"Kaikki <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
+    <string name="template_page_range" msgid="428638530038286328">"Sivumäärä: <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
     <string name="pages_range_example" msgid="8558694453556945172">"esim. 1–5,8,11–13"</string>
     <string name="print_preview" msgid="8010217796057763343">"Tulostuksen esikatselu"</string>
     <string name="install_for_print_preview" msgid="6366303997385509332">"Asenna PDF-katseluohjelma esikatselua varten"</string>
     <string name="printing_app_crashed" msgid="854477616686566398">"Tulostussovellus kaatui"</string>
-    <string name="page_count_unknown" msgid="6058852665954511124">"Sivut"</string>
     <string name="generating_print_job" msgid="3119608742651698916">"Luodaan tulostustyö"</string>
     <string name="save_as_pdf" msgid="5718454119847596853">"Tallenna PDF"</string>
     <string name="all_printers" msgid="5018829726861876202">"Kaikki tulostimet…"</string>
     <string name="print_dialog" msgid="32628687461331979">"Tulostusikkuna"</string>
+    <string name="current_page_template" msgid="1386638343571771292">"<xliff:g id="CURRENT_PAGE">%1$d</xliff:g>/<xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="page_description_template" msgid="6831239682256197161">"Sivu <xliff:g id="CURRENT_PAGE">%1$d</xliff:g>/<xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="summary_template" msgid="8899734908625669193">"Yhteenveto, kopioita <xliff:g id="COPIES">%1$s</xliff:g>, paperikoko <xliff:g id="PAPER_SIZE">%2$s</xliff:g>"</string>
+    <string name="expand_handle" msgid="7282974448109280522">"Laajennuskahva"</string>
+    <string name="collapse_handle" msgid="6886637989442507451">"Tiivistyskahva"</string>
+    <string name="print_button" msgid="645164566271246268">"Tulosta"</string>
+    <string name="savetopdf_button" msgid="2976186791686924743">"Tallenna PDF-muodossa"</string>
+    <string name="print_options_expanded" msgid="6944679157471691859">"Tulostusasetukset on laajennettu"</string>
+    <string name="print_options_collapsed" msgid="7455930445670414332">"Tulostusasetukset on tiivistetty"</string>
     <string name="search" msgid="5421724265322228497">"Haku"</string>
     <string name="all_printers_label" msgid="3178848870161526399">"Kaikki tulostimet"</string>
     <string name="add_print_service_label" msgid="5356702546188981940">"Lisää palvelu"</string>
@@ -63,7 +73,6 @@
     <string name="no_connection_to_printer" msgid="2159246915977282728">"Ei yhteyttä tulostimeen"</string>
     <string name="reason_unknown" msgid="5507940196503246139">"tuntematon"</string>
     <string name="printer_unavailable" msgid="2434170617003315690">"<xliff:g id="PRINT_JOB_NAME">%1$s</xliff:g> – ei käytettävissä"</string>
-    <string name="print_error_default_message" msgid="8568506918983980567">"Tulostustyötä ei voitu luoda"</string>
   <string-array name="color_mode_labels">
     <item msgid="7602948745415174937">"Mustavalkoinen"</item>
     <item msgid="2762241247228983754">"Väri"</item>
@@ -72,8 +81,9 @@
     <item msgid="4061931020926489228">"Pysty"</item>
     <item msgid="3199660090246166812">"Vaaka"</item>
   </string-array>
-  <string-array name="page_options_labels">
-    <item msgid="7421377442011699994">"Kaikki"</item>
-    <item msgid="6812869625222503603">"Väli"</item>
-  </string-array>
+    <string name="print_write_error_message" msgid="5787642615179572543">"Tiedostoon kirjoittaminen epäonnistui"</string>
+    <string name="print_error_default_message" msgid="8602678405502922346">"Ei valitettavasti onnistunut. Yritä uudelleen."</string>
+    <string name="print_error_retry" msgid="1426421728784259538">"Yritä uudelleen"</string>
+    <string name="print_error_printer_unavailable" msgid="8985614415253203381">"Tämä tulostin ei ole käyttävissä juuri nyt."</string>
+    <string name="print_preparing_preview" msgid="3939930735671364712">"Esikatselua valmistellaan…"</string>
 </resources>

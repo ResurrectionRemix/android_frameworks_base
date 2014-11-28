@@ -7,19 +7,20 @@
 
 #define LOG_TAG "appproc"
 
-#include <cutils/properties.h>
 #include <binder/IPCThreadState.h>
 #include <binder/ProcessState.h>
 #include <utils/Log.h>
-#include <cutils/process_name.h>
 #include <cutils/memory.h>
+#include <cutils/process_name.h>
+#include <cutils/properties.h>
 #include <cutils/trace.h>
 #include <android_runtime/AndroidRuntime.h>
-#include <sys/personality.h>
+#include <private/android_filesystem_config.h>  // for AID_SYSTEM
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/prctl.h>
 
 namespace android {
 
@@ -32,31 +33,22 @@ void app_usage()
 class AppRuntime : public AndroidRuntime
 {
 public:
-    AppRuntime()
-        : mParentDir(NULL)
-        , mClassName(NULL)
+    AppRuntime(char* argBlockStart, const size_t argBlockLength)
+        : AndroidRuntime(argBlockStart, argBlockLength)
         , mClass(NULL)
-        , mArgC(0)
-        , mArgV(NULL)
     {
     }
 
-#if 0
-    // this appears to be unused
-    const char* getParentDir() const
-    {
-        return mParentDir;
-    }
-#endif
-
-    const char* getClassName() const
-    {
-        return mClassName;
+    void setClassNameAndArgs(const String8& className, int argc, char * const *argv) {
+        mClassName = className;
+        for (int i = 0; i < argc; ++i) {
+             mArgs.add(String8(argv[i]));
+        }
     }
 
     virtual void onVmCreated(JNIEnv* env)
     {
-        if (mClassName == NULL) {
+        if (mClassName.isEmpty()) {
             return; // Zygote. Nothing to do here.
         }
 
@@ -73,10 +65,10 @@ public:
          * executing boot class Java code and thereby deny ourselves access to
          * non-boot classes.
          */
-        char* slashClassName = toSlashClassName(mClassName);
+        char* slashClassName = toSlashClassName(mClassName.string());
         mClass = env->FindClass(slashClassName);
         if (mClass == NULL) {
-            ALOGE("ERROR: could not find class '%s'\n", mClassName);
+            ALOGE("ERROR: could not find class '%s'\n", mClassName.string());
         }
         free(slashClassName);
 
@@ -90,7 +82,7 @@ public:
         proc->startThreadPool();
 
         AndroidRuntime* ar = AndroidRuntime::getRuntime();
-        ar->callMain(mClassName, mClass, mArgC, mArgV);
+        ar->callMain(mClassName, mClass, mArgs);
 
         IPCThreadState::self()->stopProcess();
     }
@@ -107,7 +99,7 @@ public:
 
     virtual void onExit(int code)
     {
-        if (mClassName == NULL) {
+        if (mClassName.isEmpty()) {
             // if zygote
             IPCThreadState::self()->stopProcess();
         }
@@ -116,119 +108,205 @@ public:
     }
 
 
-    const char* mParentDir;
-    const char* mClassName;
+    String8 mClassName;
+    Vector<String8> mArgs;
     jclass mClass;
-    int mArgC;
-    const char* const* mArgV;
 };
 
 }
 
 using namespace android;
 
-/*
- * sets argv0 to as much of newArgv0 as will fit
- */
-static void setArgv0(const char *argv0, const char *newArgv0)
-{
-    strlcpy(const_cast<char *>(argv0), newArgv0, strlen(argv0));
+static size_t computeArgBlockSize(int argc, char* const argv[]) {
+    // TODO: This assumes that all arguments are allocated in
+    // contiguous memory. There isn't any documented guarantee
+    // that this is the case, but this is how the kernel does it
+    // (see fs/exec.c).
+    //
+    // Also note that this is a constant for "normal" android apps.
+    // Since they're forked from zygote, the size of their command line
+    // is the size of the zygote command line.
+    //
+    // We change the process name of the process by over-writing
+    // the start of the argument block (argv[0]) with the new name of
+    // the process, so we'd mysteriously start getting truncated process
+    // names if the zygote command line decreases in size.
+    uintptr_t start = reinterpret_cast<uintptr_t>(argv[0]);
+    uintptr_t end = reinterpret_cast<uintptr_t>(argv[argc - 1]);
+    end += strlen(argv[argc - 1]) + 1;
+    return (end - start);
 }
+
+static void maybeCreateDalvikCache() {
+#if defined(__aarch64__)
+    static const char kInstructionSet[] = "arm64";
+#elif defined(__x86_64__)
+    static const char kInstructionSet[] = "x86_64";
+#elif defined(__arm__)
+    static const char kInstructionSet[] = "arm";
+#elif defined(__i386__)
+    static const char kInstructionSet[] = "x86";
+#elif defined (__mips__)
+    static const char kInstructionSet[] = "mips";
+#else
+#error "Unknown instruction set"
+#endif
+    const char* androidRoot = getenv("ANDROID_DATA");
+    LOG_ALWAYS_FATAL_IF(androidRoot == NULL, "ANDROID_DATA environment variable unset");
+
+    char dalvikCacheDir[PATH_MAX];
+    const int numChars = snprintf(dalvikCacheDir, PATH_MAX,
+            "%s/dalvik-cache/%s", androidRoot, kInstructionSet);
+    LOG_ALWAYS_FATAL_IF((numChars >= PATH_MAX || numChars < 0),
+            "Error constructing dalvik cache : %s", strerror(errno));
+
+    int result = mkdir(dalvikCacheDir, 0711);
+    LOG_ALWAYS_FATAL_IF((result < 0 && errno != EEXIST),
+            "Error creating cache dir %s : %s", dalvikCacheDir, strerror(errno));
+
+    // We always perform these steps because the directory might
+    // already exist, with wider permissions and a different owner
+    // than we'd like.
+    result = chown(dalvikCacheDir, AID_ROOT, AID_ROOT);
+    LOG_ALWAYS_FATAL_IF((result < 0), "Error changing dalvik-cache ownership : %s", strerror(errno));
+
+    result = chmod(dalvikCacheDir, 0711);
+    LOG_ALWAYS_FATAL_IF((result < 0),
+            "Error changing dalvik-cache permissions : %s", strerror(errno));
+}
+
+#if defined(__LP64__)
+static const char ABI_LIST_PROPERTY[] = "ro.product.cpu.abilist64";
+static const char ZYGOTE_NICE_NAME[] = "zygote64";
+#else
+static const char ABI_LIST_PROPERTY[] = "ro.product.cpu.abilist32";
+static const char ZYGOTE_NICE_NAME[] = "zygote";
+#endif
 
 int main(int argc, char* const argv[])
 {
-#ifdef __arm__
-    /*
-     * b/7188322 - Temporarily revert to the compat memory layout
-     * to avoid breaking third party apps.
-     *
-     * THIS WILL GO AWAY IN A FUTURE ANDROID RELEASE.
-     *
-     * http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=7dbaa466
-     * changes the kernel mapping from bottom up to top-down.
-     * This breaks some programs which improperly embed
-     * an out of date copy of Android's linker.
-     */
-    char value[PROPERTY_VALUE_MAX];
-    property_get("ro.kernel.qemu", value, "");
-    bool is_qemu = (strcmp(value, "1") == 0);
-    if ((getenv("NO_ADDR_COMPAT_LAYOUT_FIXUP") == NULL) && !is_qemu) {
-        int current = personality(0xFFFFFFFF);
-        if ((current & ADDR_COMPAT_LAYOUT) == 0) {
-            personality(current | ADDR_COMPAT_LAYOUT);
-            setenv("NO_ADDR_COMPAT_LAYOUT_FIXUP", "1", 1);
-            execv("/system/bin/app_process", argv);
-            return -1;
+    if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) < 0) {
+        // Older kernels don't understand PR_SET_NO_NEW_PRIVS and return
+        // EINVAL. Don't die on such kernels.
+        if (errno != EINVAL) {
+            LOG_ALWAYS_FATAL("PR_SET_NO_NEW_PRIVS failed: %s", strerror(errno));
+            return 12;
         }
     }
-    unsetenv("NO_ADDR_COMPAT_LAYOUT_FIXUP");
-#endif
 
-    // These are global variables in ProcessState.cpp
-    mArgC = argc;
-    mArgV = argv;
-
-    mArgLen = 0;
-    for (int i=0; i<argc; i++) {
-        mArgLen += strlen(argv[i]) + 1;
-    }
-    mArgLen--;
-
-    AppRuntime runtime;
-    const char* argv0 = argv[0];
-
+    AppRuntime runtime(argv[0], computeArgBlockSize(argc, argv));
     // Process command line arguments
     // ignore argv[0]
     argc--;
     argv++;
 
-    // Everything up to '--' or first non '-' arg goes to the vm
+    // Everything up to '--' or first non '-' arg goes to the vm.
+    //
+    // The first argument after the VM args is the "parent dir", which
+    // is currently unused.
+    //
+    // After the parent dir, we expect one or more the following internal
+    // arguments :
+    //
+    // --zygote : Start in zygote mode
+    // --start-system-server : Start the system server.
+    // --application : Start in application (stand alone, non zygote) mode.
+    // --nice-name : The nice name for this process.
+    //
+    // For non zygote starts, these arguments will be followed by
+    // the main class name. All remaining arguments are passed to
+    // the main method of this class.
+    //
+    // For zygote starts, all remaining arguments are passed to the zygote.
+    // main function.
+    //
+    // Note that we must copy argument string values since we will rewrite the
+    // entire argument block when we apply the nice name to argv0.
 
-    int i = runtime.addVmArguments(argc, argv);
+    int i;
+    for (i = 0; i < argc; i++) {
+        if (argv[i][0] != '-') {
+            break;
+        }
+        if (argv[i][1] == '-' && argv[i][2] == 0) {
+            ++i; // Skip --.
+            break;
+        }
+        runtime.addOption(strdup(argv[i]));
+    }
 
     // Parse runtime arguments.  Stop at first unrecognized option.
     bool zygote = false;
     bool startSystemServer = false;
     bool application = false;
-    const char* parentDir = NULL;
-    const char* niceName = NULL;
-    const char* className = NULL;
+    String8 niceName;
+    String8 className;
+
+    ++i;  // Skip unused "parent dir" argument.
     while (i < argc) {
         const char* arg = argv[i++];
-        if (!parentDir) {
-            parentDir = arg;
-        } else if (strcmp(arg, "--zygote") == 0) {
+        if (strcmp(arg, "--zygote") == 0) {
             zygote = true;
-            niceName = "zygote";
+            niceName = ZYGOTE_NICE_NAME;
         } else if (strcmp(arg, "--start-system-server") == 0) {
             startSystemServer = true;
         } else if (strcmp(arg, "--application") == 0) {
             application = true;
         } else if (strncmp(arg, "--nice-name=", 12) == 0) {
-            niceName = arg + 12;
+            niceName.setTo(arg + 12);
+        } else if (strncmp(arg, "--", 2) != 0) {
+            className.setTo(arg);
+            break;
         } else {
-            className = arg;
+            --i;
             break;
         }
     }
 
-    if (niceName && *niceName) {
-        setArgv0(argv0, niceName);
-        set_process_name(niceName);
+    Vector<String8> args;
+    if (!className.isEmpty()) {
+        // We're not in zygote mode, the only argument we need to pass
+        // to RuntimeInit is the application argument.
+        //
+        // The Remainder of args get passed to startup class main(). Make
+        // copies of them before we overwrite them with the process name.
+        args.add(application ? String8("application") : String8("tool"));
+        runtime.setClassNameAndArgs(className, argc - i, argv + i);
+    } else {
+        // We're in zygote mode.
+        maybeCreateDalvikCache();
+
+        if (startSystemServer) {
+            args.add(String8("start-system-server"));
+        }
+
+        char prop[PROP_VALUE_MAX];
+        if (property_get(ABI_LIST_PROPERTY, prop, NULL) == 0) {
+            LOG_ALWAYS_FATAL("app_process: Unable to determine ABI list from property %s.",
+                ABI_LIST_PROPERTY);
+            return 11;
+        }
+
+        String8 abiFlag("--abi-list=");
+        abiFlag.append(prop);
+        args.add(abiFlag);
+
+        // In zygote mode, pass all remaining arguments to the zygote
+        // main() method.
+        for (; i < argc; ++i) {
+            args.add(String8(argv[i]));
+        }
     }
 
-    runtime.mParentDir = parentDir;
+    if (!niceName.isEmpty()) {
+        runtime.setArgv0(niceName.string());
+        set_process_name(niceName.string());
+    }
 
     if (zygote) {
-        runtime.start("com.android.internal.os.ZygoteInit",
-                startSystemServer ? "start-system-server" : "");
+        runtime.start("com.android.internal.os.ZygoteInit", args);
     } else if (className) {
-        // Remainder of args get passed to startup class main()
-        runtime.mClassName = className;
-        runtime.mArgC = argc - i;
-        runtime.mArgV = argv + i;
-        runtime.start("com.android.internal.os.RuntimeInit",
-                application ? "application" : "tool");
+        runtime.start("com.android.internal.os.RuntimeInit", args);
     } else {
         fprintf(stderr, "Error: no class name or --zygote supplied.\n");
         app_usage();

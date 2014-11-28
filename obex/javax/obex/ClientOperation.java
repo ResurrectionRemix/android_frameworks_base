@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2014 The Android Open Source Project
  * Copyright (c) 2008-2009, Motorola, Inc.
  *
  * All rights reserved.
@@ -723,12 +723,14 @@ public final class ClientOperation implements Operation, BaseStream {
                     mReplyHeader.responseCode = ResponseCodes.OBEX_HTTP_CONTINUE;
                 }
 
-                while (mReplyHeader.responseCode == ResponseCodes.OBEX_HTTP_CONTINUE) {
+                while ((mReplyHeader.responseCode == ResponseCodes.OBEX_HTTP_CONTINUE)
+                    && !mOperationDone) {
                     if (!sendRequest(0x83)) {
                         break;
                     }
                 }
-                while (mReplyHeader.responseCode == ResponseCodes.OBEX_HTTP_CONTINUE) {
+                while ((mReplyHeader.responseCode == ResponseCodes.OBEX_HTTP_CONTINUE) &&
+                    !mOperationDone) {
                     mParent.sendRequest(0x83, null, mReplyHeader, mPrivateInput);
                 }
                 mOperationDone = true;
@@ -764,8 +766,5 @@ public final class ClientOperation implements Operation, BaseStream {
     }
 
     public void noBodyHeader(){
-    }
-    public void noEndofBody() {
-
     }
 }

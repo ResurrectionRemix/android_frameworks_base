@@ -105,8 +105,10 @@ public final class BluetoothSap implements BluetoothProfile {
         Intent intent = new Intent(IBluetoothSap.class.getName());
         ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
         intent.setComponent(comp);
-        if (comp == null || !mContext.bindService(intent, mConnection, 0)) {
-            Log.e(TAG, "Could not bind to Bluetooth Sap Service with " + intent);
+
+        if (comp == null || !mContext.bindServiceAsUser(intent, mConnection, 0,
+                android.os.Process.myUserHandle())) {
+            Log.e(TAG, "Could not bind to Bluetooth SAP Service with " + intent);
             return false;
         }
         return true;
@@ -127,7 +129,6 @@ public final class BluetoothSap implements BluetoothProfile {
         synchronized (mConnection) {
             if ( mSapService != null) {
                 try {
-                    mSapService.cleanup();
                     mSapService = null;
                     mContext.unbindService(mConnection);
                 } catch (Exception re) {
@@ -158,12 +159,12 @@ public final class BluetoothSap implements BluetoothProfile {
                 } catch (SecurityException e) {
                     Log.e(TAG,"onBluetoothStateChange: could not bind to SAP service: ", e);
                 }
+                Log.d(TAG, "BluetoothSap(), bindService called");
             } else {
                 if (VDBG) Log.d(TAG,"Unbinding service...");
                 synchronized (mConnection) {
                     if ( mSapService != null) {
                         try {
-                            mSapService.cleanup();
                             mSapService = null;
                             mContext.unbindService(mConnection);
                         } catch (Exception re) {

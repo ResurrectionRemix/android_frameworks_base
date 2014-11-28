@@ -1,5 +1,6 @@
 page.title=Action Bar
 page.tags="actionbar","navigation"
+page.metaDescription=The Action bar is an essential design element for all apps. Learn about what the action bar can do and how to use it in your apps.
 @jd:body
 
 <img src="{@docRoot}design/media/action_bar_pattern_overview.png">
@@ -181,8 +182,8 @@ files for further customization.
 </p>
 <p>
 
-<a onClick="_gaq.push(['_trackEvent', 'Design', 'Download', 'Action Bar Icons (@actionbar page)']);"
-   href="{@docRoot}downloads/design/Android_Design_Icons_20130926.zip">Download the Action Bar Icon Pack</a>
+<a onClick="ga('send', 'event', 'Design', 'Download', 'Action Bar Icons (@actionbar page)');"
+   href="{@docRoot}downloads/design/Android_Design_Icons_20131106.zip">Download the Action Bar Icon Pack</a>
 
 </p>
 

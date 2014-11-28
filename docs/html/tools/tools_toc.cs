@@ -1,46 +1,38 @@
 <ul id="nav">
 
   <li class="nav-section">
-    <div class="nav-section-header empty">
-        <a href="<?cs var:toroot ?>tools/index.html"><span class="en">Developer Tools</span></a>
-    </div>
-  </li>
-
-  <li class="nav-section">
     <div class="nav-section-header"><a href="<?cs var:toroot
 ?>sdk/index.html"><span class="en">Download</span></a></div>
     <ul>
-      <li><a href="<?cs var:toroot ?>sdk/installing/bundle.html">
-          <span class="en">Setting Up the ADT Bundle</span></a></li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/index.html">
+          <span class="en">Installing the SDK</span></a></li>
 
-      <li class="nav-section">
-        <div class="nav-section-header">
-          <a href="<?cs var:toroot ?>sdk/installing/index.html"><span class="en">Setting Up
-    an Existing IDE</span></a></div>
-        <ul>
-          <li><a href="<?cs var:toroot ?>sdk/installing/installing-adt.html">
-              <span class="en">Installing the Eclipse Plugin</span></a></li>
-        <li><a href="<?cs var:toroot ?>sdk/installing/adding-packages.html">
-            <span class="en">Adding Platforms and Packages</span></a></li>
-        </ul>
-      </li>
-
-      <li class="nav-section">
-        <div class="nav-section-header">
-          <a href="<?cs var:toroot ?>sdk/installing/studio.html">Android Studio</a>
-        </div>
-        <ul>
-          <li><a href="<?cs var:toroot ?>sdk/installing/migrate.html">
-              Migrating from Eclipse</a></li>
-          <li><a href="<?cs var:toroot ?>sdk/installing/studio-tips.html">
-              Tips and Tricks</a></li>
-        </ul>
-      </li>
-      <li><a href="<?cs var:toroot ?>sdk/exploring.html">
-          <span class="en">Exploring the SDK</span></a></li>
-      <li><a href="<?cs var:toroot ?>tools/sdk/ndk/index.html">Download the NDK</a>
-      </li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/adding-packages.html">
+          <span class="en">Adding SDK Packages</span></a></li>
     </ul>
+  </li>
+
+
+  <li class="nav-section">
+    <div class="nav-section-header">
+      <a href="<?cs var:toroot ?>sdk/installing/studio.html">Android Studio</a>
+    </div>
+    <ul>
+      <li><a href="<?cs var:toroot ?>sdk/installing/migrate.html">
+          Migrating from Eclipse</a></li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/create-project.html">
+          Creating a Project</a></li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/studio-tips.html">
+          Tips and Tricks</a></li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/studio-androidview.html">
+          Using the Android Project View</a></li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/studio-layout.html">
+          Using the Layout Editor</a></li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/studio-build.html">
+          Building Your Project with Gradle</a></li>
+      <li><a href="<?cs var:toroot ?>sdk/installing/studio-debug.html">
+          Debugging with Android Studio</a></li>
+      </ul>
   </li>
 
   <li class="nav-section">
@@ -138,7 +130,7 @@
       <li><a href="<?cs var:toroot ?>tools/debugging/improving-w-lint.html"><span class="en">Improving Your Code with lint</span></a></li>
       <li><a href="<?cs var:toroot ?>tools/debugging/debugging-ui.html"><span class="en">Optimizing your UI</span></a></li>
       <li><a href="<?cs var:toroot ?>tools/debugging/debugging-tracing.html"><span class="en">Profiling with Traceview and dmtracedump</span></a></li>
-      <li><a href="<?cs var:toroot ?>tools/debugging/systrace.html"><span class="en">Analysing Display and Performance with Systrace</span></a></li>
+      <li><a href="<?cs var:toroot ?>tools/debugging/systrace.html"><span class="en">Analyzing Display and Performance</span></a></li>
       <li><a href="<?cs var:toroot ?>tools/debugging/debugging-memory.html">Investigating Your RAM Usage</a></li>
       <li><a href="<?cs var:toroot ?>tools/debugging/debugging-devtools.html"><span class="en">Using the Dev Tools App</span></a></li>
     </ul>
@@ -168,7 +160,13 @@ class="en">Support Library</span></a></div>
 class="en">Tools Help</span></a></div>
     <ul>
       <li><a href="<?cs var:toroot ?>tools/help/adb.html">adb</a></li>
-      <li><a href="<?cs var:toroot ?>tools/help/adt.html">ADT</a></li>
+      <li class="nav-section">
+        <div class="nav-section-header"><a href="<?cs var:toroot ?>tools/help/adt.html">ADT</a></div>
+        <ul>
+          <li><a href="<?cs var:toroot ?>sdk/installing/installing-adt.html">
+              <span class="en">Installing the Eclipse Plugin</span></a></li>
+        </ul>
+      </li>
       <li><a href="<?cs var:toroot ?>tools/help/android.html">android</a></li>
       <li><a href="<?cs var:toroot ?>tools/help/avd-manager.html">AVD Manager</a></li>
       <li><a href="<?cs var:toroot ?>tools/help/bmgr.html">bmgr</a>
@@ -225,25 +223,24 @@ class="en">MonkeyRunner</span></a></li>
 ?>tools/revisions/index.html"><span class="en">Revisions</span></a></div>
     <ul>
       <li><a href="<?cs var:toroot ?>tools/sdk/tools-notes.html">
-        <span class="en">Tools</span>
+        <span class="en">SDK Tools</span>
       </a></li>
       <li><a href="<?cs var:toroot ?>tools/sdk/eclipse-adt.html">
         <span class="en">ADT Plugin</span>
       </a></li>
-      <!--
-      <li><a href="<?cs var:toroot ?>tools/sdk/addons.html"><span class="en">Add-ons</span></a></li>
-      -->
+      <li><a href="<?cs var:toroot ?>tools/revisions/build-tools.html">
+        <span class="en">Build Tools</span>
+      </a></li>
       <li><a href="<?cs var:toroot ?>tools/revisions/platforms.html"><span
 class="en">Platforms</span></a></li>
     </ul>
   </li>
 
-
   <li class="nav-section">
-    <div class="nav-section-header empty"><a href="<?cs var:toroot
-?>tools/samples/index.html"><span class="en">Samples</span></a></div>
+    <div class="nav-section-header empty">
+      <a href="<?cs var:toroot ?>tools/sdk/ndk/index.html">NDK</a>
+    </div>
   </li>
-
 
   <li class="nav-section">
     <div class="nav-section-header">

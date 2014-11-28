@@ -20,6 +20,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="719438068451601849">"Khóa bàn phím"</string>
     <string name="keyguard_password_enter_pin_code" msgid="3037685796058495017">"Nhập mã PIN"</string>
     <string name="keyguard_password_enter_puk_code" msgid="3035856550289724338">"Nhập mã PIN mới và mã PUK của SIM"</string>
     <string name="keyguard_password_enter_puk_prompt" msgid="1801941051094974609">"Mã PUK của SIM"</string>
@@ -28,12 +29,12 @@
     <string name="keyguard_password_enter_password_code" msgid="1054721668279049780">"Nhập mật khẩu để mở khóa"</string>
     <string name="keyguard_password_enter_pin_password_code" msgid="6391755146112503443">"Nhập mã PIN để mở khóa"</string>
     <string name="keyguard_password_wrong_pin_code" msgid="2422225591006134936">"Mã PIN không chính xác."</string>
-    <string name="keyguard_label_text" msgid="861796461028298424">"Để mở khóa, hãy nhấn vào Trình đơn sau đó nhấn 0."</string>
+    <string name="keyguard_label_text" msgid="861796461028298424">"Để mở khóa, hãy nhấn vào Menu sau đó nhấn 0."</string>
     <string name="faceunlock_multiple_failures" msgid="754137583022792429">"Đã vượt quá số lần Mở khóa bằng khuôn mặt tối đa"</string>
     <string name="keyguard_charged" msgid="3272223906073492454">"Pin đầy"</string>
-    <string name="keyguard_plugged_in" msgid="8117572000639998388">"Đang sạc, <xliff:g id="NUMBER">%d</xliff:g><xliff:g id="PERCENT">%%</xliff:g>"</string>
+    <string name="keyguard_plugged_in" msgid="9087497435553252863">"Đang sạc"</string>
     <string name="keyguard_low_battery" msgid="8143808018719173859">"Kết nối bộ sạc của bạn."</string>
-    <string name="keyguard_instructions_when_pattern_disabled" msgid="1332288268600329841">"Nhấn vào Trình đơn để mở khóa."</string>
+    <string name="keyguard_instructions_when_pattern_disabled" msgid="1332288268600329841">"Nhấn vào Menu để mở khóa."</string>
     <string name="keyguard_network_locked_message" msgid="9169717779058037168">"Mạng đã bị khóa"</string>
     <string name="keyguard_missing_sim_message_short" msgid="494980561304211931">"Không có thẻ SIM nào"</string>
     <string name="keyguard_missing_sim_message" product="tablet" msgid="1445849005909260039">"Không có thẻ SIM nào trong máy tính bảng."</string>
@@ -52,7 +53,6 @@
     <string name="keyguard_accessibility_unlock_area_collapsed" msgid="6366992066936076396">"Đã thu gọn vùng khóa."</string>
     <string name="keyguard_accessibility_widget" msgid="6527131039741808240">"<xliff:g id="WIDGET_INDEX">%1$s</xliff:g> tiện ích."</string>
     <string name="keyguard_accessibility_user_selector" msgid="1226798370913698896">"Bộ chọn người dùng"</string>
-    <string name="keyguard_accessibility_status" msgid="8008264603935930611">"Trạng thái"</string>
     <string name="keyguard_accessibility_camera" msgid="8904231194181114603">"Máy ảnh"</string>
     <string name="keygaurd_accessibility_media_controls" msgid="262209654292161806">"Điều khiển phương tiện"</string>
     <string name="keyguard_accessibility_widget_reorder_start" msgid="8736853615588828197">"Đã bắt đầu xắp xếp lại tiện ích."</string>
@@ -75,9 +75,10 @@
     <string name="keyguard_accessibility_transport_thumbs_down_description" msgid="8101433677192177861">"Bài hát được đánh dấu không thích"</string>
     <string name="keyguard_accessibility_transport_heart_description" msgid="2336943232474689887">"Trái tim"</string>
     <string name="keyguard_accessibility_show_bouncer" msgid="5425837272418176176">"Mở khóa để tiếp tục"</string>
-    <string name="keyguard_accessibility_hide_bouncer" msgid="7896992171878309358">"Quá trình khởi chạy bị hủy"</string>
+    <string name="keyguard_accessibility_hide_bouncer" msgid="7896992171878309358">"Quá trình chạy bị hủy"</string>
     <string name="keyguard_accessibility_delete_widget_start" msgid="4096550552634391451">"Thả <xliff:g id="WIDGET_INDEX">%1$s</xliff:g> để xóa."</string>
     <string name="keyguard_accessibility_delete_widget_end" msgid="508833506780909393">"<xliff:g id="WIDGET_INDEX">%1$s</xliff:g> sẽ không bị xóa."</string>
+    <string name="keyguard_accessibility_next_alarm" msgid="7269583073750518672">"Báo thức tiếp theo được đặt cho <xliff:g id="ALARM">%1$s</xliff:g>"</string>
     <string name="password_keyboard_label_symbol_key" msgid="992280756256536042">"?123"</string>
     <string name="password_keyboard_label_alpha_key" msgid="8001096175167485649">"ABC"</string>
     <string name="password_keyboard_label_alt_key" msgid="1284820942620288678">"ALT"</string>

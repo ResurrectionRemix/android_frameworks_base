@@ -818,6 +818,7 @@ public class KeyguardWidgetPager extends PagedView implements PagedView.PageSwit
             mZoomInOutAnim.cancel();
         }
         final View currentPage = getPageAt(getCurrentPage());
+        if (currentPage == null) return;
         if (currentPage.getScaleX() < 1f || currentPage.getScaleY() < 1f) {
             mZoomInOutAnim = new AnimatorSet();
             mZoomInOutAnim.playTogether(
@@ -839,6 +840,7 @@ public class KeyguardWidgetPager extends PagedView implements PagedView.PageSwit
         }
         int curPage = getCurrentPage();
         View currentPage = getPageAt(curPage);
+        if (currentPage == null) return;
         if (shouldSetTopAlignedPivotForWidget(curPage)) {
             currentPage.setPivotY(0);
             // Note: we are working around the issue that setting the x-pivot to the same value as it
@@ -953,17 +955,13 @@ public class KeyguardWidgetPager extends PagedView implements PagedView.PageSwit
                     // to keep event dispatch happy.
                     mCameraEventInProgress = true;
                     userActivity();
-                    startPageWarp(cameraPage);
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
                     mCameraEventInProgress = false;
-                    endWarp = isWarping();
                     break;
             }
             dispatchTouchEvent(event);
-            // This has to happen after the event has been handled by the real widget pager
-            if (endWarp) stopPageWarp();
         }
         endCameraEvent();
     }

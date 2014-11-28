@@ -37,7 +37,6 @@ static struct {
     jfieldID navigation;
     jfieldID navigationHidden;
     jfieldID orientation;
-    jfieldID uiInvertedMode;
     jfieldID uiMode;
     jfieldID screenWidthDp;
     jfieldID screenHeightDp;
@@ -63,7 +62,6 @@ void android_Configuration_getFromJava(
             << ResTable_config::SHIFT_NAVHIDDEN;
 
     out->orientation = env->GetIntField(clazz, gConfigurationClassInfo.orientation);
-    out->uiInvertedMode = env->GetIntField(clazz, gConfigurationClassInfo.uiInvertedMode);
     out->uiMode = env->GetIntField(clazz, gConfigurationClassInfo.uiMode);
 
     out->screenWidthDp = env->GetIntField(clazz, gConfigurationClassInfo.screenWidthDp);
@@ -71,15 +69,6 @@ void android_Configuration_getFromJava(
     out->smallestScreenWidthDp = env->GetIntField(clazz,
             gConfigurationClassInfo.smallestScreenWidthDp);
 }
-
-/*
- * JNI registration.
- */
-static JNINativeMethod gMethods[] = {
-    /* name, signature, funcPtr */
-    //{ "getObbInfo_native", "(Ljava/lang/String;Landroid/content/res/ObbInfo;)Z",
-    //        (void*) android_content_res_ObbScanner_getObbInfo },
-};
 
 #define FIND_CLASS(var, className) \
         var = env->FindClass(className); \
@@ -116,8 +105,6 @@ int register_android_content_res_Configuration(JNIEnv* env)
             "navigationHidden", "I");
     GET_FIELD_ID(gConfigurationClassInfo.orientation, clazz,
             "orientation", "I");
-    GET_FIELD_ID(gConfigurationClassInfo.uiInvertedMode, clazz,
-            "uiInvertedMode", "I");
     GET_FIELD_ID(gConfigurationClassInfo.uiMode, clazz,
             "uiMode", "I");
     GET_FIELD_ID(gConfigurationClassInfo.screenWidthDp, clazz,
@@ -127,8 +114,7 @@ int register_android_content_res_Configuration(JNIEnv* env)
     GET_FIELD_ID(gConfigurationClassInfo.smallestScreenWidthDp, clazz,
             "smallestScreenWidthDp", "I");
 
-    return AndroidRuntime::registerNativeMethods(env, "android/content/res/Configuration", gMethods,
-            NELEM(gMethods));
+    return 0;
 }
 
 }; // namespace android

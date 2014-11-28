@@ -1,5 +1,6 @@
 page.title=Navigation with Back and Up
 page.tags="navigation","activity","task","up navigation","back navigation"
+page.image=/design/media/navigation_between_siblings_gmail.png
 @jd:body
 
 <a class="notice-developers" href="{@docRoot}training/implementing-navigation/index.html">
@@ -9,7 +10,7 @@ page.tags="navigation","activity","task","up navigation","back navigation"
   </div>
 </a>
 
-<p>Consistent navigation is an essential component of the overall user experience. Few things frustrate
+<p itemprop="description">Consistent navigation is an essential component of the overall user experience. Few things frustrate
 users more than basic navigation that behaves in inconsistent and unexpected ways. Android 3.0
 introduced significant changes to the global navigation behavior. Thoughtfully following the
 guidelines for Back and Up will make your app's navigation predictable and reliable for your users.</p>

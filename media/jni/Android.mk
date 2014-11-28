@@ -8,8 +8,10 @@ LOCAL_SRC_FILES:= \
     android_media_MediaCodecList.cpp \
     android_media_MediaDrm.cpp \
     android_media_MediaExtractor.cpp \
+    android_media_MediaHTTPConnection.cpp \
     android_media_MediaMuxer.cpp \
     android_media_MediaPlayer.cpp \
+    android_media_ExtMediaPlayer.cpp \
     android_media_MediaRecorder.cpp \
     android_media_MediaScanner.cpp \
     android_media_MediaMetadataRetriever.cpp \
@@ -20,11 +22,6 @@ LOCAL_SRC_FILES:= \
     android_mtp_MtpDatabase.cpp \
     android_mtp_MtpDevice.cpp \
     android_mtp_MtpServer.cpp \
-
-ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
-    LOCAL_SRC_FILES += \
-    android_media_ExtMediaPlayer.cpp
-endif
 
 LOCAL_SHARED_LIBRARIES := \
     libandroid_runtime \
@@ -42,17 +39,18 @@ LOCAL_SHARED_LIBRARIES := \
     libcamera_client \
     libmtp \
     libusbhost \
+    libjhead \
     libexif \
     libstagefright_amrnb_common \
 
 LOCAL_REQUIRED_MODULES := \
-    libexif_jni
+    libjhead_jni
 
 LOCAL_STATIC_LIBRARIES := \
     libstagefright_amrnbenc
 
 LOCAL_C_INCLUDES += \
-    external/jhead \
+    external/libexif/ \
     external/tremor/Tremor \
     frameworks/base/core/jni \
     frameworks/av/media/libmedia \
@@ -60,24 +58,14 @@ LOCAL_C_INCLUDES += \
     frameworks/av/media/libstagefright/codecs/amrnb/enc/src \
     frameworks/av/media/libstagefright/codecs/amrnb/common \
     frameworks/av/media/libstagefright/codecs/amrnb/common/include \
-    frameworks/av/media/mtp
-
-ifneq ($(TI_CUSTOM_DOMX_PATH),)
-LOCAL_C_INCLUDES += $(TI_CUSTOM_DOMX_PATH)/omx_core/inc
-else
-LOCAL_C_INCLUDES += frameworks/native/include/media/openmax
-endif
-
-LOCAL_C_INCLUDES += \
+    frameworks/av/media/mtp \
+    frameworks/native/include/media/openmax \
     $(call include-path-for, libhardware)/hardware \
     system/media/camera/include \
     $(PV_INCLUDES) \
-    $(JNI_H_INCLUDE) \
-    $(call include-path-for, corecg graphics)
+    $(JNI_H_INCLUDE)
 
 LOCAL_CFLAGS +=
-
-LOCAL_LDLIBS := -lpthread
 
 LOCAL_MODULE:= libmedia_jni
 
@@ -85,5 +73,4 @@ include $(BUILD_SHARED_LIBRARY)
 
 # build libsoundpool.so
 # build libaudioeffect_jni.so
-# build libscreenrecorder.so
 include $(call all-makefiles-under,$(LOCAL_PATH))

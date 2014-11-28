@@ -16,12 +16,8 @@
 
 package android.hardware.usb;
 
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-
-import java.io.FileDescriptor;
 
 /**
  * This class represents a USB device attached to the android device with the android device
@@ -46,26 +42,35 @@ public class UsbDevice implements Parcelable {
     private static final String TAG = "UsbDevice";
 
     private final String mName;
+    private final String mManufacturerName;
+    private final String mProductName;
+    private final String mSerialNumber;
     private final int mVendorId;
     private final int mProductId;
     private final int mClass;
     private final int mSubclass;
     private final int mProtocol;
-    private final Parcelable[] mInterfaces;
+    private Parcelable[] mConfigurations;
+
+    // list of all interfaces on the device
+    private UsbInterface[] mInterfaces;
 
     /**
      * UsbDevice should only be instantiated by UsbService implementation
      * @hide
      */
     public UsbDevice(String name, int vendorId, int productId,
-            int Class, int subClass, int protocol, Parcelable[] interfaces) {
+            int Class, int subClass, int protocol,
+            String manufacturerName, String productName, String serialNumber) {
         mName = name;
         mVendorId = vendorId;
         mProductId = productId;
         mClass = Class;
         mSubclass = subClass;
         mProtocol = protocol;
-        mInterfaces = interfaces;
+        mManufacturerName = manufacturerName;
+        mProductName = productName;
+        mSerialNumber = serialNumber;
     }
 
     /**
@@ -77,6 +82,33 @@ public class UsbDevice implements Parcelable {
      */
     public String getDeviceName() {
         return mName;
+    }
+
+    /**
+     * Returns the manufacturer name of the device.
+     *
+     * @return the manufacturer name
+     */
+    public String getManufacturerName() {
+        return mManufacturerName;
+    }
+
+    /**
+     * Returns the product name of the device.
+     *
+     * @return the product name
+     */
+    public String getProductName() {
+        return mProductName;
+    }
+
+    /**
+     * Returns the serial number of the device.
+     *
+     * @return the serial number name
+     */
+    public String getSerialNumber() {
+        return mSerialNumber;
     }
 
     /**
@@ -138,21 +170,74 @@ public class UsbDevice implements Parcelable {
     }
 
     /**
+     * Returns the number of {@link UsbConfiguration}s this device contains.
+     *
+     * @return the number of configurations
+     */
+    public int getConfigurationCount() {
+        return mConfigurations.length;
+    }
+
+    /**
+     * Returns the {@link UsbConfiguration} at the given index.
+     *
+     * @return the configuration
+     */
+    public UsbConfiguration getConfiguration(int index) {
+        return (UsbConfiguration)mConfigurations[index];
+    }
+
+    private UsbInterface[] getInterfaceList() {
+        if (mInterfaces == null) {
+            int configurationCount = mConfigurations.length;
+            int interfaceCount = 0;
+            for (int i = 0; i < configurationCount; i++) {
+                UsbConfiguration configuration = (UsbConfiguration)mConfigurations[i];
+                interfaceCount += configuration.getInterfaceCount();
+            }
+
+            mInterfaces = new UsbInterface[interfaceCount];
+            int offset = 0;
+            for (int i = 0; i < configurationCount; i++) {
+                UsbConfiguration configuration = (UsbConfiguration)mConfigurations[i];
+                interfaceCount = configuration.getInterfaceCount();
+                for (int j = 0; j < interfaceCount; j++) {
+                    mInterfaces[offset++] = configuration.getInterface(j);
+                }
+            }
+        }
+
+        return mInterfaces;
+    }
+
+    /**
      * Returns the number of {@link UsbInterface}s this device contains.
+     * For devices with multiple configurations, you will probably want to use
+     * {@link UsbConfiguration#getInterfaceCount} instead.
      *
      * @return the number of interfaces
      */
     public int getInterfaceCount() {
-        return mInterfaces.length;
+        return getInterfaceList().length;
     }
 
     /**
      * Returns the {@link UsbInterface} at the given index.
+     * For devices with multiple configurations, you will probably want to use
+     * {@link UsbConfiguration#getInterface} instead.
      *
      * @return the interface
      */
     public UsbInterface getInterface(int index) {
-        return (UsbInterface)mInterfaces[index];
+        return getInterfaceList()[index];
+    }
+
+    /**
+     * Only used by UsbService implementation
+     * @hide
+     */
+    public void setConfigurations(Parcelable[] configuration) {
+        mConfigurations = configuration;
     }
 
     @Override
@@ -173,10 +258,17 @@ public class UsbDevice implements Parcelable {
 
     @Override
     public String toString() {
-        return "UsbDevice[mName=" + mName + ",mVendorId=" + mVendorId +
-                ",mProductId=" + mProductId + ",mClass=" + mClass +
-                ",mSubclass=" + mSubclass + ",mProtocol=" + mProtocol +
-                ",mInterfaces=" + mInterfaces + "]";
+        StringBuilder builder = new StringBuilder("UsbDevice[mName=" + mName +
+                ",mVendorId=" + mVendorId + ",mProductId=" + mProductId +
+                ",mClass=" + mClass + ",mSubclass=" + mSubclass + ",mProtocol=" + mProtocol +
+                ",mManufacturerName=" + mManufacturerName + ",mProductName=" + mProductName +
+                ",mSerialNumber=" + mSerialNumber + ",mConfigurations=[");
+        for (int i = 0; i < mConfigurations.length; i++) {
+            builder.append("\n");
+            builder.append(mConfigurations[i].toString());
+        }
+        builder.append("]");
+        return builder.toString();
     }
 
     public static final Parcelable.Creator<UsbDevice> CREATOR =
@@ -188,8 +280,14 @@ public class UsbDevice implements Parcelable {
             int clasz = in.readInt();
             int subClass = in.readInt();
             int protocol = in.readInt();
-            Parcelable[] interfaces = in.readParcelableArray(UsbInterface.class.getClassLoader());
-            return new UsbDevice(name, vendorId, productId, clasz, subClass, protocol, interfaces);
+            String manufacturerName = in.readString();
+            String productName = in.readString();
+            String serialNumber = in.readString();
+            Parcelable[] configurations = in.readParcelableArray(UsbInterface.class.getClassLoader());
+            UsbDevice device = new UsbDevice(name, vendorId, productId, clasz, subClass, protocol,
+                                 manufacturerName, productName, serialNumber);
+            device.setConfigurations(configurations);
+            return device;
         }
 
         public UsbDevice[] newArray(int size) {
@@ -208,7 +306,10 @@ public class UsbDevice implements Parcelable {
         parcel.writeInt(mClass);
         parcel.writeInt(mSubclass);
         parcel.writeInt(mProtocol);
-        parcel.writeParcelableArray(mInterfaces, 0);
+        parcel.writeString(mManufacturerName);
+        parcel.writeString(mProductName);
+        parcel.writeString(mSerialNumber);
+        parcel.writeParcelableArray(mConfigurations, 0);
    }
 
     public static int getDeviceId(String name) {

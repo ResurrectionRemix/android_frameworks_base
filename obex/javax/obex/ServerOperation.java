@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
  * Copyright (c) 2008-2009, Motorola, Inc.
  *
  * All rights reserved.
@@ -91,7 +90,6 @@ public final class ServerOperation implements Operation, BaseStream {
 
     private boolean mSendBodyHeader = true;
 
-    private boolean mEndofBody = true;
     /**
      * Creates new ServerOperation
      * @param p the parent that created this object
@@ -368,7 +366,7 @@ public final class ServerOperation implements Operation, BaseStream {
                  * (End of Body) otherwise, we need to send 0x48 (Body)
                  */
                 if ((finalBitSet) || (mPrivateOutput.isClosed())) {
-                    if (mEndofBody) {
+                    if(mSendBodyHeader == true) {
                         out.write(0x49);
                         bodyLength += 3;
                         out.write((byte)(bodyLength >> 8));
@@ -390,12 +388,6 @@ public final class ServerOperation implements Operation, BaseStream {
 
         if ((finalBitSet) && (type == ResponseCodes.OBEX_HTTP_OK) && (orginalBodyLength <= 0)) {
             if(mSendBodyHeader == true) {
-                out.write(0x49);
-                orginalBodyLength = 3;
-                out.write((byte)(orginalBodyLength >> 8));
-                out.write((byte)orginalBodyLength);
-            } else if (mEndofBody) {
-
                 out.write(0x49);
                 orginalBodyLength = 3;
                 out.write((byte)(orginalBodyLength >> 8));
@@ -733,8 +725,5 @@ public final class ServerOperation implements Operation, BaseStream {
 
     public void noBodyHeader(){
         mSendBodyHeader = false;
-    }
-    public void noEndofBody() {
-        mEndofBody = false;
     }
 }

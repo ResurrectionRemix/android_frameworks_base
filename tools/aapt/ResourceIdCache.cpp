@@ -9,7 +9,7 @@
 #include <utils/Log.h>
 #include "ResourceIdCache.h"
 #include <map>
-using std::map;
+using namespace std;
 
 
 static size_t mHits = 0;
@@ -98,10 +98,10 @@ uint32_t ResourceIdCache::store(const android::String16& package,
 
 void ResourceIdCache::dump() {
     printf("ResourceIdCache dump:\n");
-    printf("Size: %ld\n", mIdMap.size());
-    printf("Hits:   %ld\n", mHits);
-    printf("Misses: %ld\n", mMisses);
-    printf("(Collisions: %ld)\n", mCollisions);
+    printf("Size: %zd\n", mIdMap.size());
+    printf("Hits:   %zd\n", mHits);
+    printf("Misses: %zd\n", mMisses);
+    printf("(Collisions: %zd)\n", mCollisions);
 }
 
 }

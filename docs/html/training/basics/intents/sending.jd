@@ -166,7 +166,7 @@ the intent. If it is <code>false</code>, then there aren't any apps to handle th
 starts in case you need to disable the feature that uses the intent before the user attempts to use
 it. If you know of a specific app that can handle the intent, you can also provide a link for the
 user to download the app (see how to <a
-href="{@docRoot}distribute/googleplay/promote/linking.html">link to your product on Google
+href="{@docRoot}distribute/tools/promote/linking.html">link to your product on Google
 Play</a>).</p>
 
 
@@ -241,9 +241,13 @@ Intent intent = new Intent(Intent.ACTION_SEND);
 // Always use string resources for UI text.
 // This says something like "Share this photo with"
 String title = getResources().getString(R.string.chooser_title);
-// Create and start the chooser
+// Create intent to show chooser
 Intent chooser = Intent.createChooser(intent, title);
-startActivity(chooser);
+
+// Verify the intent will resolve to at least one activity
+if (intent.resolveActivity(getPackageManager()) != null) {
+    startActivity(chooser);
+}
 </pre>
 
 <p>This displays a dialog with a list of apps that respond to the intent passed to the {@link

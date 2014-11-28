@@ -21,6 +21,7 @@
 #include <utils/threads.h>
 #include <media/mediascanner.h>
 #include <media/stagefright/StagefrightMediaScanner.h>
+#include <private/media/VideoFrame.h>
 
 #include "jni.h"
 #include "JNIHelp.h"
@@ -226,12 +227,12 @@ private:
 
 static MediaScanner *getNativeScanner_l(JNIEnv* env, jobject thiz)
 {
-    return (MediaScanner *) env->GetIntField(thiz, fields.context);
+    return (MediaScanner *) env->GetLongField(thiz, fields.context);
 }
 
 static void setNativeScanner_l(JNIEnv* env, jobject thiz, MediaScanner *s)
 {
-    env->SetIntField(thiz, fields.context, (int)s);
+    env->SetLongField(thiz, fields.context, (jlong)s);
 }
 
 static void
@@ -347,21 +348,20 @@ android_media_MediaScanner_extractAlbumArt(
     }
 
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
-    char* data = mp->extractAlbumArt(fd);
-    if (!data) {
+    MediaAlbumArt* mediaAlbumArt = mp->extractAlbumArt(fd);
+    if (mediaAlbumArt == NULL) {
         return NULL;
     }
-    long len = *((long*)data);
 
-    jbyteArray array = env->NewByteArray(len);
+    jbyteArray array = env->NewByteArray(mediaAlbumArt->size());
     if (array != NULL) {
-        jbyte* bytes = env->GetByteArrayElements(array, NULL);
-        memcpy(bytes, data + 4, len);
-        env->ReleaseByteArrayElements(array, bytes, 0);
+        const jbyte* data =
+                reinterpret_cast<const jbyte*>(mediaAlbumArt->data());
+        env->SetByteArrayRegion(array, 0, mediaAlbumArt->size(), data);
     }
 
 done:
-    free(data);
+    free(mediaAlbumArt);
     // if NewByteArray() returned NULL, an out-of-memory
     // exception will have been raised. I just want to
     // return null in that case.
@@ -381,7 +381,7 @@ android_media_MediaScanner_native_init(JNIEnv *env)
         return;
     }
 
-    fields.context = env->GetFieldID(clazz, "mNativeContext", "I");
+    fields.context = env->GetFieldID(clazz, "mNativeContext", "J");
     if (fields.context == NULL) {
         return;
     }
@@ -398,7 +398,7 @@ android_media_MediaScanner_native_setup(JNIEnv *env, jobject thiz)
         return;
     }
 
-    env->SetIntField(thiz, fields.context, (int)mp);
+    env->SetLongField(thiz, fields.context, (jlong)mp);
 }
 
 static void

@@ -17,6 +17,7 @@
 package android.text.format;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.UnknownFormatConversionException;
 import java.util.regex.Pattern;
 
@@ -35,27 +36,40 @@ public class Time_Delegate {
     // Regex to match odd number of '%'.
     private static final Pattern p = Pattern.compile("(?<!%)(%%)*%(?!%)");
 
-    @LayoutlibDelegate
-    /*package*/ static String format1(Time thisTime, String format) {
+    // Format used by toString()
+    private static final String FORMAT = "%1$tY%1$tm%1$tdT%1$tH%1$tM%1$tS<%1$tZ>";
 
-        try {
-            // Change the format by adding changing '%' to "%1$t". This is required to tell the
-            // formatter which argument to use from the argument list. '%%' is left as is. In the
-            // replacement string, $0 refers to matched pattern. \\1 means '1', written this way to
-            // separate it from 0. \\$ means '$', written this way to suppress the special meaning
-            // of $.
-            return String.format(
-                    p.matcher(format).replaceAll("$0\\1\\$t"),
-                    timeToCalendar(thisTime, Calendar.getInstance()));
-        } catch (UnknownFormatConversionException e) {
-            Bridge.getLog().fidelityWarning(LayoutLog.TAG_STRFTIME, "Unrecognized format", e, format);
-            return format;
-        }
-    }
+    // ---- private helper methods ----
 
-    private static Calendar timeToCalendar(Time time, Calendar calendar) {
+    private static Calendar timeToCalendar(Time time) {
+        Calendar calendar = getCalendarInstance(time);
         calendar.set(time.year, time.month, time.monthDay, time.hour, time.minute, time.second);
         return calendar;
     }
 
+    private static void calendarToTime(Calendar c, Time time) {
+        time.timezone = c.getTimeZone().getID();
+        time.set(c.get(Calendar.SECOND), c.get(Calendar.MINUTE), c.get(Calendar.HOUR_OF_DAY),
+                c.get(Calendar.DATE), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+        time.weekDay = c.get(Calendar.DAY_OF_WEEK);
+        time.yearDay = c.get(Calendar.DAY_OF_YEAR);
+        time.isDst = c.getTimeZone().inDaylightTime(c.getTime()) ? 1 : 0;
+        // gmtoff is in seconds and TimeZone.getOffset() returns milliseconds.
+        time.gmtoff = c.getTimeZone().getOffset(c.getTimeInMillis()) / DateUtils.SECOND_IN_MILLIS;
+    }
+
+    /**
+     * Return a calendar instance with the correct timezone.
+     *
+     * @param time Time to obtain the timezone from.
+     */
+    private static Calendar getCalendarInstance(Time time) {
+        // TODO: Check platform code to make sure the behavior is same for null/invalid timezone.
+        if (time == null || time.timezone == null) {
+            // Default to local timezone.
+            return Calendar.getInstance();
+        }
+        // If timezone is invalid, use GMT.
+        return Calendar.getInstance(TimeZone.getTimeZone(time.timezone));
+    }
 }

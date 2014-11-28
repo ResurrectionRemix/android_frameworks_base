@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.telephony.TelephonyManager;
 import android.view.View;
 
 import com.android.systemui.R;
@@ -32,8 +33,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
 
-    private View mLeftSide, mStatusIcons, mSignalCluster, mNetworkTraffic;
-    private View mBattery, mDockBattery, mClock, mCenterClock, mNetStats;
+    private View mLeftSide, mStatusIcons, mSignalCluster, mBattery, mClock;
     private Animator mCurrentAnimation;
 
     public PhoneStatusBarTransitions(PhoneStatusBarView view) {
@@ -46,11 +46,12 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     public void init() {
         mLeftSide = mView.findViewById(R.id.notification_icon_area);
         mStatusIcons = mView.findViewById(R.id.statusIcons);
-        mSignalCluster = mView.findViewById(R.id.signal_cluster);
+        if (TelephonyManager.getDefault().isMultiSimEnabled()) {
+            mSignalCluster = mView.findViewById(R.id.msim_signal_cluster);
+        } else {
+            mSignalCluster = mView.findViewById(R.id.signal_cluster);
+        }
         mBattery = mView.findViewById(R.id.battery);
-        mDockBattery = mView.findViewById(R.id.dock_battery);
-        mCenterClock = mView.findViewById(R.id.center_clock);
-	mNetworkTraffic = mView.findViewById(R.id.networkTraffic);
         mClock = mView.findViewById(R.id.clock);
         applyModeBackground(-1, getMode(), false /*animate*/);
         applyMode(getMode(), false /*animate*/);
@@ -72,7 +73,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     }
 
     private boolean isOpaque(int mode) {
-        return !(mode == MODE_SEMI_TRANSPARENT || mode == MODE_TRANSLUCENT);
+        return !(mode == MODE_SEMI_TRANSPARENT || mode == MODE_TRANSLUCENT
+                || mode == MODE_TRANSPARENT);
     }
 
     @Override
@@ -94,11 +96,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
                     animateTransitionTo(mLeftSide, newAlpha),
                     animateTransitionTo(mStatusIcons, newAlpha),
                     animateTransitionTo(mSignalCluster, newAlpha),
-		    animateTransitionTo(mNetworkTraffic, newAlpha),
-                    animateTransitionTo(mDockBattery, newAlphaBC),
                     animateTransitionTo(mBattery, newAlphaBC),
-                    animateTransitionTo(mClock, newAlphaBC),
-                    animateTransitionTo(mCenterClock, newAlphaBC)
+                    animateTransitionTo(mClock, newAlphaBC)
                     );
             if (mode == MODE_LIGHTS_OUT) {
                 anims.setDuration(LIGHTS_OUT_DURATION);
@@ -109,11 +108,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
             mLeftSide.setAlpha(newAlpha);
             mStatusIcons.setAlpha(newAlpha);
             mSignalCluster.setAlpha(newAlpha);
-	    mNetworkTraffic.setAlpha(newAlpha);
-            mDockBattery.setAlpha(newAlphaBC);
             mBattery.setAlpha(newAlphaBC);
             mClock.setAlpha(newAlphaBC);
-            mCenterClock.setAlpha(newAlphaBC);
         }
     }
 }

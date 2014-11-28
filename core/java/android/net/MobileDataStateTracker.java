@@ -54,7 +54,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MobileDataStateTracker extends BaseNetworkStateTracker {
 
     private static final String TAG = "MobileDataStateTracker";
-    private static final boolean DBG = true;
+    private static final boolean DBG = false;
     private static final boolean VDBG = false;
 
     private PhoneConstants.DataState mMobileDataState;
@@ -66,7 +66,6 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
     private Handler mTarget;
     private Context mContext;
     private LinkProperties mLinkProperties;
-    private LinkCapabilities mLinkCapabilities;
     private boolean mPrivateDnsRouteSet = false;
     private boolean mDefaultRouteSet = false;
 
@@ -198,15 +197,13 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             loge("CONNECTED event did not supply link properties.");
             mLinkProperties = new LinkProperties();
         }
-        if (mLinkProperties.getMtu() <= 0) {
-            mLinkProperties.setMtu(mContext.getResources().getInteger(
+        mLinkProperties.setMtu(mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_mobile_mtu));
-        }
-        mLinkCapabilities = intent.getParcelableExtra(
-                PhoneConstants.DATA_LINK_CAPABILITIES_KEY);
-        if (mLinkCapabilities == null) {
-            loge("CONNECTED event did not supply link capabilities.");
-            mLinkCapabilities = new LinkCapabilities();
+        mNetworkCapabilities = intent.getParcelableExtra(
+                PhoneConstants.DATA_NETWORK_CAPABILITIES_KEY);
+        if (mNetworkCapabilities == null) {
+            loge("CONNECTED event did not supply network capabilities.");
+            mNetworkCapabilities = new NetworkCapabilities();
         }
     }
 
@@ -308,20 +305,20 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                     if (VDBG) {
                         Slog.d(TAG, "TelephonyMgr.DataConnectionStateChanged");
                         if (mNetworkInfo != null) {
-                            Slog.d(TAG, "NetworkInfo = " + mNetworkInfo.toString());
-                            Slog.d(TAG, "subType = " + String.valueOf(mNetworkInfo.getSubtype()));
+                            Slog.d(TAG, "NetworkInfo = " + mNetworkInfo);
+                            Slog.d(TAG, "subType = " + mNetworkInfo.getSubtype());
                             Slog.d(TAG, "subType = " + mNetworkInfo.getSubtypeName());
                         }
                         if (mLinkProperties != null) {
-                            Slog.d(TAG, "LinkProperties = " + mLinkProperties.toString());
+                            Slog.d(TAG, "LinkProperties = " + mLinkProperties);
                         } else {
                             Slog.d(TAG, "LinkProperties = " );
                         }
 
-                        if (mLinkCapabilities != null) {
-                            Slog.d(TAG, "LinkCapabilities = " + mLinkCapabilities.toString());
+                        if (mNetworkCapabilities != null) {
+                            Slog.d(TAG, mNetworkCapabilities.toString());
                         } else {
-                            Slog.d(TAG, "LinkCapabilities = " );
+                            Slog.d(TAG, "NetworkCapabilities = " );
                         }
                     }
 
@@ -414,9 +411,6 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
         case TelephonyManager.NETWORK_TYPE_HSPAP:
             networkTypeStr = "hspap";
             break;
-        case TelephonyManager.NETWORK_TYPE_DCHSPAP:
-            networkTypeStr = "dchspap";
-            break;
         case TelephonyManager.NETWORK_TYPE_CDMA:
             networkTypeStr = "cdma";
             break;
@@ -436,6 +430,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             networkTypeStr = "iden";
             break;
         case TelephonyManager.NETWORK_TYPE_LTE:
+        case TelephonyManager.NETWORK_TYPE_IWLAN:
             networkTypeStr = "lte";
             break;
         case TelephonyManager.NETWORK_TYPE_EHRPD:
@@ -445,48 +440,6 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             loge("unknown network type: " + tm.getNetworkType());
         }
         return "net.tcp.buffersize." + networkTypeStr;
-    }
-
-    /**
-     * Return the system properties name associated with the tcp delayed ack settings
-     * for this network.
-     */
-    @Override
-    public String getTcpDelayedAckPropName() {
-        String networkTypeStr = "default";
-        TelephonyManager tm = (TelephonyManager) mContext.getSystemService(
-                         Context.TELEPHONY_SERVICE);
-        if (tm != null) {
-            switch(tm.getNetworkType()) {
-                case TelephonyManager.NETWORK_TYPE_LTE:
-                    networkTypeStr = "lte";
-                    break;
-                default:
-                    break;
-            }
-        }
-        return "net.tcp.delack." + networkTypeStr;
-    }
-
-    /**
-     * Return the system properties name associated with the tcp user config flag
-     * for this network.
-     */
-    @Override
-    public String getTcpUserConfigPropName() {
-        String networkTypeStr = "default";
-        TelephonyManager tm = (TelephonyManager) mContext.getSystemService(
-                         Context.TELEPHONY_SERVICE);
-        if (tm != null) {
-            switch(tm.getNetworkType()) {
-                case TelephonyManager.NETWORK_TYPE_LTE:
-                    networkTypeStr = "lte";
-                    break;
-                default:
-                    break;
-            }
-        }
-        return "net.tcp.usercfg." + networkTypeStr;
     }
 
     /**
@@ -504,11 +457,6 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
      */
     public boolean isReady() {
         return mDataConnectionTrackerAc != null;
-    }
-
-    @Override
-    public void captivePortalCheckComplete() {
-        // not implemented
     }
 
     @Override
@@ -611,6 +559,17 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
 
         loge("Could not set radio power to " + (turnOn ? "on" : "off"));
         return false;
+    }
+
+
+    public void setInternalDataEnable(boolean enabled) {
+        if (DBG) log("setInternalDataEnable: E enabled=" + enabled);
+        final AsyncChannel channel = mDataConnectionTrackerAc;
+        if (channel != null) {
+            channel.sendMessage(DctConstants.EVENT_SET_INTERNAL_DATA_ENABLE,
+                    enabled ? DctConstants.ENABLED : DctConstants.DISABLED);
+        }
+        if (VDBG) log("setInternalDataEnable: X enabled=" + enabled);
     }
 
     @Override
@@ -741,15 +700,15 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                 break;
             }
 
-            try {
-                if (enable) {
-                    return mPhoneService.enableApnType(apnType);
-                } else {
-                    return mPhoneService.disableApnType(apnType);
-                }
-            } catch (RemoteException e) {
-                if (retry == 0) getPhoneService(true);
-            }
+//            try {
+//                if (enable) {
+//                    return mPhoneService.enableApnType(apnType);
+//                } else {
+//                    return mPhoneService.disableApnType(apnType);
+//                }
+//            } catch (RemoteException e) {
+//                if (retry == 0) getPhoneService(true);
+//            }
         }
 
         loge("Could not " + (enable ? "enable" : "disable") + " APN type \"" + apnType + "\"");
@@ -776,6 +735,8 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                 return PhoneConstants.APN_TYPE_CBS;
             case ConnectivityManager.TYPE_MOBILE_IA:
                 return PhoneConstants.APN_TYPE_IA;
+            case ConnectivityManager.TYPE_MOBILE_EMERGENCY:
+                return PhoneConstants.APN_TYPE_EMERGENCY;
             default:
                 sloge("Error mapping networkType " + netType + " to apnType.");
                 return null;
@@ -789,14 +750,6 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
     @Override
     public LinkProperties getLinkProperties() {
         return new LinkProperties(mLinkProperties);
-    }
-
-    /**
-     * @see android.net.NetworkStateTracker#getLinkCapabilities()
-     */
-    @Override
-    public LinkCapabilities getLinkCapabilities() {
-        return new LinkCapabilities(mLinkCapabilities);
     }
 
     public void supplyMessenger(Messenger messenger) {
@@ -898,7 +851,6 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             new NetworkDataEntry(TelephonyManager.NETWORK_TYPE_HSUPA,   14400,    5760, UNKNOWN),
             new NetworkDataEntry(TelephonyManager.NETWORK_TYPE_HSPA,    14400,    5760, UNKNOWN),
             new NetworkDataEntry(TelephonyManager.NETWORK_TYPE_HSPAP,   21000,    5760, UNKNOWN),
-            new NetworkDataEntry(TelephonyManager.NETWORK_TYPE_DCHSPAP, 42000,    5760, UNKNOWN),
             new NetworkDataEntry(TelephonyManager.NETWORK_TYPE_CDMA,  UNKNOWN, UNKNOWN, UNKNOWN),
             new NetworkDataEntry(TelephonyManager.NETWORK_TYPE_1xRTT, UNKNOWN, UNKNOWN, UNKNOWN),
             new NetworkDataEntry(TelephonyManager.NETWORK_TYPE_EVDO_0,   2468,     153, UNKNOWN),
@@ -932,7 +884,6 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             case TelephonyManager.NETWORK_TYPE_HSUPA:
             case TelephonyManager.NETWORK_TYPE_HSPA:
             case TelephonyManager.NETWORK_TYPE_HSPAP:
-            case TelephonyManager.NETWORK_TYPE_DCHSPAP:
                 level = ss.getGsmLevel();
                 break;
             case TelephonyManager.NETWORK_TYPE_CDMA:

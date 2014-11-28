@@ -1,5 +1,5 @@
 page.title=Lists
-page.tags="listview","layout"
+page.tags=listview,layout
 @jd:body
 
 <a class="notice-developers" href="{@docRoot}guide/topics/ui/layout/listview.html">
@@ -9,7 +9,7 @@ page.tags="listview","layout"
   </div>
 </a>
 
-<p>Lists present multiple line items in a vertical arrangement. They can be used for data selection as
+<p itemprop="description">Lists present multiple line items in a vertical arrangement. They can be used for data selection as
 well as drilldown navigation.</p>
 
 <div class="vspace size-1">&nbsp;</div>

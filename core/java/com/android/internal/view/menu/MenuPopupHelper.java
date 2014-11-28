@@ -23,7 +23,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
@@ -54,8 +53,7 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
     private final MenuAdapter mAdapter;
     private final boolean mOverflowOnly;
     private final int mPopupMaxWidth;
-
-    private boolean mAllowLeftOverdraw;
+    private final int mPopupStyleAttr;
 
     private View mAnchorView;
     private ListPopupWindow mPopup;
@@ -75,20 +73,21 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
     private int mDropDownGravity = Gravity.NO_GRAVITY;
 
     public MenuPopupHelper(Context context, MenuBuilder menu) {
-        this(context, menu, null, false);
+        this(context, menu, null, false, com.android.internal.R.attr.popupMenuStyle);
     }
 
     public MenuPopupHelper(Context context, MenuBuilder menu, View anchorView) {
-        this(context, menu, anchorView, false);
+        this(context, menu, anchorView, false, com.android.internal.R.attr.popupMenuStyle);
     }
 
-    public MenuPopupHelper(Context context, MenuBuilder menu,
-            View anchorView, boolean overflowOnly) {
+    public MenuPopupHelper(Context context, MenuBuilder menu, View anchorView,
+            boolean overflowOnly, int popupStyleAttr) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mMenu = menu;
         mAdapter = new MenuAdapter(mMenu);
         mOverflowOnly = overflowOnly;
+        mPopupStyleAttr = popupStyleAttr;
 
         final Resources res = context.getResources();
         mPopupMaxWidth = Math.max(res.getDisplayMetrics().widthPixels / 2,
@@ -96,7 +95,8 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
 
         mAnchorView = anchorView;
 
-        menu.addMenuPresenter(this);
+        // Present the menu using our context, not the menu builder's context.
+        menu.addMenuPresenter(this, context);
     }
 
     public void setAnchorView(View anchor) {
@@ -111,10 +111,6 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
         mDropDownGravity = gravity;
     }
 
-    public void setAllowLeftOverdraw(boolean enabled) {
-        mAllowLeftOverdraw = enabled;
-    }
-
     public void show() {
         if (!tryShow()) {
             throw new IllegalStateException("MenuPopupHelper cannot be used without an anchor");
@@ -126,7 +122,7 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
     }
 
     public boolean tryShow() {
-        mPopup = new ListPopupWindow(mContext, null, com.android.internal.R.attr.popupMenuStyle);
+        mPopup = new ListPopupWindow(mContext, null, mPopupStyleAttr);
         mPopup.setOnDismissListener(this);
         mPopup.setOnItemClickListener(this);
         mPopup.setAdapter(mAdapter);
@@ -140,7 +136,6 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
             anchor.addOnAttachStateChangeListener(this);
             mPopup.setAnchorView(anchor);
             mPopup.setDropDownGravity(mDropDownGravity);
-            mPopup.setAllowLeftOverdraw(mAllowLeftOverdraw);
         } else {
             return false;
         }
@@ -280,7 +275,7 @@ public class MenuPopupHelper implements AdapterView.OnItemClickListener, View.On
     @Override
     public boolean onSubMenuSelected(SubMenuBuilder subMenu) {
         if (subMenu.hasVisibleItems()) {
-            MenuPopupHelper subPopup = new MenuPopupHelper(mContext, subMenu, mAnchorView, false);
+            MenuPopupHelper subPopup = new MenuPopupHelper(mContext, subMenu, mAnchorView);
             subPopup.setCallback(mPresenterCallback);
 
             boolean preserveIconSpacing = false;

@@ -21,6 +21,7 @@ import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Printer;
 
@@ -65,13 +66,12 @@ public class PackageItemInfo {
      * component's icon.  From the "icon" attribute or, if not set, 0.
      */
     public int icon;
-
+    
     /**
-     * A drawable resource identifier in the icon pack's resources
-     * If there isn't an icon pack or not set, then 0.
-     * @hide
+     * A drawable resource identifier (in the package's resources) of this
+     * component's banner.  From the "banner" attribute or, if not set, 0.
      */
-    public int themedIcon;
+    public int banner;
 
     /**
      * A drawable resource identifier (in the package's resources) of this
@@ -87,8 +87,15 @@ public class PackageItemInfo {
      * {@link PackageManager#GET_META_DATA} flag when requesting the info.
      */
     public Bundle metaData;
-    
+
+    /**
+     * If different of UserHandle.USER_NULL, The icon of this item will be the one of that user.
+     * @hide
+     */
+    public int showUserIcon;
+
     public PackageItemInfo() {
+        showUserIcon = UserHandle.USER_NULL;
     }
 
     public PackageItemInfo(PackageItemInfo orig) {
@@ -99,9 +106,10 @@ public class PackageItemInfo {
         nonLocalizedLabel = orig.nonLocalizedLabel;
         if (nonLocalizedLabel != null) nonLocalizedLabel = nonLocalizedLabel.toString().trim();
         icon = orig.icon;
+        banner = orig.banner;
         logo = orig.logo;
         metaData = orig.metaData;
-        themedIcon = orig.themedIcon;
+        showUserIcon = orig.showUserIcon;
     }
 
     /**
@@ -144,15 +152,30 @@ public class PackageItemInfo {
      * such as the default activity icon.
      */
     public Drawable loadIcon(PackageManager pm) {
-        if (icon != 0) {
-            Drawable dr = pm.getDrawable(packageName, icon, getApplicationInfo());
+        return pm.loadItemIcon(this, getApplicationInfo());
+    }
+
+    /**
+     * Retrieve the current graphical banner associated with this item.  This
+     * will call back on the given PackageManager to load the banner from
+     * the application.
+     *
+     * @param pm A PackageManager from which the banner can be loaded; usually
+     * the PackageManager from which you originally retrieved this item.
+     *
+     * @return Returns a Drawable containing the item's banner.  If the item
+     * does not have a banner, this method will return null.
+     */
+    public Drawable loadBanner(PackageManager pm) {
+        if (banner != 0) {
+            Drawable dr = pm.getDrawable(packageName, banner, getApplicationInfo());
             if (dr != null) {
                 return dr;
             }
         }
-        return loadDefaultIcon(pm);
+        return loadDefaultBanner(pm);
     }
-    
+
     /**
      * Retrieve the default graphical icon associated with this item.
      * 
@@ -164,10 +187,25 @@ public class PackageItemInfo {
      * 
      * @hide
      */
-    protected Drawable loadDefaultIcon(PackageManager pm) {
+    public Drawable loadDefaultIcon(PackageManager pm) {
         return pm.getDefaultActivityIcon();
     }
-    
+
+    /**
+     * Retrieve the default graphical banner associated with this item.
+     *
+     * @param pm A PackageManager from which the banner can be loaded; usually
+     * the PackageManager from which you originally retrieved this item.
+     *
+     * @return Returns a Drawable containing the item's default banner
+     * or null if no default logo is available.
+     *
+     * @hide
+     */
+    protected Drawable loadDefaultBanner(PackageManager pm) {
+        return null;
+    }
+
     /**
      * Retrieve the current graphical logo associated with this item. This
      * will call back on the given PackageManager to load the logo from
@@ -232,10 +270,11 @@ public class PackageItemInfo {
             pw.println(prefix + "name=" + name);
         }
         pw.println(prefix + "packageName=" + packageName);
-        if (labelRes != 0 || nonLocalizedLabel != null || icon != 0) {
+        if (labelRes != 0 || nonLocalizedLabel != null || icon != 0 || banner != 0) {
             pw.println(prefix + "labelRes=0x" + Integer.toHexString(labelRes)
                     + " nonLocalizedLabel=" + nonLocalizedLabel
-                    + " icon=0x" + Integer.toHexString(icon));
+                    + " icon=0x" + Integer.toHexString(icon)
+                    + " banner=0x" + Integer.toHexString(banner));
         }
     }
     
@@ -251,9 +290,10 @@ public class PackageItemInfo {
         dest.writeInt(icon);
         dest.writeInt(logo);
         dest.writeBundle(metaData);
-        dest.writeInt(themedIcon);
+        dest.writeInt(banner);
+        dest.writeInt(showUserIcon);
     }
-
+    
     protected PackageItemInfo(Parcel source) {
         name = source.readString();
         packageName = source.readString();
@@ -263,7 +303,8 @@ public class PackageItemInfo {
         icon = source.readInt();
         logo = source.readInt();
         metaData = source.readBundle();
-        themedIcon = source.readInt();
+        banner = source.readInt();
+        showUserIcon = source.readInt();
     }
 
     /**

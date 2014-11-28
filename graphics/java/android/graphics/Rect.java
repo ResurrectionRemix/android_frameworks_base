@@ -36,8 +36,20 @@ public final class Rect implements Parcelable {
     public int right;
     public int bottom;
 
-    private static final Pattern FLATTENED_PATTERN = Pattern.compile(
+    /**
+     * A helper class for flattened rectange pattern recognition. A separate
+     * class to avoid an initialization dependency on a regular expression
+     * causing Rect to not be initializable with an ahead-of-time compilation
+     * scheme.
+     */
+    private static final class UnflattenHelper {
+        private static final Pattern FLATTENED_PATTERN = Pattern.compile(
             "(-?\\d+) (-?\\d+) (-?\\d+) (-?\\d+)");
+
+        static Matcher getMatcher(String str) {
+            return FLATTENED_PATTERN.matcher(str);
+        }
+    }
 
     /**
      * Create a new empty Rect. All coordinates are initialized to 0.
@@ -152,7 +164,7 @@ public final class Rect implements Parcelable {
      * or null if the string is not of that form.
      */
     public static Rect unflattenFromString(String str) {
-        Matcher matcher = FLATTENED_PATTERN.matcher(str);
+        Matcher matcher = UnflattenHelper.getMatcher(str);
         if (!matcher.matches()) {
             return null;
         }
@@ -595,6 +607,19 @@ public final class Rect implements Parcelable {
             top = (int) (top * scale + 0.5f);
             right = (int) (right * scale + 0.5f);
             bottom = (int) (bottom * scale + 0.5f);
+        }
+    }
+
+    /**
+     * Scales up the rect by the given scale, rounding values toward the inside.
+     * @hide
+     */
+    public void scaleRoundIn(float scale) {
+        if (scale != 1.0f) {
+            left = (int) Math.ceil(left * scale);
+            top = (int) Math.ceil(top * scale);
+            right = (int) Math.floor(right * scale);
+            bottom = (int) Math.floor(bottom * scale);
         }
     }
 }

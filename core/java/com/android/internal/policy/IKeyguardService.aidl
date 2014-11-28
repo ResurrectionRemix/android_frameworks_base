@@ -20,18 +20,29 @@ import android.view.MotionEvent;
 import com.android.internal.policy.IKeyguardShowCallback;
 import com.android.internal.policy.IKeyguardExitCallback;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 interface IKeyguardService {
     boolean isShowing();
     boolean isSecure();
-    boolean isShowingAndNotHidden();
+    boolean isShowingAndNotOccluded();
     boolean isInputRestricted();
     boolean isDismissable();
     oneway void verifyUnlock(IKeyguardExitCallback callback);
     oneway void keyguardDone(boolean authenticated, boolean wakeup);
-    oneway void setHidden(boolean isHidden);
+
+    /**
+     * Sets the Keyguard as occluded when a window dismisses the Keyguard with flag
+     * FLAG_SHOW_ON_LOCK_SCREEN.
+     *
+     * @param isOccluded Whether the Keyguard is occluded by another window.
+     * @return See IKeyguardServiceConstants.KEYGUARD_SERVICE_SET_OCCLUDED_*. This is needed because
+     *         PhoneWindowManager needs to set these flags immediately and can't wait for the
+     *         Keyguard thread to pick it up. In the hidden case, PhoneWindowManager is solely
+     *         responsible to make sure that the flags are unset.
+     */
+    int setOccluded(boolean isOccluded);
+
     oneway void dismiss();
     oneway void onDreamingStarted();
     oneway void onDreamingStopped();
@@ -45,5 +56,19 @@ interface IKeyguardService {
     oneway void dispatch(in MotionEvent event);
     oneway void launchCamera();
     oneway void onBootCompleted();
-    oneway void setBackgroundBitmap(in Bitmap bmp);
+
+    /**
+     * Notifies that the activity behind has now been drawn and it's safe to remove the wallpaper
+     * and keyguard flag.
+     *
+     * @param startTime the start time of the animation in uptime milliseconds
+     * @param fadeoutDuration the duration of the exit animation, in milliseconds
+     */
+    oneway void startKeyguardExitAnimation(long startTime, long fadeoutDuration);
+
+    /**
+     * Notifies the Keyguard that the activity that was starting has now been drawn and it's safe
+     * to start the keyguard dismiss sequence.
+     */
+    oneway void onActivityDrawn();
 }

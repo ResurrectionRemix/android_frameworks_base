@@ -1,5 +1,6 @@
 #include "GraphicsJNI.h"
 #include "SkMaskFilter.h"
+#include "SkBlurMask.h"
 #include "SkBlurMaskFilter.h"
 #include "SkTableMaskFilter.h"
 
@@ -13,64 +14,67 @@ static void ThrowIAE_IfNull(JNIEnv* env, void* ptr) {
 
 class SkMaskFilterGlue {
 public:
-    static void destructor(JNIEnv* env, jobject, SkMaskFilter* filter) {
+    static void destructor(JNIEnv* env, jobject, jlong filterHandle) {
+        SkMaskFilter* filter = reinterpret_cast<SkMaskFilter *>(filterHandle);
         SkSafeUnref(filter);
     }
 
-    static SkMaskFilter* createBlur(JNIEnv* env, jobject, float radius, int blurStyle) {
-        SkMaskFilter* filter = SkBlurMaskFilter::Create(SkFloatToScalar(radius),
-                                        (SkBlurMaskFilter::BlurStyle)blurStyle);
+    static jlong createBlur(JNIEnv* env, jobject, jfloat radius, jint blurStyle) {
+        SkScalar sigma = SkBlurMask::ConvertRadiusToSigma(radius);
+        SkMaskFilter* filter = SkBlurMaskFilter::Create((SkBlurStyle)blurStyle, sigma);
         ThrowIAE_IfNull(env, filter);
-        return filter;
+        return reinterpret_cast<jlong>(filter);
     }
 
-    static SkMaskFilter* createEmboss(JNIEnv* env, jobject, jfloatArray dirArray, float ambient, float specular, float radius) {
+    static jlong createEmboss(JNIEnv* env, jobject, jfloatArray dirArray, jfloat ambient, jfloat specular, jfloat radius) {
         SkScalar direction[3];
 
         AutoJavaFloatArray autoDir(env, dirArray, 3);
         float* values = autoDir.ptr();
         for (int i = 0; i < 3; i++) {
-            direction[i] = SkFloatToScalar(values[i]);
+            direction[i] = values[i];
         }
 
-        SkMaskFilter* filter =  SkBlurMaskFilter::CreateEmboss(direction,
-                                                      SkFloatToScalar(ambient),
-                                                      SkFloatToScalar(specular),
-                                                      SkFloatToScalar(radius));
+        SkScalar sigma = SkBlurMask::ConvertRadiusToSigma(radius);
+        SkMaskFilter* filter =  SkBlurMaskFilter::CreateEmboss(sigma,
+                direction, ambient, specular);
         ThrowIAE_IfNull(env, filter);
-        return filter;
+        return reinterpret_cast<jlong>(filter);
     }
 
-    static SkMaskFilter* createTable(JNIEnv* env, jobject, jbyteArray jtable) {
+    static jlong createTable(JNIEnv* env, jobject, jbyteArray jtable) {
         AutoJavaByteArray autoTable(env, jtable, 256);
-        return new SkTableMaskFilter((const uint8_t*)autoTable.ptr());
+        SkMaskFilter* filter = SkTableMaskFilter::Create((const uint8_t*)autoTable.ptr());
+        return reinterpret_cast<jlong>(filter);
     }
 
-    static SkMaskFilter* createClipTable(JNIEnv* env, jobject, int min, int max) {
-        return SkTableMaskFilter::CreateClip(min, max);
+    static jlong createClipTable(JNIEnv* env, jobject, jint min, jint max) {
+        SkMaskFilter* filter = SkTableMaskFilter::CreateClip(min, max);
+        return reinterpret_cast<jlong>(filter);
     }
 
-    static SkMaskFilter* createGammaTable(JNIEnv* env, jobject, float gamma) {
-        return SkTableMaskFilter::CreateGamma(gamma);
+    static jlong createGammaTable(JNIEnv* env, jobject, jfloat gamma) {
+        SkMaskFilter* filter = SkTableMaskFilter::CreateGamma(gamma);
+        return reinterpret_cast<jlong>(filter);
     }
 };
 
 static JNINativeMethod gMaskFilterMethods[] = {
-    { "nativeDestructor",   "(I)V",     (void*)SkMaskFilterGlue::destructor      }
+    { "nativeDestructor",   "(J)V",     (void*)SkMaskFilterGlue::destructor      }
 };
 
 static JNINativeMethod gBlurMaskFilterMethods[] = {
-    { "nativeConstructor",  "(FI)I",    (void*)SkMaskFilterGlue::createBlur      }
+    { "nativeConstructor",  "(FI)J",    (void*)SkMaskFilterGlue::createBlur      }
 };
 
 static JNINativeMethod gEmbossMaskFilterMethods[] = {
-    { "nativeConstructor",  "([FFFF)I", (void*)SkMaskFilterGlue::createEmboss    }
+    { "nativeConstructor",  "([FFFF)J", (void*)SkMaskFilterGlue::createEmboss    }
 };
 
 static JNINativeMethod gTableMaskFilterMethods[] = {
-    { "nativeNewTable", "([B)I", (void*)SkMaskFilterGlue::createTable    },
-    { "nativeNewClip",  "(II)I", (void*)SkMaskFilterGlue::createClipTable    },
-    { "nativeNewGamma", "(F)I", (void*)SkMaskFilterGlue::createGammaTable    }
+    { "nativeNewTable", "([B)J", (void*)SkMaskFilterGlue::createTable    },
+    { "nativeNewClip",  "(II)J", (void*)SkMaskFilterGlue::createClipTable    },
+    { "nativeNewGamma", "(F)J", (void*)SkMaskFilterGlue::createGammaTable    }
 };
 
 #include <android_runtime/AndroidRuntime.h>

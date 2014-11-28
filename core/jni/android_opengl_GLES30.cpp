@@ -20,8 +20,8 @@
 #include <GLES3/gl3.h>
 #include <GLES3/gl3ext.h>
 
-#include "jni.h"
-#include "JNIHelp.h"
+#include <jni.h>
+#include <JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <utils/misc.h>
 #include <assert.h>
@@ -111,7 +111,7 @@ getPointer(JNIEnv *_env, jobject buffer, jarray *array, jint *remaining, jint *o
             getBasePointerID, buffer);
     if (pointer != 0L) {
         *array = NULL;
-        return (void *) (jint) pointer;
+        return reinterpret_cast<void*>(pointer);
     }
 
     *array = (jarray) _env->CallStaticObjectMethod(nioAccessClass,
@@ -370,7 +370,7 @@ android_glDrawRangeElements__IIIIII
         (GLuint)end,
         (GLsizei)count,
         (GLenum)type,
-        (GLvoid *)offset
+        reinterpret_cast<GLvoid *>(offset)
     );
 }
 
@@ -419,7 +419,7 @@ android_glTexImage3D__IIIIIIIIII
         (GLint)border,
         (GLenum)format,
         (GLenum)type,
-        (GLvoid *)offset
+        reinterpret_cast<GLvoid *>(offset)
     );
 }
 
@@ -470,7 +470,7 @@ android_glTexSubImage3D__IIIIIIIIIII
         (GLsizei)depth,
         (GLenum)format,
         (GLenum)type,
-        (GLvoid *)offset
+        reinterpret_cast<GLvoid *>(offset)
     );
 }
 
@@ -534,7 +534,7 @@ android_glCompressedTexImage3D__IIIIIIIII
         (GLsizei)depth,
         (GLint)border,
         (GLsizei)imageSize,
-        (GLvoid *)offset
+        reinterpret_cast<GLvoid *>(offset)
     );
 }
 
@@ -585,7 +585,7 @@ android_glCompressedTexSubImage3D__IIIIIIIIIII
         (GLsizei)depth,
         (GLenum)format,
         (GLsizei)imageSize,
-        (GLvoid *)offset
+        reinterpret_cast<GLvoid *>(offset)
     );
 }
 
@@ -2134,7 +2134,7 @@ android_glVertexAttribIPointer__IIIII
         (GLint)size,
         (GLenum)type,
         (GLsizei)stride,
-        (GLvoid *)offset
+        reinterpret_cast<GLvoid *>(offset)
     );
 }
 
@@ -2511,6 +2511,7 @@ android_glGetFragDataLocation__ILjava_lang_String_2
     const char* _nativename = 0;
 
     if (!name) {
+        _exception = 1;
         _exceptionType = "java/lang/IllegalArgumentException";
         _exceptionMessage = "name == null";
         goto exit;
@@ -3361,6 +3362,7 @@ android_glGetUniformBlockIndex__ILjava_lang_String_2
     const char* _nativeuniformBlockName = 0;
 
     if (!uniformBlockName) {
+        _exception = 1;
         _exceptionType = "java/lang/IllegalArgumentException";
         _exceptionMessage = "uniformBlockName == null";
         goto exit;

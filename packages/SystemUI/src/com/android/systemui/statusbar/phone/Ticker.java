@@ -47,15 +47,6 @@ public abstract class Ticker {
     private ImageSwitcher mIconSwitcher;
     private TextSwitcher mTextSwitcher;
     private float mIconScale;
-    private TickerCallback mEvent;
-
-    public interface TickerCallback {  
-        public void updateTicker(StatusBarNotification notification, String text);
-    }  
-
-    public void setUpdateEvent(TickerCallback event) {
-        mEvent = event;
-    }
 
     public static boolean isGraphicOrEmoji(char c) {
         int gc = Character.getType(c);
@@ -67,25 +58,21 @@ public abstract class Ticker {
                 && gc != Character.SPACE_SEPARATOR;
     }
 
-    public final class Segment {
-        public StatusBarNotification notification;
-        public Drawable icon;
-        public CharSequence text;
-        public int current;
-        public int next;
-        public boolean first;
+    private final class Segment {
+        StatusBarNotification notification;
+        Drawable icon;
+        CharSequence text;
+        int current;
+        int next;
+        boolean first;
 
-        public StaticLayout getLayout(CharSequence substr) {
+        StaticLayout getLayout(CharSequence substr) {
             int w = mTextSwitcher.getWidth() - mTextSwitcher.getPaddingLeft()
                     - mTextSwitcher.getPaddingRight();
-            if (w < 0) {
-                return null;
-            } else {
-                return new StaticLayout(substr, mPaint, w, Alignment.ALIGN_NORMAL, 1, 0, true);
-            }
+            return new StaticLayout(substr, mPaint, w, Alignment.ALIGN_NORMAL, 1, 0, true);
         }
 
-        public CharSequence rtrim(CharSequence substr, int start, int end) {
+        CharSequence rtrim(CharSequence substr, int start, int end) {
             while (end > start && !isGraphicOrEmoji(substr.charAt(end-1))) {
                 end--;
             }
@@ -96,15 +83,12 @@ public abstract class Ticker {
         }
 
         /** returns null if there is no more text */
-        public CharSequence getText() {
+        CharSequence getText() {
             if (this.current > this.text.length()) {
                 return null;
             }
             CharSequence substr = this.text.subSequence(this.current, this.text.length());
             StaticLayout l = getLayout(substr);
-            if (l == null) {
-                return null;
-            }
             int lineCount = l.getLineCount();
             if (lineCount > 0) {
                 int start = l.getLineStart(0);
@@ -118,7 +102,7 @@ public abstract class Ticker {
         }
 
         /** returns null if there is no more text */
-        public CharSequence advance() {
+        CharSequence advance() {
             this.first = false;
             int index = this.next;
             final int len = this.text.length();
@@ -131,9 +115,6 @@ public abstract class Ticker {
 
             CharSequence substr = this.text.subSequence(index, this.text.length());
             StaticLayout l = getLayout(substr);
-            if (l == null) {
-                return null;
-            }
             final int lineCount = l.getLineCount();
             int i;
             for (i=0; i<lineCount; i++) {
@@ -154,7 +135,7 @@ public abstract class Ticker {
             return null;
         }
 
-        public Segment(StatusBarNotification n, Drawable icon, CharSequence text) {
+        Segment(StatusBarNotification n, Drawable icon, CharSequence text) {
             this.notification = n;
             this.icon = icon;
             this.text = text;
@@ -231,11 +212,6 @@ public abstract class Ticker {
         }
 
         mSegments.add(newSegment);
-        if (mEvent != null) {
-            if (newSegment != null) {
-                mEvent.updateTicker(newSegment.notification, text.toString());
-            }
-        }
 
         if (initialCount == 0 && mSegments.size() > 0) {
             Segment seg = mSegments.get(0);

@@ -20,6 +20,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="?android:actionButtonStyle"
+    android:id="@+id/set_wallpaper_button"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     <TextView style="?android:actionBarTabTextStyle"
@@ -30,5 +31,6 @@
         android:drawableLeft="@drawable/ic_actionbar_accept"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:text="@string/wallpaper_instructions" />
+        android:text="@string/wallpaper_instructions"
+        android:textColor="@android:color/white" />
 </FrameLayout>

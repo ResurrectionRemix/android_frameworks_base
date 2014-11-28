@@ -45,8 +45,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The Camera class is used to set image capture settings, start/stop preview,
@@ -133,7 +133,11 @@ import java.util.concurrent.locks.ReentrantLock;
  * <p>For more information about using cameras, read the
  * <a href="{@docRoot}guide/topics/media/camera.html">Camera</a> developer guide.</p>
  * </div>
+ *
+ * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+ *             applications.
  */
+@Deprecated
 public class Camera {
     private static final String TAG = "Camera";
 
@@ -155,7 +159,7 @@ public class Camera {
     private static final int CAMERA_MSG_META_DATA        = 0x2000;
     /* ### QC ADD-ONS: END */
 
-    private int mNativeContext; // accessed by native methods
+    private long mNativeContext; // accessed by native methods
     private EventHandler mEventHandler;
     private ShutterCallback mShutterCallback;
     private PictureCallback mRawImageCallback;
@@ -171,7 +175,16 @@ public class Camera {
     private boolean mOneShot;
     private boolean mWithBuffer;
     private boolean mFaceDetectionRunning = false;
-    private Object mAutoFocusCallbackLock = new Object();
+    private final Object mAutoFocusCallbackLock = new Object();
+
+    private static final int NO_ERROR = 0;
+    private static final int EACCESS = -13;
+    private static final int ENODEV = -19;
+    private static final int EBUSY = -16;
+    private static final int EINVAL = -22;
+    private static final int ENOSYS = -38;
+    private static final int EUSERS = -87;
+    private static final int EOPNOTSUPP = -95;
     /* ### QC ADD-ONS: START */
     private CameraDataCallback mCameraDataCallback;
     private CameraMetaDataCallback mCameraMetaDataCallback;
@@ -192,6 +205,22 @@ public class Camera {
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_NEW_VIDEO = "android.hardware.action.NEW_VIDEO";
+
+    /**
+     * Camera HAL device API version 1.0
+     * @hide
+     */
+    public static final int CAMERA_HAL_API_VERSION_1_0 = 0x100;
+
+    /**
+     * A constant meaning the normal camera connect/open will be used.
+     */
+    private static final int CAMERA_HAL_API_VERSION_NORMAL_CONNECT = -2;
+
+    /**
+     * Used to indicate HAL version un-specified.
+     */
+    private static final int CAMERA_HAL_API_VERSION_UNSPECIFIED = -1;
 
     /**
      * Hardware face detection. It does not use much CPU.
@@ -230,7 +259,11 @@ public class Camera {
 
     /**
      * Information about a camera
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public static class CameraInfo {
         /**
          * The facing of the camera is opposite to that of the screen.
@@ -346,7 +379,90 @@ public class Camera {
         return null;
     }
 
-    Camera(int cameraId) {
+    /**
+     * Creates a new Camera object to access a particular hardware camera with
+     * given hal API version. If the same camera is opened by other applications
+     * or the hal API version is not supported by this device, this will throw a
+     * RuntimeException.
+     * <p>
+     * You must call {@link #release()} when you are done using the camera,
+     * otherwise it will remain locked and be unavailable to other applications.
+     * <p>
+     * Your application should only have one Camera object active at a time for
+     * a particular hardware camera.
+     * <p>
+     * Callbacks from other methods are delivered to the event loop of the
+     * thread which called open(). If this thread has no event loop, then
+     * callbacks are delivered to the main application event loop. If there is
+     * no main application event loop, callbacks are not delivered.
+     * <p class="caution">
+     * <b>Caution:</b> On some devices, this method may take a long time to
+     * complete. It is best to call this method from a worker thread (possibly
+     * using {@link android.os.AsyncTask}) to avoid blocking the main
+     * application UI thread.
+     *
+     * @param cameraId The hardware camera to access, between 0 and
+     * {@link #getNumberOfCameras()}-1.
+     * @param halVersion The HAL API version this camera device to be opened as.
+     * @return a new Camera object, connected, locked and ready for use.
+     *
+     * @throws IllegalArgumentException if the {@code halVersion} is invalid
+     *
+     * @throws RuntimeException if opening the camera fails (for example, if the
+     * camera is in use by another process or device policy manager has disabled
+     * the camera).
+     *
+     * @see android.app.admin.DevicePolicyManager#getCameraDisabled(android.content.ComponentName)
+     * @see #CAMERA_HAL_API_VERSION_1_0
+     *
+     * @hide
+     */
+    public static Camera openLegacy(int cameraId, int halVersion) {
+        if (halVersion < CAMERA_HAL_API_VERSION_1_0) {
+            throw new IllegalArgumentException("Invalid HAL version " + halVersion);
+        }
+
+        return new Camera(cameraId, halVersion);
+    }
+
+    /**
+     * Create a legacy camera object.
+     *
+     * @param cameraId The hardware camera to access, between 0 and
+     * {@link #getNumberOfCameras()}-1.
+     * @param halVersion The HAL API version this camera device to be opened as.
+     */
+    private Camera(int cameraId, int halVersion) {
+        int err = cameraInitVersion(cameraId, halVersion);
+        if (checkInitErrors(err)) {
+            switch(err) {
+                case EACCESS:
+                    throw new RuntimeException("Fail to connect to camera service");
+                case ENODEV:
+                    throw new RuntimeException("Camera initialization failed");
+                case ENOSYS:
+                    throw new RuntimeException("Camera initialization failed because some methods"
+                            + " are not implemented");
+                case EOPNOTSUPP:
+                    throw new RuntimeException("Camera initialization failed because the hal"
+                            + " version is not supported by this device");
+                case EINVAL:
+                    throw new RuntimeException("Camera initialization failed because the input"
+                            + " arugments are invalid");
+                case EBUSY:
+                    throw new RuntimeException("Camera initialization failed because the camera"
+                            + " device was already opened");
+                case EUSERS:
+                    throw new RuntimeException("Camera initialization failed because the max"
+                            + " number of camera devices were already opened");
+                default:
+                    // Should never hit this.
+                    throw new RuntimeException("Unknown camera error");
+            }
+        }
+    }
+
+    private int cameraInitVersion(int cameraId, int halVersion) {
         mShutterCallback = null;
         mRawImageCallback = null;
         mJpegCallback = null;
@@ -370,7 +486,60 @@ public class Camera {
 
         String packageName = ActivityThread.currentPackageName();
 
-        native_setup(new WeakReference<Camera>(this), cameraId, packageName);
+        return native_setup(new WeakReference<Camera>(this), cameraId, halVersion, packageName);
+    }
+
+    private int cameraInitNormal(int cameraId) {
+        return cameraInitVersion(cameraId, CAMERA_HAL_API_VERSION_NORMAL_CONNECT);
+    }
+
+    /**
+     * Connect to the camera service using #connectLegacy
+     *
+     * <p>
+     * This acts the same as normal except that it will return
+     * the detailed error code if open fails instead of
+     * converting everything into {@code NO_INIT}.</p>
+     *
+     * <p>Intended to use by the camera2 shim only, do <i>not</i> use this for other code.</p>
+     *
+     * @return a detailed errno error code, or {@code NO_ERROR} on success
+     *
+     * @hide
+     */
+    public int cameraInitUnspecified(int cameraId) {
+        return cameraInitVersion(cameraId, CAMERA_HAL_API_VERSION_UNSPECIFIED);
+    }
+
+    /** used by Camera#open, Camera#open(int) */
+    Camera(int cameraId) {
+        int err = cameraInitNormal(cameraId);
+        if (checkInitErrors(err)) {
+            switch(err) {
+                case EACCESS:
+                    throw new RuntimeException("Fail to connect to camera service");
+                case ENODEV:
+                    throw new RuntimeException("Camera initialization failed");
+                default:
+                    // Should never hit this.
+                    throw new RuntimeException("Unknown camera error");
+            }
+        }
+    }
+
+
+    /**
+     * @hide
+     */
+    public static boolean checkInitErrors(int err) {
+        return err != NO_ERROR;
+    }
+
+    /**
+     * @hide
+     */
+    public static Camera openUninitialized() {
+        return new Camera();
     }
 
     /**
@@ -379,11 +548,12 @@ public class Camera {
     Camera() {
     }
 
+    @Override
     protected void finalize() {
         release();
     }
 
-    private native final void native_setup(Object camera_this, int cameraId,
+    private native final int native_setup(Object camera_this, int cameraId, int halVersion,
                                            String packageName);
 
     private native final void native_release();
@@ -481,13 +651,16 @@ public class Camera {
      */
     public final void setPreviewDisplay(SurfaceHolder holder) throws IOException {
         if (holder != null) {
-            setPreviewDisplay(holder.getSurface());
+            setPreviewSurface(holder.getSurface());
         } else {
-            setPreviewDisplay((Surface)null);
+            setPreviewSurface((Surface)null);
         }
     }
 
-    private native final void setPreviewDisplay(Surface surface) throws IOException;
+    /**
+     * @hide
+     */
+    public native final void setPreviewSurface(Surface surface) throws IOException;
 
     /**
      * Sets the {@link SurfaceTexture} to be used for live preview.
@@ -533,7 +706,11 @@ public class Camera {
      * @see #setOneShotPreviewCallback(Camera.PreviewCallback)
      * @see #setPreviewCallbackWithBuffer(Camera.PreviewCallback)
      * @see #startPreview()
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface PreviewCallback
     {
         /**
@@ -913,7 +1090,7 @@ public class Camera {
 
     private class EventHandler extends Handler
     {
-        private Camera mCamera;
+        private final Camera mCamera;
 
         public EventHandler(Camera c, Looper looper) {
             super(looper);
@@ -1049,7 +1226,10 @@ public class Camera {
      * manifest element.</p>
      *
      * @see #autoFocus(AutoFocusCallback)
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface AutoFocusCallback
     {
         /**
@@ -1160,7 +1340,11 @@ public class Camera {
      * Parameters#FOCUS_MODE_CONTINUOUS_VIDEO} and {@link
      * Parameters#FOCUS_MODE_CONTINUOUS_PICTURE}. Applications can show
      * autofocus animation based on this.</p>
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface AutoFocusMoveCallback
     {
         /**
@@ -1185,16 +1369,14 @@ public class Camera {
     private native void enableFocusMoveCallback(int enable);
 
     /**
-     * Send a raw command to the camera driver
-     * @hide
-     */
-    public native void sendRawCommand(int arg1, int arg2, int arg3);
-
-    /**
      * Callback interface used to signal the moment of actual image capture.
      *
      * @see #takePicture(ShutterCallback, PictureCallback, PictureCallback, PictureCallback)
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface ShutterCallback
     {
         /**
@@ -1211,7 +1393,11 @@ public class Camera {
      * Callback interface used to supply image data from a photo capture.
      *
      * @see #takePicture(ShutterCallback, PictureCallback, PictureCallback, PictureCallback)
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface PictureCallback {
         /**
          * Called when image data is available after a picture is taken.
@@ -1411,6 +1597,26 @@ public class Camera {
         return _enableShutterSound(enabled);
     }
 
+    /**
+     * Disable the shutter sound unconditionally.
+     *
+     * <p>
+     * This is only guaranteed to work for legacy cameras
+     * (i.e. initialized with {@link #cameraInitUnspecified}). Trying to call this on
+     * a regular camera will force a conditional check in the camera service.
+     * </p>
+     *
+     * @return {@code true} if the shutter sound state was successfully
+     *         changed. {@code false} if the shutter sound state could not be
+     *         changed. {@code true} is also returned if shutter sound playback
+     *         is already set to the requested state.
+     *
+     * @hide
+     */
+    public final boolean disableShutterSound() {
+        return _enableShutterSound(/*enabled*/false);
+    }
+
     private native final boolean _enableShutterSound(boolean enabled);
 
     /**
@@ -1418,7 +1624,11 @@ public class Camera {
      *
      * @see #setZoomChangeListener(OnZoomChangeListener)
      * @see #startSmoothZoom(int)
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface OnZoomChangeListener
     {
         /**
@@ -1448,7 +1658,10 @@ public class Camera {
     /**
      * Callback interface for face detected in the preview frame.
      *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface FaceDetectionListener
     {
         /**
@@ -1532,7 +1745,10 @@ public class Camera {
      * list of face objects for use in focusing and metering.</p>
      *
      * @see FaceDetectionListener
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public static class Face {
         /**
          * Create an empty face.
@@ -1625,6 +1841,23 @@ public class Camera {
          * as a set. Either they are all valid, or none of them are.
          */
         public Point mouth = null;
+
+        /**
+         * {@hide}
+         */
+        public int smileDegree = 0;
+        /**
+         * {@hide}
+         */
+        public int smileScore = 0;
+        /**
+         * {@hide}
+         */
+        public int blinkDetected = 0;
+        /**
+         * {@hide}
+         */
+        public int faceRecognised = 0;
     }
 
     // Error codes match the enum in include/ui/Camera.h
@@ -1646,7 +1879,11 @@ public class Camera {
      * Callback interface for camera error notification.
      *
      * @see #setErrorCallback(ErrorCallback)
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public interface ErrorCallback
     {
         /**
@@ -1707,6 +1944,27 @@ public class Camera {
         String s = native_getParameters();
         p.unflatten(s);
         return p;
+    }
+
+    /** @hide
+     * Returns the current cct value of white balance.
+     *
+     * If it's in AWB mode, cct is determined by stats/awb module.
+     *
+     * If it's in Manual WB mode, it actually returns cct value
+     *     set by user via {@link #setParameters(Camera.Parameters)}.
+     */
+    public int getWBCurrentCCT() {
+        Parameters p = new Parameters();
+        String s = native_getParameters();
+        p.unflatten(s);
+
+        int cct = 0;
+        if (p.getWBCurrentCCT() != null) {
+            cct = Integer.parseInt(p.getWBCurrentCCT());
+        }
+
+        return cct;
     }
 
     /**
@@ -1850,10 +2108,55 @@ public class Camera {
         /** y co-ordinate for the touch event */
         public int yCoordinate;
     };
+
+    /** @hide
+     * Returns the current focus position.
+     *
+     * If it's in AF mode, it's the lens position after af is done.
+     *
+     * If it's in Manual Focus mode, it actually returns the value
+     *     set by user via {@link #setParameters(Camera.Parameters)}.
+     */
+    public int getCurrentFocusPosition() {
+        Parameters p = new Parameters();
+        String s = native_getParameters();
+        p.unflatten(s);
+
+        int focus_pos = -1;
+        if (p.getCurrentFocusPosition() != null) {
+            focus_pos = Integer.parseInt(p.getCurrentFocusPosition());
+        }
+        return focus_pos;
+    }
+
     /* ### QC ADD-ONS: END */
     /**
-     * Image size (width and height dimensions).
+     * Returns a copied {@link Parameters}; for shim use only.
+     *
+     * @param parameters a non-{@code null} parameters
+     * @return a Parameter object, with all the parameters copied from {@code parameters}.
+     *
+     * @throws NullPointerException if {@code parameters} was {@code null}
+     * @hide
      */
+    public static Parameters getParametersCopy(Camera.Parameters parameters) {
+        if (parameters == null) {
+            throw new NullPointerException("parameters must not be null");
+        }
+
+        Camera camera = parameters.getOuter();
+        Parameters p = camera.new Parameters();
+        p.copyFrom(parameters);
+
+        return p;
+    }
+
+    /**
+     * Image size (width and height dimensions).
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
+     */
+    @Deprecated
     public class Size {
         /**
          * Sets the dimensions for pictures.
@@ -1920,7 +2223,11 @@ public class Camera {
      * @see Parameters#setMeteringAreas(List)
      * @see Parameters#getMeteringAreas()
      * @see Parameters#getMaxNumMeteringAreas()
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public static class Area {
         /**
          * Create an area with specified rectangle and weight.
@@ -1994,7 +2301,11 @@ public class Camera {
      * calling {@link Camera.Parameters#setColorEffect(String)}. If the
      * camera does not support color effects,
      * {@link Camera.Parameters#getSupportedColorEffects()} will return null.
+     *
+     * @deprecated We recommend using the new {@link android.hardware.camera2} API for new
+     *             applications.
      */
+    @Deprecated
     public class Parameters {
         // Parameter keys to communicate with the camera driver.
         private static final String KEY_PREVIEW_SIZE = "preview-size";
@@ -2020,7 +2331,6 @@ public class Camera {
         private static final String KEY_SCENE_MODE = "scene-mode";
         private static final String KEY_FLASH_MODE = "flash-mode";
         private static final String KEY_FOCUS_MODE = "focus-mode";
-        private static final String KEY_ISO_MODE = "iso";
         private static final String KEY_FOCUS_AREAS = "focus-areas";
         private static final String KEY_MAX_NUM_FOCUS_AREAS = "max-num-focus-areas";
         private static final String KEY_FOCAL_LENGTH = "focal-length";
@@ -2051,9 +2361,6 @@ public class Camera {
         private static final String KEY_VIDEO_SNAPSHOT_SUPPORTED = "video-snapshot-supported";
         private static final String KEY_VIDEO_STABILIZATION = "video-stabilization";
         private static final String KEY_VIDEO_STABILIZATION_SUPPORTED = "video-stabilization-supported";
-        private static final String KEY_POWER_MODE_SUPPORTED = "power-mode-supported";
-
-        private static final String KEY_POWER_MODE = "power-mode";
 
         // Parameter key suffix for supported values.
         private static final String SUPPORTED_VALUES_SUFFIX = "-values";
@@ -2070,6 +2377,10 @@ public class Camera {
         public static final String WHITE_BALANCE_CLOUDY_DAYLIGHT = "cloudy-daylight";
         public static final String WHITE_BALANCE_TWILIGHT = "twilight";
         public static final String WHITE_BALANCE_SHADE = "shade";
+        /** @hide
+         * wb manual cct mode.
+         */
+        public static final String WHITE_BALANCE_MANUAL_CCT = "manual-cct";
 
         // Values for color effect settings.
         public static final String EFFECT_NONE = "none";
@@ -2087,10 +2398,6 @@ public class Camera {
         public static final String ANTIBANDING_50HZ = "50hz";
         public static final String ANTIBANDING_60HZ = "60hz";
         public static final String ANTIBANDING_OFF = "off";
-
-        // Values for POWER MODE
-        public static final String LOW_POWER = "Low_Power";
-        public static final String NORMAL_POWER = "Normal_Power";
 
         // Values for flash mode settings.
         /**
@@ -2120,32 +2427,6 @@ public class Camera {
          * This can also be used for video recording.
          */
         public static final String FLASH_MODE_TORCH = "torch";
-
-        //Values for ISO settings
-        /** @hide */
-        public static final String ISO_AUTO = "auto";
-        /** @hide */
-        public static final String ISO_HJR = "ISO_HJR";
-        /** @hide */
-        public static final String ISO_SPORTS = "ISO_SPORTS";
-        /** @hide */
-        public static final String ISO_NIGHT = "ISO_NIGHT";
-        /** @hide */
-        public static final String ISO_MOVIE = "ISO_MOVIE";
-        /** @hide */
-        public static final String ISO_100 = "ISO100";
-        /** @hide */
-        public static final String ISO_200 = "ISO200";
-        /** @hide */
-        public static final String ISO_400 = "ISO400";
-        /** @hide */
-        public static final String ISO_800 = "ISO800";
-        /** @hide */
-        public static final String ISO_1600 = "ISO1600";
-        /** @hide */
-        public static final String ISO_3200 = "ISO3200";
-        /** @hide */
-        public static final String ISO_6400 = "ISO6400";
 
         /** @hide
          * Scene mode is off.
@@ -2337,6 +2618,11 @@ public class Camera {
          */
         public static final String FOCUS_MODE_CONTINUOUS_PICTURE = "continuous-picture";
 
+        /** @hide
+         *  manual focus mode
+         */
+        public static final String FOCUS_MODE_MANUAL_POSITION = "manual";
+
         // Indices for focus distance array.
         /**
          * The array index of near focus distance for use with
@@ -2383,10 +2669,52 @@ public class Camera {
         private static final String PIXEL_FORMAT_YV12 = "yv12";
         private static final String PIXEL_FORMAT_NV12 = "nv12";
 
-        private HashMap<String, String> mMap;
+        /**
+         * Order matters: Keys that are {@link #set(String, String) set} later
+         * will take precedence over keys that are set earlier (if the two keys
+         * conflict with each other).
+         *
+         * <p>One example is {@link #setPreviewFpsRange(int, int)} , since it
+         * conflicts with {@link #setPreviewFrameRate(int)} whichever key is set later
+         * is the one that will take precedence.
+         * </p>
+         */
+        private final LinkedHashMap<String, String> mMap;
 
         private Parameters() {
-            mMap = new HashMap<String, String>(64);
+            mMap = new LinkedHashMap<String, String>(/*initialCapacity*/64);
+        }
+
+        /**
+         * Overwrite existing parameters with a copy of the ones from {@code other}.
+         *
+         * <b>For use by the legacy shim only.</b>
+         *
+         * @hide
+         */
+        public void copyFrom(Parameters other) {
+            if (other == null) {
+                throw new NullPointerException("other must not be null");
+            }
+
+            mMap.putAll(other.mMap);
+        }
+
+        private Camera getOuter() {
+            return Camera.this;
+        }
+
+
+        /**
+         * Value equality check.
+         *
+         * @hide
+         */
+        public boolean same(Parameters other) {
+            if (this == other) {
+                return true;
+            }
+            return other != null && Parameters.this.mMap.equals(other.mMap);
         }
 
         /**
@@ -2394,6 +2722,7 @@ public class Camera {
          * @hide
          * @deprecated
          */
+        @Deprecated
         public void dump() {
             Log.e(TAG, "dump: size=" + mMap.size());
             for (String k : mMap.keySet()) {
@@ -2466,7 +2795,7 @@ public class Camera {
                 return;
             }
 
-            mMap.put(key, value);
+            put(key, value);
         }
 
         /**
@@ -2476,7 +2805,18 @@ public class Camera {
          * @param value the int value of the parameter
          */
         public void set(String key, int value) {
-            mMap.put(key, Integer.toString(value));
+            put(key, Integer.toString(value));
+        }
+
+        private void put(String key, String value) {
+            /*
+             * Remove the key if it already exists.
+             *
+             * This way setting a new value for an already existing key will always move
+             * that key to be ordered the latest in the map.
+             */
+            mMap.remove(key);
+            mMap.put(key, value);
         }
 
         private void set(String key, List<Area> areas) {
@@ -2966,7 +3306,6 @@ public class Camera {
             case ImageFormat.YV12:      return PIXEL_FORMAT_YUV420P;
             case ImageFormat.RGB_565:   return PIXEL_FORMAT_RGB565;
             case ImageFormat.JPEG:      return PIXEL_FORMAT_JPEG;
-            case ImageFormat.BAYER_RGGB: return PIXEL_FORMAT_BAYER_RGGB;
             default:                    return null;
             }
         }
@@ -3290,7 +3629,6 @@ public class Camera {
          * @see #getSceneMode()
          */
         public void setSceneMode(String value) {
-            if(getSupportedSceneModes() == null) return;
             set(KEY_SCENE_MODE, value);
         }
 
@@ -3328,7 +3666,6 @@ public class Camera {
          * @see #getFlashMode()
          */
         public void setFlashMode(String value) {
-	    if(getSupportedFlashModes() == null) return;
             set(KEY_FLASH_MODE, value);
         }
 
@@ -3342,28 +3679,6 @@ public class Camera {
         public List<String> getSupportedFlashModes() {
             String str = get(KEY_FLASH_MODE + SUPPORTED_VALUES_SUFFIX);
             return split(str);
-        }
-
-        /**
-         * Sets the Power mode.
-         *
-         * @param value Power mode.
-         * @see #getPowerMode()
-         */
-        public void setPowerMode(String value) {
-            set(KEY_POWER_MODE, value);
-        }
-
-        /**
-         * Gets the current power mode setting.
-         *
-         * @return current power mode. null if power mode setting is not
-         *         supported.
-         * @see #POWER_MODE_LOW
-         * @see #POWER_MODE_NORMAL
-         */
-        public String getPowerMode() {
-            return get(KEY_POWER_MODE);
         }
 
         /**
@@ -3711,39 +4026,6 @@ public class Camera {
         }
 
         /**
-         * Gets the current ISO setting.
-         *
-         * @return one of ISO_XXX string constant. null if ISO
-         *         setting is not supported.
-         * @hide
-         */
-        public String getISOValue() {
-            return get(KEY_ISO_MODE);
-        }
-
-        /**
-         * Sets the ISO.
-         *
-         * @param iso ISO_XXX string constant.
-         * @hide
-         */
-        public void setISOValue(String iso) {
-            set(KEY_ISO_MODE, iso);
-        }
-
-         /**
-         * Gets the supported ISO values.
-         *
-         * @return a List of ISO_MODE_XXX string constants. null if iso mode
-         *         setting is not supported.
-         * @hide
-         */
-        public List<String> getSupportedIsoValues() {
-            String str = get(KEY_ISO_MODE + SUPPORTED_VALUES_SUFFIX);
-            return split(str);
-        }
-
-        /**
          * <p>Gets the distances from the camera to where an object appears to be
          * in focus. The object is sharpest at the optimal focus distance. The
          * depth of field is the far focus distance minus near focus distance.</p>
@@ -3983,14 +4265,6 @@ public class Camera {
         }
 
         /**
-         * @return true if full size video snapshot is supported.
-         */
-        public boolean isPowerModeSupported() {
-            String str = get(KEY_POWER_MODE_SUPPORTED);
-            return TRUE.equals(str);
-        }
-
-        /**
          * <p>Enables and disables video stabilization. Use
          * {@link #isVideoStabilizationSupported} to determine if calling this
          * method is valid.</p>
@@ -4076,6 +4350,7 @@ public class Camera {
             splitter.setString(str);
             int index = 0;
             for (String s : splitter) {
+                s = s.replaceAll("\\s","");
                 output[index++] = Integer.parseInt(s);
             }
         }
@@ -4223,7 +4498,13 @@ public class Camera {
         private static final String KEY_QC_TOUCH_AF_AEC = "touch-af-aec";
         private static final String KEY_QC_TOUCH_INDEX_AEC = "touch-index-aec";
         private static final String KEY_QC_TOUCH_INDEX_AF = "touch-index-af";
+        private static final String KEY_QC_MANUAL_FOCUS_POSITION = "manual-focus-position";
+        private static final String KEY_QC_MANUAL_FOCUS_POS_TYPE = "manual-focus-pos-type";
         private static final String KEY_QC_SCENE_DETECT = "scene-detect";
+        private static final String KEY_QC_ISO_MODE = "iso";
+        private static final String KEY_QC_EXPOSURE_TIME = "exposure-time";
+        private static final String KEY_QC_MIN_EXPOSURE_TIME = "min-exposure-time";
+        private static final String KEY_QC_MAX_EXPOSURE_TIME = "max-exposure-time";
         private static final String KEY_QC_LENSSHADE = "lensshade";
         private static final String KEY_QC_HISTOGRAM = "histogram";
         private static final String KEY_QC_SKIN_TONE_ENHANCEMENT = "skinToneEnhancement";
@@ -4244,6 +4525,14 @@ public class Camera {
         private static final String KEY_QC_CAMERA_MODE = "camera-mode";
         private static final String KEY_QC_VIDEO_HIGH_FRAME_RATE = "video-hfr";
         private static final String KEY_QC_VIDEO_HDR = "video-hdr";
+        private static final String KEY_QC_POWER_MODE = "power-mode";
+        private static final String KEY_QC_POWER_MODE_SUPPORTED = "power-mode-supported";
+        private static final String KEY_QC_WB_MANUAL_CCT = "wb-manual-cct";
+        private static final String KEY_QC_MIN_WB_CCT = "min-wb-cct";
+        private static final String KEY_QC_MAX_WB_CCT = "max-wb-cct";
+        private static final String KEY_QC_AUTO_HDR_ENABLE = "auto-hdr-enable";
+        private static final String KEY_QC_VIDEO_ROTATION = "video-rotation";
+
         /** @hide
         * KEY_QC_AE_BRACKET_HDR
         **/
@@ -4274,6 +4563,41 @@ public class Camera {
         * Auto exposure spot metering
         **/
         public static final String AUTO_EXPOSURE_SPOT_METERING = "spot-metering";
+
+        //Values for ISO settings
+        /** @hide
+        * ISO_AUTO
+        **/
+        public static final String ISO_AUTO = "auto";
+        /** @hide
+        * ISO_HJR
+        **/
+        public static final String ISO_HJR = "ISO_HJR";
+        /** @hide
+        * ISO_100
+        **/
+        public static final String ISO_100 = "ISO100";
+        /** @hide
+        * ISO_200
+        **/
+        public static final String ISO_200 = "ISO200";
+        /** @hide
+        * ISO_400
+        **/
+        public static final String ISO_400 = "ISO400";
+        /** @hide
+        * ISO_800
+        **/
+        public static final String ISO_800 = "ISO800";
+        /** @hide
+        * ISO_1600
+        **/
+        public static final String ISO_1600 = "ISO1600";
+
+        /** @hide
+        * ISO_3200
+        **/
+        public static final String ISO_3200 = "ISO3200";
 
         //Values for Lens Shading
         /** @hide
@@ -4339,6 +4663,16 @@ public class Camera {
         * AEC bracketing aec-bracket
         **/
         public static final String AE_BRACKET = "AE-Bracket";
+
+        // Values for Power mode.
+        /** @hide
+        * LOW_POWER
+        **/
+        public static final String LOW_POWER = "Low_Power";
+        /** @hide
+        * NORMAL_POWER
+        **/
+        public static final String NORMAL_POWER = "Normal_Power";
 
         // Values for HFR settings.
         /** @hide
@@ -4425,6 +4759,25 @@ public class Camera {
         **/
         public static final String FACE_DETECTION_ON = "on";
 
+        // Values for video rotation settings.
+
+        /** @hide
+        * VIDEO_ROTATION_0
+        **/
+        public static final String VIDEO_ROTATION_0 = "0";
+        /** @hide
+        * VIDEO_ROTATION_90
+        **/
+        public static final String VIDEO_ROTATION_90 = "90";
+        /** @hide
+        * VIDEO_ROTATION_180
+        **/
+        public static final String VIDEO_ROTATION_180 = "180";
+        /** @hide
+        * VIDEO_ROTATION_270
+        **/
+        public static final String VIDEO_ROTATION_270 = "270";
+
         /* ### QC ADDED PARAMETER APIS*/
          /** @hide
          * Gets the supported preview sizes in high frame rate recording mode.
@@ -4477,6 +4830,17 @@ public class Camera {
          */
          public List<String> getSupportedSceneDetectModes() {
             String str = get(KEY_QC_SCENE_DETECT + SUPPORTED_VALUES_SUFFIX);
+            return split(str);
+         }
+
+         /** @hide
+         * Gets the supported ISO values.
+         *
+         * @return a List of FLASH_MODE_XXX string constants. null if flash mode
+         *         setting is not supported.
+         */
+         public List<String> getSupportedIsoValues() {
+            String str = get(KEY_QC_ISO_MODE + SUPPORTED_VALUES_SUFFIX);
             return split(str);
          }
 
@@ -4732,6 +5096,14 @@ public class Camera {
          }
 
          /** @hide
+         * @return true if full size video snapshot is supported.
+         */
+         public boolean isPowerModeSupported() {
+            String str = get(KEY_QC_POWER_MODE_SUPPORTED);
+            return TRUE.equals(str);
+         }
+
+         /** @hide
          * Get Sharpness level
          *
          * @return sharpness level
@@ -4914,12 +5286,89 @@ public class Camera {
          }
 
          /** @hide
+         * Sets the Power mode.
+         *
+         * @param value Power mode.
+         * @see #getPowerMode()
+         */
+         public void setPowerMode(String value) {
+            set(KEY_QC_POWER_MODE, value);
+         }
+
+         /** @hide
+         * Gets the current power mode setting.
+         *
+         * @return current power mode. null if power mode setting is not
+         *         supported.
+         * @see #POWER_MODE_LOW
+         * @see #POWER_MODE_NORMAL
+         */
+         public String getPowerMode() {
+            return get(KEY_QC_POWER_MODE);
+         }
+
+         /** @hide
          * Set HDR-Bracketing Level
          *
          * @param value HDR-Bracketing
          */
          public void setAEBracket(String value){
             set(KEY_QC_AE_BRACKET_HDR, value);
+         }
+
+         /** @hide
+         * Gets the current ISO setting.
+         *
+         * @return one of ISO_XXX string constant. null if ISO
+         *         setting is not supported.
+         */
+         public String getISOValue() {
+            return get(KEY_QC_ISO_MODE);
+         }
+
+         /** @hide
+         * Sets the ISO.
+         *
+         * @param iso ISO_XXX string constant.
+         */
+         public void setISOValue(String iso) {
+            set(KEY_QC_ISO_MODE, iso);
+         }
+
+         /** @hide
+         * Sets the exposure time.
+         *
+         * @param value exposure time.
+         */
+         public void setExposureTime(int value) {
+            set(KEY_QC_EXPOSURE_TIME, Integer.toString(value));
+         }
+
+         /** @hide
+         * Gets the current exposure time.
+         *
+         * @return exposure time.
+         */
+         public String getExposureTime() {
+            return get(KEY_QC_EXPOSURE_TIME);
+         }
+
+         /** @hide
+         * Gets the min supported exposure time.
+         *
+         * @return min supported exposure time.
+         */
+         public String getMinExposureTime() {
+            return get(KEY_QC_MIN_EXPOSURE_TIME);
+         }
+
+         /** @hide
+         * Gets the max supported exposure time.
+         *
+         * @return max supported exposure time.
+         */
+         public String getMaxExposureTime() {
+            return get(KEY_QC_MAX_EXPOSURE_TIME);
          }
 
          /** @hide
@@ -4978,6 +5427,42 @@ public class Camera {
          }
 
          /** @hide
+         * Set white balance manual cct value.
+         *
+         * @param cct user CCT setting.
+         */
+         public void setWBManualCCT(int cct) {
+            set(KEY_QC_WB_MANUAL_CCT, Integer.toString(cct));
+         }
+
+         /** @hide
+         * Gets the WB min supported CCT.
+         *
+         * @return min cct value.
+         */
+         public String getWBMinCCT() {
+            return get(KEY_QC_MIN_WB_CCT);
+         }
+
+         /** @hide
+         * Gets the WB max supported CCT.
+         *
+         * @return max cct value.
+         */
+         public String getMaxWBCCT() {
+            return get(KEY_QC_MAX_WB_CCT);
+         }
+
+         /** @hide
+         * Gets the current WB CCT.
+         *
+         * @return CCT value
+         */
+         public String getWBCurrentCCT() {
+            return get(KEY_QC_WB_MANUAL_CCT);
+         }
+
+         /** @hide
          * Gets the current ZSL Mode.
          *
          * @return ZSL mode value
@@ -4993,6 +5478,15 @@ public class Camera {
          */
          public void setZSLMode(String zsl) {
             set(KEY_QC_ZSL, zsl);
+         }
+
+         /** @hide
+         * Sets the current Auto HDR Mode.
+         * @ auto_hdr auto hdr string for enable/disable
+         * @return null
+         */
+         public void setAutoHDRMode(String auto_hdr){
+             set(KEY_QC_AUTO_HDR_ENABLE,auto_hdr);
          }
 
          /** @hide
@@ -5014,6 +5508,28 @@ public class Camera {
          public void setCameraMode(int cameraMode) {
            set(KEY_QC_CAMERA_MODE, cameraMode);
          }
+
+         private static final int MANUAL_FOCUS_POS_TYPE_INDEX = 0;
+         private static final int MANUAL_FOCUS_POS_TYPE_DAC = 1;
+         /** @hide
+         * Set focus position.
+         *
+         * @param pos user setting of focus position.
+         */
+         public void setFocusPosition(int type, int pos) {
+           set(KEY_QC_MANUAL_FOCUS_POS_TYPE, Integer.toString(type));
+           set(KEY_QC_MANUAL_FOCUS_POSITION, Integer.toString(pos));
+         }
+
+         /** @hide
+         * Gets the current focus position.
+         *
+         * @return current focus position
+         */
+         public String getCurrentFocusPosition() {
+            return get(KEY_QC_MANUAL_FOCUS_POSITION);
+         }
+
 
          /** @hide
          * Gets the current HFR Mode.
@@ -5131,6 +5647,35 @@ public class Camera {
          */
          public void setFaceDetectionMode(String value) {
             set(KEY_QC_FACE_DETECTION, value);
+         }
+
+         /** @hide
+         * Gets the current video rotation setting.
+         *
+         * @return one of VIDEO_QC_ROTATION_XXX string constant. null if video rotation
+         *         setting is not supported.
+         */
+         public String getVideoRotation() {
+            return get(KEY_QC_VIDEO_ROTATION);
+         }
+
+         /** @hide
+         * Sets the current video rotation setting.
+         *
+         * @param value VIDEO_QC_ROTATION_XXX string constants.
+         */
+         public void setVideoRotation(String value) {
+            set(KEY_QC_VIDEO_ROTATION, value);
+         }
+         /** @hide
+         * Gets the supported video rotation  modes.
+         *
+         * @return a List of VIDEO_QC_ROTATION_XXX string constant. null if this
+         *         setting is not supported.
+         */
+         public List<String> getSupportedVideoRotationValues() {
+            String str = get(KEY_QC_VIDEO_ROTATION + SUPPORTED_VALUES_SUFFIX);
+            return split(str);
          }
 
          // Splits a comma delimited string to an ArrayList of Coordinate.

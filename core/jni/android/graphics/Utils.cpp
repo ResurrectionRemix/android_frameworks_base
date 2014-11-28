@@ -19,6 +19,21 @@
 
 using namespace android;
 
+AssetStreamAdaptor::AssetStreamAdaptor(Asset* asset, OwnAsset ownAsset,
+                                       HasMemoryBase hasMemoryBase)
+    : fAsset(asset)
+    , fMemoryBase(kYes_HasMemoryBase == hasMemoryBase ?
+                  asset->getBuffer(false) : NULL)
+    , fOwnAsset(ownAsset)
+{
+}
+
+AssetStreamAdaptor::~AssetStreamAdaptor() {
+    if (kYes_OwnAsset == fOwnAsset) {
+        delete fAsset;
+    }
+}
+
 bool AssetStreamAdaptor::rewind() {
     off64_t pos = fAsset->seek(0, SEEK_SET);
     if (pos == (off64_t)-1) {
@@ -37,7 +52,6 @@ bool AssetStreamAdaptor::isAtEnd() const {
 }
 
 SkStreamRewindable* AssetStreamAdaptor::duplicate() const {
-    SkASSERT(false);
     // Cannot create a duplicate, since each AssetStreamAdaptor
     // would be modifying the Asset.
     //return new AssetStreamAdaptor(fAsset);

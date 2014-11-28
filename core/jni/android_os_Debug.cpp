@@ -24,6 +24,7 @@
 
 #include <cutils/log.h>
 #include <fcntl.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -173,21 +174,21 @@ static int read_memtrack_memory(struct memtrack_proc* p, int pid,
 
     ssize_t pss = memtrack_proc_graphics_pss(p);
     if (pss < 0) {
-        ALOGW("failed to get graphics pss: %d", pss);
+        ALOGW("failed to get graphics pss: %zd", pss);
         return pss;
     }
     graphics_mem->graphics = pss / 1024;
 
     pss = memtrack_proc_gl_pss(p);
     if (pss < 0) {
-        ALOGW("failed to get gl pss: %d", pss);
+        ALOGW("failed to get gl pss: %zd", pss);
         return pss;
     }
     graphics_mem->gl = pss / 1024;
 
     pss = memtrack_proc_other_pss(p);
     if (pss < 0) {
-        ALOGW("failed to get other pss: %d", pss);
+        ALOGW("failed to get other pss: %zd", pss);
         return pss;
     }
     graphics_mem->other = pss / 1024;
@@ -230,9 +231,9 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
     unsigned referenced = 0;
     unsigned temp;
 
-    unsigned long int start;
-    unsigned long int end = 0;
-    unsigned long int prevEnd = 0;
+    uint64_t start;
+    uint64_t end = 0;
+    uint64_t prevEnd = 0;
     char* name;
     int name_pos;
 
@@ -254,7 +255,7 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
         if (len < 1) return;
         line[--len] = 0;
 
-        if (sscanf(line, "%lx-%lx %*s %*x %*x:%*x %*d%n", &start, &end, &name_pos) != 2) {
+        if (sscanf(line, "%" SCNx64 "-%" SCNx64 " %*s %*x %*x:%*x %*d%n", &start, &end, &name_pos) != 2) {
             skip = true;
         } else {
             while (isspace(line[name_pos])) {
@@ -270,27 +271,19 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
                     whichHeap = HEAP_DALVIK_OTHER;
                     if (strstr(name, "/dev/ashmem/dalvik-LinearAlloc") == name) {
                         subHeap = HEAP_DALVIK_LINEARALLOC;
-                    } else if ((strstr(name, "/dev/ashmem/dalvik-mark") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-allocspace alloc space live-bitmap") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-allocspace alloc space mark-bitmap") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-card table") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-allocation stack") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-live stack") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-imagespace") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-bitmap") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-card-table") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-mark-stack") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-aux-structure") == name)) {
-                        subHeap = HEAP_DALVIK_ACCOUNTING;
-                    } else if (strstr(name, "/dev/ashmem/dalvik-large") == name) {
+                    } else if ((strstr(name, "/dev/ashmem/dalvik-alloc space") == name) ||
+                               (strstr(name, "/dev/ashmem/dalvik-main space") == name) ||
+                               (strstr(name, "/dev/ashmem/dalvik-non moving space") == name)) {
+                        // This is the regular Dalvik heap.
+                        whichHeap = HEAP_DALVIK;
+                        subHeap = HEAP_DALVIK_NORMAL;
+                    } else if (strstr(name, "/dev/ashmem/dalvik-large object space") == name) {
                         whichHeap = HEAP_DALVIK;
                         subHeap = HEAP_DALVIK_LARGE;
                     } else if (strstr(name, "/dev/ashmem/dalvik-jit-code-cache") == name) {
                         subHeap = HEAP_DALVIK_CODE_CACHE;
                     } else {
-                        // This is the regular Dalvik heap.
-                        whichHeap = HEAP_DALVIK;
-                        subHeap = HEAP_DALVIK_NORMAL;
+                        subHeap = HEAP_DALVIK_ACCOUNTING;  // Default to accounting.
                     }
                 } else if (strncmp(name, "/dev/ashmem/CursorWindow", 24) == 0) {
                     whichHeap = HEAP_CURSOR;
@@ -370,7 +363,7 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
                 referenced = temp;
             } else if (line[0] == 'S' && sscanf(line, "Swap: %d kB", &temp) == 1) {
                 swapped_out = temp;
-            } else if (strlen(line) > 30 && line[8] == '-' && line[17] == ' ') {
+            } else if (sscanf(line, "%" SCNx64 "-%" SCNx64 " %*s %*x %*x:%*x %*d", &start, &end) == 2) {
                 // looks like a new mapping
                 // example: "10000000-10001000 ---p 10000000 00:00 0"
                 break;
@@ -800,7 +793,7 @@ static void dumpNativeHeap(FILE* fp)
     fprintf(fp, "Total memory: %zu\n", totalMemory);
     fprintf(fp, "Allocation records: %zd\n", recordCount);
     if (backtraceSize != BACKTRACE_SIZE) {
-        fprintf(fp, "WARNING: mismatched backtrace sizes (%d vs. %d)\n",
+        fprintf(fp, "WARNING: mismatched backtrace sizes (%zu vs. %d)\n",
             backtraceSize, BACKTRACE_SIZE);
     }
     fprintf(fp, "\n");
@@ -823,7 +816,11 @@ static void dumpNativeHeap(FILE* fp)
             if (backtrace[bt] == 0) {
                 break;
             } else {
-                fprintf(fp, " %08x", backtrace[bt]);
+#ifdef __LP64__
+                fprintf(fp, " %016" PRIxPTR, backtrace[bt]);
+#else
+                fprintf(fp, " %08" PRIxPTR, backtrace[bt]);
+#endif
             }
         }
         fprintf(fp, "\n");

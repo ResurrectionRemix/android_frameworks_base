@@ -20,9 +20,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Messenger;
 
-import com.android.internal.util.Preconditions;
-
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import com.android.internal.util.Preconditions;
 
 /**
  * Interface to control and observe state of a specific network, hiding
@@ -38,19 +38,14 @@ public abstract class BaseNetworkStateTracker implements NetworkStateTracker {
 
     public static final String PROP_TCP_BUFFER_UNKNOWN = "net.tcp.buffersize.unknown";
     public static final String PROP_TCP_BUFFER_WIFI = "net.tcp.buffersize.wifi";
-    public static final String PROP_TCP_DELACK_DEFAULT = "net.tcp.delack.default";
-    public static final String PROP_TCP_USERCFG_DEFAULT = "net.tcp.usercfg.default";
-    public static final String PROP_TCP_DELACK_WIFI = "net.tcp.delack.wifi";
-    public static final String PROP_TCP_USERCFG_WIFI = "net.tcp.usercfg.wifi";
-    public static final String PROP_TCP_DELACK_LTE = "net.tcp.delack.lte";
-    public static final String PROP_TCP_USERCFG_LTE = "net.tcp.usercfg.lte";
 
     protected Context mContext;
     private Handler mTarget;
 
     protected NetworkInfo mNetworkInfo;
     protected LinkProperties mLinkProperties;
-    protected LinkCapabilities mLinkCapabilities;
+    protected NetworkCapabilities mNetworkCapabilities;
+    protected Network mNetwork = new Network(ConnectivityManager.NETID_UNSET);
 
     private AtomicBoolean mTeardownRequested = new AtomicBoolean(false);
     private AtomicBoolean mPrivateDnsRouteSet = new AtomicBoolean(false);
@@ -60,7 +55,7 @@ public abstract class BaseNetworkStateTracker implements NetworkStateTracker {
         mNetworkInfo = new NetworkInfo(
                 networkType, -1, ConnectivityManager.getNetworkTypeName(networkType), null);
         mLinkProperties = new LinkProperties();
-        mLinkCapabilities = new LinkCapabilities();
+        mNetworkCapabilities = new NetworkCapabilities();
     }
 
     protected BaseNetworkStateTracker() {
@@ -104,18 +99,13 @@ public abstract class BaseNetworkStateTracker implements NetworkStateTracker {
     }
 
     @Override
-    public LinkCapabilities getLinkCapabilities() {
-        return new LinkCapabilities(mLinkCapabilities);
+    public NetworkCapabilities getNetworkCapabilities() {
+        return new NetworkCapabilities(mNetworkCapabilities);
     }
 
     @Override
     public LinkQualityInfo getLinkQualityInfo() {
         return null;
-    }
-
-    @Override
-    public void captivePortalCheckComplete() {
-        // not implemented
     }
 
     @Override
@@ -213,20 +203,13 @@ public abstract class BaseNetworkStateTracker implements NetworkStateTracker {
         // nothing to do
     }
 
-    // TCP delayed ack settings
-    public String getTcpDelayedAckPropName() {
-        return PROP_TCP_DELACK_DEFAULT;
+    @Override
+    public void setNetId(int netId) {
+        mNetwork = new Network(netId);
     }
 
-    public String getTcpUserConfigPropName() {
-        return PROP_TCP_USERCFG_DEFAULT;
-    }
-
-    public String getDefaultTcpDelayedAckPropName() {
-        return PROP_TCP_DELACK_DEFAULT;
-    }
-
-    public String getDefaultTcpUserConfigPropName() {
-        return PROP_TCP_USERCFG_DEFAULT;
+    @Override
+    public Network getNetwork() {
+        return mNetwork;
     }
 }

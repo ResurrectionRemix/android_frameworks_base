@@ -46,7 +46,6 @@ import java.util.Random;
 import junit.framework.Assert;
 
 import libcore.io.IoUtils;
-import libcore.io.Libcore;
 
 /**
  * Tests for {@link FileRotator}.
@@ -374,8 +373,7 @@ public class FileRotatorTest extends AndroidTestCase {
         File inaccessibleDir = null;
         String dirPath = getContext().getFilesDir() + File.separator + "inaccessible";
         inaccessibleDir = new File(dirPath);
-        final FileRotator rotate = new FileRotator(inaccessibleDir, PREFIX,
-                SECOND_IN_MILLIS, SECOND_IN_MILLIS);
+        final FileRotator rotate = new FileRotator(inaccessibleDir, PREFIX, SECOND_IN_MILLIS, SECOND_IN_MILLIS);
 
         // rotate should not throw on dir not mkdir-ed (or otherwise inaccessible)
         rotate.maybeRotate(TEST_TIME);

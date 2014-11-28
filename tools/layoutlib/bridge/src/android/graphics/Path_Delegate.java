@@ -63,7 +63,7 @@ public final class Path_Delegate {
 
     // ---- Public Helper methods ----
 
-    public static Path_Delegate getDelegate(int nPath) {
+    public static Path_Delegate getDelegate(long nPath) {
         return sManager.getDelegate(nPath);
     }
 
@@ -88,7 +88,7 @@ public final class Path_Delegate {
     // ---- native methods ----
 
     @LayoutlibDelegate
-    /*package*/ static int init1() {
+    /*package*/ static long init1() {
         // create the delegate
         Path_Delegate newDelegate = new Path_Delegate();
 
@@ -96,7 +96,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static int init2(int nPath) {
+    /*package*/ static long init2(long nPath) {
         // create the delegate
         Path_Delegate newDelegate = new Path_Delegate();
 
@@ -110,7 +110,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_reset(int nPath) {
+    /*package*/ static void native_reset(long nPath) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -120,14 +120,14 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_rewind(int nPath) {
+    /*package*/ static void native_rewind(long nPath) {
         // call out to reset since there's nothing to optimize in
         // terms of data structs.
         native_reset(nPath);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_set(int native_dst, int native_src) {
+    /*package*/ static void native_set(long native_dst, long native_src) {
         Path_Delegate pathDstDelegate = sManager.getDelegate(native_dst);
         if (pathDstDelegate == null) {
             return;
@@ -142,7 +142,14 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static int native_getFillType(int nPath) {
+    /*package*/ static boolean native_isConvex(long nPath) {
+        Bridge.getLog().fidelityWarning(LayoutLog.TAG_UNSUPPORTED,
+                "Path.isConvex is not supported.", null, null);
+        return true;
+    }
+
+    @LayoutlibDelegate
+    /*package*/ static int native_getFillType(long nPath) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return 0;
@@ -152,7 +159,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_setFillType(int nPath, int ft) {
+    /*package*/ static void native_setFillType(long nPath, int ft) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -162,7 +169,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static boolean native_isEmpty(int nPath) {
+    /*package*/ static boolean native_isEmpty(long nPath) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return true;
@@ -172,7 +179,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static boolean native_isRect(int nPath, RectF rect) {
+    /*package*/ static boolean native_isRect(long nPath, RectF rect) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return false;
@@ -192,7 +199,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_computeBounds(int nPath, RectF bounds) {
+    /*package*/ static void native_computeBounds(long nPath, RectF bounds) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -202,13 +209,13 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_incReserve(int nPath, int extraPtCount) {
+    /*package*/ static void native_incReserve(long nPath, int extraPtCount) {
         // since we use a java2D path, there's no way to pre-allocate new points,
         // so we do nothing.
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_moveTo(int nPath, float x, float y) {
+    /*package*/ static void native_moveTo(long nPath, float x, float y) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -218,7 +225,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_rMoveTo(int nPath, float dx, float dy) {
+    /*package*/ static void native_rMoveTo(long nPath, float dx, float dy) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -228,7 +235,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_lineTo(int nPath, float x, float y) {
+    /*package*/ static void native_lineTo(long nPath, float x, float y) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -238,7 +245,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_rLineTo(int nPath, float dx, float dy) {
+    /*package*/ static void native_rLineTo(long nPath, float dx, float dy) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -248,7 +255,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_quadTo(int nPath, float x1, float y1, float x2, float y2) {
+    /*package*/ static void native_quadTo(long nPath, float x1, float y1, float x2, float y2) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -258,7 +265,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_rQuadTo(int nPath, float dx1, float dy1, float dx2, float dy2) {
+    /*package*/ static void native_rQuadTo(long nPath, float dx1, float dy1, float dx2, float dy2) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -268,7 +275,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_cubicTo(int nPath, float x1, float y1,
+    /*package*/ static void native_cubicTo(long nPath, float x1, float y1,
             float x2, float y2, float x3, float y3) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
@@ -279,7 +286,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_rCubicTo(int nPath, float x1, float y1,
+    /*package*/ static void native_rCubicTo(long nPath, float x1, float y1,
             float x2, float y2, float x3, float y3) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
@@ -290,18 +297,19 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_arcTo(int nPath, RectF oval,
+    /*package*/ static void native_arcTo(long nPath, float left, float top, float right,
+            float bottom,
                     float startAngle, float sweepAngle, boolean forceMoveTo) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
         }
 
-        pathDelegate.arcTo(oval, startAngle, sweepAngle, forceMoveTo);
+        pathDelegate.arcTo(left, top, right, bottom, startAngle, sweepAngle, forceMoveTo);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_close(int nPath) {
+    /*package*/ static void native_close(long nPath) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -311,17 +319,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addRect(int nPath, RectF rect, int dir) {
-        Path_Delegate pathDelegate = sManager.getDelegate(nPath);
-        if (pathDelegate == null) {
-            return;
-        }
-
-        pathDelegate.addRect(rect.left, rect.top, rect.right, rect.bottom, dir);
-    }
-
-    @LayoutlibDelegate
-    /*package*/ static void native_addRect(int nPath,
+    /*package*/ static void native_addRect(long nPath,
             float left, float top, float right, float bottom, int dir) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
@@ -332,18 +330,19 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addOval(int nPath, RectF oval, int dir) {
+    /*package*/ static void native_addOval(long nPath, float left, float top, float right,
+            float bottom, int dir) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
         }
 
         pathDelegate.mPath.append(new Ellipse2D.Float(
-                oval.left, oval.top, oval.width(), oval.height()), false);
+                left, top, right - left, bottom - top), false);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addCircle(int nPath, float x, float y, float radius, int dir) {
+    /*package*/ static void native_addCircle(long nPath, float x, float y, float radius, int dir) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -355,8 +354,8 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addArc(int nPath, RectF oval,
-            float startAngle, float sweepAngle) {
+    /*package*/ static void native_addArc(long nPath, float left, float top, float right,
+            float bottom, float startAngle, float sweepAngle) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -364,13 +363,13 @@ public final class Path_Delegate {
 
         // because x/y is the center of the circle, need to offset this by the radius
         pathDelegate.mPath.append(new Arc2D.Float(
-                oval.left, oval.top, oval.width(), oval.height(),
+                left, top, right - left, bottom - top,
                 -startAngle, -sweepAngle, Arc2D.OPEN), false);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addRoundRect(
-            int nPath, RectF rect, float rx, float ry, int dir) {
+    /*package*/ static void native_addRoundRect(long nPath, float left, float top, float right,
+            float bottom, float rx, float ry, int dir) {
 
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
@@ -378,14 +377,15 @@ public final class Path_Delegate {
         }
 
         pathDelegate.mPath.append(new RoundRectangle2D.Float(
-                rect.left, rect.top, rect.width(), rect.height(), rx * 2, ry * 2), false);
+                left, top, right - left, bottom - top, rx * 2, ry * 2), false);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addRoundRect(int nPath, RectF rect, float[] radii, int dir) {
+    /*package*/ static void native_addRoundRect(long nPath, float left, float top, float right,
+            float bottom, float[] radii, int dir) {
         // Java2D doesn't support different rounded corners in each corner, so just use the
         // first value.
-        native_addRoundRect(nPath, rect, radii[0], radii[1], dir);
+        native_addRoundRect(nPath, left, top, right, bottom, radii[0], radii[1], dir);
 
         // there can be a case where this API is used but with similar values for all corners, so
         // in that case we don't warn.
@@ -401,17 +401,17 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addPath(int nPath, int src, float dx, float dy) {
+    /*package*/ static void native_addPath(long nPath, long src, float dx, float dy) {
         addPath(nPath, src, AffineTransform.getTranslateInstance(dx, dy));
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addPath(int nPath, int src) {
+    /*package*/ static void native_addPath(long nPath, long src) {
         addPath(nPath, src, null /*transform*/);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_addPath(int nPath, int src, int matrix) {
+    /*package*/ static void native_addPath(long nPath, long src, long matrix) {
         Matrix_Delegate matrixDelegate = Matrix_Delegate.getDelegate(matrix);
         if (matrixDelegate == null) {
             return;
@@ -421,7 +421,7 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_offset(int nPath, float dx, float dy, int dst_path) {
+    /*package*/ static void native_offset(long nPath, float dx, float dy, long dst_path) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -434,12 +434,12 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_offset(int nPath, float dx, float dy) {
+    /*package*/ static void native_offset(long nPath, float dx, float dy) {
         native_offset(nPath, dx, dy, 0);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_setLastPoint(int nPath, float dx, float dy) {
+    /*package*/ static void native_setLastPoint(long nPath, float dx, float dy) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -450,8 +450,8 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_transform(int nPath, int matrix,
-                                                int dst_path) {
+    /*package*/ static void native_transform(long nPath, long matrix,
+                                                long dst_path) {
         Path_Delegate pathDelegate = sManager.getDelegate(nPath);
         if (pathDelegate == null) {
             return;
@@ -469,15 +469,26 @@ public final class Path_Delegate {
     }
 
     @LayoutlibDelegate
-    /*package*/ static void native_transform(int nPath, int matrix) {
+    /*package*/ static void native_transform(long nPath, long matrix) {
         native_transform(nPath, matrix, 0);
     }
 
     @LayoutlibDelegate
-    /*package*/ static void finalizer(int nPath) {
+    /*package*/ static boolean native_op(long nPath1, long nPath2, int op, long result) {
+        Bridge.getLog().error(LayoutLog.TAG_UNSUPPORTED, "Path.op() not supported", null);
+        return false;
+    }
+
+    @LayoutlibDelegate
+    /*package*/ static void finalizer(long nPath) {
         sManager.removeJavaReferenceFor(nPath);
     }
 
+    @LayoutlibDelegate
+    /*package*/ static float[] native_approximate(long nPath, float error) {
+        Bridge.getLog().error(LayoutLog.TAG_UNSUPPORTED, "Path.approximate() not supported", null);
+        return new float[0];
+    }
 
     // ---- Private helper methods ----
 
@@ -522,7 +533,7 @@ public final class Path_Delegate {
         return null;
     }
 
-    private static void addPath(int destPath, int srcPath, AffineTransform transform) {
+    private static void addPath(long destPath, long srcPath, AffineTransform transform) {
         Path_Delegate destPathDelegate = sManager.getDelegate(destPath);
         if (destPathDelegate == null) {
             return;
@@ -597,6 +608,9 @@ public final class Path_Delegate {
      * @param y The y-coordinate of the end of a line
      */
     private void lineTo(float x, float y) {
+        if (isEmpty()) {
+            mPath.moveTo(mLastX = 0, mLastY = 0);
+        }
         mPath.lineTo(mLastX = x, mLastY = y);
     }
 
@@ -701,14 +715,19 @@ public final class Path_Delegate {
      * start of the arc. However, if the path is empty, then we call moveTo()
      * with the first point of the arc. The sweep angle is tread mod 360.
      *
-     * @param oval        The bounds of oval defining shape and size of the arc
+     * @param left        The left of oval defining shape and size of the arc
+     * @param top         The top of oval defining shape and size of the arc
+     * @param right       The right of oval defining shape and size of the arc
+     * @param bottom      The bottom of oval defining shape and size of the arc
      * @param startAngle  Starting angle (in degrees) where the arc begins
      * @param sweepAngle  Sweep angle (in degrees) measured clockwise, treated
      *                    mod 360.
      * @param forceMoveTo If true, always begin a new contour with the arc
      */
-    private void arcTo(RectF oval, float startAngle, float sweepAngle, boolean forceMoveTo) {
-        Arc2D arc = new Arc2D.Float(oval.left, oval.top, oval.width(), oval.height(), -startAngle,
+    private void arcTo(float left, float top, float right, float bottom, float startAngle,
+            float sweepAngle,
+            boolean forceMoveTo) {
+        Arc2D arc = new Arc2D.Float(left, top, right - left, bottom - top, -startAngle,
                 -sweepAngle, Arc2D.OPEN);
         mPath.append(arc, true /*connect*/);
 

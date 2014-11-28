@@ -1,5 +1,5 @@
 page.title=Google Mobile Ads
-page.tags="Ads","monetization", "AdMob", "Google Play services"
+page.tags=Ads,monetization,AdMob,Google Play services
 header.hide=1
 
 @jd:body
@@ -31,6 +31,25 @@ header.hide=1
 </div>
 </div>
 
+<div style=
+"background-color:#fffdeb;width:100%;margin-bottom:1em;padding:.5em;" class=
+"caution">
+  <p><strong>Upgrade to the new AdMob</strong></p>
+  <p>Legacy AdMob will be shutting down on August 31, 2014. Beginning August 31,
+    you will no longer be able to use legacy AdMob to promote and monetize your
+    apps. Specifically, please be aware of the following:</p>
+  <ol style="margin-bottom:0;">
+    <li>Ads will stop serving to legacy ad units that are not updated with new
+    ad unit IDs.</li>
+    <li>Legacy house ad campaigns will stop serving.</li>
+    <li>You will not be able to access the legacy AdMob UI after August 31,
+    2014.</li>
+  </ol>
+  <p>If you are still using legacy AdMob, please upgrade your account to the new
+    AdMob as soon as possible. Upgrading takes only 5 minutes. <a href=
+    "https://apps.admob.com/admob/signup?">Start here</a>.</p>
+</div>
+
 <div class="landing-docs">
   <div class="col-6 normal-links">
     <h3 style="clear:left">Key Developer Features</h3>
@@ -41,11 +60,16 @@ header.hide=1
       APK. </p>
 
       <h4>Monetize your apps</h4>
-      <p>Connect with over a million Google advertisers and show relevant ads in your
-      app. Users engage with the ads, you make money.
+      <p>Connect with over a million Google advertisers and show relevant ads in your app. Users
+      engage with the ads, you make money. The Google Mobile Ads SDK fully supports AdMob,
+      DoubleClick for Publishers, DoubleClick Ad Exchange, and Search Ads for Mobile Apps. 
       <br>
       <a href="http://www.google.com/ads/admob/monetize.html" class="external-link">Learn more
       and sign up</a>.</p>
+
+      <h4>Location-based ads</h4>
+      <p>You can use the publisher-provided location API to provide Google with the location when
+      requesting ads. Location-based ads can improve your app monetization.</p>
 
       <h4>Innovative ads</h4>
       <p>Choose from a range of ads across mobile devices and tablets, including interactive
@@ -54,14 +78,19 @@ header.hide=1
       <h4>Flexible and powerful tools </h4>
       <p>Filters and controls help you manage your ads. If you want to use multiple ad
       networks, you can do that too, with free ad network mediation.</p>
+
+      <h4>Ad Policy Compliant</h4>
+      <p>The Google Mobile Ads SDK available in Google Play services is compliant with
+      Google Play Ad Poilcy regarding the usage of
+      <a href="{@docRoot}google/play-services/id.html">advertising ID</a>.</p>
   </div>
 
   <div class="col-6 normal-links">
     <h3 style="clear:left">Getting Started</h3>
     <h4>1. Get the Google Play services SDK</h4>
     <p>The Google Mobile Ads APIs are part of the Google Play services platform.</p>
-    <p>To get started, <a href="{@docRoot}google/play-services/setup.html">set up</a>
-    the Google Play services SDK.</p>
+    <p>To get started, <a href="{@docRoot}google/play-services/setup.html">set up
+      the Google Play services SDK</a>.</p>
 
     <h4>2. Run the sample</h4>
     <p>Once you've installed the Google Play services package, the Google Mobile Ads sample is located
@@ -79,7 +108,5 @@ header.hide=1
     <p>Detailed documentation for Google Mobile Ads for Android is available with the rest of the Google
     Mobile Ads developer documents at <a href="https://developers.google.com/mobile-ads-sdk"
     class="external-link">developers.google.com/mobile-ads-sdk</a>. </p>
-    <p class="note"><strong>Note</strong>: The SDK doesn’t currently support DFP, Ad Exchange or Search
-    Ads for Mobile Apps but support is coming soon.</p>
   </div>
 </div>

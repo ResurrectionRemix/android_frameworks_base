@@ -25,11 +25,14 @@ parent.link=index.html
       <h2>See also</h2>
 
       <ol>
-        <li><a href="http://proguard.sourceforge.net/manual/introduction.html">ProGuard
-        Manual &raquo;</a></li>
-
-        <li><a href="http://proguard.sourceforge.net/manual/retrace/introduction.html">ProGuard
-        ReTrace Manual &raquo;</a></li>
+        <li>
+          <a href="http://stuff.mit.edu/afs/sipb/project/android/sdk/android-sdk-linux/tools/proguard/docs/index.html#manual/introduction.html">ProGuard
+          Manual &raquo;</a>
+        </li>
+        <li>
+          <a href="http://stuff.mit.edu/afs/sipb/project/android/sdk/android-sdk-linux/tools/proguard/docs/index.html#manual/retrace/introduction.html">ProGuard
+          ReTrace Manual &raquo;</a>
+        </li>
       </ol>
     </div>
   </div>
@@ -61,6 +64,12 @@ parent.link=index.html
   <p>To enable ProGuard so that it runs as part of an Ant or Eclipse build, set the
   <code>proguard.config</code> property in the <code>&lt;project_root&gt;/project.properties</code>
   file. The path can be an absolute path or a path relative to the project's root.</p>
+
+<p class="note"><strong>Note:</strong> When using Android Studio, you must add Proguard
+to your <code>gradle.build</code> file's build types. For more information, see the
+<a href="http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Running-ProGuard"
+>Gradle Plugin User Guide</a>.
+
 <p>If you left the <code>proguard.cfg</code> file in its default location (the project's root directory),
 you can specify its location like this:</p>
 <pre class="no-pretty-print">
@@ -140,14 +149,14 @@ proguard.config=/path/to/proguard.cfg
 </pre>
 
   <p>There are many options and considerations when using the <code>-keep</code> option, so it is
-  highly recommended that you read the <a href="http://proguard.sourceforge.net/manual/introduction.html">ProGuard
-  Manual</a> for more information about customizing your configuration file. The <a href=
-  "http://proguard.sourceforge.net/manual/usage.html#keepoverview">Overview of Keep options</a> and
-  <a href="http://proguard.sourceforge.net/index.html#/manual/examples.html">Examples section</a>
-  are particularly helpful. The <a href=
-  "http://proguard.sourceforge.net/manual/troubleshooting.html">Troubleshooting</a> section of the
-  ProGuard Manual outlines other common problems you might encounter when your code gets stripped
-  away.</p>
+  highly recommended that you read the 
+  <a href="http://stuff.mit.edu/afs/sipb/project/android/sdk/android-sdk-linux/tools/proguard/docs/index.html#manual/introduction.html">ProGuard
+  Manual</a> for more information about customizing your configuration file. The 
+  <em>Overview of Keep options</em> and <em>Examples</em> sections are particularly helpful. 
+  The <a href=
+  "http://stuff.mit.edu/afs/sipb/project/android/sdk/android-sdk-linux/tools/proguard/docs/index.html#manual/troubleshooting.html">Troubleshooting
+  </a> section of the ProGuard Manual outlines other common problems you might encounter 
+  when your code gets stripped away.</p>
 
   <h2 id="decoding">Decoding Obfuscated Stack Traces</h2>
 

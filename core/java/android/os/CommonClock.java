@@ -15,23 +15,15 @@
  */
 package android.os;
 
-import java.net.InetAddress;
-import java.net.Inet4Address;
-import java.net.Inet6Address;
 import java.net.InetSocketAddress;
 import java.util.NoSuchElementException;
-import static libcore.io.OsConstants.*;
-
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.CommonTimeUtils;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import static android.system.OsConstants.*;
 
 /**
  * Used for accessing the android common time service's common clock and receiving notifications

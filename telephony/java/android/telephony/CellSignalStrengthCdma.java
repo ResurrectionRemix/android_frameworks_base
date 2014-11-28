@@ -21,7 +21,7 @@ import android.os.Parcelable;
 import android.telephony.Rlog;
 
 /**
- * LTE signal strength related information.
+ * Signal strength related information.
  */
 public final class CellSignalStrengthCdma extends CellSignalStrength implements Parcelable {
 
@@ -136,8 +136,7 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
     }
 
     /**
-     * Get the LTE signal level as an asu value between 0..97, 99 is unknown
-     * Asu is calculated based on 3GPP RSRP. Refer to 3GPP 27.007 (Ver 10.3.0) Sec 8.69
+     * Get the signal level as an asu value between 0..97, 99 is unknown
      */
     @Override
     public int getAsuLevel() {
@@ -342,7 +341,7 @@ public final class CellSignalStrengthCdma extends CellSignalStrength implements 
 
     /**
      * Construct a SignalStrength object from the given parcel
-     * where the TYPE_LTE token is already been processed.
+     * where the TYPE_CDMA token is already been processed.
      */
     private CellSignalStrengthCdma(Parcel in) {
         // CdmaDbm, CdmaEcio, EvdoDbm and EvdoEcio are written into

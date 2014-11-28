@@ -111,12 +111,9 @@ public interface NetworkStateTracker {
     public LinkProperties getLinkProperties();
 
     /**
-     * A capability is an Integer/String pair, the capabilities
-     * are defined in the class LinkSocket#Key.
-     *
      * @return a copy of this connections capabilities, may be empty but never null.
      */
-    public LinkCapabilities getLinkCapabilities();
+    public NetworkCapabilities getNetworkCapabilities();
 
     /**
      * Get interesting information about this network link
@@ -131,30 +128,6 @@ public interface NetworkStateTracker {
     public String getTcpBufferSizesPropName();
 
     /**
-     * Return the system properties name associated with the tcp delayed ack settings
-     * for this network.
-     */
-    public String getTcpDelayedAckPropName();
-
-    /**
-     * Return the system properties name associated with the tcp user config flag
-     * for this network.
-     */
-    public String getTcpUserConfigPropName();
-
-    /**
-      * Return the default system properties name associated with the tcp delayed ack settings
-      * for this network.
-      */
-    public String getDefaultTcpDelayedAckPropName();
-
-    /**
-     * Return the default system properties name associated with the tcp user config flag
-     * for this network.
-     */
-    public String getDefaultTcpUserConfigPropName();
-
-    /**
      * Disable connectivity to a network
      * @return {@code true} if a teardown occurred, {@code false} if the
      * teardown did not occur.
@@ -166,11 +139,6 @@ public interface NetworkStateTracker {
      * @return {@code true} if we're connected or expect to be connected
      */
     public boolean reconnect();
-
-    /**
-     * Ready to switch on to the network after captive portal check
-     */
-    public void captivePortalCheckComplete();
 
     /**
      * Captive portal check has completed
@@ -278,5 +246,15 @@ public interface NetworkStateTracker {
      * Save the ending sample
      */
     public void stopSampling(SamplingDataTracker.SamplingSnapshot s);
+
+    /*
+     * Record the current netId
+     */
+    public void setNetId(int netId);
+
+    /*
+     * ?
+     */
+    public Network getNetwork();
 
 }

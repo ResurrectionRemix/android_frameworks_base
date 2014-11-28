@@ -223,15 +223,19 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
     boolean mBlockLayoutRequests = false;
 
     public AdapterView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public AdapterView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
-    public AdapterView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public AdapterView(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public AdapterView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
 
         // If not explicitly specified this view is important for accessibility.
         if (getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
@@ -292,11 +296,11 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
      */
     public boolean performItemClick(View view, int position, long id) {
         if (mOnItemClickListener != null) {
+            playSoundEffect(SoundEffectConstants.CLICK);
+            mOnItemClickListener.onItemClick(this, view, position, id);
             if (view != null) {
                 view.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
             }
-            mOnItemClickListener.onItemClick(this, view, position, id);
-            playSoundEffect(SoundEffectConstants.CLICK);
             return true;
         }
 
@@ -663,7 +667,7 @@ public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 
     /**
      * When the current adapter is empty, the AdapterView can display a special view
-     * call the empty view. The empty view is used to provide feedback to the user
+     * called the empty view. The empty view is used to provide feedback to the user
      * that no data is available in this AdapterView.
      *
      * @return The view to show if the adapter is empty.

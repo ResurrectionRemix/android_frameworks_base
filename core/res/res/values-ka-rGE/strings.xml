@@ -27,6 +27,17 @@
     <string name="terabyteShort" msgid="231613018159186962">"ტბაიტი"</string>
     <string name="petabyteShort" msgid="5637816680144990219">"PB"</string>
     <string name="fileSizeSuffix" msgid="9164292791500531949">"<xliff:g id="NUMBER">%1$s</xliff:g><xliff:g id="UNIT">%2$s</xliff:g>"</string>
+    <string name="durationDays" msgid="6652371460511178259">"<xliff:g id="DAYS">%1$d</xliff:g> დღე"</string>
+    <string name="durationDayHours" msgid="2713107458736744435">"<xliff:g id="DAYS">%1$d</xliff:g> დღე <xliff:g id="HOURS">%2$d</xliff:g> სთ"</string>
+    <string name="durationDayHour" msgid="7293789639090958917">"<xliff:g id="DAYS">%1$d</xliff:g> დღე <xliff:g id="HOURS">%2$d</xliff:g> სთ"</string>
+    <string name="durationHours" msgid="4266858287167358988">"<xliff:g id="HOURS">%1$d</xliff:g> სთ"</string>
+    <string name="durationHourMinutes" msgid="9029176248692041549">"<xliff:g id="HOURS">%1$d</xliff:g> სთ <xliff:g id="MINUTES">%2$d</xliff:g> წთ"</string>
+    <string name="durationHourMinute" msgid="2741677355177402539">"<xliff:g id="HOURS">%1$d</xliff:g> სთ <xliff:g id="MINUTES">%2$d</xliff:g> წთ"</string>
+    <string name="durationMinutes" msgid="3134226679883579347">"<xliff:g id="MINUTES">%1$d</xliff:g> წთ"</string>
+    <string name="durationMinuteSeconds" msgid="1424656185379003751">"<xliff:g id="MINUTES">%1$d</xliff:g> წთ <xliff:g id="SECONDS">%2$d</xliff:g> წმ"</string>
+    <string name="durationMinuteSecond" msgid="3989228718067466680">"<xliff:g id="MINUTES">%1$d</xliff:g> წთ <xliff:g id="SECONDS">%2$d</xliff:g> წმ"</string>
+    <string name="durationSeconds" msgid="8050088505238241405">"<xliff:g id="SECONDS">%1$d</xliff:g> წმ"</string>
+    <string name="durationSecond" msgid="985669622276420331">"<xliff:g id="SECONDS">%1$d</xliff:g> წმ"</string>
     <string name="untitled" msgid="4638956954852782576">"უსათაურო"</string>
     <string name="ellipsis" msgid="7899829516048813237">"…"</string>
     <string name="ellipsis_two_dots" msgid="1228078994866030736">"‥"</string>
@@ -59,6 +70,8 @@
     <string name="meid" msgid="4841221237681254195">"MEID"</string>
     <string name="ClipMmi" msgid="6952821216480289285">"შემომავალი ზარის აბონენტის ID"</string>
     <string name="ClirMmi" msgid="7784673673446833091">"გამავალი მრეკავის ID"</string>
+    <string name="ColpMmi" msgid="3065121483740183974">"დაუკავშირდა Line ID-ს"</string>
+    <string name="ColrMmi" msgid="4996540314421889589">"დაუკავშირდა Line ID Restriction-ს"</string>
     <string name="CfMmi" msgid="5123218989141573515">"ზარის გადამისამართება"</string>
     <string name="CwMmi" msgid="9129678056795016867">"ზარის ლოდინი"</string>
     <string name="BaMmi" msgid="455193067926770581">"ზარის აკრძალვა"</string>
@@ -135,6 +148,7 @@
     <string name="contentServiceSyncNotificationTitle" msgid="397743349191901458">"სინქრონიზაცია"</string>
     <string name="contentServiceTooManyDeletesNotificationDesc" msgid="8100981435080696431">"<xliff:g id="CONTENT_TYPE">%s</xliff:g>-ის ძალიან ბევრი წაშლილები."</string>
     <string name="low_memory" product="tablet" msgid="6494019234102154896">"ტაბლეტის მეხსიერება გავსებულია. ადგილის გასათავისუფლებლად წაშალეთ ფაილების ნაწილი."</string>
+    <string name="low_memory" product="watch" msgid="4415914910770005166">"საათის მეხსიერება გავსებულია. ადგილის გასათავისუფლებლად წაშალეთ ფაილების ნაწილი."</string>
     <string name="low_memory" product="default" msgid="3475999286680000541">"ტელეფონის მეხსიერება გავსებულია. ადგილის გასათავისუფლებლად წაშალეთ ფაილების ნაწილი."</string>
     <string name="ssl_ca_cert_warning" msgid="5848402127455021714">"შესაძლოა ქსელი მონიტორინგის ქვეშ იმყოფება"</string>
     <string name="ssl_ca_cert_noti_by_unknown" msgid="4475437862189850602">"უცნობი მესამე მხარის მიერ"</string>
@@ -152,6 +166,7 @@
     <string name="silent_mode_ring" msgid="8592241816194074353">"ზარი ჩართულია"</string>
     <string name="shutdown_progress" msgid="2281079257329981203">"გამორთვა…"</string>
     <string name="shutdown_confirm" product="tablet" msgid="3385745179555731470">"თქვენი ტაბლეტი გაითიშება."</string>
+    <string name="shutdown_confirm" product="watch" msgid="3490275567476369184">"თქვენი საათი გაითიშება."</string>
     <string name="shutdown_confirm" product="default" msgid="649792175242821353">"თქვენი ტელეფონი გაითიშება."</string>
     <string name="shutdown_confirm_question" msgid="2906544768881136183">"გსურთ გამორთვა?"</string>
     <string name="reboot_safemode_title" msgid="7054509914500140361">"უსაფრთხო რეჟიმის ჩატვირთვა"</string>
@@ -171,9 +186,13 @@
     <string name="global_actions_toggle_airplane_mode" msgid="5884330306926307456">"თვითმფრინავის რეჟიმი"</string>
     <string name="global_actions_airplane_mode_on_status" msgid="2719557982608919750">"თვითმფრინავის რეჟიმი ჩართულია."</string>
     <string name="global_actions_airplane_mode_off_status" msgid="5075070442854490296">"თვითმფრინავის რეჟიმი გამორთულია."</string>
+    <string name="global_action_settings" msgid="1756531602592545966">"პარამეტრები"</string>
+    <string name="global_action_lockdown" msgid="8751542514724332873">"ახლა ჩაკეტვა"</string>
     <string name="status_bar_notification_info_overflow" msgid="5301981741705354993">"999+"</string>
     <string name="safeMode" msgid="2788228061547930246">"უსაფრთხო რეჟიმი"</string>
     <string name="android_system_label" msgid="6577375335728551336">"Android-ის სისტემა"</string>
+    <string name="user_owner_label" msgid="6465364741001216388">"პერსონალური აპები"</string>
+    <string name="managed_profile_label" msgid="6260850669674791528">"სამსახური"</string>
     <string name="permgrouplab_costMoney" msgid="5429808217861460401">"სერვისები, რომელშიც ფულის გადახდა გიწევთ"</string>
     <string name="permgroupdesc_costMoney" msgid="3293301903409869495">"ისეთი აქტივობების განხორციელება, რომლებშიც ფულის გადახდა მოგიწევთ."</string>
     <string name="permgrouplab_messages" msgid="7521249148445456662">"თქვენი შეტყობინებები"</string>
@@ -256,7 +275,7 @@
     <string name="permlab_uninstall_shortcut" msgid="4729634524044003699">"მალსახმობების წაშლა"</string>
     <string name="permdesc_uninstall_shortcut" msgid="6745743474265057975">"მთავარ ეკრანზე აპლიკაციისთვის მალსახმობების დამოუკიდებლად წაშლის უფლების მიცემა."</string>
     <string name="permlab_processOutgoingCalls" msgid="3906007831192990946">"გამავალი ზარების გადამისამართება"</string>
-    <string name="permdesc_processOutgoingCalls" msgid="5331318931937402040">"აპს შეეძლება გამავალი ზარების დამუშავება და ასაკრეფი ნომრის შეცვლა. ეს უფლება აპს აძლევს შესაძლებლობას აკონტროლოს, გადაამისამართოს ან აღკვეთოს გამავალი ზარები."</string>
+    <string name="permdesc_processOutgoingCalls" msgid="5156385005547315876">"საშუალებას აძლევს აპს გამავალი ზარის დროს დაინახონ ზარის მიმღების ნომერი, ზარის სხვა მისამართზე გადამისამართებით ან ზარის საერთოდ შეწყვეტის საშუალებით."</string>
     <string name="permlab_receiveSms" msgid="8673471768947895082">"ტექსტური შეტყობინებების (SMS) მიღება"</string>
     <string name="permdesc_receiveSms" msgid="6424387754228766939">"აპს შეეძლება SMS შეტყობინებების მიღება და დამუშავება. ეს ნიშნავს, რომ აპს შეეძლება თქვენ მოწყობილობაზე გამოგზავნილი შეტყობინებების მონიტორინგი და მათი წაშლა თქვენთვის ჩვენების გარეშე."</string>
     <string name="permlab_receiveMms" msgid="1821317344668257098">"ტექსტური შეტყობინებების (MMS) მიღება"</string>
@@ -277,8 +296,12 @@
     <string name="permdesc_writeSms" product="default" msgid="7268668709052328567">"აპს უფლება ექნება , უპასუხოს თქვენ ტაბლეტში ან SIM ბარათზე შენახულ SMS შეტყობინებებს. მავნე აპებმა შეიძლება წაშალონ თქვენი შეტყობინებები."</string>
     <string name="permlab_receiveWapPush" msgid="5991398711936590410">"ტექსტური შეტყობინებების (WAP) მიღება"</string>
     <string name="permdesc_receiveWapPush" msgid="748232190220583385">"აპს შეეძლება WAP შეტყობინებების მიღება და გენერირება. ამ უფლებით აპი ისე დააკვირდება და წაშლის თქვენთვის გამოგზავნილ შეტყობინებებს, რომ თქვენ ვერც ნახავთ."</string>
+    <string name="permlab_receiveBluetoothMap" msgid="7593811487142360528">"Bluetooth შეტყობინებების (MAP) მიღება"</string>
+    <string name="permdesc_receiveBluetoothMap" msgid="8656755936919466345">"აპს შეეძლება Bluetooth MAP შეტყობინებების მიღება და დამუშავება. ეს ნიშნავს, რომ აპს შეეძლება შეტყობინებების მონიტორინგი და მათი წაშლა თქვენთვის ჩვენების გარეშე."</string>
     <string name="permlab_getTasks" msgid="6466095396623933906">"მოქმედი აპების მოძიება"</string>
     <string name="permdesc_getTasks" msgid="7454215995847658102">"აპს შეეძლება მოიძიოს ინფორმაცია ამჟამად და უახლოეს წარსულში მიმდინარე ამოცანების შესახებ. ამგვარად, აპს აქვს შესაძლებლობა აღმოაჩინოს ინფორმაცია იმის შესახებ, თუ რომელი აპლიკაციებია გამოყენებული მოწყობილობაზე."</string>
+    <string name="permlab_startTasksFromRecents" msgid="8990073877885690623">"ამოცანის დაწყება ბოლო ამოცანებიდან"</string>
+    <string name="permdesc_startTasksFromRecents" msgid="7382133554871222235">"აპებისთვის ნების მიცემა გამოიყენოს ActivityManager.RecentTaskInfo object ნაგულისხმევი ამოცანის გასაშვებად, რომელიც დაბრუნდა ActivityManager.getRecentTaskList()-დან."</string>
     <string name="permlab_interactAcrossUsers" msgid="7114255281944211682">"მომხმარებლებს შორის ინტერაქცია"</string>
     <string name="permdesc_interactAcrossUsers" msgid="364670963623385786">"აპს შეეძლება, სხვადასხვა მომხმარებლის მოქმედებები შეასრულოს მოწყობილობაზე. მავნე აპებმა შეიძლება მომხმარებლებს შორის დაცვის დასარღვევად გამოიყენონ."</string>
     <string name="permlab_interactAcrossUsersFull" msgid="2567734285545074105">"მომხმარებლებთან ინტერაქციის სრული ლიცენზია"</string>
@@ -315,12 +338,12 @@
     <string name="permdesc_retrieve_window_content" msgid="3193269069469700265">"აპს შეეძლება აქტიური ფანჯრიდან კონტენტის მოძიება. მავნე აპებს შეუძლიათ ფანჯრის სრული კონტენტის მოძიება და ყველა ტექსტის წაკითხვა პაროლების გარდა."</string>
     <string name="permlab_temporary_enable_accessibility" msgid="2312612135127310254">"მარტივი წვდომის დროებით გააქტიურება"</string>
     <string name="permdesc_temporary_enable_accessibility" msgid="8079456293182975464">"აპს შეეძლება მოწყობილობაზე გამარტივებული რეჟიმის ჩართვა. მავნე აპებს შეეძლებათ ამ რეჟიმის ჩართვა მომხმარებლის გაფრთხილების გარეშე."</string>
-    <string name="permlab_retrieve_window_info" msgid="8532295199112519378">"ფანჯრის ინფორმაციის მოძიება"</string>
-    <string name="permdesc_retrieve_window_info" msgid="4998836370424186849">"აპს შეეძლება ფანჯრების მენეჯერის მეშვეობით ფანჯრების შესახებ ინფორმაციის მოპოვება. მავნე აპლიკაციებს შეეძლებათ ისეთი ინფორმაციის მოპოვება, რომელიც შიდა სისტემური მოხმარებისთვის არის განკუთვნილი."</string>
+    <string name="permlab_retrieveWindowToken" msgid="7154762602367758602">"ფანჯრის ჟეტონის მოძიება"</string>
+    <string name="permdesc_retrieveWindowToken" msgid="668173747687795074">"ნებას რთავს აპლიკაციას მოიძიოს ფანჯრის ჟეტონი. მავნე აპებს შეუძლია აპლიკაციის ფანჯარასთან არაავტორიზებული ინტერაქცია განახორციელოს და თავი სისტემად წარმოაჩინოს."</string>
+    <string name="permlab_frameStats" msgid="7056374987314361639">"ჩარჩოს სტატისტიკის მოძიება"</string>
+    <string name="permdesc_frameStats" msgid="4758001089491284919">"ნებას რთავს აპლიკაციას შეაგროვოს ჩარჩოს სტატისტიკა. მავნე აპებმა შესაძლოა ფანჯრების ჩარჩოს სტატისტიკის მონიტორინგი განახორციელოს სხვა აპებიდან."</string>
     <string name="permlab_filter_events" msgid="8675535648807427389">"ღონისძიებების გაფილტვრა"</string>
     <string name="permdesc_filter_events" msgid="8006236315888347680">"აპლიკაციას შეეძლება რეგისტრაცია შეტანის ფილტრებისა, რომლებიც ასუფთავებენ მომხმარებლის ღონისძიების ყველა დინებას. მავნე აპმა შესაძლოა ეს ფუნქცია სისტემის UI კონტროლისთვის გამოიყენოს, მომხმარებლის ინტერვენციის გარეშე."</string>
-    <string name="permlab_magnify_display" msgid="5973626738170618775">"ეკრანის გადიდება"</string>
-    <string name="permdesc_magnify_display" msgid="7121235684515003792">"აპლიკაციას შეეძლება, შეცვალოს დისპლეის კონტენტი. მავნე აპებმა შეიძლება იმგვარად გარდაქმნან დისპლეის კონტენტი, რომ  მოწყობილობა გამოუსადეგარი გახდეს."</string>
     <string name="permlab_shutdown" msgid="7185747824038909016">"ნაწილობრივი გამორთვა"</string>
     <string name="permdesc_shutdown" msgid="7046500838746291775">"აქტივობების მენეჯერს გათიშვის რეჟიმში აყენებს. სრულ გათიშვას არ ახორციელებს."</string>
     <string name="permlab_stopAppSwitches" msgid="4138608610717425573">"აპის გადართვებისგან დაცვა"</string>
@@ -382,12 +405,20 @@
     <string name="permdesc_bindVpnService" msgid="2067845564581693905">"აპს შეეძლება Vpn სერვისის ზედა დონის ინტერფეისთან დაკავშირება. არასდროს გამოიყენება ჩვეულებრივ აპებში."</string>
     <string name="permlab_bindWallpaper" msgid="8716400279937856462">"ფონზე მიჭედება"</string>
     <string name="permdesc_bindWallpaper" msgid="7108428692595491668">"მფლობელს შეეძლება ფონის ზედა დონის ინტერფეისთან დაკავშირება. არასდროს გამოიყენება ჩვეულებრივ აპებში."</string>
+    <string name="permlab_bindVoiceInteraction" msgid="5334852580713715068">"ხმის ინტერაქტორთან შეკავშირება"</string>
+    <string name="permdesc_bindVoiceInteraction" msgid="2345721766501778101">"მფლობელს შეეძლება შეკავშირდეს ხმის ინტერაქციის სერვისების ზედა დონის ინტერფეისთან. ჩვეულებრივ აპს ეს წესით არასოდეს უნდა დასჭირდეს."</string>
+    <string name="permlab_manageVoiceKeyphrases" msgid="1252285102392793548">"ხმოვანი საიდუმლო ფრაზების მართვა"</string>
+    <string name="permdesc_manageVoiceKeyphrases" msgid="8476560722907530008">"საშუალებას აძლევს მფლობელს მართოს საიდუმლო ფრაზები ხმოვანი ჯადოსნური სიტყვის ამოცნობისათვის. ეს ჩვეულებრივ აპებს არ უნდა დასჭირდეს."</string>
     <string name="permlab_bindRemoteDisplay" msgid="1782923938029941960">"დისტანციურ მონიტორზე მიბმა"</string>
     <string name="permdesc_bindRemoteDisplay" msgid="1261242718727295981">"მფლობელს შეეძლება მიებას დისტანციურ მონიტორის ზედა დონის ინტერფეისს. ჩვეულებრივ აპს ეს წესით არასოდეს უნდა დაჭირდეს."</string>
     <string name="permlab_bindRemoteViews" msgid="5697987759897367099">"ვიჯეტ სერვისთან დაკავშირება"</string>
     <string name="permdesc_bindRemoteViews" msgid="4717987810137692572">"აპს შეეძლება ზედა დონის ინტერფეისის ვიჯეტთან დაკავშირება. არასდროს გამოიყენება ჩვეულებრივ აპებში."</string>
     <string name="permlab_bindDeviceAdmin" msgid="8704986163711455010">"მოწყობილობის ადმინთან ინტერაქცია"</string>
     <string name="permdesc_bindDeviceAdmin" msgid="569715419543907930">"აპს შეეძლება მოწყობილობის ადმინისტრატორისთვის intent ობიექტების გაგზავნა. არასდროს გამოიყენება ჩვეულებრივ აპებში."</string>
+    <string name="permlab_bindTvInput" msgid="5601264742478168987">"TV შეყვანასთან მიბმა"</string>
+    <string name="permdesc_bindTvInput" msgid="2371008331852001924">"აპს შეეძლება TV შეყვანის ზედა დონის ინტერფეისთან დაკავშირება. არასდროს გამოიყენება ჩვეულებრივ აპებში."</string>
+    <string name="permlab_modifyParentalControls" msgid="4611318225997592242">"მშობელთა კონტროლის შეცვლა"</string>
+    <string name="permdesc_modifyParentalControls" msgid="7438482894162282039">"საშუალებას აძლევს მფლობელს შეცვალოს სისტემის მშობელთა კონტროლის მონაცემები. ეს წესით ჩვეულებრივ აპებს არ უნდა დაჭირდეს."</string>
     <string name="permlab_manageDeviceAdmins" msgid="4248828900045808722">"მოწყობილობის ადმინისტრატორს დამატება ან ამოშლა"</string>
     <string name="permdesc_manageDeviceAdmins" msgid="5025608167709942485">"საშუალებას აძლევს მფლობელს დაამატოს ან ამოშალოს მოწყობილობის აქტიური ადმინისტრატორები. ჩვეულებრივ აპებს, ალბათ, არასოდეს დაჭირდება"</string>
     <string name="permlab_setOrientation" msgid="3365947717163866844">"ეკრანის ორიენტაციის შეცვლა"</string>
@@ -423,6 +454,8 @@
     <string name="permdesc_anyCodecForPlayback" msgid="8283912488433189010">"აპს დასაკრავად შეეძლება გამოიყენოს ნებისმიერი დაყენებული მედია დეკოდერი."</string>
     <string name="permlab_manageCaCertificates" msgid="1678391896786882014">"სანდო მტკიცებულებების მართვა"</string>
     <string name="permdesc_manageCaCertificates" msgid="4015644047196937014">"აპისთვის ნების დართვა, მოახდინოს CA სერტიფიკატების სანდო მტკიცებულებებად ინსტალაცია და დეინსტალაცია."</string>
+    <string name="permlab_bindJobService" msgid="3637568367978271086">"აპლიკაციის დაგეგმილი ფონური სამუშაოს გაშვება"</string>
+    <string name="permdesc_bindJobService" msgid="3473288460524119838">"ეს ნებართვა Android-ის სისტემას საშუალებას აძლევს მოთხოვნისას ფონში გაუშვას აპლიკაცია."</string>
     <string name="permlab_diagnostic" msgid="8076743953908000342">"სისტემის დიაგნოსტიკის რესურსებში წაკითხვა/ჩაწერის უფლება"</string>
     <string name="permdesc_diagnostic" msgid="6608295692002452283">"აპს შეეძლება, წაიკითხოს ან ჩაწეროს ნებისმიერ რესურსში, რომელიც დიაგნოსტიკის ჯგუფს ეკუთვნის, მაგალითად, ფაილები /dev-ში. ამან შესაძლოა იმოქმედოს სისტემის სტაბილურობასა და უსაფრთხოებაზე. მისი გამოყენება მხოლოდ მწარმოებლის ან ოპერატორის მიერ ტექნიკის სპეციფიკური დიაგნოსტიკისთვის უნდა მოხდეს."</string>
     <string name="permlab_changeComponentState" msgid="6335576775711095931">"აპის კომპონენტების ჩართვა ან გამორთვა"</string>
@@ -460,6 +493,8 @@
     <string name="permdesc_readProfile" product="default" msgid="5462475151849888848">"აპს შეეძლება მოწყობილობაზე შენახული პირადი პროფილის ინფორმაციის წაკითხვა, მაგალითად, თქვენი სახელისა და საკონტაქტო ინფორმაციის. ეს ნიშნავს, რომ აპს შეუძლია თქვენი იდენტიფიცირება და თქვენი პირადი ინფორმაციის სხვებისთვის გაგზავნა."</string>
     <string name="permlab_writeProfile" msgid="907793628777397643">"თქვენი საკონტაქტო ინფორმაციის შეცვლა"</string>
     <string name="permdesc_writeProfile" product="default" msgid="5552084294598465899">"აპს შეეძლება მოწყობილობაზე შენახული პირადი პროფილის ინფორმაციის შეცვლა ან დამატება, მაგალითად, თქვენი სახელისა და საკონტაქტო ინფორმაციის. ეს ნიშნავს, რომ აპს შეუძლია თქვენი იდენტიფიცირება და თქვენი პირადი ინფორმაციის სხვებისთვის გაგზავნა."</string>
+    <string name="permlab_bodySensors" msgid="4871091374767171066">"სხეულის სენსორები (მაგ. გულისცემის მონიტორები)"</string>
+    <string name="permdesc_bodySensors" product="default" msgid="2998865085124153531">"საშუალებას აძლევს აპს იქონიოს წვდომა თქვენ მიერ გამოყენებული სენსორებიდან, რათა გაზომოთ, რა ხდება თქვენ სხეულში, მაგ. გულის ცემის რითმი."</string>
     <string name="permlab_readSocialStream" product="default" msgid="1268920956152419170">"სოციალური ნაკადის წაკითხვა"</string>
     <string name="permdesc_readSocialStream" product="default" msgid="4255706027172050872">"აპს შეეძლება თქვენი და თქვენი მეგობრების სოციალური განახლებებთან წვდომა და სინქრონიზაცია. ინფორმაციის გაზიარებისას იყავით ფრთხიად - აპს ექნება შესაძლებლობა, რომ წაიკითხოს სოციალურ ქსელებში კომუნიკაცია თქვენსა და თქვენს მეგობრებს შორის კონფიდენციალურობის მიუხედავად. შენიშვნა: ეს უფლება შესაძლოა ვერ იყოს გამოყენებული ყველა სოციალურ ქსელში."</string>
     <string name="permlab_writeSocialStream" product="default" msgid="3504179222493235645">"თქვენს სოციალურ მაუწყებლობაზე დაწერა"</string>
@@ -473,7 +508,7 @@
     <string name="permlab_accessMockLocation" msgid="8688334974036823330">"მდებარეობის წყაროების იმიტირება ტესტირებისთვის"</string>
     <string name="permdesc_accessMockLocation" msgid="5808711039482051824">"აპს შეეძლება ტესტირებისთვის ყალბი ლოკაციების შექმნა, ან მდებარეობის ახალი პროვაიდერის დაყენება. ეს უფლებას მისცემს აპს, შეცვალოს მდებარეობის სხვა წყაროების მიერ, მაგ. GPS  ან მდებარეობის პროვაიდერების მიერ მოწოდებული მდებარეობა და/ ან სტატუსი."</string>
     <string name="permlab_accessLocationExtraCommands" msgid="2836308076720553837">"მდებარეობის პროვაიდერის დამატებით ბრძანებებზე წვდომა"</string>
-    <string name="permdesc_accessLocationExtraCommands" msgid="5945166642335800763">"აპს შეეძლება წვდომა ჰქონდეს მდებარეობის სერვისის დამატებით ბრძანებებზე. შესაძლოა აპმა ეს გამოიყენოს GPS-ისა და მდებარეობის სხვა წყაროების მუშაობის პროცესში ჩარევისთვის."</string>
+    <string name="permdesc_accessLocationExtraCommands" msgid="6078307221056649927">"აპს შეეძლება წვდომა ჰქონდეს მდებარეობის სერვისის დამატებით ბრძანებებზე. შესაძლოა აპმა ეს გამოიყენოს GPS-ისა და მდებარეობის სხვა წყაროების მუშაობის პროცესში ჩარევისთვის."</string>
     <string name="permlab_installLocationProvider" msgid="6578101199825193873">"მდებარეობის პროვაიდერის ინსტალაციის უფლება"</string>
     <string name="permdesc_installLocationProvider" msgid="9066146120470591509">"აპს შეეძლება ტესტირებისთვის ყალბი ლოკაციების შექმნა, ან მდებარეობის ახალი პროვაიდერის დაყენება. აპს საშუალება მიეცემა გადააკეთოს სხვა წყაროების მაგ.: GPS ან მდებარეობის პროვაიდერების მოწოდებული მდებარეობა ან/და სტატუსი."</string>
     <string name="permlab_accessFineLocation" msgid="1191898061965273372">"ზუსტი მდებარეობა (GPS და ქსელის კოორდინატების მიხედვით)"</string>
@@ -484,6 +519,8 @@
     <string name="permdesc_accessSurfaceFlinger" msgid="1041619516733293551">"აპს შეეძლება, გამოიყენოს SurfaceFlinger-ის დაბალი დონის ელემენტები."</string>
     <string name="permlab_readFrameBuffer" msgid="6690504248178498136">"კადრის ბუფერის (ეკრანის შიგთავსის) წაკითხვა"</string>
     <string name="permdesc_readFrameBuffer" msgid="4937405521809454680">"აპს შეეძლება წაიკითხოს ბუფერული ჩარჩოს კონტენტი."</string>
+    <string name="permlab_accessInputFlinger" msgid="5348635270689553857">"InputFlinger-ზე წვდომა"</string>
+    <string name="permdesc_accessInputFlinger" msgid="2104864941201226616">"აპს შეეძლება, გამოიყენოს InputFlinger-ის დაბალი დონის ფუნქციები."</string>
     <string name="permlab_configureWifiDisplay" msgid="5595661694746742168">"Wifi ეკრანის კონფიგურაცია"</string>
     <string name="permdesc_configureWifiDisplay" msgid="7916815158690218065">"აპს შეეძლება Wifi ეკრანებთან დაკავშირება და დაკონფიგურირება."</string>
     <string name="permlab_controlWifiDisplay" msgid="393641276723695496">"Wifi ეკრანების მართვა"</string>
@@ -492,6 +529,8 @@
     <string name="permdesc_captureAudioOutput" msgid="6210597754212208853">"საშუალებას აძლევს აპს დაიჭიროს და გადაამისამართოს გამომავალი აუდიო."</string>
     <string name="permlab_captureAudioHotword" msgid="1890553935650349808">"ჯადოსნური სიტყვის პოვნა"</string>
     <string name="permdesc_captureAudioHotword" msgid="9151807958153056810">"საშუალებას აძლევს აპს ჩაიწეროს აუდიო ჯადოსნური სიტყვების ამოცნობისათვის. ჩაწერა შესაძლოა განხორციელდეს ფონურად, თუმცა ხელს არ უშლის სხვა სახის აუდიოს ჩაწერას (მაგ. ვიდეოჩამწერიდან)."</string>
+    <string name="permlab_modifyAudioRouting" msgid="7738060354490807723">"აუდიო მარშრუტიზაცია"</string>
+    <string name="permdesc_modifyAudioRouting" msgid="7205731074267199735">"საშუალებას აძლევს აპს პირდაპირ აკონტროლოს აუდიო მარშრუტიზაცია უკუაგდოს აუდიო პოლისის გადაწყვეტილებები."</string>
     <string name="permlab_captureVideoOutput" msgid="2246828773589094023">"გამომავალი ვიდეოს დაჭერა"</string>
     <string name="permdesc_captureVideoOutput" msgid="359481658034149860">"საშუალებას აძლევს აპს დაიჭიროს და გადაამისამართოს გამომავალი ვიდეო."</string>
     <string name="permlab_captureSecureVideoOutput" msgid="7815398969303382016">"გამომავალი დაცული ვიდეოს დაჭერა"</string>
@@ -502,6 +541,8 @@
     <string name="permdesc_modifyAudioSettings" msgid="3522565366806248517">"აპს შეეძლება აუდიოს გლობალური პარამეტრების შეცვლა. მაგ.: ხმის სიმაღლე და რომელი დინამიკი გამოიყენება სიგნალის გამოსტანად."</string>
     <string name="permlab_recordAudio" msgid="3876049771427466323">"აუდიოს ჩაწერა"</string>
     <string name="permdesc_recordAudio" msgid="4906839301087980680">"აპს შეეძლება აუდიო ჩაწერა მიკროფონით. ნებართვა აპს აუდიო ჩაწერის უფლებას აძლევს ნებისმიერ დროს, თქვენი თანხმობის გარეშე."</string>
+    <string name="permlab_sim_communication" msgid="1180265879464893029">"კომუნიკაცია SIM-თან"</string>
+    <string name="permdesc_sim_communication" msgid="5725159654279639498">"აპისთვის ნების დართვა გაუგზავნოს ბრძანებები SIM-ბარათს. ეს ძალიან საშიშია."</string>
     <string name="permlab_camera" msgid="3616391919559751192">"სურათებისა და ვიდეოების გადაღება"</string>
     <string name="permdesc_camera" msgid="8497216524735535009">"აპს შეეძლება კამერით სურათისა და ვიდეოს გადაღება. ეს ნებართვა აპს უფლებას აძლევს, ნებისმიერ დროს გამოიყენოს კამერა თქვენი დადასტურების გარეშე."</string>
     <string name="permlab_cameraDisableTransmitLed" msgid="2651072630501126222">"კამერის გამოყენებისას გადამცემი ინდიკატორის LED გათიშვა"</string>
@@ -557,6 +598,8 @@
     <string name="permdesc_modifyPhoneState" msgid="1029877529007686732">"აპს შეეძლება აკონტროლოს მოწყობილობაზე ტელეფონის ფუნქციები. ამ უფლების მქონე აპს შეუძლია ქსელების გადართვა, ტელეფონის რადიოს ჩართვა და გამორთვა, მომხმარებლისათვის შეტყობინების გარეშე."</string>
     <string name="permlab_readPhoneState" msgid="9178228524507610486">"ტელეფონის სტატუსისა და იდენტობის წაკითხვა"</string>
     <string name="permdesc_readPhoneState" msgid="1639212771826125528">"აპს შეეძლება ჰქონდეს წვდომა მოწყობილობის სატელეფონო ფუნქციებზე. აპმა მსგავსი უფლებით შეძლებს დაადგინოს ტელეფონის ნომერი, მისი სერიული გამოცემა, აქტიური ზარი, დაკავშირებული ნომერი და მსგავსი."</string>
+    <string name="permlab_readPrecisePhoneState" msgid="5476483020282007597">"ტელეფონის ზუსტი მდგომარეობების დადგენა"</string>
+    <string name="permdesc_readPrecisePhoneState" msgid="6648009074263855418">"ანიჭებს აპს ტელეფონის ზუსტ მდგომარეობაზე წვდომას. ეს უფლება საშუალებას აძლევს აპს შეიტყოს ინფორმაცია ზარის რეალურ სტატუსზე, აქტიურია ზარი თუ უკანა ფონზეა, ვერ განხორციელებული ზარები, მონაცემთა გადაცემის ზუსტი სტატუსი და ვერ განხორციელებული მონაცემთა კავშირები."</string>
     <string name="permlab_wakeLock" product="tablet" msgid="1531731435011495015">"დაიცავით ტაბლეტი დაძინებისგან"</string>
     <string name="permlab_wakeLock" product="default" msgid="573480187941496130">"ტელეფონის ძილის რეჟიმში გადასვლის აღკვეთა"</string>
     <string name="permdesc_wakeLock" product="tablet" msgid="7311319824400447868">"აპს შეეძლება ხელი შეუშალოს ტაბლეტის დაძინებას."</string>
@@ -568,6 +611,8 @@
     <string name="permlab_devicePower" product="default" msgid="4928622470980943206">"ტელეფონის ჩართვა ან გამორთვა"</string>
     <string name="permdesc_devicePower" product="tablet" msgid="6689862878984631831">"აპს შეეძლება, ჩართოს ან გამორთოს ტაბლეტი."</string>
     <string name="permdesc_devicePower" product="default" msgid="6037057348463131032">"აპს შეეძლება, ჩართოს ან გამორთოს ტელეფონი."</string>
+    <string name="permlab_userActivity" msgid="1677844893921729548">"დისლპეის დროის ლიმიტის ხელახლა დაყენება"</string>
+    <string name="permdesc_userActivity" msgid="651746160252248024">"უფლებას აძლევს აპს, ხელახლა დააყენოს დისლპეის დროის ლიმიტი."</string>
     <string name="permlab_factoryTest" msgid="3715225492696416187">"ქარხნულ სატესტო რეჟიმში გაშვება"</string>
     <string name="permdesc_factoryTest" product="tablet" msgid="3952059318359653091">"მწარმოებლის დაბალი დონის ტესტის რეჟიმში გაშვება, რომლის დროსაც სრულად არის ხელმისაწვდომი ტაბლეტის აპარატული უზრუნველყოფა. ხელმისაწვდომია მხოლოდ მწარმოებლის ტესტის რეჟიმში ჩართულ ტაბლეტზე."</string>
     <string name="permdesc_factoryTest" product="default" msgid="8136644990319244802">"მწარმოებლის დაბალი დონის ტესტის რეჟიმში გაშვება, რომლის დროსაც სრულად არის ხელმისაწვდომი ტელეფონის აპარატული უზრუნველყოფა. ხელმისაწვდომია მხოლოდ მწარმოებლის ტესტის რეჟიმში ჩართულ ტელეფონზე."</string>
@@ -619,11 +664,17 @@
     <string name="permlab_bluetoothPriv" msgid="4009494246009513828">"აპლიკაციის მიერ Bluetooth დაწყვილების განხორციელების ნების დართვა"</string>
     <string name="permdesc_bluetoothPriv" product="tablet" msgid="8045735193417468857">"უფლებას ანიჭებს აპს დააწყვილოს დისტანციური მოწყობილობები მომხმარებელთან ინტერაქციის გარეშე."</string>
     <string name="permdesc_bluetoothPriv" product="default" msgid="8045735193417468857">"უფლებას ანიჭებს აპს დააწყვილოს დისტანციური მოწყობილობები მომხმარებელთან ინტერაქციის გარეშე."</string>
+    <string name="permlab_bluetoothMap" msgid="6372198338939197349">"Bluetooth MAP მონაცემებზე წვდომა"</string>
+    <string name="permdesc_bluetoothMap" product="tablet" msgid="5784090105926959958">"აპს ანიჭებს Bluetooth MAP მონაცემებზე წვდომის ნებართვას."</string>
+    <string name="permdesc_bluetoothMap" product="default" msgid="5784090105926959958">"აპს ანიჭებს Bluetooth MAP მონაცემებზე წვდომის ნებართვას."</string>
     <string name="permlab_accessWimaxState" msgid="4195907010610205703">"WiMAX-თან დაკავშირება და კავშირის გაწყვეტა"</string>
     <string name="permdesc_accessWimaxState" msgid="6360102877261978887">"აპს შეეძლება განსაზღვროს, WiMAX არის თუ არა ჩართული და ასევე ინფორმაცია ნებისმიერი დაკავშირებული WiMAX ქსელის შესახებ."</string>
     <string name="permlab_changeWimaxState" msgid="2405042267131496579">"WiMAX მდგომარეობის შეცვლა"</string>
     <string name="permdesc_changeWimaxState" product="tablet" msgid="3156456504084201805">"აპს შეეძლება, დაუკავშიროს და გამოაერთოს ტაბლეტი WiMAX ქსელებიდან."</string>
     <string name="permdesc_changeWimaxState" product="default" msgid="697025043004923798">"აპს შეეძლება, დაუკავშიროს და გამოაერთოს ტელეფონი WiMAX ქსელებიდან."</string>
+    <string name="permlab_scoreNetworks" msgid="6445777779383587181">"ქსელების შეფასება"</string>
+    <string name="permdesc_scoreNetworks" product="tablet" msgid="1304304745850215556">"აპს ნებას რთავს შეაფასოს ქსელები და იქონიოს ზეგავლენა, თუ რომელი ქსელი ამჯობინოს ტაბლეტმა."</string>
+    <string name="permdesc_scoreNetworks" product="default" msgid="1831501848178651379">"აპს ნებას რთავს შეაფასოს ქსელები და იქონიოს ზეგავლენა, თუ რომელი ქსელი ამჯობინოს ტელეფონმა."</string>
     <string name="permlab_bluetooth" msgid="6127769336339276828">"Bluetooth მოწყობილობებთან დაწყვილება"</string>
     <string name="permdesc_bluetooth" product="tablet" msgid="3480722181852438628">"აპს შეეძლება, ნახოს Bluetooth-ის კონფიგურაცია ტაბლეტზე, შექმნას და მიიღოს კავშირები დაწყვილებულ მოწყობილობებთან."</string>
     <string name="permdesc_bluetooth" product="default" msgid="3207106324452312739">"აპს შეეძლება, ნახოს Bluetooth-ის კონფიგურაცია ტელეფონზე და შექმნას და მიიღოს კავშირები დაწყვილებულ მოწყობილობებთან."</string>
@@ -661,26 +712,40 @@
     <string name="permdesc_sdcardAccessAll" msgid="3215208357415891320">"აპს შეეძლება ყველა მომხმარებლის გარე მეხსიერებასთან წვდომა."</string>
     <string name="permlab_cache_filesystem" msgid="5656487264819669824">"ქეშის ფაილურ სისტემაზე წვდომა"</string>
     <string name="permdesc_cache_filesystem" msgid="5578967642265550955">"აპებს აძლევს ქეშირებული სისტემური ფაილების წაკითხვისა და მათში ჩანაწერების გაკეთების საშუალებას."</string>
-    <string name="permlab_use_sip" msgid="5986952362795870502">"ინტერნეტ-ზარების წამოწყება/მიღება"</string>
-    <string name="permdesc_use_sip" msgid="4717632000062674294">"აპს შეეძლება, გამოიყენოს SIP სერვისი ინტერნეტ ზარების განსახორციელებლად / საპასუხოდ."</string>
-    <string name="permlab_bind_call_service" msgid="6724009726671246551">"ზარს-შიდა ეკრანთან ინტერაქცია"</string>
-    <string name="permdesc_bind_call_service" msgid="8732547662442572435">"საშუალებას აძლევს აპს აკონტროლოს, თუ როდის და როგორ იხილავს მომხმარებელი ზარს-შიდა ეკრანს."</string>
+    <string name="permlab_use_sip" msgid="2052499390128979920">"SIP ზარების წამოწყება/მიღება"</string>
+    <string name="permdesc_use_sip" msgid="2297804849860225257">"ნებას რთავს აპს განახორციელოს და მიიღოს SIP ზარები."</string>
+    <string name="permlab_bind_incall_service" msgid="6773648341975287125">"ინტერაქცია საუბრის რეჟიმის ეკრანთან"</string>
+    <string name="permdesc_bind_incall_service" msgid="8343471381323215005">"აპს შეეძლება გაკონტროლება, როდის და როგორ დაინახავს მომხმარებელი საუბრის რეჟიმის ეკრანს."</string>
+    <string name="permlab_bind_connection_service" msgid="3557341439297014940">"ტელეფონიის სერვისებთან ინტერაქცია"</string>
+    <string name="permdesc_bind_connection_service" msgid="4008754499822478114">"ნებას აძლევს აპს მოახდინოს ტელეფონიის სერვისებთან ინტერაქცია, რათა განახორციელოს/მიიღოს ზარები."</string>
+    <string name="permlab_control_incall_experience" msgid="9061024437607777619">"უზრუნველყოფს საუბრის რეჟიმში მომხმარებლის გამოცდილებას."</string>
+    <string name="permdesc_control_incall_experience" msgid="915159066039828124">"აპს საშუალებას აძლევს, უზრუნველყოს საუბრის რეჟიმში მომხმარებლის გამოცდილება."</string>
     <string name="permlab_readNetworkUsageHistory" msgid="7862593283611493232">"ქსელის გამოყენების ისტორიის წაკითხვა"</string>
     <string name="permdesc_readNetworkUsageHistory" msgid="7689060749819126472">"აპს შეეძლება კონკრეტული ქსელისა და აპების ისტორიული ქსელის გამოყენების წაკითხვას."</string>
     <string name="permlab_manageNetworkPolicy" msgid="2562053592339859990">"ქსელის დებულების მართვა"</string>
     <string name="permdesc_manageNetworkPolicy" msgid="7537586771559370668">"აპს საშუალება ექნება მართოს ქსელის პოლიტიკა და დააწესოს წესები ცალკეული აპებისთვის."</string>
     <string name="permlab_modifyNetworkAccounting" msgid="5088217309088729650">"ქსელის გამოყენების აღრიცხვის შეცვლა"</string>
     <string name="permdesc_modifyNetworkAccounting" msgid="5443412866746198123">"აპს შეეძლება, შეცვალოს ქსელის გამოყენების აღრიცხვა აპებთან მიმართებაში. არ გამოიყენება ჩვეულებრივ აპებში."</string>
-    <string name="permlab_markNetworkSocket" msgid="3658527214914959749">"სოკეტის ნიშნების შეცვლა"</string>
-    <string name="permdesc_markNetworkSocket" msgid="7655568433696356578">"საშუალებას აძლევს აპს შეცვალოს მარშრუტიზაციის სოკეტის ნიშნები"</string>
     <string name="permlab_accessNotifications" msgid="7673416487873432268">"წვდომა შეტყობინებებთან"</string>
     <string name="permdesc_accessNotifications" msgid="458457742683431387">"აპს შეეძლება მოიძიოს, გამოიკვლიოს და წაშალოს შეტყობინებები, მათ შორის სხვა აპების მიერ გამოქვეყნებული."</string>
     <string name="permlab_bindNotificationListenerService" msgid="7057764742211656654">"შეტყობინებების მოსმენის სერვისთან დაკავშირება"</string>
     <string name="permdesc_bindNotificationListenerService" msgid="985697918576902986">"მფლობელს შეეძლება შეტყობინებების მსმენლის სერვისის ზედა დონის ინტერფეისთან დაკავშირება. არ უნდა მოხდეს მისი გამოყენება ჩვეუელებრივი აპებისთვის.ფ"</string>
+    <string name="permlab_bindConditionProviderService" msgid="1180107672332704641">"მდგომარეობის პროვაიდერის სერვისებთან შეკავშირება"</string>
+    <string name="permdesc_bindConditionProviderService" msgid="1680513931165058425">"მფლობელს შეეძლება შეკავშირდეს მდგომარეობის პროვაიდერის სერვისების ზედა დონის ინტერფეისთან. ჩვეულებრივ აპს ეს წესით არასოდეს უნდა დასჭირდეს."</string>
+    <string name="permlab_bindDreamService" msgid="4153646965978563462">"dream სერვისთან მიბმა"</string>
+    <string name="permdesc_bindDreamService" msgid="7325825272223347863">"მფლობელს შეეძლება მიებას dream სერვისის ზედა დონის ინტერფეისი. ჩვეულებრივ აპს ეს წესით არასოდეს უნდა დაჭირდეს."</string>
     <string name="permlab_invokeCarrierSetup" msgid="3699600833975117478">"ოპერატორის მიერ მოწოდებული კოფიგურაციის აპის გამოხმობა"</string>
     <string name="permdesc_invokeCarrierSetup" msgid="4159549152529111920">"საშუალებას აძლევს მფლობელს გამოიწვიოს ოპერატორის მიერ მოწოდებული კონფიგურაციის აპი. ჩვეულებრივ აპს ეს წესით არასოდეს არ უნდა დაჭირდეს."</string>
     <string name="permlab_accessNetworkConditions" msgid="8206077447838909516">"განხორციელდეს ქსელის მდგომარეობის მონიტორინგი"</string>
     <string name="permdesc_accessNetworkConditions" msgid="6899102075825272211">"საშუალებას აძლევს აპლიკაციებს განახორციელოს ქსელის მდგომარეობის მონიტორინგი. ეს ფუნქცია ჩვეულებრივ აპებს არ ჭირდება."</string>
+    <string name="permlab_setInputCalibration" msgid="4902620118878467615">"შეყვანის მოწყობილობის კალიბრაციის ცვლილება"</string>
+    <string name="permdesc_setInputCalibration" msgid="4527511047549456929">"საშუალებას აძლევს აპს შეცვალოს სენსორული ეკრანის კალიბრაციის პარამეტრები. ჩვეულებრივ აპებს წესით არ უნდა დაჭირდეს."</string>
+    <string name="permlab_accessDrmCertificates" msgid="7436886640723203615">"DRM სერთიფიკატებზე წვდომა"</string>
+    <string name="permdesc_accessDrmCertificates" msgid="8073288354426159089">"საშუალებას აძლევს აპლიკაციას დანერგოს და გამოიყენოს DRM სერთიფიკატები. ეს უფლება ჩვეულებრივ აპებს არ ჭირდება."</string>
+    <string name="permlab_handoverStatus" msgid="1159132046126626731">"Android Beam ტრანსფერის სტატუსის მიღება"</string>
+    <string name="permdesc_handoverStatus" msgid="4788144087245714948">"ნებას რთავს ამ აპლიკაციას, მიიღოს ინფორმაცია მიმდინარე Android Beam-ის ტრანსფერების შესახებ"</string>
+    <string name="permlab_removeDrmCertificates" msgid="7044888287209892751">"DRM სერტიფიკატების ამოშლა"</string>
+    <string name="permdesc_removeDrmCertificates" msgid="7272999075113400993">"საშუალებას აძლევს აპლიკაციას ამოშალოს DRM სერtიფიკატები. ეს წესით ჩვეულებრივ აპებს არ უნდა დაჭირდეს."</string>
     <string name="policylab_limitPassword" msgid="4497420728857585791">"პაროლის წესების დაყენება"</string>
     <string name="policydesc_limitPassword" msgid="3252114203919510394">"გააკონტროლეთ ეკრანის განბლოკვის პაროლში დაშვებული სიმბოლოები და მისი სიგრძე."</string>
     <string name="policylab_watchLogin" msgid="914130646942199503">"ეკრანის განბლოკვის მცდელობების გაკონტროლება"</string>
@@ -816,6 +881,7 @@
     <string name="sipAddressTypeHome" msgid="6093598181069359295">"სახლი"</string>
     <string name="sipAddressTypeWork" msgid="6920725730797099047">"სამსახური"</string>
     <string name="sipAddressTypeOther" msgid="4408436162950119849">"სხვა"</string>
+    <string name="quick_contacts_not_available" msgid="746098007828579688">"ამ კონტაქტის მნახველი აპლიკაცია ვერ მოიძებნა."</string>
     <string name="keyguard_password_enter_pin_code" msgid="3037685796058495017">"აკრიფეთ PIN კოდი"</string>
     <string name="keyguard_password_enter_puk_code" msgid="4800725266925845333">"დაბეჭდეთ PUK კოდი და ახალი PIN კოდი."</string>
     <string name="keyguard_password_enter_puk_prompt" msgid="1341112146710087048">"PUK კოდი"</string>
@@ -848,11 +914,13 @@
     <string name="lockscreen_missing_sim_instructions_long" msgid="3526573099019319472">"SIM ბარათი არ არის ან არ იკითხება. ჩადეთ SIM ბარათი."</string>
     <string name="lockscreen_permanent_disabled_sim_message_short" msgid="5096149665138916184">"არამოხმარებადი SIM ბარათი."</string>
     <string name="lockscreen_permanent_disabled_sim_instructions" msgid="910904643433151371">"თქვენი SIM ბარათი გამუდმებით გამორთული იყო.\n დაუკავშირდით თქვენი უკაბელო სერვისის პროვაიდერს სხვა SIM ბარათისთვის."</string>
-    <string name="lockscreen_transport_prev_description" msgid="201594905152746886">"წინა ჩანაწერი"</string>
-    <string name="lockscreen_transport_next_description" msgid="6089297650481292363">"შემდეგი ჩანაწერი"</string>
-    <string name="lockscreen_transport_pause_description" msgid="7659088786780128001">"პაუზა"</string>
-    <string name="lockscreen_transport_play_description" msgid="5888422938351019426">"დაკვრის ღილაკი"</string>
-    <string name="lockscreen_transport_stop_description" msgid="4562318378766987601">"შეწყვეტა"</string>
+    <string name="lockscreen_transport_prev_description" msgid="6300840251218161534">"წინა ჩანაწერი"</string>
+    <string name="lockscreen_transport_next_description" msgid="573285210424377338">"შემდეგი ჩანაწერი"</string>
+    <string name="lockscreen_transport_pause_description" msgid="3980308465056173363">"პაუზა"</string>
+    <string name="lockscreen_transport_play_description" msgid="1901258823643886401">"დაკვრა"</string>
+    <string name="lockscreen_transport_stop_description" msgid="5907083260651210034">"შეწყვეტა"</string>
+    <string name="lockscreen_transport_rew_description" msgid="6944412838651990410">"უკან გადახვევა"</string>
+    <string name="lockscreen_transport_ffw_description" msgid="42987149870928985">"წინ გადახვევა"</string>
     <string name="emergency_calls_only" msgid="6733978304386365407">"მხოლოდ გადაუდებელი დახმარების ზარები"</string>
     <string name="lockscreen_network_locked_message" msgid="143389224986028501">"ქსელი ჩაკეტილია"</string>
     <string name="lockscreen_sim_puk_locked_message" msgid="7441797339976230">"SIM ბარათი არის PUK-ით დაბლოკილი."</string>
@@ -953,8 +1021,12 @@
     <string name="permdesc_writeHistoryBookmarks" product="default" msgid="8497389531014185509">"აპს შეეძლება, შეცვალოს ბრაუზერის ისტორია და თქვენ ტელეფონში შენახული სანიშნეები. ამან შეიძლება უფლება მისცეს აპს, წაშალოს ან შეცვალოს ბრაუზერის მონაცემები. შენიშვნა: ეს ნებართვა არ შეიძლება შესრულდეს მესამე მხარის ბრაუზერების ან ვებ დათვალიერების შესაძლებლობის მქონე სხვა აპლიკაციების მიერ."</string>
     <string name="permlab_setAlarm" msgid="1379294556362091814">"მაღვიძარას დაყენება"</string>
     <string name="permdesc_setAlarm" msgid="316392039157473848">"აპს შეეძლება მაღვიძარას დაყენება დაინსტალირებული მაღვიძარას აპლიკაციაში. ამ ფუნქციას მაღვიძარას ზოგიერთი აპი არ იყენებს."</string>
+    <string name="permlab_writeVoicemail" msgid="7309899891683938100">"ხმოვანი ფოსტის ჩათვლით"</string>
+    <string name="permdesc_writeVoicemail" msgid="6592572839715924830">"ნებას რთავს ამ აპს, შეცვალოს და ამოშალოს შეტყობინებები თქვენი ხმოვანი ფოსტის შემოსულებიდან."</string>
     <string name="permlab_addVoicemail" msgid="5525660026090959044">"ხმოვანი ფოსტის დამატება"</string>
     <string name="permdesc_addVoicemail" msgid="6604508651428252437">"აპს შეეძლება დაამატოს შეტყობინებები თქვენი ხმოვანი ფოსტის შემოსულებში."</string>
+    <string name="permlab_readVoicemail" msgid="8415201752589140137">"ხმოვანი ფოსტის წაკითხვა"</string>
+    <string name="permdesc_readVoicemail" msgid="8926534735321616550">"აპს ეძლევა მთელი თქვენი ხმოვანი ფოსტების წაკითხვის უფლება."</string>
     <string name="permlab_writeGeolocationPermissions" msgid="5962224158955273932">"ბრაუზერის გეოლოკაციის უფლებების შეცვლა"</string>
     <string name="permdesc_writeGeolocationPermissions" msgid="1083743234522638747">"აპს შეეძლება ბრაუზერის გეოლოკაციის უფლებების შეცვლა. მავნე აპებმა ეს შესაძლოა გამოიყენონ  ნებისმიერი ვებსაიტისთვის მდებარეობის შესახებ ინფორმაციის გასაგზავნად."</string>
     <string name="permlab_packageVerificationAgent" msgid="5568139100645829117">"პაკეტების გადამოწმება"</string>
@@ -1111,6 +1183,7 @@
     <string name="editTextMenuTitle" msgid="4909135564941815494">"ქმედებები ტექსტზე"</string>
     <string name="low_internal_storage_view_title" msgid="5576272496365684834">"თავისუფალი ადგილი იწურება"</string>
     <string name="low_internal_storage_view_text" msgid="6640505817617414371">"სისტემის ზოგიერთმა ფუნქციამ შესაძლოა არ იმუშავოს"</string>
+    <string name="low_internal_storage_view_text_no_boot" msgid="6935190099204693424">"სისტემისათვის საკმარისი საცავი არ არის. დარწმუნდით, რომ იქონიოთ სულ მცირე 250 მბაიტი თავისუფალი სივრცე და დაიწყეთ ხელახლა."</string>
     <string name="app_running_notification_title" msgid="8718335121060787914">"<xliff:g id="APP_NAME">%1$s</xliff:g> გაშვებულია"</string>
     <string name="app_running_notification_text" msgid="4653586947747330058">"შეეხეთ მეტი ინფორმაციისათვის ან აპის შესაწყვეტად."</string>
     <string name="ok" msgid="5970060430562524910">"OK"</string>
@@ -1119,11 +1192,20 @@
     <string name="no" msgid="5141531044935541497">"გაუქმება"</string>
     <string name="dialog_alert_title" msgid="2049658708609043103">"ყურადღება"</string>
     <string name="loading" msgid="7933681260296021180">"ჩატვირთვა…"</string>
-    <string name="capital_on" msgid="1544682755514494298">"\u2759"</string>
-    <string name="capital_off" msgid="6815870386972805832">"\u3007"</string>
+    <string name="capital_on" msgid="1544682755514494298">"ჩართ."</string>
+    <string name="capital_off" msgid="6815870386972805832">"გამორთ."</string>
     <string name="whichApplication" msgid="4533185947064773386">"რა გამოვიყენოთ?"</string>
-    <string name="whichHomeApplication" msgid="4616420172727326782">"აირჩიეთ საშინაო აპი"</string>
+    <string name="whichApplicationNamed" msgid="8260158865936942783">"მოქმედების %1$s-ის გამოყენებით დასრულება"</string>
+    <string name="whichViewApplication" msgid="3272778576700572102">"გახსნა აპით"</string>
+    <string name="whichViewApplicationNamed" msgid="2286418824011249620">"%1$s-ით გახსნა"</string>
+    <string name="whichEditApplication" msgid="144727838241402655">"რედაქტირება აპით:"</string>
+    <string name="whichEditApplicationNamed" msgid="1775815530156447790">"რედაქტირება %1$s-ით"</string>
+    <string name="whichSendApplication" msgid="6902512414057341668">"გაზიარება:"</string>
+    <string name="whichSendApplicationNamed" msgid="2799370240005424391">"%1$s-თან გაზიარება"</string>
+    <string name="whichHomeApplication" msgid="4307587691506919691">"აირჩიეთ Home აპი"</string>
+    <string name="whichHomeApplicationNamed" msgid="4493438593214760979">"%1$s-ის გამოყენება ......Home-ად"</string>
     <string name="alwaysUse" msgid="4583018368000610438">"ამ ქმედებისთვის ნაგულისხმევად გამოყენება."</string>
+    <string name="use_a_different_app" msgid="8134926230585710243">"სხვა აპის გამოყენება"</string>
     <string name="clearDefaultHintMsg" msgid="3252584689512077257">"ნაგულისხმევი პარამეტრების წაშლა სისტემის პარამეტრებში &gt; აპებში &gt; ჩამოტვირთულებში."</string>
     <string name="chooseActivity" msgid="7486876147751803333">"აირჩიეთ მოქმედება"</string>
     <string name="chooseUsbActivity" msgid="6894748416073583509">"USB მოწყობილობისათვის აპის შერჩევა"</string>
@@ -1215,8 +1297,8 @@
     <string name="sms_control_yes" msgid="3663725993855816807">"უფლების მიცემა"</string>
     <string name="sms_control_no" msgid="625438561395534982">"უარყოფა"</string>
     <string name="sms_short_code_confirm_message" msgid="1645436466285310855">"&lt;b&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/b&gt; სურს შეტყობინების გაგზავნა &lt;b&gt;<xliff:g id="DEST_ADDRESS">%2$s</xliff:g>&lt;/b&gt;-ისთვის."</string>
-    <string name="sms_short_code_details" msgid="3492025719868078457">"ამან "<font fgcolor="#ffffb060">"შესაძლოა გამოიწვიოს ცვლილებები"</font>" თქვენი მობილურის ანგარიშზე."</string>
-    <string name="sms_premium_short_code_details" msgid="5523826349105123687"><font fgcolor="#ffffb060">"ეს გამოიწვევს დანახარჯებს თქვენ მობილურ ანგარიშზე."</font></string>
+    <string name="sms_short_code_details" msgid="5873295990846059400">"ამით "<b>"შესაძლოა შეიცვალოს"</b>" თქვენი მობილური ანგარიში."</string>
+    <string name="sms_premium_short_code_details" msgid="7869234868023975"><b>"ამით თქვენი მობილური ანგარიში შეიცვლება."</b></string>
     <string name="sms_short_code_confirm_allow" msgid="4458878637111023413">"გაგზავნა"</string>
     <string name="sms_short_code_confirm_deny" msgid="2927389840209170706">"გაუქმება"</string>
     <string name="sms_short_code_remember_choice" msgid="5289538592272218136">"ჩემი არჩევანის დამახსოვრება"</string>
@@ -1224,10 +1306,10 @@
     <string name="sms_short_code_confirm_always_allow" msgid="3241181154869493368">"ნებართვის მიცემა - ყოველთვის"</string>
     <string name="sms_short_code_confirm_never_allow" msgid="446992765774269673">"არასოდეს მისცე უფლება"</string>
     <string name="sim_removed_title" msgid="6227712319223226185">"SIM ბარათი ამოღებულია"</string>
-    <string name="sim_removed_message" msgid="2333164559970958645">"მობილური კავშირი არ იქნება ხელმისაწვდომი, ვიდრე არ ჩადებთ ქმედით SIM ბარათს და გადატვირთავთ."</string>
+    <string name="sim_removed_message" msgid="5450336489923274918">"ფიჭური კავშირი არ იქნება ხელმისაწვდომი, ვიდრე არ ჩადებთ ქმედით SIM ბარათს და გადატვირთავთ."</string>
     <string name="sim_done_button" msgid="827949989369963775">"დასრულდა"</string>
     <string name="sim_added_title" msgid="3719670512889674693">"SIM ბარათი დაემატა"</string>
-    <string name="sim_added_message" msgid="6599945301141050216">"გადატვირთეთ თქვენი მოწყობილობა მობილურ ქსელზე წვდომისთვის."</string>
+    <string name="sim_added_message" msgid="7797975656153714319">"გადატვირთეთ თქვენი მოწყობილობა ფიჭურ ქსელზე წვდომისთვის."</string>
     <string name="sim_restart_button" msgid="4722407842815232347">"გადატვირთვა"</string>
     <string name="time_picker_dialog_title" msgid="8349362623068819295">"დროის დაყენება"</string>
     <string name="date_picker_dialog_title" msgid="5879450659453782278">"თარიღის დაყენება"</string>
@@ -1269,9 +1351,9 @@
     <string name="extmedia_format_button_format" msgid="4131064560127478695">"დაფორმატება"</string>
     <string name="adb_active_notification_title" msgid="6729044778949189918">"USB გამართვა შეერთებულია"</string>
     <string name="adb_active_notification_message" msgid="1016654627626476142">"შეეხეთ, რათა შეწყვიტოთ USB-ის გამართვა."</string>
-    <string name="select_input_method" msgid="4653387336791222978">"აირჩიეთ შეყვანის მეთოდი"</string>
-    <string name="configure_input_methods" msgid="9091652157722495116">"შეყვანის მეთოდების დაყენება"</string>
-    <string name="use_physical_keyboard" msgid="6203112478095117625">"ფიზიკური კლავიატურა"</string>
+    <string name="select_input_method" msgid="8547250819326693584">"კლავიატურის შეცვლა"</string>
+    <string name="configure_input_methods" msgid="4769971288371946846">"კლავიატურების არჩევა"</string>
+    <string name="show_ime" msgid="9157568568695230830">"შეყვანის მეთოდის ჩვენება"</string>
     <string name="hardware" msgid="7517821086888990278">"მოწყობილობა"</string>
     <string name="select_keyboard_layout_notification_title" msgid="1407367017263030773">"შეარჩიეთ კლავიატურის განლაგება."</string>
     <string name="select_keyboard_layout_notification_message" msgid="4465907700449257063">"კლავიატურის განლაგების შესარჩევად შეეხეთ."</string>
@@ -1312,6 +1394,20 @@
     <string name="permdesc_access_keyguard_secure_storage" msgid="5866245484303285762">"აპლიკაციას ღილაკების დამცავის უსაფრთხო საცავზე წვდომის უფლება ექნება."</string>
     <string name="permlab_control_keyguard" msgid="172195184207828387">"ღილაკების დამცავის გამოჩენისა და დამალვის მართვა"</string>
     <string name="permdesc_control_keyguard" msgid="3043732290518629061">"აპლიკაციას შეეძლება ღილაკების დამცავის კონტროლი."</string>
+    <string name="permlab_trust_listener" msgid="1765718054003704476">"ნდობის მდგომარეობის ცვლილებების მოსმენა."</string>
+    <string name="permdesc_trust_listener" msgid="8233895334214716864">"საშუალებას აძლევს აპლიკაციას მოუსმინოს ცვლილებებს სანდო მდგომარეობაში."</string>
+    <string name="permlab_provide_trust_agent" msgid="5465587586091358316">"ნდობის აგენტის წარმოდგენა."</string>
+    <string name="permdesc_provide_trust_agent" msgid="3865702641053068148">"საშუალებას აძლევს აპლიკაციას წარმოადგინოს ნდობის აგენტი."</string>
+    <string name="permlab_launch_trust_agent_settings" msgid="5859430082240410200">"ნდობის აგენტის პარამეტრების მენიუს გამოძახება."</string>
+    <string name="permdesc_launch_trust_agent_settings" msgid="8185142708644913381">"აძლევს აპლიკაციას ნებართვას წამოიწყოს აქტივობა, რომელიც ნდობის აგენტის ქცევას ცვლის."</string>
+    <string name="permlab_bind_trust_agent_service" msgid="8242093169457695334">"ნდობის აგენტის სერვისზე მიმაგრება."</string>
+    <string name="permdesc_bind_trust_agent_service" msgid="7041930026024507515">"საშუალებას აძლევს აპლიკაციას მიემაგროს ნდობის აგენტის სერვისს."</string>
+    <string name="permlab_recovery" msgid="3157024487744125846">"განახლებასთან და აღდგენის სისტემასთან ინტერაქცია"</string>
+    <string name="permdesc_recovery" msgid="8511774533266359571">"საშუალებას აძლევს აპლიკაციას მოახდინოს აღდგენის სისტემასთან და სისტემის განახლებასთან ინტერაქცია."</string>
+    <string name="permlab_manageMediaProjection" msgid="1120495449419929218">"მედია პროეცირების სესიების მართვა"</string>
+    <string name="permdesc_manageMediaProjection" msgid="8053759147529492856">"საშუალებას აძლევს აპლიკაციას, მართოს მედია პროეცირების სესიები. ამ სესიებმა შესაძლოა აპლიკაციებს  საშუალება მისცეს, აღბეჭდოს ეკრანისა და აუდიოს ქონთენთი. ჩვეულებრივ აპს წესით ეს არასოდეს არ უნდა დაჭირდეს."</string>
+    <string name="permlab_readInstallSessions" msgid="6165432407628065939">"ინსტალაციის სესიების წაკითხვა"</string>
+    <string name="permdesc_readInstallSessions" msgid="2049771699626019849">"საშუალებას აძლევს აპლიკაციას წაიკითხოს ინსტალაციის სესიები. ამით მას საშუალება აქვს იხილოს პაკეტის აქტიური ინსტალაციები."</string>
     <string name="tutorial_double_tap_to_zoom_message_short" msgid="4070433208160063538">"მასშტაბის მართვისთვის შეეხეთ ორჯერ."</string>
     <string name="gadget_host_error_inflating" msgid="4882004314906466162">"ვერ დაემატა ვიჯეტი."</string>
     <string name="ime_action_go" msgid="8320845651737369027">"გადასვლა"</string>
@@ -1330,12 +1426,15 @@
     <string name="deny" msgid="2081879885755434506">"აკრძალვა"</string>
     <string name="permission_request_notification_title" msgid="6486759795926237907">"მოთხოვნილია ნებართვა"</string>
     <string name="permission_request_notification_with_subtitle" msgid="8530393139639560189">"მოთხოვნილია ნებრათვა \nანგარიშისთვის: <xliff:g id="ACCOUNT">%s</xliff:g>"</string>
+    <string name="forward_intent_to_owner" msgid="1207197447013960896">"იყენებთ ამ აპს თქვენს სამუშაო პროფილს მიღმა"</string>
+    <string name="forward_intent_to_work" msgid="621480743856004612">"ამ აპს თქვენს სამუშაო პროფილში იყენებთ"</string>
     <string name="input_method_binding_label" msgid="1283557179944992649">"შეყვანის მეთოდი"</string>
     <string name="sync_binding_label" msgid="3687969138375092423">"სინქრონიზაცია"</string>
     <string name="accessibility_binding_label" msgid="4148120742096474641">"წვდომა"</string>
     <string name="wallpaper_binding_label" msgid="1240087844304687662">"ფონი"</string>
     <string name="chooser_wallpaper" msgid="7873476199295190279">"ფონის შეცვლა"</string>
     <string name="notification_listener_binding_label" msgid="2014162835481906429">"შეტყობინებების მსმენელი"</string>
+    <string name="condition_provider_service_binding_label" msgid="1321343352906524564">"მდგომარეობის პროვაიდერი"</string>
     <string name="vpn_title" msgid="19615213552042827">"VPN გააქტიურებულია"</string>
     <string name="vpn_title_long" msgid="6400714798049252294">"VPN გააქტიურებულია <xliff:g id="APP">%s</xliff:g>-ის მიერ"</string>
     <string name="vpn_text" msgid="3011306607126450322">"შეეხეთ ქსელის სამართავად."</string>
@@ -1355,10 +1454,6 @@
     <string name="back_button_label" msgid="2300470004503343439">"უკან"</string>
     <string name="next_button_label" msgid="1080555104677992408">"მომდევნო"</string>
     <string name="skip_button_label" msgid="1275362299471631819">"გამოტოვება"</string>
-    <string name="throttle_warning_notification_title" msgid="4890894267454867276">"მობილური ინტერნეტის მაღალი მოხმარება"</string>
-    <string name="throttle_warning_notification_message" msgid="3340822228599337743">"შეეხეთ, რათა შეიტყოთ მეტი მობილურის ინტერნეტის გამოყენების შესახებ."</string>
-    <string name="throttled_notification_title" msgid="6269541897729781332">"მობილური ინტერნეტის ლიმიტი გადაჭარბებულია"</string>
-    <string name="throttled_notification_message" msgid="5443457321354907181">"შეეხეთ, რათა შეიტყოთ მეტი მობილურის ინტერნეტის გამოყენების შესახებ."</string>
     <string name="no_matches" msgid="8129421908915840737">"შესატყვისები არ არის."</string>
     <string name="find_on_page" msgid="1946799233822820384">"გვერდზე ძებნა"</string>
   <plurals name="matches_found">
@@ -1425,15 +1520,6 @@
     <string name="shareactionprovider_share_with" msgid="806688056141131819">"გაზიარება"</string>
     <string name="shareactionprovider_share_with_application" msgid="5627411384638389738">"გაუზიარეთ <xliff:g id="APPLICATION_NAME">%s</xliff:g>-ს"</string>
     <string name="content_description_sliding_handle" msgid="415975056159262248">"გასრიალებით მართვა. შეეხეთ &amp; არ აუშვათ."</string>
-    <string name="description_direction_up" msgid="7169032478259485180">"გაასრიალეთ ზემოთ <xliff:g id="TARGET_DESCRIPTION">%s</xliff:g>-თვის."</string>
-    <string name="description_direction_down" msgid="5087739728639014595">"გაასრიალეთ ქვემოთ <xliff:g id="TARGET_DESCRIPTION">%s</xliff:g>-თვის."</string>
-    <string name="description_direction_left" msgid="7207478719805562165">"გაასრიალეთ მარცხნივ <xliff:g id="TARGET_DESCRIPTION">%s</xliff:g>-თვის."</string>
-    <string name="description_direction_right" msgid="8034433242579600980">"გაასრიალეთ მარჯვნივ <xliff:g id="TARGET_DESCRIPTION">%s</xliff:g>-თვის."</string>
-    <string name="description_target_unlock" msgid="2228524900439801453">"განბლოკვა"</string>
-    <string name="description_target_camera" msgid="969071997552486814">"კამერა"</string>
-    <string name="description_target_silent" msgid="893551287746522182">"უხმო"</string>
-    <string name="description_target_soundon" msgid="30052466675500172">"ხმის ჩართვა"</string>
-    <string name="description_target_search" msgid="3091587249776033139">"ძიება"</string>
     <string name="description_target_unlock_tablet" msgid="3833195335629795055">"განბლოკვისათვის გადაფურცლეთ"</string>
     <string name="keyboard_headset_required_to_hear_password" msgid="7011927352267668657">"შეაერთედ ყურსასმენები, პაროლის ღილაკები რომ გაიგოთ."</string>
     <string name="keyboard_password_character_no_headset" msgid="2859873770886153678">"წერტილი."</string>
@@ -1448,14 +1534,14 @@
     <string name="extract_edit_menu_button" msgid="8940478730496610137">"რედაქტირება"</string>
     <string name="data_usage_warning_title" msgid="1955638862122232342">"ინტერნეტის გამოყენების გაფრთხილება"</string>
     <string name="data_usage_warning_body" msgid="2814673551471969954">"შეეხეთ მოხმარებისა და პარამეტრების სანახავად."</string>
-    <string name="data_usage_3g_limit_title" msgid="7093334419518706686">"2G-3G ინტერნეტი გაითიშა."</string>
-    <string name="data_usage_4g_limit_title" msgid="7636489436819470761">"4G მონაცემები გათიშულია"</string>
-    <string name="data_usage_mobile_limit_title" msgid="7869402519391631884">"მობილური ინტერნეტი გაითიშა"</string>
-    <string name="data_usage_wifi_limit_title" msgid="8992154736441284865">"Wi‑Fi მონაცემთა გამორთვა"</string>
-    <string name="data_usage_limit_body" msgid="3317964706973601386">"გასააქტიურებლად შეეხეთ."</string>
+    <string name="data_usage_3g_limit_title" msgid="4361523876818447683">"2G-3G მონაცემთა ლიმიტი ამოიწურა"</string>
+    <string name="data_usage_4g_limit_title" msgid="4609566827219442376">"4G მონაცემთა ლიმიტი ამოიწურა"</string>
+    <string name="data_usage_mobile_limit_title" msgid="557158376602636112">"ფიჭურ მონაცემთა ლიმიტი ამოიწურა"</string>
+    <string name="data_usage_wifi_limit_title" msgid="5803363779034792676">"Wi-Fi მონაცემთა ლიმიტი ამოიწურა"</string>
+    <string name="data_usage_limit_body" msgid="291731708279614081">"მონაცემები შეჩერდა ციკლისთვის"</string>
     <string name="data_usage_3g_limit_snoozed_title" msgid="7026739121138005231">"გადაჭარბებულია 2G-3G მონაცემების ლიმიტი"</string>
     <string name="data_usage_4g_limit_snoozed_title" msgid="1106562779311209039">"4G ლიმიტი გადაჭარბებულია"</string>
-    <string name="data_usage_mobile_limit_snoozed_title" msgid="279240572165412168">"მობილური ინტერნეტის ლიმიტი გადაჭარბებულია."</string>
+    <string name="data_usage_mobile_limit_snoozed_title" msgid="4941346653729943789">"ფიჭ. ინტერნეტის ლიმიტი მიღწეულია"</string>
     <string name="data_usage_wifi_limit_snoozed_title" msgid="8743856006384825974">"Wi‑Fi მონაცემთა ლიმიტი გადაჭარბებულია"</string>
     <string name="data_usage_limit_snoozed_body" msgid="7035490278298441767">"ლიმიტი გადაჭარბებულია <xliff:g id="SIZE">%s</xliff:g>-ით."</string>
     <string name="data_usage_restricted_title" msgid="5965157361036321914">"მონაცემთა ფონური გადაცემა შეზღუდულია"</string>
@@ -1483,6 +1569,7 @@
     <string name="SetupCallDefault" msgid="5834948469253758575">"უპასუხებთ ზარს?"</string>
     <string name="activity_resolver_use_always" msgid="8017770747801494933">"ყოველთვის"</string>
     <string name="activity_resolver_use_once" msgid="2404644797149173758">"მხოლოდ ერთხელ"</string>
+    <string name="activity_resolver_work_profiles_support" msgid="185598180676883455">"%1$s მხარს არ უჭერს სამუშაო პროფილს"</string>
     <string name="default_audio_route_name" product="tablet" msgid="4617053898167127471">"ტაბლეტი"</string>
     <string name="default_audio_route_name" product="default" msgid="4239291273420140123">"ტელეფონი"</string>
     <string name="default_audio_route_name_headphones" msgid="8119971843803439110">"ყურსასმენები"</string>
@@ -1491,7 +1578,7 @@
     <string name="default_audio_route_category_name" msgid="3722811174003886946">"სისტემა"</string>
     <string name="bluetooth_a2dp_audio_route_name" msgid="8575624030406771015">"Bluetooth აუდიო"</string>
     <string name="wireless_display_route_description" msgid="9070346425023979651">"უსადენო ეკრანი"</string>
-    <string name="media_route_button_content_description" msgid="5758553567065145276">"მედია გამომავალი"</string>
+    <string name="media_route_button_content_description" msgid="591703006349356016">"მსახიობები"</string>
     <string name="media_route_chooser_title" msgid="1751618554539087622">"მოწყობილობასთან დაკავშირება"</string>
     <string name="media_route_chooser_title_for_remote_display" msgid="3395541745872017583">"ეკრანის მოწყობილობაზე გადაცემა"</string>
     <string name="media_route_chooser_searching" msgid="4776236202610828706">"მოწყობილობების ძიება…"</string>
@@ -1507,11 +1594,6 @@
     <string name="display_manager_overlay_display_name" msgid="5142365982271620716">"გადაფარვა #<xliff:g id="ID">%1$d</xliff:g>"</string>
     <string name="display_manager_overlay_display_title" msgid="652124517672257172">"<xliff:g id="NAME">%1$s</xliff:g>: <xliff:g id="WIDTH">%2$d</xliff:g>x<xliff:g id="HEIGHT">%3$d</xliff:g>, <xliff:g id="DPI">%4$d</xliff:g> dpi"</string>
     <string name="display_manager_overlay_display_secure_suffix" msgid="6022119702628572080">", დაცული"</string>
-    <string name="wifi_display_notification_connecting_title" msgid="2838646471050359706">"მიმდინარეობს ეკრანის გადაცემა"</string>
-    <string name="wifi_display_notification_connecting_message" msgid="5837350993752841389">"<xliff:g id="NAME">%1$s</xliff:g>-თან დაკავშირება"</string>
-    <string name="wifi_display_notification_connected_title" msgid="8567308065912676285">"მიმდინარეობს ეკრანის გადაცემა"</string>
-    <string name="wifi_display_notification_connected_message" msgid="2587209325701109715">"დაკავშირებულია <xliff:g id="NAME">%1$s</xliff:g>-თან"</string>
-    <string name="wifi_display_notification_disconnect" msgid="6183754463561153372">"კავშირის გაწყვეტა"</string>
     <string name="kg_emergency_call_label" msgid="684946192523830531">"გადაუდებელი დახმარების ზარი"</string>
     <string name="kg_forgot_pattern_button_text" msgid="8852021467868220608">"დაგავიწყდათ ნიმუში"</string>
     <string name="kg_wrong_pattern" msgid="1850806070801358830">"არასწორი ნიმუში"</string>
@@ -1528,7 +1610,7 @@
     <string name="kg_sim_unlock_progress_dialog_message" msgid="8950398016976865762">"SIM ბარათის განბლოკვა…"</string>
     <string name="kg_password_wrong_pin_code" msgid="1139324887413846912">"არასწორი PIN კოდი."</string>
     <string name="kg_invalid_sim_pin_hint" msgid="8795159358110620001">"აკრიფეთ PIN, რომელიც შედგება 4-დან 8 ციფრამდე."</string>
-    <string name="kg_invalid_sim_puk_hint" msgid="7553388325654369575">"PUK კოდი უნდა იყოს რვა ან მეტი ციფრისგან შემდგარი."</string>
+    <string name="kg_invalid_sim_puk_hint" msgid="6025069204539532000">"PUK-კოდი 8 ციფრისგან უნდა შედგებოდეს."</string>
     <string name="kg_invalid_puk" msgid="3638289409676051243">"ხელახლა შეიყვანეთ სწორი PUK კოდი. რამდენიმე წარუმატებელი მცდელობა გამოიწვევს SIM ბარათის დაბლოკვას."</string>
     <string name="kg_invalid_confirm_pin_hint" product="default" msgid="7003469261464593516">"PIN კოდები არ ემთხვევა"</string>
     <string name="kg_login_too_many_attempts" msgid="6486842094005698475">"ნახატი ნიმუშის ძალიან ბევრი მცდელობა"</string>
@@ -1550,14 +1632,15 @@
     <string name="kg_failed_attempts_almost_at_login" product="default" msgid="1437638152015574839">"თქვენ არასწორად დახატეთ თქვენი განბლოკვის ნიმუში <xliff:g id="NUMBER_0">%d</xliff:g>-ჯერ. კიდევ <xliff:g id="NUMBER_1">%d</xliff:g> წარუმატებელი ცდის შემდეგ, დაგჭირდებათ თქვენი ტელეფონის განბლოკვა ელფოსტის ანგარიშის გამოყენებით.\n\n ხელახლა სცადეთ <xliff:g id="NUMBER_2">%d</xliff:g> წამში."</string>
     <string name="kg_text_message_separator" product="default" msgid="4160700433287233771">" — "</string>
     <string name="kg_reordering_delete_drop_target_text" msgid="7899202978204438708">"ამოშლა"</string>
-    <string name="safe_media_volume_warning" product="default" msgid="7324161939475478066">"რეკომენდებულ დონეზე მაღლა გსურთ ხმის აწევა?\nდიდი ხნის განმავლობაში ძალიან ხმამაღლა მოსმენამ შესაძლოა სმენა დაგიზიანოთ."</string>
+    <string name="safe_media_volume_warning" product="default" msgid="2276318909314492312">"გსურთ ხმის რეკომენდებულ დონეზე მაღლა აწევა?\n\nხანგრძლივად ხმამაღლა მოსმენით შესაძლოა სმენადობა დაიზიანოთ."</string>
     <string name="continue_to_enable_accessibility" msgid="1626427372316070258">"გეჭიროთ ორი თითი მარტივი წვდომის ჩასართავად."</string>
     <string name="accessibility_enabled" msgid="1381972048564547685">"მარტივი წვდომა ჩართულია."</string>
     <string name="enable_accessibility_canceled" msgid="3833923257966635673">"მარტივი წვდომა გაუქმდა."</string>
     <string name="user_switched" msgid="3768006783166984410">"ამჟამინდელი მომხმარებელი <xliff:g id="NAME">%1$s</xliff:g>."</string>
+    <string name="user_switching_message" msgid="2871009331809089783">"<xliff:g id="NAME">%1$s</xliff:g>-ზე გადართვა…"</string>
     <string name="owner_name" msgid="2716755460376028154">"მფლობელი"</string>
     <string name="error_message_title" msgid="4510373083082500195">"შეცდომა"</string>
-    <string name="app_no_restricted_accounts" msgid="5739463249673727736">"ამ აპს შეზღუდული პროფილების ანგარიშების მხარდაჭერა არ აქვს"</string>
+    <string name="error_message_change_not_allowed" msgid="1347282344200417578">"ეს ცვლილება თქვენი დომენის ადმინისტრატორის მიერ ნებადართული არ არის."</string>
     <string name="app_not_found" msgid="3429141853498927379">"ამ მოქმედების შესასრულებლად აპლიკაცია ვერ მოიძებნა"</string>
     <string name="revoke" msgid="5404479185228271586">"გაუქმება"</string>
     <string name="mediasize_iso_a0" msgid="1994474252931294172">"ISO A0"</string>
@@ -1664,4 +1747,40 @@
   </plurals>
     <string name="restr_pin_try_later" msgid="973144472490532377">"სცადეთ მოგვიანებით"</string>
     <string name="immersive_mode_confirmation" msgid="7227416894979047467">"ჩამოასრიალეთ ზევიდან სრული ეკრანის დასახურად."</string>
+    <string name="done_label" msgid="2093726099505892398">"დასრულდა"</string>
+    <string name="hour_picker_description" msgid="6698199186859736512">"საათების წრიული სლაიდერი"</string>
+    <string name="minute_picker_description" msgid="8606010966873791190">"წუთების წრიული სლაიდერი"</string>
+    <string name="select_hours" msgid="6043079511766008245">"აირჩიეთ საათები"</string>
+    <string name="select_minutes" msgid="3974345615920336087">"აირჩიეთ წუთები"</string>
+    <string name="day_picker_description" msgid="8990847925961297968">"დღეების ბადე თვეზე"</string>
+    <string name="year_picker_description" msgid="5524331207436052403">"წლის სია"</string>
+    <string name="select_day" msgid="7774759604701773332">"აირჩიეთ თვე და რიცხვი"</string>
+    <string name="select_year" msgid="7952052866994196170">"აირჩიეთ წელი"</string>
+    <string name="item_is_selected" msgid="949687401682476608">"არჩეულია <xliff:g id="ITEM">%1$s</xliff:g>"</string>
+    <string name="deleted_key" msgid="7659477886625566590">"<xliff:g id="KEY">%1$s</xliff:g> წაიშალა"</string>
+    <string name="managed_profile_label_badge" msgid="2355652472854327647">"სამსახური <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="lock_to_app_toast" msgid="7570091317001980053">"მიმაგრების გასაუქმებლად ერთდროულად შეეხეთ და არ აუშვათ ღილაკებს „უკან“ და „გადახედვა“."</string>
+    <string name="lock_to_app_toast_accessible" msgid="8239120109365070664">"ამ ეკრანისთვის მიმაგრების გასაუქმებლად შეეხეთ და არ აუშვათ ღილაკებს „გადახედვა“."</string>
+    <string name="lock_to_app_toast_locked" msgid="8739004135132606329">"ეკრანი დაფიქსირებული. ფიქსაციის მოხსნა თქვენო ორგანიზაციის მიერ ნებადართული არ არის."</string>
+    <string name="lock_to_app_title" msgid="1682643873107812874">"გსურთ ეკრანის ფიქსაციის გამოყენება?"</string>
+    <string name="lock_to_app_description" msgid="4120623404152035221">"ეკრანის მიმაგრება მხოლოდ ერთ ამჟამინდელ ხედს აჩვენებს.\n\nმიმაგრების გასაუქმებლად ერთდროულად შეეხეთ და არ აუშვათ ღილაკებს „უკან“ და „გადახედვა“."</string>
+    <string name="lock_to_app_description_accessible" msgid="199664191087836099">"ეკრანის მიმაგრება მხოლოდ ერთ ამჟამინდელ ხედს აჩვენებს.\n\nმიმაგრების გასაუქმებლად ერთდროულად შეეხეთ და არ აუშვათ ღილაკებს „უკან“ და „გადახედვა“."</string>
+    <string name="lock_to_app_negative" msgid="2259143719362732728">"არა, გმადლობთ"</string>
+    <string name="lock_to_app_positive" msgid="7085139175671313864">"დაწყება"</string>
+    <string name="lock_to_app_start" msgid="6643342070839862795">"ეკრანი დაფიქსირდა"</string>
+    <string name="lock_to_app_exit" msgid="8598219838213787430">"ეკრანს ფიქსაცია მოეხსნა"</string>
+    <string name="lock_to_app_unlock_pin" msgid="2552556656504331634">"ფიქსაციის მოხსნამდე PIN-ის მოთხოვნა"</string>
+    <string name="lock_to_app_unlock_pattern" msgid="4182192144797225137">"ფიქსაციის მოხსნამდე განბლოკვის ნიმუშის მოთხოვნა"</string>
+    <string name="lock_to_app_unlock_password" msgid="6380979775916974414">"ფიქსაციის მოხსნამდე პაროლის მოთხოვნა"</string>
+    <string name="battery_saver_description" msgid="2510530476513605742">"ბატარეის გამძლეობის გასახანგრძლივებლად, ბატარეის დამზოგი ამცირებს თქვენი მოწყობილობის წარმადობას და ზღუდავს ვიბრაციასა და უმეტეს ფონურ მონაცემს. თუ არ განაახლებთ, შეიძლება არ გაიხსნას ელფოსტა, შეტყობინებები და სხვა აპები, რომლებიც სინქრონიზაციაზეა დამოკიდებული.\n\nბატარეის დამზოგი ავტომატურად გამოირთვება, როდესაც თქვენი მოწყობილობა იტენება."</string>
+    <string name="downtime_condition_summary" msgid="8761776337475705749">"დანამ თქვენი კავშირგარეშე დრო დასრულდებოდეს <xliff:g id="FORMATTEDTIME">%1$s</xliff:g>-ზე"</string>
+  <plurals name="zen_mode_duration_minutes">
+    <item quantity="one" msgid="9040808414992812341">"ერთი წუთით"</item>
+    <item quantity="other" msgid="6924190729213550991">"%d წუთით"</item>
+  </plurals>
+  <plurals name="zen_mode_duration_hours">
+    <item quantity="one" msgid="3480040795582254384">"ერთი საათით"</item>
+    <item quantity="other" msgid="5408537517529822157">"%d საათით"</item>
+  </plurals>
+    <string name="zen_mode_forever" msgid="4316804956488785559">"სამუდამოდ"</string>
 </resources>

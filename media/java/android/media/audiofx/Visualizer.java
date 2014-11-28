@@ -18,7 +18,6 @@ package android.media.audiofx;
 
 import android.util.Log;
 import java.lang.ref.WeakReference;
-import java.io.IOException;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -184,8 +183,8 @@ public class Visualizer {
     private OnServerDiedListener mServerDiedListener = null;
 
     // accessed by native methods
-    private int mNativeVisualizer;
-    private int mJniData;
+    private long mNativeVisualizer;
+    private long mJniData;
 
     //--------------------------------------------------------------------------
     // Constructor, Finalize

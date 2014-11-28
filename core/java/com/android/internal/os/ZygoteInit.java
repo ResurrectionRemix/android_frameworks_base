@@ -16,27 +16,32 @@
 
 package com.android.internal.os;
 
-import static libcore.io.OsConstants.S_IRWXG;
-import static libcore.io.OsConstants.S_IRWXO;
+import static android.system.OsConstants.S_IRWXG;
+import static android.system.OsConstants.S_IRWXO;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.LocalServerSocket;
 import android.opengl.EGL14;
+import android.os.Build;
 import android.os.Debug;
 import android.os.Process;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.system.OsConstants;
 import android.util.EventLog;
 import android.util.Log;
+import android.util.Slog;
+import android.webkit.WebViewFactory;
 
+import dalvik.system.DexFile;
+import dalvik.system.PathClassLoader;
 import dalvik.system.VMRuntime;
-import dalvik.system.Zygote;
 
 import libcore.io.IoUtils;
-import libcore.io.Libcore;
-import libcore.io.OsConstants;
 
 import java.io.BufferedReader;
 import java.io.FileDescriptor;
@@ -65,16 +70,17 @@ public class ZygoteInit {
 
     private static final String PROPERTY_DISABLE_OPENGL_PRELOADING = "ro.zygote.disable_gl_preload";
 
-    private static final String ANDROID_SOCKET_ENV = "ANDROID_SOCKET_zygote";
+    private static final String ANDROID_SOCKET_PREFIX = "ANDROID_SOCKET_";
 
     private static final int LOG_BOOT_PROGRESS_PRELOAD_START = 3020;
     private static final int LOG_BOOT_PROGRESS_PRELOAD_END = 3030;
 
     /** when preloading, GC after allocating this many bytes */
-    private static final int PRELOAD_GC_THRESHOLD = 1000000;
+    private static final int PRELOAD_GC_THRESHOLD = 50000;
 
-    public static final String USAGE_STRING =
-            " <\"start-system-server\"|\"\" for startSystemServer>";
+    private static final String ABI_LIST_ARG = "--abi-list=";
+
+    private static final String SOCKET_NAME_ARG = "--socket-name=";
 
     private static LocalServerSocket sServerSocket;
 
@@ -88,7 +94,7 @@ public class ZygoteInit {
      * The number of times that the main Zygote loop
      * should run before calling gc() again.
      */
-    static final int GC_LOOP_COUNT = 15;
+    static final int GC_LOOP_COUNT = 10;
 
     /**
      * The name of a resource file that contains classes to preload.
@@ -96,7 +102,7 @@ public class ZygoteInit {
     private static final String PRELOADED_CLASSES = "preloaded-classes";
 
     /** Controls whether we should preload resources during zygote init. */
-    private static final boolean PRELOAD_RESOURCES = false;
+    private static final boolean PRELOAD_RESOURCES = true;
 
     /**
      * Invokes a static "main(argv[]) method on class "className".
@@ -151,15 +157,15 @@ public class ZygoteInit {
      *
      * @throws RuntimeException when open fails
      */
-    private static void registerZygoteSocket() {
+    private static void registerZygoteSocket(String socketName) {
         if (sServerSocket == null) {
             int fileDesc;
+            final String fullSocketName = ANDROID_SOCKET_PREFIX + socketName;
             try {
-                String env = System.getenv(ANDROID_SOCKET_ENV);
+                String env = System.getenv(fullSocketName);
                 fileDesc = Integer.parseInt(env);
             } catch (RuntimeException ex) {
-                throw new RuntimeException(
-                        ANDROID_SOCKET_ENV + " unset or invalid", ex);
+                throw new RuntimeException(fullSocketName + " unset or invalid", ex);
             }
 
             try {
@@ -176,9 +182,9 @@ public class ZygoteInit {
      * Waits for and accepts a single command connection. Throws
      * RuntimeException on failure.
      */
-    private static ZygoteConnection acceptCommandPeer() {
+    private static ZygoteConnection acceptCommandPeer(String abiList) {
         try {
-            return new ZygoteConnection(sServerSocket.accept());
+            return new ZygoteConnection(sServerSocket.accept(), abiList);
         } catch (IOException ex) {
             throw new RuntimeException(
                     "IOException during accept()", ex);
@@ -195,12 +201,12 @@ public class ZygoteInit {
                 FileDescriptor fd = sServerSocket.getFileDescriptor();
                 sServerSocket.close();
                 if (fd != null) {
-                    Libcore.os.close(fd);
+                    Os.close(fd);
                 }
             }
         } catch (IOException ex) {
             Log.e(TAG, "Zygote:  error closing sockets", ex);
-        } catch (libcore.io.ErrnoException ex) {
+        } catch (ErrnoException ex) {
             Log.e(TAG, "Zygote:  error closing descriptor", ex);
         }
 
@@ -244,9 +250,22 @@ public class ZygoteInit {
     }
 
     static void preload() {
+        Log.d(TAG, "begin preload");
         preloadClasses();
         preloadResources();
         preloadOpenGL();
+        preloadSharedLibraries();
+        // Ask the WebViewFactory to do any initialization that must run in the zygote process,
+        // for memory sharing purposes.
+        WebViewFactory.prepareWebViewInZygote();
+        Log.d(TAG, "end preload");
+    }
+
+    private static void preloadSharedLibraries() {
+        Log.i(TAG, "Preloading shared libraries...");
+        System.loadLibrary("android");
+        System.loadLibrary("compiler_rt");
+        System.loadLibrary("jnigraphics");
     }
 
     private static void preloadOpenGL() {
@@ -439,7 +458,7 @@ public class ZygoteInit {
                 Log.v(TAG, "Preloading resource #" + Integer.toHexString(id));
             }
             if (id != 0) {
-                if (mResources.getDrawable(id) == null) {
+                if (mResources.getDrawable(id, null) == null) {
                     throw new IllegalArgumentException(
                             "Unable to find preloaded drawable resource #0x"
                             + Integer.toHexString(id)
@@ -479,32 +498,81 @@ public class ZygoteInit {
         closeServerSocket();
 
         // set umask to 0077 so new files and directories will default to owner-only permissions.
-        Libcore.os.umask(S_IRWXG | S_IRWXO);
+        Os.umask(S_IRWXG | S_IRWXO);
 
         if (parsedArgs.niceName != null) {
             Process.setArgV0(parsedArgs.niceName);
         }
 
+        final String systemServerClasspath = Os.getenv("SYSTEMSERVERCLASSPATH");
+        if (systemServerClasspath != null) {
+            performSystemServerDexOpt(systemServerClasspath);
+        }
+
         if (parsedArgs.invokeWith != null) {
+            String[] args = parsedArgs.remainingArgs;
+            // If we have a non-null system server class path, we'll have to duplicate the
+            // existing arguments and append the classpath to it. ART will handle the classpath
+            // correctly when we exec a new process.
+            if (systemServerClasspath != null) {
+                String[] amendedArgs = new String[args.length + 2];
+                amendedArgs[0] = "-cp";
+                amendedArgs[1] = systemServerClasspath;
+                System.arraycopy(parsedArgs.remainingArgs, 0, amendedArgs, 2, parsedArgs.remainingArgs.length);
+            }
+
             WrapperInit.execApplication(parsedArgs.invokeWith,
                     parsedArgs.niceName, parsedArgs.targetSdkVersion,
-                    null, parsedArgs.remainingArgs);
+                    null, args);
         } else {
+            ClassLoader cl = null;
+            if (systemServerClasspath != null) {
+                cl = new PathClassLoader(systemServerClasspath, ClassLoader.getSystemClassLoader());
+                Thread.currentThread().setContextClassLoader(cl);
+            }
+
             /*
              * Pass the remaining arguments to SystemServer.
              */
-            RuntimeInit.zygoteInit(parsedArgs.targetSdkVersion, parsedArgs.remainingArgs);
+            RuntimeInit.zygoteInit(parsedArgs.targetSdkVersion, parsedArgs.remainingArgs, cl);
         }
 
         /* should never reach here */
     }
 
     /**
+     * Performs dex-opt on the elements of {@code classPath}, if needed. We
+     * choose the instruction set of the current runtime.
+     */
+    private static void performSystemServerDexOpt(String classPath) {
+        final String[] classPathElements = classPath.split(":");
+        final InstallerConnection installer = new InstallerConnection();
+        final String instructionSet = VMRuntime.getRuntime().vmInstructionSet();
+
+        try {
+            for (String classPathElement : classPathElements) {
+                final byte dexopt = DexFile.isDexOptNeededInternal(classPathElement, "*", instructionSet,
+                        false /* defer */);
+                if (dexopt == DexFile.DEXOPT_NEEDED) {
+                    installer.dexopt(classPathElement, Process.SYSTEM_UID, false, instructionSet);
+                } else if (dexopt == DexFile.PATCHOAT_NEEDED) {
+                    installer.patchoat(classPathElement, Process.SYSTEM_UID, false, instructionSet);
+                }
+            }
+        } catch (IOException ioe) {
+            throw new RuntimeException("Error starting system_server", ioe);
+        } finally {
+            installer.disconnect();
+        }
+    }
+
+    /**
      * Prepare the arguments and fork for the system server process.
      */
-    private static boolean startSystemServer()
+    private static boolean startSystemServer(String abiList, String socketName)
             throws MethodAndArgsCaller, RuntimeException {
         long capabilities = posixCapabilitiesAsBits(
+            OsConstants.CAP_BLOCK_SUSPEND,
             OsConstants.CAP_KILL,
             OsConstants.CAP_NET_ADMIN,
             OsConstants.CAP_NET_BIND_SERVICE,
@@ -520,7 +588,7 @@ public class ZygoteInit {
         String args[] = {
             "--setuid=1000",
             "--setgid=1000",
-            "--setgroups=1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1018,1021,1032,3001,3002,3003,3006,3007,3009",
+            "--setgroups=1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1018,1021,1032,3001,3002,3003,3006,3007",
             "--capabilities=" + capabilities + "," + capabilities,
             "--runtime-init",
             "--nice-name=system_server",
@@ -549,6 +617,10 @@ public class ZygoteInit {
 
         /* For child process */
         if (pid == 0) {
+            if (hasSecondZygote(abiList)) {
+                waitForSecondaryZygote(socketName);
+            }
+
             handleSystemServerProcess(parsedArgs);
         }
 
@@ -574,7 +646,26 @@ public class ZygoteInit {
             // Start profiling the zygote initialization.
             SamplingProfilerIntegration.start();
 
-            registerZygoteSocket();
+            boolean startSystemServer = false;
+            String socketName = "zygote";
+            String abiList = null;
+            for (int i = 1; i < argv.length; i++) {
+                if ("start-system-server".equals(argv[i])) {
+                    startSystemServer = true;
+                } else if (argv[i].startsWith(ABI_LIST_ARG)) {
+                    abiList = argv[i].substring(ABI_LIST_ARG.length());
+                } else if (argv[i].startsWith(SOCKET_NAME_ARG)) {
+                    socketName = argv[i].substring(SOCKET_NAME_ARG.length());
+                } else {
+                    throw new RuntimeException("Unknown command line argument: " + argv[i]);
+                }
+            }
+
+            if (abiList == null) {
+                throw new RuntimeException("No ABI list supplied.");
+            }
+
+            registerZygoteSocket(socketName);
             EventLog.writeEvent(LOG_BOOT_PROGRESS_PRELOAD_START,
                 SystemClock.uptimeMillis());
             preload();
@@ -591,20 +682,12 @@ public class ZygoteInit {
             // Zygote.
             Trace.setTracingEnabled(false);
 
-            // If requested, start system server directly from Zygote
-            if (argv.length != 2) {
-                throw new RuntimeException(argv[0] + USAGE_STRING);
-            }
-
-            if (argv[1].equals("start-system-server")) {
-                startSystemServer();
-            } else if (!argv[1].equals("")) {
-                throw new RuntimeException(argv[0] + USAGE_STRING);
+            if (startSystemServer) {
+                startSystemServer(abiList, socketName);
             }
 
             Log.i(TAG, "Accepting command socket connections");
-
-            runSelectLoop();
+            runSelectLoop(abiList);
 
             closeServerSocket();
         } catch (MethodAndArgsCaller caller) {
@@ -617,6 +700,36 @@ public class ZygoteInit {
     }
 
     /**
+     * Return {@code true} if this device configuration has another zygote.
+     *
+     * We determine this by comparing the device ABI list with this zygotes
+     * list. If this zygote supports all ABIs this device supports, there won't
+     * be another zygote.
+     */
+    private static boolean hasSecondZygote(String abiList) {
+        return !SystemProperties.get("ro.product.cpu.abilist").equals(abiList);
+    }
+
+    private static void waitForSecondaryZygote(String socketName) {
+        String otherZygoteName = Process.ZYGOTE_SOCKET.equals(socketName) ?
+                Process.SECONDARY_ZYGOTE_SOCKET : Process.ZYGOTE_SOCKET;
+        while (true) {
+            try {
+                final Process.ZygoteState zs = Process.ZygoteState.connect(otherZygoteName);
+                zs.close();
+                break;
+            } catch (IOException ioe) {
+                Log.w(TAG, "Got error connecting to zygote, retrying. msg= " + ioe.getMessage());
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+            }
+        }
+    }
+
+    /**
      * Runs the zygote process's select loop. Accepts new connections as
      * they happen, and reads commands from connections one spawn-request's
      * worth at a time.
@@ -624,7 +737,7 @@ public class ZygoteInit {
      * @throws MethodAndArgsCaller in a child process when a main() should
      * be executed.
      */
-    private static void runSelectLoop() throws MethodAndArgsCaller {
+    private static void runSelectLoop(String abiList) throws MethodAndArgsCaller {
         ArrayList<FileDescriptor> fds = new ArrayList<FileDescriptor>();
         ArrayList<ZygoteConnection> peers = new ArrayList<ZygoteConnection>();
         FileDescriptor[] fdArray = new FileDescriptor[4];
@@ -663,9 +776,9 @@ public class ZygoteInit {
             if (index < 0) {
                 throw new RuntimeException("Error in select()");
             } else if (index == 0) {
-                ZygoteConnection newPeer = acceptCommandPeer();
+                ZygoteConnection newPeer = acceptCommandPeer(abiList);
                 peers.add(newPeer);
-                fds.add(newPeer.getFileDesciptor());
+                fds.add(newPeer.getFileDescriptor());
             } else {
                 boolean done;
                 done = peers.get(index).runOnce();
@@ -735,15 +848,6 @@ public class ZygoteInit {
      * @throws IOException
      */
     static native void setCloseOnExec(FileDescriptor fd, boolean flag)
-            throws IOException;
-
-    /**
-     * Retrieves the permitted capability set from another process.
-     *
-     * @param pid &gt;=0 process ID or 0 for this process
-     * @throws IOException on error
-     */
-    static native long capgetPermitted(int pid)
             throws IOException;
 
     /**

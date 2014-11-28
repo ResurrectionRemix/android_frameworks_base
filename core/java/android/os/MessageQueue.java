@@ -16,7 +16,6 @@
 
 package android.os;
 
-import android.util.AndroidRuntimeException;
 import android.util.Log;
 import android.util.Printer;
 
@@ -35,7 +34,7 @@ public final class MessageQueue {
     private final boolean mQuitAllowed;
 
     @SuppressWarnings("unused")
-    private int mPtr; // used by native code
+    private long mPtr; // used by native code
 
     Message mMessages;
     private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
@@ -49,11 +48,11 @@ public final class MessageQueue {
     // Barriers are indicated by messages with a null target whose arg1 field carries the token.
     private int mNextBarrierToken;
 
-    private native static int nativeInit();
-    private native static void nativeDestroy(int ptr);
-    private native static void nativePollOnce(int ptr, int timeoutMillis);
-    private native static void nativeWake(int ptr);
-    private native static boolean nativeIsIdling(int ptr);
+    private native static long nativeInit();
+    private native static void nativeDestroy(long ptr);
+    private native static void nativePollOnce(long ptr, int timeoutMillis);
+    private native static void nativeWake(long ptr);
+    private native static boolean nativeIsIdling(long ptr);
 
     /**
      * Callback interface for discovering when a thread is going to block
@@ -126,6 +125,14 @@ public final class MessageQueue {
     }
 
     Message next() {
+        // Return here if the message loop has already quit and been disposed.
+        // This can happen if the application tries to restart a looper after quit
+        // which is not supported.
+        final long ptr = mPtr;
+        if (ptr == 0) {
+            return null;
+        }
+
         int pendingIdleHandlerCount = -1; // -1 only during first iteration
         int nextPollTimeoutMillis = 0;
         for (;;) {
@@ -133,9 +140,7 @@ public final class MessageQueue {
                 Binder.flushPendingCommands();
             }
 
-            // We can assume mPtr != 0 because the loop is obviously still running.
-            // The looper will not call this method after the loop quits.
-            nativePollOnce(mPtr, nextPollTimeoutMillis);
+            nativePollOnce(ptr, nextPollTimeoutMillis);
 
             synchronized (this) {
                 // Try to retrieve the next message.  Return if found.
@@ -163,7 +168,6 @@ public final class MessageQueue {
                         }
                         msg.next = null;
                         if (false) Log.v("MessageQueue", "Returning message: " + msg);
-                        msg.markInUse();
                         return msg;
                     }
                 } else {
@@ -227,7 +231,7 @@ public final class MessageQueue {
 
     void quit(boolean safe) {
         if (!mQuitAllowed) {
-            throw new RuntimeException("Main thread not allowed to quit.");
+            throw new IllegalStateException("Main thread not allowed to quit.");
         }
 
         synchronized (this) {
@@ -253,6 +257,7 @@ public final class MessageQueue {
         synchronized (this) {
             final int token = mNextBarrierToken++;
             final Message msg = Message.obtain();
+            msg.markInUse();
             msg.when = when;
             msg.arg1 = token;
 
@@ -297,7 +302,7 @@ public final class MessageQueue {
                 mMessages = p.next;
                 needWake = mMessages == null || mMessages.target != null;
             }
-            p.recycle();
+            p.recycleUnchecked();
 
             // If the loop is quitting then it is already awake.
             // We can assume mPtr != 0 when mQuitting is false.
@@ -308,21 +313,23 @@ public final class MessageQueue {
     }
 
     boolean enqueueMessage(Message msg, long when) {
-        if (msg.isInUse()) {
-            throw new AndroidRuntimeException(msg + " This message is already in use.");
-        }
         if (msg.target == null) {
-            throw new AndroidRuntimeException("Message must have a target.");
+            throw new IllegalArgumentException("Message must have a target.");
+        }
+        if (msg.isInUse()) {
+            throw new IllegalStateException(msg + " This message is already in use.");
         }
 
         synchronized (this) {
             if (mQuitting) {
-                RuntimeException e = new RuntimeException(
+                IllegalStateException e = new IllegalStateException(
                         msg.target + " sending message to a Handler on a dead thread");
                 Log.w("MessageQueue", e.getMessage(), e);
+                msg.recycle();
                 return false;
             }
 
+            msg.markInUse();
             msg.when = when;
             Message p = mMessages;
             boolean needWake;
@@ -418,7 +425,7 @@ public final class MessageQueue {
                    && (object == null || p.obj == object)) {
                 Message n = p.next;
                 mMessages = n;
-                p.recycle();
+                p.recycleUnchecked();
                 p = n;
             }
 
@@ -429,7 +436,7 @@ public final class MessageQueue {
                     if (n.target == h && n.what == what
                         && (object == null || n.obj == object)) {
                         Message nn = n.next;
-                        n.recycle();
+                        n.recycleUnchecked();
                         p.next = nn;
                         continue;
                     }
@@ -452,7 +459,7 @@ public final class MessageQueue {
                    && (object == null || p.obj == object)) {
                 Message n = p.next;
                 mMessages = n;
-                p.recycle();
+                p.recycleUnchecked();
                 p = n;
             }
 
@@ -463,7 +470,7 @@ public final class MessageQueue {
                     if (n.target == h && n.callback == r
                         && (object == null || n.obj == object)) {
                         Message nn = n.next;
-                        n.recycle();
+                        n.recycleUnchecked();
                         p.next = nn;
                         continue;
                     }
@@ -486,7 +493,7 @@ public final class MessageQueue {
                     && (object == null || p.obj == object)) {
                 Message n = p.next;
                 mMessages = n;
-                p.recycle();
+                p.recycleUnchecked();
                 p = n;
             }
 
@@ -496,7 +503,7 @@ public final class MessageQueue {
                 if (n != null) {
                     if (n.target == h && (object == null || n.obj == object)) {
                         Message nn = n.next;
-                        n.recycle();
+                        n.recycleUnchecked();
                         p.next = nn;
                         continue;
                     }
@@ -510,7 +517,7 @@ public final class MessageQueue {
         Message p = mMessages;
         while (p != null) {
             Message n = p.next;
-            p.recycle();
+            p.recycleUnchecked();
             p = n;
         }
         mMessages = null;
@@ -538,7 +545,7 @@ public final class MessageQueue {
                 do {
                     p = n;
                     n = p.next;
-                    p.recycle();
+                    p.recycleUnchecked();
                 } while (n != null);
             }
         }

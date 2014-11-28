@@ -154,12 +154,12 @@ public class Camera {
             getMatrix(mMatrix);
             canvas.concat(mMatrix);
         } else {
-            nativeApplyToCanvas(canvas.mNativeCanvas);
+            nativeApplyToCanvas(canvas.getNativeCanvasWrapper());
         }
     }
 
     public native float dotWithNormal(float dx, float dy, float dz);
-    
+
     protected void finalize() throws Throwable {
         try {
             nativeDestructor();
@@ -170,8 +170,8 @@ public class Camera {
 
     private native void nativeConstructor();
     private native void nativeDestructor();
-    private native void nativeGetMatrix(int native_matrix);
-    private native void nativeApplyToCanvas(int native_canvas);
-    
-    int native_instance;
+    private native void nativeGetMatrix(long native_matrix);
+    private native void nativeApplyToCanvas(long native_canvas);
+
+    long native_instance;
 }

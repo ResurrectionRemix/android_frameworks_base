@@ -31,6 +31,10 @@ framework_res_source_path := APPS/framework-res_intermediates/src
 # So we first build the framework as a monolithic static library then split it
 # up into smaller pieces.
 # ============================================================
+
+# embedded builds use nothing in frameworks/base
+ifneq ($(ANDROID_BUILD_EMBEDDED),true)
+
 include $(CLEAR_VARS)
 
 # FRAMEWORKS_BASE_SUBDIRS comes from build/core/pathmap.mk
@@ -59,21 +63,24 @@ LOCAL_SRC_FILES += \
 	core/java/android/accounts/IAccountManagerResponse.aidl \
 	core/java/android/accounts/IAccountAuthenticator.aidl \
 	core/java/android/accounts/IAccountAuthenticatorResponse.aidl \
+	core/java/android/app/IActivityContainer.aidl \
+	core/java/android/app/IActivityContainerCallback.aidl \
 	core/java/android/app/IActivityController.aidl \
 	core/java/android/app/IActivityPendingResult.aidl \
 	core/java/android/app/IAlarmManager.aidl \
+	core/java/android/app/IAppTask.aidl \
 	core/java/android/app/IBackupAgent.aidl \
-	core/java/android/app/IBatteryService.aidl \
 	core/java/android/app/IInstrumentationWatcher.aidl \
 	core/java/android/app/INotificationManager.aidl \
-	core/java/android/app/IProfileManager.aidl \
 	core/java/android/app/IProcessObserver.aidl \
+	core/java/android/app/IProfileManager.aidl \
 	core/java/android/app/ISearchManager.aidl \
 	core/java/android/app/ISearchManagerCallback.aidl \
 	core/java/android/app/IServiceConnection.aidl \
 	core/java/android/app/IStopUserCallback.aidl \
-	core/java/android/app/IThumbnailReceiver.aidl \
-	core/java/android/app/IThumbnailRetriever.aidl \
+	core/java/android/app/job/IJobCallback.aidl \
+	core/java/android/app/job/IJobScheduler.aidl \
+	core/java/android/app/job/IJobService.aidl \
 	core/java/android/app/ITransientNotification.aidl \
 	core/java/android/app/IUiAutomationConnection.aidl \
 	core/java/android/app/IUiModeManager.aidl \
@@ -81,15 +88,20 @@ LOCAL_SRC_FILES += \
 	core/java/android/app/IWallpaperManager.aidl \
 	core/java/android/app/IWallpaperManagerCallback.aidl \
 	core/java/android/app/admin/IDevicePolicyManager.aidl \
+	core/java/android/app/trust/ITrustManager.aidl \
+	core/java/android/app/trust/ITrustListener.aidl \
 	core/java/android/app/backup/IBackupManager.aidl \
 	core/java/android/app/backup/IFullBackupRestoreObserver.aidl \
 	core/java/android/app/backup/IRestoreObserver.aidl \
 	core/java/android/app/backup/IRestoreSession.aidl \
+	core/java/android/app/usage/IUsageStatsManager.aidl \
 	core/java/android/wipower/IWipower.aidl \
 	core/java/android/wipower/IWipowerManagerCallback.aidl \
 	core/java/android/bluetooth/IBluetooth.aidl \
 	core/java/android/bluetooth/IQBluetooth.aidl \
 	core/java/android/bluetooth/IBluetoothA2dp.aidl \
+	core/java/android/bluetooth/IBluetoothA2dpSink.aidl \
+	core/java/android/bluetooth/IBluetoothAvrcpController.aidl \
 	core/java/android/bluetooth/IBluetoothCallback.aidl \
 	core/java/android/bluetooth/IQBluetoothAdapterCallback.aidl \
 	core/java/android/bluetooth/IBluetoothHeadset.aidl \
@@ -104,31 +116,37 @@ LOCAL_SRC_FILES += \
 	core/java/android/bluetooth/IBluetoothPbap.aidl \
 	core/java/android/bluetooth/IBluetoothMap.aidl \
 	core/java/android/bluetooth/IBluetoothStateChangeCallback.aidl \
-	core/java/android/bluetooth/IBluetoothHandsfreeClient.aidl \
+	core/java/android/bluetooth/IBluetoothHeadsetClient.aidl \
 	core/java/android/bluetooth/IBluetoothHidDevice.aidl \
 	core/java/android/bluetooth/IBluetoothHidDeviceCallback.aidl \
 	core/java/android/bluetooth/IBluetoothGatt.aidl \
 	core/java/android/bluetooth/IBluetoothGattCallback.aidl \
 	core/java/android/bluetooth/IBluetoothGattServerCallback.aidl \
-	core/java/android/bluetooth/IBluetoothSap.aidl \
 	core/java/android/bluetooth/IBluetoothDun.aidl \
+	core/java/android/bluetooth/IBluetoothSap.aidl \
 	core/java/android/content/IClipboard.aidl \
 	core/java/android/content/IContentService.aidl \
 	core/java/android/content/IIntentReceiver.aidl \
 	core/java/android/content/IIntentSender.aidl \
 	core/java/android/content/IOnPrimaryClipChangedListener.aidl \
-	core/java/android/content/IAnonymousSyncAdapter.aidl \
+	core/java/android/content/IRestrictionsManager.aidl \
 	core/java/android/content/ISyncAdapter.aidl \
 	core/java/android/content/ISyncContext.aidl \
+	core/java/android/content/ISyncServiceAdapter.aidl \
 	core/java/android/content/ISyncStatusObserver.aidl \
+	core/java/android/content/pm/ILauncherApps.aidl \
+	core/java/android/content/pm/IOnAppsChangedListener.aidl \
 	core/java/android/content/pm/IPackageDataObserver.aidl \
 	core/java/android/content/pm/IPackageDeleteObserver.aidl \
+	core/java/android/content/pm/IPackageDeleteObserver2.aidl \
 	core/java/android/content/pm/IPackageInstallObserver.aidl \
+	core/java/android/content/pm/IPackageInstallObserver2.aidl \
+	core/java/android/content/pm/IPackageInstaller.aidl \
+	core/java/android/content/pm/IPackageInstallerCallback.aidl \
+	core/java/android/content/pm/IPackageInstallerSession.aidl \
 	core/java/android/content/pm/IPackageManager.aidl \
 	core/java/android/content/pm/IPackageMoveObserver.aidl \
 	core/java/android/content/pm/IPackageStatsObserver.aidl \
-	core/java/android/content/res/IThemeChangeListener.aidl \
-	core/java/android/content/res/IThemeService.aidl \
 	core/java/android/database/IContentObserver.aidl \
 	core/java/android/hardware/ICameraService.aidl \
 	core/java/android/hardware/ICameraServiceListener.aidl \
@@ -142,18 +160,35 @@ LOCAL_SRC_FILES += \
 	core/java/android/hardware/ISerialManager.aidl \
 	core/java/android/hardware/display/IDisplayManager.aidl \
 	core/java/android/hardware/display/IDisplayManagerCallback.aidl \
+	core/java/android/hardware/display/IVirtualDisplayCallback.aidl \
+	core/java/android/hardware/hdmi/IHdmiControlCallback.aidl \
+	core/java/android/hardware/hdmi/IHdmiControlService.aidl \
+	core/java/android/hardware/hdmi/IHdmiDeviceEventListener.aidl \
+	core/java/android/hardware/hdmi/IHdmiHotplugEventListener.aidl \
+	core/java/android/hardware/hdmi/IHdmiInputChangeListener.aidl \
+	core/java/android/hardware/hdmi/IHdmiMhlVendorCommandListener.aidl \
+	core/java/android/hardware/hdmi/IHdmiRecordListener.aidl \
+	core/java/android/hardware/hdmi/IHdmiSystemAudioModeChangeListener.aidl \
+	core/java/android/hardware/hdmi/IHdmiVendorCommandListener.aidl \
 	core/java/android/hardware/input/IInputManager.aidl \
 	core/java/android/hardware/input/IInputDevicesChangedListener.aidl \
+	core/java/android/hardware/location/IActivityRecognitionHardware.aidl \
+	core/java/android/hardware/location/IActivityRecognitionHardwareSink.aidl \
+	core/java/android/hardware/location/IActivityRecognitionHardwareWatcher.aidl \
 	core/java/android/hardware/location/IFusedLocationHardware.aidl \
 	core/java/android/hardware/location/IFusedLocationHardwareSink.aidl \
 	core/java/android/hardware/location/IGeofenceHardware.aidl \
 	core/java/android/hardware/location/IGeofenceHardwareCallback.aidl \
 	core/java/android/hardware/location/IGeofenceHardwareMonitorCallback.aidl \
+	core/java/android/hardware/soundtrigger/IRecognitionStatusCallback.aidl \
 	core/java/android/hardware/usb/IUsbManager.aidl \
 	core/java/android/net/IConnectivityManager.aidl \
+	core/java/android/net/IEthernetManager.aidl \
 	core/java/android/net/INetworkManagementEventObserver.aidl \
 	core/java/android/net/INetworkPolicyListener.aidl \
 	core/java/android/net/INetworkPolicyManager.aidl \
+	core/java/android/net/INetworkScoreCache.aidl \
+	core/java/android/net/INetworkScoreService.aidl \
 	core/java/android/net/INetworkStatsService.aidl \
 	core/java/android/net/INetworkStatsSession.aidl \
 	core/java/android/net/nsd/INsdManager.aidl \
@@ -162,11 +197,13 @@ LOCAL_SRC_FILES += \
 	core/java/android/nfc/INfcAdapterExtras.aidl \
 	core/java/android/nfc/INfcTag.aidl \
 	core/java/android/nfc/INfcCardEmulation.aidl \
+	core/java/android/nfc/INfcUnlockHandler.aidl \
 	core/java/android/os/IBatteryPropertiesListener.aidl \
 	core/java/android/os/IBatteryPropertiesRegistrar.aidl \
 	core/java/android/os/ICancellationSignal.aidl \
 	core/java/android/os/IHardwareService.aidl \
 	core/java/android/os/IMessenger.aidl \
+	core/java/android/os/INetworkActivityListener.aidl \
 	core/java/android/os/INetworkManagementService.aidl \
 	core/java/android/os/IPermissionController.aidl \
 	core/java/android/os/IPowerManager.aidl \
@@ -176,6 +213,9 @@ LOCAL_SRC_FILES += \
 	core/java/android/os/IUserManager.aidl \
 	core/java/android/os/IVibratorService.aidl \
 	core/java/android/service/notification/INotificationListener.aidl \
+	core/java/android/service/notification/IStatusBarNotificationHolder.aidl \
+	core/java/android/service/notification/IConditionListener.aidl \
+	core/java/android/service/notification/IConditionProvider.aidl \
 	core/java/android/print/ILayoutResultCallback.aidl \
 	core/java/android/print/IPrinterDiscoveryObserver.aidl \
 	core/java/android/print/IPrintDocumentAdapter.aidl \
@@ -190,10 +230,18 @@ LOCAL_SRC_FILES += \
 	core/java/android/printservice/IPrintServiceClient.aidl \
 	core/java/android/service/dreams/IDreamManager.aidl \
 	core/java/android/service/dreams/IDreamService.aidl \
-	core/java/android/service/gesture/IGestureService.aidl \
+	core/java/android/service/persistentdata/IPersistentDataBlockService.aidl \
+	core/java/android/service/fingerprint/IFingerprintService.aidl \
+	core/java/android/service/fingerprint/IFingerprintServiceReceiver.aidl \
+	core/java/android/service/trust/ITrustAgentService.aidl \
+	core/java/android/service/trust/ITrustAgentServiceCallback.aidl \
+	core/java/android/service/voice/IVoiceInteractionService.aidl \
+	core/java/android/service/voice/IVoiceInteractionSession.aidl \
+	core/java/android/service/voice/IVoiceInteractionSessionService.aidl \
 	core/java/android/service/gesture/IEdgeGestureService.aidl \
 	core/java/android/service/gesture/IEdgeGestureActivationListener.aidl \
 	core/java/android/service/gesture/IEdgeGestureHostCallback.aidl \
+	core/java/android/service/gesture/IGestureService.aidl \
 	core/java/android/service/wallpaper/IWallpaperConnection.aidl \
 	core/java/android/service/wallpaper/IWallpaperEngine.aidl \
 	core/java/android/service/wallpaper/IWallpaperService.aidl \
@@ -203,7 +251,6 @@ LOCAL_SRC_FILES += \
 	core/java/android/view/accessibility/IAccessibilityManagerClient.aidl \
 	core/java/android/view/IApplicationToken.aidl \
 	core/java/android/view/IAssetAtlas.aidl \
-	core/java/android/view/IMagnificationCallbacks.aidl \
 	core/java/android/view/IInputFilter.aidl \
 	core/java/android/view/IInputFilterHost.aidl \
 	core/java/android/view/IOnKeyguardExitResult.aidl \
@@ -213,6 +260,8 @@ LOCAL_SRC_FILES += \
 	core/java/android/view/IWindowId.aidl \
 	core/java/android/view/IWindowManager.aidl \
 	core/java/android/view/IWindowSession.aidl \
+	core/java/android/view/IWindowSessionCallback.aidl \
+	core/java/android/webkit/IWebViewUpdateService.aidl \
 	core/java/android/speech/IRecognitionListener.aidl \
 	core/java/android/speech/IRecognitionService.aidl \
 	core/java/android/speech/tts/ITextToSpeechCallback.aidl \
@@ -221,7 +270,10 @@ LOCAL_SRC_FILES += \
 	core/java/com/android/internal/app/IAppOpsService.aidl \
 	core/java/com/android/internal/app/IBatteryStats.aidl \
 	core/java/com/android/internal/app/IProcessStats.aidl \
-	core/java/com/android/internal/app/IUsageStats.aidl \
+	core/java/com/android/internal/app/IVoiceInteractionManagerService.aidl \
+	core/java/com/android/internal/app/IVoiceInteractor.aidl \
+	core/java/com/android/internal/app/IVoiceInteractorCallback.aidl \
+	core/java/com/android/internal/app/IVoiceInteractorRequest.aidl \
 	core/java/com/android/internal/app/IMediaContainerService.aidl \
 	core/java/com/android/internal/appwidget/IAppWidgetService.aidl \
 	core/java/com/android/internal/appwidget/IAppWidgetHost.aidl \
@@ -233,6 +285,7 @@ LOCAL_SRC_FILES += \
 	core/java/com/android/internal/policy/IKeyguardExitCallback.aidl \
 	core/java/com/android/internal/policy/IKeyguardService.aidl \
 	core/java/com/android/internal/os/IDropBoxManagerService.aidl \
+	core/java/com/android/internal/os/IParcelFileDescriptorFactory.aidl \
 	core/java/com/android/internal/os/IResultReceiver.aidl \
 	core/java/com/android/internal/statusbar/IStatusBar.aidl \
 	core/java/com/android/internal/statusbar/IStatusBarService.aidl \
@@ -249,6 +302,7 @@ LOCAL_SRC_FILES += \
 	core/java/com/android/internal/view/IInputMethodSession.aidl \
 	core/java/com/android/internal/view/IInputSessionCallback.aidl \
 	core/java/com/android/internal/widget/ILockSettings.aidl \
+	core/java/com/android/internal/widget/ILockSettingsObserver.aidl \
 	core/java/com/android/internal/widget/IRemoteViewsFactory.aidl \
 	core/java/com/android/internal/widget/IRemoteViewsAdapterConnection.aidl \
 	keystore/java/android/security/IKeyChainAliasCallback.aidl \
@@ -258,6 +312,8 @@ LOCAL_SRC_FILES += \
 	location/java/android/location/IFusedProvider.aidl \
 	location/java/android/location/IGeocodeProvider.aidl \
 	location/java/android/location/IGeofenceProvider.aidl \
+	location/java/android/location/IGpsMeasurementsListener.aidl \
+	location/java/android/location/IGpsNavigationMessageListener.aidl \
         location/java/android/location/IGeoFencer.aidl \
         location/java/android/location/IGeoFenceListener.aidl \
 	location/java/android/location/IGpsStatusListener.aidl \
@@ -271,6 +327,8 @@ LOCAL_SRC_FILES += \
 	media/java/android/media/IAudioService.aidl \
 	media/java/android/media/IAudioFocusDispatcher.aidl \
 	media/java/android/media/IAudioRoutesObserver.aidl \
+	media/java/android/media/IMediaHTTPConnection.aidl \
+	media/java/android/media/IMediaHTTPService.aidl \
 	media/java/android/media/IMediaRouterClient.aidl \
 	media/java/android/media/IMediaRouterService.aidl \
 	media/java/android/media/IMediaScannerListener.aidl \
@@ -279,16 +337,64 @@ LOCAL_SRC_FILES += \
 	media/java/android/media/IRemoteControlDisplay.aidl \
 	media/java/android/media/IRemoteDisplayCallback.aidl \
 	media/java/android/media/IRemoteDisplayProvider.aidl \
+	media/java/android/media/IRemoteVolumeController.aidl \
 	media/java/android/media/IRemoteVolumeObserver.aidl \
 	media/java/android/media/IRingtonePlayer.aidl \
+	media/java/android/media/IVolumeController.aidl \
+	media/java/android/media/projection/IMediaProjection.aidl \
+	media/java/android/media/projection/IMediaProjectionCallback.aidl \
+	media/java/android/media/projection/IMediaProjectionManager.aidl \
+	media/java/android/media/projection/IMediaProjectionWatcherCallback.aidl \
+	media/java/android/media/session/IActiveSessionsListener.aidl \
+	media/java/android/media/session/ISessionController.aidl \
+	media/java/android/media/session/ISessionControllerCallback.aidl \
+	media/java/android/media/session/ISession.aidl \
+	media/java/android/media/session/ISessionCallback.aidl \
+	media/java/android/media/session/ISessionManager.aidl \
+	media/java/android/media/tv/ITvInputClient.aidl \
+	media/java/android/media/tv/ITvInputHardware.aidl \
+	media/java/android/media/tv/ITvInputHardwareCallback.aidl \
+	media/java/android/media/tv/ITvInputManager.aidl \
+	media/java/android/media/tv/ITvInputManagerCallback.aidl \
+	media/java/android/media/tv/ITvInputService.aidl \
+	media/java/android/media/tv/ITvInputServiceCallback.aidl \
+	media/java/android/media/tv/ITvInputSession.aidl \
+	media/java/android/media/tv/ITvInputSessionCallback.aidl \
+	media/java/android/service/media/IMediaBrowserService.aidl \
+	media/java/android/service/media/IMediaBrowserServiceCallbacks.aidl \
+	telecomm/java/com/android/internal/telecom/IVideoCallback.aidl \
+	telecomm/java/com/android/internal/telecom/IVideoProvider.aidl \
+	telecomm/java/com/android/internal/telecom/IConnectionService.aidl \
+	telecomm/java/com/android/internal/telecom/IConnectionServiceAdapter.aidl \
+	telecomm/java/com/android/internal/telecom/IInCallAdapter.aidl \
+	telecomm/java/com/android/internal/telecom/IInCallService.aidl \
+	telecomm/java/com/android/internal/telecom/ITelecomService.aidl \
+	telecomm/java/com/android/internal/telecom/RemoteServiceCallback.aidl \
+	telephony/java/com/android/ims/internal/IImsCallSession.aidl \
+	telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl \
+	telephony/java/com/android/ims/internal/IImsConfig.aidl \
+	telephony/java/com/android/ims/internal/IImsRegistrationListener.aidl \
+	telephony/java/com/android/ims/internal/IImsEcbm.aidl \
+	telephony/java/com/android/ims/internal/IImsEcbmListener.aidl \
+	telephony/java/com/android/ims/internal/IImsService.aidl \
+	telephony/java/com/android/ims/internal/IImsStreamMediaSession.aidl \
+	telephony/java/com/android/ims/internal/IImsUt.aidl \
+	telephony/java/com/android/ims/internal/IImsUtListener.aidl \
+	telephony/java/com/android/ims/internal/IImsVideoCallCallback.aidl \
+	telephony/java/com/android/ims/internal/IImsVideoCallProvider.aidl \
+	telephony/java/com/android/ims/ImsConfigListener.aidl \
 	telephony/java/com/android/internal/telephony/IPhoneStateListener.aidl \
 	telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl \
 	telephony/java/com/android/internal/telephony/ITelephony.aidl \
-	telephony/java/com/android/internal/telephony/ISms.aidl \
 	telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl \
+	telephony/java/com/android/internal/telephony/ISms.aidl \
 	telephony/java/com/android/internal/telephony/IWapPushManager.aidl \
+	telephony/java/com/android/internal/telephony/ISub.aidl \
+	telephony/java/com/android/internal/telephony/IMms.aidl \
 	wifi/java/android/net/wifi/IWifiManager.aidl \
 	wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl \
+	wifi/java/android/net/wifi/IWifiScanner.aidl \
+	wifi/java/android/net/wifi/IRttManager.aidl \
 	packages/services/PacProcessor/com/android/net/IProxyService.aidl \
 	packages/services/Proxy/com/android/net/IProxyCallback.aidl \
 	packages/services/Proxy/com/android/net/IProxyPortListener.aidl \
@@ -302,38 +408,25 @@ LOCAL_INTERMEDIATE_SOURCES := \
 			$(framework_res_source_path)/com/android/internal/R.java
 
 LOCAL_NO_STANDARD_LIBRARIES := true
-LOCAL_JAVA_LIBRARIES := bouncycastle conscrypt core core-junit ext okhttp
-
-LOCAL_MODULE := framework-base
-
-LOCAL_JAR_EXCLUDE_FILES := none
-
-include $(BUILD_STATIC_JAVA_LIBRARY)
-
-# Make sure that R.java and Manifest.java are built before we build
-# the source for this library.
-framework_res_R_stamp := \
-	$(call intermediates-dir-for,APPS,framework-res,,COMMON)/src/R.stamp
-$(full_classes_compiled_jar): $(framework_res_R_stamp)
-
-# Build part 1 of the framework library.
-# ============================================================
-include $(CLEAR_VARS)
+LOCAL_JAVA_LIBRARIES := core-libart conscrypt okhttp core-junit bouncycastle ext
 
 LOCAL_MODULE := framework
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_NO_STANDARD_LIBRARIES := true
-LOCAL_STATIC_JAVA_LIBRARIES := framework-base
-LOCAL_DX_FLAGS := --core-library
 
-# Packages to include, use \* wildcard to include descendants.
-LOCAL_JAR_PACKAGES := android\*
+LOCAL_DX_FLAGS := --core-library --multi-dex
+
+LOCAL_RMTYPEDEFS := true
 
 # List of classes and interfaces which should be loaded by the Zygote.
 LOCAL_JAVA_RESOURCE_FILES += $(LOCAL_PATH)/preloaded-classes
 
 include $(BUILD_JAVA_LIBRARY)
 framework_module := $(LOCAL_INSTALLED_MODULE)
+
+# Make sure that R.java and Manifest.java are built before we build
+# the source for this library.
+framework_res_R_stamp := \
+	$(call intermediates-dir-for,APPS,framework-res,,COMMON)/src/R.stamp
+$(full_classes_compiled_jar): $(framework_res_R_stamp)
 
 # Build part 2 of the framework library.
 # ============================================================
@@ -345,18 +438,20 @@ LOCAL_NO_STANDARD_LIBRARIES := true
 LOCAL_STATIC_JAVA_LIBRARIES := framework-base
 LOCAL_DX_FLAGS := --core-library
 
-# Packages to include, use \* wildcard to include descendants.
-LOCAL_JAR_PACKAGES := com\* javax\*
+
+# List of packages to include along with their descendants.
+LOCAL_JAR_PACKAGES := \
+    android.hardware \
+    com \
+    javax \
+    org
 
 include $(BUILD_JAVA_LIBRARY)
 framework2_module := $(LOCAL_INSTALLED_MODULE)
 
-# Make sure that all framework modules are installed when framework is.
-# ============================================================
 $(framework_module): | $(dir $(framework_module))framework-res.apk
-$(framework_module): | $(dir $(framework_module))framework2.jar
 
-framework_built := $(call java-lib-deps,framework framework2)
+framework_built := $(call java-lib-deps,framework)
 
 # Copy AIDL files to be preprocessed and included in the SDK,
 # specified relative to the root of the build tree.
@@ -364,67 +459,164 @@ framework_built := $(call java-lib-deps,framework framework2)
 include $(CLEAR_VARS)
 
 aidl_files := \
-	frameworks/base/core/java/android/accounts/IAccountManager.aidl \
-	frameworks/base/core/java/android/accounts/IAccountManagerResponse.aidl \
-	frameworks/base/core/java/android/accounts/IAccountAuthenticator.aidl \
-	frameworks/base/core/java/android/accounts/IAccountAuthenticatorResponse.aidl \
-	frameworks/base/core/java/android/app/ComposedIconInfo.aidl \
+	frameworks/base/telephony/java/android/telephony/ServiceState.aidl \
+	frameworks/base/telephony/java/android/telephony/CellInfo.aidl \
+	frameworks/base/telephony/java/android/telephony/SignalStrength.aidl \
+	frameworks/base/telephony/java/android/telephony/IccOpenLogicalChannelResponse.aidl \
+	frameworks/base/telephony/java/android/telephony/NeighboringCellInfo.aidl \
+	frameworks/base/location/java/android/location/Location.aidl \
+	frameworks/base/location/java/android/location/Address.aidl \
+	frameworks/base/location/java/android/location/Criteria.aidl \
+	frameworks/base/media/java/android/media/MediaMetadata.aidl \
+	frameworks/base/media/java/android/media/MediaDescription.aidl \
+	frameworks/base/media/java/android/media/Rating.aidl \
+	frameworks/base/media/java/android/media/AudioAttributes.aidl \
+	frameworks/base/media/java/android/media/session/PlaybackState.aidl \
+	frameworks/base/media/java/android/media/session/MediaSession.aidl \
+	frameworks/base/media/java/android/media/tv/TvInputInfo.aidl \
+	frameworks/base/media/java/android/media/tv/TvTrackInfo.aidl \
+	frameworks/base/media/java/android/media/browse/MediaBrowser.aidl \
+	frameworks/base/wifi/java/android/net/wifi/ScanSettings.aidl \
+	frameworks/base/wifi/java/android/net/wifi/p2p/WifiP2pInfo.aidl \
+	frameworks/base/wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.aidl \
+	frameworks/base/wifi/java/android/net/wifi/p2p/WifiP2pConfig.aidl \
+	frameworks/base/wifi/java/android/net/wifi/p2p/WifiP2pDevice.aidl \
+	frameworks/base/wifi/java/android/net/wifi/p2p/WifiP2pGroup.aidl \
+	frameworks/base/wifi/java/android/net/wifi/p2p/nsd/WifiP2pServiceRequest.aidl \
+	frameworks/base/wifi/java/android/net/wifi/p2p/nsd/WifiP2pServiceInfo.aidl \
+	frameworks/base/wifi/java/android/net/wifi/WpsInfo.aidl \
+	frameworks/base/wifi/java/android/net/wifi/ScanResult.aidl \
+	frameworks/base/wifi/java/android/net/wifi/WifiEnterpriseConfig.aidl \
+	frameworks/base/wifi/java/android/net/wifi/WifiConfiguration.aidl \
+	frameworks/base/wifi/java/android/net/wifi/WifiInfo.aidl \
+	frameworks/base/graphics/java/android/graphics/Region.aidl \
+	frameworks/base/graphics/java/android/graphics/Bitmap.aidl \
+	frameworks/base/graphics/java/android/graphics/Point.aidl \
+	frameworks/base/graphics/java/android/graphics/PointF.aidl \
+	frameworks/base/graphics/java/android/graphics/RectF.aidl \
+	frameworks/base/graphics/java/android/graphics/Rect.aidl \
+	frameworks/base/core/java/android/accounts/AuthenticatorDescription.aidl \
+	frameworks/base/core/java/android/accounts/Account.aidl \
+	frameworks/base/core/java/android/print/PrintDocumentInfo.aidl \
+	frameworks/base/core/java/android/print/PageRange.aidl \
+	frameworks/base/core/java/android/print/PrintAttributes.aidl \
+	frameworks/base/core/java/android/print/PrinterCapabilitiesInfo.aidl \
+	frameworks/base/core/java/android/print/PrinterId.aidl \
+	frameworks/base/core/java/android/print/PrintJobInfo.aidl \
+	frameworks/base/core/java/android/print/PrinterInfo.aidl \
+	frameworks/base/core/java/android/print/PrintJobId.aidl \
+	frameworks/base/core/java/android/hardware/usb/UsbDevice.aidl \
+	frameworks/base/core/java/android/hardware/usb/UsbInterface.aidl \
+	frameworks/base/core/java/android/hardware/usb/UsbEndpoint.aidl \
+	frameworks/base/core/java/android/hardware/usb/UsbAccessory.aidl \
+	frameworks/base/core/java/android/os/Messenger.aidl \
+	frameworks/base/core/java/android/os/PatternMatcher.aidl \
+	frameworks/base/core/java/android/os/Message.aidl \
+	frameworks/base/core/java/android/os/UserHandle.aidl \
+	frameworks/base/core/java/android/os/ParcelUuid.aidl \
+	frameworks/base/core/java/android/os/ParcelFileDescriptor.aidl \
+	frameworks/base/core/java/android/os/ResultReceiver.aidl \
+	frameworks/base/core/java/android/os/PersistableBundle.aidl \
+	frameworks/base/core/java/android/os/WorkSource.aidl \
+	frameworks/base/core/java/android/os/DropBoxManager.aidl \
+	frameworks/base/core/java/android/os/Bundle.aidl \
+	frameworks/base/core/java/android/accessibilityservice/AccessibilityServiceInfo.aidl \
+	frameworks/base/core/java/android/net/Network.aidl \
+	frameworks/base/core/java/android/net/RouteInfo.aidl \
+	frameworks/base/core/java/android/net/NetworkInfo.aidl \
+	frameworks/base/core/java/android/net/IpPrefix.aidl \
+	frameworks/base/core/java/android/net/NetworkCapabilities.aidl \
+	frameworks/base/core/java/android/net/DhcpInfo.aidl \
+	frameworks/base/core/java/android/net/ProxyInfo.aidl \
+	frameworks/base/core/java/android/net/LinkProperties.aidl \
+	frameworks/base/core/java/android/net/Uri.aidl \
+	frameworks/base/core/java/android/net/NetworkRequest.aidl \
+	frameworks/base/core/java/android/net/LinkAddress.aidl \
+	frameworks/base/core/java/android/view/Surface.aidl \
+	frameworks/base/core/java/android/view/WindowContentFrameStats.aidl \
+	frameworks/base/core/java/android/view/InputDevice.aidl \
+	frameworks/base/core/java/android/view/InputEvent.aidl \
+	frameworks/base/core/java/android/view/inputmethod/InputMethodSubtype.aidl \
+	frameworks/base/core/java/android/view/inputmethod/CursorAnchorInfo.aidl \
+	frameworks/base/core/java/android/view/inputmethod/CompletionInfo.aidl \
+	frameworks/base/core/java/android/view/inputmethod/ExtractedText.aidl \
+	frameworks/base/core/java/android/view/inputmethod/EditorInfo.aidl \
+	frameworks/base/core/java/android/view/inputmethod/InputMethodInfo.aidl \
+	frameworks/base/core/java/android/view/inputmethod/CorrectionInfo.aidl \
+	frameworks/base/core/java/android/view/inputmethod/InputBinding.aidl \
+	frameworks/base/core/java/android/view/inputmethod/ExtractedTextRequest.aidl \
+	frameworks/base/core/java/android/view/DragEvent.aidl \
+	frameworks/base/core/java/android/view/KeyEvent.aidl \
+	frameworks/base/core/java/android/view/WindowManager.aidl \
+	frameworks/base/core/java/android/view/WindowAnimationFrameStats.aidl \
+	frameworks/base/core/java/android/view/MotionEvent.aidl \
+	frameworks/base/core/java/android/view/accessibility/AccessibilityNodeInfo.aidl \
+	frameworks/base/core/java/android/view/accessibility/AccessibilityRecord.aidl \
+	frameworks/base/core/java/android/view/accessibility/AccessibilityWindowInfo.aidl \
+	frameworks/base/core/java/android/view/accessibility/AccessibilityEvent.aidl \
+	frameworks/base/core/java/android/view/textservice/SpellCheckerSubtype.aidl \
+	frameworks/base/core/java/android/view/textservice/TextInfo.aidl \
+	frameworks/base/core/java/android/view/textservice/SpellCheckerInfo.aidl \
+	frameworks/base/core/java/android/view/textservice/SentenceSuggestionsInfo.aidl \
+	frameworks/base/core/java/android/view/textservice/SuggestionsInfo.aidl \
+	frameworks/base/core/java/android/service/notification/StatusBarNotification.aidl \
+	frameworks/base/core/java/android/speech/tts/Voice.aidl \
+	frameworks/base/core/java/android/app/usage/UsageEvents.aidl \
 	frameworks/base/core/java/android/app/Notification.aidl \
 	frameworks/base/core/java/android/app/NotificationGroup.aidl \
 	frameworks/base/core/java/android/app/Profile.aidl \
+	frameworks/base/core/java/android/app/WallpaperInfo.aidl \
+	frameworks/base/core/java/android/app/AppOpsManager.aidl \
+	frameworks/base/core/java/android/app/ActivityManager.aidl \
 	frameworks/base/core/java/android/app/PendingIntent.aidl \
+	frameworks/base/core/java/android/app/Profile.aidl \
+	frameworks/base/core/java/android/app/AlarmManager.aidl \
+	frameworks/base/core/java/android/app/SearchableInfo.aidl \
+	frameworks/base/core/java/android/app/job/JobParameters.aidl \
+	frameworks/base/core/java/android/app/job/JobInfo.aidl \
 	frameworks/base/core/java/android/appwidget/AppWidgetProviderInfo.aidl \
-	frameworks/base/core/java/android/bluetooth/BluetoothDevice.aidl \
-	frameworks/base/core/java/android/bluetooth/BluetoothHealthAppConfiguration.aidl \
-	frameworks/base/core/java/android/content/ComponentName.aidl \
-	frameworks/base/core/java/android/content/ContentValues.aidl \
+	frameworks/base/core/java/android/content/ClipDescription.aidl \
+	frameworks/base/core/java/android/content/IntentFilter.aidl \
 	frameworks/base/core/java/android/content/Intent.aidl \
-	frameworks/base/core/java/android/content/IntentSender.aidl \
-	frameworks/base/core/java/android/content/PeriodicSync.aidl \
-	frameworks/base/core/java/android/content/SyncRequest.aidl \
-	frameworks/base/core/java/android/content/SyncStats.aidl \
 	frameworks/base/core/java/android/content/res/Configuration.aidl \
-	frameworks/base/core/java/android/database/CursorWindow.aidl \
-	frameworks/base/core/java/android/hardware/location/GeofenceHardwareRequestParcelable.aidl \
-	frameworks/base/core/java/android/net/Uri.aidl \
-	frameworks/base/core/java/android/nfc/NdefMessage.aidl \
-	frameworks/base/core/java/android/nfc/NdefRecord.aidl \
-	frameworks/base/core/java/android/nfc/Tag.aidl \
-	frameworks/base/core/java/android/os/Bundle.aidl \
-	frameworks/base/core/java/android/os/DropBoxManager.aidl \
-	frameworks/base/core/java/android/os/ParcelFileDescriptor.aidl \
-	frameworks/base/core/java/android/os/ParcelUuid.aidl \
-	frameworks/base/core/java/android/view/KeyEvent.aidl \
-	frameworks/base/core/java/android/view/MotionEvent.aidl \
-	frameworks/base/core/java/android/view/Surface.aidl \
-	frameworks/base/core/java/android/view/WindowManager.aidl \
+	frameworks/base/core/java/android/content/res/ObbInfo.aidl \
+	frameworks/base/core/java/android/content/RestrictionEntry.aidl \
+	frameworks/base/core/java/android/content/ClipData.aidl \
+	frameworks/base/core/java/android/content/SyncAdapterType.aidl \
+	frameworks/base/core/java/android/content/SyncRequest.aidl \
+	frameworks/base/core/java/android/content/PeriodicSync.aidl \
+	frameworks/base/core/java/android/content/SyncResult.aidl \
+	frameworks/base/core/java/android/content/pm/FeatureInfo.aidl \
+	frameworks/base/core/java/android/content/pm/InstrumentationInfo.aidl \
+	frameworks/base/core/java/android/content/pm/PackageInstaller.aidl \
+	frameworks/base/core/java/android/content/pm/ServiceInfo.aidl \
+	frameworks/base/core/java/android/content/pm/Signature.aidl \
+	frameworks/base/core/java/android/content/pm/ApplicationInfo.aidl \
+	frameworks/base/core/java/android/content/pm/PermissionInfo.aidl \
+	frameworks/base/core/java/android/content/pm/ActivityInfo.aidl \
+	frameworks/base/core/java/android/content/pm/PackageInfo.aidl \
+	frameworks/base/core/java/android/content/pm/ResolveInfo.aidl \
+	frameworks/base/core/java/android/content/pm/ProviderInfo.aidl \
+	frameworks/base/core/java/android/content/pm/PackageStats.aidl \
+	frameworks/base/core/java/android/content/pm/PermissionGroupInfo.aidl \
+	frameworks/base/core/java/android/content/ComponentName.aidl \
+	frameworks/base/core/java/android/content/SyncStats.aidl \
+	frameworks/base/core/java/android/content/ContentValues.aidl \
+	frameworks/base/core/java/android/content/SyncInfo.aidl \
+	frameworks/base/core/java/android/content/IntentSender.aidl \
 	frameworks/base/core/java/android/widget/RemoteViews.aidl \
-	frameworks/base/core/java/com/android/internal/textservice/ISpellCheckerService.aidl \
-	frameworks/base/core/java/com/android/internal/textservice/ISpellCheckerSession.aidl \
-	frameworks/base/core/java/com/android/internal/textservice/ISpellCheckerSessionListener.aidl \
-	frameworks/base/core/java/com/android/internal/textservice/ITextServicesManager.aidl \
-	frameworks/base/core/java/com/android/internal/textservice/ITextServicesSessionListener.aidl \
-	frameworks/base/core/java/com/android/internal/view/IInputContext.aidl \
-	frameworks/base/core/java/com/android/internal/view/IInputMethod.aidl \
-	frameworks/base/core/java/com/android/internal/view/IInputMethodClient.aidl \
-	frameworks/base/core/java/com/android/internal/view/IInputMethodManager.aidl \
-	frameworks/base/core/java/com/android/internal/view/IInputMethodSession.aidl \
-        frameworks/base/core/java/android/bluetooth/BluetoothLEServiceUuid.aidl  \
-	frameworks/base/graphics/java/android/graphics/Bitmap.aidl \
-	frameworks/base/graphics/java/android/graphics/Rect.aidl \
-	frameworks/base/graphics/java/android/graphics/Region.aidl \
-	frameworks/base/location/java/android/location/Criteria.aidl \
-	frameworks/base/location/java/android/location/Geofence.aidl \
-	frameworks/base/location/java/android/location/Location.aidl \
-	frameworks/base/location/java/android/location/LocationRequest.aidl \
-	frameworks/base/location/java/android/location/FusedBatchOptions.aidl \
-	frameworks/base/location/java/com/android/internal/location/ProviderProperties.aidl \
-	frameworks/base/location/java/com/android/internal/location/ProviderRequest.aidl \
-	frameworks/base/telephony/java/android/telephony/ServiceState.aidl \
-	frameworks/base/telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl \
-	frameworks/base/telephony/java/com/android/internal/telephony/ITelephony.aidl \
-	frameworks/base/wifi/java/android/net/wifi/BatchedScanSettings.aidl \
-	frameworks/base/wifi/java/android/net/wifi/BatchedScanResult.aidl \
+	frameworks/base/core/java/android/text/style/SuggestionSpan.aidl \
+	frameworks/base/core/java/android/nfc/Tag.aidl \
+	frameworks/base/core/java/android/nfc/NdefRecord.aidl \
+	frameworks/base/core/java/android/nfc/NdefMessage.aidl \
+	frameworks/base/core/java/android/bluetooth/BluetoothHealthAppConfiguration.aidl \
+	frameworks/base/core/java/android/bluetooth/le/AdvertiseSettings.aidl \
+	frameworks/base/core/java/android/bluetooth/le/ScanSettings.aidl \
+	frameworks/base/core/java/android/bluetooth/le/AdvertiseData.aidl \
+	frameworks/base/core/java/android/bluetooth/le/ScanFilter.aidl \
+	frameworks/base/core/java/android/bluetooth/le/ScanResult.aidl \
+	frameworks/base/core/java/android/bluetooth/BluetoothDevice.aidl \
+	frameworks/base/core/java/android/database/CursorWindow.aidl
 
 gen := $(TARGET_OUT_COMMON_INTERMEDIATES)/framework.aidl
 $(gen): PRIVATE_SRC_FILES := $(aidl_files)
@@ -486,8 +678,8 @@ html_dirs := \
 # Common sources for doc check and api check
 common_src_files := \
 	$(call find-other-html-files, $(html_dirs)) \
-	$(addprefix ../../libcore/, $(call libcore_to_document, $(LOCAL_PATH)/../../libcore)) \
-	$(addprefix ../../external/junit/, $(call junit_to_document, $(LOCAL_PATH)/../../external/junit))
+	$(addprefix ../../libcore/, $(libcore_to_document)) \
+	$(addprefix ../../external/junit/, $(junit_to_document))
 
 # These are relative to frameworks/base
 framework_docs_LOCAL_SRC_FILES := \
@@ -512,14 +704,12 @@ framework_docs_LOCAL_INTERMEDIATE_SOURCES := \
 	$(framework_res_source_path)/com/android/internal/R.java
 
 framework_docs_LOCAL_API_CHECK_JAVA_LIBRARIES := \
-	bouncycastle \
+	core-libart \
 	conscrypt \
-	core \
+	bouncycastle \
 	okhttp \
 	ext \
 	framework \
-	framework2 \
-	mms-common \
 	telephony-common \
 	voip-common
 
@@ -531,8 +721,12 @@ framework_docs_LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 framework_docs_LOCAL_DROIDDOC_HTML_DIR := docs/html
 # The since flag (-since N.xml API_LEVEL) is used to add API Level information
 # to the reference documentation. Must be in order of oldest to newest.
+#
+# Conscrypt (com.android.org.conscrypt) is an implementation detail and should
+# not be referenced in the documentation.
 framework_docs_LOCAL_DROIDDOC_OPTIONS := \
     -knowntags ./frameworks/base/docs/knowntags.txt \
+    -hidePackage com.android.org.conscrypt \
     -since $(SRC_API_DIR)/1.xml 1 \
     -since $(SRC_API_DIR)/2.xml 2 \
     -since $(SRC_API_DIR)/3.xml 3 \
@@ -552,11 +746,13 @@ framework_docs_LOCAL_DROIDDOC_OPTIONS := \
     -since $(SRC_API_DIR)/17.txt 17 \
     -since $(SRC_API_DIR)/18.txt 18 \
     -since $(SRC_API_DIR)/19.txt 19 \
-		-werror -hide 113 \
+    -since $(SRC_API_DIR)/20.txt 20 \
+    -since $(SRC_API_DIR)/21.txt 21 \
+		-werror -hide 111 -hide 113 \
 		-overview $(LOCAL_PATH)/core/java/overview.html
 
 framework_docs_LOCAL_API_CHECK_ADDITIONAL_JAVA_DIR:= \
-	$(call intermediates-dir-for,JAVA_LIBRARIES,framework-base,,COMMON)
+	$(call intermediates-dir-for,JAVA_LIBRARIES,framework,,COMMON)
 
 framework_docs_LOCAL_ADDITIONAL_JAVA_DIR:= \
 	$(framework_docs_LOCAL_API_CHECK_ADDITIONAL_JAVA_DIR) \
@@ -566,8 +762,7 @@ framework_docs_LOCAL_ADDITIONAL_JAVA_DIR:= \
 framework_docs_LOCAL_ADDITIONAL_DEPENDENCIES := \
     frameworks/base/docs/knowntags.txt
 
-sample_dir := development/samples/browseable
-new_sample_dir := developers/samples/android
+samples_dir := development/samples/browseable
 
 # Whitelist of valid groups, used for default TOC grouping. Each sample must
 # belong to one (and only one) group. Assign samples to groups by setting
@@ -577,165 +772,12 @@ sample_groups := -samplegroup Background \
                  -samplegroup Content \
                  -samplegroup Input \
                  -samplegroup Media \
+                 -samplegroup RenderScript \
                  -samplegroup Security \
+                 -samplegroup Sensors \
                  -samplegroup Testing \
                  -samplegroup UI \
                  -samplegroup Views
-
-# the list here should match the list of samples included in the sdk samples package
-# (see development/build/sdk.atree)
-# remove htmlified samples for now -- samples are still available through the SDK
-web_docs_sample_code_flags := \
-		-hdf android.hasSamples 1 \
-		-samplecode $(sample_dir)/BasicAccessibility \
- 		            samples/BasicAccessibility "" \
-		-samplecode $(sample_dir)/HorizontalPaging \
- 		            samples/HorizontalPaging "" \
-		-samplecode $(sample_dir)/ShareActionProvider \
- 		            samples/ShareActionProvider "" \
-		-samplecode $(sample_dir)/Styled \
- 		            samples/Styled "" \
-		-samplecode $(sample_dir)/BasicAndroidKeyStore \
- 		            samples/BasicAndroidKeyStore "" \
-		-samplecode $(sample_dir)/Basic \
- 		            samples/Basic "" \
-		-samplecode $(sample_dir)/ImmersiveMode \
- 		            samples/ImmersiveMode "" \
-		-samplecode $(sample_dir)/repeatingAlarm \
- 		            samples/repeatingAlarm "" \
-		-samplecode $(sample_dir)/TextLinkify \
- 		            samples/TextLinkify "" \
-		-samplecode $(sample_dir)/BasicMediaRouter \
- 		            samples/BasicMediaRouter "" \
-		-samplecode $(sample_dir)/BasicMultitouch \
- 		            samples/BasicMultitouch "" \
-		-samplecode $(sample_dir)/TextSwitcher \
- 		            samples/TextSwitcher "" \
-		-samplecode $(sample_dir)/ActivityInstrumentation \
- 		            samples/ActivityInstrumentation "" \
-		-samplecode $(sample_dir)/BorderlessButtons \
- 		            samples/BorderlessButtons "" \
-		-samplecode $(sample_dir)/BasicNotifications \
- 		            samples/BasicNotifications "" \
-		-samplecode $(sample_dir)/AdvancedImmersiveMode \
- 		            samples/AdvancedImmersiveMode "" \
-		-samplecode $(sample_dir)/BluetoothLeGatt \
- 		            samples/BluetoothLeGatt "" \
-		-samplecode $(sample_dir)/NetworkConnect \
- 		            samples/NetworkConnect "" \
-		-samplecode $(sample_dir)/BasicNetworking \
- 		            samples/BasicNetworking "" \
-		-samplecode $(sample_dir)/BasicMediaDecoder \
- 		            samples/BasicMediaDecoder "" \
-		-samplecode $(sample_dir)/BasicImmersiveMode \
- 		            samples/BasicImmersiveMode "" \
-		-samplecode $(sample_dir)/CustomChoiceList \
- 		            samples/CustomChoiceList "" \
-		-samplecode $(sample_dir)/BasicContactables \
- 		            samples/BasicContactables "" \
-		-samplecode $(sample_dir)/BasicGestureDetect \
- 		            samples/BasicGestureDetect "" \
-		-samplecode $(sample_dir)/DoneBar \
- 		            samples/DoneBar "" \
-		-samplecode $(sample_dir)/ListPopupMenu \
- 		            samples/ListPopupMenu "" \
-		-samplecode $(sample_dir)/AppRestrictions \
- 		            samples/AppRestrictions "" \
-		-samplecode $(sample_dir)/CustomNotifications \
- 		            samples/CustomNotifications "" \
-		-samplecode $(sample_dir)/BasicSyncAdapter \
- 		            samples/BasicSyncAdapter "" \
-		-samplecode $(sample_dir)/StorageClient \
- 		            samples/StorageClient "" 
-#		-samplecode $(sample_dir)/StorageProvider \
-# 		            samples/StorageProvider "" 
-#       -samplecode $(sample_dir)/AndroidBeamDemo \
-# 		            samples/AndroidBeamDemo "Android Beam Demo" \
-# 		-samplecode $(sample_dir)/ApiDemos \
-# 		            samples/ApiDemos "API Demos" \
-# 		-samplecode $(sample_dir)/Support4Demos \
-# 		            samples/Support4Demos "API 4+ Support Demos" \
-# 		-samplecode $(sample_dir)/Support13Demos \
-# 		            samples/Support13Demos "API 13+ Support Demos" \
-# 		-samplecode $(sample_dir)/BackupRestore \
-# 		            samples/BackupRestore "Backup and Restore" \
-#		-samplecode $(sample_dir)/BluetoothChat \
-# 		            samples/BluetoothChat "Bluetooth Chat" \
-# 		-samplecode $(sample_dir)/BusinessCard \
-# 		            samples/BusinessCard "Business Card" \
-# 		-samplecode $(sample_dir)/ContactManager \
-# 		            samples/ContactManager "Contact Manager" \
-# 		-samplecode $(sample_dir)/CubeLiveWallpaper \
-# 		            samples/CubeLiveWallpaper "Cube Live Wallpaper" \
-# 		-samplecode $(sample_dir)/Home \
-# 		            samples/Home "Home" \
-# 		-samplecode $(sample_dir)/HoneycombGallery \
-# 		            samples/HoneycombGallery "Honeycomb Gallery" \
-# 		-samplecode $(sample_dir)/JetBoy \
-# 		            samples/JetBoy "JetBoy" \
-# 		-samplecode $(sample_dir)/KeyChainDemo \
-# 		            samples/KeyChainDemo "KeyChain Demo" \
-# 		-samplecode $(sample_dir)/LunarLander \
-# 		            samples/LunarLander "Lunar Lander" \
-# 		-samplecode $(sample_dir)/training/ads-and-ux \
-# 		            samples/training/ads-and-ux "Mobile Advertisement Integration" \
-# 		-samplecode $(sample_dir)/MultiResolution \
-# 		            samples/MultiResolution "Multiple Resolutions" \
-# 		-samplecode $(sample_dir)/training/multiscreen/newsreader \
-# 		            samples/newsreader "News Reader" \
-# 		-samplecode $(sample_dir)/NotePad \
-# 		            samples/NotePad "Note Pad" \
-# 		-samplecode $(sample_dir)/SpellChecker/SampleSpellCheckerService \
-# 		            samples/SpellChecker/SampleSpellCheckerService "Spell Checker Service" \
-# 		-samplecode $(sample_dir)/SpellChecker/HelloSpellChecker \
-# 		            samples/SpellChecker/HelloSpellChecker "Spell Checker Client" \
-# 		-samplecode $(sample_dir)/SampleSyncAdapter \
-# 		            samples/SampleSyncAdapter "Sample Sync Adapter" \
-# 		-samplecode $(sample_dir)/RandomMusicPlayer \
-# 		            samples/RandomMusicPlayer "Random Music Player" \
-# 		-samplecode $(sample_dir)/RenderScript \
-# 		            samples/RenderScript "RenderScript" \
-# 		-samplecode $(sample_dir)/SearchableDictionary \
-# 		            samples/SearchableDictionary "Searchable Dictionary v2" \
-# 		-samplecode $(sample_dir)/SipDemo \
-# 		            samples/SipDemo "SIP Demo" \
-# 		-samplecode $(sample_dir)/Snake \
-# 		            samples/Snake "Snake" \
-# 		-samplecode $(sample_dir)/SoftKeyboard \
-# 		            samples/SoftKeyboard "Soft Keyboard" \
-# 		-samplecode $(sample_dir)/Spinner  \
-# 		            samples/Spinner "Spinner" \
-# 		-samplecode $(sample_dir)/SpinnerTest \
-# 		            samples/SpinnerTest "SpinnerTest" \
-# 		-samplecode $(sample_dir)/StackWidget \
-# 		            samples/StackWidget "StackView Widget" \
-# 		-samplecode $(sample_dir)/TicTacToeLib  \
-# 		            samples/TicTacToeLib "TicTacToeLib" \
-# 		-samplecode $(sample_dir)/TicTacToeMain \
-# 		            samples/TicTacToeMain "TicTacToeMain" \
-# 		-samplecode $(sample_dir)/ToyVpn \
-# 		            samples/ToyVpn "Toy VPN Client" \
-# 		-samplecode $(sample_dir)/USB \
-# 		            samples/USB "USB" \
-# 		-samplecode $(sample_dir)/WeatherListWidget \
-# 		            samples/WeatherListWidget "Weather List Widget" \
-# 		-samplecode $(sample_dir)/WiFiDirectDemo \
-#                   samples/WiFiDirectDemo "Wi-Fi Direct Demo" \
-# 		-samplecode $(sample_dir)/Wiktionary \
-# 		            samples/Wiktionary "Wiktionary" \
-# 		-samplecode $(sample_dir)/WiktionarySimple \
-# 		            samples/WiktionarySimple "Wiktionary (Simplified)" \
-# 		-samplecode $(sample_dir)/VoiceRecognitionService \
-# 		            samples/VoiceRecognitionService "Voice Recognition Service" \
-# 		-samplecode $(sample_dir)/VoicemailProviderDemo \
-# 		            samples/VoicemailProviderDemo "Voicemail Provider Demo" \
-# 		-samplecode $(sample_dir)/XmlAdapters \
-# 		            samples/XmlAdapters "XML Adapters" \
-# 		-samplecode $(sample_dir)/TtsEngine \
-# 		            samples/TtsEngine "Text To Speech Engine" \
-# 		-samplecode $(sample_dir)/training/device-management-policy \
-# 		            samples/training/device-management-policy "Device Management Policy"
-
 
 ## SDK version identifiers used in the published docs
   # major[.minor] version for current SDK. (full releases only)
@@ -746,7 +788,7 @@ framework_docs_SDK_REL_ID:=1
 framework_docs_LOCAL_DROIDDOC_OPTIONS += \
 		-hdf sdk.version $(framework_docs_SDK_VERSION) \
 		-hdf sdk.rel.id $(framework_docs_SDK_REL_ID) \
-		-hdf sdk.preview 0 \
+		-hdf sdk.preview 0
 
 # ====  the api stubs and current.xml ===========================
 include $(CLEAR_VARS)
@@ -766,6 +808,7 @@ LOCAL_DROIDDOC_OPTIONS:=\
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
 		-stubs $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES/android_stubs_current_intermediates/src \
 		-api $(INTERNAL_PLATFORM_API_FILE) \
+		-removedApi $(INTERNAL_PLATFORM_REMOVED_API_FILE) \
 		-nodocs
 
 LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
@@ -778,6 +821,34 @@ include $(BUILD_DROIDDOC)
 $(full_target): $(framework_built) $(gen)
 $(INTERNAL_PLATFORM_API_FILE): $(full_target)
 $(call dist-for-goals,sdk,$(INTERNAL_PLATFORM_API_FILE))
+
+# ====  the system api stubs ===================================
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:=$(framework_docs_LOCAL_API_CHECK_SRC_FILES)
+LOCAL_INTERMEDIATE_SOURCES:=$(framework_docs_LOCAL_INTERMEDIATE_SOURCES)
+LOCAL_JAVA_LIBRARIES:=$(framework_docs_LOCAL_API_CHECK_JAVA_LIBRARIES)
+LOCAL_MODULE_CLASS:=$(framework_docs_LOCAL_MODULE_CLASS)
+LOCAL_DROIDDOC_SOURCE_PATH:=$(framework_docs_LOCAL_DROIDDOC_SOURCE_PATH)
+LOCAL_DROIDDOC_HTML_DIR:=$(framework_docs_LOCAL_DROIDDOC_HTML_DIR)
+LOCAL_ADDITIONAL_JAVA_DIR:=$(framework_docs_LOCAL_API_CHECK_ADDITIONAL_JAVA_DIR)
+LOCAL_ADDITIONAL_DEPENDENCIES:=$(framework_docs_LOCAL_ADDITIONAL_DEPENDENCIES)
+
+LOCAL_MODULE := system-api-stubs
+
+LOCAL_DROIDDOC_OPTIONS:=\
+		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-stubs $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES/android_system_stubs_current_intermediates/src \
+		-showAnnotation android.annotation.SystemApi \
+		-api $(INTERNAL_PLATFORM_SYSTEM_API_FILE) \
+		-removedApi $(INTERNAL_PLATFORM_SYSTEM_REMOVED_API_FILE) \
+		-nodocs
+
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
+
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_DROIDDOC)
 
 # ====  check javadoc comments but don't generate docs ========
 include $(CLEAR_VARS)
@@ -807,8 +878,9 @@ include $(BUILD_DROIDDOC)
 $(full_target): $(framework_built) $(gen)
 
 # Run this for checkbuild
-.PHONY: checkbuild
 checkbuild: doc-comment-check-docs
+# Check comment when you are updating the API
+update-api: doc-comment-check-docs
 
 # ====  static html in the sdk ==================================
 include $(CLEAR_VARS)
@@ -832,8 +904,6 @@ LOCAL_DROIDDOC_OPTIONS:=\
 		-todo $(OUT_DOCS)/$(LOCAL_MODULE)-docs-todo.html \
 		-sdkvalues $(OUT_DOCS) \
 		-hdf android.whichdoc offline
-#		$(web_docs_sample_code_flags)
-
 
 LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
@@ -860,7 +930,7 @@ LOCAL_DROIDDOC_SOURCE_PATH:=$(framework_docs_LOCAL_DROIDDOC_SOURCE_PATH)
 LOCAL_DROIDDOC_HTML_DIR:=$(framework_docs_LOCAL_DROIDDOC_HTML_DIR)
 LOCAL_ADDITIONAL_JAVA_DIR:=$(framework_docs_LOCAL_ADDITIONAL_JAVA_DIR)
 LOCAL_ADDITIONAL_DEPENDENCIES:=$(framework_docs_LOCAL_ADDITIONAL_DEPENDENCIES)
-LOCAL_ADDITIONAL_HTML_DIR:=docs/html-intl /intl/
+LOCAL_ADDITIONAL_HTML_DIR:=docs/html-intl /
 
 LOCAL_MODULE := online-sdk
 
@@ -869,11 +939,47 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-toroot / \
 		-hdf android.whichdoc online \
 		$(sample_groups) \
-		$(web_docs_sample_code_flags)
+		-hdf android.hasSamples true \
+		-samplesdir $(samples_dir)
 
 LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
+
+# ==== docs for the web (on the androiddevdocs app engine server) =======================
+# TODO: Fix the System API docs build.
+ifneq ($(filter online-system-api-sdk-docs,$(MAKECMDGOALS)),)
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:=$(framework_docs_LOCAL_SRC_FILES)
+LOCAL_INTERMEDIATE_SOURCES:=$(framework_docs_LOCAL_INTERMEDIATE_SOURCES)
+LOCAL_STATIC_JAVA_LIBRARIES:=$(framework_docs_LOCAL_STATIC_JAVA_LIBRARIES)
+LOCAL_JAVA_LIBRARIES:=$(framework_docs_LOCAL_JAVA_LIBRARIES)
+LOCAL_MODULE_CLASS:=$(framework_docs_LOCAL_MODULE_CLASS)
+LOCAL_DROIDDOC_SOURCE_PATH:=$(framework_docs_LOCAL_DROIDDOC_SOURCE_PATH)
+LOCAL_DROIDDOC_HTML_DIR:=$(framework_docs_LOCAL_DROIDDOC_HTML_DIR)
+LOCAL_ADDITIONAL_JAVA_DIR:=$(framework_docs_LOCAL_ADDITIONAL_JAVA_DIR)
+LOCAL_ADDITIONAL_DEPENDENCIES:=$(framework_docs_LOCAL_ADDITIONAL_DEPENDENCIES)
+LOCAL_ADDITIONAL_HTML_DIR:=docs/html-intl /
+
+LOCAL_MODULE := online-system-api-sdk
+
+LOCAL_DROIDDOC_OPTIONS:= \
+		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-showAnnotation android.annotation.SystemApi \
+		-title "Android SDK - Including system APIs." \
+		-toroot / \
+		-hdf android.whichdoc online \
+		$(sample_groups) \
+		-hdf android.hasSamples true \
+		-samplesdir $(samples_dir)
+
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
+# Don't build by default
+LOCAL_UNINSTALLABLE_MODULE := true
+
+include $(BUILD_DROIDDOC)
+endif  # online-system-api-sdk-docs in make command line.
 
 # ==== docs for the web (on the devsite app engine server) =======================
 include $(CLEAR_VARS)
@@ -887,7 +993,7 @@ LOCAL_DROIDDOC_HTML_DIR:=$(framework_docs_LOCAL_DROIDDOC_HTML_DIR)
 LOCAL_ADDITIONAL_JAVA_DIR:=$(framework_docs_LOCAL_ADDITIONAL_JAVA_DIR)
 LOCAL_ADDITIONAL_DEPENDENCIES:=$(framework_docs_LOCAL_ADDITIONAL_DEPENDENCIES)
 # specify a second html input dir and an output path relative to OUT_DIR)
-LOCAL_ADDITIONAL_HTML_DIR:=docs/html-intl /
+LOCAL_ADDITIONAL_HTML_DIR:=docs/html-intl/intl /
 
 LOCAL_MODULE := ds
 
@@ -897,7 +1003,6 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-toroot / \
 		-hdf android.whichdoc online \
 		-hdf devsite true
-#		$(web_docs_sample_code_flags)
 
 LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
@@ -949,7 +1054,7 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := $(ext_src_files)
 
 LOCAL_NO_STANDARD_LIBRARIES := true
-LOCAL_JAVA_LIBRARIES := core
+LOCAL_JAVA_LIBRARIES := core-libart
 LOCAL_JAVA_RESOURCE_DIRS := $(ext_res_dirs)
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := ext
@@ -967,3 +1072,5 @@ include $(BUILD_JAVA_LIBRARY)
 ifeq (,$(ONE_SHOT_MAKEFILE))
 include $(call first-makefiles-under,$(LOCAL_PATH))
 endif
+
+endif # ANDROID_BUILD_EMBEDDED

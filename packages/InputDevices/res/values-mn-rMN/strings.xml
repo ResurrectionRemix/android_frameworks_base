@@ -25,7 +25,7 @@
     <string name="keyboard_layout_finnish" msgid="5585659438924315466">"Финлянд"</string>
     <string name="keyboard_layout_croatian" msgid="4172229471079281138">"Хорват"</string>
     <string name="keyboard_layout_czech" msgid="1349256901452975343">"Чех"</string>
-    <string name="keyboard_layout_estonian" msgid="8775830985185665274">"Эстони"</string>
+    <string name="keyboard_layout_estonian" msgid="8775830985185665274">"Эстон"</string>
     <string name="keyboard_layout_hungarian" msgid="4154963661406035109">"Унгар"</string>
     <string name="keyboard_layout_icelandic" msgid="5836645650912489642">"Исланд"</string>
     <string name="keyboard_layout_brazilian" msgid="5117896443147781939">"Бразил"</string>
@@ -34,4 +34,10 @@
     <string name="keyboard_layout_slovenian" msgid="1735933028924982368">"Словени"</string>
     <string name="keyboard_layout_turkish" msgid="7736163250907964898">"Турк"</string>
     <string name="keyboard_layout_ukrainian" msgid="8176637744389480417">"Украйн"</string>
+    <string name="keyboard_layout_arabic" msgid="5671970465174968712">"Араб"</string>
+    <string name="keyboard_layout_greek" msgid="7289253560162386040">"Грек"</string>
+    <string name="keyboard_layout_hebrew" msgid="7241473985890173812">"Еврей"</string>
+    <string name="keyboard_layout_lithuanian" msgid="6943110873053106534">"Литви"</string>
+    <string name="keyboard_layout_spanish_latin" msgid="5690539836069535697">"Испани (Латин)"</string>
+    <string name="keyboard_layout_latvian" msgid="4405417142306250595">"Латви"</string>
 </resources>

@@ -16,16 +16,6 @@
 
 package android.graphics;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.DisplayMetrics;
-
-import java.io.OutputStream;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.nio.ShortBuffer;
-
 /**
  * LargeBitmap can be used to decode a rectangle region from an image.
  * LargeBimap is particularly useful when an original image is large and
@@ -37,7 +27,7 @@ import java.nio.ShortBuffer;
  * @hide
  */
 public final class LargeBitmap {
-    private int mNativeLargeBitmap;
+    private long mNativeLargeBitmap;
     private boolean mRecycled;
 
     /*  Private constructor that must received an already allocated native
@@ -45,8 +35,8 @@ public final class LargeBitmap {
 
         This can be called from JNI code.
     */
-    private LargeBitmap(int lbm) {
-        mNativeLargeBitmap = lbm;
+    private LargeBitmap(long nativeLbm) {
+        mNativeLargeBitmap = nativeLbm;
         mRecycled = false;
     }
 
@@ -119,10 +109,10 @@ public final class LargeBitmap {
         recycle();
     }
 
-    private static native Bitmap nativeDecodeRegion(int lbm,
+    private static native Bitmap nativeDecodeRegion(long nativeLbm,
             int start_x, int start_y, int width, int height,
             BitmapFactory.Options options);
-    private static native int nativeGetWidth(int lbm);
-    private static native int nativeGetHeight(int lbm);
-    private static native void nativeClean(int lbm);
+    private static native int nativeGetWidth(long nativeLbm);
+    private static native int nativeGetHeight(long nativeLbm);
+    private static native void nativeClean(long nativeLbm);
 }

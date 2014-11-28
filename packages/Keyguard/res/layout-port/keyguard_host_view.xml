@@ -21,33 +21,12 @@
     and the security view. -->
 <com.android.keyguard.KeyguardHostView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:androidprv="http://schemas.android.com/apk/res/com.android.keyguard"
+    xmlns:androidprv="http://schemas.android.com/apk/res-auto"
     android:id="@+id/keyguard_host_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
-    <com.android.keyguard.NotificationHostView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/notification_host_view" >
-
-        <view class="com.android.keyguard.NotificationHostView$TouchModalScrollView"
-            android:fillViewport="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scrollview" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:animateLayoutChanges="true"
-                android:id="@+id/linearlayout" />
-        </view>
-
-    </com.android.keyguard.NotificationHostView>
 
     <com.android.keyguard.SlidingChallengeLayout
         android:id="@+id/sliding_layout"
@@ -77,8 +56,6 @@
                 android:layout_gravity="center"/>
         </FrameLayout>
 
-        <include layout="@layout/keyguard_multi_user_selector"/>
-
         <View android:layout_width="match_parent"
               android:layout_height="match_parent"
               androidprv:layout_childType="scrim"
@@ -90,7 +67,7 @@
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"
-            androidprv:layout_maxHeight="@dimen/keyguard_security_no_widget_height"
+            androidprv:layout_maxHeight="@dimen/keyguard_security_height"
             androidprv:layout_childType="challenge"
             android:padding="0dp"
             android:gravity="bottom|center_horizontal">
@@ -106,7 +83,6 @@
         </com.android.keyguard.KeyguardSecurityContainer>
 
         <ImageButton
-              android:id="@+id/expand_challenge_handle"
               android:layout_width="match_parent"
               android:layout_height="@dimen/kg_widget_pager_bottom_padding"
               androidprv:layout_childType="expandChallengeHandle"
@@ -118,3 +94,4 @@
 
     </com.android.keyguard.SlidingChallengeLayout>
 </com.android.keyguard.KeyguardHostView>
+

@@ -20,12 +20,16 @@ import android.view.Display;
 import android.view.View;
 
 public interface RecentsComponent {
-    void toggleRecents(Display display, int layoutDirection, View statusBarView,
-                       int expandedDesktopStyle);
+    public interface Callbacks {
+        public void onVisibilityChanged(boolean visible);
+    }
 
-    void preloadRecentTasksList();
-
-    void cancelPreloadingRecentTasksList();
-
-    void closeRecents();
+    void showRecents(boolean triggeredFromAltTab, View statusBarView);
+    void hideRecents(boolean triggeredFromAltTab, boolean triggeredFromHomeKey);
+    void toggleRecents(Display display, int layoutDirection, View statusBarView);
+    void preloadRecents();
+    void cancelPreloadingRecents();
+    void showNextAffiliatedTask();
+    void showPrevAffiliatedTask();
+    void setCallback(Callbacks cb);
 }

@@ -16,13 +16,12 @@
 
 package android.os;
 
+import android.system.ErrnoException;
+import android.text.TextUtils;
+import android.system.Os;
+import android.system.OsConstants;
 import android.util.Log;
 import android.util.Slog;
-
-import libcore.io.ErrnoException;
-import libcore.io.IoUtils;
-import libcore.io.Libcore;
-import libcore.io.OsConstants;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -87,7 +86,7 @@ public class FileUtils {
      */
     public static int setPermissions(String path, int mode, int uid, int gid) {
         try {
-            Libcore.os.chmod(path, mode);
+            Os.chmod(path, mode);
         } catch (ErrnoException e) {
             Slog.w(TAG, "Failed to chmod(" + path + "): " + e);
             return e.errno;
@@ -95,7 +94,7 @@ public class FileUtils {
 
         if (uid >= 0 || gid >= 0) {
             try {
-                Libcore.os.chown(path, uid, gid);
+                Os.chown(path, uid, gid);
             } catch (ErrnoException e) {
                 Slog.w(TAG, "Failed to chown(" + path + "): " + e);
                 return e.errno;
@@ -115,7 +114,7 @@ public class FileUtils {
      */
     public static int setPermissions(FileDescriptor fd, int mode, int uid, int gid) {
         try {
-            Libcore.os.fchmod(fd, mode);
+            Os.fchmod(fd, mode);
         } catch (ErrnoException e) {
             Slog.w(TAG, "Failed to fchmod(): " + e);
             return e.errno;
@@ -123,7 +122,7 @@ public class FileUtils {
 
         if (uid >= 0 || gid >= 0) {
             try {
-                Libcore.os.fchown(fd, uid, gid);
+                Os.fchown(fd, uid, gid);
             } catch (ErrnoException e) {
                 Slog.w(TAG, "Failed to fchown(): " + e);
                 return e.errno;
@@ -138,18 +137,11 @@ public class FileUtils {
      */
     public static int getUid(String path) {
         try {
-            return Libcore.os.stat(path).st_uid;
+            return Os.stat(path).st_uid;
         } catch (ErrnoException e) {
             return -1;
         }
     }
-
-    /** returns the UUID for the volume mounted
-     * at the given mount point, or -1 for failure
-     * @param mountPoint point for volume
-     * @return UUID or -1
-     */
-    public static native int getVolumeUUID(String mountPoint);
 
     /**
      * Perform an fsync on the given FileOutputStream.  The stream at this
@@ -335,14 +327,15 @@ public class FileUtils {
      *
      * @param minCount Always keep at least this many files.
      * @param minAge Always keep files younger than this age.
+     * @return if any files were deleted.
      */
-    public static void deleteOlderFiles(File dir, int minCount, long minAge) {
+    public static boolean deleteOlderFiles(File dir, int minCount, long minAge) {
         if (minCount < 0 || minAge < 0) {
             throw new IllegalArgumentException("Constraints must be positive or 0");
         }
 
         final File[] files = dir.listFiles();
-        if (files == null) return;
+        if (files == null) return false;
 
         // Sort with newest files first
         Arrays.sort(files, new Comparator<File>() {
@@ -353,15 +346,106 @@ public class FileUtils {
         });
 
         // Keep at least minCount files
+        boolean deleted = false;
         for (int i = minCount; i < files.length; i++) {
             final File file = files[i];
 
             // Keep files newer than minAge
             final long age = System.currentTimeMillis() - file.lastModified();
             if (age > minAge) {
-                Log.d(TAG, "Deleting old file " + file);
-                file.delete();
+                if (file.delete()) {
+                    Log.d(TAG, "Deleted old file " + file);
+                    deleted = true;
+                }
             }
         }
+        return deleted;
+    }
+
+    /**
+     * Test if a file lives under the given directory, either as a direct child
+     * or a distant grandchild.
+     * <p>
+     * Both files <em>must</em> have been resolved using
+     * {@link File#getCanonicalFile()} to avoid symlink or path traversal
+     * attacks.
+     */
+    public static boolean contains(File dir, File file) {
+        if (file == null) return false;
+
+        String dirPath = dir.getAbsolutePath();
+        String filePath = file.getAbsolutePath();
+
+        if (dirPath.equals(filePath)) {
+            return true;
+        }
+
+        if (!dirPath.endsWith("/")) {
+            dirPath += "/";
+        }
+        return filePath.startsWith(dirPath);
+    }
+
+    public static boolean deleteContents(File dir) {
+        File[] files = dir.listFiles();
+        boolean success = true;
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    success &= deleteContents(file);
+                }
+                if (!file.delete()) {
+                    Log.w(TAG, "Failed to delete " + file);
+                    success = false;
+                }
+            }
+        }
+        return success;
+    }
+
+    /**
+     * Assert that given filename is valid on ext4.
+     */
+    public static boolean isValidExtFilename(String name) {
+        if (TextUtils.isEmpty(name) || ".".equals(name) || "..".equals(name)) {
+            return false;
+        }
+        for (int i = 0; i < name.length(); i++) {
+            final char c = name.charAt(i);
+            if (c == '\0' || c == '/') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static String rewriteAfterRename(File beforeDir, File afterDir, String path) {
+        if (path == null) return null;
+        final File result = rewriteAfterRename(beforeDir, afterDir, new File(path));
+        return (result != null) ? result.getAbsolutePath() : null;
+    }
+
+    public static String[] rewriteAfterRename(File beforeDir, File afterDir, String[] paths) {
+        if (paths == null) return null;
+        final String[] result = new String[paths.length];
+        for (int i = 0; i < paths.length; i++) {
+            result[i] = rewriteAfterRename(beforeDir, afterDir, paths[i]);
+        }
+        return result;
+    }
+
+    /**
+     * Given a path under the "before" directory, rewrite it to live under the
+     * "after" directory. For example, {@code /before/foo/bar.txt} would become
+     * {@code /after/foo/bar.txt}.
+     */
+    public static File rewriteAfterRename(File beforeDir, File afterDir, File file) {
+        if (file == null) return null;
+        if (contains(beforeDir, file)) {
+            final String splice = file.getAbsolutePath().substring(
+                    beforeDir.getAbsolutePath().length());
+            return new File(afterDir, splice);
+        }
+        return null;
     }
 }

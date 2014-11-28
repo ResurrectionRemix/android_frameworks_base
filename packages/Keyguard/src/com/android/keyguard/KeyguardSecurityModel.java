@@ -24,11 +24,12 @@ import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.widget.LockPatternUtils;
 
 public class KeyguardSecurityModel {
+
     /**
      * The different types of security available for {@link Mode#UnlockScreen}.
      * @see com.android.internal.policy.impl.LockPatternKeyguardView#getUnlockMode()
      */
-    enum SecurityMode {
+    public enum SecurityMode {
         Invalid, // NULL state
         None, // No security enabled
         Pattern, // Unlock by drawing a pattern.
@@ -37,8 +38,7 @@ public class KeyguardSecurityModel {
         Biometric, // Unlock with a biometric key (e.g. finger print or face unlock)
         Account, // Unlock by entering an account's login and password.
         SimPin, // Unlock by entering a sim pin.
-        SimPuk, // Unlock by entering a sim puk
-        Gesture // unlock by drawing a gesture
+        SimPuk // Unlock by entering a sim puk
     }
 
     private Context mContext;
@@ -77,8 +77,17 @@ public class KeyguardSecurityModel {
 
     SecurityMode getSecurityMode() {
         KeyguardUpdateMonitor updateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
-        final IccCardConstants.State simState = updateMonitor.getSimState();
+        IccCardConstants.State simState = IccCardConstants.State.UNKNOWN;
         SecurityMode mode = SecurityMode.None;
+        for (int i = 0; i < updateMonitor.getNumPhones(); i++) {
+            long subId = updateMonitor.getSubIdByPhoneId(i);
+            simState = updateMonitor.getSimState(subId);
+            if (simState == IccCardConstants.State.PIN_REQUIRED
+                || simState == IccCardConstants.State.PUK_REQUIRED) {
+                break;
+            }
+        }
+
         if (simState == IccCardConstants.State.PIN_REQUIRED) {
             mode = SecurityMode.SimPin;
         } else if (simState == IccCardConstants.State.PUK_REQUIRED
@@ -88,6 +97,7 @@ public class KeyguardSecurityModel {
             final int security = mLockPatternUtils.getKeyguardStoredPasswordQuality();
             switch (security) {
                 case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC:
+                case DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX:
                     mode = mLockPatternUtils.isLockPasswordEnabled() ?
                             SecurityMode.PIN : SecurityMode.None;
                     break;
@@ -105,15 +115,9 @@ public class KeyguardSecurityModel {
                             SecurityMode.Account : SecurityMode.Pattern;
                     }
                     break;
-                case DevicePolicyManager.PASSWORD_QUALITY_GESTURE_WEAK:
-                    if (mLockPatternUtils.isLockGestureEnabled()) {
-                        mode = mLockPatternUtils.isPermanentlyLocked() ?
-                            SecurityMode.Account : SecurityMode.Gesture;
-                    }
-                    break;
 
                 default:
-                    throw new IllegalStateException("Unknown unlock mode:" + mode);
+                    throw new IllegalStateException("Unknown security quality:" + security);
             }
         }
         return mode;
@@ -131,8 +135,7 @@ public class KeyguardSecurityModel {
         if (isBiometricUnlockEnabled() && !isBiometricUnlockSuppressed()
                 && (mode == SecurityMode.Password
                         || mode == SecurityMode.PIN
-                        || mode == SecurityMode.Pattern
-                        || mode == SecurityMode.Gesture )) {
+                        || mode == SecurityMode.Pattern)) {
             return SecurityMode.Biometric;
         }
         return mode; // no alternate, return what was given
@@ -149,8 +152,6 @@ public class KeyguardSecurityModel {
             case Biometric:
                 return getSecurityMode();
             case Pattern:
-                return SecurityMode.Account;
-            case Gesture:
                 return SecurityMode.Account;
         }
         return mode; // no backup, return current security mode

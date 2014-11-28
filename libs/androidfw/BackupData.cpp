@@ -59,9 +59,10 @@ padding_extra(size_t n)
 BackupDataWriter::BackupDataWriter(int fd)
     :m_fd(fd),
      m_status(NO_ERROR),
-     m_pos(0),
      m_entityCount(0)
 {
+    m_pos = (ssize_t) lseek(fd, 0, SEEK_CUR);
+    if (DEBUG) ALOGI("BackupDataWriter(%d) @ %ld", fd, (long)m_pos);
 }
 
 BackupDataWriter::~BackupDataWriter()
@@ -78,7 +79,7 @@ BackupDataWriter::write_padding_for(int n)
     paddingSize = padding_extra(n);
     if (paddingSize > 0) {
         uint32_t padding = 0xbcbcbcbc;
-        if (DEBUG) ALOGI("writing %d padding bytes for %d", paddingSize, n);
+        if (DEBUG) ALOGI("writing %zd padding bytes for %d", paddingSize, n);
         amt = write(m_fd, &padding, paddingSize);
         if (amt != paddingSize) {
             m_status = errno;
@@ -112,7 +113,7 @@ BackupDataWriter::WriteEntityHeader(const String8& key, size_t dataSize)
         k = key;
     }
     if (DEBUG) {
-        ALOGD("Writing header: prefix='%s' key='%s' dataSize=%d", m_keyPrefix.string(),
+        ALOGD("Writing header: prefix='%s' key='%s' dataSize=%zu", m_keyPrefix.string(),
                 key.string(), dataSize);
     }
 
@@ -125,7 +126,7 @@ BackupDataWriter::WriteEntityHeader(const String8& key, size_t dataSize)
     header.keyLen = tolel(keyLen);
     header.dataSize = tolel(dataSize);
 
-    if (DEBUG) ALOGI("writing entity header, %d bytes", sizeof(entity_header_v1));
+    if (DEBUG) ALOGI("writing entity header, %zu bytes", sizeof(entity_header_v1));
     amt = write(m_fd, &header, sizeof(entity_header_v1));
     if (amt != sizeof(entity_header_v1)) {
         m_status = errno;
@@ -133,7 +134,7 @@ BackupDataWriter::WriteEntityHeader(const String8& key, size_t dataSize)
     }
     m_pos += amt;
 
-    if (DEBUG) ALOGI("writing entity header key, %d bytes", keyLen+1);
+    if (DEBUG) ALOGI("writing entity header key, %zd bytes", keyLen+1);
     amt = write(m_fd, k.string(), keyLen+1);
     if (amt != keyLen+1) {
         m_status = errno;
@@ -184,10 +185,11 @@ BackupDataReader::BackupDataReader(int fd)
     :m_fd(fd),
      m_done(false),
      m_status(NO_ERROR),
-     m_pos(0),
      m_entityCount(0)
 {
     memset(&m_header, 0, sizeof(m_header));
+    m_pos = (ssize_t) lseek(fd, 0, SEEK_CUR);
+    if (DEBUG) ALOGI("BackupDataReader(%d) @ %ld", fd, (long)m_pos);
 }
 
 BackupDataReader::~BackupDataReader()
@@ -289,7 +291,7 @@ BackupDataReader::ReadNextHeader(bool* done, int* type)
                     (int)(m_pos - sizeof(m_header)), (int)m_header.type);
             m_status = EINVAL;
     }
-    
+
     return m_status;
 }
 

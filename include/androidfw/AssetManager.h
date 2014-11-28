@@ -75,7 +75,6 @@ public:
     static const char* TARGET_PACKAGE_NAME;
     static const char* TARGET_APK_PATH;
     static const char* IDMAP_DIR;
-    static const char* RESOURCES_EXTENSION;
 
     typedef enum CacheMode {
         CACHE_UNKNOWN = 0,
@@ -100,16 +99,10 @@ public:
      * then on success, *cookie is set to the value corresponding to the
      * newly-added asset source.
      */
-    bool addAssetPath(const String8& path, void** cookie);
-    bool addOverlayPath(const String8& path, void** cookie, const String8& resArscPath,
-                 const String8& resApkPath, const String8& targetPkgPath, const String8& prefixPath);
-    bool addIconPath(const String8& path, void** cookie, const String8& resArscPath,
-                 const String8& resApkPath, const String8& prefixPath, uint32_t pkgIdOverride);
-    bool addCommonOverlayPath(const String8& path, void** cookie, const String8& resArscPath,
-                 const String8& resApkPath, const String8& prefixPath);
-    bool removeOverlayPath(const String8& path, void* cookie);
+    bool addAssetPath(const String8& path, int32_t* cookie);
+    bool addOverlayPath(const String8& path, int32_t* cookie);
 
-    /*
+    /*                                                                       
      * Convenience for adding the standard system assets.  Uses the
      * ANDROID_ROOT environment variable to find them.
      */
@@ -118,17 +111,17 @@ public:
     /*                                                                       
      * Iterate over the asset paths in this manager.  (Previously
      * added via addAssetPath() and addDefaultAssets().)  On first call,
-     * 'cookie' must be NULL, resulting in the first cookie being returned.
-     * Each next cookie will be returned there-after, until NULL indicating
+     * 'cookie' must be 0, resulting in the first cookie being returned.
+     * Each next cookie will be returned there-after, until -1 indicating
      * the end has been reached.
      */
-    void* nextAssetPath(void* cookie) const;
+    int32_t nextAssetPath(const int32_t cookie) const;
 
     /*                                                                       
      * Return an asset path in the manager.  'which' must be between 0 and
      * countAssetPaths().
      */
-    String8 getAssetPath(void* cookie) const;
+    String8 getAssetPath(const int32_t cookie) const;
 
     /*
      * Set the current locale and vendor.  The locale can change during
@@ -168,13 +161,13 @@ public:
      * path hierarchy, and will not be seen by "AssetDir" or included
      * in our filename cache.
      */
-    Asset* openNonAsset(const char* fileName, AccessMode mode);
+    Asset* openNonAsset(const char* fileName, AccessMode mode, int32_t* outCookie = NULL);
 
     /*
      * Explicit non-asset file.  The file explicitly named by the cookie (the
      * resource set to look in) and fileName will be opened and returned.
      */
-    Asset* openNonAsset(void* cookie, const char* fileName, AccessMode mode);
+    Asset* openNonAsset(const int32_t cookie, const char* fileName, AccessMode mode);
 
     /*
      * Open a directory within the asset hierarchy.
@@ -198,7 +191,7 @@ public:
      *
      * To open the top-level directory, pass in "".
      */
-    AssetDir* openNonAssetDir(void* cookie, const char* dirName);
+    AssetDir* openNonAssetDir(const int32_t cookie, const char* dirName);
 
     /*
      * Get the type of a file in the asset hierarchy.  They will either
@@ -238,12 +231,7 @@ public:
      * corresponding overlay package.
      */
     bool createIdmap(const char* targetApkPath, const char* overlayApkPath,
-        uint32_t targetCrc, uint32_t overlayCrc,
-        time_t targetMtime, time_t overlayMtime,
-        Vector<String8>& targets, Vector<String8>& overlays,
-        uint32_t** outData, size_t* outSize);
-
-    String8 getBasePackageName(int index);
+        uint32_t targetCrc, uint32_t overlayCrc, uint32_t** outData, size_t* outSize);
 
 private:
     struct asset_path
@@ -251,14 +239,8 @@ private:
         String8 path;
         FileType type;
         String8 idmap;
-        String8 prefixPath;
-        String8 resfilePath;
-        String8 resApkPath;
-        uint32_t pkgIdOverride;
-        asset_path() : pkgIdOverride(0) {}
     };
 
-    bool updateResTableFromAssetPath(ResTable* rt, const asset_path& ap, void* cookie) const;
     Asset* openInPathLocked(const char* fileName, AccessMode mode,
         const asset_path& path);
     Asset* openNonAssetInPathLocked(const char* fileName, AccessMode mode,
@@ -271,7 +253,7 @@ private:
     String8 createZipSourceNameLocked(const String8& zipFileName,
         const String8& dirName, const String8& fileName);
 
-    ZipFileRO* getZipFileLocked(const String8& path);
+    ZipFileRO* getZipFileLocked(const asset_path& path);
     Asset* openAssetFromFileLocked(const String8& fileName, AccessMode mode);
     Asset* openAssetFromZipLocked(const ZipFileRO* pZipFile,
         const ZipEntryRO entry, AccessMode mode, const String8& entryName);
@@ -296,15 +278,12 @@ private:
     const ResTable* getResTable(bool required = true) const;
     void setLocaleLocked(const char* locale);
     void updateResourceParamsLocked() const;
+    bool appendPathToResTable(const asset_path& ap, size_t* entryIdx) const;
 
     Asset* openIdmapLocked(const struct asset_path& ap) const;
 
     void addSystemOverlays(const char* pathOverlaysList, const String8& targetPackagePath,
             ResTable* sharedRes, size_t offset) const;
-
-    String8 getPkgName(const char *apkPath);
-
-    String8 getOverlayResPath(const char* targetApkPath, const char* overlayApkPath);
 
     class SharedZip : public RefBase {
     public:
@@ -394,9 +373,6 @@ private:
 
     mutable ResTable* mResources;
     ResTable_config* mConfig;
-
-    String8 mBasePackageName;
-    int32_t mBasePackageIndex;
 
     /*
      * Cached data for "loose" files.  This lets us avoid poking at the

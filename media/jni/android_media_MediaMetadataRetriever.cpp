@@ -21,14 +21,17 @@
 #include <assert.h>
 #include <utils/Log.h>
 #include <utils/threads.h>
-#include <core/SkBitmap.h>
+#include <SkBitmap.h>
+#include <media/IMediaHTTPService.h>
 #include <media/mediametadataretriever.h>
+#include <media/mediascanner.h>
 #include <private/media/VideoFrame.h>
 
 #include "jni.h"
 #include "JNIHelp.h"
 #include "android_runtime/AndroidRuntime.h"
 #include "android_media_Utils.h"
+#include "android_util_Binder.h"
 
 
 using namespace android;
@@ -67,20 +70,20 @@ static void process_media_retriever_call(JNIEnv *env, status_t opStatus, const c
 static MediaMetadataRetriever* getRetriever(JNIEnv* env, jobject thiz)
 {
     // No lock is needed, since it is called internally by other methods that are protected
-    MediaMetadataRetriever* retriever = (MediaMetadataRetriever*) env->GetIntField(thiz, fields.context);
+    MediaMetadataRetriever* retriever = (MediaMetadataRetriever*) env->GetLongField(thiz, fields.context);
     return retriever;
 }
 
-static void setRetriever(JNIEnv* env, jobject thiz, int retriever)
+static void setRetriever(JNIEnv* env, jobject thiz, MediaMetadataRetriever* retriever)
 {
     // No lock is needed, since it is called internally by other methods that are protected
-    MediaMetadataRetriever *old = (MediaMetadataRetriever*) env->GetIntField(thiz, fields.context);
-    env->SetIntField(thiz, fields.context, retriever);
+    MediaMetadataRetriever *old = (MediaMetadataRetriever*) env->GetLongField(thiz, fields.context);
+    env->SetLongField(thiz, fields.context, (jlong) retriever);
 }
 
 static void
 android_media_MediaMetadataRetriever_setDataSourceAndHeaders(
-        JNIEnv *env, jobject thiz, jstring path,
+        JNIEnv *env, jobject thiz, jobject httpServiceBinderObj, jstring path,
         jobjectArray keys, jobjectArray values) {
 
     ALOGV("setDataSource");
@@ -122,10 +125,19 @@ android_media_MediaMetadataRetriever_setDataSourceAndHeaders(
             env, keys, values, &headersVector)) {
         return;
     }
+
+    sp<IMediaHTTPService> httpService;
+    if (httpServiceBinderObj != NULL) {
+        sp<IBinder> binder = ibinderForJavaObject(env, httpServiceBinderObj);
+        httpService = interface_cast<IMediaHTTPService>(binder);
+    }
+
     process_media_retriever_call(
             env,
             retriever->setDataSource(
-                pathStr.string(), headersVector.size() > 0 ? &headersVector : NULL),
+                httpService,
+                pathStr.string(),
+                headersVector.size() > 0 ? &headersVector : NULL),
 
             "java/lang/RuntimeException",
             "setDataSource failed");
@@ -146,10 +158,10 @@ static void android_media_MediaMetadataRetriever_setDataSourceFD(JNIEnv *env, jo
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
     if (offset < 0 || length < 0 || fd < 0) {
         if (offset < 0) {
-            ALOGE("negative offset (%lld)", offset);
+            ALOGE("negative offset (%lld)", (long long)offset);
         }
         if (length < 0) {
-            ALOGE("negative length (%lld)", length);
+            ALOGE("negative length (%lld)", (long long)length);
         }
         if (fd < 0) {
             ALOGE("invalid file descriptor");
@@ -245,7 +257,7 @@ static jobject android_media_MediaMetadataRetriever_getFrameAtTime(JNIEnv *env, 
                         fields.createConfigMethod,
                         SkBitmap::kRGB_565_Config);
 
-    size_t width, height;
+    uint32_t width, height;
     bool swapWidthAndHeight = false;
     if (videoFrame->mRotationAngle == 90 || videoFrame->mRotationAngle == 270) {
         width = videoFrame->mHeight;
@@ -262,9 +274,16 @@ static jobject android_media_MediaMetadataRetriever_getFrameAtTime(JNIEnv *env, 
                             width,
                             height,
                             config);
+    if (jBitmap == NULL) {
+        if (env->ExceptionCheck()) {
+            env->ExceptionClear();
+        }
+        ALOGE("getFrameAtTime: create Bitmap failed!");
+        return NULL;
+    }
 
     SkBitmap *bitmap =
-            (SkBitmap *) env->GetIntField(jBitmap, fields.nativeBitmap);
+            (SkBitmap *) env->GetLongField(jBitmap, fields.nativeBitmap);
 
     bitmap->lockPixels();
     rotate((uint16_t*)bitmap->getPixels(),
@@ -276,8 +295,8 @@ static jobject android_media_MediaMetadataRetriever_getFrameAtTime(JNIEnv *env, 
 
     if (videoFrame->mDisplayWidth  != videoFrame->mWidth ||
         videoFrame->mDisplayHeight != videoFrame->mHeight) {
-        size_t displayWidth = videoFrame->mDisplayWidth;
-        size_t displayHeight = videoFrame->mDisplayHeight;
+        uint32_t displayWidth = videoFrame->mDisplayWidth;
+        uint32_t displayHeight = videoFrame->mDisplayHeight;
         if (swapWidthAndHeight) {
             displayWidth = videoFrame->mDisplayHeight;
             displayHeight = videoFrame->mDisplayWidth;
@@ -319,17 +338,13 @@ static jbyteArray android_media_MediaMetadataRetriever_getEmbeddedPicture(
         return NULL;
     }
 
-    unsigned int len = mediaAlbumArt->mSize;
-    char* data = (char*) mediaAlbumArt + sizeof(MediaAlbumArt);
-    jbyteArray array = env->NewByteArray(len);
+    jbyteArray array = env->NewByteArray(mediaAlbumArt->size());
     if (!array) {  // OutOfMemoryError exception has already been thrown.
         ALOGE("getEmbeddedPicture: OutOfMemoryError is thrown.");
     } else {
-        jbyte* bytes = env->GetByteArrayElements(array, NULL);
-        if (bytes != NULL) {
-            memcpy(bytes, data, len);
-            env->ReleaseByteArrayElements(array, bytes, 0);
-        }
+        const jbyte* data =
+                reinterpret_cast<const jbyte*>(mediaAlbumArt->data());
+        env->SetByteArrayRegion(array, 0, mediaAlbumArt->size(), data);
     }
 
     // No need to delete mediaAlbumArt here
@@ -359,7 +374,7 @@ static void android_media_MediaMetadataRetriever_release(JNIEnv *env, jobject th
     Mutex::Autolock lock(sLock);
     MediaMetadataRetriever* retriever = getRetriever(env, thiz);
     delete retriever;
-    setRetriever(env, thiz, 0);
+    setRetriever(env, thiz, (MediaMetadataRetriever*) 0);
 }
 
 static void android_media_MediaMetadataRetriever_native_finalize(JNIEnv *env, jobject thiz)
@@ -379,7 +394,7 @@ static void android_media_MediaMetadataRetriever_native_init(JNIEnv *env)
         return;
     }
 
-    fields.context = env->GetFieldID(clazz, "mNativeContext", "I");
+    fields.context = env->GetFieldID(clazz, "mNativeContext", "J");
     if (fields.context == NULL) {
         return;
     }
@@ -406,7 +421,7 @@ static void android_media_MediaMetadataRetriever_native_init(JNIEnv *env)
     if (fields.createScaledBitmapMethod == NULL) {
         return;
     }
-    fields.nativeBitmap = env->GetFieldID(fields.bitmapClazz, "mNativeBitmap", "I");
+    fields.nativeBitmap = env->GetFieldID(fields.bitmapClazz, "mNativeBitmap", "J");
     if (fields.nativeBitmap == NULL) {
         return;
     }
@@ -435,14 +450,14 @@ static void android_media_MediaMetadataRetriever_native_setup(JNIEnv *env, jobje
         jniThrowException(env, "java/lang/RuntimeException", "Out of memory");
         return;
     }
-    setRetriever(env, thiz, (int)retriever);
+    setRetriever(env, thiz, retriever);
 }
 
 // JNI mapping between Java methods and native methods
 static JNINativeMethod nativeMethods[] = {
         {
             "_setDataSource",
-            "(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V",
+            "(Landroid/os/IBinder;Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V",
             (void *)android_media_MediaMetadataRetriever_setDataSourceAndHeaders
         },
 

@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +23,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Printer;
 
+import com.android.internal.util.ArrayUtils;
+
 import java.text.Collator;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * Information you can retrieve about a particular application.  This
@@ -316,12 +319,39 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public static final int FLAG_IS_DATA_ONLY = 1<<24;
 
     /**
-     * Value for {@link #flags}: set to {@code true} if the application
-     * is permitted to hold privileged permissions.
+     * Value for {@link #flags}: true if the application was declared to be a game, or
+     * false if it is a non-game application.
+     */
+    public static final int FLAG_IS_GAME = 1<<25;
+
+    /**
+     * Value for {@link #flags}: {@code true} if the application asks that only
+     * full-data streaming backups of its data be performed even though it defines
+     * a {@link android.app.backup.BackupAgent BackupAgent}, which normally
+     * indicates that the app will manage its backed-up data via incremental
+     * key/value updates.
+     */
+    public static final int FLAG_FULL_BACKUP_ONLY = 1<<26;
+
+    /**
+     * Value for {@link #flags}: true if the application is hidden via restrictions and for
+     * most purposes is considered as not installed.
+     * {@hide}
+     */
+    public static final int FLAG_HIDDEN = 1<<27;
+
+    /**
+     * Value for {@link #flags}: set to <code>true</code> if the application
+     * has reported that it is heavy-weight, and thus can not participate in
+     * the normal application lifecycle.
+     *
+     * <p>Comes from the
+     * android.R.styleable#AndroidManifestApplication_cantSaveState
+     * attribute of the &lt;application&gt; tag.
      *
      * {@hide}
      */
-    public static final int FLAG_PRIVILEGED = 1<<30;
+    public static final int FLAG_CANT_SAVE_STATE = 1<<28;
 
     /**
      * Value for {@link #flags}: Set to true if the application has been
@@ -334,24 +364,25 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public static final int FLAG_FORWARD_LOCK = 1<<29;
 
     /**
-     * Value for {@link #flags}: set to <code>true</code> if the application
-     * has reported that it is heavy-weight, and thus can not participate in
-     * the normal application lifecycle.
-     *
-     * <p>Comes from the
-     * {@link android.R.styleable#AndroidManifestApplication_cantSaveState android:cantSaveState}
-     * attribute of the &lt;application&gt; tag.
+     * Value for {@link #flags}: set to {@code true} if the application
+     * is permitted to hold privileged permissions.
      *
      * {@hide}
      */
-    public static final int FLAG_CANT_SAVE_STATE = 1<<28;
+    public static final int FLAG_PRIVILEGED = 1<<30;
 
     /**
-     * Value for {@link #flags}: true if the application is blocked via restrictions and for
-     * most purposes is considered as not installed.
-     * {@hide}
+     * Value for {@link #flags}: true if code from this application will need to be
+     * loaded into other applications' processes. On devices that support multiple
+     * instruction sets, this implies the code might be loaded into a process that's
+     * using any of the devices supported instruction sets.
+     *
+     * <p> The system might treat such applications specially, for eg., by
+     * extracting the application's native libraries for all supported instruction
+     * sets or by compiling the application's dex code for all supported instruction
+     * sets.
      */
-    public static final int FLAG_BLOCKED = 1<<27;
+    public static final int FLAG_MULTIARCH  = 1 << 31;
 
     /**
      * Flags associated with the application.  Any combination of
@@ -364,7 +395,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * {@link #FLAG_SUPPORTS_LARGE_SCREENS}, {@link #FLAG_SUPPORTS_XLARGE_SCREENS},
      * {@link #FLAG_RESIZEABLE_FOR_SCREENS},
      * {@link #FLAG_SUPPORTS_SCREEN_DENSITIES}, {@link #FLAG_VM_SAFE_MODE},
-     * {@link #FLAG_INSTALLED}.
+     * {@link #FLAG_INSTALLED}, {@link #FLAG_IS_GAME}.
      */
     public int flags = 0;
 
@@ -392,18 +423,36 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     public int largestWidthLimitDp = 0;
 
+    /** {@hide} */
+    public String scanSourceDir;
+    /** {@hide} */
+    public String scanPublicSourceDir;
+
     /**
-     * Full path to the location of this package.
+     * Full path to the base APK for this application.
      */
     public String sourceDir;
 
     /**
-     * Full path to the location of the publicly available parts of this
-     * package (i.e. the primary resource package and manifest).  For
-     * non-forward-locked apps this will be the same as {@link #sourceDir).
+     * Full path to the publicly available parts of {@link #sourceDir},
+     * including resources and manifest. This may be different from
+     * {@link #sourceDir} if an application is forward locked.
      */
     public String publicSourceDir;
-    
+
+    /**
+     * Full paths to zero or more split APKs that, when combined with the base
+     * APK defined in {@link #sourceDir}, form a complete application.
+     */
+    public String[] splitSourceDirs;
+
+    /**
+     * Full path to the publicly available parts of {@link #splitSourceDirs},
+     * including resources and manifest. This may be different from
+     * {@link #splitSourceDirs} if an application is forward locked.
+     */
+    public String[] splitPublicSourceDirs;
+
     /**
      * Full paths to the locations of extra resource packages this application
      * uses. This field is only used if there are extra resource packages,
@@ -442,6 +491,62 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public String nativeLibraryDir;
 
     /**
+     * Full path where unpacked native libraries for {@link #secondaryCpuAbi}
+     * are stored, if present.
+     *
+     * The main reason this exists is for bundled multi-arch apps, where
+     * it's not trivial to calculate the location of libs for the secondary abi
+     * given the location of the primary.
+     *
+     * TODO: Change the layout of bundled installs so that we can use
+     * nativeLibraryRootDir & nativeLibraryRootRequiresIsa there as well.
+     * (e.g {@code [ "/system/app-lib/Foo/arm", "/system/app-lib/Foo/arm64" ]}
+     * instead of {@code [ "/system/lib/Foo", "/system/lib64/Foo" ]}.
+     *
+     * @hide
+     */
+    public String secondaryNativeLibraryDir;
+
+    /**
+     * The root path where unpacked native libraries are stored.
+     * <p>
+     * When {@link #nativeLibraryRootRequiresIsa} is set, the libraries are
+     * placed in ISA-specific subdirectories under this path, otherwise the
+     * libraries are placed directly at this path.
+     *
+     * @hide
+     */
+    public String nativeLibraryRootDir;
+
+    /**
+     * Flag indicating that ISA must be appended to
+     * {@link #nativeLibraryRootDir} to be useful.
+     *
+     * @hide
+     */
+    public boolean nativeLibraryRootRequiresIsa;
+
+    /**
+     * The primary ABI that this application requires, This is inferred from the ABIs
+     * of the native JNI libraries the application bundles. Will be {@code null}
+     * if this application does not require any particular ABI.
+     *
+     * If non-null, the application will always be launched with this ABI.
+     *
+     * {@hide}
+     */
+    public String primaryCpuAbi;
+
+    /**
+     * The secondary ABI for this application. Might be non-null for multi-arch
+     * installs. The application itself never uses this ABI, but other applications that
+     * use its code might.
+     *
+     * {@hide}
+     */
+    public String secondaryCpuAbi;
+
+    /**
      * The kernel user-ID that has been assigned to this application;
      * currently this is not a unique ID (multiple applications can have
      * the same uid).
@@ -457,7 +562,13 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * behavior was introduced.
      */
     public int targetSdkVersion;
-    
+
+    /**
+     * The app's declared version code.
+     * @hide
+     */
+    public int versionCode;
+
     /**
      * When false, indicates that all components within this application are
      * considered disabled, regardless of their individually set enabled status.
@@ -471,17 +582,18 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public int enabledSetting = PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
 
     /**
-     * Is given application theme agnostic, i.e. behaves properly when default theme is changed.
-     * {@hide}
-     */
-    public boolean isThemeable = false;
-
-    /**
      * For convenient access to package's install location.
      * @hide
      */
     public int installLocation = PackageInfo.INSTALL_LOCATION_UNSPECIFIED;
-    
+
+    /**
+     * When true, indicates that any one component within this application is
+     * protected.
+     * @hide
+     */
+    public boolean protect = false;
+
     public void dump(Printer pw, String prefix) {
         super.dumpFront(pw, prefix);
         if (className != null) {
@@ -498,12 +610,15 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
                 + " compatibleWidthLimitDp=" + compatibleWidthLimitDp
                 + " largestWidthLimitDp=" + largestWidthLimitDp);
         pw.println(prefix + "sourceDir=" + sourceDir);
-        if (sourceDir == null) {
-            if (publicSourceDir != null) {
-                pw.println(prefix + "publicSourceDir=" + publicSourceDir);
-            }
-        } else if (!sourceDir.equals(publicSourceDir)) {
+        if (!Objects.equals(sourceDir, publicSourceDir)) {
             pw.println(prefix + "publicSourceDir=" + publicSourceDir);
+        }
+        if (!ArrayUtils.isEmpty(splitSourceDirs)) {
+            pw.println(prefix + "splitSourceDirs=" + Arrays.toString(splitSourceDirs));
+        }
+        if (!ArrayUtils.isEmpty(splitPublicSourceDirs)
+                && !Arrays.equals(splitSourceDirs, splitPublicSourceDirs)) {
+            pw.println(prefix + "splitPublicSourceDirs=" + Arrays.toString(splitPublicSourceDirs));
         }
         if (resourceDirs != null) {
             pw.println(prefix + "resourceDirs=" + resourceDirs);
@@ -515,7 +630,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         if (sharedLibraryFiles != null) {
             pw.println(prefix + "sharedLibraryFiles=" + sharedLibraryFiles);
         }
-        pw.println(prefix + "enabled=" + enabled + " targetSdkVersion=" + targetSdkVersion);
+        pw.println(prefix + "enabled=" + enabled + " targetSdkVersion=" + targetSdkVersion
+                + " versionCode=" + versionCode);
         if (manageSpaceActivityName != null) {
             pw.println(prefix + "manageSpaceActivityName="+manageSpaceActivityName);
         }
@@ -574,15 +690,25 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         requiresSmallestWidthDp = orig.requiresSmallestWidthDp;
         compatibleWidthLimitDp = orig.compatibleWidthLimitDp;
         largestWidthLimitDp = orig.largestWidthLimitDp;
+        scanSourceDir = orig.scanSourceDir;
+        scanPublicSourceDir = orig.scanPublicSourceDir;
         sourceDir = orig.sourceDir;
         publicSourceDir = orig.publicSourceDir;
+        splitSourceDirs = orig.splitSourceDirs;
+        splitPublicSourceDirs = orig.splitPublicSourceDirs;
         nativeLibraryDir = orig.nativeLibraryDir;
+        secondaryNativeLibraryDir = orig.secondaryNativeLibraryDir;
+        nativeLibraryRootDir = orig.nativeLibraryRootDir;
+        nativeLibraryRootRequiresIsa = orig.nativeLibraryRootRequiresIsa;
+        primaryCpuAbi = orig.primaryCpuAbi;
+        secondaryCpuAbi = orig.secondaryCpuAbi;
         resourceDirs = orig.resourceDirs;
         seinfo = orig.seinfo;
         sharedLibraryFiles = orig.sharedLibraryFiles;
         dataDir = orig.dataDir;
         uid = orig.uid;
         targetSdkVersion = orig.targetSdkVersion;
+        versionCode = orig.versionCode;
         enabled = orig.enabled;
         enabledSetting = orig.enabledSetting;
         installLocation = orig.installLocation;
@@ -590,7 +716,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         descriptionRes = orig.descriptionRes;
         uiOptions = orig.uiOptions;
         backupAgentName = orig.backupAgentName;
-        isThemeable = orig.isThemeable;
+        protect = orig.protect;
     }
 
 
@@ -615,15 +741,25 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         dest.writeInt(requiresSmallestWidthDp);
         dest.writeInt(compatibleWidthLimitDp);
         dest.writeInt(largestWidthLimitDp);
+        dest.writeString(scanSourceDir);
+        dest.writeString(scanPublicSourceDir);
         dest.writeString(sourceDir);
         dest.writeString(publicSourceDir);
+        dest.writeStringArray(splitSourceDirs);
+        dest.writeStringArray(splitPublicSourceDirs);
         dest.writeString(nativeLibraryDir);
+        dest.writeString(secondaryNativeLibraryDir);
+        dest.writeString(nativeLibraryRootDir);
+        dest.writeInt(nativeLibraryRootRequiresIsa ? 1 : 0);
+        dest.writeString(primaryCpuAbi);
+        dest.writeString(secondaryCpuAbi);
         dest.writeStringArray(resourceDirs);
         dest.writeString(seinfo);
         dest.writeStringArray(sharedLibraryFiles);
         dest.writeString(dataDir);
         dest.writeInt(uid);
         dest.writeInt(targetSdkVersion);
+        dest.writeInt(versionCode);
         dest.writeInt(enabled ? 1 : 0);
         dest.writeInt(enabledSetting);
         dest.writeInt(installLocation);
@@ -631,7 +767,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         dest.writeString(backupAgentName);
         dest.writeInt(descriptionRes);
         dest.writeInt(uiOptions);
-        dest.writeInt(isThemeable? 1 : 0);
+        dest.writeInt(protect ? 1 : 0);
     }
 
     public static final Parcelable.Creator<ApplicationInfo> CREATOR
@@ -655,15 +791,25 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         requiresSmallestWidthDp = source.readInt();
         compatibleWidthLimitDp = source.readInt();
         largestWidthLimitDp = source.readInt();
+        scanSourceDir = source.readString();
+        scanPublicSourceDir = source.readString();
         sourceDir = source.readString();
         publicSourceDir = source.readString();
+        splitSourceDirs = source.readStringArray();
+        splitPublicSourceDirs = source.readStringArray();
         nativeLibraryDir = source.readString();
+        secondaryNativeLibraryDir = source.readString();
+        nativeLibraryRootDir = source.readString();
+        nativeLibraryRootRequiresIsa = source.readInt() != 0;
+        primaryCpuAbi = source.readString();
+        secondaryCpuAbi = source.readString();
         resourceDirs = source.readStringArray();
         seinfo = source.readString();
         sharedLibraryFiles = source.readStringArray();
         dataDir = source.readString();
         uid = source.readInt();
         targetSdkVersion = source.readInt();
+        versionCode = source.readInt();
         enabled = source.readInt() != 0;
         enabledSetting = source.readInt();
         installLocation = source.readInt();
@@ -671,7 +817,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         backupAgentName = source.readString();
         descriptionRes = source.readInt();
         uiOptions = source.readInt();
-        isThemeable = source.readInt() != 0;
+        protect = source.readInt() != 0;
     }
 
     /**
@@ -709,7 +855,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     /**
      * @hide
      */
-    @Override protected Drawable loadDefaultIcon(PackageManager pm) {
+    @Override
+    public Drawable loadDefaultIcon(PackageManager pm) {
         if ((flags & FLAG_EXTERNAL_STORAGE) != 0
                 && isPackageUnavailable(pm)) {
             return Resources.getSystem().getDrawable(
@@ -725,11 +872,25 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
             return true;
         }
     }
-    
+
     /**
      * @hide
      */
     @Override protected ApplicationInfo getApplicationInfo() {
         return this;
     }
+
+    /** {@hide} */ public void setCodePath(String codePath) { scanSourceDir = codePath; }
+    /** {@hide} */ public void setBaseCodePath(String baseCodePath) { sourceDir = baseCodePath; }
+    /** {@hide} */ public void setSplitCodePaths(String[] splitCodePaths) { splitSourceDirs = splitCodePaths; }
+    /** {@hide} */ public void setResourcePath(String resourcePath) { scanPublicSourceDir = resourcePath; }
+    /** {@hide} */ public void setBaseResourcePath(String baseResourcePath) { publicSourceDir = baseResourcePath; }
+    /** {@hide} */ public void setSplitResourcePaths(String[] splitResourcePaths) { splitPublicSourceDirs = splitResourcePaths; }
+
+    /** {@hide} */ public String getCodePath() { return scanSourceDir; }
+    /** {@hide} */ public String getBaseCodePath() { return sourceDir; }
+    /** {@hide} */ public String[] getSplitCodePaths() { return splitSourceDirs; }
+    /** {@hide} */ public String getResourcePath() { return scanPublicSourceDir; }
+    /** {@hide} */ public String getBaseResourcePath() { return publicSourceDir; }
+    /** {@hide} */ public String[] getSplitResourcePaths() { return splitSourceDirs; }
 }

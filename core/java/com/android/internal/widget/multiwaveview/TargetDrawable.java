@@ -18,7 +18,6 @@ package com.android.internal.widget.multiwaveview;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.Log;
@@ -28,11 +27,9 @@ public class TargetDrawable {
     private static final boolean DEBUG = false;
 
     public static final int[] STATE_ACTIVE =
-            { android.R.attr.state_enabled, android.R.attr.state_active,
-                -android.R.attr.state_focused };
+            { android.R.attr.state_enabled, android.R.attr.state_active };
     public static final int[] STATE_INACTIVE =
-            { android.R.attr.state_enabled, -android.R.attr.state_active,
-                -android.R.attr.state_focused };
+            { android.R.attr.state_enabled, -android.R.attr.state_active };
     public static final int[] STATE_FOCUSED =
             { android.R.attr.state_enabled, -android.R.attr.state_active,
                 android.R.attr.state_focused };
@@ -57,14 +54,6 @@ public class TargetDrawable {
         // Note we explicitly don't set mResourceId to resId since we allow the drawable to be
         // swapped at runtime and want to re-use the existing resource id for identification.
         Drawable drawable = resId == 0 ? null : res.getDrawable(resId);
-        // Mutate the drawable so we can animate shared drawable properties.
-        mDrawable = drawable != null ? drawable.mutate() : null;
-        resizeDrawables();
-        setState(STATE_INACTIVE);
-    }
-
-    public TargetDrawable(Resources res, Drawable drawable) {
-        mResourceId = 0;
         // Mutate the drawable so we can animate shared drawable properties.
         mDrawable = drawable != null ? drawable.mutate() : null;
         resizeDrawables();

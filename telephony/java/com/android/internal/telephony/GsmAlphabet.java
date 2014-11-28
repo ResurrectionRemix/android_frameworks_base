@@ -609,16 +609,25 @@ public class GsmAlphabet {
                 }
             } else {
                 if (prevWasEscape) {
-                    char shiftChar = shiftTableToChar.charAt(c);
+                    char shiftChar =
+                            c < shiftTableToChar.length() ? shiftTableToChar.charAt(c) : ' ';
                     if (shiftChar == ' ') {
                         // display character from main table if not present in shift table
-                        ret.append(languageTableToChar.charAt(c));
+                        if (c < languageTableToChar.length()) {
+                            ret.append(languageTableToChar.charAt(c));
+                        } else {
+                            ret.append(' ');
+                        }
                     } else {
                         ret.append(shiftChar);
                     }
                 } else {
                     if (!isMbcs || c < 0x80 || i + 1 >= offset + length) {
-                        ret.append(languageTableToChar.charAt(c));
+                        if (c < languageTableToChar.length()) {
+                            ret.append(languageTableToChar.charAt(c));
+                        } else {
+                            ret.append(' ');
+                        }
                     } else {
                         // isMbcs must be true. So both mbcsBuffer and charset are initialized.
                         mbcsBuffer.clear();
@@ -743,6 +752,18 @@ public class GsmAlphabet {
             // count as a space char
             return 1;
         }
+    }
+
+    public static boolean isGsmSeptets(char c) {
+        if (sCharsToGsmTables[0].get(c, -1) != -1) {
+            return true;
+        }
+
+        if (sCharsToShiftTables[0].get(c, -1) != -1) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -991,7 +1012,7 @@ public class GsmAlphabet {
      *
      * @param tables the new list of enabled single shift tables
      */
-    static synchronized void setEnabledSingleShiftTables(int[] tables) {
+    public static synchronized void setEnabledSingleShiftTables(int[] tables) {
         sEnabledSingleShiftTables = tables;
         sDisableCountryEncodingCheck = true;
 
@@ -1009,7 +1030,7 @@ public class GsmAlphabet {
      *
      * @param tables the new list of enabled locking shift tables
      */
-    static synchronized void setEnabledLockingShiftTables(int[] tables) {
+    public static synchronized void setEnabledLockingShiftTables(int[] tables) {
         sEnabledLockingShiftTables = tables;
         sDisableCountryEncodingCheck = true;
     }
@@ -1021,7 +1042,7 @@ public class GsmAlphabet {
      *
      * @return the list of enabled single shift tables
      */
-    static synchronized int[] getEnabledSingleShiftTables() {
+    public static synchronized int[] getEnabledSingleShiftTables() {
         return sEnabledSingleShiftTables;
     }
 
@@ -1032,7 +1053,7 @@ public class GsmAlphabet {
      *
      * @return the list of enabled locking shift tables
      */
-    static synchronized int[] getEnabledLockingShiftTables() {
+    public static synchronized int[] getEnabledLockingShiftTables() {
         return sEnabledLockingShiftTables;
     }
 

@@ -34,7 +34,6 @@ Program::Program(const ProgramDescription& description, const char* vertex, cons
     mHasColorUniform = false;
     mHasSampler = false;
     mUse = false;
-    mProjectionOffset = false;
 
     // No need to cache compiled shaders, rely instead on Android's
     // persistent shaders cache
@@ -61,7 +60,6 @@ Program::Program(const ProgramDescription& description, const char* vertex, cons
             GLint status;
             glGetProgramiv(mProgramId, GL_LINK_STATUS, &status);
             if (status != GL_TRUE) {
-                ALOGE("Error while linking shaders:");
                 GLint infoLen = 0;
                 glGetProgramiv(mProgramId, GL_INFO_LOG_LENGTH, &infoLen);
                 if (infoLen > 1) {
@@ -69,14 +67,7 @@ Program::Program(const ProgramDescription& description, const char* vertex, cons
                     glGetProgramInfoLog(mProgramId, infoLen, 0, &log[0]);
                     ALOGE("%s", log);
                 }
-
-                glDetachShader(mProgramId, mVertexShader);
-                glDetachShader(mProgramId, mFragmentShader);
-
-                glDeleteShader(mVertexShader);
-                glDeleteShader(mFragmentShader);
-
-                glDeleteProgram(mProgramId);
+                LOG_ALWAYS_FATAL("Error while linking shaders");
             } else {
                 mInitialized = true;
             }
@@ -154,8 +145,7 @@ GLuint Program::buildShader(const char* source, GLenum type) {
         // use a fixed size instead
         GLchar log[512];
         glGetShaderInfoLog(shader, sizeof(log), 0, &log[0]);
-        ALOGE("Error while compiling shader: %s", log);
-        glDeleteShader(shader);
+        LOG_ALWAYS_FATAL("Error while compiling shader: %s", log);
         return 0;
     }
 
@@ -164,7 +154,7 @@ GLuint Program::buildShader(const char* source, GLenum type) {
 
 void Program::set(const mat4& projectionMatrix, const mat4& modelViewMatrix,
         const mat4& transformMatrix, bool offset) {
-    if (offset != mProjectionOffset || projectionMatrix != mProjection) {
+    if (projectionMatrix != mProjection || offset != mOffset) {
         if (CC_LIKELY(!offset)) {
             glUniformMatrix4fv(projection, 1, GL_FALSE, &projectionMatrix.data[0]);
         } else {
@@ -174,11 +164,11 @@ void Program::set(const mat4& projectionMatrix, const mat4& modelViewMatrix,
             // up and to the left.
             // This offset value is based on an assumption that some hardware may use as
             // little as 12.4 precision, so we offset by slightly more than 1/16.
-            p.translate(Vertex::gGeometryFudgeFactor, Vertex::gGeometryFudgeFactor);
+            p.translate(Vertex::GeometryFudgeFactor(), Vertex::GeometryFudgeFactor());
             glUniformMatrix4fv(projection, 1, GL_FALSE, &p.data[0]);
         }
         mProjection = projectionMatrix;
-        mProjectionOffset = offset;
+        mOffset = offset;
     }
 
     mat4 t(transformMatrix);

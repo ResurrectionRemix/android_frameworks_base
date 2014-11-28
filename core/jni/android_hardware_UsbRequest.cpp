@@ -32,7 +32,7 @@ static jfieldID field_context;
 
 struct usb_request* get_request_from_object(JNIEnv* env, jobject java_request)
 {
-    return (struct usb_request*)env->GetIntField(java_request, field_context);
+    return (struct usb_request*)env->GetLongField(java_request, field_context);
 }
 
 // in android_hardware_UsbDeviceConnection.cpp
@@ -61,7 +61,7 @@ android_hardware_UsbRequest_init(JNIEnv *env, jobject thiz, jobject java_device,
 
     struct usb_request* request = usb_request_new(device, &desc);
     if (request)
-        env->SetIntField(thiz, field_context, (int)request);
+        env->SetLongField(thiz, field_context, (jlong)request);
     return (request != NULL);
 }
 
@@ -72,7 +72,7 @@ android_hardware_UsbRequest_close(JNIEnv *env, jobject thiz)
     struct usb_request* request = get_request_from_object(env, thiz);
     if (request) {
         usb_request_free(request);
-        env->SetIntField(thiz, field_context, 0);
+        env->SetLongField(thiz, field_context, 0);
     }
 }
 
@@ -100,28 +100,29 @@ android_hardware_UsbRequest_queue_array(JNIEnv *env, jobject thiz,
     }
     request->buffer_length = length;
 
+    // save a reference to ourselves so UsbDeviceConnection.waitRequest() can find us
+    request->client_data = (void *)env->NewGlobalRef(thiz);
+
     if (usb_request_queue(request)) {
         if (request->buffer) {
             // free our buffer if usb_request_queue fails
             free(request->buffer);
             request->buffer = NULL;
         }
+        env->DeleteGlobalRef((jobject)request->client_data);
         return false;
-    } else {
-        // save a reference to ourselves so UsbDeviceConnection.waitRequest() can find us
-        request->client_data = (void *)env->NewGlobalRef(thiz);
-        return true;
     }
+    return true;
 }
 
-static int
+static jint
 android_hardware_UsbRequest_dequeue_array(JNIEnv *env, jobject thiz,
         jbyteArray buffer, jint length, jboolean out)
 {
     struct usb_request* request = get_request_from_object(env, thiz);
     if (!request) {
         ALOGE("request is closed in native_dequeue");
-        return -1;
+        return (jint) -1;
     }
 
     if (buffer && length && request->buffer && !out) {
@@ -130,7 +131,7 @@ android_hardware_UsbRequest_dequeue_array(JNIEnv *env, jobject thiz,
     }
     free(request->buffer);
     env->DeleteGlobalRef((jobject)request->client_data);
-    return request->actual_length;
+    return (jint) request->actual_length;
 }
 
 static jboolean
@@ -152,29 +153,30 @@ android_hardware_UsbRequest_queue_direct(JNIEnv *env, jobject thiz,
     }
     request->buffer_length = length;
 
+    // save a reference to ourselves so UsbDeviceConnection.waitRequest() can find us
+    // we also need this to make sure our native buffer is not deallocated
+    // while IO is active
+    request->client_data = (void *)env->NewGlobalRef(thiz);
+
     if (usb_request_queue(request)) {
         request->buffer = NULL;
+        env->DeleteGlobalRef((jobject)request->client_data);
         return false;
-    } else {
-        // save a reference to ourselves so UsbDeviceConnection.waitRequest() can find us
-        // we also need this to make sure our native buffer is not deallocated
-        // while IO is active
-        request->client_data = (void *)env->NewGlobalRef(thiz);
-        return true;
     }
+    return true;
 }
 
-static int
+static jint
 android_hardware_UsbRequest_dequeue_direct(JNIEnv *env, jobject thiz)
 {
     struct usb_request* request = get_request_from_object(env, thiz);
     if (!request) {
         ALOGE("request is closed in native_dequeue");
-        return -1;
+        return (jint) -1;
     }
     // all we need to do is delete our global ref
     env->DeleteGlobalRef((jobject)request->client_data);
-    return request->actual_length;
+    return (jint) request->actual_length;
 }
 
 static jboolean
@@ -207,7 +209,7 @@ int register_android_hardware_UsbRequest(JNIEnv *env)
         ALOGE("Can't find android/hardware/usb/UsbRequest");
         return -1;
     }
-    field_context = env->GetFieldID(clazz, "mNativeContext", "I");
+    field_context = env->GetFieldID(clazz, "mNativeContext", "J");
     if (field_context == NULL) {
         ALOGE("Can't find UsbRequest.mNativeContext");
         return -1;

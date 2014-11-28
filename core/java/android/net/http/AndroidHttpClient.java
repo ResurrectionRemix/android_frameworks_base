@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
+ * Not a Contribution.
+ *
  * Copyright (C) 2007 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -254,11 +257,6 @@ public final class AndroidHttpClient implements HttpClient {
 
     private boolean isMmsRequest()
     {
-        if(delegate.getParams() == null ||
-                delegate.getParams().getParameter(CoreProtocolPNames.USER_AGENT) == null) {
-            return false;
-        }
-
         if(delegate.getParams().getParameter(CoreProtocolPNames.USER_AGENT).toString().contains("Android-Mms"))
             return true;
 

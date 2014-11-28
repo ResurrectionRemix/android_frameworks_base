@@ -7,13 +7,11 @@ page.title=Platforms
 
 <h2>See Also</h2>
 <ol>
+  <li><a href="{@docRoot}about/versions/kitkat.html">KitKat
+Highlights and APIs</a></li>
   <li><a href="{@docRoot}about/versions/jelly-bean.html">Jelly Bean
 Highlights and APIs</a></li>
   <li><a href="{@docRoot}about/versions/android-4.0-highlights.html">Ice Cream Sandwich
-Highlights and APIs</a></li>
-  <li><a href="{@docRoot}about/versions/android-3.0-highlights.html">Honeycomb
-Highlights and APIs</a></li>
-  <li><a href="{@docRoot}about/versions/android-2.3-highlights.html">Gingerbread
 Highlights and APIs</a></li>
 </ol>
 
@@ -49,14 +47,89 @@ most recent release and restart the SDK Manager. If you do not, the latest Andro
 components will not be available for download.</p>
 
 
+<h2 id="5.0">Android 5.0</h2>
+
+<div class="toggle-content opened">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-opened.png"
+class="toggle-content-img" alt="" />Revision 1</a> <em>(October 2014)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <p>Initial release for Android 5.0 (API level 21).</p>
+    <p>Dependencies:</p>
+    <ul>
+      <li>Android SDK Platform-tools r21 or higher is required.</li>
+      <li>Android SDK Tools 23.0.5 or higher is required.</li>
+    </ul>
+  </div>
+
+  <h3>Device Definitions</h3>
+
+  <p>The platform includes the following new device definitions for use in creating
+  Android Virtual Devices in the <a href="{@docRoot}tools/help/avd-manager.html">AVD Manager</a>:</p>
+ 
+  <ul>
+  <li>Nexus 6 (5.96", 1440 x 2560, Normal 560dpi screen) </li>
+  <li>Nexus 9 (8.9", 2048 x 1536, X-Large xhdpi screen) </li>
+  </ul>
+
+</div>
+
+
+<h2 id="4.4">Android 4.4W</h2>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png"
+class="toggle-content-img" alt="" />Revision 1</a> <em>(June 2014)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <p>Initial release for Android Wear.</p>
+    <p>Dependencies:</p>
+    <ul>
+      <li>Android SDK Platform-tools r20 or higher is required.</li>
+      <li>Android SDK Tools 23.0 or higher is required.</li>
+    </ul>
+  </div>
+
+  <h3>Device Definitions</h3>
+
+  <p>The platform includes the following device definitions for use in creating Android Virtual
+  Devices in the <a href="{@docRoot}tools/help/avd-manager.html">AVD Manager</a>:</p>
+
+  <ul>
+    <li>Android Wear Round (320 x 320, hdpi)</li>
+    <li>Android Wear Square (320 x 320, hdpi)</li>
+  </ul>
+</div>
 
 <h2 id="4.4">Android 4.4</h2>
 
-
-<div class="toggle-content opened">
-
+<div class="toggle-content closed">
   <p><a href="#" onclick="return toggleContent(this)">
-    <img src="{@docRoot}assets/images/triangle-opened.png"
+    <img src="{@docRoot}assets/images/triangle-closed.png"
+class="toggle-content-img" alt="" />Revision 2</a> <em>(December 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <p>Maintenance release. The system version is 4.4.2.</p>
+    <dl>
+      <dt>Dependencies:</dt>
+      <dd>Android SDK Platform-tools r19 or higher is required.</dd>
+      <dd>Android SDK Tools 22.3 or higher is recommended.</dd>
+    </dl>
+
+  </div>
+</div>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png"
 class="toggle-content-img" alt="" />Revision 1</a> <em>(October 2013)</em>
   </p>
 
@@ -72,19 +145,65 @@ class="toggle-content-img" alt="" />Revision 1</a> <em>(October 2013)</em>
   </div>
 </div>
 
+
+
 <h3 id="gsi-4.4">Google APIs System Image</h3>
 
-<div class="toggle-content opened">
+<div class="toggle-content closed">
   <p><a href="#" onclick="return toggleContent(this)">
-    <img src="{@docRoot}assets/images/triangle-opened.png"
+    <img src="{@docRoot}assets/images/triangle-closed.png"
+class="toggle-content-img" alt="" />Revision 4</a> <em>(March 2014)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <p>This release includes
+    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 4.3,
+    allowing you to test your application in an emulator using the latest Google Play services.</p>
+
+  </div>
+</div>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png"
+class="toggle-content-img" alt="" />Revision 3</a> <em>(February 2014)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <p>This release includes
+    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 4.2.42,
+    allowing you to test your application in an emulator using the latest Google Play services.</p>
+
+  </div>
+</div>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png"
+class="toggle-content-img" alt="" />Revision 2</a> <em>(December 2013)</em>
+  </p>
+
+  <div class="toggle-content-toggleme">
+
+    <p>This release includes
+    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 4.0.33.</p>
+
+  </div>
+</div>
+
+<div class="toggle-content closed">
+  <p><a href="#" onclick="return toggleContent(this)">
+    <img src="{@docRoot}assets/images/triangle-closed.png"
 class="toggle-content-img" alt="" />Revision 1</a> <em>(October 2013)</em>
   </p>
 
   <div class="toggle-content-toggleme">
 
     <p>Initial release. This release includes
-    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 4.0.30,
-    allowing you to test your application in an emulator using the latest Google Play services.</p>
+    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 4.0.30.
+    </p>
 
   </div>
 </div>
@@ -143,8 +262,8 @@ class="toggle-content-img" alt="" />Revision 3</a> <em>(September 2013)</em>
   <div class="toggle-content-toggleme">
 
     <p>Maintenance update. This release includes
-    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 3.2.65,
-    allowing you to test your application in an emulator using the latest Google Play services.</p>
+    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 3.2.65.
+    </p>
 
   </div>
 </div>
@@ -158,8 +277,8 @@ class="toggle-content-img" alt="" />Revision 2</a> <em>(August 2013)</em>
   <div class="toggle-content-toggleme">
 
     <p>Maintenance update. This release includes
-    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 3.2.25,
-    allowing you to test your application in an emulator using the latest Google Play services.</p>
+    <a href="{@docRoot}google/play-services/index.html">Google Play services</a> version 3.2.25.
+    </p>
 
   </div>
 </div>

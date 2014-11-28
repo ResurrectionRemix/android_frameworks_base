@@ -212,8 +212,21 @@ public class MenuBuilder implements Menu {
      * @param presenter The presenter to add
      */
     public void addMenuPresenter(MenuPresenter presenter) {
+        addMenuPresenter(presenter, mContext);
+    }
+
+    /**
+     * Add a presenter to this menu that uses an alternate context for
+     * inflating menu items. This will only hold a WeakReference; you do not
+     * need to explicitly remove a presenter, but you can using
+     * {@link #removeMenuPresenter(MenuPresenter)}.
+     *
+     * @param presenter The presenter to add
+     * @param menuContext The context used to inflate menu items
+     */
+    public void addMenuPresenter(MenuPresenter presenter, Context menuContext) {
         mPresenters.add(new WeakReference<MenuPresenter>(presenter));
-        presenter.initForMenu(mContext, this);
+        presenter.initForMenu(menuContext, this);
         mIsActionItemsStale = true;
     }
 
@@ -247,10 +260,16 @@ public class MenuBuilder implements Menu {
         startDispatchingItemsChanged();
     }
     
-    private boolean dispatchSubMenuSelected(SubMenuBuilder subMenu) {
+    private boolean dispatchSubMenuSelected(SubMenuBuilder subMenu,
+            MenuPresenter preferredPresenter) {
         if (mPresenters.isEmpty()) return false;
 
         boolean result = false;
+
+        // Try the preferred presenter first.
+        if (preferredPresenter != null) {
+            result = preferredPresenter.onSubMenuSelected(subMenu);
+        }
 
         for (WeakReference<MenuPresenter> ref : mPresenters) {
             final MenuPresenter presenter = ref.get();
@@ -386,8 +405,8 @@ public class MenuBuilder implements Menu {
     private MenuItem addInternal(int group, int id, int categoryOrder, CharSequence title) {
         final int ordering = getOrdering(categoryOrder);
         
-        final MenuItemImpl item = new MenuItemImpl(this, group, id, categoryOrder,
-                ordering, title, mDefaultShowAsAction);
+        final MenuItemImpl item = createNewMenuItem(group, id, categoryOrder, ordering, title,
+                mDefaultShowAsAction);
 
         if (mCurrentMenuInfo != null) {
             // Pass along the current menu info
@@ -399,7 +418,14 @@ public class MenuBuilder implements Menu {
         
         return item;
     }
-    
+
+    // Layoutlib overrides this method to return its custom implementation of MenuItemImpl
+    private MenuItemImpl createNewMenuItem(int group, int id, int categoryOrder, int ordering,
+            CharSequence title, int defaultShowAsAction) {
+        return new MenuItemImpl(this, group, id, categoryOrder, ordering, title,
+                defaultShowAsAction);
+    }
+
     public MenuItem add(CharSequence title) {
         return addInternal(0, 0, 0, title);
     }
@@ -865,6 +891,10 @@ public class MenuBuilder implements Menu {
     }
 
     public boolean performItemAction(MenuItem item, int flags) {
+        return performItemAction(item, null, flags);
+    }
+
+    public boolean performItemAction(MenuItem item, MenuPresenter preferredPresenter, int flags) {
         MenuItemImpl itemImpl = (MenuItemImpl) item;
         
         if (itemImpl == null || !itemImpl.isEnabled()) {
@@ -889,7 +919,7 @@ public class MenuBuilder implements Menu {
             if (providerHasSubMenu) {
                 provider.onPrepareSubMenu(subMenu);
             }
-            invoked |= dispatchSubMenuSelected(subMenu);
+            invoked |= dispatchSubMenuSelected(subMenu, preferredPresenter);
             if (!invoked) close(true);
         } else {
             if ((flags & FLAG_PERFORM_NO_CLOSE) == 0) {
@@ -909,7 +939,7 @@ public class MenuBuilder implements Menu {
      *            sub menu is about to be shown, <var>allMenusAreClosing</var>
      *            is false.
      */
-    final void close(boolean allMenusAreClosing) {
+    public final void close(boolean allMenusAreClosing) {
         if (mIsClosing) return;
 
         mIsClosing = true;
@@ -936,7 +966,7 @@ public class MenuBuilder implements Menu {
      *                         false if only item properties changed.
      *                         (Visibility is a structural property since it affects layout.)
      */
-    void onItemsChanged(boolean structureChanged) {
+    public void onItemsChanged(boolean structureChanged) {
         if (!mPreventDispatchingItemsChanged) {
             if (structureChanged) {
                 mIsVisibleItemsStale = true;
@@ -990,7 +1020,7 @@ public class MenuBuilder implements Menu {
         onItemsChanged(true);
     }
     
-    ArrayList<MenuItemImpl> getVisibleItems() {
+    public ArrayList<MenuItemImpl> getVisibleItems() {
         if (!mIsVisibleItemsStale) return mVisibleItems;
         
         // Refresh the visible items
@@ -1075,12 +1105,12 @@ public class MenuBuilder implements Menu {
         mIsActionItemsStale = false;
     }
     
-    ArrayList<MenuItemImpl> getActionItems() {
+    public ArrayList<MenuItemImpl> getActionItems() {
         flagActionItems();
         return mActionItems;
     }
     
-    ArrayList<MenuItemImpl> getNonActionItems() {
+    public ArrayList<MenuItemImpl> getNonActionItems() {
         flagActionItems();
         return mNonActionItems;
     }
@@ -1111,7 +1141,7 @@ public class MenuBuilder implements Menu {
             }
             
             if (iconRes > 0) {
-                mHeaderIcon = r.getDrawable(iconRes);
+                mHeaderIcon = getContext().getDrawable(iconRes);
             } else if (icon != null) {
                 mHeaderIcon = icon;
             }

@@ -1,5 +1,5 @@
 page.title=Printing Content
-page.tags="print","navigation","gesturedetector","scroller"
+page.tags=print,navigation,gesturedetector,scroller
 
 trainingnavtop=true
 startpage=true
@@ -16,6 +16,13 @@ startpage=true
 
   </div>
 </div>
+
+<a class="notice-developers-video wide" href="http://www.youtube.com/watch?v=Iub67ic87KI">
+<div>
+    <h3>Video</h3>
+    <p>DevBytes: Android 4.4 Printing API</p>
+</div>
+</a>
 
 <p>
   Android users frequently view content solely on their devices, but there are times when

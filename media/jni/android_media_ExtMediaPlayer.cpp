@@ -49,6 +49,7 @@ bool JNIExtMediaPlayerListener::checkExtMedia(JNIEnv *env, jobject thiz)
   {
     //Clear the exception as QCMediaPlayer is optional
     env->ExceptionClear();
+    ALOGE("QCMediaPlayer could not be located....");
   }
   return nRet;
 }

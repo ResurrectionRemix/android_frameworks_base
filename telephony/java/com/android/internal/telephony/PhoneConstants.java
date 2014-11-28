@@ -57,45 +57,30 @@ public class PhoneConstants {
     public static final int PHONE_TYPE_GSM = RILConstants.GSM_PHONE;
     public static final int PHONE_TYPE_CDMA = RILConstants.CDMA_PHONE;
     public static final int PHONE_TYPE_SIP = RILConstants.SIP_PHONE;
+    public static final int PHONE_TYPE_THIRD_PARTY = RILConstants.THIRD_PARTY_PHONE;
+    public static final int PHONE_TYPE_IMS = RILConstants.IMS_PHONE;
 
     // Modes for LTE_ON_CDMA
     public static final int LTE_ON_CDMA_UNKNOWN = RILConstants.LTE_ON_CDMA_UNKNOWN;
     public static final int LTE_ON_CDMA_FALSE = RILConstants.LTE_ON_CDMA_FALSE;
     public static final int LTE_ON_CDMA_TRUE = RILConstants.LTE_ON_CDMA_TRUE;
 
-    // Used for preferred network type
-    // Note NT_* substitute RILConstants.NETWORK_MODE_* above the Phone
-    public static final int NT_MODE_WCDMA_PREF   = RILConstants.NETWORK_MODE_WCDMA_PREF;
-    public static final int NT_MODE_GSM_ONLY     = RILConstants.NETWORK_MODE_GSM_ONLY;
-    public static final int NT_MODE_WCDMA_ONLY   = RILConstants.NETWORK_MODE_WCDMA_ONLY;
-    public static final int NT_MODE_GSM_UMTS     = RILConstants.NETWORK_MODE_GSM_UMTS;
-    public static final int NT_MODE_LTE_GSM_WCDMA= RILConstants.NETWORK_MODE_LTE_GSM_WCDMA;
-
-    public static final int NT_MODE_CDMA         = RILConstants.NETWORK_MODE_CDMA;
-
-    public static final int NT_MODE_CDMA_NO_EVDO = RILConstants.NETWORK_MODE_CDMA_NO_EVDO;
-    public static final int NT_MODE_EVDO_NO_CDMA = RILConstants.NETWORK_MODE_EVDO_NO_CDMA;
-    public static final int NT_MODE_GLOBAL       = RILConstants.NETWORK_MODE_GLOBAL;
-    public static final int NT_MODE_LTE_CDMA_EVDO = RILConstants.NETWORK_MODE_LTE_CDMA_EVDO;
-    public static final int NT_MODE_LTE_CMDA_EVDO_GSM_WCDMA = RILConstants.NETWORK_MODE_LTE_CMDA_EVDO_GSM_WCDMA;
-
-    public static final int NT_MODE_LTE_ONLY     = RILConstants.NETWORK_MODE_LTE_ONLY;
-    public static final int PREFERRED_NT_MODE    = RILConstants.PREFERRED_NETWORK_MODE;
-
-    // Number presentation type for caller id display (From internal/Conneciton.java)
-    public static int PRESENTATION_ALLOWED = 1;    // normal
-    public static int PRESENTATION_RESTRICTED = 2; // block by user
-    public static int PRESENTATION_UNKNOWN = 3;    // no specified or unknown by network
-    public static int PRESENTATION_PAYPHONE = 4;   // show pay phone info
+    // Number presentation type for caller id display (From internal/Connection.java)
+    public static final int PRESENTATION_ALLOWED = 1;    // normal
+    public static final int PRESENTATION_RESTRICTED = 2; // block by user
+    public static final int PRESENTATION_UNKNOWN = 3;    // no specified or unknown by network
+    public static final int PRESENTATION_PAYPHONE = 4;   // show pay phone info
 
 
     public static final String PHONE_NAME_KEY = "phoneName";
     public static final String FAILURE_REASON_KEY = "reason";
     public static final String STATE_CHANGE_REASON_KEY = "reason";
+    public static final String DATA_NETWORK_TYPE_KEY = "networkType";
+    public static final String DATA_FAILURE_CAUSE_KEY = "failCause";
     public static final String DATA_APN_TYPE_KEY = "apnType";
     public static final String DATA_APN_KEY = "apn";
     public static final String DATA_LINK_PROPERTIES_KEY = "linkProperties";
-    public static final String DATA_LINK_CAPABILITIES_KEY = "linkCapabilities";
+    public static final String DATA_NETWORK_CAPABILITIES_KEY = "networkCapabilities";
 
     public static final String DATA_IFACE_NAME_KEY = "iface";
     public static final String NETWORK_UNAVAILABLE_KEY = "networkUnvailable";
@@ -148,5 +133,62 @@ public class PhoneConstants {
     public static final String APN_TYPE_CBS = "cbs";
     /** APN type for IA Initial Attach APN */
     public static final String APN_TYPE_IA = "ia";
+    /** APN type for IA Emergency PDN */
+    public static final String APN_TYPE_EMERGENCY = "emergency";
 
+    public static final int RIL_CARD_MAX_APPS    = 8;
+
+    public static final int DEFAULT_CARD_INDEX   = 0;
+
+    public static final int MAX_PHONE_COUNT_SINGLE_SIM = 1;
+
+    public static final int MAX_PHONE_COUNT_DUAL_SIM = 2;
+
+    public static final int MAX_PHONE_COUNT_TRI_SIM = 3;
+
+    public static final String PHONE_KEY = "phone";
+
+    public static final String SLOT_KEY  = "slot";
+
+    // FIXME: This is used to pass a subId via intents, we need to look at its usage, which is
+    // FIXME: extensive, and see if this should be an array of all active subId's or ...?
+    public static final String SUBSCRIPTION_KEY  = "subscription";
+
+    public static final String SUB_SETTING  = "subSettings";
+
+    public static final int SUB1 = 0;
+    public static final int SUB2 = 1;
+    public static final int SUB3 = 2;
+
+    public static final int EVENT_SUBSCRIPTION_ACTIVATED   = 500;
+    public static final int EVENT_SUBSCRIPTION_DEACTIVATED = 501;
+
+    // TODO: Remove these constants and use an int instead.
+    public static final int SIM_ID_1 = 0;
+    public static final int SIM_ID_2 = 1;
+    public static final int SIM_ID_3 = 2;
+    public static final int SIM_ID_4 = 3;
+
+    public static final int PHONE_ID1 = 0;
+    public static final int PHONE_ID2 = 1;
+    public static final int PHONE_ID3 = 2;
+
+    // ICC SIM Application Types
+    // TODO: Replace the IccCardApplicationStatus.AppType enums with these constants
+    public static final int APPTYPE_UNKNOWN = 0;
+    public static final int APPTYPE_SIM = 1;
+    public static final int APPTYPE_USIM = 2;
+    public static final int APPTYPE_RUIM = 3;
+    public static final int APPTYPE_CSIM = 4;
+    public static final int APPTYPE_ISIM = 5;
+
+    public enum CardUnavailableReason {
+        REASON_CARD_REMOVED,
+        REASON_RADIO_UNAVAILABLE,
+        REASON_SIM_REFRESH_RESET,
+        REASON_APM_SIM_POWER_DOWN
+    };
+
+    // Initial MTU value.
+    public static final int UNSET_MTU = 0;
 }

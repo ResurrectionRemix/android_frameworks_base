@@ -17,7 +17,6 @@
 package android.bluetooth;
 
 import android.os.Handler;
-import android.os.Message;
 import android.os.ParcelUuid;
 
 import java.io.Closeable;
@@ -92,14 +91,13 @@ public final class BluetoothServerSocket implements Closeable {
      * @param type    type of socket
      * @param auth    require the remote device to be authenticated
      * @param encrypt require the connection to be encrypted
-     * @param port    remote port
      * @param uuid    uuid
      * @throws IOException On error, for example Bluetooth not available, or
      *                     insufficient privileges
      */
-    /*package*/ BluetoothServerSocket(int type, boolean auth, boolean encrypt, int port, ParcelUuid uuid)
+    /*package*/ BluetoothServerSocket(int type, boolean auth, boolean encrypt, ParcelUuid uuid)
             throws IOException {
-        mSocket = new BluetoothSocket(type, -1, auth, encrypt, null, port, uuid);
+        mSocket = new BluetoothSocket(type, -1, auth, encrypt, null, -1, uuid);
         mChannel = mSocket.getPort();
     }
 

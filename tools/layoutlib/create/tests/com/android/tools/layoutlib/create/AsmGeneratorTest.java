@@ -19,6 +19,7 @@ package com.android.tools.layoutlib.create;
 
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -33,8 +34,10 @@ import org.objectweb.asm.Type;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Map;
@@ -118,6 +121,11 @@ public class AsmGeneratorTest {
             }
 
             @Override
+            public Set<String> getExcludedClasses() {
+                return null;
+            }
+
+            @Override
             public String[] getDeleteReturns() {
                  // methods deleted from their return type.
                 return new String[0];
@@ -131,7 +139,8 @@ public class AsmGeneratorTest {
                 new String[] {        // include classes
                     "**"
                 },
-                new HashSet<String>(0) /* excluded classes */);
+                new HashSet<String>(0) /* excluded classes */,
+                new String[]{} /* include files */);
         aa.analyze();
         agen.generate();
 
@@ -182,6 +191,11 @@ public class AsmGeneratorTest {
             }
 
             @Override
+            public Set<String> getExcludedClasses() {
+                return Collections.singleton("java.lang.JavaClass");
+            }
+
+            @Override
             public String[] getDeleteReturns() {
                  // methods deleted from their return type.
                 return new String[0];
@@ -195,10 +209,15 @@ public class AsmGeneratorTest {
                 new String[] {        // include classes
                     "**"
                 },
-                new HashSet<String>(1));
+                new HashSet<String>(1),
+                new String[] {        /* include files */
+                    "mock_android/data/data*"
+                });
         aa.analyze();
         agen.generate();
-        Map<String, ClassReader> output = parseZip(mOsDestJar);
+        Map<String, ClassReader> output = new TreeMap<String, ClassReader>();
+        Map<String, InputStream> filesFound = new TreeMap<String, InputStream>();
+        parseZip(mOsDestJar, output, filesFound);
         boolean injectedClassFound = false;
         for (ClassReader cr: output.values()) {
             TestClassVisitor cv = new TestClassVisitor();
@@ -206,10 +225,87 @@ public class AsmGeneratorTest {
             injectedClassFound |= cv.mInjectedClassFound;
         }
         assertTrue(injectedClassFound);
+        assertArrayEquals(new String[] {"mock_android/data/dataFile"},
+                filesFound.keySet().toArray());
     }
 
-    private Map<String,ClassReader> parseZip(String jarPath) throws IOException {
-        TreeMap<String, ClassReader> classes = new TreeMap<String, ClassReader>();
+    @Test
+    public void testClassExclusion() throws IOException, LogAbortException {
+        ICreateInfo ci = new ICreateInfo() {
+            @Override
+            public Class<?>[] getInjectedClasses() {
+                return new Class<?>[0];
+            }
+
+            @Override
+            public String[] getDelegateMethods() {
+                return new String[0];
+            }
+
+            @Override
+            public String[] getDelegateClassNatives() {
+                return new String[0];
+            }
+
+            @Override
+            public String[] getOverriddenMethods() {
+                // methods to force override
+                return new String[0];
+            }
+
+            @Override
+            public String[] getRenamedClasses() {
+                // classes to rename (so that we can replace them)
+                return new String[0];
+            }
+
+            @Override
+            public String[] getJavaPkgClasses() {
+                // classes to refactor (so that we can replace them)
+                return new String[0];
+            }
+
+            @Override
+            public Set<String> getExcludedClasses() {
+                Set<String> set = new HashSet<String>(2);
+                set.add("mock_android.dummy.InnerTest");
+                set.add("java.lang.JavaClass");
+                return set;
+            }
+
+            @Override
+            public String[] getDeleteReturns() {
+                // methods deleted from their return type.
+                return new String[0];
+            }
+        };
+
+        AsmGenerator agen = new AsmGenerator(mLog, mOsDestJar, ci);
+        Set<String> excludedClasses = ci.getExcludedClasses();
+        AsmAnalyzer aa = new AsmAnalyzer(mLog, mOsJarPath, agen,
+                null,                 // derived from
+                new String[] {        // include classes
+                        "**"
+                },
+                excludedClasses,
+                new String[] {        /* include files */
+                        "mock_android/data/data*"
+                });
+        aa.analyze();
+        agen.generate();
+        Map<String, ClassReader> output = new TreeMap<String, ClassReader>();
+        Map<String, InputStream> filesFound = new TreeMap<String, InputStream>();
+        parseZip(mOsDestJar, output, filesFound);
+        for (String s : output.keySet()) {
+            assertFalse(excludedClasses.contains(s));
+        }
+        assertArrayEquals(new String[] {"mock_android/data/dataFile"},
+                filesFound.keySet().toArray());
+    }
+
+    private void parseZip(String jarPath,
+            Map<String, ClassReader> classes,
+            Map<String, InputStream> filesFound) throws IOException {
 
             ZipFile zip = new ZipFile(jarPath);
             Enumeration<? extends ZipEntry> entries = zip.entries();
@@ -220,10 +316,11 @@ public class AsmGeneratorTest {
                     ClassReader cr = new ClassReader(zip.getInputStream(entry));
                     String className = classReaderToClassName(cr);
                     classes.put(className, cr);
+                } else {
+                    filesFound.put(entry.getName(), zip.getInputStream(entry));
                 }
             }
 
-        return classes;
     }
 
     private String classReaderToClassName(ClassReader classReader) {

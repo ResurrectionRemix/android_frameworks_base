@@ -16,6 +16,7 @@
 */
 package android.app;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.os.WorkSource;
 
@@ -27,10 +28,14 @@ import android.os.WorkSource;
 interface IAlarmManager {
 	/** windowLength == 0 means exact; windowLength < 0 means the let the OS decide */
     void set(int type, long triggerAtTime, long windowLength,
-            long interval, in PendingIntent operation, in WorkSource workSource);
-    void setTime(long millis);
+            long interval, in PendingIntent operation, in WorkSource workSource,
+            in AlarmManager.AlarmClockInfo alarmClock);
+    boolean setTime(long millis);
     void setTimeZone(String zone);
     void remove(in PendingIntent operation);
+    AlarmManager.AlarmClockInfo getNextAlarmClock(int userId);
+    // update the uids being synchronized by network socket request manager
+    void updateBlockedUids(int uid, boolean isBlocked);
 }
 
 

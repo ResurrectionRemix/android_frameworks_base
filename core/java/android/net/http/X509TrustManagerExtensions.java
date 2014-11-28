@@ -22,14 +22,17 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
 
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.SSLSocket;
 import javax.net.ssl.X509TrustManager;
 
 /**
  * X509TrustManager wrapper exposing Android-added features.
- *
- * <p> The checkServerTrusted method allows callers to perform additional
- * verification of certificate chains after they have been successfully
- * verified by the platform.</p>
+ * <p>
+ * The checkServerTrusted method allows callers to perform additional
+ * verification of certificate chains after they have been successfully verified
+ * by the platform.
+ * </p>
  */
 public class X509TrustManagerExtensions {
 
@@ -45,7 +48,8 @@ public class X509TrustManagerExtensions {
         if (tm instanceof TrustManagerImpl) {
             mDelegate = (TrustManagerImpl) tm;
         } else {
-            throw new IllegalArgumentException("tm is not a supported type of X509TrustManager");
+            throw new IllegalArgumentException("tm is an instance of " + tm.getClass().getName() +
+                    " which is not a supported type of X509TrustManager");
         }
     }
 
@@ -62,5 +66,19 @@ public class X509TrustManagerExtensions {
     public List<X509Certificate> checkServerTrusted(X509Certificate[] chain, String authType,
                                                     String host) throws CertificateException {
         return mDelegate.checkServerTrusted(chain, authType, host);
+    }
+
+    /**
+     * Checks whether a CA certificate is added by an user.
+     *
+     * <p>Since {@link X509TrustManager#checkServerTrusted} allows its parameter {@code chain} to
+     * chain up to user-added CA certificates, this method can be used to perform additional
+     * policies for user-added CA certificates.
+     *
+     * @return {@code true} to indicate that the certificate was added by the user, {@code false}
+     * otherwise.
+     */
+    public boolean isUserAddedCertificate(X509Certificate cert) {
+        return mDelegate.isUserAddedCertificate(cert);
     }
 }

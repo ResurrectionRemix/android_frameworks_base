@@ -69,7 +69,7 @@ static struct parcel_offsets_t
 Parcel* parcelForJavaObject(JNIEnv* env, jobject obj)
 {
     if (obj) {
-        Parcel* p = (Parcel*)env->GetIntField(obj, gParcelOffsets.mNativePtr);
+        Parcel* p = (Parcel*)env->GetLongField(obj, gParcelOffsets.mNativePtr);
         if (p != NULL) {
             return p;
         }
@@ -88,31 +88,31 @@ void recycleJavaParcelObject(JNIEnv* env, jobject parcelObj)
     env->CallVoidMethod(parcelObj, gParcelOffsets.recycle);
 }
 
-static jint android_os_Parcel_dataSize(JNIEnv* env, jclass clazz, jint nativePtr)
+static jint android_os_Parcel_dataSize(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     return parcel ? parcel->dataSize() : 0;
 }
 
-static jint android_os_Parcel_dataAvail(JNIEnv* env, jclass clazz, jint nativePtr)
+static jint android_os_Parcel_dataAvail(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     return parcel ? parcel->dataAvail() : 0;
 }
 
-static jint android_os_Parcel_dataPosition(JNIEnv* env, jclass clazz, jint nativePtr)
+static jint android_os_Parcel_dataPosition(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     return parcel ? parcel->dataPosition() : 0;
 }
 
-static jint android_os_Parcel_dataCapacity(JNIEnv* env, jclass clazz, jint nativePtr)
+static jint android_os_Parcel_dataCapacity(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     return parcel ? parcel->dataCapacity() : 0;
 }
 
-static void android_os_Parcel_setDataSize(JNIEnv* env, jclass clazz, jint nativePtr, jint size)
+static void android_os_Parcel_setDataSize(JNIEnv* env, jclass clazz, jlong nativePtr, jint size)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -123,7 +123,7 @@ static void android_os_Parcel_setDataSize(JNIEnv* env, jclass clazz, jint native
     }
 }
 
-static void android_os_Parcel_setDataPosition(JNIEnv* env, jclass clazz, jint nativePtr, jint pos)
+static void android_os_Parcel_setDataPosition(JNIEnv* env, jclass clazz, jlong nativePtr, jint pos)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -131,7 +131,7 @@ static void android_os_Parcel_setDataPosition(JNIEnv* env, jclass clazz, jint na
     }
 }
 
-static void android_os_Parcel_setDataCapacity(JNIEnv* env, jclass clazz, jint nativePtr, jint size)
+static void android_os_Parcel_setDataCapacity(JNIEnv* env, jclass clazz, jlong nativePtr, jint size)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -142,7 +142,7 @@ static void android_os_Parcel_setDataCapacity(JNIEnv* env, jclass clazz, jint na
     }
 }
 
-static jboolean android_os_Parcel_pushAllowFds(JNIEnv* env, jclass clazz, jint nativePtr, jboolean allowFds)
+static jboolean android_os_Parcel_pushAllowFds(JNIEnv* env, jclass clazz, jlong nativePtr, jboolean allowFds)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     jboolean ret = JNI_TRUE;
@@ -152,7 +152,7 @@ static jboolean android_os_Parcel_pushAllowFds(JNIEnv* env, jclass clazz, jint n
     return ret;
 }
 
-static void android_os_Parcel_restoreAllowFds(JNIEnv* env, jclass clazz, jint nativePtr, jboolean lastValue)
+static void android_os_Parcel_restoreAllowFds(JNIEnv* env, jclass clazz, jlong nativePtr, jboolean lastValue)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -160,7 +160,7 @@ static void android_os_Parcel_restoreAllowFds(JNIEnv* env, jclass clazz, jint na
     }
 }
 
-static void android_os_Parcel_writeNative(JNIEnv* env, jclass clazz, jint nativePtr, jobject data,
+static void android_os_Parcel_writeNative(JNIEnv* env, jclass clazz, jlong nativePtr, jobject data,
                                           jint offset, jint length)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
@@ -187,7 +187,46 @@ static void android_os_Parcel_writeNative(JNIEnv* env, jclass clazz, jint native
     }
 }
 
-static void android_os_Parcel_writeInt(JNIEnv* env, jclass clazz, jint nativePtr, jint val) {
+static void android_os_Parcel_writeBlob(JNIEnv* env, jclass clazz, jlong nativePtr, jobject data,
+                                        jint offset, jint length) {
+    Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
+    if (parcel == NULL) {
+        return;
+    }
+
+    if (data == NULL) {
+        const status_t err = parcel->writeInt32(-1);
+        if (err != NO_ERROR) {
+            signalExceptionForError(env, clazz, err);
+        }
+        return;
+    }
+
+    const status_t err = parcel->writeInt32(length);
+    if (err != NO_ERROR) {
+        signalExceptionForError(env, clazz, err);
+        return;
+    }
+
+    android::Parcel::WritableBlob blob;
+    android::status_t err2 = parcel->writeBlob(length, &blob);
+    if (err2 != NO_ERROR) {
+        signalExceptionForError(env, clazz, err2);
+        return;
+    }
+
+    jbyte* ar = (jbyte*)env->GetPrimitiveArrayCritical((jarray)data, 0);
+    if (ar == NULL) {
+        memset(blob.data(), 0, length);
+    } else {
+        memcpy(blob.data(), ar + offset, length);
+        env->ReleasePrimitiveArrayCritical((jarray)data, ar, 0);
+    }
+
+    blob.release();
+}
+
+static void android_os_Parcel_writeInt(JNIEnv* env, jclass clazz, jlong nativePtr, jint val) {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     const status_t err = parcel->writeInt32(val);
     if (err != NO_ERROR) {
@@ -195,7 +234,7 @@ static void android_os_Parcel_writeInt(JNIEnv* env, jclass clazz, jint nativePtr
     }
 }
 
-static void android_os_Parcel_writeLong(JNIEnv* env, jclass clazz, jint nativePtr, jlong val)
+static void android_os_Parcel_writeLong(JNIEnv* env, jclass clazz, jlong nativePtr, jlong val)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -206,7 +245,7 @@ static void android_os_Parcel_writeLong(JNIEnv* env, jclass clazz, jint nativePt
     }
 }
 
-static void android_os_Parcel_writeFloat(JNIEnv* env, jclass clazz, jint nativePtr, jfloat val)
+static void android_os_Parcel_writeFloat(JNIEnv* env, jclass clazz, jlong nativePtr, jfloat val)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -217,7 +256,7 @@ static void android_os_Parcel_writeFloat(JNIEnv* env, jclass clazz, jint nativeP
     }
 }
 
-static void android_os_Parcel_writeDouble(JNIEnv* env, jclass clazz, jint nativePtr, jdouble val)
+static void android_os_Parcel_writeDouble(JNIEnv* env, jclass clazz, jlong nativePtr, jdouble val)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -228,7 +267,7 @@ static void android_os_Parcel_writeDouble(JNIEnv* env, jclass clazz, jint native
     }
 }
 
-static void android_os_Parcel_writeString(JNIEnv* env, jclass clazz, jint nativePtr, jstring val)
+static void android_os_Parcel_writeString(JNIEnv* env, jclass clazz, jlong nativePtr, jstring val)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -248,7 +287,7 @@ static void android_os_Parcel_writeString(JNIEnv* env, jclass clazz, jint native
     }
 }
 
-static void android_os_Parcel_writeStrongBinder(JNIEnv* env, jclass clazz, jint nativePtr, jobject object)
+static void android_os_Parcel_writeStrongBinder(JNIEnv* env, jclass clazz, jlong nativePtr, jobject object)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -259,7 +298,7 @@ static void android_os_Parcel_writeStrongBinder(JNIEnv* env, jclass clazz, jint 
     }
 }
 
-static void android_os_Parcel_writeFileDescriptor(JNIEnv* env, jclass clazz, jint nativePtr, jobject object)
+static void android_os_Parcel_writeFileDescriptor(JNIEnv* env, jclass clazz, jlong nativePtr, jobject object)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -271,7 +310,7 @@ static void android_os_Parcel_writeFileDescriptor(JNIEnv* env, jclass clazz, jin
     }
 }
 
-static jbyteArray android_os_Parcel_createByteArray(JNIEnv* env, jclass clazz, jint nativePtr)
+static jbyteArray android_os_Parcel_createByteArray(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     jbyteArray ret = NULL;
 
@@ -297,7 +336,37 @@ static jbyteArray android_os_Parcel_createByteArray(JNIEnv* env, jclass clazz, j
     return ret;
 }
 
-static jint android_os_Parcel_readInt(JNIEnv* env, jclass clazz, jint nativePtr)
+static jbyteArray android_os_Parcel_readBlob(JNIEnv* env, jclass clazz, jlong nativePtr)
+{
+    jbyteArray ret = NULL;
+
+    Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
+    if (parcel != NULL) {
+        int32_t len = parcel->readInt32();
+        if (len >= 0) {
+            android::Parcel::ReadableBlob blob;
+            android::status_t err = parcel->readBlob(len, &blob);
+            if (err != NO_ERROR) {
+                signalExceptionForError(env, clazz, err);
+                return NULL;
+            }
+
+            ret = env->NewByteArray(len);
+            if (ret != NULL) {
+                jbyte* a2 = (jbyte*)env->GetPrimitiveArrayCritical(ret, 0);
+                if (a2) {
+                    memcpy(a2, blob.data(), len);
+                    env->ReleasePrimitiveArrayCritical(ret, a2, 0);
+                }
+            }
+            blob.release();
+        }
+    }
+
+    return ret;
+}
+
+static jint android_os_Parcel_readInt(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -306,7 +375,7 @@ static jint android_os_Parcel_readInt(JNIEnv* env, jclass clazz, jint nativePtr)
     return 0;
 }
 
-static jlong android_os_Parcel_readLong(JNIEnv* env, jclass clazz, jint nativePtr)
+static jlong android_os_Parcel_readLong(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -315,7 +384,7 @@ static jlong android_os_Parcel_readLong(JNIEnv* env, jclass clazz, jint nativePt
     return 0;
 }
 
-static jfloat android_os_Parcel_readFloat(JNIEnv* env, jclass clazz, jint nativePtr)
+static jfloat android_os_Parcel_readFloat(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -324,7 +393,7 @@ static jfloat android_os_Parcel_readFloat(JNIEnv* env, jclass clazz, jint native
     return 0;
 }
 
-static jdouble android_os_Parcel_readDouble(JNIEnv* env, jclass clazz, jint nativePtr)
+static jdouble android_os_Parcel_readDouble(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -333,7 +402,7 @@ static jdouble android_os_Parcel_readDouble(JNIEnv* env, jclass clazz, jint nati
     return 0;
 }
 
-static jstring android_os_Parcel_readString(JNIEnv* env, jclass clazz, jint nativePtr)
+static jstring android_os_Parcel_readString(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -347,7 +416,7 @@ static jstring android_os_Parcel_readString(JNIEnv* env, jclass clazz, jint nati
     return NULL;
 }
 
-static jobject android_os_Parcel_readStrongBinder(JNIEnv* env, jclass clazz, jint nativePtr)
+static jobject android_os_Parcel_readStrongBinder(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -356,7 +425,7 @@ static jobject android_os_Parcel_readStrongBinder(JNIEnv* env, jclass clazz, jin
     return NULL;
 }
 
-static jobject android_os_Parcel_readFileDescriptor(JNIEnv* env, jclass clazz, jint nativePtr)
+static jobject android_os_Parcel_readFileDescriptor(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -468,13 +537,13 @@ static void android_os_Parcel_clearFileDescriptor(JNIEnv* env, jclass clazz, job
     }
 }
 
-static jint android_os_Parcel_create(JNIEnv* env, jclass clazz)
+static jlong android_os_Parcel_create(JNIEnv* env, jclass clazz)
 {
     Parcel* parcel = new Parcel();
-    return reinterpret_cast<jint>(parcel);
+    return reinterpret_cast<jlong>(parcel);
 }
 
-static void android_os_Parcel_freeBuffer(JNIEnv* env, jclass clazz, jint nativePtr)
+static void android_os_Parcel_freeBuffer(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
@@ -482,13 +551,13 @@ static void android_os_Parcel_freeBuffer(JNIEnv* env, jclass clazz, jint nativeP
     }
 }
 
-static void android_os_Parcel_destroy(JNIEnv* env, jclass clazz, jint nativePtr)
+static void android_os_Parcel_destroy(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     delete parcel;
 }
 
-static jbyteArray android_os_Parcel_marshall(JNIEnv* env, jclass clazz, jint nativePtr)
+static jbyteArray android_os_Parcel_marshall(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel == NULL) {
@@ -517,7 +586,7 @@ static jbyteArray android_os_Parcel_marshall(JNIEnv* env, jclass clazz, jint nat
     return ret;
 }
 
-static void android_os_Parcel_unmarshall(JNIEnv* env, jclass clazz, jint nativePtr,
+static void android_os_Parcel_unmarshall(JNIEnv* env, jclass clazz, jlong nativePtr,
                                          jbyteArray data, jint offset, jint length)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
@@ -538,8 +607,8 @@ static void android_os_Parcel_unmarshall(JNIEnv* env, jclass clazz, jint nativeP
     }
 }
 
-static void android_os_Parcel_appendFrom(JNIEnv* env, jclass clazz, jint thisNativePtr,
-                                         jint otherNativePtr, jint offset, jint length)
+static void android_os_Parcel_appendFrom(JNIEnv* env, jclass clazz, jlong thisNativePtr,
+                                         jlong otherNativePtr, jint offset, jint length)
 {
     Parcel* thisParcel = reinterpret_cast<Parcel*>(thisNativePtr);
     if (thisParcel == NULL) {
@@ -556,7 +625,7 @@ static void android_os_Parcel_appendFrom(JNIEnv* env, jclass clazz, jint thisNat
     }
 }
 
-static jboolean android_os_Parcel_hasFileDescriptors(JNIEnv* env, jclass clazz, jint nativePtr)
+static jboolean android_os_Parcel_hasFileDescriptors(JNIEnv* env, jclass clazz, jlong nativePtr)
 {
     jboolean ret = JNI_FALSE;
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
@@ -568,7 +637,7 @@ static jboolean android_os_Parcel_hasFileDescriptors(JNIEnv* env, jclass clazz, 
     return ret;
 }
 
-static void android_os_Parcel_writeInterfaceToken(JNIEnv* env, jclass clazz, jint nativePtr,
+static void android_os_Parcel_writeInterfaceToken(JNIEnv* env, jclass clazz, jlong nativePtr,
                                                   jstring name)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
@@ -583,7 +652,7 @@ static void android_os_Parcel_writeInterfaceToken(JNIEnv* env, jclass clazz, jin
     }
 }
 
-static void android_os_Parcel_enforceInterface(JNIEnv* env, jclass clazz, jint nativePtr, jstring name)
+static void android_os_Parcel_enforceInterface(JNIEnv* env, jclass clazz, jlong nativePtr, jstring name)
 {
     jboolean ret = JNI_FALSE;
 
@@ -622,50 +691,52 @@ static void android_os_Parcel_enforceInterface(JNIEnv* env, jclass clazz, jint n
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gParcelMethods[] = {
-    {"nativeDataSize",            "(I)I", (void*)android_os_Parcel_dataSize},
-    {"nativeDataAvail",           "(I)I", (void*)android_os_Parcel_dataAvail},
-    {"nativeDataPosition",        "(I)I", (void*)android_os_Parcel_dataPosition},
-    {"nativeDataCapacity",        "(I)I", (void*)android_os_Parcel_dataCapacity},
-    {"nativeSetDataSize",         "(II)V", (void*)android_os_Parcel_setDataSize},
-    {"nativeSetDataPosition",     "(II)V", (void*)android_os_Parcel_setDataPosition},
-    {"nativeSetDataCapacity",     "(II)V", (void*)android_os_Parcel_setDataCapacity},
+    {"nativeDataSize",            "(J)I", (void*)android_os_Parcel_dataSize},
+    {"nativeDataAvail",           "(J)I", (void*)android_os_Parcel_dataAvail},
+    {"nativeDataPosition",        "(J)I", (void*)android_os_Parcel_dataPosition},
+    {"nativeDataCapacity",        "(J)I", (void*)android_os_Parcel_dataCapacity},
+    {"nativeSetDataSize",         "(JI)V", (void*)android_os_Parcel_setDataSize},
+    {"nativeSetDataPosition",     "(JI)V", (void*)android_os_Parcel_setDataPosition},
+    {"nativeSetDataCapacity",     "(JI)V", (void*)android_os_Parcel_setDataCapacity},
 
-    {"nativePushAllowFds",        "(IZ)Z", (void*)android_os_Parcel_pushAllowFds},
-    {"nativeRestoreAllowFds",     "(IZ)V", (void*)android_os_Parcel_restoreAllowFds},
+    {"nativePushAllowFds",        "(JZ)Z", (void*)android_os_Parcel_pushAllowFds},
+    {"nativeRestoreAllowFds",     "(JZ)V", (void*)android_os_Parcel_restoreAllowFds},
 
-    {"nativeWriteByteArray",      "(I[BII)V", (void*)android_os_Parcel_writeNative},
-    {"nativeWriteInt",            "(II)V", (void*)android_os_Parcel_writeInt},
-    {"nativeWriteLong",           "(IJ)V", (void*)android_os_Parcel_writeLong},
-    {"nativeWriteFloat",          "(IF)V", (void*)android_os_Parcel_writeFloat},
-    {"nativeWriteDouble",         "(ID)V", (void*)android_os_Parcel_writeDouble},
-    {"nativeWriteString",         "(ILjava/lang/String;)V", (void*)android_os_Parcel_writeString},
-    {"nativeWriteStrongBinder",   "(ILandroid/os/IBinder;)V", (void*)android_os_Parcel_writeStrongBinder},
-    {"nativeWriteFileDescriptor", "(ILjava/io/FileDescriptor;)V", (void*)android_os_Parcel_writeFileDescriptor},
+    {"nativeWriteByteArray",      "(J[BII)V", (void*)android_os_Parcel_writeNative},
+    {"nativeWriteBlob",           "(J[BII)V", (void*)android_os_Parcel_writeBlob},
+    {"nativeWriteInt",            "(JI)V", (void*)android_os_Parcel_writeInt},
+    {"nativeWriteLong",           "(JJ)V", (void*)android_os_Parcel_writeLong},
+    {"nativeWriteFloat",          "(JF)V", (void*)android_os_Parcel_writeFloat},
+    {"nativeWriteDouble",         "(JD)V", (void*)android_os_Parcel_writeDouble},
+    {"nativeWriteString",         "(JLjava/lang/String;)V", (void*)android_os_Parcel_writeString},
+    {"nativeWriteStrongBinder",   "(JLandroid/os/IBinder;)V", (void*)android_os_Parcel_writeStrongBinder},
+    {"nativeWriteFileDescriptor", "(JLjava/io/FileDescriptor;)V", (void*)android_os_Parcel_writeFileDescriptor},
 
-    {"nativeCreateByteArray",     "(I)[B", (void*)android_os_Parcel_createByteArray},
-    {"nativeReadInt",             "(I)I", (void*)android_os_Parcel_readInt},
-    {"nativeReadLong",            "(I)J", (void*)android_os_Parcel_readLong},
-    {"nativeReadFloat",           "(I)F", (void*)android_os_Parcel_readFloat},
-    {"nativeReadDouble",          "(I)D", (void*)android_os_Parcel_readDouble},
-    {"nativeReadString",          "(I)Ljava/lang/String;", (void*)android_os_Parcel_readString},
-    {"nativeReadStrongBinder",    "(I)Landroid/os/IBinder;", (void*)android_os_Parcel_readStrongBinder},
-    {"nativeReadFileDescriptor",  "(I)Ljava/io/FileDescriptor;", (void*)android_os_Parcel_readFileDescriptor},
+    {"nativeCreateByteArray",     "(J)[B", (void*)android_os_Parcel_createByteArray},
+    {"nativeReadBlob",            "(J)[B", (void*)android_os_Parcel_readBlob},
+    {"nativeReadInt",             "(J)I", (void*)android_os_Parcel_readInt},
+    {"nativeReadLong",            "(J)J", (void*)android_os_Parcel_readLong},
+    {"nativeReadFloat",           "(J)F", (void*)android_os_Parcel_readFloat},
+    {"nativeReadDouble",          "(J)D", (void*)android_os_Parcel_readDouble},
+    {"nativeReadString",          "(J)Ljava/lang/String;", (void*)android_os_Parcel_readString},
+    {"nativeReadStrongBinder",    "(J)Landroid/os/IBinder;", (void*)android_os_Parcel_readStrongBinder},
+    {"nativeReadFileDescriptor",  "(J)Ljava/io/FileDescriptor;", (void*)android_os_Parcel_readFileDescriptor},
 
     {"openFileDescriptor",        "(Ljava/lang/String;I)Ljava/io/FileDescriptor;", (void*)android_os_Parcel_openFileDescriptor},
     {"dupFileDescriptor",         "(Ljava/io/FileDescriptor;)Ljava/io/FileDescriptor;", (void*)android_os_Parcel_dupFileDescriptor},
     {"closeFileDescriptor",       "(Ljava/io/FileDescriptor;)V", (void*)android_os_Parcel_closeFileDescriptor},
     {"clearFileDescriptor",       "(Ljava/io/FileDescriptor;)V", (void*)android_os_Parcel_clearFileDescriptor},
 
-    {"nativeCreate",              "()I", (void*)android_os_Parcel_create},
-    {"nativeFreeBuffer",          "(I)V", (void*)android_os_Parcel_freeBuffer},
-    {"nativeDestroy",             "(I)V", (void*)android_os_Parcel_destroy},
+    {"nativeCreate",              "()J", (void*)android_os_Parcel_create},
+    {"nativeFreeBuffer",          "(J)V", (void*)android_os_Parcel_freeBuffer},
+    {"nativeDestroy",             "(J)V", (void*)android_os_Parcel_destroy},
 
-    {"nativeMarshall",            "(I)[B", (void*)android_os_Parcel_marshall},
-    {"nativeUnmarshall",          "(I[BII)V", (void*)android_os_Parcel_unmarshall},
-    {"nativeAppendFrom",          "(IIII)V", (void*)android_os_Parcel_appendFrom},
-    {"nativeHasFileDescriptors",  "(I)Z", (void*)android_os_Parcel_hasFileDescriptors},
-    {"nativeWriteInterfaceToken", "(ILjava/lang/String;)V", (void*)android_os_Parcel_writeInterfaceToken},
-    {"nativeEnforceInterface",    "(ILjava/lang/String;)V", (void*)android_os_Parcel_enforceInterface},
+    {"nativeMarshall",            "(J)[B", (void*)android_os_Parcel_marshall},
+    {"nativeUnmarshall",          "(J[BII)V", (void*)android_os_Parcel_unmarshall},
+    {"nativeAppendFrom",          "(JJII)V", (void*)android_os_Parcel_appendFrom},
+    {"nativeHasFileDescriptors",  "(J)Z", (void*)android_os_Parcel_hasFileDescriptors},
+    {"nativeWriteInterfaceToken", "(JLjava/lang/String;)V", (void*)android_os_Parcel_writeInterfaceToken},
+    {"nativeEnforceInterface",    "(JLjava/lang/String;)V", (void*)android_os_Parcel_enforceInterface},
 };
 
 const char* const kParcelPathName = "android/os/Parcel";
@@ -678,7 +749,7 @@ int register_android_os_Parcel(JNIEnv* env)
     LOG_FATAL_IF(clazz == NULL, "Unable to find class android.os.Parcel");
 
     gParcelOffsets.clazz = (jclass) env->NewGlobalRef(clazz);
-    gParcelOffsets.mNativePtr = env->GetFieldID(clazz, "mNativePtr", "I");
+    gParcelOffsets.mNativePtr = env->GetFieldID(clazz, "mNativePtr", "J");
     gParcelOffsets.obtain = env->GetStaticMethodID(clazz, "obtain",
                                                    "()Landroid/os/Parcel;");
     gParcelOffsets.recycle = env->GetMethodID(clazz, "recycle", "()V");

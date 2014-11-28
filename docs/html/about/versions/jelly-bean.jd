@@ -438,9 +438,9 @@ SetupWizard, Clock, Downloads, and more.</p>
 
 <p>Android 4.3 also includes new utilities and APIs for creating better RTL
 strings and testing your localized UIs. A new <strong>BidiFormatter</strong>
-provides a set of simple APIs for wrapping Unicode strings so that you can
-fine-tune your text rendering in RTL scripts. To let you use this utility more
-broadly in your apps, the BidiFormatter APIs are also now available for earlier
+class provides a simple API for wrapping Unicode strings, so that RTL-script
+data is displayed as intended in LTR-locale messages and vice-versa. To let you use this utility more
+broadly in your apps, the BidiFormatter API is also now available for earlier
 platform versions through the Support Package in the Android SDK. </p>
 
 <p>To assist you with managing date formatting across locales, Android 4.3
@@ -578,9 +578,10 @@ graphs</strong>, with colors indicating time spent creating drawing commands
 graph for each visible Activity, including the navigation bar and notification
 bar. </p>
 
-<p>A green line highlights the <strong>60ms threshold</strong> for rendering
+<p>A green line highlights the <strong>16ms threshold</strong> for rendering
 operations, so you can assess the your app’s effective framerate relative
-to a 60 fps goal. If you see operations that cross the green line, you
+to a 60 fps goal (because 1/60th of a second equals roughly 16ms).
+If you see operations that cross the green line, you
 can analyze them further using Systrace and other tools.</p>
 
 <p class="caution" style="clear:both">On devices running Android 4.2 and higher,

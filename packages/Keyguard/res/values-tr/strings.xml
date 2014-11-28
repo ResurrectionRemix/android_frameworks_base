@@ -20,6 +20,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="719438068451601849">"Keyguard"</string>
     <string name="keyguard_password_enter_pin_code" msgid="3037685796058495017">"PIN kodunu yazın"</string>
     <string name="keyguard_password_enter_puk_code" msgid="3035856550289724338">"SIM PUK kodunu ve yeni bir PIN kodu yazın."</string>
     <string name="keyguard_password_enter_puk_prompt" msgid="1801941051094974609">"SIM PUK kodu"</string>
@@ -31,7 +32,7 @@
     <string name="keyguard_label_text" msgid="861796461028298424">"Kilidi açmak için önce Menü\'ye, sonra 0\'a basın."</string>
     <string name="faceunlock_multiple_failures" msgid="754137583022792429">"Yüz Tanıma Kilidi için maksimum deneme sayısı aşıldı"</string>
     <string name="keyguard_charged" msgid="3272223906073492454">"Şarj oldu"</string>
-    <string name="keyguard_plugged_in" msgid="8117572000639998388">"Şarj oluyor, <xliff:g id="PERCENT">%%</xliff:g><xliff:g id="NUMBER">%d</xliff:g>"</string>
+    <string name="keyguard_plugged_in" msgid="9087497435553252863">"Şarj oluyor"</string>
     <string name="keyguard_low_battery" msgid="8143808018719173859">"Şarj cihazınızı takın."</string>
     <string name="keyguard_instructions_when_pattern_disabled" msgid="1332288268600329841">"Kilidi açmak için Menü\'ye basın."</string>
     <string name="keyguard_network_locked_message" msgid="9169717779058037168">"Ağ kilitli"</string>
@@ -52,7 +53,6 @@
     <string name="keyguard_accessibility_unlock_area_collapsed" msgid="6366992066936076396">"Kilit açma alanı daraltıldı."</string>
     <string name="keyguard_accessibility_widget" msgid="6527131039741808240">"<xliff:g id="WIDGET_INDEX">%1$s</xliff:g> widget\'ı."</string>
     <string name="keyguard_accessibility_user_selector" msgid="1226798370913698896">"Kullanıcı seçici"</string>
-    <string name="keyguard_accessibility_status" msgid="8008264603935930611">"Durum"</string>
     <string name="keyguard_accessibility_camera" msgid="8904231194181114603">"Kamera"</string>
     <string name="keygaurd_accessibility_media_controls" msgid="262209654292161806">"Medya denetimleri"</string>
     <string name="keyguard_accessibility_widget_reorder_start" msgid="8736853615588828197">"Widget\'ları yeniden sıralama işlemi başladı."</string>
@@ -78,6 +78,7 @@
     <string name="keyguard_accessibility_hide_bouncer" msgid="7896992171878309358">"Başlatma iptal edildi"</string>
     <string name="keyguard_accessibility_delete_widget_start" msgid="4096550552634391451">"Silmek için <xliff:g id="WIDGET_INDEX">%1$s</xliff:g> widget\'ını bırakın."</string>
     <string name="keyguard_accessibility_delete_widget_end" msgid="508833506780909393">"<xliff:g id="WIDGET_INDEX">%1$s</xliff:g> silinmeyecek."</string>
+    <string name="keyguard_accessibility_next_alarm" msgid="7269583073750518672">"Sonraki alarm <xliff:g id="ALARM">%1$s</xliff:g> için ayarlandı"</string>
     <string name="password_keyboard_label_symbol_key" msgid="992280756256536042">"?123"</string>
     <string name="password_keyboard_label_alpha_key" msgid="8001096175167485649">"ABC"</string>
     <string name="password_keyboard_label_alt_key" msgid="1284820942620288678">"ALT"</string>

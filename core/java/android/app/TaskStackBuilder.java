@@ -16,6 +16,7 @@
 
 package android.app;
 
+import android.annotation.NonNull;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -62,7 +63,6 @@ public class TaskStackBuilder {
 
     private final ArrayList<Intent> mIntents = new ArrayList<Intent>();
     private final Context mSourceContext;
-    private boolean mFirstTaskOnHome = true;
 
     private TaskStackBuilder(Context a) {
         mSourceContext = a;
@@ -77,16 +77,6 @@ public class TaskStackBuilder {
      */
     public static TaskStackBuilder create(Context context) {
         return new TaskStackBuilder(context);
-    }
-
-    /**
-     * Hide from the public api
-     *
-     * @hide
-     * @param firstTaskOnHome
-     */
-    public void setTaskOnHome(boolean firstTaskOnHome) {
-        mFirstTaskOnHome = firstTaskOnHome;
     }
 
     /**
@@ -255,7 +245,7 @@ public class TaskStackBuilder {
      *
      * @return The obtained PendingIntent
      */
-    public PendingIntent getPendingIntent(int requestCode, int flags) {
+    public PendingIntent getPendingIntent(int requestCode, @PendingIntent.Flags int flags) {
         return getPendingIntent(requestCode, flags, null);
     }
 
@@ -274,7 +264,8 @@ public class TaskStackBuilder {
      *
      * @return The obtained PendingIntent
      */
-    public PendingIntent getPendingIntent(int requestCode, int flags, Bundle options) {
+    public PendingIntent getPendingIntent(int requestCode, @PendingIntent.Flags int flags,
+            Bundle options) {
         if (mIntents.isEmpty()) {
             throw new IllegalStateException(
                     "No intents added to TaskStackBuilder; cannot getPendingIntent");
@@ -305,20 +296,14 @@ public class TaskStackBuilder {
      *
      * @return An array containing the intents added to this builder.
      */
+    @NonNull
     public Intent[] getIntents() {
         Intent[] intents = new Intent[mIntents.size()];
         if (intents.length == 0) return intents;
 
-        Intent newIntent = new Intent(mIntents.get(0));
-        newIntent.addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK |
-                Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        if (mFirstTaskOnHome) {
-            newIntent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-        }
-
-        intents[0] = newIntent;
+        intents[0] = new Intent(mIntents.get(0)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_TASK_ON_HOME);
         for (int i = 1; i < intents.length; i++) {
             intents[i] = new Intent(mIntents.get(i));
         }

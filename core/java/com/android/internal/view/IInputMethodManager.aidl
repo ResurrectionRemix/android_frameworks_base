@@ -32,7 +32,9 @@ import com.android.internal.view.IInputMethodClient;
  * this file.
  */
 interface IInputMethodManager {
+    // TODO: Use ParceledListSlice instead
     List<InputMethodInfo> getInputMethodList();
+    // TODO: Use ParceledListSlice instead
     List<InputMethodInfo> getEnabledInputMethodList();
     List<InputMethodSubtype> getEnabledInputMethodSubtypeList(in String imiId,
             boolean allowsImplicitlySelectedSubtypes);
@@ -73,5 +75,7 @@ interface IInputMethodManager {
     boolean switchToNextInputMethod(in IBinder token, boolean onlyCurrentIme);
     boolean shouldOfferSwitchingToNextInputMethod(in IBinder token);
     boolean setInputMethodEnabled(String id, boolean enabled);
-    oneway void setAdditionalInputMethodSubtypes(String id, in InputMethodSubtype[] subtypes);
+    void setAdditionalInputMethodSubtypes(String id, in InputMethodSubtype[] subtypes);
+    int getInputMethodWindowVisibleHeight();
+    oneway void notifyUserAction(int sequenceNumber);
 }

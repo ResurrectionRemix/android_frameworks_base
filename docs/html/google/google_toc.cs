@@ -3,11 +3,11 @@
      ########            ATTENTION             ###############
      ########                                  ###############
      #########################################################
-     
+
      IF YOU MAKE CHANGES TO THIS FILE, YOU MUST GENERATE THE
      GMS REFERENCE DOCS, BECAUSE THEY ARE NOT INCLUDED IN THE
      DOCS BUILD RULE.
-     
+
      #########################################################
      #########################################################
 ?>
@@ -41,6 +41,16 @@
       </a></div>
   </li>
   <li class="nav-section">
+    <div class="nav-section-header empty"><a href="<?cs var:toroot?>google/play-services/drive.html">
+          <span class="en">Drive</span>
+      </a></div>
+  </li>
+  <li class="nav-section">
+    <div class="nav-section-header empty"><a href="<?cs var:toroot?>google/play-services/cast.html">
+          <span class="en">Cast</span>
+      </a></div>
+  </li>
+  <li class="nav-section">
     <div class="nav-section-header"><a href="<?cs var:toroot ?>google/play-services/ads.html">
       <span class="en">Ads</span></a>
     </div>
@@ -55,12 +65,6 @@
           <span class="en">Wallet</span>
       </a></div>
   </li>
-  <li class="nav-section">
-    <div class="nav-section-header empty"><a href="<?cs var:toroot?>google/play-services/auth.html">
-          <span class="en">Authorization</span>
-      </a></div>
-  </li>
-
 
 
   <li class="nav-section">
@@ -69,7 +73,19 @@
     </div>
     <ul>
       <li><a href="<?cs var:toroot?>google/play-services/setup.html">
-          <span class="en">Setup</span></a>
+          <span class="en">Setting Up Google Play Services</span></a>
+      </li>
+      <li class="nav-section">
+        <div class="nav-section-header"><a href="<?cs var:toroot?>google/auth/api-client.html">
+          <span class="en">Accessing Google APIs</span></a>
+        </div>
+        <ul>
+          <li>
+            <a href="<?cs var:toroot ?>google/auth/http-auth.html">
+              <span class="en">Authorizing with Google for REST APIs</span>
+            </a>
+          </li>
+        </ul>
       </li>
       <li id="gms-tree-list" class="nav-section">
         <div class="nav-section-header">
@@ -122,9 +138,6 @@
       <li><a href="<?cs var:toroot?>google/play/billing/billing_admin.html">
               <span class="en">Administering In-app Billing</span></a>
       </li>
-      <li><a href="<?cs var:toroot?>google/play/billing/gp-purchase-status-api.html">
-              <span class="en">Purchase Status API</span></a>
-      </li>
       <li><a href="<?cs var:toroot?>google/play/billing/versions.html">
               <span class="en">Version Notes</span></a>
       </li>
@@ -133,28 +146,31 @@
 
 
 
-  <li class="nav-section">
+   <li class="nav-section">
       <div class="nav-section-header"><a href="<?cs var:toroot ?>google/gcm/index.html">
         <span class="en">Google Cloud Messaging</span></a>
       </div>
       <ul>
+        <li><a href="<?cs var:toroot?>google/gcm/gcm.html">
+            <span class="en">Overview</span></a>
+        </li>
         <li><a href="<?cs var:toroot?>google/gcm/gs.html">
             <span class="en">Getting Started</span></a>
         </li>
-        <li><a href="<?cs var:toroot?>google/gcm/gcm.html">
-            <span class="en">Architectural Overview</span></a>
+        <li><a href="<?cs var:toroot?>google/gcm/client.html">
+            <span class="en">Implementing GCM Client</span></a>
         </li>
-         <li><a href="<?cs var:toroot?>google/gcm/ccs.html">
-              <span class="en">Cloud Connection Server</span></a>
+        <li class="nav-section"><div class="nav-section-header"><a href="<?cs var:toroot?>google/gcm/server.html">
+              <span class="en">Implementing GCM Server</span></a></div>
+              <ul>
+              <li><a href="<?cs var:toroot?>google/gcm/ccs.html">
+              <span class="en">CCS (XMPP)</span></a></li>
+              <li><a href="<?cs var:toroot?>google/gcm/http.html">
+              <span class="en">HTTP</span></a></li>
+              </ul>
         </li>
         <li><a href="<?cs var:toroot?>google/gcm/notifications.html">
               <span class="en">User Notifications</span></a>
-        </li>
-        <li><a href="<?cs var:toroot?>google/gcm/client.html">
-            <span class="en">GCM Client</span></a>
-        </li>
-        <li><a href="<?cs var:toroot?>google/gcm/server.html">
-            <span class="en">GCM Server</span></a>
         </li>
         <li><a href="<?cs var:toroot?>google/gcm/adv.html">
             <span class="en">Advanced Topics</span></a>
@@ -173,6 +189,12 @@
   </li>
 
   <li class="nav-section">
+  <div class="nav-section-header empty"><a href="<?cs var:toroot ?>google/gcs/index.html">
+        <span class="en">Google Cloud Save</span></a>
+      </div>
+  </li>
+
+  <li class="nav-section">
     <div class="nav-section-header"><a href="<?cs var:toroot ?>google/play/dist.html">
       <span class="en">Google Play Distribution</span></a>
     </div>
@@ -180,7 +202,9 @@
       <li><a href="<?cs var:toroot ?>google/play/filters.html">
           <span class="en">Filters on Google Play</span></a>
       </li>
-
+      <li><a href="<?cs var:toroot?>google/play/billing/gp-purchase-status-api.html">
+              <span class="en">Google Play Developer API</span></a>
+      </li>
       <li><a href="<?cs var:toroot ?>google/play/publishing/multiple-apks.html">
           <span class="en">Multiple APK Support</span></a>
       </li>

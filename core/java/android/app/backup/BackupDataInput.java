@@ -16,6 +16,8 @@
 
 package android.app.backup;
 
+import android.annotation.SystemApi;
+
 import java.io.FileDescriptor;
 import java.io.IOException;
 
@@ -59,7 +61,7 @@ import java.io.IOException;
  * }</pre>
  */
 public class BackupDataInput {
-    int mBackupReader;
+    long mBackupReader;
 
     private EntityHeader mHeader = new EntityHeader();
     private boolean mHeaderReady;
@@ -70,6 +72,7 @@ public class BackupDataInput {
     }
 
     /** @hide */
+    @SystemApi
     public BackupDataInput(FileDescriptor fd) {
         if (fd == null) throw new NullPointerException();
         mBackupReader = ctor(fd);
@@ -79,6 +82,7 @@ public class BackupDataInput {
     }
 
     /** @hide */
+    @Override
     protected void finalize() throws Throwable {
         try {
             dtor(mBackupReader);
@@ -174,7 +178,7 @@ public class BackupDataInput {
      * for further processing.  This allows a {@link android.app.backup.BackupAgent} to
      * efficiently discard obsolete or otherwise uninteresting records during the
      * restore operation.
-     * 
+     *
      * @throws IOException if an error occurred when trying to read the restore data stream
      */
     public void skipEntityData() throws IOException {
@@ -185,10 +189,10 @@ public class BackupDataInput {
         }
     }
 
-    private native static int ctor(FileDescriptor fd);
-    private native static void dtor(int mBackupReader);
+    private native static long ctor(FileDescriptor fd);
+    private native static void dtor(long mBackupReader);
 
-    private native int readNextHeader_native(int mBackupReader, EntityHeader entity);
-    private native int readEntityData_native(int mBackupReader, byte[] data, int offset, int size);
-    private native int skipEntityData_native(int mBackupReader);
+    private native int readNextHeader_native(long mBackupReader, EntityHeader entity);
+    private native int readEntityData_native(long mBackupReader, byte[] data, int offset, int size);
+    private native int skipEntityData_native(long mBackupReader);
 }

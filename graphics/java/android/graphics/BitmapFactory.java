@@ -153,8 +153,12 @@ public class BitmapFactory {
          *
          * <p>This does not affect bitmaps without an alpha channel.</p>
          *
+         * <p>Setting this flag to false while setting {@link #inScaled} to true
+         * may result in incorrect colors.</p>
+         *
          * @see Bitmap#hasAlpha()
          * @see Bitmap#isPremultiplied()
+         * @see #inScaled
          */
         public boolean inPremultiplied;
 
@@ -249,11 +253,18 @@ public class BitmapFactory {
          * <p>This flag is turned on by default and should be turned off if you need
          * a non-scaled version of the bitmap.  Nine-patch bitmaps ignore this
          * flag and are always scaled.
+         *
+         * <p>If {@link #inPremultiplied} is set to false, and the image has alpha,
+         * setting this flag to true may result in incorrect colors.
          */
         public boolean inScaled;
 
         /**
-         * If this is set to true, then the resulting bitmap will allocate its
+         * @deprecated As of {@link android.os.Build.VERSION_CODES#LOLLIPOP}, this is
+         * ignored.
+         *
+         * In {@link android.os.Build.VERSION_CODES#KITKAT} and below, if this
+         * is set to true, then the resulting bitmap will allocate its
          * pixels such that they can be purged if the system needs to reclaim
          * memory. In that instance, when the pixels need to be accessed again
          * (e.g. the bitmap is drawn, getPixels() is called), they will be
@@ -280,14 +291,20 @@ public class BitmapFactory {
          * android.graphics.BitmapFactory.Options)} or {@link #decodeFile(String,
          * android.graphics.BitmapFactory.Options)}.</p>
          */
+        @Deprecated
         public boolean inPurgeable;
 
         /**
-         * This field works in conjuction with inPurgeable. If inPurgeable is
-         * false, then this field is ignored. If inPurgeable is true, then this
-         * field determines whether the bitmap can share a reference to the
-         * input data (inputstream, array, etc.) or if it must make a deep copy.
+         * @deprecated As of {@link android.os.Build.VERSION_CODES#LOLLIPOP}, this is
+         * ignored.
+         *
+         * In {@link android.os.Build.VERSION_CODES#KITKAT} and below, this
+         * field works in conjuction with inPurgeable. If inPurgeable is false,
+         * then this field is ignored. If inPurgeable is true, then this field
+         * determines whether the bitmap can share a reference to the input
+         * data (inputstream, array, etc.) or if it must make a deep copy.
          */
+        @Deprecated
         public boolean inInputShareable;
 
         /**
@@ -300,17 +317,22 @@ public class BitmapFactory {
         public boolean inPreferQualityOverSpeed;
 
         /**
-         * The resulting width of the bitmap, set independent of the state of
-         * inJustDecodeBounds. However, if there is an error trying to decode,
-         * outWidth will be set to -1.
+         * The resulting width of the bitmap. If {@link #inJustDecodeBounds} is
+         * set to false, this will be width of the output bitmap after any
+         * scaling is applied. If true, it will be the width of the input image
+         * without any accounting for scaling.
+         *
+         * <p>outWidth will be set to -1 if there is an error trying to decode.</p>
          */
-
         public int outWidth;
 
         /**
-         * The resulting height of the bitmap, set independent of the state of
-         * inJustDecodeBounds. However, if there is an error trying to decode,
-         * outHeight will be set to -1. 
+         * The resulting height of the bitmap. If {@link #inJustDecodeBounds} is
+         * set to false, this will be height of the output bitmap after any
+         * scaling is applied. If true, it will be the height of the input image
+         * without any accounting for scaling.
+         *
+         * <p>outHeight will be set to -1 if there is an error trying to decode.</p>
          */
         public int outHeight;
 
@@ -465,11 +487,11 @@ public class BitmapFactory {
 
     /**
      * Synonym for {@link #decodeResource(Resources, int, android.graphics.BitmapFactory.Options)}
-     * will null Options.
+     * with null Options.
      *
      * @param res The resources object containing the image data
      * @param id The resource id of the image data
-     * @return The decoded bitmap, or null if the image could not be decode.
+     * @return The decoded bitmap, or null if the image could not be decoded.
      */
     public static Bitmap decodeResource(Resources res, int id) {
         return decodeResource(res, id, null);
@@ -517,7 +539,7 @@ public class BitmapFactory {
      * @param offset offset into imageData for where the decoder should begin
      *               parsing.
      * @param length the number of bytes, beginning at offset, to parse
-     * @return The decoded bitmap, or null if the image could not be decode.
+     * @return The decoded bitmap, or null if the image could not be decoded.
      */
     public static Bitmap decodeByteArray(byte[] data, int offset, int length) {
         return decodeByteArray(data, offset, length, null);
@@ -583,7 +605,7 @@ public class BitmapFactory {
         Trace.traceBegin(Trace.TRACE_TAG_GRAPHICS, "decodeBitmap");
         try {
             if (is instanceof AssetManager.AssetInputStream) {
-                final int asset = ((AssetManager.AssetInputStream) is).getAssetInt();
+                final long asset = ((AssetManager.AssetInputStream) is).getNativeAsset();
                 bm = nativeDecodeAsset(asset, outPadding, opts);
             } else {
                 bm = decodeStreamInternal(is, outPadding, opts);
@@ -686,7 +708,7 @@ public class BitmapFactory {
             Rect padding, Options opts);
     private static native Bitmap nativeDecodeFileDescriptor(FileDescriptor fd,
             Rect padding, Options opts);
-    private static native Bitmap nativeDecodeAsset(int asset, Rect padding, Options opts);
+    private static native Bitmap nativeDecodeAsset(long nativeAsset, Rect padding, Options opts);
     private static native Bitmap nativeDecodeByteArray(byte[] data, int offset,
             int length, Options opts);
     private static native boolean nativeIsSeekable(FileDescriptor fd);

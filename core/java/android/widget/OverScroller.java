@@ -44,8 +44,6 @@ public class OverScroller {
     private static final int SCROLL_MODE = 0;
     private static final int FLING_MODE = 1;
 
-    private final PowerManager mPm;
-
     /**
      * Creates an OverScroller with a viscous fluid scroll interpolator and flywheel.
      * @param context
@@ -73,11 +71,14 @@ public class OverScroller {
      * @hide
      */
     public OverScroller(Context context, Interpolator interpolator, boolean flywheel) {
-        mInterpolator = interpolator;
+        if (interpolator == null) {
+            mInterpolator = new Scroller.ViscousFluidInterpolator();
+        } else {
+            mInterpolator = interpolator;
+        }
         mFlywheel = flywheel;
         mScrollerX = new SplineOverScroller(context);
         mScrollerY = new SplineOverScroller(context);
-        mPm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     }
 
     /**
@@ -116,7 +117,11 @@ public class OverScroller {
     }
 
     void setInterpolator(Interpolator interpolator) {
-        mInterpolator = interpolator;
+        if (interpolator == null) {
+            mInterpolator = new Scroller.ViscousFluidInterpolator();
+        } else {
+            mInterpolator = interpolator;
+        }
     }
 
     /**
@@ -306,14 +311,7 @@ public class OverScroller {
 
                 final int duration = mScrollerX.mDuration;
                 if (elapsedTime < duration) {
-                    float q = (float) (elapsedTime) / duration;
-
-                    if (mInterpolator == null) {
-                        q = Scroller.viscousFluid(q);
-                    } else {
-                        q = mInterpolator.getInterpolation(q);
-                    }
-
+                    final float q = mInterpolator.getInterpolation(elapsedTime / (float) duration);
                     mScrollerX.updateScroll(q);
                     mScrollerY.updateScroll(q);
                 } else {
@@ -377,7 +375,6 @@ public class OverScroller {
      */
     public void startScroll(int startX, int startY, int dx, int dy, int duration) {
         mMode = SCROLL_MODE;
-        mPm.cpuBoost(1500000);
         mScrollerX.startScroll(startX, dx, duration);
         mScrollerY.startScroll(startY, dy, duration);
     }
@@ -448,7 +445,6 @@ public class OverScroller {
             }
         }
 
-        mPm.cpuBoost(1500000);
         mMode = FLING_MODE;
         mScrollerX.fling(startX, velocityX, minX, maxX, overX);
         mScrollerY.fling(startY, velocityY, minY, maxY, overY);
@@ -607,6 +603,8 @@ public class OverScroller {
         private static final int CUBIC = 1;
         private static final int BALLISTIC = 2;
 
+        private final PowerManager mPm;
+
         static {
             float x_min = 0.0f;
             float y_min = 0.0f;
@@ -651,6 +649,7 @@ public class OverScroller {
                     * 39.37f // inch/meter
                     * ppi
                     * 0.84f; // look and feel tuning
+            mPm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         }
 
         void updateScroll(float q) {
@@ -768,6 +767,7 @@ public class OverScroller {
             if (velocity != 0) {
                 mDuration = mSplineDuration = getSplineFlingDuration(velocity);
                 totalDistance = getSplineFlingDistance(velocity);
+                mPm.cpuBoost(mDuration * 1000);
             }
 
             mSplineDistance = (int) (totalDistance * Math.signum(velocity));

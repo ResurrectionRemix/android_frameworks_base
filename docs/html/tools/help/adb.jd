@@ -1,13 +1,14 @@
 page.title=Android Debug Bridge
 parent.title=Tools
 parent.link=index.html
-page.tags="adb"
+page.tags=adb
 @jd:body
 
 <div id="qv-wrapper">
 <div id="qv">
   <h2>In this document</h2>
 <ol>
+  <li><a href="#Enabling">Enabling adb Debugging</a></li>
   <li><a href="#issuingcommands">Syntax</a></li>
   <li><a href="#commandsummary">Commands</a></li>
   <li><a href="#devicestatus">Querying for Emulator/Device Instances</a></li>
@@ -27,6 +28,7 @@ page.tags="adb"
   </li>
   <li><a href="#logcat">Enabling logcat logging</a></li>
   <li><a href="#stopping">Stopping the adb server</a></li>
+  <li><a href="#wireless">Wireless usage</a></li>
 </ol>
 
 </div>
@@ -71,6 +73,19 @@ instances and handles commands from multiple adb clients, you can control any em
 instance from any client (or from a script).</p>
 
 
+<h2 id="Enabling">Enabling adb Debugging</h2>
+
+<p>In order to use adb with a device connected over USB, you must enable
+<strong>USB debugging</strong> in the device system settings, under <strong>
+Developer options</strong>.</p>
+
+<p>On Android 4.2 and higher, the Developer options screen is
+hidden by default. To make it visible, go to
+<b>Settings &gt; About phone</b> and tap <b>Build number</b> seven times. Return to the previous
+screen to find <strong>Developer options</strong> at the bottom.</p>
+
+<p>On some devices, the Developer options screen may be located or named differently.</p>
+
 <p class="note"><strong>Note:</strong> When you connect a device running Android 4.2.2 or higher
 to your computer, the system shows a dialog asking whether to accept an RSA key that allows
 debugging through this computer. This security mechanism protects user devices because it ensures
@@ -78,6 +93,11 @@ that USB debugging and other adb commands cannot be executed unless you're able 
 device and acknowledge the dialog. This requires that you have adb version 1.0.31 (available with
 SDK Platform-tools r16.0.1 and higher) in order to debug on a device running Android 4.2.2 or
 higher.</p>
+
+<p>For more information about connecting to a device over USB, read
+<a href="{@docRoot}tools/device.html">Using Hardware Devices</a>.</p>
+
+
 
 
 <h2 id="issuingcommands">Syntax</h2>
@@ -1130,10 +1150,11 @@ shell. To exit and return to the adb remote shell, use <code>exit</code> or <cod
 
 <h3 id="screenrecord">Recording a device screen</h3>
 
-<p>The {@code screenrecord} command is a shell utility for recording the display of a device as you
-  use it. The utility records screen activity to an MPEG-4 file, which you can then download and use
-  as part of a video presentation. This utility is useful for developers who want to create
-  promotional or training videos without using a separate recording device.</p>
+<p>The {@code screenrecord} command is a shell utility for recording the display of devices
+  running Android 4.4 (API level 19) and higher. The utility records screen activity to an MPEG-4
+  file, which you can then download and use as part of a video presentation. This utility is useful
+  for developers who want to create promotional or training videos without using a separate
+  recording device.</p>
 
 <p>To use the {@code screenrecord} from the command line, type the following:
 
@@ -1341,3 +1362,100 @@ application and sends 500 pseudo-random events to it.</p>
 You can then restart the server by issuing any other adb command. </p>
 
 
+<h2 id="wireless">Wireless usage</h2>
+
+<p>
+adb is usually used over USB.  However, it is also possible to use over
+Wi-Fi, as described here.
+</p>
+
+<ol>
+
+<li>
+Connect Android device and adb host computer
+to a common Wi-Fi network accessible to both.
+We have found that not all access points
+are suitable; you may need to use an access point
+whose firewall is configured properly to support adb.
+</li>
+
+<li>
+Connect the device with USB cable to host.
+</li>
+
+<li>
+Make sure adb is running in USB mode on host.
+<pre>
+$ adb usb
+restarting in USB mode
+</pre>
+</li>
+
+<li>
+Connect to the device over USB.
+<pre>
+$ adb devices
+List of devices attached
+######## device
+</pre>
+</li>
+
+<li>
+Restart host adb in tcpip mode.
+<pre>
+$ adb tcpip 5555
+restarting in TCP mode port: 5555
+</pre>
+</li>
+
+<li>
+Find out the IP address of the Android device:
+Settings -> About tablet -> Status -> IP address.
+Remember the IP address, of the form <code>#.#.#.#</code>.
+</li>
+
+<li>
+Connect adb host to device:
+<pre>
+$ adb connect #.#.#.#
+connected to #.#.#.#:5555
+</pre>
+</li>
+
+<li>
+Remove USB cable from device, and confirm you can still access device:
+<pre>
+$ adb devices
+List of devices attached
+#.#.#.#:5555 device
+</pre>
+
+</ol>
+
+<p>
+You're now good to go!
+</p>
+
+<p>
+If the adb connection is ever lost:
+</p>
+
+<ol>
+
+<li>
+Make sure that your host is still connected to the same Wi-Fi network your Android device is.
+</li>
+
+<li>
+Reconnect by executing the "adb connect" step again.
+</li>
+
+<li>
+Or if that doesn't work, reset your adb host:
+<pre>
+adb kill-server
+</pre>
+and then start over from the beginning.
+</li>
+
+</ol>

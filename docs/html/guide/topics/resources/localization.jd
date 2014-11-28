@@ -19,13 +19,13 @@ parent.link=index.html
 <ol>
   <li><a href="#resource-switching">Overview: Resource-Switching in Android</a></li>
 <li><a href="#using-framework">Using Resources for Localization</a></li>
-<li><a href="#strategies">Localization Strategies</a></li>
+<li><a href="#strategies">Localization Tips</a></li>
 <li><a href="#testing">Testing Localized Applications</a></li>
 </ol>
 
 <h2>See also</h2>
   <ol>
-    <li><a href="{@docRoot}distribute/googleplay/publish/localizing.html">Localization Checklist</a></li>
+    <li><a href="{@docRoot}distribute/tools/localization-checklist.html">Localization Checklist</a></li>
     <li><a href="{@docRoot}guide/topics/resources/providing-resources.html">Providing Resources</a></li>
     <li><a href="{@docRoot}guide/topics/ui/declaring-layout.html">Layouts</a></li>
     <li><a href="{@docRoot}reference/android/app/Activity.html#ActivityLifecycle">Activity Lifecycle</a></li>
@@ -304,7 +304,13 @@ Alternative Resources</a>.</p>
 For more about this, see <a
 href="{@docRoot}guide/topics/resources/accessing-resources.html">Accessing Resources</a>.</p>
 
-<h2 id="strategies">Localization Strategies</h2>
+<h2 id="checklist">Localization Checklist</h2>
+
+<p>For a complete overview of the process of localizing and distributing an Android application,
+see the <a href="{@docRoot}distribute/tools/localization-checklist.html">Localization
+Checklist</a> document.</p>
+
+<h2 id="strategies">Localization Tips</h2>
 
 <h4 id="failing2">Design your application  to work in any locale</h4>
 
@@ -396,8 +402,7 @@ that Android makes available:</p>
 	resolution and density of the device screen may differ, which could affect 
 	the display of strings and drawables in your UI.</p>
 
-<p>To change the locale on a device, use  the Settings application  (Home &gt;
-Menu &gt; Settings &gt; Locale &amp; text &gt; Select locale). </p>
+<p>To change the locale or language on a device, use the Settings application.</p>
 
 <h3 id="emulator">Testing on an Emulator</h3>
 
@@ -478,6 +483,4 @@ the new locale. </p>
 	portrait orientation and see if the application will run. 
 
 
-<h2 id="checklist">Localization Checklist</h2>
 
-<p>For an overview of the process of localizing an Android application, see the <a href="{@docRoot}distribute/googleplay/publish/localizing.html">Localization Checklist</a>.</p>

@@ -18,8 +18,6 @@ package android.mtp;
 
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
-import android.os.ParcelFileDescriptor;
-import android.util.Log;
 
 /**
  * This class represents an MTP or PTP device connected on the USB host bus. An application can
@@ -237,7 +235,7 @@ public final class MtpDevice {
     }
 
     // used by the JNI code
-    private int mNativeContext;
+    private long mNativeContext;
 
     private native boolean native_open(String deviceName, int fd);
     private native void native_close();

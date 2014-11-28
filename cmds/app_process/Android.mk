@@ -1,4 +1,5 @@
 LOCAL_PATH:= $(call my-dir)
+
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
@@ -12,9 +13,14 @@ LOCAL_SHARED_LIBRARIES := \
 	libandroid_runtime
 
 LOCAL_MODULE:= app_process
-
+LOCAL_MULTILIB := both
+LOCAL_MODULE_STEM_32 := app_process32
+LOCAL_MODULE_STEM_64 := app_process64
 include $(BUILD_EXECUTABLE)
 
+# Create a symlink from app_process to app_process32 or 64
+# depending on the target configuration.
+include  $(BUILD_SYSTEM)/executable_prefer_symlink.mk
 
 # Build a variant of app_process binary linked with ASan runtime.
 # ARM-only at the moment.

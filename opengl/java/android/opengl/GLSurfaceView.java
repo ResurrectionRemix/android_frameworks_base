@@ -169,8 +169,6 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
     private final static boolean LOG_RENDERER = false;
     private final static boolean LOG_RENDERER_DRAW_FRAME = false;
     private final static boolean LOG_EGL = false;
-
-    private final static boolean RGB565 = SystemProperties.getBoolean("ro.opengles.surface.rgb565", false);
     /**
      * The renderer only renders
      * when the surface is created, or when {@link #requestRender} is called.
@@ -597,11 +595,6 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
         mDetached = false;
     }
 
-    /**
-     * This method is used as part of the View class and is not normally
-     * called or subclassed by clients of GLSurfaceView.
-     * Must not be called before a renderer has been set.
-     */
     @Override
     protected void onDetachedFromWindow() {
         if (LOG_ATTACH_DETACH) {
@@ -884,7 +877,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
         protected int[] mConfigSpec;
 
         private int[] filterConfigSpec(int[] configSpec) {
-            if (mEGLContextClientVersion != 2) {
+            if (mEGLContextClientVersion != 2 && mEGLContextClientVersion != 3) {
                 return configSpec;
             }
             /* We know none of the subclasses define EGL_RENDERABLE_TYPE.
@@ -894,7 +887,11 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
             int[] newConfigSpec = new int[len + 2];
             System.arraycopy(configSpec, 0, newConfigSpec, 0, len-1);
             newConfigSpec[len-1] = EGL10.EGL_RENDERABLE_TYPE;
-            newConfigSpec[len] = 4; /* EGL_OPENGL_ES2_BIT */
+            if (mEGLContextClientVersion == 2) {
+                newConfigSpec[len] = EGL14.EGL_OPENGL_ES2_BIT;  /* EGL_OPENGL_ES2_BIT */
+            } else {
+                newConfigSpec[len] = EGLExt.EGL_OPENGL_ES3_BIT_KHR; /* EGL_OPENGL_ES3_BIT_KHR */
+            }
             newConfigSpec[len+1] = EGL10.EGL_NONE;
             return newConfigSpec;
         }
@@ -976,7 +973,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
      */
     private class SimpleEGLConfigChooser extends ComponentSizeChooser {
         public SimpleEGLConfigChooser(boolean withDepthBuffer) {
-            super(RGB565 ? 5 : 8, RGB565 ? 6 : 8, RGB565 ? 5 : 8, 0, withDepthBuffer ? 16 : 0, 0);
+            super(8, 8, 8, 0, withDepthBuffer ? 16 : 0, 0);
         }
     }
 

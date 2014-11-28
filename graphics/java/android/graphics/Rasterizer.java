@@ -21,13 +21,14 @@
 
 package android.graphics;
 
+@Deprecated
 public class Rasterizer {
 
     protected void finalize() throws Throwable {
         finalizer(native_instance);
     }
 
-    private static native void finalizer(int native_instance);
+    private static native void finalizer(long native_instance);
 
-    int native_instance;
+    long native_instance;
 }

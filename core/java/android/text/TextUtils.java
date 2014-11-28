@@ -43,15 +43,17 @@ import android.text.style.SuggestionRangeSpan;
 import android.text.style.SuggestionSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.TextAppearanceSpan;
+import android.text.style.TtsSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.util.Printer;
-
 import android.view.View;
+
 import com.android.internal.R;
 import com.android.internal.util.ArrayUtils;
+
 import libcore.icu.ICU;
 
 import java.lang.reflect.Array;
@@ -229,7 +231,12 @@ public class TextUtils {
     public static boolean regionMatches(CharSequence one, int toffset,
                                         CharSequence two, int ooffset,
                                         int len) {
-        char[] temp = obtain(2 * len);
+        int tempLen = 2 * len;
+        if (tempLen < len) {
+            // Integer overflow; len is unreasonably large
+            throw new IndexOutOfBoundsException();
+        }
+        char[] temp = obtain(tempLen);
 
         getChars(one, toffset, toffset + len, temp, 0);
         getChars(two, ooffset, ooffset + len, temp, len);
@@ -601,7 +608,9 @@ public class TextUtils {
     /** @hide */
     public static final int LOCALE_SPAN = 23;
     /** @hide */
-    public static final int LAST_SPAN = LOCALE_SPAN;
+    public static final int TTS_SPAN = 24;
+    /** @hide */
+    public static final int LAST_SPAN = TTS_SPAN;
 
     /**
      * Flatten a CharSequence and whatever styles can be copied across processes
@@ -778,6 +787,10 @@ public class TextUtils {
 
                 case LOCALE_SPAN:
                     readSpan(p, sp, new LocaleSpan(p));
+                    break;
+
+                case TTS_SPAN:
+                    readSpan(p, sp, new TtsSpan(p));
                     break;
 
                 default:
@@ -1321,7 +1334,7 @@ public class TextUtils {
         }
 
         if (buf == null || buf.length < len)
-            buf = new char[ArrayUtils.idealCharArraySize(len)];
+            buf = ArrayUtils.newUnpaddedCharArray(len);
 
         return buf;
     }
@@ -1736,19 +1749,19 @@ public class TextUtils {
      * Be careful: this code will need to be updated when vertical scripts will be supported
      */
     public static int getLayoutDirectionFromLocale(Locale locale) {
-        boolean mirror = SystemProperties.getBoolean(Settings.Global.DEVELOPMENT_FORCE_RTL, false);
         if (locale != null && !locale.equals(Locale.ROOT)) {
-            final String scriptSubtag = ICU.getScript(ICU.addLikelySubtags(locale.toString()));
+            final String scriptSubtag = ICU.addLikelySubtags(locale).getScript();
             if (scriptSubtag == null) return getLayoutDirectionFromFirstChar(locale);
 
             if (scriptSubtag.equalsIgnoreCase(ARAB_SCRIPT_SUBTAG) ||
                     scriptSubtag.equalsIgnoreCase(HEBR_SCRIPT_SUBTAG)) {
-                //If forcing into RTL layout mode and language is RTL,return LTR as default,else RTL
-                return mirror ? View.LAYOUT_DIRECTION_LTR : View.LAYOUT_DIRECTION_RTL;
+                return View.LAYOUT_DIRECTION_RTL;
             }
         }
-        //If forcing into RTL layout mode and language is LTR,return RTL as default,else LTR
-        return mirror ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR;
+        // If forcing into RTL layout mode, return RTL as default, else LTR
+        return SystemProperties.getBoolean(Settings.Global.DEVELOPMENT_FORCE_RTL, false)
+                ? View.LAYOUT_DIRECTION_RTL
+                : View.LAYOUT_DIRECTION_LTR;
     }
 
     /**

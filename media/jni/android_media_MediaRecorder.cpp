@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
+#include <assert.h>
+#include <fcntl.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <stdio.h>
+#include <unistd.h>
+
 //#define LOG_NDEBUG 0
 #define LOG_TAG "MediaRecorderJNI"
 #include <utils/Log.h>
@@ -22,11 +29,6 @@
 #include <camera/ICameraService.h>
 #include <camera/Camera.h>
 #include <media/mediarecorder.h>
-#include <stdio.h>
-#include <assert.h>
-#include <limits.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <utils/threads.h>
 
 #include "jni.h"
@@ -128,21 +130,21 @@ static bool process_media_recorder_call(JNIEnv *env, status_t opStatus, const ch
 static sp<MediaRecorder> getMediaRecorder(JNIEnv* env, jobject thiz)
 {
     Mutex::Autolock l(sLock);
-    MediaRecorder* const p = (MediaRecorder*)env->GetIntField(thiz, fields.context);
+    MediaRecorder* const p = (MediaRecorder*)env->GetLongField(thiz, fields.context);
     return sp<MediaRecorder>(p);
 }
 
 static sp<MediaRecorder> setMediaRecorder(JNIEnv* env, jobject thiz, const sp<MediaRecorder>& recorder)
 {
     Mutex::Autolock l(sLock);
-    sp<MediaRecorder> old = (MediaRecorder*)env->GetIntField(thiz, fields.context);
+    sp<MediaRecorder> old = (MediaRecorder*)env->GetLongField(thiz, fields.context);
     if (recorder.get()) {
         recorder->incStrong(thiz);
     }
     if (old != 0) {
         old->decStrong(thiz);
     }
-    env->SetIntField(thiz, fields.context, (int)recorder.get());
+    env->SetLongField(thiz, fields.context, (jlong)recorder.get());
     return old;
 }
 
@@ -155,6 +157,10 @@ static void android_media_MediaRecorder_setCamera(JNIEnv* env, jobject thiz, job
         return;
     }
     sp<Camera> c = get_native_camera(env, camera, NULL);
+    if (c == NULL) {
+        // get_native_camera will throw an exception in this case
+        return;
+    }
     sp<MediaRecorder> mr = getMediaRecorder(env, thiz);
     process_media_recorder_call(env, mr->setCamera(c->remote(), c->getRecordingProxy()),
             "java/lang/RuntimeException", "setCamera failed.");
@@ -303,7 +309,7 @@ android_media_MediaRecorder_setMaxFileSize(
     sp<MediaRecorder> mr = getMediaRecorder(env, thiz);
 
     char params[64];
-    sprintf(params, "max-filesize=%lld", max_filesize_bytes);
+    sprintf(params, "max-filesize=%" PRId64, max_filesize_bytes);
 
     process_media_recorder_call(env, mr->setParameters(String8(params)), "java/lang/RuntimeException", "setMaxFileSize failed.");
 }
@@ -334,14 +340,34 @@ android_media_MediaRecorder_prepare(JNIEnv *env, jobject thiz)
     process_media_recorder_call(env, mr->prepare(), "java/io/IOException", "prepare failed.");
 }
 
-static int
+static jint
 android_media_MediaRecorder_native_getMaxAmplitude(JNIEnv *env, jobject thiz)
 {
     ALOGV("getMaxAmplitude");
     sp<MediaRecorder> mr = getMediaRecorder(env, thiz);
     int result = 0;
     process_media_recorder_call(env, mr->getMaxAmplitude(&result), "java/lang/RuntimeException", "getMaxAmplitude failed.");
-    return result;
+    return (jint) result;
+}
+
+static jobject
+android_media_MediaRecorder_getSurface(JNIEnv *env, jobject thiz)
+{
+    ALOGV("getSurface");
+    sp<MediaRecorder> mr = getMediaRecorder(env, thiz);
+
+    sp<IGraphicBufferProducer> bufferProducer = mr->querySurfaceMediaSourceFromMediaServer();
+    if (bufferProducer == NULL) {
+        jniThrowException(
+                env,
+                "java/lang/IllegalStateException",
+                "failed to get surface");
+        return NULL;
+    }
+
+    // Wrap the IGBP in a Java-language Surface.
+    return android_view_Surface_createFromIGraphicBufferProducer(env,
+            bufferProducer);
 }
 
 static void
@@ -400,7 +426,7 @@ android_media_MediaRecorder_native_init(JNIEnv *env)
         return;
     }
 
-    fields.context = env->GetFieldID(clazz, "mNativeContext", "I");
+    fields.context = env->GetFieldID(clazz, "mNativeContext", "J");
     if (fields.context == NULL) {
         return;
     }
@@ -478,6 +504,7 @@ static JNINativeMethod gMethods[] = {
     {"setMaxDuration",       "(I)V",                            (void *)android_media_MediaRecorder_setMaxDuration},
     {"setMaxFileSize",       "(J)V",                            (void *)android_media_MediaRecorder_setMaxFileSize},
     {"_prepare",             "()V",                             (void *)android_media_MediaRecorder_prepare},
+    {"getSurface",           "()Landroid/view/Surface;",        (void *)android_media_MediaRecorder_getSurface},
     {"getMaxAmplitude",      "()I",                             (void *)android_media_MediaRecorder_native_getMaxAmplitude},
     {"start",                "()V",                             (void *)android_media_MediaRecorder_start},
     {"pause",                "()V",                             (void *)android_media_MediaRecorder_pause},

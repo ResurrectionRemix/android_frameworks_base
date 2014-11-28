@@ -16,6 +16,7 @@
 
 package android.graphics;
 
+import com.android.annotations.Nullable;
 import com.android.layoutlib.bridge.Bridge;
 import com.android.layoutlib.bridge.impl.DelegateManager;
 import com.android.ninepatch.NinePatchChunk;
@@ -44,61 +45,12 @@ import java.util.Set;
  */
 /*package*/ class BitmapFactory_Delegate {
 
-    // ------ Java delegates ------
-
-    @LayoutlibDelegate
-    /*package*/ static Bitmap finishDecode(Bitmap bm, Rect outPadding, Options opts) {
-        if (bm == null || opts == null) {
-            return bm;
-        }
-
-        final int density = opts.inDensity;
-        if (density == 0) {
-            return bm;
-        }
-
-        bm.setDensity(density);
-        final int targetDensity = opts.inTargetDensity;
-        if (targetDensity == 0 || density == targetDensity || density == opts.inScreenDensity) {
-            return bm;
-        }
-
-        byte[] np = bm.getNinePatchChunk();
-        final boolean isNinePatch = np != null && NinePatch.isNinePatchChunk(np);
-        // DELEGATE CHANGE: never scale 9-patch
-        if (opts.inScaled && isNinePatch == false) {
-            float scale = targetDensity / (float)density;
-            // TODO: This is very inefficient and should be done in native by Skia
-            final Bitmap oldBitmap = bm;
-            bm = Bitmap.createScaledBitmap(oldBitmap, (int) (bm.getWidth() * scale + 0.5f),
-                    (int) (bm.getHeight() * scale + 0.5f), true);
-            oldBitmap.recycle();
-
-            if (isNinePatch) {
-                np = nativeScaleNinePatch(np, scale, outPadding);
-                bm.setNinePatchChunk(np);
-            }
-            bm.setDensity(targetDensity);
-        }
-
-        return bm;
-    }
-
-
     // ------ Native Delegates ------
 
     @LayoutlibDelegate
     /*package*/ static Bitmap nativeDecodeStream(InputStream is, byte[] storage,
-            Rect padding, Options opts) {
-        return nativeDecodeStream(is, storage, padding, opts, false, 1.f);
-    }
-
-    @LayoutlibDelegate
-    /*package*/ static  Bitmap nativeDecodeStream(InputStream is, byte[] storage,
-            Rect padding, Options opts, boolean applyScale, float scale) {
+            @Nullable Rect padding, @Nullable Options opts) {
         Bitmap bm = null;
-
-        //TODO support rescaling
 
         Density density = Density.MEDIUM;
         Set<BitmapCreateFlags> bitmapCreateFlags = EnumSet.of(BitmapCreateFlags.MUTABLE);
@@ -126,18 +78,20 @@ import java.util.Set;
                 // put the chunk in the bitmap
                 bm.setNinePatchChunk(NinePatch_Delegate.serialize(chunk));
 
-                // read the padding
-                int[] paddingarray = chunk.getPadding();
-                padding.left = paddingarray[0];
-                padding.top = paddingarray[1];
-                padding.right = paddingarray[2];
-                padding.bottom = paddingarray[3];
+                if (padding != null) {
+                    // read the padding
+                    int[] paddingArray = chunk.getPadding();
+                    padding.left = paddingArray[0];
+                    padding.top = paddingArray[1];
+                    padding.right = paddingArray[2];
+                    padding.bottom = paddingArray[3];
+                }
             } else {
                 // load the bitmap directly.
                 bm = Bitmap_Delegate.createBitmap(is, bitmapCreateFlags, density);
             }
         } catch (IOException e) {
-            Bridge.getLog().error(null,"Failed to load image" , e, null);
+            Bridge.getLog().error(null, "Failed to load image", e, null);
         }
 
         return bm;
@@ -151,14 +105,7 @@ import java.util.Set;
     }
 
     @LayoutlibDelegate
-    /*package*/ static Bitmap nativeDecodeAsset(int asset, Rect padding, Options opts) {
-        opts.inBitmap = null;
-        return null;
-    }
-
-    @LayoutlibDelegate
-    /*package*/ static Bitmap nativeDecodeAsset(int asset, Rect padding, Options opts,
-            boolean applyScale, float scale) {
+    /*package*/ static Bitmap nativeDecodeAsset(long asset, Rect padding, Options opts) {
         opts.inBitmap = null;
         return null;
     }
@@ -168,13 +115,6 @@ import java.util.Set;
             int length, Options opts) {
         opts.inBitmap = null;
         return null;
-    }
-
-    @LayoutlibDelegate
-    /*package*/ static byte[] nativeScaleNinePatch(byte[] chunk, float scale, Rect pad) {
-        // don't scale for now. This should not be called anyway since we re-implement
-        // BitmapFactory.finishDecode();
-        return chunk;
     }
 
     @LayoutlibDelegate

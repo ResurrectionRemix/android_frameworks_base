@@ -16,6 +16,7 @@
 
 package android.app;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.app.IWallpaperManagerCallback;
@@ -29,12 +30,6 @@ interface IWallpaperManager {
      * Set the wallpaper.
      */
     ParcelFileDescriptor setWallpaper(String name);
-
-    /**
-     * Set the keyguard wallpaper.
-     * @hide
-     */
-    ParcelFileDescriptor setKeyguardWallpaper(String name);
     
     /**
      * Set the live wallpaper.
@@ -46,13 +41,6 @@ interface IWallpaperManager {
      */
     ParcelFileDescriptor getWallpaper(IWallpaperManagerCallback cb,
             out Bundle outParams);
-
-    /**
-     * Get the keyguard wallpaper.
-     * @hide
-     */
-    ParcelFileDescriptor getKeyguardWallpaper(IWallpaperManagerCallback cb,
-            out Bundle outParams);
     
     /**
      * Get information about a live wallpaper.
@@ -63,12 +51,6 @@ interface IWallpaperManager {
      * Clear the wallpaper.
      */
     void clearWallpaper();
-
-    /*
-     * Clear the keyguard wallpaper.
-     * @hide
-     */
-    void clearKeyguardWallpaper();
 
     /**
      * Return whether there is a wallpaper set with the given name.
@@ -90,4 +72,19 @@ interface IWallpaperManager {
      * Returns the desired minimum height for the wallpaper.
      */
     int getHeightHint();
+
+    /**
+     * Sets extra padding that we would like the wallpaper to have outside of the display.
+     */
+    void setDisplayPadding(in Rect padding);
+
+    /**
+     * Returns the name of the wallpaper. Private API.
+     */
+    String getName();
+
+    /**
+     * Informs the service that wallpaper settings have been restored. Private API.
+     */
+    void settingsRestored();
 }

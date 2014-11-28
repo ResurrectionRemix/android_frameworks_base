@@ -17,24 +17,34 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="4469836075319831821">"Derulator print."</string>
-    <string name="advanced_settings_button" msgid="5764225091289415632">"Setările imprimantei"</string>
-    <string name="print_button" msgid="645164566271246268">"Printați"</string>
-    <string name="save_button" msgid="1921310454071758999">"Salvați"</string>
+    <string name="more_options_button" msgid="2243228396432556771">"Mai multe opțiuni"</string>
     <string name="label_destination" msgid="9132510997381599275">"Destinație"</string>
     <string name="label_copies" msgid="3634531042822968308">"Copii"</string>
-    <string name="label_paper_size" msgid="8681895607876809323">"Formatul hârtiei"</string>
+    <string name="label_copies_summary" msgid="3861966063536529540">"Copii:"</string>
+    <string name="label_paper_size" msgid="908654383827777759">"Formatul hârtiei"</string>
+    <string name="label_paper_size_summary" msgid="5668204981332138168">"Formatul hârtiei:"</string>
     <string name="label_color" msgid="1108690305218188969">"Color"</string>
     <string name="label_orientation" msgid="2853142581990496477">"Orientare"</string>
-    <string name="label_pages" msgid="6300874667546617333">"Pagini (<xliff:g id="PAGE_COUNT">%1$s</xliff:g>)"</string>
+    <string name="label_pages" msgid="7768589729282182230">"Pagini"</string>
+    <string name="template_all_pages" msgid="3322235982020148762">"Toate cele <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
+    <string name="template_page_range" msgid="428638530038286328">"Intervalul de <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
     <string name="pages_range_example" msgid="8558694453556945172">"de ex. 1-5, 8, 11-13"</string>
     <string name="print_preview" msgid="8010217796057763343">"Previzualizați printarea"</string>
     <string name="install_for_print_preview" msgid="6366303997385509332">"Instalați PDF viewer pentru previzualizare"</string>
     <string name="printing_app_crashed" msgid="854477616686566398">"Aplicația de printare s-a blocat"</string>
-    <string name="page_count_unknown" msgid="6058852665954511124">"Pagini"</string>
     <string name="generating_print_job" msgid="3119608742651698916">"Se generează sarcină printare"</string>
     <string name="save_as_pdf" msgid="5718454119847596853">"Salvați ca PDF"</string>
     <string name="all_printers" msgid="5018829726861876202">"Toate imprimantele..."</string>
     <string name="print_dialog" msgid="32628687461331979">"Caseta de dialog de printare"</string>
+    <string name="current_page_template" msgid="1386638343571771292">"<xliff:g id="CURRENT_PAGE">%1$d</xliff:g> /<xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="page_description_template" msgid="6831239682256197161">"Pagina <xliff:g id="CURRENT_PAGE">%1$d</xliff:g> din <xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="summary_template" msgid="8899734908625669193">"Rezumat, copii <xliff:g id="COPIES">%1$s</xliff:g>, dimensiunea paginii <xliff:g id="PAPER_SIZE">%2$s</xliff:g>"</string>
+    <string name="expand_handle" msgid="7282974448109280522">"Ghidaj de extindere"</string>
+    <string name="collapse_handle" msgid="6886637989442507451">"Ghidaj de restrângere"</string>
+    <string name="print_button" msgid="645164566271246268">"Printați"</string>
+    <string name="savetopdf_button" msgid="2976186791686924743">"Salvați în format PDF"</string>
+    <string name="print_options_expanded" msgid="6944679157471691859">"Opțiuni de printare extinse"</string>
+    <string name="print_options_collapsed" msgid="7455930445670414332">"Opțiuni de printare restrânse"</string>
     <string name="search" msgid="5421724265322228497">"Căutați"</string>
     <string name="all_printers_label" msgid="3178848870161526399">"Toate imprimantele"</string>
     <string name="add_print_service_label" msgid="5356702546188981940">"Adăugați un serviciu"</string>
@@ -63,7 +73,6 @@
     <string name="no_connection_to_printer" msgid="2159246915977282728">"Nu există conexiune la o imprimantă"</string>
     <string name="reason_unknown" msgid="5507940196503246139">"necunoscut"</string>
     <string name="printer_unavailable" msgid="2434170617003315690">"<xliff:g id="PRINT_JOB_NAME">%1$s</xliff:g> - indisponibil"</string>
-    <string name="print_error_default_message" msgid="8568506918983980567">"Nu s-a putut genera sarcina de printare"</string>
   <string-array name="color_mode_labels">
     <item msgid="7602948745415174937">"Alb-negru"</item>
     <item msgid="2762241247228983754">"Color"</item>
@@ -72,8 +81,9 @@
     <item msgid="4061931020926489228">"Portret"</item>
     <item msgid="3199660090246166812">"Peisaj"</item>
   </string-array>
-  <string-array name="page_options_labels">
-    <item msgid="7421377442011699994">"Toate"</item>
-    <item msgid="6812869625222503603">"Interval"</item>
-  </string-array>
+    <string name="print_write_error_message" msgid="5787642615179572543">"Nu s-a putut scrie în fișier."</string>
+    <string name="print_error_default_message" msgid="8602678405502922346">"Ne pare rău, operațiunea nu a reușit. Încercați din nou."</string>
+    <string name="print_error_retry" msgid="1426421728784259538">"Reîncercați"</string>
+    <string name="print_error_printer_unavailable" msgid="8985614415253203381">"Această imprimantă nu este disponibilă momentan."</string>
+    <string name="print_preparing_preview" msgid="3939930735671364712">"Se pregătește previzualizarea..."</string>
 </resources>

@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * <p>
  * This class enables generating a PDF document from native Android content. You
- * open a new document and then for every page you want to add you start a page,
+ * create a new document and then for every page you want to add you start a page,
  * write content to the page, and finish the page. After you are done with all
  * pages, you write the document to an output stream and close the document.
  * After a document is closed you should not use it anymore. Note that pages are
@@ -64,7 +64,7 @@ import java.util.List;
  * // write the document content
  * document.writeTo(getOutputStream());
  *
- * //close the document
+ * // close the document
  * document.close();
  * </pre>
  */
@@ -82,7 +82,7 @@ public class PdfDocument {
 
     private final List<PageInfo> mPages = new ArrayList<PageInfo>();
 
-    private int mNativeDocument;
+    private long mNativeDocument;
 
     private Page mCurrentPage;
 
@@ -235,20 +235,20 @@ public class PdfDocument {
         }
     }
 
-    private native int nativeCreateDocument();
+    private native long nativeCreateDocument();
 
-    private native void nativeClose(int document);
+    private native void nativeClose(long nativeDocument);
 
-    private native void nativeFinishPage(int document);
+    private native void nativeFinishPage(long nativeDocument);
 
-    private native void nativeWriteTo(int document, OutputStream out, byte[] chunk);
+    private native void nativeWriteTo(long nativeDocument, OutputStream out, byte[] chunk);
 
-    private static native int nativeStartPage(int documentPtr, int pageWidth, int pageHeight,
+    private static native long nativeStartPage(long nativeDocument, int pageWidth, int pageHeight,
             int contentLeft, int contentTop, int contentRight, int contentBottom);
 
     private final class PdfCanvas extends Canvas {
 
-        public PdfCanvas(int nativeCanvas) {
+        public PdfCanvas(long nativeCanvas) {
             super(nativeCanvas);
         }
 

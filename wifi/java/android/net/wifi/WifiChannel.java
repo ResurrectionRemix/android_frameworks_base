@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2014, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package android.net.wifi;
 
@@ -5,81 +20,68 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * A class representing one wifi channel or frequency
+ * Wifi Channel
+ *
+ * @see ScanSettings
+ *
  * @hide
  */
 public class WifiChannel implements Parcelable {
-    public int channel;
-    public int frequency;
-    public boolean ibssAllowed;
 
-    public String toString() {
-        StringBuffer sbuf = new StringBuffer();
-        sbuf.append(" channel: ").append(channel);
-        sbuf.append(" freq: ").append(frequency);
-        sbuf.append(" MHz");
-        sbuf.append(" IBSS: ").append(ibssAllowed ? "allowed" : "not allowed");
-        sbuf.append('\n');
-        return sbuf.toString();
+    private static final int MIN_FREQ_MHZ = 2412;
+    private static final int MAX_FREQ_MHZ = 5825;
+
+    private static final int MIN_CHANNEL_NUM = 1;
+    private static final int MAX_CHANNEL_NUM = 196;
+
+    /** frequency */
+    public int freqMHz;
+
+    /** channel number */
+    public int channelNum;
+
+    /** is it a DFS channel? */
+    public boolean isDFS;
+
+    /** public constructor */
+    public WifiChannel() { }
+
+    /** check for validity */
+    public boolean isValid() {
+        if (freqMHz < MIN_FREQ_MHZ || freqMHz > MAX_FREQ_MHZ) return false;
+        if (channelNum < MIN_CHANNEL_NUM || channelNum > MAX_CHANNEL_NUM) return false;
+        return true;
     }
 
+    /** implement Parcelable interface */
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof WifiChannel) {
-            WifiChannel w = (WifiChannel)o;
-            return (this.channel == w.channel &&
-                    this.frequency == w.frequency &&
-                    this.ibssAllowed == w.ibssAllowed);
-        }
-        return false;
-    }
-
-    /** Implement the Parcelable interface */
     public int describeContents() {
         return 0;
     }
 
-    public WifiChannel() {
-        channel = 0;
-        frequency = 0;
-        ibssAllowed = false;
+    /** implement Parcelable interface */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(freqMHz);
+        out.writeInt(channelNum);
+        out.writeInt(isDFS ? 1 : 0);
     }
 
-    public WifiChannel(int ch, int freq, boolean ibss) {
-        channel = ch;
-        frequency = freq;
-        ibssAllowed = ibss;
-    }
-
-    /* Copy constructor */
-    public WifiChannel(WifiChannel source) {
-        if (source != null) {
-            channel = source.channel;
-            frequency = source.frequency;
-            ibssAllowed = source.ibssAllowed;
+    /** implement Parcelable interface */
+    public static final Parcelable.Creator<WifiChannel> CREATOR =
+            new Parcelable.Creator<WifiChannel>() {
+        @Override
+        public WifiChannel createFromParcel(Parcel in) {
+            WifiChannel channel = new WifiChannel();
+            channel.freqMHz = in.readInt();
+            channel.channelNum = in.readInt();
+            channel.isDFS = in.readInt() != 0;
+            return channel;
         }
-    }
 
-    /** Implement the Parcelable interface */
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(channel);
-        dest.writeInt(frequency);
-        dest.writeInt(ibssAllowed ? 1 : 0);
-    }
-
-    /** Implement the Parcelable interface */
-    public static final Creator<WifiChannel> CREATOR =
-            new Creator<WifiChannel>() {
-                public WifiChannel createFromParcel(Parcel in) {
-                    WifiChannel ch = new WifiChannel();
-                    ch.channel = in.readInt();
-                    ch.frequency = in.readInt();
-                    ch.ibssAllowed = (in.readInt() == 1);
-                    return ch;
-                }
-
-                public WifiChannel[] newArray(int size) {
-                    return new WifiChannel[size];
-                }
-            };
+        @Override
+        public WifiChannel[] newArray(int size) {
+            return new WifiChannel[size];
+        }
+    };
 }

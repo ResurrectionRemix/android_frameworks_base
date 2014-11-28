@@ -40,7 +40,6 @@ import com.android.documentsui.DocumentsActivity.State;
 import com.android.documentsui.model.RootInfo;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.Objects;
 import com.google.android.collect.Lists;
 import com.google.android.collect.Sets;
 import com.google.common.collect.ArrayListMultimap;
@@ -51,6 +50,7 @@ import libcore.io.IoUtils;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -58,7 +58,7 @@ import java.util.concurrent.TimeUnit;
  * Cache of known storage backends and their roots.
  */
 public class RootsCache {
-    private static final boolean LOGD = true;
+    private static final boolean LOGD = false;
 
     public static final Uri sNotificationUri = Uri.parse(
             "content://com.android.documentsui.roots/");
@@ -103,8 +103,9 @@ public class RootsCache {
         // Special root for recents
         mRecentsRoot.authority = null;
         mRecentsRoot.rootId = null;
-        mRecentsRoot.icon = R.drawable.ic_root_recent;
-        mRecentsRoot.flags = Root.FLAG_LOCAL_ONLY | Root.FLAG_SUPPORTS_CREATE;
+        mRecentsRoot.derivedIcon = R.drawable.ic_root_recent;
+        mRecentsRoot.flags = Root.FLAG_LOCAL_ONLY | Root.FLAG_SUPPORTS_CREATE
+                | Root.FLAG_SUPPORTS_IS_CHILD;
         mRecentsRoot.title = mContext.getString(R.string.root_recent);
         mRecentsRoot.availableBytes = -1;
 
@@ -115,9 +116,6 @@ public class RootsCache {
      * Gather roots from storage providers belonging to given package name.
      */
     public void updatePackageAsync(String packageName) {
-        // Need at least first load, since we're going to be using previously
-        // cached values for non-matching packages.
-        waitForFirstLoad();
         new UpdateTask(packageName).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -181,6 +179,12 @@ public class RootsCache {
         @Override
         protected Void doInBackground(Void... params) {
             final long start = SystemClock.elapsedRealtime();
+
+            if (mFilterPackage != null) {
+                // Need at least first load, since we're going to be using
+                // previously cached values for non-matching packages.
+                waitForFirstLoad();
+            }
 
             mTaskRoots.put(mRecentsRoot.authority, mRecentsRoot);
 
@@ -295,7 +299,7 @@ public class RootsCache {
 
     private RootInfo getRootLocked(String authority, String rootId) {
         for (RootInfo root : mRoots.get(authority)) {
-            if (Objects.equal(root.rootId, rootId)) {
+            if (Objects.equals(root.rootId, rootId)) {
                 return root;
             }
         }
@@ -308,7 +312,7 @@ public class RootsCache {
         synchronized (mLock) {
             final int rootIcon = root.derivedIcon != 0 ? root.derivedIcon : root.icon;
             for (RootInfo test : mRoots.get(root.authority)) {
-                if (Objects.equal(test.rootId, root.rootId)) {
+                if (Objects.equals(test.rootId, root.rootId)) {
                     continue;
                 }
                 final int testIcon = test.derivedIcon != 0 ? test.derivedIcon : test.icon;
@@ -349,12 +353,15 @@ public class RootsCache {
         final List<RootInfo> matching = Lists.newArrayList();
         for (RootInfo root : roots) {
             final boolean supportsCreate = (root.flags & Root.FLAG_SUPPORTS_CREATE) != 0;
+            final boolean supportsIsChild = (root.flags & Root.FLAG_SUPPORTS_IS_CHILD) != 0;
             final boolean advanced = (root.flags & Root.FLAG_ADVANCED) != 0;
             final boolean localOnly = (root.flags & Root.FLAG_LOCAL_ONLY) != 0;
             final boolean empty = (root.flags & Root.FLAG_EMPTY) != 0;
 
             // Exclude read-only devices when creating
             if (state.action == State.ACTION_CREATE && !supportsCreate) continue;
+            // Exclude roots that don't support directory picking
+            if (state.action == State.ACTION_OPEN_TREE && !supportsIsChild) continue;
             // Exclude advanced devices when not requested
             if (!state.showAdvanced && advanced) continue;
             // Exclude non-local devices when local only

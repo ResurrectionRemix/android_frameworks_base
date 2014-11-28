@@ -244,7 +244,7 @@ href="{@docRoot}guide/topics/manifest/uses-sdk-element.html#target">{@code targe
 
 <p>If you want to emulate an NFC card that is using these protocols in your app, create a service component based on the {@link android.nfc.cardemulation.HostApduService} class. Whereas if your app instead uses a secure element for card emulation, you need to create a service based on the {@link android.nfc.cardemulation.OffHostApduService} class, which will not directly be involved in the transactions but is necessary to register the AIDs that should be handled by the secure element.</p>
 
-<p>For more information, read the <a href="">NFC Card Emulation</a> guide.</p>
+<p>For more information, read the <a href="{@docRoot}guide/topics/connectivity/nfc/hce.html">NFC Card Emulation</a> guide.</p>
 
 
 <h3 id="ReaderMode">NFC reader mode</h3>
@@ -474,7 +474,7 @@ sensor provides rotation vector data based on a magnetometer, which is a useful 
 
 <p>To provide batching, the {@link android.hardware.SensorManager} class adds two new versions of the {@link android.hardware.SensorManager#registerListener(SensorEventListener, Sensor, int, int) registerListener()} method that allow you to specify the "maximum report latency." This new parameter specifies the maximum delay that your {@link android.hardware.SensorEventListener} will tolerate for delivery of new sensor events. For example, if you specify a batch latency of one minute, the system will deliver the recent set of batched events at an interval no longer than one minute by making consecutive calls to your {@link android.hardware.SensorEventListener#onSensorChanged onSensorChanged()} method&mdash;once for each event that was batched. The sensor events will never be delayed longer than your maximum report latency value, but may arrive sooner if other apps have requested a shorter latency for the same sensor.</p>
 
-<p>However, be aware that the sensor will deliver your app the batched events based on your report latency <strong>only while the CPU is awake</strong>. Although a hardware sensor that supports batching will continue to collect sensor events while the CPU is asleep, it will not wake the CPU to deliver your app the batched events. When the sensor eventually runs out of its memory for events, it will begin dropping the oldest events in order to save the newest events. You can avoid losing events by waking the device before the sensor fills its memory then call {@link android.hardware.SensorManager#flush flush()} to capture the latest batch of events. To estimate when the memory will be full and should be flushed, call {@link android.hardware.Sensor#getFifoReservedEventCount()} to get the maximum number of sensor events it can save, and divide that number by the rate at which your app desires each event. Use that calculation to set wake alarms with {@link android.app.AlarmManager} that invoke your {@link android.app.Service} (which implements the {@link android.hardware.SensorEventListener}) to flush the sensor. It's okay that the alarm may execute even while the device is awake, because the alarm interval should be large enough that it occurs only a few times in a day.</p>
+<p>However, be aware that the sensor will deliver your app the batched events based on your report latency <strong>only while the CPU is awake</strong>. Although a hardware sensor that supports batching will continue to collect sensor events while the CPU is asleep, it will not wake the CPU to deliver your app the batched events. When the sensor eventually runs out of its memory for events, it will begin dropping the oldest events in order to save the newest events. You can avoid losing events by waking the device before the sensor fills its memory then call {@link android.hardware.SensorManager#flush flush()} to capture the latest batch of events. To estimate when the memory will be full and should be flushed, call {@link android.hardware.Sensor#getFifoMaxEventCount()} to get the maximum number of sensor events it can save, and divide that number by the rate at which your app desires each event. Use that calculation to set wake alarms with {@link android.app.AlarmManager} that invoke your {@link android.app.Service} (which implements the {@link android.hardware.SensorEventListener}) to flush the sensor.</p>
 
 
 <p class="note"><strong>Note:</strong> Not all devices support batching sensor events because it requires support by the hardware sensor. However, beginning with Android 4.4, you should always use the new {@link android.hardware.SensorManager#registerListener(SensorEventListener, Sensor, int, int) registerListener()} methods, because if the device does not support batching, then the system gracefully ignores the batch latency argument and delivers sensor events in real time.</p>
@@ -572,8 +572,8 @@ The new {@link android.app.Notification.Action} class defines the characteristic
 
 
 
-<p style="margin-top:50px" class="note">For a detailed view of all API changes in Android 4.3, see the
-<a href="{@docRoot}sdk/api_diff/18/changes.html">API Differences Report</a>.</p>
+<p style="margin-top:50px" class="note">For a detailed view of all API changes in Android 4.4, see the
+<a href="{@docRoot}sdk/api_diff/19/changes.html">API Differences Report</a>.</p>
 
 
 

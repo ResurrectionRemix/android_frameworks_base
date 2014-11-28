@@ -17,13 +17,11 @@
 package android.view;
 
 import android.app.AppGlobals;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.RemoteException;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
@@ -63,7 +61,7 @@ public class ViewConfiguration {
      * Defines the default duration in milliseconds before a press turns into
      * a long press
      */
-    private static final int DEFAULT_LONG_PRESS_TIMEOUT = 450;
+    private static final int DEFAULT_LONG_PRESS_TIMEOUT = 500;
 
     /**
      * Defines the time between successive key repeats in milliseconds.
@@ -75,21 +73,21 @@ public class ViewConfiguration {
      * appropriate button to bring up the global actions dialog (power off,
      * lock screen, etc).
      */
-    private static final int GLOBAL_ACTIONS_KEY_TIMEOUT = 450;
+    private static final int GLOBAL_ACTIONS_KEY_TIMEOUT = 500;
 
     /**
      * Defines the duration in milliseconds we will wait to see if a touch event
      * is a tap or a scroll. If the user does not move within this interval, it is
      * considered to be a tap.
      */
-    private static final int TAP_TIMEOUT = 175;
+    private static final int TAP_TIMEOUT = 100;
 
     /**
      * Defines the duration in milliseconds we will wait to see if a touch event
      * is a jump tap. If the user does not complete the jump tap within this interval, it is
      * considered to be a tap.
      */
-    private static final int JUMP_TAP_TIMEOUT = 450;
+    private static final int JUMP_TAP_TIMEOUT = 500;
 
     /**
      * Defines the duration in milliseconds between the first tap's up event and
@@ -123,12 +121,12 @@ public class ViewConfiguration {
      * Defines the duration in milliseconds we want to display zoom controls in response
      * to a user panning within an application.
      */
-    private static final int ZOOM_CONTROLS_TIMEOUT = 2800;
+    private static final int ZOOM_CONTROLS_TIMEOUT = 3000;
 
     /**
      * Inset in dips to look for touchable content when the user touches the edge of the screen
      */
-    private static final int EDGE_SLOP = 10;
+    private static final int EDGE_SLOP = 12;
 
     /**
      * Distance a touch can wander before we think the user is scrolling in dips.
@@ -182,12 +180,7 @@ public class ViewConfiguration {
     /**
      * Maximum velocity to initiate a fling, as measured in dips per second
      */
-    private static int MAXIMUM_FLING_VELOCITY = 15000;
-
-    /**
-     * Default Maximum velocity to initiate a fling, as measured in dips per second
-     */
-    public static final int DEFAULT_MAXIMUM_FLING_VELOCITY = 15000;
+    private static final int MAXIMUM_FLING_VELOCITY = 8000;
 
     /**
      * Delay before dispatching a recurring accessibility event in milliseconds.
@@ -207,32 +200,25 @@ public class ViewConfiguration {
     /**
      * The coefficient of friction applied to flings/scrolls.
      */
-    private static float SCROLL_FRICTION = 0.011f;
-
-    /**
-     * The default coefficient of friction applied to flings/scrolls.
-     */
-    public static final float DEFAULT_SCROLL_FRICTION = 0.011f;
+    private static final float SCROLL_FRICTION = 0.015f;
 
     /**
      * Max distance in dips to overscroll for edge effects
      */
-    private static int OVERSCROLL_DISTANCE = 0;
-
-    /**
-     * Default Max distance in dips to overscroll for edge effects
-     */
-    public static final int DEFAULT_OVERSCROLL_DISTANCE = 0;
+    private static final int OVERSCROLL_DISTANCE = 0;
 
     /**
      * Max distance in dips to overfling for edge effects
      */
-    private static int OVERFLING_DISTANCE = 6;
+    private static final int OVERFLING_DISTANCE = 6;
 
     /**
-     * Default Max distance in dips to overfling for edge effects
+     * Configuration values for overriding {@link #hasPermanentMenuKey()} behavior.
+     * These constants must match the definition in res/values/config.xml.
      */
-    public static final int DEFAULT_OVERFLING_DISTANCE = 6;
+    private static final int HAS_PERMANENT_MENU_KEY_AUTODETECT = 0;
+    private static final int HAS_PERMANENT_MENU_KEY_TRUE = 1;
+    private static final int HAS_PERMANENT_MENU_KEY_FALSE = 2;
 
     private final int mEdgeSlop;
     private final int mFadingEdgeLength;
@@ -248,8 +234,10 @@ public class ViewConfiguration {
     private final int mOverscrollDistance;
     private final int mOverflingDistance;
     private final boolean mFadingMarqueeEnabled;
+    private final long mGlobalActionsKeyTimeout;
 
-    private Context mContext;
+    private boolean sHasPermanentMenuKey;
+    private boolean sHasPermanentMenuKeySet;
 
     static final SparseArray<ViewConfiguration> sConfigurations =
             new SparseArray<ViewConfiguration>(2);
@@ -274,6 +262,7 @@ public class ViewConfiguration {
         mOverscrollDistance = OVERSCROLL_DISTANCE;
         mOverflingDistance = OVERFLING_DISTANCE;
         mFadingMarqueeEnabled = true;
+        mGlobalActionsKeyTimeout = GLOBAL_ACTIONS_KEY_TIMEOUT;
     }
 
     /**
@@ -287,40 +276,6 @@ public class ViewConfiguration {
      * @see android.util.DisplayMetrics
      */
     private ViewConfiguration(Context context) {
-
-        final ContentResolver resolver = context.getContentResolver();
-        if (Settings.System.getInt(resolver,
-                          Settings.System.ANIMATION_CONTROLS_NO_SCROLL, 0) != 1) {
-            SCROLL_FRICTION = DEFAULT_SCROLL_FRICTION;
-            MAXIMUM_FLING_VELOCITY = DEFAULT_MAXIMUM_FLING_VELOCITY;
-            OVERSCROLL_DISTANCE = DEFAULT_OVERSCROLL_DISTANCE;
-            OVERFLING_DISTANCE = DEFAULT_OVERFLING_DISTANCE;
-        } else {
-            SCROLL_FRICTION = Settings.System.getFloat(resolver,
-                          Settings.System.CUSTOM_SCROLL_FRICTION, DEFAULT_SCROLL_FRICTION);
-            int maximumFlingVelocity = Settings.System.getInt(resolver,
-                          Settings.System.CUSTOM_FLING_VELOCITY, DEFAULT_MAXIMUM_FLING_VELOCITY);
-            if (maximumFlingVelocity == 0) {
-                MAXIMUM_FLING_VELOCITY = DEFAULT_MAXIMUM_FLING_VELOCITY;
-            } else {
-                MAXIMUM_FLING_VELOCITY = maximumFlingVelocity;
-            }
-            int overScrollDistance = Settings.System.getInt(resolver,
-                          Settings.System.CUSTOM_OVERSCROLL_DISTANCE, DEFAULT_OVERSCROLL_DISTANCE);
-            if (overScrollDistance > 100) {
-                OVERSCROLL_DISTANCE = DEFAULT_OVERSCROLL_DISTANCE;
-            } else {
-                OVERSCROLL_DISTANCE = overScrollDistance;
-            }
-            int overFlingDistance = Settings.System.getInt(resolver,
-                          Settings.System.CUSTOM_OVERFLING_DISTANCE, DEFAULT_OVERFLING_DISTANCE);
-            if (overFlingDistance > 100 || overFlingDistance == 0) {
-                OVERFLING_DISTANCE = DEFAULT_OVERFLING_DISTANCE;
-            } else {
-                OVERFLING_DISTANCE = overFlingDistance;
-            }
-        }
-
         final Resources res = context.getResources();
         final DisplayMetrics metrics = res.getDisplayMetrics();
         final Configuration config = res.getConfiguration();
@@ -332,12 +287,8 @@ public class ViewConfiguration {
             sizeAndDensity = density;
         }
 
-        mContext = context;
-
         mEdgeSlop = (int) (sizeAndDensity * EDGE_SLOP + 0.5f);
         mFadingEdgeLength = (int) (sizeAndDensity * FADING_EDGE_LENGTH + 0.5f);
-        mMinimumFlingVelocity = (int) (density * MINIMUM_FLING_VELOCITY + 0.5f);
-        mMaximumFlingVelocity = (int) (density * MAXIMUM_FLING_VELOCITY + 0.5f);
         mScrollbarSize = (int) (density * SCROLL_BAR_SIZE + 0.5f);
         mDoubleTapSlop = (int) (sizeAndDensity * DOUBLE_TAP_SLOP + 0.5f);
         mWindowTouchSlop = (int) (sizeAndDensity * WINDOW_TOUCH_SLOP + 0.5f);
@@ -352,6 +303,35 @@ public class ViewConfiguration {
         mOverscrollDistance = (int) (sizeAndDensity * OVERSCROLL_DISTANCE + 0.5f);
         mOverflingDistance = (int) (sizeAndDensity * OVERFLING_DISTANCE + 0.5f);
 
+        if (!sHasPermanentMenuKeySet) {
+            final int configVal = res.getInteger(
+                    com.android.internal.R.integer.config_overrideHasPermanentMenuKey);
+
+            switch (configVal) {
+                default:
+                case HAS_PERMANENT_MENU_KEY_AUTODETECT: {
+                    IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+                    try {
+                        sHasPermanentMenuKey = !wm.hasNavigationBar();
+                        sHasPermanentMenuKeySet = true;
+                    } catch (RemoteException ex) {
+                        sHasPermanentMenuKey = false;
+                    }
+                }
+                break;
+
+                case HAS_PERMANENT_MENU_KEY_TRUE:
+                    sHasPermanentMenuKey = true;
+                    sHasPermanentMenuKeySet = true;
+                    break;
+
+                case HAS_PERMANENT_MENU_KEY_FALSE:
+                    sHasPermanentMenuKey = false;
+                    sHasPermanentMenuKeySet = true;
+                    break;
+            }
+        }
+
         mFadingMarqueeEnabled = res.getBoolean(
                 com.android.internal.R.bool.config_ui_enableFadingMarquee);
         mTouchSlop = res.getDimensionPixelSize(
@@ -359,6 +339,13 @@ public class ViewConfiguration {
         mPagingTouchSlop = mTouchSlop * 2;
 
         mDoubleTapTouchSlop = mTouchSlop;
+
+        mMinimumFlingVelocity = res.getDimensionPixelSize(
+                com.android.internal.R.dimen.config_viewMinFlingVelocity);
+        mMaximumFlingVelocity = res.getDimensionPixelSize(
+                com.android.internal.R.dimen.config_viewMaxFlingVelocity);
+        mGlobalActionsKeyTimeout = res.getInteger(
+                com.android.internal.R.integer.config_globalActionsKeyTimeout);
     }
 
     /**
@@ -715,9 +702,23 @@ public class ViewConfiguration {
      *
      * @return how long a user needs to press the relevant key to bring up
      *   the global actions dialog.
+     * @deprecated This timeout should not be used by applications
      */
+    @Deprecated
     public static long getGlobalActionKeyTimeout() {
         return GLOBAL_ACTIONS_KEY_TIMEOUT;
+    }
+
+    /**
+     * The amount of time a user needs to press the relevant key to bring up
+     * the global actions dialog.
+     *
+     * @return how long a user needs to press the relevant key to bring up
+     *   the global actions dialog.
+     * @hide
+     */
+    public long getDeviceGlobalActionKeyTimeout() {
+        return mGlobalActionsKeyTimeout;
     }
 
     /**
@@ -743,30 +744,7 @@ public class ViewConfiguration {
      * @return true if a permanent menu key is present, false otherwise.
      */
     public boolean hasPermanentMenuKey() {
-        IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
-        // Report no menu key if device has soft buttons
-        try {
-            if (wm.hasNavigationBar()) {
-                return false;
-            }
-        } catch (RemoteException ex) {
-            // do nothing, continue trying to guess
-        }
-
-        // Report no menu key if overflow button is forced to enabled
-        ContentResolver res = mContext.getContentResolver();
-        boolean forceOverflowButton = Settings.System.getInt(res,
-                Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1;
-        if (forceOverflowButton) {
-            return false;
-        }
-
-        // Report menu key presence based on hardware key rebinding
-        try {
-            return wm.hasMenuKeyEnabled();
-        } catch (RemoteException ex) {
-            return true;
-        }
+        return sHasPermanentMenuKey;
     }
 
     /**

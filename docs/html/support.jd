@@ -1,5 +1,8 @@
 page.title=Developer Support
+page.type=about
 fullpage=1
+page.metaDescription=Resources available to help you report and resolve issues while you are developing apps for Android.
+page.image=/images/android-support-card.png
 @jd:body
 
 <div class="wrap" style="width:940px;">
@@ -16,6 +19,8 @@ fullpage=1
 <h5>Community and Office Hours</h5>
 <p style="color:#888">
 
+<a href="https://plus.google.com/+AndroidDevelopers">Android Developers</a> on Google+<br />
+<a href="https://plus.google.com/communities/105153134372062985968">Android Development community</a> on Google+<br />
 <a href="http://groups.google.com/group/android-developers">android-developers</a> support forum<br />
 <a href="http://groups.google.com/group/android-ndk">android-ndk</a> support forum<br />
 <a href="http://groups.google.com/group/android-security-discuss">android-security-discuss</a> support forum<br />

@@ -17,6 +17,7 @@
 package com.android.server;
 
 import android.content.Context;
+import android.net.LinkAddress;
 import android.net.LocalSocket;
 import android.net.LocalServerSocket;
 import android.os.Binder;
@@ -140,14 +141,21 @@ public class NetworkManagementServiceTest extends AndroidTestCase {
         /**
          * Interface class activity.
          */
+
         sendMessage("613 IfaceClass active rmnet0");
-        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", true);
+        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", true, 0);
+
+        sendMessage("613 IfaceClass active rmnet0 1234");
+        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", true, 1234);
 
         sendMessage("613 IfaceClass idle eth0");
-        expectSoon(observer).interfaceClassDataActivityChanged("eth0", false);
+        expectSoon(observer).interfaceClassDataActivityChanged("eth0", false, 0);
 
-        sendMessage("613 IfaceClass reallyactive rmnet0");
-        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", false);
+        sendMessage("613 IfaceClass idle eth0 1234");
+        expectSoon(observer).interfaceClassDataActivityChanged("eth0", false, 1234);
+
+        sendMessage("613 IfaceClass reallyactive rmnet0 1234");
+        expectSoon(observer).interfaceClassDataActivityChanged("rmnet0", false, 1234);
 
         sendMessage("613 InterfaceClass reallyactive rmnet0");
         // Invalid group.
@@ -157,17 +165,60 @@ public class NetworkManagementServiceTest extends AndroidTestCase {
          * IP address changes.
          */
         sendMessage("614 Address updated fe80::1/64 wlan0 128 253");
-        expectSoon(observer).addressUpdated("fe80::1/64", "wlan0", 128, 253);
+        expectSoon(observer).addressUpdated("wlan0", new LinkAddress("fe80::1/64", 128, 253));
 
-        // There is no "added".
+        // There is no "added", so we take this as "removed".
         sendMessage("614 Address added fe80::1/64 wlan0 128 253");
-        expectSoon(observer).addressRemoved("fe80::1/64", "wlan0", 128, 253);
+        expectSoon(observer).addressRemoved("wlan0", new LinkAddress("fe80::1/64", 128, 253));
 
         sendMessage("614 Address removed 2001:db8::1/64 wlan0 1 0");
-        expectSoon(observer).addressRemoved("2001:db8::1/64", "wlan0", 1, 0);
+        expectSoon(observer).addressRemoved("wlan0", new LinkAddress("2001:db8::1/64", 1, 0));
 
-        sendMessage("666 Address added 2001:db8::1/64 wlan0 1 0");
+        sendMessage("614 Address removed 2001:db8::1/64 wlan0 1");
+        // Not enough arguments.
+
+        sendMessage("666 Address removed 2001:db8::1/64 wlan0 1 0");
         // Invalid code.
+
+
+        /**
+         * DNS information broadcasts.
+         */
+        sendMessage("615 DnsInfo servers rmnet_usb0 3600 2001:db8::1");
+        expectSoon(observer).interfaceDnsServerInfo("rmnet_usb0", 3600,
+                new String[]{"2001:db8::1"});
+
+        sendMessage("615 DnsInfo servers wlan0 14400 2001:db8::1,2001:db8::2");
+        expectSoon(observer).interfaceDnsServerInfo("wlan0", 14400,
+                new String[]{"2001:db8::1", "2001:db8::2"});
+
+        // We don't check for negative lifetimes, only for parse errors.
+        sendMessage("615 DnsInfo servers wlan0 -3600 ::1");
+        expectSoon(observer).interfaceDnsServerInfo("wlan0", -3600,
+                new String[]{"::1"});
+
+        sendMessage("615 DnsInfo servers wlan0 SIXHUNDRED ::1");
+        // Non-numeric lifetime.
+
+        sendMessage("615 DnsInfo servers wlan0 2001:db8::1");
+        // Missing lifetime.
+
+        sendMessage("615 DnsInfo servers wlan0 3600");
+        // No servers.
+
+        sendMessage("615 DnsInfo servers 3600 wlan0 2001:db8::1,2001:db8::2");
+        // Non-numeric lifetime.
+
+        sendMessage("615 DnsInfo wlan0 7200 2001:db8::1,2001:db8::2");
+        // Invalid tokens.
+
+        sendMessage("666 DnsInfo servers wlan0 5400 2001:db8::1");
+        // Invalid code.
+
+        // No syntax checking on the addresses.
+        sendMessage("615 DnsInfo servers wlan0 600 ,::,,foo,::1,");
+        expectSoon(observer).interfaceDnsServerInfo("wlan0", 600,
+                new String[]{"", "::", "", "foo", "::1"});
 
         // Make sure nothing else was called.
         verifyNoMoreInteractions(observer);

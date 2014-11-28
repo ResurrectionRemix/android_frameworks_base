@@ -47,24 +47,26 @@ public class RingtonePreference extends Preference implements
     private int mRingtoneType;
     private boolean mShowDefault;
     private boolean mShowSilent;
-    private int mDialogStyle;
     
     private int mRequestCode;
+    private int mSubscriptionID = 0; /* Sub-1 by default */
 
-    public RingtonePreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                com.android.internal.R.styleable.RingtonePreference, defStyle, 0);
+    public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+
+        final TypedArray a = context.obtainStyledAttributes(attrs,
+                com.android.internal.R.styleable.RingtonePreference, defStyleAttr, defStyleRes);
         mRingtoneType = a.getInt(com.android.internal.R.styleable.RingtonePreference_ringtoneType,
                 RingtoneManager.TYPE_RINGTONE);
         mShowDefault = a.getBoolean(com.android.internal.R.styleable.RingtonePreference_showDefault,
                 true);
         mShowSilent = a.getBoolean(com.android.internal.R.styleable.RingtonePreference_showSilent,
                 true);
-        mDialogStyle = a.getResourceId(
-                com.android.internal.R.styleable.RingtonePreference_dialogStyle, 0);
         a.recycle();
+    }
+
+    public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public RingtonePreference(Context context, AttributeSet attrs) {
@@ -93,6 +95,28 @@ public class RingtonePreference extends Preference implements
      */
     public void setRingtoneType(int type) {
         mRingtoneType = type;
+    }
+
+    /**
+     * Returns the subscription ID.
+     *
+     * @return The current subscription ID.
+     * @see #setSubId(int)
+     * @hide
+     */
+    public int getSubId() {
+        return mSubscriptionID;
+    }
+
+    /**
+     * Sets the subscription ID.
+     *
+     * @param subId subscription ID.
+     * @see #getSubId(int)
+     * @hide
+     */
+    public void setSubId(int subId) {
+        mSubscriptionID = subId;
     }
 
     /**
@@ -134,27 +158,6 @@ public class RingtonePreference extends Preference implements
         mShowSilent = showSilent;
     }
 
-    /**
-     * Returns the resource id style of the ringtone dialog.
-     *
-     * @return The resource id of the style
-     * @hide
-     */
-    public int getDialogStyle() {
-        return mDialogStyle;
-    }
-
-    /**
-     * Sets the resource id style of the ringtone dialog.
-     *
-     * @param dialogStyle The resource id of the style.
-     * @see RingtoneManager#EXTRA_RINGTONE_DIALOG_THEME
-     * @hide
-     */
-    public void setDialogStyle(int dialogStyle) {
-        mDialogStyle = dialogStyle;
-    }
-
     @Override
     protected void onClick() {
         // Launch the ringtone picker
@@ -182,12 +185,13 @@ public class RingtonePreference extends Preference implements
         
         ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, mShowDefault);
         if (mShowDefault) {
-            ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+            if (getRingtoneType() == RingtoneManager.TYPE_RINGTONE) {
+                ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+                    RingtoneManager.getDefaultRingtoneUriBySubId(getSubId()));
+            } else {
+                ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
                     RingtoneManager.getDefaultUri(getRingtoneType()));
-        }
-        if (mDialogStyle != 0) {
-            ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_DIALOG_THEME,
-                    mDialogStyle);
+            }
         }
 
         ringtonePickerIntent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, mShowSilent);

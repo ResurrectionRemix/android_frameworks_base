@@ -63,9 +63,14 @@ private:
         size_t bytesRead = 0;
         // read the bytes
         do {
-            size_t requested = size;
-            if (requested > fCapacity)
+            jint requested = 0;
+            if (size > static_cast<size_t>(fCapacity)) {
                 requested = fCapacity;
+            } else {
+                // This is safe because requested is clamped to (jint)
+                // fCapacity.
+                requested = static_cast<jint>(size);
+            }
 
             jint n = env->CallIntMethod(fJavaInputStream,
                                         gInputStream_readMethodID, fJavaByteArray, 0, requested);
@@ -73,6 +78,8 @@ private:
                 env->ExceptionDescribe();
                 env->ExceptionClear();
                 SkDebugf("---- read threw an exception\n");
+                // Consider the stream to be at the end, since there was an error.
+                fIsAtEnd = true;
                 return 0;
             }
 
@@ -87,6 +94,9 @@ private:
                 env->ExceptionDescribe();
                 env->ExceptionClear();
                 SkDebugf("---- read:GetByteArrayRegion threw an exception\n");
+                // The error was not with the stream itself, but consider it to be at the
+                // end, since we do not have a way to recover.
+                fIsAtEnd = true;
                 return 0;
             }
 
@@ -120,7 +130,7 @@ private:
     JNIEnv*     fEnv;
     jobject     fJavaInputStream;   // the caller owns this object
     jbyteArray  fJavaByteArray;     // the caller owns this object
-    size_t      fCapacity;
+    jint        fCapacity;
     size_t      fBytesRead;
     bool        fIsAtEnd;
 };
@@ -170,18 +180,26 @@ static jmethodID    gOutputStream_flushMethodID;
 class SkJavaOutputStream : public SkWStream {
 public:
     SkJavaOutputStream(JNIEnv* env, jobject stream, jbyteArray storage)
-        : fEnv(env), fJavaOutputStream(stream), fJavaByteArray(storage) {
+        : fEnv(env), fJavaOutputStream(stream), fJavaByteArray(storage), fBytesWritten(0) {
         fCapacity = env->GetArrayLength(storage);
     }
 
-	virtual bool write(const void* buffer, size_t size) {
+    virtual size_t bytesWritten() const {
+        return fBytesWritten;
+    }
+
+    virtual bool write(const void* buffer, size_t size) {
         JNIEnv* env = fEnv;
         jbyteArray storage = fJavaByteArray;
 
         while (size > 0) {
-            size_t requested = size;
-            if (requested > fCapacity) {
+            jint requested = 0;
+            if (size > static_cast<size_t>(fCapacity)) {
                 requested = fCapacity;
+            } else {
+                // This is safe because requested is clamped to (jint)
+                // fCapacity.
+                requested = static_cast<jint>(size);
             }
 
             env->SetByteArrayRegion(storage, 0, requested,
@@ -204,6 +222,7 @@ public:
 
             buffer = (void*)((char*)buffer + requested);
             size -= requested;
+            fBytesWritten += requested;
         }
         return true;
     }
@@ -216,7 +235,8 @@ private:
     JNIEnv*     fEnv;
     jobject     fJavaOutputStream;  // the caller owns this object
     jbyteArray  fJavaByteArray;     // the caller owns this object
-    size_t      fCapacity;
+    jint        fCapacity;
+    size_t      fBytesWritten;
 };
 
 SkWStream* CreateJavaOutputStreamAdaptor(JNIEnv* env, jobject stream,

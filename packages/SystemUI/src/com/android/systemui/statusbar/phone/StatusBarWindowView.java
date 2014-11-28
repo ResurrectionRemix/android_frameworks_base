@@ -17,52 +17,121 @@
 package com.android.systemui.statusbar.phone;
 
 import android.app.StatusBarManager;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.media.session.MediaSessionLegacyHelper;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.IPowerManager;
+import android.os.PowerManager;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.provider.Settings;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewRootImpl;
+import android.view.WindowManager;
+import android.view.WindowManagerGlobal;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
 
-import com.android.systemui.ExpandHelper;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
-import com.android.systemui.statusbar.policy.NotificationRowLayout;
+import com.android.systemui.statusbar.DragDownHelper;
+import com.android.systemui.statusbar.StatusBarState;
+import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 
 
-public class StatusBarWindowView extends FrameLayout
-{
+public class StatusBarWindowView extends FrameLayout {
     public static final String TAG = "StatusBarWindowView";
     public static final boolean DEBUG = BaseStatusBar.DEBUG;
 
-    private ExpandHelper mExpandHelper;
-    private NotificationRowLayout latestItems;
+    private DragDownHelper mDragDownHelper;
+    private NotificationStackScrollLayout mStackScrollLayout;
     private NotificationPanelView mNotificationPanel;
-    private ScrollView mScrollView;
+    private View mBrightnessMirror;
 
     PhoneStatusBar mService;
+    private final Paint mTransparentSrcPaint = new Paint();
+
+    private int mStatusBarHeaderHeight;
+
+    private boolean mDoubleTapToSleepEnabled;
+    private GestureDetector mDoubleTapGesture;
+    private Handler mHandler = new Handler();
+    private SettingsObserver mSettingsObserver;
 
     public StatusBarWindowView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setMotionEventSplittingEnabled(false);
-        setWillNotDraw(!DEBUG);
+        mTransparentSrcPaint.setColor(0);
+        mTransparentSrcPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+        mStatusBarHeaderHeight = context
+                .getResources().getDimensionPixelSize(R.dimen.status_bar_header_height);
+        mSettingsObserver = new SettingsObserver(mHandler);
+    }
+
+    @Override
+    protected boolean fitSystemWindows(Rect insets) {
+        if (getFitsSystemWindows()) {
+            boolean changed = insets.left != getPaddingLeft()
+                    || insets.top != getPaddingTop()
+                    || insets.right != getPaddingRight()
+                    || insets.bottom != getPaddingBottom();
+            if (changed) {
+                setPadding(insets.left, insets.top, insets.right, 0);
+            }
+            insets.left = 0;
+            insets.top = 0;
+            insets.right = 0;
+        } else {
+            boolean changed = getPaddingLeft() != 0
+                    || getPaddingRight() != 0
+                    || getPaddingTop() != 0
+                    || getPaddingBottom() != 0;
+            if (changed) {
+                setPadding(0, 0, 0, 0);
+            }
+        }
+        return false;
     }
 
     @Override
     protected void onAttachedToWindow () {
         super.onAttachedToWindow();
-        latestItems = (NotificationRowLayout) findViewById(R.id.latestItems);
-        mScrollView = (ScrollView) findViewById(R.id.scroll);
+
+        mSettingsObserver.observe();
+        mDoubleTapGesture = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+                Log.d(TAG, "Gesture!!");
+                if(pm != null)
+                    pm.goToSleep(e.getEventTime());
+                else
+                    Log.d(TAG, "getSystemService returned null PowerManager");
+
+                return true;
+            }
+        });
+
+
+        mStackScrollLayout = (NotificationStackScrollLayout) findViewById(
+                R.id.notification_stack_scroller);
         mNotificationPanel = (NotificationPanelView) findViewById(R.id.notification_panel);
-        int minHeight = getResources().getDimensionPixelSize(R.dimen.notification_row_min_height);
-        int maxHeight = getResources().getDimensionPixelSize(R.dimen.notification_row_max_height);
-        mExpandHelper = new ExpandHelper(mContext, latestItems, minHeight, maxHeight);
-        mExpandHelper.setEventSource(this);
-        mExpandHelper.setScrollView(mScrollView);
+        mDragDownHelper = new DragDownHelper(getContext(), this, mStackScrollLayout, mService);
+        mBrightnessMirror = findViewById(R.id.brightness_mirror);
 
         // We really need to be able to animate while window animations are going on
         // so that activities may be started asynchronously from panel animations
@@ -70,33 +139,90 @@ public class StatusBarWindowView extends FrameLayout
         if (root != null) {
             root.setDrawDuringWindowsAnimating(true);
         }
+
+        // We need to ensure that our window doesn't suffer from overdraw which would normally
+        // occur if our window is translucent. Since we are drawing the whole window anyway with
+        // the scrim, we don't need the window to be cleared in the beginning.
+        if (mService.isScrimSrcModeEnabled()) {
+            IBinder windowToken = getWindowToken();
+            WindowManager.LayoutParams lp = (WindowManager.LayoutParams) getLayoutParams();
+            lp.token = windowToken;
+            setLayoutParams(lp);
+            WindowManagerGlobal.getInstance().changeCanvasOpacity(windowToken, true);
+            setWillNotDraw(false);
+        } else {
+            setWillNotDraw(!DEBUG);
+        }
     }
 
     @Override
-    public void dispatchWindowFocusChanged(boolean hasFocus) {
-        this.setFocusableInTouchMode(hasFocus);
-        this.requestFocus();
-        super.dispatchWindowFocusChanged(hasFocus);
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mSettingsObserver.unobserve();
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         switch (event.getKeyCode()) {
-        case KeyEvent.KEYCODE_BACK:
-            if (!down && !event.isCanceled()) {
-                mService.animateCollapsePanels();
-            }
+            case KeyEvent.KEYCODE_BACK:
+                if (!down) {
+                    mService.onBackPressed();
+                }
+                return true;
+            case KeyEvent.KEYCODE_MENU:
+                if (!down) {
+                    return mService.onMenuPressed();
+                }
+            case KeyEvent.KEYCODE_SPACE:
+                if (!down) {
+                    return mService.onSpacePressed();
+                }
+                break;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (mService.isDozing()) {
+                    MediaSessionLegacyHelper.getHelper(mContext).sendVolumeKeyEvent(event, true);
+                    return true;
+                }
+                break;
+        }
+        if (mService.interceptMediaKey(event)) {
             return true;
         }
         return super.dispatchKeyEvent(event);
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (mBrightnessMirror != null && mBrightnessMirror.getVisibility() == VISIBLE) {
+            // Disallow new pointers while the brightness mirror is visible. This is so that you
+            // can't touch anything other than the brightness slider while the mirror is showing
+            // and the rest of the panel is transparent.
+            if (ev.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
+                return false;
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean intercept = false;
-        if (mNotificationPanel.isFullyExpanded() && mScrollView.getVisibility() == View.VISIBLE) {
-            intercept = mExpandHelper.onInterceptTouchEvent(ev);
+        if (mDoubleTapToSleepEnabled
+                && ev.getY() < mStatusBarHeaderHeight) {
+            if (DEBUG) Log.w(TAG, "logging double tap gesture");
+            mDoubleTapGesture.onTouchEvent(ev);
+        }
+        if (mNotificationPanel.isFullyExpanded()
+                && mStackScrollLayout.getVisibility() == View.VISIBLE
+                && mService.getBarState() == StatusBarState.KEYGUARD
+                && !mService.isBouncerShowing()) {
+            intercept = mDragDownHelper.onInterceptTouchEvent(ev);
+            // wake up on a touch down event, if dozing
+            if (ev.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                mService.wakeUpIfDozing(ev.getEventTime(), true);
+            }
         }
         if (!intercept) {
             super.onInterceptTouchEvent(ev);
@@ -104,7 +230,8 @@ public class StatusBarWindowView extends FrameLayout
         if (intercept) {
             MotionEvent cancellation = MotionEvent.obtain(ev);
             cancellation.setAction(MotionEvent.ACTION_CANCEL);
-            latestItems.onInterceptTouchEvent(cancellation);
+            mStackScrollLayout.onInterceptTouchEvent(cancellation);
+            mNotificationPanel.onInterceptTouchEvent(cancellation);
             cancellation.recycle();
         }
         return intercept;
@@ -113,8 +240,8 @@ public class StatusBarWindowView extends FrameLayout
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         boolean handled = false;
-        if (mNotificationPanel.isFullyExpanded()) {
-            handled = mExpandHelper.onTouchEvent(ev);
+        if (mService.getBarState() == StatusBarState.KEYGUARD && !mService.isQsExpanded()) {
+            handled = mDragDownHelper.onTouchEvent(ev);
         }
         if (!handled) {
             handled = super.onTouchEvent(ev);
@@ -129,6 +256,26 @@ public class StatusBarWindowView extends FrameLayout
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (mService.isScrimSrcModeEnabled()) {
+            // We need to ensure that our window is always drawn fully even when we have paddings,
+            // since we simulate it to be opaque.
+            int paddedBottom = getHeight() - getPaddingBottom();
+            int paddedRight = getWidth() - getPaddingRight();
+            if (getPaddingTop() != 0) {
+                canvas.drawRect(0, 0, getWidth(), getPaddingTop(), mTransparentSrcPaint);
+            }
+            if (getPaddingBottom() != 0) {
+                canvas.drawRect(0, paddedBottom, getWidth(), getHeight(), mTransparentSrcPaint);
+            }
+            if (getPaddingLeft() != 0) {
+                canvas.drawRect(0, getPaddingTop(), getPaddingLeft(), paddedBottom,
+                        mTransparentSrcPaint);
+            }
+            if (getPaddingRight() != 0) {
+                canvas.drawRect(paddedRight, getPaddingTop(), getWidth(), paddedBottom,
+                        mTransparentSrcPaint);
+            }
+        }
         if (DEBUG) {
             Paint pt = new Paint();
             pt.setColor(0x80FFFF00);
@@ -139,8 +286,42 @@ public class StatusBarWindowView extends FrameLayout
     }
 
     public void cancelExpandHelper() {
-        if (mExpandHelper != null) {
-            mExpandHelper.cancel();
+        if (mStackScrollLayout != null) {
+            mStackScrollLayout.cancelExpandHelper();
+        }
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mDoubleTapToSleepEnabled = Settings.System.getInt(
+                    resolver, Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 1) == 1;
         }
     }
 }

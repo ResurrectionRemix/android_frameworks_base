@@ -1,5 +1,5 @@
 page.title=Improving Layout Performance
-page.tags="include","merge","viewstub","listview"
+page.tags=include,merge,viewstub,listview
 
 trainingnavtop=true
 startpage=true
@@ -25,6 +25,13 @@ next.link=optimizing-layout.html
 
 </div>
 </div>
+
+<a class="notice-developers-video wide" href="http://www.youtube.com/watch?v=-FUw8HMbmBQ">
+<div>
+    <h3>Video</h3>
+    <p>DevBytes: Optimising Layouts with Hierarchy Viewer</p>
+</div>
+</a>
 
 
 

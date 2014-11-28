@@ -1,112 +1,102 @@
 //
-// Copyright 2011 The Android Open Source Project
+// Copyright 2014 The Android Open Source Project
 //
 // Build resource files from raw assets.
 //
 
 #include "ResourceFilter.h"
+#include "AaptUtil.h"
+#include "AaptConfig.h"
 
 status_t
-ResourceFilter::parse(const char* arg)
+WeakResourceFilter::parse(const String8& str)
 {
-    if (arg == NULL) {
-        return 0;
-    }
-
-    const char* p = arg;
-    const char* q;
-
-    while (true) {
-        q = strchr(p, ',');
-        if (q == NULL) {
-            q = p + strlen(p);
+    Vector<String8> configStrs = AaptUtil::split(str, ',');
+    const size_t N = configStrs.size();
+    mConfigs.clear();
+    mConfigMask = 0;
+    mConfigs.resize(N);
+    for (size_t i = 0; i < N; i++) {
+        const String8& part = configStrs[i];
+        if (part == "en_XA") {
+            mContainsPseudoAccented = true;
+        } else if (part == "ar_XB") {
+            mContainsPseudoBidi = true;
         }
 
-        String8 part(p, q-p);
+        std::pair<ConfigDescription, uint32_t>& entry = mConfigs.editItemAt(i);
 
-        if (part == "zz_ZZ") {
-            mContainsPseudo = true;
-        }
-        int axis;
-        uint32_t value;
-        if (AaptGroupEntry::parseNamePart(part, &axis, &value)) {
-            fprintf(stderr, "Invalid configuration: %s\n", arg);
-            fprintf(stderr, "                       ");
-            for (int i=0; i<p-arg; i++) {
-                fprintf(stderr, " ");
-            }
-            for (int i=0; i<q-p; i++) {
-                fprintf(stderr, "^");
-            }
-            fprintf(stderr, "\n");
-            return 1;
+        AaptLocaleValue val;
+        if (val.initFromFilterString(part)) {
+            // For backwards compatibility, we accept configurations that
+            // only specify locale in the standard 'en_US' format.
+            val.writeTo(&entry.first);
+        } else if (!AaptConfig::parse(part, &entry.first)) {
+            fprintf(stderr, "Invalid configuration: %s\n", part.string());
+            return UNKNOWN_ERROR;
         }
 
-        ssize_t index = mData.indexOfKey(axis);
-        if (index < 0) {
-            mData.add(axis, SortedVector<uint32_t>());
-        }
-        SortedVector<uint32_t>& sv = mData.editValueFor(axis);
-        sv.add(value);
-        // if it's a locale with a region, also match an unmodified locale of the
-        // same language
-        if (axis == AXIS_LANGUAGE) {
-            if (value & 0xffff0000) {
-                sv.add(value & 0x0000ffff);
-            }
-        }
-        p = q;
-        if (!*p) break;
-        p++;
+        entry.second = mDefault.diff(entry.first);
+
+        // Ignore the version
+        entry.second &= ~ResTable_config::CONFIG_VERSION;
+
+        mConfigMask |= entry.second;
     }
 
     return NO_ERROR;
 }
 
 bool
-ResourceFilter::isEmpty() const
+WeakResourceFilter::match(const ResTable_config& config) const
 {
-    return mData.size() == 0;
-}
-
-bool
-ResourceFilter::match(int axis, uint32_t value) const
-{
-    if (value == 0) {
-        // they didn't specify anything so take everything
+    uint32_t mask = mDefault.diff(config);
+    if ((mConfigMask & mask) == 0) {
+        // The two configurations don't have any common axis.
         return true;
     }
-    ssize_t index = mData.indexOfKey(axis);
-    if (index < 0) {
-        // we didn't request anything on this axis so take everything
-        return true;
-    }
-    const SortedVector<uint32_t>& sv = mData.valueAt(index);
-    return sv.indexOf(value) >= 0;
-}
 
-bool
-ResourceFilter::match(int axis, const ResTable_config& config) const
-{
-    return match(axis, AaptGroupEntry::getConfigValueForAxis(config, axis));
-}
-
-bool
-ResourceFilter::match(const ResTable_config& config) const
-{
-    for (int i=AXIS_START; i<=AXIS_END; i++) {
-        if (!match(i, AaptGroupEntry::getConfigValueForAxis(config, i))) {
-            return false;
+    uint32_t matchedAxis = 0x0;
+    const size_t N = mConfigs.size();
+    for (size_t i = 0; i < N; i++) {
+        const std::pair<ConfigDescription, uint32_t>& entry = mConfigs[i];
+        uint32_t diff = entry.first.diff(config);
+        if ((diff & entry.second) == 0) {
+            // Mark the axis that was matched.
+            matchedAxis |= entry.second;
+        } else if ((diff & entry.second) == ResTable_config::CONFIG_LOCALE) {
+            // If the locales differ, but the languages are the same and
+            // the locale we are matching only has a language specified,
+            // we match.
+            if (config.language[0] &&
+                    memcmp(config.language, entry.first.language, sizeof(config.language)) == 0) {
+                if (config.country[0] == 0) {
+                    matchedAxis |= ResTable_config::CONFIG_LOCALE;
+                }
+            }
+        } else if ((diff & entry.second) == ResTable_config::CONFIG_SMALLEST_SCREEN_SIZE) {
+            // Special case if the smallest screen width doesn't match. We check that the
+            // config being matched has a smaller screen width than the filter specified.
+            if (config.smallestScreenWidthDp != 0 &&
+                    config.smallestScreenWidthDp < entry.first.smallestScreenWidthDp) {
+                matchedAxis |= ResTable_config::CONFIG_SMALLEST_SCREEN_SIZE;
+            }
         }
     }
-    return true;
+    return matchedAxis == (mConfigMask & mask);
 }
 
-const SortedVector<uint32_t>* ResourceFilter::configsForAxis(int axis) const
-{
-    ssize_t index = mData.indexOfKey(axis);
-    if (index < 0) {
-        return NULL;
+status_t
+StrongResourceFilter::parse(const String8& str) {
+    Vector<String8> configStrs = AaptUtil::split(str, ',');
+    ConfigDescription config;
+    mConfigs.clear();
+    for (size_t i = 0; i < configStrs.size(); i++) {
+        if (!AaptConfig::parse(configStrs[i], &config)) {
+            fprintf(stderr, "Invalid configuration: %s\n", configStrs[i].string());
+            return UNKNOWN_ERROR;
+        }
+        mConfigs.insert(config);
     }
-    return &mData.valueAt(index);
+    return NO_ERROR;
 }

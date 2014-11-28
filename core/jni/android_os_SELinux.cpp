@@ -404,18 +404,18 @@ static jboolean checkSELinuxAccess(JNIEnv *env, jobject, jstring subjectContextS
  * Returns: boolean: (true) file label successfully restored, (false) otherwise
  * Exceptions: none
  */
-static jboolean native_restorecon(JNIEnv *env, jobject, jstring pathnameStr) {
+static jboolean native_restorecon(JNIEnv *env, jobject, jstring pathnameStr, jint flags) {
     if (isSELinuxDisabled) {
         return true;
     }
 
     ScopedUtfChars pathname(env, pathnameStr);
     if (pathname.c_str() == NULL) {
-        ALOGV("restorecon(%p) => threw exception", pathname);
+        ALOGV("restorecon(%p) => threw exception", pathnameStr);
         return false;
     }
 
-    int ret = selinux_android_restorecon(pathname.c_str(), 0);
+    int ret = selinux_android_restorecon(pathname.c_str(), flags);
     ALOGV("restorecon(%s) => %d", pathname.c_str(), ret);
     return (ret == 0);
 }
@@ -434,7 +434,7 @@ static JNINativeMethod method_table[] = {
     { "getPidContext"            , "(I)Ljava/lang/String;"                        , (void*)getPidCon        },
     { "isSELinuxEnforced"        , "()Z"                                          , (void*)isSELinuxEnforced},
     { "isSELinuxEnabled"         , "()Z"                                          , (void*)isSELinuxEnabled },
-    { "native_restorecon"        , "(Ljava/lang/String;)Z"                        , (void*)native_restorecon},
+    { "native_restorecon"        , "(Ljava/lang/String;I)Z"                       , (void*)native_restorecon},
     { "setBooleanValue"          , "(Ljava/lang/String;Z)Z"                       , (void*)setBooleanValue  },
     { "setFileContext"           , "(Ljava/lang/String;Ljava/lang/String;)Z"      , (void*)setFileCon       },
     { "setFSCreateContext"       , "(Ljava/lang/String;)Z"                        , (void*)setFSCreateCon   },
@@ -443,8 +443,21 @@ static JNINativeMethod method_table[] = {
 
 static int log_callback(int type, const char *fmt, ...) {
     va_list ap;
+    int priority;
+
+    switch (type) {
+    case SELINUX_WARNING:
+        priority = ANDROID_LOG_WARN;
+        break;
+    case SELINUX_INFO:
+        priority = ANDROID_LOG_INFO;
+        break;
+    default:
+        priority = ANDROID_LOG_ERROR;
+        break;
+    }
     va_start(ap, fmt);
-    LOG_PRI_VA(ANDROID_LOG_ERROR, "SELinux", fmt, ap);
+    LOG_PRI_VA(priority, "SELinux", fmt, ap);
     va_end(ap);
     return 0;
 }

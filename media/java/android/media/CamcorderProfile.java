@@ -90,10 +90,11 @@ public class CamcorderProfile
      */
     public static final int QUALITY_QVGA = 7;
 
-    /** @hide
-     * Quality level corresponding to the FWVGA resolution.
+    /**
+     * Quality level corresponding to the 2160p (3840 x 2160) resolution.
      */
-    public static final int QUALITY_FWVGA = 8;
+    public static final int QUALITY_2160P = 8;
+
     /** @hide
      * Quality level corresponding to the WVGA resolution.
      */
@@ -109,15 +110,14 @@ public class CamcorderProfile
      */
     public static final int QUALITY_WQVGA = 11;
 
-    /**
-    * {@hide}
-    */
-    public static final int QUALITY_4kUHD = 12;
+    /** @hide
+     * Quality level corresponding to the FWVGA resolution.
+     */
+    public static final int QUALITY_FWVGA = 12;
 
-    /**
-    * {@hide}
-    */
-
+    /** @hide
+     * Quality level corresponding to 4K DCI resolution
+     */
     public static final int QUALITY_4kDCI = 13;
 
     // Start and end of quality list
@@ -164,39 +164,73 @@ public class CamcorderProfile
      */
     public static final int QUALITY_TIME_LAPSE_QVGA = 1007;
 
+    /**
+     * Time lapse quality level corresponding to the 2160p (3840 x 2160) resolution.
+     */
+    public static final int QUALITY_TIME_LAPSE_2160P = 1008;
+
     /** @hide
      * Time lapse quality level corresponding to the FWVGA (864 x 480) resolution.
      */
-    public static final int QUALITY_TIME_LAPSE_FWVGA = 1008;
+    public static final int QUALITY_TIME_LAPSE_FWVGA = 1009;
 
     /** @hide
      * Time lapse quality level corresponding to the WVGA (800 x 480) resolution.
      */
-    public static final int QUALITY_TIME_LAPSE_WVGA = 1009;
+    public static final int QUALITY_TIME_LAPSE_WVGA = 1010;
 
     /** @hide
      * Time lapse quality level corresponding to the VGA (640 x 480) resolution.
      */
-    public static final int QUALITY_TIME_LAPSE_VGA = 1010;
+    public static final int QUALITY_TIME_LAPSE_VGA = 1011;
 
     /** @hide
      * Time lapse quality level corresponding to the WQVGA (432 x 240) resolution.
      */
-    public static final int QUALITY_TIME_LAPSE_WQVGA = 1011;
-
-    /** @hide
-     * Time lapse quality level corresponding to the 4k UHD resolution.
-     */
-    public static final int QUALITY_TIME_LAPSE_4kUHD = 1012;
-
-    /** @hide
-     * Time lapse quality level corresponding to the 4k DCI resolution.
-     */
-    public static final int QUALITY_TIME_LAPSE_4kDCI = 1013;
+    public static final int QUALITY_TIME_LAPSE_WQVGA = 1012;
 
     // Start and end of timelapse quality list
     private static final int QUALITY_TIME_LAPSE_LIST_START = QUALITY_TIME_LAPSE_LOW;
-    private static final int QUALITY_TIME_LAPSE_LIST_END = QUALITY_TIME_LAPSE_4kDCI;
+    private static final int QUALITY_TIME_LAPSE_LIST_END = QUALITY_TIME_LAPSE_WQVGA;
+
+    /**
+     * High speed ( >= 100fps) quality level corresponding to the lowest available resolution.
+     */
+    public static final int QUALITY_HIGH_SPEED_LOW = 2000;
+
+    /**
+     * High speed ( >= 100fps) quality level corresponding to the highest available resolution.
+     */
+    public static final int QUALITY_HIGH_SPEED_HIGH = 2001;
+
+    /**
+     * High speed ( >= 100fps) quality level corresponding to the 480p (720 x 480) resolution.
+     *
+     * Note that the horizontal resolution for 480p can also be other
+     * values, such as 640 or 704, instead of 720.
+     */
+    public static final int QUALITY_HIGH_SPEED_480P = 2002;
+
+    /**
+     * High speed ( >= 100fps) quality level corresponding to the 720p (1280 x 720) resolution.
+     */
+    public static final int QUALITY_HIGH_SPEED_720P = 2003;
+
+    /**
+     * High speed ( >= 100fps) quality level corresponding to the 1080p (1920 x 1080 or 1920x1088)
+     * resolution.
+     */
+    public static final int QUALITY_HIGH_SPEED_1080P = 2004;
+
+    /**
+     * High speed ( >= 100fps) quality level corresponding to the 2160p (3840 x 2160)
+     * resolution.
+     */
+    public static final int QUALITY_HIGH_SPEED_2160P = 2005;
+
+    // Start and end of high speed quality list
+    private static final int QUALITY_HIGH_SPEED_LIST_START = QUALITY_HIGH_SPEED_LOW;
+    private static final int QUALITY_HIGH_SPEED_LIST_END = QUALITY_HIGH_SPEED_2160P;
 
     /**
      * Default recording duration in seconds before the session is terminated.
@@ -290,13 +324,17 @@ public class CamcorderProfile
      * {@link #hasProfile(int, int)}.
      * QUALITY_LOW refers to the lowest quality available, while QUALITY_HIGH refers to
      * the highest quality available.
-     * QUALITY_LOW/QUALITY_HIGH have to match one of qcif, cif, 480p, 720p, or 1080p.
-     * E.g. if the device supports 480p, 720p, and 1080p, then low is 480p and high is
-     * 1080p.
+     * QUALITY_LOW/QUALITY_HIGH have to match one of qcif, cif, 480p, 720p, 1080p or 2160p.
+     * E.g. if the device supports 480p, 720p, 1080p and 2160p, then low is 480p and high is
+     * 2160p.
      *
      * The same is true for time lapse quality levels, i.e. QUALITY_TIME_LAPSE_LOW,
      * QUALITY_TIME_LAPSE_HIGH are guaranteed to be supported and have to match one of
-     * qcif, cif, 480p, 720p, or 1080p.
+     * qcif, cif, 480p, 720p, 1080p, or 2160p.
+     *
+     * For high speed quality levels, they may or may not be supported. If a subset of the levels
+     * are supported, QUALITY_HIGH_SPEED_LOW and QUALITY_HIGH_SPEED_HIGH are guaranteed to be
+     * supported and have to match one of 480p, 720p, or 1080p.
      *
      * A camcorder recording session with higher quality level usually has higher output
      * bit rate, better video and/or audio recording quality, larger video frame
@@ -312,6 +350,7 @@ public class CamcorderProfile
      * @see #QUALITY_480P
      * @see #QUALITY_720P
      * @see #QUALITY_1080P
+     * @see #QUALITY_2160P
      * @see #QUALITY_TIME_LAPSE_LOW
      * @see #QUALITY_TIME_LAPSE_HIGH
      * @see #QUALITY_TIME_LAPSE_QCIF
@@ -319,12 +358,21 @@ public class CamcorderProfile
      * @see #QUALITY_TIME_LAPSE_480P
      * @see #QUALITY_TIME_LAPSE_720P
      * @see #QUALITY_TIME_LAPSE_1080P
-     */
+     * @see #QUALITY_TIME_LAPSE_2160P
+     * @see #QUALITY_HIGH_SPEED_LOW
+     * @see #QUALITY_HIGH_SPEED_HIGH
+     * @see #QUALITY_HIGH_SPEED_480P
+     * @see #QUALITY_HIGH_SPEED_720P
+     * @see #QUALITY_HIGH_SPEED_1080P
+     * @see #QUALITY_HIGH_SPEED_2160P
+    */
     public static CamcorderProfile get(int cameraId, int quality) {
         if (!((quality >= QUALITY_LIST_START &&
                quality <= QUALITY_LIST_END) ||
               (quality >= QUALITY_TIME_LAPSE_LIST_START &&
-               quality <= QUALITY_TIME_LAPSE_LIST_END))) {
+               quality <= QUALITY_TIME_LAPSE_LIST_END) ||
+               (quality >= QUALITY_HIGH_SPEED_LIST_START &&
+               quality <= QUALITY_HIGH_SPEED_LIST_END))) {
             String errMessage = "Unsupported quality level: " + quality;
             throw new IllegalArgumentException(errMessage);
         }
@@ -334,6 +382,24 @@ public class CamcorderProfile
     /**
      * Returns true if camcorder profile exists for the first back-facing
      * camera at the given quality level.
+     *
+     * <p>
+     * When using the Camera 2 API in {@code LEGACY} mode (i.e. when
+     * {@link android.hardware.camera2.CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL} is set
+     * to
+     * {@link android.hardware.camera2.CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL_LEGACY}),
+     * {@link #hasProfile} may return {@code true} for unsupported resolutions.  To ensure a
+     * a given resolution is supported in LEGACY mode, the configuration given in
+     * {@link android.hardware.camera2.CameraCharacteristics#SCALER_STREAM_CONFIGURATION_MAP}
+     * must contain the the resolution in the supported output sizes.  The recommended way to check
+     * this is with
+     * {@link android.hardware.camera2.params.StreamConfigurationMap#getOutputSizes(Class)} with the
+     * class of the desired recording endpoint, and check that the desired resolution is contained
+     * in the list returned.
+     * </p>
+     * @see android.hardware.camera2.CameraManager
+     * @see android.hardware.camera2.CameraCharacteristics
+     *
      * @param quality the target quality level for the camcorder profile
      */
     public static boolean hasProfile(int quality) {
@@ -351,6 +417,24 @@ public class CamcorderProfile
     /**
      * Returns true if camcorder profile exists for the given camera at
      * the given quality level.
+     *
+     * <p>
+     * When using the Camera 2 API in LEGACY mode (i.e. when
+     * {@link android.hardware.camera2.CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL} is set
+     * to
+     * {@link android.hardware.camera2.CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL_LEGACY}),
+     * {@link #hasProfile} may return {@code true} for unsupported resolutions.  To ensure a
+     * a given resolution is supported in LEGACY mode, the configuration given in
+     * {@link android.hardware.camera2.CameraCharacteristics#SCALER_STREAM_CONFIGURATION_MAP}
+     * must contain the the resolution in the supported output sizes.  The recommended way to check
+     * this is with
+     * {@link android.hardware.camera2.params.StreamConfigurationMap#getOutputSizes(Class)} with the
+     * class of the desired recording endpoint, and check that the desired resolution is contained
+     * in the list returned.
+     * </p>
+     * @see android.hardware.camera2.CameraManager
+     * @see android.hardware.camera2.CameraCharacteristics
+     *
      * @param cameraId the id for the camera
      * @param quality the target quality level for the camcorder profile
      */

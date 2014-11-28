@@ -46,13 +46,13 @@ import android.widget.TextView;
 import com.android.documentsui.DocumentsActivity.State;
 import com.android.documentsui.model.DocumentInfo;
 import com.android.documentsui.model.RootInfo;
-import com.android.internal.util.Objects;
 import com.google.common.collect.Lists;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Display list of known storage backend roots.
@@ -133,11 +133,12 @@ public class RootsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        onDisplayStateChanged();
+    }
 
+    public void onDisplayStateChanged() {
         final Context context = getActivity();
         final State state = ((DocumentsActivity) context).getDisplayState();
-        state.showAdvanced = state.forceAdvanced
-                | SettingsActivity.getDisplayAdvancedDevices(context);
 
         if (state.action == ACTION_GET_CONTENT) {
             mList.setOnItemLongClickListener(mItemLongClickListener);
@@ -157,7 +158,7 @@ public class RootsFragment extends Fragment {
             final Object item = mAdapter.getItem(i);
             if (item instanceof RootItem) {
                 final RootInfo testRoot = ((RootItem) item).root;
-                if (Objects.equal(testRoot, root)) {
+                if (Objects.equals(testRoot, root)) {
                     mList.setItemChecked(i, true);
                     return;
                 }
@@ -234,7 +235,7 @@ public class RootsFragment extends Fragment {
             final TextView summary = (TextView) convertView.findViewById(android.R.id.summary);
 
             final Context context = convertView.getContext();
-            icon.setImageDrawable(root.loadIcon(context));
+            icon.setImageDrawable(root.loadDrawerIcon(context));
             title.setText(root.title);
 
             // Show available space if no summary

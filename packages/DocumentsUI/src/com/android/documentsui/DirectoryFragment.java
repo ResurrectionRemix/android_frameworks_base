@@ -12,20 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Per article 5 of the Apache 2.0 License, some modifications to this code
- * were made by the OmniROM Project.
- *
- * Modifications Copyright (C) 2013 The OmniROM Project
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 3
- * of the License, or (at your option) any later version.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 package com.android.documentsui;
@@ -33,7 +19,6 @@ package com.android.documentsui;
 import static com.android.documentsui.DocumentsActivity.TAG;
 import static com.android.documentsui.DocumentsActivity.State.ACTION_CREATE;
 import static com.android.documentsui.DocumentsActivity.State.ACTION_MANAGE;
-import static com.android.documentsui.DocumentsActivity.State.ACTION_STANDALONE;
 import static com.android.documentsui.DocumentsActivity.State.MODE_GRID;
 import static com.android.documentsui.DocumentsActivity.State.MODE_LIST;
 import static com.android.documentsui.DocumentsActivity.State.MODE_UNKNOWN;
@@ -43,17 +28,14 @@ import static com.android.documentsui.model.DocumentInfo.getCursorLong;
 import static com.android.documentsui.model.DocumentInfo.getCursorString;
 
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.app.ProgressDialog;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.res.Resources;
@@ -88,7 +70,6 @@ import android.widget.AbsListView.RecyclerListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -103,10 +84,7 @@ import com.android.documentsui.model.RootInfo;
 import com.google.android.collect.Lists;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.Executor;
 
 /**
  * Display the documents inside a single directory.
@@ -209,6 +187,7 @@ public class DirectoryFragment extends Fragment {
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final Context context = inflater.getContext();
+        final Resources res = context.getResources();
         final View view = inflater.inflate(R.layout.fragment_directory, container, false);
 
         mEmptyView = view.findViewById(android.R.id.empty);
@@ -217,6 +196,16 @@ public class DirectoryFragment extends Fragment {
         mListView.setOnItemClickListener(mItemListener);
         mListView.setMultiChoiceModeListener(mMultiListener);
         mListView.setRecyclerListener(mRecycleListener);
+
+        // Indent our list divider to align with text
+        final Drawable divider = mListView.getDivider();
+        final boolean insetLeft = res.getBoolean(R.bool.list_divider_inset_left);
+        final int insetSize = res.getDimensionPixelSize(R.dimen.list_divider_inset);
+        if (insetLeft) {
+            mListView.setDivider(new InsetDrawable(divider, insetSize, 0, 0, 0));
+        } else {
+            mListView.setDivider(new InsetDrawable(divider, 0, 0, insetSize, 0));
+        }
 
         mGridView = (GridView) view.findViewById(R.id.grid);
         mGridView.setOnItemClickListener(mItemListener);
@@ -362,6 +351,10 @@ public class DirectoryFragment extends Fragment {
         updateDisplayState();
     }
 
+    public void onDisplayStateChanged() {
+        updateDisplayState();
+    }
+
     public void onUserSortOrderChanged() {
         // Sort order change always triggers reload; we'll trigger state change
         // on the flip side.
@@ -470,16 +463,11 @@ public class DirectoryFragment extends Fragment {
             final MenuItem open = menu.findItem(R.id.menu_open);
             final MenuItem share = menu.findItem(R.id.menu_share);
             final MenuItem delete = menu.findItem(R.id.menu_delete);
-            final MenuItem copy = menu.findItem(R.id.menu_copy);
-            final MenuItem cut = menu.findItem(R.id.menu_cut);
 
             final boolean manageMode = state.action == ACTION_MANAGE;
-            final boolean stdMode = state.action == ACTION_STANDALONE;
-            open.setVisible(!manageMode && !stdMode);
-            share.setVisible(manageMode || stdMode);
-            delete.setVisible(manageMode || stdMode);
-            copy.setVisible(stdMode);
-            cut.setVisible(stdMode);
+            open.setVisible(!manageMode);
+            share.setVisible(manageMode);
+            delete.setVisible(manageMode);
 
             return true;
         }
@@ -513,16 +501,6 @@ public class DirectoryFragment extends Fragment {
                 mode.finish();
                 return true;
 
-            } else if (id == R.id.menu_copy) {
-                onCopyDocuments(docs);
-                mode.finish();
-                return true;
-
-            } else if (id == R.id.menu_cut) {
-                onCutDocuments(docs);
-                mode.finish();
-                return true;
-
             } else {
                 return false;
             }
@@ -539,27 +517,14 @@ public class DirectoryFragment extends Fragment {
             if (checked) {
                 // Directories and footer items cannot be checked
                 boolean valid = false;
-                boolean hasFolder = false;
 
                 final Cursor cursor = mAdapter.getItem(position);
                 if (cursor != null) {
                     final String docMimeType = getCursorString(cursor, Document.COLUMN_MIME_TYPE);
                     final int docFlags = getCursorInt(cursor, Document.COLUMN_FLAGS);
-                    final State state = getDisplayState(DirectoryFragment.this);
-                    if (Document.MIME_TYPE_DIR.equals(docMimeType)) {
-                        hasFolder = true;
-                    }
-                    if (!Document.MIME_TYPE_DIR.equals(docMimeType) || state.action == ACTION_STANDALONE) {
+                    if (!Document.MIME_TYPE_DIR.equals(docMimeType)) {
                         valid = isDocumentEnabled(docMimeType, docFlags);
                     }
-                }
-
-                if (hasFolder) {
-                    final Menu menu = mode.getMenu();
-                    final MenuItem copy = menu.findItem(R.id.menu_copy);
-                    final MenuItem cut = menu.findItem(R.id.menu_cut);
-                    copy.setVisible(false);
-                    cut.setVisible(false);
                 }
 
                 if (!valid) {
@@ -620,33 +585,7 @@ public class DirectoryFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void onDeleteDocuments(final List<DocumentInfo> docs) {
-        final Context context = getActivity();
-        final ContentResolver resolver = context.getContentResolver();
-        final Resources resources = context.getResources();
-
-        // Open a confirmation dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                new DeleteFilesTask(docs.toArray(new DocumentInfo[0])).executeOnExecutor(getCurrentExecutor());
-            }
-        });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog, ignore actions
-            }
-        });
-
-        builder.setTitle(R.string.dialog_delete_confirm_title)
-            .setMessage(resources.getQuantityString(R.plurals.dialog_delete_confirm_message, docs.size(), docs.size()));
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private boolean onDeleteDocumentsImpl(final List<DocumentInfo> docs) {
+    private void onDeleteDocuments(List<DocumentInfo> docs) {
         final Context context = getActivity();
         final ContentResolver resolver = context.getContentResolver();
 
@@ -662,33 +601,6 @@ public class DirectoryFragment extends Fragment {
             try {
                 client = DocumentsApplication.acquireUnstableProviderOrThrow(
                         resolver, doc.derivedUri.getAuthority());
-
-                if (Document.MIME_TYPE_DIR.equals(doc.mimeType)) {
-                    // In order to delete a directory, we must delete its contents first. We
-                    // recursively do so.
-                    Uri contentsUri = DocumentsContract.buildChildDocumentsUri(
-                        doc.authority, doc.documentId);
-                    final RootInfo root = getArguments().getParcelable(EXTRA_ROOT);
-
-                    // We get the contents of the directory
-                    DirectoryLoader loader = new DirectoryLoader(
-                            context, mType, root, doc, contentsUri, SORT_ORDER_UNKNOWN);
-
-                    DirectoryResult result = loader.loadInBackground();
-                    Cursor cursor = result.cursor;
-
-                    // Build a list of the docs to delete, and delete them
-                    ArrayList<DocumentInfo> docsToDelete = new ArrayList<DocumentInfo>();
-                    for (int i = 0; i < cursor.getCount(); i++) {
-                        cursor.moveToPosition(i);
-                        final DocumentInfo subDoc = DocumentInfo.fromDirectoryCursor(cursor);
-                        docsToDelete.add(subDoc);
-                    }
-
-                    onDeleteDocumentsImpl(docsToDelete);
-                }
-
-
                 DocumentsContract.deleteDocument(client, doc.derivedUri);
             } catch (Exception e) {
                 Log.w(TAG, "Failed to delete " + doc);
@@ -698,15 +610,9 @@ public class DirectoryFragment extends Fragment {
             }
         }
 
-        return !hadTrouble;
-    }
-
-    private void onCopyDocuments(final List<DocumentInfo> docs) {
-        ((DocumentsActivity) getActivity()).setClipboardDocuments(docs, true);
-    }
-
-    private void onCutDocuments(final List<DocumentInfo> docs) {
-        ((DocumentsActivity) getActivity()).setClipboardDocuments(docs, false);
+        if (hadTrouble) {
+            Toast.makeText(context, R.string.toast_failed_delete, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static State getDisplayState(Fragment fragment) {
@@ -857,21 +763,6 @@ public class DirectoryFragment extends Fragment {
                     convertView = inflater.inflate(R.layout.item_doc_list, parent, false);
                 } else if (state.derivedMode == MODE_GRID) {
                     convertView = inflater.inflate(R.layout.item_doc_grid, parent, false);
-
-                    // Apply padding to grid items
-                    final FrameLayout grid = (FrameLayout) convertView;
-                    final int gridPadding = getResources()
-                            .getDimensionPixelSize(R.dimen.grid_padding);
-
-                    // Tricksy hobbitses! We need to fully clear the drawable so
-                    // the view doesn't clobber the new InsetDrawable callback
-                    // when setting back later.
-                    final Drawable fg = grid.getForeground();
-                    final Drawable bg = grid.getBackground();
-                    grid.setForeground(null);
-                    grid.setBackground(null);
-                    grid.setForeground(new InsetDrawable(fg, gridPadding));
-                    grid.setBackground(new InsetDrawable(bg, gridPadding));
                 } else {
                     throw new IllegalStateException();
                 }
@@ -916,6 +807,9 @@ public class DirectoryFragment extends Fragment {
                     || MimePredicate.mimeMatches(MimePredicate.VISUAL_MIMES, docMimeType);
             final boolean showThumbnail = supportsThumbnail && allowThumbnail && !mSvelteRecents;
 
+            final boolean enabled = isDocumentEnabled(docMimeType, docFlags);
+            final float iconAlpha = (state.derivedMode == MODE_LIST && !enabled) ? 0.5f : 1f;
+
             boolean cacheHit = false;
             if (showThumbnail) {
                 final Uri uri = DocumentsContract.buildDocumentUri(docAuthority, docId);
@@ -926,7 +820,7 @@ public class DirectoryFragment extends Fragment {
                 } else {
                     iconThumb.setImageDrawable(null);
                     final ThumbnailAsyncTask task = new ThumbnailAsyncTask(
-                            uri, iconMime, iconThumb, mThumbSize);
+                            uri, iconMime, iconThumb, mThumbSize, iconAlpha);
                     iconThumb.setTag(task);
                     ProviderExecutor.forAuthority(docAuthority).execute(task);
                 }
@@ -965,7 +859,11 @@ public class DirectoryFragment extends Fragment {
                 // We've already had to enumerate roots before any results can
                 // be shown, so this will never block.
                 final RootInfo root = roots.getRootBlocking(docAuthority, docRootId);
-                iconDrawable = root.loadIcon(context);
+                if (state.derivedMode == MODE_GRID) {
+                    iconDrawable = root.loadGridIcon(context);
+                } else {
+                    iconDrawable = root.loadIcon(context);
+                }
 
                 if (summary != null) {
                     final boolean alwaysShowSummary = getResources()
@@ -991,7 +889,8 @@ public class DirectoryFragment extends Fragment {
                 // hint to remind user they're a directory.
                 if (Document.MIME_TYPE_DIR.equals(docMimeType) && state.derivedMode == MODE_GRID
                         && showThumbnail) {
-                    iconDrawable = context.getResources().getDrawable(R.drawable.ic_root_folder);
+                    iconDrawable = IconUtils.applyTintAttr(context, R.drawable.ic_doc_folder,
+                            android.R.attr.textColorPrimaryInverse);
                 }
 
                 if (summary != null) {
@@ -1044,20 +943,12 @@ public class DirectoryFragment extends Fragment {
                 line2.setVisibility(hasLine2 ? View.VISIBLE : View.GONE);
             }
 
-            final boolean enabled = isDocumentEnabled(docMimeType, docFlags);
-            if (enabled) {
-                setEnabledRecursive(convertView, true);
-                iconMime.setAlpha(1f);
-                iconThumb.setAlpha(1f);
-                if (icon1 != null) icon1.setAlpha(1f);
-                if (icon2 != null) icon2.setAlpha(1f);
-            } else {
-                setEnabledRecursive(convertView, false);
-                iconMime.setAlpha(0.5f);
-                iconThumb.setAlpha(0.5f);
-                if (icon1 != null) icon1.setAlpha(0.5f);
-                if (icon2 != null) icon2.setAlpha(0.5f);
-            }
+            setEnabledRecursive(convertView, enabled);
+
+            iconMime.setAlpha(iconAlpha);
+            iconThumb.setAlpha(iconAlpha);
+            if (icon1 != null) icon1.setAlpha(iconAlpha);
+            if (icon2 != null) icon2.setAlpha(iconAlpha);
 
             return convertView;
         }
@@ -1098,59 +989,22 @@ public class DirectoryFragment extends Fragment {
         }
     }
 
-    private class DeleteFilesTask extends AsyncTask<Void, Integer, Boolean> {
-        private final DocumentInfo[] mDocs;
-        private ProgressDialog mProgressDialog;
-
-        public DeleteFilesTask(DocumentInfo... docs) {
-            mDocs = docs;
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.delete_in_progress));
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setCanceledOnTouchOutside(false);
-
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            ArrayList<DocumentInfo> docs = new ArrayList<DocumentInfo>();
-            Collections.addAll(docs, mDocs);
-            boolean result = onDeleteDocumentsImpl(docs);
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            mProgressDialog.dismiss();
-
-            if (result == false) {
-                Toast.makeText(getActivity(), R.string.toast_failed_delete, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getActivity(), R.string.toast_success_delete, Toast.LENGTH_SHORT).show();
-            }
-
-            // Reload files in the current folder
-            getLoaderManager().restartLoader(mLoaderId, null, mCallbacks);
-            updateDisplayState();
-        }
-    }
-
     private static class ThumbnailAsyncTask extends AsyncTask<Uri, Void, Bitmap>
             implements Preemptable {
         private final Uri mUri;
         private final ImageView mIconMime;
         private final ImageView mIconThumb;
         private final Point mThumbSize;
+        private final float mTargetAlpha;
         private final CancellationSignal mSignal;
 
-        public ThumbnailAsyncTask(
-                Uri uri, ImageView iconMime, ImageView iconThumb, Point thumbSize) {
+        public ThumbnailAsyncTask(Uri uri, ImageView iconMime, ImageView iconThumb, Point thumbSize,
+                float targetAlpha) {
             mUri = uri;
             mIconMime = iconMime;
             mIconThumb = iconThumb;
             mThumbSize = thumbSize;
+            mTargetAlpha = targetAlpha;
             mSignal = new CancellationSignal();
         }
 
@@ -1194,11 +1048,10 @@ public class DirectoryFragment extends Fragment {
                 mIconThumb.setTag(null);
                 mIconThumb.setImageBitmap(result);
 
-                final float targetAlpha = mIconMime.isEnabled() ? 1f : 0.5f;
-                mIconMime.setAlpha(targetAlpha);
+                mIconMime.setAlpha(mTargetAlpha);
                 mIconMime.animate().alpha(0f).start();
                 mIconThumb.setAlpha(0f);
-                mIconThumb.animate().alpha(targetAlpha).start();
+                mIconThumb.animate().alpha(mTargetAlpha).start();
             }
         }
     }
@@ -1275,9 +1128,5 @@ public class DirectoryFragment extends Fragment {
         }
 
         return MimePredicate.mimeMatches(state.acceptMimes, docMimeType);
-    }
-
-    public Executor getCurrentExecutor() {
-        return ((DocumentsActivity) getActivity()).getCurrentExecutor();
     }
 }

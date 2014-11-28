@@ -17,24 +17,34 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_label" msgid="4469836075319831821">"Спулер за печат"</string>
-    <string name="advanced_settings_button" msgid="5764225091289415632">"Настройки на принтера"</string>
-    <string name="print_button" msgid="645164566271246268">"Печат"</string>
-    <string name="save_button" msgid="1921310454071758999">"Запазване"</string>
+    <string name="more_options_button" msgid="2243228396432556771">"Още опции"</string>
     <string name="label_destination" msgid="9132510997381599275">"Местоназначение"</string>
     <string name="label_copies" msgid="3634531042822968308">"Копия"</string>
-    <string name="label_paper_size" msgid="8681895607876809323">"Размер на хартията"</string>
+    <string name="label_copies_summary" msgid="3861966063536529540">"Копия:"</string>
+    <string name="label_paper_size" msgid="908654383827777759">"Размер на хартията"</string>
+    <string name="label_paper_size_summary" msgid="5668204981332138168">"Размер на хартията:"</string>
     <string name="label_color" msgid="1108690305218188969">"Цвят"</string>
     <string name="label_orientation" msgid="2853142581990496477">"Ориентация"</string>
-    <string name="label_pages" msgid="6300874667546617333">"Страници (<xliff:g id="PAGE_COUNT">%1$s</xliff:g>)"</string>
+    <string name="label_pages" msgid="7768589729282182230">"Страници"</string>
+    <string name="template_all_pages" msgid="3322235982020148762">"Всички <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
+    <string name="template_page_range" msgid="428638530038286328">"Обхват от <xliff:g id="PAGE_COUNT">%1$s</xliff:g>"</string>
     <string name="pages_range_example" msgid="8558694453556945172">"напр. 1–5, 8, 11–13"</string>
     <string name="print_preview" msgid="8010217796057763343">"Визуализация за печат"</string>
     <string name="install_for_print_preview" msgid="6366303997385509332">"Инсталиране на визуализатор на PDF"</string>
     <string name="printing_app_crashed" msgid="854477616686566398">"Получи се срив в приложението за отпечатване"</string>
-    <string name="page_count_unknown" msgid="6058852665954511124">"Страници"</string>
     <string name="generating_print_job" msgid="3119608742651698916">"Заданието за печат се генерира"</string>
     <string name="save_as_pdf" msgid="5718454119847596853">"Запазване като PDF"</string>
     <string name="all_printers" msgid="5018829726861876202">"Всички принтери…"</string>
     <string name="print_dialog" msgid="32628687461331979">"Диалогов прозорец за отпечатване"</string>
+    <string name="current_page_template" msgid="1386638343571771292">"<xliff:g id="CURRENT_PAGE">%1$d</xliff:g>/<xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="page_description_template" msgid="6831239682256197161">"Страница <xliff:g id="CURRENT_PAGE">%1$d</xliff:g> от <xliff:g id="PAGE_COUNT">%2$d</xliff:g>"</string>
+    <string name="summary_template" msgid="8899734908625669193">"Обобщена информация: копия – <xliff:g id="COPIES">%1$s</xliff:g>, размер на хартията – <xliff:g id="PAPER_SIZE">%2$s</xliff:g>"</string>
+    <string name="expand_handle" msgid="7282974448109280522">"Манипулатор за разгъване"</string>
+    <string name="collapse_handle" msgid="6886637989442507451">"Манипулатор за свиване"</string>
+    <string name="print_button" msgid="645164566271246268">"Печат"</string>
+    <string name="savetopdf_button" msgid="2976186791686924743">"Запазване като PDF файл"</string>
+    <string name="print_options_expanded" msgid="6944679157471691859">"Опциите за отпечатване са разгънати"</string>
+    <string name="print_options_collapsed" msgid="7455930445670414332">"Опциите за отпечатване са свити"</string>
     <string name="search" msgid="5421724265322228497">"Търсене"</string>
     <string name="all_printers_label" msgid="3178848870161526399">"Всички принтери"</string>
     <string name="add_print_service_label" msgid="5356702546188981940">"Добавяне на услуга"</string>
@@ -63,7 +73,6 @@
     <string name="no_connection_to_printer" msgid="2159246915977282728">"Няма връзка с принтера"</string>
     <string name="reason_unknown" msgid="5507940196503246139">"няма данни"</string>
     <string name="printer_unavailable" msgid="2434170617003315690">"<xliff:g id="PRINT_JOB_NAME">%1$s</xliff:g> – не е налице"</string>
-    <string name="print_error_default_message" msgid="8568506918983980567">"Заданието за отпечатване не можа да се генерира"</string>
   <string-array name="color_mode_labels">
     <item msgid="7602948745415174937">"Черно-бяло"</item>
     <item msgid="2762241247228983754">"Цветно"</item>
@@ -72,8 +81,9 @@
     <item msgid="4061931020926489228">"Вертикално"</item>
     <item msgid="3199660090246166812">"Хоризонтално"</item>
   </string-array>
-  <string-array name="page_options_labels">
-    <item msgid="7421377442011699994">"Всички"</item>
-    <item msgid="6812869625222503603">"Поредица"</item>
-  </string-array>
+    <string name="print_write_error_message" msgid="5787642615179572543">"Не можа да се запише във файла"</string>
+    <string name="print_error_default_message" msgid="8602678405502922346">"За съжаление това не проработи. Опитайте отново."</string>
+    <string name="print_error_retry" msgid="1426421728784259538">"Нов опит"</string>
+    <string name="print_error_printer_unavailable" msgid="8985614415253203381">"В момента този принтер не е налице."</string>
+    <string name="print_preparing_preview" msgid="3939930735671364712">"Визуализацията се подготвя…"</string>
 </resources>

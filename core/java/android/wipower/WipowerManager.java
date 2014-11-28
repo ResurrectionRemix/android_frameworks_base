@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -35,6 +35,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.IPackageManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -263,7 +265,11 @@ public final class WipowerManager {
     private WipowerManager(Context context, WipowerManagerCallback callback) {
        if (mService == null) {
            try {
-               if (!context.bindService(new Intent(IWipower.class.getName()), mConnection, Context.BIND_AUTO_CREATE)) {
+
+               Intent bindIntent = new Intent(IWipower.class.getName());
+               ComponentName comp = bindIntent.resolveSystemService(context.getPackageManager(), 0);
+               bindIntent.setComponent(comp);
+               if (comp == null || !context.bindService(bindIntent, mConnection, Context.BIND_AUTO_CREATE)) {
                   Log.e(TAG, "Could not bind to Wipower Service");
                }
            } catch (SecurityException  e) {
@@ -372,9 +378,9 @@ public final class WipowerManager {
             Log.e(TAG, " Wipower Service not available");
         } else {
             byte level = 0;
-            if( powerlevel == PowerLevel.POWER_LEVEL_MINIMUM) level = (31/3);
-            else if(  powerlevel == PowerLevel.POWER_LEVEL_MEDIUM) level = ((31/3) * 2);
-            else if(  powerlevel == PowerLevel.POWER_LEVEL_MAXIMUM) level = 31;
+            if( powerlevel == PowerLevel.POWER_LEVEL_MINIMUM) level = 2;
+            else if(  powerlevel == PowerLevel.POWER_LEVEL_MEDIUM) level = 1;
+            else if(  powerlevel == PowerLevel.POWER_LEVEL_MAXIMUM) level = 0;
             try {
                 ret = mService.setCurrentLimit(level);
             } catch (android.os.RemoteException e) {
@@ -478,6 +484,29 @@ public final class WipowerManager {
 
         return ret;
     }
+
+   /**
+    * Enables power detection command.
+    *
+    *  @return true on success or flase otherwise
+    * {@hide}
+    */
+    public boolean enablePowerApply(boolean enable, boolean on, boolean time_flag) {
+        boolean ret = false;
+        Log.v(TAG,"enablePowerApply: enable: " + enable + " on: " + on + "time_flag" + time_flag);
+        if (mService == null) {
+            Log.e(TAG, "Service  not available");
+        } else {
+            try {
+                ret = mService.enablePowerApply(enable, on, time_flag);
+            } catch (android.os.RemoteException e) {
+                Log.e(TAG, "Service  Exceptione");
+            }
+        }
+
+        return ret;
+    }
+
 
    /** API used to reigester the wipower callbacks.
     * {@hide}

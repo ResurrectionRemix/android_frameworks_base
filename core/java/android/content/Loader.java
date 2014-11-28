@@ -24,7 +24,7 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 /**
- * An abstract class that performs asynchronous loading of data. While Loaders are active
+ * A class that performs asynchronous loading of data. While Loaders are active
  * they should monitor the source of their data and deliver new results when the contents
  * change.  See {@link android.app.LoaderManager} for more detail.
  *
@@ -413,7 +413,7 @@ public class Loader<D> {
      * {@link #onReset()} happens.  You can retrieve the current abandoned
      * state with {@link #isAbandoned}.
      */
-    protected void onAbandon() {        
+    protected void onAbandon() {
     }
     
     /**

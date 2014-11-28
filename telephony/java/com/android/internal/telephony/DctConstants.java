@@ -1,5 +1,8 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
+ * Copyright (c) 2012-2014 The Linux Foundation. All rights reserved.
+ *
+ * Not a Contribution.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,6 +100,11 @@ public class DctConstants {
     public static final int CMD_ENABLE_MOBILE_PROVISIONING = BASE + 37;
     public static final int CMD_IS_PROVISIONING_APN = BASE + 38;
     public static final int EVENT_PROVISIONING_APN_ALARM = BASE + 39;
+    public static final int CMD_NET_STAT_POLL = BASE + 40;
+    public static final int EVENT_DATA_RAT_CHANGED = BASE + 41;
+    public static final int CMD_CLEAR_PROVISIONING_SPINNER = BASE + 42;
+    public static final int EVENT_MODEM_DATA_PROFILE_READY = BASE + 43;
+    public static final int EVENT_GET_WWAN_IWLAN_COEXISTENCE_DONE = BASE + 44;
 
     /***** Constants *****/
 
@@ -110,7 +118,8 @@ public class DctConstants {
     public static final int APN_FOTA_ID = 6;
     public static final int APN_CBS_ID = 7;
     public static final int APN_IA_ID = 8;
-    public static final int APN_NUM_TYPES = 9;
+    public static final int APN_EMERGENCY_ID = 9;
+    public static final int APN_NUM_TYPES = 10;
 
     public static final int DISABLED = 0;
     public static final int ENABLED = 1;

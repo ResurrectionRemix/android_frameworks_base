@@ -21,8 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.TypedArray;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
@@ -51,7 +50,6 @@ public class ViewFlipper extends ViewAnimator {
     private boolean mStarted = false;
     private boolean mVisible = false;
     private boolean mUserPresent = true;
-    private boolean mSelfMaintained = false;
 
     public ViewFlipper(Context context) {
         super(context);
@@ -87,13 +85,20 @@ public class ViewFlipper extends ViewAnimator {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (!mSelfMaintained) {
-            // Listen for broadcasts related to user-presence
-            final IntentFilter filter = new IntentFilter();
-            filter.addAction(Intent.ACTION_SCREEN_OFF);
-            filter.addAction(Intent.ACTION_USER_PRESENT);
-            getContext().registerReceiver(mReceiver, filter, null, mHandler);
-        }
+        // Listen for broadcasts related to user-presence
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+
+        // OK, this is gross but needed. This class is supported by the
+        // remote views machanism and as a part of that the remote views
+        // can be inflated by a context for another user without the app
+        // having interact users permission - just for loading resources.
+        // For exmaple, when adding widgets from a user profile to the
+        // home screen. Therefore, we register the receiver as the current
+        // user not the one the context is for.
+        getContext().registerReceiverAsUser(mReceiver, android.os.Process.myUserHandle(),
+                filter, null, mHandler);
 
         if (mAutoStart) {
             // Automatically start when requested
@@ -106,9 +111,7 @@ public class ViewFlipper extends ViewAnimator {
         super.onDetachedFromWindow();
         mVisible = false;
 
-        if (!mSelfMaintained) {
-            getContext().unregisterReceiver(mReceiver);
-        }
+        getContext().unregisterReceiver(mReceiver);
         updateRunning();
     }
 
@@ -190,13 +193,6 @@ public class ViewFlipper extends ViewAnimator {
             Log.d(TAG, "updateRunning() mVisible=" + mVisible + ", mStarted=" + mStarted
                     + ", mUserPresent=" + mUserPresent + ", mRunning=" + mRunning);
         }
-    }
-
-    /**
-     * Allow self-maintenance of start/stop and ignore intent (screen off/user active)
-     */
-    public void setSelfMaintained(boolean maintain) {
-        mSelfMaintained = maintain;
     }
 
     /**

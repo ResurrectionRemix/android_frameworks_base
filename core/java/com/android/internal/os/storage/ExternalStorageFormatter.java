@@ -18,6 +18,7 @@ import android.os.storage.StorageVolume;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
+import android.os.Looper;
 
 import com.android.internal.R;
 import java.util.ArrayList;
@@ -58,6 +59,8 @@ public class ExternalStorageFormatter extends Service
 
     private boolean mFactoryReset = false;
     private boolean mAlwaysReset = false;
+    private String mReason = null;
+    private boolean mIsFormatSuccess = false;
 
     StorageEventListener mStorageListener = new StorageEventListener() {
         @Override
@@ -92,6 +95,7 @@ public class ExternalStorageFormatter extends Service
             mAlwaysReset = true;
         }
 
+        mReason = intent.getStringExtra(Intent.EXTRA_REASON);
         mStorageVolume = intent.getParcelableExtra(StorageVolume.EXTRA_STORAGE_VOLUME);
 
         if (mProgressDialog == null) {
@@ -157,7 +161,10 @@ public class ExternalStorageFormatter extends Service
     void fail(int msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         if (mAlwaysReset) {
-            sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
+            Intent intent = new Intent(Intent.ACTION_MASTER_CLEAR);
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+            intent.putExtra(Intent.EXTRA_REASON, mReason);
+            sendBroadcast(intent);
         }
         stopSelf();
     }
@@ -194,6 +201,7 @@ public class ExternalStorageFormatter extends Service
                 || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)) {
             updateProgressDialog(R.string.progress_unmounting);
             try {
+                if(mIsFormatSuccess) return;
                 final IMountService mountService = getMountService();
                 final StorageVolume[] volumes = mountService.getVolumeList();
                 final ArrayList<StorageVolume> physicalVols = StorageManager.getPhysicalExternalVolume(volumes);
@@ -250,14 +258,19 @@ public class ExternalStorageFormatter extends Service
                                 extStoragePath = mStorageVolume.getPath();
                             }
                             mountService.formatVolume(extStoragePath);
+                            mIsFormatSuccess = true;
                             success = true;
                         } catch (Exception e) {
+                            Looper.prepare();
                             Toast.makeText(ExternalStorageFormatter.this,
                                     R.string.format_error, Toast.LENGTH_LONG).show();
                         }
                         if (success) {
                             if (mFactoryReset) {
-                                sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
+                                Intent intent = new Intent(Intent.ACTION_MASTER_CLEAR);
+                                intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+                                intent.putExtra(Intent.EXTRA_REASON, mReason);
+                                sendBroadcast(intent);
                                 // Intent handling is asynchronous -- assume it will happen soon.
                                 stopSelf();
                                 return;
@@ -266,7 +279,10 @@ public class ExternalStorageFormatter extends Service
                         // If we didn't succeed, or aren't doing a full factory
                         // reset, then it is time to remount the storage.
                         if (!success && mAlwaysReset) {
-                            sendBroadcast(new Intent("android.intent.action.MASTER_CLEAR"));
+                            Intent intent = new Intent(Intent.ACTION_MASTER_CLEAR);
+                            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+                            intent.putExtra(Intent.EXTRA_REASON, mReason);
+                            sendBroadcast(intent);
                         } else {
                             try {
                                 if(physicalVols.size() == 0) {

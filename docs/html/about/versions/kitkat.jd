@@ -54,8 +54,8 @@ window.onhashchange = function () {
 <!-- BEGIN ANDROID 4.4 -->
 <div id="44-android-44" class="version-section">
 
-  <div style="padding:0px 0px 0px 60px;margin-top:-3px;float:right;">
-    <img src="{@docRoot}design/media/index_landing_page.png" alt="Android 4.4 on phone and tablet" width="380">
+  <div style="padding:0px 0px 0px 60px;margin-top:-20px;float:right;">
+    <img src="{@docRoot}images/kk-devices.png" alt="Android 4.4 on phone and tablet" width="380">
   </div>
 
   <div class="landing-docs" style="float:right;clear:both;margin:22px 0 2em 3em;">
@@ -992,7 +992,7 @@ window.onhashchange = function () {
   <img src="{@docRoot}images/kk-pseudolocale-rtl.png" alt="" width="260" style=
   "margin-bottom:0;">
   <p class="img-caption" style="padding-top:1.5em;line-height:1.25em;">
-    Pseudo-locales make it easier to test your app's localization.
+    The <strong>Force RTL layout</strong> option makes it easier to test your app's localization.
   </p>
 </div>
 
@@ -1003,18 +1003,19 @@ window.onhashchange = function () {
   files by using a new attribute.
 </p>
 
-<h4 id="44-pseudolocale-rtl">RTL pseudo-locale</h4>
+<h4 id="44-pseudolocale-rtl">Force RTL Layout</h4>
 
 <p>
-  To make it easier to test and debug your layouts, Android includes an RTL
-  pseudo-locale as a new developer option.
+  To make it easier to test and debug layout mirroring issues without switching
+  to an RTL language, Android includes a new developer option to force RTL layout
+  direction in all apps.
 </p>
 
 <p>
-  The RTL pseudo-locale switches the device to RTL layout for all locales and
+  The Force RTL layout option switches the device to RTL layout for all locales and
   displays text in your current language. This can help you find layout issues
   across your app, without having to display the app in an RTL language. You
-  can access the RTL pseudo-localed as in <strong>Settings &gt; Developer
+  can access the option in <strong>Settings &gt; Developer
   options &gt; Force RTL layout direction</strong>.
 </p>
 

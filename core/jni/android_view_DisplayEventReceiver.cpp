@@ -87,7 +87,7 @@ status_t NativeDisplayEventReceiver::initialize() {
         return result;
     }
 
-    int rc = mMessageQueue->getLooper()->addFd(mReceiver.getFd(), 0, ALOOPER_EVENT_INPUT,
+    int rc = mMessageQueue->getLooper()->addFd(mReceiver.getFd(), 0, Looper::EVENT_INPUT,
             this, NULL);
     if (rc < 0) {
         return UNKNOWN_ERROR;
@@ -125,13 +125,13 @@ status_t NativeDisplayEventReceiver::scheduleVsync() {
 }
 
 int NativeDisplayEventReceiver::handleEvent(int receiveFd, int events, void* data) {
-    if (events & (ALOOPER_EVENT_ERROR | ALOOPER_EVENT_HANGUP)) {
+    if (events & (Looper::EVENT_ERROR | Looper::EVENT_HANGUP)) {
         ALOGE("Display event receiver pipe was closed or an error occurred.  "
                 "events=0x%x", events);
         return 0; // remove the callback
     }
 
-    if (!(events & ALOOPER_EVENT_INPUT)) {
+    if (!(events & Looper::EVENT_INPUT)) {
         ALOGW("Received spurious callback for unhandled poll event.  "
                 "events=0x%x", events);
         return 1; // keep the callback
@@ -207,7 +207,7 @@ void NativeDisplayEventReceiver::dispatchHotplug(nsecs_t timestamp, int32_t id, 
 }
 
 
-static jint nativeInit(JNIEnv* env, jclass clazz, jobject receiverObj,
+static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverObj,
         jobject messageQueueObj) {
     sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
     if (messageQueue == NULL) {
@@ -226,17 +226,17 @@ static jint nativeInit(JNIEnv* env, jclass clazz, jobject receiverObj,
     }
 
     receiver->incStrong(gDisplayEventReceiverClassInfo.clazz); // retain a reference for the object
-    return reinterpret_cast<jint>(receiver.get());
+    return reinterpret_cast<jlong>(receiver.get());
 }
 
-static void nativeDispose(JNIEnv* env, jclass clazz, jint receiverPtr) {
+static void nativeDispose(JNIEnv* env, jclass clazz, jlong receiverPtr) {
     sp<NativeDisplayEventReceiver> receiver =
             reinterpret_cast<NativeDisplayEventReceiver*>(receiverPtr);
     receiver->dispose();
     receiver->decStrong(gDisplayEventReceiverClassInfo.clazz); // drop reference held by the object
 }
 
-static void nativeScheduleVsync(JNIEnv* env, jclass clazz, jint receiverPtr) {
+static void nativeScheduleVsync(JNIEnv* env, jclass clazz, jlong receiverPtr) {
     sp<NativeDisplayEventReceiver> receiver =
             reinterpret_cast<NativeDisplayEventReceiver*>(receiverPtr);
     status_t status = receiver->scheduleVsync();
@@ -251,12 +251,12 @@ static void nativeScheduleVsync(JNIEnv* env, jclass clazz, jint receiverPtr) {
 static JNINativeMethod gMethods[] = {
     /* name, signature, funcPtr */
     { "nativeInit",
-            "(Landroid/view/DisplayEventReceiver;Landroid/os/MessageQueue;)I",
+            "(Landroid/view/DisplayEventReceiver;Landroid/os/MessageQueue;)J",
             (void*)nativeInit },
     { "nativeDispose",
-            "(I)V",
+            "(J)V",
             (void*)nativeDispose },
-    { "nativeScheduleVsync", "(I)V",
+    { "nativeScheduleVsync", "(J)V",
             (void*)nativeScheduleVsync }
 };
 

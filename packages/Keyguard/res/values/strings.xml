@@ -18,6 +18,8 @@
 */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- App label in the manifest  -->
+    <string name="app_name">Keyguard</string>
     <!-- Instructions telling the user to enter their SIM PIN to unlock the keyguard.
          Displayed in one line in a large font.  -->
     <string name="keyguard_password_enter_pin_code">Type PIN code</string>
@@ -55,14 +57,14 @@
     <!-- When the lock screen is showing, the phone is plugged in and the battery is fully
          charged, say that it is charged. -->
     <string name="keyguard_charged">Charged</string>
-    <string name="app_name">Lockscreen</string>
+
     <!-- When the lock screen is showing and the phone plugged in, and the battery
-         is not fully charged, show the current charge %.  -->
-    <string name="keyguard_plugged_in">Charging, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
+         is not fully charged, say that it's charging.  -->
+    <string name="keyguard_plugged_in">Charging</string>
 
     <!-- When the lock screen is showing and the battery is low, warn user to plug
-         in the phone soon and show current percentage. -->
-    <string name="keyguard_low_battery">Connect your charger, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
+         in the phone soon. -->
+    <string name="keyguard_low_battery">Connect your charger.</string>
 
     <!-- On the keyguard screen, when pattern lock is disabled, only tell them to press menu to unlock.  This is shown in small font at the bottom. -->
     <string name="keyguard_instructions_when_pattern_disabled">Press Menu to unlock.</string>
@@ -70,6 +72,8 @@
     <!-- SIM messages --><skip />
     <!-- When the user inserts a sim card from an unsupported network, it becomes network locked -->
     <string name="keyguard_network_locked_message">Network locked</string>
+    <!-- When the user inserts a sim card with some personalization enabled -->
+    <string name="keyguard_perso_locked_message">SIM/RUIM is Perso locked</string>
     <!-- Shown when there is no SIM card. -->
     <string name="keyguard_missing_sim_message_short">No SIM card</string>
     <!-- Shown when there is no SIM card. -->
@@ -95,9 +99,9 @@
     <string name="keyguard_sim_unlock_progress_dialog_message">Unlocking SIM card\u2026</string>
 
     <!-- Time format strings for fall-back clock widget -->
-    <string name="keyguard_widget_12_hours_format" translatable="false">h&#58;mm</string>
+    <string name="keyguard_widget_12_hours_format" translatable="false">h\uee01mm</string>
     <!-- Time format strings for fall-back clock widget -->
-    <string name="keyguard_widget_24_hours_format" translatable="false">kk&#58;mm</string>
+    <string name="keyguard_widget_24_hours_format" translatable="false">kk\uee01mm</string>
 
     <!-- Accessibility description sent when user changes the current lock screen widget. [CHAR_LIMIT=none] -->
     <string name="keyguard_accessibility_widget_changed">%1$s. Widget %2$d of %3$d.</string>
@@ -113,8 +117,6 @@
     <string name="keyguard_accessibility_widget"><xliff:g id="widget_index">%1$s</xliff:g> widget.</string>
     <!-- Accessibility description of the lock screen user selector widget. [CHAR_LIMIT=none] -->
     <string name="keyguard_accessibility_user_selector">User selector</string>
-    <!-- Accessibility description of the lock screen status widget. [CHAR_LIMIT=none] -->
-    <string name="keyguard_accessibility_status">Status</string>
     <!-- Accessibility description of the camera widget. [CHAR_LIMIT=none] -->
     <string name="keyguard_accessibility_camera">Camera</string>
     <!-- Accessibility description of the lock media control widget. [CHAR_LIMIT=none] -->
@@ -173,6 +175,9 @@
 
     <!-- Accessibility description announced when user drags widget away from delete drop target [CHAR LIMIT=NONE] -->
     <string name="keyguard_accessibility_delete_widget_end"><xliff:g id="widget_index">%1$s</xliff:g> will not be deleted.</string>
+
+    <!-- Accessibility description for the text view that indicates when the next alarm is set (not shown on screen). [CHAR_LIMIT=none] -->
+    <string name="keyguard_accessibility_next_alarm">Next alarm set for <xliff:g id="alarm" example="Fri 8:30 AM">%1$s</xliff:g></string>
 
     <!-- Password keyboard strings. Used by LockScreen and Settings --><skip />
     <!-- Label for "switch to symbols" key.  Must be short to fit on key! -->
@@ -374,26 +379,19 @@
     <!-- On the keyguard screen, it shows the carrier the phone is connected to.
         This is displayed if the phone is not connected to a carrier.-->
     <string name="keyguard_carrier_default">No service.</string>
-    
-    <!-- On the unlock gesture screen, shown at the top of the unlock screen to tell the user what to do. Below this text is the place for the user to draw the gesture. -->
-    <string name="lockscreen_gesture_instructions">Draw gesture to unlock</string>
-    <!-- Shown to confirm that the user entered their lock gesture correctly. -->
-    <string name="lockscreen_gesture_correct">Correct!</string>
-    <!-- On the unlock gesture screen, shown when the user enters the wrong lock gesture and must try again. -->
-    <string name="lockscreen_gesture_wrong">Try again</string>
-    <!-- Accessibility description of the gesture unlock. [CHAR_LIMIT=none] -->
-    <string name="keyguard_accessibility_gesture_unlock">Gesture unlock.</string>
-    <!-- Accessibility description of the unlock gesture area. [CHAR_LIMIT=none] -->
-    <string name="keyguard_accessibility_gesture_area">Gesture area.</string>
-    <!-- Message shown in gesture unlock after some number of unsuccessful attempts -->
-    <string name="kg_forgot_gesture_button_text">Forgot Gesture</string>
-    <!-- Message shown when user enters wrong pattern -->
-    <string name="kg_wrong_gesture">Wrong Gesture</string>
-    <!-- Instructions for using the gesture unlock screen -->
-    <string name="kg_gesture_instructions">Draw your gesture</string>
-    <string name="kg_too_many_failed_gesture_attempts_dialog_message">
-        You have incorrectly drawn your unlock gesture <xliff:g id="number">%d</xliff:g> times.
-        \n\nTry again in <xliff:g id="number">%d</xliff:g> seconds.
-    </string>
+    <!-- Dismiss button text in SIM pin/puk unlock view -->
+    <string name="kg_dismiss">Dismiss</string>
+    <!-- Slot id in SIM pin/puk unlock view -->
+    <string name="kg_slot_name">Slot <xliff:g id="number">%d</xliff:g>: New Sim Card\u0020 </string>
 
+    <!-- Instructions telling the user remaining times when enter SIM PIN view.  -->
+    <plurals name="kg_password_default_pin_message">
+        <item quantity="one">Enter SIM PIN, you have <xliff:g id="number">%d</xliff:g> remaining attempt before you must contact your carrier to unlock your device.</item>
+        <item quantity="other">Enter SIM PIN, you have <xliff:g id="number">%d</xliff:g> remaining attempts.</item>
+    </plurals>
+    <!-- Instructions telling the user remaining times when enter SIM PUK view.  -->
+    <plurals name="kg_password_default_puk_message">
+        <item quantity="one">SIM is now disabled. Enter PUK code to continue. You have <xliff:g id="number">%d</xliff:g> remaining attempt before SIM becomes permanently unusable. Contact carrier for details.</item>
+        <item quantity="other">SIM is now disabled. Enter PUK code to continue. You have <xliff:g id="number">%d</xliff:g> remaining attempts before SIM becomes permanently unusable. Contact carrier for details.</item>
+    </plurals>
 </resources>

@@ -28,17 +28,20 @@ public class PackageUserState {
     public boolean stopped;
     public boolean notLaunched;
     public boolean installed;
-    public boolean blocked; // Is the app restricted by owner / admin
+    public boolean hidden; // Is the app restricted by owner / admin
     public int enabled;
+    public boolean blockUninstall;
 
     public String lastDisableAppCaller;
 
     public HashSet<String> disabledComponents;
     public HashSet<String> enabledComponents;
+    public HashSet<String> protectedComponents;
+    public HashSet<String> visibleComponents;
 
     public PackageUserState() {
         installed = true;
-        blocked = false;
+        hidden = false;
         enabled = COMPONENT_ENABLED_STATE_DEFAULT;
     }
 
@@ -47,11 +50,16 @@ public class PackageUserState {
         stopped = o.stopped;
         notLaunched = o.notLaunched;
         enabled = o.enabled;
-        blocked = o.blocked;
+        hidden = o.hidden;
         lastDisableAppCaller = o.lastDisableAppCaller;
         disabledComponents = o.disabledComponents != null
                 ? new HashSet<String>(o.disabledComponents) : null;
         enabledComponents = o.enabledComponents != null
                 ? new HashSet<String>(o.enabledComponents) : null;
+        blockUninstall = o.blockUninstall;
+        protectedComponents = o.protectedComponents != null
+                ? new HashSet<String>(o.protectedComponents) : null;
+        visibleComponents = o.visibleComponents != null
+                ? new HashSet<String>(o.visibleComponents) : null;
     }
 }

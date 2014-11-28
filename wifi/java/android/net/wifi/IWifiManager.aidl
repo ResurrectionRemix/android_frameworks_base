@@ -20,9 +20,14 @@ import android.net.wifi.BatchedScanResult;
 import android.net.wifi.BatchedScanSettings;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
-import android.net.wifi.ScanResult;
+import android.net.wifi.ScanSettings;
 import android.net.wifi.WifiChannel;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConnectionStatistics;
+import android.net.wifi.WifiActivityEnergyInfo;
+
 import android.net.DhcpInfo;
+
 
 import android.os.Messenger;
 import android.os.WorkSource;
@@ -34,7 +39,13 @@ import android.os.WorkSource;
  */
 interface IWifiManager
 {
+    int getSupportedFeatures();
+
+    WifiActivityEnergyInfo reportActivityInfo();
+
     List<WifiConfiguration> getConfiguredNetworks();
+
+    List<WifiConfiguration> getPrivilegedConfiguredNetworks();
 
     int addOrUpdateNetwork(in WifiConfiguration config);
 
@@ -46,7 +57,9 @@ interface IWifiManager
 
     boolean pingSupplicant();
 
-    void startScan(in WorkSource ws);
+    List<WifiChannel> getChannelList();
+
+    void startScan(in ScanSettings requested, in WorkSource ws);
 
     List<ScanResult> getScanResults(String callingPackage);
 
@@ -58,23 +71,17 @@ interface IWifiManager
 
     WifiInfo getConnectionInfo();
 
-    boolean setWifiEnabled(String callingPackage, boolean enable);
+    boolean setWifiEnabled(boolean enable);
 
     int getWifiEnabledState();
 
     void setCountryCode(String country, boolean persist);
-
-    String getCountryCode();
 
     void setFrequencyBand(int band, boolean persist);
 
     int getFrequencyBand();
 
     boolean isDualBandSupported();
-
-    boolean isIbssSupported();
-
-    List<WifiChannel> getSupportedChannels();
 
     boolean saveConfiguration();
 
@@ -114,11 +121,7 @@ interface IWifiManager
 
     Messenger getWifiServiceMessenger();
 
-    Messenger getWifiStateMachineMessenger();
-
     String getConfigFile();
-
-    void captivePortalCheckComplete();
 
     void enableTdls(String remoteIPAddress, boolean enable);
 
@@ -133,5 +136,23 @@ interface IWifiManager
     boolean isBatchedScanSupported();
 
     void pollBatchedScan();
+
+    String getWpsNfcConfigurationToken(int netId);
+
+    void enableVerboseLogging(int verbose);
+
+    void enableRssiThreshold(int enabled);
+
+    int getVerboseLoggingLevel();
+
+    int getAggressiveHandover();
+
+    void enableAggressiveHandover(int enabled);
+
+    int getAllowScansWithTraffic();
+
+    void setAllowScansWithTraffic(int enabled);
+
+    WifiConnectionStatistics getConnectionStatistics();
 }
 

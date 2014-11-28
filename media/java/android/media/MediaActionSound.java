@@ -18,20 +18,21 @@ package android.media;
 
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.SystemProperties;
 import android.util.Log;
 
 /**
  * <p>A class for producing sounds that match those produced by various actions
  * taken by the media and camera APIs.  </p>
  *
- * <p>Use this class to play an appropriate camera operation sound when
- * implementing a custom still or video recording mechanism (through the Camera
- * preview callbacks with {@link android.hardware.Camera#setPreviewCallback
- * Camera.setPreviewCallback}, or through GPU processing with {@link
- * android.hardware.Camera#setPreviewTexture Camera.setPreviewTexture}, for
- * example), or when implementing some other camera-like function in your
- * application.</p>
+ * <p>This class is recommended for use with the {@link android.hardware.camera2} API, since the
+ * camera2 API does not play any sounds on its own for any capture or video recording actions.</p>
+ *
+ * <p>With the older {@link android.hardware.Camera} API, use this class to play an appropriate
+ * camera operation sound when implementing a custom still or video recording mechanism (through the
+ * Camera preview callbacks with
+ * {@link android.hardware.Camera#setPreviewCallback Camera.setPreviewCallback}, or through GPU
+ * processing with {@link android.hardware.Camera#setPreviewTexture Camera.setPreviewTexture}, for
+ * example), or when implementing some other camera-like function in your application.</p>
  *
  * <p>There is no need to play sounds when using
  * {@link android.hardware.Camera#takePicture Camera.takePicture} or
@@ -89,8 +90,6 @@ public class MediaActionSound {
 
     private static final int SOUND_NOT_LOADED = -1;
 
-    private static final String PROP_CAMERA_SOUND = "persist.sys.camera-sound";
-
     /**
      * Construct a new MediaActionSound instance. Only a single instance is
      * needed for playing any platform media action sound; you do not need a
@@ -139,10 +138,12 @@ public class MediaActionSound {
      * {@link android.media.MediaRecorder#start MediaRecorder.start}, and
      * {@link android.media.MediaRecorder#stop MediaRecorder.stop}.</p>
      *
-     * <p>Using this method makes it easy to match the default device sounds
-     * when recording or capturing data through the preview callbacks, or when
-     * implementing custom camera-like features in your
-     * application.</p>
+     * <p>With the {@link android.hardware.camera2 camera2} API, this method can be used to play
+     * standard camera operation sounds with the appropriate system behavior for such sounds.</p>
+
+     * <p>With the older {@link android.hardware.Camera} API, using this method makes it easy to
+     * match the default device sounds when recording or capturing data through the preview
+     * callbacks, or when implementing custom camera-like features in your application.</p>
      *
      * <p>If the sound has not been loaded by {@link #load} before calling play,
      * play will load the sound at the cost of some additional latency before
@@ -159,17 +160,15 @@ public class MediaActionSound {
      * @see #STOP_VIDEO_RECORDING
      */
     public synchronized void play(int soundName) {
-        if (SystemProperties.getBoolean(PROP_CAMERA_SOUND, true)) {
-            if (soundName < 0 || soundName >= SOUND_FILES.length) {
-                throw new RuntimeException("Unknown sound requested: " + soundName);
-            }
-            if (mSoundIds[soundName] == SOUND_NOT_LOADED) {
-                mSoundIdToPlay =
-                        mSoundPool.load(SOUND_FILES[soundName], 1);
-                mSoundIds[soundName] = mSoundIdToPlay;
-            } else {
-                mSoundPool.play(mSoundIds[soundName], 1.0f, 1.0f, 0, 0, 1.0f);
-            }
+        if (soundName < 0 || soundName >= SOUND_FILES.length) {
+            throw new RuntimeException("Unknown sound requested: " + soundName);
+        }
+        if (mSoundIds[soundName] == SOUND_NOT_LOADED) {
+            mSoundIdToPlay =
+                    mSoundPool.load(SOUND_FILES[soundName], 1);
+            mSoundIds[soundName] = mSoundIdToPlay;
+        } else {
+            mSoundPool.play(mSoundIds[soundName], 1.0f, 1.0f, 0, 0, 1.0f);
         }
     }
 

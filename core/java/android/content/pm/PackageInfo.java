@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +16,6 @@
 
 package android.content.pm;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -35,6 +29,11 @@ public class PackageInfo implements Parcelable {
      * attribute.
      */
     public String packageName;
+
+    /**
+     * The names of any installed split APKs for this package.
+     */
+    public String[] splitNames;
 
     /**
      * The version number of this package, as specified by the &lt;manifest&gt;
@@ -181,14 +180,26 @@ public class PackageInfo implements Parcelable {
      * {@link android.R.styleable#AndroidManifestUsesConfiguration
      * &lt;uses-configuration&gt;} tags included under &lt;manifest&gt;,
      * or null if there were none. This is only filled in if the flag
-     * {@link PackageManager#GET_CONFIGURATIONS} was set.  
+     * {@link PackageManager#GET_CONFIGURATIONS} was set.
      */
     public ConfigurationInfo[] configPreferences;
 
     /**
-     * The features that this application has said it requires.
+     * Features that this application has requested.
+     *
+     * @see FeatureInfo#FLAG_REQUIRED
      */
     public FeatureInfo[] reqFeatures;
+
+    /**
+     * Groups of features that this application has requested.
+     * Each group contains a set of features that are required.
+     * A device must match the features listed in {@link #reqFeatures} and one
+     * or more FeatureGroups in order to have satisfied the feature requirement.
+     *
+     * @see FeatureInfo#FLAG_REQUIRED
+     */
+    public FeatureGroupInfo[] featureGroups;
 
     /**
      * Constant corresponding to <code>auto</code> in
@@ -196,94 +207,35 @@ public class PackageInfo implements Parcelable {
      * @hide
      */
     public static final int INSTALL_LOCATION_UNSPECIFIED = -1;
+
     /**
-     * Constant corresponding to <code>auto</code> in
-     * the {@link android.R.attr#installLocation} attribute.
-     * @hide
+     * Constant corresponding to <code>auto</code> in the
+     * {@link android.R.attr#installLocation} attribute.
      */
     public static final int INSTALL_LOCATION_AUTO = 0;
+
     /**
-     * Constant corresponding to <code>internalOnly</code> in
-     * the {@link android.R.attr#installLocation} attribute.
-     * @hide
+     * Constant corresponding to <code>internalOnly</code> in the
+     * {@link android.R.attr#installLocation} attribute.
      */
     public static final int INSTALL_LOCATION_INTERNAL_ONLY = 1;
+
     /**
-     * Constant corresponding to <code>preferExternal</code> in
-     * the {@link android.R.attr#installLocation} attribute.
-     * @hide
+     * Constant corresponding to <code>preferExternal</code> in the
+     * {@link android.R.attr#installLocation} attribute.
      */
     public static final int INSTALL_LOCATION_PREFER_EXTERNAL = 2;
+
     /**
-     * The install location requested by the activity.  From the
+     * The install location requested by the package. From the
      * {@link android.R.attr#installLocation} attribute, one of
-     * {@link #INSTALL_LOCATION_AUTO},
-     * {@link #INSTALL_LOCATION_INTERNAL_ONLY},
+     * {@link #INSTALL_LOCATION_AUTO}, {@link #INSTALL_LOCATION_INTERNAL_ONLY},
      * {@link #INSTALL_LOCATION_PREFER_EXTERNAL}
-     * @hide
      */
     public int installLocation = INSTALL_LOCATION_INTERNAL_ONLY;
 
-    // Is Theme Apk
-    /**
-     * {@hide}
-     */
-    public boolean isThemeApk = false;
-
-    /**
-     * {@hide}
-     */
-    public boolean hasIconPack = false;
-
-    /**
-     * {@hide}
-     */
-    public ArrayList<String> mOverlayTargets;
-
-    // Is Legacy Theme Apk
-    /**
-     * {@hide}
-     */
-    public boolean isLegacyThemeApk = false;
-
-    // Is Legacy Icon Apk
-    /**
-     * {@hide}
-     */
-    public boolean isLegacyIconPackApk = false;
-
-    // ThemeInfo
-    /**
-     * {@hide}
-     */
-    public ThemeInfo [] themeInfos;
-
-    // ThemeInfo
-    /**
-     * {@hide}
-     */
-    public LegacyThemeInfo [] legacyThemeInfos;
-
-    /**
-     * Contains a mapping of packages and their redirected resources found in
-     * legacy themes.
-     *
-     * i.e
-     * com.android.systemui
-     *      |--- color/status_bar_clock_color -> color/com_android_systemui_status_bar_clock_color
-     *      |--- drawable/ic_notifications -> drawable/com_android_systemui_ic_notifications
-     *      |--- ...
-     *      |--- ...
-     * com.android.settings
-     *      |--- dimen/normal_height -> dimen/com_android_settings_normal_height
-     *      |--- drawable/ic_location -> drawable/com_android_settings_ic_location
-     *      |--- drawable/ic_menu_trash_holo_dark -> drawable/com_android_settings_ic_menu_trash
-     *      |--- ...
-     *      |--- ...
-     *
-     *  {@hide}
-     */
-    public Map<String, Map<String, String>> packageRedirections;
+    /** @hide */
+    public boolean coreApp;
 
     /** @hide */
     public boolean requiredForAllUsers;
@@ -317,6 +269,7 @@ public class PackageInfo implements Parcelable {
 
     public void writeToParcel(Parcel dest, int parcelableFlags) {
         dest.writeString(packageName);
+        dest.writeStringArray(splitNames);
         dest.writeInt(versionCode);
         dest.writeString(versionName);
         dest.writeString(sharedUserId);
@@ -341,21 +294,13 @@ public class PackageInfo implements Parcelable {
         dest.writeTypedArray(signatures, parcelableFlags);
         dest.writeTypedArray(configPreferences, parcelableFlags);
         dest.writeTypedArray(reqFeatures, parcelableFlags);
+        dest.writeTypedArray(featureGroups, parcelableFlags);
         dest.writeInt(installLocation);
+        dest.writeInt(coreApp ? 1 : 0);
         dest.writeInt(requiredForAllUsers ? 1 : 0);
         dest.writeString(restrictedAccountType);
         dest.writeString(requiredAccountType);
-
-        /* Theme-specific. */
-        dest.writeInt((isThemeApk)? 1 : 0);
-        dest.writeStringList(mOverlayTargets);
-        dest.writeTypedArray(themeInfos, parcelableFlags);
-        dest.writeInt(hasIconPack ? 1 : 0);
-        /* Legacy Theme-specific. */
-        dest.writeInt((isLegacyThemeApk) ? 1 : 0);
-        dest.writeInt((isLegacyIconPackApk) ? 1 : 0);
-        writeRedirectionsMap(dest);
-        dest.writeTypedArray(legacyThemeInfos, parcelableFlags);
+        dest.writeString(overlayTarget);
     }
 
     public static final Parcelable.Creator<PackageInfo> CREATOR
@@ -371,6 +316,7 @@ public class PackageInfo implements Parcelable {
 
     private PackageInfo(Parcel source) {
         packageName = source.readString();
+        splitNames = source.readStringArray();
         versionCode = source.readInt();
         versionName = source.readString();
         sharedUserId = source.readString();
@@ -393,62 +339,12 @@ public class PackageInfo implements Parcelable {
         signatures = source.createTypedArray(Signature.CREATOR);
         configPreferences = source.createTypedArray(ConfigurationInfo.CREATOR);
         reqFeatures = source.createTypedArray(FeatureInfo.CREATOR);
+        featureGroups = source.createTypedArray(FeatureGroupInfo.CREATOR);
         installLocation = source.readInt();
+        coreApp = source.readInt() != 0;
         requiredForAllUsers = source.readInt() != 0;
         restrictedAccountType = source.readString();
         requiredAccountType = source.readString();
-
-        /* Theme-specific. */
-        isThemeApk = (source.readInt() != 0);
-        mOverlayTargets = source.createStringArrayList();
-        themeInfos = source.createTypedArray(ThemeInfo.CREATOR);
-        hasIconPack = source.readInt() == 1;
-        /* Legacy Theme-specific. */
-        isLegacyThemeApk = (source.readInt() != 0);
-        isLegacyIconPackApk = (source.readInt() != 0);
-        readRedirectionsMap(source);
-        legacyThemeInfos = source.createTypedArray(LegacyThemeInfo.CREATOR);
-    }
-
-    /**
-     * Writes the packageRedirections map to the given parcel
-     * @param dest
-     */
-    private void writeRedirectionsMap(Parcel dest) {
-        if (packageRedirections == null) {
-            dest.writeInt(0);
-            return;
-        }
-        final int numPackages = packageRedirections.size();
-        dest.writeInt(numPackages);
-        Set<String> pkgs = packageRedirections.keySet();
-        for (String pkg : pkgs) {
-            dest.writeString(pkg);
-            Map<String, String> redirectionsMap = packageRedirections.get(pkg);
-            final int numRedirections = redirectionsMap.size();
-            dest.writeInt(numRedirections);
-            Set<String> redirectKeys = redirectionsMap.keySet();
-            for (String redirectKey : redirectKeys) {
-                dest.writeString(redirectKey);
-                dest.writeString(redirectionsMap.get(redirectKey));
-            }
-        }
-    }
-
-    /**
-     * Reads back packageRedirections map from the given parcel
-     * @param source
-     */
-    private void readRedirectionsMap(Parcel source) {
-        final int numPackages = source.readInt();
-        for (int i = 0; i < numPackages; i++) {
-            String pkg = source.readString();
-            final int numRedirections = source.readInt();
-            Map<String, String> redirectrionsMap = new HashMap<String, String>();
-            for (int j = 0; j < numRedirections; j++) {
-                redirectrionsMap.put(source.readString(), source.readString());
-            }
-            packageRedirections.put(pkg, redirectrionsMap);
-        }
+        overlayTarget = source.readString();
     }
 }
