@@ -2087,6 +2087,9 @@
   <public type="style" name="Theme.DeviceDefault.NoActionBar.TranslucentDecor" id="0x010301e3" />
   <public type="style" name="Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor" id="0x010301e4" />
 
+  <public type="color" name="trds_background" id="0x0106001c" />
+  <public type="color" name="trds_text" id="0x0106001d" />
+
 <!-- ===============================================================
      Resources added in version 20 of the platform
      =============================================================== -->
