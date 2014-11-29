@@ -3021,8 +3021,15 @@ public final class Settings {
          * Setting for clock color
          * @hide
          */
+         
         public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
-
+         /**
+          * Settings for clock font style
+          * @hide
+          */
+          
+         public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
+         
         /**
          * Shows custom date before clock time
          * 0 - No Date
