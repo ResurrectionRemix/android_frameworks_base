@@ -2044,19 +2044,13 @@ public class NotificationManagerService extends SystemService {
                     applyZenModeLocked(r);
                     mRankingHelper.sort(mNotificationList);
 
-                    if (notification.icon != 0) {
+                   if (notification.icon != 0) {
                         StatusBarNotification oldSbn = (old != null) ? old.sbn : null;
                         mListeners.notifyPostedLocked(n, oldSbn);
                     } else {
-                        Slog.e(TAG, "Not posting notification with icon==0: " + notification);
                         if (old != null && !old.isCanceled) {
                             mListeners.notifyRemovedLocked(n);
                         }
-                        // ATTENTION: in a future release we will bail out here
-                        // so that we do not play sounds, show lights, etc. for invalid
-                        // notifications
-                        Slog.e(TAG, "WARNING: In a future release this will crash the app: "
-                                + n.getPackageName());
                     }
 
                     buzzBeepBlinkLocked(r);
