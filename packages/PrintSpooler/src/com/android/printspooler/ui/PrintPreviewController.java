@@ -131,6 +131,10 @@ class PrintPreviewController implements MutexFileProvider.OnReleaseRequestCallba
     public void onContentUpdated(boolean documentChanged, int documentPageCount,
             PageRange[] writtenPages, PageRange[] selectedPages, MediaSize mediaSize,
             Margins minMargins) {
+        if (mRecyclerView.getAdapter() == null) {
+            return;
+        }
+
         boolean contentChanged = false;
 
         if (documentChanged) {
