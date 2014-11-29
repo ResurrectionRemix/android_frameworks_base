@@ -1928,9 +1928,8 @@ public final class StrictMode {
                 // so we'll report it and bail on all of the current strict mode violations
                 // we currently are maintaining for this thread.
                 // First, drain the remaining violations from the parcel.
-                while (i < numViolations) {
+                while (++i < numViolations) {
                     info = new ViolationInfo(p, !currentlyGathering);
-                    i++;
                 }
                 // Next clear out all gathered violations.
                 clearGatheredViolations();
