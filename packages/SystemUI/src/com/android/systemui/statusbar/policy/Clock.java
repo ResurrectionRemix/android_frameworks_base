@@ -385,7 +385,7 @@ public class Clock extends TextView implements DemoMode {
                 Settings.System.STATUSBAR_CLOCK_DATE_STYLE, CLOCK_DATE_STYLE_REGULAR,
                 UserHandle.USER_CURRENT);
         mClockFontStyle = Settings.System.getIntForUser(resolver,
-                Settings.System.STATUSBAR_CLOCK_FONT_STYLE, FONT_NORMAL,
+                Settings.System.STATUSBAR_CLOCK_FONT_STYLE, FONT_BOLD,
                 UserHandle.USER_CURRENT);
                 
         int defaultColor = getResources().getColor(R.color.status_bar_clock_color);
