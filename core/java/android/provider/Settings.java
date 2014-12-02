@@ -7455,6 +7455,12 @@ public final class Settings {
         public static final String QS_TILES = "sysui_qs_tiles";
 
         /**
+         * Whether user is allowed to pull down quick settings on secure keyguard.
+         * @hide
+         */
+        public static final String STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD = "status_bar_locked_on_secure_keyguard";
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear
@@ -7530,7 +7536,8 @@ public final class Settings {
             INCALL_POWER_BUTTON_BEHAVIOR,
             WIFI_DISCONNECT_DELAY_DURATION,
             ADVANCED_REBOOT,
-            QS_TILES
+            QS_TILES,
+            STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD
         };
 
         /**
