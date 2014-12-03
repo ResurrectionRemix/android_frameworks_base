@@ -789,6 +789,15 @@ public class StatusBarWindowView extends FrameLayout implements TunerService.Tun
         }
     };
 
+    public void setStatusBarWindowViewOptions() {
+        ContentResolver resolver = mContext.getContentResolver();
+        int qsSmartPullDown = Settings.System.getIntForUser(resolver,
+                Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
+        if (mNotificationPanel != null) {
+            mNotificationPanel.setQsSmartPulldown(qsSmartPullDown);
+        }
+    }
+
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (!DOUBLE_TAP_SLEEP_GESTURE.equals(key)) {

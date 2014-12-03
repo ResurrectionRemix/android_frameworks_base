@@ -2493,6 +2493,18 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateNotifications();
     }
 
+    protected boolean hasActiveVisibleNotifications() {
+        return mNotificationData.hasActiveVisibleNotifications();
+    }
+
+    protected boolean hasActiveOngoingNotifications() {
+        return mNotificationData.hasActiveOngoingNotifications();
+    }
+
+    protected boolean hasActiveClearableNotificationsQS() {
+        return hasActiveClearableNotifications();
+    }
+
     protected void setAreThereNotifications() {
 
         if (SPEW) {
@@ -6489,6 +6501,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENT_CARD_TEXT_COLOR), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SMART_PULLDOWN),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -6521,6 +6536,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.RECENT_CARD_BG_COLOR))) {
                 rebuildRecentsScreen();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_SMART_PULLDOWN))) {
+                setStatusBarWindowViewOptions();
             }
         }
 

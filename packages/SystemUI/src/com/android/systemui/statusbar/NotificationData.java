@@ -113,6 +113,10 @@ public class NotificationData {
             }
         }
 
+        public View getContentView() {
+            return row.getPrivateLayout().getContractedChild();
+        }
+
         public View getExpandedContentView() {
             return row.getPrivateLayout().getExpandedChild();
         }
@@ -536,6 +540,32 @@ public class NotificationData {
             return true;
         }
 
+        return false;
+    }
+
+    /**
+     * Return whether there are any visible notifications (i.e. without an error).
+     */
+    public boolean hasActiveVisibleNotifications() {
+        for (Entry e : mSortedAndFiltered) {
+            if (e.getContentView() != null) { // the view successfully inflated
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Return whether there are any ongoing notifications (that aren't errors).
+     */
+    public boolean hasActiveOngoingNotifications() {
+        for (Entry e : mSortedAndFiltered) {
+            if (e.getContentView() != null) { // the view successfully inflated
+                if (e.notification.isOngoing()) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
