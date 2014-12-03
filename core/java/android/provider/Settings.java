@@ -4232,6 +4232,12 @@ public final class Settings {
         public static final String QS_FANCY_ANIMATION = "qs_fancy_animation";
 
         /**
+         * Quick Settings Smart Pulldown
+         * @hide
+         */
+        public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
