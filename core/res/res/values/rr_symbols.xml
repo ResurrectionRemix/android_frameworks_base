@@ -137,4 +137,7 @@
 
   <java-symbol type="array" name="anim_controls_entries" />
 
+ <!-- Hardware keys on/off option -->
+  <java-symbol type="bool" name="config_hwKeysPref" />
+
 </resources>

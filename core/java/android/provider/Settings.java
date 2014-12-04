@@ -4437,6 +4437,12 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
 
+        /**
+         * Enable HW keys
+         * @hide
+         */
+        public static final String ENABLE_HW_KEYS = "enable_hw_keys";
+
 	/** Wheither navigation bar is enabled or not
 	 * @hide
 	 */
