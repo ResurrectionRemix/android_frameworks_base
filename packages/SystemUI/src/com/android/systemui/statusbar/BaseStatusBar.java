@@ -2047,13 +2047,15 @@ public abstract class BaseStatusBar extends SystemUI implements
         boolean isHighPriority = sbn.getScore() >= INTERRUPTION_THRESHOLD;
         boolean isFullscreen = notification.fullScreenIntent != null;
         boolean hasTicker = mHeadsUpTicker && !TextUtils.isEmpty(notification.tickerText);
-        boolean isAllowed = notification.extras.getInt(Notification.EXTRA_AS_HEADS_UP,
-                Notification.HEADS_UP_ALLOWED) != Notification.HEADS_UP_NEVER;
+        int asHeadsUp = notification.extras.getInt(Notification.EXTRA_AS_HEADS_UP,
+                Notification.HEADS_UP_ALLOWED);
+        boolean isAllowed = asHeadsUp != Notification.HEADS_UP_NEVER;
         boolean accessibilityForcesLaunch = isFullscreen
                 && mAccessibilityManager.isTouchExplorationEnabled();
 
         final KeyguardTouchDelegate keyguard = KeyguardTouchDelegate.getInstance(mContext);
-        boolean interrupt = (isFullscreen || (isHighPriority && (isNoisy || hasTicker)))
+        boolean interrupt = (isFullscreen || (isHighPriority && (isNoisy || hasTicker))
+                || asHeadsUp == Notification.HEADS_UP_REQUESTED)
                 && isAllowed
                 && !accessibilityForcesLaunch
                 && mPowerManager.isScreenOn()
