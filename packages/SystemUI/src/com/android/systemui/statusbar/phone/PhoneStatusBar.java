@@ -2209,7 +2209,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public void setClockAndDateStatus(int width, int mode, boolean enabled) {
         if (mNotificationIcons != null) {
-            mNotificationIcons.setClockAndDateWidth(width, mode);
+            mNotificationIcons.setClockAndDateStatus(width, mode, enabled);
         }
         mClockLocation = mode;
         mShowClock = enabled;
