@@ -238,4 +238,7 @@
 
     <!-- Default for Settings.Secure.AWARE_LOCK_ENABLED -->
     <bool name="def_aware_lock_enabled">false</bool>
+
+    <!-- Default for Settings.System.STATUS_BAR_NOTIF_COUNT. -->
+    <integer name="def_notif_count">0</integer>
 </resources>
