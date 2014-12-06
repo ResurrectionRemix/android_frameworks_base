@@ -22,12 +22,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.Clock;
 
 public class IconMerger extends LinearLayout {
     private static final String TAG = "IconMerger";
     private static final boolean DEBUG = false;
 
     private int mIconSize;
+    private int mClockAndDateWidth;
+    private boolean mCenterClock;    
     private View mMoreView;
 
     public IconMerger(Context context, AttributeSet attrs) {
@@ -50,6 +53,13 @@ public class IconMerger extends LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         // we need to constrain this to an integral multiple of our children
         int width = getMeasuredWidth();
+        if (mCenterClock) {
+            final int totalWidth = mContext.getResources().getDisplayMetrics().widthPixels;
+            final int usableWidth = (totalWidth - mClockAndDateWidth - 2 * mIconSize) / 2;
+            if (width > usableWidth) {
+                width = usableWidth;
+            }
+        }
         setMeasuredDimension(width - (width % mIconSize), getMeasuredHeight());
     }
 
@@ -69,7 +79,7 @@ public class IconMerger extends LinearLayout {
         }
         final boolean overflowShown = (mMoreView.getVisibility() == View.VISIBLE);
         // let's assume we have one more slot if the more icon is already showing
-        if (overflowShown) visibleChildren --;
+        if (!mCenterClock && overflowShown) visibleChildren --;
         final boolean moreRequired = visibleChildren * mIconSize > width;
         if (moreRequired != overflowShown) {
             post(new Runnable() {
@@ -79,5 +89,9 @@ public class IconMerger extends LinearLayout {
                 }
             });
         }
+    }
+    public void setClockAndDateWidth(int width, int mode) {
+        mClockAndDateWidth = width;
+        mCenterClock = mode == Clock.STYLE_CLOCK_CENTER;
     }
 }
