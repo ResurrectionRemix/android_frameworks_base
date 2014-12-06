@@ -18,6 +18,8 @@ package com.android.keyguard;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.provider.Settings;
+import android.os.UserHandle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -136,6 +138,9 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView
         // Set selected property on so the view can send accessibility events.
         mPasswordEntry.setSelected(true);
 
+        final boolean quickUnlock = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 1, UserHandle.USER_CURRENT) == 1;
+
         mPasswordEntry.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
@@ -146,6 +151,14 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView
             public void afterTextChanged(Editable s) {
                 if (mCallback != null) {
                     mCallback.userActivity();
+                }
+                if (quickUnlock) {
+                    String entry = getPasswordText();
+                    if (getPasswordText().length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT
+                            && mLockPatternUtils.checkPassword(getPasswordText())) {
+                        mCallback.reportUnlockAttempt(true);
+                        mCallback.dismiss(true);
+                    }
                 }
             }
         });

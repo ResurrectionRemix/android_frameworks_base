@@ -18,6 +18,8 @@ package com.android.keyguard;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.provider.Settings;
+import android.os.UserHandle;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -26,7 +28,7 @@ import android.view.View;
  * A Pin based Keyguard input view
  */
 public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
-        implements View.OnKeyListener {
+        implements View.OnKeyListener, PasswordTextView.OnTextChangedListener {
 
     protected PasswordTextView mPasswordEntry;
     private View mOkButton;
@@ -41,6 +43,8 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
     private View mButton7;
     private View mButton8;
     private View mButton9;
+
+    private boolean mQuickUnlock;
 
     public KeyguardPinBasedInputView(Context context) {
         this(context, null);
@@ -137,10 +141,23 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
         return mPasswordEntry.getText();
     }
 
+    // Listener callback.
+    @Override
+    public void onTextChanged() {
+        if (mQuickUnlock) {
+            if (getPasswordText().length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT
+                    && mLockPatternUtils.checkPassword(getPasswordText())) {
+                mCallback.reportUnlockAttempt(true);
+                mCallback.dismiss(true);
+            }
+        }
+    }
+
     @Override
     protected void onFinishInflate() {
         mPasswordEntry = (PasswordTextView) findViewById(getPasswordTextViewId());
         mPasswordEntry.setOnKeyListener(this);
+        mPasswordEntry.setOnTextChangedListener(this);
 
         // Set selected property on so the view can send accessibility events.
         mPasswordEntry.setSelected(true);
@@ -152,18 +169,26 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
             }
         });
 
+        mQuickUnlock = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 1, UserHandle.USER_CURRENT) == 1;
+
         mOkButton = findViewById(R.id.key_enter);
+
         if (mOkButton != null) {
-            mOkButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    doHapticKeyClick();
-                    if (mPasswordEntry.isEnabled()) {
-                        verifyPasswordAndUnlock();
+            if (mQuickUnlock) {
+                mOkButton.setVisibility(View.INVISIBLE);
+            } else {
+                mOkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        doHapticKeyClick();
+                        if (mPasswordEntry.isEnabled()) {
+                            verifyPasswordAndUnlock();
+                        }
                     }
-                }
-            });
-            mOkButton.setOnHoverListener(new LiftToActivateListener(getContext()));
+                });
+                mOkButton.setOnHoverListener(new LiftToActivateListener(getContext()));
+            }
         }
 
         mDeleteButton = findViewById(R.id.delete_button);

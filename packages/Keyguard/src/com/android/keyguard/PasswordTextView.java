@@ -87,6 +87,21 @@ public class PasswordTextView extends View {
     private Interpolator mFastOutSlowInInterpolator;
     private boolean mShowPassword;
 
+    public interface OnTextChangedListener {
+        void onTextChanged();
+    }
+    private OnTextChangedListener mOnTextChangedListener = null;
+
+    public void setOnTextChangedListener(OnTextChangedListener onTextChangedListener) {
+        mOnTextChangedListener = onTextChangedListener;
+    }
+
+    private void textChanged() {
+        if (mOnTextChangedListener != null) {
+            mOnTextChangedListener.onTextChanged();
+        }
+    }
+
     public PasswordTextView(Context context) {
         this(context, null);
     }
@@ -195,6 +210,7 @@ public class PasswordTextView extends View {
                 previousState.swapToDotWhenAppearFinished();
             }
         }
+        textChanged();
         userActivity();
     }
 
@@ -209,6 +225,7 @@ public class PasswordTextView extends View {
             CharState charState = mTextChars.get(length - 1);
             charState.startRemoveAnimation(0, 0);
         }
+        textChanged();
         userActivity();
     }
 
@@ -256,6 +273,7 @@ public class PasswordTextView extends View {
         if (!animated) {
             mTextChars.clear();
         }
+        textChanged();
     }
 
     private class CharState {
