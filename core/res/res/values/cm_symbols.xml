@@ -235,4 +235,7 @@
     <!-- Ignored sms packages -->
     <java-symbol type="array" name="config_ignored_sms_packages" />
 
+    <!-- Blur effects -->
+    <java-symbol type="bool" name="config_ui_blur_enabled" />
+
 </resources>
