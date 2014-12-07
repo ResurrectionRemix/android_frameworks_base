@@ -159,7 +159,8 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="16dp"
                 android:gravity="right"
-                android:textColor="#ffffff"
+                android:textColor="#64ffffff"
+                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textSize="@dimen/battery_level_text_size"
                 android:importantForAccessibility="noHideDescendants"/>
         <TextView
@@ -168,7 +169,8 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="16dp"
                 android:gravity="right"
-                android:textColor="#ffffff"
+                android:textColor="#64ffffff"
+                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textSize="@dimen/battery_level_text_size"
                 android:importantForAccessibility="noHideDescendants"/>
     </LinearLayout>
