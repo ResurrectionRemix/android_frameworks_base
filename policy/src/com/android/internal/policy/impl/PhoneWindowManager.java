@@ -3756,9 +3756,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } else if (mScreenOnFully) {
                 // check if screen is fully on before going home
                 // to avoid hardware home button wake going home
-                // Otherwise, just launch Home
-                sendCloseSystemWindows(SYSTEM_DIALOG_REASON_HOME_KEY);
-                startDockOrHome();
+                 sendCloseSystemWindows(SYSTEM_DIALOG_REASON_HOME_KEY);
+                 startDockOrHome();
             }
         }
     }
