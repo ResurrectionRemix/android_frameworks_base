@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (c) 2014, The Android Open Source Project
+ * Copyright (c) 2006, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 <resources>
     <!-- Network traffic monitor single-line text size -->
     <dimen name="net_traffic_single_text_size">8dp</dimen>
+
     <!-- Network traffic monitor multi-line text size -->
     <dimen name="net_traffic_multi_text_size">8dp</dimen>
 </resources>

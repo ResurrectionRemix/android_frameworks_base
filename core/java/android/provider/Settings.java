@@ -3029,6 +3029,17 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CLOCK = "status_bar_clock";
         
+         /**
+         * Network traffic inactivity threshold (default is 10 kBs)
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
+
+        /**
+         * Whether or not to hide the network traffic indicator when there is no activity
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTOHIDE = "network_traffic_autohide";        
         /**
          * Display second in the Clock
          * @hide
@@ -3053,28 +3064,18 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_CLOCK_STYLE = "statusbar_clock_style";
-        
-        /**
-         * Network traffic indicator, goes from least to greatest significant bitwise
-         * 0 = Display up-stream traffic if set
-         * 1 = Display down-stream traffic if set
-         * 2 = Show as Byte/s if set
-         * 16-31 = Refresh interval(ms)  min: 250  max: 32750  default: 1000
-         * @hide
-         */
-        public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state"; 
 
         /**
          * Setting for clock color
          * @hide
          */
-        
+         
         public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
          /**
           * Settings for clock font style
           * @hide
           */
-      
+          
          public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
          
         /**
@@ -3230,6 +3231,16 @@ public final class Settings {
          * @hide
          */
         public static final String VOICE_LAUNCH_INTENT = "voice_launch_intent";
+
+       /**
+         * Network traffic indicator, goes from least to greatest significant bitwise
+         * 0 = Display up-stream traffic if set
+         * 1 = Display down-stream traffic if set
+         * 2 = Show as Byte/s if set
+         * 16-31 = Refresh interval(ms) min: 250 max: 32750 default: 1000
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
