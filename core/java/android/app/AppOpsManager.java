@@ -514,10 +514,7 @@ public class AppOpsManager {
             null,
             null,
             null,
-<<<<<<< HEAD
             null,
-=======
->>>>>>> 82bb89b... appops: Fix an off-by-one error that causes the location icon to stay on
     };
 
     /**
