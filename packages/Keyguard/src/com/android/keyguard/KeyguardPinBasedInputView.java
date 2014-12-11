@@ -143,21 +143,18 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
 
         mOkButton = findViewById(R.id.key_enter);
         if (mOkButton != null) {
-            if (mQuickUnlock) {
-                mOkButton.setVisibility(View.INVISIBLE);
-            } else {
-                mOkButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        doHapticKeyClick();
-                        if (mPasswordEntry.isEnabled()) {
-                            verifyPasswordAndUnlock();
-                        }
+            mOkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    doHapticKeyClick();
+                    if (mPasswordEntry.isEnabled()) {
+                        verifyPasswordAndUnlock();
                     }
-                });
-                mOkButton.setOnHoverListener(new LiftToActivateListener(getContext()));
-            }
+                }
+            });
+            mOkButton.setOnHoverListener(new LiftToActivateListener(getContext()));
         }
+
         
         mDeleteButton = findViewById(R.id.delete_button);
         mDeleteButton.setVisibility(View.VISIBLE);
@@ -187,7 +184,7 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
 
         final int randomDigitMode = Settings.Secure.getIntForUser(
                 mContext.getContentResolver(), Settings.Secure.LOCK_NUMPAD_RANDOM,
-                1, UserHandle.USER_CURRENT);
+                0, UserHandle.USER_CURRENT);
 
         if (randomDigitMode > 0) {
             final View randomButton = findViewById(R.id.key_random);
