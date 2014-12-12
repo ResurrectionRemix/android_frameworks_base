@@ -916,7 +916,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
     };
 
-<<<<<<< HEAD
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -951,7 +950,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             updateVisibilities();
         }
     }
-=======
+
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -968,5 +967,4 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
     }
 
->>>>>>> 0407211... Battery text mode (1/2)
 }
