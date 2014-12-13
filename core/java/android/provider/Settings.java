@@ -3043,12 +3043,7 @@ public final class Settings {
          * @hide
          */
         public static final String NETWORK_TRAFFIC_AUTOHIDE = "network_traffic_autohide";        
-        /**
-         * Display second in the Clock
-         * @hide
-         */
-         
-        public static final String CLOCK_USE_SECOND = "clock_use_second";
+       
         /**
          * AM/PM Style for clock options
          * 0 - Normal AM/PM
