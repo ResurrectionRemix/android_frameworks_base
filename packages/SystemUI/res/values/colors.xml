@@ -151,6 +151,9 @@
     <color name="instant_apps_color">#ff4d5a64</color>
 
     <color name="zen_introduction">#ffffffff</color>
+    <!-- Gesture Anywhere specific colors -->
+    <color name="gesture_overlay_background_fill_color">#80000000</color>
+    <color name="gesture_color">@android:color/holo_blue_light</color>
 
     <color name="smart_reply_button_text">#5F6368</color>
     <color name="smart_reply_button_text_dark_bg">@*android:color/notification_primary_text_color_dark</color>
