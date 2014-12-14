@@ -35,6 +35,8 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
+import android.annotation.ChaosLab;
+import android.annotation.ChaosLab.Classification;
 import android.annotation.NonNull;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
@@ -831,6 +833,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // ================================================================================
     // Constructing the view
     // ================================================================================
+    @ChaosLab(name="GestureAnywhere", classification=Classification.CHANGE_CODE)
     protected PhoneStatusBarView makeStatusBarView() {
         final Context context = mContext;
 
@@ -916,6 +919,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         updateShowSearchHoldoff();
+
+        addGestureAnywhereView();
 
         try {
             boolean showNav = mWindowManagerService.hasNavigationBar();
