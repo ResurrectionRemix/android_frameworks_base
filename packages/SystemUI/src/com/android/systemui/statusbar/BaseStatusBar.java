@@ -19,6 +19,9 @@ package com.android.systemui.statusbar;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
+import android.annotation.ChaosLab;
+import android.annotation.ChaosLab.Classification;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.Notification;
@@ -42,6 +45,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.ThemeConfig;
 import android.database.ContentObserver;
+import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
@@ -70,12 +74,14 @@ import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.IWindowManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
@@ -103,6 +109,7 @@ import com.android.systemui.RecentsComponent;
 import com.android.systemui.SwipeHelper;
 import com.android.systemui.SystemUI;
 import com.android.systemui.assist.AssistManager;
+import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.cm.SpamMessageProvider;
 import com.android.systemui.statusbar.NotificationData.Entry;
@@ -230,6 +237,9 @@ public abstract class BaseStatusBar extends SystemUI implements
     private RecentsComponent mRecents;
 
     protected int mZenMode;
+
+    @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+    protected GestureAnywhereView mGestureAnywhereView;
 
     // which notification is currently being longpress-examined by the user
     private NotificationGuts mNotificationGutsExposed;
@@ -2182,5 +2192,39 @@ public abstract class BaseStatusBar extends SystemUI implements
         if (mAssistManager != null) {
             mAssistManager.startAssist(args);
         }
+    }
+
+    @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
+    protected void addGestureAnywhereView() {
+        mGestureAnywhereView = (GestureAnywhereView)View.inflate(
+                mContext, R.layout.gesture_anywhere_overlay, null);
+        mWindowManager.addView(mGestureAnywhereView, getGestureAnywhereViewLayoutParams(Gravity.LEFT));
+        mGestureAnywhereView.setStatusBar(this);
+    }
+
+    @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
+    protected void removeGestureAnywhereView() {
+        if (mGestureAnywhereView != null)
+            mWindowManager.removeView(mGestureAnywhereView);
+    }
+
+    @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
+    protected WindowManager.LayoutParams getGestureAnywhereViewLayoutParams(int gravity) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL,
+                0
+                | WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
+                PixelFormat.TRANSLUCENT);
+        lp.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_NO_MOVE_ANIMATION;
+        lp.gravity = Gravity.TOP | gravity;
+        lp.setTitle("GestureAnywhereView");
+
+        return lp;
     }
 }
