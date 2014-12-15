@@ -2489,7 +2489,24 @@ public final class Settings {
         * @hide
         */
         public static final String DEV_FORCE_SHOW_NAVBAR = "dev_force_show_navbar";
+        /**
+         * Navigation bar height when it is on portrait
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
 
+        /**
+         * Navigation bar height when it is on landscape
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HEIGHT_LANDSCAPE = "navigation_bar_height_landscape";
+
+        /**
+         * Navigation bar height when it is on landscape at the right
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_WIDTH = "navigation_bar_width";
+    
 
         /**
          * Date format string
@@ -3247,8 +3264,9 @@ public final class Settings {
         * Network stats Color style
         * @hide
         */
-       public static final String NETWORK_TRAFFIC_COLOR = "network_traffic_color";
-       
+        
+       public static final String NETWORK_TRAFFIC_COLOR = "network_traffic_color";            
+        
         /**
          * Toast Animations
          * @hide
