@@ -6176,7 +6176,6 @@ public final class ActivityManagerService extends ActivityManagerNative
         app.hasShownUi = false;
         app.debugging = false;
         app.cached = false;
-        app.killedByAm = false;
 
         mHandler.removeMessages(PROC_START_TIMEOUT_MSG, app);
 
@@ -9458,9 +9457,9 @@ public final class ActivityManagerService extends ActivityManagerNative
                             "Attempt to launch content provider before system ready");
                 }
 
-                // Make sure that the user who owns this provider is running.  If not,
+                // Make sure that the user who owns this provider is started.  If not,
                 // we don't want to allow it to run.
-                if (!isUserRunningLocked(userId, false)) {
+                if (mStartedUsers.get(userId) == null) {
                     Slog.w(TAG, "Unable to launch app "
                             + cpi.applicationInfo.packageName + "/"
                             + cpi.applicationInfo.uid + " for provider "
@@ -15555,10 +15554,10 @@ public final class ActivityManagerService extends ActivityManagerNative
         userId = handleIncomingUser(callingPid, callingUid, userId,
                 true, ALLOW_NON_FULL, "broadcast", callerPackage);
 
-        // Make sure that the user who is receiving this broadcast is running.
+        // Make sure that the user who is receiving this broadcast is started.
         // If not, we will just skip it.
 
-        if (userId != UserHandle.USER_ALL && !isUserRunningLocked(userId, false)) {
+        if (userId != UserHandle.USER_ALL && mStartedUsers.get(userId) == null) {
             if (callingUid != Process.SYSTEM_UID || (intent.getFlags()
                     & Intent.FLAG_RECEIVER_BOOT_UPGRADE) == 0) {
                 Slog.w(TAG, "Skipping broadcast of " + intent

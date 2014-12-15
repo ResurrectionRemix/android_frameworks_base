@@ -2420,15 +2420,10 @@ public class ListView extends AbsListView {
                         (ViewGroup) selectedView, currentFocus, direction);
                 if (nextFocus != null) {
                     // do the math to get interesting rect in next focus' coordinates
-                    Rect focusedRect = mTempRect;
-                    if (currentFocus != null) {
-                        currentFocus.getFocusedRect(focusedRect);
-                        offsetDescendantRectToMyCoords(currentFocus, focusedRect);
-                        offsetRectIntoDescendantCoords(nextFocus, focusedRect);
-                    } else {
-                        focusedRect = null;
-                    }
-                    if (nextFocus.requestFocus(direction, focusedRect)) {
+                    currentFocus.getFocusedRect(mTempRect);
+                    offsetDescendantRectToMyCoords(currentFocus, mTempRect);
+                    offsetRectIntoDescendantCoords(nextFocus, mTempRect);
+                    if (nextFocus.requestFocus(direction, mTempRect)) {
                         return true;
                     }
                 }
@@ -2561,10 +2556,8 @@ public class ListView extends AbsListView {
         if (mItemsCanFocus && (focusResult == null)
                 && selectedView != null && selectedView.hasFocus()) {
             final View focused = selectedView.findFocus();
-            if (focused != null) {
-                if (!isViewAncestorOf(focused, this) || distanceToView(focused) > 0) {
-                    focused.clearFocus();
-                }
+            if (!isViewAncestorOf(focused, this) || distanceToView(focused) > 0) {
+                focused.clearFocus();
             }
         }
 

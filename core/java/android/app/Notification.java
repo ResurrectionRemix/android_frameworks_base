@@ -1668,7 +1668,6 @@ public class Notification implements Parcelable
         builder.setSound(this.sound, this.audioStreamType);
         builder.setDefaults(this.defaults);
         builder.setVibrate(this.vibrate);
-        builder.setDeleteIntent(this.deleteIntent);
 
         // now apply the latestEventInfo fields
         if (contentTitle != null) {
