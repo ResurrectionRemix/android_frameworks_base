@@ -2146,7 +2146,14 @@ public final class Settings {
          * value will not change the volume. See AudioManager.
          */
         public static final String VOLUME_SYSTEM = "volume_system";
-
+        
+         /**
+         * Defines the status and navigation bar color is battery safe mode is enabled.
+         *
+         * @hide
+         */
+        public static final String BATTERY_SAVER_MODE_COLOR = "battery_save_mode_color";
+        
         /**
          * Voice call volume. This is used internally, changing this value will
          * not change the volume. See AudioManager.
