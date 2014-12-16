@@ -17,5 +17,23 @@
   <java-symbol type="style" name="Animation.Toast.Translucent" />
   <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
+  <!-- Themes and styles -->
+  <java-symbol type="style" name="Theme.Material.Dialog.Dark" />
+  <java-symbol type="style" name="Theme.Material.Dialog.Alert.Dark" />
+  <java-symbol type="style" name="TextAppearance.Material.Large.Dark" />
+  <java-symbol type="style" name="TextAppearance.Material.Small.Dark" />
+  <java-symbol type="drawable" name="item_background_borderless_material_dark" />
+  <java-symbol type="drawable" name="btn_borderless_material_dark" />
+  <java-symbol type="drawable" name="material_bg_blue_grey" />
+  <java-symbol type="color" name="material_blue_grey" />
 
+  <!-- Config Power Menu -->
+  <java-symbol type="drawable" name="ic_audio_ring_notif_dark" />
+  <java-symbol type="drawable" name="ic_audio_ring_notif_mute_dark" />
+  <java-symbol type="drawable" name="ic_audio_ring_notif_vibrate_dark" />
+  <java-symbol type="drawable" name="ic_lock_airplane_mode_off_dark" />
+  <java-symbol type="drawable" name="ic_lock_bugreport_dark" />
+  <java-symbol type="drawable" name="ic_lock_lock_dark" />
+  <java-symbol type="drawable" name="ic_lock_power_off_dark" />
+  <java-symbol type="drawable" name="ic_lock_reboot_dark" />
 </resources>

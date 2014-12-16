@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2011 The Android Open Source Project
+<!-- Copyright (C) 2014 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,8 +13,16 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="false" android:drawable="@android:color/transparent" />
-    <item android:state_selected="true"  android:drawable="@drawable/tab_indicator_material" />
-</selector>
+    <style name="TextAppearance.Material.Large.Dark">
+        <item name="textSize">@dimen/text_size_large_material</item>
+        <item name="textColor">@color/primary_text_material_dark</item>
+    </style>
+
+    <style name="TextAppearance.Material.Small.Dark">
+        <item name="textSize">@dimen/text_size_small_material</item>
+        <item name="textColor">@color/secondary_text_material_dark</item>
+    </style>
+
+</resources>
