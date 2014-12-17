@@ -58,7 +58,7 @@
 
     <!-- How many icons may be shown at once in the system bar. Includes any
          slots that may be reused for things like IME control. -->
-    <integer name="config_maxNotificationIcons">3</integer>
+    <integer name="config_maxNotificationIcons">4</integer>
 
     <!-- Show phone (voice) signal strength instead of data in mobile RSSI. -->
     <bool name="config_showPhoneRSSIForData">false</bool>
@@ -274,7 +274,7 @@
     <integer name="volume_panel_dismiss_delay">200</integer>
 
     <!-- Tiles with feature timeouts: number of days to show after feature is used. -->
-    <integer name="days_to_show_timeout_tiles">30</integer>
+    <integer name="days_to_show_timeout_tiles">1</integer>
 
     <!-- Whether to enable to show task manager or not -->
     <bool name="config_showTaskManagerSwitcher">false</bool>
