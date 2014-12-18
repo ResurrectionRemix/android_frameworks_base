@@ -37,7 +37,7 @@
     <dimen name="glowpadview_inner_radius">15dip</dimen>
 
     <!-- Size of status line font on Unsecure unlock LockScreen. -->
-    <dimen name="keyguard_lockscreen_status_line_font_size">14dip</dimen>
+    <dimen name="keyguard_lockscreen_status_line_font_size">11dip</dimen>
 
     <!-- Size of right margin on Unsecure unlock LockScreen -->
     <dimen name="keyguard_lockscreen_status_line_font_right_margin">42dip</dimen>

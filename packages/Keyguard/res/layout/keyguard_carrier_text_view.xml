@@ -32,9 +32,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:id="@+id/airplane_mode"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingLeft="12dp"
@@ -42,16 +41,15 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection = "locale"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/carrier1"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingLeft="12dp"
@@ -59,7 +57,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection = "locale"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
         android:visibility="gone" />
@@ -73,9 +71,8 @@
 
     <TextView
         android:id="@+id/carrier2"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingLeft="12dp"
@@ -83,7 +80,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection = "locale"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
         android:visibility="gone" />
@@ -97,9 +94,8 @@
 
     <TextView
         android:id="@+id/carrier3"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingLeft="12dp"
@@ -107,7 +103,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection = "locale"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
         android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
         android:visibility="gone" />
