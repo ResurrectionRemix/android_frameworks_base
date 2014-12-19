@@ -436,16 +436,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE), false, this);
-<<<<<<< HEAD
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR),
                     false, this, UserHandle.USER_ALL);
-=======
             //resolver.registerContentObserver(Settings.System.getUriFor(
             //        Settings.System.STATUS_BAR_BATTERY_STYLE), false, this);
             //resolver.registerContentObserver(Settings.System.getUriFor(
             //        Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT), false, this);
->>>>>>> 0e31558... Forward port battery icon options [1/2]
             update();
         }
 
