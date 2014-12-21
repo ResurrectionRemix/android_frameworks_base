@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -39,23 +40,24 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int OP_SET_ICON    = 1;
     private static final int OP_REMOVE_ICON = 2;
 
-    private static final int MSG_ICON                       = 1 << MSG_SHIFT;
-    private static final int MSG_DISABLE                    = 2 << MSG_SHIFT;
-    private static final int MSG_EXPAND_NOTIFICATIONS       = 3 << MSG_SHIFT;
-    private static final int MSG_COLLAPSE_PANELS            = 4 << MSG_SHIFT;
-    private static final int MSG_EXPAND_SETTINGS            = 5 << MSG_SHIFT;
-    private static final int MSG_SET_SYSTEMUI_VISIBILITY    = 6 << MSG_SHIFT;
-    private static final int MSG_TOP_APP_WINDOW_CHANGED     = 7 << MSG_SHIFT;
-    private static final int MSG_SHOW_IME_BUTTON            = 8 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_RECENT_APPS         = 9 << MSG_SHIFT;
-    private static final int MSG_PRELOAD_RECENT_APPS        = 10 << MSG_SHIFT;
-    private static final int MSG_CANCEL_PRELOAD_RECENT_APPS = 11 << MSG_SHIFT;
-    private static final int MSG_SET_WINDOW_STATE           = 12 << MSG_SHIFT;
-    private static final int MSG_SHOW_RECENT_APPS           = 13 << MSG_SHIFT;
-    private static final int MSG_HIDE_RECENT_APPS           = 14 << MSG_SHIFT;
-    private static final int MSG_BUZZ_BEEP_BLINKED          = 15 << MSG_SHIFT;
-    private static final int MSG_NOTIFICATION_LIGHT_OFF     = 16 << MSG_SHIFT;
-    private static final int MSG_NOTIFICATION_LIGHT_PULSE   = 17 << MSG_SHIFT;
+    private static final int MSG_ICON                               = 1 << MSG_SHIFT;
+    private static final int MSG_DISABLE                            = 2 << MSG_SHIFT;
+    private static final int MSG_EXPAND_NOTIFICATIONS               = 3 << MSG_SHIFT;
+    private static final int MSG_COLLAPSE_PANELS                    = 4 << MSG_SHIFT;
+    private static final int MSG_EXPAND_SETTINGS                    = 5 << MSG_SHIFT;
+    private static final int MSG_SET_SYSTEMUI_VISIBILITY            = 6 << MSG_SHIFT;
+    private static final int MSG_TOP_APP_WINDOW_CHANGED             = 7 << MSG_SHIFT;
+    private static final int MSG_SHOW_IME_BUTTON                    = 8 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_RECENT_APPS                 = 9 << MSG_SHIFT;
+    private static final int MSG_PRELOAD_RECENT_APPS                = 10 << MSG_SHIFT;
+    private static final int MSG_CANCEL_PRELOAD_RECENT_APPS         = 11 << MSG_SHIFT;
+    private static final int MSG_SET_WINDOW_STATE                   = 12 << MSG_SHIFT;
+    private static final int MSG_SHOW_RECENT_APPS                   = 13 << MSG_SHIFT;
+    private static final int MSG_HIDE_RECENT_APPS                   = 14 << MSG_SHIFT;
+    private static final int MSG_BUZZ_BEEP_BLINKED                  = 15 << MSG_SHIFT;
+    private static final int MSG_NOTIFICATION_LIGHT_OFF             = 16 << MSG_SHIFT;
+    private static final int MSG_NOTIFICATION_LIGHT_PULSE           = 17 << MSG_SHIFT;
+    private static final int MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD = 18 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -97,6 +99,7 @@ public class CommandQueue extends IStatusBar.Stub {
         public void buzzBeepBlinked();
         public void notificationLightOff();
         public void notificationLightPulse(int argb, int onMillis, int offMillis);
+        public void showCustomIntentAfterKeyguard(Intent intent);
     }
 
     public CommandQueue(Callbacks callbacks, StatusBarIconList list) {
@@ -238,6 +241,16 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
+
+    public void showCustomIntentAfterKeyguard(Intent intent) {
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD);
+            Message m = mHandler.obtainMessage(
+                    MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD, 0, 0, intent);
+            m.sendToTarget();
+        }
+    }
+
     private final class H extends Handler {
         public void handleMessage(Message msg) {
             final int what = msg.what & MSG_MASK;
@@ -316,6 +329,9 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_NOTIFICATION_LIGHT_PULSE:
                     mCallbacks.notificationLightPulse((Integer) msg.obj, msg.arg1, msg.arg2);
+                    break;
+                case MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD:
+                    mCallbacks.showCustomIntentAfterKeyguard((Intent) msg.obj);
                     break;
             }
         }
