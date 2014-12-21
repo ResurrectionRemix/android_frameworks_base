@@ -137,10 +137,13 @@
     <bool name="config_show4GForLTE">true</bool>
 
     <!-- milliseconds before the heads up notification auto-dismisses. -->
-    <integer name="heads_up_notification_decay">10000</integer>
+    <integer name="heads_up_notification_decay">6000</integer>
 
     <!-- milliseconds before the heads up notification accepts touches. -->
     <integer name="heads_up_sensitivity_delay">700</integer>
+
+    <!-- milliseconds how long heads up should be in snooze. -->
+    <integer name="heads_up_snooze_time">300000</integer>
 
     <!-- Show emergency call label only without carrier label on expanded notification area -->
     <bool name="config_showEmergencyCallLabelOnly">false</bool>

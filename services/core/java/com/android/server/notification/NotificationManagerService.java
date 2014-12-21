@@ -1270,6 +1270,27 @@ public class NotificationManagerService extends SystemService {
             return mRankingHelper.getShowNotificationForPackageOnKeyguard(pkg, uid);
         }
 
+        @Override
+        public void setHeadsUpNotificationsEnabledForPackage(
+                String pkg, int uid, int headsUp) {
+            // enforce() will ensure the calling uid has the correct permission
+            getContext().enforceCallingOrSelfPermission(
+                    android.Manifest.permission.CHANGE_HEADS_UP_STATE,
+                    "NotificationManagerService.setHeadsUpNotificationsEnabledForPackage");
+            mRankingHelper.setHeadsUpNotificationsEnabledForPackage(pkg, uid, headsUp);
+            savePolicyFile();
+        }
+
+        @Override
+        public int getHeadsUpNotificationsEnabledForPackage(String pkg, int uid) {
+            // enforce() will ensure the calling uid has the correct permission
+            getContext().enforceCallingOrSelfPermission(
+                    android.Manifest.permission.CHANGE_HEADS_UP_STATE,
+                    "NotificationManagerService.getHeadsUpNotificationsEnabledForPackage");
+            return mRankingHelper.getHeadsUpNotificationsEnabledForPackage(pkg, uid);
+        }
+
+
         /**
          * System-only API for getting a list of current (i.e. not cleared) notifications.
          *

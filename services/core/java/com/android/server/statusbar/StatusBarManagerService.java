@@ -459,6 +459,32 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
         }
     }
 
+    /**
+     * @hide
+     */
+    @Override
+    public void hideHeadsUpCandidate(String packageName) {
+        enforceStatusBarService();
+        if (mBar != null) {
+            try {
+                mBar.hideHeadsUpCandidate(packageName);
+            } catch (RemoteException ex) {}
+            }
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public void scheduleHeadsUpClose() {
+        enforceStatusBarService();
+        if (mBar != null) {
+            try {
+                mBar.scheduleHeadsUpClose();
+            } catch (RemoteException ex) {}
+            }
+    }
+
     private void enforceStatusBar() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.STATUS_BAR,
                 "StatusBarManagerService");

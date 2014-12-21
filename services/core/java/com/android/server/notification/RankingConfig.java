@@ -28,4 +28,8 @@ public interface RankingConfig {
 
     int getShowNotificationForPackageOnKeyguard(String packageName, int uid);
 
+    void setHeadsUpNotificationsEnabledForPackage(String packageName, int uid, int headsUp);
+
+    int getHeadsUpNotificationsEnabledForPackage(String packageName, int uid);
+
 }

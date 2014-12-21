@@ -2323,6 +2323,14 @@
         android:description="@string/permdesc_changeComponentState"
         android:protectionLevel="signature|system" />
 
+    <!-- @hide Allows an application to change heads up state only with correct signature.
+        Maybe overkill...but we do not want to allow whatever third party app
+        without permission to confuse the user. -->
+    <permission android:name="android.permission.CHANGE_HEADS_UP_STATE"
+        android:label="@string/permlab_changeHeadsUpState"
+        android:description="@string/permdesc_changeHeadsUpState"
+        android:protectionLevel="signature|system" />
+
     <!-- @hide Allows an application to grant or revoke specific permissions. -->
     <permission android:name="android.permission.GRANT_REVOKE_PERMISSIONS"
         android:label="@string/permlab_grantRevokePermissions"
