@@ -38,4 +38,7 @@
      <string name="animation_grow_shrink_right">Grow in (Right)</string>
      <string name="action_null">Blank</string>
 
+    <!-- Slimseekbar -->
+    <string name="default_string">Default</string>
+
 </resources>
