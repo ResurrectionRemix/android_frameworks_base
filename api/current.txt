@@ -1719,6 +1719,8 @@ package android {
     field public static final int toggle = 16908311; // 0x1020017
     field public static final int undo = 16908338; // 0x1020032
     field public static final int widget_frame = 16908312; // 0x1020018
+    field public static final int monitor_box = 16908334; // 0x01020031
+    field public static final int seek_bar = 16908335; // 0x01020032
   }
 
   public static final class R.integer {
@@ -1775,6 +1777,7 @@ package android {
     field public static final int simple_spinner_item = 17367048; // 0x1090008
     field public static final int test_list_item = 17367052; // 0x109000c
     field public static final int two_line_list_item = 17367053; // 0x109000d
+    field public static final int slider_preference = 17367064; // 0x01090018
   }
 
   public static final class R.menu {
@@ -1821,6 +1824,7 @@ package android {
     field public static final int unknownName = 17039374; // 0x104000e
     field public static final int untitled = 17039375; // 0x104000f
     field public static final int yes = 17039379; // 0x1040013
+    field public static final int default_string = 17039384; // 0x01040018
   }
 
   public static final class R.style {
