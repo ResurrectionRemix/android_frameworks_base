@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.InputType;
 import android.text.Layout;
@@ -902,7 +903,15 @@ public class InputMethodService extends AbstractInputMethodService {
      * is currently running in fullscreen mode.
      */
     public void updateFullscreenMode() {
-        boolean isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
+        boolean fullScreenOverride = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.FULLSCREEN_KEYBOARD_MODE, 1,
+                UserHandle.USER_CURRENT_OR_SELF) == 1;
+        boolean isFullscreen;
+        if (!fullScreenOverride) {
+            isFullscreen = false;
+        } else {
+            isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
+        }
         boolean changed = mLastShowInputRequested != mShowInputRequested;
         if (mIsFullscreen != isFullscreen || !mFullscreenApplied) {
             changed = true;
