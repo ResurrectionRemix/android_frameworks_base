@@ -138,6 +138,14 @@ public class DozeParameters {
         return sPulseSchedule;
     }
 
+    public PulseSchedule getAlternatePulseSchedule() {
+        final String spec = getString("doze.pulse.schedule", R.string.doze_pulse_schedule_alternate);
+        if (sPulseSchedule == null || !sPulseSchedule.mSpec.equals(spec)) {
+            sPulseSchedule = PulseSchedule.parse(spec);
+        }
+        return sPulseSchedule;
+    }
+
     public int getPulseScheduleResets() {
         return getInt("doze.pulse.schedule.resets", R.integer.doze_pulse_schedule_resets);
     }
