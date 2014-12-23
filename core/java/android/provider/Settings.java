@@ -3468,7 +3468,13 @@ public final class Settings {
          * @hide
          */
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
-
+        
+        /**
+         * Timeout for ambient display notification
+         * @hide
+         */
+        public static final String DOZE_TIMEOUT = "doze_timeout";
+        
         /**
          * Boolean value on whether to show weather in the statusbar
          * @hide
@@ -3506,6 +3512,7 @@ public final class Settings {
          * 16-31 = Refresh interval(ms) min: 250 max: 32750 default: 1000
          * @hide
          */
+         
         public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
         
        /**

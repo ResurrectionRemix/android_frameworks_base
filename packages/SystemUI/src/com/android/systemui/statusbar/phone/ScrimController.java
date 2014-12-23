@@ -20,8 +20,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.annotation.NonNull;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -55,6 +60,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener {
     private final ScrimView mScrimInFront;
     private final UnlockMethodCache mUnlockMethodCache;
     private final DozeParameters mDozeParameters;
+    private Context mContext;
+    private Handler mHandler = new Handler();
 
     private boolean mKeyguardShowing;
     private float mFraction;
@@ -76,15 +83,22 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener {
     private BackDropView mBackDropView;
     private boolean mScrimSrcEnabled;
 
+    private int mCustomTimeoutDelay = 3000;
+
     public ScrimController(ScrimView scrimBehind, ScrimView scrimInFront, boolean scrimSrcEnabled) {
         mScrimBehind = scrimBehind;
         mScrimInFront = scrimInFront;
         final Context context = scrimBehind.getContext();
+        mContext = context;
         mUnlockMethodCache = UnlockMethodCache.getInstance(context);
         mLinearOutSlowInInterpolator = AnimationUtils.loadInterpolator(context,
                 android.R.interpolator.linear_out_slow_in);
         mDozeParameters = new DozeParameters(context);
         mScrimSrcEnabled = scrimSrcEnabled;
+
+        // Settings observer
+        SettingsObserver observer = new SettingsObserver(mHandler);
+        observer.observe();
     }
 
     public void setKeyguardShowing(boolean showing) {
@@ -347,7 +361,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener {
         public void run() {
             if (DEBUG) Log.d(TAG, "Pulse in finished, mDozing=" + mDozing);
             if (!mDozing) return;
-            mScrimInFront.postDelayed(mPulseOut, mDozeParameters.getPulseVisibleDuration());
+            mScrimInFront.postDelayed(mPulseOut, mCustomTimeoutDelay);
         }
     };
 
@@ -389,5 +403,37 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener {
     private void updateScrimBehindDrawingMode() {
         boolean asSrc = mBackDropView.getVisibility() != View.VISIBLE && mScrimSrcEnabled;
         mScrimBehind.setDrawAsSrc(asSrc);
+    }
+
+    /**
+     * Settingsobserver to take care of the user settings.
+     */
+    private class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOZE_TIMEOUT),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+
+            // Get custom timeout
+            mCustomTimeoutDelay = Settings.System.getIntForUser(resolver,
+                    Settings.System.DOZE_TIMEOUT, 3000,
+                    UserHandle.USER_CURRENT);
+        }
     }
 }
