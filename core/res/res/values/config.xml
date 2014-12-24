@@ -2048,9 +2048,13 @@
 
     <!-- Whether cpu boost is enabled for horizontal scroll. -->
     <bool name="config_enableCpuBoostForScroller">false</bool>
-
+    
+	    <!-- Wether doze feature is enabled by default in settings. -->
+    <bool name="config_doze_enabled_by_default">false</bool>
+    
     <!-- Configuration to enable non-default PDP during IWLAN -->
     <bool name="config_feature_iwlan_enabled">false</bool>
+    
     <!-- set to false if we dont need to consider data
          service state to display signal strength bars -->
     <bool name="config_combined_signal">true</bool>
