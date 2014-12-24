@@ -109,6 +109,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.Executor;
 
+
+import android.content.ContentValues;
+import android.drm.DrmManagerClient;
+import android.drm.DrmStore.DrmDeliveryType;
+import android.drm.DrmStore.RightsStatus;
+import android.drm.DrmStore.Action;
+
 /**
  * Display the documents inside a single directory.
  */
@@ -215,7 +222,6 @@ public class DirectoryFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_directory, container, false);
 
         mEmptyView = view.findViewById(android.R.id.empty);
-
         mListView = (ListView) view.findViewById(R.id.list);
         mListView.setOnItemClickListener(mItemListener);
         mListView.setMultiChoiceModeListener(mMultiListener);
@@ -607,6 +613,7 @@ public class DirectoryFragment extends Fragment {
 
     private void onShareDocuments(List<DocumentInfo> docs) {
         Intent intent;
+        boolean allfowd = true;
         if (docs.size() == 1) {
             final DocumentInfo doc = docs.get(0);
 
@@ -615,7 +622,9 @@ public class DirectoryFragment extends Fragment {
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.setType(doc.mimeType);
             intent.putExtra(Intent.EXTRA_STREAM, doc.derivedUri);
-
+            if(doc.displayName.endsWith(".dm")){
+               allfowd = false;
+            }
         } else if (docs.size() > 1) {
             intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -626,15 +635,20 @@ public class DirectoryFragment extends Fragment {
             for (DocumentInfo doc : docs) {
                 mimeTypes.add(doc.mimeType);
                 uris.add(doc.derivedUri);
+                if(doc.displayName.endsWith(".dm")){
+                   allfowd = false;
+                }
             }
-
             intent.setType(findCommonMimeType(mimeTypes));
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 
         } else {
             return;
         }
-
+        if (!allfowd) {
+          Toast.makeText(getActivity(), R.string.no_permission_for_drm, Toast.LENGTH_SHORT).show();
+          return;
+        }
         intent = Intent.createChooser(intent, getActivity().getText(R.string.share_via));
         startActivity(intent);
     }

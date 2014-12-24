@@ -143,6 +143,8 @@ public class DocumentsActivity extends Activity {
     private final Object mRootsLock = new Object();
     private HashMap<String, File> mIdToPath;
 
+    private boolean mIsContactPhoto = false;
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -229,6 +231,7 @@ public class DocumentsActivity extends Activity {
             moreApps.setComponent(null);
             moreApps.setPackage(null);
             RootsFragment.show(getFragmentManager(), moreApps);
+            mIsContactPhoto = getIntent().getBooleanExtra("isContactPhoto", false);
         } else if (mState.action == ACTION_OPEN || mState.action == ACTION_CREATE
                 || mState.action == ACTION_OPEN_TREE || mState.action == ACTION_STANDALONE) {
             RootsFragment.show(getFragmentManager(), null);
@@ -1075,7 +1078,11 @@ public class DocumentsActivity extends Activity {
             onCurrentDirectoryChanged(ANIM_DOWN);
         } else if (mState.action == ACTION_OPEN || mState.action == ACTION_GET_CONTENT) {
             // Explicit file picked, return
-            new ExistingFinishTask(doc.derivedUri).executeOnExecutor(getCurrentExecutor());
+            if (!mIsContactPhoto && doc.displayName.endsWith(".dm") && mState.action == ACTION_GET_CONTENT) {
+                Toast.makeText(this, R.string.no_permission_for_drm, Toast.LENGTH_SHORT).show();
+            } else {
+                new ExistingFinishTask(doc.derivedUri).executeOnExecutor(getCurrentExecutor());
+            }
         } else if (mState.action == ACTION_CREATE) {
             // Replace selected file
             SaveFragment.get(fm).setReplaceTarget(doc);
