@@ -100,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/header_battery_margin_keyguard"
+                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textColor="#ffffff"
                 android:visibility="gone"
                 android:textSize="@dimen/battery_level_text_size" />
@@ -115,6 +116,25 @@
                 />
         </com.android.keyguard.AlphaOptimizedLinearLayout>
     </LinearLayout>
+
+    <com.android.keyguard.AlphaOptimizedLinearLayout
+        android:id="@+id/center_clock_layout"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.android.systemui.statusbar.policy.ClockCenter
+            android:id="@+id/center_clock"
+            android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:singleLine="true"
+            />
+    </com.android.keyguard.AlphaOptimizedLinearLayout>
 
     <ViewStub
         android:id="@+id/ticker_stub"
