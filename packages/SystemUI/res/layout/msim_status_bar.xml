@@ -100,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/header_battery_margin_keyguard"
+                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textColor="#ffffff"
                 android:visibility="gone"
                 android:textSize="@dimen/battery_level_text_size" />
