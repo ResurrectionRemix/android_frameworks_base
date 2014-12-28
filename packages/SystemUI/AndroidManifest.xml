@@ -218,6 +218,9 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
+    <!--Screenshot and screenrecord -->
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
+
     <protected-broadcast android:name="com.android.settingslib.action.REGISTER_SLICE_RECEIVER" />
     <protected-broadcast android:name="com.android.settingslib.action.UNREGISTER_SLICE_RECEIVER" />
 
@@ -270,6 +273,12 @@
                 <action android:name="com.android.systemui.screenshot.SHOW_ERROR" />
             </intent-filter>
         </receiver>
+
+        <!-- started from PhoneWindowManager
+             TODO: Should have an android:permission attribute -->
+        <service android:name=".screenrecord.TakeScreenrecordService"
+            android:process=":screenrecord"
+            android:exported="false" />
 
         <receiver android:name=".SysuiRestartReceiver"
             android:exported="false">
