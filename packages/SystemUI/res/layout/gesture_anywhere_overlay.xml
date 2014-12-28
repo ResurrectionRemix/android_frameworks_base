@@ -20,13 +20,22 @@
             android:gestureStrokeType="single"
             android:gestureStrokeWidth="16.0"
             android:visibility="gone" />
-
+<TextView
+    android:id="@+id/gesture_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:padding="24dp"
+    android:textSize="18sp"
+    android:textColor="#24a599"
+    android:text="@string/gestures_message"
+    android:textStyle="normal|bold"/>
         <ImageView
             android:id="@+id/cancel_gesturing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:padding="10dp"
+            android:padding="15dp"
             android:clickable="true"
             android:src="@drawable/btn_ga_cancel_gesturing" />
     </FrameLayout>
