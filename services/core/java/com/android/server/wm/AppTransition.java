@@ -246,7 +246,7 @@ public class AppTransition implements Dump {
     private final int mClipRevealTranslationY;
 
     private SettingsObserver mSettingsObserver;
-    private int[] mActivityAnimations = new int[10];
+    private int[] mActivityAnimations = new int[11];
     private int mAnimationDuration;
     private boolean mIsResId = false;
 
@@ -1811,9 +1811,17 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_TASK_OPEN_BEHIND:
-                    animAttr = enter
-                            ? WindowAnimation_launchTaskBehindSourceAnimation
-                            : WindowAnimation_launchTaskBehindTargetAnimation;
+                    if (mActivityAnimations[10] != 0) {
+                        mIsResId = true;
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[10]);
+                        animAttr = enter
+                                ? animArray[1]
+                                : animArray[0];
+                    } else {
+                        animAttr = enter
+                                ? WindowAnimation_launchTaskBehindSourceAnimation
+                                : WindowAnimation_launchTaskBehindTargetAnimation;
+                    }
             }
             a = animAttr != 0 ? loadAnimationAttr(lp, animAttr, transit) : null;
             if (a != null) {
@@ -2323,7 +2331,7 @@ public class AppTransition implements Dump {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.ANIMATION_CONTROLS_DURATION), false, this);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 11; i++) {
 	            resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.ACTIVITY_ANIMATION_CONTROLS[i]), false, this);
             }
@@ -2336,7 +2344,7 @@ public class AppTransition implements Dump {
 
     private void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
-        for (int i = 0; i < 10; i++) {  
+        for (int i = 0; i < 11; i++) {  
             mActivityAnimations[i] = Settings.System.getInt(resolver, Settings.System.ACTIVITY_ANIMATION_CONTROLS[i], 0);
         }
         int temp = Settings.System.getInt(resolver, Settings.System.ANIMATION_CONTROLS_DURATION, 0);
