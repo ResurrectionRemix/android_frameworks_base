@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2012-2015 The CyanogenMod Project
-     Copyright (C) 2017 The LineageOS Project
+     Copyright (C) 2016-2020 crDroid Android Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,75 +15,12 @@
      limitations under the License.
 -->
 <resources>
-    <!-- Whether notify fingerprint client of successful cancelled authentication -->
-    <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
 
   <!-- Whether device has dash charging support -->
   <java-symbol type="bool" name="config_hasDashCharger" />
 
   <!-- Whether device has warp charging support -->
   <java-symbol type="bool" name="config_hasWarpCharger" />
-
-    <!-- App error dialog -->
-    <!--java-symbol type="id" name="aerr_copy" /-->
-    <java-symbol type="string" name="url_copy_success" />
-    <java-symbol type="string" name="url_copy_failed" />
-
-    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
-    <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
-
-  <java-symbol type="string" name="reboot_to_recovery_title" />
-  <java-symbol type="string" name="reboot_to_recovery_message" />
-  <java-symbol type="string" name="reboot_to_bootloader_title" />
-  <java-symbol type="string" name="reboot_to_bootloader_message" />
-  <java-symbol type="string" name="reboot_title" />
-  <java-symbol type="string" name="reboot_message" />
- 
-           
-  <!-- Pocket Lock -->
-  <java-symbol type="layout" name="pocket_lock_view_layout" />
-  <java-symbol type="id" name="pocket_hint_container" />
-  <java-symbol type="id" name="pocket_hint_image" />
-  <java-symbol type="id" name="pocket_hint_message" />
-
-  <!-- Pocket bridge -->
-  <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
-
-  <!-- On-The-Go -->
-  <java-symbol type="drawable" name="ic_lock_onthego" />
-
-  <!-- Screenrecord -->
-  <java-symbol type="drawable" name="ic_lock_screenrecord" />
-
-  <!-- True if the notification's should dynamically tint the app icon and text -->
-  <java-symbol type="bool" name="config_allowNotificationIconTextTinting" />
-  <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
-       backgrounds -->
-  <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
-
-  <!-- Toast Animation -->
-  <java-symbol type="style" name="Animation.Toast.Fade" />
-  <java-symbol type="style" name="Animation.Toast.SlideRight" />
-  <java-symbol type="style" name="Animation.Toast.SlideLeft" />
-  <java-symbol type="style" name="Animation.Toast.Xylon" />
-  <java-symbol type="style" name="Animation.Toast.Toko" />
-  <java-symbol type="style" name="Animation.Toast.Tn" />
-  <java-symbol type="style" name="Animation.Toast.Honami" />
-  <java-symbol type="style" name="Animation.Toast.FastFade" />
-  <java-symbol type="style" name="Animation.Toast.GrowFade" />
-  <java-symbol type="style" name="Animation.Toast.GrowFadeCenter" />
-  <java-symbol type="style" name="Animation.Toast.GrowFadeBottom" />
-  <java-symbol type="style" name="Animation.Toast.Translucent" />
-  <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
-  <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
-
-  <!-- Gaming mode -->
-  <java-symbol type="drawable" name="ic_gaming_notif" />
-  <java-symbol type="string" name="notification_channel_gaming" />
-  <java-symbol type="string" name="gaming_mode_notification_title" />
-  <java-symbol type="string" name="gaming_mode_notification_content" />
-  <java-symbol type="string" name="gaming_mode_enabled_toast" />
-  <java-symbol type="string" name="gaming_mode_disabled_toast" />
 
   <!-- AOKP custom system animations -->
   <java-symbol type="string" name="action_null"/>
@@ -128,5 +65,4 @@
   <java-symbol type="anim" name="slide_out_left_no_fade" />
   <java-symbol type="anim" name="slide_in_left_no_fade" />
   <java-symbol type="anim" name="slide_out_right_no_fade" />
-
 </resources>
