@@ -417,7 +417,6 @@ public class LockPatternUtils {
      */
     public byte[] verifyPattern(List<LockPatternView.Cell> pattern, long challenge, int userId)
             throws RequestThrottledException {
-        throwIfCalledOnMainThread();
         return verifyCredential(patternToByteArray(pattern, userId),
                 CREDENTIAL_TYPE_PATTERN, challenge, userId);
     }
@@ -442,7 +441,6 @@ public class LockPatternUtils {
     public boolean checkPattern(List<LockPatternView.Cell> pattern, int userId,
             @Nullable CheckCredentialProgressCallback progressCallback)
             throws RequestThrottledException {
-        throwIfCalledOnMainThread();
         return checkCredential(patternToByteArray(pattern, userId),
                 CREDENTIAL_TYPE_PATTERN, userId, progressCallback);
     }
@@ -458,7 +456,6 @@ public class LockPatternUtils {
      */
     public byte[] verifyPassword(byte[] password, long challenge, int userId)
             throws RequestThrottledException {
-        throwIfCalledOnMainThread();
         return verifyCredential(password, CREDENTIAL_TYPE_PASSWORD, challenge, userId);
     }
 
@@ -474,7 +471,6 @@ public class LockPatternUtils {
      */
     public byte[] verifyTiedProfileChallenge(byte[] password, boolean isPattern, long challenge,
             int userId) throws RequestThrottledException {
-        throwIfCalledOnMainThread();
         try {
             VerifyCredentialResponse response =
                     getLockSettings().verifyTiedProfileChallenge(password,
@@ -529,7 +525,6 @@ public class LockPatternUtils {
             @Nullable CheckCredentialProgressCallback progressCallback)
             throws RequestThrottledException {
         byte[] passwordBytes = password != null ? password.getBytes() : null;
-        throwIfCalledOnMainThread();
         return checkCredential(passwordBytes, CREDENTIAL_TYPE_PASSWORD, userId, progressCallback);
 
     }
@@ -544,7 +539,6 @@ public class LockPatternUtils {
     public boolean checkPassword(byte[] password, int userId,
             @Nullable CheckCredentialProgressCallback progressCallback)
             throws RequestThrottledException {
-        throwIfCalledOnMainThread();
         return checkCredential(password, CREDENTIAL_TYPE_PASSWORD, userId, progressCallback);
     }
 
@@ -1743,12 +1737,6 @@ public class LockPatternUtils {
 
     private boolean shouldEncryptWithCredentials(boolean defaultValue) {
         return isCredentialRequiredToDecrypt(defaultValue) && !isDoNotAskCredentialsOnBootSet();
-    }
-
-    private void throwIfCalledOnMainThread() {
-        if (Looper.getMainLooper().isCurrentThread()) {
-            throw new IllegalStateException("should not be called from the main thread.");
-        }
     }
 
     public void registerStrongAuthTracker(final StrongAuthTracker strongAuthTracker) {
