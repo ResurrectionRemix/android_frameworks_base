@@ -35,6 +35,8 @@ import android.metrics.LogMaker;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Vibrator;
+import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.text.format.DateUtils;
 import android.util.ArraySet;
@@ -63,6 +65,7 @@ import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.PagedTileLayout.TilePage;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.QuickStatusBarHeader;
+import com.android.systemui.tuner.TunerService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -77,7 +80,7 @@ import java.util.ArrayList;
  *
  * @param <TState> see above
  */
-public abstract class QSTileImpl<TState extends State> implements QSTile, LifecycleOwner, Dumpable {
+public abstract class QSTileImpl<TState extends State> implements QSTile, LifecycleOwner, Dumpable, TunerService.Tunable {
     protected final String TAG = "Tile." + getClass().getSimpleName();
     protected static final boolean DEBUG = Log.isLoggable("Tile", Log.DEBUG);
 
@@ -105,6 +108,12 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     private boolean mShowingDetail;
     private int mIsFullQs;
 
+    protected Vibrator mVibrator;
+    private boolean mVibrationEnabled;
+
+    private static final String QUICK_SETTINGS_VIBRATE =
+            Settings.Secure.QUICK_SETTINGS_VIBRATE;
+
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
 
     public abstract TState newTileState();
@@ -124,6 +133,22 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
     protected QSTileImpl(QSHost host) {
         mHost = host;
         mContext = host.getContext();
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+
+        Dependency.get(TunerService.class).addTunable(this,
+                QUICK_SETTINGS_VIBRATE);
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case QUICK_SETTINGS_VIBRATE:
+                mVibrationEnabled =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                break;
+            default:
+                break;
+        }
     }
 
     @NonNull
@@ -182,6 +207,12 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
         return true;
     }
 
+    public void vibrateTile(int duration) {
+        if (mVibrationEnabled && mVibrator != null && mVibrator.hasVibrator()) {
+            mVibrator.vibrate(duration);
+        }
+    }
+
     // safe to call from any thread
 
     public void addCallback(Callback callback) {
@@ -201,6 +232,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 .addTaggedData(FIELD_STATUS_BAR_STATE,
                         mStatusBarStateController.getState())));
         mHandler.sendEmptyMessage(H.CLICK);
+        vibrateTile(100);
     }
 
     public void secondaryClick() {
@@ -208,6 +240,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 .addTaggedData(FIELD_STATUS_BAR_STATE,
                         mStatusBarStateController.getState())));
         mHandler.sendEmptyMessage(H.SECONDARY_CLICK);
+        vibrateTile(100);
     }
 
     public void longClick() {
@@ -215,6 +248,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 .addTaggedData(FIELD_STATUS_BAR_STATE,
                         mStatusBarStateController.getState())));
         mHandler.sendEmptyMessage(H.LONG_CLICK);
+        vibrateTile(100);
 
         Prefs.putInt(
                 mContext,
