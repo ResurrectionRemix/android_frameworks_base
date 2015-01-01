@@ -6018,6 +6018,12 @@ public final class Settings {
          */
         public static final String DEFAULT_THEME_PACKAGE = "default_theme_package";
 
+        /** Whether to vibrate when quick settings tile is pressed.
+          *
+          * @hide
+          */
+         public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
+
         /**
          * Whether the camera launch gesture should be disabled.
          *
