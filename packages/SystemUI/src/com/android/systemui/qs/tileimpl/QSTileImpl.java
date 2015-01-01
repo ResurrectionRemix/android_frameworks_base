@@ -31,6 +31,9 @@ import android.metrics.LogMaker;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.UserHandle;
+import android.os.Vibrator;
+import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.text.format.DateUtils;
 import android.util.ArraySet;
@@ -89,6 +92,8 @@ public abstract class QSTileImpl<TState extends State> implements QSTile {
 
     abstract protected void handleUpdateState(TState state, Object arg);
 
+    protected Vibrator mVibrator;
+
     /**
      * Declare the category of this tile.
      *
@@ -101,6 +106,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile {
         mHost = host;
         mContext = host.getContext();
         handleStale(); // Tile was just created, must be stale.
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     /**
@@ -166,6 +172,18 @@ public abstract class QSTileImpl<TState extends State> implements QSTile {
 
     // safe to call from any thread
 
+    public boolean isVibrationEnabled() {
+        return (Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
+    }
+
+    public void vibrateTile(int duration) {
+        if (!isVibrationEnabled()) { return; }
+        if (mVibrator != null) {
+            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
+        }
+    }
+
     public void addCallback(Callback callback) {
         mHandler.obtainMessage(H.ADD_CALLBACK, callback).sendToTarget();
     }
@@ -181,6 +199,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile {
     public void click() {
         mMetricsLogger.write(populate(new LogMaker(ACTION_QS_CLICK).setType(TYPE_ACTION)));
         mHandler.sendEmptyMessage(H.CLICK);
+        vibrateTile(45);
     }
 
     public void secondaryClick() {
@@ -191,6 +210,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile {
     public void longClick() {
         mMetricsLogger.write(populate(new LogMaker(ACTION_QS_LONG_PRESS).setType(TYPE_ACTION)));
         mHandler.sendEmptyMessage(H.LONG_CLICK);
+        vibrateTile(45);
     }
 
     public LogMaker populate(LogMaker logMaker) {
