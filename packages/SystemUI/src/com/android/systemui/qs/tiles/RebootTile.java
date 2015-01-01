@@ -34,7 +34,7 @@ public class RebootTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.BENZO;
+        return MetricsEvent.APPLICATION;
     }
 
     @Override
