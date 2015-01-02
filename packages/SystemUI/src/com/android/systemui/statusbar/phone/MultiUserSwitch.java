@@ -134,6 +134,7 @@ public class MultiUserSwitch extends FrameLayout implements View.OnClickListener
                 getContext().startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
             }
         }
+        mQsPanel.vibrateTile(20);
     }
 
     @Override

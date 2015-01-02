@@ -593,6 +593,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         } else if (v == mWeatherContainer) {
             startForecastActivity();
         }
+        mQSPanel.vibrateTile(20);
     }
 
     private void startSettingsActivity() {
