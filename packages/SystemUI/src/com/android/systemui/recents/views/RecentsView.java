@@ -373,6 +373,9 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 default:
                     params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
                     break;
+                case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_CENTER:
+                    params.gravity = Gravity.BOTTOM | Gravity.CENTER;
+                    break;
             }
             mFloatingButton.setLayoutParams(params);
         } else {
