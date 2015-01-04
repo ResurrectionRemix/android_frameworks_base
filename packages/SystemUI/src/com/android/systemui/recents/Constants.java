@@ -58,9 +58,10 @@ public class Constants {
             // clear button location
             public static final int RECENTS_CLEAR_ALL_TOP_RIGHT    = 0;
             public static final int RECENTS_CLEAR_ALL_TOP_LEFT     = 1;
-            public static final int RECENTS_CLEAR_ALL_BOTTOM_RIGHT = 2;
-            public static final int RECENTS_CLEAR_ALL_BOTTOM_LEFT  = 3;
-            public static final int RECENTS_CLEAR_ALL_BOTTOM_CENTER  = 4;
+            public static final int RECENTS_CLEAR_ALL_TOP_CENTER   = 2;
+            public static final int RECENTS_CLEAR_ALL_BOTTOM_RIGHT = 3;
+            public static final int RECENTS_CLEAR_ALL_BOTTOM_LEFT  = 4;
+            public static final int RECENTS_CLEAR_ALL_BOTTOM_CENTER  = 5;
         }
     }
 
