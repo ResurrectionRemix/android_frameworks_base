@@ -31,5 +31,5 @@
             android:id="@+id/clear_recents"
             android:background="@drawable/floating_action_button"
             android:tint="@color/floating_action_button_icon_color"
-            android:src="@drawable/ic_dismiss_all"/>
+            android:src="@drawable/ic_close"/>
 </FrameLayout>
