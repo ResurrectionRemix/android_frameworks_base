@@ -959,7 +959,9 @@ public class DocumentsActivity extends Activity {
             if (pick != null) {
                 final CharSequence displayName = (mState.stack.size() <= 1) ? root.title
                         : cwd.displayName;
-                pick.setPickTarget(cwd, displayName);
+                if (displayName != null) {
+                    pick.setPickTarget(cwd, displayName);
+                }
             }
         }
 
