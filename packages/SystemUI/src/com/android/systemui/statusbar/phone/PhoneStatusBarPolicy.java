@@ -79,6 +79,7 @@ public class PhoneStatusBarPolicy {
     private final CastController mCast;
     private final SuController mSuController;
     private boolean mAlarmIconVisible;
+    private boolean mSuIconVisible;
 
     // Assume it's all good unless we hear otherwise.  We don't always seem
     // to get broadcasts that it *is* there.
@@ -196,18 +197,24 @@ public class PhoneStatusBarPolicy {
         mService.setIconVisibility(SLOT_SU, false);
         mSuController.addCallback(mSuCallback);
 
-        mAlarmIconObserver.onChange(true);
+        mIconObserver.onChange(true);
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.SHOW_ALARM_ICON),
-                false, mAlarmIconObserver);
+                false, mIconObserver);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.SHOW_SU_ICON),
+                false, mIconObserver);
     }
 
-    private ContentObserver mAlarmIconObserver = new ContentObserver(null) {
+    private final ContentObserver mIconObserver = new ContentObserver(null) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             mAlarmIconVisible = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.SHOW_ALARM_ICON, 1) == 1;
+            mSuIconVisible = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SHOW_SU_ICON, 1) == 1;
             updateAlarm();
+            updateSu();
         }
 
         @Override
@@ -395,7 +402,7 @@ public class PhoneStatusBarPolicy {
     }
 
     private void updateSu() {
-        mService.setIconVisibility(SLOT_SU, mSuController.hasActiveSessions());
+        mService.setIconVisibility(SLOT_SU, mSuIconVisible && mSuController.hasActiveSessions());
     }
 
     private final CastController.Callback mCastCallback = new CastController.Callback() {
