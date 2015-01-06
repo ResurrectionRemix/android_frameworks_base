@@ -6246,7 +6246,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // Only display the current package name if the main message says "Optimizing app N of M".
                     // We don't want to do this when the message says "Starting apps" or "Finishing boot", etc.
 //                    mBootMsgDialog.setMessage(msg + "\n" + currentPackageName);
-                    mBootMsgDialog.setMessage(Html.fromHtml(msg + "<br><b>" + currentPackageName + "</b>"));
+                    mBootMsgDialog.setMessage(Html.fromHtml(msg + "<br><i><b>" + currentPackageName + "</b></i>"));
                 }
                 else {
                     mBootMsgDialog.setMessage(msg);
