@@ -3421,7 +3421,6 @@ public final class Settings {
         public static final String NAVBAR_LEFT_IN_LANDSCAPE = "navigation_bar_left";
 
         /**
-<<<<<<< HEAD
          * Whether to use gesture anywhere feature.
          * @hide
          */
