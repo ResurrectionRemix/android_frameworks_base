@@ -311,7 +311,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         final boolean numberEquals = mIcon != null
                 && mIcon.number == icon.number;
         if (icon == null) {
-        	return;
+        	return false;
         }
         mIcon = icon.clone();
         setContentDescription(icon.contentDescription);
