@@ -3494,7 +3494,13 @@ public final class Settings {
          * @hide
          */
         public static final String RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
-         
+       
+         /**
+         * Whether to dismiss all recents tasks
+         * @hide
+         */
+        public static final String RECENTS_CLEAR_ALL_DISMISS_ALL = "recents_clear_all_dismiss_all";         
+        
          /**
          * Whether to show a fullscreen keyboard in landscape
          * @hide
