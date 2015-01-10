@@ -189,6 +189,9 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
             case Password:
                 messageId = R.string.kg_too_many_failed_password_attempts_dialog_message;
                 break;
+            case Gesture:
+                messageId = R.string.kg_too_many_failed_gesture_attempts_dialog_message;
+                break;
             // These don't have timeout dialogs.
             case Account:
             case Biometric:
@@ -339,6 +342,7 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
                 case PIN:
                 case Account:
                 case Biometric:
+                case Gesture:
                     finish = true;
                     break;
 
@@ -493,6 +497,7 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
             case Account: return R.id.keyguard_account_view;
             case SimPin: return R.id.keyguard_sim_pin_view;
             case SimPuk: return R.id.keyguard_sim_puk_view;
+            case Gesture: return R.id.keyguard_gesture_view;
         }
         return 0;
     }
@@ -506,6 +511,7 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
             case Account: return R.layout.keyguard_account_view;
             case SimPin: return R.layout.keyguard_sim_pin_view;
             case SimPuk: return R.layout.keyguard_sim_puk_view;
+            case Gesture: return R.layout.keyguard_gesture_view;
             default:
                 return 0;
         }

@@ -16,6 +16,7 @@
 
 package com.android.internal.widget;
 
+import android.gesture.Gesture;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.ArrayMap;
@@ -32,6 +33,8 @@ public class LockPatternUtilsCache implements ILockSettings {
             = "LockPatternUtils.Cache.HasLockPatternCacheKey";
     private static final String HAS_LOCK_PASSWORD_CACHE_KEY
             = "LockPatternUtils.Cache.HasLockPasswordCacheKey";
+    private static final String HAS_LOCK_GESTURE_CACHE_KEY
+            = "LockPatternUtils.Cache.HasLockGestureCacheKey";
 
     private static LockPatternUtilsCache sInstance;
 
@@ -125,6 +128,18 @@ public class LockPatternUtilsCache implements ILockSettings {
     }
 
     @Override
+    public void setLockGesture(Gesture gesture, int userId) throws RemoteException {
+        invalidateCache(HAS_LOCK_GESTURE_CACHE_KEY, userId);
+        mService.setLockGesture(gesture, userId);
+        putCache(HAS_LOCK_GESTURE_CACHE_KEY, userId, gesture != null);
+    }
+
+    @Override
+    public boolean checkGesture(Gesture gesture, int userId) throws RemoteException {
+        return mService.checkGesture(gesture, userId);
+    }
+
+    @Override
     public void setLockPassword(String password, int userId) throws RemoteException {
         invalidateCache(HAS_LOCK_PASSWORD_CACHE_KEY, userId);
         mService.setLockPassword(password, userId);
@@ -149,6 +164,17 @@ public class LockPatternUtilsCache implements ILockSettings {
         }
         boolean result = mService.havePattern(userId);
         putCache(HAS_LOCK_PATTERN_CACHE_KEY, userId, result);
+        return result;
+    }
+
+    @Override
+    public boolean haveGesture(int userId) throws RemoteException {
+        Object value = peekCache(HAS_LOCK_GESTURE_CACHE_KEY, userId);
+        if (value instanceof Boolean) {
+            return (boolean) value;
+        }
+        boolean result = mService.haveGesture(userId);
+        putCache(HAS_LOCK_GESTURE_CACHE_KEY, userId, result);
         return result;
     }
 

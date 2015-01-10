@@ -38,7 +38,8 @@ public class KeyguardSecurityModel {
         Biometric, // Unlock with a biometric key (e.g. finger print or face unlock)
         Account, // Unlock by entering an account's login and password.
         SimPin, // Unlock by entering a sim pin.
-        SimPuk // Unlock by entering a sim puk
+        SimPuk, // Unlock by entering a sim puk
+        Gesture // unlock by drawing a gesture
     }
 
     private Context mContext;
@@ -115,6 +116,12 @@ public class KeyguardSecurityModel {
                             SecurityMode.Account : SecurityMode.Pattern;
                     }
                     break;
+                case DevicePolicyManager.PASSWORD_QUALITY_GESTURE_WEAK:
+                    if (mLockPatternUtils.isLockGestureEnabled()) {
+                        mode = mLockPatternUtils.isPermanentlyLocked() ?
+                            SecurityMode.Account : SecurityMode.Gesture;
+                    }
+                    break;
 
                 default:
                     throw new IllegalStateException("Unknown security quality:" + security);
@@ -135,7 +142,8 @@ public class KeyguardSecurityModel {
         if (isBiometricUnlockEnabled() && !isBiometricUnlockSuppressed()
                 && (mode == SecurityMode.Password
                         || mode == SecurityMode.PIN
-                        || mode == SecurityMode.Pattern)) {
+                        || mode == SecurityMode.Pattern
+                        || mode == SecurityMode.Gesture )) {
             return SecurityMode.Biometric;
         }
         return mode; // no alternate, return what was given
@@ -152,6 +160,8 @@ public class KeyguardSecurityModel {
             case Biometric:
                 return getSecurityMode();
             case Pattern:
+                return SecurityMode.Account;
+            case Gesture:
                 return SecurityMode.Account;
         }
         return mode; // no backup, return current security mode
