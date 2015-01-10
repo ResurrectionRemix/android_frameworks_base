@@ -368,6 +368,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private boolean mShowCarrierInPanel = false;
 
+    // Status bar carrier
+    private boolean mShowStatusBarCarrier;
+
     // position
     int[] mPositionTmp = new int[2];
     boolean mExpandedVisible;
@@ -442,6 +445,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_TICKER_ENABLED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CARRIER), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -510,6 +516,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
             mBrightnessControl = Settings.System.getInt(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1;
+            mShowStatusBarCarrier = Settings.System.getInt(
+                    resolver, Settings.System.STATUS_BAR_CARRIER, 0) == 1;
+                    showStatusBarCarrierLabel(mShowStatusBarCarrier);
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = Settings.System.getInt(resolver,
                         Settings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0) == 1;
@@ -2400,6 +2409,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if ((diff & StatusBarManager.DISABLE_CLOCK) != 0) {
             boolean show = (state & StatusBarManager.DISABLE_CLOCK) == 0;
             showClock(show);
+            showStatusBarCarrierLabel(show);
         }
         if ((diff & StatusBarManager.DISABLE_EXPAND) != 0) {
             if ((state & StatusBarManager.DISABLE_EXPAND) != 0) {
@@ -3704,6 +3714,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private void setControllerUsers() {
         if (mZenModeController != null) {
             mZenModeController.setUserId(mCurrentUserId);
+        }
+    }
+
+    public void showStatusBarCarrierLabel(boolean show) {
+        if (mStatusBarView == null) return;
+        ContentResolver resolver = mContext.getContentResolver();
+        View statusBarCarrierLabel = mStatusBarView.findViewById(R.id.status_bar_carrier_label);
+        if (statusBarCarrierLabel != null) {
+            statusBarCarrierLabel.setVisibility(show ? (mShowStatusBarCarrier ? View.VISIBLE : View.GONE) : View.GONE);
         }
     }
 
