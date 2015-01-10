@@ -141,4 +141,10 @@
         android:layout_height="match_parent"
         />
 
+    <com.android.systemui.statusbar.policy.BatteryBarController
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        systemui:viewLocation="1" />
+
 </com.android.systemui.statusbar.phone.PhoneStatusBarView>
