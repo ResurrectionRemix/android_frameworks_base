@@ -26,7 +26,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="top|center"
     android:padding="24dp"
-    android:textSize="18sp"
+    android:textSize="16sp"
     android:textColor="#24a599"
     android:text="@string/gestures_message"
     android:textStyle="normal|bold"/>
