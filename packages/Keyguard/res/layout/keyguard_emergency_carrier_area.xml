@@ -36,7 +36,7 @@
         android:ellipsize="marquee"
         android:textStyle="bold"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="?android:attr/textColorPrimary"
         android:visibility="gone"
         android:textAllCaps="false" />
 
@@ -51,7 +51,7 @@
         style="?android:attr/buttonBarButtonStyle"
         android:textStyle="bold"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="?android:attr/textColorPrimary"
         android:drawablePadding="8dip"
         android:textAllCaps="false" />
 
