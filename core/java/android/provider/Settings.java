@@ -6051,6 +6051,12 @@ public final class Settings {
          */
         public static final String QS_USE_FOUR_COLUMNS = "qs_use_four_columns";
 
+        /** Whether to show the brightness slider in quick settings panel.
+         *
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
+
         /**
          * Whether the camera launch gesture should be disabled.
          *

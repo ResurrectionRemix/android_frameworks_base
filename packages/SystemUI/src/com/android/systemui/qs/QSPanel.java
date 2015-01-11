@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
 import android.os.Vibrator;
+
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -145,8 +146,11 @@ public class QSPanel extends ViewGroup {
      * Enable/disable brightness slider.
      */
     private boolean showBrightnessSlider() {
+        boolean brightnessSliderEnabled = Settings.Secure.getIntForUser(
+            mContext.getContentResolver(), Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER,
+                1, UserHandle.USER_CURRENT) == 1;
         ToggleSlider brightnessSlider = (ToggleSlider) findViewById(R.id.brightness_slider);
-        if (mBrightnessSliderEnabled) {
+        if (brightnessSliderEnabled) {
             mBrightnessView.setVisibility(VISIBLE);
             brightnessSlider.setVisibility(VISIBLE);
         } else {
@@ -154,7 +158,7 @@ public class QSPanel extends ViewGroup {
             brightnessSlider.setVisibility(GONE);
         }
         updateResources();
-        return mBrightnessSliderEnabled;
+        return brightnessSliderEnabled;
     }
 
     /**
