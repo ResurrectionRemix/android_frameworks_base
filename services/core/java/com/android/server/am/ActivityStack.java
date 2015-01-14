@@ -1979,6 +1979,11 @@ final class ActivityStack {
     }
 
     private final void updatePrivacyGuardNotificationLocked(ActivityRecord next) {
+        if (android.provider.Settings.Secure.getIntForUser(mService.mContext.getContentResolver(),
+            android.provider.Settings.Secure.PRIVACY_GUARD_NOTIFICATION,
+            1, UserHandle.USER_CURRENT) == 0) {
+            return;
+        }
 
         String privacyGuardPackageName = mStackSupervisor.mPrivacyGuardPackageName;
         if (privacyGuardPackageName != null && privacyGuardPackageName.equals(next.packageName)) {
