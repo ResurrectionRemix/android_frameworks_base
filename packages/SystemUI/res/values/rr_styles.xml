@@ -19,6 +19,9 @@
      <style name="TextAppearance.StatusBar.Traffic" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textStyle">bold</item>
     </style>
+     <style name="TextAppearance.StatusBar.Batterymeter" parent="@*android:style/android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:textStyle">bold</item>
+    </style>
     <!-- Custom carrier MIUI -->
     <style name="TextAppearance.StatusBar.CarrierLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textSize">10dp</item>
