@@ -41,5 +41,15 @@
     <string name="notification_inspect_heads_up_title_enabled">Engedélyezze a Felugrót erre az alkalmazásra</string>
     <string name="notification_inspect_heads_up_title_disabled">Tiltja a Felugrót erre az alkalmazásra</string>
     <string name="gestures_message">Rejzoljon egy gesztust itt</string>
-        
+    <string name="lockscreen_gesture_instructions">Rajzoljon egy gesztust</string>
+    <string name="lockscreen_gesture_correct">Helyes!</string>
+    <string name="lockscreen_gesture_wrong">Próbálja újra</string>
+    <string name="keyguard_accessibility_gesture_unlock">Feloldva.</string>
+    <string name="keyguard_accessibility_gesture_area">Gesztus terület.</string>
+    <string name="kg_forgot_gesture_button_text">Elfelejtett Gesztus</string>
+    <string name="kg_wrong_gesture">Rossz Gesztus</string>
+    <string name="kg_gesture_instructions">Rajzoljon egy gesztust</string>
+    <string name="kg_too_many_failed_gesture_attempts_dialog_message" formatted="false">"Rosszul rajzolta le a feloldási gesztust %d alkalommal. 
+
+Próbálja újra %d másodperc mulva."</string>
 </resources>
