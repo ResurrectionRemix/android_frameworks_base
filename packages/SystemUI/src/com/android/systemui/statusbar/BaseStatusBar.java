@@ -43,6 +43,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.ThemeConfig;
 import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
@@ -103,7 +104,6 @@ import com.android.systemui.SwipeHelper;
 import com.android.systemui.SystemUI;
 import com.android.systemui.cm.SpamMessageProvider;
 import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
-import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.phone.KeyguardTouchDelegate;
 import com.android.systemui.statusbar.phone.NavigationBarView;
@@ -1389,12 +1389,15 @@ public abstract class BaseStatusBar extends SystemUI implements
         // set up the adaptive layout
         View contentViewLocal = null;
         View bigContentViewLocal = null;
+        final ThemeConfig themeConfig = mContext.getResources().getConfiguration().themeConfig;
+        String themePackageName = themeConfig != null ?
+                themeConfig.getOverlayPkgNameForApp(mContext.getPackageName()) : null;
         try {
             contentViewLocal = contentView.apply(mContext, expanded,
-                    mOnClickHandler);
+                    mOnClickHandler, themePackageName);
             if (bigContentView != null) {
                 bigContentViewLocal = bigContentView.apply(mContext, expanded,
-                        mOnClickHandler);
+                        mOnClickHandler, themePackageName);
             }
         }
         catch (RuntimeException e) {

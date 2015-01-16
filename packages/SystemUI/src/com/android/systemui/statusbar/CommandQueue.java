@@ -72,6 +72,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private StatusBarIconList mList;
     private Callbacks mCallbacks;
     private Handler mHandler = new H();
+    private boolean mPaused = false;
 
     /**
      * These methods are called back on the main thread.
@@ -252,15 +253,27 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
     
+    public void pause() {
+        mPaused = true;
+    }
+
+    public void resume() {
+        mPaused = false;
+    }
+       
     public void scheduleHeadsUpClose() {
         synchronized (mList) {
             mHandler.removeMessages(MSG_HIDE_HEADS_UP);
             mHandler.sendEmptyMessage(MSG_HIDE_HEADS_UP);
         }
-    }
-
+     }
+     
     private final class H extends Handler {
         public void handleMessage(Message msg) {
+            if (mPaused) {
+                this.sendMessageAtFrontOfQueue(Message.obtain(msg));
+                return;
+            }
             final int what = msg.what & MSG_MASK;
             switch (what) {
                 case MSG_ICON: {

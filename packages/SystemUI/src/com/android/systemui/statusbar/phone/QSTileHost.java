@@ -26,7 +26,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.provider.Settings;
-import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -73,8 +72,6 @@ import java.util.Map;
 public class QSTileHost implements QSTile.Host {
     private static final String TAG = "QSTileHost";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
-
-    private static final String TILES_SETTING = "sysui_qs_tiles";
 
     private final Context mContext;
     private final ConnectivityManager mConnectivityManager;
@@ -285,8 +282,8 @@ public class QSTileHost implements QSTile.Host {
     private List<String> loadTileSpecs() {
         final Resources res = mContext.getResources();
         final String defaultTileList = res.getString(R.string.quick_settings_tiles_default);
-        String tileList = Secure.getStringForUser(mContext.getContentResolver(), TILES_SETTING,
-                mUserTracker.getCurrentUserId());
+        String tileList = Settings.System.getStringForUser(mContext.getContentResolver(),
+                Settings.System.QS_TILES, mUserTracker.getCurrentUserId());
         if (DEBUG) Log.d(TAG, "Config string: "+tileList);
         if (tileList == null) {
             tileList = res.getString(R.string.quick_settings_tiles);
@@ -322,10 +319,11 @@ public class QSTileHost implements QSTile.Host {
             if (mRegistered) {
                 mContext.getContentResolver().unregisterContentObserver(this);
             }
-            mContext.getContentResolver().registerContentObserver(Secure.getUriFor(TILES_SETTING),
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.QS_TILES),
                     false, this, mUserTracker.getCurrentUserId());
             mContext.getContentResolver().registerContentObserver(
-                    Secure.getUriFor(Settings.Secure.QS_USE_MAIN_TILES),
+                    Settings.System.getUriFor(Settings.System.QS_USE_MAIN_TILES),
                     false, this, mUserTracker.getCurrentUserId());
             mRegistered = true;
         }
