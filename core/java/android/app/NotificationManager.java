@@ -271,32 +271,9 @@ public class NotificationManager
     public int getShowNotificationForPackageOnKeyguard(String pkg, int uid) {
         INotificationManager service = getService();
         try {
-            return service.getShowNotificationForPackageOnKeyguard(pkg, uid);
+            return getService().getShowNotificationForPackageOnKeyguard(pkg, uid);
         } catch (RemoteException e) {
             return Notification.SHOW_ALL_NOTI_ON_KEYGUARD;
-        }
-    }
-
-    /**
-     * @hide
-     */
-    public int getHeadsUpNotificationsEnabledForPackage(String pkg, int uid) {
-        INotificationManager service = getService();
-        try {
-            return service.getHeadsUpNotificationsEnabledForPackage(pkg, uid);
-        } catch (RemoteException e) {
-            return Notification.HEADS_UP_NEVER;
-        }
-    }
-
-    /**
-     * @hide
-     */
-    public void setHeadsUpNotificationsEnabledForPackage(String pkg, int uid, int headsUp) {
-        INotificationManager service = getService();
-        try {
-            service.setHeadsUpNotificationsEnabledForPackage(pkg, uid, headsUp);
-        } catch (RemoteException e) {
         }
     }
 

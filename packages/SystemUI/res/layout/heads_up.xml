@@ -14,12 +14,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- extends LinearLayout -->
+<!-- extends FrameLayout -->
 <com.android.systemui.statusbar.policy.HeadsUpNotificationView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:background="@drawable/heads_up_scrim">
 
         <FrameLayout
@@ -30,26 +29,5 @@
                 android:paddingEnd="@dimen/notification_side_padding"
                 android:elevation="8dp"
                 android:id="@+id/content_holder" />
-
-        <LinearLayout
-                android:layout_width="@dimen/notification_panel_width"
-                android:layout_height="wrap_content"
-                android:layout_gravity="@integer/notification_panel_layout_gravity"
-                android:layout_marginTop="6dp"
-                android:gravity="end"
-                android:paddingStart="@dimen/notification_side_padding"
-                android:paddingEnd="@dimen/notification_side_padding"
-                android:orientation="horizontal"
-                android:id="@+id/below_content_container">
-
-            <ImageButton
-                    android:id="@+id/heads_up_snooze_button"
-                    android:layout_height="28dp"
-                    android:layout_width="28dp"
-                    android:layout_marginEnd="@dimen/notification_side_padding"
-                    android:contentDescription="@string/heads_up_snooze_button_title"
-                    android:background="@drawable/recents_lock_to_task_button_bg"
-                    android:src="@drawable/ic_heads_up_snooze" />
-        </LinearLayout>
 
 </com.android.systemui.statusbar.policy.HeadsUpNotificationView>

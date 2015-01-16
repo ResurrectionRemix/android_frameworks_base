@@ -61,6 +61,4 @@ interface IStatusBarService
     void preloadRecentApps();
     void cancelPreloadRecentApps();
     void showCustomIntentAfterKeyguard(inout Intent intent);
-    void hideHeadsUpCandidate(String packageName);
-    void scheduleHeadsUpClose();
 }

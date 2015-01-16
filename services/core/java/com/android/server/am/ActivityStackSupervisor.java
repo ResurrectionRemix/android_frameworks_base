@@ -44,8 +44,6 @@ import android.app.IActivityContainer;
 import android.app.IActivityContainerCallback;
 import android.app.IActivityManager;
 import android.app.IApplicationThread;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProfilerInfo;
 import android.app.ActivityManager.RunningTaskInfo;
@@ -171,8 +169,6 @@ public final class ActivityStackSupervisor implements DisplayListener {
     /** Short cut */
     WindowManagerService mWindowManager;
     DisplayManager mDisplayManager;
-
-    private NotificationManager mNoMan;
 
     /** Identifier counter for all ActivityStacks */
     private int mLastStackId = HOME_STACK_ID;
@@ -304,11 +300,6 @@ public final class ActivityStackSupervisor implements DisplayListener {
         }
     }
 
-    /**
-     * Is heads up currently enabled? Shared between ActivityStacks
-     */
-    String mHeadsUpPackageName = null;
-
     public ActivityStackSupervisor(ActivityManagerService service) {
         mService = service;
         mHandler = new ActivityStackSupervisorHandler(mService.mHandler.getLooper());
@@ -338,13 +329,6 @@ public final class ActivityStackSupervisor implements DisplayListener {
                 }
             }
             return mStatusBarService;
-        }
-    }
-
-    private void initNotificationManager() {
-        if (mNoMan == null) {
-            mNoMan = (NotificationManager) mService.mContext
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
         }
     }
 
@@ -4061,23 +4045,5 @@ public final class ActivityStackSupervisor implements DisplayListener {
         }
 
         return onLeanbackOnly;
-    }
-
-    void hideHeadsUpCandidate(String packageName) {
-        try {
-            IStatusBarService statusbar = getStatusBarService();
-            if (statusbar != null) {
-                statusbar.hideHeadsUpCandidate(packageName);
-            }
-        } catch (RemoteException e) {
-            // re-acquire status bar service next time it is needed.
-            mStatusBarService = null;
-        }
-    }
-
-    boolean getHeadsUpNotificationsEnabledForPackage(String packageName, int uid) {
-        initNotificationManager();
-        return mNoMan.getHeadsUpNotificationsEnabledForPackage(
-                packageName, uid) != Notification.HEADS_UP_NEVER;
     }
 }

@@ -305,7 +305,7 @@ public class SwipeHelper implements Gefingerpoken {
      */
     public void dismissChild(final View view, float velocity, boolean direction) {
         dismissChild(view, velocity, null, 0, false, 0, direction);
-    }
+     }
 
     /**
      * @param view The view to be dismissed

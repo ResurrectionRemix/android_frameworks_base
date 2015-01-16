@@ -54,9 +54,6 @@ interface INotificationManager
     void setShowNotificationForPackageOnKeyguard(String pkg, int uid, int status);
     int getShowNotificationForPackageOnKeyguard(String pkg, int uid);
 
-    void setHeadsUpNotificationsEnabledForPackage(String pkg, int uid, int headsUp);
-    int getHeadsUpNotificationsEnabledForPackage(String pkg, int uid);
-
     // TODO: Remove this when callers have been migrated to the equivalent
     // INotificationListener method.
     StatusBarNotification[] getActiveNotifications(String callingPkg);

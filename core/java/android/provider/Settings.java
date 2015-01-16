@@ -3158,18 +3158,6 @@ public final class Settings {
         public static final String LOCKSCREEN_SHORTCUTS_LONGPRESS =
                 "lockscreen_shortcuts_longpress";       
         /**
-         * Defines global heads up snooze time if user want to snooze it.
-         * @hide
-         */
-        public static final String HEADS_UP_SNOOZE_TIME = "heads_up_snooze_time";
-
-        /**
-         * Defines the global heads up notification decay
-         * @hide
-         */
-        public static final String HEADS_UP_NOTIFCATION_DECAY = "heads_up_notification_decay";
-
-        /**
          * AM/PM Style for clock options
          * 0 - Normal AM/PM
          * 1 - Small AM/PM
@@ -3563,6 +3551,34 @@ public final class Settings {
          * boolean (1 or 0).
          */
         public static final String STATUS_BAR_CARRIER = "status_bar_carrier";
+
+        /**
+         * Heads Up Notifications
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_NOTIFICATION = "heads_up_enabled";
+
+        /**
+         * Which applications to disable heads up notifications for
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_CUSTOM_VALUES = "heads_up_custom_values";
+
+        /**
+         * Which applications to disable heads up notifications for
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
+
+        /**
+         * Defines the global heads up notification decay
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_NOTIFCATION_DECAY = "heads_up_notification_decay";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -8160,7 +8176,7 @@ public final class Settings {
          * <P>Type: TEXT</P>
          */
         public static final String INTENT = "intent";
-       
+
         /**
          * Optional shortcut character associated with this bookmark.
          * <P>Type: INTEGER</P>

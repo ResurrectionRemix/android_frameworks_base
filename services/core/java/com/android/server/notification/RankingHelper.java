@@ -53,7 +53,6 @@ public class RankingHelper implements RankingConfig {
     private static final String ATT_PRIORITY = "priority";
     private static final String ATT_VISIBILITY = "visibility";
     private static final String ATT_KEYGUARD = "keyguard";
-    private static final String ATT_HEADSUP = "headsup";
 
     private final NotificationSignalExtractor[] mSignalExtractors;
     private final NotificationComparator mPreliminaryComparator = new NotificationComparator();
@@ -63,7 +62,6 @@ public class RankingHelper implements RankingConfig {
     private final ArrayMap<String, SparseIntArray> mPackagePriorities;
     private final ArrayMap<String, SparseIntArray> mPackageVisibilities;
     private final ArrayMap<String, SparseIntArray> mPackageOnKeyguard;
-    private final ArrayMap<String, SparseIntArray> mPackageHeadsUp;
     private final ArrayMap<String, NotificationRecord> mProxyByGroupTmp;
 
     private final Context mContext;
@@ -75,7 +73,6 @@ public class RankingHelper implements RankingConfig {
         mPackagePriorities = new ArrayMap<String, SparseIntArray>();
         mPackageVisibilities = new ArrayMap<String, SparseIntArray>();
         mPackageOnKeyguard = new ArrayMap<String, SparseIntArray>();
-        mPackageHeadsUp = new ArrayMap<String, SparseIntArray>();
 
         final int N = extractorNames.length;
         mSignalExtractors = new NotificationSignalExtractor[N];
@@ -147,7 +144,6 @@ public class RankingHelper implements RankingConfig {
                             NotificationListenerService.Ranking.VISIBILITY_NO_OVERRIDE);
                     int keyguard = safeInt(parser, ATT_KEYGUARD,
                             Notification.SHOW_ALL_NOTI_ON_KEYGUARD);
-                    int headsUp = safeInt(parser, ATT_HEADSUP, Notification.HEADS_UP_NEVER);
                     String name = parser.getAttributeValue(null, ATT_NAME);
 
                     if (!TextUtils.isEmpty(name)) {
@@ -175,14 +171,6 @@ public class RankingHelper implements RankingConfig {
                             }
                             keyguardByUid.put(uid, keyguard);
                         }
-                        if (headsUp != Notification.HEADS_UP_NEVER) {
-                            SparseIntArray headsUpByUid = mPackageHeadsUp.get(name);
-                            if (headsUpByUid == null) {
-                                headsUpByUid = new SparseIntArray();
-                                mPackageHeadsUp.put(name, headsUpByUid);
-                            }
-                            headsUpByUid.put(uid, headsUp);
-                        }
                     }
                 }
             }
@@ -199,14 +187,12 @@ public class RankingHelper implements RankingConfig {
         packageNames.addAll(mPackagePriorities.keySet());
         packageNames.addAll(mPackageVisibilities.keySet());
         packageNames.addAll(mPackageOnKeyguard.keySet());
-        packageNames.addAll(mPackageHeadsUp.keySet());
         final Set<Integer> packageUids = new ArraySet<>();
         for (String packageName : packageNames) {
             packageUids.clear();
             SparseIntArray priorityByUid = mPackagePriorities.get(packageName);
             SparseIntArray visibilityByUid = mPackageVisibilities.get(packageName);
             SparseIntArray keyguardByUid = mPackageOnKeyguard.get(packageName);
-            SparseIntArray headsUpByUid = mPackageHeadsUp.get(packageName);
 
             if (priorityByUid != null) {
                 final int M = priorityByUid.size();
@@ -224,12 +210,6 @@ public class RankingHelper implements RankingConfig {
                 final int M = keyguardByUid.size();
                 for (int j = 0; j < M; j++) {
                     packageUids.add(keyguardByUid.keyAt(j));
-                }
-            }
-            if (headsUpByUid != null) {
-                final int M = headsUpByUid.size();
-                for (int j = 0; j < M; j++) {
-                    packageUids.add(headsUpByUid.keyAt(j));
                 }
             }
             for (Integer uid : packageUids) {
@@ -251,12 +231,6 @@ public class RankingHelper implements RankingConfig {
                     final int keyguard = keyguardByUid.get(uid);
                     if (keyguard != Notification.SHOW_ALL_NOTI_ON_KEYGUARD) {
                         out.attribute(null, ATT_KEYGUARD, Integer.toString(keyguard));
-                    }
-                }
-                if (headsUpByUid != null) {
-                    final int headsUp = headsUpByUid.get(uid);
-                    if (headsUp != Notification.HEADS_UP_NEVER) {
-                        out.attribute(null, ATT_HEADSUP, Integer.toString(headsUp));
                     }
                 }
                 out.attribute(null, ATT_UID, Integer.toString(uid));
@@ -438,32 +412,6 @@ public class RankingHelper implements RankingConfig {
         keyguardByUid.put(uid, keyguard);
         updateConfig();
     }
-
-    @Override
-    public int getHeadsUpNotificationsEnabledForPackage(String packageName, int uid) {
-        int headsUp = Notification.HEADS_UP_NEVER;
-        SparseIntArray headsUpByUid = mPackageHeadsUp.get(packageName);
-        if (headsUpByUid != null) {
-            headsUp = headsUpByUid.get(uid, Notification.HEADS_UP_NEVER);
-        }
-        return headsUp;
-    }
-
-    @Override
-    public void setHeadsUpNotificationsEnabledForPackage(
-                String packageName, int uid, int headsUp) {
-        if (headsUp == getHeadsUpNotificationsEnabledForPackage(packageName, uid)) {
-            return;
-        }
-        SparseIntArray headsUpByUid = mPackageHeadsUp.get(packageName);
-        if (headsUpByUid == null) {
-            headsUpByUid = new SparseIntArray();
-            mPackageHeadsUp.put(packageName, headsUpByUid);
-        }
-        headsUpByUid.put(uid, headsUp);
-        updateConfig();
-    }
-
 
     public void dump(PrintWriter pw, String prefix, NotificationManagerService.DumpFilter filter) {
         if (filter == null) {
