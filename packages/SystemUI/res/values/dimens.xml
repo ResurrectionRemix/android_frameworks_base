@@ -510,4 +510,5 @@
     <dimen name="fake_shadow_inset">1dp</dimen>
 
     <dimen name="fake_shadow_size">8dp</dimen>
+
 </resources>
