@@ -24,6 +24,7 @@
             android:layout_toRightOf="@+id/icon"
             android:background="@drawable/circle_list_item_text_background"
             android:padding="2dp"
+            android:textStyle="normal|bold"
             android:textColor="@color/circle_list_item_text" />
     </RelativeLayout>
 
