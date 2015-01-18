@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (c) 2006, The Android Open Source Project
+ * Copyright (c) 2015  The Benzo Rom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,4 +22,9 @@
     <dimen name="floating_action_button_translation_z">12dp</dimen>
     <dimen name="floating_action_button_margin_side">78dp</dimen>
     <dimen name="floating_action_button_margin_bottom">42dp</dimen>
+
+    <!-- Lockscreen Shortcuts -->
+    <dimen name="phone_height">210dp</dimen>
+    <dimen name="phone_width">420dp</dimen>
+
 </resources>

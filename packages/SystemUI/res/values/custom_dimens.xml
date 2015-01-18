@@ -22,4 +22,14 @@
     <dimen name="floating_action_button_translation_z">12dp</dimen>
     <dimen name="floating_action_button_margin_side">32dp</dimen>
     <dimen name="floating_action_button_margin_bottom">46dp</dimen>
+
+
+    <!-- lockscreen shortcuts -->
+    <dimen name="lockscreen_icon_side_padding">10dp</dimen>
+    <dimen name="lockscreen_icon_size">35dp</dimen>
+    <dimen name="phone_side_padding">10dp</dimen>
+    <dimen name="phone_bottom_padding">40dp</dimen>
+    <dimen name="phone_width">320dp</dimen>
+    <dimen name="phone_height">420dp</dimen>
+
 </resources>
