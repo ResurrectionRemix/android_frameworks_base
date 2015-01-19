@@ -57,6 +57,11 @@ public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
     }
 
     @Override
+    protected void handleSecondaryClick() {
+        mHost.startSettingsActivity(WIRELESS_SETTINGS);
+    }
+
+    @Override
     public void handleLongClick() {
         mHost.startSettingsActivity(WIRELESS_SETTINGS);
     }
