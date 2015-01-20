@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="16dp"
                 android:gravity="right"
-                android:textColor="#ebebeb"
+                android:textColor="#E0E0E0"
                 android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textSize="@dimen/battery_level_text_size"
                 android:importantForAccessibility="noHideDescendants"/>
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="16dp"
                 android:gravity="right"
-                android:textColor="#ebebeb"
+                android:textColor="#E0E0E0"
                 android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textSize="@dimen/battery_level_text_size"
                 android:importantForAccessibility="noHideDescendants"/>
