@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
-    <color name="material_blue_grey">#ff1b1f23</color>
-    <drawable name="material_bg_blue_grey">@color/material_blue_grey</drawable>
-</resources>

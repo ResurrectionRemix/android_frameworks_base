@@ -20,7 +20,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:background="@drawable/btn_borderless_material_dark"
     android:orientation="horizontal"
 
     android:paddingStart="8dip"
@@ -46,7 +45,7 @@
             android:layout_gravity="top"
 
             android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.Material.Large.Dark"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             />
         <TextView android:id="@+id/status"
             android:layout_width="match_parent"
@@ -54,7 +53,7 @@
             android:layout_gravity="bottom"
             android:minHeight="26dp"
 
-            android:textAppearance="@style/TextAppearance.Material.Small.Dark"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             />
     </LinearLayout>
 </LinearLayout>
