@@ -3447,12 +3447,6 @@ public final class Settings {
          */
         public static final String EGG_MODE = "egg_mode";
 
-         /**
-         * Recents Show/Hide Search Bar
-         * @hide
-         */
-        public static final String RECENTS_SHOW_HIDE_SEARCH_BAR = "recents_show_hide_search_bar";
-
         /**
          * Display style of the status bar battery information
          * 0: Display the battery an icon in portrait mode
@@ -3654,6 +3648,12 @@ public final class Settings {
          * @hide
          */
         public static final String RECENTS_CLEAR_ALL_DISMISS_ALL = "recents_clear_all_dismiss_all";         
+        
+        /**
+         * Whether to show or hide search bar in recents view
+         * @hide
+         */
+        public static final String RECENTS_SEARCH_BAR = "recents_search_bar";        
         
          /**
          * Whether to show a fullscreen keyboard in landscape
