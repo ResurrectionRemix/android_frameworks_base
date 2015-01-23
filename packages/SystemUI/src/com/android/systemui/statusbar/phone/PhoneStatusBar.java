@@ -3886,7 +3886,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (newTheme != null &&
                 (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
             mCurrentTheme = (ThemeConfig)newTheme.clone();
-            recreateStatusBar();
+            removeAllViews(mStatusBarWindow);
         } else {
             loadDimens();
         }
