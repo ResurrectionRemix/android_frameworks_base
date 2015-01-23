@@ -489,6 +489,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 boolean navLeftInLandscape = Settings.System.getInt(resolver,
                         Settings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0) == 1;
                 mNavigationBarView.setLeftInLandscape(navLeftInLandscape);
+                mNavigationBarView.updateResources(getNavbarThemedResources());
+
             }
         }
     }
@@ -527,7 +529,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mNavigationBarView.setDisabledFlags(mDisabled);
         mNavigationBarView.setBar(this);
-        mNavigationBarView.updateResources(getNavbarThemedResources());
         addNavigationBar();
     }
 

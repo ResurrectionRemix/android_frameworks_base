@@ -253,6 +253,13 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
     
+    public void scheduleHeadsUpClose() {
+        synchronized (mList) {
+            mHandler.removeMessages(MSG_HIDE_HEADS_UP);
+            mHandler.sendEmptyMessage(MSG_HIDE_HEADS_UP);
+        }
+    }
+
     public void pause() {
         mPaused = true;
     }
@@ -260,14 +267,7 @@ public class CommandQueue extends IStatusBar.Stub {
     public void resume() {
         mPaused = false;
     }
-       
-    public void scheduleHeadsUpClose() {
-        synchronized (mList) {
-            mHandler.removeMessages(MSG_HIDE_HEADS_UP);
-            mHandler.sendEmptyMessage(MSG_HIDE_HEADS_UP);
-        }
-     }
-     
+
     private final class H extends Handler {
         public void handleMessage(Message msg) {
             if (mPaused) {
