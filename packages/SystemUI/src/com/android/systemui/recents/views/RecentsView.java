@@ -284,7 +284,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         }
 
         boolean showClearAllRecents = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 1) == 1;
+                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0) == 1;
 
         Rect taskStackBounds = new Rect();
         mConfig.getTaskStackBounds(width, height, mConfig.systemInsets.top,
@@ -312,10 +312,10 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_LEFT:
                     params.gravity = Gravity.BOTTOM | Gravity.LEFT;
                     break;
-                    default:
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_CENTER:
+                    default:
                     params.gravity = Gravity.BOTTOM | Gravity.CENTER;
-                    break;                   
+                    break; 
             }
             mFloatingButton.setLayoutParams(params);
         } else {
