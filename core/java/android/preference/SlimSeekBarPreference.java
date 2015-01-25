@@ -28,7 +28,7 @@ public class SlimSeekBarPreference extends Preference
     boolean mDisablePercentageValue = false;
     boolean mIsMilliSeconds = false;
 
-    private OnPreferenceChangeListener changer;
+    private OnPreferenceChangeListener mChanger;
 
     public SlimSeekBarPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -65,7 +65,7 @@ public class SlimSeekBarPreference extends Preference
     @Override
     public void setOnPreferenceChangeListener(
                 OnPreferenceChangeListener onPreferenceChangeListener) {
-        changer = onPreferenceChangeListener;
+        mChanger = onPreferenceChangeListener;
         super.setOnPreferenceChangeListener(onPreferenceChangeListener);
     }
 
@@ -94,7 +94,9 @@ public class SlimSeekBarPreference extends Preference
                 monitorBox.setText(Integer.toString(progress));
             }
         }
-        changer.onPreferenceChange(this, Integer.toString(progress));
+        if (mChanger != null) {
+            mChanger.onPreferenceChange(this, Integer.toString(progress));
+        }
     }
 
     public void disablePercentageValue(boolean disable) {
