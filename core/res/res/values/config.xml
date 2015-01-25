@@ -2055,6 +2055,8 @@
     
 	    <!-- Wether doze feature is enabled by default in settings. -->
     <bool name="config_doze_enabled_by_default">false</bool>
+    <bool name="doze_pulse_on_significant_motion">false</bool>
+    <bool name="doze_display_state_supported">false</bool>
     
     <!-- Configuration to enable non-default PDP during IWLAN -->
     <bool name="config_feature_iwlan_enabled">false</bool>
