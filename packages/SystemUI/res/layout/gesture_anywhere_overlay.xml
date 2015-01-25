@@ -16,7 +16,7 @@
             android:id="@+id/gesture_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gestureColor="@color/gesture_color"
+            android:gestureColor="@*android:color/material_deep_teal_500"
             android:gestureStrokeType="single"
             android:gestureStrokeWidth="16.0"
             android:visibility="gone" />
@@ -27,7 +27,7 @@
     android:layout_gravity="top|center"
     android:padding="24dp"
     android:textSize="16sp"
-    android:textColor="#24a599"
+    android:textColor="#FFFFFF"
     android:text="@string/gestures_message"
     android:textStyle="normal|bold"/>
         <ImageView
