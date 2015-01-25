@@ -2048,10 +2048,10 @@
     <bool name="config_telephony_ESN_Tracker_enabled">false</bool>
 
     <!-- Whether cpu boost is enabled for overscroller fling. -->
-    <bool name="config_enableCpuBoostForOverScrollerFling">false</bool>
+    <bool name="config_enableCpuBoostForOverScrollerFling">true</bool>
 
     <!-- Whether cpu boost is enabled for horizontal scroll. -->
-    <bool name="config_enableCpuBoostForScroller">false</bool>
+    <bool name="config_enableCpuBoostForScroller">true</bool>
     
 	    <!-- Wether doze feature is enabled by default in settings. -->
     <bool name="config_doze_enabled_by_default">false</bool>
