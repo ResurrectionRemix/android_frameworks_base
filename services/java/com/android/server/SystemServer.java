@@ -436,7 +436,6 @@ public final class SystemServer {
         AudioService audioService = null;
         MmsServiceBroker mmsService = null;
         ProfileManagerService profile = null;
-        EntropyMixer entropyMixer = null;
 
         boolean disableStorage = SystemProperties.getBoolean("config.disable_storage", false);
         boolean disableMedia = SystemProperties.getBoolean("config.disable_media", false);
@@ -461,7 +460,7 @@ public final class SystemServer {
             ServiceManager.addService("telephony.registry", telephonyRegistry);
 
             Slog.i(TAG, "Entropy Mixer");
-            entropyMixer = new EntropyMixer(context);
+            ServiceManager.addService("entropy", new EntropyMixer(context));
 
             mContentResolver = context.getContentResolver();
 
@@ -504,7 +503,7 @@ public final class SystemServer {
             Slog.i(TAG, "Window Manager");
             wm = WindowManagerService.main(context, inputManager,
                     mFactoryTestMode != FactoryTest.FACTORY_TEST_LOW_LEVEL,
-                    !mFirstBoot, mOnlyCore);
+                    true, mOnlyCore);
             ServiceManager.addService(Context.WINDOW_SERVICE, wm);
             ServiceManager.addService(Context.INPUT_SERVICE, inputManager);
 
