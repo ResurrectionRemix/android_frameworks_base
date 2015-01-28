@@ -18,8 +18,6 @@ package com.android.keyguard;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.provider.Settings;
-import android.os.UserHandle;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,26 +26,21 @@ import android.view.View;
  * A Pin based Keyguard input view
  */
 public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
-        implements View.OnKeyListener, PasswordTextView.OnTextChangedListener {
+        implements View.OnKeyListener {
 
     protected PasswordTextView mPasswordEntry;
     private View mOkButton;
     private View mDeleteButton;
-    private View[] mButton = new NumPadKey[10];
-    private int[] mButtonResId = new int[] {
-            R.id.key0,
-            R.id.key1,
-            R.id.key2,
-            R.id.key3,
-            R.id.key4,
-            R.id.key5,
-            R.id.key6,
-            R.id.key7,
-            R.id.key8,
-            R.id.key9
-        };
-
-    private boolean mQuickUnlock;
+    private View mButton0;
+    private View mButton1;
+    private View mButton2;
+    private View mButton3;
+    private View mButton4;
+    private View mButton5;
+    private View mButton6;
+    private View mButton7;
+    private View mButton8;
+    private View mButton9;
 
     public KeyguardPinBasedInputView(Context context) {
         this(context, null);
@@ -89,7 +82,7 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
         }
         if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
             int number = keyCode - KeyEvent.KEYCODE_0 ;
-            performClick(mButton[number]);
+            performNumberClick(number);
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -97,6 +90,41 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
 
     private void performClick(View view) {
         view.performClick();
+    }
+
+    private void performNumberClick(int number) {
+        switch (number) {
+            case 0:
+                performClick(mButton0);
+                break;
+            case 1:
+                performClick(mButton1);
+                break;
+            case 2:
+                performClick(mButton2);
+                break;
+            case 3:
+                performClick(mButton3);
+                break;
+            case 4:
+                performClick(mButton4);
+                break;
+            case 5:
+                performClick(mButton5);
+                break;
+            case 6:
+                performClick(mButton6);
+                break;
+            case 7:
+                performClick(mButton7);
+                break;
+            case 8:
+                performClick(mButton8);
+                break;
+            case 9:
+                performClick(mButton9);
+                break;
+        }
     }
 
     @Override
@@ -109,23 +137,10 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
         return mPasswordEntry.getText();
     }
 
-    // Listener callback.
-    @Override
-    public void onTextChanged() {
-        if (mQuickUnlock) {
-            if (getPasswordText().length() > MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT
-                    && mLockPatternUtils.checkPassword(getPasswordText())) {
-                mCallback.reportUnlockAttempt(true);
-                mCallback.dismiss(true);
-            }
-        }
-    }
-
     @Override
     protected void onFinishInflate() {
         mPasswordEntry = (PasswordTextView) findViewById(getPasswordTextViewId());
         mPasswordEntry.setOnKeyListener(this);
-        mPasswordEntry.setOnTextChangedListener(this);
 
         // Set selected property on so the view can send accessibility events.
         mPasswordEntry.setSelected(true);
@@ -136,10 +151,6 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
                 mCallback.userActivity();
             }
         });
-
-
-        mQuickUnlock = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 1, UserHandle.USER_CURRENT) == 1;
 
         mOkButton = findViewById(R.id.key_enter);
         if (mOkButton != null) {
@@ -155,7 +166,6 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
             mOkButton.setOnHoverListener(new LiftToActivateListener(getContext()));
         }
 
-        
         mDeleteButton = findViewById(R.id.delete_button);
         mDeleteButton.setVisibility(View.VISIBLE);
         mDeleteButton.setOnClickListener(new OnClickListener() {
@@ -178,31 +188,16 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
             }
         });
 
-        for (int i = 0; i < 10; i++) {
-            mButton[i] = findViewById(mButtonResId[i]);
-        }
-
-        final int randomDigitMode = Settings.Secure.getIntForUser(
-                mContext.getContentResolver(), Settings.Secure.LOCK_NUMPAD_RANDOM,
-                0, UserHandle.USER_CURRENT);
-
-        if (randomDigitMode > 0) {
-            final View randomButton = findViewById(R.id.key_random);
-            if (randomDigitMode == 1) {
-                buildRandomNumPadKey();
-            }
-            if (randomButton != null) {
-                randomButton.setVisibility(View.VISIBLE);
-                randomButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        doHapticKeyClick();
-                        buildRandomNumPadKey();
-                    }
-                });
-                randomButton.setOnHoverListener(new LiftToActivateListener(getContext()));
-            }
-        }
+        mButton0 = findViewById(R.id.key0);
+        mButton1 = findViewById(R.id.key1);
+        mButton2 = findViewById(R.id.key2);
+        mButton3 = findViewById(R.id.key3);
+        mButton4 = findViewById(R.id.key4);
+        mButton5 = findViewById(R.id.key5);
+        mButton6 = findViewById(R.id.key6);
+        mButton7 = findViewById(R.id.key7);
+        mButton8 = findViewById(R.id.key8);
+        mButton9 = findViewById(R.id.key9);
 
         mPasswordEntry.requestFocus();
         super.onFinishInflate();
@@ -215,16 +210,5 @@ public abstract class KeyguardPinBasedInputView extends KeyguardAbsKeyInputView
             return true;
         }
         return false;
-    }
-
-    private void buildRandomNumPadKey() {
-        for (int i = 0; i < 10; i++) {
-            if (mButton[i] != null) {
-                if (i == 0) {
-                    ((NumPadKey) mButton[i]).initNumKeyPad();
-                }
-                ((NumPadKey) mButton[i]).createNumKeyPad(true);
-            }
-        }
     }
 }

@@ -183,17 +183,11 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 >
-           <com.android.keyguard.AlphaOptimizedImageButton
-                    android:id="@+id/key_random"
+            <Space
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingBottom="11sp"
-                    android:src="@drawable/sym_keyboard_random_holo"
-                    android:background="@drawable/ripple_drawable"
-                    android:contentDescription="@string/keyboardview_keycode_random"
-                    android:visibility="invisible"
-                />
+                    />
             <com.android.keyguard.NumPadKey
                     android:id="@+id/key0"
                     android:layout_width="0px"
