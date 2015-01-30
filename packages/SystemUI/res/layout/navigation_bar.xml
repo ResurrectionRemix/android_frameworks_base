@@ -30,6 +30,10 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
             <com.android.systemui.statusbar.policy.BatteryBarController
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -43,11 +47,8 @@
                 android:visibility="gone"
                 systemui:viewLocation="3"
                 android:layout_alignParentBottom="true" />
-                        
-        <RelativeLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
-                
+
+        </RelativeLayout>
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
