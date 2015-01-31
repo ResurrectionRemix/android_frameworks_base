@@ -2363,7 +2363,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadSetting(stmt, Settings.System.HEADS_UP_NOTIFICATION, "0");
             loadSetting(stmt, Settings.System.HEADS_UP_CUSTOM_VALUES, dndValues);
             loadSetting(stmt, Settings.System.HEADS_UP_BLACKLIST_VALUES, blackListValues);
-
+        }
+    }
 
     private void loadSettings(SQLiteDatabase db) {
         loadSystemSettings(db);
