@@ -230,6 +230,8 @@
     <java-symbol type="string" name="global_action_screenshot" />
     <java-symbol type="drawable" name="ic_lock_settings" />
     <java-symbol type="drawable" name="ic_lock_user" />
+    <java-symbol type="string" name="global_action_current_user" />
+    <java-symbol type="dimen" name="global_actions_avatar_size" />
 
     <!-- Theme reset notification -->
     <java-symbol type="string" name="theme_reset_notification_title" />
