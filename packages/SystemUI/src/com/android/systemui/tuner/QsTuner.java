@@ -207,6 +207,7 @@ public class QsTuner extends Fragment implements Callback {
         else if (spec.equals("headsup")) return R.string.quick_settings_heads_up_label;
         else if (spec.equals("usb_tether")) return R.string.quick_settings_usb_tether_label;
         else if (spec.equals("ambient_display")) return R.string.quick_settings_ambient_display_label;
+        else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
         return 0;
     }
 
@@ -452,6 +453,7 @@ public class QsTuner extends Fragment implements Callback {
             else if (mSpec.equals("headsup")) return R.drawable.ic_qs_heads_up_on;
             else if (mSpec.equals("usb_tether")) return R.drawable.ic_qs_usb_tether_off;
             else if (mSpec.equals("ambient_display")) return R.drawable.ic_qs_ambientdisplay_on;
+            else if (mSpec.equals("screenshot")) return R.drawable.ic_qs_screenshot;
             return R.drawable.android;
         }
 
