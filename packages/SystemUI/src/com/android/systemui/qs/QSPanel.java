@@ -65,6 +65,8 @@ public class QSPanel extends ViewGroup {
     private final H mHandler = new H();
 
     private int mColumns;
+    private int mNumberOfColumns;
+    private boolean mUseFourColumns;
     private int mCellWidth;
     private int mCellHeight;
     private int mLargeCellWidth;
@@ -146,6 +148,22 @@ public class QSPanel extends ViewGroup {
         return brightnessSliderEnabled;
     }
 
+    /**
+     * Use three or four columns.
+     */
+    private int useFourColumns() {
+        final Resources res = mContext.getResources();
+        mUseFourColumns = Settings.Secure.getInt(
+            mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
+                0) == 1;
+        if (mUseFourColumns) {
+            mNumberOfColumns = 4;
+        } else {
+            mNumberOfColumns = res.getInteger(R.integer.quick_settings_num_columns);
+        }
+        return mNumberOfColumns;
+    }
+
     public boolean isVibrationEnabled() {
         return (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
@@ -186,11 +204,15 @@ public class QSPanel extends ViewGroup {
 
     public void updateResources() {
         final Resources res = mContext.getResources();
-        final int columns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        final int columns = Math.max(1, useFourColumns());
         mCellHeight = res.getDimensionPixelSize(R.dimen.qs_tile_height);
-        mCellWidth = (int)(mCellHeight * TILE_ASPECT);
-        mLargeCellHeight = res.getDimensionPixelSize(R.dimen.qs_dual_tile_height);
+        if (mUseFourColumns) {
+            mCellWidth = (int)(mCellHeight * 0.8f);
+        } else {
+            mCellWidth = (int)(mCellHeight * TILE_ASPECT);
+        }
         mLargeCellWidth = (int)(mLargeCellHeight * TILE_ASPECT);
+        mLargeCellHeight = res.getDimensionPixelSize(R.dimen.qs_dual_tile_height);
         mPanelPaddingBottom = res.getDimensionPixelSize(R.dimen.qs_panel_padding_bottom);
         mDualTileUnderlap = res.getDimensionPixelSize(R.dimen.qs_dual_tile_padding_vertical);
         mBrightnessPaddingTop = res.getDimensionPixelSize(R.dimen.qs_brightness_padding_top);
