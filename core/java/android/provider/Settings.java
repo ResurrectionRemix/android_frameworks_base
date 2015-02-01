@@ -6233,6 +6233,12 @@ public final class Settings {
         public static final String QS_LOCATION_ADVANCED = "qs_location_advanced";
 
         /**
+         * Whether to show four tiles per row.
+         * @hide
+         */
+        public static final String QS_USE_FOUR_COLUMNS = "qs_use_four_columns";
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear
