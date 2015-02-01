@@ -48,4 +48,17 @@
     <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
 
+    <!-- Content description of the USB tethering tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_usb_tether_off">USB tethering off.</string>
+    <!-- Content description of the USB tethering tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_usb_tether_on">USB tethering on.</string>
+
+    <!-- Announcement made when USB tethering changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_usb_tether_changed_off">USB tethering turned off.</string>
+    <!-- Announcement made when USB tethering changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering turned on.</string>
+
+    <!-- QuickSettings tiles -->
+    <string name="quick_settings_usb_tether_label">USB tethering</string>
+
 </resources>

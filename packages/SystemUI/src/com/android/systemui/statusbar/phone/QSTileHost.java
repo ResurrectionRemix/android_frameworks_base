@@ -42,6 +42,7 @@ import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenOffTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.VolumeTile;
+import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.statusbar.policy.BluetoothController;
 import com.android.systemui.statusbar.policy.CastController;
@@ -264,6 +265,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
         else if (tileSpec.equals("volume")) return new VolumeTile(this);
         else if (tileSpec.equals("headsup")) return new HeadsUpTile(this);
+        else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
