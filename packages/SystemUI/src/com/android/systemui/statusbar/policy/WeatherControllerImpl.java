@@ -18,11 +18,15 @@ package com.android.systemui.statusbar.policy;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -53,18 +57,19 @@ public class WeatherControllerImpl implements WeatherController {
 
     private WeatherInfo mCachedInfo = new WeatherInfo();
 
-
     public WeatherControllerImpl(Context context) {
         mContext = context;
                 mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         queryWeather();
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_UPDATE_FINISHED);
+        mContext.registerReceiver(mReceiver, filter);
     }
 
     public void addCallback(Callback callback) {
         if (callback == null || mCallbacks.contains(callback)) return;
         if (DEBUG) Log.d(TAG, "addCallback " + callback);
         mCallbacks.add(callback);
-        mReceiver.setListening(!mCallbacks.isEmpty());
         callback.onWeatherChanged(mCachedInfo); // immediately update with current values
     }
 
@@ -72,7 +77,6 @@ public class WeatherControllerImpl implements WeatherController {
         if (callback == null) return;
         if (DEBUG) Log.d(TAG, "removeCallback " + callback);
         mCallbacks.remove(callback);
-        mReceiver.setListening(!mCallbacks.isEmpty());
     }
 
     @Override
@@ -104,24 +108,7 @@ public class WeatherControllerImpl implements WeatherController {
         }
     }
 
-
     private final class Receiver extends BroadcastReceiver {
-        private boolean mRegistered;
-
-        public void setListening(boolean listening) {
-            if (listening && !mRegistered) {
-                if (DEBUG) Log.d(TAG, "Registering receiver");
-                final IntentFilter filter = new IntentFilter();
-                filter.addAction(ACTION_UPDATE_FINISHED);
-                mContext.registerReceiver(this, filter);
-                mRegistered = true;
-            } else if (!listening && mRegistered) {
-                if (DEBUG) Log.d(TAG, "Unregistering receiver");
-                mContext.unregisterReceiver(this);
-                mRegistered = false;
-            }
-        }
-
         @Override
         public void onReceive(Context context, Intent intent) {
             if (DEBUG) Log.d(TAG, "onReceive " + intent.getAction());
