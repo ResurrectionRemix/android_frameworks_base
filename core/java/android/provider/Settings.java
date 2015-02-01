@@ -3142,6 +3142,15 @@ public final class Settings {
          * @hide
          */
         public static final String SCREENSHOT_SOUND = "screenshot_sound";
+        
+         /**
+         * Show icon when stylus is used?
+         * 0 = no
+         * 1 = yes
+         * @hide
+         */
+        public static final String STYLUS_ICON_ENABLED = "stylus_icon_enabled";
+        
         /**
          * Enable Stylus Gestures
          *
