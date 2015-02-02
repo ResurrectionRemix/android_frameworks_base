@@ -252,6 +252,9 @@
     <!-- Doze: when to pulse after a buzzworthy notification arrives -->
     <string name="doze_pulse_schedule" translatable="false">1s,10s,30s,60s,120s</string>
 
+    <!-- Doze: alternate schedule -->
+    <string name="doze_pulse_schedule_alternate" translatable="false">1s</string>
+
     <!-- Doze: maximum number of times the notification pulse schedule can be reset -->
     <integer name="doze_pulse_schedule_resets">3</integer>
 
