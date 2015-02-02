@@ -62,6 +62,7 @@ public class QSPanel extends ViewGroup {
 
     private int mColumns;
     private int mNumberOfColumns;
+    private boolean mUseFourColumns;
     private int mCellWidth;
     private int mCellHeight;
     private int mLargeCellWidth;
@@ -142,10 +143,10 @@ public class QSPanel extends ViewGroup {
      */
     private int useFourColumns() {
         final Resources res = mContext.getResources();
-        boolean shouldUseFourColumns = Settings.Secure.getInt(
+        mUseFourColumns = Settings.Secure.getInt(
             mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
                 0) == 1;
-        if (shouldUseFourColumns) {
+        if (mUseFourColumns) {
             mNumberOfColumns = 4;
         } else {
             mNumberOfColumns = res.getInteger(R.integer.quick_settings_num_columns);
@@ -183,9 +184,14 @@ public class QSPanel extends ViewGroup {
         final Resources res = mContext.getResources();
         final int columns = Math.max(1, useFourColumns());
         mCellHeight = res.getDimensionPixelSize(R.dimen.qs_tile_height);
-        mCellWidth = (int)(mCellHeight * TILE_ASPECT);
+        if (mUseFourColumns) {
+            mCellWidth = (int)(mCellHeight * 0.8f);
+            mLargeCellWidth = (int)(mLargeCellHeight * 0.8f);
+        } else {
+            mCellWidth = (int)(mCellHeight * TILE_ASPECT);
+            mLargeCellWidth = (int)(mLargeCellHeight * TILE_ASPECT);
+        }
         mLargeCellHeight = res.getDimensionPixelSize(R.dimen.qs_dual_tile_height);
-        mLargeCellWidth = (int)(mLargeCellHeight * TILE_ASPECT);
         mPanelPaddingBottom = res.getDimensionPixelSize(R.dimen.qs_panel_padding_bottom);
         mDualTileUnderlap = res.getDimensionPixelSize(R.dimen.qs_dual_tile_padding_vertical);
         mBrightnessPaddingTop = res.getDimensionPixelSize(R.dimen.qs_brightness_padding_top);
