@@ -47,6 +47,7 @@ public class QSConstants {
     public static final String TILE_VISUALIZER = "visualizer";
     public static final String TILE_SCREEN_TIMEOUT = "screen_timeout";
     public static final String TILE_SCREENSHOT = "screenshot";
+    public static final String TILE_SCREENRECORD = "screenrecord";
     public static final String TILE_SYNC = "sync";
     public static final String TILE_BRIGHTNESS = "brightness";
     public static final String TILE_BATTERY_SAVER = "battery_saver";
@@ -123,6 +124,8 @@ public class QSConstants {
         DYNAMIC_TILES_AVAILABLE.add(DYNAMIC_TILE_ADB);
 
         TILES_AVAILABLE.addAll(STATIC_TILES_AVAILABLE);
-        TILES_AVAILABLE.addAll(DYNAMIC_TILES_AVAILABLE);        
+        TILES_AVAILABLE.addAll(DYNAMIC_TILES_AVAILABLE); 
+	TILES_AVAILABLE.add(TILE_SCREENRECORD);       
     }
 }
+
