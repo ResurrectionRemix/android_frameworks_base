@@ -88,10 +88,10 @@ public class ScreenrecordTile extends QSTile<QSTile.BooleanState> {
         state.visible = true;
 	state.value = mRecording;
         if (mRecording) {
-            state.iconId = R.drawable.ic_qs_screenrecord;
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_screenrecord);
             state.label = mContext.getString(R.string.quick_settings_screenrecord_on);
         } else {
-            state.iconId = R.drawable.ic_qs_screenrecord;
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_screenrecord);
             state.label = mContext.getString(R.string.quick_settings_screenrecord);
         }
     }
