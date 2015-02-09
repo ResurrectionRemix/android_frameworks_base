@@ -7401,7 +7401,6 @@ public class PackageManagerService extends IPackageManager.Stub {
                                 for (int j=0; j<sysPs.pkg.libraryNames.size(); j++) {
                                     if (name.equals(sysPs.pkg.libraryNames.get(j))) {
                                         allowed = true;
-                                        allowed = true;
                                         break;
                                     }
                                 }
