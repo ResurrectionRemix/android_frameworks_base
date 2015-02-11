@@ -19,10 +19,13 @@ package com.android.systemui.qs;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
@@ -49,6 +52,7 @@ import java.util.Collection;
 /** View that represents the quick settings tile panel. **/
 public class QSPanel extends ViewGroup {
     private static final float TILE_ASPECT = 1.2f;
+    private static final float TILE_ASPECT_SMALL = 0.8f;
 
     private final Context mContext;
     private final ArrayList<TileRecord> mRecords = new ArrayList<TileRecord>();
@@ -62,7 +66,6 @@ public class QSPanel extends ViewGroup {
 
     private int mColumns;
     private int mNumberOfColumns;
-    private boolean mUseFourColumns;
     private int mCellWidth;
     private int mCellHeight;
     private int mLargeCellWidth;
@@ -73,6 +76,9 @@ public class QSPanel extends ViewGroup {
     private boolean mExpanded;
     private boolean mListening;
 
+    private boolean mBrightnessSliderEnabled;
+    private boolean mUseFourColumns;
+
     private Record mDetailRecord;
     private Callback mCallback;
     private BrightnessController mBrightnessController;
@@ -82,6 +88,8 @@ public class QSPanel extends ViewGroup {
     private boolean mGridContentVisible = true;
 
     private boolean mUseMainTiles = false;
+
+    private SettingsObserver mSettingsObserver;
 
     public QSPanel(Context context) {
         this(context, null);
@@ -105,6 +113,7 @@ public class QSPanel extends ViewGroup {
         addView(mBrightnessView);
         addView(mFooter.getView());
         mClipper = new QSDetailClipper(mDetail);
+        mSettingsObserver = new SettingsObserver(mHandler);
         updateResources();
 
         mBrightnessController = new BrightnessController(getContext(),
@@ -123,11 +132,8 @@ public class QSPanel extends ViewGroup {
      * Enable/disable brightness slider.
      */
     private boolean showBrightnessSlider() {
-        boolean brightnessSliderEnabled = Settings.Secure.getInt(
-            mContext.getContentResolver(), Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER,
-                1) == 1;
         ToggleSlider brightnessSlider = (ToggleSlider) findViewById(R.id.brightness_slider);
-        if (brightnessSliderEnabled) {
+        if (mBrightnessSliderEnabled) {
             mBrightnessView.setVisibility(VISIBLE);
             brightnessSlider.setVisibility(VISIBLE);
         } else {
@@ -135,7 +141,7 @@ public class QSPanel extends ViewGroup {
             brightnessSlider.setVisibility(GONE);
         }
         updateResources();
-        return brightnessSliderEnabled;
+        return mBrightnessSliderEnabled;
     }
     
     /**
@@ -143,9 +149,6 @@ public class QSPanel extends ViewGroup {
      */
     private int useFourColumns() {
         final Resources res = mContext.getResources();
-        mUseFourColumns = Settings.Secure.getInt(
-            mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
-                0) == 1;
         if (mUseFourColumns) {
             mNumberOfColumns = 4;
         } else {
@@ -185,13 +188,12 @@ public class QSPanel extends ViewGroup {
         final int columns = Math.max(1, useFourColumns());
         mCellHeight = res.getDimensionPixelSize(R.dimen.qs_tile_height);
         if (mUseFourColumns) {
-            mCellWidth = (int)(mCellHeight * 0.8f);
-            mLargeCellWidth = (int)(mLargeCellHeight * 0.8f);
+            mCellWidth = (int)(mCellHeight * TILE_ASPECT_SMALL);
         } else {
             mCellWidth = (int)(mCellHeight * TILE_ASPECT);
-            mLargeCellWidth = (int)(mLargeCellHeight * TILE_ASPECT);
         }
         mLargeCellHeight = res.getDimensionPixelSize(R.dimen.qs_dual_tile_height);
+        mLargeCellWidth = (int)(mLargeCellHeight * TILE_ASPECT);
         mPanelPaddingBottom = res.getDimensionPixelSize(R.dimen.qs_panel_padding_bottom);
         mDualTileUnderlap = res.getDimensionPixelSize(R.dimen.qs_dual_tile_padding_vertical);
         mBrightnessPaddingTop = res.getDimensionPixelSize(R.dimen.qs_brightness_padding_top);
@@ -201,10 +203,11 @@ public class QSPanel extends ViewGroup {
         }
         if (mListening) {
             refreshAllTiles();
+            mSettingsObserver.observe();
         }
         updateDetailText();
     }
-
+    
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -240,6 +243,9 @@ public class QSPanel extends ViewGroup {
         mFooter.setListening(mListening);
         if (mListening) {
             refreshAllTiles();
+            mSettingsObserver.observe();
+        } else {
+            mSettingsObserver.unobserve();
         }
         if (listening && showBrightnessSlider()) {
             mBrightnessController.registerCallbacks();
@@ -249,8 +255,6 @@ public class QSPanel extends ViewGroup {
     }
 
     private void refreshAllTiles() {
-        mUseMainTiles = Settings.Secure.getInt(getContext().getContentResolver(),
-                Settings.Secure.QS_USE_MAIN_TILES, 1) == 1;
         for (int i = 0; i < mRecords.size(); i++) {
             TileRecord r = mRecords.get(i);
             r.tileView.setDual(mUseMainTiles && i < 2);
@@ -606,5 +610,54 @@ public class QSPanel extends ViewGroup {
         void onShowingDetail(QSTile.DetailAdapter detail);
         void onToggleStateChanged(boolean state);
         void onScanStateChanged(boolean state);
+    }
+
+    private class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.QS_USE_MAIN_TILES),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.QS_USE_FOUR_COLUMNS),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mUseMainTiles = Settings.Secure.getIntForUser(
+            mContext.getContentResolver(), Settings.Secure.QS_USE_MAIN_TILES,
+                1, UserHandle.USER_CURRENT) == 1;
+            mBrightnessSliderEnabled = Settings.Secure.getIntForUser(
+            mContext.getContentResolver(), Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER,
+                1, UserHandle.USER_CURRENT) == 1;
+            mUseFourColumns = Settings.Secure.getIntForUser(
+            mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
+                0, UserHandle.USER_CURRENT) == 1;
+        }
     }
 }
