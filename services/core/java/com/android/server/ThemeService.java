@@ -271,9 +271,6 @@ public class ThemeService extends IThemeService.Stub {
         // Populate the currentTheme map for the components we care about, we'll look
         // at the compatibility of each pkg below.
         HashMap<String, String> currentThemeMap = new HashMap<String, String>();
-        currentThemeMap.put(ThemesColumns.MODIFIES_STATUS_BAR, config.getOverlayForStatusBar());
-        currentThemeMap.put(ThemesColumns.MODIFIES_NAVIGATION_BAR,
-                config.getOverlayForNavBar());
         currentThemeMap.put(ThemesColumns.MODIFIES_OVERLAYS, config.getOverlayPkgName());
 
         // Look at each component's theme (that we care about at least) and check compatibility
@@ -770,7 +767,7 @@ public class ThemeService extends IThemeService.Stub {
         }
 
         if (componentMap.containsKey(ThemesColumns.MODIFIES_STATUS_BAR)) {
-            builder.overlay(ThemeConfig.SYSTEMUI_STATUS_BAR_PKG, pkgName == null ?
+            builder.overlay("com.android.systemui", pkgName == null ?
                     componentMap.get(ThemesColumns.MODIFIES_STATUS_BAR) : pkgName);
         }
 
