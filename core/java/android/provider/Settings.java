@@ -4057,10 +4057,29 @@ public final class Settings {
         /** @hide */ public static final int HEADS_UP_USER_ON = 1;
 
         /**
-         * Which applications to disable heads up notifications for
-         *
+
+         
+         * volume answer.
          * @hide
          */
+        public static final String ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER = "call_volume_answer";
+
+        /**
+         * ListView Animations
+         * 0 == None
+         * 1 == Wave (Left)
+         * 2 == Wave (Right)
+         * 3 == Scale
+         * 4 == Alpha
+         * 5 == Stack (Top)
+         * 6 == Stack (Bottom)
+         * 7 == Translate (Left)
+         * 8 == Translate (Right)
+         * @hide
+         */  
+	 /** * Which applications to disable heads up notifications for
+         */
+
         public static final String HEADS_UP_CUSTOM_VALUES = "heads_up_custom_values";
 
         /**
