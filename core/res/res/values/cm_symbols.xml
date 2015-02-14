@@ -60,7 +60,10 @@
     <java-symbol type="string" name="stk_cc_ussd_to_ussd" />
 
     <java-symbol type="layout" name="permission_confirmation_dialog" />
-
+    
+    <!-- First boot install dialog -->
+    <java-symbol type="string" name="android_installing_apk" />
+    <java-symbol type="string" name="android_installing_title" />
     <!-- From android.policy -->
     <java-symbol type="array" name="shutdown_reboot_options" />
     <java-symbol type="array" name="shutdown_reboot_actions" />
