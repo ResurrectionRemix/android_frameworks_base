@@ -3946,6 +3946,12 @@ public final class Settings {
         public static final String DOZE_TIME_MODE = "doze_time_mode";
 
         /**
+         * Timeout for volume panel
+         * @hide
+         */
+        public static final String VOLUME_PANEL_TIMEOUT = "volume_panel_timeout";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
