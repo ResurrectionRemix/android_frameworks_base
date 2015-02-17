@@ -6337,10 +6337,18 @@ public final class Settings {
         };
 
         /**
+<<<<<<< HEAD
          * Whether search panel is enabled.
          * @hide
          */
         public static final String SEARCH_PANEL_ENABLED = "search_panel_enabled";
+=======
+         * Whether to enable "advanced mode" for the current user.
+         * Boolean setting. 0 = no, 1 = yes.
+         * @hide
+         */
+        public static final String ADVANCED_MODE = "advanced_mode";
+>>>>>>> e7a2da3... SettingsProvider: add advanced_mode
 
         /**
          * This are the settings to be backed up.
