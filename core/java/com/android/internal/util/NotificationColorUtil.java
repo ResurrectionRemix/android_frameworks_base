@@ -203,8 +203,8 @@ public class NotificationColorUtil {
 
     private int processColor(int color) {
         return Color.argb(Color.alpha(color),
-                200 - Color.red(color),
-                200 - Color.green(color),
-                200 - Color.blue(color));
+                175 - Color.red(color),
+                175 - Color.green(color),
+                175 - Color.blue(color));
     }
 }
