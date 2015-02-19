@@ -18,4 +18,5 @@
 <resources>
     <color name="notification_text_default_color">@android:color/notification_default_color</color>
     <color name="sender_text_color">@android:color/black</color>
+    <color name="resolver_list_bg">@color/white</color>
 </resources>
