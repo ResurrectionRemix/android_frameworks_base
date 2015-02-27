@@ -45,5 +45,8 @@
     <!-- App Circle Bar tile -->
     <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
     <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+
+    <!-- Power Button for Navbar -->
+    <string name="navbar_power_button">Power button</string>
     
 </resources>

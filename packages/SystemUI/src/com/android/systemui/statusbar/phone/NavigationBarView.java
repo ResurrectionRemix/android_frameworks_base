@@ -39,12 +39,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
-import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,6 +70,14 @@ public class NavigationBarView extends LinearLayout {
     private OnTouchListener mRecentsPreloadListener;
     private OnTouchListener mHomeSearchActionListener;
     private OnLongClickListener mRecentsBackListener;
+
+    private OnLongClickListener mPowerListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            ((KeyButtonView) v).sendEvent(KeyEvent.KEYCODE_POWER, KeyEvent.FLAG_LONG_PRESS);
+            return true;
+        }
+    };
 
     final Display mDisplay;
     View mCurrentView = null;
@@ -476,6 +479,7 @@ public class NavigationBarView extends LinearLayout {
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_BACK, !disableBack);
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_HOME, !disableHome);
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_RECENT, !disableRecent);
+        setButtonWithTagVisibility(NavbarEditor.NAVBAR_POWER, !disableRecent);
 
         mBarTransitions.applyBackButtonQuiescentAlpha(mBarTransitions.getMode(), true /*animate*/);
     }
@@ -782,6 +786,11 @@ public class NavigationBarView extends LinearLayout {
         View homeView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_HOME);
         if (homeView != null) {
             homeView.setOnTouchListener(mHomeSearchActionListener);
+        }
+        View powerView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_POWER);
+        if (powerView != null) {
+            powerView.setLongClickable(true);
+            powerView.setOnLongClickListener(mPowerListener);
         }
     }
 
