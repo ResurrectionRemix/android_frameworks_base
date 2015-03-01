@@ -3495,6 +3495,12 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_DATE_FORMAT = "statusbar_clock_date_format";
 
         /**
+         * Display second in the Clock
+         * @hide
+         */
+        public static final String CLOCK_USE_SECOND = "clock_use_second";
+
+        /**
          * Action to perform when the home key is double-tapped.
          * (Default can be configured via config_doubleTapOnHomeBehavior)
          * (See KEY_HOME_LONG_PRESS_ACTION for valid values)
