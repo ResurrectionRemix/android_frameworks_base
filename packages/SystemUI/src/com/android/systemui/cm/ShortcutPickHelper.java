@@ -288,6 +288,7 @@ public class ShortcutPickHelper {
 
         mActions.addAction(ACTION_KILL_TASK, R.string.navring_action_kill_app);
         mActions.addAction(ACTION_STANDBY, R.string.navring_action_screen_off);
+        mActions.addAction(ACTION_POWER_MENU, R.string.navring_action_power_menu);
     }
 
     private class ActionHolder {

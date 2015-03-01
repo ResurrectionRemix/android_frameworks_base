@@ -120,6 +120,8 @@ public class NavigationRingHelpers {
             resourceId = getTorchDrawableResId(context);
         } else if (action.equals(ACTION_ASSIST)) {
             resourceId = R.drawable.ic_navigation_ring_search;
+        } else if (action.equals(ACTION_POWER_MENU)) {
+            resourceId = R.drawable.ic_navigation_ring_standby;
         }
 
         if (resourceId < 0) {
