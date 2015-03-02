@@ -78,4 +78,5 @@ interface IInputMethodManager {
     void setAdditionalInputMethodSubtypes(String id, in InputMethodSubtype[] subtypes);
     int getInputMethodWindowVisibleHeight();
     oneway void notifyUserAction(int sequenceNumber);
+    boolean isImeShowing();
 }

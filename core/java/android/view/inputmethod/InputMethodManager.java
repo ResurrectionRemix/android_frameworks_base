@@ -1338,6 +1338,17 @@ public final class InputMethodManager {
     }
 
     /**
+      * @hide
+      */
+    public boolean isImeShowing() {
+        try {
+            return mService.isImeShowing();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /**
      * @hide
      */
     public void checkFocus() {
