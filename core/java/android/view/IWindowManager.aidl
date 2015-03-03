@@ -265,6 +265,12 @@ interface IWindowManager
     void enableScreenIfNeeded();
 
     /**
+     * Toggle global menu
+     * @hide
+     */
+    void toggleGlobalMenu();
+
+    /**
      * Clears the frame statistics for a given window.
      *
      * @param token The window token.
