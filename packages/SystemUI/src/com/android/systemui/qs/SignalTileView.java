@@ -39,6 +39,7 @@ public final class SignalTileView extends QSTileView {
     private ImageView mIn;
     private ImageView mOut;
     private int mIconColor;
+    private boolean mQSCSwitch = false;
 
     private int mWideOverlayIconStartPadding;
 
@@ -56,7 +57,9 @@ public final class SignalTileView extends QSTileView {
         updateIconColor();
         final ImageView traffic = new ImageView(mContext);
         traffic.setImageResource(icon);
-        traffic.setColorFilter(mIconColor, Mode.MULTIPLY);
+        if (mQSCSwitch) {
+            traffic.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
         traffic.setAlpha(0f);
         addView(traffic);
         return traffic;
@@ -67,10 +70,14 @@ public final class SignalTileView extends QSTileView {
         updateIconColor();
         mIconFrame = new FrameLayout(mContext);
         mSignal = new ImageView(mContext);
-        mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
+        if (mQSCSwitch) {
+            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
         mIconFrame.addView(mSignal);
         mOverlay = new ImageView(mContext);
-        mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
+        if (mQSCSwitch) {
+            mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
         mIconFrame.addView(mOverlay, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         return mIconFrame;
     }
@@ -147,16 +154,22 @@ public final class SignalTileView extends QSTileView {
     }
 
     private void updateIconColor() {
-        mIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xffffffff);
+        mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (mQSCSwitch) {
+            mIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_ICON_COLOR, 0xffffffff);
+        }
     }
 
     @Override
     public void setIconColor() {
         updateIconColor();
-        mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
-        mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
-        mIn.setColorFilter(mIconColor, Mode.MULTIPLY);
-        mOut.setColorFilter(mIconColor, Mode.MULTIPLY);
+        if (mQSCSwitch) {
+            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mIn.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mOut.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
     }
 }

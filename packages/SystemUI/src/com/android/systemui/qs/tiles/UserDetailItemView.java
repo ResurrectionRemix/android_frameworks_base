@@ -128,12 +128,16 @@ public class UserDetailItemView extends LinearLayout {
     }
 
     public void setTextColor(boolean activated) {
-        int textColorNormal = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xffffffff);
-        int textColorActivated = getContext().getResources().getColor(
-                R.color.system_accent_color);
-        int textColorDeactivated = (102 << 24) | (textColorNormal & 0x00ffffff); // Text color normal with a transparency of 40%
-        mName.setTextColor(activated ? textColorActivated : textColorDeactivated);
+        boolean mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (mQSCSwitch) {
+            int textColorNormal = Settings.System.getInt(getContext().getContentResolver(),
+                    Settings.System.QS_TEXT_COLOR, 0xffffffff);
+            int textColorActivated = getContext().getResources().getColor(
+                    R.color.system_accent_color);
+            int textColorDeactivated = (102 << 24) | (textColorNormal & 0x00ffffff); // Text color normal with a transparency of 40%
+            mName.setTextColor(activated ? textColorActivated : textColorDeactivated);
+        }
     }
 
     @Override

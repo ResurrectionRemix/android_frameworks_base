@@ -44,6 +44,8 @@ public class DataUsageDetailView extends LinearLayout {
 
     private final DecimalFormat FORMAT = new DecimalFormat("#.##");
 
+    private boolean mQSCSwitch = false;
+
     public DataUsageDetailView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -66,6 +68,8 @@ public class DataUsageDetailView extends LinearLayout {
         final Resources res = mContext.getResources();
         final int titleId;
         final long bytes;
+        mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         int textColor = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xffffffff);
         int usageColor = R.color.system_accent_color;
@@ -99,7 +103,9 @@ public class DataUsageDetailView extends LinearLayout {
 
         final TextView title = (TextView) findViewById(android.R.id.title);
         title.setText(titleId);
-        title.setTextColor(textColor);
+        if (mQSCSwitch) {
+            title.setTextColor(textColor);
+        }
         final TextView usage = (TextView) findViewById(R.id.usage_text);
         usage.setText(formatBytes(bytes));
         usage.setTextColor(res.getColor(usageColor));
@@ -107,18 +113,27 @@ public class DataUsageDetailView extends LinearLayout {
         graph.setLevels(info.limitLevel, info.warningLevel, info.usageLevel);
         final TextView carrier = (TextView) findViewById(R.id.usage_carrier_text);
         carrier.setText(info.carrier);
-        carrier.setTextColor(textColor);
+        if (mQSCSwitch) {
+            carrier.setTextColor(textColor);
+        } else {
+            final TextView period = (TextView) findViewById(R.id.usage_period_text);
+            period.setText(info.period);
+        }
         final TextView infoTop = (TextView) findViewById(R.id.usage_info_top_text);
         infoTop.setVisibility(top != null ? View.VISIBLE : View.GONE);
         infoTop.setText(top);
-        infoTop.setTextColor(textColor);
-        final TextView period = (TextView) findViewById(R.id.usage_period_text);
-        period.setText(info.period);
-        period.setTextColor(secondaryTextColor);
+        if (mQSCSwitch) {
+            infoTop.setTextColor(textColor);
+            final TextView period = (TextView) findViewById(R.id.usage_period_text);
+            period.setText(info.period);
+            period.setTextColor(secondaryTextColor);
+        }
         final TextView infoBottom = (TextView) findViewById(R.id.usage_info_bottom_text);
         infoBottom.setVisibility(bottom != null ? View.VISIBLE : View.GONE);
         infoBottom.setText(bottom);
-        infoBottom.setTextColor(secondaryTextColor);
+        if (mQSCSwitch) {
+            infoBottom.setTextColor(secondaryTextColor);
+        }
     }
 
     private String formatBytes(long bytes) {

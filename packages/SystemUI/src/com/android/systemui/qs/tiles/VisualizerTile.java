@@ -90,6 +90,8 @@ public class VisualizerTile extends QSTile<QSTile.State>
             protected View createIcon() {
                 Resources r = mContext.getResources();
 
+                boolean mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
+                        Settings.System.QS_COLOR_SWITCH, 0) == 1;
                 int color = Settings.System.getInt(
                         getContext().getContentResolver(),
                         Settings.System.QS_ICON_COLOR, 0x96FFFFFF);
@@ -103,7 +105,11 @@ public class VisualizerTile extends QSTile<QSTile.State>
                 paint.setStrokeWidth(r.getDimensionPixelSize(
                         R.dimen.visualizer_path_stroke_width));
                 paint.setAntiAlias(true);
-                paint.setColor(color);
+                if (mQSCSwitch) {
+                    paint.setColor(color);
+                } else {
+                    paint.setColor(r.getColor(R.color.visualizer_fill_color));
+                }
                 paint.setPathEffect(new android.graphics.DashPathEffect(new float[]{
                         r.getDimensionPixelSize(R.dimen.visualizer_path_effect_1),
                         r.getDimensionPixelSize(R.dimen.visualizer_path_effect_2)

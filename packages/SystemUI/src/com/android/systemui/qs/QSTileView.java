@@ -62,6 +62,7 @@ public class QSTileView extends ViewGroup {
     private QSDualTileLabel mDualLabel;
     private int mLabelColor;
     private int mIconColor;
+    private boolean mQSCSwitch = false;
     private boolean mDual;
     private OnClickListener mClickPrimary;
     private OnClickListener mClickSecondary;
@@ -122,6 +123,8 @@ public class QSTileView extends ViewGroup {
     private void recreateLabel() {
         CharSequence labelText = null;
         CharSequence labelDescription = null;
+        boolean mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         if (mLabel != null) {
             labelText = mLabel.getText();
             removeView(mLabel);
@@ -141,7 +144,11 @@ public class QSTileView extends ViewGroup {
             mDualLabel = new QSDualTileLabel(mContext);
             mDualLabel.setId(android.R.id.title);
             mDualLabel.setBackgroundResource(R.drawable.btn_borderless_rect);
-            mDualLabel.setTextColor(mLabelColor);
+            if (mQSCSwitch) {
+                mDualLabel.setTextColor(mLabelColor);
+            } else {
+                mDualLabel.setTextColor(res.getColor(R.color.qs_tile_text));
+            }
             mDualLabel.setPadding(0, mDualTileVerticalPaddingPx, 0, mDualTileVerticalPaddingPx);
             mDualLabel.setTypeface(CONDENSED);
             mDualLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX,
@@ -159,7 +166,11 @@ public class QSTileView extends ViewGroup {
         } else {
             mLabel = new TextView(mContext);
             mLabel.setId(android.R.id.title);
-            mLabel.setTextColor(mLabelColor);
+            if (mQSCSwitch) {
+                mLabel.setTextColor(mLabelColor);
+            } else {
+                mLabel.setTextColor(res.getColor(R.color.qs_tile_text));
+            }
             mLabel.setGravity(Gravity.CENTER_HORIZONTAL);
             mLabel.setMinLines(2);
             mLabel.setPadding(0, 0, 0, 0);
@@ -208,10 +219,14 @@ public class QSTileView extends ViewGroup {
 
     protected void updateColors() {
         final ContentResolver resolver = mContext.getContentResolver();
-        mLabelColor = Settings.System.getInt(resolver,
-                Settings.System.QS_TEXT_COLOR, 0xffffffff);
-        mIconColor = Settings.System.getInt(resolver,
-                Settings.System.QS_ICON_COLOR, 0xff009688);
+        mQSCSwitch = Settings.System.getInt(resolver,
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (mQSCSwitch) {
+            mLabelColor = Settings.System.getInt(resolver,
+                    Settings.System.QS_TEXT_COLOR, 0xffffffff);
+            mIconColor = Settings.System.getInt(resolver,
+                    Settings.System.QS_ICON_COLOR, 0xffffffff);
+        }
     }
 
     public void setLabelColor() {
@@ -254,7 +269,9 @@ public class QSTileView extends ViewGroup {
         final ImageView icon = new ImageView(mContext);
         icon.setId(android.R.id.icon);
         icon.setScaleType(ScaleType.CENTER_INSIDE);
-        icon.setColorFilter(mIconColor, Mode.MULTIPLY);
+        if (mQSCSwitch) {
+            icon.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
         return icon;
     }
 
