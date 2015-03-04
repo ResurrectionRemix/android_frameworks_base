@@ -3570,36 +3570,7 @@ public final class Settings {
          * @hide
          */
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
-        
-        /**
-         * Timeout for ambient display notification
-         * @hide
-         */
-        public static final String DOZE_TIMEOUT = "doze_timeout";
-        /**
-         * Use pick up gesture sensor as doze pulse trigger
-         * @hide
-         */
-        public static final String DOZE_TRIGGER_PICKUP = "doze_trigger_pickup";
 
-        /**
-         * Use significant motion sensor as doze pulse trigger
-         * @hide
-         */
-        public static final String DOZE_TRIGGER_SIGMOTION = "doze_trigger_sigmotion";
-
-        /**	2133
-         * Use notifications as doze pulse triggers
-         * @hide
-         */
-        public static final String DOZE_TRIGGER_NOTIFICATION = "doze_trigger_notification";
-
-        /**
-         * Follow pre-configured doze pulse repeat schedule
-         * @hide
-         */
-         
-        public static final String DOZE_SCHEDULE = "doze_schedule";        
         /**
          * Boolean value on whether to show weather in the statusbar
          * @hide
@@ -3637,7 +3608,6 @@ public final class Settings {
          * 16-31 = Refresh interval(ms) min: 250 max: 32750 default: 1000
          * @hide
          */
-         
         public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
         
        /**
@@ -3880,6 +3850,60 @@ public final class Settings {
          * @hide
          */
         public static final String APP_CIRCLE_BAR_SHOW_TRIGGER = "app_circle_bar_show_trigger";
+
+        /**
+         * Enable/disable overwrite default value for ambient display
+         * @hide
+         */
+        public static final String DOZE_OVERWRITE_VALUE = "doze_overwrite_value";
+
+        /**
+         * Duration in for ambient display
+         * @hide
+         */
+        public static final String DOZE_PULSE_DURATION_IN = "doze_pulse_duration_in";
+
+        /**
+         * Duration visible for ambient display
+         * @hide
+         */
+        public static final String DOZE_PULSE_DURATION_VISIBLE = "doze_pulse_duration_visible";
+
+        /**
+         * Duration out for ambient display
+         * @hide
+         */
+        public static final String DOZE_PULSE_DURATION_OUT = "doze_pulse_duration_out";
+
+        /**
+         * Pulse if there is notifications for ambient display
+         * @hide
+         */
+        public static final String DOZE_PULSE_ON_NOTIFICATIONS = "doze_pulse_on_notifications";
+
+        /**
+         * Shake threshold for ambient display
+         * @hide
+         */
+        public static final String DOZE_SHAKE_ACC_THRESHOLD = "doze_shake_acc_threshold";
+
+        /**
+         * Pocket mode for ambient display
+         * @hide
+         */
+        public static final String DOZE_POCKET_MODE = "doze_pocket_mode";
+
+        /**
+         * Shake mode for ambient display
+         * @hide
+         */
+        public static final String DOZE_SHAKE_MODE = "doze_shake_mode";
+
+        /**
+         * Time mode for ambient display
+         * @hide
+         */
+        public static final String DOZE_TIME_MODE = "doze_time_mode";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

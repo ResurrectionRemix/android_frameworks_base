@@ -2015,9 +2015,6 @@
     <!-- Configuration to sending and receiving Mms when mobile data is disable.-->
     <bool name="config_enable_mms_with_mobile_data_off">false</bool>
 
-    <!-- Configuartion to set zen mode when silent mode is on -->
-    <bool name="config_setZenModeWhenSilentModeOn">false</bool>
-
     <!-- Configuartion to support ESN Tracker -->
     <bool name="config_telephony_ESN_Tracker_enabled">false</bool>
 
@@ -2026,11 +2023,6 @@
 
     <!-- Whether cpu boost is enabled for horizontal scroll. -->
     <bool name="config_enableCpuBoostForScroller">true</bool>
-    
-	    <!-- Wether doze feature is enabled by default in settings. -->
-    <bool name="config_doze_enabled_by_default">false</bool>
-    <bool name="doze_pulse_on_significant_motion">false</bool>
-    <bool name="doze_display_state_supported">false</bool>
     
     <!-- Configuration to enable non-default PDP during IWLAN -->
     <bool name="config_feature_iwlan_enabled">false</bool>
