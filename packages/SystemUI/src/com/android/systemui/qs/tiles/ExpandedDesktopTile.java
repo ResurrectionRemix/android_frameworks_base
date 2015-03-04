@@ -55,12 +55,6 @@ public class ExpandedDesktopTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void handleClick() {
-        /* wait for ripple animation to end */
-        try {
-             Thread.sleep(750);
-        } catch (InterruptedException ie) {
-             // Do nothing
-        }
         toggleState();
         refreshState();
     }

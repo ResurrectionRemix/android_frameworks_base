@@ -3783,11 +3783,21 @@ public final class Settings {
         public static final String STATUS_BAR_CARRIER = "status_bar_carrier";
 
         /**
-         * Heads Up Notifications
+         * Whether the user has enabled headsup (Default 1)
+         * HeadsUp is enabled by default within its Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED
+         * setting. Avoid changing low level implementations and use a System setting to
+         * override per-user heads up on/off preference.
          *
+         * Enable headsup = 1 (on by default)
+         * Disable headsup = 0
+         *
+         * @see com.android.systemui.statusbar.BaseStatusBar#addNotification
          * @hide
          */
-        public static final String HEADS_UP_NOTIFICATION = "heads_up_enabled";
+        public static final String HEADS_UP_USER_ENABLED = "heads_up_user_enabled";
+
+        /** @hide */ public static final int HEADS_UP_USER_OFF = 0;
+        /** @hide */ public static final int HEADS_UP_USER_ON = 1;
 
         /**
          * Which applications to disable heads up notifications for
@@ -4963,12 +4973,6 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_TARGETS = "lockscreen_target_actions";
-
-        /**
-         * Long press on lock screen lock icon to sleep
-         * @hide
-         */
-        public static final String LONG_PRESS_LOCK_ICON_TO_SLEEP = "long_press_lock_icon_to_sleep";
 
         /**
          * Comma-separated list of location providers that activities may access. Do not rely on

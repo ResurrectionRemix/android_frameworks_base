@@ -536,9 +536,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
 
                 // And remove all the excluded or all the other tasks
                 SystemServicesProxy ssp = RecentsTaskLoader.getInstance().getSystemServicesProxy();
-                if (size > 0) {
-                    ssp.removeAllUserTask(UserHandle.myUserId());
-                }
+                ssp.removeAllUserTask(UserHandle.myUserId());
             }
         });
     }

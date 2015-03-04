@@ -36,12 +36,9 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.os.RemoteException;
-import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.telecom.TelecomManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -123,10 +120,6 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     private VisualizerView mVisualizer;
     private boolean mScreenOn;
     private boolean mLinked;
-    
-    private boolean mLongClickToForceLock;
-    private boolean mLongClickToSleep;
-    private PowerManager mPm;
 
     public KeyguardBottomAreaView(Context context) {
         this(context, null);
@@ -383,12 +376,10 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         boolean clickToUnlock = mAccessibilityController.isTouchExplorationEnabled();
         boolean clickToForceLock = mUnlockMethodCache.isTrustManaged()
                 && !mAccessibilityController.isAccessibilityEnabled();
-        mLongClickToForceLock = mUnlockMethodCache.isTrustManaged()
+        boolean longClickToForceLock = mUnlockMethodCache.isTrustManaged()
                 && !clickToForceLock;
-        mLongClickToSleep = Settings.Secure.getIntForUser(getContext().getContentResolver(),
-                Settings.Secure.LONG_PRESS_LOCK_ICON_TO_SLEEP, 0, UserHandle.USER_CURRENT) == 1;
         mLockIcon.setClickable(clickToForceLock || clickToUnlock);
-        mLockIcon.setLongClickable(mLongClickToForceLock || mLongClickToSleep);
+        mLockIcon.setLongClickable(longClickToForceLock);
         mLockIcon.setFocusable(mAccessibilityController.isAccessibilityEnabled());
     }
 
@@ -410,14 +401,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
     @Override
     public boolean onLongClick(View v) {
-        if (mLongClickToSleep && !mLongClickToForceLock) {
-            mPm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-            mPm.goToSleep(SystemClock.uptimeMillis());
-            return true;
-        } else {
-            handleTrustCircleClick();
-            return true;
-        }
+        handleTrustCircleClick();
+        return true;
     }
 
     private void handleTrustCircleClick() {

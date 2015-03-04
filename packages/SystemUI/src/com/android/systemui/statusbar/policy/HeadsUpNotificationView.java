@@ -61,6 +61,8 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
 
     private NotificationData.Entry mHeadsUp;
 
+    private boolean mTouchOutside;
+
     private static int sRoundedRectCornerRadius = 0;
 
     public HeadsUpNotificationView(Context context, AttributeSet attrs) {
@@ -102,6 +104,8 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         if (mContentHolder != null) {
             mContentHolder.removeAllViews();
         }
+
+        mTouchOutside = false;
 
         if (mHeadsUp != null) {
             mHeadsUp.row.setSystemExpanded(true);
@@ -221,6 +225,8 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         }
 
         getViewTreeObserver().addOnComputeInternalInsetsListener(this);
+
+        mTouchOutside = false;
     }
 
     @Override
@@ -256,11 +262,24 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         if (System.currentTimeMillis() < mStartTouchTime) {
             return false;
         }
-        mBar.resetHeadsUpDecayTimer();
-        return mEdgeSwipeHelper.onTouchEvent(ev)
-                || mSwipeHelper.onTouchEvent(ev)
-                || mExpandHelper.onTouchEvent(ev)
-                || super.onTouchEvent(ev);
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_OUTSIDE:
+                if (mTouchOutside) return true;
+                // Hide headsup, after 1 sec.
+                mBar.getHandler().postDelayed(new Runnable() {
+                    public void run() {
+                        mBar.scheduleHeadsUpClose();
+                    }
+                }, 1000);
+                mTouchOutside = true;
+                return true;
+            default:
+                mBar.resetHeadsUpDecayTimer();
+                return mEdgeSwipeHelper.onTouchEvent(ev)
+                        || mSwipeHelper.onTouchEvent(ev)
+                        || mExpandHelper.onTouchEvent(ev)
+                        || super.onTouchEvent(ev);
+        }
     }
 
     @Override
@@ -332,6 +351,8 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
 
     @Override
     public void onBeginDrag(View v) {
+        // Prevent any surrounding View from intercepting us now.
+        requestDisallowInterceptTouchEvent(true);
     }
 
     @Override
