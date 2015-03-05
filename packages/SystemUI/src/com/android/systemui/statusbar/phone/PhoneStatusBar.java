@@ -1102,7 +1102,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mSuController = new SuControllerImpl(mContext);
 
         if (isMSim()) {
-            mMSimNetworkController = new MSimNetworkControllerImpl(mContext);
+            if (mMSimNetworkController == null) {
+                mMSimNetworkController = new MSimNetworkControllerImpl(mContext);
+            }
             MSimSignalClusterView signalCluster = (MSimSignalClusterView)
                     mStatusBarView.findViewById(R.id.msim_signal_cluster);
             MSimSignalClusterView signalClusterKeyguard = (MSimSignalClusterView)
@@ -1140,7 +1142,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 //});
             }
         } else {
-            mNetworkController = new NetworkControllerImpl(mContext);
+            if (mNetworkController == null) {
+                mNetworkController = new NetworkControllerImpl(mContext);
+            }
             final SignalClusterView signalCluster =
                 (SignalClusterView)mStatusBarView.findViewById(R.id.signal_cluster);
             final SignalClusterView signalClusterKeyguard =
@@ -3820,9 +3824,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mRecreating = true;
 
         if (mMSimNetworkController != null) {
-            mContext.unregisterReceiver(mMSimNetworkController);
+            mMSimNetworkController.removeAllSignalClusters();
         } else if (mNetworkController != null) {
-            mContext.unregisterReceiver(mNetworkController);
+            mNetworkController.removeAllSignalClusters();
         }
 
         removeHeadsUpView();
