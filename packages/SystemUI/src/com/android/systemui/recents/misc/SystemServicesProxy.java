@@ -611,7 +611,7 @@ public class SystemServicesProxy {
         int searchWidgetId = host.allocateAppWidgetId();
         Bundle opts = new Bundle();
         opts.putInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY,
-                AppWidgetProviderInfo.WIDGET_CATEGORY_SEARCHBOX);
+                AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN);
         if (!mAwm.bindAppWidgetIdIfAllowed(searchWidgetId, resolvedSearchWidgetInfo.provider, opts)) {
             host.deleteAppWidgetId(searchWidgetId);
             return null;
