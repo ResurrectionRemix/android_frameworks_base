@@ -512,7 +512,12 @@ public class WindowManagerService extends IWindowManager.Stub
     int mLastDisplayFreezeDuration = 0;
     Object mLastFinishedFreezeSource = null;
     boolean mWaitingForConfig = false;
-    boolean mWindowsFreezingScreen = false;
+
+    final static int WINDOWS_FREEZING_SCREENS_NONE = 0;
+    final static int WINDOWS_FREEZING_SCREENS_ACTIVE = 1;
+    final static int WINDOWS_FREEZING_SCREENS_TIMEOUT = 2;
+    private int mWindowsFreezingScreen = WINDOWS_FREEZING_SCREENS_NONE;
+
     boolean mClientFreezingScreen = false;
     int mAppsFreezingScreen = 0;
     int mLastWindowForcedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
@@ -4780,7 +4785,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 if (mAppsFreezingScreen == 1) {
                     startFreezingDisplayLocked(false, 0, 0);
                     mH.removeMessages(H.APP_FREEZE_TIMEOUT);
-                    mH.sendEmptyMessageDelayed(H.APP_FREEZE_TIMEOUT, 5000);
+                    mH.sendEmptyMessageDelayed(H.APP_FREEZE_TIMEOUT, 2000);
                 }
             }
             final int N = wtoken.allAppWindows.size();
@@ -6597,7 +6602,7 @@ public class WindowManagerService extends IWindowManager.Stub
         mAltOrientation = altOrientation;
         mPolicy.setRotationLw(mRotation);
 
-        mWindowsFreezingScreen = true;
+        mWindowsFreezingScreen = WINDOWS_FREEZING_SCREENS_ACTIVE;
         mH.removeMessages(H.WINDOW_FREEZE_TIMEOUT);
         mH.sendEmptyMessageDelayed(H.WINDOW_FREEZE_TIMEOUT, WINDOW_FREEZE_TIMEOUT_DURATION);
         mWaitingForConfig = true;
@@ -7995,6 +8000,7 @@ public class WindowManagerService extends IWindowManager.Stub
                     // TODO(multidisplay): Can non-default displays rotate?
                     synchronized (mWindowMap) {
                         Slog.w(TAG, "Window freeze timeout expired.");
+                        mWindowsFreezingScreen = WINDOWS_FREEZING_SCREENS_TIMEOUT;
                         final WindowList windows = getDefaultWindowListLocked();
                         int i = windows.size();
                         while (i > 0) {
@@ -8066,6 +8072,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 case APP_FREEZE_TIMEOUT: {
                     synchronized (mWindowMap) {
                         Slog.w(TAG, "App freeze timeout expired.");
+                        mWindowsFreezingScreen = WINDOWS_FREEZING_SCREENS_TIMEOUT;
                         final int numStacks = mStackIdToStack.size();
                         for (int stackNdx = 0; stackNdx < numStacks; ++stackNdx) {
                             final TaskStack stack = mStackIdToStack.valueAt(stackNdx);
@@ -9156,8 +9163,8 @@ public class WindowManagerService extends IWindowManager.Stub
             w.mOrientationChanging = true;
             w.mLastFreezeDuration = 0;
             mInnerFields.mOrientationChangeComplete = false;
-            if (!mWindowsFreezingScreen) {
-                mWindowsFreezingScreen = true;
+            if (mWindowsFreezingScreen == WINDOWS_FREEZING_SCREENS_NONE) {
+                mWindowsFreezingScreen = WINDOWS_FREEZING_SCREENS_ACTIVE;
                 // XXX should probably keep timeout from
                 // when we first froze the display.
                 mH.removeMessages(H.WINDOW_FREEZE_TIMEOUT);
@@ -10222,8 +10229,8 @@ public class WindowManagerService extends IWindowManager.Stub
                 "With display frozen, orientationChangeComplete="
                 + mInnerFields.mOrientationChangeComplete);
         if (mInnerFields.mOrientationChangeComplete) {
-            if (mWindowsFreezingScreen) {
-                mWindowsFreezingScreen = false;
+            if (mWindowsFreezingScreen != WINDOWS_FREEZING_SCREENS_NONE) {
+                mWindowsFreezingScreen = WINDOWS_FREEZING_SCREENS_NONE;
                 mLastFinishedFreezeSource = mInnerFields.mLastWindowFreezeSource;
                 mH.removeMessages(H.WINDOW_FREEZE_TIMEOUT);
             }
@@ -10509,7 +10516,7 @@ public class WindowManagerService extends IWindowManager.Stub
         } else {
             mInnerFields.mOrientationChangeComplete = true;
             mInnerFields.mLastWindowFreezeSource = mAnimator.mLastWindowFreezeSource;
-            if (mWindowsFreezingScreen) {
+            if (mWindowsFreezingScreen != WINDOWS_FREEZING_SCREENS_NONE) {
                 doRequest = true;
             }
         }
@@ -10856,7 +10863,8 @@ public class WindowManagerService extends IWindowManager.Stub
             return;
         }
 
-        if (mWaitingForConfig || mAppsFreezingScreen > 0 || mWindowsFreezingScreen
+        if (mWaitingForConfig || mAppsFreezingScreen > 0
+                || mWindowsFreezingScreen == WINDOWS_FREEZING_SCREENS_ACTIVE
                 || mClientFreezingScreen || !mOpeningApps.isEmpty()) {
             if (DEBUG_ORIENTATION) Slog.d(TAG,
                 "stopFreezingDisplayLocked: Returning mWaitingForConfig=" + mWaitingForConfig
