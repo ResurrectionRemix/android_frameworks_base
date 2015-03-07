@@ -6516,7 +6516,14 @@ public final class Settings {
          * @hide
          */
         public static final String SEARCH_PANEL_ENABLED = "search_panel_enabled";
-
+        
+        /**
+         * Whether to enable "advanced mode" for the current user.
+         * Boolean setting. 0 = no, 1 = yes.
+         * @hide
+         */
+        public static final String ADVANCED_MODE = "advanced_mode";
+        
         /**
          * String to contain power menu actions
          * @hide
