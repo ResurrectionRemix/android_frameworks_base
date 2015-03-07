@@ -3936,13 +3936,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      */
     void updateResources(Configuration newConfig) {
         final Context context = mContext;
+        ContentResolver resolver = mContext.getContentResolver();
 
         // detect theme change.
         ThemeConfig newTheme = newConfig != null ? newConfig.themeConfig : null;
         if (shouldUpdateStatusbar(mCurrentTheme, newTheme)) {
             mCurrentTheme = (ThemeConfig)newTheme.clone();
             recreateStatusBar();
-            repositionNavigationBar();
         // detect status bar carrier state when theme change.
         mShowStatusBarCarrier = Settings.System.getInt(
                 resolver, Settings.System.STATUS_BAR_CARRIER, 0) == 1;
@@ -3951,7 +3951,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         } else {
             loadDimens();
         }
-        
+
         // Update the quick setting tiles
         if (mQSPanel != null) {
             mQSPanel.updateResources();
