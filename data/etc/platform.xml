@@ -120,7 +120,10 @@
     <permission name="android.permission.MANAGE_VOICE_KEYPHRASES">
         <group gid="audio" />
     </permission>
-
+    
+    <permission name="android.permission.HARDWARE_ABSTRACTION_ACCESS" >
+        <group gid="system" />
+    </permission>
     <!-- ================================================================== -->
     <!-- ================================================================== -->
     <!-- ================================================================== -->
