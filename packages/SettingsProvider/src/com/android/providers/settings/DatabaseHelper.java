@@ -78,7 +78,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // is properly propagated through your change.  Not doing so will result in a loss of user
     // settings.
 
-    private static final int DATABASE_VERSION = 123;
+    private static final int DATABASE_VERSION = 124;
+
 
     private Context mContext;
     private int mUserHandle;
@@ -1934,6 +1935,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         
         if (upgradeVersion < 122) {
+
             // only the owner has access to global table, so we need to check that here
             if (mUserHandle == UserHandle.USER_OWNER) {
                 String[] globalToSecure = new String[] { Settings.Secure.POWER_MENU_ACTIONS };
@@ -1959,7 +1961,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
                         + " VALUES(?,?);");
                 loadBooleanSetting(stmt, Secure.ADVANCED_MODE,
-                        R.bool.def_advanced_mode);
+                        com.android.internal.R.bool.config_advancedSettingsMode);
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
@@ -1967,7 +1969,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             upgradeVersion = 123;
         }
-        
+
+        if (upgradeVersion < 124) {
+            // Force enable advanced settings if the overlay defaults to true
+            if (mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_advancedSettingsMode)) {
+                db.beginTransaction();
+                SQLiteStatement stmt = null;
+                try {
+                    stmt = db.compileStatement("INSERT OR REPLACE INTO secure(name,value)"
+                            + " VALUES(?,?);");
+                    loadBooleanSetting(stmt, Secure.ADVANCED_MODE,
+                            com.android.internal.R.bool.config_advancedSettingsMode);
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                    if (stmt != null) stmt.close();
+                }
+            }
+            upgradeVersion = 124;
+        }
+
         // *** Remember to update DATABASE_VERSION above!
 
         if (upgradeVersion != currentVersion) {
@@ -2623,7 +2645,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     R.bool.def_cm_stats_collection);
                     
             loadBooleanSetting(stmt, Settings.Secure.ADVANCED_MODE,
-                    R.bool.def_advanced_mode);
+                    com.android.internal.R.bool.config_advancedSettingsMode);
 
             loadDefaultThemeSettings(stmt);
             loadProtectedSmsSetting(stmt);
