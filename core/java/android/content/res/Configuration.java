@@ -1004,9 +1004,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         if (delta.themeConfig != null
                 && (themeConfig == null || !themeConfig.equals(delta.themeConfig))) {
             changed |= ActivityInfo.CONFIG_THEME_RESOURCE;
-            final String fontPkgName = delta.themeConfig.getFontPkgName();
             if (themeConfig == null ||
-                    (fontPkgName != null && !fontPkgName.equals(themeConfig.getFontPkgName()))) {
+                    !delta.themeConfig.getFontPkgName().equals(themeConfig.getFontPkgName())) {
                 changed |= ActivityInfo.CONFIG_THEME_FONT;
             }
             themeConfig = (ThemeConfig)delta.themeConfig.clone();
