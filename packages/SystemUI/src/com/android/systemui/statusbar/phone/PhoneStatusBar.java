@@ -501,6 +501,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             Settings.System.QS_COLOR_SWITCH,
                             0, UserHandle.USER_CURRENT) == 1;
                     recreateStatusBar();
+                    updateRowStates();
+                    updateSpeedbump();
+                    updateClearAll();
+                    updateEmptyShadeView();
             }
             update();
 
