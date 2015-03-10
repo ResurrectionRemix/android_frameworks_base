@@ -214,6 +214,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView {
 
     public void setExpandable(boolean expandable) {
         mExpandable = expandable;
+        setClipToOutline(expandable);
     }
 
     /**
