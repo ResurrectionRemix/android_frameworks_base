@@ -126,15 +126,12 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     private VisualizerView mVisualizer;
     private boolean mScreenOn;
     private boolean mLinked;
-<<<<<<< HEAD
     
     private boolean mLongClickToForceLock;
     private boolean mLongClickToSleep;
     private PowerManager mPm;
-=======
     private boolean mVisualizerEnabled;
     private SettingsObserver mSettingsObserver;
->>>>>>> 408dc52... SystemUI: allow lock screen visualizer to be disabled
 
     public KeyguardBottomAreaView(Context context) {
         this(context, null);
