@@ -20,37 +20,119 @@
 <!-- This is a view that shows general weather information in Keyguard. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/keyguard_weather_view"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom"
-        android:paddingBottom="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="14dp"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/no_weather_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"   >
+        android:layout_gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/weather_info_not_available"
+        android:textSize="16sp"
+        android:textColor="@color/keyguard_default_primary_text_color" />
 
-    <ImageView
-        android:id="@+id/weather_image"
-        android:scaleType="centerCrop"
-        android:layout_width="wrap_content"
-        android:layout_marginBottom="-10dp"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/weather_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <LinearLayout
+            android:id="@+id/left_panel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:includeFontPadding="false"
+                android:textSize="20sp"
+                android:textColor="@color/keyguard_default_primary_text_color" />
+
+            <TextView
+                android:id="@+id/wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:includeFontPadding="false"
+                android:textSize="16sp"
+                android:textColor="@color/keyguard_default_secondary_text_color" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/center_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/weather_image"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/right_panel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/current_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:includeFontPadding="false"
+                android:textSize="18sp"
+                android:textColor="@color/keyguard_default_primary_text_color" />
+
+            <TextView
+                android:id="@+id/humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:includeFontPadding="false"
+                android:textSize="14sp"
+                android:textColor="@color/keyguard_default_secondary_text_color" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
-        android:textColor="@color/clock_white"
-        android:textSize="16sp"
+        android:id="@+id/condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:includeFontPadding="false"
-        android:id="@+id/temperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textSize="18sp"
+        android:textColor="@color/keyguard_default_primary_text_color" />
 
     <TextView
-        android:textColor="@color/clock_white"
-        android:textSize="16sp"
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:includeFontPadding="false"
-        android:visibility="gone"
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textSize="10sp"
+        android:textColor="@color/keyguard_default_secondary_text_color" />
 
 </LinearLayout>
