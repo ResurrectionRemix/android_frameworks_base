@@ -35,4 +35,8 @@
      <string name="content_setup_dismiss">Continue</string>
 <string name="toast_not_installed">App is not installed</string>
 
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_expanded_header_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+    <string name="weather_info_not_available">Weather informations not available</string>
+
 </resources>

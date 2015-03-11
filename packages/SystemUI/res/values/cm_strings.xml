@@ -66,12 +66,14 @@
     <string name="advanced_dev_option_uninstall">Uninstall</string>
 
 
+
     <!-- Content description of the light brightness slider (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_notification_brightness">Light brightness</string>
 
     <!-- Lights settings, LED notification -->
     <string name="led_notification_title">Light settings</string>
     <string name="led_notification_text">LED light enabled by settings</string>
+
 
     <string name="qs_tile_edit_header_instruction">Press and hold a tile to edit</string>
     <string name="quick_settings_edit_label">Edit Tiles</string>
@@ -81,4 +83,8 @@
     <!-- The text for the button in the notification window-shade that clears
          all of the currently visible notifications. [CHAR LIMIT=10]-->
     <string name="clear_recents">Close all recent</string>
+     
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="weather_info_not_available">Weather informations not available</string>
+
 </resources>
