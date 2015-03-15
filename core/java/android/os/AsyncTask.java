@@ -226,6 +226,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 
     private final WorkerRunnable<Params, Result> mWorker;
     private final FutureTask<Result> mFuture;
+    private Executor mTaskExecutor;
 
     private volatile Status mStatus = Status.PENDING;
     
@@ -496,6 +497,10 @@ public abstract class AsyncTask<Params, Progress, Result> {
      */
     public final boolean cancel(boolean mayInterruptIfRunning) {
         mCancelled.set(true);
+        if ( mTaskExecutor instanceof ThreadPoolExecutor )
+        {
+            ((ThreadPoolExecutor) mTaskExecutor).remove(mFuture);
+        }
         return mFuture.cancel(mayInterruptIfRunning);
     }
 
@@ -615,6 +620,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
             }
         }
 
+        mTaskExecutor = exec;
         mStatus = Status.RUNNING;
 
         onPreExecute();
