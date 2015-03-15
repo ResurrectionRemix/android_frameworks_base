@@ -3970,12 +3970,6 @@ public final class Settings {
          * @hide
          */
         public static final String DOZE_TIME_MODE = "doze_time_mode";
-
-        /**
-         * Timeout for volume panel
-         * @hide
-         */
-        public static final String VOLUME_PANEL_TIMEOUT = "volume_panel_timeout";
         
         /**
          * Color temperature of the display during the day
@@ -6273,6 +6267,12 @@ public final class Settings {
          * @hide
          */
         public static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
+
+        /**
+         * Timeout of long-pressing the Back button
+         * @hide
+         */
+        public static final String KILL_APP_LONGPRESS_TIMEOUT = "kill_app_longpress_timeout";
 
         /**
          * The default NFC payment component
