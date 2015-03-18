@@ -7985,15 +7985,16 @@ public final class Settings {
          * Display style of the status bar battery information
          * 0: Display the battery an icon in portrait mode
          * 1: Display the battery as a circle
-         * 2: Display the battery as text
-         * 3: Do not display the battery
+         * 2: Display the battery as a dotted circle
+         * 3: Display the battery as text
+         * 4: Do not display the battery
          * default: 0
          * @hide
          */
         public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
         /** @hide */
         public static final Validator STATUS_BAR_BATTERY_STYLE_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 4);
 
         /**
          * This are the settings to be backed up.
