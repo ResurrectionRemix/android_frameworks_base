@@ -1167,10 +1167,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mNavigationBarView = mNavigationController.getNavigationBarView(mContext);
         mNavigationBarView.setDisabledFlags(mDisabled1);
-//        addNavigationBarCallback(mNavigationBarView);
+        addNavigationBarCallback(mNavigationBarView);
         mNavigationBarView.notifyInflateFromUser(); // let bar know we're not starting from boot
-//        addNavigationBar(true); // dynamically adding nav bar, reset System UI visibility!
-        addNavigationBar();
+        addNavigationBar(true); // dynamically adding nav bar, reset System UI visibility!
+
     }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
@@ -1460,7 +1460,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
         // in session state
 
-        addNavigationBar();
+        addNavigationBar(false);
 
         SettingsObserver observer = new SettingsObserver(mHandler);
         observer.observe();
@@ -2174,15 +2174,25 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 
-    private void prepareNavigationBarView() {
+    private void prepareNavigationBarView(boolean forceReset) {
         mNavigationBarView.reorient();
         mNavigationBarView.setListeners(mUserAutoHideListener);
         mNavigationBarView.setOnVerticalChangedListener(mVerticalChangedListener);
         mAssistManager.onConfigurationChanged();
+        if (forceReset) {
+            // Nav Bar was added dynamically - we need to reset the mSystemUiVisibility and call
+            // setSystemUiVisibility so that mNavigationBarMode is set to the correct value
+            int newVal = mSystemUiVisibility;
+            mSystemUiVisibility = 0;
+            setSystemUiVisibility(newVal, SYSTEM_UI_VISIBILITY_MASK);
+            checkBarMode(mNavigationBarMode,
+                    mNavigationBarWindowState, mNavigationBarView.getBarTransitions(),
+                    mNoAnimationOnNextBarModeChange);
+        }
     }
 
     // For small-screen devices (read: phones) that lack hardware navigation buttons
-    private void addNavigationBar() {
+    private void addNavigationBar(boolean forceReset) {
         if (DEBUG) Log.v(TAG, "addNavigationBar: about to add " + mNavigationBarView);
         if (mNavigationBarView == null) return;
 
@@ -2193,7 +2203,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             return;
         }
 
-        prepareNavigationBarView();
+        prepareNavigationBarView(forceReset);
 
         mWindowManager.addView(mNavigationBarView.getBaseView(), getNavigationBarLayoutParams());
     }
@@ -2209,7 +2219,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private void repositionNavigationBar() {
         if (mNavigationBarView == null || !mNavigationBarView.getBaseView().isAttachedToWindow()) return;
 
-        prepareNavigationBarView();
+        prepareNavigationBarView(false);
 
         mWindowManager.updateViewLayout(mNavigationBarView.getBaseView(), getNavigationBarLayoutParams());
     }
