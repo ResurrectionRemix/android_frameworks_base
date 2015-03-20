@@ -107,7 +107,7 @@ public class SlimSeekBarPreference extends Preference
             } else if (!mDisablePercentageValue) {
                 monitorBox.setText(progress + "%");
             } else {
-                monitorBox.setText(progress);
+                monitorBox.setText(Integer.toString(progress));
             }
         }
         if (mChanger != null) {
