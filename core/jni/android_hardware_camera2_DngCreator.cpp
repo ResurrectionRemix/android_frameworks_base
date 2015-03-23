@@ -1278,7 +1278,7 @@ static void DngCreator_init(JNIEnv* env, jobject thiz, jobject characteristicsPt
             }
 
             BAIL_IF_INVALID(writer->addEntry(TAG_CAMERACALIBRATION2, entry2.count,
-                    calibrationTransform2, TIFF_IFD_0),  env, TAG_CAMERACALIBRATION2, writer);
+                    calibrationTransform1, TIFF_IFD_0),  env, TAG_CAMERACALIBRATION2, writer);
         }
     }
 

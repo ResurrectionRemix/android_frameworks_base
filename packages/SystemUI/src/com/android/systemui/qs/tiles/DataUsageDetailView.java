@@ -19,7 +19,6 @@ package com.android.systemui.qs.tiles;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -44,8 +43,6 @@ public class DataUsageDetailView extends LinearLayout {
 
     private final DecimalFormat FORMAT = new DecimalFormat("#.##");
 
-    private boolean mQSCSwitch = false;
-
     public DataUsageDetailView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -68,12 +65,7 @@ public class DataUsageDetailView extends LinearLayout {
         final Resources res = mContext.getResources();
         final int titleId;
         final long bytes;
-        mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        int textColor = Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xffffffff);
         int usageColor = R.color.system_accent_color;
-        int secondaryTextColor = (179 << 24) | (textColor & 0x00ffffff); // Text color with a transparency of 70%
         final String top;
         String bottom = null;
         if (info.usageLevel < info.warningLevel || info.limitLevel <= 0) {
@@ -103,9 +95,6 @@ public class DataUsageDetailView extends LinearLayout {
 
         final TextView title = (TextView) findViewById(android.R.id.title);
         title.setText(titleId);
-        if (mQSCSwitch) {
-            title.setTextColor(textColor);
-        }
         final TextView usage = (TextView) findViewById(R.id.usage_text);
         usage.setText(formatBytes(bytes));
         usage.setTextColor(res.getColor(usageColor));
@@ -113,27 +102,14 @@ public class DataUsageDetailView extends LinearLayout {
         graph.setLevels(info.limitLevel, info.warningLevel, info.usageLevel);
         final TextView carrier = (TextView) findViewById(R.id.usage_carrier_text);
         carrier.setText(info.carrier);
-        if (mQSCSwitch) {
-            carrier.setTextColor(textColor);
-        } else {
-            final TextView period = (TextView) findViewById(R.id.usage_period_text);
-            period.setText(info.period);
-        }
+        final TextView period = (TextView) findViewById(R.id.usage_period_text);
+        period.setText(info.period);
         final TextView infoTop = (TextView) findViewById(R.id.usage_info_top_text);
         infoTop.setVisibility(top != null ? View.VISIBLE : View.GONE);
         infoTop.setText(top);
-        if (mQSCSwitch) {
-            infoTop.setTextColor(textColor);
-            final TextView period = (TextView) findViewById(R.id.usage_period_text);
-            period.setText(info.period);
-            period.setTextColor(secondaryTextColor);
-        }
         final TextView infoBottom = (TextView) findViewById(R.id.usage_info_bottom_text);
         infoBottom.setVisibility(bottom != null ? View.VISIBLE : View.GONE);
         infoBottom.setText(bottom);
-        if (mQSCSwitch) {
-            infoBottom.setTextColor(secondaryTextColor);
-        }
     }
 
     private String formatBytes(long bytes) {

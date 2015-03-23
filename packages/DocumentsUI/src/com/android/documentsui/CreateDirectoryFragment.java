@@ -30,7 +30,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.provider.DocumentsContract;
 import android.provider.DocumentsContract.Document;
 import android.util.Log;
@@ -40,8 +39,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.documentsui.model.DocumentInfo;
-
-import java.io.FileNotFoundException;
 
 /**
  * Dialog to create a new directory.
@@ -112,10 +109,7 @@ public class CreateDirectoryFragment extends DialogFragment {
                 final Uri childUri = DocumentsContract.createDocument(
                         client, mCwd.derivedUri, Document.MIME_TYPE_DIR, mDisplayName);
                 return DocumentInfo.fromUri(resolver, childUri);
-            } catch (RemoteException e) {
-                Log.w(TAG, "Failed to create directory", e);
-                return null;
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 Log.w(TAG, "Failed to create directory", e);
                 return null;
             } finally {

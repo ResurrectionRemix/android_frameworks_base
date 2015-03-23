@@ -76,7 +76,7 @@
     <dimen name="status_bar_icon_size">@*android:dimen/status_bar_icon_size</dimen>
 
     <!-- The font size for the clock -->
-    <dimen name="status_bar_clock_size">13sp</dimen>
+    <dimen name="status_bar_clock_size">14sp</dimen>
 
     <!-- Height of a small notification in the status bar -->
     <dimen name="notification_min_height">64dp</dimen>
@@ -411,7 +411,7 @@
     <dimen name="qs_emergency_calls_only_text_size">12sp</dimen>
 
     <!-- The font size of the date in QS -->
-    <dimen name="qs_date_collapsed_size">12sp</dimen>
+    <dimen name="qs_date_collapsed_size">14sp</dimen>
 
     <!-- Battery level text padding end when in expanded QS and on Keyguard -->
     <dimen name="battery_level_padding_end">2dp</dimen>
@@ -468,7 +468,7 @@
     <dimen name="keyguard_indication_margin_bottom">65dp</dimen>
 
     <!-- The text size for battery level -->
-    <dimen name="battery_level_text_size">11sp</dimen>
+    <dimen name="battery_level_text_size">12sp</dimen>
 
     <!-- TrustDrawable: Minimum inner radius of the breathing animation -->
     <dimen name="trust_circle_inner_radius_visible_min">22dp</dimen>
@@ -507,5 +507,4 @@
     <dimen name="fake_shadow_inset">1dp</dimen>
 
     <dimen name="fake_shadow_size">8dp</dimen>
-
 </resources>

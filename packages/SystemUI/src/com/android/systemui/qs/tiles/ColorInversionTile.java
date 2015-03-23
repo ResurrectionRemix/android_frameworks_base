@@ -84,11 +84,6 @@ public class ColorInversionTile extends QSTile<QSTile.BooleanState> {
     }
 
     @Override
-    protected void handleSecondaryClick() {
-        mHost.startSettingsActivity(ACCESSIBILITY_SETTINGS);
-    }
-
-    @Override
     protected void handleLongClick() {
         mHost.startSettingsActivity(ACCESSIBILITY_SETTINGS);
     }

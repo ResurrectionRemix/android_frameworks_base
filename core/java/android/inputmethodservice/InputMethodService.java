@@ -31,7 +31,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.os.SystemClock;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.InputType;
 import android.text.Layout;
@@ -714,7 +713,6 @@ public class InputMethodService extends AbstractInputMethodService {
         mRootView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         mWindow.setContentView(mRootView);
-        mRootView.getViewTreeObserver().removeOnComputeInternalInsetsListener(mInsetsComputer);
         mRootView.getViewTreeObserver().addOnComputeInternalInsetsListener(mInsetsComputer);
         if (Settings.Global.getInt(getContentResolver(),
                 Settings.Global.FANCY_IME_ANIMATIONS, 0) != 0) {
@@ -904,15 +902,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * is currently running in fullscreen mode.
      */
     public void updateFullscreenMode() {
-        boolean fullScreenOverride = Settings.System.getIntForUser(getContentResolver(),
-                Settings.System.FULLSCREEN_KEYBOARD_MODE, 1,
-                UserHandle.USER_CURRENT_OR_SELF) == 1;
-        boolean isFullscreen;
-        if (!fullScreenOverride) {
-            isFullscreen = false;
-        } else {
-            isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
-        }
+        boolean isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
         boolean changed = mLastShowInputRequested != mShowInputRequested;
         if (mIsFullscreen != isFullscreen || !mFullscreenApplied) {
             changed = true;

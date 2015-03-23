@@ -1225,15 +1225,10 @@ public class MediaScanner
 
         // compute original size of images
         mOriginalCount = 0;
-        try {
-            c = mMediaProvider.query(mPackageName, mImagesUri, new String[] {"COUNT(*)"}, null, null, null, null);
-            if (c.moveToFirst()) {
-                mOriginalCount = c.getInt(0);
-            }
-        } finally {
-            if (c != null && !c.isClosed()) {
-                c.close();
-            }
+        c = mMediaProvider.query(mPackageName, mImagesUri, ID_PROJECTION, null, null, null, null);
+        if (c != null) {
+            mOriginalCount = c.getCount();
+            c.close();
         }
     }
 

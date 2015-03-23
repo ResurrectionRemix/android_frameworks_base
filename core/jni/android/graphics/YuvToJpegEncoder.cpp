@@ -236,7 +236,6 @@ static jboolean YuvImage_compressToJpeg(JNIEnv* env, jobject, jbyteArray inYuv,
     env->ReleaseByteArrayElements(inYuv, yuv, 0);
     env->ReleaseIntArrayElements(offsets, imgOffsets, 0);
     env->ReleaseIntArrayElements(strides, imgStrides, 0);
-    delete strm;
     return result;
 }
 ///////////////////////////////////////////////////////////////////////////////

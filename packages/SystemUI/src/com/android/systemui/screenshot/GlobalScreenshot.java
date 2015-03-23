@@ -55,7 +55,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
-import android.provider.Settings;
 
 import com.android.systemui.R;
 import com.android.systemui.screenshot.DeleteScreenshot;
@@ -527,24 +526,22 @@ class GlobalScreenshot {
             finisher.run();
             return;
         }
-        
-        Bitmap ss = Bitmap.createBitmap(mDisplayMetrics.widthPixels,
-                mDisplayMetrics.heightPixels, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(ss);
-        
+
         if (requiresRotation) {
             // Rotate the screenshot to the current orientation
+            Bitmap ss = Bitmap.createBitmap(mDisplayMetrics.widthPixels,
+                    mDisplayMetrics.heightPixels, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(ss);
             c.translate(ss.getWidth() / 2, ss.getHeight() / 2);
             c.rotate(degrees);
             c.translate(-dims[0] / 2, -dims[1] / 2);
+            c.drawBitmap(mScreenBitmap, 0, 0, null);
+            c.setBitmap(null);
+            // Recycle the previous bitmap
+            mScreenBitmap.recycle();
+            mScreenBitmap = ss;
         }
-        
-        c.drawBitmap(mScreenBitmap, 0, 0, null);
-        c.setBitmap(null);
 
-        // Recycle the previous bitmap
-        mScreenBitmap.recycle();
-        mScreenBitmap = ss;
         // Optimizations
         mScreenBitmap.setHasAlpha(false);
         mScreenBitmap.prepareToDraw();
@@ -592,9 +589,7 @@ class GlobalScreenshot {
             @Override
             public void run() {
                 // Play the shutter sound to notify that we've taken a screenshot
-                if (Settings.System.getInt(mContext.getContentResolver(),
-            			Settings.System.SCREENSHOT_SOUND, 0) == 1)
-            		mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
 
                 mScreenshotView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                 mScreenshotView.buildLayer();

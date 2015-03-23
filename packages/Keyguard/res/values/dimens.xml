@@ -37,7 +37,7 @@
     <dimen name="glowpadview_inner_radius">15dip</dimen>
 
     <!-- Size of status line font on Unsecure unlock LockScreen. -->
-    <dimen name="keyguard_lockscreen_status_line_font_size">11dip</dimen>
+    <dimen name="keyguard_lockscreen_status_line_font_size">14dip</dimen>
 
     <!-- Size of right margin on Unsecure unlock LockScreen -->
     <dimen name="keyguard_lockscreen_status_line_font_right_margin">42dip</dimen>
@@ -161,8 +161,8 @@
     <dimen name="bottom_text_spacing_digital">-10dp</dimen>
     <dimen name="label_font_size">14dp</dimen>
     <dimen name="widget_label_font_size">16sp</dimen>
-    <dimen name="widget_big_font_size">78dp</dimen>
-    <dimen name="big_font_size">100dp</dimen>
+    <dimen name="widget_big_font_size">88dp</dimen>
+    <dimen name="big_font_size">120dp</dimen>
 
     <!-- The y translation to apply at the start in appear animations. -->
     <dimen name="appear_y_translation_start">32dp</dimen>

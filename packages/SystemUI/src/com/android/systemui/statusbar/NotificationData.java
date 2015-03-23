@@ -264,18 +264,6 @@ public class NotificationData {
         }
         return false;
     }
-    
-     /**
-     * Return whether there are any visible notifications (i.e. without an error).
-     */
-    public boolean hasActiveVisibleNotifications() {
-        for (Entry e : mSortedAndFiltered) {
-            if (e.expanded != null) { // the view successfully inflated
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Return whether there are any clearable notifications (that aren't errors).

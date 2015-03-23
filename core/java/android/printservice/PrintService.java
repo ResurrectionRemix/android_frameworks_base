@@ -386,7 +386,7 @@ public abstract class PrintService extends Service {
 
             @Override
             public void setClient(IPrintServiceClient client) {
-                mHandler.obtainMessage(ServiceHandler.MSG_SET_CLIENT, client)
+                mHandler.obtainMessage(ServiceHandler.MSG_SET_CLEINT, client)
                         .sendToTarget();
             }
 
@@ -414,7 +414,7 @@ public abstract class PrintService extends Service {
         public static final int MSG_STOP_PRINTER_STATE_TRACKING = 7;
         public static final int MSG_ON_PRINTJOB_QUEUED = 8;
         public static final int MSG_ON_REQUEST_CANCEL_PRINTJOB = 9;
-        public static final int MSG_SET_CLIENT = 10;
+        public static final int MSG_SET_CLEINT = 10;
 
         public ServiceHandler(Looper looper) {
             super(looper, null, true);
@@ -528,9 +528,9 @@ public abstract class PrintService extends Service {
                     onPrintJobQueued(new PrintJob(printJobInfo, mClient));
                 } break;
 
-                case MSG_SET_CLIENT: {
+                case MSG_SET_CLEINT: {
                     if (DEBUG) {
-                        Log.i(LOG_TAG, "MSG_SET_CLIENT "
+                        Log.i(LOG_TAG, "MSG_SET_CLEINT "
                                 + getPackageName());
                     }
                     mClient = (IPrintServiceClient) message.obj;

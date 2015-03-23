@@ -58,7 +58,7 @@
 
     <!-- How many icons may be shown at once in the system bar. Includes any
          slots that may be reused for things like IME control. -->
-    <integer name="config_maxNotificationIcons">4</integer>
+    <integer name="config_maxNotificationIcons">5</integer>
 
     <!-- Show phone (voice) signal strength instead of data in mobile RSSI. -->
     <bool name="config_showPhoneRSSIForData">false</bool>
@@ -137,13 +137,13 @@
     <bool name="config_show4GForLTE">true</bool>
 
     <!-- milliseconds before the heads up notification auto-dismisses. -->
-    <integer name="heads_up_notification_decay">6000</integer>
+    <integer name="heads_up_notification_decay">10000</integer>
 
     <!-- milliseconds before the heads up notification accepts touches. -->
     <integer name="heads_up_sensitivity_delay">700</integer>
 
     <!-- Show emergency call label only without carrier label on expanded notification area -->
-    <bool name="config_showEmergencyCallLabelOnly">false</bool>
+    <bool name="config_showEmergencyCallLabelOnly">true</bool>
     <bool name="config_showDataConnectionView">true</bool>
     <bool name="config_disableWifiAndBluetooth">false</bool>
 
@@ -237,12 +237,21 @@
     <!-- Doze: should the pickup sensor be used as a pulse signal? -->
     <bool name="doze_pulse_on_pick_up">false</bool>
 
+    <bool name="config_showSdcardAbsentIndicator">false</bool>
+    <bool name="config_showWifiIndicatorWhenEnabled">false</bool>
+    <bool name="config_showGpsIndicator">false</bool>
+    <bool name="config_showTogglesLayout">false</bool>
+    <bool name="config_showBrightnessToggles">false</bool>
+    <bool name="config_showHotSpotToggles">false</bool>
+    <bool name="config_showSyncToggles">false</bool>
+    <bool name="config_showGpsToggles">false</bool>
+
     <!-- Doze: should notifications be used as a pulse signal? -->
     <bool name="doze_pulse_on_notifications">true</bool>
 
     <!-- Doze: when to pulse after a buzzworthy notification arrives -->
     <string name="doze_pulse_schedule" translatable="false">1s,10s,30s,60s,120s</string>
-    
+
     <!-- Doze: maximum number of times the notification pulse schedule can be reset -->
     <integer name="doze_pulse_schedule_resets">3</integer>
 
@@ -261,11 +270,6 @@
     <!-- Doze: alpha to apply to small icons when dozing -->
     <integer name="doze_small_icon_alpha">222</integer><!-- 87% of 0xff -->
 
-    <!-- Whether doze should invert colors for notifications. If the RRO theme causes
-    the NORMAL notification background to be dark and the text to be light, this boolean
-    needs to be set to false, to prevent the doze notifications from being light -->
-    <bool name="config_invert_colors_on_doze">true</bool>
-
     <!-- Volume: time to delay dismissing the volume panel after a click is performed -->
     <integer name="volume_panel_dismiss_delay">200</integer>
 
@@ -280,16 +284,7 @@
 
     <!-- Zen toast visibility duration -->
     <integer name="zen_toast_visible_duration">500</integer>
-    
-    <bool name="config_showSdcardAbsentIndicator">false</bool>
-    <bool name="config_showWifiIndicatorWhenEnabled">false</bool>
-    <bool name="config_showGpsIndicator">false</bool>
-    <bool name="config_showTogglesLayout">false</bool>
-    <bool name="config_showBrightnessToggles">false</bool>
-    <bool name="config_showHotSpotToggles">false</bool>
-    <bool name="config_showSyncToggles">false</bool>
-    <bool name="config_showGpsToggles">false</bool>
-
     <!-- Whether to enable data switch or not -->
     <bool name="config_enableDataSwitch">false</bool>
 </resources>
+

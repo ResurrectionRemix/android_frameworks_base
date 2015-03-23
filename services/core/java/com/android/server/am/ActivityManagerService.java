@@ -302,7 +302,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     // Amount of time after a call to stopAppSwitches() during which we will
     // prevent further untrusted switches from happening.
-    static final long APP_SWITCH_DELAY_TIME = 0;
+    static final long APP_SWITCH_DELAY_TIME = 5*1000;
 
     // How long we wait for a launched process to attach to the activity manager
     // before we decide it's never going to come up for real.
@@ -4955,11 +4955,9 @@ public final class ActivityManagerService extends ActivityManagerNative
             stats.noteProcessDiedLocked(app.info.uid, pid);
         }
 
-        if (!app.killed) {
-            Process.killProcessQuiet(pid);
-            Process.killProcessGroup(app.info.uid, pid);
-            app.killed = true;
-        }
+        Process.killProcessQuiet(pid);
+        Process.killProcessGroup(app.info.uid, pid);
+        app.killed = true;
 
         // Clean up already done if the process has been re-started.
         if (app.pid == pid && app.thread != null &&

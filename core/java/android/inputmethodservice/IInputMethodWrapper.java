@@ -277,10 +277,6 @@ class IInputMethodWrapper extends IInputMethod.Stub
 
     @Override
     public void setSessionEnabled(IInputMethodSession session, boolean enabled) {
-        if (session == null) {
-            Log.w(TAG, "Incoming session is null");
-            return;
-        }
         try {
             InputMethodSession ls = ((IInputMethodSessionWrapper)
                     session).getInternalInputMethodSession();

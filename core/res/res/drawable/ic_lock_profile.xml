@@ -15,5 +15,5 @@
      limitations under the License.
 -->
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/ic_lock_profile_alpha1"
+    android:src="@drawable/ic_lock_profile_alpha"
     android:tint="?attr/colorControlNormal" />

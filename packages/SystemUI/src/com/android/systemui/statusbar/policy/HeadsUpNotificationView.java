@@ -45,6 +45,9 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
     private static final boolean DEBUG = false;
     private static final boolean SPEW = DEBUG;
 
+    public static final int DIRECTION_X = 0;
+    public static final int DIRECTION_Y = 1;
+
     Rect mTmpRect = new Rect();
     int[] mTmpTwoArray = new int[2];
 
@@ -60,8 +63,6 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
     private ViewGroup mContentHolder;
 
     private NotificationData.Entry mHeadsUp;
-
-    private boolean mTouchOutside;
 
     private static int sRoundedRectCornerRadius = 0;
 
@@ -104,8 +105,6 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         if (mContentHolder != null) {
             mContentHolder.removeAllViews();
         }
-
-        mTouchOutside = false;
 
         if (mHeadsUp != null) {
             mHeadsUp.row.setSystemExpanded(true);
@@ -225,8 +224,6 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         }
 
         getViewTreeObserver().addOnComputeInternalInsetsListener(this);
-
-        mTouchOutside = false;
     }
 
     @Override
@@ -262,24 +259,11 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         if (System.currentTimeMillis() < mStartTouchTime) {
             return false;
         }
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_OUTSIDE:
-                if (mTouchOutside) return true;
-                // Hide headsup, after 1 sec.
-                mBar.getHandler().postDelayed(new Runnable() {
-                    public void run() {
-                        mBar.scheduleHeadsUpClose();
-                    }
-                }, 1000);
-                mTouchOutside = true;
-                return true;
-            default:
-                mBar.resetHeadsUpDecayTimer();
-                return mEdgeSwipeHelper.onTouchEvent(ev)
-                        || mSwipeHelper.onTouchEvent(ev)
-                        || mExpandHelper.onTouchEvent(ev)
-                        || super.onTouchEvent(ev);
-        }
+        mBar.resetHeadsUpDecayTimer();
+        return mEdgeSwipeHelper.onTouchEvent(ev)
+                || mSwipeHelper.onTouchEvent(ev)
+                || mExpandHelper.onTouchEvent(ev)
+                || super.onTouchEvent(ev);
     }
 
     @Override
@@ -344,15 +328,14 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         return 1.0f;
     }
 
-    public void onChildDismissed(View v, boolean direction) {
-        if (DEBUG)  Log.v(TAG, "User swiped heads up to dismiss");
-        mBar.onHeadsUpDismissed(direction);
+    @Override
+    public void onChildDismissed(View v) {
+        Log.v(TAG, "User swiped heads up to dismiss");
+        mBar.onHeadsUpDismissed(DIRECTION_X);
     }
 
     @Override
     public void onBeginDrag(View v) {
-        // Prevent any surrounding View from intercepting us now.
-        requestDisallowInterceptTouchEvent(true);
     }
 
     @Override
@@ -428,7 +411,10 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
                         if (dY > 0) {
                             if (DEBUG_EDGE_SWIPE) Log.d(TAG, "found an open");
                             mBar.animateExpandNotificationsPanel();
-                            mBar.onHeadsUpDismissed(true);
+                        }
+                        if (dY < 0) {
+                            if (DEBUG_EDGE_SWIPE) Log.d(TAG, "found a close");
+                            mBar.onHeadsUpDismissed(DIRECTION_Y);
                         }
                         mConsuming = true;
                     }

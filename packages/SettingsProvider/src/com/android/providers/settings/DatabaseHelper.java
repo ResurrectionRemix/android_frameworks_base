@@ -77,8 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // database gets upgraded properly. At a minimum, please confirm that 'upgradeVersion'
     // is properly propagated through your change.  Not doing so will result in a loss of user
     // settings.
-
-    private static final int DATABASE_VERSION = 123;
+    private static final int DATABASE_VERSION = 124;
 
     private Context mContext;
     private int mUserHandle;
@@ -1932,8 +1931,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     settingsToMove, true);
             upgradeVersion = 121;
         }
-        
+
         if (upgradeVersion < 122) {
+            db.beginTransaction();
+            SQLiteStatement stmt = null;
+            try {
+                stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
+                        + " VALUES(?,?);");
+                loadBooleanSetting(stmt, Secure.ADVANCED_MODE,
+                        R.bool.def_advanced_mode);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+                if (stmt != null) stmt.close();
+            }
+            upgradeVersion = 122;
+        }
+
+        if (upgradeVersion < 123) {
             // only the owner has access to global table, so we need to check that here
             if (mUserHandle == UserHandle.USER_OWNER) {
                 String[] globalToSecure = new String[] { Settings.Secure.POWER_MENU_ACTIONS };
@@ -1949,25 +1964,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             };
             moveSettingsToNewTable(db, TABLE_SYSTEM, TABLE_SECURE, systemToSecure, true);
 
-            upgradeVersion = 122;
+            upgradeVersion = 123;
         }
-        
-        if (upgradeVersion < 123) {
+
+        if (upgradeVersion < 124) {
+            // Migrate from cm-12.0 if there is no entry from cm-11.0
             db.beginTransaction();
             SQLiteStatement stmt = null;
             try {
                 stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
                         + " VALUES(?,?);");
-                loadBooleanSetting(stmt, Secure.ADVANCED_MODE,
-                        R.bool.def_advanced_mode);
+                int quickPulldown = getIntValueFromSystem(db,
+                        Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN,
+                        R.integer.def_qs_quick_pulldown);
+                loadSetting(stmt, Settings.System.QS_QUICK_PULLDOWN, quickPulldown);
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
                 if (stmt != null) stmt.close();
             }
-            upgradeVersion = 123;
+            upgradeVersion = 124;
         }
-        
+
         // *** Remember to update DATABASE_VERSION above!
 
         if (upgradeVersion != currentVersion) {
@@ -2398,14 +2416,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void loadHeadsUpSetting(SQLiteStatement stmt) {
-        String dndValues = mContext.getResources()
-                .getString(R.string.def_heads_up_notification_dnd_values);
-        String blackListValues = mContext.getResources()
-                .getString(R.string.def_heads_up_notification_blacklist_values);
-        if (!TextUtils.isEmpty(dndValues)) {
-            loadSetting(stmt, Settings.System.HEADS_UP_CUSTOM_VALUES, dndValues);
-            loadSetting(stmt, Settings.System.HEADS_UP_BLACKLIST_VALUES, blackListValues);
+    private void loadProtectedSmsSetting(SQLiteStatement stmt) {
+        String[] regAddresses = mContext.getResources()
+                .getStringArray(R.array.def_protected_sms_list_values);
+        if (regAddresses.length > 0) {
+            loadSetting(stmt,
+                    Settings.Secure.PROTECTED_SMS_ADDRESSES,
+                    TextUtils.join("|", regAddresses));
         }
     }
 
@@ -2417,15 +2434,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadGlobalSettings(db);
         }
     }
-    private void loadProtectedSmsSetting(SQLiteStatement stmt) {
-        String[] regAddresses = mContext.getResources()
-                .getStringArray(R.array.def_protected_sms_list_values);
-        if (regAddresses.length > 0) {
-            loadSetting(stmt,
-                    Settings.Secure.PROTECTED_SMS_ADDRESSES,
-                    TextUtils.join("|", regAddresses));
-        }
-    }
+
     private void loadSystemSettings(SQLiteDatabase db) {
         SQLiteStatement stmt = null;
         try {
@@ -2472,11 +2481,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             loadIntegerSetting(stmt, Settings.System.STATUS_BAR_BATTERY_STYLE,
                     R.integer.def_battery_style);
-                    
-            loadHeadsUpSetting(stmt);
 
             loadIntegerSetting(stmt, Settings.System.ENABLE_PEOPLE_LOOKUP,
                     R.integer.def_people_lookup);
+
+            loadIntegerSetting(stmt, Settings.System.QS_QUICK_PULLDOWN,
+                    R.integer.def_qs_quick_pulldown);
 
         } finally {
             if (stmt != null) stmt.close();
@@ -2621,7 +2631,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             loadBooleanSetting(stmt, Settings.Secure.STATS_COLLECTION,
                     R.bool.def_cm_stats_collection);
-                    
+
             loadBooleanSetting(stmt, Settings.Secure.ADVANCED_MODE,
                     R.bool.def_advanced_mode);
 

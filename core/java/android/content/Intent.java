@@ -2274,21 +2274,6 @@ public class Intent implements Parcelable, Cloneable {
             "org.codeaurora.intent.action.WIFI_DISPLAY_VIDEO";
 
     /**
-     * <p>Broadcast Action: The user has changed carrier label:</p>
-     * <ul>
-     *   <li><em>state</em> - String value.</li>
-     * </ul>
-     *
-     * <p class="note">This is a protected intent that can only be sent
-     * by the system.
-     *
-     * @hide
-     */
-    //@SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
-    public static final String ACTION_CUSTOM_CARRIER_LABEL_CHANGED
-            = "android.intent.action.CUSTOM_CARRIER_LABEL";
-
-    /**
      * <p>Broadcast Action: The user has switched on advanced settings in the settings app:</p>
      * <ul>
      *   <li><em>state</em> - A boolean value indicating whether the settings is on or off.</li>
