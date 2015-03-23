@@ -24,17 +24,13 @@ import android.animation.ValueAnimator;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
-<<<<<<< HEAD
 import android.database.ContentObserver;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.graphics.PorterDuff.Mode;
-=======
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
->>>>>>> 0e7c113... Evo Merge Part - 2
 import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.Settings;
@@ -57,11 +53,9 @@ import com.android.internal.util.cm.LockscreenShortcutsHelper;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.R;
-<<<<<<< HEAD
-=======
+
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.qs.QSContainer;
->>>>>>> 0e7c113... Evo Merge Part - 2
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.statusbar.ExpandableView;
 import com.android.systemui.statusbar.FlingAnimationUtils;
@@ -87,7 +81,6 @@ public class NotificationPanelView extends PanelView implements
     private static final float HEADER_RUBBERBAND_FACTOR = 2.05f;
     private static final float LOCK_ICON_ACTIVE_SCALE = 1.2f;
 
-<<<<<<< HEAD
     private static final int DOZE_BACKGROUND_COLOR = 0xff000000;
     private static final int TAG_KEY_ANIM = R.id.scrim;
     private static final long DOZE_BACKGROUND_ANIM_DURATION = ScrimController.ANIMATION_DURATION;
@@ -96,10 +89,8 @@ public class NotificationPanelView extends PanelView implements
     private static final int ONE_FINGER_QS_INTERCEPT_END   = 1;
     private static final int ONE_FINGER_QS_INTERCEPT_START = 2;
     
-=======
     public static final long DOZE_ANIMATION_DURATION = 700;
 
->>>>>>> 0e7c113... Evo Merge Part - 2
     private KeyguardAffordanceHelper mAfforanceHelper;
     private StatusBarHeaderView mHeader;
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
@@ -2084,9 +2075,6 @@ public class NotificationPanelView extends PanelView implements
         mKeyguardStatusView.refreshTime();
     }
 
-<<<<<<< HEAD
-    class SettingsObserver extends ContentObserver {
-=======
     @Override
     public void onEmptySpaceClicked(float x, float y) {
         onEmptySpaceClick(x);
@@ -2119,11 +2107,11 @@ public class NotificationPanelView extends PanelView implements
     }
 
     private class SettingsObserver extends UserContentObserver {
->>>>>>> 0e7c113... Evo Merge Part - 2
         SettingsObserver(Handler handler) {
             super(handler);
         }
 
+        @Override
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(

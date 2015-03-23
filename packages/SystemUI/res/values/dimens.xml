@@ -531,8 +531,6 @@
 
     <dimen name="fake_shadow_size">8dp</dimen>
 
-<<<<<<< HEAD
-=======
     <!-- Padding between signal cluster and battery icon -->
     <dimen name="signal_cluster_battery_padding">7dp</dimen>
 
@@ -563,5 +561,4 @@
     <!-- Screen pinning inner nav bar outer circle size -->
     <dimen name="screen_pinning_nav_highlight_outer_size">84dp</dimen>
 
->>>>>>> 0e7c113... Evo Merge Part - 2
 </resources>

@@ -36,19 +36,14 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
-<<<<<<< HEAD
 import android.os.PowerManager;
-=======
 import android.os.RemoteException;
->>>>>>> 0e7c113... Evo Merge Part - 2
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
-<<<<<<< HEAD
 import android.view.GestureDetector;
 import android.view.*;
-=======
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -56,7 +51,6 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
->>>>>>> 0e7c113... Evo Merge Part - 2
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;

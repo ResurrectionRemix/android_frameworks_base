@@ -265,8 +265,6 @@
     <!-- Doze: should the pickup sensor be used as a pulse signal? -->
     <bool name="doze_pulse_on_pick_up">false</bool>
 
-<<<<<<< HEAD
-=======
     <bool name="config_showSdcardAbsentIndicator">false</bool>
     <bool name="config_showWifiIndicatorWhenEnabled">false</bool>
     <bool name="config_showGpsIndicator">false</bool>
@@ -278,18 +276,12 @@
     <!-- Doze: check proximity sensor before pulsing? -->
     <bool name="doze_proximity_check_before_pulse">true</bool>
 
->>>>>>> 0e7c113... Evo Merge Part - 2
     <!-- Doze: should notifications be used as a pulse signal? -->
     <bool name="doze_pulse_on_notifications">true</bool>
 
     <!-- Doze: when to pulse after a buzzworthy notification arrives -->
-<<<<<<< HEAD
     <string name="doze_pulse_schedule" translatable="false">1s,10s,30s,60s,120s</string>
     
-=======
-    <string name="doze_pulse_schedule" translatable="false">1s,10s,30s,60s</string>
-
->>>>>>> 0e7c113... Evo Merge Part - 2
     <!-- Doze: maximum number of times the notification pulse schedule can be reset -->
     <integer name="doze_pulse_schedule_resets">2</integer>
 

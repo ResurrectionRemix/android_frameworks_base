@@ -281,15 +281,9 @@ public class QSPanel extends ViewGroup {
         }
     }
 
-<<<<<<< HEAD
     private void refreshAllTiles() {
         mUseMainTiles = Settings.Secure.getIntForUser(getContext().getContentResolver(),
                 Settings.Secure.QS_USE_MAIN_TILES, 1, UserHandle.USER_CURRENT) == 1;
-=======
-    public void refreshAllTiles() {
-        mUseMainTiles = Settings.Secure.getIntForUser(getContext().getContentResolver(),
-                Settings.Secure.QS_USE_MAIN_TILES, 1, UserHandle.myUserId()) == 1;
->>>>>>> 0e7c113... Evo Merge Part - 2
         for (int i = 0; i < mRecords.size(); i++) {
             TileRecord r = mRecords.get(i);
             r.tileView.setDual(mUseMainTiles && i < 2);
@@ -700,17 +694,13 @@ public class QSPanel extends ViewGroup {
 
         @Override
         public void onAnimationEnd(Animator animation) {
-<<<<<<< HEAD
-            setGridContentVisibility(true);
-=======
             // Only hide content if still in detail state.
             if (mDetailRecord != null) {
                 setGridContentVisibility(false);
             }
->>>>>>> 0e7c113... Evo Merge Part - 2
         }
     };
-
+    
     public interface DetailCallback {
         void onDetailChanged(boolean showing);
     }

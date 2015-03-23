@@ -542,23 +542,22 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         tv.dismissTask(0L);
     }
 
-<<<<<<< HEAD
     private boolean dismissAll() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.RECENTS_CLEAR_ALL_DISMISS_ALL, 1) == 1;
-=======
-    /** Resets the focused task. */
-    void resetFocusedTask() {
-        if ((0 <= mFocusedTaskIndex) && (mFocusedTaskIndex < mStack.getTaskCount())) {
-            Task t = mStack.getTasks().get(mFocusedTaskIndex);
-            TaskView tv = getChildViewForTask(t);
-            if (tv != null) {
-                tv.unsetFocusedTask();
-            }
-        }
-        mFocusedTaskIndex = -1;
->>>>>>> 0e7c113... Evo Merge Part - 2
     }
+
+    public void dismissAllTasks() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Task> tasks = new ArrayList<Task>();
+                tasks.addAll(mStack.getTasks());
+                if (!dismissAll() && tasks.size() > 1) {
+                    // Ignore the visible foreground task
+                    Task foregroundTask = tasks.get(tasks.size() - 1);
+                    tasks.remove(foregroundTask);
+                }
 
     public void dismissAllTasks() {
         post(new Runnable() {

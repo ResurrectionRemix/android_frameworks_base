@@ -19,11 +19,8 @@ package com.android.systemui.qs;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
-<<<<<<< HEAD
 import android.graphics.PorterDuff.Mode;
-=======
 import android.graphics.drawable.Drawable;
->>>>>>> 0e7c113... Evo Merge Part - 2
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -196,16 +193,13 @@ public class QSDetailItems extends FrameLayout {
         view.setVisibility(mItemsVisible ? VISIBLE : INVISIBLE);
         final ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
         iv.setImageResource(item.icon);
-<<<<<<< HEAD
         if (mQSCSwitch) {
             iv.setColorFilter(mIconColor, Mode.MULTIPLY);
-=======
         iv.getOverlay().clear();
         if (item.overlay != null) {
             item.overlay.setBounds(0, 0, item.overlay.getIntrinsicWidth(),
                     item.overlay.getIntrinsicHeight());
             iv.getOverlay().add(item.overlay);
->>>>>>> 0e7c113... Evo Merge Part - 2
         }
         final TextView title = (TextView) view.findViewById(android.R.id.title);
         title.setText(item.line1);

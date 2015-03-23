@@ -617,47 +617,28 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         }
     }
 
-<<<<<<< HEAD
-    /** Called when the enter recents animation is triggered. */
-    public void onEnterAnimationTriggered() {
-        // Animate the SystemUI scrim views
-        mScrimViews.startEnterRecentsAnimation();
-        mRecentsView.startFABanimation();
-    }
 
-=======
->>>>>>> 0e7c113... Evo Merge Part - 2
     /**** RecentsView.RecentsViewCallbacks Implementation ****/
 
     @Override
     public void onExitToHomeAnimationTriggered() {
         // Animate the SystemUI scrim views out
         mScrimViews.startExitRecentsAnimation();
-        mRecentsView.endFABanimation();
     }
 
     @Override
     public void onTaskViewClicked() {
-<<<<<<< HEAD
-        // Mark recents as no longer visible
-        AlternateRecentsComponent.notifyVisibilityChanged(false);
-        mVisible = false;
-        mRecentsView.endFABanimation();
-=======
->>>>>>> 0e7c113... Evo Merge Part - 2
     }
 
     @Override
     public void onTaskLaunchFailed() {
         // Return to Home
         dismissRecentsToHomeRaw(true);
-        mRecentsView.endFABanimation();
     }
 
     @Override
     public void onAllTaskViewsDismissed() {
         mFinishLaunchHomeRunnable.run();
-        mRecentsView.endFABanimation();
     }
 
     @Override

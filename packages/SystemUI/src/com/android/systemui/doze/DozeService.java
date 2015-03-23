@@ -138,22 +138,16 @@ public class DozeService extends DreamService implements ProximitySensorManager.
 
         mSensors = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mSigMotionSensor = new TriggerSensor(Sensor.TYPE_SIGNIFICANT_MOTION,
-<<<<<<< HEAD
-            mDozeParameters.getPulseOnSigMotion(), mDozeParameters.getVibrateOnSigMotion());
-        mPickupSensor = new TriggerSensor(Sensor.TYPE_PICK_UP_GESTURE,
-            mDozeParameters.getPulseOnPickup(), mDozeParameters.getVibrateOnPickup());
-        mUseAccelerometer = mDozeParameters.setUsingAccelerometerAsSensorPickUp();
-        if (mUseAccelerometer) {
-            mProximitySensorManager = new ProximitySensorManager(mContext, this);
-            mShakeSensorManager = new ShakeSensorManager(mContext, this);
-        }
-=======
                 mDozeParameters.getPulseOnSigMotion(), mDozeParameters.getVibrateOnSigMotion(),
                 DozeLog.PULSE_REASON_SENSOR_SIGMOTION);
         mPickupSensor = new TriggerSensor(Sensor.TYPE_PICK_UP_GESTURE,
                 mDozeParameters.getPulseOnPickup(), mDozeParameters.getVibrateOnPickup(),
                 DozeLog.PULSE_REASON_SENSOR_PICKUP);
->>>>>>> 0e7c113... Evo Merge Part - 2
+        mUseAccelerometer = mDozeParameters.setUsingAccelerometerAsSensorPickUp();
+        if (mUseAccelerometer) {
+            mProximitySensorManager = new ProximitySensorManager(mContext, this);
+            mShakeSensorManager = new ShakeSensorManager(mContext, this);
+        }
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, mTag);
         mWakeLock.setReferenceCounted(true);
@@ -162,7 +156,7 @@ public class DozeService extends DreamService implements ProximitySensorManager.
         mUiModeManager = (UiModeManager) mContext.getSystemService(Context.UI_MODE_SERVICE);
         turnDisplayOff();
     }
-
+    
     @Override
     public void onAttachedToWindow() {
         if (DEBUG) Log.d(mTag, "onAttachedToWindow");
@@ -320,15 +314,13 @@ public class DozeService extends DreamService implements ProximitySensorManager.
                 // proximity check is only done to capture statistics, continue pulsing
                 continuePulsing(reason);
             }
+
             // perform a proximity check
             new ProximityCheck() {
                 @Override
                 public void onProximityResult(int result) {
                     final boolean isNear = result == RESULT_NEAR;
-<<<<<<< HEAD
                     final boolean isAccSensor = mUseAccelerometer && mDozeParameters.getShakeMode();
-                    DozeLog.traceProximityResult(isNear, SystemClock.uptimeMillis() - start);
-=======
                     final long end = SystemClock.uptimeMillis();
                     DozeLog.traceProximityResult(isNear, end - start, reason);
                     if (nonBlocking) {
@@ -336,7 +328,6 @@ public class DozeService extends DreamService implements ProximitySensorManager.
                         return;
                     }
                     // avoid pulsing in pockets
->>>>>>> 0e7c113... Evo Merge Part - 2
                     if (isNear) {
                         mPulsing = false;
                         mWakeLock.release();
@@ -549,29 +540,21 @@ public class DozeService extends DreamService implements ProximitySensorManager.
         public void onReceive(Context context, Intent intent) {
             if (PULSE_ACTION.equals(intent.getAction())) {
                 if (DEBUG) Log.d(mTag, "Received pulse intent");
-<<<<<<< HEAD
                 if (mUseAccelerometer && mDozeParameters.getPocketMode()) {
                     requestPulseFromAccelerometer();
                 } else {
-                    requestPulse();
+                    requestPulse(DozeLog.PULSE_REASON_INTENT);
                 }
-=======
-                requestPulse(DozeLog.PULSE_REASON_INTENT);
->>>>>>> 0e7c113... Evo Merge Part - 2
             }
             if (NOTIFICATION_PULSE_ACTION.equals(intent.getAction())) {
                 final long instance = intent.getLongExtra(EXTRA_INSTANCE, -1);
                 if (DEBUG) Log.d(mTag, "Received notification pulse intent instance=" + instance);
                 DozeLog.traceNotificationPulse(instance);
-<<<<<<< HEAD
                 if (mUseAccelerometer && mDozeParameters.getPocketMode()) {
                     requestPulseFromAccelerometer();
                 } else {
-                    requestPulse();
+                    requestPulse(DozeLog.PULSE_REASON_NOTIFICATION);
                 }
-=======
-                requestPulse(DozeLog.PULSE_REASON_NOTIFICATION);
->>>>>>> 0e7c113... Evo Merge Part - 2
                 rescheduleNotificationPulse(mNotificationLightOn);
             }
             if (UiModeManager.ACTION_ENTER_CAR_MODE.equals(intent.getAction())) {

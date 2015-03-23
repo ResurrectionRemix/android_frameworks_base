@@ -74,11 +74,8 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     View mSearchBar;
     RecentsViewCallbacks mCb;
     View mClearRecents;
-<<<<<<< HEAD
     View mFloatingButton;
     boolean mAlreadyLaunchingTask;
-=======
->>>>>>> 0e7c113... Evo Merge Part - 2
 
     public RecentsView(Context context) {
         super(context);
@@ -246,16 +243,9 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
 
     /** Requests all task stacks to start their exit-recents animation */
     public void startExitToHomeAnimation(ViewAnimation.TaskViewExitContext ctx) {
-<<<<<<< HEAD
-=======
         // We have to increment/decrement the post animation trigger in case there are no children
         // to ensure that it runs
         ctx.postAnimationTrigger.increment();
-
-        // Hide clear recents button before return to home
-        startHideClearRecentsButtonAnimation();
-
->>>>>>> 0e7c113... Evo Merge Part - 2
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);

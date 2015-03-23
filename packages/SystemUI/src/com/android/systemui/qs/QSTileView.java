@@ -149,16 +149,13 @@ public class QSTileView extends ViewGroup {
             mDualLabel = new QSDualTileLabel(mContext);
             mDualLabel.setId(android.R.id.title);
             mDualLabel.setBackgroundResource(R.drawable.btn_borderless_rect);
-<<<<<<< HEAD
             if (mQSCSwitch) {
                 mDualLabel.setTextColor(mLabelColor);
             } else {
                 mDualLabel.setTextColor(res.getColor(R.color.qs_tile_text));
             }
-=======
             mDualLabel.setFirstLineCaret(res.getDrawable(R.drawable.qs_dual_tile_caret));
             mDualLabel.setTextColor(res.getColor(R.color.qs_tile_text));
->>>>>>> 0e7c113... Evo Merge Part - 2
             mDualLabel.setPadding(0, mDualTileVerticalPaddingPx, 0, mDualTileVerticalPaddingPx);
             mDualLabel.setTypeface(CONDENSED);
             mDualLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX,

@@ -112,15 +112,6 @@ public class DozeParameters {
         return getPulseInDuration(pickup) + getPulseVisibleDuration() + getPulseOutDuration();
     }
 
-<<<<<<< HEAD
-    public int getPulseInDuration() {
-        if (getOverwriteValue()) {
-            return Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.DOZE_PULSE_DURATION_IN, R.integer.doze_pulse_duration_in,
-                    UserHandle.USER_CURRENT);
-        }
-        return getInt("doze.pulse.duration.in", R.integer.doze_pulse_duration_in);
-=======
     public int getPulseInDuration(boolean pickup) {
         return pickup
                 ? getInt("doze.pulse.duration.in.pickup", R.integer.doze_pulse_duration_in_pickup)
@@ -131,7 +122,6 @@ public class DozeParameters {
         return pickup
                 ? getInt("doze.pulse.delay.in.pickup", R.integer.doze_pulse_delay_in_pickup)
                 : getInt("doze.pulse.delay.in", R.integer.doze_pulse_delay_in);
->>>>>>> 0e7c113... Evo Merge Part - 2
     }
 
     public int getPulseVisibleDuration() {

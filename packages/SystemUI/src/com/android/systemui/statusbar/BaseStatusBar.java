@@ -106,13 +106,9 @@ import com.android.systemui.SwipeHelper;
 import com.android.systemui.SystemUI;
 import com.android.systemui.cm.SpamMessageProvider;
 import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
-import com.android.systemui.statusbar.NotificationData.Entry;
-<<<<<<< HEAD
 import com.android.systemui.statusbar.appcirclesidebar.AppCircleSidebar;
 import com.android.systemui.statusbar.phone.KeyguardTouchDelegate;
-=======
 import com.android.systemui.statusbar.NotificationData.Entry;
->>>>>>> 0e7c113... Evo Merge Part - 2
 import com.android.systemui.statusbar.phone.NavigationBarView;
 import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
 import com.android.systemui.statusbar.policy.HeadsUpNotificationView;
@@ -2219,7 +2215,8 @@ public abstract class BaseStatusBar extends SystemUI implements
         boolean accessibilityForcesLaunch = isFullscreen
                 && mAccessibilityManager.isTouchExplorationEnabled();
 
-<<<<<<< HEAD
+        }
+        
         final KeyguardTouchDelegate keyguard = KeyguardTouchDelegate.getInstance(mContext);
         boolean keyguardIsShowing = keyguard.isShowingAndNotOccluded()
                 && keyguard.isInputRestricted();
@@ -2227,30 +2224,24 @@ public abstract class BaseStatusBar extends SystemUI implements
         boolean isExpanded = false;
             if (mStackScroller != null) {
                 isExpanded = mStackScroller.getIsExpanded();
-        }
+
 
         final InputMethodManager inputMethodManager = (InputMethodManager)
                 mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         boolean isIMEShowing = inputMethodManager.isImeShowing();
 
-=======
->>>>>>> 0e7c113... Evo Merge Part - 2
         boolean interrupt = (isFullscreen || (isHighPriority && (isNoisy || hasTicker)))
                 && isAllowed
                 && !accessibilityForcesLaunch
                 && mPowerManager.isScreenOn()
-<<<<<<< HEAD
                 && !keyguardIsShowing
                 && !isExpanded
                 && !zenBlocksHeadsUp
                 && !isIMEShowing;
-
-=======
                 && (!mStatusBarKeyguardViewManager.isShowing()
                         || mStatusBarKeyguardViewManager.isOccluded())
                 && !mStatusBarKeyguardViewManager.isInputRestricted();
->>>>>>> 0e7c113... Evo Merge Part - 2
         try {
             interrupt = interrupt && !mDreamManager.isDreaming();
         } catch (RemoteException e) {
@@ -2359,8 +2350,10 @@ public abstract class BaseStatusBar extends SystemUI implements
             // Ignore.
         }
     }
-
-<<<<<<< HEAD
+        
+    public boolean isKeyguardSecure() {
+        return mStatusBarKeyguardViewManager.isSecure();
+        
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
     protected void addGestureAnywhereView() {
         mGestureAnywhereView = (GestureAnywhereView)View.inflate(
@@ -2428,9 +2421,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         lp.setTitle("AppCircleSidebar");
 
         return lp;
-=======
-    public boolean isKeyguardSecure() {
-        return mStatusBarKeyguardViewManager.isSecure();
->>>>>>> 0e7c113... Evo Merge Part - 2
+
+
     }
 }
