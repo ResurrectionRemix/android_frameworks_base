@@ -36,6 +36,7 @@ import com.android.server.wm.WindowManagerService;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
+import org.codeaurora.Performance;
 
 import android.app.ActivityManagerNative;
 import android.app.AppGlobals;
@@ -66,6 +67,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.net.Uri;
 import android.os.Binder;
@@ -385,6 +387,56 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
      * True if the screen is on.  The value is true initially.
      */
     boolean mScreenOn = true;
+
+    class KeyboardDetect {
+        private final int GPU_DEFAULT_PWRLVL = 0x4C05; /* GPU default power level to 5 */
+        private Performance mPerf = new Performance();
+        private int keyboardState = 0;
+
+        final int INACTIVE = 0;
+        final int FOREGROUND = 1;
+        final int BACKGROUND = 2;
+
+        synchronized void keyboardPerflockAcquire() {
+             if (mPerf != null) {
+                 try {
+                     mPerf.perfLockAcquire(0, GPU_DEFAULT_PWRLVL);
+                     if (DEBUG) Slog.i(TAG, "Keyboard Perflock Acquired");
+                 } catch (Exception e) {
+                     Slog.e(TAG, "Exception caught at perflock acquire", e);
+                     return;
+                 }
+             } else {
+                 Slog.e(TAG, "Perflock object null");
+                 return;
+             }
+        }
+
+        synchronized void keyboardPerflockRelease() {
+             if (mPerf != null) {
+                 try {
+                     mPerf.perfLockRelease();
+                     if (DEBUG) Slog.i(TAG, "Keyboard Perflock Released");
+                 } catch (Exception e) {
+                     Slog.e(TAG, "Exception caught at perflock release", e);
+                     return;
+                 }
+             } else {
+                 Slog.e(TAG, "Perflock object null");
+                 return;
+             }
+        }
+
+        synchronized int getKeyboardState() {
+             return keyboardState;
+        }
+
+        synchronized void setKeyboardState(int state) {
+             keyboardState = state;
+             if (DEBUG) Slog.i(TAG, "Keyboard state is " + keyboardState);
+        }
+    }
+    KeyboardDetect kb = new KeyboardDetect();
 
     int mCurUserActionNotificationSequenceNumber = 0;
 
@@ -782,7 +834,11 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
         if (defIm == null && mMethodList.size() > 0) {
             defIm = InputMethodUtils.getMostApplicableDefaultIME(
                     mSettings.getEnabledInputMethodListLocked());
-            Slog.i(TAG, "No default found, using " + defIm.getId());
+            if (defIm != null) {
+                Slog.i(TAG, "Default found, using " + defIm.getId());
+            } else {
+                Slog.i(TAG, "No default found");
+            }
         }
         if (defIm != null) {
             setSelectedInputMethodAndSubtypeLocked(defIm, NOT_A_SUBTYPE_ID, false);
@@ -944,6 +1000,22 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
     }
 
     private void updateImeWindowStatusLocked() {
+        /* Handle soft input interaction with display screen state */
+
+        /* Release perflock if soft input was visible when display about to go off */
+        if ((kb.getKeyboardState() == kb.FOREGROUND) && !mScreenOn) {
+           kb.keyboardPerflockRelease();
+           kb.setKeyboardState(kb.BACKGROUND);
+           if (DEBUG) Slog.i(TAG, "Keyboard in background");
+        }
+
+        /* Acquire perflock if display is turning on and soft input is active in background */
+        else if ((kb.getKeyboardState() == kb.BACKGROUND) && mScreenOn) {
+           kb.keyboardPerflockAcquire();
+           kb.setKeyboardState(kb.FOREGROUND);
+           if (DEBUG) Slog.i(TAG, "Keyboard in foreground");
+        }
+
         setImeWindowStatus(mCurToken, mImeWindowVis, mBackDisposition);
     }
 
@@ -1899,6 +1971,13 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                                 | Context.BIND_TREAT_LIKE_ACTIVITY);
                 mVisibleBound = true;
             }
+            /* Acquire perflock if - display is on, soft input is shown
+             * and perflock not yet acquired */
+            if (mScreenOn && kb.getKeyboardState() == kb.INACTIVE) {
+               kb.keyboardPerflockAcquire();
+               kb.setKeyboardState(kb.FOREGROUND);
+               if (DEBUG) Slog.i(TAG, "Keyboard in foreground");
+            }
             res = true;
         } else if (mHaveConnection && SystemClock.uptimeMillis()
                 >= (mLastBindTime+TIME_TO_RECONNECT)) {
@@ -1984,6 +2063,23 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
         mShowRequested = false;
         mShowExplicitlyRequested = false;
         mShowForced = false;
+       /* Release perflock if - display is on, soft input is hidden
+        * and perflock is still acquired */
+        if (mScreenOn && kb.getKeyboardState() == kb.FOREGROUND) {
+            kb.keyboardPerflockRelease();
+            kb.setKeyboardState(kb.INACTIVE);
+            if (DEBUG) Slog.i(TAG, "Keyboard hidden by explicitly");
+        }
+       /* Change keyboard state - some apps can call hide input after
+        * SCREEN OFF intent, in which case if keyboard was in
+        * BACKGROUND state, it needs to be hidden so state has to
+        * change to INACTIVE. After display comes on, keyboard will
+        * not be visible in the app and perflock is in released state.
+        */
+        else if (!mScreenOn && kb.getKeyboardState() == kb.BACKGROUND) {
+            kb.setKeyboardState(kb.INACTIVE);
+            if (DEBUG) Slog.i(TAG, "Keyboard hidden by implicitly");
+        }
         return res;
     }
 
@@ -2850,23 +2946,30 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                     }
                 }
             }
-            final Context themedContext = new ContextThemeWrapper(context,
-                    android.R.style.Theme_DeviceDefault_Settings);
-            mDialogBuilder = new AlertDialog.Builder(themedContext);
-            final TypedArray a = themedContext.obtainStyledAttributes(null,
-                    com.android.internal.R.styleable.DialogPreference,
-                    com.android.internal.R.attr.alertDialogStyle, 0);
-            mDialogBuilder.setIcon(a.getDrawable(
-                    com.android.internal.R.styleable.DialogPreference_dialogIcon));
-            a.recycle();
+
+            final Context settingsContext = new ContextThemeWrapper(context,
+                    com.android.internal.R.style.Theme_DeviceDefault_Settings);
+
+            mDialogBuilder = new AlertDialog.Builder(settingsContext);
             mDialogBuilder.setOnCancelListener(new OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     hideInputMethodMenu();
                 }
             });
-            final LayoutInflater inflater =
-                    (LayoutInflater)themedContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            final Context dialogContext = mDialogBuilder.getContext();
+            final TypedArray a = dialogContext.obtainStyledAttributes(null,
+                    com.android.internal.R.styleable.DialogPreference,
+                    com.android.internal.R.attr.alertDialogStyle, 0);
+            final Drawable dialogIcon = a.getDrawable(
+                    com.android.internal.R.styleable.DialogPreference_dialogIcon);
+            a.recycle();
+
+            mDialogBuilder.setIcon(dialogIcon);
+
+            final LayoutInflater inflater = (LayoutInflater) dialogContext.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
             final View tv = inflater.inflate(
                     com.android.internal.R.layout.input_method_switch_dialog_title, null);
             mDialogBuilder.setCustomTitle(tv);
@@ -2877,7 +2980,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                     .findViewById(com.android.internal.R.id.hard_keyboard_section)
                     .setVisibility(mWindowManagerService.isHardKeyboardAvailable()
                             ? View.VISIBLE : View.GONE);
-            final Switch hardKeySwitch = (Switch)mSwitchingDialogTitleView.findViewById(
+            final Switch hardKeySwitch = (Switch) mSwitchingDialogTitleView.findViewById(
                     com.android.internal.R.id.hard_keyboard_switch);
             hardKeySwitch.setChecked(mShowImeWithHardKeyboard);
             hardKeySwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -2890,7 +2993,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                 }
             });
 
-            final ImeSubtypeListAdapter adapter = new ImeSubtypeListAdapter(themedContext,
+            final ImeSubtypeListAdapter adapter = new ImeSubtypeListAdapter(dialogContext,
                     com.android.internal.R.layout.input_method_switch_item, imList, checkedItem);
             final OnClickListener choiceListener = new OnClickListener() {
                 @Override
@@ -2946,10 +3049,11 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
         public ImeSubtypeListAdapter(Context context, int textViewResourceId,
                 List<ImeSubtypeListItem> itemsList, int checkedItem) {
             super(context, textViewResourceId, itemsList);
+
             mTextViewResourceId = textViewResourceId;
             mItemsList = itemsList;
             mCheckedItem = checkedItem;
-            mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override

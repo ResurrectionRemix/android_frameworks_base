@@ -24,9 +24,9 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Handler;
+import android.provider.Settings;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -60,7 +60,7 @@ import java.lang.annotation.RetentionPolicy;
  * <a href="{@docRoot}guide/topics/ui/notifiers/toasts.html">Toast Notifications</a> developer
  * guide.</p>
  * </div>
- */
+ */ 
 public class Toast {
     static final String TAG = "Toast";
     static final boolean localLOGV = false;
@@ -104,7 +104,7 @@ public class Toast {
         mTN.mGravity = context.getResources().getInteger(
                 com.android.internal.R.integer.config_toastDefaultGravity);
     }
-
+    
     /**
      * Show the view for the specified duration.
      */
@@ -139,7 +139,7 @@ public class Toast {
             // Empty
         }
     }
-
+    
     /**
      * Set the view to show.
      * @see #getView
@@ -173,7 +173,7 @@ public class Toast {
     public int getDuration() {
         return mDuration;
     }
-
+    
     /**
      * Set the margins of the view.
      *
@@ -229,7 +229,7 @@ public class Toast {
     public int getXOffset() {
         return mTN.mX;
     }
-
+    
     /**
      * Return the Y offset in pixels to apply to the gravity's location.
      */
@@ -237,6 +237,14 @@ public class Toast {
         return mTN.mY;
     }
 
+    /**
+     * Gets the LayoutParams for the Toast window.
+     * @hide
+     */
+    public WindowManager.LayoutParams getWindowParams() {
+        return mTN.mParams;
+    }
+    
     /**
      * Make a standard toast that just contains a text view.
      *
@@ -255,7 +263,7 @@ public class Toast {
         View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);
         TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);
         tv.setText(text);
-
+        
         result.mNextView = v;
         result.mDuration = duration;
 
@@ -285,7 +293,7 @@ public class Toast {
     public void setText(int resId) {
         setText(mContext.getText(resId));
     }
-
+    
     /**
      * Update the text in a Toast that was previously created using one of the makeText() methods.
      * @param s The new text for the Toast.
@@ -354,7 +362,7 @@ public class Toast {
             params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             params.width = WindowManager.LayoutParams.WRAP_CONTENT;
             params.format = PixelFormat.TRANSLUCENT;
-	    params.windowAnimations = com.android.internal.R.style.Animation_Toast;
+            params.windowAnimations = com.android.internal.R.style.Animation_Toast;
             params.type = WindowManager.LayoutParams.TYPE_TOAST;
             params.setTitle("Toast");
             params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON

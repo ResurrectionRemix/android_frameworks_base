@@ -22,9 +22,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:fitsSystemWindows="false"
-    android:descendantFocusability="afterDescendants">
+    android:fitsSystemWindows="false">
 
     <com.android.systemui.statusbar.BackDropView
             android:id="@+id/backdrop"
@@ -45,7 +43,8 @@
 
     <com.android.systemui.statusbar.ScrimView android:id="@+id/scrim_behind"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no" />
 
     <include layout="@layout/status_bar"
         android:layout_width="match_parent"
@@ -55,8 +54,8 @@
                  android:layout_width="@dimen/notification_panel_width"
                  android:layout_height="wrap_content"
                  android:layout_gravity="@integer/notification_panel_layout_gravity"
-                 android:paddingLeft="@dimen/notification_side_padding"
-                 android:paddingRight="@dimen/notification_side_padding"
+                 android:paddingStart="@dimen/notification_side_padding"
+                 android:paddingEnd="@dimen/notification_side_padding"
                  android:visibility="gone">
         <FrameLayout
                 android:layout_width="match_parent"
@@ -82,6 +81,7 @@
 
     <com.android.systemui.statusbar.ScrimView android:id="@+id/scrim_in_front"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no" />
 
 </FrameLayout>

@@ -48,6 +48,10 @@ public class UserDetailView extends PseudoGridView {
         ViewGroupAdapterBridge.link(this, mAdapter);
     }
 
+    public void refreshAdapter() {
+        mAdapter.refresh();
+    }
+
     public static class Adapter extends UserSwitcherController.BaseUserAdapter
             implements OnClickListener {
 

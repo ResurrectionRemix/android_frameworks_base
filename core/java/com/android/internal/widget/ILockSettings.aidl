@@ -38,6 +38,4 @@ interface ILockSettings {
     boolean haveGesture(int userId);
     boolean havePassword(int userId);
     void removeUser(int userId);
-    void registerObserver(in ILockSettingsObserver observer);
-    void unregisterObserver(in ILockSettingsObserver observer);
 }

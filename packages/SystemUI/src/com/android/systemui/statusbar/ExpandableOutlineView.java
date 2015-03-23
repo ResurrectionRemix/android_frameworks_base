@@ -42,7 +42,7 @@ public abstract class ExpandableOutlineView extends ExpandableView {
                     outline.setRoundRect(0,
                             mClipTopAmount,
                             getWidth(),
-                            Math.max(mActualHeight, mClipTopAmount), mRoundCornerRadius);
+                            Math.max(getActualHeight(), mClipTopAmount), mRoundCornerRadius);
                 } else {
                     outline.setRoundRect(mOutlineRect, mRoundCornerRadius);
                 }

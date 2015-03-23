@@ -124,6 +124,11 @@
     <permission name="android.permission.HARDWARE_ABSTRACTION_ACCESS" >
         <group gid="system" />
     </permission>
+
+    <permission name="android.permission.ACCESS_FM_RADIO" >
+        <group gid="media" />
+    </permission>
+
     <!-- ================================================================== -->
     <!-- ================================================================== -->
     <!-- ================================================================== -->
