@@ -44,6 +44,10 @@ oneway interface IStatusBar
     void toggleRecentApps();
     void preloadRecentApps();
     void cancelPreloadRecentApps();
+<<<<<<< HEAD
     void showCustomIntentAfterKeyguard(inout Intent intent);
+=======
+    void showScreenPinningRequest();
+>>>>>>> 0e7c113... Evo Merge Part - 2
 }
 

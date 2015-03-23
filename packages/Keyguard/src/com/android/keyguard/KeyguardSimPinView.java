@@ -23,6 +23,9 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.AttributeSet;
@@ -30,7 +33,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.telephony.SubscriptionManager;
-import android.telephony.SubInfoRecord;
+import android.telephony.SubscriptionInfo;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -53,12 +57,13 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
     private int mRemainingAttempts = -1;
     private AlertDialog mRemainingAttemptsDialog;
     KeyguardUpdateMonitor mKgUpdateMonitor;
-    private long mSubId = SubscriptionManager.INVALID_SUB_ID;
-    private TextView mSubNameView;
+    private int mSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private TextView mSubDisplayName = null;
+    private ImageView mSimImageView;
 
     private KeyguardUpdateMonitorCallback mUpdateCallback = new KeyguardUpdateMonitorCallback() {
         @Override
-        public void onSubIdUpdated(long oldSubId, long newSubId) {
+        public void onSubIdUpdated(int oldSubId, int newSubId) {
             if (mSubId == oldSubId) {
                 mSubId = newSubId;
                 //subId updated, handle sub info changed.
@@ -67,7 +72,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
         }
 
         @Override
-        public void onSubInfoContentChanged(long subId, String column,
+        public void onSubInfoContentChanged(int subId, String column,
                                 String sValue, int iValue) {
             if (column != null && column.equals(SubscriptionManager.DISPLAY_NAME)
                     && mSubId == subId) {
@@ -77,7 +82,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
         }
 
         @Override
-        public void onSimStateChanged(long subId, IccCardConstants.State simState) {
+        public void onSimStateChanged(int subId, IccCardConstants.State simState) {
             if (DEBUG) Log.d(TAG, "onSimStateChangedUsingSubId: " + simState + ", subId=" + subId);
             if (subId != mSubId) return;
             switch (simState) {
@@ -142,10 +147,15 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mSubNameView = (TextView) findViewById(R.id.sim_name);
+        mSubDisplayName = (TextView) findViewById(R.id.sub_display_name);
         mSubId = mKgUpdateMonitor.getSimPinLockSubId();
-        if (mKgUpdateMonitor.getNumPhones() > 1) {
-            mSubNameView.setVisibility(View.VISIBLE);
+        mSimImageView = (ImageView) findViewById(R.id.keyguard_sim);
+        if ( mKgUpdateMonitor.getNumPhones() > 1 ) {
+
+            View simInfoMsg = findViewById(R.id.sim_info_message);
+            if (simInfoMsg != null) {
+                simInfoMsg.setVisibility(View.VISIBLE);
+            }
             handleSubInfoChange();
         }
 
@@ -337,36 +347,48 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
     }
 
     private void handleSubInfoChangeIfNeeded() {
-        long subId = mKgUpdateMonitor.getSimPinLockSubId();
-        if (SubscriptionManager.isValidSubId(subId) && (subId != mSubId)) {
+        int subId = mKgUpdateMonitor.getSimPinLockSubId();
+        if (subId != mSubId && SubscriptionManager.isValidSubscriptionId(subId)) {
             mSubId = subId;
             handleSubInfoChange();
+            mRemainingAttempts = -1;
+            mShowDefaultMessage = true;
         }
     }
 
     private void handleSubInfoChange() {
-        SubInfoRecord info = SubscriptionManager.getSubInfoForSubscriber(mSubId);
-        final String displayName;
-
-        if (info != null && info.displayName != null) {
-            displayName = info.displayName;
-        } else {
-            displayName = mContext.getString(R.string.kg_slot_name,
-                    SubscriptionManager.getSlotId(mSubId) + 1);
+        String displayName = null;
+        //get Display Name
+        SubscriptionInfo info =
+            SubscriptionManager.from(mContext).getActiveSubscriptionInfo(mSubId);
+        if (null != info) {
+           displayName = info.getDisplayName().toString();
         }
-
         if (DEBUG) Log.i(TAG, "handleSubInfoChange, mSubId=" + mSubId +
                 ", displayName=" + displayName);
-        mSubNameView.setText(displayName);
 
-        if (info != null && info.simIconRes[0] != 0) {
-            mSubNameView.setBackgroundResource(info.simIconRes[0]);
+        TextView slotName = (TextView)findViewById(R.id.slot_id_name);
+        //Set slot display name
+        if (null == displayName) {//display name not yet configured.
+            if (DEBUG) Log.d(TAG, "mSubId " + mSubId + ": New Card Inserted");
+            slotName.setText(mContext.getString(R.string.kg_slot_name,
+                    SubscriptionManager.getSlotId(mSubId) + 1));
+            slotName.setVisibility(View.VISIBLE);
+            mSubDisplayName.setVisibility(View.GONE);
         } else {
-            mSubNameView.setBackground(null);
+            if (DEBUG) Log.d(TAG, "handleSubInfoChange, refresh Sub Info for mSubId=" + mSubId);
+            int color = Color.WHITE;
+            if (null != info) {
+               color = info.getIconTint();
+            }
+            mSimImageView.setImageTintList(ColorStateList.valueOf(color));
+            int simCardNamePadding = getContext().getResources().
+                                getDimensionPixelSize(R.dimen.sim_card_name_padding);
+            mSubDisplayName.setPadding(simCardNamePadding, 0, simCardNamePadding, 0);
+            mSubDisplayName.setText(displayName);
+            mSubDisplayName.setVisibility(View.VISIBLE);
+            slotName.setVisibility(View.GONE);
         }
-        // Setting the background modifies the padding of the view in case the drawable
-        // itself contains padding, so make sure to preserve our padding
-        applyPaddingToView(mSubNameView, R.dimen.sim_card_name_padding);
     }
 
     private void showDefaultMessage() {
@@ -374,6 +396,8 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
             mSecurityMessageDisplay.setMessage(getPinPasswordErrorMessage(
                     mRemainingAttempts, true), true);
             return;
+        } else {
+            mSecurityMessageDisplay.setMessage(R.string.kg_sim_pin_instructions, true);
         }
     }
 }

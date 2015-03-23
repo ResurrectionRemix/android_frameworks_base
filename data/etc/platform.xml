@@ -120,10 +120,18 @@
     <permission name="android.permission.MANAGE_VOICE_KEYPHRASES">
         <group gid="audio" />
     </permission>
+<<<<<<< HEAD
     
     <permission name="android.permission.HARDWARE_ABSTRACTION_ACCESS" >
         <group gid="system" />
     </permission>
+=======
+
+    <permission name="android.permission.ACCESS_FM_RADIO" >
+        <group gid="media" />
+    </permission>
+
+>>>>>>> 0e7c113... Evo Merge Part - 2
     <!-- ================================================================== -->
     <!-- ================================================================== -->
     <!-- ================================================================== -->

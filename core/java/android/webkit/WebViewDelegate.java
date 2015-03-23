@@ -16,6 +16,10 @@
 
 package android.webkit;
 
+<<<<<<< HEAD
+=======
+import android.annotation.SystemApi;
+>>>>>>> 0e7c113... Evo Merge Part - 2
 import android.app.ActivityThread;
 import android.app.Application;
 import android.content.Context;
@@ -35,6 +39,10 @@ import android.view.ViewRootImpl;
  *
  * @hide
  */
+<<<<<<< HEAD
+=======
+@SystemApi
+>>>>>>> 0e7c113... Evo Merge Part - 2
 public final class WebViewDelegate {
 
     /* package */ WebViewDelegate() { }
@@ -105,7 +113,11 @@ public final class WebViewDelegate {
             throw new IllegalArgumentException(canvas.getClass().getName()
                     + " is not hardware accelerated");
         }
+<<<<<<< HEAD
         ((HardwareCanvas) canvas).callDrawGLFunction(nativeDrawGLFunctor);
+=======
+        ((HardwareCanvas) canvas).callDrawGLFunction2(nativeDrawGLFunctor);
+>>>>>>> 0e7c113... Evo Merge Part - 2
     }
 
     /**

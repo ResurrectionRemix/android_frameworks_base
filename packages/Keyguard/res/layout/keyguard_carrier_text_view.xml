@@ -40,10 +40,16 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection = "locale"
+<<<<<<< HEAD
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+=======
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/kg_status_line_font_size"
+>>>>>>> 0e7c113... Evo Merge Part - 2
         android:visibility="gone" />
 
     <TextView
@@ -55,11 +61,18 @@
         android:gravity="start"
         android:ellipsize="marquee"
         android:singleLine="true"
+<<<<<<< HEAD
         android:textAllCaps="false"
         android:textDirection = "locale"
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+=======
+        android:textDirection = "locale"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/kg_status_line_font_size"
+>>>>>>> 0e7c113... Evo Merge Part - 2
         android:visibility="gone" />
 
     <TextView
@@ -67,6 +80,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+<<<<<<< HEAD
+=======
+        android:textAppearance="?android:attr/textAppearanceMedium"
+>>>>>>> 0e7c113... Evo Merge Part - 2
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:visibility="gone" />
@@ -78,6 +95,7 @@
         android:layout_weight="1"
         android:layout_gravity="center"
         android:gravity="start"
+<<<<<<< HEAD
         android:textAllCaps="false"
         android:ellipsize="marquee"
         android:singleLine="true"
@@ -85,6 +103,14 @@
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+=======
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textDirection = "locale"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/kg_status_line_font_size"
+>>>>>>> 0e7c113... Evo Merge Part - 2
         android:visibility="gone" />
 
     <TextView
@@ -92,6 +118,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+<<<<<<< HEAD
+=======
+        android:textAppearance="?android:attr/textAppearanceMedium"
+>>>>>>> 0e7c113... Evo Merge Part - 2
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:visibility="gone" />
@@ -103,6 +133,7 @@
         android:layout_weight="1"
         android:layout_gravity="center"
         android:gravity="start"
+<<<<<<< HEAD
         android:textAllCaps="false"
         android:ellipsize="marquee"
         android:singleLine="true"
@@ -110,5 +141,13 @@
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+=======
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textDirection = "locale"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/kg_status_line_font_size"
+>>>>>>> 0e7c113... Evo Merge Part - 2
         android:visibility="gone" />
 </merge>

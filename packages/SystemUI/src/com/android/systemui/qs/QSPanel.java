@@ -75,9 +75,11 @@ public class QSPanel extends ViewGroup {
     private int mPanelPaddingBottom;
     private int mDualTileUnderlap;
     private int mBrightnessPaddingTop;
+    private int mGridHeight;
     private int mTranslationTop;
     private boolean mExpanded;
     private boolean mListening;
+    private boolean mClosingDetail;
 
     private boolean mBrightnessSliderEnabled;
     private boolean mUseFourColumns;
@@ -279,9 +281,15 @@ public class QSPanel extends ViewGroup {
         }
     }
 
+<<<<<<< HEAD
     private void refreshAllTiles() {
         mUseMainTiles = Settings.Secure.getIntForUser(getContext().getContentResolver(),
                 Settings.Secure.QS_USE_MAIN_TILES, 1, UserHandle.USER_CURRENT) == 1;
+=======
+    public void refreshAllTiles() {
+        mUseMainTiles = Settings.Secure.getIntForUser(getContext().getContentResolver(),
+                Settings.Secure.QS_USE_MAIN_TILES, 1, UserHandle.myUserId()) == 1;
+>>>>>>> 0e7c113... Evo Merge Part - 2
         for (int i = 0; i < mRecords.size(); i++) {
             TileRecord r = mRecords.get(i);
             r.tileView.setDual(mUseMainTiles && i < 2);
@@ -380,14 +388,14 @@ public class QSPanel extends ViewGroup {
                 r.tile.secondaryClick();
             }
         };
-        final View.OnLongClickListener clickLong = new View.OnLongClickListener() {
+        final View.OnLongClickListener longClick = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 r.tile.longClick();
                 return true;
             }
         };
-        r.tileView.init(click, clickSecondary, clickLong);
+        r.tileView.init(click, clickSecondary, longClick);
         r.tile.setListening(mListening);
         callback.onStateChanged(r.tile.getState());
         r.tile.refreshState();
@@ -402,6 +410,14 @@ public class QSPanel extends ViewGroup {
 
     public void closeDetail() {
         showDetail(false, mDetailRecord);
+    }
+
+    public boolean isClosingDetail() {
+        return mClosingDetail;
+    }
+
+    public int getGridHeight() {
+        return mGridHeight;
     }
 
     private void handleShowDetail(Record r, boolean show) {
@@ -448,6 +464,7 @@ public class QSPanel extends ViewGroup {
             setDetailRecord(r);
             listener = mHideGridContentWhenDone;
         } else {
+            mClosingDetail = true;
             setGridContentVisibility(true);
             listener = mTeardownDetailWhenDone;
             fireScanStateChanged(false);
@@ -522,6 +539,7 @@ public class QSPanel extends ViewGroup {
                 mDetail.measure(exactly(width), exactly(detailMinHeight));
             }
         }
+        mGridHeight = h;
         setMeasuredDimension(width, Math.max(h, mDetail.getMeasuredHeight()));
     }
 
@@ -666,6 +684,7 @@ public class QSPanel extends ViewGroup {
         public void onAnimationEnd(Animator animation) {
             mDetailContent.removeAllViews();
             setDetailRecord(null);
+            mClosingDetail = false;
             if (mDetailCallback != null) {
                 mDetailCallback.onDetailChanged(false);
             }
@@ -681,7 +700,14 @@ public class QSPanel extends ViewGroup {
 
         @Override
         public void onAnimationEnd(Animator animation) {
+<<<<<<< HEAD
             setGridContentVisibility(true);
+=======
+            // Only hide content if still in detail state.
+            if (mDetailRecord != null) {
+                setGridContentVisibility(false);
+            }
+>>>>>>> 0e7c113... Evo Merge Part - 2
         }
     };
 

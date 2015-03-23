@@ -24,13 +24,38 @@ import android.widget.TextView;
 import com.android.systemui.R;
 
 public class LLandActivity extends Activity {
+    LLand mLand;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+<<<<<<< HEAD
         setContentView(R.layout.lland);
         LLand world = (LLand) findViewById(R.id.world);
         world.setScoreField((TextView) findViewById(R.id.score));
         world.setSplash(findViewById(R.id.welcome));
         Log.v(LLand.TAG, "focus: " + world.requestFocus());
+=======
+        final boolean isCM = getIntent().getBooleanExtra("is_cm", false);
+        if (isCM) {
+            setContentView(R.layout.cmland);
+            CMLand world = (CMLand) findViewById(R.id.world);
+            world.setScoreField((TextView) findViewById(R.id.score));
+            world.setSplash(findViewById(R.id.welcome));
+            Log.v(CMLand.TAG, "focus: " + world.requestFocus());
+        } else {
+            setContentView(R.layout.lland);
+            mLand = (LLand) findViewById(R.id.world);
+            mLand.setScoreField((TextView) findViewById(R.id.score));
+            mLand.setSplash(findViewById(R.id.welcome));
+            //Log.v(LLand.TAG, "focus: " + mLand.requestFocus());
+        }
+>>>>>>> 0e7c113... Evo Merge Part - 2
+    }
+
+    @Override
+    public void onPause() {
+        mLand.stop();
+        super.onPause();
     }
 }

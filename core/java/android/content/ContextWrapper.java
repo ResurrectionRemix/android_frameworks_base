@@ -29,6 +29,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.UserHandle;
 import android.view.DisplayAdjustments;
@@ -572,6 +573,12 @@ public class ContextWrapper extends Context {
         return mBase.checkPermission(permission, pid, uid);
     }
 
+    /** @hide */
+    @Override
+    public int checkPermission(String permission, int pid, int uid, IBinder callerToken) {
+        return mBase.checkPermission(permission, pid, uid, callerToken);
+    }
+
     @Override
     public int checkCallingPermission(String permission) {
         return mBase.checkCallingPermission(permission);
@@ -612,6 +619,12 @@ public class ContextWrapper extends Context {
     @Override
     public int checkUriPermission(Uri uri, int pid, int uid, int modeFlags) {
         return mBase.checkUriPermission(uri, pid, uid, modeFlags);
+    }
+
+    /** @hide */
+    @Override
+    public int checkUriPermission(Uri uri, int pid, int uid, int modeFlags, IBinder callerToken) {
+        return mBase.checkUriPermission(uri, pid, uid, modeFlags, callerToken);
     }
 
     @Override

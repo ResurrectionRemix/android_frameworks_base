@@ -62,6 +62,7 @@ import android.service.wallpaper.IWallpaperConnection;
 import android.service.wallpaper.IWallpaperEngine;
 import android.service.wallpaper.IWallpaperService;
 import android.service.wallpaper.WallpaperService;
+import android.util.EventLog;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.Xml;
@@ -87,6 +88,7 @@ import com.android.internal.content.PackageMonitor;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.JournaledFile;
 import com.android.internal.R;
+import com.android.server.EventLogTags;
 
 public class WallpaperManagerService extends IWallpaperManager.Stub {
     static final String TAG = "WallpaperManagerService";
@@ -99,6 +101,7 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
      * restarting it vs. just reverting to the static wallpaper.
      */
     static final long MIN_WALLPAPER_CRASH_TIME = 10000;
+    static final int MAX_WALLPAPER_COMPONENT_LOG_LENGTH = 128;
     static final String WALLPAPER = "wallpaper";
     static final String WALLPAPER_INFO = "wallpaper_info.xml";
     static final String KEYGUARD_WALLPAPER = "keyguard_wallpaper";
@@ -116,6 +119,7 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
         final KeyguardWallpaperData mKeyguardWallpaper;
         final File mWallpaperDir;
         final File mWallpaperFile;
+        final File mWallpaperInfoFile;
         final File mKeyguardWallpaperFile;
 
         public WallpaperObserver(WallpaperData wallpaper, KeyguardWallpaperData keyguardWallpaper) {
@@ -124,6 +128,7 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
             mWallpaperDir = getWallpaperDir(wallpaper.userId);
             mWallpaper = wallpaper;
             mWallpaperFile = new File(mWallpaperDir, WALLPAPER);
+            mWallpaperInfoFile = new File(mWallpaperDir, WALLPAPER_INFO);
             mKeyguardWallpaper = keyguardWallpaper;
             mKeyguardWallpaperFile = new File(mWallpaperDir, KEYGUARD_WALLPAPER);
         }
@@ -135,6 +140,14 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
             }
             synchronized (mLock) {
                 File changedFile = new File(mWallpaperDir, path);
+                if (mWallpaperFile.equals(changedFile)
+                        || mWallpaperInfoFile.equals(changedFile)) {
+                    // changing the wallpaper means we'll need to back up the new one
+                    long origId = Binder.clearCallingIdentity();
+                    BackupManager bm = new BackupManager(mContext);
+                    bm.dataChanged();
+                    Binder.restoreCallingIdentity(origId);
+                }
                 if (mWallpaperFile.equals(changedFile)) {
                     // changing the wallpaper means we'll need to back up the new one
                     long origId = Binder.clearCallingIdentity();
@@ -318,6 +331,10 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
                         } else {
                             mWallpaper.lastDiedTime = SystemClock.uptimeMillis();
                         }
+                        final String flattened = name.flattenToString();
+                        EventLog.writeEvent(EventLogTags.WP_WALLPAPER_CRASHED,
+                                flattened.substring(0, Math.min(flattened.length(),
+                                        MAX_WALLPAPER_COMPONENT_LOG_LENGTH)));
                     }
                 }
             }

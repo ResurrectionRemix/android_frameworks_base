@@ -237,6 +237,17 @@ public class Toast {
         return mTN.mY;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Gets the LayoutParams for the Toast window.
+     * @hide
+     */
+    public WindowManager.LayoutParams getWindowParams() {
+        return mTN.mParams;
+    }
+    
+>>>>>>> 0e7c113... Evo Merge Part - 2
     /**
      * Make a standard toast that just contains a text view.
      *

@@ -16,9 +16,12 @@
 
 package com.android.internal.widget;
 
+<<<<<<< HEAD
 import com.android.internal.widget.ILockSettingsObserver;
 import android.gesture.Gesture;
 
+=======
+>>>>>>> 0e7c113... Evo Merge Part - 2
 /** {@hide} */
 interface ILockSettings {
     void setBoolean(in String key, in boolean value, in int userId);
@@ -38,6 +41,4 @@ interface ILockSettings {
     boolean haveGesture(int userId);
     boolean havePassword(int userId);
     void removeUser(int userId);
-    void registerObserver(in ILockSettingsObserver observer);
-    void unregisterObserver(in ILockSettingsObserver observer);
 }
