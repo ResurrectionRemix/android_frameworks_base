@@ -652,14 +652,9 @@ public class DocumentsActivity extends Activity {
         // Only sort by size when visible
         sortSize.setVisible(mState.showSize);
 
-<<<<<<< HEAD
-        final boolean searchVisible;
-        if (mState.action == ACTION_CREATE || mState.action == ACTION_OPEN_TREE || mState.action == ACTION_STANDALONE) {
-=======
         boolean searchVisible;
         boolean fileSizeVisible = mState.action != ACTION_MANAGE;
         if (mState.action == ACTION_CREATE || mState.action == ACTION_OPEN_TREE) {
->>>>>>> 0e7c113... Evo Merge Part - 2
             createDir.setVisible(cwd != null && cwd.isCreateSupported());
             searchVisible = false;
 

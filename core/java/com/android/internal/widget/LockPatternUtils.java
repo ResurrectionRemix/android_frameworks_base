@@ -545,29 +545,19 @@ public class LockPatternUtils {
     /**
      * Clear any lock pattern or password.
      */
-<<<<<<< HEAD
-    public void clearLock(boolean isFallback) {
-        if(!isFallback) deleteGallery();
-        saveLockPassword(null, DevicePolicyManager.PASSWORD_QUALITY_SOMETHING);
-        setLockPatternEnabled(false);
-        saveLockPattern(null);
-        saveLockGesture(null);
-        setLockGestureEnabled(false);
-        setLong(PASSWORD_TYPE_KEY, DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
-        setLong(PASSWORD_TYPE_ALTERNATE_KEY, DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
-        onAfterChangingPassword();
-=======
+
     public void clearLock(boolean isFallback, int userHandle) {
         if(!isFallback) deleteGallery(userHandle);
         saveLockPassword(null, DevicePolicyManager.PASSWORD_QUALITY_SOMETHING, isFallback,
                 userHandle);
         setLockPatternEnabled(false, userHandle);
+        setLockGestureEnabled(false, userHandle);
         saveLockPattern(null, isFallback, userHandle);
+        saveLockGesture(null, isFallback, userHandle);
         setLong(PASSWORD_TYPE_KEY, DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED, userHandle);
         setLong(PASSWORD_TYPE_ALTERNATE_KEY, DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED,
                 userHandle);
         onAfterChangingPassword(userHandle);
->>>>>>> 0e7c113... Evo Merge Part - 2
     }
 
     /**
@@ -1687,15 +1677,10 @@ public class LockPatternUtils {
                 || mode == DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC
                 || mode == DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC
                 || mode == DevicePolicyManager.PASSWORD_QUALITY_COMPLEX;
-<<<<<<< HEAD
-        final boolean secure = isPattern && isLockPatternEnabled() && savedPatternExists()
-                || isPassword && savedPasswordExists()
-                || isGesture && isLockGestureEnabled() && savedGestureExists();
-=======
-        final boolean secure =
-                isPattern && isLockPatternEnabled(userId) && savedPatternExists(userId)
-                || isPassword && savedPasswordExists(userId);
->>>>>>> 0e7c113... Evo Merge Part - 2
+        final boolean secure = isPattern && isLockPatternEnabled(userId) && savedPatternExists(userId)
+                || isPassword && savedPasswordExists(userId)
+                || isGesture && isLockGestureEnabled(userId) && savedGestureExists(userId);
+
         return secure && getActiveProfileLockMode() == Profile.LockMode.DEFAULT;
     }
 

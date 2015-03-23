@@ -277,13 +277,7 @@ static void read_mapinfo(FILE *fp, stats_t* stats)
                     if (strstr(name, "/dev/ashmem/dalvik-LinearAlloc") == name) {
                         subHeap = HEAP_DALVIK_LINEARALLOC;
                     } else if ((strstr(name, "/dev/ashmem/dalvik-alloc space") == name) ||
-<<<<<<< HEAD
-                               (strstr(name, "/dev/ashmem/dalvik-main space") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-zygote space") == name) ||
-                               (strstr(name, "/dev/ashmem/dalvik-non moving space") == name)) {
-=======
                                (strstr(name, "/dev/ashmem/dalvik-main space") == name)) {
->>>>>>> 0e7c113... Evo Merge Part - 2
                         // This is the regular Dalvik heap.
                         whichHeap = HEAP_DALVIK;
                         subHeap = HEAP_DALVIK_NORMAL;

@@ -2146,14 +2146,7 @@
     <!-- Configuartion to support ESN Tracker -->
     <bool name="config_telephony_ESN_Tracker_enabled">false</bool>
 
-    <!-- Whether cpu boost is enabled for overscroller fling. -->
-<<<<<<< HEAD
-    <bool name="config_enableCpuBoostForOverScrollerFling">true</bool>
-
-    <!-- Whether cpu boost is enabled for horizontal scroll. -->
-    <bool name="config_enableCpuBoostForScroller">true</bool>
     
-=======
     <bool name="config_enableCpuBoostForOverScrollerFling">false</bool>
     <integer name="flingboost_timeout_param">0</integer>
     <integer name="flingboost_schedboost_param">0</integer>
@@ -2169,7 +2162,6 @@
     <integer name="scrollboost_pcdisbl_param">0</integer>
     <integer name="scrollboost_ksmboost_param">0</integer>
 
->>>>>>> 0e7c113... Evo Merge Part - 2
     <!-- Configuration to enable non-default PDP during IWLAN -->
     <bool name="config_feature_iwlan_enabled">false</bool>
     
@@ -2197,18 +2189,15 @@
     -->
     <integer name="config_LTE_RSRP_threshold_type">1</integer>
 
-<<<<<<< HEAD
     <!-- Timeout in MS for how long you have to long-press the back key to
          kill the foreground app. -->
     <integer name="config_backKillTimeout">1000</integer>
-=======
     <!-- Enabled built-in zen mode condition providers -->
     <string-array translatable="false" name="config_system_condition_providers">
         <item>countdown</item>
         <item>downtime</item>
         <item>next_alarm</item>
     </string-array>
->>>>>>> 0e7c113... Evo Merge Part - 2
 
     <!-- Show the next-alarm as a zen exit condition if it occurs in the next n hours. -->
     <integer name="config_next_alarm_condition_lookahead_threshold_hrs">12</integer>

@@ -20,7 +20,9 @@ import android.app.Activity;
 import android.app.LoadedApk;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.Network;
@@ -32,6 +34,7 @@ import android.net.http.SslError;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.provider.Settings.Global;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.Menu;
@@ -55,16 +58,12 @@ import java.lang.reflect.Method;
 
 public class CaptivePortalLoginActivity extends Activity {
     private static final String TAG = "CaptivePortalLogin";
-<<<<<<< HEAD
-    private static final String DEFAULT_SERVER = "clients3.google.com";
-=======
     private static final String DEFAULT_SERVER = "connectivitycheck.android.com";
 
     private static final String EXTRA_STATUS_BAR_COLOR = "status_bar_color";
     private static final String EXTRA_ACTION_BAR_COLOR = "action_bar_color";
     private static final String EXTRA_PROGRESS_COLOR = "progress_bar_color";
 
->>>>>>> 0e7c113... Evo Merge Part - 2
     private static final int SOCKET_TIMEOUT_MS = 10000;
 
     // Keep this in sync with NetworkMonitor.
@@ -93,14 +92,6 @@ public class CaptivePortalLoginActivity extends Activity {
         String server = Settings.Global.getString(getContentResolver(), "captive_portal_server");
         if (server == null) server = DEFAULT_SERVER;
         try {
-<<<<<<< HEAD
-            mURL = new URL("http://" + server + "/generate_204");
-        } catch (MalformedURLException e) {
-            done(true);
-        }
-
-        mNetId = Integer.parseInt(getIntent().getStringExtra(Intent.EXTRA_TEXT));
-=======
             mURL = new URL("http", server, "/generate_204");
             final Uri dataUri = getIntent().getData();
             if (!dataUri.getScheme().equals("netid")) {
@@ -129,7 +120,6 @@ public class CaptivePortalLoginActivity extends Activity {
         }
 
         final ConnectivityManager cm = ConnectivityManager.from(this);
->>>>>>> 0e7c113... Evo Merge Part - 2
         final Network network = new Network(mNetId);
         // Also initializes proxy system properties.
         cm.setProcessDefaultNetwork(network);
@@ -139,6 +129,14 @@ public class CaptivePortalLoginActivity extends Activity {
         setContentView(R.layout.activity_captive_portal_login);
 
         getActionBar().setDisplayShowHomeEnabled(false);
+
+        ProgressBar myProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        if (intent.hasExtra(EXTRA_PROGRESS_COLOR)) {
+            int color = intent.getIntExtra(EXTRA_PROGRESS_COLOR, -1);
+            if (color != -1) {
+                myProgressBar.setProgressTintList(ColorStateList.valueOf(color));
+            }
+        }
 
         // Exit app if Network disappears.
         final NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(network);
@@ -202,6 +200,7 @@ public class CaptivePortalLoginActivity extends Activity {
         intent.putExtra(LOGGED_IN_RESULT, String.valueOf(result));
         intent.putExtra(RESPONSE_TOKEN, mResponseToken);
         sendBroadcast(intent);
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
@@ -283,6 +282,11 @@ public class CaptivePortalLoginActivity extends Activity {
                 // Load the real page.
                 view.loadUrl(mURL.toString());
                 return;
+            } else {
+                if (TextUtils.isEmpty(view.getUrl()) || view.getUrl().contains("text/html")) {
+                    setResult(Activity.RESULT_CANCELED);
+                    finish();
+                }
             }
             testForCaptivePortal();
         }

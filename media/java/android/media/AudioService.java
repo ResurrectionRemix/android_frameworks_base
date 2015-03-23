@@ -1895,13 +1895,8 @@ public class AudioService extends IAudioService.Stub {
         return MAX_STREAM_VOLUME[streamType];
     }
 
-<<<<<<< HEAD
-    protected static void setMaxStreamVolume(int streamType, int maxVol) {
-        MAX_STREAM_VOLUME[streamType] = maxVol;
-=======
     public static int getDefaultStreamVolume(int streamType) {
         return DEFAULT_STREAM_VOLUME[streamType];
->>>>>>> 0e7c113... Evo Merge Part - 2
     }
 
     /** @see AudioManager#getStreamVolume(int) */
