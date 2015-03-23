@@ -305,12 +305,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private UnlockMethodCache mUnlockMethodCache;
     private DozeServiceHost mDozeServiceHost;
     private boolean mScreenOnComingFromTouch;
-<<<<<<< HEAD
     private boolean mQSCSwitch;
-=======
     private PointF mScreenOnTouchLocation;
 
->>>>>>> 0e7c113... Evo Merge Part - 2
     int mPixelFormat;
     Object mQueueLock = new Object();
 
@@ -3914,7 +3911,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 
-<<<<<<< HEAD
     public void onHeadsUpDismissed(boolean direction) {
         // If direction == true we know that the notification
         // was dismissed to the right. So we just hide it that
@@ -3927,11 +3923,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mHeadsUpNotificationView.dismiss();
         }
      }
-=======
-    public void onHeadsUpDismissed() {
-        mHeadsUpNotificationView.dismiss();
-    }
->>>>>>> 0e7c113... Evo Merge Part - 2
 
     private static void copyNotifications(ArrayList<Pair<String, StatusBarNotification>> dest,
             NotificationData source) {
@@ -4620,7 +4611,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (mState != StatusBarState.KEYGUARD && !mNotificationPanel.isDozing()) {
             return;
         }
-<<<<<<< HEAD
         mNotificationPanel.setDozing(mDozing);
         if (mDozing) {
             mKeyguardBottomArea.setVisibility(View.INVISIBLE);
@@ -4631,11 +4621,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mKeyguardBottomArea.setVisibility(View.VISIBLE);
             mStackScroller.setDark(false, false /*animate*/);
         }
-=======
         boolean animate = !mDozing && mDozeScrimController.isPulsing();
         mNotificationPanel.setDozing(mDozing, animate);
         mStackScroller.setDark(mDozing, animate, mScreenOnTouchLocation);
->>>>>>> 0e7c113... Evo Merge Part - 2
         mScrimController.setDozing(mDozing);
         mDozeScrimController.setDozing(mDozing, animate);
     }

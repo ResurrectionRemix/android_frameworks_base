@@ -172,12 +172,9 @@ public class Clock extends TextView implements DemoMode {
             filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
             filter.addAction(Intent.ACTION_USER_SWITCHED);
 
-<<<<<<< HEAD
-            getContext().registerReceiver(mIntentReceiver, filter, null, getHandler());
-=======
+
             mContext.registerReceiverAsUser(mIntentReceiver, UserHandle.ALL, filter,
                     null, new Handler());
->>>>>>> 0e7c113... Evo Merge Part - 2
         }
 
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
@@ -232,14 +229,10 @@ public class Clock extends TextView implements DemoMode {
     }
 
     private final CharSequence getSmallTime() {
-<<<<<<< HEAD
         Context context = getContext();
         boolean is24 = DateFormat.is24HourFormat(context);
         LocaleData d = LocaleData.get(context.getResources().getConfiguration().locale);
-=======
-        boolean is24 = DateFormat.is24HourFormat(mContext, ActivityManager.getCurrentUser());
-        LocaleData d = LocaleData.get(mContext.getResources().getConfiguration().locale);
->>>>>>> 0e7c113... Evo Merge Part - 2
+
 
         final char MAGIC1 = '\uEF00';
         final char MAGIC2 = '\uEF01';

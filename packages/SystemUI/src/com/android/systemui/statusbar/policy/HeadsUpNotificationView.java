@@ -51,10 +51,7 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
     private static final String TAG = "HeadsUpNotificationView";
     private static final boolean DEBUG = false;
     private static final boolean SPEW = DEBUG;
-<<<<<<< HEAD
-=======
     private static final String SETTING_HEADS_UP_SNOOZE_LENGTH_MS = "heads_up_snooze_length_ms";
->>>>>>> 0e7c113... Evo Merge Part - 2
 
     Rect mTmpRect = new Rect();
     int[] mTmpTwoArray = new int[2];
@@ -331,7 +328,6 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         if (SystemClock.elapsedRealtime() < mStartTouchTime) {
             return false;
         }
-<<<<<<< HEAD
         switch (ev.getAction()) {
             case MotionEvent.ACTION_OUTSIDE:
                 if (mTouchOutside) return true;
@@ -347,15 +343,8 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
                 mBar.resetHeadsUpDecayTimer();
                 return mEdgeSwipeHelper.onTouchEvent(ev)
                         || mSwipeHelper.onTouchEvent(ev)
-                        || mExpandHelper.onTouchEvent(ev)
                         || super.onTouchEvent(ev);
         }
-=======
-        mBar.resetHeadsUpDecayTimer();
-        return mEdgeSwipeHelper.onTouchEvent(ev)
-                || mSwipeHelper.onTouchEvent(ev)
-                || super.onTouchEvent(ev);
->>>>>>> 0e7c113... Evo Merge Part - 2
     }
 
     @Override
@@ -420,16 +409,10 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         return 1.0f;
     }
 
-<<<<<<< HEAD
-    public void onChildDismissed(View v, boolean direction) {
-        if (DEBUG)  Log.v(TAG, "User swiped heads up to dismiss");
-        mBar.onHeadsUpDismissed(direction);
-=======
     @Override
     public void onChildDismissed(View v) {
         Log.v(TAG, "User swiped heads up to dismiss");
         mBar.onHeadsUpDismissed();
->>>>>>> 0e7c113... Evo Merge Part - 2
     }
 
     @Override
@@ -516,10 +499,7 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
                         if (dY > 0) {
                             if (DEBUG_EDGE_SWIPE) Log.d(TAG, "found an open");
                             mBar.animateExpandNotificationsPanel();
-<<<<<<< HEAD
                             mBar.onHeadsUpDismissed(true);
-=======
->>>>>>> 0e7c113... Evo Merge Part - 2
                         }
                         mConsuming = true;
                     }

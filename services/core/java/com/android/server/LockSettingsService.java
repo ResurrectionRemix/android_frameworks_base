@@ -29,7 +29,6 @@ import static android.content.Context.USER_SERVICE;
 import static android.Manifest.permission.READ_PROFILE;
 
 import android.database.sqlite.SQLiteDatabase;
-<<<<<<< HEAD
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.gesture.Gesture;
@@ -37,8 +36,6 @@ import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.Prediction;
 import android.gesture.GestureStore;
-=======
->>>>>>> 0e7c113... Evo Merge Part - 2
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Process;
@@ -77,16 +74,13 @@ public class LockSettingsService extends ILockSettings.Stub {
 
     private final Context mContext;
 
-<<<<<<< HEAD
     private static final String SYSTEM_DIRECTORY = "/system/";
     private static final String LOCK_PATTERN_FILE = "gesture.key";
     private static final String LOCK_PASSWORD_FILE = "password.key";
     private static final String LOCK_GESTURE_FILE = "lock_gesture.key";
 
     private static final String LOCK_GESTURE_NAME = "lock_gesture";
-=======
     private final LockSettingsStorage mStorage;
->>>>>>> 0e7c113... Evo Merge Part - 2
 
     private LockPatternUtils mLockPatternUtils;
     private boolean mFirstCallToVold;
@@ -268,7 +262,6 @@ public class LockSettingsService extends ILockSettings.Stub {
     public String getString(String key, String defaultValue, int userId) throws RemoteException {
         checkReadPermission(key, userId);
 
-<<<<<<< HEAD
         return readFromDb(key, defaultValue, userId);
     }
 
@@ -370,9 +363,7 @@ public class LockSettingsService extends ILockSettings.Stub {
             return new File(Environment.getUserSystemDirectory(userId), LOCK_PASSWORD_FILE)
                     .getAbsolutePath();
         }
-=======
-        return mStorage.readKeyValue(key, defaultValue, userId);
->>>>>>> 0e7c113... Evo Merge Part - 2
+
     }
 
     @Override

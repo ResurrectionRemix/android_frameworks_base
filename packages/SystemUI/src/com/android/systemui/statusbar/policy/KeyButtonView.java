@@ -23,14 +23,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-<<<<<<< HEAD
 import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.CanvasProperty;
 import android.graphics.Paint;
 import android.graphics.RectF;
-=======
->>>>>>> 0e7c113... Evo Merge Part - 2
 import android.hardware.input.InputManager;
 import android.media.AudioManager;
 import android.os.Bundle;

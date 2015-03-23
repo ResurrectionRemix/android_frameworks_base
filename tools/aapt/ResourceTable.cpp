@@ -3028,19 +3028,17 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<const ResourceFilter>& 
                 continue;
             }
 
+
             // We need to write one type chunk for each configuration for
             // which we have entries in this type.
-<<<<<<< HEAD
-            const size_t NC = t != NULL ? t->getUniqueConfigs().size() : 0;
-=======
             const SortedVector<ConfigDescription> uniqueConfigs(t->getUniqueConfigs());
             const size_t NC = uniqueConfigs.size();
->>>>>>> 0e7c113... Evo Merge Part - 2
             
             const size_t typeSize = sizeof(ResTable_type) + sizeof(uint32_t)*N;
             
             for (size_t ci=0; ci<NC; ci++) {
                 const ConfigDescription& config = uniqueConfigs[ci];
+
 
                 NOISY(printf("Writing config %d config: imsi:%d/%d lang:%c%c cnt:%c%c "
                      "orien:%d ui:%d touch:%d density:%d key:%d inp:%d nav:%d sz:%dx%d "

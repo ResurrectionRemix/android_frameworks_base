@@ -445,7 +445,6 @@ public class VolumePanel extends Handler implements DemoMode {
 
         updateWidth();
 
-<<<<<<< HEAD
             Interaction.register(mView, new Interaction.Callback() {
                 @Override
                 public void onInteraction() {
@@ -457,7 +456,6 @@ public class VolumePanel extends Handler implements DemoMode {
             mView = LayoutInflater.from(mContext).inflate(
                     com.android.systemui.R.layout.volume_panel, parent, false);
         }
-=======
         window.setBackgroundDrawable(new ColorDrawable(0x00000000));
         window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         window.addFlags(LayoutParams.FLAG_NOT_FOCUSABLE
@@ -471,7 +469,6 @@ public class VolumePanel extends Handler implements DemoMode {
                 resetTimeout();
             }
         });
->>>>>>> 0e7c113... Evo Merge Part - 2
 
         mPanel = (ViewGroup) mView.findViewById(com.android.systemui.R.id.visible_panel);
         mSliderPanel = (ViewGroup) mView.findViewById(com.android.systemui.R.id.slider_panel);
@@ -743,18 +740,6 @@ public class VolumePanel extends Handler implements DemoMode {
             sc.iconRes = streamRes.iconRes;
             sc.iconMuteRes = streamRes.iconMuteRes;
             sc.icon.setImageResource(sc.iconRes);
-<<<<<<< HEAD
-            sc.icon.setClickable(isNotificationOrRing(streamType));
-            if (sc.icon.isClickable()) {
-                sc.icon.setSoundEffectsEnabled(false);
-                sc.icon.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        resetVolPanelTimeout();
-                        toggle(sc);
-                    }
-                });
-=======
             sc.icon.setClickable(isNotification && mHasVibrator);
             if (isNotification) {
                 if (mHasVibrator) {
@@ -768,7 +753,6 @@ public class VolumePanel extends Handler implements DemoMode {
                         }
                     });
                 }
->>>>>>> 0e7c113... Evo Merge Part - 2
                 sc.iconSuppressedRes = com.android.systemui.R.drawable.ic_ringer_mute;
             }
             sc.seekbarView = (SeekBar) sc.group.findViewById(com.android.systemui.R.id.seekbar);
@@ -1375,12 +1359,6 @@ public class VolumePanel extends Handler implements DemoMode {
             final boolean muted = isMuted(streamType);
             updateSliderEnabled(sc, muted, (flags & AudioManager.FLAG_FIXED_VOLUME) != 0);
             if (isNotificationOrRing(streamType)) {
-                // check for secondary-icon transition completion
-                if (mSecondaryIconTransition.isRunning()) {
-                    mSecondaryIconTransition.cancel();  // safe to reset
-                    sc.seekbarView.setAlpha(0); sc.seekbarView.animate().alpha(1);
-                    mZenPanel.setAlpha(0); mZenPanel.animate().alpha(1);
-                }
                 updateSliderIcon(sc, muted);
             }
         }
@@ -1388,7 +1366,9 @@ public class VolumePanel extends Handler implements DemoMode {
         if (!isShowing()) {
             int stream = (streamType == STREAM_REMOTE_MUSIC) ? -1 : streamType;
             // when the stream is for remote playback, use -1 to reset the stream type evaluation
-            mAudioManager.forceVolumeControlStream(stream);
+            if (stream != STREAM_MASTER) {
+                mAudioManager.forceVolumeControlStream(stream);
+            }
             if (mDialog != null) {
                 mDialog.show();
                 Runnable r = new Runnable() {
@@ -1411,17 +1391,6 @@ public class VolumePanel extends Handler implements DemoMode {
                     r.run();
                 }
             }
-<<<<<<< HEAD
-=======
-            if (stream != STREAM_MASTER) {
-                mAudioManager.forceVolumeControlStream(stream);
-            }
-            mDialog.show();
-            if (mCallback != null) {
-                mCallback.onVisible(true);
-            }
-            announceDialogShown();
->>>>>>> 0e7c113... Evo Merge Part - 2
         }
 
         // Do a little vibrate if applicable (only when going into vibrate mode)
