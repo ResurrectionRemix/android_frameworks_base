@@ -358,7 +358,7 @@ public class UsbDeviceManager {
                     SystemProperties.set("sys.usb.config", mDefaultFunctions);
                 }
 
-                mCurrentFunctions = mDefaultFunctions;
+                mCurrentFunctions = getDefaultFunctions();
                 String state = FileUtils.readTextFile(new File(STATE_PATH), 0, null).trim();
                 updateState(state);
                 mAdbEnabled = containsFunction(mCurrentFunctions, UsbManager.USB_FUNCTION_ADB);
@@ -478,8 +478,10 @@ public class UsbDeviceManager {
             if (enable != mAdbEnabled) {
                 mAdbEnabled = enable;
                 // Due to the persist.sys.usb.config property trigger, changing adb state requires
-                // switching to default function
+                // persisting default function
                 setEnabledFunctions(mDefaultFunctions, true);
+                // After persisting them use the lock-down aware function set
+                setEnabledFunctions(getDefaultFunctions(), false);
                 updateAdbNotification();
             }
             if (mDebuggingManager != null) {
@@ -577,7 +579,7 @@ public class UsbDeviceManager {
                 // make sure accessory mode is off
                 // and restore default functions
                 Slog.d(TAG, "exited USB accessory mode");
-                setEnabledFunctions(mDefaultFunctions, false);
+                setEnabledFunctions(getDefaultFunctions(), false);
 
                 if (mCurrentAccessory != null) {
                     if (mBootCompleted) {
@@ -651,7 +653,7 @@ public class UsbDeviceManager {
                         updateCurrentAccessory();
                     } else if (!mConnected) {
                         // restore defaults when USB is disconnected
-                        setEnabledFunctions(mDefaultFunctions, false);
+                        setEnabledFunctions(getDefaultFunctions(), false);
                     }
                     if (mBootCompleted) {
                         updateUsbState();
@@ -680,13 +682,19 @@ public class UsbDeviceManager {
                     if (mDebuggingManager != null) {
                         mDebuggingManager.setAdbEnabled(mAdbEnabled);
                     }
+                    if (mContext.getResources().getBoolean(com.android.internal.
+                            R.bool.always_popup_usb_computer_connection_option)) {
+                        updateState(bootState(mConnected, mConfigured));
+                    }
                     break;
                 case MSG_USER_SWITCHED: {
                     UserManager userManager =
                             (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-                    if (userManager.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER)) {
-                        Slog.v(TAG, "Switched to user with DISALLOW_USB_FILE_TRANSFER restriction;"
-                                + " disabling USB.");
+                    UserHandle userHandle = new UserHandle(msg.arg1);
+                    if (userManager.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER,
+                            userHandle)) {
+                        Slog.v(TAG, "Switched to user " + msg.arg1 +
+                                " with DISALLOW_USB_FILE_TRANSFER restriction; disabling USB.");
                         setUsbConfig("none");
                         mCurrentUser = msg.arg1;
                         break;
@@ -704,6 +712,18 @@ public class UsbDeviceManager {
                     break;
                 }
             }
+        }
+
+        private String bootState(boolean isConnected, boolean isConfigured) {
+            String bootState = "CONNECTED";
+            if (!isConnected && !isConfigured) {
+                bootState = "DISCONNECTED";
+            } else if (isConnected && !isConfigured) {
+                bootState = "CONNECTED";
+            } else if (isConnected && isConfigured) {
+                bootState = "CONFIGURED";
+            }
+            return bootState;
         }
 
         public UsbAccessory getCurrentAccessory() {
@@ -736,7 +756,7 @@ public class UsbDeviceManager {
                     //}
                 }
             }
-            if (id != mUsbNotificationId) {
+            if (id != mUsbNotificationId && mBootCompleted) {
                 // clear notification if title needs changing
                 if (mUsbNotificationId != 0) {
                     mNotificationManager.cancelAsUser(null, mUsbNotificationId,
@@ -770,6 +790,9 @@ public class UsbDeviceManager {
                     mNotificationManager.notifyAsUser(null, id, notification,
                             UserHandle.ALL);
                     mUsbNotificationId = id;
+                    if (r.getBoolean(com.android.internal.R.bool.
+                            always_popup_usb_computer_connection_option))
+                        mContext.startActivity(intent);
                 }
             }
         }
@@ -830,6 +853,15 @@ public class UsbDeviceManager {
                 }
                 mAdbNotificationId = id;
             }
+        }
+
+        private String getDefaultFunctions() {
+            UserManager userManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
+            if (userManager.hasUserRestriction(UserManager.DISALLOW_USB_FILE_TRANSFER,
+                    new UserHandle(mCurrentUser))) {
+                return "none";
+            }
+            return mDefaultFunctions;
         }
 
         public void dump(FileDescriptor fd, PrintWriter pw) {

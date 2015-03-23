@@ -268,6 +268,18 @@ public class NotificationManager
     /**
      * @hide
      */
+    public boolean isSystemConditionProviderEnabled(String path) {
+        INotificationManager service = getService();
+        try {
+            return service.isSystemConditionProviderEnabled(path);
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /**
+     * @hide
+     */
     public int getShowNotificationForPackageOnKeyguard(String pkg, int uid) {
         INotificationManager service = getService();
         try {

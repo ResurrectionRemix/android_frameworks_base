@@ -207,7 +207,8 @@ MyMtpDatabase::MyMtpDatabase(JNIEnv *env, jobject client)
         return; // Already threw.
     }
     mLongBuffer = (jlongArray)env->NewGlobalRef(longArray);
-    jcharArray charArray = env->NewCharArray(256);
+    // Needs to be long enough to hold a file path for getObjectFilePath()
+    jcharArray charArray = env->NewCharArray(PATH_MAX + 1);
     if (!charArray) {
         return; // Already threw.
     }
@@ -764,7 +765,7 @@ MtpResponseCode MyMtpDatabase::getObjectPropertyList(MtpObjectHandle handle,
     return result;
 }
 
-static void foreachentry(ExifEntry *entry, void *user) {
+static void foreachentry(ExifEntry *entry, void * /*user*/) {
     char buf[1024];
     ALOGI("entry %x, format %d, size %d: %s",
             entry->tag, entry->format, entry->size, exif_entry_get_value(entry, buf, sizeof(buf)));
@@ -929,6 +930,11 @@ static const PropertyTableEntry   kObjectPropertyTable[] = {
     {   MTP_PROPERTY_COMPOSER,          MTP_TYPE_STR        },
     {   MTP_PROPERTY_DURATION,          MTP_TYPE_UINT32     },
     {   MTP_PROPERTY_DESCRIPTION,       MTP_TYPE_STR        },
+    {   MTP_PROPERTY_AUDIO_WAVE_CODEC,  MTP_TYPE_UINT32     },
+    {   MTP_PROPERTY_BITRATE_TYPE,      MTP_TYPE_UINT16     },
+    {   MTP_PROPERTY_AUDIO_BITRATE,     MTP_TYPE_UINT32     },
+    {   MTP_PROPERTY_NUMBER_OF_CHANNELS,MTP_TYPE_UINT16     },
+    {   MTP_PROPERTY_SAMPLE_RATE,       MTP_TYPE_UINT32     },
 };
 
 static const PropertyTableEntry   kDevicePropertyTable[] = {

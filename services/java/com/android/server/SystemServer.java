@@ -32,6 +32,7 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.ThemeUtils;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.ThemeConfig;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -98,6 +99,7 @@ import com.android.server.restrictions.RestrictionsManagerService;
 import com.android.server.search.SearchManagerService;
 import com.android.server.statusbar.StatusBarManagerService;
 import com.android.server.storage.DeviceStorageMonitorService;
+import com.android.server.telecom.TelecomLoaderService;
 import com.android.server.trust.TrustManagerService;
 import com.android.server.tv.TvInputManagerService;
 import com.android.server.twilight.TwilightService;
@@ -161,7 +163,6 @@ public final class SystemServer {
     private SystemServiceManager mSystemServiceManager;
 
     // TODO: remove all of these references by improving dependency resolution and boot phases
-    private Installer mInstaller;
     private PowerManagerService mPowerManagerService;
     private AlarmManagerService mAlarmManagerService;
     private ActivityManagerService mActivityManagerService;
@@ -337,12 +338,13 @@ public final class SystemServer {
         // Wait for installd to finish starting up so that it has a chance to
         // create critical directories such as /data/user with the appropriate
         // permissions.  We need this to complete before we initialize other services.
-        mInstaller = mSystemServiceManager.startService(Installer.class);
+        Installer installer = mSystemServiceManager.startService(Installer.class);
 
         // Activity manager runs the show.
         mActivityManagerService = mSystemServiceManager.startService(
                 ActivityManagerService.Lifecycle.class).getService();
         mActivityManagerService.setSystemServiceManager(mSystemServiceManager);
+        mActivityManagerService.setInstaller(installer);
 
         // Power manager needs to be started early because other services need it.
         // Native daemons may be watching for it to be registered so it must be ready
@@ -373,7 +375,7 @@ public final class SystemServer {
 
         // Start the package manager.
         Slog.i(TAG, "Package Manager");
-        mPackageManagerService = PackageManagerService.main(mSystemContext, mInstaller,
+        mPackageManagerService = PackageManagerService.main(mSystemContext, installer,
                 mFactoryTestMode != FactoryTest.FACTORY_TEST_OFF, mOnlyCore);
         mFirstBoot = mPackageManagerService.isFirstBoot();
         mPackageManager = mSystemContext.getPackageManager();
@@ -402,6 +404,8 @@ public final class SystemServer {
         mSystemServiceManager.startService(UsageStatsService.class);
         mActivityManagerService.setUsageStatsManager(
                 LocalServices.getService(UsageStatsManagerInternal.class));
+        // Update after UsageStatsService is available, needed before performBootDexOpt.
+        mPackageManagerService.getUsageStatsIfNoPackageUsageInfo();
 
         // Tracks whether the updatable WebView is in a ready state and watches for update installs.
         mSystemServiceManager.startService(WebViewUpdateService.class);
@@ -445,7 +449,10 @@ public final class SystemServer {
         boolean disableSystemUI = SystemProperties.getBoolean("config.disable_systemui", false);
         boolean disableNonCoreServices = SystemProperties.getBoolean("config.disable_noncore", false);
         boolean disableNetwork = SystemProperties.getBoolean("config.disable_network", false);
+        boolean disableNetworkTime = SystemProperties.getBoolean("config.disable_networktime", false);
         boolean isEmulator = SystemProperties.get("ro.kernel.qemu").equals("1");
+        boolean digitalPenCapable =
+            Resources.getSystem().getBoolean(com.android.internal.R.bool.config_digitalPenCapable);
         boolean disableAtlas = SystemProperties.getBoolean("config.disable_atlas", false);
 
         try {
@@ -454,6 +461,8 @@ public final class SystemServer {
 
             Slog.i(TAG, "Scheduling Policy");
             ServiceManager.addService("scheduling_policy", new SchedulingPolicyService());
+
+            mSystemServiceManager.startService(TelecomLoaderService.class);
 
             Slog.i(TAG, "Telephony Registry");
             telephonyRegistry = new TelephonyRegistry(context);
@@ -503,7 +512,7 @@ public final class SystemServer {
             Slog.i(TAG, "Window Manager");
             wm = WindowManagerService.main(context, inputManager,
                     mFactoryTestMode != FactoryTest.FACTORY_TEST_LOW_LEVEL,
-                    true, mOnlyCore);
+                    !mFirstBoot, mOnlyCore);
             ServiceManager.addService(Context.WINDOW_SERVICE, wm);
             ServiceManager.addService(Context.INPUT_SERVICE, inputManager);
 
@@ -923,7 +932,7 @@ public final class SystemServer {
                 reportWtf("starting SamplingProfiler Service", e);
             }
 
-            if (!disableNetwork) {
+            if (!disableNetwork && !disableNetworkTime) {
                 try {
                     Slog.i(TAG, "NetworkTimeUpdateService");
                     networkTimeUpdater = new NetworkTimeUpdateService(context);
@@ -1056,6 +1065,23 @@ public final class SystemServer {
                 }
             } else {
                 Slog.d(TAG, "Wipower not supported");
+            }
+
+            if (digitalPenCapable) {
+              try {
+                  Slog.i(TAG, "Digital Pen Service");
+                  PathClassLoader digitalPenClassLoader =
+                    new PathClassLoader("/system/framework/DigitalPenService.jar",
+                                        ClassLoader.getSystemClassLoader());
+                  Class digitalPenClass = digitalPenClassLoader.loadClass
+                    ("com.qti.snapdragon.digitalpen.DigitalPenService");
+                  Constructor<Class> ctor = digitalPenClass.getConstructor(Context.class);
+                  Object digitalPenRemoteObject = ctor.newInstance(context);
+                  Slog.i(TAG, "Successfully loaded DigitalPenService class");
+                  ServiceManager.addService("DigitalPen", (IBinder)digitalPenRemoteObject);
+              } catch (Throwable e) {
+                  reportWtf("starting DigitalPenService", e);
+              }
             }
 
             try {
@@ -1366,7 +1392,7 @@ public final class SystemServer {
             int dpmFeature = SystemProperties.getInt("persist.dpm.feature", 0);
             Slog.i(TAG, "DPM configuration set to " + dpmFeature);
 
-            if (dpmFeature > 0 && dpmFeature < 8) {
+            if (dpmFeature > 0 && dpmFeature < 16) {
                 PathClassLoader dpmClassLoader =
                     new PathClassLoader("/system/framework/com.qti.dpmframework.jar",
                             ClassLoader.getSystemClassLoader());
