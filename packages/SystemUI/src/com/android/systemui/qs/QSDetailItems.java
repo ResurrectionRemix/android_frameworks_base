@@ -59,9 +59,6 @@ public class QSDetailItems extends FrameLayout {
     private ImageView mEmptyIcon;
     private int mMaxItems;
 
-    private int mTextColor;
-    private int mEmptyTextColor;
-    private int mIconColor;
 
     public QSDetailItems(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -113,11 +110,8 @@ public class QSDetailItems extends FrameLayout {
     }
 
     public void setEmptyState(int icon, int text) {
-        updateColors();
         mEmptyIcon.setImageResource(icon);
         mEmptyText.setText(text);
-        mEmptyIcon.setColorFilter(mIconColor, Mode.MULTIPLY);
-        mEmptyText.setTextColor(mEmptyTextColor);
     }
 
     /**
