@@ -29,13 +29,6 @@ import static android.content.Context.USER_SERVICE;
 import static android.Manifest.permission.READ_PROFILE;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
-import android.gesture.Gesture;
-import android.gesture.GestureLibraries;
-import android.gesture.GestureLibrary;
-import android.gesture.Prediction;
-import android.gesture.GestureStore;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Process;
@@ -57,7 +50,6 @@ import com.android.internal.widget.LockPatternUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,12 +66,6 @@ public class LockSettingsService extends ILockSettings.Stub {
 
     private final Context mContext;
 
-    private static final String SYSTEM_DIRECTORY = "/system/";
-    private static final String LOCK_PATTERN_FILE = "gesture.key";
-    private static final String LOCK_PASSWORD_FILE = "password.key";
-    private static final String LOCK_GESTURE_FILE = "lock_gesture.key";
-
-    private static final String LOCK_GESTURE_NAME = "lock_gesture";
     private final LockSettingsStorage mStorage;
 
     private LockPatternUtils mLockPatternUtils;
@@ -262,108 +248,7 @@ public class LockSettingsService extends ILockSettings.Stub {
     public String getString(String key, String defaultValue, int userId) throws RemoteException {
         checkReadPermission(key, userId);
 
-        return readFromDb(key, defaultValue, userId);
-    }
-
-    @Override
-    public void registerObserver(ILockSettingsObserver remote) throws RemoteException {
-        synchronized (mObservers) {
-            for (int i = 0; i < mObservers.size(); i++) {
-                if (mObservers.get(i).remote.asBinder() == remote.asBinder()) {
-                    boolean isDebuggable = "1".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, "0"));
-                    if (isDebuggable) {
-                        throw new IllegalStateException("Observer was already registered.");
-                    } else {
-                        Log.e(TAG, "Observer was already registered.");
-                        return;
-                    }
-                }
-            }
-            LockSettingsObserver o = new LockSettingsObserver();
-            o.remote = remote;
-            o.remote.asBinder().linkToDeath(o, 0);
-            mObservers.add(o);
-        }
-    }
-
-    @Override
-    public void unregisterObserver(ILockSettingsObserver remote) throws RemoteException {
-        synchronized (mObservers) {
-            for (int i = 0; i < mObservers.size(); i++) {
-                if (mObservers.get(i).remote.asBinder() == remote.asBinder()) {
-                    mObservers.remove(i);
-                    return;
-                }
-            }
-        }
-    }
-
-    public void notifyObservers(String key, int userId) {
-        synchronized (mObservers) {
-            for (int i = 0; i < mObservers.size(); i++) {
-                try {
-                    mObservers.get(i).remote.onLockSettingChanged(key, userId);
-                } catch (RemoteException e) {
-                    // The stack trace is not really helpful here.
-                    Log.e(TAG, "Failed to notify ILockSettingsObserver: " + e);
-                }
-            }
-        }
-    }
-
-    private int getUserParentOrSelfId(int userId) {
-        if (userId != 0) {
-            final UserManager um = (UserManager) mContext.getSystemService(USER_SERVICE);
-            final UserInfo pi = um.getProfileParent(userId);
-            if (pi != null) {
-                return pi.id;
-            }
-        }
-        return userId;
-    }
-
-    private String getLockPatternFilename(int userId) {
-        String dataSystemDirectory =
-                android.os.Environment.getDataDirectory().getAbsolutePath() +
-                SYSTEM_DIRECTORY;
-        userId = getUserParentOrSelfId(userId);
-        if (userId == 0) {
-            // Leave it in the same place for user 0
-            return dataSystemDirectory + LOCK_PATTERN_FILE;
-        } else {
-            return  new File(Environment.getUserSystemDirectory(userId), LOCK_PATTERN_FILE)
-                    .getAbsolutePath();
-        }
-    }
-
-    private String getLockGestureFilename(int userId) {
-        String dataSystemDirectory =
-                android.os.Environment.getDataDirectory().getAbsolutePath() +
-                SYSTEM_DIRECTORY;
-        String patternFile = LOCK_GESTURE_FILE;
-
-        if (userId == 0) {
-            // Leave it in the same place for user 0
-            return dataSystemDirectory + patternFile;
-        } else {
-            return  new File(Environment.getUserSystemDirectory(userId), patternFile)
-                    .getAbsolutePath();
-        }
-    }
-
-    private String getLockPasswordFilename(int userId) {
-        userId = getUserParentOrSelfId(userId);
-        String dataSystemDirectory =
-                android.os.Environment.getDataDirectory().getAbsolutePath() +
-                SYSTEM_DIRECTORY;
-        if (userId == 0) {
-            // Leave it in the same place for user 0
-            return dataSystemDirectory + LOCK_PASSWORD_FILE;
-        } else {
-            return new File(Environment.getUserSystemDirectory(userId), LOCK_PASSWORD_FILE)
-                    .getAbsolutePath();
-        }
-
+        return mStorage.readKeyValue(key, defaultValue, userId);
     }
 
     @Override
@@ -406,13 +291,6 @@ public class LockSettingsService extends ILockSettings.Stub {
     }
 
     @Override
-    public boolean haveGesture(int userId) throws RemoteException {
-        // Do we need a permissions check here?
-
-        return new File(getLockGestureFilename(userId)).length() > 0;
-    }
-
-    @Override
     public void setLockPattern(String pattern, int userId) throws RemoteException {
         checkWritePermission(userId);
 
@@ -421,45 +299,6 @@ public class LockSettingsService extends ILockSettings.Stub {
         final byte[] hash = LockPatternUtils.patternToHash(
                 LockPatternUtils.stringToPattern(pattern));
         mStorage.writePatternHash(hash, userId);
-    }
-
-     @Override
-    public void setLockGesture(Gesture gesture, int userId) throws RemoteException {
-        checkWritePermission(userId);
-        if (gesture == null)
-            return;
-
-        File storeFile = new File(getLockGestureFilename(userId));
-        GestureLibrary store = GestureLibraries.fromFile(storeFile);
-
-        store.load();
-        if (store.getGestures(LOCK_GESTURE_NAME) != null) {
-            store.removeEntry(LOCK_GESTURE_NAME);
-        }
-
-        store.addGesture(LOCK_GESTURE_NAME, gesture);
-        store.save();
-    }
-
-    @Override
-    public boolean checkGesture(Gesture gesture, int userId) throws RemoteException {
-        checkPasswordReadPermission(userId);
-
-        File storeFile = new File(getLockGestureFilename(userId));
-        GestureLibrary store = GestureLibraries.fromFile(storeFile);
-        int minPredictionScore = 2;
-        store.setOrientationStyle(GestureStore.ORIENTATION_SENSITIVE);
-        store.load();
-        ArrayList<Prediction> predictions = store.recognize(gesture);
-        if (predictions.size() > 0) {
-            Prediction prediction = predictions.get(0);
-            if (prediction.score > minPredictionScore) {
-                if (prediction.name.equals(LOCK_GESTURE_NAME)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override

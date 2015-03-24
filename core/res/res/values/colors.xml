@@ -148,7 +148,13 @@
 
     <color name="system_notification_accent_color">#ff607D8B</color>
     <color name="battery_saver_mode_color">#fff4511e</color><!-- deep orange 600 -->
-
+    <!-- TRDS colors -->
+<!-- commenting these out for now, until TRDS is implemented
+    <color name="trds_background">#ffffffff</color>
+    <color name="trds_text">#ff000000</color>
+-->
+    <color name="trds_background">#ff000000</color>
+    <color name="trds_text">#ffffffff</color>
     <!-- Default user icon colors -->
     <color name="user_icon_1">#ff00bcd4</color><!-- teal 500 -->
     <color name="user_icon_2">#ff3f51b5</color><!-- indigo 500 -->

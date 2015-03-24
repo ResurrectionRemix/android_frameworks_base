@@ -1899,6 +1899,10 @@ public class AudioService extends IAudioService.Stub {
         return DEFAULT_STREAM_VOLUME[streamType];
     }
 
+    protected static void setMaxStreamVolume(int streamType, int maxVol) {
+        MAX_STREAM_VOLUME[streamType] = maxVol;
+    }
+
     /** @see AudioManager#getStreamVolume(int) */
     public int getStreamVolume(int streamType) {
         ensureValidStreamType(streamType);

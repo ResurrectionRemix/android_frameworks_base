@@ -334,15 +334,6 @@
 
     <!-- Zen toast visibility duration -->
     <integer name="zen_toast_visible_duration">500</integer>
-    
-    <bool name="config_showSdcardAbsentIndicator">false</bool>
-    <bool name="config_showWifiIndicatorWhenEnabled">false</bool>
-    <bool name="config_showGpsIndicator">false</bool>
-    <bool name="config_showTogglesLayout">false</bool>
-    <bool name="config_showBrightnessToggles">false</bool>
-    <bool name="config_showHotSpotToggles">false</bool>
-    <bool name="config_showSyncToggles">false</bool>
-    <bool name="config_showGpsToggles">false</bool>
 
     <!-- Whether to enable data switch or not -->
     <bool name="config_enableDataSwitch">false</bool>
