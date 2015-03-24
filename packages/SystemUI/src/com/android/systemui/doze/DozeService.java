@@ -156,7 +156,7 @@ public class DozeService extends DreamService implements ProximitySensorManager.
         mUiModeManager = (UiModeManager) mContext.getSystemService(Context.UI_MODE_SERVICE);
         turnDisplayOff();
     }
-    
+
     @Override
     public void onAttachedToWindow() {
         if (DEBUG) Log.d(mTag, "onAttachedToWindow");
@@ -168,7 +168,7 @@ public class DozeService extends DreamService implements ProximitySensorManager.
         if (mDozeParameters.getPocketMode()) {
             startPulsingFromSensor();
         } else {
-            requestPulse();
+            requestPulse(DozeLog.PULSE_REASON_INTENT);
         }
     }
 
@@ -232,7 +232,7 @@ public class DozeService extends DreamService implements ProximitySensorManager.
                     }
                     mWakeLock.release(); // needs to be unconditional to balance acquire
                 }
-            });
+            }, DozeLog.PULSE_REASON_INTENT);
         }
     }
 
@@ -314,7 +314,6 @@ public class DozeService extends DreamService implements ProximitySensorManager.
                 // proximity check is only done to capture statistics, continue pulsing
                 continuePulsing(reason);
             }
-
             // perform a proximity check
             new ProximityCheck() {
                 @Override

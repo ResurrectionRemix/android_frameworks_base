@@ -185,8 +185,9 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
      * Enable/disable recents search widget.
      */
     private boolean isRecentsSearchbarEnabled() {
-        boolean recentsSearchbarEnabled = Settings.System.getInt(
-            getContentResolver(), Settings.System.RECENTS_SEARCH_BAR, 1) == 1;
+        boolean recentsSearchbarEnabled = Settings.System.getIntForUser(
+            getContentResolver(), Settings.System.RECENTS_SEARCH_BAR,
+                1, UserHandle.USER_CURRENT) == 1;
 
         // Update search bar space height
         Resources res = getResources();
@@ -586,8 +587,6 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
         // Dismiss Recents to the focused Task or Home
         dismissRecentsToFocusedTaskOrHome(true);
-
-        mRecentsView.endFABanimation();
     }
 
     /** Called when debug mode is triggered */
@@ -616,7 +615,6 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                 Toast.LENGTH_SHORT).show();
         }
     }
-
 
     /**** RecentsView.RecentsViewCallbacks Implementation ****/
 
