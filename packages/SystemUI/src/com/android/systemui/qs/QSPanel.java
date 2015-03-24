@@ -269,7 +269,7 @@ public class QSPanel extends ViewGroup {
         }
     }
 
-    private void refreshAllTiles() {
+    public void refreshAllTiles() {
         mUseMainTiles = Settings.Secure.getIntForUser(getContext().getContentResolver(),
                 Settings.Secure.QS_USE_MAIN_TILES, 1, UserHandle.USER_CURRENT) == 1;
         for (int i = 0; i < mRecords.size(); i++) {

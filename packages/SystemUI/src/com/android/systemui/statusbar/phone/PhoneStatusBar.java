@@ -4523,10 +4523,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         return staying;
     }
 
-    boolean isSecure() {
-        return mStatusBarKeyguardViewManager != null && mStatusBarKeyguardViewManager.isSecure();
-    }
-
     public long calculateGoingToFullShadeDelay() {
         return mKeyguardFadingAwayDelay + mKeyguardFadingAwayDuration;
     }
@@ -4593,16 +4589,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private void updateDozingState() {
         if (mState != StatusBarState.KEYGUARD && !mNotificationPanel.isDozing()) {
             return;
-        }
-        mNotificationPanel.setDozing(mDozing);
-        if (mDozing) {
-            mKeyguardBottomArea.setVisibility(View.INVISIBLE);
-            mStackScroller.setDark(
-                    mContext.getResources().getBoolean(R.bool.config_invert_colors_on_doze),
-                    false /*animate*/);
-        } else {
-            mKeyguardBottomArea.setVisibility(View.VISIBLE);
-            mStackScroller.setDark(false, false /*animate*/);
         }
         boolean animate = !mDozing && mDozeScrimController.isPulsing();
         mNotificationPanel.setDozing(mDozing, animate);
