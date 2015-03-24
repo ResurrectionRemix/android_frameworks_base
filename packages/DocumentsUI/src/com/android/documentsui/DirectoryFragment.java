@@ -71,6 +71,7 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.provider.DocumentsContract;
 import android.provider.DocumentsContract.Document;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
 import android.text.format.Time;
@@ -111,6 +112,7 @@ import java.util.concurrent.Executor;
 
 
 import android.content.ContentValues;
+import android.drm.DrmHelper;
 import android.drm.DrmManagerClient;
 import android.drm.DrmStore.DrmDeliveryType;
 import android.drm.DrmStore.RightsStatus;
@@ -966,8 +968,13 @@ public class DirectoryFragment extends Fragment {
                     iconMime.setImageDrawable(
                             IconUtils.loadPackageIcon(context, docAuthority, docIcon));
                 } else {
-                    iconMime.setImageDrawable(IconUtils.loadMimeIcon(
-                            context, docMimeType, docAuthority, docId, state.derivedMode));
+                    if (DrmHelper.isDrmFile(docDisplayName)) {
+                        iconMime.setImageDrawable(context
+                                .getDrawable(R.drawable.ic_doc_drm));
+                    } else {
+                        iconMime.setImageDrawable(IconUtils.loadMimeIcon(
+                                context, docMimeType, docAuthority, docId, state.derivedMode));
+                    }
                 }
             }
 
