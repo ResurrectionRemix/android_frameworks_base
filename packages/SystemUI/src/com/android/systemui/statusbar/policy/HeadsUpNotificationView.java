@@ -88,11 +88,11 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         Resources resources = context.getResources();
         mTouchSensitivityDelay = resources.getInteger(R.integer.heads_up_sensitivity_delay);
         if (DEBUG) Log.v(TAG, "create() " + mTouchSensitivityDelay);
+        sRoundedRectCornerRadius = context.getResources().getDimensionPixelSize(
+                R.dimen.notification_material_rounded_rect_radius);
         mSnoozedPackages = new ArrayMap<>();
         mDefaultSnoozeLengthMs = resources.getInteger(R.integer.heads_up_default_snooze_length_ms);
         mSnoozeLengthMs = mDefaultSnoozeLengthMs;
-        sRoundedRectCornerRadius = context.getResources().getDimensionPixelSize(
-                R.dimen.notification_material_rounded_rect_radius);
     }
 
     public void updateResources() {
@@ -409,10 +409,9 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
         return 1.0f;
     }
 
-    @Override
-    public void onChildDismissed(View v) {
-        Log.v(TAG, "User swiped heads up to dismiss");
-        mBar.onHeadsUpDismissed();
+    public void onChildDismissed(View v, boolean direction) {
+        if (DEBUG)  Log.v(TAG, "User swiped heads up to dismiss");
+        mBar.onHeadsUpDismissed(direction);
     }
 
     @Override

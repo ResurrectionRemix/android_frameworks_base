@@ -2242,8 +2242,8 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         // its below our threshold priority, we might want to always display
         // notifications from certain apps
-        if (!isHighPriority && !isOngoing && !keyguardIsShowing
-                    && !isExpanded && !zenBlocksHeadsUp && !isIMEShowing) {
+        if (!isHighPriority && !isOngoing && !isExpanded
+                    && !zenBlocksHeadsUp && !isIMEShowing) {
             // However, we don't want to interrupt if we're in an application that is
             // in Do Not Disturb
             if (!isPackageInDnd(getTopLevelPackage())) {
@@ -2341,6 +2341,10 @@ public abstract class BaseStatusBar extends SystemUI implements
         } catch (RemoteException e) {
             // Ignore.
         }
+    }
+    
+    public boolean isKeyguardSecure() {
+        return mStatusBarKeyguardViewManager.isSecure();
     }
         
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
