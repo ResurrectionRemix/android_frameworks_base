@@ -62,7 +62,6 @@ public class QSDetailItems extends FrameLayout {
     private int mTextColor;
     private int mEmptyTextColor;
     private int mIconColor;
-    private boolean mQSCSwitch = false;
 
     public QSDetailItems(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -117,10 +116,8 @@ public class QSDetailItems extends FrameLayout {
         updateColors();
         mEmptyIcon.setImageResource(icon);
         mEmptyText.setText(text);
-        if (mQSCSwitch) {
-            mEmptyIcon.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mEmptyText.setTextColor(mEmptyTextColor);
-        }
+        mEmptyIcon.setColorFilter(mIconColor, Mode.MULTIPLY);
+        mEmptyText.setTextColor(mEmptyTextColor);
     }
 
     /**
@@ -193,8 +190,6 @@ public class QSDetailItems extends FrameLayout {
         view.setVisibility(mItemsVisible ? VISIBLE : INVISIBLE);
         final ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
         iv.setImageResource(item.icon);
-        if (mQSCSwitch) {
-            iv.setColorFilter(mIconColor, Mode.MULTIPLY);
         iv.getOverlay().clear();
         if (item.overlay != null) {
             item.overlay.setBounds(0, 0, item.overlay.getIntrinsicWidth(),
@@ -203,8 +198,6 @@ public class QSDetailItems extends FrameLayout {
         }
         final TextView title = (TextView) view.findViewById(android.R.id.title);
         title.setText(item.line1);
-        if (mQSCSwitch) {
-            title.setTextColor(mTextColor);
         final TextView summary = (TextView) view.findViewById(android.R.id.summary);
         final boolean twoLines = !TextUtils.isEmpty(item.line2);
         title.setMaxLines(twoLines ? 1 : 2);
@@ -220,19 +213,16 @@ public class QSDetailItems extends FrameLayout {
                 }
             }
         });
-    }
-
-    private void updateColors() {
-        final ContentResolver resolver = mContext.getContentResolver();
-        mQSCSwitch = Settings.System.getInt(resolver,
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        if (mQSCSwitch) {
-            mTextColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_TEXT_COLOR, 0xffffffff);
-            mEmptyTextColor = (153 << 24) | (mTextColor & 0x00ffffff); // Text color with a transparency of 60%
-            mIconColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_ICON_COLOR, 0xffffffff);
-        }
+        final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
+        disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
+        disconnect.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCallback != null) {
+                    mCallback.onDetailItemDisconnect(item);
+                }
+            }
+        });
     }
             
     private class H extends Handler {

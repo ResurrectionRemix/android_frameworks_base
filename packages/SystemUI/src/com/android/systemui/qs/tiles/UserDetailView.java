@@ -21,7 +21,6 @@ import com.android.systemui.qs.PseudoGridView;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,11 +77,7 @@ public class UserDetailView extends PseudoGridView {
             }
             v.setActivated(item.isCurrent);
             v.setTag(item);
-            boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_COLOR_SWITCH, 0) == 1;
-            if (mQSCSwitch) {
-                v.setTextColor(item.isCurrent);
-            }
+            v.setTextColor(item.isCurrent);
             return v;
         }
 
