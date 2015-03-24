@@ -2319,4 +2319,9 @@
     <string name="config_defaultQuickSettingsTiles">wifi,bt,cell,airplane,rotation,flashlight,location,cast,visualizer,hotspot,live_display</string>
 
     <string-array name="config_externalCMServices"></string-array>
+
+    <!-- If this is true, key chords can be used to take a screen record on the device. -->
+    <bool name="config_enableScreenrecordChord">true</bool>
+
 </resources>
+
