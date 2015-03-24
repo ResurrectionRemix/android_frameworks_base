@@ -3980,12 +3980,6 @@ public final class Settings {
          * @hide
          */
         public static final String DOZE_TIME_MODE = "doze_time_mode";
-
-        /**
-         * Timeout for volume panel
-         * @hide
-         */
-        public static final String VOLUME_PANEL_TIMEOUT = "volume_panel_timeout";
         
         /**
          * Color temperature of the display during the day

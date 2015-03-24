@@ -205,7 +205,6 @@ public class QSDetailItems extends FrameLayout {
         title.setText(item.line1);
         if (mQSCSwitch) {
             title.setTextColor(mTextColor);
-        }
         final TextView summary = (TextView) view.findViewById(android.R.id.summary);
         final boolean twoLines = !TextUtils.isEmpty(item.line2);
         title.setMaxLines(twoLines ? 1 : 2);
@@ -218,19 +217,6 @@ public class QSDetailItems extends FrameLayout {
             public void onClick(View v) {
                 if (mCallback != null) {
                     mCallback.onDetailItemClick(item);
-                }
-            }
-        });
-        final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
-        disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
-        if (mQSCSwitch) {
-            disconnect.setColorFilter(mIconColor, Mode.MULTIPLY);
-        }
-        disconnect.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCallback != null) {
-                    mCallback.onDetailItemDisconnect(item);
                 }
             }
         });
@@ -248,7 +234,7 @@ public class QSDetailItems extends FrameLayout {
                     Settings.System.QS_ICON_COLOR, 0xffffffff);
         }
     }
-
+            
     private class H extends Handler {
         private static final int SET_ITEMS = 1;
         private static final int SET_CALLBACK = 2;
