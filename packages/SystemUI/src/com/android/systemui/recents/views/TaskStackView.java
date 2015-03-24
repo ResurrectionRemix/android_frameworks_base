@@ -559,18 +559,6 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
                     tasks.remove(foregroundTask);
                 }
 
-    public void dismissAllTasks() {
-        post(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<Task> tasks = new ArrayList<Task>();
-                tasks.addAll(mStack.getTasks());
-                if (!dismissAll() && tasks.size() > 1) {
-                    // Ignore the visible foreground task
-                    Task foregroundTask = tasks.get(tasks.size() - 1);
-                    tasks.remove(foregroundTask);
-                }
-
                 // Remove visible TaskViews
                 long dismissDelay = 0;
                 int childCount = getChildCount();

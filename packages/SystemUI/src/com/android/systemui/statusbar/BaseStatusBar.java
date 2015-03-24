@@ -107,7 +107,6 @@ import com.android.systemui.SystemUI;
 import com.android.systemui.cm.SpamMessageProvider;
 import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
 import com.android.systemui.statusbar.appcirclesidebar.AppCircleSidebar;
-import com.android.systemui.statusbar.phone.KeyguardTouchDelegate;
 import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.phone.NavigationBarView;
 import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
@@ -2215,16 +2214,10 @@ public abstract class BaseStatusBar extends SystemUI implements
         boolean accessibilityForcesLaunch = isFullscreen
                 && mAccessibilityManager.isTouchExplorationEnabled();
 
-        }
-        
-        final KeyguardTouchDelegate keyguard = KeyguardTouchDelegate.getInstance(mContext);
-        boolean keyguardIsShowing = keyguard.isShowingAndNotOccluded()
-                && keyguard.isInputRestricted();
-
         boolean isExpanded = false;
             if (mStackScroller != null) {
                 isExpanded = mStackScroller.getIsExpanded();
-
+        }
 
         final InputMethodManager inputMethodManager = (InputMethodManager)
                 mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -2235,10 +2228,9 @@ public abstract class BaseStatusBar extends SystemUI implements
                 && isAllowed
                 && !accessibilityForcesLaunch
                 && mPowerManager.isScreenOn()
-                && !keyguardIsShowing
                 && !isExpanded
                 && !zenBlocksHeadsUp
-                && !isIMEShowing;
+                && !isIMEShowing
                 && (!mStatusBarKeyguardViewManager.isShowing()
                         || mStatusBarKeyguardViewManager.isOccluded())
                 && !mStatusBarKeyguardViewManager.isInputRestricted();
@@ -2350,9 +2342,6 @@ public abstract class BaseStatusBar extends SystemUI implements
             // Ignore.
         }
     }
-        
-    public boolean isKeyguardSecure() {
-        return mStatusBarKeyguardViewManager.isSecure();
         
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
     protected void addGestureAnywhereView() {
