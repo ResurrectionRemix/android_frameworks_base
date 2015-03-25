@@ -78,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // is properly propagated through your change.  Not doing so will result in a loss of user
     // settings.
 
-    private static final int DATABASE_VERSION = 124;
+    private static final int DATABASE_VERSION = 123;
 
 
     private Context mContext;
@@ -1953,24 +1953,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             upgradeVersion = 122;
         }
-        
-        if (upgradeVersion < 123) {
-            db.beginTransaction();
-            SQLiteStatement stmt = null;
-            try {
-                stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
-                        + " VALUES(?,?);");
-                loadBooleanSetting(stmt, Secure.ADVANCED_MODE,
-                        com.android.internal.R.bool.config_advancedSettingsMode);
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-                if (stmt != null) stmt.close();
-            }
-            upgradeVersion = 123;
-        }
 
-        if (upgradeVersion < 124) {
+        if (upgradeVersion < 123) {
             // Force enable advanced settings if the overlay defaults to true
             if (mContext.getResources().getBoolean(
                     com.android.internal.R.bool.config_advancedSettingsMode)) {
@@ -1987,7 +1971,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     if (stmt != null) stmt.close();
                 }
             }
-            upgradeVersion = 124;
+            upgradeVersion = 123;
         }
 
         // *** Remember to update DATABASE_VERSION above!
