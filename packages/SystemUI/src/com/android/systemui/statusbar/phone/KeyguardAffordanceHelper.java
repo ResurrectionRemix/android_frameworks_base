@@ -318,7 +318,7 @@ public class KeyguardAffordanceHelper {
         animator.addListener(mFlingEndListener);
         if (!snapBack) {
             startFinishingCircleAnimation(vel * 0.375f, mAnimationEndRunnable);
-            mCallback.onAnimationToSideStarted(mTranslation < 0);
+            mCallback.onAnimationToSideStarted(mTranslation < 0, mTranslation, vel);
         } else {
             reset(true);
         }
@@ -443,6 +443,10 @@ public class KeyguardAffordanceHelper {
         initIcons();
     }
 
+    public void onRtlPropertiesChanged() {
+        initIcons();
+    }
+
     public void reset(boolean animate) {
         if (mSwipeAnimator != null) {
             mSwipeAnimator.cancel();
@@ -458,7 +462,7 @@ public class KeyguardAffordanceHelper {
          *
          * @param rightPage Is the page animated to the right page?
          */
-        void onAnimationToSideStarted(boolean rightPage);
+        void onAnimationToSideStarted(boolean rightPage, float translation, float vel);
 
         /**
          * Notifies the callback the animation to a side page has ended.

@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<FrameLayout
+<com.android.systemui.qs.QSContainer
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/quick_settings_container"
         android:layout_width="match_parent"
@@ -24,8 +24,9 @@
         android:elevation="2dp">
 
     <com.android.systemui.qs.QSPanel
-            android:id="@+id/quick_settings_panel"
-            android:background="#0000"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-</FrameLayout>
+        android:id="@+id/quick_settings_panel"
+        android:background="#0000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</com.android.systemui.qs.QSContainer>

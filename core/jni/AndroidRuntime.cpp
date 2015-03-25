@@ -190,6 +190,8 @@ extern int register_com_android_internal_content_NativeLibraryHelper(JNIEnv *env
 extern int register_com_android_internal_net_NetworkStatsFactory(JNIEnv *env);
 extern int register_com_android_internal_os_Zygote(JNIEnv *env);
 extern int register_com_android_internal_util_VirtualRefBasePtr(JNIEnv *env);
+extern int register_org_codeaurora_Performance(JNIEnv *env);
+extern int register_com_android_internal_app_ActivityTrigger(JNIEnv *env);
 
 static AndroidRuntime* gCurRuntime = NULL;
 
@@ -354,6 +356,15 @@ static int hasDir(const char* dir)
         return S_ISDIR(s.st_mode);
     }
     return 0;
+}
+
+static bool hasFile(const char* file) {
+    struct stat s;
+    int res = stat(file, &s);
+    if (res == 0) {
+        return S_ISREG(s.st_mode);
+    }
+    return false;
 }
 
 /*
@@ -768,10 +779,22 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
             parseCompilerOption("dalvik.vm.image-dex2oat-filter", dex2oatImageCompilerFilterBuf,
                                 "--compiler-filter=", "-Ximage-compiler-option");
         }
+
+        // Make sure there is a preloaded-classes file.
+        if (!hasFile("/system/etc/preloaded-classes")) {
+            ALOGE("Missing preloaded-classes file, /system/etc/preloaded-classes not found: %s\n",
+                  strerror(errno));
+            goto bail;
+        }
         addOption("-Ximage-compiler-option");
-        addOption("--image-classes-zip=/system/framework/framework.jar");
-        addOption("-Ximage-compiler-option");
-        addOption("--image-classes=preloaded-classes");
+        addOption("--image-classes=/system/etc/preloaded-classes");
+
+        // If there is a compiled-classes file, push it.
+        if (hasFile("/system/etc/compiled-classes")) {
+            addOption("-Ximage-compiler-option");
+            addOption("--compiled-classes=/system/etc/compiled-classes");
+        }
+
         property_get("dalvik.vm.image-dex2oat-flags", dex2oatImageFlagsBuf, "");
         parseExtraOpts(dex2oatImageFlagsBuf, "-Ximage-compiler-option");
 
@@ -856,7 +879,7 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
         parseRuntimeOption("dalvik.vm.profiler.type", profileType, "-Xprofile-type:");
 
         // Depth of bounded stack data
-        parseRuntimeOption("dalvik.vm.profile.max-stack-depth",
+        parseRuntimeOption("dalvik.vm.profile.stack-depth",
                            profileMaxStackDepth,
                            "-Xprofile-max-stack-depth:");
 
@@ -929,8 +952,8 @@ jstring AndroidRuntime::NewStringLatin1(JNIEnv* env, const char* bytes) {
  */
 void AndroidRuntime::start(const char* className, const Vector<String8>& options)
 {
-    ALOGD("\n>>>>>> AndroidRuntime START %s <<<<<<\n",
-            className != NULL ? className : "(unknown)");
+    ALOGD(">>>>>> START %s uid %d <<<<<<\n",
+            className != NULL ? className : "(unknown)", getuid());
 
     static const String8 startSystemServer("start-system-server");
 
@@ -1363,6 +1386,8 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_animation_PropertyValuesHolder),
     REG_JNI(register_com_android_internal_content_NativeLibraryHelper),
     REG_JNI(register_com_android_internal_net_NetworkStatsFactory),
+    REG_JNI(register_org_codeaurora_Performance),
+    REG_JNI(register_com_android_internal_app_ActivityTrigger),
 };
 
 /*

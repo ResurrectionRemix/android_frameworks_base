@@ -20,12 +20,14 @@
 # ==========================================================
 LOCAL_PATH:= $(call my-dir)
 testFiles := \
+    AttributeFinder_test.cpp \
     ByteBucketArray_test.cpp \
     Config_test.cpp \
     ConfigLocale_test.cpp \
     PackageIdOverride_test.cpp \
     ResTable_test.cpp \
     Split_test.cpp \
+    TestHelpers.cpp \
     Theme_test.cpp \
     ThemesBags_test.cpp \
     ThemesIdmap_test.cpp \
@@ -38,7 +40,6 @@ testFiles := \
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libandroidfw_tests
-
 LOCAL_SRC_FILES := $(testFiles)
 LOCAL_STATIC_LIBRARIES := \
     libandroidfw \
@@ -52,14 +53,13 @@ include $(BUILD_HOST_NATIVE_TEST)
 # ==========================================================
 # Build the device tests: libandroidfw_tests
 # ==========================================================
+ifneq ($(SDK_ONLY),true)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libandroidfw_tests
-
 LOCAL_SRC_FILES := $(testFiles) \
     BackupData_test.cpp \
     ObbFile_test.cpp
-
 LOCAL_SHARED_LIBRARIES := \
     libandroidfw \
     libcutils \
@@ -68,3 +68,5 @@ LOCAL_SHARED_LIBRARIES := \
     libstlport
 
 include $(BUILD_NATIVE_TEST)
+endif # Not SDK_ONLY
+

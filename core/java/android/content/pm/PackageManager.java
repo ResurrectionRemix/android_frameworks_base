@@ -3943,6 +3943,13 @@ public abstract class PackageManager {
     public abstract VerifierDeviceIdentity getVerifierDeviceIdentity();
 
     /**
+     * Returns true if the device is upgrading, such as first boot after OTA.
+     *
+     * @hide
+     */
+    public abstract boolean isUpgrade();
+
+    /**
      * Return interface that offers the ability to install, upgrade, and remove
      * applications on the device.
      */
@@ -3992,6 +3999,11 @@ public abstract class PackageManager {
      * @hide
      */
     public abstract Drawable loadItemIcon(PackageItemInfo itemInfo, ApplicationInfo appInfo);
+
+    /**
+     * @hide
+     */
+    public abstract Drawable loadUnbadgedItemIcon(PackageItemInfo itemInfo, ApplicationInfo appInfo);
 
     /** {@hide} */
     public abstract boolean isPackageAvailable(String packageName);

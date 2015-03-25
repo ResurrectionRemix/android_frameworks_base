@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.ViewConfiguration;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import org.codeaurora.Performance;
 
 /**
  * This class encapsulates scrolling with the ability to overshoot the bounds
@@ -909,6 +910,10 @@ public class OverScroller {
             final long time = AnimationUtils.currentAnimationTimeMillis();
             final long currentTime = time - mStartTime;
 
+            if (currentTime == 0) {
+                // Skip work but report that we're still going if we have a nonzero duration.
+                return mDuration > 0;
+            }
             if (currentTime > mDuration) {
                 return false;
             }

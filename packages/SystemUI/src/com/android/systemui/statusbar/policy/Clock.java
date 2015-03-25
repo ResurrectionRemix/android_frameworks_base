@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.policy;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -171,7 +172,9 @@ public class Clock extends TextView implements DemoMode {
             filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
             filter.addAction(Intent.ACTION_USER_SWITCHED);
 
-            getContext().registerReceiver(mIntentReceiver, filter, null, getHandler());
+
+            mContext.registerReceiverAsUser(mIntentReceiver, UserHandle.ALL, filter,
+                    null, new Handler());
         }
 
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
@@ -229,6 +232,7 @@ public class Clock extends TextView implements DemoMode {
         Context context = getContext();
         boolean is24 = DateFormat.is24HourFormat(context);
         LocaleData d = LocaleData.get(context.getResources().getConfiguration().locale);
+
 
         final char MAGIC1 = '\uEF00';
         final char MAGIC2 = '\uEF01';

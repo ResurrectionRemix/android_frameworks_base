@@ -53,7 +53,7 @@ oneway interface IConnectionServiceAdapter {
 
     void setRingbackRequested(String callId, boolean ringing);
 
-    void setCallCapabilities(String callId, int callCapabilities);
+    void setConnectionCapabilities(String callId, int connectionCapabilities);
 
     void setCallProperties(String callId, int callProperties);
 
@@ -64,6 +64,8 @@ oneway interface IConnectionServiceAdapter {
     void removeCall(String callId);
 
     void onPostDialWait(String callId, String remaining);
+
+    void onPostDialChar(String callId, char nextChar);
 
     void queryRemoteConnectionServices(RemoteServiceCallback callback);
 

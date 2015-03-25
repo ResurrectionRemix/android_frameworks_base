@@ -31,7 +31,7 @@ public class StackTapPointerEventListener implements PointerEventListener {
     private float mDownX;
     private float mDownY;
     private int mPointerId;
-    final private Region mTouchExcludeRegion = new Region();
+    final private Region mTouchExcludeRegion;
     private final WindowManagerService mService;
     private final DisplayContent mDisplayContent;
 
@@ -39,6 +39,7 @@ public class StackTapPointerEventListener implements PointerEventListener {
             DisplayContent displayContent) {
         mService = service;
         mDisplayContent = displayContent;
+        mTouchExcludeRegion = displayContent.mTouchExcludeRegion;
         DisplayInfo info = displayContent.getDisplayInfo();
         mMotionSlop = (int)(info.logicalDensityDpi * TAP_MOTION_SLOP_INCHES);
     }
@@ -62,8 +63,8 @@ public class StackTapPointerEventListener implements PointerEventListener {
 
                     if ((motionEvent.getEventTime() - motionEvent.getDownTime()) > TAP_TIMEOUT_MSEC
                             || index < 0
-                            || Math.abs(motionEvent.getX(index) - mDownX) > mMotionSlop
-                            || Math.abs(motionEvent.getY(index) - mDownY) > mMotionSlop) {
+                            || (motionEvent.getX(index) - mDownX) > mMotionSlop
+                            || (motionEvent.getY(index) - mDownY) > mMotionSlop) {
                         mPointerId = -1;
                     }
                 }
@@ -76,26 +77,17 @@ public class StackTapPointerEventListener implements PointerEventListener {
                 if (mPointerId == motionEvent.getPointerId(index)) {
                     final int x = (int)motionEvent.getX(index);
                     final int y = (int)motionEvent.getY(index);
-                    synchronized(this) {
-                        if ((motionEvent.getEventTime() - motionEvent.getDownTime())
-                                < TAP_TIMEOUT_MSEC
-                                && Math.abs(x - mDownX) < mMotionSlop
-                                && Math.abs(y - mDownY) < mMotionSlop
-                                && !mTouchExcludeRegion.contains(x, y)) {
-                            mService.mH.obtainMessage(H.TAP_OUTSIDE_STACK, x, y,
-                                    mDisplayContent).sendToTarget();
-                        }
+                    if ((motionEvent.getEventTime() - motionEvent.getDownTime())
+                            < TAP_TIMEOUT_MSEC
+                            && (x - mDownX) < mMotionSlop && (y - mDownY) < mMotionSlop
+                            && !mTouchExcludeRegion.contains(x, y)) {
+                        mService.mH.obtainMessage(H.TAP_OUTSIDE_STACK, x, y,
+                                mDisplayContent).sendToTarget();
                     }
                     mPointerId = -1;
                 }
                 break;
             }
-        }
-    }
-
-    void setTouchExcludeRegion(Region newRegion) {
-        synchronized (this) {
-           mTouchExcludeRegion.set(newRegion);
         }
     }
 }

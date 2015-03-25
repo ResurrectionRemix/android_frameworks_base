@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -27,7 +28,6 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,13 +54,11 @@ public class QSDetailItems extends FrameLayout {
     private boolean mItemsVisible = true;
     private LinearLayout mItems;
     private View mEmpty;
+    private View mMinHeightSpacer;
     private TextView mEmptyText;
     private ImageView mEmptyIcon;
+    private int mMaxItems;
 
-    private int mTextColor;
-    private int mEmptyTextColor;
-    private int mIconColor;
-    private boolean mQSCSwitch = false;
 
     public QSDetailItems(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -85,6 +83,12 @@ public class QSDetailItems extends FrameLayout {
         mEmpty.setVisibility(GONE);
         mEmptyText = (TextView) mEmpty.findViewById(android.R.id.title);
         mEmptyIcon = (ImageView) mEmpty.findViewById(android.R.id.icon);
+        mMinHeightSpacer = findViewById(R.id.min_height_spacer);
+
+        // By default, a detail item view has fixed size.
+        mMaxItems = getResources().getInteger(
+                R.integer.quick_settings_detail_max_item_count);
+        setMinHeightInItems(mMaxItems);
     }
 
     @Override
@@ -106,13 +110,18 @@ public class QSDetailItems extends FrameLayout {
     }
 
     public void setEmptyState(int icon, int text) {
-        updateColors();
         mEmptyIcon.setImageResource(icon);
         mEmptyText.setText(text);
-        if (mQSCSwitch) {
-            mEmptyIcon.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mEmptyText.setTextColor(mEmptyTextColor);
-        }
+    }
+
+    /**
+     * Set the minimum height of this detail view, in item count.
+     */
+    public void setMinHeightInItems(int minHeightInItems) {
+        ViewGroup.LayoutParams lp = mMinHeightSpacer.getLayoutParams();
+        lp.height = minHeightInItems * getResources().getDimensionPixelSize(
+                R.dimen.qs_detail_item_height);
+        mMinHeightSpacer.setLayoutParams(lp);
     }
 
     @Override
@@ -148,7 +157,7 @@ public class QSDetailItems extends FrameLayout {
     }
 
     private void handleSetItems(Item[] items) {
-        final int itemCount = items != null ? items.length : 0;
+        final int itemCount = items != null ? Math.min(items.length, mMaxItems) : 0;
         mEmpty.setVisibility(itemCount == 0 ? VISIBLE : GONE);
         mItems.setVisibility(itemCount == 0 ? GONE : VISIBLE);
         for (int i = mItems.getChildCount() - 1; i >= itemCount; i--) {
@@ -175,16 +184,17 @@ public class QSDetailItems extends FrameLayout {
         view.setVisibility(mItemsVisible ? VISIBLE : INVISIBLE);
         final ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
         iv.setImageResource(item.icon);
-        if (mQSCSwitch) {
-            iv.setColorFilter(mIconColor, Mode.MULTIPLY);
+        iv.getOverlay().clear();
+        if (item.overlay != null) {
+            item.overlay.setBounds(0, 0, item.overlay.getIntrinsicWidth(),
+                    item.overlay.getIntrinsicHeight());
+            iv.getOverlay().add(item.overlay);
         }
         final TextView title = (TextView) view.findViewById(android.R.id.title);
         title.setText(item.line1);
-        if (mQSCSwitch) {
-            title.setTextColor(mTextColor);
-        }
         final TextView summary = (TextView) view.findViewById(android.R.id.summary);
         final boolean twoLines = !TextUtils.isEmpty(item.line2);
+        title.setMaxLines(twoLines ? 1 : 2);
         summary.setVisibility(twoLines ? VISIBLE : GONE);
         summary.setText(twoLines ? item.line2 : null);
         view.setMinimumHeight(mContext.getResources() .getDimensionPixelSize(
@@ -199,9 +209,6 @@ public class QSDetailItems extends FrameLayout {
         });
         final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
         disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
-        if (mQSCSwitch) {
-            disconnect.setColorFilter(mIconColor, Mode.MULTIPLY);
-        }
         disconnect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,20 +218,7 @@ public class QSDetailItems extends FrameLayout {
             }
         });
     }
-
-    private void updateColors() {
-        final ContentResolver resolver = mContext.getContentResolver();
-        mQSCSwitch = Settings.System.getInt(resolver,
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        if (mQSCSwitch) {
-            mTextColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_TEXT_COLOR, 0xffffffff);
-            mEmptyTextColor = (153 << 24) | (mTextColor & 0x00ffffff); // Text color with a transparency of 60%
-            mIconColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_ICON_COLOR, 0xffffffff);
-        }
-    }
-
+            
     private class H extends Handler {
         private static final int SET_ITEMS = 1;
         private static final int SET_CALLBACK = 2;
@@ -248,6 +242,7 @@ public class QSDetailItems extends FrameLayout {
 
     public static class Item {
         public int icon;
+        public Drawable overlay;
         public String line1;
         public String line2;
         public Object tag;

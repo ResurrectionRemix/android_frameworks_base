@@ -63,6 +63,8 @@ import android.location.Address;
 import android.location.Criteria;
 import android.location.GeocoderParams;
 import android.location.Geofence;
+import android.location.GpsMeasurementsEvent;
+import android.location.GpsNavigationMessageEvent;
 import android.location.IGpsMeasurementsListener;
 import android.location.IGpsNavigationMessageListener;
 import android.location.GeoFenceParams;
@@ -1869,9 +1871,6 @@ public class LocationManagerService extends ILocationManager.Stub {
 
     @Override
     public boolean addGpsStatusListener(IGpsStatusListener listener, String packageName) {
-        if (mGpsStatusProvider == null) {
-            return false;
-        }
         int allowedResolutionLevel = getCallerAllowedResolutionLevel();
         checkResolutionLevelIsSufficientForProviderUse(allowedResolutionLevel,
                 LocationManager.GPS_PROVIDER);
@@ -1884,6 +1883,10 @@ public class LocationManagerService extends ILocationManager.Stub {
             }
         } finally {
             Binder.restoreCallingIdentity(ident);
+        }
+
+        if (mGpsStatusProvider == null) {
+            return false;
         }
 
         try {
@@ -1931,8 +1934,8 @@ public class LocationManagerService extends ILocationManager.Stub {
     }
 
     @Override
-    public boolean removeGpsMeasurementsListener(IGpsMeasurementsListener listener) {
-        return mGpsMeasurementsProvider.removeListener(listener);
+    public void removeGpsMeasurementsListener(IGpsMeasurementsListener listener) {
+        mGpsMeasurementsProvider.removeListener(listener);
     }
 
     @Override
@@ -1960,8 +1963,8 @@ public class LocationManagerService extends ILocationManager.Stub {
     }
 
     @Override
-    public boolean removeGpsNavigationMessageListener(IGpsNavigationMessageListener listener) {
-        return mGpsNavigationMessageProvider.removeListener(listener);
+    public void removeGpsNavigationMessageListener(IGpsNavigationMessageListener listener) {
+        mGpsNavigationMessageProvider.removeListener(listener);
     }
 
     @Override

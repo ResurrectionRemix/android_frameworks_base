@@ -151,6 +151,12 @@ public class PhoneStatusBarView extends PanelBar {
     }
 
     @Override
+    public void onClosingFinished() {
+        super.onClosingFinished();
+        mBar.onClosingFinished();
+    }
+
+    @Override
     public void onTrackingStopped(PanelView panel, boolean expand) {
         super.onTrackingStopped(panel, expand);
         mBar.onTrackingStopped(expand);

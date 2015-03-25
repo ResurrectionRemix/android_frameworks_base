@@ -105,7 +105,6 @@ public class KeyButtonRipple extends Drawable {
         }
     }
 
-
     @Override
     public void draw(Canvas canvas) {
         mSupportHardware = canvas.isHardwareAccelerated();
@@ -176,6 +175,11 @@ public class KeyButtonRipple extends Drawable {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void jumpToCurrentState() {
+        cancelAnimations();
     }
 
     @Override

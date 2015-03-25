@@ -16,6 +16,7 @@
 
 package android.webkit;
 
+import android.annotation.SystemApi;
 import android.app.ActivityThread;
 import android.app.Application;
 import android.content.Context;
@@ -35,6 +36,7 @@ import android.view.ViewRootImpl;
  *
  * @hide
  */
+@SystemApi
 public final class WebViewDelegate {
 
     /* package */ WebViewDelegate() { }
@@ -105,7 +107,7 @@ public final class WebViewDelegate {
             throw new IllegalArgumentException(canvas.getClass().getName()
                     + " is not hardware accelerated");
         }
-        ((HardwareCanvas) canvas).callDrawGLFunction(nativeDrawGLFunctor);
+        ((HardwareCanvas) canvas).callDrawGLFunction2(nativeDrawGLFunctor);
     }
 
     /**

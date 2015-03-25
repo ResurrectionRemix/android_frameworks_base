@@ -36,9 +36,10 @@
         android:orientation="horizontal">
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_lockscreen_sim"/>
+            android:id="@+id/keyguard_sim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_lockscreen_sim" />
 
         <TextView
             android:id="@+id/sim_name"
@@ -82,6 +83,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginRight="72dp"
                     androidprv:scaledTextSize="28"
+                    android:contentDescription="@string/keyguard_accessibility_sim_puk_area"
                     />
             <ImageButton
                     android:id="@+id/delete_button"

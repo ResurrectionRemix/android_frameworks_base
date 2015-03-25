@@ -229,6 +229,11 @@ public class DisconnectCause {
      */
     public static final int IMS_MERGED_SUCCESSFULLY = 91;
 
+    /** EMERGENCY call failed with temporary fail cause */
+    public static final int EMERGENCY_TEMP_FAILURE         = 92;
+    /** EMERGENCY call failed with permanent fail cause */
+    public static final int EMERGENCY_PERM_FAILURE         = 93;
+
     //*********************************************************************************************
     // When adding a disconnect type:
     // 1) Please assign the new type the next id value below.
@@ -348,10 +353,10 @@ public class DisconnectCause {
             return "OUTGOING_FAILURE";
         case OUTGOING_CANCELED:
             return "OUTGOING_CANCELED";
-        case CALL_BLACKLISTED:
-            return "CALL_BLACKLISTED";
         case IMS_MERGED_SUCCESSFULLY:
             return "IMS_MERGED_SUCCESSFULLY";
+        case CALL_BLACKLISTED:
+            return "CALL_BLACKLISTED";
         default:
             return "INVALID: " + cause;
         }

@@ -12,13 +12,11 @@ import android.media.session.ISessionController;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.WindowManagerGlobal;
 
 import com.android.systemui.R;
 import com.android.systemui.SystemUI;
@@ -54,6 +52,7 @@ public class VolumeUI extends SystemUI {
 
     private final Handler mHandler = new Handler();
 
+    private boolean mEnabled;
     private AudioManager mAudioManager;
     private MediaSessionManager mMediaSessionManager;
     private VolumeController mVolumeController;
@@ -67,6 +66,8 @@ public class VolumeUI extends SystemUI {
 
     @Override
     public void start() {
+        mEnabled = mContext.getResources().getBoolean(R.bool.enable_volume_ui);
+        if (!mEnabled) return;
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mMediaSessionManager = (MediaSessionManager) mContext
                 .getSystemService(Context.MEDIA_SESSION_SERVICE);
@@ -103,6 +104,7 @@ public class VolumeUI extends SystemUI {
 
     @Override
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        pw.print("mEnabled="); pw.println(mEnabled);
         if (mPanel != null) {
             mPanel.dump(fd, pw, args);
         }
@@ -197,7 +199,7 @@ public class VolumeUI extends SystemUI {
 
         @Override
         public void dismiss() throws RemoteException {
-            mPanel.postDismiss(0);
+            dismissNow();
         }
 
         @Override
@@ -208,6 +210,16 @@ public class VolumeUI extends SystemUI {
         @Override
         public void setVolumePanel(VolumePanel panel) {
             mPanel = (panel == null) ? mDialogPanel : panel;
+        }
+
+        @Override
+        public void dispatchDemoCommand(String command, Bundle args) {
+            mPanel.dispatchDemoCommand(command, args);
+        }
+
+        @Override
+        public void dismissNow() {
+            mPanel.postDismiss(0);
         }
     }
 
