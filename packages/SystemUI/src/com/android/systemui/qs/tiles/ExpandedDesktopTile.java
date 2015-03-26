@@ -85,10 +85,10 @@ public class ExpandedDesktopTile extends QSTile<QSTile.BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
         if (mExpandedDesktopState == 1) {
-            state.iconId = R.drawable.ic_qs_expanded_desktop;
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_desktop);
             state.label = mContext.getString(R.string.quick_settings_expanded_desktop);
         } else {
-            state.iconId = R.drawable.ic_qs_expanded_desktop_off;
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_desktop_off);
             state.label = mContext.getString(R.string.quick_settings_expanded_desktop_off);
         }
     }

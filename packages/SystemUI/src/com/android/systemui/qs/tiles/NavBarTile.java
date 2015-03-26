@@ -83,10 +83,10 @@ public class NavBarTile extends QSTile<QSTile.BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
 	if (navbarEnabled()) {
-        state.iconId = R.drawable.ic_qs_navbar_on;
+        state.icon = R.drawable.ic_qs_navbar_on;
         state.label = mContext.getString(R.string.quick_settings_navbar_on);
 	} else {
-        state.iconId = R.drawable.ic_qs_navbar_off;
+        state.icon = R.drawable.ic_qs_navbar_off;
 	state.label = mContext.getString(R.string.quick_settings_navbar_off);
 	    }
 	}

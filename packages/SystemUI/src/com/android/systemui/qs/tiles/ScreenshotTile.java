@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
  * Copyright (C) 2012-2015 The CyanogenMod Project
- * Copyright (C) 2014-2015 The Euphoria-OS Project
+ * Copyright 2014-2015 The Euphoria-OS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
         state.label = mContext.getString(R.string.quick_settings_screenshot);
-        state.iconId = R.drawable.ic_qs_screenshot;
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_screenshot);
     }
 
     final Runnable mScreenshotTimeout = new Runnable() {

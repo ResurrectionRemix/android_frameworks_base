@@ -76,7 +76,7 @@ public class ScreenOffTile extends QSTile<QSTile.BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
         state.label = mContext.getString(R.string.quick_settings_screen_off);
-        state.iconId = R.drawable.ic_qs_power;
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_power);
     }
 
     private void triggerVirtualKeypress(final int keyCode, final boolean longPress) {
