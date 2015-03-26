@@ -2481,8 +2481,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     
             loadHeadsUpSetting(stmt);
 
+            loadIntegerSetting(stmt, Settings.System.ENABLE_FORWARD_LOOKUP,
+                    R.integer.def_forward_lookup);
+
             loadIntegerSetting(stmt, Settings.System.ENABLE_PEOPLE_LOOKUP,
                     R.integer.def_people_lookup);
+
+            loadIntegerSetting(stmt, Settings.System.ENABLE_REVERSE_LOOKUP,
+                    R.integer.def_reverse_lookup);
 
         } finally {
             if (stmt != null) stmt.close();
