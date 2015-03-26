@@ -30,6 +30,19 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:id="@+id/container"
+            >
+
+            <include layout="@layout/mid_navigation_bar_port"/>
+
+        </LinearLayout>
         <RelativeLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent">
@@ -49,19 +62,7 @@
                 android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:id="@+id/container"
-            >
-
-            <include layout="@layout/mid_navigation_bar_port"/>
-
-        </LinearLayout>
-
+        
         <!-- lights out layout to match exactly -->
         <LinearLayout
             android:layout_height="match_parent"
