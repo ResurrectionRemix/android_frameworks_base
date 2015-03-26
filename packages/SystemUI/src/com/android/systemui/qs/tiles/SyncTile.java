@@ -62,7 +62,6 @@ public class SyncTile extends QSTile<QSTile.BooleanState> {
             ContentResolver.setMasterSyncAutomatically(true);
         }
         refreshState();
-        qsCollapsePanel();
     }
 
     @Override

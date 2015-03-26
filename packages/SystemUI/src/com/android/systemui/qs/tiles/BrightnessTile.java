@@ -79,14 +79,12 @@ public class BrightnessTile extends QSTile<QSTile.BooleanState> {
     protected void handleSecondaryClick() {
         toggleState();
         refreshState();
-        qsCollapsePanel();
     }
 
     @Override
     public void handleLongClick() {
         toggleState();
         refreshState();
-        qsCollapsePanel();
     }
 
     @Override
