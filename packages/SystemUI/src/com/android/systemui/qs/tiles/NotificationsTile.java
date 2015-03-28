@@ -39,6 +39,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 import android.view.ViewGroup;
+import android.os.Vibrator;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
@@ -51,13 +52,29 @@ import com.android.systemui.volume.ZenModePanel;
 public class NotificationsTile extends QSTile<NotificationsTile.NotificationsState> {
     private final ZenModeController mZenController;
     private final AudioManager mAudioManager;
+    private final Vibrator mVibrator;
 
     private boolean mListening;
+
+    private static final int[] RINGERS = new int[] {
+        AudioManager.RINGER_MODE_NORMAL,
+        AudioManager.RINGER_MODE_VIBRATE,
+        AudioManager.RINGER_MODE_SILENT,
+        AudioManager.RINGER_MODE_SILENT
+    };
+    private static final int[] ZENS = new int[] {
+        Global.ZEN_MODE_OFF,
+        Global.ZEN_MODE_OFF,
+        Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS,
+        Global.ZEN_MODE_NO_INTERRUPTIONS
+    };
+    private int mRingerIndex;
 
     public NotificationsTile(Host host) {
         super(host);
         mZenController = host.getZenModeController();
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -86,6 +103,33 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
 
     @Override
     protected void handleClick() {
+        mRingerIndex++;
+        if (mRingerIndex >= RINGERS.length) {
+            mRingerIndex = 0;
+        }
+        int ringerMode = RINGERS[mRingerIndex];
+        int zenMode = ZENS[mRingerIndex];
+
+        // If we are setting a vibrating state, vibrate to indicate it
+        if (ringerMode == AudioManager.RINGER_MODE_VIBRATE && mVibrator != null) {
+            boolean hasVibrator = mVibrator.hasVibrator();
+            if (hasVibrator) {
+                mVibrator.vibrate(200);
+            }
+        }
+
+        mAudioManager.setRingerMode(ringerMode);
+        mZenController.setZen(zenMode);
+    }
+
+    @Override
+    protected void handleLongClick() {
+        super.handleLongClick();
+        showDetail(true);
+    }
+
+    @Override
+    protected void handleSecondaryClick() {
         showDetail(true);
     }
 
@@ -94,22 +138,18 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
         state.visible = true;
         state.zen = mZenController.getZen();
         state.ringerMode = mAudioManager.getRingerMode();
-        state.icon = ResourceIcon.get(getNotificationIconId(state.zen, state.ringerMode));
         state.label = mContext.getString(R.string.quick_settings_notifications_label);
-    }
-
-    private int getNotificationIconId(int zenMode, int ringerMode) {
-        int retValue = R.drawable.ic_qs_ringer_audible;
-        if (zenMode == Global.ZEN_MODE_NO_INTERRUPTIONS) {
-            retValue = R.drawable.ic_qs_zen_on;
-        } else if (zenMode == Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS){
-            retValue = R.drawable.ic_qs_zen_important;
-        } else if (ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
-            retValue = R.drawable.ic_qs_ringer_vibrate;
-        } else if (ringerMode == AudioManager.RINGER_MODE_SILENT) {
-            retValue = R.drawable.ic_qs_ringer_silent;
+        if (state.zen == Global.ZEN_MODE_NO_INTERRUPTIONS) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_zen_on);
+        } else if (state.zen == Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS){
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_zen_important);
+        } else if (state.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_ringer_audible);
+        } else if (state.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_ringer_vibrate);
+        } else if (state.ringerMode == AudioManager.RINGER_MODE_SILENT) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_ringer_silent);
         }
-        return retValue;
     }
 
     private final ZenModeController.Callback mCallback = new ZenModeController.Callback() {
