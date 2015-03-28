@@ -2146,25 +2146,6 @@
     <!-- Configuartion to support ESN Tracker -->
     <bool name="config_telephony_ESN_Tracker_enabled">false</bool>
 
-<<<<<<< HEAD
-    
-    <bool name="config_enableCpuBoostForOverScrollerFling">false</bool>
-    <integer name="flingboost_timeout_param">0</integer>
-    <integer name="flingboost_schedboost_param">0</integer>
-    <integer name="flingboost_cpuboost_param">0</integer>
-    <integer name="flingboost_pcdisbl_param">0</integer>
-    <integer name="flingboost_ksmboost_param">0</integer>
-
-    <!-- Whether cpu boost is enabled for horizontal scroll. -->
-    <bool name="config_enableCpuBoostForScroller">false</bool>
-    <integer name="scrollboost_timeout_param">0</integer>
-    <integer name="scrollboost_schedboost_param">0</integer>
-    <integer name="scrollboost_cpuboost_param">0</integer>
-    <integer name="scrollboost_pcdisbl_param">0</integer>
-    <integer name="scrollboost_ksmboost_param">0</integer>
-
-=======
->>>>>>> a2cb663... Revert QC performance manager, we have our own.
     <!-- Configuration to enable non-default PDP during IWLAN -->
     <bool name="config_feature_iwlan_enabled">false</bool>
     
