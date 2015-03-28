@@ -171,7 +171,11 @@ public class TvStatusBar extends BaseStatusBar {
     @Override
     protected void createAndAddWindows() {
     }
-
+    
+    @Override
+    public void hideHeadsUp() {
+    }
+    
     @Override
     protected void refreshLayout(int layoutDirection) {
     }
