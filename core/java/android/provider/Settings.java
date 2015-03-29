@@ -4481,6 +4481,13 @@ public final class Settings {
         };
 
         /**
+         * Screenshod sound enable, This is the noise made when taking a screesnhot
+         * Defaults to 1 - sounds enabled
+         * @hide
+         */
+        public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
+
+        /**
          * Setting to determine whether or not to show the battery percentage in the status bar.
          *    0 - Don't show percentage
          *    1 - Show percentage
