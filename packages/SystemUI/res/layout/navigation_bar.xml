@@ -20,7 +20,7 @@
 
 <com.android.systemui.statusbar.phone.NavigationBarView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:systemui="http://schemas.android.com/apk/res-auto"
+    xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@drawable/system_bar_background"
@@ -77,7 +77,7 @@
             android:visibility="gone"
             >
             <ImageView
-                android:layout_width="@dimen/navigation_key_width"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/navigation_side_padding"
                 android:src="@drawable/ic_sysbar_lights_out_dot_large"
@@ -90,7 +90,7 @@
                 android:visibility="invisible"
                 />
             <ImageView
-                android:layout_width="@dimen/navigation_key_width"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_sysbar_lights_out_dot_large"
                 android:scaleType="center"
@@ -207,7 +207,7 @@
                 android:visibility="invisible"
                 />
             <ImageView
-                android:layout_height="@dimen/navigation_key_width"
+                android:layout_height="80dp"
                 android:layout_width="match_parent"
                 android:src="@drawable/ic_sysbar_lights_out_dot_large"
                 android:scaleType="center"
