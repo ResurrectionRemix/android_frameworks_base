@@ -123,12 +123,6 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
     }
 
     @Override
-    protected void handleLongClick() {
-        super.handleLongClick();
-        showDetail(true);
-    }
-
-    @Override
     protected void handleSecondaryClick() {
         showDetail(true);
     }
