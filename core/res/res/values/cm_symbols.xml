@@ -115,6 +115,9 @@
     <!-- Automatic brightness enhancements -->
     <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
 
+    <!-- Automatic brightness enhancements -->
+    <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
+
     <!-- LiveDisplay -->
     <java-symbol type="string" name="live_display_title" />
     <java-symbol type="string" name="live_display_hint" />
