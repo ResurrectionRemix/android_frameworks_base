@@ -7331,6 +7331,12 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Volume call answer
+         * @hide
+         */
+        public static final String VOLUME_ANSWER_CALL = "volume_answer_call";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
