@@ -25,6 +25,9 @@
         android:layout_height="match_parent">
     </com.android.systemui.recents.views.RecentsView>
 
+
+    <include layout="@layout/recents_membar" />
+
     <!-- Incompatible task overlay -->
     <ViewStub android:id="@+id/incompatible_app_overlay_stub"
         android:inflatedId="@+id/incompatible_app_overlay"
