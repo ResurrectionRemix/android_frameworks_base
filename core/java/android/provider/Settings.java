@@ -2748,6 +2748,12 @@ public final class Settings {
          */
         public static final String QS_TRANSPARENT_SHADE = "qs_transparent_shade";
 
+         /**
+         * show the membar in recents
+         *  @hide
+         */
+        public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
+
         /**
          * Whether to allow one finger quick settings expansion on the right side of the statusbar.
          * @hide
