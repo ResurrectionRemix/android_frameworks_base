@@ -2163,9 +2163,6 @@
     -->
     <integer name="config_LTE_RSRP_threshold_type">1</integer>
 
-    <!-- Timeout in MS for how long you have to long-press the back key to
-         kill the foreground app. -->
-    <integer name="config_backKillTimeout">1000</integer>
     <!-- Enabled built-in zen mode condition providers -->
     <string-array translatable="false" name="config_system_condition_providers">
         <item>countdown</item>
