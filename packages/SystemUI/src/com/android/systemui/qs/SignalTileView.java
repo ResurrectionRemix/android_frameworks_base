@@ -19,6 +19,8 @@ package com.android.systemui.qs;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff.Mode;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,6 +38,8 @@ public final class SignalTileView extends QSTileView {
     private ImageView mOverlay;
     private ImageView mIn;
     private ImageView mOut;
+    private int mIconColor;
+    private boolean mQSCSwitch = false;
 
     private int mWideOverlayIconStartPadding;
 
@@ -50,8 +54,12 @@ public final class SignalTileView extends QSTileView {
     }
 
     private ImageView addTrafficView(int icon) {
+        updateIconColor();
         final ImageView traffic = new ImageView(mContext);
         traffic.setImageResource(icon);
+        if (mQSCSwitch) {
+            traffic.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
         traffic.setAlpha(0f);
         addView(traffic);
         return traffic;
@@ -59,10 +67,17 @@ public final class SignalTileView extends QSTileView {
 
     @Override
     protected View createIcon() {
+        updateIconColor();
         mIconFrame = new FrameLayout(mContext);
         mSignal = new ImageView(mContext);
+        if (mQSCSwitch) {
+            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
         mIconFrame.addView(mSignal);
         mOverlay = new ImageView(mContext);
+        if (mQSCSwitch) {
+            mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
+        }
         mIconFrame.addView(mOverlay, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         return mIconFrame;
     }
@@ -135,6 +150,26 @@ public final class SignalTileView extends QSTileView {
                 .start();
         } else {
             view.setAlpha(newAlpha);
+        }
+    }
+
+    private void updateIconColor() {
+        mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (mQSCSwitch) {
+            mIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_ICON_COLOR, 0xffffffff);
+        }
+    }
+
+    @Override
+    public void setIconColor() {
+        updateIconColor();
+        if (mQSCSwitch) {
+            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mIn.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mOut.setColorFilter(mIconColor, Mode.MULTIPLY);
         }
     }
 }
