@@ -46,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:includeFontPadding="false"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"
                 android:textColor="@color/keyguard_default_primary_text_color" />
 
             <TextView
@@ -55,7 +56,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:includeFontPadding="false"
-                android:textSize="16sp"
+                android:textSize="15sp"
+                android:textStyle="normal|bold"
                 android:textColor="@color/keyguard_default_secondary_text_color" />
 
         </LinearLayout>
@@ -92,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:includeFontPadding="false"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textStyle="normal|bold"
                 android:textColor="@color/keyguard_default_primary_text_color" />
 
             <TextView
@@ -101,7 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:includeFontPadding="false"
-                android:textSize="14sp"
+                android:textSize="13sp"
+                android:textStyle="normal|bold"
                 android:textColor="@color/keyguard_default_secondary_text_color" />
 
         </LinearLayout>
@@ -113,7 +117,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:includeFontPadding="false"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:textStyle="normal|bold"
         android:textColor="@color/keyguard_default_primary_text_color" />
 
     <TextView
@@ -123,6 +128,7 @@
         android:layout_gravity="center_horizontal"
         android:includeFontPadding="false"
         android:textSize="10sp"
+        android:textStyle="normal|bold"
         android:textColor="@color/keyguard_default_secondary_text_color" />
 
 </LinearLayout>
