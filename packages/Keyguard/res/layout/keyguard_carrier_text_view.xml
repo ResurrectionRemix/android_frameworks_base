@@ -40,9 +40,10 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection="locale"
-        android:textStyle="bold"
-        android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:textColor="?android:attr/textColorPrimary"
+        android:textAllCaps="false"
         android:visibility="gone" />
 
     <TextView
@@ -55,9 +56,10 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection="locale"
-        android:textStyle="bold"
-        android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:textColor="?android:attr/textColorPrimary"
+        android:textAllCaps="false"
         android:visibility="gone" />
 
     <TextView
@@ -65,8 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:textColor="?android:attr/textColorPrimary"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
@@ -82,9 +84,10 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection="locale"
-        android:textStyle="bold"
-        android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:textColor="?android:attr/textColorPrimary"
+        android:textAllCaps="false"
         android:visibility="gone" />
 
     <TextView
@@ -92,7 +95,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/kg_status_line_font_size"
+        android:textColor="?android:attr/textColorPrimary"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:visibility="gone" />
@@ -107,8 +112,9 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textDirection="locale"
-        android:textStyle="bold"
-        android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:textColor="?android:attr/textColorPrimary"
+        android:textAllCaps="false"
         android:visibility="gone" />
 </merge>

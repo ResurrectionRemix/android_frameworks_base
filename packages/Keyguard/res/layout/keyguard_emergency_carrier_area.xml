@@ -33,9 +33,12 @@
         android:id="@+id/carrier_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/kg_status_line_font_size"
+        android:textColor="?android:attr/textColorPrimary"
         android:orientation="horizontal"
         android:visibility="gone"
-        androidprv:allCaps="@bool/kg_use_all_caps" />
+        android:textAllCaps="false" />
 
     <com.android.keyguard.EmergencyButton
         android:id="@+id/emergency_call_button"
@@ -47,9 +50,9 @@
         android:text="@string/kg_emergency_call_label"
         style="?android:attr/buttonBarButtonStyle"
         android:textStyle="bold"
-        android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:textColor="?android:attr/textColorPrimary"
         android:drawablePadding="8dip"
-        android:textAllCaps="@bool/kg_use_all_caps" />
+        android:textAllCaps="false" />
 
 </com.android.keyguard.EmergencyCarrierArea>
