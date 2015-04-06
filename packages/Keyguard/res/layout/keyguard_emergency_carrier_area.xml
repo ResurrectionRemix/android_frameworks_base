@@ -46,9 +46,9 @@
         android:drawableLeft="@drawable/lockscreen_emergency_button"
         android:text="@string/kg_emergency_call_label"
         style="?android:attr/buttonBarButtonStyle"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="@dimen/kg_status_line_font_size"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textStyle="bold"
+        android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
+        android:textColor="?android:attr/textColorPrimary"
         android:drawablePadding="8dip"
         android:textAllCaps="@bool/kg_use_all_caps" />
 
