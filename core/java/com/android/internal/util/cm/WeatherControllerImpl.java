@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.android.systemui.statusbar.policy;
+package com.android.internal.util.cm;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.ContentObserver;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -46,10 +46,18 @@ public class WeatherControllerImpl implements WeatherController {
     public static final Uri CURRENT_WEATHER_URI
             = Uri.parse("content://com.cyanogenmod.lockclock.weather.provider/weather/current");
     public static final String[] WEATHER_PROJECTION = new String[]{
-            "temperature",
             "city",
+            "wind",
+            "condition_code",
+            "temperature",
+            "humidity",
             "condition"
+
     };
+    public static final String LOCK_CLOCK_PACKAGE_NAME = "com.cyanogenmod.lockclock";
+
+    private static final int WEATHER_ICON_MONOCHROME = 0;
+    private static final int WEATHER_ICON_COLORED = 1;
 
     private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
     private final Receiver mReceiver = new Receiver();
@@ -79,6 +87,29 @@ public class WeatherControllerImpl implements WeatherController {
         mCallbacks.remove(callback);
     }
 
+    private Drawable getIcon(int conditionCode) {
+        int iconNameValue = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);
+        String iconName;
+
+        if (iconNameValue == WEATHER_ICON_MONOCHROME) {
+            iconName = "weather_";
+        } else if (iconNameValue == WEATHER_ICON_COLORED) {
+            iconName = "weather_color_";
+        } else {
+            iconName = "weather_vclouds_";
+        }
+
+        try {
+            Resources resources =
+                    mContext.createPackageContext(LOCK_CLOCK_PACKAGE_NAME, 0).getResources();
+            return resources.getDrawable(resources.getIdentifier(iconName + conditionCode,
+                    "drawable", LOCK_CLOCK_PACKAGE_NAME));
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
+        }
+    }
+
     @Override
     public WeatherInfo getWeatherInfo() {
         return mCachedInfo;
@@ -93,9 +124,13 @@ public class WeatherControllerImpl implements WeatherController {
         } else {
             try {
                 c.moveToFirst();
-                mCachedInfo.temp = c.getString(0);
-                mCachedInfo.city = c.getString(1);
-                mCachedInfo.condition = c.getString(2);
+                mCachedInfo.city = c.getString(0);
+                mCachedInfo.wind = c.getString(1);
+                mCachedInfo.conditionCode = c.getInt(2);
+                mCachedInfo.conditionDrawable = getIcon(mCachedInfo.conditionCode);
+                mCachedInfo.temp = c.getString(3);
+                mCachedInfo.humidity = c.getString(4);
+                mCachedInfo.condition = c.getString(5);
             } finally {
                 c.close();
             }
@@ -121,6 +156,12 @@ public class WeatherControllerImpl implements WeatherController {
             queryWeather();
             fireCallback();
         }
+    }
+
+    @Override
+    public void updateWeather() {
+        queryWeather();
+        fireCallback();
     }
 
 }

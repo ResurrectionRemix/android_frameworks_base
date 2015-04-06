@@ -47,6 +47,7 @@
             android:layout_marginBottom="@dimen/bottom_text_spacing_digital" />
 
         <include layout="@layout/keyguard_status_area" />
+        <include layout="@layout/keyguard_weather_view" />
         <TextView
             android:id="@+id/owner_info"
             android:layout_marginLeft="16dp"
