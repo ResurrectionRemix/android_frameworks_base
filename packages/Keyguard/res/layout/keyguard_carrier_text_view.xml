@@ -39,11 +39,10 @@
         android:gravity="start"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textDirection="locale"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="@dimen/kg_status_line_font_size"
+        android:textDirection = "locale"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="?android:attr/textColorPrimary"
-        android:textAllCaps="false"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:visibility="gone" />
 
     <TextView
@@ -55,11 +54,10 @@
         android:gravity="start"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textDirection="locale"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="@dimen/kg_status_line_font_size"
+        android:textDirection = "locale"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="?android:attr/textColorPrimary"
-        android:textAllCaps="false"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:visibility="gone" />
 
     <TextView
@@ -67,9 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="@dimen/kg_status_line_font_size"
-        android:textColor="?android:attr/textColorPrimary"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:visibility="gone" />
@@ -83,11 +79,10 @@
         android:gravity="start"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textDirection="locale"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="@dimen/kg_status_line_font_size"
+        android:textDirection = "locale"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="?android:attr/textColorPrimary"
-        android:textAllCaps="false"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:visibility="gone" />
 
     <TextView
@@ -95,9 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="@dimen/kg_status_line_font_size"
-        android:textColor="?android:attr/textColorPrimary"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:visibility="gone" />
@@ -111,10 +104,9 @@
         android:gravity="start"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textDirection="locale"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="@dimen/kg_status_line_font_size"
+        android:textDirection = "locale"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="?android:attr/textColorPrimary"
-        android:textAllCaps="false"
+        android:textSize="@dimen/kg_status_line_font_size"
         android:visibility="gone" />
 </merge>
