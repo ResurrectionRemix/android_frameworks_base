@@ -16,8 +16,6 @@
 
 package com.android.systemui.recents.views;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
 import android.app.ActivityOptions;
@@ -84,7 +82,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     RecentsViewCallbacks mCb;
     View mClearRecents;
     View mFloatingButton;
-    boolean mAlreadyLaunchingTask;
     TextView mMemText;
     ProgressBar mMemBar;
 
@@ -339,8 +336,8 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
         // Get the search bar bounds and measure the search bar layout
+        Rect searchBarSpaceBounds = new Rect();
         if (mSearchBar != null) {
-            Rect searchBarSpaceBounds = new Rect();
             mConfig.getSearchBarBounds(width, height, mConfig.systemInsets.top, searchBarSpaceBounds);
             mSearchBar.measure(
                     MeasureSpec.makeMeasureSpec(searchBarSpaceBounds.width(), MeasureSpec.EXACTLY),
@@ -355,13 +352,34 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         }
         showMemDisplay();
 
-
         boolean showClearAllRecents = Settings.System.getInt(resolver,
                 Settings.System.SHOW_CLEAR_ALL_RECENTS, 1) == 1;
 
         Rect taskStackBounds = new Rect();
         mConfig.getTaskStackBounds(width, height, mConfig.systemInsets.top,
                 mConfig.systemInsets.right, taskStackBounds);
+
+        // Measure each TaskStackView with the full width and height of the window since the 
+        // transition view is a child of that stack view
+        int childCount = getChildCount();
+        int taskViewWidth = 0;
+        for (int i = 0; i < childCount; i++) {
+            View child = getChildAt(i);
+            if (child != mSearchBar && child.getVisibility() != GONE) {
+                TaskStackView tsv = (TaskStackView) child;
+                // Set the insets to be the top/left inset + search bounds
+                tsv.setStackInsetRect(taskStackBounds);
+                tsv.measure(widthMeasureSpec, heightMeasureSpec);
+
+                // Retrieve the max width of the task views
+                int taskViewChildCount = tsv.getChildCount();
+                for (int j = 0; j < taskViewChildCount; j++) {
+                    View taskViewChild = tsv.getChildAt(j);
+                    taskViewWidth = Math.max(taskViewChild.getMeasuredWidth(), taskViewWidth);
+                }
+
+            }
+        }
 
         if (mFloatingButton != null && showClearAllRecents) {
             int clearRecentsLocation = Settings.System.getInt(resolver,
@@ -392,38 +410,25 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                     params.gravity = Gravity.TOP | Gravity.LEFT;
                     break;
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_RIGHT:
+                default:
                     params.gravity = Gravity.TOP | Gravity.RIGHT;
                     break;
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_CENTER:
                     params.gravity = Gravity.TOP | Gravity.CENTER;
-                    break;										
-                case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_RIGHT:
-                default:
-                    params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
                     break;
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_LEFT:
                     params.gravity = Gravity.BOTTOM | Gravity.LEFT;
                     break;
+                case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_RIGHT:
+                    params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+                    break;
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_CENTER:
                     params.gravity = Gravity.BOTTOM | Gravity.CENTER;
-                    break;								
+                    break;
             }
             mFloatingButton.setLayoutParams(params);
         } else {
             mFloatingButton.setVisibility(View.GONE);
-        }
-        
-        // Measure each TaskStackView with the full width and height of the window since the 
-        // transition view is a child of that stack view
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View child = getChildAt(i);
-            if (child != mSearchBar && child.getVisibility() != GONE) {
-                TaskStackView tsv = (TaskStackView) child;
-                // Set the insets to be the top/left inset + search bounds
-                tsv.setStackInsetRect(taskStackBounds);
-                tsv.measure(widthMeasureSpec, heightMeasureSpec);
-            }
         }
 
         setMeasuredDimension(width, height);
