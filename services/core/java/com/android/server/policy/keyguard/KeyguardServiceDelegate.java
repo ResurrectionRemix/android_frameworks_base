@@ -34,6 +34,9 @@ public class KeyguardServiceDelegate {
     private static final String TAG = "KeyguardServiceDelegate";
     private static final boolean DEBUG = true;
 
+    public static final String KEYGUARD_PACKAGE = "com.android.systemui";
+    public static final String KEYGUARD_CLASS = "com.android.systemui.keyguard.KeyguardService";
+
     private static final int SCREEN_STATE_OFF = 0;
     private static final int SCREEN_STATE_TURNING_ON = 1;
     private static final int SCREEN_STATE_ON = 2;
