@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.phone;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -489,5 +490,9 @@ public class StatusBarKeyguardViewManager {
 
     public boolean isKeyguardShowingMedia() {
         return mPhoneStatusBar.isKeyguardShowingMedia();
+    }
+
+    public void setBackgroundBitmap(Bitmap bmp) {
+        mPhoneStatusBar.setBackgroundBitmap(bmp);
     }
 }
