@@ -255,7 +255,7 @@
     <item name="recents_stack_overscroll_percentage" format="float" type="dimen">0.0875</item>
 
     <!-- The top offset for the task stack. -->
-    <dimen name="recents_stack_top_padding">16dp</dimen>
+    <dimen name="recents_stack_top_padding">6dp</dimen>
 
     <!-- Used to calculate the translation animation duration, the expected amount of movement 
          in dps over one second of time. -->
