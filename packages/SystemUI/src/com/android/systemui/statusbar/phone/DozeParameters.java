@@ -113,9 +113,17 @@ public class DozeParameters {
     }
 
     public int getPulseInDuration(boolean pickup) {
-        return pickup
-                ? getInt("doze.pulse.duration.in.pickup", R.integer.doze_pulse_duration_in_pickup)
-                : getInt("doze.pulse.duration.in", R.integer.doze_pulse_duration_in);
+        if (getOverwriteValue()) {
+            return pickup
+                    ? getInt("doze.pulse.duration.in.pickup", R.integer.doze_pulse_duration_in_pickup)
+                    : Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.DOZE_PULSE_DURATION_IN, 1000,
+                            UserHandle.USER_CURRENT);
+        } else {
+            return pickup
+                    ? getInt("doze.pulse.duration.in.pickup", R.integer.doze_pulse_duration_in_pickup)
+                    : getInt("doze.pulse.duration.in", R.integer.doze_pulse_duration_in);
+        }
     }
 
     public int getPulseInDelay(boolean pickup) {
@@ -127,19 +135,21 @@ public class DozeParameters {
     public int getPulseVisibleDuration() {
         if (getOverwriteValue()) {
             return Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.DOZE_PULSE_DURATION_VISIBLE, R.integer.doze_pulse_duration_visible,
+                Settings.System.DOZE_PULSE_DURATION_VISIBLE, 3000,
                     UserHandle.USER_CURRENT);
+        } else {
+            return getInt("doze.pulse.duration.visible", R.integer.doze_pulse_duration_visible);
         }
-        return getInt("doze.pulse.duration.visible", R.integer.doze_pulse_duration_visible);
     }
 
     public int getPulseOutDuration() {
         if (getOverwriteValue()) {
             return Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.DOZE_PULSE_DURATION_OUT, R.integer.doze_pulse_duration_out,
+                Settings.System.DOZE_PULSE_DURATION_OUT, 1000,
                     UserHandle.USER_CURRENT);
+        } else {
+            return getInt("doze.pulse.duration.out", R.integer.doze_pulse_duration_out);
         }
-        return getInt("doze.pulse.duration.out", R.integer.doze_pulse_duration_out);
     }
 
     public boolean getPulseOnSigMotion() {
