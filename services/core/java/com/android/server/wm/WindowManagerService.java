@@ -5645,12 +5645,6 @@ public class WindowManagerService extends IWindowManager.Stub
         mLastStatusBarVisibility |= flags;
     }
 
-    /* @hide */
-    @Override
-    public void toggleGlobalMenu() {
-        mPolicy.toggleGlobalMenu();
-    }
-
     // Called by window manager policy. Not exposed externally.
     @Override
     public int getLidState() {
