@@ -99,6 +99,9 @@
     <string name="navbar_menu_always_button">Menu (alwaysShow) button</string>
     <string name="navbar_menu_big_button">Menu button</string>
 
+    <!-- Screen pinning dialog description (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">This keeps it in view until you unpin. Touch and hold the Back button to unpin.</string>
+    
     <!-- Navigation ring shortcuts -->
     <string name="navigation_ring_title">Quick launch shortcuts</string>
     <string name="navring_target_reset_message">Delete all user created navigation bar shortcuts and restore to default?</string>
