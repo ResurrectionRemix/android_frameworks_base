@@ -38,6 +38,8 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.Trace;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.MathUtils;
 import android.util.Slog;
 import android.util.Spline;
@@ -137,9 +139,6 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     // The proximity sensor, or null if not available or needed.
     private Sensor mProximitySensor;
 
-    // The doze screen brightness.
-    private final int mScreenBrightnessDozeConfig;
-
     // The dim screen brightness.
     private final int mScreenBrightnessDimConfig;
 
@@ -154,9 +153,6 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
     // True if auto-brightness should be used.
     private boolean mUseSoftwareAutoBrightnessConfig;
-
-    // True if should use light sensor to automatically determine doze screen brightness.
-    private final boolean mAllowAutoBrightnessWhileDozingConfig;
 
     // True if we should fade the screen while turning it off, false if we should play
     // a stylish color fade animation instead.
@@ -275,9 +271,6 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         final int screenBrightnessSettingMinimum = clampAbsoluteBrightness(resources.getInteger(
                 com.android.internal.R.integer.config_screenBrightnessSettingMinimum));
 
-        mScreenBrightnessDozeConfig = clampAbsoluteBrightness(resources.getInteger(
-                com.android.internal.R.integer.config_screenBrightnessDoze));
-
         mScreenBrightnessDimConfig = clampAbsoluteBrightness(resources.getInteger(
                 com.android.internal.R.integer.config_screenBrightnessDim));
 
@@ -303,9 +296,6 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
         mUseSoftwareAutoBrightnessConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_automatic_brightness_available);
-
-        mAllowAutoBrightnessWhileDozingConfig = resources.getBoolean(
-                com.android.internal.R.bool.config_allowAutoBrightnessWhileDozing);
 
         if (mUseSoftwareAutoBrightnessConfig) {
             int[] lux = resources.getIntArray(
@@ -358,6 +348,46 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             }
         }
 
+    }
+
+    /**
+     * Returns true if we want to overwrite doze values.
+     */
+    public boolean getOverwriteValue() {
+        final int values = Settings.System.getIntForUser(mContext.getContentResolver(),
+               Settings.System.DOZE_OVERWRITE_VALUE, 0,
+                    UserHandle.USER_CURRENT);
+        return values != 0;
+    }
+
+    /**
+     * Doze screen brightness.
+     */
+    private int screenBrightnessDozeConfig() {
+        if (getOverwriteValue()) {
+            return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_BRIGHTNESS, clampAbsoluteBrightness(mContext.getResources().getInteger(
+                    com.android.internal.R.integer.config_screenBrightnessDoze)), UserHandle.USER_CURRENT);
+        } else {
+            return clampAbsoluteBrightness(mContext.getResources().getInteger(
+                        com.android.internal.R.integer.config_screenBrightnessDoze));
+        }
+    }
+
+    /**
+     * Doze screen auto brightness.
+     */
+    public boolean allowAutoBrightnessWhileDozingConfig() {
+        if (getOverwriteValue()) {
+            return Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.DOZE_AUTO_BRIGHTNESS,
+                        mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_allowAutoBrightnessWhileDozing)
+                        ? 1 : 0, UserHandle.USER_CURRENT) != 0;
+        } else {
+            return mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_allowAutoBrightnessWhileDozing);
+        }
     }
 
     /**
@@ -538,7 +568,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 } else {
                     state = Display.STATE_DOZE;
                 }
-                if (!mAllowAutoBrightnessWhileDozingConfig) {
+                if (!allowAutoBrightnessWhileDozingConfig()) {
                     brightness = mPowerRequest.dozeScreenBrightness;
                 }
                 break;
@@ -602,7 +632,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         // Configure auto-brightness.
         boolean autoBrightnessEnabled = false;
         if (mAutomaticBrightnessController != null) {
-            final boolean autoBrightnessEnabledInDoze = mAllowAutoBrightnessWhileDozingConfig
+            final boolean autoBrightnessEnabledInDoze = allowAutoBrightnessWhileDozingConfig()
                     && (state == Display.STATE_DOZE || state == Display.STATE_DOZE_SUSPEND);
             autoBrightnessEnabled = mPowerRequest.useAutoBrightness
                     && (state == Display.STATE_ON || autoBrightnessEnabledInDoze)
@@ -644,7 +674,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         // Use default brightness when dozing unless overridden.
         if (brightness < 0 && (state == Display.STATE_DOZE
                 || state == Display.STATE_DOZE_SUSPEND)) {
-            brightness = mScreenBrightnessDozeConfig;
+            brightness = screenBrightnessDozeConfig();
         }
 
         // Apply manual brightness.
@@ -1058,14 +1088,14 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
         pw.println();
         pw.println("Display Power Controller Configuration:");
-        pw.println("  mScreenBrightnessDozeConfig=" + mScreenBrightnessDozeConfig);
+        pw.println("  screenBrightnessDozeConfig()=" + screenBrightnessDozeConfig());
         pw.println("  mScreenBrightnessDimConfig=" + mScreenBrightnessDimConfig);
         pw.println("  mScreenBrightnessDarkConfig=" + mScreenBrightnessDarkConfig);
         pw.println("  mScreenBrightnessRangeMinimum=" + mScreenBrightnessRangeMinimum);
         pw.println("  mScreenBrightnessRangeMaximum=" + mScreenBrightnessRangeMaximum);
         pw.println("  mUseSoftwareAutoBrightnessConfig=" + mUseSoftwareAutoBrightnessConfig);
-        pw.println("  mAllowAutoBrightnessWhileDozingConfig=" +
-                mAllowAutoBrightnessWhileDozingConfig);
+        pw.println("  allowAutoBrightnessWhileDozingConfig()=" +
+                allowAutoBrightnessWhileDozingConfig());
         pw.println("  mColorFadeFadesConfig=" + mColorFadeFadesConfig);
 
         mHandler.runWithScissors(new Runnable() {
