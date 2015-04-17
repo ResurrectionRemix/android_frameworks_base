@@ -92,7 +92,7 @@ public class DeadZone extends View {
             return 0;
         long dt = (now - mLastPokeTime);
         if (dt > mHold + mDecay)
-            return mSizeMin;
+            return 0;
         if (dt < mHold)
             return mSizeMax;
         return (int) lerp(mSizeMax, mSizeMin, (float) (dt - mHold) / mDecay);
