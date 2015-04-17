@@ -35,5 +35,13 @@
     <!-- True if the notifications should dynamically tint the app icon and app title -->
     <bool name="config_allowNotificationIconTextTinting">true</bool>
 
+<<<<<<< HEAD:core/res/res/values/rr_attrs.xml
 >>>>>>> 197e0af9f92... Notifications: Expose a bool to disable dynamic colors:core/res/res/values/aicp_config.xml
+=======
+    <!-- Whether doze should invert colors for notifications. If the RRO theme causes
+    the NORMAL notification background to be dark and the text to be light, this boolean
+    needs to be set to false, to prevent the doze notifications from being light -->
+    <bool name="config_invert_colors_on_doze">true</bool>
+
+>>>>>>> 6a94a1b0e4e... Allow prevention of doze notification color inversion:core/res/res/values/aicp_config.xml
 </resources>
