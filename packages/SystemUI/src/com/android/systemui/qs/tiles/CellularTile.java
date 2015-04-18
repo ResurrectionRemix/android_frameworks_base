@@ -93,7 +93,7 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
 
     @Override
     protected void handleSecondaryClick() {
-        mHost.startSettingsActivity(WIRELESS_SETTINGS);
+        mHost.startSettingsActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS));
     }
 
     @Override
