@@ -343,7 +343,11 @@ public class Camera {
         if(cameraId >= getNumberOfCameras()){
             throw new RuntimeException("Unknown camera ID");
         }
-        _getCameraInfo(cameraId, cameraInfo);
+        try {
+            _getCameraInfo(cameraId, cameraInfo);
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Lock screen is disabled, facelock can't get camera info");
+        }
         IBinder b = ServiceManager.getService(Context.AUDIO_SERVICE);
         IAudioService audioService = IAudioService.Stub.asInterface(b);
         try {
