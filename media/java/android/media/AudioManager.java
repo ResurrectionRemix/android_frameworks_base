@@ -1389,7 +1389,7 @@ public class AudioManager {
      * current ringer mode that can be queried via {@link #getRingerMode()}.
      */
     public boolean shouldVibrate(int vibrateType) {
-        String packageName = mContext.getPackageName();
+        String packageName = mApplicationContext.getPackageName();
         // Don't apply profiles for "android" context, as these could
         // come from the NotificationManager, and originate from a real package.
         if (!packageName.equals("android")) {
