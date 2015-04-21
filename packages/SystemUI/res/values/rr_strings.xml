@@ -135,6 +135,11 @@
     <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
     <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
     <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
+    <string name="quick_settings_heads_up_label">Heads up</string>
+    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
 
     <!-- PA Pie controls -->
     <string name="pie_date_format" translatable="false">ccc, dd MMM yyyy</string>
