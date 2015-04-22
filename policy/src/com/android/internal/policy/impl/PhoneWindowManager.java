@@ -6728,7 +6728,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mBootMsgDialog.setCancelable(false);
                     mBootMsgDialog.show();
                 }
-                mBootMsgDialog.setMessage("Powered By Android 5.1.0\n\n" + msg
+                mBootMsgDialog.setMessage("Powered By Android 5.1.1\n\n" + msg
                 + "\n\nInitializing Resources..");
             }
         });
