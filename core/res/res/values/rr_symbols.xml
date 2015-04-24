@@ -63,6 +63,5 @@
   
   <!-- Doze mode -->
   <java-symbol type="bool" name="config_doze_enabled_by_default" />
-  <!-- Doze Settings -->
-  <java-symbol type="bool" name="config_dozeUseAccelerometer" />
+
 </resources>

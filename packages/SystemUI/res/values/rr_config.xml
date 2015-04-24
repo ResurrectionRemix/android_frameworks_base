@@ -20,6 +20,4 @@
     <!-- Whether to enable to show task manager or not -->
     <bool name="config_showTaskManagerSwitcher">false</bool>
 
-    <!-- Doze: shake accelerometer threshold minimum is 2 and maximum is 10-->
-    <integer name="doze_shake_accelerometer_threshold">10</integer>
 </resources>
