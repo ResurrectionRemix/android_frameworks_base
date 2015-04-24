@@ -51,9 +51,9 @@ static struct {
     jfieldID bottom;
 } gRectClassInfo;
 
-static Mutex sLock;
+Mutex sLock;
 
-static int sUnmatchedInitRequestCount = 0;
+int sUnmatchedInitRequestCount = 0;
 
 static void initializeLibraryIfNeeded() {
     Mutex::Autolock _l(sLock);

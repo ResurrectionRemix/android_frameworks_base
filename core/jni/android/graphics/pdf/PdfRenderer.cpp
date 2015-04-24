@@ -43,9 +43,9 @@ static struct {
     jfieldID y;
 } gPointClassInfo;
 
-static Mutex sLock;
+extern Mutex sLock;
 
-static int sUnmatchedInitRequestCount = 0;
+extern int sUnmatchedInitRequestCount;
 
 static void initializeLibraryIfNeeded() {
     Mutex::Autolock _l(sLock);
