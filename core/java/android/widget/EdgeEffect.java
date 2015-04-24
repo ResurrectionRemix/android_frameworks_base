@@ -23,8 +23,14 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 
 import android.content.Context;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.util.FloatMath;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.os.Handler;
+import android.provider.Settings;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;

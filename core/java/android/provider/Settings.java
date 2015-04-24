@@ -3821,6 +3821,19 @@ public final class Settings {
          * @hide
          */
         public static final String LISTVIEW_INTERPOLATOR = "listview_interpolator";
+
+        /**
+         *
+         * OverScroll effects configuration
+         * @hide
+         */
+        public static final String OVERSCROLL_EFFECT = "overscroll_effect";
+
+        /**
+         * Sets the overscroller weight (edge bounce effect on lists)
+         * @hide
+         */
+        public static final String OVERSCROLL_WEIGHT = "overscroll_weight";
         
         /**
          * Whether navigation bar is placed on the left side in landscape mode
