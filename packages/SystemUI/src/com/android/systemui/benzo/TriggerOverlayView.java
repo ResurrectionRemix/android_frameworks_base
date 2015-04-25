@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.bliss;
+package com.android.systemui.benzo;
 
 import android.app.KeyguardManager;
 import android.content.Context;
