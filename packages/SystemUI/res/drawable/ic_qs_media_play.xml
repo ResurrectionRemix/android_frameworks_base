@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48.0"
+    android:viewportHeight="48.0">
+
+    <group
+        android:name="play"
+        android:translateX="10"
+        android:translateY="6" >
+
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M0,31.6499023c0-1.546875,0-28.6938477,0-29.7607422
+	c0-1.3837891,1.4057617-2.4130859,2.7954102-1.6035156c1.1137695,0.6479492,23.3701172,13.7314453,25.2695313,14.8500977
+	c1.2480469,0.7353516,1.2265625,2.487793,0,3.2241211C26.6977539,19.1801758,4.3564453,32.3305664,2.7382813,33.2446289
+	C1.5537109,33.9145508,0,33.1743164,0,31.6499023z"/>
+    </group>
+</vector>
