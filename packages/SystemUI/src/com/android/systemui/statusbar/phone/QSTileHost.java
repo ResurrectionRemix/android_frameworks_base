@@ -27,6 +27,7 @@ import android.util.Log;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
+import com.android.systemui.qs.tiles.AmbientDisplayTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.BrightnessTile;
 import com.android.systemui.qs.tiles.CastTile;
@@ -266,6 +267,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("volume")) return new VolumeTile(this);
         else if (tileSpec.equals("headsup")) return new HeadsUpTile(this);
         else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
+        else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
