@@ -70,6 +70,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.provider.Settings.Global;
 import android.service.dreams.DreamService;
 import android.service.dreams.IDreamManager;
 import android.telephony.PhoneStateListener;
@@ -244,12 +245,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
      * @return A new dialog.
      */
     private GlobalActionsDialog createDialog() {
-        // Simple toggle style if there's no vibrator, otherwise use a tri-state
-        if (!mHasVibrator) {
-            mSilentModeAction = new SilentModeToggleAction();
-        } else {
-            mSilentModeAction = new SilentModeTriStateAction(mContext, mAudioManager, mHandler);
-        }
+        mSilentModeAction = new SilentModeTriStateAction(mContext, mAudioManager, mHandler);
         mAirplaneModeOn = new ToggleAction(
                 R.drawable.ic_lock_airplane_mode,
                 R.drawable.ic_lock_airplane_mode_off,
@@ -813,22 +809,12 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     }
 
     private void prepareDialog() {
-        refreshSilentMode();
         mAirplaneModeOn.updateState(mAirplaneState);
         mAdapter.notifyDataSetChanged();
         mDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         if (mShowSilentToggle) {
             IntentFilter filter = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
             mContext.registerReceiver(mRingerModeReceiver, filter);
-        }
-    }
-
-    private void refreshSilentMode() {
-        if (!mHasVibrator) {
-            final boolean silentModeOn =
-                    mAudioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL;
-            ((ToggleAction)mSilentModeAction).updateState(
-                    silentModeOn ? ToggleAction.State.On : ToggleAction.State.Off);
         }
     }
 
@@ -846,9 +832,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     /** {@inheritDoc} */
     public void onClick(DialogInterface dialog, int which) {
-        if (!(mAdapter.getItem(which) instanceof SilentModeTriStateAction)) {
-            dialog.dismiss();
-        }
         mAdapter.getItem(which).onPress();
     }
 
@@ -1179,7 +1162,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
     }
 
-    private class SilentModeToggleAction extends ToggleAction {
+    private final class SilentModeToggleAction extends ToggleAction {
         public SilentModeToggleAction() {
             super(R.drawable.ic_audio_vol_mute,
                     R.drawable.ic_audio_vol,
@@ -1190,9 +1173,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
         void onToggle(boolean on) {
             if (on) {
-                mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_SILENT);
             } else {
-                mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_NORMAL);
             }
         }
 
@@ -1205,9 +1188,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
     }
 
-    private static class SilentModeTriStateAction implements Action, View.OnClickListener {
+    private final class SilentModeTriStateAction implements Action, View.OnClickListener {
 
-        private final int[] ITEM_IDS = { R.id.option1, R.id.option2, R.id.option3 };
+        private final int[] ITEM_IDS = { R.id.option1, R.id.option2, R.id.option3, R.id.option4, R.id.option5 };
 
         private final AudioManager mAudioManager;
         private final Handler mHandler;
@@ -1219,14 +1202,18 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             mContext = context;
         }
 
-        private int ringerModeToIndex(int ringerMode) {
-            // They just happen to coincide
-            return ringerMode;
-        }
-
         private int indexToRingerMode(int index) {
-            // They just happen to coincide
-            return index;
+            if (index == 2) {
+                return AudioManager.RINGER_MODE_SILENT;
+            }
+            if (index == 3) {
+                if (mHasVibrator) {
+                    return AudioManager.RINGER_MODE_VIBRATE;
+                } else {
+                    return AudioManager.RINGER_MODE_NORMAL;
+                }
+            }
+            return AudioManager.RINGER_MODE_NORMAL;
         }
 
         @Override
@@ -1238,9 +1225,30 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 LayoutInflater inflater) {
             View v = inflater.inflate(R.layout.global_actions_silent_mode, parent, false);
 
-            int selectedIndex = ringerModeToIndex(mAudioManager.getRingerMode());
-            for (int i = 0; i < 3; i++) {
+            int ringerMode = mAudioManager.getRingerModeInternal();
+            int zenMode = Global.getInt(mContext.getContentResolver(), Global.ZEN_MODE, Global.ZEN_MODE_OFF);
+            int selectedIndex = 0;
+            if (zenMode != Global.ZEN_MODE_OFF) {
+                if (zenMode == Global.ZEN_MODE_NO_INTERRUPTIONS) {
+                    selectedIndex = 0;
+                } else if (zenMode == Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS) {
+                    selectedIndex = 1;
+                }
+            } else if (ringerMode == AudioManager.RINGER_MODE_SILENT) {
+                selectedIndex = 2;
+            } else if (ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
+                selectedIndex = 3;
+            } else if (ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+                selectedIndex = 4;
+            }
+
+            for (int i = 0; i < ITEM_IDS.length; i++) {
                 View itemView = v.findViewById(ITEM_IDS[i]);
+                // TODO dont hardcode 3 here
+                if (!mHasVibrator && i == 3) {
+                    itemView.setVisibility(View.GONE);
+                    continue;
+                }
                 itemView.setSelected(selectedIndex == i);
                 // Set up click handler
                 itemView.setTag(i);
@@ -1271,7 +1279,21 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             if (!(v.getTag() instanceof Integer)) return;
 
             int index = (Integer) v.getTag();
-            mAudioManager.setRingerMode(indexToRingerMode(index));
+            if (index == 0 || index == 1) {
+                int zenMode = index == 0
+                            ? Global.ZEN_MODE_NO_INTERRUPTIONS
+                            : Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS;
+                Global.putInt(mContext.getContentResolver(), Global.ZEN_MODE, zenMode);
+            } else {
+                Global.putInt(mContext.getContentResolver(), Global.ZEN_MODE, Global.ZEN_MODE_OFF);
+            }
+
+            // must be after zen mode!
+            if (index == 2 || index == 3 || index == 4) {
+                int ringerMode = indexToRingerMode(index);
+                mAudioManager.setRingerModeInternal(ringerMode);
+            }
+            mAdapter.notifyDataSetChanged();
             mHandler.sendEmptyMessageDelayed(MESSAGE_DISMISS, DIALOG_DISMISS_DELAY);
         }
     }
@@ -1358,7 +1380,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 }
                 break;
             case MESSAGE_REFRESH:
-                refreshSilentMode();
                 mAdapter.notifyDataSetChanged();
                 break;
             case MESSAGE_SHOW:
