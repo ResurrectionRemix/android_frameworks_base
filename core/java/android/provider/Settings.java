@@ -4706,6 +4706,12 @@ public final class Settings {
         public static final String SHOW_HEADSET_ICON = "show_headset_icon";
 
         /**
+         * Whether to use the proximity sensor to turn the screen on/off during a call
+         * @hide
+         */
+        public static final String IN_CALL_PROXIMITY_SENSOR = "in_call_proximity_sensor";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
