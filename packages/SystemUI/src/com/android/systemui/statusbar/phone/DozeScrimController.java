@@ -224,9 +224,9 @@ public class DozeScrimController {
             DozeLog.tracePulseStart(mPulseReason);
             final boolean pickup = mPulseReason == DozeLog.PULSE_REASON_SENSOR_PICKUP;
             startScrimAnimation(true /* inFront */, 0f,
-                    mDozeParameters.getPulseInDuration(mPulseReason),
+                    mDozeParameters.getPulseInDuration(pickup),
                     pickup ? mPulseInInterpolatorPickup : mPulseInInterpolator,
-                    mDozeParameters.getPulseInDelay(mPulseReason),
+                    mDozeParameters.getPulseInDelay(pickup),
                     mPulseInFinished);
 
             // Signal that the pulse is ready to turn the screen on and draw.

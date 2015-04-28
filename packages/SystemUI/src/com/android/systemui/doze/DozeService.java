@@ -472,7 +472,7 @@ public class DozeService extends DreamService implements ProximitySensorManager.
             if (DEBUG) Log.d(mTag, "No more schedule resets remaining");
             return;
         }
-        final long pulseDuration = mDozeParameters.getPulseDuration(DozeLog.PULSE_REASON_NOTIFICATION);
+        final long pulseDuration = mDozeParameters.getPulseDuration(false /*pickup*/);
         if ((notificationTimeMs - mNotificationPulseTime) < pulseDuration) {
             if (DEBUG) Log.d(mTag, "Recently updated, not resetting schedule");
             return;
