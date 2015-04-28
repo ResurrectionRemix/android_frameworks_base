@@ -206,7 +206,12 @@ public class ResolverActivity extends Activity implements AdapterView.OnItemClic
     protected void onCreate(Bundle savedInstanceState, Intent intent,
             CharSequence title, int defaultTitleRes, Intent[] initialIntents,
             List<ResolveInfo> rList, boolean alwaysUseOption) {
-        setTheme(R.style.Theme_DeviceDefault_Resolver);
+        if (getResources().getConfiguration().uiThemeMode
+                    == Configuration.UI_THEME_MODE_HOLO_DARK) {
+              setTheme(R.style.Theme_DeviceDefault_Dialog_Alert);
+        } else {
+              setTheme(R.style.Theme_DeviceDefault_Resolver);
+        }
         super.onCreate(savedInstanceState);
 
         // Determine whether we should show that intent is forwarded
