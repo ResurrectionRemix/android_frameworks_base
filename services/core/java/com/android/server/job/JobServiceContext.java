@@ -73,7 +73,7 @@ public class JobServiceContext extends IJobCallback.Stub implements ServiceConne
     private static final long OP_TIMEOUT_MILLIS = 8 * 1000;
 
     private static final String[] VERB_STRINGS = {
-            "VERB_BINDING", "VERB_STARTING", "VERB_EXECUTING", "VERB_STOPPING"
+            "VERB_BINDING", "VERB_STARTING", "VERB_EXECUTING", "VERB_STOPPING", "VERB_FINISHED"
     };
 
     // States that a job occupies while interacting with the client.
@@ -81,6 +81,7 @@ public class JobServiceContext extends IJobCallback.Stub implements ServiceConne
     static final int VERB_STARTING = 1;
     static final int VERB_EXECUTING = 2;
     static final int VERB_STOPPING = 3;
+    static final int VERB_FINISHED = 4;
 
     // Messages that result from interactions with the client service.
     /** System timed out waiting for a response. */
@@ -172,6 +173,7 @@ public class JobServiceContext extends IJobCallback.Stub implements ServiceConne
                 mRunningJob = null;
                 mParams = null;
                 mExecutionStartTimeElapsed = 0L;
+                mVerb = VERB_FINISHED;
                 removeOpTimeOut();
                 return false;
             }
@@ -307,8 +309,8 @@ public class JobServiceContext extends IJobCallback.Stub implements ServiceConne
                     break;
                 case MSG_CALLBACK:
                     if (DEBUG) {
-                        Slog.d(TAG, "MSG_CALLBACK of : " + mRunningJob + " v:" +
-                                (mVerb >= 0 ? VERB_STRINGS[mVerb] : "[invalid]"));
+                        Slog.d(TAG, "MSG_CALLBACK of : " + mRunningJob
+                                + " v:" + VERB_STRINGS[mVerb]);
                     }
                     removeOpTimeOut();
 
@@ -524,8 +526,12 @@ public class JobServiceContext extends IJobCallback.Stub implements ServiceConne
          * we want to clean up internally.
          */
         private void closeAndCleanupJobH(boolean reschedule) {
-            final JobStatus completedJob = mRunningJob;
+            final JobStatus completedJob;
             synchronized (mLock) {
+                if (mVerb == VERB_FINISHED) {
+                    return;
+                }
+                completedJob = mRunningJob;
                 try {
                     mBatteryStats.noteJobFinish(mRunningJob.getName(), mRunningJob.getUid());
                 } catch (RemoteException e) {
@@ -538,7 +544,7 @@ public class JobServiceContext extends IJobCallback.Stub implements ServiceConne
                 mWakeLock = null;
                 mRunningJob = null;
                 mParams = null;
-                mVerb = -1;
+                mVerb = VERB_FINISHED;
                 mCancelled.set(false);
                 service = null;
                 mAvailable = true;
