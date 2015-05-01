@@ -24,4 +24,7 @@
 
     <!-- Configuartion to set zen mode when silent mode is on -->
     <bool name="config_setZenModeWhenSilentModeOn">false</bool>
+
+    <!-- Hardware keys on/off option -->
+    <bool name="config_hwKeysPref">true</bool>
 </resources>

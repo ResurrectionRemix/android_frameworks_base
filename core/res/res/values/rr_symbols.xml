@@ -60,7 +60,8 @@
   <java-symbol type="anim" name="slide_out_left_no_fade" />
   <java-symbol type="anim" name="slide_in_left_no_fade" />
   <java-symbol type="anim" name="slide_out_right_no_fade" />
-
+  <!-- Hardware keys on/off option -->
+  <java-symbol type="bool" name="config_hwKeysPref" />
   <!-- global actions -->
   <java-symbol type="id" name="option4" />
   <java-symbol type="id" name="option5" />

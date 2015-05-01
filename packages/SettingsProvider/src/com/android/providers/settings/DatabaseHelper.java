@@ -1953,7 +1953,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             String[] systemToSecure = new String[] {
-                    Secure.DEV_FORCE_SHOW_NAVBAR,
                     Secure.KEYBOARD_BRIGHTNESS,
                     Secure.BUTTON_BRIGHTNESS,
                     Secure.BUTTON_BACKLIGHT_TIMEOUT
@@ -2682,9 +2681,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             loadIntegerSetting(stmt, Settings.Secure.LONG_PRESS_TIMEOUT,
                     R.integer.def_long_press_timeout_millis);
-
-            loadIntegerSetting(stmt, Settings.Secure.DEV_FORCE_SHOW_NAVBAR,
-                    R.integer.def_force_disable_navkeys);
 
             loadBooleanSetting(stmt, Settings.Secure.TOUCH_EXPLORATION_ENABLED,
                     R.bool.def_touch_exploration_enabled);
