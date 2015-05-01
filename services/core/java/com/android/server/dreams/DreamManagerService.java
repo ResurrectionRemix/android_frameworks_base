@@ -161,6 +161,12 @@ public final class DreamManagerService extends SystemService {
         }
     }
 
+    private boolean isDozingInternal() {
+        synchronized (mLock) {
+            return mCurrentDreamIsDozing;
+        }
+    }
+
     private void requestDreamInternal() {
         // Ask the power manager to nap.  It will eventually call back into
         // startDream() if/when it is appropriate to start dreaming.
@@ -541,6 +547,18 @@ public final class DreamManagerService extends SystemService {
         }
 
         @Override // Binder call
+        public boolean isDozing() {
+            checkPermission(android.Manifest.permission.READ_DREAM_STATE);
+
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                return isDozingInternal();
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+        @Override // Binder call
         public void dream() {
             checkPermission(android.Manifest.permission.WRITE_DREAM_STATE);
 
@@ -648,6 +666,11 @@ public final class DreamManagerService extends SystemService {
         @Override
         public boolean isDreaming() {
             return isDreamingInternal();
+        }
+
+        @Override
+        public boolean isDozing() {
+            return isDozingInternal();
         }
     }
 
