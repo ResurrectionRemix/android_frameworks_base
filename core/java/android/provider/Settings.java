@@ -3906,7 +3906,7 @@ public final class Settings {
          * Notification custom carrier label
          * @hide
          */
-        public static final String NOTIFICATION_CUSTOM_CARRIER_LABEL = "notification_custom_carrier_label";
+        public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
 
         /**
          * Carrier Label Custom Color

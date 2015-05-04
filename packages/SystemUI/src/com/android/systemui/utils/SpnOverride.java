@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.statusbar.util;
+package com.android.systemui.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,7 +43,7 @@ public class SpnOverride {
         loadSpnOverrides();
     }
 
-    boolean containsCarrier(String carrier) {
+    public boolean containsCarrier(String carrier) {
         return mCarrierSpnMap.containsKey(carrier);
     }
 
@@ -84,6 +84,7 @@ public class SpnOverride {
 
                 mCarrierSpnMap.put(numeric, data);
             }
+            spnReader.close();
         } catch (XmlPullParserException e) {
             Rlog.w(LOG_TAG, "Exception in spn-conf parser " + e);
         } catch (IOException e) {

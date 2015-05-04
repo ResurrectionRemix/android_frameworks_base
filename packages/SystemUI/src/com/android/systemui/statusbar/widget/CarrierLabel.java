@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The MoKee OpenSource Project
+ * Copyright (C) 2014-2015 The MoKee OpenSource Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.statusbar.phone;
+package com.android.systemui.statusbar.widget;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.os.Handler;
+import com.android.internal.util.slim.RRUtils;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -32,9 +33,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.internal.util.cm.CarrierUtils;
 import com.android.internal.telephony.TelephonyIntents;
-import com.android.systemui.statusbar.util.SpnOverride;
+import com.android.systemui.utils.SpnOverride;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,11 +44,9 @@ import com.android.systemui.R;
 
 public class CarrierLabel extends TextView {
 
-    private boolean mAttached;
-
-    private static boolean isCN;
-
     private Context mContext;
+    private boolean mAttached;
+    private static boolean isCN;
 
     protected int mCarrierColor = com.android.internal.R.color.white;
     Handler mHandler;
@@ -81,7 +79,7 @@ public class CarrierLabel extends TextView {
     public CarrierLabel(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-        updateNetworkName(false, null, false, null);
+        updateNetworkName(true, null, false, null);
         mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
@@ -116,34 +114,28 @@ public class CarrierLabel extends TextView {
             String action = intent.getAction();
             if (TelephonyIntents.SPN_STRINGS_UPDATED_ACTION.equals(action)
                     || Intent.ACTION_CUSTOM_CARRIER_LABEL_CHANGED.equals(action)) {
-                updateNetworkName(intent.getBooleanExtra(TelephonyIntents.EXTRA_SHOW_SPN, false),
+                        updateNetworkName(intent.getBooleanExtra(TelephonyIntents.EXTRA_SHOW_SPN, true),
                         intent.getStringExtra(TelephonyIntents.EXTRA_SPN),
                         intent.getBooleanExtra(TelephonyIntents.EXTRA_SHOW_PLMN, false),
                         intent.getStringExtra(TelephonyIntents.EXTRA_PLMN));
-                isCN = CarrierUtils.isChineseLanguage();
+                isCN = RRUtils.isChineseLanguage();
             }
         }
     };
 
     void updateNetworkName(boolean showSpn, String spn, boolean showPlmn, String plmn) {
-        if (false) {
-            Log.d("CarrierLabel", "updateNetworkName showSpn=" + showSpn + " spn=" + spn
-                    + " showPlmn=" + showPlmn + " plmn=" + plmn);
-        }
         final String str;
         final boolean plmnValid = showPlmn && !TextUtils.isEmpty(plmn);
         final boolean spnValid = showSpn && !TextUtils.isEmpty(spn);
-        if (plmnValid && spnValid) {
-            str = plmn + "|" + spn;
+        if (spnValid) {
+            str = spn;
         } else if (plmnValid) {
             str = plmn;
-        } else if (spnValid) {
-            str = spn;
         } else {
             str = "";
         }
         String customCarrierLabel = Settings.System.getStringForUser(mContext.getContentResolver(),
-                Settings.System.NOTIFICATION_CUSTOM_CARRIER_LABEL, UserHandle.USER_CURRENT);
+                Settings.System.CUSTOM_CARRIER_LABEL, UserHandle.USER_CURRENT);
         if (!TextUtils.isEmpty(customCarrierLabel)) {
             setText(customCarrierLabel);
         } else {
@@ -162,14 +154,11 @@ public class CarrierLabel extends TextView {
             }
             SpnOverride mSpnOverride = new SpnOverride();
             operatorName = mSpnOverride.getSpn(operator);
-            if (TextUtils.isEmpty(operatorName)) {
-                operatorName = telephonyManager.getSimOperatorName();
-            }
         } else {
             operatorName = telephonyManager.getNetworkOperatorName();
-            if (TextUtils.isEmpty(operatorName)) {
-                operatorName = telephonyManager.getSimOperatorName();
-            }
+        }
+        if (TextUtils.isEmpty(operatorName)) {
+            operatorName = telephonyManager.getSimOperatorName();
         }
         return operatorName.toUpperCase();
     }

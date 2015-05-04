@@ -369,8 +369,6 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
             }
             fadeInFromDark(delay);
         } else {
-            mBackgroundNormalInvertHelper.update(mDark);
-            mBackgroundDimmedInvertHelper.update(mDark);
             updateBackground();
         }
      }
@@ -483,6 +481,8 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
 
     private void updateBackground() {
         cancelFadeAnimations();
+        mBackgroundNormalInvertHelper.update(mDark);
+        mBackgroundDimmedInvertHelper.update(mDark);
         if (mDark) {
             mBackgroundDimmed.setVisibility(View.INVISIBLE);
             mBackgroundNormal.setVisibility(View.VISIBLE);
