@@ -22,13 +22,18 @@
      <style name="TextAppearance.StatusBar.Batterymeter" parent="@*android:style/android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textStyle">bold</item>
     </style>
-    <!-- Custom carrier MIUI -->
+    <!-- Custom carrier -->
     <style name="TextAppearance.StatusBar.CarrierLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textSize">10dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/status_bar_clock_color</item>
     </style>   
-
+    <!-- welcome_label -->
+    <style name="TextAppearance.StatusBar.CustomLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:textSize">11dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/status_bar_clock_color</item>
+    </style> 
     <style name="ListTheme" parent="@*android:style/Theme.Holo">
         <item name="android:windowBackground">@*android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>

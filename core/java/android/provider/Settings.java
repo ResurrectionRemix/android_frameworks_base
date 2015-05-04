@@ -3622,6 +3622,19 @@ public final class Settings {
          */
         public static final String EGG_MODE = "egg_mode";
 
+         /**
+         * Status bar greeting
+         * @hide
+         */
+        public static final String STATUS_BAR_GREETING = "status_bar_greeting";
+
+         /**
+         * Status bar greeting timeout
+         * @hide
+         */
+        public static final String STATUS_BAR_GREETING_TIMEOUT = "status_bar_greeting_timeout";
+
+
         /**
          * Display style of the status bar battery information
          * 0: Display the battery an icon in portrait mode
@@ -4058,6 +4071,18 @@ public final class Settings {
          * @hide
          */
         public static final String DOZE_TIME_MODE = "doze_time_mode";
+
+         /**
+         * Statusbar logo
+         * @hide
+         */
+        public static final String STATUS_BAR_LOGO = "status_bar_logo";
+ 
+         /**
+         * Statusbar logo color setting
+         * @hide
+         */
+        public static final String STATUS_BAR_LOGO_COLOR = "status_bar_logo_color";
 
         /**
          * Brigthness level for ambient display
