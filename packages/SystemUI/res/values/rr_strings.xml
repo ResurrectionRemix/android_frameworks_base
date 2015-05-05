@@ -32,4 +32,7 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot deleted</string>
 
+    <string name="gestures_message">Draw your gesture here</string>
+
+
 </resources>
