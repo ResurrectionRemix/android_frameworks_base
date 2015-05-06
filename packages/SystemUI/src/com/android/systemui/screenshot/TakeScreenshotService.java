@@ -29,30 +29,34 @@ public class TakeScreenshotService extends Service {
 
     private static GlobalScreenshot mScreenshot;
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
+    @Override
+    public IBinder onBind(Intent intent) {
+        return new Messenger(new ScreenshotHandler(TakeScreenshotService.this)).getBinder();
+    }
+
+    private static class ScreenshotHandler extends Handler {
+        private TakeScreenshotService takeScreenshotService;
+
+        public ScreenshotHandler(TakeScreenshotService takeScreenshotService) {
+            this.takeScreenshotService = takeScreenshotService;
+        }
+
+        @Override public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     final Messenger callback = msg.replyTo;
                     if (mScreenshot == null) {
-                        mScreenshot = new GlobalScreenshot(TakeScreenshotService.this);
+                        mScreenshot = new GlobalScreenshot(takeScreenshotService);
                     }
                     mScreenshot.takeScreenshot(new Runnable() {
                         @Override public void run() {
                             Message reply = Message.obtain(null, 1);
                             try {
                                 callback.send(reply);
-                            } catch (RemoteException e) {
-                            }
+                            } catch (RemoteException ignored) { }
                         }
                     }, msg.arg1 > 0, msg.arg2 > 0);
             }
         }
-    };
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return new Messenger(mHandler).getBinder();
     }
 }
