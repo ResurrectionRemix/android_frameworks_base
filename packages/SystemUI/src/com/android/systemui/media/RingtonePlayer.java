@@ -59,7 +59,9 @@ public class RingtonePlayer extends SystemUI {
         mAudioService = IAudioService.Stub.asInterface(
                 ServiceManager.getService(Context.AUDIO_SERVICE));
         try {
-            mAudioService.setRingtonePlayer(mCallback);
+            if (mAudioService != null) {
+                mAudioService.setRingtonePlayer(mCallback);
+            }
         } catch (RemoteException e) {
             Log.e(TAG, "Problem registering RingtonePlayer: " + e);
         }

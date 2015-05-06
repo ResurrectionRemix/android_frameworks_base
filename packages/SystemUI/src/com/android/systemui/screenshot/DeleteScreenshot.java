@@ -40,9 +40,9 @@ public class DeleteScreenshot extends BroadcastReceiver {
             return;
         }
 
-        Uri screenshotUri = Uri.parse(extras.getString(SCREENSHOT_URI));
-        if (screenshotUri != null) {
-            context.getContentResolver().delete(screenshotUri, null, null);
+        String screenshotUri = extras.getString(SCREENSHOT_URI);
+        if (screenshotUri != null && !screenshotUri.isEmpty()) {
+            context.getContentResolver().delete(Uri.parse(screenshotUri), null, null);
         }
 
         // Dismiss the notification that brought us here.
