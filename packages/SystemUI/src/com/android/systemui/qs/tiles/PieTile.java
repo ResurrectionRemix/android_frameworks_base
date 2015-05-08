@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The Resurrection Remix Project
+ * Copyright (C) 2015 The Dirty Unicorns Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,22 +42,23 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
 
-public class PulseTile extends QSTile<QSTile.BooleanState> {
+public class PieTile extends QSTile<QSTile.BooleanState> {
     private boolean mListening;
-    private PulseObserver mObserver;
+    private PieObserver mObserver;
 
- private static final Intent PULSE_SETTINGS = new Intent().setComponent(new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$PulseSettingsActivity"));
+ private static final Intent PIE_SETTINGS = new Intent().setComponent(new ComponentName(
+            "com.android.settings", "com.android.settings.Settings$PieControlSettingsActivity"));
 
-    public PulseTile (Host host) {
+    public PieTile(Host host) {
         super(host);
-        mObserver = new PulseObserver(mHandler);
+        mObserver = new PieObserver(mHandler);
     }
 
     @Override
     public BooleanState newTileState() {
         return new BooleanState();
     }
+
 
     @Override
     public int getMetricsCategory() {
@@ -72,12 +73,12 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
 
      @Override
     protected void handleSecondaryClick() {
-	mHost.startActivityDismissingKeyguard(PULSE_SETTINGS);
+	mHost.startActivityDismissingKeyguard(PIE_SETTINGS);
     }
 
     @Override
-    public CharSequence getTileLabel() {
-        return mContext.getString(R.string.quick_settings_pulse_label);
+    public void handleLongClick() {
+	mHost.startActivityDismissingKeyguard(PIE_SETTINGS);
     }
 
     @Override
@@ -86,41 +87,26 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
         return null;
     }
 
-    @Override
-    public void handleLongClick() {
-	if (isPulseEnabled()) {
-	Settings.Secure.putInt(mContext.getContentResolver(),
-                        Settings.Secure.FLING_PULSE_LAVALAMP_ENABLED, !isLavampenEbled() ? 1 : 0);
-    }                
-        mHost.startActivityDismissingKeyguard(PULSE_SETTINGS);
-    }
-
     protected void toggleState() {
-         Settings.Secure.putInt(mContext.getContentResolver(),
-                        Settings.Secure.FLING_PULSE_ENABLED, !isPulseEnabled() ? 1 : 0);
+         Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PA_PIE_STATE, !isPieEnabled() ? 1 : 0);
     }
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
-	    if (isPulseEnabled()) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_pulse);
-            state.label = mContext.getString(R.string.quick_settings_pulse_enabled);
+        if (isPieEnabled()) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_pie_on);
+            state.label = mContext.getString(R.string.quick_settings_pie);
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_pulse_off);
-            state.label = mContext.getString(R.string.quick_settings_pulse_disabled);
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_pie_off);
+            state.label = mContext.getString(R.string.quick_settings_pie);
         }
     }
 
-    private boolean isPulseEnabled() {
-        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.FLING_PULSE_ENABLED, 0,
-                UserHandle.USER_CURRENT) == 1;
-    }
-    
-    private boolean isLavampenEbled() {
-        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.FLING_PULSE_LAVALAMP_ENABLED, 0,
+    private boolean isPieEnabled() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PA_PIE_STATE, 0,
                 UserHandle.USER_CURRENT) == 1;
     }
 
@@ -135,8 +121,8 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
         }
     }
 
-    private class PulseObserver extends ContentObserver {
-        public PulseObserver(Handler handler) {
+    private class PieObserver extends ContentObserver {
+        public PieObserver(Handler handler) {
             super(handler);
         }
 
@@ -147,10 +133,7 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
 
         public void startObserving() {
             mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.FLING_PULSE_ENABLED),
-                    false, this, UserHandle.USER_ALL);
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.FLING_PULSE_LAVALAMP_ENABLED),
+                    Settings.System.getUriFor(Settings.System.PA_PIE_STATE),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -159,4 +142,3 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
         }
     }
 }
- 

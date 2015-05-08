@@ -19,5 +19,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Date format for display: should match the lockscreen in /policy.  -->
     <string name="system_ui_date_pattern">@*android:string/system_ui_date_pattern</string>
+    <!-- Default Java date format for PIE that will cause SystemUI FCs if translated -->
+    <string name="pie_date_format">ccc, dd MMM yyyy</string>
 
 </resources>
