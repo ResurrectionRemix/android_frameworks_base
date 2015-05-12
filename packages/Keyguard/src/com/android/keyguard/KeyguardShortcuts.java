@@ -26,7 +26,9 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.Display;
+import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -86,8 +88,8 @@ public class KeyguardShortcuts extends LinearLayout {
         }
         setVisibility(View.VISIBLE);
 
-        boolean longpress = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_SHORTCUTS_LONGPRESS, 1, UserHandle.USER_CURRENT) == 1;
+        int clickType = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_SHORTCUTS_LONGPRESS, 1, UserHandle.USER_CURRENT);
 
         ActionConfig actionConfig;
 
@@ -110,7 +112,31 @@ public class KeyguardShortcuts extends LinearLayout {
                     mContext, mPackageManager, actionConfig.getClickAction()));
             i.setClickable(true);
 
-            if (longpress) {
+            if (clickType == 0) {
+                i.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        doHapticKeyClick(HapticFeedbackConstants.VIRTUAL_KEY);
+                        Action.processAction(mContext, action, false);
+                    }
+                });
+            } else if (clickType == 1) {
+                final GestureDetector gestureDetector = new GestureDetector(mContext,
+                        new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onDoubleTap(MotionEvent e) {
+                        doHapticKeyClick(HapticFeedbackConstants.VIRTUAL_KEY);
+                        Action.processAction(mContext, action, false);
+                        return true;
+                    }
+                });
+                i.setOnTouchListener(new OnTouchListener() {
+                    public boolean onTouch(View v, MotionEvent event) {
+                        gestureDetector.onTouchEvent(event);
+                        return true;
+                    }
+                });
+            } else {
                 i.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -119,15 +145,8 @@ public class KeyguardShortcuts extends LinearLayout {
                         return true;
                     }
                 });
-            } else {
-                i.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        doHapticKeyClick(HapticFeedbackConstants.VIRTUAL_KEY);
-                        Action.processAction(mContext, action, false);
-                    }
-                });
             }
+
             addView(i);
             if (j+1 < actionConfigs.size()) {
                 addSeparator();
