@@ -47,7 +47,6 @@ import com.android.systemui.settings.BrightnessController;
 import com.android.systemui.settings.ToggleSlider;
 import com.android.systemui.statusbar.phone.QSTileHost;
 import com.android.systemui.statusbar.policy.BrightnessMirrorController;
-import cyanogenmod.app.StatusBarPanelCustomTile;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +60,6 @@ public class QSPanel extends ViewGroup {
     private final ArrayList<TileRecord> mRecords = new ArrayList<TileRecord>();
     private final View mDetail;
     private final ViewGroup mDetailContent;
-    private final TextView mDetailRemoveButton;
     private final TextView mDetailSettingsButton;
     private final TextView mDetailDoneButton;
     private final View mBrightnessView;
@@ -114,7 +112,6 @@ public class QSPanel extends ViewGroup {
 
         mDetail = LayoutInflater.from(context).inflate(R.layout.qs_detail, this, false);
         mDetailContent = (ViewGroup) mDetail.findViewById(android.R.id.content);
-        mDetailRemoveButton = (TextView) mDetail.findViewById(android.R.id.button3);
         mDetailSettingsButton = (TextView) mDetail.findViewById(android.R.id.button2);
         mDetailDoneButton = (TextView) mDetail.findViewById(android.R.id.button1);
         updateDetailText();
@@ -178,7 +175,6 @@ public class QSPanel extends ViewGroup {
                     Settings.System.QS_TEXT_COLOR, 0xffffffff);
         mDetailDoneButton.setText(R.string.quick_settings_done);
         mDetailSettingsButton.setText(R.string.quick_settings_more_settings);
-        mDetailRemoveButton.setText(R.string.quick_settings_remove);
         if (mQSCSwitch) {
             mDetailDoneButton.setTextColor(textColor);
             mDetailSettingsButton.setTextColor(textColor);
@@ -244,7 +240,6 @@ public class QSPanel extends ViewGroup {
         super.onConfigurationChanged(newConfig);
         FontSizeUtils.updateFontSize(mDetailDoneButton, R.dimen.qs_detail_button_text_size);
         FontSizeUtils.updateFontSize(mDetailSettingsButton, R.dimen.qs_detail_button_text_size);
-        FontSizeUtils.updateFontSize(mDetailRemoveButton, R.dimen.qs_detail_button_text_size);
 
         // We need to poke the detail views as well as they might not be attached to the view
         // hierarchy but reused at a later point.
@@ -464,16 +459,6 @@ public class QSPanel extends ViewGroup {
                 @Override
                 public void onClick(View v) {
                     mHost.startSettingsActivity(settingsIntent);
-                }
-            });
-
-            final StatusBarPanelCustomTile customTile = detailAdapter.getCustomTile();
-            mDetailRemoveButton.setVisibility(customTile != null ? VISIBLE : GONE);
-            mDetailRemoveButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mHost.collapsePanels();
-                    mHost.removeCustomTile(customTile);
                 }
             });
 
