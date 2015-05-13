@@ -25,8 +25,8 @@ import android.database.ContentObserver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.graphics.Point;
+import android.net.Uri;
 import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.os.Message;
@@ -99,10 +99,10 @@ public class QSPanel extends ViewGroup {
 
     private boolean mUseMainTiles = false;
 
-    private SettingsObserver mSettingsObserver;
-    
     private DetailCallback mDetailCallback;
     private int mContainerTop;
+
+    private SettingsObserver mSettingsObserver;
 
     public QSPanel(Context context) {
         this(context, null);
@@ -157,7 +157,7 @@ public class QSPanel extends ViewGroup {
         updateResources();
         return mBrightnessSliderEnabled;
     }
-    
+
     /**
      * Use three or four columns.
      */
@@ -182,6 +182,7 @@ public class QSPanel extends ViewGroup {
         if (mQSCSwitch) {
             mDetailDoneButton.setTextColor(textColor);
             mDetailSettingsButton.setTextColor(textColor);
+            mDetailRemoveButton.setTextColor(textColor);
         }
     }
 
@@ -238,7 +239,7 @@ public class QSPanel extends ViewGroup {
         }
         updateDetailText();
     }
-    
+
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -728,7 +729,7 @@ public class QSPanel extends ViewGroup {
             }
         }
     };
-    
+
     public interface DetailCallback {
         void onDetailChanged(boolean showing);
     }
@@ -785,12 +786,12 @@ public class QSPanel extends ViewGroup {
             mUseFourColumns = Settings.Secure.getIntForUser(
             mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
                 0, UserHandle.USER_CURRENT) == 1;
-            mQSShadeTransparency = Settings.System.getIntForUser(
+            mQSShadeTransparency = Settings.System.getInt(
             mContext.getContentResolver(), Settings.System.QS_TRANSPARENT_SHADE,
-                0, UserHandle.USER_CURRENT) == 1;
-            mQSCSwitch = Settings.System.getIntForUser(
+                0) == 1;
+            mQSCSwitch = Settings.System.getInt(
             mContext.getContentResolver(), Settings.System.QS_COLOR_SWITCH,
-                0, UserHandle.USER_CURRENT) == 1;
+                0) == 1;
         }
     }
 }
