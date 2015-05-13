@@ -4175,11 +4175,6 @@ public final class Settings {
          */
         public static final String VOLUME_KEYS_CONTROL_RING_STREAM =
                 "volume_keys_control_ring_stream";
-        /**
-         * Color of the clear all icon in the notification drawer
-         * @hide
-         */
-        public static final String NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR = "nd_clear_all_icon_color";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

@@ -21,7 +21,6 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.PorterDuff.Mode;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.Choreographer;
@@ -134,10 +133,4 @@ public class DismissViewButton extends Button {
     public boolean isButtonStatic() {
         return mActiveDrawable == mStaticDismissDrawable;
     }
-
-    public void setIconColor(int color) {
-        mStaticDismissDrawable.setColorFilter(color, Mode.MULTIPLY);
-        mAnimatedDismissDrawable.setColorFilter(color, Mode.MULTIPLY);
-    }
-
 }
