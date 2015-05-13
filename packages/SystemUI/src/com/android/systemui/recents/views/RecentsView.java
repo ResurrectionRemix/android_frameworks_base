@@ -32,7 +32,11 @@ import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.view.Gravity;
+=======
+import android.util.EventLog;
+>>>>>>> 8eba73a... SystemUI: add RecentsView EventLogs
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowInsets;
@@ -49,12 +53,17 @@ import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.model.TaskStack;
 
 import com.android.systemui.R;
+<<<<<<< HEAD
  
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+=======
+import com.android.systemui.EventLogTags;
+
+>>>>>>> 8eba73a... SystemUI: add RecentsView EventLogs
 import java.util.ArrayList;
 
 /**
@@ -253,6 +262,8 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
             }
         }
         ctx.postAnimationTrigger.decrement();
+
+        EventLog.writeEvent(EventLogTags.SYSUI_RECENTS_EVENT, 1 /* opened */);
     }
 
     /** Requests all task stacks to start their exit-recents animation */
@@ -491,6 +502,8 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
 
                 dismissAllTasksAnimated();
                 updateMemoryStatus();
+
+                EventLog.writeEvent(EventLogTags.SYSUI_RECENTS_EVENT, 4 /* closed all tasks */);
             }
         });
         mMemText = (TextView) ((View)getParent()).findViewById(R.id.recents_memory_text);
@@ -711,6 +724,8 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 launchRunnable.run();
             }
         }
+
+        EventLog.writeEvent(EventLogTags.SYSUI_RECENTS_EVENT, 3 /* chose task */);
     }
 
     @Override
@@ -755,6 +770,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 stackView.onRecentsHidden();
             }
         }
+        EventLog.writeEvent(EventLogTags.SYSUI_RECENTS_EVENT, 2 /* closed */);
     }
 
     @Override
