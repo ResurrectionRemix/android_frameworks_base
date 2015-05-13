@@ -51,6 +51,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.ViewAnimationUtils;
 import android.view.Gravity;
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowInsets;
@@ -77,6 +78,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
+
+import com.android.systemui.EventLogTags;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -330,6 +334,8 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
             stackView.startEnterRecentsAnimation(ctx);
         }
         ctx.postAnimationTrigger.decrement();
+
+        EventLog.writeEvent(EventLogTags.SYSUI_RECENTS_EVENT, 1 /* opened */);
     }
 
     /** Requests all task stacks to start their exit-recents animation */
@@ -1259,6 +1265,8 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
                 launchRunnable.run();
             }
         }
+
+        EventLog.writeEvent(EventLogTags.SYSUI_RECENTS_EVENT, 3 /* chose task */);
     }
 
     @Override
@@ -1311,6 +1319,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
             TaskStackView stackView = stackViews.get(i);
             stackView.onRecentsHidden();
         }
+        EventLog.writeEvent(EventLogTags.SYSUI_RECENTS_EVENT, 2 /* closed */);
     }
 
     @Override
