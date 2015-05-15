@@ -1028,7 +1028,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         checkUserAutohide(v, event);
                         return false;
                     }});
-                mNavigationBarView.updateSettings();
 
              }
         } catch (RemoteException ex) {
