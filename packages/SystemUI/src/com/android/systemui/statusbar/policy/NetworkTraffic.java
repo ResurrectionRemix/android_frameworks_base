@@ -9,6 +9,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -58,6 +62,7 @@ public class NetworkTraffic extends TextView {
     private int GB = MB * KB;
     private boolean mAutoHide;
     private int mAutoHideThreshold;
+    private int mNetworkTrafficColor;
 
     private Handler mTrafficHandler = new Handler() {
         @Override
@@ -262,6 +267,9 @@ public class NetworkTraffic extends TextView {
     private void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
 
+        int defaultColor = Settings.System.getInt(resolver,
+                Settings.System.NETWORK_TRAFFIC_COLOR, 0xFFFFFFFF);
+
         mAutoHide = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_AUTOHIDE, 0,
                 UserHandle.USER_CURRENT) == 1;
@@ -271,6 +279,18 @@ public class NetworkTraffic extends TextView {
                 UserHandle.USER_CURRENT);
 
         mState = Settings.System.getInt(resolver, Settings.System.NETWORK_TRAFFIC_STATE, 0);
+
+        mNetworkTrafficColor = Settings.System.getInt(resolver,
+                Settings.System.NETWORK_TRAFFIC_COLOR, -2);
+
+            if (mNetworkTrafficColor == Integer.MIN_VALUE
+                || mNetworkTrafficColor == -2) {
+            mNetworkTrafficColor = defaultColor;
+        }
+
+            setTextColor(mNetworkTrafficColor);
+            updateTrafficDrawable();
+
         if (isSet(mState, MASK_UNIT)) {
             KB = KILOBYTE;
         } else {
@@ -313,6 +333,7 @@ public class NetworkTraffic extends TextView {
 
     private void updateTrafficDrawable() {
         int intTrafficDrawable;
+        Drawable drw = null;
         if (isSet(mState, MASK_UP + MASK_DOWN)) {
             intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
         } else if (isSet(mState, MASK_UP)) {
@@ -322,6 +343,10 @@ public class NetworkTraffic extends TextView {
         } else {
             intTrafficDrawable = 0;
         }
-        setCompoundDrawablesWithIntrinsicBounds(0, 0, intTrafficDrawable, 0);
+        if (intTrafficDrawable != 0) {
+            drw = getContext().getResources().getDrawable(intTrafficDrawable);
+            drw.setColorFilter(mNetworkTrafficColor, PorterDuff.Mode.SRC_ATOP);
+        }
+        setCompoundDrawablesWithIntrinsicBounds(null, null, drw, null);
     }
 }
