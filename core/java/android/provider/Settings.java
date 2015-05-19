@@ -2206,12 +2206,12 @@ public final class Settings {
          
         public static final String STATUS_BAR_IME_SWITCHER = "status_bar_ime_switcher";
          /**
-         * Whether to enable ticker animation in statusbar
+         * Wether to show the ticker on the status bar
          *
          * @hide
          */
          
-        public static final String STATUS_BAR_TICKER_ENABLED = "status_bar_ticker_enabled";
+        public static final String STATUS_BAR_SHOW_TICKER = "status_bar_show_show_ticker";
         /**
          * The keyboard brightness to be used while the screen is on.
          * Valid value range is between 0 and {@link PowerManager#getMaximumKeyboardBrightness()}
