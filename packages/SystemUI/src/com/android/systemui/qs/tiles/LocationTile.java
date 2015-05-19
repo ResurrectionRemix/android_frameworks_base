@@ -50,22 +50,28 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
             Settings.Secure.LOCATION_MODE_HIGH_ACCURACY
     };
 
-    private final AnimationIcon mEnable =
-            new AnimationIcon(R.drawable.ic_signal_location_enable_animation);
-    private final AnimationIcon mDisable =
-            new AnimationIcon(R.drawable.ic_signal_location_disable_animation);
-
     private final List<Integer> mLocationList = new ArrayList<>();
     private final LocationController mController;
     private final LocationDetailAdapter mDetailAdapter;
     private final KeyguardMonitor mKeyguard;
     private final Callback mCallback = new Callback();
 
+    private boolean mForceToggleState = false;
+    
     public LocationTile(Host host) {
         super(host);
         mController = host.getLocationController();
         mDetailAdapter = new LocationDetailAdapter();
         mKeyguard = host.getKeyguardMonitor();
+    }
+
+    @Override
+    public boolean supportsDualTargets() {
+        return true;
+    }
+
+    protected void setForceToggleState(boolean force) {
+        mForceToggleState = force;
     }
 
     @Override
@@ -91,13 +97,16 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleClick() {
-        if(mController.isAdvancedSettingsEnabled()) {
-            showDetail(true);
-        } else {
+    if (!mController.isAdvancedSettingsEnabled() || mForceToggleState) {
             mController.setLocationEnabled(!mController.isLocationEnabled());
+//            mEnable.setAllowAnimation(true);
+//            mDisable.setAllowAnimation(true);
+        } else {
+//            mEnable.setAllowAnimation(false);
+//            mDisable.setAllowAnimation(false);
+            showDetail(true);
         }
-        mEnable.setAllowAnimation(true);
-        mDisable.setAllowAnimation(true);
+
     }
 
     @Override
@@ -115,33 +124,31 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
         // state.visible = !(mKeyguard.isSecure() && mKeyguard.isShowing());
         state.visible = !mKeyguard.isShowing();
         state.value = locationEnabled;
-        state.label = mContext.getString(getStateLabelRes(currentState));
 
         switch (currentState) {
             case Settings.Secure.LOCATION_MODE_OFF:
-                state.contentDescription = mContext.getString(
-                        R.string.accessibility_quick_settings_location_off);
-                state.icon = mDisable;
+                state.label = mContext.getString(R.string.quick_settings_location_off_label);
+                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_off);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_off);
                 break;
             case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
-                state.contentDescription = mContext.getString(
-                        R.string.accessibility_quick_settings_location_battery_saving);
+                state.label = mContext.getString(R.string.quick_settings_location_battery_saving_label);
+                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_battery_saving);
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_location_battery_saving);
                 break;
             case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
-                state.contentDescription = mContext.getString(
-                        R.string.accessibility_quick_settings_location_gps_only);
-                state.icon = mEnable;
+                state.label = mContext.getString(R.string.quick_settings_location_gps_only_label);
+                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_gps_only);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
                 break;
             case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
-                state.contentDescription = mContext.getString(
-                        R.string.accessibility_quick_settings_location_high_accuracy);
-                state.icon = mEnable;
+                state.label = mContext.getString(R.string.quick_settings_location_high_accuracy_label);
+                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_high_accuracy);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
                 break;
             default:
-                state.contentDescription = mContext.getString(
-                        R.string.accessibility_quick_settings_location_on);
-                state.icon = mEnable;
+                state.label = mContext.getString(R.string.quick_settings_location_label);
+                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_on);
         }
     }
 

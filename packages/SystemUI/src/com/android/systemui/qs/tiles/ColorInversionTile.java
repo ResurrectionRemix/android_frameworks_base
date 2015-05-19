@@ -29,10 +29,10 @@ import com.android.systemui.qs.UsageTracker;
 public class ColorInversionTile extends QSTile<QSTile.BooleanState> {
     private static final Intent ACCESSIBILITY_SETTINGS = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
 
-    private final AnimationIcon mEnable
-            = new AnimationIcon(R.drawable.ic_invert_colors_enable_animation);
-    private final AnimationIcon mDisable
-            = new AnimationIcon(R.drawable.ic_invert_colors_disable_animation);
+//    private final AnimationIcon mEnable
+//            = new AnimationIcon(R.drawable.ic_invert_colors_enable_animation);
+//    private final AnimationIcon mDisable
+//            = new AnimationIcon(R.drawable.ic_invert_colors_disable_animation);
     private final SecureSetting mSetting;
     private final UsageTracker mUsageTracker;
 
@@ -88,8 +88,8 @@ public class ColorInversionTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleClick() {
         mSetting.setValue(mState.value ? 0 : 1);
-        mEnable.setAllowAnimation(true);
-        mDisable.setAllowAnimation(true);
+//        mEnable.setAllowAnimation(true);
+//        mDisable.setAllowAnimation(true);
     }
 
     @Override
@@ -109,7 +109,8 @@ public class ColorInversionTile extends QSTile<QSTile.BooleanState> {
         state.visible = true;
         state.value = enabled;
         state.label = mContext.getString(R.string.quick_settings_inversion_label);
-        state.icon = enabled ? mEnable : mDisable;
+        state.icon = ResourceIcon.get(enabled ? R.drawable.ic_qs_inversion_on
+                : R.drawable.ic_qs_inversion_off);
     }
 
     @Override

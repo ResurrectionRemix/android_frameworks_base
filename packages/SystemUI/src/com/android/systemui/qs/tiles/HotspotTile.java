@@ -30,10 +30,10 @@ import com.android.systemui.statusbar.policy.KeyguardMonitor;
 
 /** Quick settings tile: Hotspot **/
 public class HotspotTile extends QSTile<QSTile.BooleanState> {
-    private final AnimationIcon mEnable =
-            new AnimationIcon(R.drawable.ic_hotspot_enable_animation);
-    private final AnimationIcon mDisable =
-            new AnimationIcon(R.drawable.ic_hotspot_disable_animation);
+//    private final AnimationIcon mEnable =
+//            new AnimationIcon(R.drawable.ic_hotspot_enable_animation);
+//    private final AnimationIcon mDisable =
+//            new AnimationIcon(R.drawable.ic_hotspot_disable_animation);
 
     private static final Intent TETHER_SETTINGS = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.TetherSettings"));
@@ -74,8 +74,13 @@ public class HotspotTile extends QSTile<QSTile.BooleanState> {
     protected void handleClick() {
         final boolean isEnabled = (Boolean) mState.value;
         mController.setHotspotEnabled(!isEnabled);
-        mEnable.setAllowAnimation(true);
-        mDisable.setAllowAnimation(true);
+//        mEnable.setAllowAnimation(true);
+//        mDisable.setAllowAnimation(true);
+    }
+
+    @Override
+    protected void handleSecondaryClick() {
+        mHost.startSettingsActivity(TETHER_SETTINGS);
     }
 
     @Override
@@ -89,7 +94,8 @@ public class HotspotTile extends QSTile<QSTile.BooleanState> {
         state.label = mContext.getString(R.string.quick_settings_hotspot_label);
 
         state.value = mController.isHotspotEnabled();
-        state.icon = state.visible && state.value ? mEnable : mDisable;
+        state.icon = ResourceIcon.get(state.visible && state.value ? R.drawable.ic_qs_hotspot_on
+                : R.drawable.ic_qs_hotspot_off);
     }
 
     @Override

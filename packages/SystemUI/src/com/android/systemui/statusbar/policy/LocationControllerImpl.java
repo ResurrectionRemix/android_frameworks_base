@@ -72,9 +72,9 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
 
         // Initialize last active mode. If state was off use the default high accuracy mode
         mLastActiveMode = getLocationCurrentState();
-        if(mLastActiveMode == Settings.Secure.LOCATION_MODE_OFF)
+        if (mLastActiveMode == Settings.Secure.LOCATION_MODE_OFF) {
             mLastActiveMode = Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
-
+        }
         // Register to listen for changes in location settings.
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocationManager.MODE_CHANGED_ACTION);
@@ -125,9 +125,9 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
 
         // Store last active mode if we are switching off
         // so we can restore it at the next enable
-        if(!enabled)
+        if (!enabled) {
             mLastActiveMode = getLocationCurrentState();
-
+        }
         // When enabling location, a user consent dialog will pop up, and the
         // setting won't be fully enabled until the user accepts the agreement.
         int mode = enabled
