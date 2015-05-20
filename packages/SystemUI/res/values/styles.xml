@@ -218,8 +218,7 @@
     <style name="TextAppearance.StatusBar.PhoneTicker"
         parent="@*android:style/TextAppearance.StatusBar.Ticker">
         <!-- Note: must be dp to fit in status bar -->
-        <item name="android:textSize">12dp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14dp</item>
     </style>
 
     <style name="systemui_theme" parent="@android:style/Theme.DeviceDefault">
