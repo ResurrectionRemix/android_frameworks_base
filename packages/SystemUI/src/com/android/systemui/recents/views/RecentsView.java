@@ -417,7 +417,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
             }
         }
 
-<<<<<<< HEAD
         setMeasuredDimension(width, height);
     }
 
@@ -429,24 +428,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
             mMemText.setVisibility(View.GONE);
             mMemBar.setVisibility(View.GONE);
             return false;
-=======
-        if (mClearRecents != null) {
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
-                    mClearRecents.getLayoutParams();
-            params.topMargin = taskStackBounds.top;
-            if (mSearchBar != null && (searchBarSpaceBounds.width() > taskViewWidth)) {
-                // Adjust to the search bar
-                params.rightMargin = width - searchBarSpaceBounds.right;
-            } else {
-                // Adjust to task views
-                params.rightMargin = (width / 2) - (taskViewWidth / 2);
-
-                // If very close to the screen edge, align to it
-                if (params.rightMargin < mClearRecents.getWidth())
-                    params.rightMargin = width - taskStackBounds.right;
-            }
-            mClearRecents.setLayoutParams(params);
->>>>>>> 91c7ce9... Align recents clear button to screen edge instead of tasks if close
         }
         mMemText.setVisibility(View.VISIBLE);
         mMemBar.setVisibility(View.VISIBLE);
