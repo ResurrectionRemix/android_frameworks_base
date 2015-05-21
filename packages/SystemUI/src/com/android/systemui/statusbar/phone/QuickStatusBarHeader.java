@@ -171,7 +171,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mAlarmStatusCollapsed.setOnClickListener(this);
         mAlarmStatus = (TextView) findViewById(R.id.alarm_status);
         mAlarmStatus.setOnClickListener(this);
-        if (getResources().getBoolean(R.bool.config_showTaskManagerSwitcher)) {
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.ENABLE_TASK_MANAGER, 0) == 1) {
             mTaskManagerButton = findViewById(R.id.task_manager_button);
         }
         mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
