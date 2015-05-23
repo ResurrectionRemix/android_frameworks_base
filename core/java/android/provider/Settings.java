@@ -3354,6 +3354,36 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String ANIMATOR_DURATION_SCALE = Global.ANIMATOR_DURATION_SCALE;
 
         /**
+         * Determine custom scroll friction.
+         * @hide
+         */
+        public static final String CUSTOM_SCROLL_FRICTION = "custom_scroll_friction";
+
+        /**
+         * Determine custom fling velocity.
+         * @hide
+         */
+        public static final String CUSTOM_FLING_VELOCITY = "custom_fling_velocity";
+
+        /**
+         * Determine custom overscroll distance.
+         * @hide
+         */
+        public static final String CUSTOM_OVERSCROLL_DISTANCE = "custom_overscroll_distance";
+
+        /**
+         * Determine custom overfling distance.
+         * @hide
+         */
+        public static final String CUSTOM_OVERFLING_DISTANCE = "custom_overfling_distance";
+
+         /**
+         *
+         * @hide
+         */
+        public static final String ANIMATION_CONTROLS_NO_SCROLL = "animation_controls_no_scroll";
+
+        /**
          * Control the type of rotation which can be performed using the accelerometer
          * if ACCELEROMETER_ROTATION is enabled.
          * Value is a bitwise combination of
