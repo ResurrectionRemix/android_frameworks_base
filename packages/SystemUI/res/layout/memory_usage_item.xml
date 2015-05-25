@@ -31,7 +31,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#0000" >
+    android:background="@color/memory_usage_item_background" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:paddingLeft="3dip"
             android:paddingTop="3dip"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#ffffffff"
+            android:textColor="@color/task_manager_title_text"
             android:text="@string/task_manager_title"
             android:layout_alignParentLeft="true" />
         <Button
@@ -65,7 +65,7 @@
         android:layout_height="20dip"
         android:paddingLeft="40dip"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#ffffffff"
+        android:textColor="@color/memory_usage_text_text"
         android:layout_alignParentLeft="true" />
 
     <ProgressBar
