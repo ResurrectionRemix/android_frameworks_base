@@ -35,12 +35,12 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="#808080" />
+        android:background="@color/task_item_view_background" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0000" >
+        android:background="@color/task_item_background" >
 
         <ImageView
             android:id="@+id/task_icon"
@@ -59,7 +59,7 @@
             android:layout_height="@dimen/task_manager_item_height"
             android:maxLines="1"
             android:gravity="center_vertical"
-            android:textColor="#ffffffff"
+            android:textColor="@color/task_item_text"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/task_icon" />
 
