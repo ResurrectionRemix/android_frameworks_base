@@ -25,7 +25,7 @@
 
     <com.android.systemui.qs.QSPanel
         android:id="@+id/quick_settings_panel"
-        android:background="#0000"
+        android:background="@color/qs_panel_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
