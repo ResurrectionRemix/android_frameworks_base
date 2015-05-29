@@ -33,14 +33,19 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 
 public class ImageHelper {
 
-    public static Bitmap getColoredBitmap(Drawable d, int color) {
+    public static Drawable getColoredDrawable(Drawable d, int color) {
         if (d == null) {
             return null;
+        }
+        if (d instanceof VectorDrawable) {
+            d.setTint(color);
+            return d;
         }
         Bitmap colorBitmap = ((BitmapDrawable) d).getBitmap();
         Bitmap grayscaleBitmap = toGrayscale(colorBitmap);
@@ -52,7 +57,19 @@ public class ImageHelper {
         Canvas cc = new Canvas(grayscaleBitmap);
         final Rect rect = new Rect(0, 0, grayscaleBitmap.getWidth(), grayscaleBitmap.getHeight());
         cc.drawBitmap(grayscaleBitmap, rect, rect, pp);
-        return grayscaleBitmap;
+        return new BitmapDrawable(grayscaleBitmap);
+    }
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
     private static Bitmap toGrayscale(Bitmap bmpOriginal) {
@@ -78,27 +95,30 @@ public class ImageHelper {
         if (image == null || context == null) {
             return null;
         }
+        if (image instanceof VectorDrawable) {
+            return image;
+        } else {
+            int newSize = Converter.dpToPx(context, size);
+            Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
+            Bitmap scaledBitmap = Bitmap.createBitmap(newSize, newSize, Config.ARGB_8888);
 
-        int newSize = Converter.dpToPx(context, size);
-        Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
-        Bitmap scaledBitmap = Bitmap.createBitmap(newSize, newSize, Config.ARGB_8888);
+            float ratioX = newSize / (float) bitmap.getWidth();
+            float ratioY = newSize / (float) bitmap.getHeight();
+            float middleX = newSize / 2.0f;
+            float middleY = newSize / 2.0f;
 
-        float ratioX = newSize / (float) bitmap.getWidth();
-        float ratioY = newSize / (float) bitmap.getHeight();
-        float middleX = newSize / 2.0f;
-        float middleY = newSize / 2.0f;
+            final Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+            paint.setAntiAlias(true);
 
-        final Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
-        paint.setAntiAlias(true);
+            Matrix scaleMatrix = new Matrix();
+            scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
 
-        Matrix scaleMatrix = new Matrix();
-        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
-        Canvas canvas = new Canvas(scaledBitmap);
-        canvas.setMatrix(scaleMatrix);
-        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2,
-                middleY - bitmap.getHeight() / 2, paint);
-        return new BitmapDrawable(context.getResources(), scaledBitmap);
+            Canvas canvas = new Canvas(scaledBitmap);
+            canvas.setMatrix(scaleMatrix);
+            canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2,
+                    middleY - bitmap.getHeight() / 2, paint);
+            return new BitmapDrawable(context.getResources(), scaledBitmap);
+        }
     }
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
