@@ -23,11 +23,11 @@
     <color name="gesture_color">@android:color/holo_blue_light</color>
 
     <!-- Task Manager -->
-    <color name="memory_usage_item_background">#0000</color>
+    <color name="memory_usage_item_background">#00000000</color>
     <color name="task_manager_title_text">#ffffffff</color>
     <color name="memory_usage_text_text">#ffffffff</color>
     <color name="qs_panel_background">#0000</color>
-    <color name="task_item_view_background">#808080</color>
+    <color name="task_item_view_background">#00000000</color>
     <color name="task_item_background">#0000</color>
     <color name="task_item_text">#ffffffff</color>
 
