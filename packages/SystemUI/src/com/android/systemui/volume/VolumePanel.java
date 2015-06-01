@@ -1002,7 +1002,6 @@ public class VolumePanel extends Handler implements DemoMode {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         resetVolPanelTimeout();
-                        showSilentHint();
                         if (mAudioManager.getRingerModeInternal() ==
                                 AudioManager.RINGER_MODE_VIBRATE) {
                             showRingerHint();
