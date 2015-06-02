@@ -54,6 +54,7 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -1790,6 +1791,11 @@ public class VolumePanel extends Handler implements DemoMode {
             final Object tag = seekBar.getTag();
             if (fromUser && tag instanceof StreamControl) {
                 StreamControl sc = (StreamControl) tag;
+                // Revert volume changes done in onShowVolumeChanged()
+                if (sc.streamType == AudioManager.STREAM_BLUETOOTH_SCO
+                        || sc.streamType == AudioManager.STREAM_VOICE_CALL) {
+                    progress = Math.max(0, progress - 1);
+                }
                 setStreamVolume(sc, progress,
                         AudioManager.FLAG_SHOW_UI | AudioManager.FLAG_VIBRATE);
             }
@@ -1823,6 +1829,40 @@ public class VolumePanel extends Handler implements DemoMode {
             onRemoteVolumeUpdateIfShown();
         }
     };
+
+    public static class VolumeSeekBar extends SeekBar {
+        public VolumeSeekBar(Context context) {
+            super(context);
+        }
+
+        public VolumeSeekBar(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public VolumeSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        public VolumeSeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        protected int updateTouchProgress(int lastProgress, int newProgress) {
+            final Object tag = getTag();
+            if (tag instanceof StreamControl) {
+                StreamControl sc = (StreamControl) tag;
+                // In-call voice streams shouldn't be draggable down to 0, see onShowVolumeChanged
+                if (sc.streamType == AudioManager.STREAM_BLUETOOTH_SCO
+                        || sc.streamType == AudioManager.STREAM_VOICE_CALL) {
+                    if (newProgress == 0) {
+                        return 1;
+                    }
+                }
+            }
+            return super.updateTouchProgress(lastProgress, newProgress);
+        }
+    }
 
     public interface Callback {
         void onZenSettings();
