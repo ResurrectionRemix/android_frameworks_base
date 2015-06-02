@@ -58,6 +58,7 @@
         android:layout_toStartOf="@id/settings_button"
         android:layout_width="48dp"
         android:layout_height="@dimen/status_bar_header_height"
+        android:background="@drawable/ripple_drawable"
         android:layout_marginStart="8dp"
         android:src="@drawable/ic_tasklist_switch_normal"
         android:visibility="gone"/>
