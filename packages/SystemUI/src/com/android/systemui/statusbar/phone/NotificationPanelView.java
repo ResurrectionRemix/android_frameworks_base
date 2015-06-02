@@ -107,7 +107,6 @@ public class NotificationPanelView extends PanelView implements
     private KeyguardStatusBarView mKeyguardStatusBar;
     private QSContainer mQsContainer;
     private QSPanel mQsPanel;
-    private LinearLayout mTaskManagerPanel;
     private KeyguardStatusView mKeyguardStatusView;
     private ObservableScrollView mScrollView;
     private TextView mClockView;
@@ -236,6 +235,10 @@ public class NotificationPanelView extends PanelView implements
     private boolean mDoubleTapToSleepEnabled;
     private int mStatusBarHeaderHeight;
     private GestureDetector mDoubleTapGesture;
+
+    // Task manager
+    private boolean mShowTaskManager;
+    private LinearLayout mTaskManagerPanel;
 
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -1522,8 +1525,7 @@ public class NotificationPanelView extends PanelView implements
     }
 
     public void setTaskManagerVisibility(boolean mTaskManagerShowing) {
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.ENABLE_TASK_MANAGER, 0) == 1) {
+        if (mShowTaskManager) {
             cancelAnimation();
             boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
             mQsPanel.setVisibility(expandVisually && !mTaskManagerShowing
@@ -2452,6 +2454,8 @@ public class NotificationPanelView extends PanelView implements
                     CMSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN), false, this);
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ENABLE_TASK_MANAGER), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -2476,6 +2480,8 @@ public class NotificationPanelView extends PanelView implements
                     resolver, CMSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1) == 1;
             mDoubleTapToSleepEnabled = CMSettings.System.getInt(
                     resolver, CMSettings.System.DOUBLE_TAP_SLEEP_GESTURE, 1) == 1;
+	    mShowTaskManager = Settings.System.getIntForUser(resolver,
+                    Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
         }
     }
 
@@ -2490,7 +2496,6 @@ public class NotificationPanelView extends PanelView implements
         } else if (source == StatusBarManager.CAMERA_LAUNCH_SOURCE_WIGGLE) {
             mLastCameraLaunchSource = KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCE_WIGGLE;
         } else {
-
             // Default.
             mLastCameraLaunchSource = KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCE_AFFORDANCE;
         }
