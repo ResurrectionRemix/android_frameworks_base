@@ -569,7 +569,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             mContext.getContentResolver(),
                             Settings.System.ENABLE_TASK_MANAGER,
                             0, UserHandle.USER_CURRENT) == 1;
-                            recreateStatusBar();
+                    recreateStatusBar();
+                    updateRowStates();
+                    updateSpeedbump();
+                    updateClearAll();
+                    updateEmptyShadeView();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
                     mQSCSwitch = Settings.System.getIntForUser(
