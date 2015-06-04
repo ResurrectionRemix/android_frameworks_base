@@ -209,6 +209,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
         mTaskManagerButton = findViewById(R.id.task_manager_button);
+        mTaskManagerButton.setOnLongClickListener(this);
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
         mQsDetailHeader.setAlpha(0);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -654,9 +655,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         } else if (v == mWeatherContainer) {
             startForecastLongClickActivity();
         } else if (v == mMultiUserSwitch) {
-            startUserLongClickActivity();
+            startUserLongClickActivity();       
+        } else if (v == mTaskManagerButton) {
+            startTaskManagerLongClickActivity();
         }
-        vibrateheader(20);
+	vibrateheader(20);	
         return false;
     }
 
@@ -729,7 +732,15 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
-    public void setQSPanel(QSDragPanel qsp) {
+
+    private void startTaskManagerLongClickActivity() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.android.settings",
+            "com.android.settings.Settings$RunningServicesActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
+     public void setQSPanel(QSDragPanel qsp) {
         mQSPanel = qsp;
         if (mQSPanel != null) {
             mQSPanel.setCallback(mQsPanelCallback);
