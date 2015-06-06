@@ -31,6 +31,7 @@ package com.android.systemui.statusbar.phone;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.ActivityManager;
+import android.app.ActivityManager.MemoryInfo;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
@@ -110,6 +111,7 @@ public class TaskManager {
     }
 
     public void refreshTaskManagerView () {
+        if (DEBUG) Log.e(TAG, "refreshTaskManagerView");
         loadRunningTasks();
         refreshMemoryUsagePanel();
         inflateTaskListView();
@@ -234,8 +236,13 @@ public class TaskManager {
 
     private void refreshMemoryUsageBar(ProgressBar progressBar) {
         if (progressBar != null) {
-            int max = (int)readTotalMem();
-            int currentMem = (int)readAvailMem();
+            /*
+             * 1024 bytes      == 1 kilobyte
+             * 1024 kilobytes  == 1 megabyte
+             * 1024 * 1024     == 1048576
+             */
+            int max = (int)(readTotalMem() / 1048576L);
+            int currentMem = (int)(readAvailMem() / 1048576L);
             progressBar.setMax(max);
             progressBar.setProgress(currentMem);
         }
@@ -272,55 +279,17 @@ public class TaskManager {
     }
 
     private long readAvailMem() {
-        byte[] mBuffer = new byte[1024];
-        try {
-            long memFree = 0;
-            long memCached = 0;
-            FileInputStream is = new FileInputStream("/proc/meminfo");
-            int len = is.read(mBuffer);
-            is.close();
-            final int BUFLEN = mBuffer.length;
-            for (int i=0; i<len && (memFree == 0 || memCached == 0); i++) {
-                if (matchText(mBuffer, i, "MemFree")) {
-                    i += 7;
-                    memFree = extractMemValue(mBuffer, i);
-                } else if (matchText(mBuffer, i, "Cached")) {
-                    i += 6;
-                    memCached = extractMemValue(mBuffer, i);
-                }
-                while (i < BUFLEN && mBuffer[i] != '\n') {
-                    i++;
-                }
-            }
-            return memFree + memCached;
-        } catch (java.io.FileNotFoundException e) {
-        } catch (java.io.IOException e) {
-        }
-        return 0;
+        MemoryInfo mi = new MemoryInfo();
+        mActivityManager.getMemoryInfo(mi);
+        long availableMem = mi.availMem;
+        return availableMem;
     }
 
     private long readTotalMem() {
-        byte[] mBuffer = new byte[1024];
-        try {
-            long memTotal = 0;
-            FileInputStream is = new FileInputStream("/proc/meminfo");
-            int len = is.read(mBuffer);
-            is.close();
-            final int BUFLEN = mBuffer.length;
-            for (int i=0; i<len && memTotal == 0; i++) {
-                if (matchText(mBuffer, i, "MemTotal")) {
-                    i += 7;
-                    memTotal = extractMemValue(mBuffer, i);
-                }
-                while (i < BUFLEN && mBuffer[i] != '\n') {
-                    i++;
-                }
-            }
-            return memTotal;
-        } catch (java.io.FileNotFoundException e) {
-        } catch (java.io.IOException e) {
-        }
-        return 0;
+        MemoryInfo mi = new MemoryInfo();
+        mActivityManager.getMemoryInfo(mi);
+        long totalMem = mi.totalMem;
+        return totalMem;
     }
 
     private void killChildByName(String packageName) {
