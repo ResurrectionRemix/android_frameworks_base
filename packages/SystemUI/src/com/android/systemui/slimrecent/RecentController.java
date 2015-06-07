@@ -591,7 +591,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
                     mRecentPanelView.EXPANDED_MODE_AUTO,
                     UserHandle.USER_CURRENT));
                 mRecentPanelView.setShowTopTask(Settings.System.getIntForUser(
-                    resolver, Settings.System.RECENT_PANEL_SHOW_TOPMOST, 0,
+                    resolver, Settings.System.RECENT_PANEL_SHOW_TOPMOST, 1,
                     UserHandle.USER_CURRENT) == 1);
                 mRecentPanelView.setShowOnlyRunningTasks(Settings.System.getIntForUser(
                     resolver, Settings.System.RECENT_SHOW_RUNNING_TASKS, 0,
