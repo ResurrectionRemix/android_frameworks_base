@@ -4451,7 +4451,7 @@ public final class ActivityThread {
         if (mCurDefaultDisplayDpi != Configuration.DENSITY_DPI_UNDEFINED
                 && mCurDefaultDisplayDpi != DisplayMetrics.DENSITY_DEVICE
                 && !mDensityCompatMode) {
-            Slog.i(TAG, "Switching default density from "
+            if (DEBUG_MESSAGES) Slog.i(TAG, "Switching default density from "
                     + DisplayMetrics.DENSITY_DEVICE + " to "
                     + mCurDefaultDisplayDpi);
             DisplayMetrics.DENSITY_DEVICE = mCurDefaultDisplayDpi;
