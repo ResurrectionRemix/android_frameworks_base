@@ -18,4 +18,8 @@
     <!-- The maximum count of notifications on Keyguard. The rest will be collapsed in an overflow
          card. -->
     <integer name="keyguard_max_notification_count">3</integer>
+
+    <!-- Default value how much apps show the app screenshot on recents view entry -->
+    <integer name="expanded_items_default">2</integer>
+
 </resources>

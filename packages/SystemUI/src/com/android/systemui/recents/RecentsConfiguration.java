@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -208,7 +209,9 @@ public class RecentsConfiguration {
                 res.getInteger(R.integer.recents_filter_animate_new_views_duration);
 
         // Loading
-        maxNumTasksToLoad = ActivityManager.getMaxRecentTasksStatic();
+        maxNumTasksToLoad = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.RECENTS_MAX_APPS, ActivityManager.getMaxRecentTasksStatic(),
+                UserHandle.USER_CURRENT);
 
         // Search Bar
         searchBarAppWidgetId = settings.getInt(Constants.Values.App.Key_SearchAppWidgetId, -1);

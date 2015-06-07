@@ -275,4 +275,5 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:alertDialogTheme">@style/Theme.SystemUI.Dialog.Alert</item>
     </style>
+
 </resources>

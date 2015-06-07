@@ -22,6 +22,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import com.android.systemui.recents.RecentsConfiguration;
 import com.android.systemui.recents.misc.SystemServicesProxy;
@@ -102,6 +103,25 @@ public class RecentsTaskLoadPlan {
         for (int i = 0; i < taskCount; i++) {
             ActivityManager.RecentTaskInfo t = mRawTasks.get(i);
 
+            boolean onlyShowRunningTasks = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.RECENT_SHOW_RUNNING_TASKS, 0,
+                    UserHandle.USER_CURRENT) == 1;
+
+            final List<ActivityManager.RunningTaskInfo> runningTasks =
+                mSystemServicesProxy.getRunningTasks(Integer.MAX_VALUE);
+
+            boolean isRunning = false;
+            if (onlyShowRunningTasks) {
+                for (ActivityManager.RunningTaskInfo task : runningTasks) {
+                    if (task.numRunning <= 0) continue;
+                    if (t.baseIntent.getComponent().getPackageName().equals(
+                            task.baseActivity.getPackageName())) {
+                        isRunning = true;
+                    }
+                }
+            }
+            if (isRunning) continue;
+
             // Compose the task key
             Task.TaskKey taskKey = new Task.TaskKey(t.persistentId, t.baseIntent, t.userId,
                     t.firstActiveTime, t.lastActiveTime);
@@ -150,7 +170,7 @@ public class RecentsTaskLoadPlan {
 
         // Assertion
         if (mStack.getTaskCount() != mRawTasks.size()) {
-            throw new RuntimeException("Loading failed");
+            //throw new RuntimeException("Loading failed");
         }
     }
 

@@ -11,7 +11,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := Keyguard \
     android-support-v4 \
     android-visualizer \
     guava \
-    org.cyanogenmod.platform.sdk
+    org.cyanogenmod.platform.sdk \
+    android-opt-cards
 
 LOCAL_JAVA_LIBRARIES := telephony-common
 
@@ -23,8 +24,11 @@ LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 LOCAL_RESOURCE_DIR := \
     frameworks/base/packages/Keyguard/res \
-    $(LOCAL_PATH)/res
+    $(LOCAL_PATH)/res \
+    $(LOCAL_PATH)/../../../../frameworks/opt/cards/res
+
 LOCAL_AAPT_FLAGS := --auto-add-overlay --extra-packages com.android.keyguard
+LOCAL_AAPT_FLAGS += --extra-packages com.android.cards
 
 include $(BUILD_PACKAGE)
 

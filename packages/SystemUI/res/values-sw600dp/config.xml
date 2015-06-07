@@ -37,4 +37,8 @@
     <bool name="recents_has_transposed_search_bar">true</bool>
     <!-- Transposes the nav bar in landscape (only used for purposes of layout). -->
     <bool name="recents_has_transposed_nav_bar">false</bool>
+
+    <!-- Default value how much apps show the app screenshot on recents view entry -->
+    <integer name="expanded_items_default">3</integer>
+
 </resources>
