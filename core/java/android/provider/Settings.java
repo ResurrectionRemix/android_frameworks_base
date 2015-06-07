@@ -5708,7 +5708,25 @@ public final class Settings {
        private static final Validator GAMING_MODE_VALUES_VALIDATOR =
                ANY_STRING_VALIDATOR;
 
+        /** @hide */
         public static final String LOCKSCREEN_CHARGING_ANIMATION_STYLE = "lockscreen_charging_animation_style";
+        /**
+         * Whether to wake the screen with the camera key, the value is boolean.
+         * @hide
+         */
+        public static final String CAMERA_SLEEP_ON_RELEASE = "camera_sleep_on_release";
+        /** @hide */
+        private static final Validator CAMERA_SLEEP_ON_RELEASE_VALIDATOR =
+               BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether to wake the screen with the camera key, the value is boolean.
+         * @hide
+         */
+        public static final String CAMERA_LAUNCH = "camera_launch";
+        /** @hide */
+        private static final Validator CAMERA_LAUNCH_VALIDATOR =
+               BOOLEAN_VALIDATOR;
 
         /** @hide */
         public static final String CHARING_INDICATOR_DOZE = "lockscreen_charging_indicator_doze";
@@ -7540,6 +7558,8 @@ public final class Settings {
             SHOW_VOLTE_ICON,
             OMNI_LOCKSCREEN_MEDIA_BLUR,
             NOTIFICATION_GUTS_KILL_APP_BUTTON,
+            CAMERA_SLEEP_ON_RELEASE,
+            CAMERA_LAUNCH,
             THEMING_SETTINGS_DASHBOARD_ICONS,
             ENABLE_CONDITIONS,
             ENABLE_SUGGESTIONS,
@@ -7796,6 +7816,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_MEDIA_BLUR);
             PRIVATE_SETTINGS.add(NOTIFICATION_GUTS_KILL_APP_BUTTON);
+            PRIVATE_SETTINGS.add(CAMERA_SLEEP_ON_RELEASE);
+            PRIVATE_SETTINGS.add(CAMERA_LAUNCH);
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(ENABLE_CONDITIONS);
             PRIVATE_SETTINGS.add(ENABLE_SUGGESTIONS);
@@ -8054,6 +8076,8 @@ public final class Settings {
             VALIDATORS.put(OMNI_LOCKSCREEN_MEDIA_BLUR, OMNI_LOCKSCREEN_MEDIA_BLUR_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON,
                             NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
+            VALIDATORS.put(CAMERA_SLEEP_ON_RELEASE, CAMERA_SLEEP_ON_RELEASE_VALIDATOR);
+            VALIDATORS.put(CAMERA_LAUNCH, CAMERA_LAUNCH_VALIDATOR);
             VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
             VALIDATORS.put(ENABLE_CONDITIONS, ENABLE_CONDITIONS_VALIDATOR);
             VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
