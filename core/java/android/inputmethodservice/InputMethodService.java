@@ -30,9 +30,12 @@ import android.graphics.Region;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ResultReceiver;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.service.gesture.IEdgeGestureService;
 import android.text.InputType;
 import android.text.Layout;
 import android.text.Spannable;
@@ -66,6 +69,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.android.internal.statusbar.IStatusBarService;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
@@ -305,6 +309,10 @@ public class InputMethodService extends AbstractInputMethodService {
     
     int mStatusIcon;
     int mBackDisposition;
+ 
+    private IStatusBarService mStatusBarService;
+    private Object mServiceAquireLock = new Object();
+    private IEdgeGestureService mEdgeGestureService;
 
     final Insets mTmpInsets = new Insets();
     final int[] mTmpLocation = new int[2];
@@ -1445,6 +1453,17 @@ public class InputMethodService extends AbstractInputMethodService {
             mWindowWasVisible = mWindowVisible;
             mInShowWindow = true;
             showWindowInner(showInput);
+            if (showInput) {
+                // IME softkeyboard is showing. Notify EdgeGestureService.
+                IEdgeGestureService edgeGestureService = getEdgeGestureService();
+                try {
+                    if (edgeGestureService != null) {
+                        edgeGestureService.setImeIsActive(true);
+                    }
+                } catch (RemoteException e) {
+                    mEdgeGestureService = null;
+                }
+            }
         } finally {
             mWindowWasVisible = true;
             mInShowWindow = false;
@@ -1531,6 +1550,17 @@ public class InputMethodService extends AbstractInputMethodService {
             onWindowHidden();
             mWindowWasVisible = false;
         }
+
+        // IME softkeyboard is hiding. Notify EdgeGestureService.
+        IEdgeGestureService edgeGestureService = getEdgeGestureService();
+        try {
+            if (edgeGestureService != null) {
+                edgeGestureService.setImeIsActive(false);
+            }
+        } catch (RemoteException e) {
+            mEdgeGestureService = null;
+        }
+
     }
 
     /**
@@ -2220,6 +2250,29 @@ public class InputMethodService extends AbstractInputMethodService {
         return true;
     }
     
+    private IStatusBarService getStatusBarService() {
+        synchronized (mServiceAquireLock) {
+            if (mStatusBarService == null) {
+                mStatusBarService = IStatusBarService.Stub.asInterface(
+                        ServiceManager.getService("statusbar"));
+            }
+            return mStatusBarService;
+        }
+    }
+
+    /**
+     * If not set till now get EdgeGestureService.
+     */
+    private IEdgeGestureService getEdgeGestureService() {
+        synchronized (mServiceAquireLock) {
+            if (mEdgeGestureService == null) {
+                mEdgeGestureService = IEdgeGestureService.Stub.asInterface(
+                            ServiceManager.getService("edgegestureservice"));
+            }
+            return mEdgeGestureService;
+        }
+    }
+
     /**
      * Return text that can be used as a button label for the given
      * {@link EditorInfo#imeOptions EditorInfo.imeOptions}.  Returns null

@@ -20,4 +20,10 @@
 
     <!-- Doze: shake accelerometer threshold minimum is 2 and maximum is 10-->
     <integer name="doze_shake_accelerometer_threshold">10</integer>
+
+   <!-- Sensivity of pie gestures controlls.
+         Must be minimum 1 and maximum 10 (See @EdgeServiceConstants.java).
+         Default for pie is high sensivity -->
+   <integer name="pie_gesture_sensivity">10</integer>
+
 </resources>

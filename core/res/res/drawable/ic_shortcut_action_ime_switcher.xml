@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2015 SlimRoms
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M10.461
+35.665c-0.4745-0.0381-0.8553-0.13964-1.2519-0.33376-1.1074-0.54203-1.8251-1.6405-1.8738-2.8677-0.011-0.26737
+0.014-16.975 0.026-17.094 0.075-0.79359 0.4082-1.5065 0.9658-2.0656
+0.5405-0.54197 1.2176-0.86751 1.9913-0.95738 0.094-0.0109 2.4266-0.0132
+13.692-0.0132 13.087 0 13.584 0.00065 13.717 0.018 0.9197 0.11987 1.7109 0.57604
+2.2654 1.3061 0.3652 0.48088 0.5871 1.0391 0.659 1.6578 0.02 0.16868 0.02 17.2 0
+17.369-0.1053 0.9059-0.5432 1.6994-1.2487 2.2624-0.476 0.37997-1.012
+0.60554-1.667 0.70165-0.1109 0.0163-0.8368 0.0172-13.676 0.0183-7.4575
+0.00064-13.577-0.00027-13.599-0.002zm20.203-4.9963v-1.6709h-6.6637-6.6638v1.6709
+1.6709h6.6638 6.6637v-1.6709zm-14.993-6.6687v-1.6659h-1.6709-1.6709v1.6659
+1.6659h1.6709 1.6709v-1.6659zm4.9978 0v-1.6659h-1.666-1.6659v1.6659
+1.6659h1.6659 1.666v-1.6659zm4.9978 0v-1.6659h-1.6659-1.666v1.6659 1.6659h1.666
+1.6659v-1.6659zm4.9978 0v-1.6659h-1.6659-1.666v1.6659 1.6659h1.666
+1.6659v-1.6659zm5.0077 0v-1.6659h-1.6709-1.6709v1.6659 1.6659h1.6709
+1.6709v-1.6659zm-20.006-5.0027v-1.6659h-1.6659-1.6659v1.6684 1.6684l1.6684-0.003
+1.6684-0.002v-1.6659zm5.0028 0v-1.6709h-1.666-1.6659v1.6709 1.6709h1.6659
+1.666v-1.6709zm4.9978 0v-1.6709h-1.6659-1.666v1.6709 1.6709h1.666
+1.6659v-1.6709zm4.9978 0v-1.6709h-1.6659-1.666v1.6709 1.6709h1.666
+1.6659v-1.6709zm5.0052 0.002v-1.6684h-1.6659-1.6659v1.6561c0 0.91084-0.0004
+1.6616 0 1.6684 0 0.01 0.347 0.0123 1.671 0.0123h1.6662v-1.6684z" />
+</vector>
