@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 The Android Open Source Project
+ * Copyright (C) 2015 crDroid Android
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +17,18 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.IWindowManager;
-import android.view.WindowManagerGlobal;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
 
-/** Quick settings tile: Screenshot **/
 public class PowerMenuTile extends QSTile<QSTile.BooleanState> {
 
-    private boolean mListening;
+private boolean mListening;
 
     public PowerMenuTile(Host host) {
         super(host);
@@ -51,8 +47,12 @@ public class PowerMenuTile extends QSTile<QSTile.BooleanState> {
     @Override
     public void handleClick() {
         mHost.collapsePanels();
-        Intent intent = new Intent(Intent.ACTION_POWERMENU);
-        mContext.sendBroadcast(intent);
+        try {
+            IWindowManager windowManagerService = IWindowManager.Stub.asInterface(
+            ServiceManager.getService(Context.WINDOW_SERVICE));
+            windowManagerService.toggleGlobalMenu();
+        } catch (RemoteException e) {
+        }
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PowerMenuTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
-        state.label = mContext.getString(R.string.quick_settings_powermenu_label);
-        state.icon = ResourceIcon.get(R.drawable.ic_qs_powermenu);
+        state.label = mContext.getString(R.string.quick_settings_power_menu_label);
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_power_menu);
     }
 }
