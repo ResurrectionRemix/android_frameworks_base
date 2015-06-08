@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.benzo;
+package com.android.systemui.rr;
 
 import android.app.KeyguardManager;
 import android.content.Context;
