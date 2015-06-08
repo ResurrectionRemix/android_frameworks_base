@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="16dp"
                 android:gravity="right"
-                android:textColor="#E0E0E0"
+                android:textColor="@color/status_bar_temperature_text_color"
                 android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textSize="@dimen/battery_level_text_size"
                 android:importantForAccessibility="noHideDescendants"/>
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="16dp"
                 android:gravity="right"
-                android:textColor="#E0E0E0"
+                android:textColor="@color/status_bar_temperature_location_text_color"
                 android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Date"
                 android:textSize="@dimen/battery_level_text_size"
                 android:importantForAccessibility="noHideDescendants"/>
