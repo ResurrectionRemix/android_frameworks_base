@@ -78,7 +78,7 @@ public class ActionHelper {
         try {
             systemUiResources = pm.getResourcesForApplication(SYSTEMUI_METADATA_NAME);
         } catch (Exception e) {
-            Log.e("ButtonsHelper:", "can't access systemui resources",e);
+            Log.e("ActionHelper:", "can't access systemui resources",e);
             return null;
         }
 
