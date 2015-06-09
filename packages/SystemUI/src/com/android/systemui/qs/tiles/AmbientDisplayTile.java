@@ -83,6 +83,17 @@ public class AmbientDisplayTile extends QSTile<QSTile.BooleanState> {
                 Settings.Secure.DOZE_ENABLED, 1) == 1;
     }
 
+    @Override
+    protected String composeChangeAnnouncement() {
+        if (mState.value) {
+            return mContext.getString(
+                    R.string.accessibility_quick_settings_ambient_display_changed_on);
+        } else {
+            return mContext.getString(
+                    R.string.accessibility_quick_settings_ambient_display_changed_off);
+        }
+    }
+
     private ContentObserver mObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
