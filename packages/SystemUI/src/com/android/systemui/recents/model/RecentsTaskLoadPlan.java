@@ -113,14 +113,13 @@ public class RecentsTaskLoadPlan {
             boolean isRunning = false;
             if (onlyShowRunningTasks) {
                 for (ActivityManager.RunningTaskInfo task : runningTasks) {
-                    if (task.numRunning <= 0) continue;
                     if (t.baseIntent.getComponent().getPackageName().equals(
                             task.baseActivity.getPackageName())) {
                         isRunning = true;
                     }
                 }
+                if (!isRunning) continue;
             }
-            if (isRunning) continue;
 
             // Compose the task key
             Task.TaskKey taskKey = new Task.TaskKey(t.persistentId, t.baseIntent, t.userId,
