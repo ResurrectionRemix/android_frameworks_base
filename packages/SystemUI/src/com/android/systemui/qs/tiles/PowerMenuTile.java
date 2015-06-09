@@ -66,6 +66,6 @@ private boolean mListening;
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
         state.label = mContext.getString(R.string.quick_settings_power_menu_label);
-        state.icon = ResourceIcon.get(R.drawable.ic_qs_power_menu);
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_power);
     }
 }
