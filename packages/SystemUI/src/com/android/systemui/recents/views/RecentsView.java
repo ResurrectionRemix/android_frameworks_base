@@ -32,11 +32,8 @@ import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
-<<<<<<< HEAD
 import android.view.Gravity;
-=======
 import android.util.EventLog;
->>>>>>> 8eba73a... SystemUI: add RecentsView EventLogs
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowInsets;
@@ -53,17 +50,14 @@ import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.model.TaskStack;
 
 import com.android.systemui.R;
-<<<<<<< HEAD
  
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-=======
 import com.android.systemui.EventLogTags;
 
->>>>>>> 8eba73a... SystemUI: add RecentsView EventLogs
 import java.util.ArrayList;
 
 /**
