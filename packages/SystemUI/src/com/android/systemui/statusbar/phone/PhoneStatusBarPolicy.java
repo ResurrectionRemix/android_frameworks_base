@@ -20,15 +20,20 @@
 package com.android.systemui.statusbar.phone;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.storage.StorageEventListener;
 import android.os.storage.StorageManager;
@@ -44,11 +49,18 @@ import android.util.Log;
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.TelephonyIntents;
+import com.android.internal.util.cm.QSConstants;
+import com.android.internal.util.cm.QSUtils;
+import com.android.internal.util.cm.QSUtils.OnQSChanged;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.CastController;
 import com.android.systemui.statusbar.policy.CastController.CastDevice;
-import com.android.systemui.statusbar.policy.SuController;
 import com.android.systemui.statusbar.policy.HotspotController;
+
+import java.util.ArrayList;
+
+import cyanogenmod.app.CMStatusBarManager;
+import cyanogenmod.app.CustomTile;
 
 /**
  * This class contains all of the policy about which icons are installed in the status
@@ -70,7 +82,6 @@ public class PhoneStatusBarPolicy {
     private static final String SLOT_VOLUME = "volume";
     private static final String SLOT_CDMA_ERI = "cdma_eri";
     private static final String SLOT_ALARM_CLOCK = "alarm_clock";
-    private static final String SLOT_SU = "su";
 
     private static final String SDCARD_ABSENT = "sdcard_absent";
     private static final String SDCARD_KEYWORD = "SD";
@@ -79,9 +90,7 @@ public class PhoneStatusBarPolicy {
     private final StatusBarManager mService;
     private final Handler mHandler = new Handler();
     private final CastController mCast;
-    private final SuController mSuController;
     private boolean mAlarmIconVisible;
-    private boolean mSuIconVisible;
     private final HotspotController mHotspot;
 
     // Assume it's all good unless we hear otherwise.  We don't always seem
@@ -125,12 +134,19 @@ public class PhoneStatusBarPolicy {
         }
     };
 
-    public PhoneStatusBarPolicy(Context context, CastController cast, SuController su, HotspotController hotspot) {
+    private final OnQSChanged mQSListener = new OnQSChanged() {
+        @Override
+        public void onQSChanged() {
+            // processQSChangedLocked();
+        }
+    };
+
+    public PhoneStatusBarPolicy(Context context, CastController cast, HotspotController hotspot) {
         mContext = context;
         mCast = cast;
-        mSuController = su;
         mHotspot = hotspot;
         mService = (StatusBarManager)context.getSystemService(Context.STATUS_BAR_SERVICE);
+
         // listen for broadcasts
         IntentFilter filter = new IntentFilter();
         filter.addAction(AlarmManager.ACTION_NEXT_ALARM_CLOCK_CHANGED);
@@ -195,36 +211,25 @@ public class PhoneStatusBarPolicy {
         mService.setIconVisibility(SLOT_CAST, false);
         mCast.addCallback(mCastCallback);
 
-        // su
-        mService.setIcon(SLOT_SU, R.drawable.stat_sys_su, 0, null);
-        mService.setIconVisibility(SLOT_SU, false);
-        mSuController.addCallback(mSuCallback);
-
-        mIconObserver.onChange(true);
+        mAlarmIconObserver.onChange(true);
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.SHOW_ALARM_ICON),
-
-                false, mIconObserver);
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.SHOW_SU_ICON),
-                false, mIconObserver);
+                false, mAlarmIconObserver);
 
         // hotspot
         mService.setIcon(SLOT_HOTSPOT, R.drawable.stat_sys_hotspot, 0, null);
         mService.setIconVisibility(SLOT_HOTSPOT, mHotspot.isHotspotEnabled());
         mHotspot.addCallback(mHotspotCallback);
 
+        QSUtils.registerObserverForQSChanges(mContext, mQSListener);
     }
 
-    private final ContentObserver mIconObserver = new ContentObserver(null) {
+    private ContentObserver mAlarmIconObserver = new ContentObserver(null) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             mAlarmIconVisible = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.SHOW_ALARM_ICON, 1) == 1;
-            mSuIconVisible = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.SHOW_SU_ICON, 1) == 1;
             updateAlarm();
-            updateSu();
         }
 
         @Override
@@ -316,6 +321,7 @@ public class PhoneStatusBarPolicy {
         boolean zenVisible = false;
         int zenIconId = 0;
         String zenDescription = null;
+        boolean zenModeNoInterruptions = false;
 
         boolean volumeVisible = false;
         int volumeIconId = 0;
@@ -323,6 +329,7 @@ public class PhoneStatusBarPolicy {
 
         if (mZen == Global.ZEN_MODE_NO_INTERRUPTIONS) {
             zenVisible = true;
+            zenModeNoInterruptions = true;
             zenIconId = R.drawable.stat_sys_zen_none;
             zenDescription = mContext.getString(R.string.zen_no_interruptions);
         } else if (mZen == Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS) {
@@ -331,11 +338,16 @@ public class PhoneStatusBarPolicy {
             zenDescription = mContext.getString(R.string.zen_important_interruptions);
         }
 
-        if (mZen != Global.ZEN_MODE_NO_INTERRUPTIONS &&
-                audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
+        if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
             volumeVisible = true;
             volumeIconId = R.drawable.stat_sys_ringer_vibrate;
             volumeDescription = mContext.getString(R.string.accessibility_ringer_vibrate);
+        }
+
+        if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT) {
+            volumeVisible = true;
+            volumeIconId = R.drawable.stat_sys_ringer_silent;
+            volumeDescription = mContext.getString(R.string.accessibility_ringer_silent);
         }
 
         if (zenVisible) {
@@ -344,6 +356,10 @@ public class PhoneStatusBarPolicy {
         if (zenVisible != mZenVisible) {
             mService.setIconVisibility(SLOT_ZEN, zenVisible);
             mZenVisible = zenVisible;
+        }
+        // overrules volume icon
+        if (zenModeNoInterruptions) {
+            volumeVisible = false;
         }
 
         if (volumeVisible) {
@@ -411,9 +427,6 @@ public class PhoneStatusBarPolicy {
         mService.setIconVisibility(SLOT_CAST, isCasting);
     }
 
-    private void updateSu() {
-        mService.setIconVisibility(SLOT_SU, mSuIconVisible && mSuController.hasActiveSessions());
-    }
     private final HotspotController.Callback mHotspotCallback = new HotspotController.Callback() {
         @Override
         public void onHotspotChanged(boolean enabled) {
@@ -428,11 +441,17 @@ public class PhoneStatusBarPolicy {
         }
     };
 
-    private final SuController.Callback mSuCallback = new SuController.Callback() {
-        @Override
-        public void onSuSessionsChanged() {
-            updateSu();
-        }
-    };
+    private PendingIntent getCustomTilePendingIntent(String pkg) {
+        Intent i = new Intent(Intent.ACTION_MAIN);
+        i.setPackage(pkg);
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return PendingIntent.getActivity(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT, null);
+    }
 
+    private Intent getCustomTileSettingsIntent() {
+        Intent i = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return i;
+    }
 }
