@@ -4109,6 +4109,62 @@ public final class Settings {
          * @hide
          */
         public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
+
+         /**
+         * Whether or not to use the app sidebar
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_ENABLED = "app_sidebar_enabled";
+
+        /**
+         * User defined transparency level for sidebar
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_TRANSPARENCY = "app_sidebar_transparency";
+
+        /**
+         * Disable text labels for app sidebar items
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_DISABLE_LABELS = "app_sidebar_disable_labels";
+
+        /**
+         * Position of app sidebar
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_POSITION = "app_sidebar_position";
+
+        /**
+         * Width of the appbar trigger
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_TRIGGER_WIDTH = "app_sidebar_trigger_width";
+
+         /**
+          * Position of appbar sidebar
+          *
+          * @hide
+          */
+        public static final String APP_SIDEBAR_TRIGGER_TOP = "app_sidebar_trigger_top";
+
+        /**
+         * Height of the appbar trigger
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_TRIGGER_HEIGHT = "app_sidebar_trigger_height";
+
+        /**
+         * Whether to display the trigger region or not
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_SHOW_TRIGGER = "app_sidebar_show_trigger";
         
         /**
          * Whether to display app circle sidebar

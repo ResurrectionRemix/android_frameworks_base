@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (c) 2015 AICP Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">Maximize</string>
+    <string name="app_float_item_title">Float view</string>
+    <string name="app_stop_item_title">Kill app</string>
+
+    <!-- Power Button for Navbar -->
+    <string name="navbar_power_button">Power button</string>
+
+    <!-- Greeting -->
+    <string name="aicp_label">Welcome to AICP</string>
+
+    <!-- Off/On/Toggle -->
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="toggle">Toggle</string>
+
+    <!-- Dialog Cancel/OK -->
+    <string name="cancel">Cancel</string>
+    <string name="dlg_ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Slim Shortcut Actions -->
+    <string name="shortcut_picker">Slim Shortcuts</string>
+    <string name="shortcut_rotation">Rotation</string>
+    <string name="shortcut_reboot">Reboot</string>
+    <string name="shortcut_recovery">Recovery</string>
+    <string name="shortcut_toggle_title">Action to perform</string>
+
+    <!-- Kill app toast -->
+    <string name="app_killed_message">App Killed</string>
+
+    <!-- mount notifications -->
+    <string name="ext_media_mounted_notification_title">mounted</string>
+    <string name="ext_media_unmounted_notification_title">unmounted</string>
+    <string name="ext_media_unmounted_notification_message">You can safely remove storage.</string>
+    <string name="ext_media_unmount_action">Unmount</string>
+    <string name="ext_media_mount_action">Mount</string>
+    <string name="ext_media_unmounting_notification_title">unmounting\u2026</string>
+    <string name="ext_media_mounting_notification_title">mounting\u2026</string>
+
+    <!-- Additional navring targets -->
+    <string name="navring_action_power_menu">Power Menu</string>
+    <string name="navring_action_last_app">Last app</string>
+    <string name="navring_action_expand_desktop">Expanded desktop</string>
+
+    <string name="gestures_message">Draw your gesture here</string>
+
+    <!-- Battery status in pie controls -->
+    <string name="pie_battery_status_charging">Charging (<xliff:g id="percent">%d</xliff:g>%%)</string>
+    <string name="pie_battery_status_full">Charged</string>
+    <string name="pie_battery_status_discharging"><xliff:g id="percent">%d</xliff:g>%% remaining</string>
+
+    <!-- Phone status in pie controls -->
+    <string name="pie_phone_status_no_service">No service</string>
+    <string name="pie_phone_status_airplane_mode">Airplane mode on</string>
+    <string name="pie_phone_status_emergency_only">Emergency calls only</string>
+
+    <!-- App sidebar -->
+    <string name="default_folder_text">Folder</string>
+    <string name="title_activity_sidebar_configuration">Appbar content setup</string>
+    <string name="action_save">Save</string>
+    <string name="toast_items_saved">Appbar items have been saved.</string>
+    <string name="content_setup_instructions">Add items to the Appbar by long pressing any item on the right and drag it over to the Appbar.\n\nCombine items into folders by droping an item onto any existing item in the Appbar.\n\nTo remove an item simply drag it out of the \@appbar.</string>
+    <string name="content_setup_dismiss">Continue</string>
+    <string name="toast_not_installed">App is not installed</string>
+
+</resources>
