@@ -1064,6 +1064,14 @@ public class LockPatternUtils {
                 Settings.System.HAPTIC_FEEDBACK_ENABLED, 1, UserHandle.USER_CURRENT) != 0;
     }
 
+    public boolean shouldPassToSecurityView(int userId) {
+        return getBoolean(Settings.Secure.LOCK_PASS_TO_SECURITY_VIEW, false, userId);
+    }
+
+    public void setPassToSecurityView(boolean enabled, int userId) {
+        setBoolean(Settings.Secure.LOCK_PASS_TO_SECURITY_VIEW, enabled, userId);
+    }
+
     /**
      * Set and store the lockout deadline, meaning the user can't attempt his/her unlock
      * pattern until the deadline has passed.
