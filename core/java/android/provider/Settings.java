@@ -3685,13 +3685,6 @@ public final class Settings {
          */
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
-         /**
-         * Color of the expanded status bar header background
-         * @hide
-         */
-        public static final String STATUS_BAR_EXPANDED_HEADER_BG_COLOR = "status_bar_expanded_header_bg_color";
-
-
         /**
          *  Enable navigation bar double tap gesture on to put device to sleep
          * @hide

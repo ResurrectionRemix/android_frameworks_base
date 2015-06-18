@@ -31,8 +31,6 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Outline;
 import android.graphics.Rect;
-import android.graphics.Color;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -212,7 +210,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         loadDimens();
         updateVisibilities();
         updateClockScale();
-        updateBackgroundColor();
         updateAvatarScale();
         addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -286,14 +283,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         requestLayout();
     }
 
-    private void updateBackgroundColor() {
-        ContentResolver resolver = mContext.getContentResolver();
-        int backgroundColor = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_EXPANDED_HEADER_BG_COLOR, 0xee263238);
-
-        getBackground().setColorFilter(backgroundColor, Mode.MULTIPLY);
-    }
-    
     private void requestCaptureValues() {
         mCaptureValues = true;
         requestLayout();
@@ -381,7 +370,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         updateAvatarScale();
         updateClockLp();
         requestCaptureValues();
-        updateBackgroundColor();
     }
 
     private void updateHeights() {
@@ -1042,14 +1030,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
 
         @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_EXPANDED_HEADER_BG_COLOR))) {
-                updateBackgroundColor();
-            }
-
-        }
-
         public void update() {
 
             ContentResolver resolver = mContext.getContentResolver();
