@@ -98,7 +98,7 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
      *
      * @return true if attempt to change setting was successful.
      */
-    public boolean setLocationEnabled(int mode) {
+    public boolean setLocationEnabled(boolean enabled) {
         int currentUserId = ActivityManager.getCurrentUser();
         if (isUserLocationRestricted(currentUserId)) {
             return false;
@@ -106,18 +106,48 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
         final ContentResolver cr = mContext.getContentResolver();
         // When enabling location, a user consent dialog will pop up, and the
         // setting won't be fully enabled until the user accepts the agreement.
-        Settings.Secure.putIntForUser(cr, Settings.Secure.LOCATION_MODE, mode,
-                currentUserId);
-        return true;
+        int mode = enabled
+                ? Settings.Secure.LOCATION_MODE_PREVIOUS : Settings.Secure.LOCATION_MODE_OFF;
+        // QuickSettings always runs as the owner, so specifically set the settings
+        // for the current foreground user.
+        return Settings.Secure
+                .putIntForUser(cr, Settings.Secure.LOCATION_MODE, mode, currentUserId);
     }
 
     /**
-     * Returns the current location mode.
+     * Enable or disable location in settings to a specific mode.
+     *
+     * <p>This will attempt to enable/disable every type of location setting
+     * (e.g. high and balanced power).
+     *
+     * <p>If enabling, a user consent dialog will pop up prompting the user to accept.
+     * If the user doesn't accept, network location won't be enabled.
+     *
+     * @return true if attempt to change setting was successful.
      */
-    public int getCurrentMode() {
+    public boolean setLocationMode(int mode) {
         int currentUserId = ActivityManager.getCurrentUser();
+        if (isUserLocationRestricted(currentUserId)) {
+            return false;
+        }
         final ContentResolver cr = mContext.getContentResolver();
-         return Settings.Secure.getIntForUser(cr, Settings.Secure.LOCATION_MODE,
+        // When enabling location, a user consent dialog will pop up, and the
+        // setting won't be fully enabled until the user accepts the agreement.
+        // QuickSettings always runs as the owner, so specifically set the settings
+        // for the current foreground user.
+        return Settings.Secure.putIntForUser(cr, Settings.Secure.LOCATION_MODE, mode, currentUserId);
+    }
+
+    /**
+     * Returns int corresponding to current location mode in settings.
+     */
+    public int getLocationCurrentState() {
+        int currentUserId = ActivityManager.getCurrentUser();
+        if (isUserLocationRestricted(currentUserId)) {
+            return Settings.Secure.LOCATION_MODE_OFF;
+        }
+        final ContentResolver cr = mContext.getContentResolver();
+        return Settings.Secure.getIntForUser(cr, Settings.Secure.LOCATION_MODE,
                 Settings.Secure.LOCATION_MODE_OFF, currentUserId);
     }
 
