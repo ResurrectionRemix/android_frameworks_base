@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,4 +124,14 @@ interface IBatteryStats {
     long getAwakeTimePlugged();
     /** @hide **/
     void resetStatistics();
+    /** @hide */
+    byte[] getDockStatistics();
+    /** @hide */
+    ParcelFileDescriptor getDockStatisticsStream();
+    /** @hide **/
+    void setDockBatteryState(int status, int health, int plugType, int level, int temp, int volt);
+    /** @hide **/
+    long getAwakeTimeDockBattery();
+    /** @hide **/
+    long getAwakeTimeDockPlugged();
 }
