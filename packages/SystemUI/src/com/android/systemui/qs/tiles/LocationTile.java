@@ -50,6 +50,11 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
             Settings.Secure.LOCATION_MODE_HIGH_ACCURACY
     };
 
+    private final AnimationIcon mEnable =
+            new AnimationIcon(R.drawable.ic_signal_location_enable_animation);
+    private final AnimationIcon mDisable =
+            new AnimationIcon(R.drawable.ic_signal_location_disable_animation);
+
     private final List<Integer> mLocationList = new ArrayList<>();
     private final LocationController mController;
     private final LocationDetailAdapter mDetailAdapter;
@@ -97,13 +102,19 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleClick() {
-    if (!mController.isAdvancedSettingsEnabled() || mForceToggleState) {
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (!mController.isAdvancedSettingsEnabled() || mForceToggleState) {
             mController.setLocationEnabled(!mController.isLocationEnabled());
-//            mEnable.setAllowAnimation(true);
-//            mDisable.setAllowAnimation(true);
+            if (!mQSCSwitch) {
+                mEnable.setAllowAnimation(true);
+                mDisable.setAllowAnimation(true);
+            }
         } else {
-//            mEnable.setAllowAnimation(false);
-//            mDisable.setAllowAnimation(false);
+            if (!mQSCSwitch) {
+                mEnable.setAllowAnimation(false);
+                mDisable.setAllowAnimation(false);
+            }
             showDetail(true);
         }
 
@@ -118,6 +129,8 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         final int currentState = mController.getLocationCurrentState();
         final boolean locationEnabled = currentState != Settings.Secure.LOCATION_MODE_OFF;
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
 
         // Work around for bug 15916487: don't show location tile on top of lock screen. After the
         // bug is fixed, this should be reverted to only hiding it on secure lock screens:
@@ -125,30 +138,59 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
         state.visible = !mKeyguard.isShowing();
         state.label = mContext.getString(getStateLabelRes(currentState));
 
-        switch (currentState) {
-            case Settings.Secure.LOCATION_MODE_OFF:
-                state.label = mContext.getString(R.string.quick_settings_location_off_label);
-                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_off);
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_off);
-                break;
-            case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
-                state.label = mContext.getString(R.string.quick_settings_location_battery_saving_label);
-                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_battery_saving);
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_battery_saving);
-                break;
-            case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
-                state.label = mContext.getString(R.string.quick_settings_location_gps_only_label);
-                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_gps_only);
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
-                break;
-            case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
-                state.label = mContext.getString(R.string.quick_settings_location_high_accuracy_label);
-                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_high_accuracy);
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
-                break;
-            default:
-                state.label = mContext.getString(R.string.quick_settings_location_label);
-                state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_on);
+        if (mQSCSwitch) {
+            switch (currentState) {
+                case Settings.Secure.LOCATION_MODE_OFF:
+                    state.label = mContext.getString(R.string.quick_settings_location_off_label);
+                    state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_off);
+                    state.icon = ResourceIcon.get(R.drawable.ic_qs_location_off);
+                    break;
+                case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
+                    state.label = mContext.getString(R.string.quick_settings_location_battery_saving_label);
+                    state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_battery_saving);
+                    state.icon = ResourceIcon.get(R.drawable.ic_qs_location_battery_saving);
+                    break;
+                case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
+                    state.label = mContext.getString(R.string.quick_settings_location_gps_only_label);
+                    state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_gps_only);
+                    state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
+                    break;
+                case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
+                    state.label = mContext.getString(R.string.quick_settings_location_high_accuracy_label);
+                    state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_high_accuracy);
+                    state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
+                    break;
+                default:
+                    state.label = mContext.getString(R.string.quick_settings_location_label);
+                    state.contentDescription = mContext.getString(R.string.accessibility_quick_settings_location_on);
+            }
+        } else {
+            switch (currentState) {
+                case Settings.Secure.LOCATION_MODE_OFF:
+                    state.contentDescription = mContext.getString(
+                            R.string.accessibility_quick_settings_location_off);
+                    state.icon = mDisable;
+                    break;
+                case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
+                    state.contentDescription = mContext.getString(
+                            R.string.accessibility_quick_settings_location_battery_saving);
+                    state.icon = ResourceIcon.get(R.drawable.ic_qs_location_battery_saving);
+                    break;
+                case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
+                    state.contentDescription = mContext.getString(
+                            R.string.accessibility_quick_settings_location_gps_only);
+                    state.icon = mEnable;
+                    break;
+                case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
+                    state.contentDescription = mContext.getString(
+                            R.string.accessibility_quick_settings_location_high_accuracy);
+                    state.icon = mEnable;
+                    break;
+                default:
+                    state.contentDescription = mContext.getString(
+                            R.string.accessibility_quick_settings_location_on);
+                    state.icon = mEnable;
+            }
         }
     }
 

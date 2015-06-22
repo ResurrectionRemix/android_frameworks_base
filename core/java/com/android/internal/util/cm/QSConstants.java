@@ -61,6 +61,7 @@ public class QSConstants {
     public static final String TILE_POWER_MENU = "power_menu";
     public static final String TILE_REBOOT = "reboot";
     public static final String TILE_SLIMACTION = "slimaction";
+    public static final String TILE_SYSTEMUI_RESTART = "reboot_systemui";
 
     protected static final ArrayList<String> TILES_AVAILABLE = new ArrayList<String>();
 
@@ -105,5 +106,6 @@ public class QSConstants {
         TILES_AVAILABLE.add(TILE_POWER_MENU);
         TILES_AVAILABLE.add(TILE_REBOOT);
         TILES_AVAILABLE.add(TILE_SLIMACTION);
+        TILES_AVAILABLE.add(TILE_SYSTEMUI_RESTART);
     }
 }

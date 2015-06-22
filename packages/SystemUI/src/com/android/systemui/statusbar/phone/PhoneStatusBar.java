@@ -920,7 +920,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         observer.observe();
 
         // Lastly, call to the icon policy to install/update all the icons.
-        mIconPolicy = new PhoneStatusBarPolicy(mContext, mCastController, mSuController);
+        mIconPolicy = new PhoneStatusBarPolicy(mContext, mCastController, mSuController, mHotspotController);
+
         mSettingsObserver.onChange(false); // set up
 
         mHeadsUpObserver.onChange(true); // set up
@@ -1806,7 +1807,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         lp.packageName = mContext.getPackageName();
         lp.windowAnimations = R.style.Animation_StatusBar_HeadsUp;
 
-        mWindowManager.addView(mHeadsUpNotificationView, lp);
+        if(mHeadsUpNotificationView.getWindowToken() == null) {
+            mWindowManager.addView(mHeadsUpNotificationView, lp);
+        }
     }
 
     private void removeHeadsUpView() {

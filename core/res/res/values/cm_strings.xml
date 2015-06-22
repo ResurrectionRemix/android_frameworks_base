@@ -119,6 +119,8 @@
     <string name="reboot_download">Download</string>
     <!-- Button to soft reboot the device, within the Reboot Options dialog -->
     <string name="reboot_soft">Soft reboot</string>
+    <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+    <string name="reboot_systemui">Restart SystemUI</string>
 
     <!-- Title of dialog to confirm rebooting. -->
     <string name="reboot_title">Reboot</string>

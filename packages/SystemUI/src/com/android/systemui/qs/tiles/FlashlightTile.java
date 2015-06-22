@@ -20,6 +20,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.hardware.TorchManager;
 import android.os.SystemClock;
+import android.provider.Settings;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
@@ -32,10 +33,10 @@ public class FlashlightTile extends QSTile<QSTile.BooleanState> implements
      * still available because it was recently on. */
     private static final long RECENTLY_ON_DURATION_MILLIS = 500;
 
-//    private final AnimationIcon mEnable
-//            = new AnimationIcon(R.drawable.ic_signal_flashlight_enable_animation);
-//    private final AnimationIcon mDisable
-//            = new AnimationIcon(R.drawable.ic_signal_flashlight_disable_animation);
+    private final AnimationIcon mEnable
+            = new AnimationIcon(R.drawable.ic_signal_flashlight_enable_animation);
+    private final AnimationIcon mDisable
+            = new AnimationIcon(R.drawable.ic_signal_flashlight_disable_animation);
     private final TorchManager mTorchManager;
     private long mWasLastOn;
     private boolean mTorchAvailable;
@@ -79,6 +80,8 @@ public class FlashlightTile extends QSTile<QSTile.BooleanState> implements
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         if (state.value) {
             mWasLastOn = SystemClock.uptimeMillis();
         }
@@ -98,8 +101,14 @@ public class FlashlightTile extends QSTile<QSTile.BooleanState> implements
 
         state.visible = mWasLastOn != 0 || mTorchAvailable;
         state.label = mHost.getContext().getString(R.string.quick_settings_flashlight_label);
-        state.icon = ResourceIcon.get(state.value ? R.drawable.ic_qs_flashlight_on
-                : R.drawable.ic_qs_flashlight_off);
+        if (mQSCSwitch) {
+            state.icon = ResourceIcon.get(state.value ? R.drawable.ic_qs_flashlight_on
+                    : R.drawable.ic_qs_flashlight_off);
+        } else {
+            final AnimationIcon icon = state.value ? mEnable : mDisable;
+            icon.setAllowAnimation(arg instanceof UserBoolean && ((UserBoolean) arg).userInitiated);
+            state.icon = icon;
+        }
         int onOrOffId = state.value
                 ? R.string.accessibility_quick_settings_flashlight_on
                 : R.string.accessibility_quick_settings_flashlight_off;

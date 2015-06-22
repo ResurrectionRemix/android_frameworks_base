@@ -30,10 +30,10 @@ import com.android.systemui.statusbar.policy.KeyguardMonitor;
 
 /** Quick settings tile: Hotspot **/
 public class HotspotTile extends QSTile<QSTile.BooleanState> {
-//    private final AnimationIcon mEnable =
-//            new AnimationIcon(R.drawable.ic_hotspot_enable_animation);
-//    private final AnimationIcon mDisable =
-//            new AnimationIcon(R.drawable.ic_hotspot_disable_animation);
+    private final AnimationIcon mEnable =
+            new AnimationIcon(R.drawable.ic_hotspot_enable_animation);
+    private final AnimationIcon mDisable =
+            new AnimationIcon(R.drawable.ic_hotspot_disable_animation);
 
     private static final Intent TETHER_SETTINGS = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.TetherSettings"));
@@ -74,8 +74,12 @@ public class HotspotTile extends QSTile<QSTile.BooleanState> {
     protected void handleClick() {
         final boolean isEnabled = (Boolean) mState.value;
         mController.setHotspotEnabled(!isEnabled);
-//        mEnable.setAllowAnimation(true);
-//        mDisable.setAllowAnimation(true);
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (!mQSCSwitch) {
+            mEnable.setAllowAnimation(true);
+            mDisable.setAllowAnimation(true);
+        }
     }
 
     @Override
@@ -90,16 +94,26 @@ public class HotspotTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         state.visible = mController.isHotspotSupported();
         state.label = mContext.getString(R.string.quick_settings_hotspot_label);
 
         state.value = mController.isHotspotEnabled();
         if (state.visible && state.value) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_hotspot_on);
+            if (mQSCSwitch) {
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_hotspot_on);
+            } else {
+                state.icon = mEnable;
+            }
             state.contentDescription = mContext.getString(
                     R.string.accessibility_quick_settings_hotspot_on);
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_hotspot_off);
+            if (mQSCSwitch) {
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_hotspot_off);
+            } else {
+                state.icon = mDisable;
+            }
             state.contentDescription = mContext.getString(
                     R.string.accessibility_quick_settings_hotspot_off);
         }

@@ -18,6 +18,7 @@
         <item>@string/reboot_soft</item>
         <item>@string/reboot_recovery</item>
         <item>@string/reboot_bootloader</item>
+        <item>@string/reboot_systemui</item>
     </array>
 
     <!-- Do not translate. Defines the shutdown actions passed to the kernel.
@@ -27,6 +28,7 @@
         <item>soft_reboot</item>
         <item>recovery</item>
         <item>bootloader</item>
+        <item>systemui_reboot</item>
      </string-array>
 
     <!-- Do not translate. Defines the mapping of notification package names
