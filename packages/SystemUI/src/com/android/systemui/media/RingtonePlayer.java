@@ -172,11 +172,18 @@ public class RingtonePlayer extends SystemUI {
     };
 
     private Context getContextForUser(UserHandle user) {
+        Context contextForUser = mContext;
+        String pkg = mContext.getPackageName();
         try {
-            return mContext.createPackageContextAsUser(mContext.getPackageName(), 0, user);
+            contextForUser = mContext.createPackageContextAsUser(pkg, 0, user);
         } catch (NameNotFoundException e) {
-            throw new RuntimeException(e);
+            // Shouldn't fail to find the package name for system ui.
+            if (!"com.android.systemui".equals(pkg)) {
+                throw new RuntimeException(e);
+            }
+            if (LOGD) Log.w(TAG, "getContextForUser(): "+pkg+" not found!");
         }
+        return contextForUser;
     }
 
     @Override

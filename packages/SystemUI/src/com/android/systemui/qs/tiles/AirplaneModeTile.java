@@ -31,10 +31,10 @@ import com.android.systemui.qs.QSTile;
 /** Quick settings tile: Airplane mode **/
 public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
 	
-//    private final AnimationIcon mEnable =
-//            new AnimationIcon(R.drawable.ic_signal_airplane_enable_animation);
-//    private final AnimationIcon mDisable =
-//            new AnimationIcon(R.drawable.ic_signal_airplane_disable_animation);
+    private final AnimationIcon mEnable =
+            new AnimationIcon(R.drawable.ic_signal_airplane_enable_animation);
+    private final AnimationIcon mDisable =
+            new AnimationIcon(R.drawable.ic_signal_airplane_disable_animation);
 
     private static final Intent WIRELESS_SETTINGS = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
 
@@ -60,9 +60,13 @@ public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void handleClick() {
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         setEnabled(!mState.value);
-//        mEnable.setAllowAnimation(true);
-//        mDisable.setAllowAnimation(true);
+        if (!mQSCSwitch) {
+            mEnable.setAllowAnimation(true);
+            mDisable.setAllowAnimation(true);
+        }
     }
 
     @Override
@@ -84,17 +88,27 @@ public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         final int value = arg instanceof Integer ? (Integer)arg : mSetting.getValue();
         final boolean airplaneMode = value != 0;
         state.value = airplaneMode;
         state.visible = true;
         state.label = mContext.getString(R.string.quick_settings_airplane_mode_label);
         if (airplaneMode) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_airplane_on);
+            if (mQSCSwitch) {
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_airplane_on);
+            } else {
+                state.icon = mEnable;
+            }
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_airplane_on);
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_airplane_off);
+            if (mQSCSwitch) {
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_airplane_off);
+            } else {
+                state.icon = mDisable;
+            }
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_airplane_off);
         }

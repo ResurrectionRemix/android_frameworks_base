@@ -19,6 +19,7 @@ package com.android.internal.os;
 import android.app.ActivityManagerNative;
 import android.app.ActivityThread;
 import android.app.ApplicationErrorReport;
+import android.app.IActivityManager;
 import android.os.Build;
 import android.os.Debug;
 import android.os.IBinder;
@@ -86,8 +87,11 @@ public class RuntimeInit {
                 }
 
                 // Bring up crash dialog, wait for it to be dismissed
-                ActivityManagerNative.getDefault().handleApplicationCrash(
-                        mApplicationObject, new ApplicationErrorReport.CrashInfo(e));
+                final IActivityManager mgr = ActivityManagerNative.getDefault();
+                if (mgr != null) {
+                    mgr.handleApplicationCrash(
+                            mApplicationObject, new ApplicationErrorReport.CrashInfo(e));
+                }
             } catch (Throwable t2) {
                 try {
                     Clog_e(TAG, "Error reporting crash", t2);

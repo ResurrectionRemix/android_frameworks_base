@@ -29,10 +29,10 @@ import com.android.systemui.qs.UsageTracker;
 public class ColorInversionTile extends QSTile<QSTile.BooleanState> {
     private static final Intent ACCESSIBILITY_SETTINGS = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
 
-//    private final AnimationIcon mEnable
-//            = new AnimationIcon(R.drawable.ic_invert_colors_enable_animation);
-//    private final AnimationIcon mDisable
-//            = new AnimationIcon(R.drawable.ic_invert_colors_disable_animation);
+    private final AnimationIcon mEnable
+            = new AnimationIcon(R.drawable.ic_invert_colors_enable_animation);
+    private final AnimationIcon mDisable
+            = new AnimationIcon(R.drawable.ic_invert_colors_disable_animation);
     private final SecureSetting mSetting;
     private final UsageTracker mUsageTracker;
 
@@ -88,8 +88,12 @@ public class ColorInversionTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleClick() {
         mSetting.setValue(mState.value ? 0 : 1);
-//        mEnable.setAllowAnimation(true);
-//        mDisable.setAllowAnimation(true);
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (!mQSCSwitch) {
+            mEnable.setAllowAnimation(true);
+            mDisable.setAllowAnimation(true);
+        }
     }
 
     @Override
@@ -104,17 +108,27 @@ public class ColorInversionTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         final int value = arg instanceof Integer ? (Integer) arg : mSetting.getValue();
         final boolean enabled = value != 0;
         state.visible = true;
         state.value = enabled;
         state.label = mContext.getString(R.string.quick_settings_inversion_label);
         if (enabled) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_inversion_on);
+            if (mQSCSwitch) {
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_inversion_on);
+            } else {
+                state.icon = mEnable;
+            }
             state.contentDescription = mContext.getString(
                     R.string.accessibility_quick_settings_color_inversion_on);
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_inversion_off);
+            if (mQSCSwitch) {
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_inversion_off);
+            } else {
+                state.icon = mDisable;
+            }
             state.contentDescription = mContext.getString(
                     R.string.accessibility_quick_settings_color_inversion_off);
         }

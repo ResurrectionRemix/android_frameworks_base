@@ -323,6 +323,9 @@ public class ActionHelper {
         } else if (clickAction.equals(ActionConstants.ACTION_TORCH)) {
             resId = systemUiResources.getIdentifier(
                         SYSTEMUI_METADATA_NAME + ":drawable/ic_sysbar_torch", null, null);
+        } else if (clickAction.equals(ActionConstants.ACTION_RESTARTUI)) {
+            resId = systemUiResources.getIdentifier(
+                        SYSTEMUI_METADATA_NAME + ":drawable/ic_qs_systemui_restart", null, null);
         } else {
             resId = systemUiResources.getIdentifier(
                         SYSTEMUI_METADATA_NAME + ":drawable/ic_sysbar_null", null, null);

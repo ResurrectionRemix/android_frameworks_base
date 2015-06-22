@@ -39,6 +39,8 @@
     <string name="quick_settings_brightness">Brightness</string>
     <string name="quick_settings_music_play">Play</string>
     <string name="quick_settings_music_pause">Pause</string>
+    <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
+
     <!-- NavBar tile -->
     <string name="quick_settings_navbar_on">NavBar On</string>
     <string name="quick_settings_navbar_off">NavBar Off</string>
