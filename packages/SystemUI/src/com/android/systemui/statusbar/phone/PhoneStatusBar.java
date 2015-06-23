@@ -653,7 +653,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mLabel.setText(mGreeting);
            }
             mShowLabelTimeout = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_GREETING_TIMEOUT, 400, mCurrentUserId);
+                    Settings.System.STATUS_BAR_GREETING_TIMEOUT, 100, mCurrentUserId);
        }
     }
 
