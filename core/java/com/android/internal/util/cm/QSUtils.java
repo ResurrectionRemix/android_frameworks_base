@@ -123,9 +123,6 @@ public class QSUtils {
                 case QSConstants.TILE_COMPASS:
                     removeTile = !deviceSupportsCompass(context);
                     break;
-                case QSConstants.DYNAMIC_TILE_SU:
-                    removeTile = !supportsRootAccess();
-                    break;
             }
             if (removeTile) {
                 iterator.remove();
