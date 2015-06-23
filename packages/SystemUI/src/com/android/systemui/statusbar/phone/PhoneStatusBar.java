@@ -4263,6 +4263,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCenterClockLayout.setVisibility(View.INVISIBLE);
             mNotificationIconArea.setVisibility(View.INVISIBLE);
             mSystemIconArea.setVisibility(View.INVISIBLE);
+            mLabel.setVisibility(View.INVISIBLE);
+            mCarrierLabel.setVisibility(View.INVISIBLE);
         }
     }
 
