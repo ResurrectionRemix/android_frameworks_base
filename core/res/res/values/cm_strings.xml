@@ -42,6 +42,10 @@
     <!-- label for item that screenshots in phone options dialog -->
     <string name="global_action_screenshot">Screenshot</string>
 
+    <string name="global_action_screenrecord">Screenrecord</string>
+    <!-- label for item that torch in power menu options dialog -->
+    <string name="global_action_torch">Flashlight</string>
+
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_receiveProtectedSms">receive protected SMS</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
