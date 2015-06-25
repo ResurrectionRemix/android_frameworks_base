@@ -1453,7 +1453,6 @@
   <java-symbol type="bool" name="config_enableLockScreenTranslucentDecor" />
   <java-symbol type="bool" name="config_enableTranslucentDecor" />
   <java-symbol type="bool" name="config_lidControlsSleep" />
-  <java-symbol type="bool" name="config_legacyGpsHAL" />
   <java-symbol type="bool" name="config_reverseDefaultRotation" />
   <java-symbol type="bool" name="config_showNavigationBar" />
   <java-symbol type="bool" name="config_supportAutoRotation" />
