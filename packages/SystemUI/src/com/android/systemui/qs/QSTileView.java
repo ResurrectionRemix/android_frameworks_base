@@ -132,11 +132,6 @@ public class QSTileView extends ViewGroup {
         CharSequence labelDescription = null;
         boolean mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        if (mLabel != null) {
-            labelText = mLabel.getText();
-            removeView(mLabel);
-            mLabel = null;
-        }
         if (mDualLabel != null) {
             labelText = mDualLabel.getText();
             if (mLabel != null) {
@@ -144,6 +139,11 @@ public class QSTileView extends ViewGroup {
             }
             removeView(mDualLabel);
             mDualLabel = null;
+        }
+        if (mLabel != null) {
+            labelText = mLabel.getText();
+            removeView(mLabel);
+            mLabel = null;
         }
         final Resources res = mContext.getResources();
         updateColors();
