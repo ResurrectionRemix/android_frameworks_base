@@ -124,10 +124,7 @@ public class DisplayMetrics {
     @Deprecated
     public static int DENSITY_DEVICE;
 
-    /**
-     * Allow custom density setting
-     * @hide
-     */
+    /** @hide */
     public static int DENSITY_CURRENT;
 
     static {
