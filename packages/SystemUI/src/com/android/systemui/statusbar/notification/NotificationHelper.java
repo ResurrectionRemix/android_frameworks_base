@@ -27,7 +27,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+<<<<<<< HEAD
 import android.content.pm.ResolveInfo;
+=======
+>>>>>>> d0eef58... [1/2] Base: option to launch heads up in floating mode.
 import android.provider.Settings;
 
 import com.android.systemui.R;
@@ -78,14 +81,18 @@ public class NotificationHelper {
             boolean makeFloating = floating
                     // if the notification is from the foreground app, don't open in floating mode
                     && !entry.notification.getPackageName().equals(getForegroundPackageName())
+<<<<<<< HEAD
                     // if user is on default launcher, don't open in floating window
                     && !isUserOnLauncher()
+=======
+>>>>>>> d0eef58... [1/2] Base: option to launch heads up in floating mode.
                     && openInFloatingMode;
 
             intent.makeFloating(makeFloating);
         }
         return intent;
     }
+<<<<<<< HEAD
 
     public boolean isUserOnLauncher() {
         // Get default launcher name
@@ -98,4 +105,6 @@ public class NotificationHelper {
         // compare and return result
         return getForegroundPackageName().equals(currentHomePackage);
     }
+=======
+>>>>>>> d0eef58... [1/2] Base: option to launch heads up in floating mode.
 }
