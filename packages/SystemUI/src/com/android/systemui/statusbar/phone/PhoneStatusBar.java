@@ -922,7 +922,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mCastController, mHotspotController);
-
         mSettingsObserver.onChange(false); // set up
 
         mHeadsUpObserver.onChange(true); // set up
@@ -4294,8 +4293,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mLeftClockLayout.setVisibility(View.INVISIBLE);
             mNotificationIconArea.setVisibility(View.INVISIBLE);
             mSystemIconArea.setVisibility(View.INVISIBLE);
-            mLabel.setVisibility(View.INVISIBLE);
-            mCarrierLabel.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -4329,8 +4326,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             recreateStatusBar();
             observer.update();
             attachPieContainer(isPieEnabled());
-            repositionNavigationBar();
-            checkBarModes();
 
         } else {
             loadDimens();
