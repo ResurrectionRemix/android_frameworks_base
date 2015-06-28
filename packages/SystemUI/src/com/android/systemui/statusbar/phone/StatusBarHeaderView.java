@@ -198,6 +198,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mTime = (TextView) findViewById(R.id.time_view);
         mAmPm = (TextView) findViewById(R.id.am_pm_view);
         mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
+        mMultiUserSwitch.setOnLongClickListener(this);
         mMultiUserAvatar = (ImageView) findViewById(R.id.multi_user_avatar);
         mDateCollapsed = (TextView) findViewById(R.id.date_collapsed);
         mDateExpanded = (TextView) findViewById(R.id.date_expanded);
@@ -650,6 +651,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             startDateLongClickActivity();
         } else if (v == mWeatherContainer) {
             startForecastLongClickActivity();
+        } else if (v == mMultiUserSwitch) {
+            startUserLongClickActivity();
         }
         vibrateheader(20);
         return false;
@@ -676,6 +679,13 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.android.settings",
             "com.android.settings.Settings$BatterySaverSettingsActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
+    private void startUserLongClickActivity() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.android.settings",
+            "com.android.settings.Settings$UserSettingsActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
