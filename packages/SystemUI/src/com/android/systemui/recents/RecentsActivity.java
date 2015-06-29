@@ -39,6 +39,7 @@ import android.view.ViewStub;
 import android.widget.Toast;
 
 import com.android.systemui.R;
+import com.android.systemui.recents.RecentsConfiguration;
 import com.android.systemui.recents.misc.DebugTrigger;
 import com.android.systemui.recents.misc.ReferenceCountedTrigger;
 import com.android.systemui.recents.misc.SystemServicesProxy;
@@ -181,25 +182,6 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         }
     });
 
-    /**
-     * Enable/disable recents search widget.
-     */
-    private boolean isRecentsSearchbarEnabled() {
-        boolean recentsSearchbarEnabled = Settings.System.getIntForUser(
-            getContentResolver(), Settings.System.RECENTS_SEARCH_BAR,
-                1, UserHandle.USER_CURRENT) == 1;
-
-        // Update search bar space height
-        Resources res = getResources();
-        if (!recentsSearchbarEnabled) {
-            RecentsConfiguration.searchBarSpaceHeightPx = 0;
-        } else {
-            RecentsConfiguration.searchBarSpaceHeightPx =
-                res.getDimensionPixelSize(R.dimen.recents_search_bar_space_height);
-        }
-        return recentsSearchbarEnabled;
-    }
-
     /** Updates the set of recent tasks */
     void updateRecentsTasks(Intent launchIntent) {
         // If AlternateRecentsComponent has preloaded a load plan, then use that to prevent
@@ -277,10 +259,18 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                 mEmptyView.setOnClickListener(null);
             }
             findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
+            boolean showSearchBar = Settings.System.getInt(getContentResolver(),
+                       Settings.System.RECENTS_SEARCH_BAR, 1) == 1;
             if (mRecentsView.hasSearchBar()) {
-                mRecentsView.setSearchBarVisibility(isRecentsSearchbarEnabled() ? View.VISIBLE : View.GONE);
+                if (showSearchBar) {
+                    mRecentsView.setSearchBarVisibility(View.VISIBLE);
+                } else {
+                    mRecentsView.setSearchBarVisibility(View.GONE);
+                }
             } else {
-                addSearchBarAppWidgetView();
+                if (showSearchBar) {
+                    addSearchBarAppWidgetView();
+                }
             }
         }
 

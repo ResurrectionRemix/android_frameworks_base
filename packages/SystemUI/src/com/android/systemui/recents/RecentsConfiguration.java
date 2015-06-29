@@ -316,7 +316,7 @@ public class RecentsConfiguration {
 
     private void updateShowSearch(Context context) {
         boolean showSearchBar = Settings.System.getInt(context.getContentResolver(),
-                Settings.System.RECENTS_SHOW_SEARCH_BAR, 1) == 1;
+                Settings.System.RECENTS_SEARCH_BAR, 1) == 1;
         searchBarSpaceHeightPx = showSearchBar ? context.getResources().getDimensionPixelSize(
                 R.dimen.recents_search_bar_space_height): 0;
     }
