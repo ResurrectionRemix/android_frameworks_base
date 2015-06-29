@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2010 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Heads up -->
+    <string name="heads_up_snooze_message">Всплывающие уведомления отключены на <xliff:g id="number">%d</xliff:g> минут.</string>
+    <string name="heads_up_snooze_button_title">Отложить</string>
+    <string name="notification_inspect_heads_up_title_enabled">Включить всплывающие уведомления для следующих программ</string>
+    <string name="notification_inspect_heads_up_title_disabled">Отключить всплывающие уведомления для следующих программ</string>
+    <string name="gestures_message">Нарисуйте ваш жест здесь</string>
+
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">Развернуть</string>
+    <string name="app_float_item_title">В плавающем окне</string>
+    <string name="app_stop_item_title">Закрыть приложение</string>
+    <!-- Quick settings -->
+    <string name="quick_settings_battery_saver">Энергосбережение</string>
+    <string name="quick_settings_screen_off">Выкл. экран</string>
+    <string name="quick_settings_expanded_desktop">Расширенный</string>
+    <string name="quick_settings_expanded_desktop_off">Обычный</string>
+    <string name="quick_settings_battery_saver_off">Энергосбережение выкл</string>
+    <string name="quick_settings_screenshot">Скриншот</string>
+    <string name="quick_settings_sync">Синхронизация</string>
+    <string name="quick_settings_sync_off">Синхронизация выкл</string>
+    <string name="quick_settings_brightness">Яркость</string>
+    <string name="quick_settings_music_play">Играть</string>
+    <string name="quick_settings_music_pause">Пауза</string>
+    <string name="quick_settings_systemui_restart_label">Перезапуск интерфейса</string>
+
+    <!-- NavBar tile -->
+    <string name="quick_settings_navbar_on">Панель навигации вкл.</string>
+    <string name="quick_settings_navbar_off">Панель навигации выкл.</string>
+
+    <!-- App Circle Bar tile -->
+    <string name="quick_settings_appcirclebar_on">Круг приложений включен</string>
+    <string name="quick_settings_appcirclebar_off">Круг приложений выключен</string>
+
+    <string name="quick_settings_doze">Активный экран</string>
+    <string name="quick_settings_doze_off">Активный экран выкл</string>
+
+    <!-- Power Button for Navbar -->
+    <string name="navbar_power_button">Кнопка питания</string>
+    <!-- Greeting -->
+    <string name="welcome_label">Привет, МИР!</string>
+    <!-- Battery status in pie controls -->
+    <string name="pie_battery_status_charging">Заряжается (<xliff:g id="percent">%d</xliff:g>%%)</string>
+    <string name="pie_battery_status_full">Заряжено</string>
+    <string name="pie_battery_status_discharging"><xliff:g id="percent">%d</xliff:g>%% осталось</string>
+
+    <!-- Phone status in pie controls -->
+    <string name="pie_phone_status_no_service">Вне зоны обслуживания</string>
+    <string name="pie_phone_status_airplane_mode">Включен режим полета</string>
+    <string name="pie_phone_status_emergency_only">Только экстренные вызовы</string>
+    <!-- Off/On/Toggle -->
+    <string name="off">Выкл.</string>
+    <string name="on">Вкл.</string>
+    <string name="toggle">Переключить</string>
+
+    <!-- Dialog Cancel/OK -->
+    <string name="cancel">Отмена</string>
+    <string name="dlg_ok">Ok</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <!-- Slim Shortcut Actions -->
+    <string name="shortcut_picker">Ярлыки</string>
+    <string name="shortcut_rotation">Автоповорот</string>
+    <string name="shortcut_reboot">Перезагрузка</string>
+    <string name="shortcut_recovery">Режим восстановления</string>
+    <string name="shortcut_toggle_title">Действие для выполнения</string>
+    <!-- Power menu -->
+    <string name="quick_settings_power_menu_label">Меню питания</string>
+
+    <!-- Kill app toast -->
+    <string name="app_killed_message">Приложение закрыто</string>
+
+    <!-- Title shown in recents popup for showing app in floating mode -->
+    <string name="status_bar_recent_floating_item_title">Открыть в плавающем окне</string>
+
+    <!-- Slim Action floats tile -->
+    <string name="quick_settings_slim_floats_on">Режим плавающих окон включен</string>
+    <string name="quick_settings_slim_floats_off">Режим плавающих окон выключен</string>
+</resources>
+
