@@ -2276,7 +2276,6 @@
     <string-array name="config_auto_perf_activities" translatable="false">
     </string-array>
 
-<<<<<<< HEAD
     <!-- If a dock provides a lid switch, that lid can be removed. This
          setting is used to determine, whether lidOpenRotation has to be
          applied. -->
