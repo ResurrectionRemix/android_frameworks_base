@@ -86,5 +86,13 @@
     <string name="quick_settings_power_menu_label">Power Menu</string>
 
     <!-- Kill app toast -->
-    <string name="app_killed_message">App Killed</string>  
+    <string name="app_killed_message">App Killed</string>
+
+    <!-- Title shown in recents popup for showing app in floating mode -->
+    <string name="status_bar_recent_floating_item_title">Floating mode</string>  
+    
+    <!-- Slim Action floats tile -->
+    <string name="quick_settings_slim_floats_on">Slim Floats Enabled</string>
+    <string name="quick_settings_slim_floats_off">Slim Floats Disabled</string>
+
 </resources>

@@ -96,4 +96,29 @@
   <java-symbol type="anim" name="recent_screen_enter_left" />
   <java-symbol type="anim" name="recent_screen_fade_out" />
 
+  <!-- Floating Window -->
+  <java-symbol type="drawable" name="ic_floating_window_close" />
+  <java-symbol type="drawable" name="ic_floating_window_max" />
+  <java-symbol type="drawable" name="ic_floating_window_min" />
+  <java-symbol type="drawable" name="ic_floating_window_more" />
+  <java-symbol type="id" name="floating_window_background" />
+  <java-symbol type="id" name="floating_window_titlebar" />
+  <java-symbol type="id" name="floating_window_close" />
+  <java-symbol type="id" name="floating_window_max" />
+  <java-symbol type="id" name="floating_window_min" />
+  <java-symbol type="id" name="floating_window_more" />
+  <java-symbol type="layout" name="floating_window_layout" />
+  <java-symbol type="string" name="floating_window_snap_top"/>
+  <java-symbol type="string" name="floating_window_snap_bottom"/>
+  <java-symbol type="string" name="floating_window_snap_left"/>
+  <java-symbol type="string" name="floating_window_snap_right"/>
+  <java-symbol type="string" name="floating_window_minimize"/>
+
+  <!--Setting confirmation dialog-->
+  <java-symbol type="id" name="setting_confirmation_dialog_visual_hint" />
+  <java-symbol type="layout" name="setting_confirmation_dialog" />
+  <java-symbol type="string" name="setting_confirmation_ask_me_later" />
+  <java-symbol type="string" name="setting_confirmation_yes" />
+  <java-symbol type="string" name="setting_confirmation_no" />
+
 </resources>

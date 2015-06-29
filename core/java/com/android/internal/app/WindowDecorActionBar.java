@@ -28,6 +28,8 @@ import com.android.internal.view.menu.SubMenuBuilder;
 import com.android.internal.widget.ActionBarContainer;
 import com.android.internal.widget.ActionBarContextView;
 import com.android.internal.widget.ActionBarOverlayLayout;
+import com.android.internal.widget.ActionBarView;
+import com.android.internal.widget.FloatingWindowView;
 import com.android.internal.widget.DecorToolbar;
 import com.android.internal.widget.ScrollingTabContainerView;
 
@@ -43,6 +45,13 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.ActionMode;
@@ -56,6 +65,9 @@ import android.view.Window;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AnimationUtils;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+
+import com.android.internal.util.aicp.ColorUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -78,6 +90,7 @@ public class WindowDecorActionBar extends ActionBar implements
 
     private ActionBarOverlayLayout mOverlayLayout;
     private ActionBarContainer mContainerView;
+    private ActionBarView mActionView;    
     private DecorToolbar mDecorToolbar;
     private ActionBarContextView mContextView;
     private ActionBarContainer mSplitView;
@@ -119,6 +132,8 @@ public class WindowDecorActionBar extends ActionBar implements
     private Animator mCurrentShowAnim;
     private boolean mShowHideAnimationEnabled;
     boolean mHideOnContentScroll;
+
+    private FloatingWindowView mFloatingWindowView;
 
     final AnimatorListener mHideListener = new AnimatorListenerAdapter() {
         @Override
@@ -455,13 +470,81 @@ public class WindowDecorActionBar extends ActionBar implements
         mDecorToolbar.setDisplayOptions((options & mask) | (current & ~mask));
     }
 
+    /**
+     * @hide
+     */
+    public void changeColorFromActionBar(Drawable drawable) {
+        int textColor = -3;
+        int iconTint = Color.WHITE;
+
+        if (mActionMode != null) {
+            if (drawable == null) {
+                View viewAM = mActionMode.getCustomView();
+                if (viewAM != null) {
+                    drawable = viewAM.getBackground();
+                }
+            }
+        }
+
+        if (mContainerView != null) {
+            if (drawable == null) {
+                drawable = mContainerView.getPrimaryBackground();
+                if (drawable == null) {
+                    drawable = mContainerView.getStackedBackground();
+                    if (drawable == null) {
+                        drawable = mContainerView.getSplitBackground();
+                    }
+                }
+            }
+        }
+        if (mActionView != null) {
+            TextView titleView = mActionView.getTitleViewActionBar();
+            if (titleView != null) {
+                if (titleView.getVisibility() == View.VISIBLE) {
+                    textColor = titleView.getCurrentTextColor();
+                }
+            }
+            if ((drawable == null) && (textColor != -3)) {
+                drawable = mActionView.getBackgroundActionBar();
+                if (drawable == null) {
+                    View viewAV = getCustomView();
+                    if (viewAV != null) {
+                        drawable = viewAV.getBackground();
+                    }
+                }
+            }
+        }
+
+        int color = ColorUtils.getMainColorFromDrawable(drawable);
+
+        if (textColor != -3) {
+            iconTint = textColor;
+        }
+
+        if (ColorUtils.isBrightColor(color)) {
+            iconTint = Color.BLACK;
+        }
+
+        if (color == -3) {
+            iconTint = -3;
+        }
+
+        if (color != -3) {
+            mActivity.changeFloatingWindowColor(color, iconTint);
+        } else {
+            mActivity.changeFloatingWindowColor(Color.TRANSPARENT, iconTint);
+        }
+    }
+
     public void setBackgroundDrawable(Drawable d) {
         mContainerView.setPrimaryBackground(d);
+        changeColorFromActionBar(d);
     }
 
     public void setStackedBackgroundDrawable(Drawable d) {
         mContainerView.setStackedBackground(d);
     }
+
 
     public void setSplitBackgroundDrawable(Drawable d) {
         if (mSplitView != null) {
@@ -685,6 +768,9 @@ public class WindowDecorActionBar extends ActionBar implements
             }
             updateVisibility(false);
         }
+        if (mFloatingWindowView != null) {
+            mActivity.changeFloatingWindowColor(Color.TRANSPARENT, Color.WHITE);
+        }        
     }
 
     public void hideForSystem() {
