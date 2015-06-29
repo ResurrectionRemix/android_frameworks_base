@@ -17,7 +17,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Heads up -->
-    <string name="permlab_changeHeadsUpState">вкл. и выкл. высплывающих сообщений</string>
+    <string name="permlab_changeHeadsUpState">Вкл. и выкл. всплывающих сообщений</string>
     <string name="permdesc_changeHeadsUpState">Разрешает приложению показывать всплывающие уведомления.</string>
     <string name="default_string">По умолчанию</string>
 
