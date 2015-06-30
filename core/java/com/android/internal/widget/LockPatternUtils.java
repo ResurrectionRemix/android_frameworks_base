@@ -335,7 +335,6 @@ public class LockPatternUtils {
         }
     }
 
-
     /**
      * Check to see if a gesture matches the saved gesture.  If no gesture exists,
      * always returns true.
@@ -411,7 +410,6 @@ public class LockPatternUtils {
         return passwordHistory.contains(passwordHashString);
     }
 
-
     /**
      * Check to see if the user has stored a lock gesture.
      * @return Whether a saved gesture exists.
@@ -473,7 +471,6 @@ public class LockPatternUtils {
     public boolean isPatternEverChosen() {
         return getBoolean(PATTERN_EVER_CHOSEN_KEY, false);
     }
-
 
     /**
      * Return true if the user has ever chosen a gesture.  This is true even if the gesture is
@@ -564,7 +561,7 @@ public class LockPatternUtils {
                 userHandle);
         setLockPatternEnabled(false, userHandle);
         saveLockGesture(null);
-        setLockGestureEnabled(false, userHandle);
+        setLockGestureEnabled(false);
         saveLockPattern(null, isFallback, false, userHandle);
         setLong(PASSWORD_TYPE_KEY, DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED, userHandle);
         setLong(PASSWORD_TYPE_ALTERNATE_KEY, DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED,
@@ -1341,7 +1338,6 @@ public class LockPatternUtils {
                         || (usingBiometricWeak(userId) && backupEnabled));
     }
 
-
     /**
      * @return Whether the lock gesture is enabled, or if it is set as a backup for biometric weak
      */
@@ -1451,7 +1447,6 @@ public class LockPatternUtils {
             Log.e(TAG, "Error changing pattern visible state", e);
         }
     }
-
 
     /**
      * Set whether the lock gesture is enabled.
@@ -1811,7 +1806,7 @@ public class LockPatternUtils {
                 || mode == DevicePolicyManager.PASSWORD_QUALITY_COMPLEX;
         final boolean secure =
                 isPattern && isLockPatternEnabled(userId) && savedPatternExists(userId)
-                || isPassword && savedPasswordExists(userId);
+                || isPassword && savedPasswordExists(userId)
                 || isGesture && isLockGestureEnabled() && savedGestureExists();
         return secure;
     }
