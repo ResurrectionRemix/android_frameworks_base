@@ -1731,8 +1731,8 @@ public class LockPatternUtils {
                 || mode == DevicePolicyManager.PASSWORD_QUALITY_COMPLEX;
         final boolean secure =
                 isPattern && isLockPatternEnabled(userId) && savedPatternExists(userId)
-                || isGesture && isLockGestureEnabled() && savedGestureExists();
                 || isPassword && savedPasswordExists(userId);
+                || isGesture && isLockGestureEnabled() && savedGestureExists();
         return secure;
     }
 
