@@ -36,6 +36,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,6 +58,7 @@ public class TaskViewHeader extends FrameLayout {
 
     // Header views
     ImageView mDismissButton;
+    ImageView mPinButton;
     ImageView mApplicationIcon;
     TextView mActivityDescription;
 
@@ -66,6 +68,8 @@ public class TaskViewHeader extends FrameLayout {
     int mBackgroundColor;
     Drawable mLightDismissDrawable;
     Drawable mDarkDismissDrawable;
+    Drawable mLightPinDrawable;
+    Drawable mDarkPinDrawable;
     RippleDrawable mBackground;
     GradientDrawable mBackgroundColorDrawable;
     AnimatorSet mFocusAnimator;
@@ -109,6 +113,10 @@ public class TaskViewHeader extends FrameLayout {
         mDismissContentDescription =
                 res.getString(R.string.accessibility_recents_item_will_be_dismissed);
 
+        // Load the screen pinning resources
+        mLightPinDrawable = res.getDrawable(R.drawable.ic_pin);
+        mDarkPinDrawable = res.getDrawable(R.drawable.ic_pin_dark);
+
         // Configure the highlight paint
         if (sHighlightPaint == null) {
             sHighlightPaint = new Paint();
@@ -134,6 +142,7 @@ public class TaskViewHeader extends FrameLayout {
         mApplicationIcon = (ImageView) findViewById(R.id.application_icon);
         mActivityDescription = (TextView) findViewById(R.id.activity_description);
         mDismissButton = (ImageView) findViewById(R.id.dismiss_task);
+        mPinButton = (ImageView) findViewById(R.id.lock_to_app_fab);
 
         // Hide the backgrounds if they are ripple drawables
         if (!Constants.DebugFlags.App.EnableTaskFiltering) {
@@ -210,6 +219,8 @@ public class TaskViewHeader extends FrameLayout {
         mCurrentPrimaryColorIsDark = t.useLightOnPrimaryColor;
         mActivityDescription.setTextColor(t.useLightOnPrimaryColor ?
                 mConfig.taskBarViewLightTextColor : mConfig.taskBarViewDarkTextColor);
+        mPinButton.setImageDrawable(t.useLightOnPrimaryColor ?
+                mLightPinDrawable : mDarkPinDrawable);
         mDismissButton.setImageDrawable(t.useLightOnPrimaryColor ?
                 mLightDismissDrawable : mDarkDismissDrawable);
         mDismissButton.setContentDescription(String.format(mDismissContentDescription,
@@ -233,6 +244,18 @@ public class TaskViewHeader extends FrameLayout {
                     .withLayer()
                     .start();
         }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.LOCK_TO_APP_ENABLED, 1) != 0) {
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.animate().cancel();
+            mPinButton.animate()
+                    .alpha(0f)
+                    .setStartDelay(0)
+                    .setInterpolator(mConfig.fastOutSlowInInterpolator)
+                    .setDuration(mConfig.taskViewExitToAppDuration)
+                    .withLayer()
+                    .start();
+        }
     }
 
     /** Animates this task bar if the user does not interact with the stack after a certain time. */
@@ -241,6 +264,18 @@ public class TaskViewHeader extends FrameLayout {
             mDismissButton.setVisibility(View.VISIBLE);
             mDismissButton.setAlpha(0f);
             mDismissButton.animate()
+                    .alpha(1f)
+                    .setStartDelay(0)
+                    .setInterpolator(mConfig.fastOutLinearInInterpolator)
+                    .setDuration(mConfig.taskViewEnterFromAppDuration)
+                    .withLayer()
+                    .start();
+        }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.LOCK_TO_APP_ENABLED, 1) != 0) {
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.setAlpha(0f);
+            mPinButton.animate()
                     .alpha(1f)
                     .setStartDelay(0)
                     .setInterpolator(mConfig.fastOutLinearInInterpolator)
@@ -257,11 +292,19 @@ public class TaskViewHeader extends FrameLayout {
             mDismissButton.setVisibility(View.VISIBLE);
             mDismissButton.setAlpha(1f);
         }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.LOCK_TO_APP_ENABLED, 1) != 0) {
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.animate().cancel();
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.setAlpha(1f);
+        }
     }
 
     /** Resets the state tracking that the user has not interacted with the stack after a certain time. */
     void resetNoUserInteractionState() {
         mDismissButton.setVisibility(View.INVISIBLE);
+        mPinButton.setVisibility(View.INVISIBLE);
     }
 
     @Override
