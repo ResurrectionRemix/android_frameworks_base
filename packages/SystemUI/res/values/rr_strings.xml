@@ -95,4 +95,6 @@
     <string name="quick_settings_slim_floats_on">Slim Floats Enabled</string>
     <string name="quick_settings_slim_floats_off">Slim Floats Disabled</string>
 
+    <!-- Battery Saver Dimss -->
+    <string name="battery_saver_dismiss_title">Dismiss</string>
 </resources>

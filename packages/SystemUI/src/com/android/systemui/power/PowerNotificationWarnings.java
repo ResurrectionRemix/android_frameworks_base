@@ -181,7 +181,6 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                 .setContentTitle(mContext.getString(R.string.battery_low_title))
                 .setContentText(mContext.getString(textRes, percentage))
                 .setOnlyAlertOnce(true)
-                .setDeleteIntent(pendingBroadcast(ACTION_DISMISSED_WARNING))
                 .setPriority(Notification.PRIORITY_MAX)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setColor(mContext.getResources().getColor(
@@ -195,6 +194,7 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                     pendingBroadcast(ACTION_START_SAVER));
         } else {
             addStopSaverAction(nb);
+            addDismissAction(nb);
         }
         if (mPlaySound) {
             attachLowBatterySound(nb);
@@ -212,12 +212,12 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                 .setSmallIcon(R.drawable.ic_power_saver)
                 .setContentTitle(mContext.getString(R.string.battery_saver_notification_title))
                 .setContentText(mContext.getString(R.string.battery_saver_notification_text))
-                .setOngoing(true)
                 .setShowWhen(false)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setColor(mContext.getResources().getColor(
                         com.android.internal.R.color.battery_saver_mode_color));
         addStopSaverAction(nb);
+        addDismissAction(nb);
         if (hasSaverSettings()) {
             nb.setContentIntent(pendingActivity(mOpenSaverSettings));
         }
@@ -228,6 +228,12 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
         nb.addAction(0,
                 mContext.getString(R.string.battery_saver_notification_action_text),
                 pendingBroadcast(ACTION_STOP_SAVER));
+    }
+
+    private void addDismissAction(Notification.Builder nb) {
+        nb.addAction(0,
+                mContext.getString(R.string.battery_saver_dismiss_title),
+                pendingBroadcast(ACTION_DISMISSED_WARNING));
     }
 
     private void dismissSaverNotification() {
@@ -395,7 +401,7 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                 dismissLowBatteryNotification();
                 setSaverMode(false);
             } else if (action.equals(ACTION_DISMISSED_WARNING)) {
-                dismissLowBatteryWarning();
+                dismissSaverNotification();
             }
         }
     }
