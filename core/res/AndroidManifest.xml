@@ -18,6 +18,7 @@
 */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
     package="android" coreApp="true" android:sharedUserId="android.uid.system"
     android:sharedUserLabel="@string/android_system_label">
 
