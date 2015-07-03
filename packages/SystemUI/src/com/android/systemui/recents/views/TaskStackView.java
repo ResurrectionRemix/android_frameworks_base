@@ -64,6 +64,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         public void onTaskViewClicked(TaskStackView stackView, TaskView tv, TaskStack stack, Task t,
                                       boolean lockToTask);
         public void onTaskViewAppInfoClicked(Task t);
+        public void onTaskFloatClicked(Task t);
         public void onTaskViewDismissed(Task t);
         public void onAllTaskViewsDismissed();
         public void onTaskStackFilterTriggered();
@@ -1127,6 +1128,13 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         }
     }
 
+     @Override
+    public void onTaskFloatClicked(TaskView tv) {
+        if (mCb != null) {
+            mCb.onTaskFloatClicked(tv.getTask());
+        }
+    }
+
     @Override
     public void onTaskViewLongClicked(final TaskView tv) {
         final PopupMenu popup = new PopupMenu(getContext(), tv.mHeaderView.mApplicationIcon);
@@ -1161,6 +1169,9 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
                         break;
                     case R.id.recent_inspect_item:
                         onTaskViewAppInfoClicked(tv);
+                        break;
+                    case R.id.recent_float_mode:
+                        onTaskFloatClicked(tv);
                         break;
                     case R.id.recent_force_stop:
                     {
