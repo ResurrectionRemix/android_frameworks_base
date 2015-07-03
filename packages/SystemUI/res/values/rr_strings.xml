@@ -97,4 +97,7 @@
 
     <!-- Battery Saver Dimss -->
     <string name="battery_saver_dismiss_title">Dismiss</string>
+    
+    <!-- Pie tile -->
+    <string name="quick_settings_pie">Pie</string>
 </resources>

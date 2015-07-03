@@ -36,6 +36,7 @@ public class QSConstants {
     public static final String TILE_ROAMING = "roaming";
     public static final String TILE_DDS = "dds";
     public static final String TILE_APN = "apn";
+    public static final String TILE_PIE = "pie";
     public static final String TILE_PROFILES = "profiles";
     public static final String TILE_PERFORMANCE = "performance";
     public static final String TILE_ADB_NETWORK = "adb_network";
@@ -88,6 +89,7 @@ public class QSConstants {
         STATIC_TILES_AVAILABLE.add(TILE_ROAMING);
         STATIC_TILES_AVAILABLE.add(TILE_DDS);
         STATIC_TILES_AVAILABLE.add(TILE_APN);
+        STATIC_TILES_AVAILABLE.add(TILE_PIE);
         STATIC_TILES_AVAILABLE.add(TILE_PROFILES);
         STATIC_TILES_AVAILABLE.add(TILE_PERFORMANCE);
         STATIC_TILES_AVAILABLE.add(TILE_ADB_NETWORK);
