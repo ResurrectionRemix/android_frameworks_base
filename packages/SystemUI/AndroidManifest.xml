@@ -150,6 +150,9 @@
     <!-- AppSidebar -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
+    <!-- LiveDisplay -->
+    <uses-permission android:name="android.permission.HARDWARE_ABSTRACTION_ACCESS" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
