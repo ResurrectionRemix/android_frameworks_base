@@ -245,7 +245,7 @@ public class TaskViewHeader extends FrameLayout {
                     .start();
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
-                       Settings.System.LOCK_TO_APP_ENABLED, 1) != 0) {
+                       Settings.System.LOCK_TO_APP_ENABLED, 0) != 0) {
             mPinButton.setVisibility(View.VISIBLE);
             mPinButton.animate().cancel();
             mPinButton.animate()
@@ -272,7 +272,7 @@ public class TaskViewHeader extends FrameLayout {
                     .start();
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
-                       Settings.System.LOCK_TO_APP_ENABLED, 1) != 0) {
+                       Settings.System.LOCK_TO_APP_ENABLED, 0) != 0) {
             mPinButton.setVisibility(View.VISIBLE);
             mPinButton.setAlpha(0f);
             mPinButton.animate()
@@ -293,7 +293,7 @@ public class TaskViewHeader extends FrameLayout {
             mDismissButton.setAlpha(1f);
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
-                       Settings.System.LOCK_TO_APP_ENABLED, 1) != 0) {
+                       Settings.System.LOCK_TO_APP_ENABLED, 0) != 0) {
             mPinButton.setVisibility(View.VISIBLE);
             mPinButton.animate().cancel();
             mPinButton.setVisibility(View.VISIBLE);
