@@ -290,7 +290,6 @@ public class KeyguardStatusView extends GridLayout implements
         final Resources res = getContext().getResources();
         View weatherPanel = findViewById(R.id.weather_panel);
         TextView noWeatherInfo = (TextView) findViewById(R.id.no_weather_info_text);
-
         mShowWeather = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER, 0) == 1;
         boolean showLocation = Settings.System.getInt(resolver,
@@ -307,8 +306,27 @@ public class KeyguardStatusView extends GridLayout implements
         int alarmTextAndIconColor = (128 << 24) | (primaryTextColor & 0x00ffffff);
         int defaultIconColor =
                 res.getColor(R.color.keyguard_default_icon_color);
+        int maxAllowedNotifications = 6;
+        int currentVisibleNotifications = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_VISIBLE_NOTIFICATIONS, 0);
+        int hideMode = Settings.System.getInt(resolver,
+                    Settings.System.LOCK_SCREEN_WEATHER_HIDE_PANEL, 0);
+        int numberOfNotificationsToHide = Settings.System.getInt(resolver,
+                       Settings.System.LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS, 4);
+        boolean forceHideByNumberOfNotifications = false;
 
-        mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
+        if (hideMode == 0) {
+            if (currentVisibleNotifications > maxAllowedNotifications) {
+                forceHideByNumberOfNotifications = true;
+            }
+        } else if (hideMode == 1) {
+            if (currentVisibleNotifications >= numberOfNotificationsToHide) {
+                forceHideByNumberOfNotifications = true;
+            }
+        }
+
+        mWeatherView.setVisibility(
+                (mShowWeather && !forceHideByNumberOfNotifications) ? View.VISIBLE : View.GONE);
         if (forceHide) {
             noWeatherInfo.setVisibility(View.VISIBLE);
             weatherPanel.setVisibility(View.GONE);
