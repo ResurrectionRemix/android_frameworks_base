@@ -703,20 +703,6 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
         return mLogo != null;
     }
 
-    /**
-     * @hide
-     */
-    public Drawable getBackgroundActionBar() {
-        return mUpGoerFive.getBackground();
-    }
-
-    /**
-     * @hide
-     */
-    public TextView getTitleViewActionBar() {
-        return mTitleView;
-    }
-
     public void setNavigationMode(int mode) {
         final int oldMode = mNavigationMode;
         if (mode != oldMode) {
@@ -922,14 +908,14 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
 
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         if (widthMode != MeasureSpec.EXACTLY) {
-            //throw new IllegalStateException(getClass().getSimpleName() + " can only be used " +
-            //        "with android:layout_width=\"match_parent\" (or fill_parent)");
+            throw new IllegalStateException(getClass().getSimpleName() + " can only be used " +
+                    "with android:layout_width=\"match_parent\" (or fill_parent)");
         }
 
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         if (heightMode != MeasureSpec.AT_MOST) {
-            //throw new IllegalStateException(getClass().getSimpleName() + " can only be used " +
-            //        "with android:layout_height=\"wrap_content\"");
+            throw new IllegalStateException(getClass().getSimpleName() + " can only be used " +
+                    "with android:layout_height=\"wrap_content\"");
         }
 
         int contentWidth = MeasureSpec.getSize(widthMeasureSpec);

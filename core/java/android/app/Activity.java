@@ -51,6 +51,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -103,12 +104,15 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
+import com.android.internal.util.aicp.ColorUtils;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * An activity is a single, focused thing that the user can do.  Almost all
@@ -856,7 +860,7 @@ public class Activity extends ContextThemeWrapper
     private int mAppFloatViewHeight;
     private boolean mChangedFlags = false;
     private boolean isAlreadyAttachToWindow = false;
-    private boolean mIsFullscreenApp = false;
+    public boolean mIsFullscreenApp = false;
     private ScaleGestureDetector mScaleGestureDetector;
     private FloatingWindowView mFloatingWindowView;
 
@@ -1300,41 +1304,73 @@ public class Activity extends ContextThemeWrapper
             return;
         }
 
+        mWindow.getDecorView().setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+
         FrameLayout decorFloatingView = (FrameLayout) mWindow.peekDecorView().getRootView();
         if (decorFloatingView == null) {
             return;
         }
-
         if (!reload) {
             decorFloatingView.setFitsSystemWindows(true);
-            decorFloatingView.hackTurnOffWindowResizeAnim(true);
             mFloatingWindowView = new FloatingWindowView(this, getActionBarHeight(true));
             decorFloatingView.addView(mFloatingWindowView, -1, FloatingWindowView.getParams());
             decorFloatingView.setTagInternal(android.R.id.extractArea, mFloatingWindowView);
+            changeTitleBarColor();
         } else {
             mFloatingWindowView = (FloatingWindowView) decorFloatingView.getTag(android.R.id.extractArea);
+            changeTitleBarColor();
             decorFloatingView.bringChildToFront(mFloatingWindowView);
         }
-        reloadAppColor(reload);
     }
 
-    private void reloadAppColor(boolean reload) {
-		if (mActionBar != null) {
-			if (reload && mActionBar.isShowing()) {
-				mDecorActionBar.changeColorFromActionBar(null);
-			}
-        }
+    private void changeFloatingWindowColor(int bg_color, int ic_color) {
+        mFloatingWindowView.setFloatingBackgroundColor(bg_color);
+        mFloatingWindowView.setFloatingColorFilter(ic_color);
     }
 
-   /**
-     * @hide
-     */
-    public void changeFloatingWindowColor(int bg_color, int ic_color) {
+
+    private void changeTitleBarColor() {
         if (mFloatingWindowView != null) {
-            mFloatingWindowView.setFloatingBackgroundColor(bg_color);
-            mFloatingWindowView.setFloatingColorFilter(ic_color);
-        }
-	}
+            try {
+                final PackageManager pm = getPackageManager();
+                // Getting current task packagename
+                final ActivityManager am = (ActivityManager) getSystemService(Activity.ACTIVITY_SERVICE);
+                List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+                ActivityManager.RunningTaskInfo task = tasks.get(0); // current task
+                ComponentName rootActivity = task.baseActivity;
+                String appPackageName = rootActivity.getPackageName();
+                // Get theme from packagename
+                final Resources res = pm.getResourcesForApplication(appPackageName);
+                final int[] attrs = new int[] {
+                        res.getIdentifier("colorPrimary", "attr", appPackageName),
+                        android.R.attr.colorPrimary
+                };
+
+                final Resources.Theme theme = res.newTheme();
+                final ComponentName cn = pm.getLaunchIntentForPackage(appPackageName).getComponent();
+                theme.applyStyle(pm.getActivityInfo(cn, 0).theme, false);
+                // Obtain the colorPrimary color from the attrs
+                TypedArray a = theme.obtainStyledAttributes(attrs);
+                // Do something with the color
+                final int colorPrimary = a.getColor(0, a.getColor(1, Color.WHITE));
+                // Make sure you recycle the TypedArray
+                a.recycle();
+                a = null;
+                int iconTint;
+
+                if (ColorUtils.isBrightColor(colorPrimary)) {
+                    iconTint = Color.BLACK;
+                } else {
+                    iconTint = Color.WHITE;
+                }
+                    changeFloatingWindowColor(colorPrimary, iconTint);
+                } catch (final NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+    }
 
     /**
      * Called after {@link #onStop} when the current activity is being
@@ -3450,6 +3486,9 @@ public class Activity extends ContextThemeWrapper
         mLastLayout = layout;
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        mWindow.getDecorView().setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
         mWindow.setAttributes(params);
         mIsFullscreenApp = true;
     }
@@ -3466,6 +3505,9 @@ public class Activity extends ContextThemeWrapper
         params.y = mLastLayout[1];
         params.width = mLastLayout[2];
         params.height = mLastLayout[3];
+        mWindow.getDecorView().setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
         mWindow.setAttributes(params);
         mIsFullscreenApp = false;
     }
