@@ -19,8 +19,12 @@ package com.android.systemui;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.TextView;
+
+import com.android.systemui.R;
 
 import com.android.systemui.statusbar.policy.BatteryController;
 
@@ -38,6 +42,7 @@ public class BatteryLevelTextView extends TextView implements
 
     private int mStyle;
     private int mPercentMode;
+    private int mParentId;
 
     public BatteryLevelTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -73,7 +78,19 @@ public class BatteryLevelTextView extends TextView implements
 
     @Override
     public void onBatteryLevelChanged(int level, boolean pluggedIn, boolean charging) {
-        setText(getResources().getString(R.string.battery_level_template, level));
+        String text = getResources().getString(R.string.battery_level_template, level);
+
+        //if we're in text-only mode, AND we're in the statusbar or expanded statusbar
+        if ((mParentId == R.id.system_icon_area ||
+                mParentId == R.id.system_icons_super_container) &&
+                mStyle == BatteryController.STYLE_TEXT) {
+            //prepend a '+' if the phone is charging
+            if (charging && level < 100) {
+                text = getResources().getString(R.string.battery_level_template_charging, text);
+            }
+        }
+
+        setText(text);
         if (mBatteryCharging != charging) {
             mBatteryCharging = charging;
             updateVisibility();
@@ -96,6 +113,15 @@ public class BatteryLevelTextView extends TextView implements
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
 
+        View parent = null;
+        try {
+            parent = ((View)getParent());
+        } catch (Exception ex) {
+            Log.e("BatteryLevelTextView", ex.toString());
+        }
+
+        mParentId = parent == null ? 0 : parent.getId();
+
         if (mBatteryController != null) {
             mBatteryController.addStateChangedCallback(this);
         }
@@ -107,6 +133,8 @@ public class BatteryLevelTextView extends TextView implements
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mAttached = false;
+
+        mParentId = 0;
 
         if (mBatteryController != null) {
             mBatteryController.removeStateChangedCallback(this);
