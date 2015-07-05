@@ -302,6 +302,11 @@ public class KeyguardStatusView extends GridLayout implements
         final Resources res = getContext().getResources();
         View weatherPanel = findViewById(R.id.weather_panel);
         TextView noWeatherInfo = (TextView) findViewById(R.id.no_weather_info_text);
+        int currentVisibleNotifications = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_VISIBLE_NOTIFICATIONS, 0);
+        int maxAllowedNotifications = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_MAX_NOTIFICATIONS, 6);
+        boolean forceHideByNumberOfNotifications = false;
 
         mShowWeather = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER, 0) == 1;
@@ -313,17 +318,33 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);
         boolean colorizeAllIcons = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_COLORIZE_ALL_ICONS, 0) == 1;
+        int hideMode = Settings.System.getInt(resolver,
+                    Settings.System.LOCK_SCREEN_WEATHER_HIDE_PANEL, 0);
+        int numberOfNotificationsToHide = Settings.System.getInt(resolver,
+                       Settings.System.LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS, 6);                
         int defaultPrimaryTextColor =
                 res.getColor(R.color.keyguard_default_primary_text_color);
         int primaryTextColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_TEXT_COLOR, defaultPrimaryTextColor);
+
+        if (hideMode == 0) {
+            if (currentVisibleNotifications > maxAllowedNotifications) {
+                forceHideByNumberOfNotifications = true;
+            }
+        } else if (hideMode == 1) {
+            if (currentVisibleNotifications >= numberOfNotificationsToHide) {
+                forceHideByNumberOfNotifications = true;
+            }
+        }
+
         int secondaryTextColor = (179 << 24) | (primaryTextColor & 0x00ffffff); // primaryTextColor with a transparency of 70%
         int defaultIconColor =
                 res.getColor(R.color.keyguard_default_icon_color);
         int iconColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, defaultIconColor);
 
-        mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
+        mWeatherView.setVisibility(
+                (mShowWeather && !forceHideByNumberOfNotifications) ? View.VISIBLE : View.GONE);
         if (forceHide) {
             noWeatherInfo.setVisibility(View.VISIBLE);
             weatherPanel.setVisibility(View.GONE);
