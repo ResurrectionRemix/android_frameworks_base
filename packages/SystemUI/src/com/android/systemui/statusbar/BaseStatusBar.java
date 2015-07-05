@@ -2861,9 +2861,10 @@ public abstract class BaseStatusBar extends SystemUI implements
 	if (enabled) {			
            if (mAppSidebar != null) {
             	mWindowManager.removeView(mAppSidebar);
-	    }
-	}
-
+     	    }
+    	}				
+    }
+    
     protected WindowManager.LayoutParams getAppSidebarLayoutParams(int position) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
                 LayoutParams.WRAP_CONTENT,
