@@ -96,7 +96,7 @@ public class FloatingWindowView extends RelativeLayout {
         mTitleBarClose.setImageDrawable(mResource.getDrawable(R.drawable.ic_floating_window_close));
         mTitleBarClose.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                activity.finish();
+                activity.finishAndRemoveTask();
             }
         });
 
