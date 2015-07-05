@@ -1308,9 +1308,14 @@ public class NetworkControllerImpl extends BroadcastReceiver
         }
 
         void updateSubscriptionInfo(SubscriptionInfo info) {
-            String mCustomCarrierLabel = Settings.System.getStringForUser(mContext.getContentResolver(),
-                        Settings.System.CUSTOM_CARRIER_LABEL, UserHandle.USER_CURRENT);
-            CharSequence carrierName = !TextUtils.isEmpty(mCustomCarrierLabel) && !mAirplaneMode ? mCustomCarrierLabel : info.getCarrierName();
+            final boolean showCustomCarrier = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.STATUS_BAR_CARRIER,
+                    0, UserHandle.USER_CURRENT) == 1;
+            final String CustomCarrierLabel = Settings.System.getStringForUser(mContext.getContentResolver(),
+                    Settings.System.CUSTOM_CARRIER_LABEL, UserHandle.USER_CURRENT);
+            CharSequence carrierName = showCustomCarrier && !TextUtils.isEmpty(CustomCarrierLabel) && !mAirplaneMode
+                    ? CustomCarrierLabel
+                    : info.getCarrierName();
             mCurrentState.networkName = carrierName != null ? carrierName.toString() : null;
             notifyListenersIfNecessary();
         }
