@@ -430,7 +430,7 @@
 
         <activity android:name=".statusbar.sidebar.SidebarConfigurationActivity"
                   android:label="@string/title_activity_sidebar_configuration"
-                  android:taskAffinity=""
+                  android:icon="@mipmap/ic_launcher_dreams"
                   android:excludeFromRecents="true"
                   android:exported="true">
             <intent-filter>
