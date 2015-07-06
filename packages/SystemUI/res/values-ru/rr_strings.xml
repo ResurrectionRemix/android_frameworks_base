@@ -91,8 +91,24 @@
     <!-- Title shown in recents popup for showing app in floating mode -->
     <string name="status_bar_recent_floating_item_title">Открыть в плавающем окне</string>
 
+    <!-- App sidebar -->
+    <string name="default_folder_text">Папка</string>
+    <string name="title_activity_sidebar_configuration">Содержиме панели приложений</string>
+    <string name="action_save">Сохранить</string>
+    <string name="toast_items_saved">Элементы \"Панели приложений\" сохранены.</string>
+    <string name="content_setup_instructions">Добавление элементов на \"Панель приложений\" осуществляется долгим нажатием на любой элемент справа и перетаскиванием его на панель\n\nГруппируйте элементы в папки простым перемещением.\n\nЧтобы удалить элемент, просто перетащите его из \"Панели приложений\" в любое место.</string>
+    <string name="content_setup_dismiss">Продолжить</string>
+    <string name="toast_not_installed">Приложение не установлено</string>
+
     <!-- Slim Action floats tile -->
     <string name="quick_settings_slim_floats_on">Режим плавающих окон включен</string>
     <string name="quick_settings_slim_floats_off">Режим плавающих окон выключен</string>
+
+    <!-- Battery Saver Dimss -->
+    <string name="battery_saver_dismiss_title">Отклонить</string>
+
+    <!-- Pie tile -->
+    <string name="quick_settings_pie">Pie</string>
+
 </resources>
 
