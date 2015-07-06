@@ -17,7 +17,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Heads up -->
-    <string name="heads_up_snooze_message">Heads up is disabled for <xliff:g id="number">%d</xliff:g> minutes.</string>
+    <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
     <string name="heads_up_snooze_button_title">Snooze heads up</string>
     <string name="notification_inspect_heads_up_title_enabled">Enable heads up for this application</string>
     <string name="notification_inspect_heads_up_title_disabled">Disable heads up for this application</string>
@@ -51,9 +51,6 @@
     
     <string name="quick_settings_doze">Doze enabled</string>
     <string name="quick_settings_doze_off">Doze disabled</string>
-
-    <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
 
     <!-- Power Button for Navbar -->
     <string name="navbar_power_button">Power button</string>
