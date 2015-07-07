@@ -631,42 +631,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT) == 1;
             mQSCSwitch = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
-
+            mVisualizerEnabled = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 1,
+                    UserHandle.USER_CURRENT) != 0;
             int sidebarPosition = Settings.System.getInt(
                     resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
             if (sidebarPosition != mSidebarPosition) {
                 mSidebarPosition = sidebarPosition;
                 removeSidebarView();
                 addSidebarView();
-            mVisualizerEnabled = Settings.Secure.getIntForUser(resolver,
-                    Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 1,
-                    UserHandle.USER_CURRENT) != 0;
 
-            final int oldClockLocation = mClockLocation;
-            final View oldClockView = mClockView;
-            mClockLocation = Settings.System.getIntForUser(
-                    resolver, Settings.System.STATUS_BAR_CLOCK, Clock.STYLE_CLOCK_RIGHT,
-                    UserHandle.USER_CURRENT);
-            updateClockView();
-
-            // check to see if we need to adjust alpha/visibility
-            // this fixes the bug where if User A has left and User B has center and you switch
-            // from A to B then go into the settings and adjust the clock to left - without this
-            // code block it will adjust the space but be transparent
-            if (oldClockView != mClockView) {
-                // if the new clock position is outside the system icon area, make the alpha
-                // and visibility match the system icon area alpha/visibility
-                if (isClockLocationOutsideSystemIconArea(mClockLocation)) {
-                    mClockView.setAlpha(mSystemIconArea.getAlpha());
-                    mClockView.setVisibility(mSystemIconArea.getVisibility());
-                }
-
-                // if the old clock position it outside the system icon area, make it opaque
-                // and set visibility to gone
-                if (isClockLocationOutsideSystemIconArea(oldClockLocation)) {
-                    oldClockView.setAlpha(1f);
-                    oldClockView.setVisibility(View.GONE);
-                }
             }
 
             if (mNavigationBarView != null) {
