@@ -5821,6 +5821,12 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }    
 
+    /* @hide */
+    @Override
+    public void toggleGlobalMenu() {
+        mPolicy.toggleGlobalMenu();
+    }
+
     // Called by window manager policy. Not exposed externally.
     @Override
     public int getLidState() {
@@ -5869,17 +5875,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
     // Called by window manager policy.  Not exposed externally.
     @Override
-    public void rebootTile() {
-        ShutdownThread.reboot(mContext, null, true);
-    }
-
-    @Override
-    public void toggleGlobalMenu() {
-        mPolicy.toggleGlobalMenu();
-    }
-
-    // Called by window manager policy.  Not exposed externally.
-    @Override
     public void rebootSafeMode(boolean confirm) {
         ShutdownThread.rebootSafeMode(getUiContext(), confirm);
     }
@@ -5888,6 +5883,12 @@ public class WindowManagerService extends IWindowManager.Stub
     @Override
     public void reboot() {
         ShutdownThread.reboot(getUiContext(), null, true);
+    }
+
+    // Called by window manager policy.  Not exposed externally.
+    @Override
+    public void rebootTile() {
+        ShutdownThread.reboot(mContext, null, true);
     }
 
     public void setCurrentProfileIds(final int[] currentProfileIds) {
@@ -11333,11 +11334,6 @@ public class WindowManagerService extends IWindowManager.Stub
     @Override
     public boolean hasPermanentMenuKey() {
         return mPolicy.hasPermanentMenuKey();
-    }
-
-    @Override
-    public boolean needsNavigationBar() {
-        return mPolicy.needsNavigationBar();
     }
 
     @Override
