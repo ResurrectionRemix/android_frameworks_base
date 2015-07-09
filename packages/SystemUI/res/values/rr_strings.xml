@@ -109,7 +109,4 @@
     
     <!-- Pie tile -->
     <string name="quick_settings_pie">Pie</string>
-
-   <!-- Battery level text modification to indicate charging state [CHAR LIMIT=3] -->
-   <string name="battery_level_template_charging"><xliff:g id="level_text" example="45%">+%s</xliff:g></string>
 </resources>
