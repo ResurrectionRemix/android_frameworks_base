@@ -295,8 +295,15 @@ public class GestureAnywhereView extends TriggerOverlayView implements GestureOv
     private boolean launchShortcut(String uri) {
         try {
             Intent intent = Intent.parseUri(uri, 0);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.GESTURE_ANYWHERE_FLOATING, 0) == 1) {
+                intent.setFlags(Intent.FLAG_FLOATING_WINDOW
+                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            } else {
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
             return true;
         } catch (URISyntaxException e) {
             Log.e(TAG, "URISyntaxException: [" + uri + "]");
