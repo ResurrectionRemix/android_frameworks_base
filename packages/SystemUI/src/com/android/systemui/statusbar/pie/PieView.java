@@ -394,7 +394,7 @@ public class PieView extends View implements View.OnTouchListener {
             if (DEBUG) {
                 Slog.d(TAG, "onDraw: (" + canvas.getWidth() + "," + canvas.getHeight() + ")");
             }
-            if (mActivateStartDebug != 0) {
+            if (DEBUG && mActivateStartDebug != 0) {
                 Slog.d(TAG,  "First draw within "
                         + (SystemClock.uptimeMillis() - mActivateStartDebug) + " ms");
             }
@@ -575,7 +575,7 @@ public class PieView extends View implements View.OnTouchListener {
         }
 
         long start = SystemClock.uptimeMillis();
-        if (mActivateStartDebug != 0) {
+        if (DEBUG && mActivateStartDebug != 0) {
             Slog.d(TAG,  "Layout within " + (start - mActivateStartDebug) + " ms");
         }
 
@@ -631,8 +631,9 @@ public class PieView extends View implements View.OnTouchListener {
             }
             mCenter.y = mPadding + (int) ((getHeight() - 2 * mPadding) * mPosition.FACTOR);
         }
-
-        Slog.d(TAG,  "Layout finished within " + (SystemClock.uptimeMillis() - start) + " ms");
+        if(DEBUG) {
+            Slog.d(TAG,  "Layout finished within " + (SystemClock.uptimeMillis() - start) + " ms");
+        }
     }
 
     @Override
@@ -678,8 +679,10 @@ public class PieView extends View implements View.OnTouchListener {
         mBackgroundAnimator.setStartDelay(TIME_FADEIN_DELAY);
         mBackgroundAnimator.start();
 
-        Slog.d(TAG, "activate finished within "
-                + (SystemClock.uptimeMillis() - mActivateStartDebug) + " ms");
+        if(DEBUG) {
+            Slog.d(TAG, "activate finished within "
+                    + (SystemClock.uptimeMillis() - mActivateStartDebug) + " ms");
+        }
     }
 
     public void exit() {
