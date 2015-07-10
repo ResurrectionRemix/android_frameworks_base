@@ -2609,6 +2609,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.System.ENABLE_REVERSE_LOOKUP,
                     R.integer.def_reverse_lookup);
 
+            loadBooleanSetting(stmt, Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION,
+                    R.bool.def_swap_volume_keys_on_rotation);
+
         } finally {
             if (stmt != null) stmt.close();
         }
