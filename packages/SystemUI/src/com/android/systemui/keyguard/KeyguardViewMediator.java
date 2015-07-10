@@ -671,7 +671,7 @@ public class KeyguardViewMediator extends SystemUI {
             // This also "locks" the device when not secure to provide easy access to the
             // camera while preventing unwanted input.
             final boolean lockImmediately =
-                mLockPatternUtils.getPowerButtonInstantlyLocks() || !mLockPatternUtils.isSecure();
+                mLockPatternUtils.getPowerButtonInstantlyLocks() || mLockPatternUtils.usingFingerprint();
 
             notifyScreenOffLocked();
 
