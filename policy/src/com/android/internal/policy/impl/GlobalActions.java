@@ -565,23 +565,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             }
         };
     }
-    private Action getScreenrecordAction() {
-        return new SinglePressAction(com.android.internal.R.drawable.ic_lock_screenrecord,
-                R.string.global_action_screenrecord) {
-
-            public void onPress() {
-                takeScreenrecord();
-            }
-
-            public boolean showDuringKeyguard() {
-                return true;
-            }
-
-            public boolean showBeforeProvisioning() {
-                return false;
-            }
-        };
-    }
 
     private Action getTorchToggleAction() {
         return new SinglePressAction(com.android.internal.R.drawable.ic_lock_torch,

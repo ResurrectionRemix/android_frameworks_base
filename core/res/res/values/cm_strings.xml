@@ -25,7 +25,6 @@
     <!-- label for item that screenshots in phone options dialog -->
     <string name="global_action_screenshot">Screenshot</string>
 
-    <string name="global_action_screenrecord">Screenrecord</string>
     <!-- label for item that torch in power menu options dialog -->
     <string name="global_action_torch">Flashlight</string>
 
