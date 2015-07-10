@@ -234,14 +234,6 @@
     <java-symbol type="drawable" name="ic_lock_user" />
     <java-symbol type="string" name="global_action_current_user" />
     <java-symbol type="dimen" name="global_actions_avatar_size" />
-    <java-symbol type="drawable" name="ic_lock_screenrecord" />
-    <java-symbol type="string" name="global_action_screenrecord" />
-    <java-symbol type="drawable" name="ic_lock_torch" />
-    <java-symbol type="string" name="global_action_torch" />
-
-    <!-- First boot install dialog -->
-    <java-symbol type="string" name="android_installing_apk" />
-    <java-symbol type="string" name="android_installing_title" />
 
     <!-- Theme reset notification -->
     <java-symbol type="string" name="theme_reset_notification_title" />
