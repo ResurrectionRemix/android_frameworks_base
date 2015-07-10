@@ -33,7 +33,7 @@
         android:id="@+id/notification_lights_out"
         android:layout_width="@dimen/status_bar_icon_size"
         android:layout_height="match_parent"
-        android:paddingStart="6dip"
+        android:paddingStart="3dp"
         android:paddingBottom="2dip"
         android:src="@drawable/ic_sysbar_lights_out_dot_small"
         android:scaleType="center"
@@ -43,8 +43,8 @@
     <LinearLayout android:id="@+id/status_bar_contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="6dp"
-        android:paddingEnd="8dp"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
         android:orientation="horizontal"
         >
         <TextView
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingStart="7dp"
+            android:paddingStart="4dp"
             android:visibility="gone"
             android:text="@string/welcome_label"
             android:textAppearance="@style/TextAppearance.StatusBar.CustomLabel"
@@ -86,7 +86,7 @@
                         android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
-                        android:paddingEnd="4dip"
+                        android:paddingEnd="3dp"
                         android:visibility="gone"
                         android:singleLine="true"
                     />
@@ -150,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:singleLine="true"
-                android:paddingStart="7dp"
+                android:paddingStart="3dp"
                 android:gravity="center_vertical|start"
                 />
         </com.android.keyguard.AlphaOptimizedLinearLayout>
