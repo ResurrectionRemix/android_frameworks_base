@@ -3951,6 +3951,12 @@ public final class Settings {
         public static final String GESTURE_ANYWHERE_CHANGED = "gesture_anywhere_changed";
 
         /**
+         * show carrier in statusbae while on lockscreen. The value is
+         * int (1: Show or 0: Hide).
+         */
+        public static final String LOCK_SCREEN_HIDE_CARRIER = "lock_screen_hide_carrier";
+
+        /**
          * Width of the gesture anywhere trigger.
          * @hide
          */
