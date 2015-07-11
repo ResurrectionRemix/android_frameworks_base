@@ -50,6 +50,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.TorchManager;
 import android.Manifest;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
@@ -111,7 +112,7 @@ import static com.android.internal.util.cm.PowerMenuConstants.*;
  * may show depending on whether the keyguard is showing, and whether the device
  * is provisioned.
  */
-class GlobalActions implements DialogInterface.OnDismissListener, DialogInterface.OnClickListener  {
+class GlobalActions implements DialogInterface.OnDismissListener, DialogInterface.OnClickListener {
 
     private static final String TAG = "GlobalActions";
 
@@ -368,6 +369,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             }
 
                         });
+            } else if (GLOBAL_ACTION_KEY_TORCH.equals(actionKey)) {
+                mItems.add(getTorchToggleAction());
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
             }
@@ -559,6 +562,32 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
             public boolean showBeforeProvisioning() {
                 return true;
+            }
+        };
+    }
+
+    private Action getTorchToggleAction() {
+        return new SinglePressAction(com.android.internal.R.drawable.ic_lock_torch,
+                R.string.global_action_torch) {
+
+            public void onPress() {
+                // toggle torch the new way
+                TorchManager torchManager =
+                        (TorchManager) mContext.getSystemService(Context.TORCH_SERVICE);
+                if (!torchManager.isTorchOn()) {
+                    torchManager.setTorchEnabled(true);
+                } else {
+                    torchManager.setTorchEnabled(false);
+                }
+                return;
+            }
+
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            public boolean showBeforeProvisioning() {
+                return false;
             }
         };
     }
