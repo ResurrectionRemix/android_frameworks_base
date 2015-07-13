@@ -22,6 +22,7 @@ import android.app.ActivityOptions;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.ContentResolver;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -354,6 +355,14 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
+        int paddingStatusBar = mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height) / 2;
+
+        final Resources res = getContext().getResources();
+        boolean isLandscape = res.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+        boolean enableMemDisplay = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SYSTEMUI_RECENTS_MEM_DISPLAY, 1) == 1;
+        
         // Get the search bar bounds and measure the search bar layout
         Rect searchBarSpaceBounds = new Rect();
         if (mSearchBar != null) {
@@ -362,16 +371,23 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                     MeasureSpec.makeMeasureSpec(searchBarSpaceBounds.width(), MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(searchBarSpaceBounds.height(), MeasureSpec.EXACTLY));
 
-            boolean enableMemDisplay = Settings.System.getInt(resolver,
-                    Settings.System.SYSTEMUI_RECENTS_MEM_DISPLAY, 1) == 1;
-            int padding = enableMemDisplay
-                    ? searchBarSpaceBounds.height() + 25
-                    : mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_header_height);
-            mMemBar.setPadding(0, padding, 0, 0);
+            int paddingSearchBar = searchBarSpaceBounds.height() + 25;
+
+            if (enableMemDisplay) {
+                if (!isLandscape) {
+                    mMemBar.setPadding(0, paddingSearchBar, 0, 0);
+                } else {
+                    mMemBar.setPadding(0, paddingStatusBar, 0, 0);
+                }
+            }
+        } else {
+            if (enableMemDisplay) {
+                mMemBar.setPadding(0, paddingStatusBar, 0, 0);
+            }
         }
         showMemDisplay();
 
-        boolean showClearAllRecents = Settings.System.getInt(mContext.resolver,
+        boolean showClearAllRecents = Settings.System.getInt(resolver,
                 Settings.System.SHOW_CLEAR_ALL_RECENTS, 1) == 1;
 
         Rect taskStackBounds = new Rect();

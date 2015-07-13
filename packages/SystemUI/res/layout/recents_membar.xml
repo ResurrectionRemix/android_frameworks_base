@@ -38,9 +38,9 @@
     <TextView android:id="@+id/recents_memory_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
+        android:layout_gravity="top|center"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="5dp"
         />
 </LinearLayout>
