@@ -88,8 +88,8 @@
     <!-- Kill app toast -->
     <string name="app_killed_message">Приложение закрыто</string>
 
-    <!-- Title shown in recents popup for showing app in floating mode -->
-    <string name="status_bar_recent_floating_item_title">Открыть в плавающем окне</string>
+    <!-- Title shown in recents popup for showing app launch in floating mode -->
+    <string name="recent_float_mode_title">В плавающем окне</string>
 
     <!-- App sidebar -->
     <string name="default_folder_text">Папка</string>
