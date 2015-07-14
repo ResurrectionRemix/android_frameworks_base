@@ -504,6 +504,7 @@ void JNICameraContext::setCallbackMode(JNIEnv *env, bool installed, bool manualM
 static void android_hardware_Camera_setLongshot(JNIEnv *env, jobject thiz, jboolean enable)
 {
     ALOGV("setLongshot");
+#ifdef QCOM_HARDWARE
     JNICameraContext* context;
     status_t rc;
     sp<Camera> camera = get_native_camera(env, thiz, &context);
@@ -518,11 +519,13 @@ static void android_hardware_Camera_setLongshot(JNIEnv *env, jobject thiz, jbool
     if (rc != NO_ERROR) {
        jniThrowException(env, "java/lang/RuntimeException", "enabling longshot mode failed");
     }
+#endif
 }
 
 static void android_hardware_Camera_sendHistogramData(JNIEnv *env, jobject thiz)
  {
    ALOGV("sendHistogramData" );
+#ifdef QCOM_HARDWARE
    JNICameraContext* context;
    status_t rc;
    sp<Camera> camera = get_native_camera(env, thiz, &context);
@@ -533,10 +536,12 @@ static void android_hardware_Camera_sendHistogramData(JNIEnv *env, jobject thiz)
    if (rc != NO_ERROR) {
       jniThrowException(env, "java/lang/RuntimeException", "send histogram data failed");
     }
+#endif
  }
  static void android_hardware_Camera_setHistogramMode(JNIEnv *env, jobject thiz, jboolean mode)
  {
    ALOGV("setHistogramMode: mode:%d", (int)mode);
+#ifdef QCOM_HARDWARE
    JNICameraContext* context;
    status_t rc;
    sp<Camera> camera = get_native_camera(env, thiz, &context);
@@ -550,6 +555,7 @@ static void android_hardware_Camera_sendHistogramData(JNIEnv *env, jobject thiz)
    if (rc != NO_ERROR) {
       jniThrowException(env, "java/lang/RuntimeException", "set histogram mode failed");
      }
+#endif
  }
 void JNICameraContext::addCallbackBuffer(
         JNIEnv *env, jbyteArray cbb, int msgType)
