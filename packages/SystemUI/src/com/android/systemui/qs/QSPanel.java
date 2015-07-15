@@ -178,7 +178,7 @@ public class QSPanel extends ViewGroup {
         int textColor = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.QS_TEXT_COLOR, 0xffffffff);
         mDetailDoneButton.setText(R.string.quick_settings_done);
-        mDetailSettingsButton.setText(R.string.quick_settings_more_settings);
+        mDetailSettingsButton.setText(R.string.status_bar_settings_settings_button);
         mDetailRemoveButton.setText(R.string.quick_settings_remove);
         if (mQSCSwitch) {
             mDetailDoneButton.setTextColor(textColor);
