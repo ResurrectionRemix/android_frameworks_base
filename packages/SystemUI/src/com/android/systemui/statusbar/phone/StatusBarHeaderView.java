@@ -208,7 +208,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         loadDimens();
         updateVisibilities();
         updateClockScale();
-        updateBackgroundColor();
+        if (mQSCSwitch) {
+            updateBackgroundColor();
+        }
         updateAvatarScale();
         addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -286,11 +288,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         ContentResolver resolver = mContext.getContentResolver();
         int backgroundColor = Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_EXPANDED_HEADER_BG_COLOR, 0xee263238);
-        if (mQSCSwitch) {
-            getBackground().setColorFilter(backgroundColor, Mode.SRC_OVER);
-        } else {
-            getBackground().setColorFilter(0xee263238, Mode.SRC_OVER);
-        }
+        getBackground().setColorFilter(backgroundColor, Mode.SRC_OVER);
     }
 
     private void requestCaptureValues() {
@@ -397,7 +395,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         updateAvatarScale();
         updateClockLp();
         requestCaptureValues();
-        updateBackgroundColor();
+        if (mQSCSwitch) {
+            updateBackgroundColor();
+        }
     }
 
     private void updateHeights() {
