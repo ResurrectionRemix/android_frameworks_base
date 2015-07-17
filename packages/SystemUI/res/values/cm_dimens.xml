@@ -49,7 +49,7 @@
     <dimen name="qs_detail_item_height_twoline">72dp</dimen>
 
     <dimen name="detail_exterior_padding">8dp</dimen>
-
+    
     <dimen name="queue_row_height">52dp</dimen>
     <dimen name="queue_top_shadow">3dp</dimen>
 </resources>
