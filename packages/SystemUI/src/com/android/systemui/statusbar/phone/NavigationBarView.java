@@ -226,14 +226,17 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
 
     public void onNavButtonTouched() {
         mHandler.removeCallbacks(mNavButtonDimmer);
+        final boolean keyguardProbablyEnabled =
+                (mDisabledFlags & View.STATUS_BAR_DISABLE_HOME) != 0;
         if (getNavButtons() != null) {
+            // restore alpha to previous state first
             if (mIsDim || mIsAnimating) {
                 mIsAnimating = false;
                 getNavButtons().clearAnimation();
                 mIsDim = false;
                 getNavButtons().setAlpha(mOriginalAlpha);
             }
-            if (mDimNavButtons) {
+            if (mDimNavButtons && !keyguardProbablyEnabled) {
                 mHandler.postDelayed(mNavButtonDimmer, mDimNavButtonsTimeout);
             }
         }
