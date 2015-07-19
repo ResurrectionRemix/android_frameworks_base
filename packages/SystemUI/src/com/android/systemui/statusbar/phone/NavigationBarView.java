@@ -84,7 +84,6 @@ public class NavigationBarView extends LinearLayout {
     // slippery nav bar when everything is disabled, e.g. during setup
     final static boolean SLIPPERY_WHEN_DISABLED = true;
 
-    private boolean mIsHandlerCallbackActive = false;
 
     final Display mDisplay;
     View mCurrentView = null;
@@ -130,6 +129,7 @@ public class NavigationBarView extends LinearLayout {
     private boolean mDimNavButtonsAnimate;
     private int mDimNavButtonsAnimateDuration;
     private boolean mDimNavButtonsTouchAnywhere;
+    private boolean mIsHandlerCallbackActive = false;
 
     // workaround for LayoutTransitions leaving the nav buttons in a weird state (bug 5549288)
     final static boolean WORKAROUND_INVALID_LAYOUT = true;
