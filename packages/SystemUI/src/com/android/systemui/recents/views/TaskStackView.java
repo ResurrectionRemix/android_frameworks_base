@@ -1236,7 +1236,9 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         tv.announceForAccessibility(getContext().getString(R.string.accessibility_recents_item_dismissed,
                 tv.getTask().activityLabel));
         // Remove the task from the view
-        mStack.removeTask(task);
+        if (task != null) {
+            mStack.removeTask(task);
+        }
         // If the dismissed task was focused, then we should focus the new task in the same index
         if (taskWasFocused) {
             ArrayList<Task> tasks = mStack.getTasks();
