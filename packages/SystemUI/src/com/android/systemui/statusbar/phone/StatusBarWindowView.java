@@ -257,6 +257,7 @@ public class StatusBarWindowView extends FrameLayout {
         if (mDoubleTapToSleepEnabled
                 && ev.getY() < mStatusBarHeaderHeight) {
             if (DEBUG) Log.w(TAG, "logging double tap gesture");
+		}
         final int h = getMeasuredHeight();
         if (mDoubleTapToSleepEnabled) {
             if (mService.getBarState() == StatusBarState.SHADE
@@ -268,8 +269,8 @@ public class StatusBarWindowView extends FrameLayout {
                     ev.getY() > (h - mStatusBarHeaderHeight))) {
                 if (DEBUG) Log.w(TAG, "logging lock screen double tap gesture");
                 mDoubleTapGesture.onTouchEvent(ev);
-            }
-        }
+           		 }
+        	}
         if (mNotificationPanel.isFullyExpanded()
                 && mStackScrollLayout.getVisibility() == View.VISIBLE
                 && mService.getBarState() == StatusBarState.KEYGUARD

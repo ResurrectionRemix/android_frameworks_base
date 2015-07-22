@@ -375,6 +375,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mShowCarrierInPanel = false;
     boolean mExpandedVisible;
 
+    // RR logo
+    private boolean mRRlogo;
+    private ImageView rrLogo;
+
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
     private int mStatusBarHeaderHeight;
@@ -465,6 +469,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.APP_SIDEBAR_POSITION),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_RR_LOGO),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -486,7 +493,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = CMSettings.System.getIntForUser(
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
-
+            mRRlogo = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
+            showRRLogo(mRRlogo);
+            if (oldWeatherState != mWeatherTempState) {
+                updateTempView();
+		}
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
                         CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
@@ -551,6 +563,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mNavigationBarView.setBar(this);
         addNavigationBar();
     }
+
+
+
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
@@ -3472,6 +3487,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     };
+
+    public void showRRLogo(boolean show) {
+        if (mStatusBarView == null) return;
+        ContentResolver resolver = mContext.getContentResolver();
+        rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+        if (rrLogo != null) {
+            rrLogo.setVisibility(show ? (mRRlogo ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+    }
 
     private void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();
