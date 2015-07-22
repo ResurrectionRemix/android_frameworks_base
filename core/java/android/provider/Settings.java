@@ -3513,6 +3513,13 @@ public final class Settings {
         public static final String STATUS_BAR_RR_LOGO = "status_bar_rr_logo";
 
 	/**
+         * Statusbar RR logo color setting
+         * @hide
+         */
+
+	public static final String STATUS_BAR_RR_LOGO_COLOR = "status_bar_rr_logo_color";
+
+	/**
          * show clear all recents button
          *  @hide
          */
@@ -6151,6 +6158,8 @@ public final class Settings {
          * @hide
          */
         public static final String DOZE_ENABLED = "doze_enabled";
+
+
 
         /**
          * The current night mode that has been selected by the user.  Owned
