@@ -45,8 +45,4 @@
     <dimen name="pie_sysinfo_radius">165dp</dimen>
     <dimen name="pie_sysinfo_second_layer_radius">255dp</dimen>
     <dimen name="pie_sysinfo_height">85sp</dimen>
-
-     <!-- The font size for the temperature text -->
-    <dimen name="status_bar_temp_text_size">14sp</dimen>
-
 </resources>
