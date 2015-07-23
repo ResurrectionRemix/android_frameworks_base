@@ -111,10 +111,14 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
 
     @Override
     protected void handleLongClick() {
-        if (mTelephonyManager.getDefault().getPhoneCount() > 1) {
-            mHost.startSettingsActivity(MOBILE_NETWORK_SETTINGS_MSIM);
+        if (mDataController.isMobileDataSupported()) {
+            showDetail(true);
         } else {
-            mHost.startSettingsActivity(MOBILE_NETWORK_SETTINGS);
+            if (mTelephonyManager.getDefault().getPhoneCount() > 1) {
+                mHost.startSettingsActivity(MOBILE_NETWORK_SETTINGS_MSIM);
+            } else {
+                mHost.startSettingsActivity(MOBILE_NETWORK_SETTINGS);
+            }
         }
     }
 
