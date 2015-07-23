@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.Settings;
 import android.os.UserHandle;
@@ -255,6 +256,18 @@ public class CacheController {
                 mKeys.add(key);
             }
             mMemoryCache.put(key, bitmap);
+        }
+    }
+
+    /**
+     * Add the bitmap from Drawable to the LRU cache.
+     */
+    protected void addBitmapDrawableToMemoryCache(String key, BitmapDrawable bitmap) {
+        if (key != null && bitmap != null) {
+            if (key.startsWith(RecentPanelView.TASK_PACKAGE_IDENTIFIER)) {
+                mKeys.add(key);
+            }
+            mMemoryCache.put(key, bitmap.getBitmap());
         }
     }
 
