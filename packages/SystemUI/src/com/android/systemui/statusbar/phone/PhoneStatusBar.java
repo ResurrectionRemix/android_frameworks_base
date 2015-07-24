@@ -635,6 +635,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.Secure.UI_THEME_AUTO_MODE), false, this,
                     UserHandle.USER_ALL);                    
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.QS_NUM_TILE_COLUMNS), false, this,
+                    UserHandle.USER_ALL);
             update();
         }
 
@@ -860,8 +863,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 boolean showIndicators = Settings.System.getIntForUser(
                         mContext.getContentResolver(), Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0, mCurrentUserId) == 1;
                 mNetworkController.setShowIndicators(showIndicators);
+            		}
+
+       		}
+
+            if (mQSPanel != null) {
+                mQSPanel.updateNumColumns();
             }
-       }
     }
 
     private void forceAddNavigationBar() {
