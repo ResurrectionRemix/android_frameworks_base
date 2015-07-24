@@ -649,14 +649,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT) == 1;
             mQSCSwitch = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
-            
+
             final int oldWeatherState = mWeatherTempState;
             mWeatherTempState = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                     UserHandle.USER_CURRENT);
             if (oldWeatherState != mWeatherTempState) {
                 updateWeatherTextState(mWeatherController.getWeatherInfo().temp);
-         
+		}
             mVisualizerEnabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 1,
                     UserHandle.USER_CURRENT) != 0;
@@ -675,7 +675,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mNavigationBarView.setLeftInLandscape(navLeftInLandscape);
 
             }
-            
            // This method reads Settings.Secure.RECENTS_LONG_PRESS_ACTIVITY
             updateCustomRecentsLongPressHandler(false);
 
@@ -683,7 +682,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_CARRIER, 0, mCurrentUserId) == 1;
             showStatusBarCarrierLabel(mShowStatusBarCarrier);
             mShowTaskManager = Settings.System.getIntForUser(resolver,
-                    Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;     
+                    Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
             mLogo = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_LOGO, 0, mCurrentUserId) == 1;
             mLogoColor = Settings.System.getIntForUser(resolver,
