@@ -28,4 +28,10 @@
         <item name="android:textColor">@color/status_bar_temperature_location_text_color</item>
     </style>
 
+    <style name="TextAppearance.StatusBar.WeatherTemp" parent="@*android:style/TextAppearance.StatusBar">
+        <item name="android:textSize">@dimen/status_bar_temp_text_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/status_bar_temp_text_color</item>
+    </style>
+
 </resources>
