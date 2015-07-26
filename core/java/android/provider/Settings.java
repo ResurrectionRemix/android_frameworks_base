@@ -4651,6 +4651,11 @@ public final class Settings {
          * @hide
          */
         public static final String SCREENSHOT_DELAY = "screenshot_delay";
+	/**
+         * Switch for headset icon
+         * @hide
+         */
+        public static final String SHOW_HEADSET_ICON = "show_headset_icon";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
