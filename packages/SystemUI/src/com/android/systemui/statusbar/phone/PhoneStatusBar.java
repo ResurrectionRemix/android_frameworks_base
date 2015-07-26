@@ -355,6 +355,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mShowClock;
     private int mClockLocation;
 
+
     // the icons themselves
     IconMerger mNotificationIcons;
     View mNotificationIconArea;
