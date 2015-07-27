@@ -78,6 +78,7 @@ import com.android.systemui.qs.tiles.AppCircleBarTile;
 import com.android.systemui.qs.tiles.SlimFloatsTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.SlimActionTile;
+import com.android.systemui.qs.tiles.ThemesTile;
 import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.statusbar.CustomTileData;
 import com.android.systemui.statusbar.policy.BluetoothController;
@@ -417,6 +418,8 @@ public class QSTileHost implements QSTile.Host {
                 return new SystemUIRestartTile(this);
             case QSConstants.TILE_SLIM_FLOATS:
                 return new SlimFloatsTile(this);
+            case QSConstants.TILE_THEMES:
+                return new ThemesTile(this);
             default:
                 throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
         }
@@ -517,3 +520,4 @@ public class QSTileHost implements QSTile.Host {
         }
     }
 }
+
