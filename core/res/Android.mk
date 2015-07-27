@@ -20,6 +20,8 @@ LOCAL_NO_STANDARD_LIBRARIES := true
 LOCAL_PACKAGE_NAME := framework-res
 LOCAL_CERTIFICATE := platform
 
+LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
+
 # Tell aapt to create "extending (non-application)" resource IDs,
 # since these resources will be used by many apps.
 LOCAL_AAPT_FLAGS := -x
