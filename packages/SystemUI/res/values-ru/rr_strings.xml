@@ -91,6 +91,9 @@
     <!-- Title shown in recents popup for showing app launch in floating mode -->
     <string name="recent_float_mode_title">В плавающем окне</string>
 
+    <!-- Themes Tile -->
+    <string name="quick_settings_themes">Темы</string>
+
     <!-- App sidebar -->
     <string name="default_folder_text">Папка</string>
     <string name="title_activity_sidebar_configuration">Содержиме панели приложений</string>
