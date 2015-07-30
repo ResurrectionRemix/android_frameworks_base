@@ -343,8 +343,10 @@ public class KeyguardStatusView extends GridLayout implements
         int iconColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, defaultIconColor);
 
-        mWeatherView.setVisibility(
+        if (mWeatherView != null) {
+            mWeatherView.setVisibility(
                 (mShowWeather && !forceHideByNumberOfNotifications) ? View.VISIBLE : View.GONE);
+        }
         if (forceHide) {
             noWeatherInfo.setVisibility(View.VISIBLE);
             weatherPanel.setVisibility(View.GONE);
