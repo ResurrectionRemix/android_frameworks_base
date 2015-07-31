@@ -50,6 +50,9 @@
     <string name="quick_settings_doze">Doze enabled</string>
     <string name="quick_settings_doze_off">Doze disabled</string>
 
+    <!-- Kernel Adiutor Tile -->
+    <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+
     <!-- Power Button for Navbar -->
     <string name="navbar_power_button">Power button</string>
     <!-- Greeting -->

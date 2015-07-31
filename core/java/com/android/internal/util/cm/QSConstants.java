@@ -70,7 +70,7 @@ public class QSConstants {
     public static final String TILE_THEMES = "toggleThemes";
     public static final String TILE_CONFIGURATIONS = "Configurations"; 	 
     //public static final String TILE_ONTHEGO = "toggleOnTheGo";
-
+    public static final String TILE_KERNEL_ADIUTOR = "kernel_adiutor";
     public static final String DYNAMIC_TILE_NEXT_ALARM = "next_alarm";
     public static final String DYNAMIC_TILE_IME_SELECTOR = "ime_selector";
     public static final String DYNAMIC_TILE_ADB = "adb";
@@ -127,6 +127,7 @@ public class QSConstants {
         STATIC_TILES_AVAILABLE.add(TILE_SLIM_FLOATS);
  	STATIC_TILES_AVAILABLE.add(TILE_THEMES);
 	STATIC_TILES_AVAILABLE.add(TILE_CONFIGURATIONS);
+        STATIC_TILES_AVAILABLE.add(TILE_KERNEL_ADIUTOR);
 
         DYNAMIC_TILES_AVAILABLE.add(DYNAMIC_TILE_NEXT_ALARM);
         DYNAMIC_TILES_AVAILABLE.add(DYNAMIC_TILE_IME_SELECTOR);
