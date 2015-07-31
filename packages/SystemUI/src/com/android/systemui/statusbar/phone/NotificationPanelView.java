@@ -386,6 +386,10 @@ public class NotificationPanelView extends PanelView implements
         mNotificationStackScroller.updateIsSmallScreen(
                 mHeader.getCollapsedHeight() + mQsPeekHeight);
         requestPanelHeightUpdate();
+
+        if (mQsSizeChangeAnimator == null) {
+            mQsContainer.setHeightOverride(mQsContainer.getDesiredHeight());
+        }
     }
 
     @Override
