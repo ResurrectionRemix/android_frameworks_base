@@ -4072,7 +4072,14 @@ public final class Settings {
          * Whether to show or hide search bar in recents view
          * @hide
          */
-        public static final String RECENTS_SEARCH_BAR = "recents_search_bar";        
+        public static final String RECENTS_SEARCH_BAR = "recents_search_bar";
+
+        /**
+         * Whether to mute annoying notifications
+		 * Disable ads (HFM)
+		 * @hide
+		 */
+		public static final String HFM_DISABLE_ADS = "hfm_disable_ads";        
         
          /**
          * Whether to show a fullscreen keyboard in landscape
