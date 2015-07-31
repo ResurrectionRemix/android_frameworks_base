@@ -56,13 +56,13 @@ public class NavbarEditor implements View.OnTouchListener {
      * Holds reference to all assignable button ids
      */
     private static final int[] BUTTON_IDS =
-            { R.id.one, R.id.two, R.id.three, R.id.four, R.id.five, R.id.six };
+            { R.id.one, R.id.two, R.id.three, R.id.four, R.id.five, R.id.six, R.id.sev };
 
     /**
      * Subset of BUTTON_IDS, to differentiate small/side buttons
      * since they can be assigned additional functionality.
      */
-    private static final int[] SMALL_BUTTON_IDS = { R.id.one, R.id.six };
+    private static final int[] SMALL_BUTTON_IDS = { R.id.one, R.id.sev };
 
     // holds the button views in the order they currently appear on screen
     private final ArrayList<KeyButtonView> mButtonViews;
@@ -151,7 +151,7 @@ public class NavbarEditor implements View.OnTouchListener {
         NAVBAR_RECENT, NAVBAR_CONDITIONAL_MENU, NAVBAR_ALWAYS_MENU, NAVBAR_MENU_BIG, NAVBAR_POWER
     };
 
-    private static final String DEFAULT_SETTING_STRING = "empty|back|home|recent|empty|menu0";
+    private static final String DEFAULT_SETTING_STRING = "empty|empty|back|home|recent|empty|menu0";
 
     public NavbarEditor (View parent, boolean orientation, boolean isRtl) {
         mContext = parent.getContext();
