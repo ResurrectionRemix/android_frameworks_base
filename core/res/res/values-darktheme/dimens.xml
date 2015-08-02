@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<dimen name="control_inset_material">4.0dip</dimen>
+<dimen name="control_padding_material">4.0dip</dimen>
+<dimen name="control_corner_material">15.0dip</dimen>
+</resources>

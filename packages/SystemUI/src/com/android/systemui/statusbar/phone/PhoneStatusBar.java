@@ -4705,10 +4705,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             // Needs to recreate statusbar 
             recreateStatusBar();
             observer.update();
-            updateRowStates();
-            updateSpeedbump();
-            updateClearAll();
-            updateEmptyShadeView();
+            addSidebarView();
+            attachPieContainer(isPieEnabled());
         } else {
             loadDimens();
         }

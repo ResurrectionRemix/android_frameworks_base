@@ -20,4 +20,4 @@
     android:height="32dp"
     android:viewportWidth="24.0"
     android:viewportHeight="24.0"
-    android:fillColor="#FFFFFFFF" />
+    android:tint="#FFFFFFFF" />

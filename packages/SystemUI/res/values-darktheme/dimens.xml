@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="notification_material_rounded_rect_radius">8.0dip</dimen>
+
+
+    <dimen name="notification_side_padding">8.0dip</dimen>
+    <dimen name="notifications_top_padding">0.0dip</dimen>
+    <dimen name="recents_task_view_rounded_corners_radius">8.0dip</dimen>
+
+
+
+
+
+</resources>
