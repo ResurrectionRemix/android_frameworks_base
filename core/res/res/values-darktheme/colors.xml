@@ -37,4 +37,5 @@
     <color name="primary_material_light">#ffbdbdbd</color>
     <color name="primary_dark_material_dark">#ff111111</color>
     <color name="primary_dark_material_light">#ff999999</color>
+    <color name="resolver_list_bg">#ff000000</color>
 </resources>
