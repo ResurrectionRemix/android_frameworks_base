@@ -225,13 +225,13 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
     }
 
     private void addStopSaverAction(Notification.Builder nb) {
-        nb.addAction(0,
+        nb.addAction(R.drawable.battery_saver_turn_off,
                 mContext.getString(R.string.battery_saver_notification_action_text),
                 pendingBroadcast(ACTION_STOP_SAVER));
     }
 
     private void addDismissAction(Notification.Builder nb) {
-        nb.addAction(0,
+        nb.addAction(R.drawable.battery_saver_dismiss,
                 mContext.getString(R.string.battery_saver_dismiss_title),
                 pendingBroadcast(ACTION_DISMISSED_WARNING));
     }
