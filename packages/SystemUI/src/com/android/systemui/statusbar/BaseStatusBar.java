@@ -2698,6 +2698,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         lp.setTitle("AppCircleSidebar");
 
         return lp;
+    }
 
     protected void addSidebarView() {
         mAppSidebar = (AppSidebar)View.inflate(mContext, R.layout.app_sidebar, null);
@@ -2727,9 +2728,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         lp.setTitle("AppSidebar");
 
         return lp;
-    }
-
-
     }
 
     Runnable mKillTask = new Runnable() {
