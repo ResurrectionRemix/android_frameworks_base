@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="DeviceDefault.Light.ButtonBar" parent="@android:style/Widget.Material.ButtonBar" />
+    <style name="DeviceDefault.Light.ButtonBar.AlertDialog" parent="@android:style/Widget.Material.ButtonBar.AlertDialog" />
+    <style name="DeviceDefault.Light.SegmentedButton" parent="@android:style/Widget.Material.SegmentedButton" />
+    <style name="Theme.Dialog.RecentApplications" parent="@android:style/Theme.DeviceDefault.Dialog" />
     <style name="Theme.DeviceDefault.Light.NoActionBar" parent="@android:style/Theme.Material.NoActionBar" />
     <style name="Theme.DeviceDefault.Light.NoActionBar.Fullscreen" parent="@android:style/Theme.Material.NoActionBar.Fullscreen" />
     <style name="Theme.DeviceDefault.Light.Dialog" parent="@android:style/Theme.Material.Dialog" />
+    <style name="Theme.DeviceDefault.Light.Dialog.Alert" parent="@android:style/Theme.Material.Dialog.Alert" />
+    <style name="Theme.DeviceDefault.Light.Dialog.FixedSize" parent="@android:style/Theme.DeviceDefault.Dialog" />
     <style name="Theme.DeviceDefault.Light.Dialog.MinWidth" parent="@android:style/Theme.Material.Dialog.MinWidth" />
     <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar" parent="@android:style/Theme.Material.Dialog.NoActionBar" />
+    <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar.FixedSize" parent="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
     <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar.MinWidth" parent="@android:style/Theme.Material.Dialog.NoActionBar.MinWidth" />
+    <style name="Theme.DeviceDefault.Light.Dialog.Presentation" parent="@android:style/Theme.Material.Dialog.Presentation" />
     <style name="Theme.DeviceDefault.Light.DialogWhenLarge" parent="@android:style/Theme.Material.DialogWhenLarge" />
     <style name="Theme.DeviceDefault.Light.DialogWhenLarge.NoActionBar" parent="@android:style/Theme.Material.DialogWhenLarge.NoActionBar" />
     <style name="Theme.DeviceDefault.Light.Panel" parent="@android:style/Theme.Material.Panel" />
+    <style name="Theme.DeviceDefault.Light.NoActionBar.Overscan" parent="@android:style/Theme.Material.NoActionBar.Overscan" />
+    <style name="Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor" parent="@android:style/Theme.Material.NoActionBar.TranslucentDecor" />
+    <style name="Theme.Material.Settings.Dialog.Presentation" parent="@android:style/Theme.Material.Dialog.Presentation" />
+    <style name="Theme.DeviceDefault.Light.SearchBar" parent="@style/Theme.Material.SearchBar" />
+    <style name="Theme.Material.SearchBar" parent="@android:style/Theme.Material.Panel" />
+    <style name="Theme.Material.Settings" parent="@android:style/Theme.Material" />
     <style name="Widget.DeviceDefault.Light" parent="@android:style/Widget.Material" />
     <style name="Widget.DeviceDefault.Light.Button" parent="@android:style/Widget.Material.Button" />
     <style name="Widget.DeviceDefault.Light.Button.Small" parent="@android:style/Widget.Material.Button.Small" />
@@ -58,26 +72,13 @@
     <style name="Widget.DeviceDefault.Light.ActionBar.TabText" parent="@android:style/Widget.Material.ActionBar.TabText" />
     <style name="Widget.DeviceDefault.Light.ActionBar.TabBar" parent="@android:style/Widget.Material.ActionBar.TabBar" />
     <style name="Widget.DeviceDefault.Light.ActionBar.Solid" parent="@android:style/Widget.Material.ActionBar.Solid" />
-    <style name="DeviceDefault.Light.ButtonBar" parent="@android:style/Widget.Material.ButtonBar" />
-    <style name="DeviceDefault.Light.ButtonBar.AlertDialog" parent="@android:style/Widget.Material.ButtonBar.AlertDialog" />
-    <style name="DeviceDefault.Light.SegmentedButton" parent="@android:style/Widget.Material.SegmentedButton" />
     <style name="Widget.DeviceDefault.Light.MediaRouteButton" parent="@android:style/Widget.Material.MediaRouteButton" />
-    <style name="Theme.DeviceDefault.Light.NoActionBar.Overscan" parent="@android:style/Theme.Material.NoActionBar.Overscan" />
-    <style name="Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor" parent="@android:style/Theme.Material.NoActionBar.TranslucentDecor" />
     <style name="Widget.DeviceDefault.Light.FastScroll" parent="@android:style/Widget.Material.FastScroll" />
     <style name="Widget.DeviceDefault.Light.StackView" parent="@android:style/Widget.Material.StackView" />
-    <style name="Theme.Material.Settings" parent="@android:style/Theme.Material" />
     <style name="Widget.DeviceDefault.Light.Button.Borderless" parent="@android:style/Widget.Material.Button.Borderless" />
     <style name="Widget.DeviceDefault.Light.DatePicker" parent="@android:style/Widget.Material.DatePicker" />
     <style name="Widget.DeviceDefault.Light.TimePicker" parent="@android:style/Widget.Material.TimePicker" />
-    <style name="Theme.Dialog.RecentApplications" parent="@android:style/Theme.DeviceDefault.Dialog" />
-    <style name="Theme.DeviceDefault.Light.Dialog.FixedSize" parent="@android:style/Theme.DeviceDefault.Dialog" />
-    <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar.FixedSize" parent="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
-    <style name="Theme.DeviceDefault.Light.Dialog.Presentation" parent="@android:style/Theme.Material.Dialog.Presentation" />
-    <style name="Theme.DeviceDefault.Light.Dialog.Alert" parent="@android:style/Theme.Material.Dialog.Alert" />
-    <style name="Theme.Material.Settings.Dialog.Presentation" parent="@android:style/Theme.Material.Dialog.Presentation" />
-    <style name="Theme.DeviceDefault.Light.SearchBar" parent="@style/Theme.Material.SearchBar" />
-    <style name="Theme.Material.SearchBar" parent="@android:style/Theme.Material.Panel" />
+
     <style name="Theme.DeviceDefault.Resolver" parent="@android:style/Theme.Material.Panel">
         <item name="windowBackground">@color/transparent</item>
         <item name="windowNoTitle">true</item>
@@ -90,28 +91,27 @@
     </style>
     <style name="Theme.DeviceDefault.Light.DarkActionBar" parent="@android:style/Theme.Material" />
 
-	<!--Changing text color to white on majority of ROMs-->			
-		<!--SystemUI Notification colors values (Lockscreen + Notification Drawer)-->
-			<style name="TextAppearance.Material.Notification" parent="@style/TextAppearance.Material">
-				<item name="android:textSize">@dimen/notification_text_size</item>
-				<item name="android:textColor">@color/secondary_text_default_material_dark</item>
-			</style>
-			<style name="TextAppearance.Material.Notification.Info" parent="@style/TextAppearance.Material.Notification">
-				<item name="android:textSize">@dimen/notification_subtext_size</item>
-				<item name="android:textColor">@android:color/white</item>
-			</style>
-			<style name="TextAppearance.Material.Notification.Line2" parent="@style/TextAppearance.Material.Notification">
-				<item name="android:textSize">@dimen/notification_subtext_size</item>
-				<item name="android:textColor">@android:color/white</item>
-			</style>
-			<style name="TextAppearance.Material.Notification.Time" parent="@style/TextAppearance.Material.Notification">
-				<item name="android:textSize">@dimen/notification_subtext_size</item>
-				<item name="android:textColor">@android:color/white</item>
-			</style>
-			<style name="TextAppearance.Material.Notification.Title" parent="@style/TextAppearance.Material.Notification">
-				<item name="android:textSize">@dimen/notification_title_text_size</item>
-				<item name="android:textColor">@android:color/white</item>
-			</style>
-
+    <!--Changing text color to white on majority of ROMs-->
+    <!--SystemUI Notification colors values (Lockscreen + Notification Drawer)-->
+    <style name="TextAppearance.Material.Notification" parent="@android:style/TextAppearance.Material">
+        <item name="android:textSize">@dimen/notification_text_size</item>
+        <item name="android:textColor">@color/secondary_text_default_material_dark</item>
+    </style>
+    <style name="TextAppearance.Material.Notification.Info" parent="@style/TextAppearance.Material.Notification">
+        <item name="android:textSize">@dimen/notification_subtext_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="TextAppearance.Material.Notification.Line2" parent="@style/TextAppearance.Material.Notification">
+        <item name="android:textSize">@dimen/notification_subtext_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="TextAppearance.Material.Notification.Time" parent="@style/TextAppearance.Material.Notification">
+        <item name="android:textSize">@dimen/notification_subtext_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="TextAppearance.Material.Notification.Title" parent="@style/TextAppearance.Material.Notification">
+        <item name="android:textSize">@dimen/notification_title_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 
 </resources>
