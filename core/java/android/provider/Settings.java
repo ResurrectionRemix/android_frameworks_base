@@ -6964,6 +6964,12 @@ public final class Settings {
 
 
         /**
+         * Whether the device should color invert notifications when doze if enabled.
+         * @hide
+         */
+        public static final String DOZE_NOTIFICATION_INVERT_ENABLED = "doze_notification_invert_enabled";
+
+        /**
          * The current night mode that has been selected by the user.  Owned
          * and controlled by UiModeManagerService.  Constants are as per
          * UiModeManager.
