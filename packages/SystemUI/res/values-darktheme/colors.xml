@@ -1,47 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--You are editing SystemUI's Colors-->
+
 <resources>
-    <color name="qs_text">#ffffffff</color>
-    <color name="status_bar_clock_color">#ffffffff</color>
-    <color name="search_panel_circle_color">#ffffffff</color>
-    <color name="exposed_volume_panel">#dd111111</color>
-    <color name="exposed_system_panel_text_light">#ffffffff</color>
-    <color name="system_primary_color">#ff000000</color>
-    <color name="system_secondary_color">#ff000000</color>
-    <color name="system_accent_color">#ffffffff</color>
-    <color name="qs_tile_text">#ffffffff</color>
-    <color name="qs_detail_progress_track">#99ffffff</color>
-    <color name="notification_legacy_background_color">#ff000000</color>
-    <color name="notification_material_background_color">#ff000000</color>
-    <color name="notification_material_background_dimmed_color">#ff000000</color>
-    <color name="notification_material_background_low_priority_color">#ff000000</color>
-    <color name="notification_material_background_media_default_color">#ff000000</color>
-    <color name="notification_ripple_untinted_color">#28ffffff</color>
-    <color name="notification_ripple_color_low_priority">#30ffffff</color>
-    <color name="system_notification_accent_color">#ffaaaaaa</color>
-    <color name="exposed_bg_dark">#ff111111</color>
-    <color name="exposed_bg_light">#ff111111</color>
-    <color name="exposed_primary_text_light">#deffffff</color>
-    <color name="exposed_secondary_text_light">#8affffff</color>
-    <color name="exposed_TextAppearance.Material.Notification.Parenthetical">#ffffffff</color>
-    <color name="exposed_TextAppearance.StatusBar.TextButton">#ffffffff</color>
-    <color name="exposed_TextAppearance_Network">#ffffffff</color>
-    <color name="exposed_primary_text_dark">#ffffffff</color>
-    <color name="exposed_secondary_text_dark">#b3ffffff</color>
-    <color name="exposed_button">#b3ffffff</color>
-    <color name="exposed_batt_text">#ffffffff</color>
-    <color name="exposed_kg_indication_text">#ffffffff</color>
-    <color name="exposed_kg_camera_button">#ffffffff</color>
-    <color name="exposed_kg_phone_button">#ffffffff</color>
-    <color name="exposed_kg_lock_icon">#ffffffff</color>
-    <color name="exposed_kg_batt_level">#ffffffff</color>
-    <color name="exposed_kg_carrier_text">#ffffffff</color>
-    <color name="exposed_recents_search_bar_label">#99ffffff</color>
-    <color name="exposed_no_notify">#ddffffff</color>
-    <color name="exposed_more_text">#ffffffff</color>
-    <color name="exposed_speedbump_line">#6fffffff</color>
-    <color name="exposed_toggle">#ffffffff</color>
-    <color name="exposed_segmented_button_text_selector">#ffffffff</color>
-    <color name="exposed_qs_user_detail_name">#66ffffff</color>
-    <color name="primary_text_color">#ffffffff</color>
-    <color name="secondary_text_color">#ffffffff</color>
+	<!--Color of your notification drawer, primary:middle, secondary:top w/avatar, accent: brightness trail)-->	
+		<color name="system_primary_background">#cc000000</color>
+		<color name="system_primary_color">@*android:color/theme_color</color>
+		<color name="system_primary_color_translucent">#90000000</color>
+		<color name="system_secondary_color">@*android:color/theme_color_qs_header</color>
+		<color name="system_accent_color">@*android:color/theme_color_accent_dark</color>
+		
+	<!--Bliss Gerrit ID: I8ccefddf5eb2d38297f385a7ea83752162a7c563-->
+		<!--QS Background-->
+		<color name="qs_background_drawable_color">@color/system_primary_background</color>
+		
+	<!--Quick Settings in Notification drawer -->	
+		<color name="qs_tile_text">@*android:color/theme_color_qs_tile_text</color>
+		<color name="qs_detail_empty">#24ffffff</color>
+		<color name="qs_detail_transition">#66ffffff</color>
+	
+	<!--All notification popups listed here-->
+		<color name="notification_legacy_background_color">@*android:color/theme_color_notification_background</color>
+		<color name="notification_material_background_color">@*android:color/theme_color_notification_background</color>
+		<color name="notification_material_background_dimmed_color">@*android:color/theme_color_notification_background</color>
+		<color name="notification_material_background_low_priority_color">@*android:color/theme_color_notification_background</color>
+		<color name="notification_material_background_media_default_color">@*android:color/theme_color_notification_background</color>
+		<color name="notification_guts_bg_color">@*android:color/theme_color_notification_background</color>
+		<color name="notification_guts_title_color">@android:color/white</color>
+		<color name="notification_guts_text_color">#b2ffffff</color>
+		<color name="notification_guts_btn_color">@android:color/white</color>
+
+	<!--Miscellaneous ROM based tweaks-->
+		<color name="status_bar_traffic_color">@android:color/white</color>
+		<color name="gesture_overlay_background_fill_color">#80000000</color>
+		<color name="fab_color">@*android:color/theme_color_fab</color>
+		<color name="floating_action_button_icon_color">@android:color/white</color>
+		<color name="floating_action_button_touch_tint">#d4000000</color>
+		
+	<!--Navigation Bar Shortcuts Settings Colors-->
+		<color name="navring_check_tint">@android:color/white</color>
+		<color name="navring_edit_fill">@*android:color/theme_color</color>
+		<color name="navring_edit_tint">@android:color/white</color>
+
+	<!--Navigation Bar Shortcuts Colors-->		
+		<color name="search_panel_circle_color">@*android:color/theme_color</color>
+		<color name="search_panel_ripple_color">#4a000000</color>
+		
+	<!--Screen Pinning Background Dialog-->
+		<color name="screen_pinning_nav_icon_highlight_outer">#80777777</color>
+	    <color name="screen_pinning_primary_text">@android:color/white</color>
+		<color name="screen_pinning_request_bg">@*android:color/theme_color</color>
+		<color name="screen_pinning_request_window_bg">#b3000000</color>
+
+    <!--Tint of the Visualizer tile-->
+		<color name="visualizer_fill_color">@android:color/white</color>
+
+    <!--Background of the volume panel. See also: volume_dialog_background-->
+		<color name="volume_panel_background_color">@*android:color/theme_color_hardcoded_translucent_black</color>
+		
+	<!--Battery base color-->
+		<color name="batterymeter_base_color">@android:color/white</color>
+
+    <!--Navigation button ripple color-->
+		<color name="navbutton_ripple_color">@android:color/white</color>
 </resources>

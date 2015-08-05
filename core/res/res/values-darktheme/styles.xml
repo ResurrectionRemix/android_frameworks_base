@@ -89,4 +89,29 @@
         <item name="windowDrawsSystemBarBackgrounds">false</item>
     </style>
     <style name="Theme.DeviceDefault.Light.DarkActionBar" parent="@android:style/Theme.Material" />
+
+	<!--Changing text color to white on majority of ROMs-->			
+		<!--SystemUI Notification colors values (Lockscreen + Notification Drawer)-->
+			<style name="TextAppearance.Material.Notification" parent="@style/TextAppearance.Material">
+				<item name="android:textSize">@dimen/notification_text_size</item>
+				<item name="android:textColor">@color/secondary_text_default_material_dark</item>
+			</style>
+			<style name="TextAppearance.Material.Notification.Info" parent="@style/TextAppearance.Material.Notification">
+				<item name="android:textSize">@dimen/notification_subtext_size</item>
+				<item name="android:textColor">@android:color/white</item>
+			</style>
+			<style name="TextAppearance.Material.Notification.Line2" parent="@style/TextAppearance.Material.Notification">
+				<item name="android:textSize">@dimen/notification_subtext_size</item>
+				<item name="android:textColor">@android:color/white</item>
+			</style>
+			<style name="TextAppearance.Material.Notification.Time" parent="@style/TextAppearance.Material.Notification">
+				<item name="android:textSize">@dimen/notification_subtext_size</item>
+				<item name="android:textColor">@android:color/white</item>
+			</style>
+			<style name="TextAppearance.Material.Notification.Title" parent="@style/TextAppearance.Material.Notification">
+				<item name="android:textSize">@dimen/notification_title_text_size</item>
+				<item name="android:textColor">@android:color/white</item>
+			</style>
+
+
 </resources>

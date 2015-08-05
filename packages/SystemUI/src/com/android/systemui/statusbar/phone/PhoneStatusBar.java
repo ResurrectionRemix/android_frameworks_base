@@ -4669,7 +4669,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         int uiThemeMode = res.getConfiguration().uiThemeMode;
         if (uiThemeMode != mCurrUiThemeMode) {
             mCurrUiThemeMode = uiThemeMode;
-           // recreateStatusBar(false);
+            recreateStatusBar();
         } else {
             loadDimens();
         }
