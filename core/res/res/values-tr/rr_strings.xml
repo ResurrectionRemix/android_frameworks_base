@@ -21,8 +21,6 @@
     <string name="permdesc_changeHeadsUpState">Diğer iletileri heads up arayüzünde göster</string>
     <string name="default_string">Standart</string>
 
-    <string name="silent_mode_priority">öncelik</string>
-    <string name="silent_mode_none">hiçbiri</string>
     <!-- AOKP custom system animations -->
     <string name="animation_fade">karart</string>
     <string name="animation_slide_right">Sağ kaydır</string>
