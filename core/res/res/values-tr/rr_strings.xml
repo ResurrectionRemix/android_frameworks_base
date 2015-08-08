@@ -70,4 +70,6 @@
     <string name="setting_confirmation_no">Hayır</string>
     <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
     <string name="resurrection_start_title">Güncelleme Durumunda\u2026</string>
+     <!-- [CHAR LIMIT=40] Title of dialog that is shown when performing a system upgrade. -->
+    <string name="resurrection_upgrading_title">Resurrection Güncelleniyor\u2026</string>
 </resources>
