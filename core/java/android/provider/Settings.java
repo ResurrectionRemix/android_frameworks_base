@@ -4689,6 +4689,16 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Three Finger Gesture from Oppo
+         * @hide
+         */
+        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+
+        /** @hide */
+        private static final Validator THREE_FINGER_GESTURE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
@@ -4769,19 +4779,13 @@ public final class Settings {
             DISPLAY_COLOR_MODE,
             ALARM_ALERT,
             NOTIFICATION_LIGHT_PULSE,
-<<<<<<< HEAD
-=======
-            // AICP Settings
-            AE_THEME,
-            TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK,
             STATUSBAR_BATTERY_BAR,
             STATUSBAR_BATTERY_BAR_LOCATION,
             STATUSBAR_BATTERY_BAR_COLOR,
             STATUSBAR_BATTERY_BAR_THICKNESS,
             STATUSBAR_BATTERY_BAR_STYLE,
-            STATUSBAR_BATTERY_BAR_ANIMATE
-            // AICP Settings end
->>>>>>> 1e3959cbfbc... BatteryBar [1/2]
+            STATUSBAR_BATTERY_BAR_ANIMATE,
+            THREE_FINGER_GESTURE,
         };
 
         /**
@@ -4901,9 +4905,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(EGG_MODE);
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
-<<<<<<< HEAD
-=======
-            // AICP Settings
             PRIVATE_SETTINGS.add(AE_THEME);
             PRIVATE_SETTINGS.add(TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR);
@@ -4912,8 +4913,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_THICKNESS);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_STYLE);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_ANIMATE);
-            // AICP Settings end
->>>>>>> 1e3959cbfbc... BatteryBar [1/2]
+            PRIVATE_SETTINGS.add(THREE_FINGER_GESTURE);
         }
 
         /**
@@ -5007,13 +5007,8 @@ public final class Settings {
             VALIDATORS.put(WIFI_STATIC_DNS2, WIFI_STATIC_DNS2_VALIDATOR);
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
-<<<<<<< HEAD
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
                     ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
-=======
-            // AICP Settings
-            VALIDATORS.put(AE_THEME, AE_THEME_VALIDATOR);
-            VALIDATORS.put(TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR, STATUSBAR_BATTERY_BAR_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_LOCATION, STATUSBAR_BATTERY_BAR_LOCATION_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_COLOR, STATUSBAR_BATTERY_BAR_COLOR_VALIDATOR);
@@ -5021,8 +5016,7 @@ public final class Settings {
                     STATUSBAR_BATTERY_BAR_THICKNESS_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_STYLE, STATUSBAR_BATTERY_BAR_STYLE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_ANIMATE, STATUSBAR_BATTERY_BAR_ANIMATE_VALIDATOR);
-            // AICP Settings end
->>>>>>> 1e3959cbfbc... BatteryBar [1/2]
+            VALIDATORS.put(THREE_FINGER_GESTURE, THREE_FINGER_GESTURE_VALIDATOR);
         }
 
         /**
