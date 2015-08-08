@@ -3726,8 +3726,6 @@
     <!-- [CHAR LIMIT=40] Title of dialog that is shown when performing a system upgrade. -->
     <string name="resurrection_upgrading_title">Resurrection is upgrading\u2026</string>
 
-    <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
-    <string name="resurrection_start_title">Upgrade in Progress\u2026</string>
 
     <!-- [CHAR LIMIT=NONE] Message shown in upgrading dialog when doing an fstrim. -->
     <string name="android_upgrading_fstrim">Optimizing storage.</string>
