@@ -4929,6 +4929,7 @@ public final class Settings {
         public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
 
         /**
+<<<<<<< HEAD
          * Whether to disable the torch when the screen turns off
          * @hide
          */
@@ -4939,6 +4940,12 @@ public final class Settings {
          * @hide
          */
         public static final String DISABLE_TORCH_ON_SCREEN_OFF_DELAY = "disable_torch_on_screen_off_delay";
+
+        /**
+         * TRDS: Override custom notification and qs colors on theme change
+         * @hide
+         */
+        public static final String OVERRIDE_CUSTOM_COLORS = "override_custom_colors";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
