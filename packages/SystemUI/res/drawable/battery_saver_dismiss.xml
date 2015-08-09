@@ -18,8 +18,8 @@ Copyright (C) 2014 The Android Open Source Project
         android:height="24dp"
         android:viewportWidth="24"
         android:viewportHeight="24"
-        android:tint="?android:attr/colorControlNormal">
+        android:tint="@color/battery_saver_dismiss">
     <path
         android:pathData="M5 13h14v-2H5v2zm-2 4h14v-2H3v2zM7 7v2h14V7H7z"
-        android:fillColor="@*android:color/system_notification_accent_color"/>
+        android:fillColor="@color/battery_saver_dismiss"/>
 </vector>
