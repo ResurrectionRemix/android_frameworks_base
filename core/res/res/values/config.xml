@@ -2335,5 +2335,12 @@
     <bool name="config_enableScreenrecordChord">true</bool>
 
 
+    <!-- If there is no sysfs-based control mechanism, enable this -->
+    <bool name="useCameraInterface">true</bool>
+    <!-- Full path to the sysfs toggle -->
+    <string name="flashDevice"></string>  
+    <!-- Off setting -->
+    <integer name="valueOff">0</integer>
+    <!-- On setting -->
+    <integer name="valueOn">1</integer>
 </resources>
-
