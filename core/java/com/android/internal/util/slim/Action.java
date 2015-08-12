@@ -350,7 +350,7 @@ public class Action {
                     torchManager.setTorchEnabled(false);
             } else if (action.equals(ActionConstants.ACTION_THEME_SWITCH)) {
                 boolean overrideCustomColors = Settings.System.getInt(context.getContentResolver(),
-                        Settings.System.OVERRIDE_CUSTOM_COLORS, 0) == 1;
+                        Settings.System.OVERRIDE_CUSTOM_COLORS, 1) == 1;
                 boolean autoLightMode = Settings.Secure.getIntForUser(
                         context.getContentResolver(),
                         Settings.Secure.UI_THEME_AUTO_MODE, 0,
