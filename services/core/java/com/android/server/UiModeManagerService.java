@@ -605,7 +605,7 @@ final class UiModeManagerService extends SystemService
             }
             try {
                 boolean overrideCustomColors = Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.OVERRIDE_CUSTOM_COLORS, 0) == 1;
+                        Settings.System.OVERRIDE_CUSTOM_COLORS, 1) == 1;
                 ActivityManagerNative.getDefault().updateConfiguration(mConfiguration);
                 Toast.makeText(mContext, "updated configuration sent", Toast.LENGTH_SHORT).show();
                 if (overrideCustomColors) {
