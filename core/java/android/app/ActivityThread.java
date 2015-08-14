@@ -4169,7 +4169,9 @@ public final class ActivityThread {
             boolean hasFontConfigChange = ((configDiff & ActivityInfo.CONFIG_THEME_FONT) != 0);
             if (hasLocaleConfigChange || hasFontConfigChange) {
                 Canvas.freeTextLayoutCaches();
-                Typeface.recreateDefaults();
+                if (hasFontConfigChange) {
+                    Typeface.recreateDefaults();
+                }
                 if (DEBUG_CONFIGURATION) Slog.v(TAG, "Cleared TextLayout Caches");
             }
         }
