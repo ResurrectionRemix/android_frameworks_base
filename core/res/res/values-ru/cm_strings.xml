@@ -21,6 +21,8 @@
   <string name="global_action_choose_profile">Профиль</string>
   <string name="profile_none">Не выбран</string>
   <string name="global_action_screenshot">Скриншот</string>
+  <string name="global_action_screenrecord">Запись экрана</string>
+  <string name="global_action_torch">Фонарик</string>
   <string name="permlab_receiveProtectedSms">Получение защищённых SMS</string>
   <string name="permdesc_receiveProtectedSms">Приложение сможет получать входящие защищённые SMS-сообщения.</string>
   <string name="permlab_modifyProtectedSmsList">Изменение списка защищённых SMS</string>
