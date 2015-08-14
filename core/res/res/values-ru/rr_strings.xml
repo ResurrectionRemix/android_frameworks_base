@@ -69,4 +69,9 @@
     <string name="setting_confirmation_yes">Да</string>
     <string name="setting_confirmation_no">Нет</string>
 
+    <!-- label for item that screenrecord in phone options dialog -->
+    <string name="global_action_screenrecord">Запись экрана</string>
+
+    <!-- label for item that torch in power menu options dialog -->
+    <string name="global_action_torch">Фонарик</string>
 </resources>
