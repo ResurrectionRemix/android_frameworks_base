@@ -21,6 +21,8 @@
     <string name="permdesc_changeHeadsUpState">Разрешает приложению показывать всплывающие уведомления.</string>
     <string name="default_string">По умолчанию</string>
 
+    <string name="silent_mode_priority">Приоритет</string>
+    <string name="silent_mode_none">Нет</string>
     <!-- AOKP custom system animations -->
     <string name="animation_fade">Затухание</string>
     <string name="animation_slide_right">Сдвиг вправо</string>
@@ -74,4 +76,7 @@
 
     <!-- label for item that torch in power menu options dialog -->
     <string name="global_action_torch">Фонарик</string>
+
+    <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
+    <string name="resurrection_start_title">Выполняется обновление\u2026</string>
 </resources>
