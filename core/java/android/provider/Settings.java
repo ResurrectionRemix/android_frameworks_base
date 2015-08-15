@@ -3800,10 +3800,9 @@ public final class Settings {
 
         /**
          * Timeout for volume panel
-         * Whether navigation bar is placed on the left side in landscape mode
          * @hide
          */
-        public static final String NAVBAR_LEFT_IN_LANDSCAPE = "navigation_bar_left";
+        public static final String VOLUME_PANEL_TIMEOUT = "volume_panel_timeout";
 
         /**
          * Three Finger Gesture from Oppo
@@ -3811,13 +3810,7 @@ public final class Settings {
          * @hide
          */
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
-
-        /**
-         * Locale for secondary overlay on dialer for t9 search input
-         * @hide
-         */
-        public static final String VOLUME_PANEL_TIMEOUT = "volume_panel_timeout";
-
+       
         /**
          * Whether to show the weather info on the lock screen
          * @hide
