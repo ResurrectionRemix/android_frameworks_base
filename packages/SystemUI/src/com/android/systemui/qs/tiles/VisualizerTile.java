@@ -16,8 +16,6 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +25,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.audiofx.AudioEffect;
-import android.media.session.MediaController;
-import android.media.session.MediaSession;
-import android.media.session.MediaSessionManager;
-import android.media.session.PlaybackState;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.provider.Settings;
@@ -48,10 +42,6 @@ import com.pheelicks.visualizer.FFTData;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.Renderer;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class VisualizerTile extends QSTile<QSTile.State> implements KeyguardMonitor.Callback {
 
     private static final Intent AUDIO_EFFECTS =
@@ -65,6 +55,8 @@ public class VisualizerTile extends QSTile<QSTile.State> implements KeyguardMoni
     private boolean mPowerSaveModeEnabled;
 
     private MediaMonitor mMediaMonitor;
+
+    private boolean mDestroyed;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -195,7 +187,9 @@ public class VisualizerTile extends QSTile<QSTile.State> implements KeyguardMoni
         state.contentDescription = mContext.getString(
                 R.string.accessibility_quick_settings_visualizer);
 
-        mUiHandler.post(mUpdateVisibilities);
+        if (!mDestroyed) {
+            mUiHandler.post(mUpdateVisibilities);
+        }
     }
 
     @Override
@@ -208,6 +202,7 @@ public class VisualizerTile extends QSTile<QSTile.State> implements KeyguardMoni
 
     @Override
     protected void handleDestroy() {
+        mDestroyed = true;
         mMediaMonitor.setListening(false);
         mMediaMonitor = null;
         super.handleDestroy();
@@ -255,7 +250,9 @@ public class VisualizerTile extends QSTile<QSTile.State> implements KeyguardMoni
     private final Runnable mUpdateVisibilities = new Runnable() {
         @Override
         public void run() {
-            boolean showVz = mMediaMonitor.isAnythingPlaying() && !mKeyguardMonitor.isShowing();
+            boolean showVz = mMediaMonitor != null
+                    && mMediaMonitor.isAnythingPlaying()
+                    && !mKeyguardMonitor.isShowing();
             mVisualizer.animate().cancel();
             mVisualizer.animate()
                     .setDuration(200)
