@@ -79,6 +79,10 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
         mForceToggleState = force;
     }
 
+    public boolean hasSensitiveData() {
+        return true;
+    }
+
     @Override
     public DetailAdapter getDetailAdapter() {
         return mDetailAdapter;

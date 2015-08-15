@@ -46,11 +46,17 @@ public class SyncTile extends QSTile<QSTile.BooleanState> {
             ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
             mSyncObserverHandle = null;
         }
+
     }
 
     @Override
     protected BooleanState newTileState() {
         return new BooleanState();
+    }
+
+     @Override
+    public boolean hasSensitiveData() {
+        return true;
     }
 
     @Override

@@ -576,6 +576,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_SIZE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCKSCREEN_HIDE_TILES_WITH_SENSITIVE_DATA),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -684,6 +687,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mWeatherTempSize = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_WEATHER_SIZE, 14, mCurrentUserId);
 
+            mQSPanel.setHideQsTilesWithSensitiveData(
+                    Settings.Secure.getIntForUser(resolver,
+                        Settings.Secure.LOCKSCREEN_HIDE_TILES_WITH_SENSITIVE_DATA, 0,
+                            UserHandle.USER_CURRENT) != 0);
 
             final int oldWeatherState = mWeatherTempState;
             mWeatherTempState = Settings.System.getIntForUser(
@@ -1472,6 +1479,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         mQSPanel.getHost().setCustomTileListenerService(mCustomTileListenerService);
+        mQSPanel.setHideQsTilesWithSensitiveData(
+                Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.LOCKSCREEN_HIDE_TILES_WITH_SENSITIVE_DATA, 0,
+                        UserHandle.USER_CURRENT) != 0);
 
         // Task manager
         mTaskManagerPanel =
