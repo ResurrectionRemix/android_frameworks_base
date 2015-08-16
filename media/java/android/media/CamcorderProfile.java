@@ -249,9 +249,21 @@ public class CamcorderProfile
      */
     public static final int QUALITY_HIGH_SPEED_4KDCI = 10006;
 
+    /**
+     * Quality level corresponding to 1440p (2560 x 1440) resolution.
+     * @hide
+     */
+    public static final int QUALITY_1440P = 10007;
+
+    /**
+     * Time lapse quality level corresponding to the 1440p (2560 x 1440) resolution.
+     * @hide
+     */
+    public static final int QUALITY_TIME_LAPSE_1440P = 10008;
+
     // Start and end of vendor quality list
     private static final int QUALITY_VENDOR_LIST_START = QUALITY_VGA;
-    private static final int QUALITY_VENDOR_LIST_END = QUALITY_HIGH_SPEED_4KDCI;
+    private static final int QUALITY_VENDOR_LIST_END = QUALITY_TIME_LAPSE_1440P;
 
     /**
      * Default recording duration in seconds before the session is terminated.
