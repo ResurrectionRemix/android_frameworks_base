@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2010 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Heads up -->
+    <string name="heads_up_snooze_message">헤드업 알림이 <xliff:g id="number">%d</xliff:g>분 동안 해제됩니다.</string>
+    <string name="heads_up_snooze_button_title">알림 잠시 끄기</string>
+    <string name="notification_inspect_heads_up_title_enabled">이 애플리케이션의 헤드업 알림 켜기</string>
+    <string name="notification_inspect_heads_up_title_disabled">이 애플리케이션의 헤드업 알림 끄기</string>
+    <string name="gestures_message">여기에 제스처를 그리세요</string>
+
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">최대화</string>
+    <string name="app_float_item_title">플로팅 모드</string>
+    <string name="app_stop_item_title">앱 종료</string>
+    <!-- Quick settings -->
+    <string name="quick_settings_battery_saver">배터리 세이버</string>
+    <string name="quick_settings_screen_off">화면 끄기</string>
+    <string name="quick_settings_expanded_desktop">확장됨</string>
+    <string name="quick_settings_expanded_desktop_off">일반</string>
+    <string name="quick_settings_battery_saver_off">배터리 세이버 끄기</string>
+    <string name="quick_settings_screenshot">스크린샷</string>
+    <string name="quick_settings_sync">동기화</string>
+    <string name="quick_settings_sync_off">동기화 끄기</string>
+    <string name="quick_settings_brightness">밝기</string>
+    <string name="quick_settings_music_play">재생</string>
+    <string name="quick_settings_music_pause">일시정지</string>
+    <string name="quick_settings_systemui_restart_label">SystemUI 재시작</string>
+
+    <!-- NavBar tile -->
+    <string name="quick_settings_navbar_on">네비게이션 바 켜기</string>
+    <string name="quick_settings_navbar_off">네비게이션 바 끄기</string>
+    
+    <!-- App Circle Bar tile -->
+    <string name="quick_settings_appcirclebar_on">앱 서클 바 켜기</string>
+    <string name="quick_settings_appcirclebar_off">앱 서클 바 끄기</string>
+    
+    <string name="quick_settings_doze">절전 모드 자동 해제 활성화됨</string>
+    <string name="quick_settings_doze_off">절전 모드 자동 해제 비활성화됨</string>
+
+    <!-- Power Button for Navbar -->
+    <string name="navbar_power_button">전원 버튼</string>
+    <!-- Greeting -->
+    <string name="welcome_label">Hello world!</string> 
+    <!-- Battery status in pie controls -->
+    <string name="pie_battery_status_charging">충전중 (<xliff:g id="percent">%d</xliff:g>%%)</string>
+    <string name="pie_battery_status_full">충전됨</string>
+    <string name="pie_battery_status_discharging"><xliff:g id="percent">%d</xliff:g>%% 남음</string>
+
+    <!-- Phone status in pie controls -->
+    <string name="pie_phone_status_no_service">서비스 안됨</string>
+    <string name="pie_phone_status_airplane_mode">비행기 모드 활성화</string>
+    <string name="pie_phone_status_emergency_only">비상 전화만 가능합니다</string> 
+    <!-- Off/On/Toggle -->
+    <string name="off">끄기</string>
+    <string name="on">켜기</string>
+    <string name="toggle">토글</string>
+
+    <!-- Dialog Cancel/OK -->
+    <string name="cancel">취소</string>
+    <string name="dlg_ok">확인</string>
+    <string name="yes">네</string>
+    <string name="no">아니요</string>
+
+    <!-- Slim Shortcut Actions -->
+    <string name="shortcut_picker">Slim Shortcuts</string>
+    <string name="shortcut_rotation">회전</string>
+    <string name="shortcut_reboot">재시작</string>
+    <string name="shortcut_recovery">리커버리 모드</string>
+    <string name="shortcut_toggle_title">실행할 활동</string>
+    <!-- Power menu -->
+    <string name="quick_settings_power_menu_label">전원 메뉴</string>
+
+    <!-- Kill app toast -->
+    <string name="app_killed_message">앱이 종료됨</string>
+
+    <!-- Title shown in recents popup for showing app launch in floating mode -->
+    <string name="recent_float_mode_title">플로팅 모드</string>
+
+    <!-- Themes Tile -->
+    <string name="quick_settings_themes">테마</string>
+
+    <!-- App sidebar -->
+    <string name="default_folder_text">폴더</string>
+    <string name="title_activity_sidebar_configuration">표시할 항목 설정</string>
+    <string name="action_save">저장</string>
+    <string name="toast_items_saved">수정된 내용이 저장되었습니다.</string>
+    <string name="content_setup_instructions">앱을 길게 누른 후 앱 사이드바로 드래그해서 추가합니다.\n\n사이드바에 있는 앱 위로 다른 앱을 겹치면 폴더가 생성됩니다.\n\n항목을 삭제하려면 \@appbar 밖으로 드래그하세요.</string>
+    <string name="content_setup_dismiss">계속</string>
+    <string name="toast_not_installed">앱이 설치되지 않음</string>   
+
+    <!-- Slim Action floats tile -->
+    <string name="quick_settings_slim_floats_on">Slim Floats가 활성화됨</string>
+    <string name="quick_settings_slim_floats_off">Slim Floats가 비활성화됨</string>
+
+    <!-- Battery Saver Dimss -->
+    <string name="battery_saver_dismiss_title">지우기</string>
+    
+    <!-- Pie tile -->
+    <string name="quick_settings_pie">파이</string>
+</resources>
+
