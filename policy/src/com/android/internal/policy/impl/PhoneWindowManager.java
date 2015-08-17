@@ -2189,7 +2189,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             
             hasHwKeysEnabled();
             updateKeyAssignments();
-                
+
+            //Three Finger Gesture
+            boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
+                    Settings.System.THREE_FINGER_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
+            enableSwipeThreeFingerGesture(threeFingerGesture);                
+
             // Configure rotation lock.
             int userRotation = Settings.System.getIntForUser(resolver,
                     Settings.System.USER_ROTATION, Surface.ROTATION_0,
@@ -2212,14 +2217,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     
             // Navbr on/off and custom dimensions
             setHasNavigationBar();
-
-            //Three Finger Gesture
-            boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
-                    Settings.System.THREE_FINGER_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
-            enableSwipeThreeFingerGesture(threeFingerGesture);
-
-            mNavigationBarLeftInLandscape = Settings.System.getInt(resolver,
-                    Settings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0) == 1;
 
             // Navbar dimensions
             mNavigationBarHeight =
