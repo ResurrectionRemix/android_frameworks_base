@@ -70,7 +70,7 @@ public class NotificationHelper {
         NotificationClicker intent = null;
         final PendingIntent contentIntent = entry.notification.getNotification().contentIntent;
         boolean openInFloatingMode = Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.HEADS_UP_FLOATING, 1) == 1;
+                        Settings.System.HEADS_UP_FLOATING, 0) == 1;
 
         if (contentIntent != null) {
             //final StatusBarNotification sbn = entry.notification;
