@@ -1195,6 +1195,10 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         return MathUtils.constrain(value, PowerManager.BRIGHTNESS_OFF, PowerManager.BRIGHTNESS_ON);
     }
 
+    void systemReady() {
+        mLiveDisplayController.systemReady();
+    }
+
     private final class DisplayControllerHandler extends Handler {
         public DisplayControllerHandler(Looper looper) {
             super(looper, null, true /*async*/);
