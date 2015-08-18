@@ -109,7 +109,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         }
 
         @Override
-        public void run() {
+        public void run() {  
             // Finish Recents
             if (mLaunchIntent != null) {
                 if (mLaunchOpts != null) {
