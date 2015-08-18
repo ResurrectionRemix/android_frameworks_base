@@ -93,7 +93,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
 
     private ActivityManager mAm;
     private int mTotalMem;
-
     private ShakeSensorManager mShakeSensorManager;
 
     public RecentsView(Context context) {
@@ -481,6 +480,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         }
     }
 
+
     public void startFABanimation() {
         // Animate the action button in
         mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
@@ -503,6 +503,13 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 .withLayer()
                 .start();
     }
+
+
+    private boolean dismissAll() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.RECENTS_CLEAR_ALL_DISMISS_ALL, 1) == 1;
+}
+
 
     @Override
     protected void onAttachedToWindow () {
