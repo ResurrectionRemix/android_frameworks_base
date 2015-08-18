@@ -239,11 +239,15 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
             }
         }
 
+        boolean enableShakeCleanByUser = Settings.System.getInt(getContentResolver(),
+            Settings.System.SHAKE_CLEAN_RECENT, 0) == 1;
+
         // Update the top level view's visibilities
         if (mConfig.launchedWithNoRecentTasks) {
             if (mEmptyView == null) {
                 mEmptyView = mEmptyViewStub.inflate();
             }
+            mRecentsView.enableShake(false);
             mEmptyView.setVisibility(View.VISIBLE);
             mEmptyView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -258,6 +262,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                 mEmptyView.setVisibility(View.GONE);
                 mEmptyView.setOnClickListener(null);
             }
+            mRecentsView.enableShake(true && enableShakeCleanByUser);
             findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
             boolean showSearchBar = Settings.System.getInt(getContentResolver(),
                        Settings.System.RECENTS_SEARCH_BAR, 1) == 1;

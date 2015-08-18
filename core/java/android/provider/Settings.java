@@ -4548,7 +4548,13 @@ public final class Settings {
         public static final String PIE_SHOW_TEXT = "pie_show_text";
 
         /**
-         * Pie show snap (0 or 1)
+         * Clean recent by shake
+         * @hide
+         */
+        public static final String SHAKE_CLEAN_RECENT = "shake_clean_recent";
+
+        /**
+         * This preference enables showing the power menu on LockScreen.
          * @hide
          */
         public static final String PIE_SHOW_SNAP = "pie_show_snap";
