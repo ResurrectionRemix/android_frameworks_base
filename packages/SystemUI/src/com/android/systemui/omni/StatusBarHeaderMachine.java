@@ -42,6 +42,7 @@ import java.util.Calendar;
 public class StatusBarHeaderMachine {
 
     private static final String TAG = "StatusBarHeaderMachine";
+    private static final boolean DEBUG = false;
 
     public interface IStatusBarHeaderProvider {
         public Drawable getCurrent(final Calendar time);
@@ -61,6 +62,7 @@ public class StatusBarHeaderMachine {
     private PendingIntent mAlarmHourly;
     private Handler mHandler = new Handler();
     private boolean mAttached;
+    private boolean mScreenOn = true;
 
     private static final String STATUS_BAR_HEADER_UPDATE_ACTION = "com.android.systemui.omni.STATUS_BAR_HEADER_UPDATE";
 
@@ -68,11 +70,18 @@ public class StatusBarHeaderMachine {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (STATUS_BAR_HEADER_UPDATE_ACTION.equals(intent.getAction())) {
-                //Log.i(TAG, "status bar header background alarm triggered");
-                doUpdateStatusHeaderObservers(false);
+                if (mScreenOn) {
+                    if (DEBUG) Log.i(TAG, "status bar header background alarm triggered");
+                    doUpdateStatusHeaderObservers(false);
+                }
+            } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+                mScreenOn = false;
             } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
-                //Log.i(TAG, "status bar header background SCREEN_ON triggered");
-                doUpdateStatusHeaderObservers(true);
+                if (!mScreenOn) {
+                    if (DEBUG) Log.i(TAG, "status bar header background SCREEN_ON triggered");
+                    mScreenOn = true;
+                    doUpdateStatusHeaderObservers(true);
+                }
             }
         }
     };
@@ -141,7 +150,7 @@ public class StatusBarHeaderMachine {
         if (mAlarmHourly != null) {
             final AlarmManager alarmManager = (AlarmManager) mContext
                     .getSystemService(Context.ALARM_SERVICE);
-            Log.i(TAG, "stop hourly alarm");
+            if (DEBUG) Log.i(TAG, "stop hourly alarm");
             alarmManager.cancel(mAlarmHourly);
         }
         mAlarmHourly = null;
@@ -159,7 +168,7 @@ public class StatusBarHeaderMachine {
         mAlarmHourly = PendingIntent.getBroadcast(mContext, 0, intent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Log.i(TAG, "start hourly alarm");
+        if (DEBUG) Log.i(TAG, "start hourly alarm");
         alarmManager.setInexactRepeating(AlarmManager.RTC, c.getTimeInMillis(),
                 AlarmManager.INTERVAL_HOUR, mAlarmHourly);
     }
@@ -201,6 +210,7 @@ public class StatusBarHeaderMachine {
                 doUpdateStatusHeaderObservers(true);
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(Intent.ACTION_SCREEN_ON);
+                filter.addAction(Intent.ACTION_SCREEN_OFF);
                 filter.addAction(STATUS_BAR_HEADER_UPDATE_ACTION);
                 mContext.registerReceiver(mBroadcastReceiver, filter);
                 setHourlyAlarm();
