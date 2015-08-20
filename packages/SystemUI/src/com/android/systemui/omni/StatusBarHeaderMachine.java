@@ -70,7 +70,8 @@ public class StatusBarHeaderMachine {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (STATUS_BAR_HEADER_UPDATE_ACTION.equals(intent.getAction())) {
-               if (mScreenOn) {
+
+                if (mScreenOn) {
                     if (DEBUG) Log.i(TAG, "status bar header background alarm triggered");
                     doUpdateStatusHeaderObservers(false);
                 }
