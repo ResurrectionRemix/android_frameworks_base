@@ -113,7 +113,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         mConfig = RecentsConfiguration.getInstance();
         mInflater = LayoutInflater.from(context);
         mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-        mTotalMem = getTotalMemory();
         mShakeSensorManager = new ShakeSensorManager(mContext, this);
     }
 
@@ -456,23 +455,17 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         MemoryInfo memInfo = new MemoryInfo();
         mAm.getMemoryInfo(memInfo);
             int available = (int)(memInfo.availMem / 1048576L);
+            int max = (int)(getTotalMemory() / 1048576L);
             mMemText.setText("Free RAM: " + String.valueOf(available) + "MB");
-            mMemBar.setMax(mTotalMem);
+            mMemBar.setMax(max);
             mMemBar.setProgress(available);
     }
 
-    public int getTotalMemory() {
-        int memory = 0;
-        try {
-            final FileReader localFileReader = new FileReader("/proc/meminfo");
-            final BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
-            String str2 = localBufferedReader.readLine(); // meminfo
-            String[] arrayOfString = str2.split("\\s+");
-            memory = Integer.valueOf(arrayOfString[1]).intValue() * 1024;
-            localBufferedReader.close();
-        } catch (IOException e) {
-        }
-        return memory / 1048576;
+    public long getTotalMemory() {
+        MemoryInfo memInfo = new MemoryInfo();
+        mAm.getMemoryInfo(memInfo);
+        long totalMem = memInfo.totalMem;
+        return totalMem;
     }
 
     public void noUserInteraction() {
