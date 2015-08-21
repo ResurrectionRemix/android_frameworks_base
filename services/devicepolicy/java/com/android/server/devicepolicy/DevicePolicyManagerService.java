@@ -3829,13 +3829,18 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         }
 
         // Keystore.isEmpty() requires system UID
-        long token = Binder.clearCallingIdentity();
-        try {
-            if (!KeyStore.getInstance().isEmpty()) {
-                return true;
+        if (Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.ENABLE_DEVICE_POLICY_OVERRIDE, 1) == 1) {
+            long token = Binder.clearCallingIdentity();
+            try {
+                if (!KeyStore.getInstance().isEmpty()) {
+                    return true;
+                }
+            } finally {
+                Binder.restoreCallingIdentity(token);
             }
-        } finally {
-            Binder.restoreCallingIdentity(token);
+        } else {
+            return false;
         }
 
         return false;
