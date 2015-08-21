@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2013 The OmniROM Project
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">화면 녹화 중 입니다</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">화면 녹화 중</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">중지</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">포인터 보이기</string>
+    <string name="screenrecord_notif_pointer_off">포인터 숨기기</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">화면을 녹화할 수 없습니다</string>
+
+
+    <!-- Quick settings -->
+    <string name="quick_settings_screenrecord">화면 녹화</string>
+    <string name="quick_settings_screenrecord_on">녹화중...</string>
+
+</resources>
