@@ -21,14 +21,5 @@
         android:id="@+id/setting_confirmation_dialog_visual_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" 
-        android:visibility="gone" />
-
-    <android.widget.GifView
-        android:id="@+id/setting_confirmation_dialog_visual_gif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
+        android:layout_centerInParent="true" />
 </RelativeLayout>
