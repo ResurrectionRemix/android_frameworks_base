@@ -1070,7 +1070,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     public void enableShake(boolean enableShakeClean) {
-        if (enableShakeClean && mScreenOnFromKeyguard) {
+        if (enableShakeClean && enableShakeCleanByUser && mScreenOnFromKeyguard) {
             mShakeSensorManager.enable(20);
         } else {
             mShakeSensorManager.disable();
@@ -3100,7 +3100,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         mExpandedVisible = true;
-        enableShake(true && enableShakeCleanByUser);
+        enableShake(true);
         if (mNavigationBarView != null)
             mNavigationBarView.setSlippery(true);
 
