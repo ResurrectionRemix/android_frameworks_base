@@ -112,13 +112,5 @@
     
     <!-- Pie tile -->
     <string name="quick_settings_pie">Pie</string>
-
-    <!-- Shake to clear Recents apps -->
-    <string name="shake_to_clean_recents_title">Shake To Clear Recents applications</string>
-    <string name="shake_to_clean_recents_message">Would you like to clear the Running applications shown in recents screen by shaking the phone? Doze shake mode needs to be enabled. Enabling it might drain your battery!</string>
-
-    <!-- Shake to clear notifications -->
-    <string name="shake_to_clean_notifications_title">Shake To Clear Notifications</string>
-    <string name="shake_to_clean_notifications_message">Would you like to clear the Expanded Notifications by shaking the phone? Doze shake mode needs to be enabled. Enabling it might drain your battery!</string>
-
 </resources>
+
