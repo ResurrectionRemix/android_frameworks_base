@@ -109,6 +109,7 @@ import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.Pair;
+import android.util.SettingConfirmationHelper;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.HardwareCanvas;
@@ -330,6 +331,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private ShakeSensorManager mShakeSensorManager;
     private boolean enableShakeCleanByUser;
+    private boolean enableShakeClean;
 
     int mPixelFormat;
     Object mQueueLock = new Object();
@@ -678,9 +680,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
             mBrightnessControl = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
-                    UserHandle.USER_CURRENT) == 1;
-            enableShakeCleanByUser = Settings.System.getIntForUser(resolver,
-                    Settings.System.SHAKE_TO_CLEAN_NOTIFICATIONS, 1,
                     UserHandle.USER_CURRENT) == 1;
             mQSCSwitch = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
@@ -1066,11 +1065,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     @Override
     public synchronized void onShake() {
+        ContentResolver resolver = mContext.getContentResolver();
+        enableShakeCleanByUser = Settings.System.getIntForUser(
+                resolver, Settings.System.SHAKE_TO_CLEAN_NOTIFICATIONS, 1, UserHandle.USER_CURRENT) == 1;
         clearAllNotifications();
     }
 
     public void enableShake(boolean enableShakeClean) {
-        if (enableShakeClean && enableShakeCleanByUser && mScreenOnFromKeyguard) {
+        if (enableShakeClean) {
             mShakeSensorManager.enable(20);
         } else {
             mShakeSensorManager.disable();
@@ -1240,6 +1242,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mDismissView.setOnButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              SettingConfirmationHelper helper =  new SettingConfirmationHelper();
+                  helper.showConfirmationDialogForSetting(
+                  mContext,
+                  mContext.getString(R.string.shake_to_clean_notifications_title),
+                  mContext.getString(R.string.shake_to_clean_notifications_message),
+                  mContext.getResources().getDrawable(R.drawable.shake_to_clean_notifications),
+                  Settings.System.SHAKE_TO_CLEAN_NOTIFICATIONS,
+                  null);
                 clearAllNotifications();
             }
         });

@@ -35,6 +35,7 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.util.EventLog;
+import android.util.SettingConfirmationHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowInsets;
@@ -95,7 +96,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     private int mTotalMem;
 
     private ShakeSensorManager mShakeSensorManager;
-	private boolean enableShakeCleanByUser;
+    private boolean enableShakeCleanByUser;
     private boolean enableShakeClean;
 
     public RecentsView(Context context) {
@@ -117,15 +118,15 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         mTotalMem = getTotalMemory();
         mShakeSensorManager = new ShakeSensorManager(mContext, this);
+
     }
 
     @Override
     public synchronized void onShake() {
-        startHideClearRecentsButtonAnimation();
         dismissAllTasksAnimated();
     }
 
-    public void enableShake(boolean enableShakeClean) {
+    public void enableShake (boolean enableShakeClean) {
         if (enableShakeClean && enableShakeCleanByUser) {
             mShakeSensorManager.enable(20);
         } else {
@@ -400,7 +401,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
 
         enableShakeCleanByUser = Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.SHAKE_TO_CLEAN_RECENTS, 1) == 1;
-
         Rect taskStackBounds = new Rect();
         mConfig.getTaskStackBounds(width, height, mConfig.systemInsets.top,
                 mConfig.systemInsets.right, taskStackBounds);
@@ -541,6 +541,20 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         });
         mMemText = (TextView) ((View)getParent()).findViewById(R.id.recents_memory_text);
         mMemBar = (ProgressBar) ((View)getParent()).findViewById(R.id.recents_memory_bar);
+
+        mClearRecents.setOnLongClickListener(new View.OnLongClickListener() {
+             public boolean onLongClick(View v) {
+		    SettingConfirmationHelper helper =  new SettingConfirmationHelper();
+                        helper.showConfirmationDialogForSetting(
+                        mContext,
+                        mContext.getString(R.string.shake_to_clean_recents_title),
+                        mContext.getString(R.string.shake_to_clean_recents_message),
+                        mContext.getResources().getDrawable(R.drawable.shake_to_clean_recents),
+                        Settings.System.SHAKE_TO_CLEAN_RECENTS,
+                        null);
+                        return true;
+             }
+        });
     }
 
     /**
