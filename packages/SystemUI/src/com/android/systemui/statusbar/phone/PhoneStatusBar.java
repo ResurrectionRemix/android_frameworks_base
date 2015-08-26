@@ -580,7 +580,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_SIZE),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor( 
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.System.SHAKE_TO_CLEAN_NOTIFICATIONS), false, this,
                     UserHandle.USER_ALL);
             update();
@@ -680,7 +680,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
             enableShakeCleanByUser = Settings.System.getIntForUser(resolver,
-                    Settings.System.SHAKE_TO_CLEAN_NOTIFICATIONS, 0,
+                    Settings.System.SHAKE_TO_CLEAN_NOTIFICATIONS, 1,
                     UserHandle.USER_CURRENT) == 1;
             mQSCSwitch = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;

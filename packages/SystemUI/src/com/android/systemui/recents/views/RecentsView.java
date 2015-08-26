@@ -95,6 +95,8 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     private int mTotalMem;
 
     private ShakeSensorManager mShakeSensorManager;
+	private boolean enableShakeCleanByUser;
+    private boolean enableShakeClean;
 
     public RecentsView(Context context) {
         super(context);
@@ -124,7 +126,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     }
 
     public void enableShake(boolean enableShakeClean) {
-        if (enableShakeClean) {
+        if (enableShakeClean && enableShakeCleanByUser) {
             mShakeSensorManager.enable(20);
         } else {
             mShakeSensorManager.disable();
@@ -395,6 +397,9 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
 
                 boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SHOW_CLEAR_ALL_RECENTS, 1, UserHandle.USER_CURRENT) != 0;
+
+        enableShakeCleanByUser = Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.SHAKE_TO_CLEAN_RECENTS, 1) == 1;
 
         Rect taskStackBounds = new Rect();
         mConfig.getTaskStackBounds(width, height, mConfig.systemInsets.top,
@@ -717,7 +722,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         final Runnable launchRunnable = new Runnable() {
             @Override
             public void run() {
-                enableShake(false);
                 if (task.isActive) {
                     // Bring an active task to the foreground
                     ssp.moveTaskToFront(task.key.id, launchOpts);
