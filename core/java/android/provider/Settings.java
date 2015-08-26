@@ -4814,6 +4814,15 @@ public final class Settings {
          */
         public static final String WHEN_TO_MAKE_WIFI_CALLS = "when_to_make_wifi_calls";
 
+        /**
+         * Settings to reset on user request. They will fall back to their default value (0).
+         *
+         * @hide
+         */
+        public static final String[] SETTINGS_TO_RESET = {
+
+         };
+
         // Settings moved to Settings.Secure
 
         /**
