@@ -4426,7 +4426,8 @@ public final class ActivityThread {
         }
 
 
-        final boolean is24Hr = android.text.format.DateFormat.is24HourFormat(appContext);
+        final boolean is24Hr = android.text.format.DateFormat.is24HourFormat(
+            mCoreSettings.getString(Settings.System.TIME_12_24), data.config.locale);
         DateFormat.set24HourTimePref(is24Hr);
 
         View.mDebugViewAttributes =
