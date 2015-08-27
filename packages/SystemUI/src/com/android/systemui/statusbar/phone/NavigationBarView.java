@@ -199,7 +199,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
                 mHomeAppearing = false;
             }
 
-            if (view.getId() == R.id.home)
                 onNavButtonTouched();
         }
 
