@@ -772,6 +772,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             mNeedsNavigationBar = true;
         }
 
+        final TunerService tunerService = Dependency.get(TunerService.class);
+        tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
+        tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
+        tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
+        tunerService.addTunable(this, QS_BACKGROUND_BLUR);
+
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -904,12 +910,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         int disabledFlags2 = result.mDisabledFlags2;
         Dependency.get(InitController.class).addPostInitTask(
                 () -> setUpDisableFlags(disabledFlags1, disabledFlags2));
-
-        final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, SCREEN_BRIGHTNESS_MODE);
-        tunerService.addTunable(this, STATUS_BAR_BRIGHTNESS_CONTROL);
-        tunerService.addTunable(this, FORCE_SHOW_NAVBAR);
-        tunerService.addTunable(this, QS_BACKGROUND_BLUR);
     }
 
     // ================================================================================
