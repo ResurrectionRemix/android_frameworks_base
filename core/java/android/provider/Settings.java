@@ -4169,8 +4169,13 @@ public final class Settings {
         /** @hide */ public static final int HEADS_UP_USER_ON = 1;
 
         /**
+         * Toast icon
+         *
+         * @hide
+         */
+        public static final String TOAST_ICON = "toast_icon";
 
-         
+        /**
          * volume answer.
          * @hide
          */
