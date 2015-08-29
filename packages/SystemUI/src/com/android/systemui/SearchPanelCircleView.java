@@ -51,6 +51,8 @@ public class SearchPanelCircleView extends FrameLayout {
     private final Rect mCircleRect = new Rect();
     private final Rect mCircleRectLeft = new Rect();
     private final Rect mCircleRectRight = new Rect();
+    private final Rect mCircleRectLeft1 = new Rect();
+    private final Rect mCircleRectRight1 = new Rect();
     private final Rect mStaticRect = new Rect();
     private final Interpolator mFastOutSlowInInterpolator;
     private final Interpolator mAppearInterpolator;
@@ -61,7 +63,7 @@ public class SearchPanelCircleView extends FrameLayout {
     private boolean mAnimatingOut;
     private float mOutlineAlpha;
     private float mOffset;
-    private float mCircleSize, mLeftCircleSize, mRightCircleSize;
+    private float mCircleSize, mLeftCircleSize, mRightCircleSize, mLeftCircleSize1, mRightCircleSize1;
     private boolean mHorizontal;
     private boolean mLeftNavbar;
     private boolean mCircleHidden;
@@ -73,6 +75,8 @@ public class SearchPanelCircleView extends FrameLayout {
     public int mIntersectIndex = -1;
     private View mLeftParent, mRightParent;
     private View mLeftLogo, mRightLogo;
+    private View mLeftParent1, mRightParent1;
+    private View mLeftLogo1, mRightLogo1;
 
     private ValueAnimator mOffsetAnimator;
     private ValueAnimator mCircleAnimator;
@@ -154,6 +158,10 @@ public class SearchPanelCircleView extends FrameLayout {
         mLeftParent.invalidate();
         mRightParent.invalidateOutline();
         mRightParent.invalidate();
+        mLeftParent1.invalidateOutline();
+        mLeftParent1.invalidate();
+        mRightParent1.invalidateOutline();
+        mRightParent1.invalidate();
     }
 
     @Override
@@ -167,6 +175,8 @@ public class SearchPanelCircleView extends FrameLayout {
         mLogo.layout(0, 0, mLogo.getMeasuredWidth(), mLogo.getMeasuredHeight());
         mLeftLogo.layout(0, 0, mLeftLogo.getMeasuredWidth(), mLeftLogo.getMeasuredHeight());
         mRightLogo.layout(0, 0, mRightLogo.getMeasuredWidth(), mRightLogo.getMeasuredHeight());
+        mLeftLogo1.layout(0, 0, mLeftLogo1.getMeasuredWidth(), mLeftLogo1.getMeasuredHeight());
+        mRightLogo1.layout(0, 0, mRightLogo1.getMeasuredWidth(), mRightLogo1.getMeasuredHeight());
         if (changed) {
             updateCircleRect(mStaticRect, mStaticOffset, true);
         }
@@ -232,11 +242,19 @@ public class SearchPanelCircleView extends FrameLayout {
                 case 2:
                     mRightCircleSize = circleSize;
                     break;
+                case 3:
+                    mLeftCircleSize1 = circleSize;
+                    break;
+                case 4:
+                    mRightCircleSize1 = circleSize;
+                    break;
             }
         } else {
             mCircleSize = circleSize;
             mLeftCircleSize = circleSize;
             mRightCircleSize = circleSize;
+            mLeftCircleSize1 = circleSize;
+            mRightCircleSize1 = circleSize;
         }
 
         updateLayout();
@@ -249,6 +267,8 @@ public class SearchPanelCircleView extends FrameLayout {
         setElevation(offset);
         mLeftParent.setElevation(offset);
         mRightParent.setElevation(offset);
+        mLeftParent1.setElevation(offset);
+        mRightParent1.setElevation(offset);
     }
 
     /**
@@ -312,6 +332,8 @@ public class SearchPanelCircleView extends FrameLayout {
         updateLogo(rect, mLogo, exitAnimationRunning);
         updateLogo(mCircleRectLeft, mLeftLogo, exitAnimationRunning);
         updateLogo(mCircleRectRight, mRightLogo, exitAnimationRunning);
+        updateLogo(mCircleRectLeft1, mLeftLogo1, exitAnimationRunning);
+        updateLogo(mCircleRectRight1, mRightLogo1, exitAnimationRunning);
         invalidateOutline();
         invalidate();
         updateClipping();
@@ -323,6 +345,8 @@ public class SearchPanelCircleView extends FrameLayout {
             setClipToOutline(clip);
             mLeftParent.setClipToOutline(clip);
             mRightParent.setClipToOutline(clip);
+            mLeftParent1.setClipToOutline(clip);
+            mRightParent1.setClipToOutline(clip);
             mClipToOutline = clip;
         }
     }
@@ -357,6 +381,10 @@ public class SearchPanelCircleView extends FrameLayout {
         updateCircleRectLeft(mOffset, false);
 
         updateCircleRectRight(mOffset, false);
+
+        updateCircleRectLeft1(mOffset, false);
+
+        updateCircleRectRight1(mOffset, false);
     }
 
     private void updateCircleRectRight(float offset, boolean useStaticSize) {
@@ -366,14 +394,14 @@ public class SearchPanelCircleView extends FrameLayout {
             if (mLeftNavbar) {
                 left = (int) (circleSize / 2);
             } else {
-                left = (int) (getWidth() - circleSize / 2 - offset);
+                left = (int) (getWidth() - circleSize / 2 - offset - 100);
             }
             top = (int) (getHeight() - circleSize) / 2;
-            top = (int) ((top / 2) - (circleSize / 2));
+            top = (int) ((top / 2) - (circleSize / 2) + 65);
         } else {
-            left = (int) ((getWidth() / 4) - ((3 * circleSize) / 4));
+            left = (int) ((getWidth() / 4) - ((3 * circleSize) / 4) + 65);
             left = (int) (getWidth() - left - circleSize);
-            top = (int) (getHeight() - circleSize / 2 - offset);
+            top = (int) (getHeight() - circleSize / 2 - offset - 100);
         }
         mCircleRectRight.set(left, top, (int) (left + circleSize), (int) (top + circleSize));
     }
@@ -385,16 +413,46 @@ public class SearchPanelCircleView extends FrameLayout {
             if (mLeftNavbar) {
                 left = (int) (circleSize / 2);
             } else {
-                left = (int) (getWidth() - circleSize / 2 - offset);
+                left = (int) (getWidth() - circleSize / 2 - offset - 100);
             }
             top = (int) ((getHeight() / 4) - ((3 * circleSize) / 4));
-            top = (int) (getHeight() - top - circleSize);
+            top = (int) (getHeight() - top - circleSize - 80);
         } else {
             left = (int) (getWidth() - circleSize) / 2;
-            left = (int) ((left / 2) - (circleSize / 2));
-            top = (int) (getHeight() - circleSize / 2 - offset);
+            left = (int) ((left / 2) - (circleSize / 2) + 65);
+            top = (int) (getHeight() - circleSize / 2 - offset - 100);
         }
         mCircleRectLeft.set(left, top, (int) (left + circleSize), (int) (top + circleSize));
+    }
+
+    private void updateCircleRectRight1(float offset, boolean useStaticSize) {
+        int left, top;
+        float circleSize = useStaticSize ? mCircleMinSize : mRightCircleSize1;
+        if (mHorizontal) {
+            left = (int) (getWidth() - circleSize / 2 - offset - 30);
+            top = (int) (getHeight() - circleSize) / 2;
+            top = (int) ((top / 2) - (circleSize / 2) - 80);
+        } else {
+            left = (int) ((getWidth() / 4) - ((3 * circleSize) / 4) - 80);
+            left = (int) (getWidth() - left - circleSize);
+            top = (int) (getHeight() - circleSize / 2 - offset - 30);
+        }
+        mCircleRectRight1.set(left, top, (int) (left + circleSize), (int) (top + circleSize));
+    }
+
+    private void updateCircleRectLeft1(float offset, boolean useStaticSize) {
+        int left, top;
+        float circleSize = useStaticSize ? mCircleMinSize : mLeftCircleSize1;
+        if (mHorizontal) {
+            left = (int) (getWidth() - circleSize / 2 - offset - 30);
+            top = (int) ((getHeight() / 4) - ((3 * circleSize) / 4));
+            top = (int) (getHeight() - top - circleSize + 65);
+        } else {
+            left = (int) (getWidth() - circleSize) / 2;
+            left = (int) ((left / 2) - (circleSize / 2) - 80);
+            top = (int) (getHeight() - circleSize / 2 - offset - 30);
+        }
+        mCircleRectLeft1.set(left, top, (int) (left + circleSize), (int) (top + circleSize));
     }
 
     private void updateCircleRect(Rect rect, float offset, boolean useStaticSize) {
@@ -457,8 +515,8 @@ public class SearchPanelCircleView extends FrameLayout {
         }
         applyCircleSize(0);
         setOffset(0);
-        setCircleSize(mCircleMinSize, true, null, 50, null);
-        setOffset(mStaticOffset, true, 50, null, null);
+        setCircleSize(mCircleMinSize, true, null, 30, null);
+        setOffset(mStaticOffset, true, 30, null, null);
         mCircleHidden = false;
     }
 
@@ -500,6 +558,8 @@ public class SearchPanelCircleView extends FrameLayout {
                 mLogo.setAlpha(logoValue);
                 mLeftLogo.setAlpha(logoValue);
                 mRightLogo.setAlpha(logoValue);
+                mLeftLogo1.setAlpha(logoValue);
+                mRightLogo1.setAlpha(logoValue);
                 invalidateOutline();
                 invalidate();
             }
@@ -513,6 +573,8 @@ public class SearchPanelCircleView extends FrameLayout {
                 mLogo.setAlpha(1.0f);
                 mLeftLogo.setAlpha(1.0f);
                 mRightLogo.setAlpha(1.0f);
+                mLeftLogo1.setAlpha(1.0f);
+                mRightLogo1.setAlpha(1.0f);
                 mBackgroundPaint.setAlpha(255);
                 mOutlineAlpha = 1.0f;
                 mFadeOutAnimator = null;
@@ -570,6 +632,12 @@ public class SearchPanelCircleView extends FrameLayout {
         } else if (index == 2) {
             circleCenterX = mCircleRectRight.centerX();
             circleCenterY = mCircleRectRight.centerY();
+        } else if (index == 3) {
+            circleCenterX = mCircleRectLeft1.centerX();
+            circleCenterY = mCircleRectLeft1.centerY();
+        } else if (index == 4) {
+            circleCenterX = mCircleRectRight1.centerX();
+            circleCenterY = mCircleRectRight1.centerY();
         }
         float radius = Math.max(mCircleSize, mCircleMinSize * 1.25f) * 0.70f;
         Ripple ripple = new Ripple(circleCenterX, circleCenterY, radius);
@@ -706,6 +774,13 @@ public class SearchPanelCircleView extends FrameLayout {
             mIntersectIndex = 0;
         } else if (isRectConsideredActive(mCircleRectRight, event)) {
             mIntersectIndex = 2;
+            return 2;
+        } else if (isRectConsideredActive(mCircleRectLeft1, event)) {
+            mIntersectIndex = 3;
+            return 3;
+        } else if (isRectConsideredActive(mCircleRectRight1, event)) {
+            mIntersectIndex = 4;
+            return 4;
         } else {
             mIntersectIndex = -1;
         }
@@ -717,9 +792,15 @@ public class SearchPanelCircleView extends FrameLayout {
         mLeftLogo = mLeftParent.findViewById(R.id.search_logo1);
         mRightParent = panelView.findViewById(R.id.two_parent);
         mRightLogo = mRightParent.findViewById(R.id.search_logo2);
+        mLeftParent1 = panelView.findViewById(R.id.three_parent);
+        mLeftLogo1 = mLeftParent1.findViewById(R.id.search_logo3);
+        mRightParent1 = panelView.findViewById(R.id.four_parent);
+        mRightLogo1 = mRightParent1.findViewById(R.id.search_logo4);
 
         mLeftParent.setBackground(new RectDrawable(mCircleRectLeft));
         mRightParent.setBackground(new RectDrawable(mCircleRectRight));
+        mLeftParent1.setBackground(new RectDrawable(mCircleRectLeft1));
+        mRightParent1.setBackground(new RectDrawable(mCircleRectRight1));
     }
 
     private class RectDrawable extends Drawable {

@@ -35,7 +35,7 @@ import java.net.URISyntaxException;
 import static com.android.internal.util.cm.NavigationRingConstants.*;
 
 public class NavigationRingHelpers {
-    public static final int MAX_ACTIONS = 3;
+    public static final int MAX_ACTIONS = 5;
 
     private NavigationRingHelpers() {
         // Do nothing here
@@ -47,8 +47,7 @@ public class NavigationRingHelpers {
         boolean isDefault = true;
 
         for (int i = 0; i < MAX_ACTIONS; i++) {
-            result[i] = Settings.Secure.getStringForUser(cr,
-                    Settings.Secure.NAVIGATION_RING_TARGETS[i], UserHandle.USER_CURRENT);
+            result[i] = Settings.Secure.getString(cr, Settings.Secure.NAVIGATION_RING_TARGETS[i]);
             if (result[i] != null) {
                 isDefault = false;
             }
@@ -79,12 +78,11 @@ public class NavigationRingHelpers {
 
     public static void resetActionsToDefaults(Context context) {
         final ContentResolver cr = context.getContentResolver();
-        Settings.Secure.putStringForUser(cr, Settings.Secure.NAVIGATION_RING_TARGETS[0], null,
-                UserHandle.USER_CURRENT);
-        Settings.Secure.putStringForUser(cr, Settings.Secure.NAVIGATION_RING_TARGETS[1],
-                ACTION_ASSIST, UserHandle.USER_CURRENT);
-        Settings.Secure.putStringForUser(cr, Settings.Secure.NAVIGATION_RING_TARGETS[2], null,
-                UserHandle.USER_CURRENT);
+        Settings.Secure.putString(cr, Settings.Secure.NAVIGATION_RING_TARGETS[0], null);
+        Settings.Secure.putString(cr, Settings.Secure.NAVIGATION_RING_TARGETS[1], ACTION_ASSIST);
+        Settings.Secure.putString(cr, Settings.Secure.NAVIGATION_RING_TARGETS[2], null);
+        Settings.Secure.putString(cr, Settings.Secure.NAVIGATION_RING_TARGETS[3], null);
+        Settings.Secure.putString(cr, Settings.Secure.NAVIGATION_RING_TARGETS[4], null);
     }
 
     public static boolean isAssistantAvailable(Context context) {
@@ -120,6 +118,12 @@ public class NavigationRingHelpers {
             resourceId = getTorchDrawableResId(context);
         } else if (action.equals(ACTION_ASSIST)) {
             resourceId = R.drawable.ic_navigation_ring_search;
+        } else if (action.equals(ACTION_POWER_MENU)) {
+            resourceId = R.drawable.ic_navigation_ring_standby;
+        } else if (action.equals(ACTION_LAST_APP)) {
+            resourceId = R.drawable.ic_navigation_ring_last_app;
+        } else if (action.equals(ACTION_EXPANDED_DESKTOP)) {
+            resourceId = R.drawable.ic_navigation_ring_expanded_desktop;
         }
 
         if (resourceId < 0) {
