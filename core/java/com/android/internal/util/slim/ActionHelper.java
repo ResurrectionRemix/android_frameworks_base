@@ -64,6 +64,40 @@ public class ActionHelper {
                     Settings.System.LOCKSCREEN_SHORTCUTS, config);
     }
 
+    public static ArrayList<ActionConfig> getRecentAppSidebarConfig(Context context) {
+        return (ConfigSplitHelper.getActionConfigValues(context,
+                getRecentAppSidebarProvider(context), null, null, false));
+    }
+
+    public static ArrayList<ActionConfig> getRecentAppSidebarConfigWithDescription(
+            Context context, String values, String entries) {
+        return (ConfigSplitHelper.getActionConfigValues(context,
+                getRecentAppSidebarProvider(context), values, entries, false));
+    }
+
+    private static String getRecentAppSidebarProvider(Context context) {
+        String config = Settings.System.getStringForUser(
+                context.getContentResolver(),
+                Settings.System.RECENT_APP_SIDEBAR_CONTENT,
+                UserHandle.USER_CURRENT);
+        if (config == null) {
+            config = "";
+        }
+        return config;
+    }
+
+    public static void setRecentAppSidebarConfig(
+            Context context, ArrayList<ActionConfig> actionConfig, boolean reset) {
+        String config;
+        if (reset) {
+            config = "";
+        } else {
+            config = ConfigSplitHelper.setActionConfig(actionConfig, false);
+        }
+        Settings.System.putString(context.getContentResolver(),
+                Settings.System.RECENT_APP_SIDEBAR_CONTENT, config);
+    }
+
     // General methods to retrieve the correct icon for the respective action.
     public static Drawable getActionIconImage(Context context,
             String clickAction, String customIcon) {
