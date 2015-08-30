@@ -5965,4 +5965,3 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 }
-
