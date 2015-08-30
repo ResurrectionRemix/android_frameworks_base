@@ -852,6 +852,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         startIntent.setComponent(cn);
         startIntent.setAction("start");
         mContext.startService(startIntent);
+	}
     
 
     private void prepareDialog() {
