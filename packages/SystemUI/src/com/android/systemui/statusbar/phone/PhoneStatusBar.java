@@ -286,6 +286,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // Weather temperature
     public static final int FONT_NORMAL = 0;
     public static final int FONT_BOLD = 1;
+    public static final int FONT_CONDENSED = 2;
+    public static final int FONT_LIGHT = 3;
+    public static final int FONT_LIGHT_ITALIC = 4;
 
     /** Allow some time inbetween the long press for back and recents. */
     private static final int LOCK_TO_APP_GESTURE_TOLERENCE = 200;
@@ -694,6 +697,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 break;
             case FONT_BOLD:
                 mWeatherTempView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+                break;
+            case FONT_CONDENSED:
+                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+                break;
+            case FONT_LIGHT:
+                mWeatherTempView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                break;
+            case FONT_LIGHT_ITALIC:
+                mWeatherTempView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
                 break;
         }
         mWeatherTempView.setVisibility(View.VISIBLE);
