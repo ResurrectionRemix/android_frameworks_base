@@ -154,6 +154,16 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
         state.ringerMode = mAudioManager.getRingerMode();
         state.icon = ResourceIcon.get(getNotificationIconId(state.zen, state.ringerMode));
         state.label = mContext.getString(R.string.quick_settings_notifications_label);
+        mRingerIndex = getRingerIndex(state.ringerMode, state.zen);
+    }
+
+    private int getRingerIndex(int ringerMode, int zenMode) {
+        for (int ringerIndex = 0; ringerIndex < RINGERS.length; ringerIndex++) {
+            if (ringerMode == RINGERS[ringerIndex] && zenMode == ZENS[ringerIndex]) {
+                return ringerIndex;
+            }
+        }
+        return 0;
     }
 
     private int getNotificationIconId(int zenMode, int ringerMode) {
