@@ -34,6 +34,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.util.Log;
 import android.view.View;
@@ -60,10 +63,12 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
     private static final int[] RINGERS = new int[] {
         AudioManager.RINGER_MODE_NORMAL,
         AudioManager.RINGER_MODE_VIBRATE,
+        AudioManager.RINGER_MODE_SILENT,
         AudioManager.RINGER_MODE_NORMAL,
         AudioManager.RINGER_MODE_SILENT
     };
     private static final int[] ZENS = new int[] {
+        Global.ZEN_MODE_OFF,
         Global.ZEN_MODE_OFF,
         Global.ZEN_MODE_OFF,
         Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS,
@@ -111,6 +116,14 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
         int ringerMode = RINGERS[mRingerIndex];
         int zenMode = ZENS[mRingerIndex];
 
+        // If we are setting a ringer state, ring to indicate it
+        if (ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+            Ringtone ringTone = RingtoneManager.getRingtone(mContext,
+                Settings.System.DEFAULT_NOTIFICATION_URI);
+            ringTone.setStreamType(AudioManager.STREAM_MUSIC);
+            ringTone.play();
+        }
+
         // If we are setting a vibrating state, vibrate to indicate it
         if (ringerMode == AudioManager.RINGER_MODE_VIBRATE && mVibrator != null) {
             boolean hasVibrator = mVibrator.hasVibrator();
@@ -124,6 +137,12 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
     }
 
     @Override
+    protected void handleLongClick() {
+        super.handleLongClick();
+        showDetail(true);
+    }
+
+    @Override
     protected void handleSecondaryClick() {
         showDetail(true);
     }
@@ -133,18 +152,22 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
         state.visible = true;
         state.zen = mZenController.getZen();
         state.ringerMode = mAudioManager.getRingerMode();
+        state.icon = ResourceIcon.get(getNotificationIconId(state.zen, state.ringerMode));
         state.label = mContext.getString(R.string.quick_settings_notifications_label);
-        if (state.zen == Global.ZEN_MODE_NO_INTERRUPTIONS) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_zen_on);
-        } else if (state.zen == Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS){
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_zen_important);
-        } else if (state.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_ringer_audible);
-        } else if (state.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_ringer_vibrate);
-        } else if (state.ringerMode == AudioManager.RINGER_MODE_SILENT) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_ringer_silent);
+    }
+
+    private int getNotificationIconId(int zenMode, int ringerMode) {
+        int retValue = R.drawable.ic_qs_ringer_audible;
+        if (zenMode == Global.ZEN_MODE_NO_INTERRUPTIONS) {
+            retValue = R.drawable.ic_qs_zen_on;
+        } else if (zenMode == Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS){
+            retValue = R.drawable.ic_qs_zen_important;
+        } else if (ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
+            retValue = R.drawable.ic_qs_ringer_vibrate;
+        } else if (ringerMode == AudioManager.RINGER_MODE_SILENT) {
+            retValue = R.drawable.ic_qs_ringer_silent;
         }
+        return retValue;
     }
 
     private final ZenModeController.Callback mCallback = new ZenModeController.Callback() {
