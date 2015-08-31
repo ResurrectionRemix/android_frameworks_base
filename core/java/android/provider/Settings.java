@@ -3758,12 +3758,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_WEATHER_SIZE = "status_bar_weather_size";
-	/**
-         * Statusbar weather font style setting
-         * @hide
-         */
-        public static final String STATUS_BAR_WEATHER_FONT_STYLE = "status_bar_weather_font_style";
-
         /**
          * Visibility of SIM icons of unpopulated SIM slots in MSIM mode
          * 0: Hide unpopulated SIM icons
@@ -9907,4 +9901,5 @@ public final class Settings {
         return "android-" + Long.toHexString(androidId);
     }
 }
+
 
