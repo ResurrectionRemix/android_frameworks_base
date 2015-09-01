@@ -690,7 +690,6 @@ public class QSPanel extends ViewGroup {
         }
     }
 
-<<<<<<< HEAD
     public void setDetailBackgroundColor(int color) {
         mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
