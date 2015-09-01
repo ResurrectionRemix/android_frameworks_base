@@ -119,7 +119,7 @@ public class Recents extends SystemUI
             if (mConfig.multiStackEnabled) return;
 
             RecentsConfiguration config = RecentsConfiguration.getInstance();
-            if (config.svelteLevel == RecentsConfiguration.SVELTE_NONE) {
+            if (config != null && config.svelteLevel == RecentsConfiguration.SVELTE_NONE) {
                 RecentsTaskLoader loader = RecentsTaskLoader.getInstance();
                 SystemServicesProxy ssp = loader.getSystemServicesProxy();
                 ActivityManager.RunningTaskInfo runningTaskInfo = ssp.getTopMostTask();
