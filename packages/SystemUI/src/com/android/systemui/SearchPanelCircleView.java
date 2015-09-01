@@ -394,14 +394,14 @@ public class SearchPanelCircleView extends FrameLayout {
             if (mLeftNavbar) {
                 left = (int) (circleSize / 2);
             } else {
-                left = (int) (getWidth() - circleSize / 2 - offset - 100);
+                left = (int) (getWidth() - circleSize / 2 - offset - 150);
             }
             top = (int) (getHeight() - circleSize) / 2;
-            top = (int) ((top / 2) - (circleSize / 2) + 65);
+            top = (int) ((top / 2) - (circleSize / 2) + 175);
         } else {
-            left = (int) ((getWidth() / 4) - ((3 * circleSize) / 4) + 65);
+            left = (int) ((getWidth() / 4) - ((3 * circleSize) / 4) + 175);
             left = (int) (getWidth() - left - circleSize);
-            top = (int) (getHeight() - circleSize / 2 - offset - 100);
+            top = (int) (getHeight() - circleSize / 2 - offset - 150);
         }
         mCircleRectRight.set(left, top, (int) (left + circleSize), (int) (top + circleSize));
     }
@@ -413,14 +413,14 @@ public class SearchPanelCircleView extends FrameLayout {
             if (mLeftNavbar) {
                 left = (int) (circleSize / 2);
             } else {
-                left = (int) (getWidth() - circleSize / 2 - offset - 100);
+                left = (int) (getWidth() - circleSize / 2 - offset - 150);
             }
             top = (int) ((getHeight() / 4) - ((3 * circleSize) / 4));
-            top = (int) (getHeight() - top - circleSize - 80);
+            top = (int) (getHeight() - top - circleSize - 180);
         } else {
             left = (int) (getWidth() - circleSize) / 2;
-            left = (int) ((left / 2) - (circleSize / 2) + 65);
-            top = (int) (getHeight() - circleSize / 2 - offset - 100);
+            left = (int) ((left / 2) - (circleSize / 2) + 180);
+            top = (int) (getHeight() - circleSize / 2 - offset - 150);
         }
         mCircleRectLeft.set(left, top, (int) (left + circleSize), (int) (top + circleSize));
     }
