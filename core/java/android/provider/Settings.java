@@ -4385,6 +4385,14 @@ public final class Settings {
         public static final String STATUS_BAR_LOGO = "status_bar_logo";
  
          /**
+         * Style of Status bar logo
+         * 0 - Left (default)
+         * 1 - Right
+         * @hide
+         */
+        public static final String STATUS_BAR_LOGO_STYLE = "status_bar_logo_style";
+
+         /**
          * Statusbar logo color setting
          * @hide
          */

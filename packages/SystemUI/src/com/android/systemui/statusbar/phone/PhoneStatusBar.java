@@ -419,6 +419,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mLogo;
     private ImageView Logo;
     private int mLogoColor;
+    private int mLogoStyle;
 
     // position
     int[] mPositionTmp = new int[2];
@@ -538,6 +539,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_LOGO_COLOR),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_GREETING),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -648,6 +652,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     updateClearAll();
                     updateEmptyShadeView();
             } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO_STYLE))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO_COLOR))) {
+                    recreateStatusBar();
+                    updateRowStates();
+                    updateSpeedbump();
+                    updateClearAll();
+                    updateEmptyShadeView();
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.PIE_CONTROLS))) {
                     attachPieContainer(isPieEnabled());
             } else if (uri.equals(Settings.System.getUriFor(
@@ -721,10 +734,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mShowStatusBarCarrier = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_CARRIER, 0, mCurrentUserId) == 1;
             showStatusBarCarrierLabel(mShowStatusBarCarrier);
+            
+            mLogoStyle = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_LOGO_STYLE, 0,
+                    UserHandle.USER_CURRENT);
+
             mShowTaskManager = Settings.System.getIntForUser(resolver,
                     Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
             mLogo = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_LOGO, 0, mCurrentUserId) == 1;
+            showLogo(mLogo, mLogoStyle);
+            
             mLogoColor = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
             showLogo(mLogo, mLogoColor);
@@ -771,6 +791,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	mWeatherTempView.setTextSize(size);
         mWeatherTempView.setVisibility(View.VISIBLE);
     }   
+
+    public void showLogo(boolean show, int color) {
+        if (mStatusBarView == null) return;
+        ContentResolver resolver = mContext.getContentResolver();
+        Logo.setColorFilter(color, Mode.SRC_IN);
+        if (Logo != null) {
+            Logo.setVisibility(show ? (mLogo ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+    }
 
     private boolean isPieEnabled() {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -1400,6 +1429,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 }
             });
         }
+
+        mLogoStyle = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.STATUS_BAR_LOGO_STYLE, 0,
+                UserHandle.USER_CURRENT);
+        if (mLogoStyle == 0) {
+            Logo = (ImageView) mStatusBarView.findViewById(R.id.left_logo);
+        } else {
+            Logo = (ImageView) mStatusBarView.findViewById(R.id.logo);
+        }
+
 	mWeatherTempStyle = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
                 UserHandle.USER_CURRENT);
@@ -4200,16 +4239,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     };
-
-    public void showLogo(boolean show, int color) {
-        if (mStatusBarView == null) return;
-        ContentResolver resolver = mContext.getContentResolver();
-        Logo = (ImageView) mStatusBarView.findViewById(R.id.logo);
-        Logo.setColorFilter(color, Mode.SRC_IN);
-        if (Logo != null) {
-            Logo.setVisibility(show ? (mLogo ? View.VISIBLE : View.GONE) : View.GONE);
-        }
-    }
 
     public void showStatusBarCarrierLabel(boolean show) {
         if (mStatusBarView == null) return;

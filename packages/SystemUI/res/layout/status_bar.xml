@@ -93,7 +93,7 @@
 
                 </com.android.keyguard.AlphaOptimizedLinearLayout>
                 <ImageView
-                    android:id="@+id/logo"
+                    android:id="@+id/left_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="1dip"
@@ -192,6 +192,15 @@
                 android:paddingStart="7dp"
                 android:visibility="gone"
                 android:gravity="center_vertical|start"
+                />
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="1dp"
+                android:src="@drawable/ic_status_bar_logo"
+                android:scaleType="center"
+                android:visibility="gone"
                 />
         </com.android.keyguard.AlphaOptimizedLinearLayout>
     </LinearLayout>
