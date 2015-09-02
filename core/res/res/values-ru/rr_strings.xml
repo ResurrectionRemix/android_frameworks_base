@@ -38,7 +38,6 @@
     <string name="animation_grow_shrink_right">Увеличение (справа)</string>
     <string name="action_null">Пустой</string>
 
-
     <!-- status message in phone options dialog for when pie is on -->
     <string name="global_actions_pie_mode_on_status">Pie включен</string>
 
