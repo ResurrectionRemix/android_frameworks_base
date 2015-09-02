@@ -113,12 +113,14 @@ public class CreateShortcut extends LauncherActivity {
             return R.drawable.ic_qs_auto_rotate;
         } else if (c.equals("Torch")) {
             return R.drawable.ic_qs_torch;
-        } else if (c.equals("ChamberOfSecrets")) {
-            return R.drawable.ic_qs_slim_action;
+        } else if (c.equals("SleepScreen")) {
+            return R.drawable.ic_qs_sleep;
         } else if (c.equals("Reboot")) {
             return R.drawable.ic_qs_reboot;
         } else if (c.equals("Recovery")) {
             return R.drawable.ic_qs_reboot_recovery;
+        } else if (c.equals("ChamberOfSecrets")) {
+            return R.drawable.ic_qs_slim_action;
         } else {
             // Oh-Noes, you found a wild derp.
             return R.drawable.ic_sysbar_null;
