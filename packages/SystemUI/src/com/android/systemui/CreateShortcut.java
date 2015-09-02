@@ -121,6 +121,8 @@ public class CreateShortcut extends LauncherActivity {
             return R.drawable.ic_qs_reboot_recovery;
         } else if (c.equals("VolumePanel")) {
             return R.drawable.ic_qs_volume;
+        } else if (c.equals("RestartUI")) {
+            return R.drawable.ic_qs_systemui_restart;
         } else if (c.equals("ChamberOfSecrets")) {
             return R.drawable.ic_qs_slim_action;
         } else {
