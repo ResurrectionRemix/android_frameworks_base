@@ -79,9 +79,24 @@
     <!-- Slim Shortcut Actions -->
     <string name="shortcut_picker">Ярлыки</string>
     <string name="shortcut_rotation">Автоповорот</string>
+    <string name="shortcut_torch">Фонарик</string>
+    <string name="shortcut_chamber">Тайная комната</string>
     <string name="shortcut_reboot">Перезагрузка</string>
     <string name="shortcut_recovery">Режим восстановления</string>
     <string name="shortcut_toggle_title">Действие для выполнения</string>
+    <string name="chamber_disabled">Тайная комната закрыта</string>
+    <string name="chamber_title">Введите строку настроек</string>
+    <string name="chamber_message">Введите строку настроек, которая является либо функцией флажка (вкл/выкл), либо настройкой списка. Например, doze_enabled и тому подобное. Настройки можно найти в файле исходного кода Settings.java. ВНИМАНИЕ: Эта функция опасна!</string>
+    <string name="chamber_invalid">Введено неверное значение. Будьте внимательны.</string>
+    <string name="chamber_invalid_setting">Попробуйте вручную переключить параметры, чтобы убедиться, что необходимые настройки существуют в базе данных.</string>
+    <string name="chamber_checkbox">Переключить</string>
+    <string name="chamber_chk_message">Эта настройка - установка переключателя?</string>
+    <string name="chamber_int">Вводимые значения</string>
+    <string name="chamber_int_message">Введите значения, между которыми вы бы хотели переключаться, через запятую. Цветовые настройки задаются шестнадцатеричными значениями, например, #FF00aacc или базовыми значениями, как red, green, или yellow.</string>
+    <string name="chamber_name_title">Название ярлыка</string>
+    <string name="chamber_name_message">Установить имя для отображения на ярлыке рядом со значком.</string>
+    <string name="chamber_name_toast">Используется имя по умолчанию</string>
+
     <!-- Power menu -->
     <string name="quick_settings_power_menu_label">Меню питания</string>
 
@@ -112,6 +127,4 @@
 
     <!-- Pie tile -->
     <string name="quick_settings_pie">Pie</string>
-
 </resources>
-
