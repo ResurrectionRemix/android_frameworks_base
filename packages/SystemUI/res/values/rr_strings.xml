@@ -86,6 +86,7 @@
     <string name="shortcut_screensleep">Sleep screen</string>
     <string name="shortcut_volume">Volume panel</string>
     <string name="shortcut_restart_ui">Restart SystemUI</string>
+    <string name="shortcut_powermenu">Power menu</string>
     <string name="shortcut_toggle_title">Action to perform</string>
     <string name="chamber_disabled">Chamber of secrets is closed</string>
     <string name="chamber_title">Input Settings string</string>

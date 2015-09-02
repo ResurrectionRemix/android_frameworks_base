@@ -459,6 +459,19 @@
                 <category android:name="com.android.systemui.SHORTCUT_COS" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.android.systemui.shortcuts.PowerMenu"
+            android:label="@string/shortcut_powermenu"
+            android:icon="@drawable/ic_qs_powermenu"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.systemui.SHORTCUT" />
+                <category android:name="com.android.systemui.SHORTCUT_COS" />
+            </intent-filter>
+        </activity>
 
         <!-- platform logo easter egg activity -->
         <activity
