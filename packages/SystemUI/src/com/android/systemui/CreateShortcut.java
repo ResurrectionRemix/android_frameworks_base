@@ -73,7 +73,7 @@ public class CreateShortcut extends LauncherActivity {
         if (Settings.Secure.getIntForUser(getContentResolver(),
                 Settings.Secure.CHAMBER_OF_SECRETS, 0,
                 UserHandle.USER_CURRENT) == 1) {
-            targetIntent.addCategory("com.android.systemui.SHORTCUT_EXTRA");
+            targetIntent.addCategory("com.android.systemui.SHORTCUT_COS");
         } else {
             targetIntent.addCategory("com.android.systemui.SHORTCUT");
         }
