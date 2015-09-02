@@ -112,7 +112,7 @@ public class CreateShortcut extends LauncherActivity {
         if (c.equals ("Rotation")) {
             return R.drawable.ic_qs_auto_rotate;
         } else if (c.equals("Torch")) {
-            return R.drawable.ic_signal_flashlight_enable_animation;
+            return R.drawable.ic_qs_torch;
         } else if (c.equals("ChamberOfSecrets")) {
             return R.drawable.ic_qs_slim_action;
         } else if (c.equals("Reboot")) {

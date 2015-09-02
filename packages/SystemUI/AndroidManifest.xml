@@ -353,6 +353,20 @@
             </intent-filter>
         </activity>
 
+        <!-- extremely secret launcher shortcut -->
+        <activity
+            android:name="com.android.systemui.shortcuts.ChamberOfSecrets"
+            android:label="@string/shortcut_chamber"
+            android:icon="@drawable/ic_qs_slim_action"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.systemui.SHORTCUT_COS" />
+            </intent-filter>
+        </activity>
+
         <!-- Shortcut activities -->
         <activity
             android:name="com.android.systemui.shortcuts.Reboot"
@@ -382,6 +396,18 @@
             android:name="com.android.systemui.shortcuts.Rotation"
             android:label="@string/shortcut_rotation"
             android:icon="@drawable/ic_qs_auto_rotate"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.systemui.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.android.systemui.shortcuts.Torch"
+            android:label="@string/shortcut_torch"
+            android:icon="@drawable/ic_qs_torch"
             android:theme="@android:style/Theme.NoDisplay"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" >
