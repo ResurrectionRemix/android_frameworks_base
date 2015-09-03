@@ -4037,6 +4037,12 @@ public final class Settings {
          */
         public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
 
+	/**
+         * Settings for clock font size
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_FONT_SIZE = "statusbar_clock_font_size";
+
          /**
          * Shows custom date before clock time
          * 0 - No Date
