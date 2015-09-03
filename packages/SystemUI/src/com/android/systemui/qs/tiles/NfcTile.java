@@ -40,7 +40,11 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
 
     public NfcTile(Host host) {
         super(host);
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(mContext);
+        try {
+            mNfcAdapter = NfcAdapter.getNfcAdapter(mContext);
+        } catch (UnsupportedOperationException e) {
+            mNfcAdapter = null;
+        }
     }
 
     @Override
@@ -92,7 +96,11 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         if (mNfcAdapter == null) {
-            mNfcAdapter = NfcAdapter.getDefaultAdapter(mContext);
+            try {
+                mNfcAdapter = NfcAdapter.getNfcAdapter(mContext);
+            } catch (UnsupportedOperationException e) {
+                mNfcAdapter = null;
+            }
         }
         state.visible = mNfcAdapter != null;
         state.value = mNfcAdapter != null && isEnabled();
@@ -112,7 +120,11 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
         mListening = listening;
         if (listening) {
             if (mNfcAdapter == null) {
-                mNfcAdapter = NfcAdapter.getDefaultAdapter(mContext);
+                try {
+                    mNfcAdapter = NfcAdapter.getNfcAdapter(mContext);
+                } catch (UnsupportedOperationException e) {
+                    mNfcAdapter = null;
+                }
                 refreshState();
             }
             mContext.registerReceiver(mReceiver,
