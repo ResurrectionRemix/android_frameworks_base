@@ -485,6 +485,7 @@ public final class PowerManagerService extends SystemService
     private static native void nativeSetAutoSuspend(boolean enable);
     private static native void nativeSendPowerHint(int hintId, int data);
     private static native void nativeCpuBoost(int duration);
+    private static native void nativeLaunchBoost();
     static native void nativeSetPowerProfile(int profile);
     private boolean mKeyboardVisible = false;
 
@@ -3494,6 +3495,19 @@ public final class PowerManagerService extends SystemService
                 }
             } else {
                 Slog.e(TAG, "Invalid boost duration: " + duration);
+            }
+        }
+
+        /**
+         * Boost the CPU for an app launch
+         * @hide
+         */
+        @Override
+        public void launchBoost() {
+            // Don't send boosts if we're in another power profile
+            String profile = mPerformanceManager.getPowerProfile();
+            if (profile == null || profile.equals(PowerManager.PROFILE_BALANCED)) {
+                nativeLaunchBoost();
             }
         }
 
