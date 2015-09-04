@@ -39,4 +39,21 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/status_bar_clock_color</item>
     </style>
+
+
+    <style name="ListTheme" parent="@*android:style/Theme.Holo">
+        <item name="android:windowBackground">@*android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:listSelector">@*android:color/transparent</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:clipChildren">false</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:divider">@null</item>
+    </style>
+
+    <style name="TextAppearance.StatusBar.CarrierLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
 </resources>
