@@ -5565,6 +5565,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateDozingState();
     }
 
+
     public void setBackgroundBitmap(Bitmap bmp) {
         if (bmp != null) {
             if (mBlurRadius != 0) {
@@ -5601,6 +5602,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         rs.destroy();
         return out;
+}
+
+    public VisualizerView getVisualizer() {
+        return mVisualizerView;
     }
 
     private final class ShadeUpdates {
