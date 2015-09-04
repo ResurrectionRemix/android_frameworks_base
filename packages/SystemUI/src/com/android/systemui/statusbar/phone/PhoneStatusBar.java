@@ -5758,8 +5758,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 
-    protected void setVisualizerAlpha(float alpha) {
-        mVisualizerView.setAlpha(alpha);
+    public VisualizerView getVisualizer() {
+        return mVisualizerView;
     }
 
     private final class ShadeUpdates {
