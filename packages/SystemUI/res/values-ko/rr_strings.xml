@@ -78,10 +78,25 @@
 
     <!-- Slim Shortcut Actions -->
     <string name="shortcut_picker">Slim Shortcuts</string>
-    <string name="shortcut_rotation">회전</string>
+    <string name="shortcut_rotation">화면 회전 잠금</string>
+    <string name="shortcut_torch">손전등</string>
+    <string name="shortcut_chamber">비밀의 방</string>
     <string name="shortcut_reboot">재시작</string>
     <string name="shortcut_recovery">리커버리 모드</string>
     <string name="shortcut_toggle_title">실행할 활동</string>
+    <string name="chamber_disabled">비밀의 방이 닫혔습니다</string>
+    <string name="chamber_title">설정 문자열 입력</string>
+    <string name="chamber_message">켜짐/꺼짐 (체크박스) 기능이거나 목록 선택인 설정 문자열을 입력하세요. (예: doze_enabled) 설정 문자열은 Settings.java 파일 안에서 찾을 수 있습니다. 주의: 위험한 작업이니 조심하세요!</string>
+    <string name="chamber_invalid">잘못된 입력입니다. 조심하세요.</string>
+    <string name="chamber_invalid_setting">직접 설정을 토글해서 이 활동의 설정 데이터베이스가 존재하는지 확인하세요.</string>
+    <string name="chamber_checkbox">체크박스</string>
+    <string name="chamber_chk_message">체크박스가 필요한 설정입니까?</string>
+    <string name="chamber_int">값 입력</string>
+    <string name="chamber_int_message">토글되기 바라는 설정의 값을 입력하세요. 각각의 값은 쉼표으로 구분됩니다. 색 설정은 #FF00aacc와 같은 16진수 값이나 red, green, yellow와 같은 기본 색 값이 사용 가능합니다.</string>
+    <string name="chamber_name_title">바로가기 이름</string>
+    <string name="chamber_name_message">아이콘과 함께 표시될 바로가기의 이름을 설정합니다.</string>
+    <string name="chamber_name_toast">기본 이름 사용</string>
+
     <!-- Power menu -->
     <string name="quick_settings_power_menu_label">전원 메뉴</string>
 
@@ -111,6 +126,6 @@
     <string name="battery_saver_dismiss_title">지우기</string>
     
     <!-- Pie tile -->
-    <string name="quick_settings_pie">파이</string>
+    <string name="quick_settings_pie">Pie</string>
 </resources>
 
