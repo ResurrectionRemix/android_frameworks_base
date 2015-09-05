@@ -3121,7 +3121,7 @@ public class NotificationManagerService extends SystemService {
             enableLed = false;
         } else if (isLedNotificationForcedOn(ledNotification)) {
             enableLed = true;
-        } else if (!mScreenOnEnabled && (mInCall || mScreenOn)) {
+        } else if (mInCall || (mScreenOn && !mScreenOnEnabled)) {
             enableLed = false;
         } else {
             enableLed = true;
