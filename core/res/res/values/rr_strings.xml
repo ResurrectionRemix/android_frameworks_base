@@ -21,8 +21,6 @@
     <string name="permdesc_changeHeadsUpState">Allows the application to change whether another application is allowed to show normal notifications as heads up notification.</string>
     <string name="default_string">Default</string>
 
-    <string name="silent_mode_priority">Priority</string>
-    <string name="silent_mode_none">None</string>
     <!-- AOKP custom system animations -->
     <string name="animation_fade">Fade</string>
     <string name="animation_slide_right">Slide in right</string>
