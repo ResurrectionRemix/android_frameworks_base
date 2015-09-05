@@ -4053,6 +4053,12 @@ public final class Settings {
         @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_CHANGED = "gesture_anywhere_changed";
 
+	/**
+         * Settings for carrier label font size
+         * @hide
+        */
+        public static final String STATUS_BAR_CARRIER_FONT_SIZE = "status_bar_carrier_font_size";
+
         /**
          * show carrier in statusbae while on lockscreen. The value is
          * int (1: Show or 0: Hide).

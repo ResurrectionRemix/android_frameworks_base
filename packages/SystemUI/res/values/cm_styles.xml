@@ -31,5 +31,9 @@
     <style name="TextAppearance.StatusBar.WeatherTemp" parent="@*android:style/TextAppearance.StatusBar">
         <item name="android:textStyle">normal</item>
     </style>
+ 
+    <style name="TextAppearance.StatusBar.CarrierLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 
 </resources>
