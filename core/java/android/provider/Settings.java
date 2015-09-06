@@ -4313,6 +4313,12 @@ public final class Settings {
         public static final String APP_CIRCLE_BAR_TRIGGER_WIDTH = "app_circle_bar_trigger_width";
 
         /**
+         * Settings for clock font size
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_FONT_SIZE = "statusbar_clock_font_size";
+
+        /**
          * Position of app circle bar trigger
          *
          * @hide
