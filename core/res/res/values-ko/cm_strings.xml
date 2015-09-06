@@ -20,8 +20,6 @@
   <string name="profile_picker_title">프로필</string>
   <string name="global_action_choose_profile">프로필</string>
   <string name="profile_none">없음</string>
-  <string name="silent_mode_priority">우선 순위</string>
-  <string name="silent_mode_none">없음</string>
   <string name="global_action_screenshot">스크린샷</string>
   <string name="global_action_screenrecord">화면 녹화</string>
   <string name="global_action_torch">손전등</string>
