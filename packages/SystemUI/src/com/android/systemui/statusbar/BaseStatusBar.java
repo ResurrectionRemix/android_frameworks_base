@@ -1389,12 +1389,10 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     protected void hideRecents(boolean triggeredFromAltTab, boolean triggeredFromHomeKey) {
-        if (mRecents != null) {
-            mRecents.hideRecents(triggeredFromAltTab, triggeredFromHomeKey);
-            } else if (mSlimRecents != null) {
+        if (mSlimRecents != null) {
                 mSlimRecents.hideRecents(triggeredFromHomeKey);            
    		 }
-        if (isOmniSwitchEnabled()) {
+        else if (isOmniSwitchEnabled()) {
             Intent showIntent = new Intent(OmniSwitchConstants.ACTION_HIDE_OVERLAY);
             mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
         } else {
@@ -1404,14 +1402,11 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 }
     protected void toggleRecents() {
-        if (mRecents != null) {
-            sendCloseSystemWindows(mContext, SYSTEM_DIALOG_REASON_RECENT_APPS);
-            mRecents.toggleRecents(mDisplay, mLayoutDirection, getStatusBarView());
-            } else if (mSlimRecents != null) {
+	if (mSlimRecents != null) {
             sendCloseSystemWindows(mContext, SYSTEM_DIALOG_REASON_RECENT_APPS);
             mSlimRecents.toggleRecents(mDisplay, mLayoutDirection, getStatusBarView());
 		}
-        elseif (isOmniSwitchEnabled()) {
+        else if (isOmniSwitchEnabled()) {
             Intent showIntent = new Intent(OmniSwitchConstants.ACTION_TOGGLE_OVERLAY);
             mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
         } else {
@@ -2957,3 +2952,4 @@ public abstract class BaseStatusBar extends SystemUI implements
         return lp;
     }
 }
+
