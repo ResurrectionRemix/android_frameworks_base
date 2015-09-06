@@ -17,57 +17,57 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Heads up -->
-    <string name="permlab_changeHeadsUpState">enable or disable heads up</string>
-    <string name="permdesc_changeHeadsUpState">Allows the application to change whether another application is allowed to show normal notifications as heads up notification.</string>
-    <string name="default_string">Default</string>
+    <string name="permlab_changeHeadsUpState">헤드업 알림 활성화/비활성화</string>
+    <string name="permdesc_changeHeadsUpState">애플리케이션이 다른 애플리케이션의 헤드업 알림과 같은 일반 알림을 표시하는 설정을 변경하는 권한을 허용합니다.</string>
+    <string name="default_string">기본</string>
     
     <!-- AOKP custom system animations -->
-    <string name="animation_fade">Fade</string>
-    <string name="animation_slide_right">Slide in right</string>
-    <string name="animation_slide_left">Slide in left</string>
-    <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-    <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-    <string name="animation_slide_up">Slide in bottom</string>
-    <string name="animation_slide_down">Slide in top</string>
-    <string name="animation_default">Default</string>
-    <string name="animation_translucent">Translucent</string>
-    <string name="animation_grow_shrink">Grow in (Top)</string>
-    <string name="animation_grow_shrink_center">Grow in (Center)</string>
-    <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-    <string name="animation_grow_shrink_left">Grow in (Left)</string>
-    <string name="animation_grow_shrink_right">Grow in (Right)</string>
-    <string name="action_null">Blank</string>
+    <string name="animation_fade">페이드</string>
+    <string name="animation_slide_right">오른쪽에서 슬라이드</string>
+    <string name="animation_slide_left">왼쪽에서 슬라이드</string>
+    <string name="animation_slide_right_no_fade">오른쪽에서 슬라이드 (페이드 없음)</string>
+    <string name="animation_slide_left_no_fade">왼쪽에서 슬라이드 (페이드 없음)</string>
+    <string name="animation_slide_up">아래쪽에서 슬라이드</string>
+    <string name="animation_slide_down">위쪽에서 슬라이드</string>
+    <string name="animation_default">기본</string>
+    <string name="animation_translucent">반투명</string>
+    <string name="animation_grow_shrink">커지기 (상단)</string>
+    <string name="animation_grow_shrink_center">커지기 (중앙)</string>
+    <string name="animation_grow_shrink_bottom">커지기 (하단)</string>
+    <string name="animation_grow_shrink_left">커지기 (좌측)</string>
+    <string name="animation_grow_shrink_right">커지기 (우측)</string>
+    <string name="action_null">공백</string>
 
 
     <!-- status message in phone options dialog for when pie is on -->
-    <string name="global_actions_pie_mode_on_status">SlimPie is ON</string>
+    <string name="global_actions_pie_mode_on_status">SlimPie가 켜짐</string>
 
     <!-- status message in phone options dialog for when pie is off -->
-    <string name="global_actions_pie_mode_off_status">SlimPie is OFF</string>
+    <string name="global_actions_pie_mode_off_status">SlimPie가 꺼짐</string>
 
     <!-- Error message if user want to try to disable all navigation options -->
-    <string name="disable_pie_navigation_error">You cannot disable pie controls. No other navigation is enabled. Enable first the navigation bar to turn off pie controls.</string>
+    <string name="disable_pie_navigation_error">다른 네비게이션 도구가 없어 Pie 컨트롤를 해제할 수 없습니다. Pie 컨트롤를 끄려면 네비게이션 바를 먼저 활성화 해주세요.</string>
 
     <!-- status message in phone options dialog for when navigation bar is on -->
-    <string name="global_actions_nav_bar_mode_on_status">Navigation bar is ON</string>
+    <string name="global_actions_nav_bar_mode_on_status">네비게이션 바가 켜짐</string>
 
     <!-- status message in phone options dialog for when navigation bar is off -->
-    <string name="global_actions_nav_bar_mode_off_status">Navigation bar is OFF</string>
+    <string name="global_actions_nav_bar_mode_off_status">네비게이션 바가 꺼짐</string>
 
     <!-- Error message if user want to try to disable all navigation options -->
-    <string name="disable_navigation_pie_error">You cannot disable the navigation bar. No other navigation is enabled. Enable first pie controls to turn off the navigation bar.</string>
+    <string name="disable_navigation_pie_error">다른 네비게이션 도구가 없어 네비게이션 바를 해제할 수 없습니다. 네비게이션 바를 끄려면 Pie 컨트롤을 먼저 활성화 해주세요.</string>
 
     <!-- Floating Window -->
-    <string name="floating_window_snap_top">Snap top</string>
-    <string name="floating_window_snap_bottom">Snap bottom</string>
-    <string name="floating_window_snap_left">Snap left</string>
-    <string name="floating_window_snap_right">Snap right</string>
-    <string name="floating_window_minimize">Minimize</string>
+    <string name="floating_window_snap_top">상단에 붙이기</string>
+    <string name="floating_window_snap_bottom">하단에 붙이기</string>
+    <string name="floating_window_snap_left">좌측에 붙이기</string>
+    <string name="floating_window_snap_right">우측에 붙이기</string>
+    <string name="floating_window_minimize">최소화</string>
 
     <!-- Setting confirmation dialog strings. Shown when any UI interaction can be modified by user input -->
-    <string name="setting_confirmation_ask_me_later">Ask later</string>
-    <string name="setting_confirmation_yes">Yes</string>
-    <string name="setting_confirmation_no">No</string>
+    <string name="setting_confirmation_ask_me_later">나중에 물어보기</string>
+    <string name="setting_confirmation_yes">네</string>
+    <string name="setting_confirmation_no">아니요</string>
     <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
-    <string name="resurrection_start_title">Upgrade in Progress\u2026</string>
+    <string name="resurrection_start_title">업그레이드 진행 중\u2026</string>
 </resources>
