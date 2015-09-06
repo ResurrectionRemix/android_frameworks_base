@@ -20,6 +20,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.ConnectivityManager;
 import android.provider.Settings;
@@ -143,15 +144,29 @@ public class CarrierText extends TextView {
                 // "No SIM card"
                 // Grab the first subscripton, because they all should contain the emergency text,
                 // described above.
-                displayText =  makeCarrierStringOnEmergencyCapable(
-                        getContext().getText(R.string.keyguard_missing_sim_message_short),
-                        subs.get(0).getCarrierName());
+                displayText =  null;
             } else {
                 // We don't have a SubscriptionInfo to get the emergency calls only from.
-                // Lets just make it ourselves.
-                displayText =  makeCarrierStringOnEmergencyCapable(
-                        getContext().getText(R.string.keyguard_missing_sim_message_short),
-                        getContext().getText(com.android.internal.R.string.emergency_calls_only));
+                // Grab it from the old sticky broadcast if possible instead. We can use it
+                // here because no subscriptions are active, so we don't have
+                // to worry about MSIM clashing.
+                CharSequence text =
+                        getContext().getText(com.android.internal.R.string.emergency_calls_only);
+                Intent i = getContext().registerReceiver(null,
+                        new IntentFilter(TelephonyIntents.SPN_STRINGS_UPDATED_ACTION));
+                if (i != null) {
+                    String spn = "";
+                    String plmn = "";
+                    if (i.getBooleanExtra(TelephonyIntents.EXTRA_SHOW_SPN, false)) {
+                        spn = i.getStringExtra(TelephonyIntents.EXTRA_SPN);
+                    }
+                    if (i.getBooleanExtra(TelephonyIntents.EXTRA_SHOW_PLMN, false)) {
+                        plmn = i.getStringExtra(TelephonyIntents.EXTRA_PLMN);
+                    }
+                    if (DEBUG) Log.d(TAG, "Getting plmn/spn sticky brdcst " + plmn + "/" + spn);
+                    text = concatenate(plmn, spn);
+                }
+                displayText =  null;
             }
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
