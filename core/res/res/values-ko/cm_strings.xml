@@ -54,7 +54,7 @@
   <string name="reboot_bootloader">부트로더</string>
   <string name="reboot_download">다운로드</string>
   <string name="reboot_soft">빠른 다시 시작</string>
-  <string name="reboot_systemui">SystemUI 재시작</string>
+  <string name="reboot_systemui">시스템UI 다시 시작</string>
   <string name="reboot_title">다시 시작</string>
   <string name="reboot_confirm" product="tablet">태블릿이 다시 시작됩니다.</string>
   <string name="reboot_confirm" product="default">휴대전화가 다시 시작됩니다.</string>
