@@ -127,5 +127,8 @@
     
     <!-- Pie tile -->
     <string name="quick_settings_pie">Pie</string>
+
+    <!-- Configurations Tile -->
+    <string name="quick_settings_rrtools">Remix Configurations</string>
 </resources>
 

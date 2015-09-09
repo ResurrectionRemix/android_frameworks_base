@@ -97,6 +97,7 @@ import com.android.systemui.volume.VolumeComponent;
 
 import cyanogenmod.app.CustomTileListenerService;
 import cyanogenmod.app.StatusBarPanelCustomTile;
+import com.android.systemui.qs.tiles.RRTile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -429,6 +430,8 @@ public class QSTileHost implements QSTile.Host {
                 return new SlimFloatsTile(this);
             case QSConstants.TILE_THEMES:
                 return new ThemesTile(this);
+            case QSConstants.TILE_CONFIGURATIONS:
+                return new RRTile(this);
             default:
                 throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
         }
