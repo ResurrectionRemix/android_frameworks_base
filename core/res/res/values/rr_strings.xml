@@ -44,4 +44,7 @@
     <!-- Button to soft reboot the device, within the Reboot Options dialog -->
     <string name="reboot_systemui">Restart SystemUI</string>
 
+    <!-- On-The-Go -->
+    <string name="global_action_onthego">On-The-Go Mode</string>
+
 </resources>
