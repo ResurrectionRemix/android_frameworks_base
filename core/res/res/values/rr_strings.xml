@@ -49,4 +49,7 @@
     <!-- Label for item that screenrecords in power menu options dialog -->
     <string name="global_action_screenrecord">Screenrecord</string>
 
+    <!-- On-The-Go -->
+    <string name="global_action_onthego">On-The-Go Mode</string>
+
 </resources>

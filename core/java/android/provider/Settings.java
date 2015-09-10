@@ -4378,8 +4378,6 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_STYLE = "statusbar_battery_bar_style";
 
         /**
-<<<<<<< HEAD
-=======
          * Defines the shortcuts to be shown on lockscreen
          * Usage is like this: target:icon|target:icon|target:icon
          * if :icon is not set, default application icon will be used
@@ -4395,14 +4393,6 @@ public final class Settings {
                 "lockscreen_shortcuts_longpress";
 
         /**
-         * Settings to backup. This is here so that it's in the same place as the settings
-         * keys and easy to update.
-         *
-         * NOTE: Settings are backed up and restored in the order they appear
-         *       in this array. If you have one setting depending on another,
-         *       make sure that they are ordered appropriately.
-         *
->>>>>>> f973b0c... squash Frameworks: Keyguard - Add user configurable shortcuts
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
@@ -4667,6 +4657,36 @@ public final class Settings {
          * @hide
          */
         public static final String TRANSPARENT_POWER_MENU = "transparent_power_menu";
+
+        /**
+         * If On-The-Go should be displayed at the power menu.
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_ONTHEGO_ENABLED = "power_menu_onthego_enabled";
+
+        /**
+         * The alpha value of the On-The-Go overlay.
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_ALPHA = "on_the_go_alpha";
+
+        /**
+         * Whether the service should restart itself or not.
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
+
+        /**
+         * The camera instance to use.
+         * 0 = Rear Camera
+         * 1 = Front Camera
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
         /**
          * Dim amount around power/reboot menu dialogs

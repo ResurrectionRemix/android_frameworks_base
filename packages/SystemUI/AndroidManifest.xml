@@ -35,6 +35,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.DUMP" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
@@ -281,6 +282,12 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+
+        <!-- started from PhoneWindowManager
+             TODO: Should have an android:permission attribute -->
+        <service android:name=".rr.onthego.OnTheGoService"
+            android:process=":onthego"
+            android:exported="false" />
 
         <!-- started from PhoneWindowManager
              TODO: Should have an android:permission attribute -->

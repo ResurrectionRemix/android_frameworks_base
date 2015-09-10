@@ -43,6 +43,7 @@ import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -100,6 +101,8 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+import com.android.internal.util.rr.OnTheGoActions;
+
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that
  * may show depending on whether the keyguard is showing, and whether the device
@@ -129,6 +132,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private static final String GLOBAL_ACTION_KEY_ADVANCED = "advanced";
     private static final String GLOBAL_ACTION_KEY_SCREENSHOT = "screenshot";
     private static final String GLOBAL_ACTION_KEY_SCREENRECORD = "screenrecord";
+    private static final String GLOBAL_ACTION_KEY_ON_THE_GO = "on_the_go";
 
     private static final int SHOW_TOGGLES_BUTTON = 1;
     private static final int RESTART_HOT_BUTTON = 2;
@@ -470,6 +474,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         };
 
         mItems = new ArrayList<Action>();
+        updateOnTheGoActions();
         String[] defaultActions = mContext.getResources().getStringArray(
                 R.array.config_custom_globalActionsList);
 
@@ -1824,4 +1829,45 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
             Log.e(TAG, "failure trying to perform hot reboot", e);
         }
     }
+
+    public void updateOnTheGoActions() {
+ 	     ContentResolver resolver = mContext.getContentResolver();
+         boolean showOnTheGo = Settings.System.getInt(
+                 resolver, Settings.System.POWER_MENU_ONTHEGO_ENABLED, 0) == 1;
+         if (showOnTheGo) {
+             mItems.add(
+                 new SinglePressAction(com.android.internal.R.drawable.ic_lock_onthego,
+                         R.string.global_action_onthego) {
+ 
+                         public void onPress() {
+                             OnTheGoActions.processAction(mContext,
+                                     OnTheGoActions.ACTION_ONTHEGO_TOGGLE);
+                         }
+ 
+                         public boolean onLongPress() {
+                             return false;
+                         }
+ 
+                         public boolean showDuringKeyguard() {
+                             return true;
+                         }
+ 
+                         public boolean showBeforeProvisioning() {
+                             return true;
+                         }
+                     }
+             );
+         }
+    }
+
+ 
+    private void startOnTheGo() {
+        final ComponentName cn = new ComponentName("com.android.systemui",
+                "com.android.systemui.rr.onthego.OnTheGoService");
+        final Intent startIntent = new Intent();
+        startIntent.setComponent(cn);
+        startIntent.setAction("start");
+        mContext.startService(startIntent);
+    }
+
 }

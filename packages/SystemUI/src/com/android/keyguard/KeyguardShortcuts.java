@@ -202,10 +202,10 @@ public class KeyguardShortcuts extends LinearLayout {
         public void onChange(boolean selfChange, Uri uri) {
             recreateShortcuts();
         }
+    }
 
         public void recreateShortcuts() {
             removeAllViews();
             createShortcuts();
         }
-    }
 }
