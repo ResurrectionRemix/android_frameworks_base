@@ -2120,13 +2120,6 @@ public final class ActivityManagerService extends ActivityManagerNative
         cpuTrackerThread.start();
         mCpuTrackerHandler = new CpuTrackerHandler(cpuTrackerThread.getLooper());
 
-        mFgBroadcastQueue = new BroadcastQueue(this, mHandler,
-                "foreground", BROADCAST_FG_TIMEOUT, false);
-        mBgBroadcastQueue = new BroadcastQueue(this, mHandler,
-                "background", BROADCAST_BG_TIMEOUT, true);
-        mBroadcastQueues[0] = mFgBroadcastQueue;
-        mBroadcastQueues[1] = mBgBroadcastQueue;
-
         mServices = new ActiveServices(this);
         mBroadcasts = new ActiveBroadcasts(this);
         mProviderMap = new ProviderMap(this);
