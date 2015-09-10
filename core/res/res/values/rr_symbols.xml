@@ -43,4 +43,7 @@
   <!-- Pocket bridge -->
   <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
 
+  <!-- On-The-Go -->
+  <java-symbol type="drawable" name="ic_lock_onthego" />
+
 </resources>

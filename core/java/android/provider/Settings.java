@@ -4792,6 +4792,53 @@ public final class Settings {
         /** @hide */
         private static final Validator STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE_VALIDATOR = BOOLEAN_VALIDATOR;
 
+
+        /**
+         * If On-The-Go should be displayed at the power menu.
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_ONTHEGO = "global_actions_onthego";
+
+        /** @hide */
+        private static final Validator GLOBAL_ACTIONS_ONTHEGO_VALIDATOR =
+              BOOLEAN_VALIDATOR;
+
+        /**
+         * The alpha value of the On-The-Go overlay.
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_ALPHA = "on_the_go_alpha";
+
+        /**
+         * Whether the service should restart itself or not.
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
+
+        /** @hide */
+        private static final Validator ON_THE_GO_SERVICE_RESTART_VALIDATOR =
+              BOOLEAN_VALIDATOR;
+
+        /**
+         * The camera instance to use.
+         * 0 = Rear Camera
+         * 1 = Front Camera
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
+
+        /** @hide */
+        private static final Validator ON_THE_GO_CAMERA_VALIDATOR =
+              new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
+
+        /***************************
+         * AICP System Settings end
+         ***************************/
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
@@ -4889,6 +4936,9 @@ public final class Settings {
             STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR,
             STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE,
             STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE,
+            GLOBAL_ACTIONS_ONTHEGO,
+            ON_THE_GO_SERVICE_RESTART,
+            ON_THE_GO_CAMERA,
         };
 
         /**
@@ -5026,6 +5076,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE);
+            PRIVATE_SETTINGS.add(GLOBAL_ACTIONS_ONTHEGO);
+            PRIVATE_SETTINGS.add(ON_THE_GO_SERVICE_RESTART);
+            PRIVATE_SETTINGS.add(ON_THE_GO_ALPHA);
+            PRIVATE_SETTINGS.add(ON_THE_GO_CAMERA);
         }
 
         /**
@@ -5138,6 +5192,9 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR, STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE, STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE, STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE_VALIDATOR);
+            VALIDATORS.put(GLOBAL_ACTIONS_ONTHEGO,GLOBAL_ACTIONS_ONTHEGO_VALIDATOR);
+            VALIDATORS.put(ON_THE_GO_SERVICE_RESTART,ON_THE_GO_SERVICE_RESTART_VALIDATOR);
+            VALIDATORS.put(ON_THE_GO_CAMERA,ON_THE_GO_CAMERA_VALIDATOR);
         }
 
         /**
