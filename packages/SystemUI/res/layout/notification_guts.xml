@@ -113,7 +113,7 @@
                 android:layout_weight="0"
                 android:gravity="center"
                 android:contentDescription="@string/recent_float_mode_title"
-                android:src="@drawable/ic_qs_floating_on"
+                android:src="@drawable/ic_qs_notification_floating_on"
                 />
 
     </LinearLayout>
