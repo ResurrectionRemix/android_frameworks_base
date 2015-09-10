@@ -47,7 +47,8 @@ public class NavigationRingHelpers {
         boolean isDefault = true;
 
         for (int i = 0; i < MAX_ACTIONS; i++) {
-            result[i] = Settings.Secure.getString(cr, Settings.Secure.NAVIGATION_RING_TARGETS[i]);
+            result[i] = Settings.Secure.getStringForUser(cr,
+                    Settings.Secure.NAVIGATION_RING_TARGETS[i], UserHandle.USER_CURRENT);
             if (result[i] != null) {
                 isDefault = false;
             }
@@ -118,12 +119,6 @@ public class NavigationRingHelpers {
             resourceId = getTorchDrawableResId(context);
         } else if (action.equals(ACTION_ASSIST)) {
             resourceId = R.drawable.ic_navigation_ring_search;
-        } else if (action.equals(ACTION_POWER_MENU)) {
-            resourceId = R.drawable.ic_navigation_ring_standby;
-        } else if (action.equals(ACTION_LAST_APP)) {
-            resourceId = R.drawable.ic_navigation_ring_last_app;
-        } else if (action.equals(ACTION_EXPANDED_DESKTOP)) {
-            resourceId = R.drawable.ic_navigation_ring_expanded_desktop;
         }
 
         if (resourceId < 0) {
