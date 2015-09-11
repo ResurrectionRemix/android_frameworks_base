@@ -310,7 +310,7 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
     public void onAttachedToWindow() {
         if (!mAttached) {
             mAttached = true;
-
+            super.onAttachedToWindow();
             final ViewConfiguration viewConfiguration = ViewConfiguration.get(getContext());
             float touchSlop = viewConfiguration.getScaledTouchSlop();
             mSwipeHelper = new SwipeHelper(SwipeHelper.X, this, getContext());
@@ -344,6 +344,7 @@ public class HeadsUpNotificationView extends FrameLayout implements SwipeHelper.
     @Override
     protected void onDetachedFromWindow() {
         if (mAttached) {
+			super.onDetachedFromWindow();
             mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
             mAttached = false;
         }

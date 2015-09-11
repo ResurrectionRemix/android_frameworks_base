@@ -587,6 +587,7 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel,
 
     @Override
     protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
         mPicker.cleanup();
     }
 }
