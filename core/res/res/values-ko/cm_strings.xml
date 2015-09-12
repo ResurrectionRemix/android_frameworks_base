@@ -21,8 +21,6 @@
   <string name="global_action_choose_profile">프로필</string>
   <string name="profile_none">없음</string>
   <string name="global_action_screenshot">스크린샷</string>
-  <string name="global_action_screenrecord">화면 녹화</string>
-  <string name="global_action_torch">손전등</string>
   <string name="permlab_receiveProtectedSms">보안 SMS 수신</string>
   <string name="permdesc_receiveProtectedSms">앱이 들어오는 보안 SMS를 수신할 수 있도록 허용합니다.</string>
   <string name="permlab_modifyProtectedSmsList">보안 SMS 목록 수정</string>
@@ -54,7 +52,6 @@
   <string name="reboot_bootloader">부트로더</string>
   <string name="reboot_download">다운로드</string>
   <string name="reboot_soft">빠른 다시 시작</string>
-  <string name="reboot_systemui">시스템UI 다시 시작</string>
   <string name="reboot_title">다시 시작</string>
   <string name="reboot_confirm" product="tablet">태블릿이 다시 시작됩니다.</string>
   <string name="reboot_confirm" product="default">휴대전화가 다시 시작됩니다.</string>
