@@ -68,6 +68,16 @@
     <string name="setting_confirmation_ask_me_later">나중에 물어보기</string>
     <string name="setting_confirmation_yes">네</string>
     <string name="setting_confirmation_no">아니요</string>
+
+    <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+    <string name="reboot_systemui">시스템UI 다시 시작</string>
+
+    <!-- label for item that screenrecord in phone options dialog -->
+    <string name="global_action_screenrecord">화면 녹화</string>
+
+    <!-- label for item that torch in power menu options dialog -->
+    <string name="global_action_torch">손전등</string>    
+
     <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
     <string name="resurrection_start_title">업그레이드 진행 중\u2026</string>
 </resources>

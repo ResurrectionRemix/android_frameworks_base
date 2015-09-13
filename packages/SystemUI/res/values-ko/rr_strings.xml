@@ -127,5 +127,8 @@
     
     <!-- Pie tile -->
     <string name="quick_settings_pie">Pie</string>
+
+    <!-- Configurations Tile -->
+    <string name="quick_settings_rrtools">RR 추가 설정</string>
 </resources>
 
