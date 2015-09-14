@@ -110,7 +110,7 @@ public class TaskManager {
         });
     }
 
-    public void refreshTaskManagerView () {
+    public void refreshTaskManagerView() {
         if (DEBUG) Log.e(TAG, "refreshTaskManagerView");
         loadRunningTasks();
         refreshMemoryUsagePanel();
@@ -124,7 +124,7 @@ public class TaskManager {
                 PackageManager.MATCH_DEFAULT_ONLY | PackageManager.GET_RESOLVED_FILTER);
 
         showTaskList.clear();
-        for(RunningTaskInfo runningTaskInfo : runningTaskList) {
+        for (RunningTaskInfo runningTaskInfo : runningTaskList) {
             boolean needshow = true;
             DetailProcess detailProcess = new DetailProcess(mContext, runningTaskInfo);
             final String packageName = detailProcess.getPackageName();
