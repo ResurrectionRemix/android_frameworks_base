@@ -493,7 +493,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 mItems.add(getTorchToggleAction());
             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
                 mItems.add(getAssistAction());
-            } else if (GLOBAL_ACTION_KEY_REBOOT.equals(actionKey)) {
+            } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
                 mItems.add(new RestartAction());
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
