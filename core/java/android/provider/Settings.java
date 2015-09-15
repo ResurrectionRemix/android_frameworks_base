@@ -3566,6 +3566,14 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_DATE_STYLE = "statusbar_clock_date_style";
 
         /**
+         * Position of date
+         * 0 - Left of clock
+         * 1 - Right of clock
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_DATE_POSITION = "statusbar_clock_date_position";
+
+        /**
          * Stores the java DateFormat string for the date
          * @hide
          */
