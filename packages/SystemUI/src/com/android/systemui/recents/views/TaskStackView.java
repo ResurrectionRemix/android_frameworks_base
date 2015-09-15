@@ -548,43 +548,39 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
     }
 
     public void dismissAllTasks() {
-        post(new Runnable() {
+        final ArrayList<Task> tasks = new ArrayList<Task>();
+        tasks.addAll(mStack.getTasks());
+
+        // Remove visible TaskViews
+        long dismissDelay = 0;
+        int childCount = getChildCount();
+        if (childCount > 0) {
+            int delay = mConfig.taskViewRemoveAnimDuration / childCount;
+            for (int i = 0; i < childCount; i++) {
+                TaskView tv = (TaskView) getChildAt(i);
+                tasks.remove(tv.getTask());
+                tv.dismissTask(dismissDelay);
+                dismissDelay += delay;
+            }
+        }
+
+        // Remove any other Tasks
+        for (Task t : tasks) {
+            if (mStack.getTasks().contains(t)) {
+                mStack.removeTask(t);
+            }
+        }
+
+        // removeAllUserTask() can take upwards of two seconds to execute so post
+        // a delayed runnable to run this code once we are done animating
+        postDelayed(new Runnable() {
             @Override
             public void run() {
-                ArrayList<Task> tasks = new ArrayList<Task>();
-                tasks.addAll(mStack.getTasks());
-                if (!dismissAll() && tasks.size() > 1) {
-                    // Ignore the visible foreground task
-                    Task foregroundTask = tasks.get(tasks.size() - 1);
-                    tasks.remove(foregroundTask);
-                }
-
-                // Remove visible TaskViews
-                long dismissDelay = 0;
-                int childCount = getChildCount();
-                if (childCount > 0) {
-                    int delay = mConfig.taskViewRemoveAnimDuration / childCount;
-                    for (int i = 0; i < childCount; i++) {
-                        TaskView tv = (TaskView) getChildAt(i);
-                        tasks.remove(tv.getTask());
-                        tv.dismissTask(dismissDelay);
-                        dismissDelay += delay;
-                    }
-                }
-
-                int size = tasks.size();
-
-                if (size > 0) {
-                    // Remove possible alive Tasks
-                    for (int i = 0; i < size; i++) {
-                        Task t = tasks.get(i);
-                        if (mStack.getTasks().contains(t)) {
-                            mStack.removeTask(t);
-                        }
-                    }
-                }
+                // And remove all the excluded or all the other tasks
+                SystemServicesProxy ssp = RecentsTaskLoader.getInstance().getSystemServicesProxy();
+                ssp.removeAllUserTask(UserHandle.myUserId());
             }
-        });
+        }, mConfig.taskViewRemoveAnimDuration);
     }
 
     /** Resets the focused task. */
