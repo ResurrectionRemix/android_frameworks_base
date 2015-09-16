@@ -369,6 +369,10 @@ public class RecentTasksLoader implements View.OnTouchListener {
                     return mFirstTask;
                 }
             }
+            try {
+                Thread.sleep(3);
+            } catch (InterruptedException e) {
+            }
         }
     }
 

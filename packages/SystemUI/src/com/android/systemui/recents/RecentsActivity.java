@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.UserHandle;
@@ -39,7 +38,6 @@ import android.view.ViewStub;
 import android.widget.Toast;
 
 import com.android.systemui.R;
-import com.android.systemui.recents.RecentsConfiguration;
 import com.android.systemui.recents.misc.DebugTrigger;
 import com.android.systemui.recents.misc.ReferenceCountedTrigger;
 import com.android.systemui.recents.misc.SystemServicesProxy;
@@ -239,11 +237,15 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
             }
         }
 
+        boolean enableShakeCleanByUser = Settings.System.getInt(getContentResolver(),
+            Settings.System.SHAKE_CLEAN_RECENT, 0) == 1;
+
         // Update the top level view's visibilities
         if (mConfig.launchedWithNoRecentTasks) {
             if (mEmptyView == null) {
                 mEmptyView = mEmptyViewStub.inflate();
             }
+            mRecentsView.enableShake(false);
             mEmptyView.setVisibility(View.VISIBLE);
             mEmptyView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -258,20 +260,23 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                 mEmptyView.setVisibility(View.GONE);
                 mEmptyView.setOnClickListener(null);
             }
+            mRecentsView.enableShake(true && enableShakeCleanByUser);
             findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
-            boolean showSearchBar = Settings.System.getInt(getContentResolver(),
-                       Settings.System.RECENTS_SEARCH_BAR, 1) == 1;
             if (mRecentsView.hasSearchBar()) {
-                if (showSearchBar) {
+
+                if (Settings.System.getInt(getContentResolver(),
+                    Settings.System.RECENTS_SEARCH_BAR, 0) == 1) {
                     mRecentsView.setSearchBarVisibility(View.VISIBLE);
                 } else {
                     mRecentsView.setSearchBarVisibility(View.GONE);
-                }
-            } else {
-                if (showSearchBar) {
+                   }
+                } else {
+                if (Settings.System.getInt(getContentResolver(),
+                    Settings.System.RECENTS_SEARCH_BAR, 0) == 1) {
                     addSearchBarAppWidgetView();
+            } else {
+               }
                 }
-            }
         }
 
         // Animate the SystemUI scrims into view
@@ -509,6 +514,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         ReferenceCountedTrigger t = new ReferenceCountedTrigger(this, null, null, null);
         ViewAnimation.TaskViewEnterContext ctx = new ViewAnimation.TaskViewEnterContext(t);
         mRecentsView.startEnterRecentsAnimation(ctx);
+        mRecentsView.startFABanimation();
         if (mConfig.searchBarAppWidgetId >= 0) {
             final WeakReference<RecentsAppWidgetHost.RecentsAppWidgetHostCallbacks> cbRef =
                     new WeakReference<RecentsAppWidgetHost.RecentsAppWidgetHostCallbacks>(
@@ -585,8 +591,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         // Dismiss Recents to the focused Task or Home
         dismissRecentsToFocusedTaskOrHome(true);
 
-        // Hide clear recents button before return to home
-        mRecentsView.startHideClearRecentsButtonAnimation();
+        mRecentsView.endFABanimation();
     }
 
     /** Called when debug mode is triggered */
@@ -622,24 +627,25 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
     public void onExitToHomeAnimationTriggered() {
         // Animate the SystemUI scrim views out
         mScrimViews.startExitRecentsAnimation();
+        mRecentsView.endFABanimation();
     }
 
     @Override
     public void onTaskViewClicked() {
+        mRecentsView.endFABanimation();
     }
 
     @Override
     public void onTaskLaunchFailed() {
         // Return to Home
         dismissRecentsToHomeRaw(true);
-
-        // Hide clear recents button before return to home
-        mRecentsView.startHideClearRecentsButtonAnimation();
+        mRecentsView.endFABanimation();
     }
 
     @Override
     public void onAllTaskViewsDismissed() {
         mFinishLaunchHomeRunnable.run();
+        mRecentsView.endFABanimation();
     }
 
     @Override

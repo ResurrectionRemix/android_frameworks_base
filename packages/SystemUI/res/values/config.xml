@@ -58,7 +58,7 @@
 
     <!-- How many icons may be shown at once in the system bar. Includes any
          slots that may be reused for things like IME control. -->
-    <integer name="config_maxNotificationIcons">4</integer>
+    <integer name="config_maxNotificationIcons">5</integer>
 
     <!-- Show phone (voice) signal strength instead of data in mobile RSSI. -->
     <bool name="config_showPhoneRSSIForData">false</bool>
@@ -150,7 +150,7 @@
     <integer name="heads_up_sensitivity_delay">700</integer>
 
     <!-- Show emergency call label only without carrier label on expanded notification area -->
-    <bool name="config_showEmergencyCallLabelOnly">false</bool>
+    <bool name="config_showEmergencyCallLabelOnly">true</bool>
     <bool name="config_showDataConnectionView">true</bool>
     <bool name="config_disableWifiAndBluetooth">false</bool>
 
@@ -164,6 +164,14 @@
 
     <!-- The min animation duration for animating views that are newly visible. -->
     <integer name="recents_filter_animate_new_views_duration">250</integer>
+
+    <!-- The min animation duration for animating the task bar in. -->
+    <integer name="recents_animate_task_bar_enter_duration">225</integer>
+    <!-- The animation delay for animating the first task in. This should roughly be the animation
+     duration of the transition in to recents. -->
+    <integer name="recents_animate_task_bar_enter_delay">275</integer>
+    <!-- The min animation duration for animating the task bar out. -->
+    <integer name="recents_animate_task_bar_exit_duration">125</integer>
 
     <!-- The duration of the window transition when coming to Recents from an app.
          In order to defer the in-app animations until after the transition is complete,
@@ -199,7 +207,7 @@
     <integer name="recents_nav_bar_scrim_enter_duration">400</integer>
 
     <!-- The animation duration for animating the removal of a task view. -->
-    <integer name="recents_animate_task_view_remove_duration">450</integer>
+    <integer name="recents_animate_task_view_remove_duration">250</integer>
 
     <!-- The animation duration for scrolling the stack to a particular item. -->
     <integer name="recents_animate_task_stack_scroll_duration">225</integer>
@@ -257,12 +265,15 @@
     <!-- Doze: check proximity sensor before pulsing? -->
     <bool name="doze_proximity_check_before_pulse">true</bool>
 
+    <!-- Doze: check proximity sensor before pulsing from intent? -->
+    <bool name="doze_proximity_check_before_pulse_intent">false</bool>
+
     <!-- Doze: should notifications be used as a pulse signal? -->
     <bool name="doze_pulse_on_notifications">true</bool>
 
     <!-- Doze: when to pulse after a buzzworthy notification arrives -->
-    <string name="doze_pulse_schedule" translatable="false">1s,10s,30s,60s,120s</string>
-    
+    <string name="doze_pulse_schedule" translatable="false">1s,10s,30s,60s</string>
+
     <!-- Doze: maximum number of times the notification pulse schedule can be reset -->
     <integer name="doze_pulse_schedule_resets">2</integer>
 
@@ -278,11 +289,17 @@
     <!-- Doze: pulse parameter - how long does it take to fade in after a pickup? -->
     <integer name="doze_pulse_duration_in_pickup">300</integer>
 
+    <!-- Doze: pulse parameter - how long does it take to fade in after an intent? -->
+    <integer name="doze_pulse_duration_in_intent">300</integer>
+
     <!-- Doze: pulse parameter - delay to wait for the screen to wake up -->
     <integer name="doze_pulse_delay_in">200</integer>
 
     <!-- Doze: pulse parameter - delay to wait for the screen to wake up after a pickup -->
     <integer name="doze_pulse_delay_in_pickup">200</integer>
+
+    <!-- Doze: pulse parameter - delay to wait for the screen to wake up after an intent -->
+    <integer name="doze_pulse_delay_in_intent">200</integer>
 
     <!-- Doze: pulse parameter - once faded in, how long does it stay visible? -->
     <integer name="doze_pulse_duration_visible">3000</integer>
@@ -292,11 +309,6 @@
 
     <!-- Doze: alpha to apply to small icons when dozing -->
     <integer name="doze_small_icon_alpha">222</integer><!-- 87% of 0xff -->
-
-    <!-- Whether doze should invert colors for notifications. If the RRO theme causes
-    the NORMAL notification background to be dark and the text to be light, this boolean
-    needs to be set to false, to prevent the doze notifications from being light -->
-    <bool name="config_invert_colors_on_doze">true</bool>
 
     <!-- Volume: time to delay dismissing the volume panel after a click is performed -->
     <integer name="volume_panel_dismiss_delay">200</integer>
@@ -315,7 +327,6 @@
 
     <!-- Zen toast visibility duration -->
     <integer name="zen_toast_visible_duration">500</integer>
-
     <!-- Whether to enable data switch or not -->
     <bool name="config_enableDataSwitch">false</bool>
     <!-- Enable the default volume dialog -->

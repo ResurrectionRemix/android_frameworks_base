@@ -16,16 +16,17 @@
 
 package com.android.systemui.recents.views;
 
-import android.app.ActivityOptions;
-import android.app.TaskStackBuilder;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
+import android.app.ActivityOptions;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.ContentResolver;
-import android.content.res.Resources;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -33,6 +34,7 @@ import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
+import android.view.ViewAnimationUtils;
 import android.view.Gravity;
 import android.util.EventLog;
 import android.view.LayoutInflater;
@@ -49,16 +51,16 @@ import com.android.systemui.recents.model.RecentsPackageMonitor;
 import com.android.systemui.recents.model.RecentsTaskLoader;
 import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.model.TaskStack;
+import com.android.systemui.doze.ShakeSensorManager;
 
 import com.android.systemui.R;
- 
+import com.android.systemui.EventLogTags;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import com.android.systemui.EventLogTags;
-
 import java.util.ArrayList;
 
 /**
@@ -66,7 +68,7 @@ import java.util.ArrayList;
  * to their SpaceNode bounds.
  */
 public class RecentsView extends FrameLayout implements TaskStackView.TaskStackViewCallbacks,
-        RecentsPackageMonitor.PackageCallbacks {
+        RecentsPackageMonitor.PackageCallbacks,ShakeSensorManager.ShakeListener {
 
     /** The RecentsView callbacks */
     public interface RecentsViewCallbacks {
@@ -86,13 +88,14 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     RecentsViewCallbacks mCb;
     View mClearRecents;
     View mFloatingButton;
-    boolean mAlreadyLaunchingTask;
     TextView mMemText;
     ProgressBar mMemBar;
 
     private ActivityManager mAm;
     private int mTotalMem;
-    
+
+    private ShakeSensorManager mShakeSensorManager;
+
     public RecentsView(Context context) {
         super(context);
     }
@@ -111,6 +114,20 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         mInflater = LayoutInflater.from(context);
         mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         mTotalMem = getTotalMemory();
+        mShakeSensorManager = new ShakeSensorManager(mContext, this);
+    }
+
+    @Override
+    public synchronized void onShake() {
+        dismissAllTasksAnimated();
+    }
+
+    public void enableShake(boolean enableShakeClean) {
+        if (enableShakeClean) {
+            mShakeSensorManager.enable(20);
+        } else {
+            mShakeSensorManager.disable();
+        }
     }
 
     /** Sets the callbacks */
@@ -266,10 +283,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         // We have to increment/decrement the post animation trigger in case there are no children
         // to ensure that it runs
         ctx.postAnimationTrigger.increment();
-
-        // Hide clear recents button before return to home
-        startHideClearRecentsButtonAnimation();
-
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
@@ -282,25 +295,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
 
         // Notify of the exit animation
         mCb.onExitToHomeAnimationTriggered();
-    }
-
-    public void startHideClearRecentsButtonAnimation() {
-        if (mFloatingButton != null) {
-            mFloatingButton.animate()
-                .alpha(0f)
-                .setStartDelay(0)
-                .setUpdateListener(null)
-                .setInterpolator(mConfig.fastOutSlowInInterpolator)
-                .setDuration(mConfig.taskViewRemoveAnimDuration)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        mFloatingButton.setVisibility(View.GONE);
-                        mFloatingButton.setAlpha(1f);
-                    }
-                })
-                .start();
-        }
     }
 
     /** Adds the search bar */
@@ -338,7 +332,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		final ContentResolver resolver = mContext.getContentResolver();
+        final ContentResolver resolver = mContext.getContentResolver();
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         Rect searchBarSpaceBounds = new Rect();
@@ -371,24 +365,24 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
             if (enableMemDisplay) {
                 mMemBar.setPadding(0, paddingStatusBar, 0, 0);
             }
-         }
-         showMemDisplay();
+        }
 
-                boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 1, UserHandle.USER_CURRENT) != 0;
+        showMemDisplay();
+
+        boolean showClearAllRecents = Settings.System.getInt(resolver,
+                Settings.System.SHOW_CLEAR_ALL_RECENTS, 1) == 1;
 
         Rect taskStackBounds = new Rect();
         mConfig.getTaskStackBounds(width, height, mConfig.systemInsets.top,
                 mConfig.systemInsets.right, taskStackBounds);
 
         if (mFloatingButton != null && showClearAllRecents) {
-            int clearRecentsLocation = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.RECENTS_CLEAR_ALL_LOCATION,
-            Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_CENTER, UserHandle.USER_CURRENT);
+            int clearRecentsLocation = Settings.System.getInt(resolver,
+                    Settings.System.RECENTS_CLEAR_ALL_LOCATION, Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_RIGHT);
 
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
                     mFloatingButton.getLayoutParams();
-                    
+            params.topMargin = taskStackBounds.top;
             if (mSearchBar == null || isLandscape) {
                 params.topMargin = mContext.getResources().
                     getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height);
@@ -397,7 +391,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                     getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height)
                         + searchBarSpaceBounds.height();
             }
-
             switch (clearRecentsLocation) {
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_LEFT:
                     params.gravity = Gravity.TOP | Gravity.LEFT;
@@ -407,17 +400,17 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                     break;
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_CENTER:
                     params.gravity = Gravity.TOP | Gravity.CENTER;
+                    break;										
+                case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_RIGHT:
+                default:
+                    params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
                     break;
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_LEFT:
                     params.gravity = Gravity.BOTTOM | Gravity.LEFT;
                     break;
-                case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_RIGHT:
-                    params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-                    break;
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_CENTER:
-                default:
                     params.gravity = Gravity.BOTTOM | Gravity.CENTER;
-                    break;
+                    break;								
             }
             mFloatingButton.setLayoutParams(params);
         } else {
@@ -483,14 +476,32 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     }
 
     public void noUserInteraction() {
-        if (mFloatingButton != null) {
-            mFloatingButton.setVisibility(View.VISIBLE);
+        if (mClearRecents != null) {
+            mClearRecents.setVisibility(View.VISIBLE);
         }
     }
 
-    private boolean dismissAll() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.RECENTS_CLEAR_ALL_DISMISS_ALL, 1) == 1;
+    public void startFABanimation() {
+        // Animate the action button in
+        mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
+        mClearRecents.animate().alpha(1f)
+                .setStartDelay(mConfig.taskBarEnterAnimDelay)
+                .setDuration(mConfig.taskBarEnterAnimDuration)
+                .setInterpolator(mConfig.fastOutLinearInInterpolator)
+                .withLayer()
+                .start();
+    }
+
+    public void endFABanimation() {
+        // Animate the action button away
+        enableShake(false);
+        mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
+        mClearRecents.animate().alpha(0f)
+                .setStartDelay(0)
+                .setDuration(mConfig.taskBarExitAnimDuration)
+                .setInterpolator(mConfig.fastOutLinearInInterpolator)
+                .withLayer()
+                .start();
     }
 
     @Override
@@ -499,16 +510,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
         mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
         mClearRecents.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
-                if (mFloatingButton.getAlpha() != 1f) {
-                    return;
-                }
-
-                if (dismissAll()) {
-                    startHideClearRecentsButtonAnimation();
-                }
-
                 dismissAllTasksAnimated();
                 updateMemoryStatus();
 
@@ -698,6 +700,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         final Runnable launchRunnable = new Runnable() {
             @Override
             public void run() {
+                enableShake(false);
                 if (task.isActive) {
                     // Bring an active task to the foreground
                     ssp.moveTaskToFront(task.key.id, launchOpts);
@@ -749,7 +752,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 new UserHandle(t.key.userId));
     }
 
-     @Override
+    @Override
     public void onTaskFloatClicked(Task t) {
         Intent baseIntent = t.key.baseIntent;
         // Hide and go home
@@ -771,7 +774,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
 
         // Remove the old task from activity manager
         loader.getSystemServicesProxy().removeTask(t.key.id);
-        
+
         updateMemoryStatus();
     }
 

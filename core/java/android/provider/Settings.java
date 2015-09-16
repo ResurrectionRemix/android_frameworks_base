@@ -3785,6 +3785,12 @@ public final class Settings {
         public static final String STATUS_BAR_MSIM_SHOW_EMPTY_ICONS = "status_bar_show_empty_sims";
 
         /**
+         * Clean recent by shake
+         * @hide
+         */
+        public static final String SHAKE_CLEAN_RECENT = "shake_clean_recent";
+
+        /**
          * Enable statusbar double tap gesture on to put device to sleep
          * @hide
          */
