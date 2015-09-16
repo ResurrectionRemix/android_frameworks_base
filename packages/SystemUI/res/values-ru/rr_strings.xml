@@ -34,8 +34,8 @@
     <string name="quick_settings_expanded_desktop_off">Обычный</string>
     <string name="quick_settings_battery_saver_off">Энергосбережение выкл</string>
     <string name="quick_settings_screenshot">Скриншот</string>
-    <string name="quick_settings_sync">Синхронизация</string>
-    <string name="quick_settings_sync_off">Синхронизация выкл</string>
+    <string name="quick_settings_sync">Синхр. вкл</string>
+    <string name="quick_settings_sync_off">Синхр. выкл</string>
     <string name="quick_settings_brightness">Яркость</string>
     <string name="quick_settings_music_play">Играть</string>
     <string name="quick_settings_music_pause">Пауза</string>
@@ -83,6 +83,10 @@
     <string name="shortcut_chamber">Тайная комната</string>
     <string name="shortcut_reboot">Перезагрузка</string>
     <string name="shortcut_recovery">Режим восстановления</string>
+    <string name="shortcut_screensleep">Выключить экран</string>
+    <string name="shortcut_volume">Панель громкости</string>
+    <string name="shortcut_restart_ui">Перезапуск интерфейса</string>
+    <string name="shortcut_powermenu">Меню кнопки питания</string>
     <string name="shortcut_toggle_title">Действие для выполнения</string>
     <string name="chamber_disabled">Тайная комната закрыта</string>
     <string name="chamber_title">Введите строку настроек</string>
@@ -119,12 +123,13 @@
     <string name="toast_not_installed">Приложение не установлено</string>
 
     <!-- Slim Action floats tile -->
-    <string name="quick_settings_slim_floats_on">Режим плавающих окон включен</string>
-    <string name="quick_settings_slim_floats_off">Режим плавающих окон выключен</string>
+    <string name="quick_settings_slim_floats_on">Плавающие окна включены</string>
+    <string name="quick_settings_slim_floats_off">Плавающие окна выключены</string>
 
     <!-- Battery Saver Dimss -->
     <string name="battery_saver_dismiss_title">Отклонить</string>
 
-    <!-- Pie tile -->
-    <string name="quick_settings_pie">Pie</string>
+    <!-- Configurations Tile -->
+    <string name="quick_settings_rrtools">Настройки RR</string>
+
 </resources>
