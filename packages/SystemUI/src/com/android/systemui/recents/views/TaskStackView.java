@@ -28,6 +28,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
