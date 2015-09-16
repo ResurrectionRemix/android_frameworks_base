@@ -197,8 +197,15 @@ public class KeyguardBouncer {
     public int needsFullscreenBouncer() {
         if (mKeyguardView != null) {
             SecurityMode mode = mKeyguardView.getSecurityMode();
-            if(mode == SecurityMode.SimPin || mode == SecurityMode.SimPuk) return 1;
-            else if((mode == SecurityMode.Pattern || mode == SecurityMode.Password || mode == SecurityMode.PIN) && (mLockPatternUtils != null && mLockPatternUtils.shouldPassToSecurityView())) return 2;
+            if(mode == SecurityMode.SimPin ||
+               mode == SecurityMode.SimPuk)
+                return 1;
+            else if((mode == SecurityMode.Pattern ||
+                     mode == SecurityMode.Password ||
+                     mode == SecurityMode.PIN ||
+                     mode == SecurityMode.Gesture)
+                     && (mLockPatternUtils != null && mLockPatternUtils.shouldPassToSecurityView()))
+                return 2;
         }
         return 0;
     }
@@ -210,8 +217,15 @@ public class KeyguardBouncer {
     public int isFullscreenBouncer() {
         if (mKeyguardView != null) {
             SecurityMode mode = mKeyguardView.getCurrentSecurityMode();
-            if(mode == SecurityMode.SimPin || mode == SecurityMode.SimPuk) return 1;
-            else if((mode == SecurityMode.Pattern || mode == SecurityMode.Password || mode == SecurityMode.PIN) && (mLockPatternUtils != null && mLockPatternUtils.shouldPassToSecurityView())) return 2;
+            if(mode == SecurityMode.SimPin ||
+               mode == SecurityMode.SimPuk)
+                return 1;
+            else if((mode == SecurityMode.Pattern ||
+                     mode == SecurityMode.Password ||
+                     mode == SecurityMode.PIN ||
+                     mode == SecurityMode.Gesture)
+                     && (mLockPatternUtils != null && mLockPatternUtils.shouldPassToSecurityView()))
+                return 2;
         }
         return 0;
     }

@@ -117,7 +117,7 @@ public class StatusBarKeyguardViewManager {
                 mPhoneStatusBar.hideKeyguard();
                 mBouncer.show(true /* resetSecuritySelection */);
                 break;
-            case 2: // Pattern/PIN/Password with "Directly pass to security view" enabled
+            case 2: // Pattern/Password/PIN/Gesture with "Directly pass to security view" enabled
                 if (backpressed) {
                     mPhoneStatusBar.showKeyguard();
                     mBouncer.hide(false /* destroyView */);
