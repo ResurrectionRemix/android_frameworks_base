@@ -68,6 +68,9 @@
     <string name="setting_confirmation_yes">Да</string>
     <string name="setting_confirmation_no">Нет</string>
 
+    <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+    <string name="reboot_systemui">Перезапуск интерфейса</string>
+
     <!-- label for item that screenrecord in phone options dialog -->
     <string name="global_action_screenrecord">Запись экрана</string>
 
