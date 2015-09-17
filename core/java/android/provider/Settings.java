@@ -4383,10 +4383,6 @@ public final class Settings {
          */
         public static final String DOZE_PULSE_ON_NOTIFICATIONS = "doze_pulse_on_notifications";
 
-  	/**Clean recent by shake
- 	@hide
-         */
-        public static final String SHAKE_CLEAN_RECENT = "shake_clean_recent";
 	 /**
          * Config for advanced power menu
          *
