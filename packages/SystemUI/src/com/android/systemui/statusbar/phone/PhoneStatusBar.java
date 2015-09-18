@@ -590,6 +590,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.APP_SIDEBAR_POSITION),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_BOTTOM_ICONS_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP), 
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -692,6 +695,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.USE_SLIM_RECENTS))) {
                 updateRecents();
+            } else if (uri.equals(Settings.System.getUriFor(
+                   Settings.System.LOCKSCREEN_BOTTOM_ICONS_COLOR))) {
+                setBottomIconsColors();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.RECENT_CARD_BG_COLOR))
                     || uri.equals(Settings.System.getUriFor(
@@ -1687,6 +1693,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mStatusBarHeaderMachine.updateEnablement();
 
         UpdateNotifDrawerClearAllIconColor();
+        setBottomIconsColors();
 
         return mStatusBarView;
     }
@@ -2843,6 +2850,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             .start();
                 }
             }
+        }
+    }
+
+    public void setBottomIconsColors() {
+        int iconColor =
+                Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_BOTTOM_ICONS_COLOR, 0xffffffff);
+        if (mKeyguardBottomArea != null) {
+            mKeyguardBottomArea.updateIconColor(iconColor);
         }
     }
 
