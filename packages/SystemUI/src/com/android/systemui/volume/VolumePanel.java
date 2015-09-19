@@ -297,6 +297,7 @@ public class VolumePanel extends Handler implements DemoMode {
                     Settings.System.VOLUME_PANEL_TIMEOUT, TIMEOUT_DELAY_VOL_PANEL);
         }
     };
+    private BroadcastReceiver mReceiver;
 
     private static class SafetyWarning extends SystemUIDialog
             implements DialogInterface.OnDismissListener, DialogInterface.OnClickListener {
@@ -624,7 +625,7 @@ public class VolumePanel extends Handler implements DemoMode {
         filter.addAction(AudioManager.INTERNAL_RINGER_MODE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-        mContext.registerReceiver(new BroadcastReceiver() {
+        mReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 final String action = intent.getAction();
@@ -652,7 +653,8 @@ public class VolumePanel extends Handler implements DemoMode {
                     }
                 }
             }
-        }, filter);
+        };
+        mContext.registerReceiver(mReceiver, filter);
     }
 
     private boolean isMuted(int streamType) {
@@ -1868,5 +1870,11 @@ public class VolumePanel extends Handler implements DemoMode {
         void onZenSettings();
         void onInteraction();
         void onVisible(boolean visible);
+    }
+
+    public void cleanup() {
+        mZenController.removeCallback(mZenCallback);
+        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
+        mContext.unregisterReceiver(mReceiver);
     }
 }
