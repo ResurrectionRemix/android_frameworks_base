@@ -37,7 +37,7 @@
         android:id="@+id/onthego_divider_0"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@android:color/white"
+        android:background="@android:color/transparent"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_below="@+id/alpha_slider" />
@@ -59,7 +59,7 @@
             android:id="@+id/onthego_divider_1"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@android:color/darker_gray"
+            android:background="@android:color/transparent"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_below="@+id/onthego_camera_toggle" />
@@ -76,7 +76,7 @@
             android:id="@+id/onthego_divider_2"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_below="@+id/onthego_service_toggle" />
