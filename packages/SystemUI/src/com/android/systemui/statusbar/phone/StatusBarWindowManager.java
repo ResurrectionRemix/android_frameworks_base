@@ -23,6 +23,8 @@ import android.graphics.Point;
 import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.Display;
 import android.view.View;
@@ -49,6 +51,7 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
     private WindowManager.LayoutParams mLpChanged;
     private int mBarHeight;
     private final boolean mKeyguardScreenRotation;
+    private boolean mKeyguardScreenRotationEnabled;
 
     private boolean mKeyguardBlurEnabled;
     private boolean mShowingMedia;
@@ -80,9 +83,23 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
     }
 
     private boolean shouldEnableKeyguardScreenRotation() {
-        Resources res = mContext.getResources();
-        return SystemProperties.getBoolean("lockscreen.rot_override", false)
-                || res.getBoolean(R.bool.config_enableLockScreenRotation);
+        final Resources res = mContext.getResources();
+        final boolean configRotation = SystemProperties.getBoolean("lockscreen.rot_override",
+                res.getBoolean(R.bool.config_enableLockScreenRotation));
+
+        if (configRotation) {
+            mKeyguardScreenRotationEnabled = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.LOCKSCREEN_ROTATION,
+                    1, UserHandle.USER_CURRENT) != 0;
+        }
+
+        return configRotation;
+    }
+
+    public void enableKeyguardScreenRotation(boolean keyguardScreenRotationEnabled) {
+        if (mKeyguardScreenRotation) {
+            mKeyguardScreenRotationEnabled = keyguardScreenRotationEnabled;
+        }
     }
 
     /**
@@ -144,7 +161,7 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
 
     private void adjustScreenOrientation(State state) {
         if (state.isKeyguardShowingAndNotOccluded()) {
-            if (mKeyguardScreenRotation) {
+            if (mKeyguardScreenRotationEnabled) {
                 mLpChanged.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_USER;
             } else {
                 mLpChanged.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;

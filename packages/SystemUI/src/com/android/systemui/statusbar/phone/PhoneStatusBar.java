@@ -607,6 +607,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_HIDE_TILES_WITH_SENSITIVE_DATA),
                     false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ROTATION),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -765,6 +768,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
            // This method reads Settings.Secure.RECENTS_LONG_PRESS_ACTIVITY
             updateCustomRecentsLongPressHandler(false);
+
+            if (mStatusBarWindowManager != null) {
+                final boolean enableRotation = Settings.System.getIntForUser(
+                        mContext.getContentResolver(), Settings.System.LOCKSCREEN_ROTATION,
+                        1, UserHandle.USER_CURRENT) != 0;
+                mStatusBarWindowManager.enableKeyguardScreenRotation(enableRotation);
+            }
             
             mLogoStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_LOGO_STYLE, 0,
