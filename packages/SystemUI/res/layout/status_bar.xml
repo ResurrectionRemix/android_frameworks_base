@@ -92,6 +92,7 @@
                     />
 
                 </com.android.keyguard.AlphaOptimizedLinearLayout>
+
                 <ImageView
                     android:id="@+id/left_logo"
                     android:layout_width="wrap_content"
@@ -102,17 +103,19 @@
                     android:visibility="gone"
                     />
 
-            <com.android.systemui.statusbar.widget.CarrierLabel
-                android:id="@+id/status_bar_carrier_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
-                android:textAllCaps="false"
-                android:visibility="gone"
-                android:singleLine="true"
-                android:ellipsize="end"
+               <com.android.systemui.statusbar.widget.CarrierLabel
+                    android:id="@+id/statusbar_carrier_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:ellipsize="end"
+                    android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
+                    android:textSize="@dimen/status_bar_clock_size"
+                    android:textColor="@color/kg_carrier_text"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:singleLine="true"
                 />
+
                 <TextView
                    android:id="@+id/left_weather_temp"
                    android:layout_width="wrap_content"

@@ -16,14 +16,12 @@
 
 package com.android.keyguard;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.ConnectivityManager;
-import android.provider.Settings;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -169,12 +167,7 @@ public class CarrierText extends TextView {
                 displayText =  null;
             }
         }
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_SCREEN_HIDE_CARRIER, 0) == 0) {
-            setText(displayText);
-        } else {
-            setText("");
-        }
+        setText(displayText);
     }
 
     @Override

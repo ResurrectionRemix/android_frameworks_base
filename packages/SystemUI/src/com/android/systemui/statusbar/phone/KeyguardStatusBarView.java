@@ -18,7 +18,13 @@
 package com.android.systemui.statusbar.phone;
 
 import android.content.Context;
+import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -26,6 +32,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.BatteryLevelTextView;
@@ -54,8 +61,24 @@ public class KeyguardStatusBarView extends RelativeLayout {
     private int mSystemIconsSwitcherHiddenExpandedMargin;
     private Interpolator mFastOutSlowInInterpolator;
 
+    private int mShowCarrierLabel;
+    private TextView mCarrierLabel;
+
+    private ContentObserver mObserver = new ContentObserver(new Handler()) {
+        public void onChange(boolean selfChange, Uri uri) {
+            showStatusBarCarrier();
+            updateVisibilities();
+        }
+    };
+
     public KeyguardStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        showStatusBarCarrier();
+    }
+
+    private void showStatusBarCarrier() {
+        mShowCarrierLabel = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_CARRIER, 1, UserHandle.USER_CURRENT);
     }
 
     @Override
@@ -64,6 +87,7 @@ public class KeyguardStatusBarView extends RelativeLayout {
         mSystemIconsSuperContainer = findViewById(R.id.system_icons_super_container);
         mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = (ImageView) findViewById(R.id.multi_user_avatar);
+        mCarrierLabel = (TextView) findViewById(R.id.keyguard_carrier_text);
         mBatteryLevel = (BatteryLevelTextView) findViewById(R.id.battery_level_text);
         mDockBatteryLevel = (BatteryLevelTextView) findViewById(R.id.dock_battery_level_text);
         loadDimens();
@@ -87,6 +111,23 @@ public class KeyguardStatusBarView extends RelativeLayout {
         } else if (mMultiUserSwitch.getParent() == this && mKeyguardUserSwitcherShowing) {
             removeView(mMultiUserSwitch);
         }
+
+        ConnectivityManager cm = (ConnectivityManager)mContext.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        if (mCarrierLabel != null) {
+            if (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) != false){
+                if (mShowCarrierLabel == 1) {
+                    mCarrierLabel.setVisibility(View.VISIBLE);
+                } else if (mShowCarrierLabel == 3) {
+                    mCarrierLabel.setVisibility(View.VISIBLE);
+                } else {
+                    mCarrierLabel.setVisibility(View.GONE);
+                }
+            } else {
+                mCarrierLabel.setVisibility(View.GONE);
+            }
+        }
+
         mBatteryLevel.setVisibility(View.VISIBLE);
         if (mDockBatteryLevel != null) {
             mDockBatteryLevel.setVisibility(View.VISIBLE);
@@ -217,4 +258,17 @@ public class KeyguardStatusBarView extends RelativeLayout {
     public boolean hasOverlappingRendering() {
         return false;
     }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                "status_bar_custom_carrier"), false, mObserver);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
+
 }

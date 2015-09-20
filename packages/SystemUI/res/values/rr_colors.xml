@@ -66,4 +66,8 @@
     <!-- Battery saver dialog icon colors -->
     <color name="battery_saver_dismiss">#ffffffff</color><!-- white -->
     <color name="battery_saver_turn_off">#FF5252</color><!-- red -->
+
+    <!-- Carrier Label -->
+    <color name="kg_carrier_text">#ffffffff</color>    
+
 </resources>

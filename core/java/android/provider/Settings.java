@@ -4075,9 +4075,13 @@ public final class Settings {
 
         /**
          * show carrier in statusbae while on lockscreen. The value is
-         * int (1: Show or 0: Hide).
+         * 0 = Hide
+         * 1 = Show only on keyguard
+         * 2 = Show only on statusbar
+         * 3 = Show on keyguard and statusbar
+  
          */
-        public static final String LOCK_SCREEN_HIDE_CARRIER = "lock_screen_hide_carrier";
+        public static final String STATUS_BAR_CUSTOM_CARRIER = "status_bar_custom_carrier";
 
         /**
          * Width of the gesture anywhere trigger.
