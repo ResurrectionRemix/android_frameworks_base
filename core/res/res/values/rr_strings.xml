@@ -66,6 +66,7 @@
     <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
     <string name="animation_grow_shrink_left">Grow in (Left)</string>
     <string name="animation_grow_shrink_right">Grow in (Right)</string>
+    <string name="animation_random">Random</string>
     <string name="action_null">Blank</string>
 
 </resources>

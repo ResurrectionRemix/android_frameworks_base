@@ -107,6 +107,7 @@
   <java-symbol type="string" name="animation_grow_shrink_bottom"/>
   <java-symbol type="string" name="animation_grow_shrink_left"/>
   <java-symbol type="string" name="animation_grow_shrink_right"/>
+  <java-symbol type="string" name="animation_random"/>
   <java-symbol type="anim" name="shrink_fade_out_ribbon" />
   <java-symbol type="anim" name="shrink_fade_out_center_ribbon" />
   <java-symbol type="anim" name="shrink_fade_out_right_ribbon" />
