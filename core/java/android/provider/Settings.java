@@ -1384,7 +1384,7 @@ public final class Settings {
 
         /**
          * Look up a boolean in the database.
-         * @param resolver to access the database with
+         * @param cr to access the database with
          * @param name to look up in the table
          * @param def Value to return if the setting is not defined.
          * @return The setting's current value, or 'def' if it is not defined
