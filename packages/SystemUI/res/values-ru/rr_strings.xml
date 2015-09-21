@@ -132,4 +132,19 @@
     <!-- Configurations Tile -->
     <string name="quick_settings_rrtools">Настройки RR</string>
 
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">\"На ходу\" активируется</string>
+    <string name="onthego_notif_title">\"На ходу\" активен</string>
+    <string name="onthego_notif_stop">Остановить</string>
+    <string name="onthego_notif_options">Настройки</string>
+    <string name="onthego_notif_error">Не удаётся включить \"На ходу\"</string>
+    <string name="onthego_notif_restart">Перезапустить \"На ходу\"</string>
+    <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
+    <string name="onthego_transparency">Прозрачность</string>
+    <string name="onthego_front_camera">Использовать переднюю камеру</string>
+    <string name="onthego_service_toggle">Автоматически перезапускать службу</string>
+    <!-- To do: Add QS OnTheGo
+    <string name="quick_settings_onthego_back">Задняя камера</string>
+    <string name="quick_settings_onthego_front">Передняя камера</string>-->
+
 </resources>
