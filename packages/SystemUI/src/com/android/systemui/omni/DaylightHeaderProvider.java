@@ -49,24 +49,32 @@ public class DaylightHeaderProvider implements
     // Daily calendar periods
     private static final int TIME_SUNRISE = 6;
     private static final int DRAWABLE_SUNRISE = R.drawable.notifhead_sunrise;
+    private static final int DRAWABLE_SUNRISE_HD = R.drawable.notifhead_sunrise_hd;
     private static final int TIME_MORNING = 9;
     private static final int DRAWABLE_MORNING = R.drawable.notifhead_morning;
+    private static final int DRAWABLE_MORNING_HD = R.drawable.notifhead_morning_hd;
     private static final int TIME_NOON = 11;
     private static final int DRAWABLE_NOON = R.drawable.notifhead_noon;
+    private static final int DRAWABLE_NOON_HD = R.drawable.notifhead_noon_hd;
     private static final int TIME_AFTERNOON = 13;
     private static final int DRAWABLE_AFTERNOON = R.drawable.notifhead_afternoon;
+    private static final int DRAWABLE_AFTERNOON_HD = R.drawable.notifhead_afternoon_hd;
     private static final int TIME_SUNSET = 19;
     private static final int DRAWABLE_SUNSET = R.drawable.notifhead_sunset;
+    private static final int DRAWABLE_SUNSET_HD = R.drawable.notifhead_sunset_hd;
     private static final int TIME_NIGHT = 21;
     private static final int DRAWABLE_NIGHT = R.drawable.notifhead_night;
+    private static final int DRAWABLE_NIGHT_HD = R.drawable.notifhead_night_hd;
 
     // Special events
     // Christmas is on Dec 25th
     private static final Calendar CAL_CHRISTMAS = Calendar.getInstance();
     private static final int DRAWABLE_CHRISTMAS = R.drawable.notifhead_christmas;
+    private static final int DRAWABLE_CHRISTMAS_HD = R.drawable.notifhead_christmas_hd;
     // New years eve is on Dec 31st
     private static final Calendar CAL_NEWYEARSEVE = Calendar.getInstance();
     private static final int DRAWABLE_NEWYEARSEVE = R.drawable.notifhead_newyearseve;
+    private static final int DRAWABLE_NEWYEARSEVE_HD = R.drawable.notifhead_newyearseve_hd;
 
     // Default drawable (AOSP)
     private static final int DRAWABLE_DEFAULT = R.drawable.notification_header_bg;
@@ -97,31 +105,63 @@ public class DaylightHeaderProvider implements
 
     @Override
     public Drawable getCurrent(final Calendar now) {
+
+        int headerdefault = Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.STATUS_BAR_CUSTOM_HEADER_DEFAULT, 0);
+
         // Check special events first. They have the priority over any other
         // period.
-        if (isItToday(CAL_CHRISTMAS)) {
-            // Merry christmas!
-            return loadOrFetch(DRAWABLE_CHRISTMAS);
-        } else if (isItToday(CAL_NEWYEARSEVE)) {
-            // Happy new year!
-            return loadOrFetch(DRAWABLE_NEWYEARSEVE);
+        if (headerdefault == 0) {
+            if (isItToday(CAL_CHRISTMAS)) {
+                // Merry christmas!
+                return loadOrFetch(DRAWABLE_CHRISTMAS);
+            } else if (isItToday(CAL_NEWYEARSEVE)) {
+                // Happy new year!
+                return loadOrFetch(DRAWABLE_NEWYEARSEVE);
+            }
+        }
+        if (headerdefault == 1) {
+            if (isItToday(CAL_CHRISTMAS)) {
+                // Merry christmas!
+                return loadOrFetch(DRAWABLE_CHRISTMAS_HD);
+            } else if (isItToday(CAL_NEWYEARSEVE)) {
+                // Happy new year!
+                return loadOrFetch(DRAWABLE_NEWYEARSEVE_HD);
+            }
         }
 
         // Now we check normal periods
         final int hour = now.get(Calendar.HOUR_OF_DAY);
 
-        if (hour < TIME_SUNRISE || hour >= TIME_NIGHT) {
-            return loadOrFetch(DRAWABLE_NIGHT);
-        } else if (hour >= TIME_SUNRISE && hour < TIME_MORNING) {
-            return loadOrFetch(DRAWABLE_SUNRISE);
-        } else if (hour >= TIME_MORNING && hour < TIME_NOON) {
-            return loadOrFetch(DRAWABLE_MORNING);
-        } else if (hour >= TIME_NOON && hour < TIME_AFTERNOON) {
-            return loadOrFetch(DRAWABLE_NOON);
-        } else if (hour >= TIME_AFTERNOON && hour < TIME_SUNSET) {
-            return loadOrFetch(DRAWABLE_AFTERNOON);
-        } else if (hour >= TIME_SUNSET && hour < TIME_NIGHT) {
-            return loadOrFetch(DRAWABLE_SUNSET);
+        if (headerdefault == 0) {
+            if (hour < TIME_SUNRISE || hour >= TIME_NIGHT) {
+                return loadOrFetch(DRAWABLE_NIGHT);
+            } else if (hour >= TIME_SUNRISE && hour < TIME_MORNING) {
+                return loadOrFetch(DRAWABLE_SUNRISE);
+            } else if (hour >= TIME_MORNING && hour < TIME_NOON) {
+                return loadOrFetch(DRAWABLE_MORNING);
+            } else if (hour >= TIME_NOON && hour < TIME_AFTERNOON) {
+                return loadOrFetch(DRAWABLE_NOON);
+            } else if (hour >= TIME_AFTERNOON && hour < TIME_SUNSET) {
+                return loadOrFetch(DRAWABLE_AFTERNOON);
+            } else if (hour >= TIME_SUNSET && hour < TIME_NIGHT) {
+                return loadOrFetch(DRAWABLE_SUNSET);
+            }
+        }
+        if (headerdefault == 1) {
+            if (hour < TIME_SUNRISE || hour >= TIME_NIGHT) {
+                return loadOrFetch(DRAWABLE_NIGHT_HD);
+            } else if (hour >= TIME_SUNRISE && hour < TIME_MORNING) {
+                return loadOrFetch(DRAWABLE_SUNRISE_HD);
+            } else if (hour >= TIME_MORNING && hour < TIME_NOON) {
+                return loadOrFetch(DRAWABLE_MORNING_HD);
+            } else if (hour >= TIME_NOON && hour < TIME_AFTERNOON) {
+                return loadOrFetch(DRAWABLE_NOON_HD);
+            } else if (hour >= TIME_AFTERNOON && hour < TIME_SUNSET) {
+                return loadOrFetch(DRAWABLE_AFTERNOON_HD);
+            } else if (hour >= TIME_SUNSET && hour < TIME_NIGHT) {
+                return loadOrFetch(DRAWABLE_SUNSET_HD);
+            }
         }
 
         // When all else fails, just be yourself
