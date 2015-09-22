@@ -614,7 +614,7 @@ public class KeyguardViewMediator extends SystemUI {
 
         @Override
         public void onScreenTurnedOff(int why) {
-            if (mLockPatternUtils.usingFingerprint()) {
+            if (isFingerprintActive()) {
                 synchronized (KeyguardViewMediator.this) {
                     mHandler.removeMessages(KEYGUARD_FINGERPRINT_AUTH);
                     mHandler.obtainMessage(KEYGUARD_FINGERPRINT_AUTH, 0, 0).sendToTarget();
@@ -635,7 +635,7 @@ public class KeyguardViewMediator extends SystemUI {
 
         @Override
         public void onScreenTurnedOn() {
-            if (mLockPatternUtils.usingFingerprint()) {
+            if (isFingerprintActive()) {
                 synchronized (KeyguardViewMediator.this) {
                     FingerprintManager fpm = (FingerprintManager)
                             mContext.getSystemService(Context.FINGERPRINT_SERVICE);
@@ -695,7 +695,7 @@ public class KeyguardViewMediator extends SystemUI {
         @Override
         public void onKeyguardVisibilityChanged(boolean showing) {
             super.onKeyguardVisibilityChanged(showing);
-            if (mLockPatternUtils.usingFingerprint()) {
+            if (isFingerprintActive()) {
                 synchronized (KeyguardViewMediator.this) {
                     mUpdateMonitor.setFingerprintListening(showing);
                 }
@@ -741,7 +741,7 @@ public class KeyguardViewMediator extends SystemUI {
         @Override
         public void keyguardGone() {
             mKeyguardDisplayManager.hide();
-            if (mLockPatternUtils.usingFingerprint()) {
+            if (isFingerprintActive()) {
                 synchronized (KeyguardViewMediator.this) {
                     if (mFingerprintWakeUnlock) {
                         if (DBG_FINGERPRINT) {
@@ -903,7 +903,12 @@ public class KeyguardViewMediator extends SystemUI {
             // This also "locks" the device when not secure to provide easy access to the
             // camera while preventing unwanted input.
             final boolean lockImmediately =
+<<<<<<< HEAD
                 mLockPatternUtils.getPowerButtonInstantlyLocks() || mLockPatternUtils.usingFingerprint();
+=======
+                mLockPatternUtils.getPowerButtonInstantlyLocks() || !mLockPatternUtils.isSecure()
+                    || isFingerprintActive();
+>>>>>>> ccbaa26... Fingerprint: don't report as active without any fp's
 
             notifyScreenOffLocked();
 
@@ -1592,7 +1597,7 @@ public class KeyguardViewMediator extends SystemUI {
         }
 
         if (authenticated) {
-            if (mLockPatternUtils.usingFingerprint()) {
+            if (isFingerprintActive()) {
                 KeyguardStats.sendUnlockEvent(mContext,
                         mUpdateMonitor.isFingerprintRecognized(),
                         mUpdateMonitor.getFailedFingerprintUnlockAttempts());
@@ -1973,7 +1978,7 @@ public class KeyguardViewMediator extends SystemUI {
     private void startFingerAuthIfUsingFingerprint() {
         synchronized (KeyguardViewMediator.this) {
             if (DBG_FINGERPRINT) Log.i(TAG, "startFingerAuthIfUsingFingerprint()");
-            if (mLockPatternUtils.usingFingerprint()) {
+            if (isFingerprintActive()) {
                 if (mFingerprintWakeUnlock) {
                     Log.w(TAG, "fingerprint unlock mode, not authenticating");
                     return;
@@ -2006,7 +2011,7 @@ public class KeyguardViewMediator extends SystemUI {
 
     private void stopAuthenticatingFingerprint() {
         synchronized (KeyguardViewMediator.this) {
-            if (mLockPatternUtils.usingFingerprint()) {
+            if (isFingerprintActive()) {
                 if (DBG_FINGERPRINT) {
                     Log.i(TAG, "stopAuthenticatingFingerprint()");
                 }
@@ -2016,6 +2021,16 @@ public class KeyguardViewMediator extends SystemUI {
                 fpm.cancel();
             }
         }
+    }
+
+    private boolean isFingerprintActive() {
+        return isFingerprintActive(mContext, mLockPatternUtils);
+    }
+
+    public static boolean isFingerprintActive(Context context, LockPatternUtils lockPatternUtils) {
+        FingerprintManager fp = (FingerprintManager)
+                context.getSystemService(Context.FINGERPRINT_SERVICE);
+        return fp != null && fp.userEnrolled() && lockPatternUtils.usingFingerprint();
     }
 
 }
