@@ -1509,7 +1509,8 @@
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="signature"
         android:label="@string/permlab_interactAcrossUsersFull"
-        android:description="@string/permdesc_interactAcrossUsersFull" />
+        android:description="@string/permdesc_interactAcrossUsersFull"
+        androidprv:allowViaWhitelist="true" />
 
     <!-- @SystemApi @hide Allows an application to call APIs that allow it to query and manage
          users on the device. This permission is not available to
@@ -1834,7 +1835,8 @@
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="signature"
         android:label="@string/permlab_setPreferredApplications"
-        android:description="@string/permdesc_setPreferredApplications" />
+        android:description="@string/permdesc_setPreferredApplications"
+        androidprv:allowViaWhitelist="true" />
 
     <!-- Allows an application to receive the
          {@link android.content.Intent#ACTION_BOOT_COMPLETED} that is
