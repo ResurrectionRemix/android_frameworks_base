@@ -774,7 +774,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             if (mStatusBarWindowManager != null) {
                 final boolean enableRotation = Settings.System.getIntForUser(
                         mContext.getContentResolver(), Settings.System.LOCKSCREEN_ROTATION,
-                        1, UserHandle.USER_CURRENT) != 0;
+                        0, UserHandle.USER_CURRENT) != 0;
                 mStatusBarWindowManager.enableKeyguardScreenRotation(enableRotation);
             }
             
