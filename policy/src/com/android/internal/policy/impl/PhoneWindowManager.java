@@ -1883,7 +1883,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void updateKeyAssignments() {
         int activeHardwareKeys = mDeviceHardwareKeys;
 
-        if (!hasHwKeysEnabled()) 
+        if (!hasHwKeysEnabled()) {
             activeHardwareKeys = 0;
         }
 
