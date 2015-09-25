@@ -4387,7 +4387,18 @@ public final class Settings {
         public static final String APP_CIRCLE_BAR_TRIGGER_HEIGHT = "app_circle_bar_trigger_height";
 
         /**
+<<<<<<< HEAD
          * Whether to display the trigger region or not
+=======
+         * Defines global heads up snooze time if user want to snooze it.
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_SNOOZE_TIME = "heads_up_snooze_time";
+
+        /**
+         * Wether to show a headsup enable/disable button in status bar header
+>>>>>>> 7c2bc2e... [1/2] Heads up snooze
          *
          * @hide
          */
