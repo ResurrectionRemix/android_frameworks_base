@@ -15,6 +15,7 @@
  */
 package com.android.internal.policy;
 
+import android.graphics.Bitmap;
 import android.view.MotionEvent;
 
 import com.android.internal.policy.IKeyguardShowCallback;
@@ -72,4 +73,6 @@ interface IKeyguardService {
      * to start the keyguard dismiss sequence.
      */
     oneway void onActivityDrawn();
+
+    oneway void setBackgroundBitmap(in Bitmap bmp);
 }
