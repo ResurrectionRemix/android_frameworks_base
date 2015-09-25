@@ -1,12 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2014-2015 SlimRoms Project
-
-   Licensed under the Apache License, Version 2.0 (the "License");
+    Copyright (c) 2015 SlimRoms
+    Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
+        http://www.apache.org/licenses/LICENSE-2.0
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,11 +12,19 @@ Copyright (C) 2014-2015 SlimRoms Project
     limitations under the License.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="48.0"
-        android:viewportHeight="48.0">
+    android:width="20dp"
+    android:height="15dp"
+    android:viewportWidth="20"
+    android:viewportHeight="15">
+
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M23.000000,44.000000c2.200000,0.000000 4.000000,-1.800000 4.000000,-4.000000l-8.000000,0.000000C19.000000,42.200001 20.799999,44.000000 23.000000,44.000000zM36.000000,21.000000c0.000000,-6.100000 -4.300000,-11.300000 -10.000000,-12.600000L26.000000,7.000000c0.000000,-1.700000 -1.300000,-3.000000 -3.000000,-3.000000c-1.700000,0.000000 -3.000000,1.300000 -3.000000,3.000000l0.000000,1.400000c-1.000000,0.200000 -2.000000,0.600000 -2.900000,1.100000L36.000000,28.400000L36.000000,21.000000zM35.500000,38.000000l4.000000,4.000000l2.500000,-2.500000L8.500000,6.000000L6.000000,8.500000l5.800000,5.800000C10.700000,16.299999 10.000000,18.600000 0.000000,21.000000l0.000000,11.000000l-4.000000,4.000000l0.000000,2.000000L35.500000,38.000000z"/>
+        android:pathData="M14.546 14.025v-0.975l1.25-1.713 1.25-1.962h-1.25-1.25v-0.9375-0.9375h2.726
+2.728v0.9775 0.975l-1.25 1.7105-1.25 1.962h1.25 1.25v0.937
+0.938h-2.728-2.726zm-7.2733-3.75v-0.975l1.2498-1.7133
+1.25-1.9617h-1.25-1.2498v-0.9375-0.9375h2.7273 2.727v0.9773 0.975l-1.25
+1.7109-1.25 1.9618h1.25 1.25v0.937
+0.938h-2.727-2.7273zm-7.2727-3.75v-0.975l1.25-1.7132
+1.25-1.9618h-1.25-1.25v-0.9375-0.9375l2.7272-9.5367e-7h2.7274v0.97733
+0.97497l-1.25 1.7109-1.25 1.9618h1.25 1.25v0.9375 0.9375h-2.7274-2.7272z" />
 </vector>
