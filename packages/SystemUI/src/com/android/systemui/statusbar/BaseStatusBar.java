@@ -198,6 +198,8 @@ public abstract class BaseStatusBar extends SystemUI implements
     // for heads up notifications
     protected HeadsUpNotificationView mHeadsUpNotificationView;
     protected int mHeadsUpNotificationDecay;
+    private int mHeadsUpSnoozeTime;
+    private long mHeadsUpSnoozeStartTime;
 
     // Search panel
     protected SearchPanelView mSearchPanelView;
@@ -2471,6 +2473,26 @@ public abstract class BaseStatusBar extends SystemUI implements
                 || (newNotification.flags & Notification.FLAG_ONLY_ALERT_ONCE) == 0;
     }
 
+    public void snoozeHeadsUp() {
+        scheduleHeadsUpClose();
+        mHeadsUpSnoozeStartTime = System.currentTimeMillis();
+        Toast.makeText(mContext,
+                mContext.getString(R.string.heads_up_snooze_message,
+                mHeadsUpSnoozeTime / 60 / 1000), Toast.LENGTH_LONG).show();
+    }
+
+    protected boolean isHeadsUpInSnooze() {
+        return (mHeadsUpSnoozeStartTime + mHeadsUpSnoozeTime - System.currentTimeMillis()) > 0;
+    }
+
+    protected void setHeadsUpSnoozeTime(int snoozeTime) {
+        mHeadsUpSnoozeTime = snoozeTime;
+    }
+
+    protected void resetHeadsUpSnoozeTimer() {
+        mHeadsUpSnoozeStartTime = 0;
+    }
+
     protected boolean shouldInterrupt(StatusBarNotification sbn) {
         if (mNotificationData.shouldFilterOut(sbn)) {
             if (DEBUG) {
@@ -2484,6 +2506,11 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
 
         Notification notification = sbn.getNotification();
+        // we are snoozing
+
+        if (isHeadsUpInSnooze()) {
+            return false;
+        }
 
         // check if notification from the package is blacklisted first
         if (isPackageBlacklisted(sbn.getPackageName())) {
