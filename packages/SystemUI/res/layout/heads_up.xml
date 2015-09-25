@@ -49,6 +49,7 @@
                         android:layout_height="28dp"
                         android:layout_width="28dp"
                         android:layout_marginEnd="@dimen/notification_side_padding"
+                        android:scaleType="centerInside"
                         android:contentDescription="@string/heads_up_snooze_button_title"
                         android:background="@drawable/snooze_button_bg"
                         android:src="@drawable/ic_heads_up_snooze" />
