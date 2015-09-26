@@ -1271,6 +1271,7 @@ public final class Settings {
             MOVED_TO_SECURE.add(Secure.QS_TILES);
             MOVED_TO_SECURE.add(Secure.QS_USE_MAIN_TILES);
             MOVED_TO_SECURE.add(Secure.QS_SHOW_BRIGHTNESS_SLIDER);
+            MOVED_TO_SECURE.add(Secure.DEV_FORCE_SHOW_NAVBAR);
             for (String s : Secure.NAVIGATION_RING_TARGETS) {
                 MOVED_TO_SECURE.add(s);
             }
@@ -2240,6 +2241,21 @@ public final class Settings {
          */
         @Deprecated
         public static final String BUTTON_BACKLIGHT_TIMEOUT = Secure.BUTTON_BACKLIGHT_TIMEOUT;
+
+        /**
+         * Developer options - Navigation Bar show switch
+         * @deprecated Use {@link android.provider.Settings.Secure#DEV_FORCE_SHOW_NAVBAR} instead
+         * @hide
+         */
+        @Deprecated
+        public static final String DEV_FORCE_SHOW_NAVBAR = Secure.DEV_FORCE_SHOW_NAVBAR;
+
+        /**
+         * Quick Settings Quick Pulldown
+         * 0 = off, 1 = right, 2 = left
+         * @hide
+         */
+        public static final String QS_QUICK_PULLDOWN = "qs_quick_pulldown";
 
         /**
          * List of QS tile names
@@ -7452,6 +7468,12 @@ public final class Settings {
          */
         public static final String POWER_MENU_ACTIONS = "power_menu_actions";
 
+        /**
+         * Developer options - Navigation Bar show switch
+         * @hide
+         */
+        public static final String DEV_FORCE_SHOW_NAVBAR = "dev_force_show_navbar";
+        
         /**
          * The keyboard brightness to be used while the screen is on.
          * Valid value range is between 0 and {@link PowerManager#getMaximumKeyboardBrightness()}
