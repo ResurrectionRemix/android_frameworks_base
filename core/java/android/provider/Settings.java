@@ -4893,25 +4893,7 @@ public final class Settings {
          * Alternative recent apps integration using OmniSwitch
          * @hide
          */
-<<<<<<< HEAD
         public static final String RECENTS_USE_OMNISWITCH = "recents_use_omniswitch";
-=======
-        public static final String STATUS_BAR_CUSTOM_HEADER_PROVIDER = "status_bar_custom_header_provider";
-		
-        /**
-         * Allows to show the background activity back the lockscreen
-         * 0 = off
-         * 1 = on
-         * @hide
-         */
-        public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
-
-        /**
-         * Allows setting the radius for lockscreen blur
-         * @hide
-         */
-        public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
->>>>>>> 2e5275f... Frameworks: Lockscreen blur & see through (1/2)
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
