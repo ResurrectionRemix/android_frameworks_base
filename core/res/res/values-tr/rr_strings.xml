@@ -22,7 +22,7 @@
     <string name="default_string">Standart</string>
 
     <!-- AOKP custom system animations -->
-    <string name="animation_fade">karart</string>
+    <string name="animation_fade">Karart</string>
     <string name="animation_slide_right">Sağ kaydır</string>
     <string name="animation_slide_left">Sola kaydır</string>
     <string name="animation_slide_right_no_fade">Sağ kaydır (karartma yok)</string>
@@ -46,30 +46,45 @@
     <string name="global_actions_pie_mode_off_status">Pie kapalı</string>
 
     <!-- Error message if user want to try to disable all navigation options -->
-    <string name="disable_pie_navigation_error">You cannot disable pie controls. No other navigation is enabled. Enable first the navigation bar to turn off pie controls.</string>
+    <string name="disable_pie_navigation_error">Pie kontrollerini devre dışı bırakamazsınız. Başka hiçbir gezinti etkin değil. Pie kontrollerini kapatmak için ilk önce gezinti çubuğunu etkinleştirin.</string>
 
     <!-- status message in phone options dialog for when navigation bar is on -->
-    <string name="global_actions_nav_bar_mode_on_status">Navigasyon tuşları açık</string>
+    <string name="global_actions_nav_bar_mode_on_status">Gezinti tuşları açık</string>
 
     <!-- status message in phone options dialog for when navigation bar is off -->
-    <string name="global_actions_nav_bar_mode_off_status">Navigasyon tuşları kapalı</string>
+    <string name="global_actions_nav_bar_mode_off_status">Gezinti tuşları kapalı</string>
 
     <!-- Error message if user want to try to disable all navigation options -->
-    <string name="disable_navigation_pie_error">You cannot disable the navigation bar. No other navigation is enabled. Enable first pie controls to turn off the navigation bar.</string>
+    <string name="disable_navigation_pie_error">Gezinti çubuğunu devre dışı bırakamazsınız. Başka hiçbir gezinti etkin değil. Gezinti çubuğunu kapatmak için ilk önce pie kontrollerini etkinleştirin.</string>
 
     <!-- Floating Window -->
     <string name="floating_window_snap_top">Yukarı yapıştır</string>
     <string name="floating_window_snap_bottom">Aşağıya yapıştır</string>
     <string name="floating_window_snap_left">Sola yapıştır</string>
-    <string name="floating_window_snap_right">sağa yapıştır</string>
+    <string name="floating_window_snap_right">Sağa yapıştır</string>
     <string name="floating_window_minimize">Küçült</string>
 
     <!-- Setting confirmation dialog strings. Shown when any UI interaction can be modified by user input -->
     <string name="setting_confirmation_ask_me_later">Daha sonra sor</string>
     <string name="setting_confirmation_yes">Evet</string>
     <string name="setting_confirmation_no">Hayır</string>
+    
+    <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+    <string name="reboot_systemui">SystemUI Yeniden Başlat</string>
+
+    <!-- label for item that screenrecord in phone options dialog -->
+    <string name="global_action_screenrecord">Ekran Kaydedici</string>
+
+    <!-- label for item that torch in power menu options dialog -->
+    <string name="global_action_torch">El Feneri</string>
+    
     <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
     <string name="resurrection_start_title">Güncelleme Durumunda\u2026</string>
-     <!-- [CHAR LIMIT=40] Title of dialog that is shown when performing a system upgrade. -->
+    
+    <!-- [CHAR LIMIT=40] Title of dialog that is shown when performing a system upgrade. -->
     <string name="resurrection_upgrading_title">Resurrection Güncelleniyor\u2026</string>
+    
+    <!-- label for item that takes On-The-Go in the phone options dialog -->
+    <string name="global_action_onthego">On-The-Go Modu</string>
+
 </resources>
