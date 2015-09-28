@@ -9166,6 +9166,10 @@ package android.content.res {
     field public static final int UI_MODE_TYPE_TELEVISION = 4; // 0x4
     field public static final int UI_MODE_TYPE_UNDEFINED = 0; // 0x0
     field public static final int UI_MODE_TYPE_WATCH = 6; // 0x6
+    field public static final int UI_THEME_MODE_UNDEFINED = 0; // 0x0
+    field public static final int UI_THEME_MODE_NORMAL = 1; // 0x1
+    field public static final int UI_THEME_MODE_HOLO_DARK = 2; // 0x2
+    field public static final int UI_THEME_MODE_HOLO_LIGHT = 3; // 0x3
     field public int densityDpi;
     field public float fontScale;
     field public int hardKeyboardHidden;
@@ -9182,6 +9186,7 @@ package android.content.res {
     field public int screenWidthDp;
     field public int smallestScreenWidthDp;
     field public int touchscreen;
+    field public int uiThemeMode;
     field public int uiMode;
   }
 

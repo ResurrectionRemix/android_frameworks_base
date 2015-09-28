@@ -136,13 +136,13 @@ public:
             String8 leaf(group->getLeaf());
             mLeafName = String8(leaf);
             mParams = file->getGroupEntry().toParams();
-            NOISY(printf("Dir %s: mcc=%d mnc=%d lang=%c%c cnt=%c%c orient=%d ui=%d density=%d touch=%d key=%d inp=%d nav=%d\n",
+            NOISY(printf("Dir %s: mcc=%d mnc=%d lang=%c%c cnt=%c%c orient=%d uiTheme=%d ui=%d density=%d touch=%d key=%d inp=%d nav=%d\n",
                    group->getPath().string(), mParams.mcc, mParams.mnc,
                    mParams.language[0] ? mParams.language[0] : '-',
                    mParams.language[1] ? mParams.language[1] : '-',
                    mParams.country[0] ? mParams.country[0] : '-',
                    mParams.country[1] ? mParams.country[1] : '-',
-                   mParams.orientation, mParams.uiMode,
+                   mParams.orientation, mParams.uiThemeMode, mParams.uiMode,
                    mParams.density, mParams.touchscreen, mParams.keyboard,
                    mParams.inputFlags, mParams.navigation));
             mPath = "res";
@@ -332,9 +332,10 @@ static status_t makeFileResources(Bundle* bundle, const sp<AaptAssets>& assets,
         const char16_t* const end = str + baseName.size();
         while (str < end) {
             if (!((*str >= 'a' && *str <= 'z')
+                    || (*str >= 'A' && *str <= 'Z')
                     || (*str >= '0' && *str <= '9')
                     || *str == '_' || *str == '.')) {
-                fprintf(stderr, "%s: Invalid file name: must contain only [a-z0-9_.]\n",
+                fprintf(stderr, "%s: Invalid file name: must contain only [a-zA-Z0-9_.]\n",
                         it.getPath().string());
                 hasErrors = true;
             }
@@ -1028,13 +1029,13 @@ static ssize_t extractPlatformBuildVersion(AssetManager& assets, Bundle* bundle)
     }
 
     ResXMLTree tree;
+    ssize_t result = NO_ERROR;
     Asset* asset = assets.openNonAsset(cookie, "AndroidManifest.xml", Asset::ACCESS_STREAMING);
+
     if (asset == NULL) {
-        fprintf(stderr, "ERROR: Platform AndroidManifest.xml not found\n");
-        return UNKNOWN_ERROR;
+        return NO_ERROR;
     }
 
-    ssize_t result = NO_ERROR;
     if (tree.setTo(asset->getBuffer(true), asset->getLength()) != NO_ERROR) {
         fprintf(stderr, "ERROR: Platform AndroidManifest.xml is corrupt\n");
         result = UNKNOWN_ERROR;
