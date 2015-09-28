@@ -64,6 +64,7 @@ public class QSConstants {
     public static final String TILE_POWER_MENU = "power_menu";
     public static final String TILE_REBOOT = "reboot";
     public static final String TILE_SLIMACTION = "slimaction";
+    public static final String TILE_TRDS = "trds";
     public static final String TILE_SYSTEMUI_RESTART = "reboot_systemui";
     public static final String TILE_SLIM_FLOATS = "slim_floats";
     public static final String TILE_THEMES = "toggleThemes";
@@ -121,6 +122,7 @@ public class QSConstants {
         STATIC_TILES_AVAILABLE.add(TILE_POWER_MENU);
         STATIC_TILES_AVAILABLE.add(TILE_REBOOT);
         STATIC_TILES_AVAILABLE.add(TILE_SLIMACTION);
+        STATIC_TILES_AVAILABLE.add(TILE_TRDS);
         STATIC_TILES_AVAILABLE.add(TILE_SYSTEMUI_RESTART);
         STATIC_TILES_AVAILABLE.add(TILE_SLIM_FLOATS);
  	STATIC_TILES_AVAILABLE.add(TILE_THEMES);
