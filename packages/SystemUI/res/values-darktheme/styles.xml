@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="systemui_theme" parent="@android:style/Theme.Material" />
+    <style name="Theme.SystemUI.Dialog" parent="@android:style/Theme.Material.Dialog" />
+</resources>

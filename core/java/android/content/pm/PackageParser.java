@@ -907,7 +907,7 @@ public class PackageParser {
         XmlResourceParser parser = null;
         try {
             res = new Resources(assets, mMetrics, null);
-            assets.setConfiguration(0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            assets.setConfiguration(0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     Build.VERSION.RESOURCES_SDK_INT);
             parser = assets.openXmlResourceParser(cookie, ANDROID_MANIFEST_FILENAME);
 
@@ -961,7 +961,7 @@ public class PackageParser {
         XmlResourceParser parser = null;
         try {
             res = new Resources(assets, mMetrics, null);
-            assets.setConfiguration(0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            assets.setConfiguration(0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     Build.VERSION.RESOURCES_SDK_INT);
             parser = assets.openXmlResourceParser(cookie, ANDROID_MANIFEST_FILENAME);
 
@@ -1258,7 +1258,7 @@ public class PackageParser {
         XmlResourceParser parser = null;
         try {
             assets = new AssetManager();
-            assets.setConfiguration(0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            assets.setConfiguration(0, 0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     Build.VERSION.RESOURCES_SDK_INT);
 
             int cookie = assets.addAssetPath(apkPath);

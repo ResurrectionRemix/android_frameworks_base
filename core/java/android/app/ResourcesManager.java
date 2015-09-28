@@ -515,7 +515,7 @@ public class ResourcesManager {
                         }
                     }
                 }
-                if (!isDefaultDisplay || hasOverrideConfiguration) {
+                if ((!isDefaultDisplay || hasOverrideConfiguration)) {
                     if (tmpConfig == null) {
                         tmpConfig = new Configuration();
                     }

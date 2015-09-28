@@ -61,6 +61,7 @@ bool parseScreenHeightDp(const char* str, android::ResTable_config* out = NULL);
 bool parseScreenLayoutSize(const char* str, android::ResTable_config* out = NULL);
 bool parseScreenLayoutLong(const char* str, android::ResTable_config* out = NULL);
 bool parseOrientation(const char* str, android::ResTable_config* out = NULL);
+bool parseUiThemeMode(const char* str, android::ResTable_config* out = NULL);
 bool parseUiModeType(const char* str, android::ResTable_config* out = NULL);
 bool parseUiModeNight(const char* str, android::ResTable_config* out = NULL);
 bool parseDensity(const char* str, android::ResTable_config* out = NULL);
