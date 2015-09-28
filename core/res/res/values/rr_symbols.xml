@@ -62,7 +62,12 @@
   <java-symbol type="anim" name="slide_out_right_no_fade" />
   <!-- Hardware keys on/off option -->
   <java-symbol type="bool" name="config_hwKeysPref" />
-  <!-- global actions -->
+  
+  <!-- UI theme mode -->
+  <java-symbol type="integer" name="config_uiThemeMode" />
+  <java-symbol type="string" name="theme_auto_switch_mode_error" />
+
+  <!-- Global actions -->
   <java-symbol type="id" name="option4" />
   <java-symbol type="id" name="option5" />
   <!-- Doze mode -->

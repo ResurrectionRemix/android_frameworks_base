@@ -131,6 +131,14 @@ bool parse(const String8& str, ConfigDescription* out) {
         part = parts[index].string();
     }
 
+    if (parseUiThemeMode(part, &config)) {
+        index++;
+        if (index == N) {
+            goto success;
+        }
+        part = parts[index].string();
+    }
+
     if (parseUiModeType(part, &config)) {
         index++;
         if (index == N) {
@@ -247,6 +255,7 @@ bool parseCommaSeparatedList(const String8& str, std::set<ConfigDescription>* ou
 }
 
 void applyVersionForCompatibility(ConfigDescription* config) {
+    return;
     if (config == NULL) {
         return;
     }
@@ -261,7 +270,8 @@ void applyVersionForCompatibility(ConfigDescription* config) {
     } else if ((config->uiMode & ResTable_config::MASK_UI_MODE_TYPE)
                 != ResTable_config::UI_MODE_TYPE_ANY
             ||  (config->uiMode & ResTable_config::MASK_UI_MODE_NIGHT)
-                != ResTable_config::UI_MODE_NIGHT_ANY) {
+                != ResTable_config::UI_MODE_NIGHT_ANY
+            ||  config->uiThemeMode != ResTable_config::UI_THEME_MODE_ANY) {
         minSdk = SDK_FROYO;
     } else if ((config->screenLayout & ResTable_config::MASK_SCREENSIZE)
                 != ResTable_config::SCREENSIZE_ANY
@@ -458,6 +468,39 @@ bool parseUiModeType(const char* name, ResTable_config* out) {
       if (out) out->uiMode =
               (out->uiMode&~ResTable_config::MASK_UI_MODE_TYPE)
               | ResTable_config::UI_MODE_TYPE_WATCH;
+        return true;
+    } else if (strcmp(name, "smallui") == 0) {
+      if (out) out->uiMode =
+              (out->uiMode&~ResTable_config::MASK_UI_MODE_TYPE)
+              | 0xc;
+      return true;
+    } else if (strcmp(name, "mediumui") == 0) {
+      if (out) out->uiMode =
+              (out->uiMode&~ResTable_config::MASK_UI_MODE_TYPE)
+              | 0xd;
+      return true;
+    } else if (strcmp(name, "largeui") == 0) {
+      if (out) out->uiMode =
+              (out->uiMode&~ResTable_config::MASK_UI_MODE_TYPE)
+              | 0xe;
+      return true;
+    } else if (strcmp(name, "hugeui") == 0) {
+      if (out) out->uiMode = 0xf;
+      return true;
+    }
+
+    return false;
+}
+
+bool parseUiThemeMode(const char* name, ResTable_config* out) {
+    if (strcmp(name, kWildcardName) == 0) {
+      if (out) out->uiThemeMode = out->UI_THEME_MODE_ANY;
+        return true;
+    } else if (strcmp(name, "darktheme") == 0) {
+      if (out) out->uiThemeMode = out->UI_THEME_MODE_HOLO_DARK;
+        return true;
+    } else if (strcmp(name, "lighttheme") == 0) {
+      if (out) out->uiThemeMode = out->UI_THEME_MODE_HOLO_LIGHT;
         return true;
     }
 

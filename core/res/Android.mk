@@ -24,6 +24,8 @@ LOCAL_CERTIFICATE := platform
 # since these resources will be used by many apps.
 LOCAL_AAPT_FLAGS := -x
 
+LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
+
 LOCAL_MODULE_TAGS := optional
 
 # Install this alongside the libraries.
