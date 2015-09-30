@@ -28,8 +28,6 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.net.ConnectivityManager;
-import android.nfc.NfcAdapter;
-import android.os.SystemProperties;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -126,6 +124,9 @@ public class QSUtils {
                     break;
                 case QSConstants.TILE_PERFORMANCE:
                     removeTile = !deviceSupportsPowerProfiles(context);
+                    break;
+                case QSConstants.TILE_AMBIENT_DISPLAY:
+                    removeTile = !deviceSupportsDoze(context);
                     break;
             }
             if (removeTile) {
@@ -287,12 +288,9 @@ public class QSUtils {
                 && sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null;
     }
 
-    private static boolean isDozeAvailable(Context context) {
-        String name = Build.IS_DEBUGGABLE ? SystemProperties.get("debug.doze.component") : null;
-        if (TextUtils.isEmpty(name)) {
-            name = context.getResources().getString(
+    public static boolean deviceSupportsDoze(Context context) {
+        String name = context.getResources().getString(
                     com.android.internal.R.string.config_dozeComponent);
-        }
         return !TextUtils.isEmpty(name);
     }
 
@@ -301,7 +299,4 @@ public class QSUtils {
         return pm.hasPowerProfiles();
     }
 
-    private static boolean supportsRootAccess() {
-        return Build.IS_DEBUGGABLE || "eng".equals(Build.TYPE);
-    }
 }
