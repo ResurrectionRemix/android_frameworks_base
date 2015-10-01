@@ -124,6 +124,9 @@ public class QSUtils {
                 case QSConstants.TILE_COMPASS:
                     removeTile = !deviceSupportsCompass(context);
                     break;
+                case QSConstants.TILE_AMBIENT_DISPLAY:
+                    removeTile = !isDozeAvailable(context);
+                    break;
                 case QSConstants.TILE_PERFORMANCE:
                     removeTile = !deviceSupportsPowerProfiles(context);
                     break;
