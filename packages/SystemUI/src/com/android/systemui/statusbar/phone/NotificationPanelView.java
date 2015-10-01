@@ -403,7 +403,7 @@ public class NotificationPanelView extends PanelView implements
                 // if TaskManager is showing reset back to QSPanel
                 // otherwise multiuser switch will not work.
                 if (mTaskManagerShowing) {
-                    mStatusBar.resetQsPanelVisibility();
+                    resetQsPanelVisibility();
                 }
             }
         });
