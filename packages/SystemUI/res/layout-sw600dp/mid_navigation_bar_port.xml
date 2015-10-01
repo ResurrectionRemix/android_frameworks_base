@@ -97,6 +97,7 @@
             systemui:keyRepeat="true" />
         <com.android.systemui.statusbar.policy.KeyButtonView
             android:id="@+id/six"
+            android:scaleType="fitCenter"
             android:layout_width="128dp" android:paddingLeft="25dp" android:paddingRight="25dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
