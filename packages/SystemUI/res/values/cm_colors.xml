@@ -48,6 +48,12 @@
     <!-- Color for notification icons -->
     <color name="notification_icon_color">#FFFFFFFF</color>
 
+    <!-- snooze_button_bg_color -->
+    <color name="snooze_button_bg_color">@color/system_accent_color</color>
+ 
+    <!-- snooze_button_ripple_color -->
+    <color name="snooze_button_ripple_color">@color/notification_ripple_tinted_color</color>
+
     <!-- Navigation button ripple color -->
     <color name="navbutton_ripple_color">#FFFFFFFF</color>
 
