@@ -870,11 +870,9 @@ class ContextImpl extends Context {
 
     @Override
     public void recreateTheme() {
-        if (mTheme != null) {
-            Resources.Theme newTheme = mResources.newTheme();
-            newTheme.applyStyle(mThemeResource, true);
-            mTheme.setTo(newTheme);
-        }
+        Resources.Theme newTheme = mResources.newTheme();
+        newTheme.applyStyle(mThemeResource, true);
+        mTheme.setTo(newTheme);
     }
 
     @Override

@@ -2043,14 +2043,6 @@ public class Resources {
             return;
         }
 
-        if (Configuration.needNewResources(configChanges, 0)) {
-            if (DEBUG_CONFIG) {
-                Log.d(TAG, "Clear drawable cache from config changes: 0x"
-                        + Integer.toHexString(configChanges));
-            }
-            cache.clear();
-            return;
-        }
 
         if (DEBUG_CONFIG) {
             Log.d(TAG, "Cleaning up drawables config changes: 0x"
