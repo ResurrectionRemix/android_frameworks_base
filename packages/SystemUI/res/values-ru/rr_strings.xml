@@ -30,8 +30,6 @@
     <!-- Quick settings -->
     <string name="quick_settings_battery_saver">Энергосбережение</string>
     <string name="quick_settings_screen_off">Выкл. экран</string>
-    <string name="quick_settings_expanded_desktop">Расширенный</string>
-    <string name="quick_settings_expanded_desktop_off">Обычный</string>
     <string name="quick_settings_battery_saver_off">Энергосбережение выкл</string>
     <string name="quick_settings_screenshot">Скриншот</string>
     <string name="quick_settings_sync">Синхр. вкл</string>
@@ -146,5 +144,41 @@
     <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Задняя камера</string>
     <string name="quick_settings_onthego_front">Передняя камера</string>-->
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Идёт запись экрана</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Запись экрана</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Стоп</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Показывать нажатия</string>
+    <string name="screenrecord_notif_pointer_off">Скрывать нажатия</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Невозможно записать экран</string>
+
+    <!-- Quick settings -->
+    <string name="quick_settings_screenrecord">Запись экрана</string>
+    <string name="quick_settings_screenrecord_on">Пишу ...</string>
+
+    <!-- Torch detail tile -->
+    <string name="disable_torch_screen_off_title">Отключать фонарик при выключенном экране</string>
+
+    <!-- Expanded desktop detail tile -->
+    <string name="quick_settings_expanded_desktop">Расширенный</string>
+    <string name="quick_settings_expanded_desktop_off">Обычный</string>
+    <string name="quick_settings_expanded_desktop_detail_title">Режим расширенного экрана</string>
+    <string name="quick_settings_expanded_hide_status">Скрывать строку состояния</string>
+    <string name="quick_settings_expanded_hide_navigation">Скрывать панель навигации</string>
+    <string name="quick_settings_expanded_hide_both">Скрывать обе</string>
+    <string name="accessibility_quick_settings_expanded_desktop_off">Расширенный экран выключен</string>
+
+    <!-- Heads up -->
+    <string name="heads_up_snooze_message">Всплывающие сообщения выключены на <xliff:g id="number">%d</xliff:g> минут.</string>
+    <string name="heads_up_snooze_button_title">Отложить всплывающие сообщения</string>
 
 </resources>
