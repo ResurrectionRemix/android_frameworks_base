@@ -42,19 +42,15 @@ import android.util.Slog;
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.qs.GlobalSetting;
 
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /** Platform implementation of the zen mode controller. **/
 public class ZenModeControllerImpl implements ZenModeController {
     private static final String TAG = "ZenModeController";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
-    private final HashMap<Integer, WeakReference<Callback>> mCallbacks =
-            new HashMap<Integer, WeakReference<Callback>>();
+    private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
     private final Context mContext;
     private final GlobalSetting mModeSetting;
     private final GlobalSetting mConfigSetting;
@@ -92,13 +88,12 @@ public class ZenModeControllerImpl implements ZenModeController {
 
     @Override
     public void addCallback(Callback callback) {
-        mCallbacks.put(System.identityHashCode(callback), new WeakReference<Callback>(callback));
-        removeNullReferences();
+        mCallbacks.add(callback);
     }
 
     @Override
     public void removeCallback(Callback callback) {
-        mCallbacks.remove(System.identityHashCode(callback));
+        mCallbacks.remove(callback);
     }
 
     @Override
@@ -175,40 +170,40 @@ public class ZenModeControllerImpl implements ZenModeController {
     }
 
     private void fireNextAlarmChanged() {
-        for (WeakReference<Callback> cb : mCallbacks.values()) {
-            if (cb.get() != null) cb.get().onNextAlarmChanged();
+        for (Callback cb : mCallbacks) {
+            cb.onNextAlarmChanged();
         }
     }
 
     private void fireEffectsSuppressorChanged() {
-        for (WeakReference<Callback> cb : mCallbacks.values()) {
-            if (cb.get() != null) cb.get().onEffectsSupressorChanged();
+        for (Callback cb : mCallbacks) {
+            cb.onEffectsSupressorChanged();
         }
     }
 
     private void fireZenChanged(int zen) {
-        for (WeakReference<Callback> cb : mCallbacks.values()) {
-            if (cb.get() != null) cb.get().onZenChanged(zen);
+        for (Callback cb : mCallbacks) {
+            cb.onZenChanged(zen);
         }
     }
 
     private void fireZenAvailableChanged(boolean available) {
-        for (WeakReference<Callback> cb : mCallbacks.values()) {
-            if (cb.get() != null) cb.get().onZenAvailableChanged(available);
+        for (Callback cb : mCallbacks) {
+            cb.onZenAvailableChanged(available);
         }
     }
 
     private void fireConditionsChanged(Condition[] conditions) {
-        for (WeakReference<Callback> cb : mCallbacks.values()) {
-            if (cb.get() != null) cb.get().onConditionsChanged(conditions);
+        for (Callback cb : mCallbacks) {
+            cb.onConditionsChanged(conditions);
         }
     }
 
     private void fireExitConditionChanged() {
         final Condition exitCondition = getExitCondition();
         if (DEBUG) Slog.d(TAG, "exitCondition changed: " + exitCondition);
-        for (WeakReference<Callback> cb : mCallbacks.values()) {
-            if (cb.get() != null) cb.get().onExitConditionChanged(exitCondition);
+        for (Callback cb : mCallbacks) {
+            cb.onExitConditionChanged(exitCondition);
         }
     }
 
@@ -220,16 +215,6 @@ public class ZenModeControllerImpl implements ZenModeController {
         }
         fireConditionsChanged(
                 mConditions.values().toArray(new Condition[mConditions.values().size()]));
-    }
-
-    private void removeNullReferences() {
-        Iterator it = mCallbacks.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, WeakReference> pair = (Map.Entry) it.next();
-            if (pair.getValue().get() == null) {
-                it.remove();
-            }
-        }
     }
 
     private final IConditionListener mListener = new IConditionListener.Stub() {

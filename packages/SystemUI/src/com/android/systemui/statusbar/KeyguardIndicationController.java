@@ -179,11 +179,6 @@ public class KeyguardIndicationController {
         }
     };
 
-    public void cleanup() {
-        KeyguardUpdateMonitor.getInstance(mContext).removeCallback(mUpdateMonitor);
-        mContext.unregisterReceiver(mReceiver);
-    }
-
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
