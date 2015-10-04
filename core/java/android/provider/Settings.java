@@ -2759,6 +2759,24 @@ public final class Settings {
          */
         public static final String QS_BACKGROUND_COLOR = "qs_background_color";
 
+        /**
+         * Color of the notifications icon background
+         * @hide
+         */
+        public static final String NOTIFICATION_APP_ICON_BG_COLOR = "notification_app_icon_bg_color";
+
+        /**
+         * Color of the notification text
+         * @hide
+         */
+        public static final String NOTIFICATION_TEXT_COLOR = "notification_text_color";
+
+        /**
+         * Color of the notifications background
+         * @hide
+         */
+        public static final String NOTIFICATION_BG_COLOR = "notification_bg_color";
+
          /**
          * Transparent shade
          * @hide
@@ -4929,7 +4947,6 @@ public final class Settings {
         public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
 
         /**
-<<<<<<< HEAD
          * Whether to disable the torch when the screen turns off
          * @hide
          */
