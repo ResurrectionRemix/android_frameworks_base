@@ -731,11 +731,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.Secure.UI_THEME_MODE))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.Secure.UI_THEME_AUTO_MODE))) {
-                    recreateStatusBar();
-                    updateRowStates();
-                    updateSpeedbump();
-                    updateClearAll();
-                    updateEmptyShadeView();
             }
             update();
 
@@ -4695,7 +4690,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         int uiThemeMode = res.getConfiguration().uiThemeMode;
         if (uiThemeMode != mCurrUiThemeMode) {
             mCurrUiThemeMode = uiThemeMode;
-           // recreateStatusBar(false);
+            // Needs to recreate statusbar 
+            //recreateStatusBar();
             updateRowStates();
             updateSpeedbump();
             updateClearAll();
