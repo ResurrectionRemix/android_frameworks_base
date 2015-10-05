@@ -262,11 +262,6 @@ public class NotificationPanelView extends PanelView implements
                 if (!showing) {
                     mHandler.removeCallbacks(mCloseQsRunnable);
                 }
-                // if TaskManager is showing reset back to QSPanel
-                // otherwise multiuser switch will not work.
-                if (mTaskManagerShowing) {
-                    resetQsPanelVisibility();
-                }
             }
         });
         mTaskManagerPanel = (LinearLayout) findViewById(R.id.task_manager_panel);

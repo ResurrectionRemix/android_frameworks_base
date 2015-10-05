@@ -4678,7 +4678,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (uiThemeMode != mCurrUiThemeMode) {
             mCurrUiThemeMode = uiThemeMode;
             // Needs to recreate statusbar 
-            recreateStatusBar();
+            //recreateStatusBar();
             updateRowStates();
             updateSpeedbump();
             updateClearAll();
