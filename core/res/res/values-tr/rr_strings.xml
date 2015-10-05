@@ -39,6 +39,9 @@
     <string name="action_null">Boş</string>
 
 
+    <!-- Error description on theme switch with ligtsensor mode enabled -->
+    <string name="theme_auto_switch_mode_error">Otomatik ışık durum değişikliği modu etkindir. El ile anahtarlama mümkün değildir.</string>
+    
     <!-- status message in phone options dialog for when pie is on -->
     <string name="global_actions_pie_mode_on_status">Pie açık</string>
 
