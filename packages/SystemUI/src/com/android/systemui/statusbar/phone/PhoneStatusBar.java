@@ -727,6 +727,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.RECENT_CARD_TEXT_COLOR))) {
                 rebuildRecentsScreen();
+             } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_SNOOZE_TIME))) {
+                final int snoozeTime = Settings.System.getIntForUser(
+                        mContext.getContentResolver(),
+                        Settings.System.HEADS_UP_SNOOZE_TIME,
+                        mContext.getResources().getInteger(
+                        R.integer.heads_up_snooze_time),
+                        UserHandle.USER_CURRENT);
+                setHeadsUpSnoozeTime(snoozeTime);
+                if (mHeadsUpNotificationView != null) {
+                    mHeadsUpNotificationView.setSnoozeVisibility(snoozeTime != 0);
+                }
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.Secure.UI_THEME_MODE))
                     || uri.equals(Settings.System.getUriFor(
