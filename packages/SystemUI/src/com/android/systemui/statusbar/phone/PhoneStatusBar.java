@@ -4692,6 +4692,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCurrUiThemeMode = uiThemeMode;
             // Needs to recreate statusbar 
             recreateStatusBar();
+            observer.update();
             updateRowStates();
             updateSpeedbump();
             updateClearAll();
