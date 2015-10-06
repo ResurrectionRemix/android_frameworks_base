@@ -255,6 +255,7 @@ bool parseCommaSeparatedList(const String8& str, std::set<ConfigDescription>* ou
 }
 
 void applyVersionForCompatibility(ConfigDescription* config) {
+    return;
     if (config == NULL) {
         return;
     }
