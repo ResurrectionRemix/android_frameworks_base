@@ -552,7 +552,7 @@ int main(int argc, char* const argv[])
                     argc--;
                     argv++;
                     if (!argc) {
-                      fprinf(stderr, "ERROR: No argument supplied for '--forced-package-id' option\n");
+                      fprintf(stderr, "ERROR: No argument supplied for '--forced-package-id' option\n");
                       wantUsage = true;
                       goto bail;
                     }
