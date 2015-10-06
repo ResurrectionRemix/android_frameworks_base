@@ -218,7 +218,10 @@ void usage(void)
         "       Prevents symbols from being generated for strings that do not have a default\n"
         "       localization\n"
         "   --no-version-vectors\n"
-        "       Do not automatically generate versioned copies of vector XML resources.\n",
+        "       Do not automatically generate versioned copies of vector XML resources.\n"
+        "   --compress\n"
+        "       Specifies if aapt should prefer compression or not.\n"
+        "       Possible values are 0(Stored) and 1(Deflated).\n",
         gDefaultIgnoreAssets);
 }
 
@@ -725,6 +728,23 @@ int main(int argc, char* const argv[])
                     bundle.setPseudolocalize(PSEUDO_ACCENTED | PSEUDO_BIDI);
                 } else if (strcmp(cp, "-no-version-vectors") == 0) {
                     bundle.setNoVersionVectors(true);
+                } else if (strcmp(cp, "-compress") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--compress' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    if (strcmp(argv[0], "0") == 0) {
+                        bundle.setCompressionMethod(ZipEntry::kCompressStored);
+                    } else if (strcmp(argv[0], "1") == 0) {
+                        bundle.setCompressionMethod(ZipEntry::kCompressDeflated);
+                    } else {
+                        fprintf(stderr, "ERROR: Invalid argument supplied for '--compress' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
                 } else {
                     fprintf(stderr, "ERROR: Unknown option '-%s'\n", cp);
                     wantUsage = true;
