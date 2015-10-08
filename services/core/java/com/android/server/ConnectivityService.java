@@ -4972,6 +4972,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     if (VDBG) log("rematch for " + newNetwork.name());
                     if (currentNetwork != null) {
                         if (VDBG) log("   accepting network in place of " + currentNetwork.name());
+                        // Also need to send score of network which is being replaced
+                        sendUpdatedScoreToFactories(nri.request, currentNetwork.getCurrentScore());
+
                         currentNetwork.removeRequest(nri.request.requestId);
                         currentNetwork.lingerRequest(nri.request, now, mLingerDelayMs);
                         affectedNetworks.add(currentNetwork);
