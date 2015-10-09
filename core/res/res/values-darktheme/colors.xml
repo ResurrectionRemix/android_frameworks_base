@@ -20,10 +20,11 @@
                 <color name="midnight_secondary">#000000</color>
                 <color name="midnight_transparent">#31ffffff</color>
                 <color name="midnight_white">#ffffffff</color>
-                <color name="midnight_theme">#D24D57</color>
+                <color name="midnight_theme">#FF4081</color>
                 <color name="qs_toggles_midnight">#ffffffff</color>
                 <color name="midnight_text">#b3ffffff</color>
-
+			    <color name="pb_sb">#303F9F</color>
+			    <color name="pb_ab">#3F51B5</color>
 				
 				<color name="app_background">#ff000000</color>
 				<color name="light_background">#ffd7d7d7</color>
@@ -55,7 +56,7 @@
 				<color name="whatsapp_fab_color">@color/main_color</color>
 				
 				<color name="keyboard_dark_text_color">@android:color/white</color>
-				<color name="keyboard_light_text_color">@android:color/black</color>
+				<color name="keyboard_light_text_color">#66aaaaaa</color>
 				<color name="keyboard_accent_dark">#99ffffff</color>
 				<color name="keyboard_accent_light">@color/common_color</color>
 				
@@ -129,9 +130,9 @@
 		<color name="highlighted_text_material_dark">#66777777</color>
 	
 	<!--System-wide changes to colors in Theme.Holo Styles-->
-		<color name="holo_blue_dark">#ffaaaaaa</color>
-		<color name="holo_blue_light">#ffaaaaaa</color>
-		<color name="holo_blue_bright">#ffaaaaaa</color>
+		<color name="holo_blue_dark">@color/midnight_theme</color>
+		<color name="holo_blue_light">@color/midnight_theme</color>
+		<color name="holo_blue_bright">@color/midnight_theme</color>
 		<color name="perms_dangerous_grp_color">#ffaaaaaa</color>
 		<color name="perms_dangerous_perm_color">#ffaaaaaa</color>
 		<color name="highlighted_text_holo_dark">#66aaaaaa</color>
@@ -143,15 +144,15 @@
 	
 	<!--System-wide Accents for toggle switches, button colors, etc.-->
 		<!--Material Dark Accents-->
-			<color name="material_deep_teal_200">@color/theme_color_accent_dark</color>
+			<color name="material_deep_teal_200">@color/pb_ab</color>
 			
 		<!--Material Light Accents-->
-			<color name="material_deep_teal_500">@color/theme_color_accent_light</color>
+			<color name="material_deep_teal_500">@color/pb_ab</color>
 			
 		<!--Backgrounds and Accents-->
-			<color name="material_blue_grey_800">@color/theme_color</color>
-			<color name="material_blue_grey_900">@color/theme_color</color>
-			<color name="material_blue_grey_950">@color/theme_color</color>
+			<color name="material_blue_grey_800">@color/pb_ab</color>
+			<color name="material_blue_grey_900">@color/pb_ab</color>
+			<color name="material_blue_grey_950">@color/pb_ab</color>
 		
 	<!--Notification Modifications-->
 		<color name="system_notification_accent_color">@color/theme_color_common_color</color>
@@ -174,12 +175,36 @@
 		<color name="background_floating_material_light">@color/theme_color_dialog_color_light</color>
 	
 	<!--Button Colors-->
-		<color name="button_material_dark">@color/theme_color_hardcoded_color</color>
+		<color name="button_material_dark">@color/midnight_theme</color>
 		<color name="button_material_light">@color/theme_color_light_background</color>	
-		
-	<!--Ripple Colors-->
+
+        <!--Pitchblack base Text Colors-->
+	    <color name="bright_foreground_holo_dark">@color/background_holo_light</color>
+	    <color name="bright_foreground_holo_light">#424242</color>
+	    <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+	    <color name="bright_foreground_disabled_holo_light">#424242</color>
+	    <color name="bright_foreground_inverse_holo_dark">@color/bright_foreground_holo_light</color>
+	    <color name="bright_foreground_inverse_holo_light">#424242</color>
+	    <color name="dim_foreground_holo_dark">#ffbebebe</color>
+	    <color name="dim_foreground_disabled_holo_dark">#80bebebe</color>
+	    <color name="dim_foreground_inverse_holo_dark">#ff323232</color>
+	    <color name="dim_foreground_inverse_disabled_holo_dark">#80323232</color>
+	    <color name="hint_foreground_holo_dark">#ff808080</color>
+	    <color name="dim_foreground_holo_light">#424242</color>
+	    <color name="dim_foreground_disabled_holo_light">#A09B9B</color>
+	    <color name="dim_foreground_inverse_holo_light">#424242</color>
+	    <color name="dim_foreground_inverse_disabled_holo_light">#A09B9B</color>
+	    <color name="hint_foreground_holo_light">#424242</color>
+	    <color name="link_text_holo_dark">@color/midnight_theme</color>
+	    <color name="link_text_holo_light">#424242</color>	
+    	<color name="notification_material_action_textcolor">#ffffffff</color>
+        <color name="notification_button_text">#ffffffff</color>
+		<color name="primary_text_default_material_light">#424242</color>
+		<color name="secondary_text_default_material_light">#9E9E9E</color>
+
+	    <!--Ripple Colors-->
 		<color name="ripple_material_dark">@color/midnight_theme</color>		
 		<color name="ripple_material_light">@color/theme_color_ripple_light</color>
-                <color name="material_blue_grey">@color/midnight_primary</color>
-
+        <color name="material_blue_grey">@color/midnight_primary</color>
+        <color name="colorEdgeEffect">@color/midnight_theme</color>
 </resources>

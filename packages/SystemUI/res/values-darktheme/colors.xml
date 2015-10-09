@@ -10,7 +10,7 @@
     <color name="midnight_secondary">#000000</color>
     <color name="midnight_transparent">#31ffffff</color>
     <color name="midnight_white">#ffffffff</color>
-    <color name="midnight_theme">#D24D57</color>
+    <color name="midnight_theme">#FF4081</color>
     <color name="qs_toggles_midnight">#ffffffff</color>
     <color name="midnight_text">#b3ffffff</color>
 
@@ -96,7 +96,9 @@
 		
     <!-- snooze_button_bg_color -->
     <color name="snooze_button_bg_color">@color/midnight_theme</color>
- 
+
+    <color name="segmented_button_text_inactive">#99afbdc4</color>
+
     <!-- snooze_button_ripple_color -->
     <color name="snooze_button_ripple_color">#4a000000</color>
 

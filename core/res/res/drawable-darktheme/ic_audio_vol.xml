@@ -11,12 +11,11 @@ Copyright (C) 2014 The Android Open Source Project
     limitations under the License.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="32dp"
-        android:height="32dp"
+        android:width="32.0dp"
+        android:height="32.0dp"
         android:viewportWidth="48.0"
         android:viewportHeight="48.0">
-
     <path
         android:fillColor="@android:color/white"
-        android:pathData="M24.0,4.0C13.0,4.0 4.0,13.0 4.0,24.0c0.0,11.0 9.0,20.0 20.0,20.0c11.0,0.0 20.0,-9.0 20.0,-20.0C44.0,13.0 35.0,4.0 24.0,4.0zM24.0,40.0c-8.8,0.0 -16.0,-7.2 -16.0,-16.0c0.0,-3.7 1.3,-7.1 3.4,-9.8l22.4,22.4C31.1,38.7 27.7,40.0 24.0,40.0zM36.6,33.8L14.2,11.4C16.9,9.3 20.3,8.0 24.0,8.0c8.8,0.0 16.0,7.2 16.0,16.0C40.0,27.7 38.7,31.1 36.6,33.8z"/>
+        android:pathData="M6.0,18.0l0.0,12.0l8.0,0.0l10.0,10.0L24.0,8.0L14.0,18.0L6.0,18.0zm27.0,6.0c0.0,-3.53 -2.04,-6.58 -5.0,-8.05l0.0,16.11c2.96,-1.48 5.0,-4.53 5.0,-8.06zM28.0,6.46l0.0,4.13c5.78,1.72 10.0,7.07 10.0,13.41s-4.22,11.69 -10.0,13.41l0.0,4.13c8.01,-1.82 14.0,-8.97 14.0,-17.54S36.01,8.28 28.0,6.46z"/>
 </vector>
