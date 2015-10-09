@@ -181,4 +181,7 @@
     <string name="heads_up_snooze_message">Всплывающие сообщения выключены на <xliff:g id="number">%d</xliff:g> минут.</string>
     <string name="heads_up_snooze_button_title">Отложить всплывающие сообщения</string>
 
+    <!-- PitchBlack -->
+    <string name="quick_settings_trds_label">Всё тёмное</string>
+
 </resources>
