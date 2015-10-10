@@ -203,7 +203,7 @@
 		<color name="secondary_text_default_material_light">#9E9E9E</color>
 
 	    <!--Ripple Colors-->
-		<color name="ripple_material_dark">@color/midnight_theme</color>		
+		<color name="ripple_material_dark">@color/pb_ab</color>		
 		<color name="ripple_material_light">@color/theme_color_ripple_light</color>
         <color name="material_blue_grey">@color/midnight_primary</color>
         <color name="colorEdgeEffect">@color/midnight_theme</color>
