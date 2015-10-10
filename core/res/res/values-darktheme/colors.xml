@@ -144,7 +144,7 @@
 	
 	<!--System-wide Accents for toggle switches, button colors, etc.-->
 		<!--Material Dark Accents-->
-			<color name="material_deep_teal_200">@color/pb_ab</color>
+			<color name="material_deep_teal_200">@color/midnight_theme</color>
 			
 		<!--Material Light Accents-->
 			<color name="material_deep_teal_500">@color/pb_ab</color>
