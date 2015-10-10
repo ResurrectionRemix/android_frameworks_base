@@ -97,6 +97,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Maximum number of phones
     private static final int MAX_PHONE_COUNT = 3;
 
+    private String mPublicSrcDir;
+
     static {
         mValidTables.add(TABLE_SYSTEM);
         mValidTables.add(TABLE_SECURE);
@@ -127,6 +129,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, dbNameForUser(userHandle), null, DATABASE_VERSION);
         mContext = context;
         mUserHandle = userHandle;
+        try {
+            String packageName = mContext.getPackageName();
+            mPublicSrcDir = mContext.getPackageManager().getApplicationInfo(packageName, 0)
+                    .publicSourceDir;
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean isValidTable(String name) {
@@ -2794,14 +2803,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             // Mobile Data default, based on build
-            loadBooleanSetting(stmt, Settings.Global.MOBILE_DATA,
+            loadRegionLockedBooleanSetting(stmt, Settings.Global.MOBILE_DATA,
                     R.bool.def_enable_mobile_data);
 
             int phoneCount = TelephonyManager.getDefault().getPhoneCount();
             // SUB specific flags for Multisim devices
             for (int phoneId = 0; phoneId < MAX_PHONE_COUNT; phoneId++) {
                 // Mobile Data default, based on build
-                loadBooleanSetting(stmt, Settings.Global.MOBILE_DATA + phoneId,
+                loadRegionLockedBooleanSetting(stmt, Settings.Global.MOBILE_DATA + phoneId,
                         R.bool.def_enable_mobile_data);
 
                 // Data roaming default, based on build
@@ -2922,17 +2931,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.execute();
     }
 
-    private void loadRegionLockedStringSetting(SQLiteStatement stmt, String key, int resid) {
+    private Resources getRegionLockedResources() {
         Configuration tempConfiguration = new Configuration();
         String mcc = SystemProperties.get("ro.prebundled.mcc");
         Resources customResources = null;
         if (!TextUtils.isEmpty(mcc)) {
             tempConfiguration.mcc = Integer.parseInt(mcc);
-            customResources = new Resources(new AssetManager(), new DisplayMetrics(),
+            AssetManager assetManager = new AssetManager();
+            assetManager.addAssetPath(mPublicSrcDir);
+            customResources = new Resources(assetManager, new DisplayMetrics(),
                     tempConfiguration);
         }
+
+        return customResources;
+    }
+
+    private void loadRegionLockedStringSetting(SQLiteStatement stmt, String key, int resid) {
+        Resources customResources = getRegionLockedResources();
         loadSetting(stmt, key, customResources == null ? mContext.getResources().getString(resid)
                 : customResources.getString(resid));
+    }
+
+    private void loadRegionLockedBooleanSetting(SQLiteStatement stmt, String key, int resId) {
+        Resources customResources = getRegionLockedResources();
+        if (customResources == null) {
+            customResources = mContext.getResources();
+        }
+
+        loadSetting(stmt, key, customResources.getBoolean(resId) ? "1" : "0");
     }
 
     private void loadStringSetting(SQLiteStatement stmt, String key, int resid) {
