@@ -40,4 +40,7 @@
     <string name="animation_grow_shrink_right">Grow in (Right)</string>
     <string name="action_null">Blank</string>
 
+    <!-- kill app long press back -->
+    <string name="app_killed_message">App killed</string>
+
 </resources>
