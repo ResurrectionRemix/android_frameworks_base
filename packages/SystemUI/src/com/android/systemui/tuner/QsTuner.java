@@ -200,6 +200,9 @@ public class QsTuner extends Fragment implements Callback {
         else if (spec.equals("location")) return R.string.quick_settings_location_label;
         else if (spec.equals("cast")) return R.string.quick_settings_cast_title;
         else if (spec.equals("hotspot")) return R.string.quick_settings_hotspot_label;
+        else if (spec.equals("brightness")) return R.string.quick_settings_brightness_label;
+        else if (spec.equals("screenOff")) return R.string.quick_settings_screen_off_label;
+        else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
         return 0;
     }
 
@@ -438,6 +441,9 @@ public class QsTuner extends Fragment implements Callback {
             else if (mSpec.equals("location")) return R.drawable.ic_signal_location_enable;
             else if (mSpec.equals("cast")) return R.drawable.ic_qs_cast_on;
             else if (mSpec.equals("hotspot")) return R.drawable.ic_hotspot_enable;
+            else if (mSpec.equals("brightness")) return R.drawable.ic_qs_brightness_auto_off_alpha;
+            else if (mSpec.equals("screenOff")) return R.drawable.ic_qs_power;
+            else if (mSpec.equals("screenshot")) return R.drawable.ic_qs_screenshot;
             return R.drawable.android;
         }
 
