@@ -150,8 +150,6 @@ public class QsTuner extends Fragment implements Callback {
     public boolean isEditing() {
         return mTileHost.isEditing();
 
-    }
-
     private static class CustomHost extends QSTileHost {
 
         public CustomHost(Context context) {
