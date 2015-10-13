@@ -70,32 +70,6 @@
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/three_parent"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-        <ImageView
-            android:padding="10dp"
-            android:layout_width="@dimen/search_panel_circle_size"
-            android:layout_height="@dimen/search_panel_circle_size"
-            android:scaleType="centerInside"
-            android:id="@+id/search_logo3"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/four_parent"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-        <ImageView
-            android:padding="10dp"
-            android:layout_width="@dimen/search_panel_circle_size"
-            android:layout_height="@dimen/search_panel_circle_size"
-            android:scaleType="centerInside"
-            android:id="@+id/search_logo4"/>
-
-    </FrameLayout>
-
     <com.android.systemui.SearchPanelCircleView
         style="@style/SearchPanelCircle"
         android:id="@+id/search_panel_circle">

@@ -463,7 +463,7 @@
     <dimen name="go_to_full_shade_appearing_translation">200dp</dimen>
 
     <!-- The diameter of the search panel circle. -->
-    <dimen name="search_panel_circle_size">62dp</dimen>
+    <dimen name="search_panel_circle_size">88dp</dimen>
 
     <!-- The margin to the edge of the screen from where the circle starts to appear -->
     <dimen name="search_panel_circle_base_margin">80dp</dimen>

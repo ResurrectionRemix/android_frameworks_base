@@ -96,7 +96,6 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel,
     private ImageView mSelectedView;
     private List<ImageView> mTargetViews;
     private ImageView mLogoRight, mLogoLeft;
-    private ImageView mLogoRight1, mLogoLeft1;
     private final ActionTarget mActionTarget;
     private ShortcutPickHelper mPicker;
     private SettingsObserver mSettingsObserver;
@@ -165,17 +164,10 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel,
         mLogoRight = (ImageView) findViewById(R.id.search_logo2);
         mLogoRight.setOnClickListener(this);
 
-        mLogoLeft1 = (ImageView) findViewById(R.id.search_logo3);
-        mLogoLeft1.setOnClickListener(this);
-
-        mLogoRight1 = (ImageView) findViewById(R.id.search_logo4);
-        mLogoRight1.setOnClickListener(this);
         // Order matters
         mTargetViews.add(mLogoLeft);
         mTargetViews.add(mLogo);
         mTargetViews.add(mLogoRight);
-        mTargetViews.add(mLogoLeft1);
-        mTargetViews.add(mLogoRight1);
 
         mCircle.initializeAdditionalTargets(this);
         updateDrawables();
@@ -431,7 +423,7 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel,
                 startEditAnimation(false);
                 updateTargetVisibility();
                 mPicker.cleanup();
-            } else if (v == mLogo || v == mLogoLeft || v == mLogoRight || v == mLogoLeft1 || v == mLogoRight1) {
+            } else if (v == mLogo || v == mLogoLeft || v == mLogoRight) {
                 mSelectedView = (ImageView) v;
                 mPicker.pickShortcut(v != mLogo);
             }
