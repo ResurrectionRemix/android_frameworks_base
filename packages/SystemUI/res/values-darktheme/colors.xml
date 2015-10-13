@@ -13,6 +13,8 @@
     <color name="midnight_theme">#FF4081</color>
     <color name="qs_toggles_midnight">#ffffffff</color>
     <color name="midnight_text">#b3ffffff</color>
+	<color name="pb_sb">#303F9F</color>
+	<color name="pb_ab">#3F51B5</color>
 
     <color name="batterymeter_frame_color">#66ffffff</color>
     <color name="batterymeter_charge_color">#ffffffff</color>
@@ -119,7 +121,7 @@
     <color name="pie_text_color">#ffffffff</color>
     <color name="pie_foreground_color">#ffffffff</color>
     <color name="pie_background_color">#aa000000</color>
-    <color name="pie_selected_color">@color/midnight_theme</color>
-    <color name="pie_long_pressed_color">@color/midnight_theme</color>
+    <color name="pie_selected_color">@color/pb_ab</color>
+    <color name="pie_long_pressed_color">@color/pb_sb</color>
     <color name="pie_outline_color">@color/midnight_theme</color>
 </resources>
