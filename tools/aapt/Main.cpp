@@ -60,7 +60,7 @@ void usage(void)
     fprintf(stderr,
         " %s p[ackage] [-d][-f][-m][-u][-v][-x[ extending-resource-id]][-z][-M AndroidManifest.xml] \\\n"
         "        [-0 extension [-0 extension ...]] [-g tolerance] [-j jarfile] \\\n"
-        "        [--debug-mode] [--min-sdk-version VAL] [--target-sdk-version VAL] \\\n"
+        "        [--debug-mode] [--forced-package-id VAL] [--min-sdk-version VAL] [--target-sdk-version VAL] \\\n"
         "        [--app-version VAL] [--app-version-name TEXT] [--custom-package VAL] \\\n"
         "        [--rename-manifest-package PACKAGE] \\\n"
         "        [--rename-instrumentation-target-package PACKAGE] \\\n"
@@ -138,6 +138,8 @@ void usage(void)
         "       when used with \"dump badging\" also includes meta-data tags.\n"
         "   --pseudo-localize\n"
         "       generate resources for pseudo-locales (en-XA and ar-XB).\n"
+	"   --forced-package-id\n"
+	"       forces value as package-id\n"
         "   --min-sdk-version\n"
         "       inserts android:minSdkVersion in to manifest.  If the version is 7 or\n"
         "       higher, the default encoding for resources will be in UTF-8.\n"
@@ -213,7 +215,10 @@ void usage(void)
         "       specified folder.\n"
         "   --ignore-assets\n"
         "       Assets to be ignored. Default pattern is:\n"
-        "       %s\n",
+        "       %s\n"
+        "   --compress\n"
+        "       Specifies if aapt should prefer compression or not.\n"
+        "       Possible values are 0(Stored) and 1(Deflated).\n",
         gDefaultIgnoreAssets);
 }
 
@@ -254,8 +259,8 @@ int main(int argc, char* const argv[])
     int result = 1;    // pessimistically assume an error.
     int tolerance = 0;
 
-    /* default to compression */
-    bundle.setCompressionMethod(ZipEntry::kCompressDeflated);
+    /* default to 0 compression */
+    bundle.setCompressionMethod(ZipEntry::kCompressStored);
 
     if (argc < 2) {
         wantUsage = true;
@@ -538,6 +543,15 @@ int main(int argc, char* const argv[])
             case '-':
                 if (strcmp(cp, "-debug-mode") == 0) {
                     bundle.setDebugMode(true);
+                } else if (strcmp(cp, "-forced-package-id") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--forced-package-id' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    bundle.setForcedPackageId(atoi(argv[0]));
                 } else if (strcmp(cp, "-min-sdk-version") == 0) {
                     argc--;
                     argv++;
@@ -716,6 +730,23 @@ int main(int argc, char* const argv[])
                     gUserIgnoreAssets = argv[0];
                 } else if (strcmp(cp, "-pseudo-localize") == 0) {
                     bundle.setPseudolocalize(PSEUDO_ACCENTED | PSEUDO_BIDI);
+                } else if (strcmp(cp, "-compress") == 0) {
+                    argc--;
+                    argv++;
+                    if (!argc) {
+                        fprintf(stderr, "ERROR: No argument supplied for '--compress' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
+                    if (strcmp(argv[0], "0") == 0) {
+                        bundle.setCompressionMethod(ZipEntry::kCompressStored);
+                    } else if (strcmp(argv[0], "1") == 0) {
+                        bundle.setCompressionMethod(ZipEntry::kCompressDeflated);
+                    } else {
+                        fprintf(stderr, "ERROR: Invalid argument supplied for '--compress' option\n");
+                        wantUsage = true;
+                        goto bail;
+                    }
                 } else {
                     fprintf(stderr, "ERROR: Unknown option '-%s'\n", cp);
                     wantUsage = true;

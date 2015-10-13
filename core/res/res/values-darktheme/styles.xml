@@ -109,7 +109,8 @@
 				<item name="android:windowNoTitle">true</item>
 				<item name="android:windowTranslucentStatus">false</item>
 				<item name="android:windowTranslucentNavigation">false</item>
-    </style>
+        </style>
+
     <style name="Theme.DeviceDefault.Light.DarkActionBar" parent="@android:style/Theme.Material" />
 
     <!--Changing text color to white on majority of ROMs-->

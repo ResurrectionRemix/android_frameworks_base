@@ -32,7 +32,6 @@ import android.content.res.Configuration;
 import android.content.res.ThemeConfig;
 import android.content.res.Resources;
 import android.content.res.ResourcesKey;
-import android.graphics.Typeface;
 import android.hardware.display.DisplayManagerGlobal;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -177,9 +176,8 @@ public class ResourcesManager {
             Configuration overrideConfiguration, CompatibilityInfo compatInfo, IBinder token,
             Context context, boolean isThemeable) {
         final float scale = compatInfo.applicationScale;
-        ThemeConfig themeConfig = getThemeConfig();
         ResourcesKey key = new ResourcesKey(resDir, displayId, overrideConfiguration, scale,
-                isThemeable, themeConfig, token);
+                isThemeable, getThemeConfig(), token);
         Resources r;
         synchronized (this) {
             // Resources is app scale dependent.
@@ -257,26 +255,20 @@ public class ResourcesManager {
 
         boolean iconsAttached = false;
         /* Attach theme information to the resulting AssetManager when appropriate. */
-        if (config != null && !context.getPackageManager().isSafeMode()) {
-            if (themeConfig == null) {
+        if (isThemeable && config != null && !context.getPackageManager().isSafeMode()) {
+            if (config.themeConfig == null) {
                 try {
-                    themeConfig = ThemeConfig.getBootTheme(context.getContentResolver());
+                    config.themeConfig = ThemeConfig.getBootTheme(context.getContentResolver());
                 } catch (Exception e) {
                     Slog.d(TAG, "ThemeConfig.getBootTheme failed, falling back to system theme", e);
-                    themeConfig = ThemeConfig.getSystemTheme();
+                    config.themeConfig = ThemeConfig.getSystemTheme();
                 }
             }
 
-            if (isThemeable) {
-                if (themeConfig != null) {
-                    attachThemeAssets(assets, themeConfig);
-                    attachCommonAssets(assets, themeConfig);
-                    iconsAttached = attachIconAssets(assets, themeConfig);
-                }
-            } else if (themeConfig != null &&
-                    !ThemeConfig.SYSTEM_DEFAULT.equals(themeConfig.getFontPkgName())) {
-                // use system fonts if not themeable and a theme font is currently in use
-                Typeface.recreateDefaults(true);
+            if (config.themeConfig != null) {
+                attachThemeAssets(assets, config.themeConfig);
+                attachCommonAssets(assets, config.themeConfig);
+                iconsAttached = attachIconAssets(assets, config.themeConfig);
             }
         }
 
@@ -500,7 +492,7 @@ public class ResourcesManager {
                 DisplayMetrics dm = defaultDisplayMetrics;
                 final boolean hasOverrideConfiguration = key.hasOverrideConfiguration();
                 boolean themeChanged = (changes & ActivityInfo.CONFIG_THEME_RESOURCE) != 0;
-                final boolean themeChangedTRDS = (changes & ActivityInfo.CONFIG_UI_THEME_MODE) != 0;
+                final boolean themeChanged2 = (changes & ActivityInfo.CONFIG_UI_THEME_MODE) != 0;
                 if (themeChanged) {
                     AssetManager am = r.getAssets();
                     if (am.hasThemeSupport()) {
@@ -516,7 +508,7 @@ public class ResourcesManager {
                         }
                     }
                 }
-                if ((!isDefaultDisplay || hasOverrideConfiguration)) {
+                if (!isDefaultDisplay || hasOverrideConfiguration) {
                     if (tmpConfig == null) {
                         tmpConfig = new Configuration();
                     }
@@ -532,7 +524,7 @@ public class ResourcesManager {
                 } else {
                     r.updateConfiguration(config, dm, compat);
                 }
-                if (themeChanged || themeChangedTRDS) {
+                if (themeChanged || themeChanged2) {
                     r.updateStringCache();
                 }
                 //Slog.i(TAG, "Updated app resources " + v.getKey()
@@ -779,7 +771,10 @@ public class ResourcesManager {
     }
 
     private ThemeConfig getThemeConfig() {
-        final Configuration config = getConfiguration();
-        return config != null ? config.themeConfig : null;
+        Configuration config = getConfiguration();
+        if (config != null) {
+            return config.themeConfig;
+        }
+        return null;
     }
 }
