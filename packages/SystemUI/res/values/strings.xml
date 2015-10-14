@@ -809,7 +809,7 @@
     <string name="battery_saver_notification_text">Reduces performance and background data</string>
 
     <!-- Battery saver notification action text. [CHAR LIMIT=60] -->
-    <string name="battery_saver_notification_action_text">Turn off</string>
+    <string name="battery_saver_notification_action_text">Turn off battery saver</string>
 
     <!-- Battery level for expanded quick settings [CHAR LIMIT=2] -->
     <string name="battery_level_template"><xliff:g id="level" example="45">%d</xliff:g>%%</string>
