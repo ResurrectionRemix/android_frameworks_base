@@ -1719,8 +1719,8 @@ package android {
     field public static final int toggle = 16908311; // 0x1020017
     field public static final int undo = 16908338; // 0x1020032
     field public static final int widget_frame = 16908312; // 0x1020018
-    field public static final int monitor_box = 16908334; // 0x01020031
-    field public static final int seek_bar = 16908335; // 0x01020032
+    field public static final int monitor_box = 16908374; // 0x01020071
+    field public static final int seek_bar = 16908375; // 0x01020072
   }
 
   public static final class R.integer {
