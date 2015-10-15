@@ -305,7 +305,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         initDownStates(event);
-        }
         if (mDoubleTapToSleep) {
             mDoubleTapGesture.onTouchEvent(event);
         }
@@ -983,6 +982,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
 
         @Override
         protected void update() {
+			ContentResolver resolver = mContext.getContentResolver();
             mShowDpadArrowKeys = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.NAVIGATION_BAR_MENU_ARROW_KEYS, 0, UserHandle.USER_CURRENT) != 0;
             mDoubleTapToSleep = (Settings.System.getIntForUser(resolver,
