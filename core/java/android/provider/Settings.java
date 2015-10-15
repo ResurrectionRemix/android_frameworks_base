@@ -2822,6 +2822,7 @@ public final class Settings {
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
         
         /**
+<<<<<<< HEAD
          * Whether to dim the navigation bar icons after inactivity
          * @hide
          */
@@ -2864,6 +2865,8 @@ public final class Settings {
         public static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
 
         /**
+=======
+>>>>>>> parent of 569a692... SystemUI: SlimDim [1/2]
          * Date format string
          *   mm/dd/yyyy
          *   dd/mm/yyyy
