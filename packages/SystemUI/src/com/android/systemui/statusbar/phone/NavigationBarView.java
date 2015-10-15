@@ -192,8 +192,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
             } else if (NavbarEditor.NAVBAR_HOME.equals(view.getTag()) && transitionType == LayoutTransition.APPEARING) {
                 mHomeAppearing = false;
             }
-
-            if (view.getId() == R.id.home)
                 onNavButtonTouched();
         }
 
