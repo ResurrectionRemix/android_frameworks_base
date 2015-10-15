@@ -199,7 +199,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
                 mHomeAppearing = false;
             }
 
-            if (NavbarEditor.NAVBAR_HOME.equals(view.getTag()))
                 onNavButtonTouched();
         }
 
@@ -359,8 +358,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mSettingsObserver.observe();
-         mContext.registerReceiverAsUser(mNavBarReceiver, UserHandle.ALL,
-                 new IntentFilter(NAVBAR_EDIT_ACTION), null, null);
         mContext.registerReceiver(mBatteryDimReceiver, mBatteryFilter);
     }
 
@@ -368,7 +365,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mSettingsObserver.unobserve();
-        mContext.unregisterReceiver(mNavBarReceiver);
         mContext.unregisterReceiver(mBatteryDimReceiver);
     }
 
@@ -1140,16 +1136,17 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
             mDoubleTapToSleep = (Settings.System.getIntForUser(resolver,
                     Settings.System.DOUBLE_TAP_SLEEP_NAVBAR, 0,
                     UserHandle.USER_CURRENT) == 1);
-            String expDeskString = Settings.Global.getStringForUser(resolver,
-                    Settings.Global.POLICY_CONTROL, UserHandle.USER_CURRENT);
-            mIsExpandedDesktopOn = (expDeskString != null ?
-                    expDeskString.equals("immersive.full=*") : false);
             // reset saved side button visibilities
             for (int i = 0; i < mSideButtonVisibilities.length; i++) {
                 for (int j = 0; j < mSideButtonVisibilities[i].length; j++) {
                     mSideButtonVisibilities[i][j] = -1;
-                }
-            }
+               
+            String expDeskString = Settings.Global.getStringForUser(resolver,
+                    Settings.Global.POLICY_CONTROL, UserHandle.USER_CURRENT);
+            mIsExpandedDesktopOn = (expDeskString != null ?
+                    expDeskString.equals("immersive.full=*") : false);
+	}	
+     }
             setNavigationIconHints(mNavigationIconHints, true);
 
             onNavButtonTouched();
