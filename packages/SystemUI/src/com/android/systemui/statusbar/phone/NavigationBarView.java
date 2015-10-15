@@ -125,7 +125,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     private boolean mIsAnimating = false;
     private boolean mDimNavButtonsAnimate;
     private int mDimNavButtonsAnimateDuration;
-    private boolean mDimNavButtonsTouchAnywhere;
     private boolean mDoubleTapToSleep;
 
     private NavigationBarViewTaskSwitchHelper mTaskSwitchHelper;
@@ -346,8 +345,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         initDownStates(event);
-        if (mDimNavButtonsTouchAnywhere) {
-            onNavButtonTouched();
         }
         if (mDoubleTapToSleep) {
             mDoubleTapGesture.onTouchEvent(event);
@@ -1035,8 +1032,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DIM_NAV_BUTTONS_ANIMATE_DURATION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.DIM_NAV_BUTTONS_TOUCH_ANYWHERE), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_NAVBAR), false, this);
 
             // intialize mModlockDisabled
@@ -1070,9 +1065,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
             mDimNavButtonsAnimateDuration = Settings.System.getIntForUser(resolver,
                     Settings.System.DIM_NAV_BUTTONS_ANIMATE_DURATION, 2000,
                     UserHandle.USER_CURRENT);
-            mDimNavButtonsTouchAnywhere = (Settings.System.getIntForUser(resolver,
-                    Settings.System.DIM_NAV_BUTTONS_TOUCH_ANYWHERE, 0,
-                    UserHandle.USER_CURRENT) == 1);
             mDoubleTapToSleep = (Settings.System.getIntForUser(resolver,
                     Settings.System.DOUBLE_TAP_SLEEP_NAVBAR, 0,
                     UserHandle.USER_CURRENT) == 1);

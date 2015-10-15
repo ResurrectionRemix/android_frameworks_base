@@ -2851,6 +2851,7 @@ public final class Settings {
          */
         public static final String DIM_NAV_BUTTONS_ANIMATE_DURATION = "dim_nav_buttons_animate_duration";
 
+<<<<<<< HEAD
          /**
          * Whether to listen on the entire screen for touches to un-dim
          * the buttons instead of just listening on the navbar
@@ -2870,6 +2871,8 @@ public final class Settings {
          */
         public static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
 
+=======
+>>>>>>> parent of 74a456e... SystemUI: SlimDim - pref to listen on entire screen for touches [1/2]
         /**
          * Date format string
          *   mm/dd/yyyy
