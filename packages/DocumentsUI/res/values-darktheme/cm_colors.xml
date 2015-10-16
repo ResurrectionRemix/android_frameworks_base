@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--You are editing DocumentsUI's CM Specific Colors-->
+
+<resources>
+	<color name="drawer_background_color">#BF000000</color>
+	
+	<color name="exposed_font_color_doc_grid">@android:color/white</color>
+    <color name="font_color_doc_grid">@android:color/white</color>
+</resources>

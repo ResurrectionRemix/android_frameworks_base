@@ -21,21 +21,13 @@
     <style name="DeviceDefault.Light.ButtonBar.AlertDialog" parent="@android:style/Widget.Material.ButtonBar.AlertDialog" />
     <style name="DeviceDefault.Light.SegmentedButton" parent="@android:style/Widget.Material.SegmentedButton" />
     <style name="Theme.Dialog.RecentApplications" parent="@android:style/Theme.DeviceDefault.Dialog" />
-    <style name="Theme.DeviceDefault.Light.NoActionBar" parent="@android:style/Theme.Material.NoActionBar" />
-    <style name="Theme.DeviceDefault.Light.NoActionBar.Fullscreen" parent="@android:style/Theme.Material.NoActionBar.Fullscreen" />
     <style name="Theme.DeviceDefault.Light.Dialog" parent="@android:style/Theme.Material.Dialog" />
     <style name="Theme.DeviceDefault.Light.Dialog.Alert" parent="@android:style/Theme.Material.Dialog.Alert" />
     <style name="Theme.DeviceDefault.Light.Dialog.FixedSize" parent="@android:style/Theme.DeviceDefault.Dialog" />
     <style name="Theme.DeviceDefault.Light.Dialog.MinWidth" parent="@android:style/Theme.Material.Dialog.MinWidth" />
-    <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar" parent="@android:style/Theme.Material.Dialog.NoActionBar" />
-    <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar.FixedSize" parent="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
-    <style name="Theme.DeviceDefault.Light.Dialog.NoActionBar.MinWidth" parent="@android:style/Theme.Material.Dialog.NoActionBar.MinWidth" />
     <style name="Theme.DeviceDefault.Light.Dialog.Presentation" parent="@android:style/Theme.Material.Dialog.Presentation" />
     <style name="Theme.DeviceDefault.Light.DialogWhenLarge" parent="@android:style/Theme.Material.DialogWhenLarge" />
-    <style name="Theme.DeviceDefault.Light.DialogWhenLarge.NoActionBar" parent="@android:style/Theme.Material.DialogWhenLarge.NoActionBar" />
     <style name="Theme.DeviceDefault.Light.Panel" parent="@android:style/Theme.Material.Panel" />
-    <style name="Theme.DeviceDefault.Light.NoActionBar.Overscan" parent="@android:style/Theme.Material.NoActionBar.Overscan" />
-    <style name="Theme.DeviceDefault.Light.NoActionBar.TranslucentDecor" parent="@android:style/Theme.Material.NoActionBar.TranslucentDecor" />
     <style name="Theme.Material.Settings.Dialog.Presentation" parent="@android:style/Theme.Material.Dialog.Presentation" />
     <style name="Theme.DeviceDefault.Light.SearchBar" parent="@style/Theme.Material.SearchBar" />
     <style name="Theme.Material.SearchBar" parent="@android:style/Theme.Material.Panel" />
@@ -84,21 +76,21 @@
     <style name="Widget.DeviceDefault.Light.ActionButton.Overflow" parent="@android:style/Widget.Material.ActionButton.Overflow" />
     <style name="Widget.DeviceDefault.Light.ActionMode" parent="@android:style/Widget.Material.ActionMode" />
     <style name="Widget.DeviceDefault.Light.ActionButton.CloseMode" parent="@android:style/Widget.Material.ActionButton.CloseMode" />
-    <style name="Widget.DeviceDefault.Light.ActionBar" parent="@android:style/Widget.Material.ActionBar" />
-    <style name="Widget.DeviceDefault.Light.ActionBar.TabView" parent="@android:style/Widget.Material.ActionBar.TabView" />
-    <style name="Widget.DeviceDefault.Light.ActionBar.TabText" parent="@android:style/Widget.Material.ActionBar.TabText" />
-    <style name="Widget.DeviceDefault.Light.ActionBar.TabBar" parent="@android:style/Widget.Material.ActionBar.TabBar" />
-    <style name="Widget.DeviceDefault.Light.ActionBar.Solid" parent="@android:style/Widget.Material.ActionBar.Solid" />
     <style name="Widget.DeviceDefault.Light.MediaRouteButton" parent="@android:style/Widget.Material.MediaRouteButton" />
     <style name="Widget.DeviceDefault.Light.FastScroll" parent="@android:style/Widget.Material.FastScroll" />
     <style name="Widget.DeviceDefault.Light.StackView" parent="@android:style/Widget.Material.StackView" />
     <style name="Widget.DeviceDefault.Light.Button.Borderless" parent="@android:style/Widget.Material.Button.Borderless" />
     <style name="Widget.DeviceDefault.Light.DatePicker" parent="@android:style/Widget.Material.DatePicker" />
     <style name="Widget.DeviceDefault.Light.TimePicker" parent="@android:style/Widget.Material.TimePicker" />
-
+       <!--Actionbar Material Style Overrides-->
+	<style name="Theme.DeviceDefault.Light.Dialog.NoActionBar" parent="@android:style/Theme.Material.Dialog.NoActionBar" />
+	<style name="Theme.DeviceDefault.Light.Dialog.NoActionBar.MinWidth" parent="@android:style/Theme.Material.Dialog.NoActionBar.MinWidth" />
+	<style name="Theme.DeviceDefault.Light.DialogWhenLarge.NoActionBar" parent="@android:style/Theme.Material.DialogWhenLarge.NoActionBar" />
+	<style name="Theme.DeviceDefault.Light.DarkActionBar" parent="@android:style/Theme.Material" /> <!--This includes the power menu for the system-->
+			
 	<!--Preparing DeviceDefault Styles for system-wide changes-->
 		<!--DeviceDefault Material Style Overrides-->
-		<style name="Theme.DeviceDefault.Resolver" parent="@style/Theme.Material">
+		<style name="Theme.DeviceDefault.Resolver" parent="@android:style/Theme.Material">
 				<item name="android:backgroundDimEnabled">true</item>
                 <item name="android:textColor">#ffffffff</item>
 				<item name="android:colorAccent">@color/midnight_theme</item>
@@ -111,7 +103,6 @@
 				<item name="android:windowTranslucentNavigation">false</item>
         </style>
 
-    <style name="Theme.DeviceDefault.Light.DarkActionBar" parent="@android:style/Theme.Material" />
 
     <!--Changing text color to white on majority of ROMs-->
     <!--SystemUI Notification colors values (Lockscreen + Notification Drawer)-->

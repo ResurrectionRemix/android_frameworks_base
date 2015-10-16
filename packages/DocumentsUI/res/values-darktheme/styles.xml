@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--You are editing DocumentsUI's Styles-->
+
+<resources>
+    <style name="DialogWhenReallyLarge" parent="@android:style/Theme.Material" />
+
+    <style name="DocumentsTheme" parent="@style/DialogWhenReallyLarge">
+        <item name="android:actionBarWidgetTheme">@android:style/Theme.Material</item>
+        <item name="android:actionBarTheme">@style/Theme.ActionBar</item>
+        <item name="android:actionBarPopupTheme">@android:style/Theme.Material</item>
+
+        <item name="android:colorPrimaryDark">@color/pb_sb</item>
+        <item name="android:colorPrimary">@color/pb_ab</item>
+        <item name="android:colorAccent">@color/midnight_theme</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="*android:windowFixedWidthMajor">@null</item>
+        <item name="*android:windowFixedWidthMinor">@null</item>
+        <item name="*android:windowMinWidthMajor">@null</item>
+        <item name="*android:windowMinWidthMinor">@null</item>
+        <item name="*android:windowFixedHeightMajor">80%</item>
+        <item name="*android:windowFixedHeightMinor">90%</item>
+
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustUnspecified</item>
+    </style>
+
+    <style name="Theme.ActionBar" parent="@android:style/ThemeOverlay.Material.Dark.ActionBar">
+		<item name="android:icon">@color/midnight_transparent</item>
+        <item name="android:background">@color/pb_ab</item>
+    </style>    
+
+</resources>

@@ -181,7 +181,7 @@
 
         <!--Pitchblack base Text Colors-->
 	    <color name="bright_foreground_holo_dark">@color/background_holo_light</color>
-	    <color name="bright_foreground_holo_light">#ffffffff</color>
+	    <color name="bright_foreground_holo_light">#424242</color>
 	    <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
 	    <color name="bright_foreground_disabled_holo_light">#424242</color>
 	    <color name="bright_foreground_inverse_holo_dark">@color/bright_foreground_holo_light</color>
@@ -200,7 +200,7 @@
 	    <color name="link_text_holo_light">#424242</color>	
     	<color name="notification_material_action_textcolor">#ffffffff</color>
         <color name="notification_button_text">#ffffffff</color>
-		<color name="primary_text_default_material_light">#ffffffff</color>
+		<color name="primary_text_default_material_light">#424242</color>
 		<color name="secondary_text_default_material_light">#9E9E9E</color>
 
 	    <!--Ripple Colors-->
