@@ -5,7 +5,7 @@
 <resources>
 	<!--Commit ID: I3a0a460c5ffe0f5057b3b9ec92faa7a3e09c9e01-->
 		<!--Layouts override for Resolver List Background, overriding res/layout/resolver_list.xml, resolver_different_item_header.xml & resolver_list_with_default.xml-->
-			<color name="resolver_list_bg">@*android:color/theme_color_hardcoded_color</color> <!--CM-->
+			<color name="resolver_list_bg">@color/pb_dark_shade</color> <!--CM-->
 			
 		<!--Layouts override for Notification Material Big Picture, overriding res/layout/notification_template_material_big_picture.xml-->
 			<color name="notification_mtrl_big_picture_bg">@*android:color/theme_color</color> <!--CM-->

@@ -25,6 +25,7 @@
                 <color name="midnight_text">#b3ffffff</color>
 			    <color name="pb_sb">#303F9F</color>
 			    <color name="pb_ab">#3F51B5</color>
+				<color name="pb_dark_shade">#BF000000</color>
 				
 				<color name="app_background">#ff000000</color>
 				<color name="light_background">#ffd7d7d7</color>
@@ -37,7 +38,7 @@
 				<color name="primary_text_material_dark">#ffffffff</color>
 				<color name="secondary_text_material_dark">#ffaeaeae</color>
 				
-				<color name="dialog_color_dark">@color/midnight_primary</color>
+				<color name="dialog_color_dark">@color/pb_dark_shade</color>
 				<color name="dialog_color_light">@color/light_color</color>
 				
 				<color name="qs_header_color">@color/midnight_primary</color>
@@ -72,7 +73,7 @@
   <color name="theme_color_hardcoded_color">#ff212021</color>
 		
   <!--Toast Background and Volume Panel Background-->
-  <color name="theme_color_hardcoded_translucent_black">#b3000000</color>
+  <color name="theme_color_hardcoded_translucent_black">@color/pb_dark_shade</color>
 		
   <!--Do not change this black, as it affects button colors with black text on black-->
   <color name="theme_color_play_store_color">#ff212021</color>
@@ -93,7 +94,7 @@
 			<color name="theme_color_ripple_light">@color/ripple_light</color>
 			<color name="theme_color_primary_text_material_dark">@color/primary_text_material_dark</color>
 			<color name="theme_color_secondary_text_material_dark">@color/secondary_text_material_dark</color>
-			<color name="theme_color_dialog_color_dark">@color/dialog_color_dark</color>
+			<color name="theme_color_dialog_color_dark">@color/pb_dark_shade</color>
 			<color name="theme_color_dialog_color_light">@color/dialog_color_light</color>
 		<!--SystemUI modifications-->
 			<color name="theme_color_qs_header">@color/qs_header_color</color>
@@ -168,19 +169,19 @@
 		<color name="datepicker_default_selected_text_color_material_dark">#ffaaaaaa</color>
 		
 	<!--System-wide changes to colors in Theme.Material Styles-->
-		<color name="background_material_dark">@color/midnight_primary</color>
+		<color name="background_material_dark">@color/pb_dark_shade</color>
 
 	<!--Dialog Background Colors-->
-		<color name="background_floating_material_dark">@color/theme_color_dialog_color_dark</color>
+		<color name="background_floating_material_dark">@color/pb_dark_shade</color>
 		<color name="background_floating_material_light">@color/theme_color_dialog_color_light</color>
 	
 	<!--Button Colors-->
-		<color name="button_material_dark">@color/midnight_theme</color>
+		<color name="button_material_dark">@color/pb_dark_shade</color>
 		<color name="button_material_light">@color/theme_color_light_background</color>	
 
         <!--Pitchblack base Text Colors-->
 	    <color name="bright_foreground_holo_dark">@color/background_holo_light</color>
-	    <color name="bright_foreground_holo_light">#424242</color>
+	    <color name="bright_foreground_holo_light">#ffffffff</color>
 	    <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
 	    <color name="bright_foreground_disabled_holo_light">#424242</color>
 	    <color name="bright_foreground_inverse_holo_dark">@color/bright_foreground_holo_light</color>
@@ -199,7 +200,7 @@
 	    <color name="link_text_holo_light">#424242</color>	
     	<color name="notification_material_action_textcolor">#ffffffff</color>
         <color name="notification_button_text">#ffffffff</color>
-		<color name="primary_text_default_material_light">#424242</color>
+		<color name="primary_text_default_material_light">#ffffffff</color>
 		<color name="secondary_text_default_material_light">#9E9E9E</color>
 
 	    <!--Ripple Colors-->

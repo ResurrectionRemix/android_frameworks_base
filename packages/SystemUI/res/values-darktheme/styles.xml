@@ -2,18 +2,7 @@
 <!--You are editing SystemUI's Styles-->
 
 <resources>
-    <style name="TextAppearance.Material.Notification.Parenthetical" parent="@android:style/TextAppearance.Material.Notification">
-        <item name="android:textStyle">italic</item>
-        <item name="android:textColor">#ffffffff</item>
-    </style>
-	<style name="Theme.SystemUI.Dialog" parent="@android:style/Theme.Material.Dialog">
-        <item name="android:colorControlActivated">@color/midnight_theme</item>
-        <item name="android:colorPrimary">@color/midnight_primary</item>
-    </style>
-    <style name="Theme.SystemUI.Dialog.Alert" parent="@*android:style/Theme.Material.Dialog.Alert">
-        <item name="android:textColor">#ffffffff</item>
-    </style>
-    <style name="systemui_theme" parent="@android:style/Theme.Material">
-        <item name="android:textColor">#ffffffff</item>
-    </style>
+    <style name="systemui_theme" parent="@android:style/Theme.Material" />
+    <style name="Theme.SystemUI.Dialog" parent="@android:style/Theme.Material.Dialog" />
+
 </resources>

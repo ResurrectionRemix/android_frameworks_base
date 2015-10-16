@@ -3,9 +3,7 @@
 
 <resources>
 
-    <color name="title_divider_color">#cdcdcd</color>
-    <color name="widget_subtitle_color">#ffffffff</color>
-    <color name="widget_title_color">#ffffffff</color>
+    <color name="title_divider_color">#000000</color>
     <color name="midnight_primary">#000000</color>
     <color name="midnight_secondary">#000000</color>
     <color name="midnight_transparent">#31ffffff</color>
