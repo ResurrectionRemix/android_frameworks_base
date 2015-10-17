@@ -382,7 +382,7 @@ public final class DefaultPermissionGrantPolicy {
         PackageParser.Package setupPackage = getSystemPackage(setupWizardPackageName);
         if (setupPackage != null
                 && doesPackageSupportRuntimePermissions(setupPackage)) {
-            grantRuntimePermissions(setupPackage, PHONE_PERMISSIONS, userId);
+            grantRuntimePermissions(setupPackage, PHONE_PERMISSIONS, true, userId);
             grantRuntimePermissions(setupPackage, CONTACTS_PERMISSIONS, userId);
             grantRuntimePermissions(setupPackage, LOCATION_PERMISSIONS, userId);
             grantRuntimePermissions(setupPackage, CAMERA_PERMISSIONS, userId);
