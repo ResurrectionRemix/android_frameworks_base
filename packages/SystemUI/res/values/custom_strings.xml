@@ -21,6 +21,7 @@
 
     <!-- Quick settings -->
     <string name="quick_settings_brightness_label">Brightness</string>
+    <string name="quick_settings_heads_up_label">Heads up</string>
     <string name="quick_settings_screen_off_label">Screen off</string>
     <string name="quick_settings_screenshot_label">Screenshot</string>
     <string name="quick_settings_volume_panel_label">Volume panel</string>
@@ -36,5 +37,15 @@
 
     <!-- Content description of the volume panel tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_volume_panel">Volume panel.</string>
+
+    <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+    <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+
+    <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+    <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
 
 </resources>
