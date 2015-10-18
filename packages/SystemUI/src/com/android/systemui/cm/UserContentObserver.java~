@@ -37,11 +37,11 @@ public abstract class UserContentObserver extends ContentObserver {
         public void onUserSwitching(int newUserId, IRemoteCallback reply) {
         }
         @Override
-        public void onUserSwitchComplete(int newUserId) throws RemoteException {
-            mHandler.post(mUpdateRunnable);
+        public void onForegroundProfileSwitch(int newUserId) {
         }
         @Override
-        public void onForegroundProfileSwitch(int newProfileId) {
+        public void onUserSwitchComplete(int newUserId) throws RemoteException {
+            mHandler.post(mUpdateRunnable);
         }
     };
 
