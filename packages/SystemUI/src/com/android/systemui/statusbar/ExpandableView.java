@@ -48,13 +48,9 @@ public abstract class ExpandableView extends FrameLayout {
                 R.dimen.notification_max_height);
     }
 
-    protected int getMaxNotificationHeight() {
-        return mMaxNotificationHeight;
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int ownMaxHeight = getMaxNotificationHeight();
+        int ownMaxHeight = mMaxNotificationHeight;
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         boolean hasFixedHeight = heightMode == MeasureSpec.EXACTLY;
         boolean isHeightLimited = heightMode == MeasureSpec.AT_MOST;
