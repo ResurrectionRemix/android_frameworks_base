@@ -34,9 +34,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.util.Log;
 import android.view.View;
@@ -63,12 +60,10 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
     private static final int[] RINGERS = new int[] {
         AudioManager.RINGER_MODE_NORMAL,
         AudioManager.RINGER_MODE_VIBRATE,
-        AudioManager.RINGER_MODE_SILENT,
         AudioManager.RINGER_MODE_NORMAL,
         AudioManager.RINGER_MODE_SILENT
     };
     private static final int[] ZENS = new int[] {
-        Global.ZEN_MODE_OFF,
         Global.ZEN_MODE_OFF,
         Global.ZEN_MODE_OFF,
         Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS,
@@ -116,14 +111,6 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
         int ringerMode = RINGERS[mRingerIndex];
         int zenMode = ZENS[mRingerIndex];
 
-        // If we are setting a ringer state, ring to indicate it
-        if (ringerMode == AudioManager.RINGER_MODE_NORMAL) {
-            Ringtone ringTone = RingtoneManager.getRingtone(mContext,
-                Settings.System.DEFAULT_NOTIFICATION_URI);
-            ringTone.setStreamType(AudioManager.STREAM_MUSIC);
-            ringTone.play();
-        }
-
         // If we are setting a vibrating state, vibrate to indicate it
         if (ringerMode == AudioManager.RINGER_MODE_VIBRATE && mVibrator != null) {
             boolean hasVibrator = mVibrator.hasVibrator();
@@ -134,6 +121,12 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
 
         mAudioManager.setRingerMode(ringerMode);
         mZenController.setZen(zenMode);
+    }
+
+    @Override
+    protected void handleLongClick() {
+        super.handleLongClick();
+        showDetail(true);
     }
 
     @Override
@@ -148,16 +141,6 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
         state.ringerMode = mAudioManager.getRingerMode();
         state.icon = ResourceIcon.get(getNotificationIconId(state.zen, state.ringerMode));
         state.label = mContext.getString(R.string.quick_settings_notifications_label);
-        mRingerIndex = getRingerIndex(state.ringerMode, state.zen);
-    }
-
-    private int getRingerIndex(int ringerMode, int zenMode) {
-        for (int ringerIndex = 0; ringerIndex < RINGERS.length; ringerIndex++) {
-            if (ringerMode == RINGERS[ringerIndex] && zenMode == ZENS[ringerIndex]) {
-                return ringerIndex;
-            }
-        }
-        return 0;
     }
 
     private int getNotificationIconId(int zenMode, int ringerMode) {
@@ -232,7 +215,7 @@ public class NotificationsTile extends QSTile<NotificationsTile.NotificationsSta
             return ZenModePanel.ZEN_SETTINGS;
         }
 
-        @Override
+         @Override
         public StatusBarPanelCustomTile getCustomTile() {
             return null;
         }
