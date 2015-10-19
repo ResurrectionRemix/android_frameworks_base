@@ -30,6 +30,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
+import android.provider.Settings;
 import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -60,6 +61,7 @@ public class TaskViewHeader extends FrameLayout {
     // Header views
     ImageView mMoveTaskButton;
     ImageView mDismissButton;
+    ImageView mPinButton;
     ImageView mApplicationIcon;
     TextView mActivityDescription;
 
@@ -69,6 +71,10 @@ public class TaskViewHeader extends FrameLayout {
     int mBackgroundColor;
     Drawable mLightDismissDrawable;
     Drawable mDarkDismissDrawable;
+    Drawable mLightPinDrawable;
+    Drawable mDarkPinDrawable;
+    Drawable mLightMultiwindowDrawable;
+    Drawable mDarkMultiwindowDrawable;
     RippleDrawable mBackground;
     GradientDrawable mBackgroundColorDrawable;
     AnimatorSet mFocusAnimator;
@@ -114,6 +120,14 @@ public class TaskViewHeader extends FrameLayout {
         mDismissContentDescription =
                 context.getString(R.string.accessibility_recents_item_will_be_dismissed);
 
+        // Load the screen pinning resources
+        mLightPinDrawable = context.getDrawable(R.drawable.ic_pin);
+        mDarkPinDrawable = context.getDrawable(R.drawable.ic_pin_dark);
+
+        // Load multi-window resources
+        mLightMultiwindowDrawable = context.getDrawable(R.drawable.ic_multiwindow);
+        mDarkMultiwindowDrawable = context.getDrawable(R.drawable.ic_multiwindow_dark);
+
         // Configure the highlight paint
         if (sHighlightPaint == null) {
             sHighlightPaint = new Paint();
@@ -131,6 +145,7 @@ public class TaskViewHeader extends FrameLayout {
         mApplicationIcon = (ImageView) findViewById(R.id.application_icon);
         mActivityDescription = (TextView) findViewById(R.id.activity_description);
         mDismissButton = (ImageView) findViewById(R.id.dismiss_task);
+        mPinButton = (ImageView) findViewById(R.id.lock_to_app_fab);
         mMoveTaskButton = (ImageView) findViewById(R.id.move_task);
 
         // Hide the backgrounds if they are ripple drawables
@@ -211,47 +226,15 @@ public class TaskViewHeader extends FrameLayout {
         mCurrentPrimaryColorIsDark = t.useLightOnPrimaryColor;
         mActivityDescription.setTextColor(t.useLightOnPrimaryColor ?
                 mConfig.taskBarViewLightTextColor : mConfig.taskBarViewDarkTextColor);
+        mPinButton.setImageDrawable(t.useLightOnPrimaryColor ?
+                mLightPinDrawable : mDarkPinDrawable);
         mDismissButton.setImageDrawable(t.useLightOnPrimaryColor ?
                 mLightDismissDrawable : mDarkDismissDrawable);
         mDismissButton.setContentDescription(String.format(mDismissContentDescription,
                 t.contentDescription));
         mMoveTaskButton.setVisibility((mConfig.multiStackEnabled) ? View.VISIBLE : View.INVISIBLE);
-        if (mConfig.multiStackEnabled) {
-            updateResizeTaskBarIcon(t);
-        }
-    }
-
-    /** Updates the resize task bar button. */
-    void updateResizeTaskBarIcon(Task t) {
-        Rect display = mSsp.getWindowRect();
-        Rect taskRect = mSsp.getTaskBounds(t.key.stackId);
-        int resId = R.drawable.star;
-        if (display.equals(taskRect) || taskRect.isEmpty()) {
-            resId = R.drawable.vector_drawable_place_fullscreen;
-        } else {
-            boolean top = display.top == taskRect.top;
-            boolean bottom = display.bottom == taskRect.bottom;
-            boolean left = display.left == taskRect.left;
-            boolean right = display.right == taskRect.right;
-            if (top && bottom && left) {
-                resId = R.drawable.vector_drawable_place_left;
-            } else if (top && bottom && right) {
-                resId = R.drawable.vector_drawable_place_right;
-            } else if (top && left && right) {
-                resId = R.drawable.vector_drawable_place_top;
-            } else if (bottom && left && right) {
-                resId = R.drawable.vector_drawable_place_bottom;
-            } else if (top && right) {
-                resId = R.drawable.vector_drawable_place_top_right;
-            } else if (top && left) {
-                resId = R.drawable.vector_drawable_place_top_left;
-            } else if (bottom && right) {
-                resId = R.drawable.vector_drawable_place_bottom_right;
-            } else if (bottom && left) {
-                resId = R.drawable.vector_drawable_place_bottom_left;
-            }
-        }
-        mMoveTaskButton.setImageResource(resId);
+        mMoveTaskButton.setImageDrawable(t.useLightOnPrimaryColor ?
+                mLightMultiwindowDrawable : mDarkMultiwindowDrawable);
     }
 
     /** Unbinds the bar view from the task */
@@ -270,6 +253,18 @@ public class TaskViewHeader extends FrameLayout {
                     .setDuration(mConfig.taskViewExitToAppDuration)
                     .start();
         }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.LOCK_TO_APP_ENABLED, 0) != 0) {
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.animate().cancel();
+            mPinButton.animate()
+                    .alpha(0f)
+                    .setStartDelay(0)
+                    .setInterpolator(mConfig.fastOutSlowInInterpolator)
+                    .setDuration(mConfig.taskViewExitToAppDuration)
+                    .withLayer()
+                    .start();
+        }
     }
 
     /** Animates this task bar if the user does not interact with the stack after a certain time. */
@@ -284,6 +279,18 @@ public class TaskViewHeader extends FrameLayout {
                     .setDuration(mConfig.taskViewEnterFromAppDuration)
                     .start();
         }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.LOCK_TO_APP_ENABLED, 0) != 0) {
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.setAlpha(0f);
+            mPinButton.animate()
+                    .alpha(1f)
+                    .setStartDelay(0)
+                    .setInterpolator(mConfig.fastOutLinearInInterpolator)
+                    .setDuration(mConfig.taskViewEnterFromAppDuration)
+                    .withLayer()
+                    .start();
+        }
     }
 
     /** Mark this task view that the user does has not interacted with the stack after a certain time. */
@@ -293,11 +300,19 @@ public class TaskViewHeader extends FrameLayout {
             mDismissButton.setVisibility(View.VISIBLE);
             mDismissButton.setAlpha(1f);
         }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                       Settings.System.LOCK_TO_APP_ENABLED, 0) != 0) {
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.animate().cancel();
+            mPinButton.setVisibility(View.VISIBLE);
+            mPinButton.setAlpha(1f);
+        }
     }
 
     /** Resets the state tracking that the user has not interacted with the stack after a certain time. */
     void resetNoUserInteractionState() {
         mDismissButton.setVisibility(View.INVISIBLE);
+        mPinButton.setVisibility(View.INVISIBLE);
     }
 
     @Override

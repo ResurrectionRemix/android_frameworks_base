@@ -295,8 +295,10 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
                 ctx.postAnimationTrigger.increment();
 
                 // Animate the action button in
-                fadeInActionButton(mConfig.transitionEnterFromAppDelay,
-                        mConfig.taskViewEnterFromAppDuration);
+                mActionButtonView.animate().alpha(1f)
+                        .setInterpolator(mConfig.fastOutLinearInInterpolator)
+                        .withLayer()
+                        .start();
             } else {
                 // Animate the task up if it was occluding the launch target
                 if (ctx.currentTaskOccludesLaunchTarget) {
@@ -359,18 +361,6 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
                 enableFocusAnimations();
             }
         }, startDelay);
-    }
-
-    public void fadeInActionButton(int delay, int duration) {
-        // Hide the action button
-        mActionButtonView.setAlpha(0f);
-
-        // Animate the action button in
-        mActionButtonView.animate().alpha(1f)
-                .setStartDelay(delay)
-                .setDuration(duration)
-                .setInterpolator(PhoneStatusBar.ALPHA_IN)
-                .start();
     }
 
     /** Animates this task view as it leaves recents by pressing home. */
@@ -664,10 +654,8 @@ public class TaskView extends FrameLayout implements Task.TaskCallbacks,
         mTask.setCallbacks(this);
 
         // Hide the action button if lock to app is disabled for this view
-        int lockButtonVisibility = (!t.lockToTaskEnabled || !t.lockToThisTask) ? GONE : VISIBLE;
-        if (mActionButtonView.getVisibility() != lockButtonVisibility) {
-            mActionButtonView.setVisibility(lockButtonVisibility);
-            requestLayout();
+        if (!t.lockToTaskEnabled && mActionButtonView.getVisibility() != View.GONE) {
+            mActionButtonView.setVisibility(View.GONE);
         }
     }
 
