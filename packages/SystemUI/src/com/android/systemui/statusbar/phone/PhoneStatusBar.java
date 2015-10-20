@@ -864,13 +864,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mContext.getContentResolver(), Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0, mCurrentUserId) == 1;
                 mNetworkController.setShowIndicators(showIndicators);
             		}
-
-       		}
-
+       		
             if (mQSPanel != null) {
                 mQSPanel.updateNumColumns();
             }
     }
+ }
 
     private void forceAddNavigationBar() {
         // If we have no Navbar view and we should have one, create it
