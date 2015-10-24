@@ -3900,6 +3900,13 @@ public final class Settings {
          * @hide
          */
         public static final String BATTERY_SAVER_MODE_COLOR = "battery_save_mode_color";
+ 	
+ 	/**
+         * Navigation bar button color
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_TINT = "navigation_bar_tint";
+
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
