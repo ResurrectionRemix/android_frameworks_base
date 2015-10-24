@@ -1828,7 +1828,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         }
 
         Drawable artworkDrawable = null;
-        if (mediaMetadata != null) {
+        if (mediaMetadata != null && (Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.LOCKSCREEN_MEDIA_METADATA, 1, UserHandle.USER_CURRENT) == 1)) {
             Bitmap artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
                 artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART);
