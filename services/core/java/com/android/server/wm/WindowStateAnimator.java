@@ -791,24 +791,6 @@ class WindowStateAnimator {
                 flags |= SurfaceControl.SECURE;
             }
 
-            final boolean consumingNavBar =
-                    (attrs.flags & FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0
-                    && (attrs.systemUiVisibility & View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION) == 0
-                    && (attrs.systemUiVisibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
-
-            final DisplayContent displayContent = w.getDisplayContent();
-
-            int defaultWidth = 1;
-            int defaultHeight = 1;
-            if (displayContent != null) {
-                final DisplayInfo displayInfo = displayContent.getDisplayInfo();
-                // When we need to expand the window with FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS,
-                // set the default width and height of the window to the size of the display
-                // we can use.
-                defaultWidth = consumingNavBar ? displayInfo.logicalWidth : displayInfo.appWidth;
-                defaultHeight = consumingNavBar ? displayInfo.logicalHeight : displayInfo.appHeight;
-            }
-
             int width;
             int height;
             if ((attrs.flags & LayoutParams.FLAG_SCALED) != 0) {
@@ -817,17 +799,17 @@ class WindowStateAnimator {
                 width = w.mRequestedWidth;
                 height = w.mRequestedHeight;
             } else {
-                width = consumingNavBar ? defaultWidth : w.mCompatFrame.width();
-                height = consumingNavBar ? defaultHeight : w.mCompatFrame.height();
+                width = w.mCompatFrame.width();
+                height = w.mCompatFrame.height();
             }
 
             // Something is wrong and SurfaceFlinger will not like this,
             // try to revert to sane values
             if (width <= 0) {
-                width = defaultWidth;
+                width = 1;
             }
             if (height <= 0) {
-                height = defaultHeight;
+                height = 1;
             }
 
             float left = w.mFrame.left + w.mXOffset;
@@ -934,6 +916,7 @@ class WindowStateAnimator {
                 try {
                     mSurfaceControl.setPosition(left, top);
                     mSurfaceLayer = mAnimLayer;
+                    final DisplayContent displayContent = w.getDisplayContent();
                     if (displayContent != null) {
                         mSurfaceControl.setLayerStack(displayContent.getDisplay().getLayerStack());
                     }
