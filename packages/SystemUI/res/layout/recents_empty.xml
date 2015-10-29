@@ -14,15 +14,12 @@
      limitations under the License.
 -->
 
-<TextView
+<ImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:textSize="16sp"
-    android:textColor="#ffffffff"
-    android:text="@string/recents_empty_message"
-    android:fontFamily="sans-serif"
-    android:background="#80000000"
+    android:background="#40000000"
+    android:src="@drawable/no_recent_apps_logo"
     android:visibility="gone" />
