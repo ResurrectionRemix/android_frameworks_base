@@ -177,4 +177,15 @@ interface IAudioService {
     void addMediaPlayerAndUpdateRemoteController(String packageName);
 
     void removeMediaPlayerAndUpdateRemoteController(String packageName);
+
+    /**
+     * Internal DU api to protect Pulse
+     * @hide
+     */
+    void setVisualizerLocked(boolean doLock);
+
+    /**
+     * @hide
+     */
+    boolean isVisualizerLocked(String callingPackage);
 }
