@@ -1615,10 +1615,16 @@ public class ActivityManagerService extends IActivityManager.Stub
                     }
                     AppErrorResult res = (AppErrorResult) data.get("result");
                     if (mAtmInternal.showStrictModeViolationDialog()) {
-                        Dialog d = new StrictModeViolationDialog(mUiContext,
-                                ActivityManagerService.this, res, proc);
-                        d.show();
-                        proc.crashDialog = d;
+                        if (Settings.System.getInt(mContext.getContentResolver(),
+                                Settings.System.DISABLE_FC_NOTIFICATIONS, 0) == 0) {;
+                             Dialog d = new StrictModeViolationDialog(mUiContext,
+                                    ActivityManagerService.this, res, proc);
+                            d.show();
+                            proc.crashDialog = d;
+                        } else {
+                            Slog.w(TAG, "Skipping crash dialog of " + proc + ": disabled");
+                            res.set(0);
+                        }
                     } else {
                         // The device is asleep, so just pretend that the user
                         // saw a crash dialog and hit "force quit".
