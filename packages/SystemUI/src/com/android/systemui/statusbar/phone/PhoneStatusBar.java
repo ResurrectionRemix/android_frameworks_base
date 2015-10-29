@@ -3081,7 +3081,9 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
             backdropBitmap = mKeyguardWallpaper;
         }
 
-        boolean keyguardVisible = (mState != StatusBarState.SHADE);
+        // HACK: Consider keyguard as visible if showing sim pin security screen
+        KeyguardUpdateMonitor updateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
+        boolean keyguardVisible = mState != StatusBarState.SHADE || updateMonitor.isSimPinSecure();
 
         if (!mKeyguardFadingAway && keyguardVisible && backdropBitmap != null && mScreenOn) {
             // if there's album art, ensure visualizer is visible
