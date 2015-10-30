@@ -86,6 +86,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 	private ImageView mRRLogoRight;
 	private ImageView mRRLogoLeft;
 	private NetworkTraffic mNetworkTraffic;
+    private TextView mCarrierLabel;
 
 	private TextView mWeather;
 
@@ -152,6 +153,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 		mRRLogoLeft = (ImageView) statusBar.findViewById(R.id.rr_logo_left);
 		mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
 		mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
+        mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mHandler = new Handler();
         mClockController = new ClockController(statusBar, mNotificationIconAreaController, mHandler);
         mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
@@ -340,6 +342,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.STATUS_BAR_RR_LOGO, 0) == 1) {
             animateHide(mRRLogoLeft, animate);
         }
+        animateHide(mCarrierLabel,animate);
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -349,6 +352,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.STATUS_BAR_RR_LOGO, 0) == 1) {
             animateShow(mRRLogoLeft, animate);
         }
+        animateShow(mCarrierLabel,animate);
     }
 
     public void hideNotificationIconArea(boolean animate) {
@@ -576,6 +580,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
  		mNetworkTraffic.setDarkIntensity(mDarkIntensity);
 		}
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CARRIER_COLOR,
+                mContext.getResources().getColor(R.color.status_bar_clock_color),
+                UserHandle.USER_CURRENT) == mContext.getResources().
+                getColor(R.color.status_bar_clock_color)) {
+        mCarrierLabel.setTextColor(mIconTint);
+        }
     }
 
     public void appTransitionPending() {

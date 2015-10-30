@@ -950,13 +950,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
-    private final ContentObserver mShowOperatorNameObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfChange) {
-            showOperatorName();
-        }
-    };
-
     private int mInteractingWindows;
     private boolean mAutohideSuspended;
     private int mStatusBarMode;
@@ -1178,20 +1171,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 = (MediaSessionManager) mContext.getSystemService(Context.MEDIA_SESSION_SERVICE);
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
         // in session state
-
-        // If the phone is configured to show the operator name
-        // then register the observer.
-        // Phones without simcard should not show
-        // operatorname in statusbar.
-        final boolean enableOperatorName = (mContext.getResources().
-                getBoolean(com.android.internal.R.bool.config_showOperatorNameInStatusBar));
-        if (enableOperatorName) {
-            mContext.getContentResolver().unregisterContentObserver(mShowOperatorNameObserver);
-            mShowOperatorNameObserver.onChange(false); // setup
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.System.getUriFor(SHOW_OPERATOR_NAME), true,
-                    mShowOperatorNameObserver);
-        }
 
         addNavigationBar();
 
@@ -1556,7 +1535,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
-        showOperatorName();
 
         return mStatusBarView;
     }
@@ -4252,6 +4230,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             rrLogoright.setVisibility(View.GONE);
             rrLogo.setVisibility(View.GONE);
             rrLogoleft.setVisibility(View.VISIBLE);
+		}
     }
 
     public void resetUserExpandedStates() {
@@ -5139,23 +5118,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mFalsingManager.setStatusBarState(state);
         mStatusBarWindowManager.setStatusBarState(state);
         updateDozing();
-    }
-
-    private void showOperatorName() {
-        boolean showOperatorName = (0 != Settings.System.getInt(
-                mContext.getContentResolver(), SHOW_OPERATOR_NAME, 1));
-        final boolean enableOperatorName = (mContext.getResources().
-                getBoolean(com.android.internal.R.bool.config_showOperatorNameInStatusBar));
-
-        TextView networkLabel = (TextView)mStatusBarWindow.findViewById(R.id.network_label);
-        if (networkLabel != null) {
-            if (!enableOperatorName || !showOperatorName || mState != StatusBarState.SHADE) {
-                mNetworkController.removeNetworkLabelView();
-                networkLabel.setVisibility(View.GONE);
-            } else {
-                mNetworkController.addNetworkLabelView(networkLabel);
-            }
-        }
     }
 
     @Override

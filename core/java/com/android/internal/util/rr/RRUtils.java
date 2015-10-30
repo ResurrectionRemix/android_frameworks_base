@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2014 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,20 @@
  * limitations under the License.
  */
 
-package com.android.camerabrowser;
+package com.android.internal.util.rr;
 
-import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
+import android.net.ConnectivityManager;
 
-public class CameraBrowserApplication extends Application { 
+import java.util.Locale;
 
-    private MtpClient mClient;
+public class RRUtils {
 
-    @Override
-    public void onCreate() {
-        mClient = new MtpClient(this);
-    }
-
-    @Override
-    public void onTerminate() {
-        mClient.close();
-        mClient = null;
-    }
-
-    public MtpClient getMtpClient() {
-        return mClient;
+    public static boolean isWifiOnly(Context context) {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        return (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) == false);
     }
 
     public static boolean isChineseLanguage() {

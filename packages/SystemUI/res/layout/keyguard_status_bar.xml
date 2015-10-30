@@ -82,12 +82,12 @@
         android:gravity="center"
         android:visibility="gone" />
 
-    <com.android.keyguard.CarrierText
+    <com.android.systemui.statusbar.widget.CarrierLabel
         android:id="@+id/keyguard_carrier_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
         android:visibility="gone"
         android:singleLine="true" />
 
