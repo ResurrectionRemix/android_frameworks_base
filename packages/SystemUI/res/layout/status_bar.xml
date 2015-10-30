@@ -91,6 +91,14 @@
                     android:src="@drawable/stat_notify_more"
                     android:visibility="gone"
                     />
+                <com.android.systemui.statusbar.widget.CarrierLabel
+                    android:id="@+id/status_bar_carrier_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
                 <com.android.systemui.statusbar.phone.IconMerger android:id="@+id/notificationIcons"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
