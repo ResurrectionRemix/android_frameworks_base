@@ -135,19 +135,31 @@ public class SQLiteCursor extends AbstractWindowedCursor {
     }
 
     private void fillWindow(int requiredPos) {
+        final int firstOutside;
+        if (mWindow == null) {
+            firstOutside = 0;
+        } else {
+            firstOutside = mWindow.getStartPosition() + mWindow.getNumRows();
+        }
         clearOrCreateWindow(getDatabase().getPath());
 
+        requiredPos = Math.max(0, requiredPos);
         try {
             if (mCount == NO_COUNT) {
-                int startPos = DatabaseUtils.cursorPickFillWindowStartPosition(requiredPos, 0);
-                mCount = mQuery.fillWindow(mWindow, startPos, requiredPos, true);
+                mCount = mQuery.fillWindow(mWindow, requiredPos, requiredPos, true);
                 mCursorWindowCapacity = mWindow.getNumRows();
                 if (Log.isLoggable(TAG, Log.DEBUG)) {
                     Log.d(TAG, "received count(*) from native_fill_window: " + mCount);
                 }
             } else {
-                int startPos = DatabaseUtils.cursorPickFillWindowStartPosition(requiredPos,
-                        mCursorWindowCapacity);
+                final int startPos;
+                if (requiredPos == firstOutside) {
+                    // looks like we're going forward one step at a time; let's avoid overlap
+                    startPos = requiredPos;
+                } else {
+                    // general case: get 1/3 space behind us, and 2/3 in front of us.
+                    startPos = Math.max(0, requiredPos - mCursorWindowCapacity/3);
+                }
                 mQuery.fillWindow(mWindow, startPos, requiredPos, false);
             }
         } catch (RuntimeException ex) {
