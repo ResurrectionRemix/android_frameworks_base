@@ -1527,10 +1527,18 @@ public final class PowerManagerService extends SystemService
                 userActivityNoUpdateLocked(
                         now, PowerManager.USER_ACTIVITY_EVENT_OTHER, 0, Process.SYSTEM_UID);
 
-                // Tell the notifier whether wireless charging has started so that
-                // it can provide feedback to the user.
-                if (dockedOnWirelessCharger) {
-                    mNotifier.onWirelessChargingStarted();
+                if (mPlugType == BatteryManager.BATTERY_PLUGGED_WIRELESS ||
+                        oldPlugType == BatteryManager.BATTERY_PLUGGED_WIRELESS) {
+                    // Tell the notifier whether wireless charging has started so that
+                    // it can provide feedback to the user.
+                    if (dockedOnWirelessCharger) {
+                        mNotifier.onWirelessChargingStarted();
+                    }
+                } else {
+                    // anything wired is now plugged
+                    if (!wasPowered && mIsPowered) {
+                        mNotifier.onWiredChargingStarted();
+                    }
                 }
             }
 
