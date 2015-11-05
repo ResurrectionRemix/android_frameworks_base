@@ -209,6 +209,7 @@ public class SQLiteCursor extends AbstractWindowedCursor {
     @Override
     public void deactivate() {
         super.deactivate();
+        mQuery.deactivate();
         mDriver.cursorDeactivated();
     }
 
@@ -238,6 +239,7 @@ public class SQLiteCursor extends AbstractWindowedCursor {
             mPos = -1;
             mCount = NO_COUNT;
 
+            mQuery.onRequery();
             mDriver.cursorRequeried(this);
         }
 

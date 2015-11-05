@@ -27,11 +27,13 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.util.Log;
 import android.util.LruCache;
+import android.util.MutableInt;
 import android.util.Printer;
 
 import dalvik.system.BlockGuard;
 import dalvik.system.CloseGuard;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -102,6 +104,12 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
     private final boolean mIsReadOnlyConnection;
     private final PreparedStatementCache mPreparedStatementCache;
     private PreparedStatement mPreparedStatementPool;
+
+    // Queue for resetting prepared statements that we've left open for performance reasons but may
+    // no longer need. Split into two parallel lists to avoid allocation of a Pair each time.
+    // Protected by mPool.mLock.
+    private final ArrayList<WeakReference<PreparedStatement>> mDerefQueueStmt = new ArrayList<>(2);
+    private final ArrayList<WeakReference> mDerefQueueClient = new ArrayList<>(2);
 
     // The recent operations log.
     private final OperationLog mRecentOperations = new OperationLog();
@@ -813,16 +821,19 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
      * @param countAllRows True to count all rows that the query would return
      * regagless of whether they fit in the window.
      * @param cancellationSignal A signal to cancel the operation in progress, or null if none.
-     * @return The number of rows that were counted during query execution.  Might
+     * @param seenRows Set to the number of rows that have been seen in this queryso far.  Might
      * not be all rows in the result set unless <code>countAllRows</code> is true.
+     * @param client A client that will later be used in a queueClientDereferenceLocked() call
+     * @return A reference that will later be used in a queueClientDereferenceLocked() call
      *
      * @throws SQLiteException if an error occurs, such as a syntax error
      * or invalid number of bind arguments.
      * @throws OperationCanceledException if the operation was canceled.
      */
-    public int executeForCursorWindow(String sql, Object[] bindArgs,
+    public WeakReference<PreparedStatement> executeForCursorWindow(String sql, Object[] bindArgs,
             CursorWindow window, int startPos, int requiredPos, boolean countAllRows,
-            CancellationSignal cancellationSignal) {
+            CancellationSignal cancellationSignal, MutableInt seenRows,
+            WeakReference client) {
         if (sql == null) {
             throw new IllegalArgumentException("sql must not be null.");
         }
@@ -835,10 +846,12 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
             int actualPos = -1;
             int countedRows = -1;
             int filledRows = -1;
+            seenRows.value = -1;
             final int cookie = mRecentOperations.beginOperation("executeForCursorWindow",
                     sql, bindArgs);
             try {
                 final PreparedStatement statement = acquirePreparedStatement(sql, bindArgs, startPos);
+                statement.mLastClient = client;
                 if (DEBUG) dumpStatement(statement, "before");
                 boolean shouldReset = countAllRows; // might as well, if we're consuming everything
                 try {
@@ -867,7 +880,8 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
                             // everything fit in the window; we've exhausted the result set
                             shouldReset = true;
                         }
-                        return alreadyStepped + countedRows;
+                        seenRows.value = alreadyStepped + countedRows;
+                        return statement.mWeak;
                     } finally {
                         detachCancellationSignal(cancellationSignal);
                     }
@@ -888,12 +902,41 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
                             + "', startPos=" + startPos
                             + ", actualPos=" + actualPos
                             + ", filledRows=" + filledRows
-                            + ", countedRows=" + countedRows);
+                            + ", countedRows=" + countedRows
+                            + ", seenRows=" + seenRows.value);
                 }
             }
         } finally {
             window.releaseReference();
         }
+    }
+
+    /**
+     * Called from the connection pool when this connection is released, or when a new deref is
+     * queued and the connection was available. Must be locked on the pool's mLock.
+     */
+    void handleDereferenceQueueLocked() {
+        final int N = mDerefQueueStmt.size();
+        for (int i=0; i<N; ++i) {
+            PreparedStatement stmt = mDerefQueueStmt.get(i).get();
+            if (stmt != null) {
+                WeakReference lastClient = stmt.mLastClient;
+                if (lastClient != null && lastClient == mDerefQueueClient.get(i)) {
+                    resetAndClear(stmt);
+                }
+            }
+        }
+        mDerefQueueStmt.clear();
+        mDerefQueueClient.clear();
+    }
+
+    /**
+     * Called from the connection pool when a client releases their reference to a statement. Will
+     * be handled on the next call to handleDereferenceQueueLocked(). Must lock the pool's mLock.
+     */
+    void queueClientDereferenceLocked(WeakReference<PreparedStatement> stmt, WeakReference client) {
+        mDerefQueueStmt.add(stmt);
+        mDerefQueueClient.add(client);
     }
 
     private void dumpStatement(PreparedStatement stmt, String info) {
@@ -989,6 +1032,7 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
             nativeResetStatementAndClearBindings(mConnectionPtr, statement.mStatementPtr);
             statement.mLastBindArgs = null;
             statement.mNumSteps = PreparedStatement.RESET;
+            statement.mLastClient = null;
         } catch (SQLiteException ex) {
             // The statement could not be reset due to an error.  Remove it from the cache.
             // When remove() is called, the cache will invoke its entryRemoved() callback,
@@ -1199,8 +1243,9 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
         // We ignore the first row in the database list because it corresponds to
         // the main database which we have already described.
         CursorWindow window = new CursorWindow("collectDbStats");
+        MutableInt seen = new MutableInt(0);
         try {
-            executeForCursorWindow("PRAGMA database_list;", null, window, 0, 0, false, null);
+            executeForCursorWindow("PRAGMA database_list;", null, window, 0, 0, false, null, seen, null);
             for (int i = 1; i < window.getNumRows(); i++) {
                 String name = window.getString(i, 1);
                 String path = window.getString(i, 2);
@@ -1261,7 +1306,7 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
             statement.mPoolNext = null;
             statement.mInCache = false;
         } else {
-            statement = new PreparedStatement();
+            statement = new PreparedStatement(this);
         }
         statement.mSql = sql;
         statement.mStatementPtr = statementPtr;
@@ -1276,6 +1321,7 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
     private void recyclePreparedStatement(PreparedStatement statement) {
         statement.mSql = null;
         statement.mLastBindArgs = null;
+        statement.mLastClient = null;
         statement.mPoolNext = mPreparedStatementPool;
         mPreparedStatementPool = statement;
     }
@@ -1298,7 +1344,7 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
      * resource disposal because all native statement objects must be freed before
      * the native database object can be closed.  So no finalizers here.
      */
-    private static final class PreparedStatement {
+    static final class PreparedStatement {
         // Next item in pool.
         public PreparedStatement mPoolNext;
 
@@ -1335,6 +1381,15 @@ public final class SQLiteConnection implements CancellationSignal.OnCancelListen
         // possible for SQLite calls to be re-entrant.  Consequently we need to prevent
         // in use statements from being finalized until they are no longer in use.
         public boolean mInUse;
+
+        public final WeakReference<PreparedStatement> mWeak = new WeakReference<>(this);
+        public WeakReference mLastClient;
+
+        public final SQLiteConnection owner;
+
+        public PreparedStatement(SQLiteConnection owner) {
+            this.owner = owner;
+        }
     }
 
     private final class PreparedStatementCache

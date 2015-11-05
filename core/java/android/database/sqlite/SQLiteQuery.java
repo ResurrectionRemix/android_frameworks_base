@@ -20,6 +20,9 @@ import android.database.CursorWindow;
 import android.os.CancellationSignal;
 import android.os.OperationCanceledException;
 import android.util.Log;
+import android.util.MutableInt;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Represents a query that reads the resulting rows into a {@link SQLiteQuery}.
@@ -32,6 +35,9 @@ public final class SQLiteQuery extends SQLiteProgram {
     private static final String TAG = "SQLiteQuery";
 
     private final CancellationSignal mCancellationSignal;
+    private final MutableInt mNumRowsFound = new MutableInt(0);
+    private final WeakReference<SQLiteQuery> mWeak = new WeakReference(this);
+    private WeakReference<SQLiteConnection.PreparedStatement> mLastStmt = null;
 
     SQLiteQuery(SQLiteDatabase db, String query, CancellationSignal cancellationSignal) {
         super(db, query, null, cancellationSignal);
@@ -59,10 +65,12 @@ public final class SQLiteQuery extends SQLiteProgram {
         try {
             window.acquireReference();
             try {
-                int numRows = getSession().executeForCursorWindow(getSql(), getBindArgs(),
+                WeakReference<SQLiteConnection.PreparedStatement> stmt;
+                stmt = getSession().executeForCursorWindow(getSql(), getBindArgs(),
                         window, startPos, requiredPos, countAllRows, getConnectionFlags(),
-                        mCancellationSignal);
-                return numRows;
+                        mCancellationSignal, mNumRowsFound, this.mWeak);
+                setLastStmt(stmt);
+                return mNumRowsFound.value;
             } catch (SQLiteDatabaseCorruptException ex) {
                 onCorruption();
                 throw ex;
@@ -75,6 +83,30 @@ public final class SQLiteQuery extends SQLiteProgram {
         } finally {
             releaseReference();
         }
+    }
+
+    private final void setLastStmt(WeakReference<SQLiteConnection.PreparedStatement> stmt) {
+        if (mLastStmt == stmt) {
+            return;
+        }
+        if (mLastStmt != null) {
+            getSession().releaseStmtRef(mLastStmt, this.mWeak);
+        }
+        mLastStmt = stmt;
+    }
+
+    void onRequery() {
+        setLastStmt(null);
+    }
+
+    void deactivate() {
+        setLastStmt(null);
+    }
+
+    @Override
+    public void close() {
+        setLastStmt(null);
+        super.close();
     }
 
     @Override

@@ -22,6 +22,11 @@ import android.os.CancellationSignal;
 import android.os.OperationCanceledException;
 import android.os.ParcelFileDescriptor;
 
+import android.util.MutableInt;
+
+import java.lang.ref.WeakReference;
+
+import static android.database.sqlite.SQLiteConnection.PreparedStatement;
 /**
  * Provides a single client the ability to use a database.
  *
@@ -809,16 +814,19 @@ public final class SQLiteSession {
      * @param connectionFlags The connection flags to use if a connection must be
      * acquired by this operation.  Refer to {@link SQLiteConnectionPool}.
      * @param cancellationSignal A signal to cancel the operation in progress, or null if none.
-     * @return The number of rows that were counted during query execution.  Might
+     * @param seenRows Set to the number of rows that have been seen in this queryso far.  Might
      * not be all rows in the result set unless <code>countAllRows</code> is true.
+     * @param client A client that will later be used in a queueClientDereferenceLocked() call
+     * @return A reference that will later be used in a queueClientDereferenceLocked() call
      *
      * @throws SQLiteException if an error occurs, such as a syntax error
      * or invalid number of bind arguments.
      * @throws OperationCanceledException if the operation was canceled.
      */
-    public int executeForCursorWindow(String sql, Object[] bindArgs,
+    public WeakReference<PreparedStatement> executeForCursorWindow(String sql, Object[] bindArgs,
             CursorWindow window, int startPos, int requiredPos, boolean countAllRows,
-            int connectionFlags, CancellationSignal cancellationSignal) {
+            int connectionFlags, CancellationSignal cancellationSignal,
+            MutableInt seenRows, WeakReference client) {
         if (sql == null) {
             throw new IllegalArgumentException("sql must not be null.");
         }
@@ -828,17 +836,22 @@ public final class SQLiteSession {
 
         if (executeSpecial(sql, bindArgs, connectionFlags, cancellationSignal)) {
             window.clear();
-            return 0;
+            seenRows.value = 0;
+            return null;
         }
 
         acquireConnection(sql, connectionFlags, cancellationSignal); // might throw
         try {
             return mConnection.executeForCursorWindow(sql, bindArgs,
                     window, startPos, requiredPos, countAllRows,
-                    cancellationSignal); // might throw
+                    cancellationSignal, seenRows, client); // might throw
         } finally {
             releaseConnection(); // might throw
         }
+    }
+
+    void releaseStmtRef(WeakReference<PreparedStatement> stmt, WeakReference client) {
+        mConnectionPool.releaseStmtRef(stmt, client, mConnection);
     }
 
     /**
