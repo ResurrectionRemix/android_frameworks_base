@@ -486,10 +486,11 @@ public class SyncRequest implements Parcelable {
          *         builder.
          */
         public SyncRequest build() {
-            // Validate the extras bundle
-            ContentResolver.validateSyncExtrasBundle(mCustomExtras);
             if (mCustomExtras == null) {
                 mCustomExtras = new Bundle();
+            } else {
+                // Validate the extras bundle
+                ContentResolver.validateSyncExtrasBundle(mCustomExtras);
             }
             // Combine builder extra flags into the config bundle.
             mSyncConfigExtras = new Bundle();
