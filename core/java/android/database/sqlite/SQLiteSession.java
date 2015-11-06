@@ -22,6 +22,7 @@ import android.os.CancellationSignal;
 import android.os.OperationCanceledException;
 import android.os.ParcelFileDescriptor;
 
+import android.util.MutableBoolean;
 import android.util.MutableInt;
 
 import java.lang.ref.WeakReference;
@@ -814,6 +815,7 @@ public final class SQLiteSession {
      * @param connectionFlags The connection flags to use if a connection must be
      * acquired by this operation.  Refer to {@link SQLiteConnectionPool}.
      * @param cancellationSignal A signal to cancel the operation in progress, or null if none.
+     * @param exhausted will be set to true if the full result set was consumed - never set to false
      * @param seenRows Set to the number of rows that have been seen in this queryso far.  Might
      * not be all rows in the result set unless <code>countAllRows</code> is true.
      * @param client A client that will later be used in a queueClientDereferenceLocked() call
@@ -825,17 +827,14 @@ public final class SQLiteSession {
      */
     public WeakReference<PreparedStatement> executeForCursorWindow(String sql, Object[] bindArgs,
             CursorWindow window, int startPos, int requiredPos, boolean countAllRows,
-            int connectionFlags, CancellationSignal cancellationSignal,
+            int connectionFlags, CancellationSignal cancellationSignal, MutableBoolean exhausted,
             MutableInt seenRows, WeakReference client) {
         if (sql == null) {
             throw new IllegalArgumentException("sql must not be null.");
         }
-        if (window == null) {
-            throw new IllegalArgumentException("window must not be null.");
-        }
 
         if (executeSpecial(sql, bindArgs, connectionFlags, cancellationSignal)) {
-            window.clear();
+            if (window != null) window.clear();
             seenRows.value = 0;
             return null;
         }
@@ -844,7 +843,7 @@ public final class SQLiteSession {
         try {
             return mConnection.executeForCursorWindow(sql, bindArgs,
                     window, startPos, requiredPos, countAllRows,
-                    cancellationSignal, seenRows, client); // might throw
+                    cancellationSignal, exhausted, seenRows, client); // might throw
         } finally {
             releaseConnection(); // might throw
         }

@@ -21,6 +21,7 @@ import android.database.CursorWindow;
 import android.database.DatabaseUtils;
 import android.os.StrictMode;
 import android.util.Log;
+import android.util.MutableBoolean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,16 @@ public class SQLiteCursor extends AbstractWindowedCursor {
 
     /** The number of rows in the cursor */
     private int mCount = NO_COUNT;
+
+    /** The number of rows we've found so far. Invariants:
+     *  1. mFound >= 0
+     *  2. mFound will decrease only when requery() is called
+     *  3. mFound == mCount iff mCount != NO_COUNT
+     */
+    private int mFound = 0;
+
+    /* Cached here for use in method implementations - don't use this to store "permanent" info. */
+    private final MutableBoolean mTmpBoolean = new MutableBoolean(false);
 
     /** The number of rows that can fit in the cursor window, 0 if unknown */
     private int mCursorWindowCapacity;
@@ -115,52 +126,121 @@ public class SQLiteCursor extends AbstractWindowedCursor {
         return mQuery.getDatabase();
     }
 
-    @Override
     public boolean onMove(int oldPosition, int newPosition) {
         // Make sure the row at newPosition is present in the window
         if (mWindow == null || newPosition < mWindow.getStartPosition() ||
                 newPosition >= (mWindow.getStartPosition() + mWindow.getNumRows())) {
-            fillWindow(newPosition);
+            throw new IllegalStateException("newPosition should be in the window at this point");
         }
 
         return true;
     }
 
+    /** @hide */
+    @Override
+    protected int onMoveWithBoundsCheck(int position) {
+        if (mCount != NO_COUNT && position >= mCount) {
+            return MOVE_AFTER_LAST;
+        } else if (position >= mFound) {
+            // okay, there are more rows to find -- maybe enough to reach our new position?
+            fillWindow(position, false);
+            if (position >= mFound) {
+                return MOVE_AFTER_LAST; // we tried.
+            }
+        } else if (position < 0) {
+            return MOVE_BEFORE_FIRST;
+        } else if (position == mPos) {
+            return MOVE_NOP;
+        } else {
+            fillWindow(position, false);
+        }
+
+        if (!onMove(mPos, position)) {
+            return MOVE_FAILED;
+        }
+        return MOVE_OK;
+    }
+
     @Override
     public int getCount() {
         if (mCount == NO_COUNT) {
-            fillWindow(0);
+            // might as well get some data if we don't already have some
+            if (mWindow == null) {
+                fillWindow(0, true);
+            } else {
+                traverseQuery(0, 0, null, true);
+            }
         }
+        assert mCount != NO_COUNT;
         return mCount;
     }
 
-    private void fillWindow(int requiredPos) {
+    /** @hide */
+    @Override
+    protected boolean isAfterLast(int position) {
+        if (position < mFound) {
+            return false; // we've found enough rows to say this wasn't the end
+        } else if (mCount != NO_COUNT) {
+            return true; // position was not in what we've counted, and we've counted everything
+        }
+
+        // might as well get some data if we don't already have some
+        if (mWindow == null) {
+            fillWindow(position, false);
+        } else {
+            traverseQuery(0, position, null, false);
+        }
+        assert mCount == 0 || mFound > 0;
+        return position >= mFound;
+    }
+
+
+    private void fillWindow(int requiredPos, boolean countAll) {
+        requiredPos = Math.max(0, requiredPos);
         final int firstOutside;
         if (mWindow == null) {
             firstOutside = 0;
         } else {
-            firstOutside = mWindow.getStartPosition() + mWindow.getNumRows();
+            final int start = mWindow.getStartPosition();
+            firstOutside = start + mWindow.getNumRows();
+            if (requiredPos >= start && requiredPos < firstOutside) {
+                return; // we already have what we need.
+            }
         }
-        clearOrCreateWindow(getDatabase().getPath());
 
-        requiredPos = Math.max(0, requiredPos);
+        final int startPos;
+        if (requiredPos == firstOutside) {
+            // looks like we're going forward one step at a time; let's avoid overlap
+            startPos = requiredPos;
+        } else {
+            // general case: get 1/3 space behind us, and 2/3 in front of us.
+            startPos = Math.max(0, requiredPos - mCursorWindowCapacity/3);
+        }
+
+        clearOrCreateWindow(getDatabase().getPath());
+        traverseQuery(startPos, requiredPos, mWindow, countAll);
+    }
+
+    private void traverseQuery(int requiredPos) {
+        traverseQuery(requiredPos, requiredPos, null, false); // need no data - start=required.
+    }
+
+    private void traverseQuery(int startPos, int requiredPos, CursorWindow w, boolean countAll) {
         try {
-            if (mCount == NO_COUNT) {
-                mCount = mQuery.fillWindow(mWindow, requiredPos, requiredPos, true);
-                mCursorWindowCapacity = mWindow.getNumRows();
+            MutableBoolean exhausted = mTmpBoolean;
+            exhausted.value = false;
+            final int found = mQuery.traverse(w, startPos, requiredPos, countAll, exhausted);
+            if (w != null && mCursorWindowCapacity == 0) {
+                mCursorWindowCapacity = w.getNumRows();
                 if (Log.isLoggable(TAG, Log.DEBUG)) {
                     Log.d(TAG, "received count(*) from native_fill_window: " + mCount);
                 }
+            }
+            if (exhausted.value) {
+                // we exhausted the whole result set, so we know the count.
+                mCount = mFound = found;
             } else {
-                final int startPos;
-                if (requiredPos == firstOutside) {
-                    // looks like we're going forward one step at a time; let's avoid overlap
-                    startPos = requiredPos;
-                } else {
-                    // general case: get 1/3 space behind us, and 2/3 in front of us.
-                    startPos = Math.max(0, requiredPos - mCursorWindowCapacity/3);
-                }
-                mQuery.fillWindow(mWindow, startPos, requiredPos, false);
+                mFound = Math.max(mFound, found);
             }
         } catch (RuntimeException ex) {
             // Close the cursor window if the query failed and therefore will

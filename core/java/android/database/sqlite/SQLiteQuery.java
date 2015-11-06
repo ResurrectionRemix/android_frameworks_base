@@ -20,6 +20,7 @@ import android.database.CursorWindow;
 import android.os.CancellationSignal;
 import android.os.OperationCanceledException;
 import android.util.Log;
+import android.util.MutableBoolean;
 import android.util.MutableInt;
 
 import java.lang.ref.WeakReference;
@@ -54,21 +55,23 @@ public final class SQLiteQuery extends SQLiteProgram {
      * If it won't fit, then the query should discard part of what it filled.
      * @param countAllRows True to count all rows that the query would
      * return regardless of whether they fit in the window.
-     * @return Number of rows that were enumerated.  Might not be all rows
-     * unless countAllRows is true.
+     * @param exhausted will be set to true if the full result set was consumed - never set to false
+     * @return Number of rows that have been consumed from this result set so far. Might not be all
+     * rows unless countAllRows is true.
      *
      * @throws SQLiteException if an error occurs.
      * @throws OperationCanceledException if the operation was canceled.
      */
-    int fillWindow(CursorWindow window, int startPos, int requiredPos, boolean countAllRows) {
+    int traverse(CursorWindow window, int startPos, int requiredPos,
+                 boolean countAllRows, MutableBoolean exhausted) {
         acquireReference();
         try {
-            window.acquireReference();
+            if (window != null) window.acquireReference();
             try {
                 WeakReference<SQLiteConnection.PreparedStatement> stmt;
                 stmt = getSession().executeForCursorWindow(getSql(), getBindArgs(),
                         window, startPos, requiredPos, countAllRows, getConnectionFlags(),
-                        mCancellationSignal, mNumRowsFound, this.mWeak);
+                        mCancellationSignal, exhausted, mNumRowsFound, this.mWeak);
                 setLastStmt(stmt);
                 return mNumRowsFound.value;
             } catch (SQLiteDatabaseCorruptException ex) {
@@ -78,7 +81,7 @@ public final class SQLiteQuery extends SQLiteProgram {
                 Log.e(TAG, "exception: " + ex.getMessage() + "; query: " + getSql());
                 throw ex;
             } finally {
-                window.releaseReference();
+                if (window != null) window.releaseReference();
             }
         } finally {
             releaseReference();
