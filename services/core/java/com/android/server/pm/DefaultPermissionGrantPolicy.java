@@ -608,6 +608,8 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(gmscorePackage, SMS_PERMISSIONS, userId);
                 grantRuntimePermissionsLPw(gmscorePackage, STORAGE_PERMISSIONS, userId);
 
+	   }
+
             // DU ALLOWED PERMISSIONS
             PackageParser.Package chromiumPackage = getDefaultProviderAuthorityPackageLPr(
                     "org.chromium.chrome", userId);
