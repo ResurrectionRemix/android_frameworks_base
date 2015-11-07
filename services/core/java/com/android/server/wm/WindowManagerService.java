@@ -2781,7 +2781,7 @@ public class WindowManagerService extends IWindowManager.Stub
         // to hold off on removing the window until the animation is done.
         // If the display is frozen, just remove immediately, since the
         // animation wouldn't be seen.
-        if (win.mHasSurface && okToDisplay()) {
+        if (win.mHasSurface && okToDisplay() && !win.mBinderDied) {
             // If we are not currently running the exit animation, we
             // need to see about starting one.
             wasVisible = win.isWinVisibleLw();
@@ -3847,7 +3847,7 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     public int getOrientationLocked() {
-        if (mDisplayFrozen) {
+        if (mDisplayFrozen || mAppsFreezingScreen > 0) {
             if (mLastWindowForcedOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
                 if (DEBUG_ORIENTATION) Slog.v(TAG, "Display is frozen, return "
                         + mLastWindowForcedOrientation);
@@ -3872,8 +3872,8 @@ public class WindowManagerService extends IWindowManager.Stub
                     continue;
                 }
                 int req = win.mAttrs.screenOrientation;
-                if((req == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) ||
-                        (req == ActivityInfo.SCREEN_ORIENTATION_BEHIND)){
+                if ((req == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) ||
+                        (req == ActivityInfo.SCREEN_ORIENTATION_BEHIND)) {
                     continue;
                 }
 
@@ -3903,7 +3903,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 }
                 if (DEBUG_ORIENTATION) Slog.v(TAG,
                         "No one is requesting an orientation when the screen is locked");
-                return mLastKeyguardForcedOrientation;
+                return mLastWindowForcedOrientation = mLastKeyguardForcedOrientation;
             }
         }
 
@@ -6250,10 +6250,13 @@ public class WindowManagerService extends IWindowManager.Stub
         int retryCount = 0;
         WindowState appWin = null;
 
-        final boolean appIsImTarget = mInputMethodTarget != null
-                && mInputMethodTarget.mAppToken != null
-                && mInputMethodTarget.mAppToken.appToken != null
-                && mInputMethodTarget.mAppToken.appToken.asBinder() == appToken;
+        boolean appIsImTarget;
+        synchronized(mWindowMap) {
+            appIsImTarget = mInputMethodTarget != null
+                    && mInputMethodTarget.mAppToken != null
+                    && mInputMethodTarget.mAppToken.appToken != null
+                    && mInputMethodTarget.mAppToken.appToken.asBinder() == appToken;
+        }
 
         final int aboveAppLayer = (mPolicy.windowTypeToLayerLw(TYPE_APPLICATION) + 1)
                 * TYPE_LAYER_MULTIPLIER + TYPE_LAYER_OFFSET;
