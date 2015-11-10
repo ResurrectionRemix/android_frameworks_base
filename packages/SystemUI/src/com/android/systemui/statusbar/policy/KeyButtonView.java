@@ -74,13 +74,13 @@ public class KeyButtonView extends ImageView {
                     sendEvent(KeyEvent.ACTION_DOWN, CURSOR_REPEAT_FLAGS,
                             System.currentTimeMillis(), false);
                     postDelayed(mCheckLongPress, ViewConfiguration.getKeyRepeatDelay());
-                } else if (mCode != 0) {
-                    sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
-                    sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
                 } else if (isLongClickable()) {
                     // Just an old-fashioned ImageView
                     mPerformedLongClick = true;
                     performLongClick();
+                } else {
+                    sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
+                    sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
                 }
             }
         }
@@ -211,7 +211,7 @@ public class KeyButtonView extends ImageView {
     }
 
     private boolean supportsLongPress() {
-        return mSupportsLongpress && getTag() != NavbarEditor.NAVBAR_HOME;
+        return mSupportsLongpress;
     }
 
     public boolean onTouchEvent(MotionEvent ev) {
