@@ -72,7 +72,7 @@
         android:layout_toStartOf="@id/system_icons_super_container"
         android:gravity="center_vertical"
         android:ellipsize="marquee"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="@style/TextAppearance.StatusBar.Clock"
         android:textColor="#ffffff"
         android:singleLine="true" />
 
