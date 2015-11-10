@@ -44,7 +44,6 @@ public class KeyguardStatusBarView extends RelativeLayout {
 
     private boolean mKeyguardUserSwitcherShowing;
 
-    private TextView mCarrierLabel;
     private View mSystemIconsSuperContainer;
     private MultiUserSwitch mMultiUserSwitch;
     private ImageView mMultiUserAvatar;
@@ -78,11 +77,6 @@ public class KeyguardStatusBarView extends RelativeLayout {
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        // Respect font size setting.
-        mCarrierLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(
-                        com.android.internal.R.dimen.text_size_small_material));
     }
 
     private void loadDimens() {
