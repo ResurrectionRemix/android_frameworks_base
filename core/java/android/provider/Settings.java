@@ -4189,6 +4189,12 @@ public final class Settings {
          */
         public static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";
 
+        /** 
+         * Whether to allow one finger quick settings expansion on the right side of the statusbar.
+         * @hide
+         */
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+
         /**
          * Enable/Disable screenshot sound
          * @hide
