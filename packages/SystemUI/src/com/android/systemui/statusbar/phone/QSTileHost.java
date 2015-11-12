@@ -48,6 +48,7 @@ import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.CustomQSTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.EditTile;
+import com.android.systemui.qs.tiles.ExpandedDesktopTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
@@ -364,6 +365,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("brightness")) return new BrightnessTile(this);
         else if (tileSpec.equals("screen_off")) return new ScreenOffTile(this);
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
+        else if (tileSpec.equals("expanded_desktop")) return new ExpandedDesktopTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -449,6 +451,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("brightness")) return R.string.quick_settings_brightness_label;
         else if (spec.equals("screen_off")) return R.string.quick_settings_screen_off_label;
         else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
+        else if (spec.equals("expanded_desktop")) return R.string.quick_settings_expanded_desktop_label;
         return 0;
     }
 
