@@ -178,10 +178,10 @@
     <string name="quick_settings_expanded_desktop">拡張中</string>
     <string name="quick_settings_expanded_desktop_off">標準</string>
     <string name="quick_settings_expanded_desktop_detail_title">拡張デスクトップ</string>
-    <string name="quick_settings_expanded_hide_status">ステータスバーを隠す</string>
-    <string name="quick_settings_expanded_hide_navigation">ナビゲーションバーを隠す</string>
-    <string name="quick_settings_expanded_hide_both">両方を隠す</string>
-    <string name="accessibility_quick_settings_expanded_desktop_off">拡張デスクトップの無効化</string>
+    <string name="quick_settings_expanded_hide_status">ステータスバーを非表示</string>
+    <string name="quick_settings_expanded_hide_navigation">ナビゲーションバーを非表示</string>
+    <string name="quick_settings_expanded_hide_both">両方を非表示</string>
+    <string name="accessibility_quick_settings_expanded_desktop_off">拡張デスクトップはオフになっています</string>
 
     <!-- Heads up -->
     <string name="heads_up_snooze_message">Heads up is disabled for <xliff:g id="number">%d</xliff:g> minutes.</string>
