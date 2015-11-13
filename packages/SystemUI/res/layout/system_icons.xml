@@ -40,10 +40,13 @@
         android:layout_marginStart="@dimen/signal_cluster_battery_padding"
         android:visibility="gone"/>
 
+    <!-- 3Minit proprietary battery icon hook -->
     <com.android.systemui.statusbar.policy.MinitBattery
         android:id="@+id/minitBattery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/battery_margin_bottom"
+        android:layout_marginStart="@dimen/signal_cluster_battery_padding"
         android:visibility="gone"/>
 
 </LinearLayout>
