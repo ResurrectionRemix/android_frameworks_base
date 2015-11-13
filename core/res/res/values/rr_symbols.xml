@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
-** Copyright 2013, The Android Open Source Project
+/* Copyright 2012, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -16,9 +15,10 @@
 ** limitations under the License.
 */
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Tele2: Don't use roaming icon for T-Mo -->
-    <string-array translatable="false" name="config_operatorConsideredNonRoaming">
-        <item>20416</item>
-    </string-array>
+
+<resources>
+
+  <!-- Vendor image mismatched -->
+  <java-symbol type="string" name="system_error_vendorprint" />
+
 </resources>
