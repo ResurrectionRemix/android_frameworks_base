@@ -204,17 +204,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         return returnTask;
     }
 
-    public void dismissAllTasksAnimated() {
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View child = getChildAt(i);
-            if (child != mSearchBar) {
-                TaskStackView stackView = (TaskStackView) child;
-                stackView.dismissAllTasks();
-            }
-        }
-    }
-
     /** Launches the focused task from the first stack if possible */
     public boolean launchFocusedTask() {
         // Get the first stack view
@@ -875,7 +864,8 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
             if (child != mSearchBar) {
-                TaskStackView stackView = (TaskStackView) child;
+                    TaskStackView stackView = (TaskStackView) child;
+                    stackView.dismissAllTasks();
             }
         }
     }
