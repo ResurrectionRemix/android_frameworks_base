@@ -553,5 +553,5 @@ public class StatusBarKeyguardViewManager {
 
     public void setBackgroundBitmap(Bitmap bmp) {
         mPhoneStatusBar.setBackgroundBitmap(bmp);
-  
+  	}
 }

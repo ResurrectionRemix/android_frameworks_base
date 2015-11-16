@@ -23,6 +23,8 @@ import com.android.server.policy.keyguard.KeyguardServiceWrapper;
 import com.android.server.LocalServices;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.lights.LightsManager;
+import android.provider.Settings;
+import android.os.UserHandle;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
