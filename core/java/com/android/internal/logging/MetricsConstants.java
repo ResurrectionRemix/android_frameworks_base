@@ -276,4 +276,10 @@ public interface MetricsConstants {
 
     //aliases
     public static final int DEVICEINFO_STORAGE = DEVICEINFO_MEMORY;
+
+   //Location tile
+    public static final int QS_LOCATION_DETAILS = 249;
+
+   //Notification Drawer	
+   public static final int NOTIFICATION_DRAWER_SETTINGS = 247;
 }
