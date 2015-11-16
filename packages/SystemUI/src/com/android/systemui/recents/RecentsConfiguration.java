@@ -112,6 +112,9 @@ public class RecentsConfiguration {
     /** Task bar size & animations */
     public int taskBarHeight;
     public int taskBarDismissDozeDelaySeconds;
+    public int taskBarEnterAnimDuration;
+    public int taskBarEnterAnimDelay;
+    public int taskBarExitAnimDuration;
 
     /** Nav bar scrim */
     public int navBarScrimEnterDuration;
@@ -267,6 +270,12 @@ public class RecentsConfiguration {
         taskBarHeight = res.getDimensionPixelSize(R.dimen.recents_task_bar_height);
         taskBarDismissDozeDelaySeconds =
                 res.getInteger(R.integer.recents_task_bar_dismiss_delay_seconds);
+        taskBarEnterAnimDuration =
+                res.getInteger(R.integer.recents_animate_task_bar_enter_duration);
+        taskBarEnterAnimDelay =
+                res.getInteger(R.integer.recents_animate_task_bar_enter_delay);
+        taskBarExitAnimDuration =
+                res.getInteger(R.integer.recents_animate_task_bar_exit_duration);
 
         // Nav bar scrim
         navBarScrimEnterDuration =
