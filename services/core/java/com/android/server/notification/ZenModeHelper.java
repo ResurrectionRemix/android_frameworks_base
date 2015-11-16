@@ -614,7 +614,7 @@ public class ZenModeHelper {
                             && (mZenMode == Global.ZEN_MODE_NO_INTERRUPTIONS
                                     || mZenMode == Global.ZEN_MODE_ALARMS)) {
                         newZen = Global.ZEN_MODE_OFF;
-                    } else if (mZenMode != Global.ZEN_MODE_OFF) {
+                    } else if (mZenMode != Global.ZEN_MODE_OFF && mZenMode != Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS) {
                         ringerModeExternalOut = AudioManager.RINGER_MODE_SILENT;
                     }
                     break;
@@ -668,7 +668,7 @@ public class ZenModeHelper {
 
         @Override
         public boolean canVolumeDownEnterSilent() {
-            return mZenMode == Global.ZEN_MODE_OFF;
+            return mZenMode == Global.ZEN_MODE_OFF || mZenMode == Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS;
         }
 
         @Override

@@ -3448,13 +3448,9 @@ public class AudioService extends IAudioService.Stub {
                 if (!mVolumePolicy.volumeUpToExitSilent) {
                     result |= AudioManager.FLAG_SHOW_SILENT_HINT;
                 } else {
-                  if (mHasVibrator && direction == AudioManager.ADJUST_RAISE) {
-                      ringerMode = RINGER_MODE_VIBRATE;
-                  } else {
-                      // If we don't have a vibrator or they were toggling mute
-                      // go straight back to normal.
-                      ringerMode = RINGER_MODE_NORMAL;
-                  }
+                    // from vibrate we always go back to normal
+                    // no need to go via vibrate again
+                    ringerMode = RINGER_MODE_NORMAL;
                 }
             }
             result &= ~FLAG_ADJUST_VOLUME;
