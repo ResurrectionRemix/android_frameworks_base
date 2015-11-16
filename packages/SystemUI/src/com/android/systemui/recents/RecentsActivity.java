@@ -267,7 +267,13 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                 } else {
                     mRecentsView.setSearchBarVisibility(View.GONE);
                 }
+       findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
             } 
+		else {
+                if (showSearchBar) {
+                    refreshSearchWidgetView();
+                }
+            }
 
 
             // Update search bar space height
