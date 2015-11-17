@@ -61,5 +61,10 @@
 
     <!-- Two target preference vertical divider color -->
     <color name="list_divider_dark">#64000000</color>
+
+    <!-- Immersive cling -->
+    <color name="immersive_cling_bg_color">@color/accent_device_default_light</color>
+    <color name="immersive_cling_text_color">@android:color/white</color>
+    <color name="immersive_cling_button_text_color">@android:color/white</color>
 </resources>
 
