@@ -347,9 +347,7 @@ public class WifiTracker {
                     continue;
                 }
                 AccessPoint accessPoint = getCachedOrCreate(config, cachedAccessPoints);
-                if (mLastInfo != null && mLastNetworkInfo != null) {
-                    accessPoint.update(connectionConfig, mLastInfo, mLastNetworkInfo);
-                }
+                accessPoint.update(connectionConfig, mLastInfo, mLastNetworkInfo);
                 if (mIncludeSaved) {
                     // If saved network not present in scan result then set its Rssi to MAX_VALUE
                     boolean apFound = false;
