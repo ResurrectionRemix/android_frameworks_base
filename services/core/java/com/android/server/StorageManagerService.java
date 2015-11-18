@@ -1863,8 +1863,10 @@ class StorageManagerService extends IStorageManager.Stub
                     final long destroy = extras.getLong("destroy");
 
                     final DropBoxManager dropBox = mContext.getSystemService(DropBoxManager.class);
-                    dropBox.addText(TAG_STORAGE_BENCHMARK, scrubPath(path)
-                            + " " + ident + " " + create + " " + run + " " + destroy);
+                    if (dropBox != null) {
+                        dropBox.addText(TAG_STORAGE_BENCHMARK, scrubPath(path)
+                                + " " + ident + " " + create + " " + run + " " + destroy);
+                    }
 
                     synchronized (mLock) {
                         final VolumeRecord rec = findRecordForPath(path);
@@ -2026,7 +2028,9 @@ class StorageManagerService extends IStorageManager.Stub
                         final long time = extras.getLong("time");
 
                         final DropBoxManager dropBox = mContext.getSystemService(DropBoxManager.class);
-                        dropBox.addText(TAG_STORAGE_TRIM, scrubPath(path) + " " + bytes + " " + time);
+                        if (dropBox != null) {
+                           dropBox.addText(TAG_STORAGE_TRIM, scrubPath(path) + " " + bytes + " " + time);
+                        }
 
                         synchronized (mLock) {
                             final VolumeRecord rec = findRecordForPath(path);
