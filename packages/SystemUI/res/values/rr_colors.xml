@@ -20,4 +20,9 @@
     <!-- Floating action button -->
     <color name="fab_color">#ff009688</color>
     <color name="floating_action_button_icon_color">#ffffff</color>
+
+    <!-- Gesture Anywhere specific colors -->
+    <color name="gesture_overlay_background_fill_color">#80000000</color>
+    <color name="gesture_color">@android:color/holo_blue_light</color>
+
 </resources>
