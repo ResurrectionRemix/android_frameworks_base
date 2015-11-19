@@ -122,9 +122,9 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.WindowManagerPolicyControl;
 import android.widget.Toast;
 
-import android.view.WindowManagerPolicyControl;
 import com.android.internal.R;
 import com.android.internal.policy.IKeyguardService;
 import com.android.internal.statusbar.IStatusBarService;
@@ -1155,7 +1155,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // taken over the whole screen.
         boolean panic = mImmersiveModeConfirmation.onPowerKeyDown(interactive,
                 SystemClock.elapsedRealtime(), isImmersiveMode(mLastSystemUiFlags));
-        if (panic && !PolicyControl.isImmersiveFiltersActive()) {
+        if (panic && !WindowManagerPolicyControl.isImmersiveFiltersActive()) {
             mHandler.post(mHiddenNavPanic);
         }
 
@@ -2132,9 +2132,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.END_BUTTON_BEHAVIOR,
                     Settings.System.END_BUTTON_BEHAVIOR_DEFAULT,
                     UserHandle.USER_CURRENT);
-            mIncallPowerBehavior = CMSettings.Secure.getIntForUser(resolver,
-                    CMSettings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,
-                    CMSettings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT,
+            mIncallPowerBehavior = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,
+                    Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT,
                     UserHandle.USER_CURRENT);
             mHomeWakeScreen = (CMSettings.System.getIntForUser(resolver,
                     CMSettings.System.HOME_WAKE_SCREEN, 1, UserHandle.USER_CURRENT) == 1) &&
@@ -3631,18 +3631,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             final int metaState = event.getMetaState();
             final boolean initialDown = event.getAction() == KeyEvent.ACTION_DOWN
                     && event.getRepeatCount() == 0;
-
-        // Specific device key handling
-        if (mDeviceKeyHandler != null) {
-            try {
-                // The device only should consume known keys.
-                if (mDeviceKeyHandler.handleKeyEvent(event)) {
-                    return null;
-                }
-            } catch (Exception e) {
-                Slog.w(TAG, "Could not dispatch event to device key handler", e);
-            }
-        }
 
             // Check for fallback actions specified by the key character map.
             final FallbackAction fallbackAction;
@@ -5610,6 +5598,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0
                 && event.getRepeatCount() == 0;
 
+        // Specific device key handling
+        if (mDeviceKeyHandler != null) {
+            try {
+                // The device only should consume known keys.
+                if (mDeviceKeyHandler.handleKeyEvent(event)) {
+                    return 0;
+                }
+            } catch (Exception e) {
+                Slog.w(TAG, "Could not dispatch event to device key handler", e);
+            }
+        }
+
         // Handle special keys.
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_DOWN:
@@ -7551,7 +7551,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // If the top fullscreen-or-dimming window is also the top fullscreen, respect
                 // its light flag.
                 vis &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-                vis |= PolicyControl.getSystemUiVisibility(statusColorWin, null)
+                vis |= WindowManagerPolicyControl.getSystemUiVisibility(statusColorWin, null)
                         & View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             } else if (statusColorWin != null && statusColorWin.isDimming()) {
                 // Otherwise if it's dimming, clear the light flag.
