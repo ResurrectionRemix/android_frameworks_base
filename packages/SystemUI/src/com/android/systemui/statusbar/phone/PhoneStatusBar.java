@@ -967,14 +967,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         checkUserAutohide(v, event);
                         return false;
                     }});
+			}
 
  		} catch (RemoteException ex) {
             // no window manager? good luck with that
         }
 
         addGestureAnywhereView();
-
-            }
        
 
         mAssistManager = new AssistManager(this, context);
