@@ -1009,8 +1009,16 @@ public class NavigationBarView extends LinearLayout {
         }
 
         @Override
-        protected void update() {
-            mShowDpadArrowKeys = CMSettings.System.getIntForUser(getContext().getContentResolver(),
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            update();
+            onNavButtonTouched();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+
+	mShowDpadArrowKeys = CMSettings.System.getIntForUser(mContext.getContentResolver(),
                     CMSettings.System.NAVIGATION_BAR_MENU_ARROW_KEYS, 0, UserHandle.USER_CURRENT) != 0;
             // reset saved side button visibilities
             for (int i = 0; i < mSideButtonVisibilities.length; i++) {
@@ -1019,14 +1027,6 @@ public class NavigationBarView extends LinearLayout {
                 }
             }
             setNavigationIconHints(mNavigationIconHints, true);
-            super.onChange(selfChange);
-            update();
-            onNavButtonTouched();
-            setNavigationIconHints(mNavigationIconHints, true);
-        }
-
-        public void update() {
-            ContentResolver resolver = mContext.getContentResolver();
 
             mDimNavButtons = (Settings.System.getIntForUser(resolver,
                     Settings.System.DIM_NAV_BUTTONS, 0,
