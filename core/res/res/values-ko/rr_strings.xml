@@ -38,6 +38,8 @@
     <string name="animation_grow_shrink_right">커지기 (우측)</string>
     <string name="action_null">공백</string>
 
+    <!-- Error description on theme switch with ligtsensor mode enabled -->
+    <string name="theme_auto_switch_mode_error">자동 밝기 조정 모드가 설정되었습니다. 수동 조작이 불가능합니다.</string>
 
     <!-- status message in phone options dialog for when pie is on -->
     <string name="global_actions_pie_mode_on_status">SlimPie가 켜짐</string>
@@ -80,4 +82,8 @@
 
     <!-- [CHAR LIMIT=40] Title of dialog that is shown when system is starting. -->
     <string name="resurrection_start_title">업그레이드 진행 중\u2026</string>
+
+    <!-- label for item that takes On-The-Go in the phone options dialog -->
+    <string name="global_action_onthego">On-The-Go 모드</string>
+
 </resources>

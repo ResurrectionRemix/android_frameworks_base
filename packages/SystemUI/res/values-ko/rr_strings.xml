@@ -30,8 +30,6 @@
     <!-- Quick settings -->
     <string name="quick_settings_battery_saver">배터리 세이버</string>
     <string name="quick_settings_screen_off">화면 끄기</string>
-    <string name="quick_settings_expanded_desktop">확장됨</string>
-    <string name="quick_settings_expanded_desktop_off">일반</string>
     <string name="quick_settings_battery_saver_off">배터리 세이버 끄기</string>
     <string name="quick_settings_screenshot">스크린샷</string>
     <string name="quick_settings_sync">동기화</string>
@@ -51,6 +49,9 @@
     
     <string name="quick_settings_doze">절전 모드 자동 해제 활성화됨</string>
     <string name="quick_settings_doze_off">절전 모드 자동 해제 비활성화됨</string>
+
+    <!-- Kernel Adiutor Tile -->
+    <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
 
     <!-- Power Button for Navbar -->
     <string name="navbar_power_button">전원 버튼</string>
@@ -83,8 +84,12 @@
     <string name="shortcut_chamber">비밀의 방</string>
     <string name="shortcut_reboot">재시작</string>
     <string name="shortcut_recovery">리커버리 모드</string>
+    <string name="shortcut_screensleep">화면 끄기</string>
+    <string name="shortcut_volume">볼륨 패널</string>
+    <string name="shortcut_restart_ui">시스템UI 다시 시작</string>
+    <string name="shortcut_powermenu">전원 메뉴</string>
     <string name="shortcut_toggle_title">실행할 활동</string>
-    <string name="chamber_disabled">비밀의 방이 닫혔습니다</string>
+    <string name="chamber_disabled">비밀의 방이 닫힘</string>
     <string name="chamber_title">설정 문자열 입력</string>
     <string name="chamber_message">켜짐/꺼짐 (체크박스) 기능이거나 목록 선택인 설정 문자열을 입력하세요. (예: doze_enabled) 설정 문자열은 Settings.java 파일 안에서 찾을 수 있습니다. 주의: 위험한 작업이니 조심하세요!</string>
     <string name="chamber_invalid">잘못된 입력입니다. 조심하세요.</string>
@@ -121,14 +126,64 @@
     <!-- Slim Action floats tile -->
     <string name="quick_settings_slim_floats_on">Slim Floats가 활성화됨</string>
     <string name="quick_settings_slim_floats_off">Slim Floats가 비활성화됨</string>
-
-    <!-- Battery Saver Dimss -->
-    <string name="battery_saver_dismiss_title">지우기</string>
     
     <!-- Pie tile -->
     <string name="quick_settings_pie">Pie</string>
 
     <!-- Configurations Tile -->
-    <string name="quick_settings_rrtools">RR 추가 설정</string>
-</resources>
+    <string name="quick_settings_rrtools">추가 설정</string>
 
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go 모드 활성화됨</string>
+    <string name="onthego_notif_title">On-The-Go 모드가 활성화됨</string>
+    <string name="onthego_notif_stop">중지</string>
+    <string name="onthego_notif_options">설정</string>
+    <string name="onthego_notif_error">On-The-Go 모드를 시작할 수 없음</string>
+    <string name="onthego_notif_restart">On-The-Go 모드 다시 시작</string>
+    <string name="onthego_notif_camera_changed">카메라 모드가 변경됨</string>
+    <string name="onthego_transparency">투명도</string>
+    <string name="onthego_front_camera">전면 카메라 사용</string>
+    <string name="onthego_service_toggle">자동으로 서비스 재시작</string>
+
+    <!-- To do: Add QS OnTheGo
+    <string name="quick_settings_onthego_back">Rear Camera</string>
+    <string name="quick_settings_onthego_front">Front Camera</string>-->
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">화면 녹화 중 입니다</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">화면 녹화 중</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">중지</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">포인터 보이기</string>
+    <string name="screenrecord_notif_pointer_off">포인터 숨기기</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">화면을 녹화할 수 없습니다</string>
+
+
+    <!-- Quick settings -->
+    <string name="quick_settings_screenrecord">화면 녹화</string>
+    <string name="quick_settings_screenrecord_on">녹화중...</string>
+
+    <!-- Expanded desktop detail tile -->
+    <string name="quick_settings_expanded_desktop">확장됨</string>
+    <string name="quick_settings_expanded_desktop_off">일반</string>
+    <string name="quick_settings_expanded_desktop_detail_title">확장된 데스크탑 모드</string>
+    <string name="quick_settings_expanded_hide_status">상태바 숨기기</string>
+    <string name="quick_settings_expanded_hide_navigation">네비게이션바 숨기기</string>
+    <string name="quick_settings_expanded_hide_both">모두 숨기기</string>
+    <string name="accessibility_quick_settings_expanded_desktop_off">확장된 데스크탑 모드 비활성화됨</string>
+
+    <!-- Heads up -->
+    <string name="heads_up_snooze_message">헤드업 알림이 <xliff:g id="number">%d</xliff:g>분 동안 해제됩니다.</string>
+    <string name="heads_up_snooze_button_title">알림 잠시 끄기</string>
+
+    <!-- PitchBlack -->
+    <string name="quick_settings_trds_label">PitchBlack</string>
+
+</resources>
