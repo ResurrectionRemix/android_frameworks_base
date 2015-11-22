@@ -258,7 +258,6 @@ public class StatusBarWindowView extends FrameLayout {
         if (mDoubleTapToSleepEnabled
                 && ev.getY() < mStatusBarHeaderHeight) {
             if (DEBUG) Log.w(TAG, "logging double tap gesture");
-            mDoubleTapGesture.onTouchEvent(ev);
         }
         if (mNotificationPanel.isFullyExpanded()
                 && mStackScrollLayout.getVisibility() == View.VISIBLE

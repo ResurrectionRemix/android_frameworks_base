@@ -67,6 +67,7 @@ import android.media.session.MediaController;
 import android.media.session.MediaSession;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -91,6 +92,9 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.StatusBarNotification;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 import android.util.ArraySet;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
@@ -169,6 +173,9 @@ import com.android.systemui.statusbar.phone.UnlockMethodCache.OnUnlockMethodChan
 import com.android.systemui.statusbar.policy.AccessibilityController;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
+import com.android.internal.util.cm.WeatherController;
+import com.android.internal.util.cm.WeatherControllerImpl;
+import com.android.internal.util.cm.WeatherController.WeatherInfo;
 import com.android.systemui.statusbar.policy.BluetoothControllerImpl;
 import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.CastControllerImpl;
@@ -188,7 +195,6 @@ import com.android.systemui.statusbar.policy.SecurityControllerImpl;
 import com.android.systemui.statusbar.policy.SuControllerImpl;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
-import com.android.systemui.statusbar.policy.WeatherControllerImpl;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout.OnChildLocationsChangedListener;
@@ -345,6 +351,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     StatusBarIconController mIconController;
 
+    // Weather temperature
+    TextView mWeatherTempView;
+    private int mWeatherTempState;
+    private int mWeatherTempStyle;
+
     // expanded notifications
     NotificationPanelView mNotificationPanel; // the sliding/resizing panel within the notification window
     View mExpandedContents;
@@ -475,6 +486,25 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.APP_SIDEBAR_POSITION),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+	@Override
+        public void onChange(boolean selfChange, Uri uri) {
+		 if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE))) {
+                    mWeatherTempStyle = Settings.System.getIntForUser(
+                        mContext.getContentResolver(),
+                        Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
+                        UserHandle.USER_CURRENT);
+                updateTempView();
+            }
             update();
         }
 
@@ -483,7 +513,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             super.unobserve();
             ContentResolver resolver = mContext.getContentResolver();
             resolver.unregisterContentObserver(this);
-        }
+
+	}
+      
 
         @Override
         public void update() {
@@ -493,19 +525,26 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
                             UserHandle.USER_CURRENT);
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
+
             mBrightnessControl = CMSettings.System.getIntForUser(
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
-
+            final int oldWeatherState = mWeatherTempState;
+            mWeatherTempState = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                    UserHandle.USER_CURRENT);
+            if (oldWeatherState != mWeatherTempState) {
+                updateTempView();
+	}
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
                         CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
                 mNavigationBarView.setLeftInLandscape(navLeftInLandscape);
             }
 
-
             // This method reads CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY
             updateCustomRecentsLongPressHandler(false);
+
 
             int sidebarPosition = Settings.System.getInt(
                     resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
@@ -548,8 +587,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mContext.sendBroadcastAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
             mBlurRadius = Settings.System.getInt(resolver,
                     Settings.System.LOCKSCREEN_BLUR_RADIUS, 14);
+
+            final int oldWeatherState = mWeatherTempState;
+            mWeatherTempState = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                    UserHandle.USER_CURRENT);
+            if (oldWeatherState != mWeatherTempState) {
+                updateWeatherTextState(mWeatherController.getWeatherInfo().temp);
+            }
+	  }
         }
-    }
+	
 
     private void forceAddNavigationBar() {
         // If we have no Navbar view and we should have one, create it
@@ -563,13 +611,42 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mNavigationBarView.setDisabledFlags(mDisabled1);
         mNavigationBarView.setBar(this);
         addNavigationBar();
+	}
+
+    private void updateWeatherTextState(String temp) {
+        if (mWeatherTempView != null) {
+            if (mWeatherTempState == 0 || TextUtils.isEmpty(temp)) {
+                mWeatherTempView.setVisibility(View.GONE);
+                return;
+            }
+            if (mWeatherTempState == 1) {
+                SpannableString span = new SpannableString(temp);
+                span.setSpan(new RelativeSizeSpan(0.7f), temp.length() - 1, temp.length(), 0);
+                mWeatherTempView.setText(span);
+            } else if (mWeatherTempState == 2) {
+                mWeatherTempView.setText(temp.substring(0, temp.length() - 1));
+            }
+            mWeatherTempView.setVisibility(View.VISIBLE);
+        }
+  }	
+
+    private void updateTempView() {
+        if (mWeatherTempView != null) {
+            mWeatherTempView.setVisibility(View.GONE);
+            if (mWeatherTempStyle == 0) {
+                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
+            } else {
+                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
+            }
+            updateWeatherTextState(mWeatherController.getWeatherInfo().temp);
+        }
     }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
     private ContentObserver mUserSetupObserver = new ContentObserver(new Handler()) {
         @Override
-        public void onChange(boolean selfChange) {
+        public void onChange(boolean selfChange ,Uri uri) {
             final boolean userSetup = 0 != Settings.Secure.getIntForUser(
                     mContext.getContentResolver(),
                     Settings.Secure.USER_SETUP_COMPLETE,
@@ -589,8 +666,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
             if (mIconPolicy != null) {
                 mIconPolicy.setCurrentUserSetup(mUserSetup);
-            }
-        }
+            	} 
+	    }
     };
 
     final private ContentObserver mHeadsUpObserver = new ContentObserver(mHandler) {
@@ -1155,6 +1232,25 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mHandler);
         }
         mWeatherController = new WeatherControllerImpl(mContext);
+        if (mWeatherController == null) {
+            mWeatherController = new WeatherControllerImpl(mContext);
+            mWeatherController.addCallback(new WeatherController.Callback() {
+                @Override
+                public void onWeatherChanged(WeatherInfo temp) {
+                    updateWeatherTextState(temp.temp);
+                }
+            });
+        }
+        updateWeatherTextState(mWeatherController.getWeatherInfo().temp);
+
+        mWeatherTempStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0, UserHandle.USER_CURRENT);
+        if (mWeatherTempStyle == 0) {
+            mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
+        } else {
+            mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
+        }
+        updateTempView();
 
         mKeyguardUserSwitcher = new KeyguardUserSwitcher(mContext,
                 (ViewStub) mStatusBarWindowContent.findViewById(R.id.keyguard_user_switcher),
@@ -2391,7 +2487,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 });
             }
         }
-    }
+   }
 
     @Override
     public void onHeadsUpPinned(ExpandableNotificationRow headsUp) {
@@ -2711,7 +2807,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         }
                     });
                 }
-
 
             }
         } catch (RemoteException e) {
@@ -5260,3 +5355,4 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 }
+

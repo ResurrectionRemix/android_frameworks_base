@@ -32,4 +32,7 @@
      <!-- app sidebar item text shadow color -->
      <color name="sidebar_item_text_shadow_color">#ff000000</color>
 
+	<!-- Status bar temperature color -->
+    <color name="status_bar_temp_text_color">#FFFFFFFF</color>
+
 </resources>
