@@ -516,13 +516,20 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = CMSettings.System.getIntForUser(
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
+
+            mBlurRadius = Settings.System.getInt(resolver,
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 14);
+
             final int oldWeatherState = mWeatherTempState;
             mWeatherTempState = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                     UserHandle.USER_CURRENT);
             if (oldWeatherState != mWeatherTempState) {
                 updateTempView();
-	}
+            }
+
+
+
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
                         CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
@@ -582,9 +589,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             if (oldWeatherState != mWeatherTempState) {
                 updateWeatherTextState(mWeatherController.getWeatherInfo().temp);
             }
-	  }
         }
-	
+    }
 
     private void forceAddNavigationBar() {
         // If we have no Navbar view and we should have one, create it
@@ -615,7 +621,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
             mWeatherTempView.setVisibility(View.VISIBLE);
         }
-  }	
+    }
 
     private void updateTempView() {
         if (mWeatherTempView != null) {
@@ -633,7 +639,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mUserSetup = false;
     private ContentObserver mUserSetupObserver = new ContentObserver(new Handler()) {
         @Override
-        public void onChange(boolean selfChange ,Uri uri) {
+        public void onChange(boolean selfChange) {
             final boolean userSetup = 0 != Settings.Secure.getIntForUser(
                     mContext.getContentResolver(),
                     Settings.Secure.USER_SETUP_COMPLETE,
@@ -660,8 +666,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
                         UserHandle.USER_CURRENT);
                 updateTempView();
-        	}
-	    }
+        }
     };
 
     final private ContentObserver mHeadsUpObserver = new ContentObserver(mHandler) {
@@ -2481,7 +2486,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 });
             }
         }
-   }
+    }
 
     @Override
     public void onHeadsUpPinned(ExpandableNotificationRow headsUp) {
@@ -2801,6 +2806,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         }
                     });
                 }
+
 
             }
         } catch (RemoteException e) {
