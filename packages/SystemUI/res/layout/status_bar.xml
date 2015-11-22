@@ -97,8 +97,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
-                    android:visibility="gone"
-                    android:singleLine="true" />
+                    android.visibility="gone"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
                 <com.android.systemui.statusbar.phone.IconMerger android:id="@+id/notificationIcons"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
