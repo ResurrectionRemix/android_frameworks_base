@@ -540,11 +540,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT);
             if (oldWeatherState != mWeatherTempState) {
                 updateTempView();
-
-	}
-
-            }
-
+		}
 
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
