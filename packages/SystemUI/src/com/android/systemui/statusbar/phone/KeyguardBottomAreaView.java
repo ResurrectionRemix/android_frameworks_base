@@ -768,7 +768,6 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         updateLeftPreview();
     }
 
-
     private void updateEmergencyButton() {
         if (SystemProperties.getBoolean("persist.radio.emgcy_btn_onswipe",false)) {
             if (mEmergencyButton != null) {
@@ -776,7 +775,6 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
             }
         }
     }
-
 
     private String getIndexHint(LockscreenShortcutsHelper.Shortcuts shortcut) {
         if (mShortcutHelper.isTargetCustom(shortcut)) {
@@ -825,5 +823,4 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     public void onChange() {
         updateCustomShortcuts();
     }
-
 }

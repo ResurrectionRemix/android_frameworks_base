@@ -285,4 +285,6 @@ public interface MetricsConstants {
 
    //Notification Drawer	
    public static final int NOTIFICATION_DRAWER_SETTINGS = 247;
+
+   public static final int DIRTYTWEAKS = 239;	
 }

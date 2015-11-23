@@ -57,6 +57,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -553,7 +554,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
             mRRLogoColor = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-            showDuLogo(mRRLogo, mRRLogoColor);
+            showRRLogo(mRRlogo, mRRLogoColor);
             if (oldWeatherState != mWeatherTempState) {
                 updateTempView();
 		}
@@ -3609,7 +3610,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	 }
 	}
 
-    public void showRRLogo(boolean show int color) {
+    public void showRRLogo(boolean show , int color) {
         if (mStatusBarView == null) return;
         ContentResolver resolver = mContext.getContentResolver();
         rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);

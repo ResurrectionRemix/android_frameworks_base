@@ -11,7 +11,10 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+<<<<<<< HEAD
 import android.provider.Settings;
+=======
+>>>>>>> parent of 03d88ab... SystemUI: Lockscreen shortcut customization
 import android.os.Handler;
 import android.os.Looper;
 
