@@ -62,6 +62,11 @@ public class Build {
     /** The name of the underlying board, like "goldfish". */
     public static final String BOARD = getString("ro.product.board");
 
+    /** The build date
+     * @hide
+     */
+    public static final String DATE = getString("ro.build.date");
+
     /**
      * The build date
      * @hide
