@@ -27,14 +27,5 @@
                   android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
                   android:exported="true"
                   android:authorities="com.cyanogenmod.spam" />
-
-        <activity
-            android:name=".cm.LockscreenShortcutsActivity"
-            android:icon="@drawable/tuner"
-            android:label="@string/lockscreen_targets_message"
-            android:theme="@android:style/Theme.Material.Settings"
-            android:process=":cmsettings"
-            android:exported="true">
-        </activity>
     </application>
 </manifest>
