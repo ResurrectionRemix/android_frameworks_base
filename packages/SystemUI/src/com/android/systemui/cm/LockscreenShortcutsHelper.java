@@ -11,7 +11,10 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+<<<<<<< HEAD
+=======
 import android.provider.Settings;
+>>>>>>> 73ee23a... SystemUI: Lockscreen shortcut customization
 import android.os.Handler;
 import android.os.Looper;
 
@@ -20,7 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.systemui.R;
+<<<<<<< HEAD
 import cyanogenmod.providers.CMSettings;
+=======
+>>>>>>> 73ee23a... SystemUI: Lockscreen shortcut customization
 
 public class LockscreenShortcutsHelper {
 
@@ -55,7 +61,11 @@ public class LockscreenShortcutsHelper {
             mListener = listener;
             mHandler = new Handler(Looper.getMainLooper());
             mContext.getContentResolver().registerContentObserver(
+<<<<<<< HEAD
                     CMSettings.Secure.getUriFor(CMSettings.Secure.LOCKSCREEN_TARGETS), false, mObserver);
+=======
+                    Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_TARGETS), false, mObserver);
+>>>>>>> 73ee23a... SystemUI: Lockscreen shortcut customization
         }
         fetchTargets();
     }
@@ -92,8 +102,13 @@ public class LockscreenShortcutsHelper {
     }
 
     private void fetchTargets() {
+<<<<<<< HEAD
         mTargetActivities = CMSettings.Secure.getDelimitedStringAsList(mContext.getContentResolver(),
                 CMSettings.Secure.LOCKSCREEN_TARGETS, DELIMITER);
+=======
+        mTargetActivities = Settings.Secure.getDelimitedStringAsList(mContext.getContentResolver(),
+                Settings.Secure.LOCKSCREEN_TARGETS, DELIMITER);
+>>>>>>> 73ee23a... SystemUI: Lockscreen shortcut customization
         int itemsToPad = Shortcuts.values().length - mTargetActivities.size();
         if (itemsToPad > 0) {
             for (int i = 0; i < itemsToPad; i++) {
@@ -191,7 +206,12 @@ public class LockscreenShortcutsHelper {
     }
 
     public void saveTargets(ArrayList<String> targets) {
+<<<<<<< HEAD
         CMSettings.Secure.putListAsDelimitedString(mContext.getContentResolver(),
                 CMSettings.Secure.LOCKSCREEN_TARGETS, DELIMITER, targets);
+=======
+        Settings.Secure.putListAsDelimitedString(mContext.getContentResolver(),
+                Settings.Secure.LOCKSCREEN_TARGETS, DELIMITER, targets);
+>>>>>>> 73ee23a... SystemUI: Lockscreen shortcut customization
     }
 }
