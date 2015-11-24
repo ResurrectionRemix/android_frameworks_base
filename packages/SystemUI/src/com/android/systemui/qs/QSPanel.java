@@ -158,7 +158,7 @@ public class QSPanel extends ViewGroup {
     /**
      * Use three or four columns.
      */
-    private int useFourColumns() {
+    protected int useFourColumns() {
         final Resources res = mContext.getResources();
         mUseFourColumns = Settings.Secure.getInt(
             mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
