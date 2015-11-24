@@ -141,6 +141,7 @@ public class QsTuner extends Fragment implements Callback {
         mQsPanel.setTiles(mTileHost.getTiles());
     }
 
+<<<<<<< HEAD
     @Override
     public void setEditing(boolean editing) {
         mQsPanel.setEditing(editing);
@@ -306,8 +307,11 @@ public class QsTuner extends Fragment implements Callback {
             else if (mSpec.equals("headsup")) return R.drawable.ic_qs_heads_up_on;
             else if (mSpec.equals("usb_tether")) return R.drawable.ic_qs_usb_tether_off;
             else if (mSpec.equals("ambient_display")) return R.drawable.ic_qs_ambientdisplay_on;
+<<<<<<< HEAD
             else if (mSpec.equals("screenshot")) return R.drawable.ic_qs_screenshot;
             else if (mSpec.equals("nfc")) return R.drawable.ic_qs_nfc_on;
+=======
+>>>>>>> parent of 4f0e6ec... QS: add Screenshot tile (1/2)
             return R.drawable.android;
         }
 
