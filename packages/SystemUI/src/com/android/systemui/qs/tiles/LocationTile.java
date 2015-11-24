@@ -16,17 +16,6 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.content.Context;
-import android.content.Intent;
-import android.provider.Settings;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
-import android.widget.ListView;
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
@@ -75,11 +64,6 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
         mController.setLocationEnabled(!wasEnabled);
         mEnable.setAllowAnimation(true);
         mDisable.setAllowAnimation(true);
-    }
-
-    @Override
-    protected void handleLongClick() {
-        mHost.startActivityDismissingKeyguard(LOCATION_SETTINGS_INTENT);
     }
 
     @Override

@@ -392,7 +392,7 @@ public class QSPanel extends ViewGroup {
                 vibrateTile(20);
             }
         };
-        final View.OnLongClickListener clickLong = new View.OnLongClickListener() {
+        final View.OnLongClickListener longClick = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 r.tile.longClick();
@@ -400,7 +400,7 @@ public class QSPanel extends ViewGroup {
                 return true;
             }
         };
-        r.tileView.init(click, clickSecondary, clickLong);
+        r.tileView.init(click, clickSecondary, longClick);
         r.tile.setListening(mListening);
         callback.onStateChanged(r.tile.getState());
         r.tile.refreshState();

@@ -64,7 +64,7 @@ public class QSTileView extends ViewGroup {
     private boolean mDual;
     private OnClickListener mClickPrimary;
     private OnClickListener mClickSecondary;
-    private OnLongClickListener mClickLong;
+    private OnLongClickListener mLongClick;
     private Drawable mTileBackground;
     private RippleDrawable mRipple;
 
@@ -184,7 +184,6 @@ public class QSTileView extends ViewGroup {
         }
         if (dual) {
             mTopBackgroundView.setOnClickListener(mClickPrimary);
-            mTopBackgroundView.setOnLongClickListener(mClickLong);
             setOnClickListener(null);
             setClickable(false);
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
@@ -193,7 +192,7 @@ public class QSTileView extends ViewGroup {
             mTopBackgroundView.setOnClickListener(null);
             mTopBackgroundView.setClickable(false);
             setOnClickListener(mClickPrimary);
-            setOnLongClickListener(mClickLong);
+            setOnLongClickListener(mLongClick);
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
             setBackground(mTileBackground);
         }
@@ -215,10 +214,11 @@ public class QSTileView extends ViewGroup {
         }
     }
 
-    public void init(OnClickListener clickPrimary, OnClickListener clickSecondary, OnLongClickListener clickLong) {
+    public void init(OnClickListener clickPrimary, OnClickListener clickSecondary,
+            OnLongClickListener longClick) {
         mClickPrimary = clickPrimary;
         mClickSecondary = clickSecondary;
-        mClickLong = clickLong;
+        mLongClick = longClick;
     }
 
     protected View createIcon() {
