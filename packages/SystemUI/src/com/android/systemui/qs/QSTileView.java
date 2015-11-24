@@ -16,6 +16,7 @@
 
 package com.android.systemui.qs;
 
+import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -27,6 +28,7 @@ import android.graphics.drawable.RippleDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.util.MathUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -47,6 +49,8 @@ import java.util.Objects;
 public class QSTileView extends ViewGroup {
     private static final Typeface CONDENSED = Typeface.create("sans-serif-condensed",
             Typeface.NORMAL);
+
+    private static final String TAG = "QSTileView";
 
     protected final Context mContext;
     private final View mIcon;
@@ -122,13 +126,12 @@ public class QSTileView extends ViewGroup {
     }
 
     private void recreateLabel() {
+        Log.d(TAG, "recreateLabel() called with " + "");
         CharSequence labelText = null;
         CharSequence labelDescription = null;
         if (mDualLabel != null) {
             labelText = mDualLabel.getText();
-            if (mLabel != null) {
-                labelDescription = mLabel.getContentDescription();
-            }
+            labelDescription = mDualLabel.getContentDescription();
             removeView(mDualLabel);
             mDualLabel = null;
         }
@@ -176,26 +179,30 @@ public class QSTileView extends ViewGroup {
         }
     }
 
+    public boolean isDual() {
+        return mDual;
+    }
+
     public boolean setDual(boolean dual) {
         final boolean changed = dual != mDual;
         mDual = dual;
-        if (mTileBackground instanceof RippleDrawable) {
-            setRipple((RippleDrawable) mTileBackground);
+        if (changed) {
+            recreateLabel();
         }
+
         if (dual) {
             mTopBackgroundView.setOnClickListener(mClickPrimary);
             setOnClickListener(null);
             setClickable(false);
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-            mTopBackgroundView.setBackground(mTileBackground);
         } else {
             mTopBackgroundView.setOnClickListener(null);
             mTopBackgroundView.setClickable(false);
             setOnClickListener(mClickPrimary);
             setOnLongClickListener(mLongClick);
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
-            setBackground(mTileBackground);
         }
+        setTileBackground(mTileBackground);
         mTopBackgroundView.setFocusable(dual);
         setFocusable(!dual);
         mDivider.setVisibility(dual ? VISIBLE : GONE);
@@ -207,9 +214,23 @@ public class QSTileView extends ViewGroup {
         return changed;
     }
 
+    protected void setTileBackground(Drawable background) {
+        mTileBackground = background;
+        if (mTileBackground instanceof RippleDrawable) {
+            setRipple((RippleDrawable) mTileBackground);
+        } else {
+            setRipple(null);
+        }
+        if (mDual) {
+            mTopBackgroundView.setBackground(mTileBackground);
+        } else {
+            setBackground(mTileBackground);
+        }
+    }
+
     private void setRipple(RippleDrawable tileBackground) {
         mRipple = tileBackground;
-        if (getWidth() != 0) {
+        if (getWidth() != 0 && mRipple != null) {
             updateRippleSize(getWidth(), getHeight());
         }
     }
@@ -228,7 +249,7 @@ public class QSTileView extends ViewGroup {
         return icon;
     }
 
-    private Drawable newTileBackground() {
+    public Drawable newTileBackground() {
         final int[] attrs = new int[] { android.R.attr.selectableItemBackgroundBorderless };
         final TypedArray ta = mContext.obtainStyledAttributes(attrs);
         final Drawable d = ta.getDrawable(0);
@@ -350,6 +371,25 @@ public class QSTileView extends ViewGroup {
         }
         firstView.setAccessibilityTraversalAfter(previousView.getId());
         return lastView;
+    }
+
+    public void setEditing(boolean editing) {
+        if (mDual) {
+            if (mTopBackgroundView != null) {
+                mTopBackgroundView.setFocusable(!editing);
+            }
+            if (mDualLabel != null) {
+                mDualLabel.setFocusable(!editing);
+                mDualLabel.setClickable(!editing);
+            }
+            setClickable(editing);
+            setFocusable(editing);
+            setOnLongClickListener(editing ? mLongClick : null);
+        } else {
+            if (mLabel != null) {
+                mLabel.setFocusable(!editing);
+            }
+        }
     }
 
     private class H extends Handler {
