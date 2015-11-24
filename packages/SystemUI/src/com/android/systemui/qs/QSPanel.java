@@ -65,6 +65,7 @@ public class QSPanel extends ViewGroup {
     private final H mHandler = new H();
 
     protected int mNumberOfColumns;
+    protected boolean mUseFourColumns;
     protected int mColumns;
     protected int mCellWidth;
     protected int mCellHeight;
@@ -78,7 +79,7 @@ public class QSPanel extends ViewGroup {
     protected boolean mListening;
     private boolean mClosingDetail;
 
-    private Record mDetailRecord;
+    protected Record mDetailRecord;
     private Callback mCallback;
     protected BrightnessController mBrightnessController;
     protected QSTileHost mHost;
@@ -157,7 +158,7 @@ public class QSPanel extends ViewGroup {
     /**
      * Use three or four columns.
      */
-    protected int useFourColumns() {
+    private int useFourColumns() {
         final Resources res = mContext.getResources();
         mUseFourColumns = Settings.Secure.getInt(
             mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
