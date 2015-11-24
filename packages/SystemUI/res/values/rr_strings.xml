@@ -62,20 +62,8 @@
     <!-- Announcement made when USB tethering changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering turned on.</string>
 
-    <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_ambient_display_off">Ambient Display off.</string>
-    <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_ambient_display_on">Ambient Display on.</string>
-
-    <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient Display turned off.</string>
-    <!-- Announcement made when ambient display changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient Display turned on.</string>
-
     <!-- QuickSettings tiles -->
     <string name="quick_settings_usb_tether_label">USB tethering</string>
-
-    <string name="quick_settings_ambient_display_label">Ambient Display</string>
 
 
     <string name="gestures_message">Draw your gesture here</string>
