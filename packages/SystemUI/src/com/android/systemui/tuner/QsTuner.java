@@ -164,6 +164,7 @@ public class QsTuner extends Fragment implements Callback {
         else if (spec.equals("nfc")) return R.string.quick_settings_nfc_label;
 	else if (spec.equals("edit")) return R.string.quick_settings_edit_label;
         return 0;
+	}
 
     @Override
     public void setEditing(boolean editing) {

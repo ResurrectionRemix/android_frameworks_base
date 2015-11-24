@@ -69,6 +69,7 @@ public class QSTileView extends ViewGroup {
     private OnClickListener mClickPrimary;
     private OnClickListener mClickSecondary;
     private OnLongClickListener mClickLong;
+
     private Drawable mTileBackground;
     private RippleDrawable mRipple;
 
@@ -391,7 +392,7 @@ public class QSTileView extends ViewGroup {
             }
             setClickable(editing);
             setFocusable(editing);
-            setOnLongClickListener(editing ? mLongClick : null);
+            setOnLongClickListener(editing ? mClickLong : null);
         } else {
             if (mLabel != null) {
                 mLabel.setFocusable(!editing);
