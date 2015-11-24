@@ -148,6 +148,9 @@
     <!-- blur surface -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
+    <!-- headset icon -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
