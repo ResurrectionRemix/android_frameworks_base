@@ -68,18 +68,6 @@ public class QSPanel extends ViewGroup {
     protected QSDetailClipper mClipper;
     private final H mHandler = new H();
 
-<<<<<<< HEAD
-    private int mColumns;
-    private int mNumberOfColumns;
-    private int mCellWidth;
-    private int mCellHeight;
-    private int mLargeCellWidth;
-    private int mLargeCellHeight;
-    private int mPanelPaddingBottom;
-    private int mDualTileUnderlap;
-    private int mBrightnessPaddingTop;
-    private int mGridHeight;
-=======
     protected int mColumns;
     protected int mCellWidth;
     protected int mCellHeight;
@@ -89,20 +77,15 @@ public class QSPanel extends ViewGroup {
     protected int mDualTileUnderlap;
     protected int mBrightnessPaddingTop;
     protected int mGridHeight;
->>>>>>> 8b59e88... WIP: draggable quick settings tiles
     private boolean mExpanded;
     protected boolean mListening;
     private boolean mClosingDetail;
 
-<<<<<<< HEAD
     private boolean mBrightnessSliderEnabled;
     private boolean mUseFourColumns;
     private boolean mVibrationEnabled;
 
-    private Record mDetailRecord;
-=======
     protected Record mDetailRecord;
->>>>>>> 8b59e88... WIP: draggable quick settings tiles
     private Callback mCallback;
     protected BrightnessController mBrightnessController;
     protected QSTileHost mHost;

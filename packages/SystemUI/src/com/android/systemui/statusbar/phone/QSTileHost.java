@@ -289,7 +289,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("location")) return new LocationTile(this);
         else if (tileSpec.equals("cast")) return new CastTile(this);
         else if (tileSpec.equals("hotspot")) return new HotspotTile(this);
-<<<<<<< HEAD
         else if (tileSpec.equals("brightness")) return new BrightnessTile(this);
         else if (tileSpec.equals("screenOff")) return new ScreenOffTile(this);
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
@@ -299,9 +298,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
         else if (tileSpec.equals("nfc")) return new NfcTile(this);
-=======
         else if (tileSpec.equals("edit")) return new EditTile(this);
->>>>>>> 8b59e88... WIP: draggable quick settings tiles
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }

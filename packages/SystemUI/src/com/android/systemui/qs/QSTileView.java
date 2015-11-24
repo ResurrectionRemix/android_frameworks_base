@@ -131,13 +131,9 @@ public class QSTileView extends ViewGroup {
         CharSequence labelDescription = null;
         if (mDualLabel != null) {
             labelText = mDualLabel.getText();
-<<<<<<< HEAD
             if (mLabel != null) {
-                labelDescription = mLabel.getContentDescription();
+                labelDescription = mDualLabel.getContentDescription();
             }
-=======
-            labelDescription = mDualLabel.getContentDescription();
->>>>>>> 8b59e88... WIP: draggable quick settings tiles
             removeView(mDualLabel);
             mDualLabel = null;
         }
@@ -192,16 +188,11 @@ public class QSTileView extends ViewGroup {
     public boolean setDual(boolean dual) {
         final boolean changed = dual != mDual;
         mDual = dual;
-<<<<<<< HEAD
-        if (mTileBackground instanceof RippleDrawable) {
-            setRipple((RippleDrawable) mTileBackground);
-        }
-=======
+
         if (changed) {
             recreateLabel();
         }
 
->>>>>>> 8b59e88... WIP: draggable quick settings tiles
         if (dual) {
             mTopBackgroundView.setOnClickListener(mClickPrimary);
             mTopBackgroundView.setOnLongClickListener(mClickLong);

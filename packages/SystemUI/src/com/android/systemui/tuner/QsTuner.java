@@ -141,30 +141,6 @@ public class QsTuner extends Fragment implements Callback {
         mQsPanel.setTiles(mTileHost.getTiles());
     }
 
-<<<<<<< HEAD
-    private static int getLabelResource(String spec) {
-        if (spec.equals("wifi")) return R.string.quick_settings_wifi_label;
-        else if (spec.equals("bt")) return R.string.quick_settings_bluetooth_label;
-        else if (spec.equals("inversion")) return R.string.quick_settings_inversion_label;
-        else if (spec.equals("cell")) return R.string.quick_settings_cellular_detail_title;
-        else if (spec.equals("airplane")) return R.string.airplane_mode;
-        else if (spec.equals("dnd")) return R.string.quick_settings_dnd_label;
-        else if (spec.equals("rotation")) return R.string.quick_settings_rotation_locked_label;
-        else if (spec.equals("flashlight")) return R.string.quick_settings_flashlight_label;
-        else if (spec.equals("location")) return R.string.quick_settings_location_label;
-        else if (spec.equals("cast")) return R.string.quick_settings_cast_title;
-        else if (spec.equals("hotspot")) return R.string.quick_settings_hotspot_label;
-        else if (spec.equals("brightness")) return R.string.quick_settings_brightness_label;
-        else if (spec.equals("screenOff")) return R.string.quick_settings_screen_off_label;
-        else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
-        else if (spec.equals("volume")) return R.string.quick_settings_volume_panel_label;
-        else if (spec.equals("headsup")) return R.string.quick_settings_heads_up_label;
-        else if (spec.equals("usb_tether")) return R.string.quick_settings_usb_tether_label;
-        else if (spec.equals("ambient_display")) return R.string.quick_settings_ambient_display_label;
-        else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
-        else if (spec.equals("nfc")) return R.string.quick_settings_nfc_label;
-        return 0;
-=======
     @Override
     public void setEditing(boolean editing) {
         mQsPanel.setEditing(editing);
@@ -173,7 +149,6 @@ public class QsTuner extends Fragment implements Callback {
     @Override
     public boolean isEditing() {
         return mTileHost.isEditing();
->>>>>>> 8b59e88... WIP: draggable quick settings tiles
     }
 
     private static class CustomHost extends QSTileHost {
@@ -272,14 +247,11 @@ public class QsTuner extends Fragment implements Callback {
         }
 
         @Override
-<<<<<<< HEAD
-=======
         public boolean supportsDualTargets() {
             return true;
         }
 
         @Override
->>>>>>> 8b59e88... WIP: draggable quick settings tiles
         public void setListening(boolean listening) {
         }
 
