@@ -68,6 +68,7 @@ public class QSPanel extends ViewGroup {
     protected QSDetailClipper mClipper;
     private final H mHandler = new H();
 
+    protected int mNumberOfColumns;
     protected int mColumns;
     protected int mCellWidth;
     protected int mCellHeight;
@@ -82,7 +83,7 @@ public class QSPanel extends ViewGroup {
     private boolean mClosingDetail;
 
     private boolean mBrightnessSliderEnabled;
-    private boolean mUseFourColumns;
+    protected boolean mUseFourColumns;
     private boolean mVibrationEnabled;
 
     protected Record mDetailRecord;
@@ -162,7 +163,7 @@ public class QSPanel extends ViewGroup {
     /**
      * Use three or four columns.
      */
-    private int useFourColumns() {
+    protected int useFourColumns() {
         final Resources res = mContext.getResources();
         if (mUseFourColumns) {
             mNumberOfColumns = 4;
