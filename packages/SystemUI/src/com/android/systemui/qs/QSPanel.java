@@ -760,7 +760,7 @@ public class QSPanel extends ViewGroup {
             ContentResolver resolver = mContext.getContentResolver();
             mBrightnessSliderEnabled = Settings.Secure.getIntForUser(
             mContext.getContentResolver(), Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER,
-		1, UserHandle.USER_CURRENT) == 1;
+                1, UserHandle.USER_CURRENT) == 1;
             mUseFourColumns = Settings.Secure.getIntForUser(
             mContext.getContentResolver(), Settings.Secure.QS_USE_FOUR_COLUMNS,
                 0, UserHandle.USER_CURRENT) == 1;
