@@ -1386,7 +1386,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 flags |= EdgeGesturePosition.TOP.FLAG;
             }
             if (mNavigationBar != null && !mNavigationBar.isVisibleLw()
-                    && !immersiveModeImplementsPie() && !isStatusBarKeyguard()) {
+                     && !isStatusBarKeyguard()) {
                 if (mNavigationBarPosition == NAV_BAR_BOTTOM) {
                     flags |= EdgeGesturePosition.BOTTOM.FLAG;
                 } else if (mNavigationBarPosition == NAV_BAR_RIGHT){
@@ -2964,9 +2964,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 updateRotation = true;
                 updateOrientationListenerLp();
             }
-
-            final boolean useEdgeService = Settings.System.getIntForUser(resolver,
-                    Settings.System.USE_EDGE_SERVICE_FOR_GESTURES, 1, UserHandle.USER_CURRENT) == 1;
+            boolean useEdgeService = true;
             if (useEdgeService ^ mUsingEdgeGestureServiceForGestures && mSystemReady) {
                 if (!mUsingEdgeGestureServiceForGestures && useEdgeService) {
                     mUsingEdgeGestureServiceForGestures = true;
@@ -8519,6 +8517,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mVrManagerInternal != null) {
             mVrManagerInternal.addPersistentVrModeStateListener(mPersistentVrModeListener);
         }
+
         mEdgeGestureManager = EdgeGestureManager.getInstance();
         mEdgeGestureManager.setEdgeGestureActivationListener(mEdgeGestureActivationListener);
         mSettingsObserver.observe();

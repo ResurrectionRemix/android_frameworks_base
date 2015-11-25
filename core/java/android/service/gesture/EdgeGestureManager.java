@@ -174,6 +174,10 @@ public class EdgeGestureManager {
         if (DEBUG) {
             Slog.d(TAG, "Set edge gesture activation listener");
         }
+        if (mPs == null) {
+            Slog.e(TAG, "Failed to set edge gesture activation listener: Service not present");
+            return false;
+        }
         try {
             IEdgeGestureHostCallback callback = mPs.registerEdgeGestureActivationListener(listener.mDelegator);
             listener.setHostCallback(callback);
@@ -194,6 +198,10 @@ public class EdgeGestureManager {
     public void updateEdgeGestureActivationListener(EdgeGestureActivationListener listener, int positions) {
         if (DEBUG) {
             Slog.d(TAG, "Update edge gesture activation listener: 0x" + Integer.toHexString(positions));
+        }
+        if (mPs == null) {
+            Slog.e(TAG, "Failed to update edge gesture activation listener: Service not present");
+            return;
         }
         try {
             mPs.updateEdgeGestureActivationListener(listener.mDelegator.asBinder(), positions);
