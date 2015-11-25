@@ -68,7 +68,6 @@ public class QSTileView extends ViewGroup {
     private boolean mDual;
     private OnClickListener mClickPrimary;
     private OnClickListener mClickSecondary;
-    private OnLongClickListener mLongClick;
     private OnLongClickListener mClickLong;
     private Drawable mTileBackground;
     private RippleDrawable mRipple;
