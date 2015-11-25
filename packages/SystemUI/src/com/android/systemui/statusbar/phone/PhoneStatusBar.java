@@ -148,8 +148,11 @@ import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
 import com.android.systemui.keyguard.KeyguardViewMediator;
+<<<<<<< HEAD
 import com.android.systemui.omni.StatusBarHeaderMachine;
+=======
 import com.android.systemui.qs.QSDragPanel;
+>>>>>>> 8b59e88... WIP: draggable quick settings tiles
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.settings.BrightnessController;
