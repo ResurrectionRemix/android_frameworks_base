@@ -487,7 +487,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     }
 
     public int getTilesPerPage() {
-        return QSTileHost.TILES_PER_PAGE;
+        return 8;
     }
 
     @Override
