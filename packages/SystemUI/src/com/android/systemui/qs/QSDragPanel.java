@@ -1337,6 +1337,13 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
             }
         }
         available[index++] = getContext().getString(R.string.broadcast_tile);
+	available[index++] = getContext().getString(R.string.quick_settings_brightness_label);
+       available[index++] = getContext().getString(R.string.quick_settings_brightness_label);
+	available[index++] = getContext().getString(R.string.quick_settings_brightness_label);
+       available[index++] = getContext().getString(R.string.quick_settings_volume_panel_label);
+	available[index++] = getContext().getString(R.string.quick_settings_heads_up_label);
+       available[index++] = getContext().getString(R.string.quick_settings_usb_tether_label);
+	available[index++] = getContext().getString(R.string.quick_settings_nfc_label);
 
         final AlertDialog d = new AlertDialog.Builder(getContext(), R.style.Theme_SystemUI_Dialog)
                 .setTitle(R.string.add_tile)
