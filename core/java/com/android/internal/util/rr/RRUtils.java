@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.du;
+package com.android.internal.util.rr;
 
 import android.content.Context;
 import android.content.res.Resources;
 
 import java.util.Locale;
 
-public class AicpUtils {
+public class RRUtils {
 
     public static boolean isChineseLanguage() {
        return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
