@@ -65,7 +65,6 @@ import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
-import cyanogenmod.providers.CMSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +77,8 @@ import java.util.Map;
 public class QSTileHost implements QSTile.Host, Tunable {
     private static final String TAG = "QSTileHost";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
+
+    public static final String TILES_SETTING = "sysui_qs_tiles";
 
     private final Context mContext;
     private final PhoneStatusBar mStatusBar;
@@ -124,7 +125,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         ht.start();
         mLooper = ht.getLooper();
 
-        TunerService.get(mContext).addTunableByProvider(this, CMSettings.Secure.QS_TILES, true);
+        TunerService.get(mContext).addTunable(this, TILES_SETTING);
     }
 
     public void destroy() {
@@ -242,7 +243,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
     
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (!CMSettings.Secure.QS_TILES.equals(key)) {
+        if (!TILES_SETTING.equals(key)) {
             return;
         }
         if (DEBUG) Log.d(TAG, "Recreating tiles");
@@ -336,8 +337,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
     }
 
     public void setTiles(List<String> tiles) {
-        CMSettings.Secure.putStringForUser(getContext().getContentResolver(),
-                CMSettings.Secure.QS_TILES,
+        Settings.Secure.putStringForUser(getContext().getContentResolver(), TILES_SETTING,
                 TextUtils.join(",", tiles), ActivityManager.getCurrentUser());
     }
 
