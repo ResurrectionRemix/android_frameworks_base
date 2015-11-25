@@ -68,6 +68,7 @@ public class QSTileView extends ViewGroup {
     private boolean mDual;
     private OnClickListener mClickPrimary;
     private OnClickListener mClickSecondary;
+    private OnLongClickListener mLongClick;
     private OnLongClickListener mClickLong;
     private Drawable mTileBackground;
     private RippleDrawable mRipple;
@@ -129,16 +130,18 @@ public class QSTileView extends ViewGroup {
         Log.d(TAG, "recreateLabel() called with " + "");
         CharSequence labelText = null;
         CharSequence labelDescription = null;
+        if (mDualLabel != null) {
+            labelText = mDualLabel.getText();
+            if (mLabel != null) {
+                labelDescription = mDualLabel.getContentDescription();
+            }
+            removeView(mDualLabel);
+            mDualLabel = null;
+        }
         if (mLabel != null) {
             labelText = mLabel.getText();
             removeView(mLabel);
             mLabel = null;
-        }
-        if (mDualLabel != null) {
-            labelText = mDualLabel.getText();
-            labelDescription = mDualLabel.getContentDescription();
-            removeView(mDualLabel);
-            mDualLabel = null;
         }
         final Resources res = mContext.getResources();
         if (mDual) {
@@ -385,7 +388,7 @@ public class QSTileView extends ViewGroup {
             }
             setClickable(editing);
             setFocusable(editing);
-            setOnLongClickListener(editing ? mClickLong : null);
+            setOnLongClickListener(editing ? mLongClick : null);
         } else {
             if (mLabel != null) {
                 mLabel.setFocusable(!editing);

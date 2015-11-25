@@ -368,14 +368,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("location")) return R.string.quick_settings_location_label;
         else if (spec.equals("cast")) return R.string.quick_settings_cast_title;
         else if (spec.equals("hotspot")) return R.string.quick_settings_hotspot_label;
-        else if (spec.equals("brightness")) return R.string.quick_settings_brightness_label;
-        else if (spec.equals("screenOff")) return R.string.quick_settings_screen_off_label;       
-        else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
-        else if (spec.equals("volume")) return R.string.quick_settings_volume_panel_label;
-        else if (spec.equals("headsup")) return R.string.quick_settings_heads_up_label;
-        else if (spec.equals("usb_tether")) return R.string.quick_settings_usb_tether_label;
-        else if (spec.equals("ambient_display")) return R.string.quick_settings_ambient_display_label;
-        else if (spec.equals("nfc")) return R.string.quick_settings_nfc_label;
         else if (spec.equals("edit")) return R.string.quick_settings_edit_label;
         return 0;
     }
