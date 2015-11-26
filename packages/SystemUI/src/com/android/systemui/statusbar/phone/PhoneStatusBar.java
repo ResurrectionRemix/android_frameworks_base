@@ -87,6 +87,9 @@ import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.StatusBarNotification;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 import android.util.ArraySet;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
@@ -118,11 +121,13 @@ import android.view.animation.PathInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.cm.ActionUtils;
+import com.android.internal.util.cm.WeatherController;
+import com.android.internal.util.cm.WeatherControllerImpl;
+import com.android.internal.util.cm.WeatherController.WeatherInfo;
 import com.android.keyguard.KeyguardHostView.OnDismissAction;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
@@ -376,10 +381,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mShowCarrierInPanel = false;
     boolean mExpandedVisible;
 
+
     // RR logo
     private boolean mRRlogo;
     private ImageView rrLogo;
     private int mRRLogoColor;	
+
+    // Weather temperature
+    TextView mWeatherTempView;
+    private int mWeatherTempState;
+
 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
@@ -482,6 +493,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		    false, this, UserHandle.USER_ALL);	
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR),
+		    false, this, UserHandle.USER_ALL);
+ 	   resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -525,9 +539,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mRRLogoColor = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
             showRRLogo(mRRlogo, mRRLogoColor);
-            if (oldWeatherState != mWeatherTempState) {
-                updateTempView();
-		}
+
             if (mNavigationBarView != null) {
                 boolean navLeftInLandscape = CMSettings.System.getIntForUser(resolver,
                         CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
@@ -544,7 +556,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mSidebarPosition = sidebarPosition;
                 removeSidebarView();
                 addSidebarView();
-            }
+		}
+
+            final int oldWeatherState = mWeatherTempState;
+            mWeatherTempState = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                    UserHandle.USER_CURRENT);
+            if (oldWeatherState != mWeatherTempState) {
+                updateWeatherTextState(mWeatherController.getWeatherInfo().temp);
+            
         }
     }
 
@@ -595,6 +615,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
 
 
+
+    private void updateWeatherTextState(String temp) {
+        if (mWeatherTempState == 0 || TextUtils.isEmpty(temp)) {
+            mWeatherTempView.setVisibility(View.GONE);
+            return;
+        }
+        if (mWeatherTempState == 1) {
+            SpannableString span = new SpannableString(temp);
+            span.setSpan(new RelativeSizeSpan(0.7f), temp.length() - 1, temp.length(), 0);
+            mWeatherTempView.setText(span);
+        } else if (mWeatherTempState == 2) {
+            mWeatherTempView.setText(temp.substring(0, temp.length() - 1));
+        }
+        mWeatherTempView.setVisibility(View.VISIBLE);
+    }
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
@@ -1194,7 +1229,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mUserSwitcherController = new UserSwitcherController(mContext, mKeyguardMonitor,
                     mHandler);
         }
-        mWeatherController = new WeatherControllerImpl(mContext);
+
+        mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
+        mWeatherTempState = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                UserHandle.USER_CURRENT);
+        if (mWeatherController == null) {
+            mWeatherController = new WeatherControllerImpl(mContext);
+            mWeatherController.addCallback(new WeatherController.Callback() {
+                @Override
+                public void onWeatherChanged(WeatherInfo temp) {
+                    updateWeatherTextState(temp.temp);
+                }
+            });
+        }
+        updateWeatherTextState(mWeatherController.getWeatherInfo().temp);
 
         mKeyguardUserSwitcher = new KeyguardUserSwitcher(mContext,
                 (ViewStub) mStatusBarWindowContent.findViewById(R.id.keyguard_user_switcher),

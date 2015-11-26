@@ -123,6 +123,16 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="right|center_vertical"/>
 
+            <TextView
+                android:id="@+id/weather_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:gravity="right|center_vertical"
+                android:textAppearance="@style/TextAppearance.StatusBar.WeatherTemp"
+                android:paddingStart="2dp"
+                android:paddingEnd="4dp" />
+
             <include layout="@layout/system_icons" />
 
             <com.android.systemui.BatteryLevelTextView android:id="@+id/battery_level_text"
