@@ -607,7 +607,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                     UserHandle.USER_CURRENT);
             if (oldWeatherState != mWeatherTempState) {
-                updateWeatherTextState(mWeatherController.getWeatherInfo().temp, mWeatherTempColor);
+                updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
+                        mWeatherTempColor, mWeatherTempSize, mWeatherTempFontStyle);
             }
 
             mWeatherTempStyle = Settings.System.getIntForUser(
