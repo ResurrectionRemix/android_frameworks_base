@@ -29,6 +29,7 @@ import android.graphics.Rect;
 import android.media.session.MediaSessionLegacyHelper;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.os.IBinder;
 import android.os.IPowerManager;
 import android.os.PowerManager;
@@ -272,8 +273,6 @@ public class StatusBarWindowView extends FrameLayout {
                 mDoubleTapGesture.onTouchEvent(ev);
            		 }
         	}
-
-        final int h = getMeasuredHeight();
         if (mDoubleTapToSleepLockScreen &&
                 mService.getBarState() == StatusBarState.KEYGUARD
                 && (ev.getY() < (h / 3) ||
