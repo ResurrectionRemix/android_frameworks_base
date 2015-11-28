@@ -31,5 +31,9 @@
      <color name="sidebar_item_text_color">#ffffffff</color>
      <!-- app sidebar item text shadow color -->
      <color name="sidebar_item_text_shadow_color">#ff000000</color>
-
+     
+     <!-- Lockscreen bottom shorcut phone background color -->
+     <color name="lockscreen_bottom_shorcut_phone_background">@*android:color/accent_material_light</color>
+     <!-- Lockscreen bottom shorcut info text color -->
+     <color name="lockscreen_bottom_shorcut_info_text_color">@*android:color/primary_text_default_material_light</color>
 </resources>
