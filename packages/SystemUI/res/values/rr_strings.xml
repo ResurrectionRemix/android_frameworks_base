@@ -24,7 +24,7 @@
     <string name="battery_saver_notification_action_text_short">Turn off</string>
 
 
-    <string name="gestures_message">Draw your gesture here</string>
+    <string name="gestures_message">Draw gesture here</string>
  
      <!-- App sidebar -->
      <string name="default_folder_text">Folder</string>
