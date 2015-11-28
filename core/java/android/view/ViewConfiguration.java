@@ -61,7 +61,8 @@ public class ViewConfiguration {
      * Defines the default duration in milliseconds before a press turns into
      * a long press
      */
-    private static final int DEFAULT_LONG_PRESS_TIMEOUT = 450;
+
+    private static final int DEFAULT_LONG_PRESS_TIMEOUT = 500;
 
     /**
      * Defines the time between successive key repeats in milliseconds.
@@ -74,8 +75,7 @@ public class ViewConfiguration {
      * lock screen, etc).
      */
 
-    private static final int GLOBAL_ACTIONS_KEY_TIMEOUT = 450;
-
+    private static final int GLOBAL_ACTIONS_KEY_TIMEOUT = 500;
 
     /**
      * Defines the duration in milliseconds we will wait to see if a touch event
@@ -90,8 +90,7 @@ public class ViewConfiguration {
      * considered to be a tap.
      */
 
-    private static final int JUMP_TAP_TIMEOUT = 450;
-
+    private static final int JUMP_TAP_TIMEOUT = 500;
 
     /**
      * Defines the duration in milliseconds between the first tap's up event and
@@ -126,14 +125,14 @@ public class ViewConfiguration {
      * to a user panning within an application.
      */
 
-    private static final int ZOOM_CONTROLS_TIMEOUT = 2800;
+    private static final int ZOOM_CONTROLS_TIMEOUT = 3000;
 
 
     /**
      * Inset in dips to look for touchable content when the user touches the edge of the screen
      */
 
-    private static final int EDGE_SLOP = 10;
+    private static final int EDGE_SLOP = 12;
 
     /**
      * Distance a touch can wander before we think the user is scrolling in dips.
@@ -209,7 +208,7 @@ public class ViewConfiguration {
      * The coefficient of friction applied to flings/scrolls.
      */
 
-    private static final float SCROLL_FRICTION = 0.011f;
+    private static final float SCROLL_FRICTION = 0.015f;
 
 
     /**
