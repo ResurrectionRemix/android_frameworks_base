@@ -264,6 +264,10 @@ public interface MetricsConstants {
     public static final int TUNER_BATTERY_PERCENTAGE = 237;
     public static final int FUELGAUGE_INACTIVE_APPS = 238;
 
+
+   //Notification Drawer	
+   public static final int NOTIFICATION_DRAWER_SETTINGS = 247;
+
     // These constants must match those in the analytic pipeline, do not edit.
     // Add temporary values to the top of MetricsLogger instead.
 
