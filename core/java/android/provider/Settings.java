@@ -3722,6 +3722,13 @@ public final class Settings {
         public static final String RECENTS_USE_OMNISWITCH = "recents_use_omniswitch";
 
         /**
+         * Whether to display recents in full screen
+         * @hide
+         */
+        public static final String RECENTS_FULL_SCREEN = "recents_full_screen";
+
+        /**
+
          *  Enable navigation bar double tap gesture on to put device to sleep
          * @hide
          */
