@@ -35,5 +35,5 @@
      <!-- Lockscreen bottom shorcut phone background color -->
      <color name="lockscreen_bottom_shorcut_phone_background">@*android:color/accent_material_light</color>
      <!-- Lockscreen bottom shorcut info text color -->
-     <color name="lockscreen_bottom_shorcut_info_text_color">@*android:color/primary_text_default_material_light</color>
+     <color name="lockscreen_bottom_shorcut_info_text_color">@*android:color/secondary_text_default_material_light</color>
 </resources>

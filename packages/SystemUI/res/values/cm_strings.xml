@@ -85,6 +85,6 @@
     <string name="clear_recents">Close all recent</string>
      
     <!-- Weather string format in expanded statusbar header -->
-    <string name="weather_info_not_available">Weather informations not available</string>
+    <string name="weather_info_not_available">Not available</string>
 
 </resources>
