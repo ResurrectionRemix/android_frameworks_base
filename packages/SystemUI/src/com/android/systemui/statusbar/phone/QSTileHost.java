@@ -59,6 +59,7 @@ import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
+import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenOffTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
@@ -368,6 +369,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
         else if (tileSpec.equals("expanded_desktop")) return new ExpandedDesktopTile(this);
         else if (tileSpec.equals("music")) return new MusicTile(this);
+        else if (tileSpec.equals("reboot")) return new RebootTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
