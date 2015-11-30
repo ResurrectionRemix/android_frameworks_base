@@ -3715,6 +3715,13 @@ public final class Settings {
          */
         public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
 
+	 /**
+         * Network stats Color style
+         * @hide
+         */
+
+	public static final String NETWORK_TRAFFIC_COLOR = "network_traffic_color";
+
         /**
          * Alternative recent apps integration using OmniSwitch
          * @hide
