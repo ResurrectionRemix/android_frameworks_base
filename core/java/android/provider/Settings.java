@@ -3781,7 +3781,6 @@ public final class Settings {
         public static final String RECENTS_FULL_SCREEN = "recents_full_screen";
 
         /**
-
          *  Enable navigation bar double tap gesture on to put device to sleep
          * @hide
          */
@@ -3884,7 +3883,15 @@ public final class Settings {
          */
         public static final String APP_SIDEBAR_DISABLE_LABELS = "app_sidebar_disable_labels";
 
-        /**
+     /**
+         * Whether to display powermenu on secure lockscreen
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_LOCKSCREEN = "power_menu_lockscreen";
+
+   
+   /**
          * Position of app sidebar
          *
          * @hide
