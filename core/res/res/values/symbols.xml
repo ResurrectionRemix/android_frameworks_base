@@ -2428,4 +2428,8 @@
   <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
 
   <java-symbol type="bool" name="config_useSystemClockforSensors" />
+
+  <java-symbol type="string" name="operator_config_url" />
+  <java-symbol type="string" name="operator_ping_url" />
+  <java-symbol type="bool" name="config_zero_balance_operator"/>
 </resources>
