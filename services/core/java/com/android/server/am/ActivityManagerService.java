@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2006-2008 The Android Open Source Project
  * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2010-2015, The Linux Foundation. All rights reserved.
  * Not a Contribution.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -299,6 +299,11 @@ public final class ActivityManagerService extends ActivityManagerNative
     private static final String TAG_URI_PERMISSION = TAG + POSTFIX_URI_PERMISSION;
     private static final String TAG_VISIBILITY = TAG + POSTFIX_VISIBILITY;
     private static final String TAG_VISIBLE_BEHIND = TAG + POSTFIX_VISIBLE_BEHIND;
+
+    private static final String ACTION_POWER_OFF_ALARM =
+            "org.codeaurora.alarm.action.POWER_OFF_ALARM";
+
+    private static final String POWER_OFF_ALARM = "powerOffAlarm";
 
     /** Control over CPU and battery monitoring */
     // write battery stats every 30 minutes.
@@ -3612,6 +3617,15 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
 
         return true;
+    }
+
+    /**
+     * If system is power off alarm boot mode, we need to start alarm UI.
+     */
+    void startAlarmActivityLocked() {
+        Intent intent = new Intent(ACTION_POWER_OFF_ALARM);
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        mContext.startActivityAsUser(intent, UserHandle.CURRENT);
     }
 
     private ActivityInfo resolveActivityInfo(Intent intent, int flags, int userId) {
@@ -12068,6 +12082,12 @@ public final class ActivityManagerService extends ActivityManagerNative
             mBooting = true;
             startHomeActivityLocked(mCurrentUserId, "systemReady");
 
+            // start the power off alarm by boot mode
+            boolean isAlarmBoot = SystemProperties.getBoolean("ro.alarm_boot", false);
+            if (isAlarmBoot) {
+                startAlarmActivityLocked();
+            }
+
             try {
                 if (AppGlobals.getPackageManager().hasSystemUidErrors()) {
                     Slog.e(TAG, "UIDs on the system are inconsistent, you need to wipe your"
@@ -18916,6 +18936,18 @@ public final class ActivityManagerService extends ActivityManagerNative
         boolean success = true;
 
         if (app.curRawAdj != app.setRawAdj) {
+            String seempStr = "app_uid=" + app.uid
+                + ",app_pid=" + app.pid + ",oom_adj=" + app.curAdj
+                + ",setAdj=" + app.setAdj + ",hasShownUi=" + (app.hasShownUi ? 1 : 0)
+                + ",cached=" + (app.cached ? 1 : 0)
+                + ",fA=" + (app.foregroundActivities ? 1 : 0)
+                + ",fS=" + (app.foregroundServices ? 1 : 0)
+                + ",systemNoUi=" + (app.systemNoUi ? 1 : 0)
+                + ",curSchedGroup=" + app.curSchedGroup
+                + ",curProcState=" + app.curProcState + ",setProcState=" + app.setProcState
+                + ",killed=" + (app.killed ? 1 : 0) + ",killedByAm=" + (app.killedByAm ? 1 : 0)
+                + ",debugging=" + (app.debugging ? 1 : 0);
+            android.util.SeempLog.record_str(385, seempStr);
             app.setRawAdj = app.curRawAdj;
         }
 
