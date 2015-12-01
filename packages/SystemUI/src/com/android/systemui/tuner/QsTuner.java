@@ -248,7 +248,7 @@ public class QsTuner extends Fragment implements Callback {
 
         @Override
         public boolean supportsDualTargets() {
-            return "wifi".equals(mSpec) || "bt".equals(mSpec);
+            return true;
         }
 
         @Override
