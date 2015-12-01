@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
- * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.provider.Settings;
 import android.provider.Settings.Global;
 
 import com.android.internal.logging.MetricsLogger;
@@ -36,9 +34,6 @@ public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
             new AnimationIcon(R.drawable.ic_signal_airplane_enable_animation);
     private final AnimationIcon mDisable =
             new AnimationIcon(R.drawable.ic_signal_airplane_disable_animation);
-
-    private static final Intent WIRELESS_SETTINGS = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
-
     private final GlobalSetting mSetting;
 
     private boolean mListening;
@@ -65,11 +60,6 @@ public class AirplaneModeTile extends QSTile<QSTile.BooleanState> {
         setEnabled(!mState.value);
         mEnable.setAllowAnimation(true);
         mDisable.setAllowAnimation(true);
-    }
-
-    @Override
-    public void handleLongClick() {
-        mHost.startActivityDismissingKeyguard(WIRELESS_SETTINGS);
     }
 
     private void setEnabled(boolean enabled) {
