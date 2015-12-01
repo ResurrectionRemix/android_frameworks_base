@@ -17,14 +17,22 @@
 package com.android.server.display;
 
 import com.android.internal.app.IBatteryStats;
+import com.android.internal.policy.IKeyguardService;
+import com.android.server.policy.keyguard.KeyguardServiceWrapper;
 import com.android.server.LocalServices;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.lights.LightsManager;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -32,17 +40,23 @@ import android.hardware.SensorManager;
 import android.hardware.display.DisplayManagerInternal.DisplayPowerCallbacks;
 import android.hardware.display.DisplayManagerInternal.DisplayPowerRequest;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.Trace;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.MathUtils;
 import android.util.Slog;
 import android.util.Spline;
 import android.util.TimeUtils;
 import android.view.Display;
+import android.view.Surface;
+import android.view.SurfaceControl;
+import android.view.WindowManager;
 import android.view.WindowManagerPolicy;
 
 import java.io.PrintWriter;
@@ -259,6 +273,25 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private ObjectAnimator mColorFadeOffAnimator;
     private RampAnimator<DisplayPowerState> mScreenBrightnessRampAnimator;
 
+    // Lock screen blur
+    private static final int MAX_BLUR_WIDTH = 900;
+    private static final int MAX_BLUR_HEIGHT = 1600;
+    public static final String KEYGUARD_PACKAGE = "com.android.systemui";
+    public static final String KEYGUARD_CLASS = "com.android.systemui.keyguard.KeyguardService";
+    private KeyguardServiceWrapper mKeyguardService;
+    private final ServiceConnection mKeyguardConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mKeyguardService = new KeyguardServiceWrapper(mContext,
+                    IKeyguardService.Stub.asInterface(service));
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mKeyguardService = null;
+        }
+    };
+
     /**
      * Creates the display power controller.
      */
@@ -374,6 +407,12 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                         TYPICAL_PROXIMITY_THRESHOLD);
             }
         }
+		
+        Intent intent = new Intent();
+        intent.setClassName(KEYGUARD_PACKAGE,
+                KEYGUARD_CLASS);
+        mContext.bindServiceAsUser(intent, mKeyguardConnection,
+                Context.BIND_AUTO_CREATE, UserHandle.OWNER);
 
     }
 
@@ -427,6 +466,40 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             }
 
             if (changed && !mPendingRequestChangedLocked) {
+                if ((mKeyguardService != null && !mKeyguardService.isShowing())
+                        && request.policy == DisplayPowerRequest.POLICY_OFF) {
+                    boolean seeThrough = Settings.System.getBoolean(mContext.getContentResolver(),
+                            Settings.System.LOCKSCREEN_SEE_THROUGH, false);
+                    if (seeThrough) {
+                        WindowManager wm = (WindowManager)
+                                mContext.getSystemService(Context.WINDOW_SERVICE);
+                        Display display = wm.getDefaultDisplay();
+                        Point point = new Point();
+                        display.getRealSize(point);
+                        int rotation = display.getRotation();
+                        boolean reverse = rotation == Surface.ROTATION_90
+                                || rotation == Surface.ROTATION_270;
+                        /* Limit max screenshot capture layer to 22000.
+                           Prevents status bar and navigation bar from being captured. */
+                        Bitmap bmp = SurfaceControl.screenshot(new Rect(),
+                                reverse ? point.y : point.x, reverse ? point.x : point.y,
+                                0, 22000, false, Surface.ROTATION_0);
+                        if (bmp != null) {
+                            Bitmap tmpBmp = bmp;
+                            // scale image if its too large
+                            if (bmp.getWidth() > MAX_BLUR_WIDTH) {
+                                tmpBmp = bmp.createScaledBitmap(
+                                        bmp, MAX_BLUR_WIDTH, MAX_BLUR_HEIGHT, true);
+                            }
+                            mKeyguardService.setBackgroundBitmap(tmpBmp);
+
+                            bmp.recycle();
+                            tmpBmp.recycle();
+                        }
+                    } else {
+                        mKeyguardService.setBackgroundBitmap(null);
+                    }
+                }
                 mPendingRequestChangedLocked = true;
                 sendUpdatePowerStateLocked();
             }
