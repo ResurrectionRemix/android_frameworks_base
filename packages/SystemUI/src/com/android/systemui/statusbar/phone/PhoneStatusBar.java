@@ -544,7 +544,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     false, this, UserHandle.USER_ALL);
     	   resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
-		    false, this, UserHandle.USER_ALL);
             update();
         }
 
