@@ -45,4 +45,5 @@
     <dimen name="phone_bottom_padding">40dp</dimen>
     <dimen name="phone_width">320dp</dimen>
     <dimen name="phone_height">420dp</dimen>
+
 </resources>

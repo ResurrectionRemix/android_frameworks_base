@@ -116,6 +116,7 @@ import com.android.systemui.recents.Recents;
 import com.android.systemui.cm.SpamMessageProvider;
 import com.android.systemui.slimrecent.RecentController;
 import com.android.systemui.statusbar.NotificationData.Entry;
+import com.android.systemui.statusbar.appcirclesidebar.AppCircleSidebar;
 import com.android.systemui.statusbar.phone.NavigationBarView;
 import com.android.systemui.statusbar.phone.NotificationGroupManager;
 import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
@@ -245,6 +246,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected AppSidebar mAppSidebar;
     protected int mSidebarPosition;
+    protected AppCircleSidebar mAppCircleSidebar;
 
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
     protected GestureAnywhereView mGestureAnywhereView;
@@ -2323,6 +2325,20 @@ public abstract class BaseStatusBar extends SystemUI implements
             mWindowManager.removeView(mAppSidebar);
     }
 
+    protected void addAppCircleSidebar() {
+        if (mAppCircleSidebar == null) {
+            mAppCircleSidebar = (AppCircleSidebar) View.inflate(mContext, R.layout.app_circle_sidebar, null);
+            mWindowManager.addView(mAppCircleSidebar, getAppCircleSidebarLayoutParams());
+        }
+    }
+
+    protected void removeAppCircleSidebar() {
+        if (mAppCircleSidebar != null) {
+            mWindowManager.removeView(mAppCircleSidebar);
+        }
+    }
+
+ 
     protected WindowManager.LayoutParams getAppSidebarLayoutParams(int position) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
                 LayoutParams.WRAP_CONTENT,
@@ -2339,6 +2355,28 @@ public abstract class BaseStatusBar extends SystemUI implements
         lp.gravity = Gravity.TOP;// | Gravity.FILL_VERTICAL;
         lp.gravity |= position == AppSidebar.SIDEBAR_POSITION_LEFT ? Gravity.LEFT : Gravity.RIGHT;
         lp.setTitle("AppSidebar");
+
+        return lp;
+    }
+
+ protected WindowManager.LayoutParams getAppCircleSidebarLayoutParams() {
+        int maxWidth =
+                mContext.getResources().getDimensionPixelSize(R.dimen.app_sidebar_trigger_width);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+                maxWidth,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL,
+                0
+                | WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
+                PixelFormat.TRANSLUCENT);
+        lp.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_NO_MOVE_ANIMATION;
+        lp.gravity = Gravity.TOP | Gravity.RIGHT;
+        lp.setTitle("AppCircleSidebar");
 
         return lp;
     }
