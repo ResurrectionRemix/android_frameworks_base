@@ -1250,7 +1250,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             mSlimRecents.setCallback(this);
             mRecents = null;
         } else {
-            mRecents = getComponent(RecentsComponent.class);
+            mRecents = getComponent(Recents.class);
             mRecents.setCallback(this);
             mSlimRecents = null;
         }
