@@ -14,9 +14,6 @@
      limitations under the License.
 -->
 
-
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.test.bags">
-    <application>
-    </application>
-</manifest>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/ic_lock_power_off_alpha"
+    android:tint="?attr/colorAccent" />
