@@ -119,11 +119,11 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
                 }};
 
 
+        boolean quickUnlock = (Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_QUICK_UNLOCK_CONTROL, 0) == 1);
+
         boolean scramblePin = (CMSettings.System.getInt(getContext().getContentResolver(),
                 CMSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0) == 1);
-        boolean scramblePin = (Settings.System.getInt(getContext().getContentResolver(),
-                Settings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0) == 1);
-
         if (scramblePin) {
             Collections.shuffle(sNumbers);
             // get all children who are NumPadKey's
