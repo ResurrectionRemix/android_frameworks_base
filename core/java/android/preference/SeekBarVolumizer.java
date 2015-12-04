@@ -61,6 +61,7 @@ public class SeekBarVolumizer implements OnSeekBarChangeListener, Handler.Callba
     private final int mMaxStreamVolume;
     private boolean mAffectedByRingerMode;
     private boolean mNotificationOrRing;
+    private boolean mIsRing;
     private final Receiver mReceiver = new Receiver();
 
     private Handler mHandler;
@@ -88,6 +89,7 @@ public class SeekBarVolumizer implements OnSeekBarChangeListener, Handler.Callba
         mStreamType = streamType;
         mAffectedByRingerMode = mAudioManager.isStreamAffectedByRingerMode(mStreamType);
         mNotificationOrRing = isNotificationOrRing(mStreamType);
+        mIsRing = isRing(mStreamType);
         if (mNotificationOrRing) {
             mRingerMode = mAudioManager.getRingerModeInternal();
         }
@@ -116,6 +118,10 @@ public class SeekBarVolumizer implements OnSeekBarChangeListener, Handler.Callba
         return stream == AudioManager.STREAM_RING || stream == AudioManager.STREAM_NOTIFICATION;
     }
 
+    private static boolean isRing(int stream) {
+        return stream == AudioManager.STREAM_RING;
+    }
+
     public void setSeekBar(SeekBar seekBar) {
         if (mSeekBar != null) {
             mSeekBar.setOnSeekBarChangeListener(null);
@@ -137,8 +143,20 @@ public class SeekBarVolumizer implements OnSeekBarChangeListener, Handler.Callba
         mSeekBar.setEnabled(!zenMuted);
         if (zenMuted) {
             mSeekBar.setProgress(mLastAudibleStreamVolume);
-        } else if (mNotificationOrRing && mRingerMode == AudioManager.RINGER_MODE_VIBRATE) {
-            mSeekBar.setProgress(0);
+        }
+        final boolean linkEnabled = Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
+
+        boolean enableVibrateBar = false;
+        if (mRingerMode == AudioManager.RINGER_MODE_VIBRATE) {
+            if (linkEnabled) {
+                enableVibrateBar = mNotificationOrRing;
+            } else {
+                // only enable the ringer stream seekbar cause
+                // only via this stream ringer mode can be changed
+                enableVibrateBar = mIsRing;
+            }
+            mSeekBar.setEnabled(enableVibrateBar);
         } else if (mMuted) {
             mSeekBar.setProgress(0);
         } else {
@@ -395,8 +413,14 @@ public class SeekBarVolumizer implements OnSeekBarChangeListener, Handler.Callba
             if (AudioManager.VOLUME_CHANGED_ACTION.equals(action)) {
                 int streamType = intent.getIntExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE, -1);
                 int streamValue = intent.getIntExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, -1);
-                final boolean streamMatch = mNotificationOrRing ? isNotificationOrRing(streamType)
-                        : (streamType == mStreamType);
+                final boolean linkEnabled = Settings.System.getInt(context.getContentResolver(),
+                        Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
+                boolean streamMatch = streamType == mStreamType;
+                if (mNotificationOrRing) {
+                    if (linkEnabled) {
+                        streamMatch = isNotificationOrRing(streamType);
+                     }
+                }
                 if (mSeekBar != null && streamMatch && streamValue != -1) {
                     final boolean muted = mAudioManager.isStreamMute(mStreamType)
                             || streamValue == 0;
