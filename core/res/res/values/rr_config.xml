@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/* Copyright 2012, The Android Open Source Project
+/*
+** Copyright 2009, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -16,13 +17,9 @@
 */
 -->
 
-<resources>
-
-  <!-- Vendor image mismatched -->
-  <java-symbol type="string" name="system_error_vendorprint" />
-
-
-  <!-- Screenrecord -->
-  <java-symbol type="bool" name="config_enableScreenrecordChord" />
+<!-- These resources are around just to allow their values to be customized
+     for different hardware and product builds.  Do not translate. -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">    <!-- If this is true, key chords can be used to take a screen record on the device. -->
+    <bool name="config_enableScreenrecordChord">true</bool>
 
 </resources>
