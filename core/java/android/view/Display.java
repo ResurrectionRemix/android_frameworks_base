@@ -778,6 +778,9 @@ public final class Display {
         synchronized (this) {
             updateDisplayInfoLocked();
             mDisplayInfo.getAppMetrics(outMetrics, mDisplayAdjustments);
+            if (getDisplayId() == DEFAULT_DISPLAY) {
+                outMetrics.densityDpi = DisplayMetrics.DENSITY_DEVICE_DEFAULT;
+            }
         }
     }
 
