@@ -2711,6 +2711,11 @@ public final class Settings {
                 "lockscreen_quick_unlock_control";
 
         /**
+         * @hide
+         */
+        public static final String SHOW_SU_INDICATOR = "show_su_indicator";
+
+        /**
          * A formatted string of the next alarm that is set, or the empty string
          * if there is no alarm set.
          *

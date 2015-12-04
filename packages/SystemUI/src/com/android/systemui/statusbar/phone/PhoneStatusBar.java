@@ -646,6 +646,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_TICKER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_SU_INDICATOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -707,8 +710,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mContext.getContentResolver(),
                         Settings.System.STATUS_BAR_SHOW_TICKER,
                         0, UserHandle.USER_CURRENT) == 1;
-                initTickerView();
-            }
+                    initTickerView();
+           } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_SU_INDICATOR))) {
+                    onDensityOrFontScaleChanged();
+           }
             update();
         }
 
