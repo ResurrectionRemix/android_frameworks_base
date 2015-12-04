@@ -39,7 +39,10 @@
         android:layout_width="@dimen/volume_button_size"
         android:layout_height="@dimen/volume_button_size"
         android:layout_below="@id/volume_row_header"
-        android:soundEffectsEnabled="false" />
+        android:soundEffectsEnabled="false"
+        android:adjustViewBounds="true"
+        android:padding="12dp"
+        android:scaleType="fitCenter" />
 
     <SeekBar
         android:id="@+id/volume_row_slider"
