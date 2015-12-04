@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-<<<<<<< HEAD
-     Copyright (C) 2015 Benzo Rom
+     Copyright (C) 2015 Resurrection Remix Rom
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -113,5 +112,8 @@
   <java-symbol type="anim" name="recent_screen_enter" />
   <java-symbol type="anim" name="recent_screen_enter_left" />
   <java-symbol type="anim" name="recent_screen_fade_out" />
+
+  <!-- Screen record shortcut -->
+  <java-symbol type="bool" name="config_enableScreenrecordChord" />
 
 </resources>
