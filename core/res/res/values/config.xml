@@ -2314,6 +2314,7 @@
           when evaluating RSRP for LTE antenna bar display
            0. Strict threshold
            1. Lenient threshold
+           2. Custom threshold
     -->
     <integer name="config_LTE_RSRP_threshold_type">1</integer>
 
@@ -2552,7 +2553,17 @@
     <string name="config_rat_3g" translatable="false">3G</string>
     <string name="config_rat_4g" translatable="false">4G</string>
 
+
     <!-- Sets whether IME switcher on statusbar should be shown or not. -->
 	<bool name="config_show_IMESwitcher">true</bool>
+    <!-- When config_LTE_RSRP_threshold_type is set to "custom" -->
+    <integer-array name="config_LTE_RSRP_custom_levels">
+        <item>-140</item>
+        <item>-128</item>
+        <item>-118</item>
+        <item>-108</item>
+        <item>-98</item>
+        <item>-44</item>
+    </integer-array>
 
 </resources>

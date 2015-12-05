@@ -87,4 +87,6 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="weather_info_not_available">Not connected</string>
 
+    <!-- Screen pinning dialog description (for devices without navbar) -->
+    <string name="screen_pinning_description_no_navbar">This keeps it in view until you unpin. Touch and hold the Back button to unpin.</string>
 </resources>
