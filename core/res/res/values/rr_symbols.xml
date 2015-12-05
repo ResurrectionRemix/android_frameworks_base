@@ -21,10 +21,11 @@
   <!-- Vendor image mismatched -->
   <java-symbol type="string" name="system_error_vendorprint" />
 
+  <java-symbol type="drawable" name="ic_lock_screenrecord" />
+  <java-symbol type="string" name="global_action_screenrecord" />
 
   <!-- Screenrecord -->
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
-
 
   <!-- AOKP custom system animations -->
   <java-symbol type="string" name="action_null"/>
