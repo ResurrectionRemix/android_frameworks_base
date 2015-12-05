@@ -31,4 +31,3 @@
         android:gravity="center_vertical"
         android:text="@string/wallpaper_instructions"
         android:textColor="@color/set_wallpaper_text_color" />
-</FrameLayout>
