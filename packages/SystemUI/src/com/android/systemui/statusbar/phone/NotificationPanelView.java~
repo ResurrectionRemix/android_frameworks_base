@@ -1543,10 +1543,10 @@ public class NotificationPanelView extends PanelView implements
         if (mShowTaskManager) {
             mTaskManagerShowing = taskManagerShowing;
             cancelQsAnimation();
-            boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling || mHeaderAnimating;
-            mQsPanel.setVisibility(expandVisually && !taskManagerShowing
+            boolean expandVisually1 = mQsExpanded || mStackScrollerOverscrolling;
+            mQsPanel.setVisibility(expandVisually1 && !taskManagerShowing
                     ? View.VISIBLE : View.GONE);
-            mTaskManagerPanel.setVisibility(expandVisually && taskManagerShowing
+            mTaskManagerPanel.setVisibility(expandVisually1 && taskManagerShowing
                     && !mKeyguardShowing ? View.VISIBLE : View.GONE);
         }
     }
