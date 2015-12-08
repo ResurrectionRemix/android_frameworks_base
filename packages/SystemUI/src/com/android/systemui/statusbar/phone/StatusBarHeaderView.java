@@ -58,9 +58,9 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.internal.util.cm.WeatherController;
 import com.android.internal.util.cm.WeatherControllerImpl;
+import com.android.internal.logging.MetricsConstants;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
@@ -68,6 +68,7 @@ import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.omni.StatusBarHeaderMachine;
+import com.android.systemui.qs.QSDragPanel;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.statusbar.policy.BatteryController;
@@ -78,6 +79,7 @@ import com.android.systemui.tuner.TunerService;
 
 import java.text.NumberFormat;
 
+import cyanogenmod.app.StatusBarPanelCustomTile;
 import cyanogenmod.providers.CMSettings;
 
 /**
@@ -114,6 +116,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private BatteryLevelTextView mBatteryLevel;
     private TextView mAlarmStatus;
     private TextView mWeatherLine1, mWeatherLine2;
+    private TextView mEditTileDoneText;
 
     private boolean mShowEmergencyCallsOnly;
     private boolean mAlarmShowing;
@@ -148,7 +151,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private BatteryController mBatteryController;
     private NextAlarmController mNextAlarmController;
     private WeatherController mWeatherController;
-    private QSPanel mQSPanel;
+    private QSDragPanel mQSPanel;
 
     private final Rect mClipBounds = new Rect();
 
@@ -164,6 +167,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private SettingsObserver mSettingsObserver;
     private boolean mShowWeather;
     private boolean mShowBatteryTextExpanded;
+    private boolean mEditing;
 
     private ImageView mBackgroundImage;
     private Drawable mCurrentBackground;
@@ -208,6 +212,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mWeatherContainer.setOnClickListener(this);
         mWeatherLine1 = (TextView) findViewById(R.id.weather_line_1);
         mWeatherLine2 = (TextView) findViewById(R.id.weather_line_2);
+        mEditTileDoneText = (TextView) findViewById(R.id.done);
         mSettingsObserver = new SettingsObserver(new Handler());
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         loadDimens();
@@ -360,6 +365,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         boolean changed = expanded != mExpanded;
         mExpanded = expanded;
         if (changed) {
+            if (mShowingDetail && !expanded) {
+                mQsPanelCallback.onShowingDetail(null);
+            }
             updateEverything();
         }
     }
@@ -602,8 +610,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             startBatteryActivity();
         } else if (v == mAlarmStatus && mNextAlarm != null) {
             PendingIntent showIntent = mNextAlarm.getShowIntent();
-            if (showIntent != null && showIntent.isActivity()) {
-                mActivityStarter.startActivity(showIntent.getIntent(), true /* dismissShade */);
+            if (showIntent != null) {
+                mActivityStarter.startPendingIntentDismissingKeyguard(showIntent);
             }
         } else if (v == mClock) {
             startClockActivity();
@@ -644,7 +652,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
-    public void setQSPanel(QSPanel qsp) {
+    public void setQSPanel(QSDragPanel qsp) {
         mQSPanel = qsp;
         if (mQSPanel != null) {
             mQSPanel.setCallback(mQsPanelCallback);
@@ -784,6 +792,50 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         updateAmPmTranslation();
     }
 
+    public void setEditing(boolean editing) {
+        mEditing = editing;
+        if (mEditing) {
+            mQsPanelCallback.onShowingDetail(new QSTile.DetailAdapter() {
+                @Override
+                public StatusBarPanelCustomTile getCustomTile() {
+                    return null;
+                }
+
+                @Override
+                public int getTitle() {
+                    return R.string.quick_settings_edit_label;
+                }
+
+                @Override
+                public Boolean getToggleState() {
+                    return null;
+                }
+
+                @Override
+                public View createDetailView(Context context, View convertView, ViewGroup parent) {
+                    return null;
+                }
+
+                @Override
+                public Intent getSettingsIntent() {
+                    return null;
+                }
+
+                @Override
+                public void setToggleState(boolean state) {
+
+                }
+
+                @Override
+                public int getMetricsCategory() {
+                    return MetricsConstants.DONT_TRACK_ME_BRO;
+                }
+            });
+        } else {
+            mQsPanelCallback.onShowingDetail(null);
+        }
+    }
+
     /**
      * Captures all layout values (position, visibility) for a certain state. This is used for
      * animations.
@@ -905,17 +957,29 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 transition(mWeatherContainer, !showingDetail);
             }
             if (mAlarmShowing) {
-                transition(mAlarmStatus, !showingDetail);
+                transition(mAlarmStatus, !showingDetail && !mDetailTransitioning);
             }
             transition(mQsDetailHeader, showingDetail);
             mShowingDetail = showingDetail;
             if (showingDetail) {
                 mQsDetailHeaderTitle.setText(detail.getTitle());
                 final Boolean toggleState = detail.getToggleState();
-                if (toggleState == null) {
+                if (detail.getTitle() == R.string.quick_settings_edit_label) {
+                    mEditTileDoneText.setVisibility(View.VISIBLE);
                     mQsDetailHeaderSwitch.setVisibility(INVISIBLE);
+                    mQsDetailHeader.setClickable(true);
+                    mQsDetailHeader.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mQSPanel.getHost().setEditing(false);
+                        }
+                    });
+                } else if (toggleState == null) {
+                    mQsDetailHeaderSwitch.setVisibility(INVISIBLE);
+                    mEditTileDoneText.setVisibility(View.GONE);
                     mQsDetailHeader.setClickable(false);
                 } else {
+                    mEditTileDoneText.setVisibility(View.GONE);
                     mQsDetailHeaderSwitch.setVisibility(VISIBLE);
                     mQsDetailHeaderSwitch.setChecked(toggleState);
                     mQsDetailHeader.setClickable(true);

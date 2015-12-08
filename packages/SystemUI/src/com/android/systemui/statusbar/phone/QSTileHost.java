@@ -17,17 +17,23 @@
 package com.android.systemui.statusbar.phone;
 
 import android.app.ActivityManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Process;
+import android.os.RemoteException;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.logging.MetricsLogger;
+import android.widget.RemoteViews;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
@@ -35,6 +41,7 @@ import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
+import com.android.systemui.qs.tiles.CustomQSTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.EditTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
@@ -43,6 +50,7 @@ import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.WifiTile;
+import com.android.systemui.statusbar.CustomTileData;
 import com.android.systemui.statusbar.policy.BluetoothController;
 import com.android.systemui.statusbar.policy.CastController;
 import com.android.systemui.statusbar.policy.FlashlightController;
@@ -56,6 +64,9 @@ import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
+
+import cyanogenmod.app.CustomTileListenerService;
+import cyanogenmod.app.StatusBarPanelCustomTile;
 import cyanogenmod.providers.CMSettings;
 
 import java.util.ArrayList;
@@ -89,6 +100,9 @@ public class QSTileHost implements QSTile.Host, Tunable {
     private final KeyguardMonitor mKeyguard;
     private final SecurityController mSecurity;
 
+    private CustomTileData mCustomTileData;
+    private CustomTileListenerService mCustomTileListenerService;
+
     private Callback mCallback;
 
     public QSTileHost(Context context, PhoneStatusBar statusBar,
@@ -111,6 +125,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         mUserSwitcherController = userSwitcher;
         mKeyguard = keyguard;
         mSecurity = security;
+        mCustomTileData = new CustomTileData();
 
         final HandlerThread ht = new HandlerThread(QSTileHost.class.getSimpleName(),
                 Process.THREAD_PRIORITY_BACKGROUND);
@@ -125,11 +140,18 @@ public class QSTileHost implements QSTile.Host, Tunable {
     }
 
     public boolean isEditing() {
-        return mCallback.isEditing();
+        if (mCallback != null) {
+            return mCallback.isEditing();
+        }
+        return false;
     }
 
     public void setEditing(boolean editing) {
         mCallback.setEditing(editing);
+    }
+
+    void setCustomTileListenerService(CustomTileListenerService customTileListenerService) {
+        mCustomTileListenerService = customTileListenerService;
     }
 
     @Override
@@ -161,6 +183,19 @@ public class QSTileHost implements QSTile.Host, Tunable {
     }
 
     @Override
+    public void removeCustomTile(StatusBarPanelCustomTile customTile) {
+        if (mCustomTileListenerService != null) {
+            mCustomTileListenerService.removeCustomTile(customTile.getPackage(),
+                    customTile.getTag(), customTile.getId());
+        }
+    }
+
+    @Override
+    public void startActivityDismissingKeyguard(PendingIntent intent) {
+        mStatusBar.postStartActivityDismissingKeyguard(intent);
+    }
+
+    @Override
     public void warn(String message, Throwable t) {
         // already logged
     }
@@ -168,6 +203,11 @@ public class QSTileHost implements QSTile.Host, Tunable {
     @Override
     public void collapsePanels() {
         mStatusBar.postAnimateCollapsePanels();
+    }
+
+    @Override
+    public RemoteViews.OnClickHandler getOnClickHandler() {
+        return mStatusBar.getOnClickHandler();
     }
 
     @Override
@@ -269,6 +309,13 @@ public class QSTileHost implements QSTile.Host, Tunable {
         }
     }
 
+    @Override
+    public void goToSettingsPage() {
+        if (mCallback != null) {
+            mCallback.goToSettingsPage();
+        }
+    }
+
     public QSTile<?> createTile(String tileSpec) {
         if (tileSpec.equals("wifi")) return new WifiTile(this);
         else if (tileSpec.equals("bt")) return new BluetoothTile(this);
@@ -352,5 +399,37 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("hotspot")) return R.string.quick_settings_hotspot_label;
         else if (spec.equals("edit")) return R.string.quick_settings_edit_label;
         return 0;
+    }
+
+    void updateCustomTile(StatusBarPanelCustomTile sbc) {
+        if (mTiles.containsKey(sbc.getKey())) {
+            QSTile<?> tile = mTiles.get(sbc.getKey());
+            if (tile instanceof CustomQSTile) {
+                CustomQSTile qsTile = (CustomQSTile) tile;
+                qsTile.update(sbc);
+            }
+        }
+    }
+
+    void addCustomTile(StatusBarPanelCustomTile sbc) {
+        mCustomTileData.add(new CustomTileData.Entry(sbc));
+        mTiles.put(sbc.getKey(), new CustomQSTile(this, sbc));
+        if (mCallback != null) {
+            mCallback.onTilesChanged();
+        }
+    }
+
+    void removeCustomTileSysUi(String key) {
+        if (mTiles.containsKey(key)) {
+            mTiles.remove(key);
+            mCustomTileData.remove(key);
+            if (mCallback != null) {
+                mCallback.onTilesChanged();
+            }
+        }
+    }
+
+    CustomTileData getCustomTileData() {
+        return mCustomTileData;
     }
 }
