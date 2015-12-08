@@ -45,14 +45,20 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+<<<<<<< HEAD
 import android.content.res.ThemeConfig;
+=======
 import android.content.ServiceConnection;
+>>>>>>> 379d0c7... PIE 3.0 (1/2)
 import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+<<<<<<< HEAD
+=======
 import android.hardware.SensorManager;
+>>>>>>> 379d0c7... PIE 3.0 (1/2)
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
