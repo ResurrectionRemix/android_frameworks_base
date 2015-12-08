@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <color name="system_primary_color">@*android:color/material_grey_850</color>
+    <color name="system_secondary_color">@*android:color/material_grey_800</color>
+    <color name="system_accent_color">@*android:color/material_deep_teal_500</color>
+    <color name="qs_detail_transition">@*android:color/material_grey_850</color>
+</resources>
