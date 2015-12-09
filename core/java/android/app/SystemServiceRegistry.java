@@ -351,8 +351,8 @@ final class SystemServiceRegistry {
                                     outerContext.getApplicationInfo().targetSdkVersion,
                                     com.android.internal.R.style.Theme_Dialog,
                                     com.android.internal.R.style.Theme_Holo_Dialog,
-                                    com.android.internal.R.style.Theme_Material_DayNight_Dialog,
-                                    com.android.internal.R.style.Theme_Material_DayNight_Dialog)),
+                                    com.android.internal.R.style.Theme_DeviceDefault_Dialog,
+                                    com.android.internal.R.style.Theme_DeviceDefault_Light_Dialog)),
                     ctx.mMainThread.getHandler());
             }});
 

@@ -82,7 +82,7 @@ public class DumpHeapActivity extends Activity {
         }
 
         AlertDialog.Builder b = new AlertDialog.Builder(this,
-                android.R.style.Theme_Material_DayNight_Dialog_Alert);
+                android.R.style.Theme_Material_Light_Dialog_Alert);
         b.setTitle(com.android.internal.R.string.dump_heap_title);
         b.setMessage(getString(com.android.internal.R.string.dump_heap_text,
                 mProcess, DebugUtils.sizeValueToString(mSize, null)));
