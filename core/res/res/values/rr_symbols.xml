@@ -206,4 +206,7 @@
 
   <java-symbol type="drawable" name="ic_qs_weather_default_on" />
 
+  <!-- Use alternative way to blur lockscreen -->
+  <java-symbol type="bool" name="config_use_stackblur" />
+
 </resources>

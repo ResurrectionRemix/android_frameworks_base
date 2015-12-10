@@ -2946,4 +2946,6 @@
     <!-- Whether notify fingerprint client of successful cancelled authentication -->
     <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
 
+    <integer name="config_dayColorTemperature">6500</integer>
+
 </resources>
