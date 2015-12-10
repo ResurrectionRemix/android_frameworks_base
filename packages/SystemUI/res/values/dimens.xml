@@ -251,7 +251,7 @@
     <item name="recents_stack_overscroll_percentage" format="float" type="dimen">0.0875</item>
 
     <!-- The top offset for the task stack. -->
-    <dimen name="recents_stack_top_padding">6dp</dimen>
+    <dimen name="recents_stack_top_padding">16dp</dimen>
 
     <!-- The dimesnsions of the dismiss all recents button. -->
     <dimen name="recents_dismiss_all_button_size">48dp</dimen>
