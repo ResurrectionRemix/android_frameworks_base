@@ -154,4 +154,6 @@
     <!-- Restricted fingerprint config -->
     <java-symbol type="bool" name="config_fingerprintRestrictedToSystemAndOwner" />
 
+    <!-- Use alternative way to blur lockscreen -->
+    <java-symbol type="bool" name="config_use_stackblur" />
 </resources>

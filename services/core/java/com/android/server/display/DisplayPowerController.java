@@ -279,9 +279,6 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private final int mDozeBrightnessDefault;
     private final int mMaxBrightness;
 
-    // Lock screen blur
-    private static final int MAX_BLUR_WIDTH = 900;
-    private static final int MAX_BLUR_HEIGHT = 1600;
     public static final String KEYGUARD_PACKAGE = "com.android.systemui";
     public static final String KEYGUARD_CLASS = "com.android.systemui.keyguard.KeyguardService";
     private KeyguardServiceWrapper mKeyguardService;
@@ -528,6 +525,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                         && request.policy == DisplayPowerRequest.POLICY_OFF) {
                     boolean seeThrough = Settings.System.getBoolean(mContext.getContentResolver(),
                             Settings.System.LOCKSCREEN_SEE_THROUGH, false);
+                    Bitmap bmp = null;
                     if (seeThrough) {
                         WindowManager wm = (WindowManager)
                                 mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -535,28 +533,16 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                         Point point = new Point();
                         display.getRealSize(point);
                         int rotation = display.getRotation();
-                        boolean reverse = rotation == Surface.ROTATION_90
-                                || rotation == Surface.ROTATION_270;
+                        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+                            point.set(point.y, point.x);
+                        }
+
                         /* Limit max screenshot capture layer to 22000.
                            Prevents status bar and navigation bar from being captured. */
-                        Bitmap bmp = SurfaceControl.screenshot(new Rect(),
-                                reverse ? point.y : point.x, reverse ? point.x : point.y,
-                                0, 22000, false, Surface.ROTATION_0);
-                        if (bmp != null) {
-                            Bitmap tmpBmp = bmp;
-                            // scale image if its too large
-                            if (bmp.getWidth() > MAX_BLUR_WIDTH) {
-                                tmpBmp = bmp.createScaledBitmap(
-                                        bmp, MAX_BLUR_WIDTH, MAX_BLUR_HEIGHT, true);
-                            }
-                            mKeyguardService.setBackgroundBitmap(tmpBmp);
-
-                            bmp.recycle();
-                            tmpBmp.recycle();
-                        }
-                    } else {
-                        mKeyguardService.setBackgroundBitmap(null);
+                        bmp = SurfaceControl.screenshot(new Rect(),
+                                point.x, point.y, 0, 22000, false, Surface.ROTATION_0);
                     }
+                    mKeyguardService.setBackgroundBitmap(bmp);
                 }
                 mPendingRequestChangedLocked = true;
                 sendUpdatePowerStateLocked();

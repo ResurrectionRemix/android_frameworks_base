@@ -2541,4 +2541,7 @@
          automatically try to pair with it when the device exits tablet mode. -->
     <string translatable="false" name="config_packagedKeyboardName"></string>
     <integer name="config_dayColorTemperature">6500</integer>
+
+    <!-- Use alternative way to blur lockscreen -->
+    <bool name="config_use_stackblur">false</bool>
 </resources>
