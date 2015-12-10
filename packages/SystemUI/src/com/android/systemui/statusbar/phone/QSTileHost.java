@@ -51,8 +51,10 @@ import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.NfcTile;
+import com.android.systemui.qs.tiles.ProfilesTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SyncTile;
+import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.statusbar.CustomTileData;
@@ -336,8 +338,10 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("edit")) return new EditTile(this);
         else if (tileSpec.equals("compass")) return new CompassTile(this);
         else if (tileSpec.equals("nfc")) return new NfcTile(this);
+        else if (tileSpec.equals("profiles")) return new ProfilesTile(this);
         else if (tileSpec.equals("sync")) return new SyncTile(this);
         else if (tileSpec.equals("volume_panel")) return new VolumeTile(this);
+        else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -411,8 +415,10 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("adb_network")) return R.string.qs_tile_adb_over_network;
         else if (spec.equals("compass")) return R.string.qs_tile_compass;
         else if (spec.equals("nfc")) return R.string.quick_settings_nfc;
+        else if (spec.equals("profiles")) return R.string.quick_settings_profiles;
         else if (spec.equals("sync")) return R.string.quick_settings_sync_label;
         else if (spec.equals("volume_panel")) return R.string.quick_settings_volume_panel_label;
+        else if (spec.equals("usb_tether")) return R.string.quick_settings_usb_tether_label;
         return 0;
     }
 
