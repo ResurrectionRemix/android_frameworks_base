@@ -51,8 +51,10 @@ import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.NfcTile;
+import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenTimeoutTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.VolumeTile;
@@ -301,7 +303,12 @@ public class QSTileHost implements QSTile.Host, Tunable {
             } else {
                 if (DEBUG) Log.d(TAG, "Creating tile: " + tileSpec);
                 try {
-                    newTiles.put(tileSpec, createTile(tileSpec));
+                    if (mCustomTileData.get(tileSpec) != null) {
+                        newTiles.put(tileSpec, new CustomQSTile(this,
+                                mCustomTileData.get(tileSpec).sbc));
+                    } else {
+                        newTiles.put(tileSpec, createTile(tileSpec));
+                    }
                 } catch (Throwable t) {
                     Log.w(TAG, "Error creating tile for spec: " + tileSpec, t);
                 }
@@ -342,6 +349,8 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("sync")) return new SyncTile(this);
         else if (tileSpec.equals("volume_panel")) return new VolumeTile(this);
         else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
+        else if (tileSpec.equals("screen_timeout")) return new ScreenTimeoutTile(this);
+        else if (tileSpec.equals("performance")) return new PerfProfileTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -419,33 +428,43 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("sync")) return R.string.quick_settings_sync_label;
         else if (spec.equals("volume_panel")) return R.string.quick_settings_volume_panel_label;
         else if (spec.equals("usb_tether")) return R.string.quick_settings_usb_tether_label;
+        else if (spec.equals("screen_timeout")) return R.string.quick_settings_screen_timeout_detail_title;
+        else if (spec.equals("performance")) return R.string.qs_tile_performance;
         return 0;
     }
 
     void updateCustomTile(StatusBarPanelCustomTile sbc) {
-        if (mTiles.containsKey(sbc.getKey())) {
-            QSTile<?> tile = mTiles.get(sbc.getKey());
-            if (tile instanceof CustomQSTile) {
-                CustomQSTile qsTile = (CustomQSTile) tile;
-                qsTile.update(sbc);
+        synchronized (mTiles) {
+            if (mTiles.containsKey(sbc.getKey())) {
+                QSTile<?> tile = mTiles.get(sbc.getKey());
+                if (tile instanceof CustomQSTile) {
+                    CustomQSTile qsTile = (CustomQSTile) tile;
+                    qsTile.update(sbc);
+                }
             }
         }
     }
 
     void addCustomTile(StatusBarPanelCustomTile sbc) {
-        mCustomTileData.add(new CustomTileData.Entry(sbc));
-        mTiles.put(sbc.getKey(), new CustomQSTile(this, sbc));
-        if (mCallback != null) {
-            mCallback.onTilesChanged();
+        synchronized (mTiles) {
+            mCustomTileData.add(new CustomTileData.Entry(sbc));
+            mTileSpecs.add(sbc.getKey());
+            mTiles.put(sbc.getKey(), new CustomQSTile(this, sbc));
+            if (mCallback != null) {
+                mCallback.onTilesChanged();
+            }
         }
     }
 
     void removeCustomTileSysUi(String key) {
-        if (mTiles.containsKey(key)) {
-            mTiles.remove(key);
-            mCustomTileData.remove(key);
-            if (mCallback != null) {
-                mCallback.onTilesChanged();
+        synchronized (mTiles) {
+            if (mTiles.containsKey(key)) {
+                mTileSpecs.remove(key);
+                mTiles.remove(key);
+                mCustomTileData.remove(key);
+                if (mCallback != null) {
+                    mCallback.onTilesChanged();
+                }
             }
         }
     }
