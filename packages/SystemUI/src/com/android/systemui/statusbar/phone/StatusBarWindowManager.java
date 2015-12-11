@@ -21,18 +21,16 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PixelFormat;
-import android.os.Handler;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Display;
 import android.view.SurfaceSession;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.WindowManagerPolicy;
 
 import com.android.keyguard.R;
 import com.android.systemui.keyguard.KeyguardViewMediator;
@@ -355,6 +353,12 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
         applyKeyguardBlurShow();
     }
 
+    public void setKeyguardExternalViewFocus(boolean hasFocus) {
+        mCurrentState.keyguardExternalViewHasFocus = hasFocus;
+        // make the keyguard occluded so the external view gets full focus
+        setKeyguardOccluded(hasFocus);
+    }
+
     /**
      * @param state The {@link StatusBarState} of the status bar.
      */
@@ -402,6 +406,10 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
         pw.println(mCurrentState);
     }
 
+    public boolean keyguardExternalViewHasFocus() {
+        return mCurrentState.keyguardExternalViewHasFocus;
+    }
+
     private static class State {
         boolean keyguardShowing;
         boolean keyguardOccluded;
@@ -416,6 +424,7 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
         boolean forceStatusBarVisible;
         boolean forceCollapsed;
         boolean forceDozeBrightness;
+        boolean keyguardExternalViewHasFocus;
 
         /**
          * The {@link BaseStatusBar} state from the status bar.
