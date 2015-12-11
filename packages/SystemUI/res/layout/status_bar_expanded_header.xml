@@ -71,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="36dp"
+            android:layout_marginStart="8dp"
             android:tint="@color/tuner_icon_tint"
             android:tintMode="src_in"
             android:visibility="invisible"
@@ -81,7 +82,8 @@
     <com.android.keyguard.AlphaOptimizedImageButton android:id="@+id/task_manager_button"
         style="@android:style/Widget.Material.Button.Borderless"
         android:layout_toStartOf="@id/settings_button_container"
-        android:layout_width="42dp"
+        android:layout_width="48dp"
+        android:layout_marginStart="8dp"
         android:layout_height="@dimen/status_bar_header_height"
         android:background="@drawable/ripple_drawable"
         android:src="@drawable/ic_tasklist_switch_normal"
@@ -94,7 +96,7 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginStart="16dp"
         android:background="@drawable/ripple_drawable"
-        android:paddingEnd="4dp" >
+        android:paddingEnd="8dp" >
         <FrameLayout android:id="@+id/system_icons_container"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/status_bar_height"
