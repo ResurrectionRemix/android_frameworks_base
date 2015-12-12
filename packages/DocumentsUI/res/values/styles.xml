@@ -21,7 +21,7 @@
     <style name="DocumentsTheme" parent="@style/DialogWhenReallyLarge">
         <item name="android:actionBarWidgetTheme">@null</item>
         <item name="android:actionBarTheme">@*android:style/ThemeOverlay.Material.Dark.ActionBar</item>
-        <item name="android:actionBarPopupTheme">@*android:style/ThemeOverlay.Material.Light</item>
+        <item name="android:actionModeBackground">@drawable/actionmode_background</item>
 
         <item name="android:colorPrimaryDark">@*android:color/material_blue_grey_900</item>
         <item name="android:colorPrimary">@*android:color/material_blue_grey_800</item>
@@ -35,5 +35,4 @@
 
         <item name="android:windowSoftInputMode">stateUnspecified|adjustUnspecified</item>
     </style>
-
 </resources>
