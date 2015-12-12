@@ -72,6 +72,7 @@ public class StatusBarWindowView extends FrameLayout {
     private int mStatusBarHeaderHeight;
 
     private boolean mDoubleTapToSleepEnabled;
+    private boolean mDoubleTapToSleepLockScreen;
     private GestureDetector mDoubleTapGesture;
     private Handler mHandler = new Handler();
     private SettingsObserver mSettingsObserver;
@@ -271,8 +272,6 @@ public class StatusBarWindowView extends FrameLayout {
                 if (DEBUG) Log.w(TAG, "logging lock screen double tap gesture");
                 mDoubleTapGesture.onTouchEvent(ev);
            		 }
-        	}
-<<<<<<< HEAD
 
         if (mDoubleTapToSleepLockScreen &&
                 mService.getBarState() == StatusBarState.KEYGUARD
@@ -281,9 +280,8 @@ public class StatusBarWindowView extends FrameLayout {
             if (DEBUG) Log.w(TAG, "logging lock screen double tap gesture");
             mDoubleTapGesture.onTouchEvent(ev);
         }
+    }
 
-=======
->>>>>>> parent of 6ddae0e... SystemUI: Double tap to sleep on the lock screen (1/2)
         if (mNotificationPanel.isFullyExpanded()
                 && mStackScrollLayout.getVisibility() == View.VISIBLE
                 && mService.getBarState() == StatusBarState.KEYGUARD
@@ -402,6 +400,8 @@ public class StatusBarWindowView extends FrameLayout {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCK_SCREEN), false, this);
             update();
         }
 
@@ -424,7 +424,8 @@ public class StatusBarWindowView extends FrameLayout {
             ContentResolver resolver = mContext.getContentResolver();
             mDoubleTapToSleepEnabled = Settings.System.getInt(
                     resolver, Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 1) == 1;
-
+            mDoubleTapToSleepLockScreen = Settings.System.getIntForUser(resolver,
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCK_SCREEN, 0, UserHandle.USER_CURRENT) == 1;
         }
     }
 }
