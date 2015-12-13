@@ -2,6 +2,7 @@
 <!--
 **
 ** Copyright 2014, SlimRoms Project
+** Copyright 2015 CyanideL
 **
 ** Licensed under the Apache License, Version 2.0 (the "License")
 ** you may not use this file except in compliance with the License.
@@ -16,11 +17,25 @@
 ** limitations under the License.
 */
 -->
-
-<LinearLayout
+<HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:id="@+id/header_bar_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fadingEdgeLength="30dp"
+    android:requiresFadingEdge="horizontal"
+    android:scrollbars="none"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/header_bar_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <com.android.keyguard.KeyguardShortcuts
             android:id="@+id/shortcuts"
@@ -29,4 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/shortcut_margin_top" />
 
-</LinearLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</HorizontalScrollView>
