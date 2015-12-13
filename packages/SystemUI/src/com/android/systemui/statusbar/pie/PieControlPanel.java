@@ -73,7 +73,6 @@ public class PieControlPanel extends FrameLayout implements OnNavButtonPressedLi
     private Handler mHandler;
     private ViewGroup mPieContentFrame;
     private PieController mPieController;
-    private boolean mRelocatePieOnRotation;
 
     private final static String SysUIPackage = "com.android.systemui";
 
@@ -91,8 +90,6 @@ public class PieControlPanel extends FrameLayout implements OnNavButtonPressedLi
         mContentArea = new Rect();
         mOrientation = Gravity.BOTTOM;
         mMenuButton = false;
-        mRelocatePieOnRotation = mContext.getResources().getBoolean(
-                R.bool.config_relocatePieOnRotation);
     }
 
     public boolean currentAppUsesMenu() {
@@ -104,7 +101,8 @@ public class PieControlPanel extends FrameLayout implements OnNavButtonPressedLi
     }
 
     private int convertAbsoluteToRelativeGravity(int gravity) {
-        if (mRelocatePieOnRotation) {
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.PA_PIE_ALWAYS_RIGHT, 1) == 1) {
             int rot = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE))
                     .getDefaultDisplay().getRotation();
 
@@ -127,7 +125,8 @@ public class PieControlPanel extends FrameLayout implements OnNavButtonPressedLi
     }
 
     private int convertRelativeToAbsoluteGravity(int gravity) {
-        if (mRelocatePieOnRotation) {
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.PA_PIE_ALWAYS_RIGHT, 1) == 1) {
             int rot = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE))
                     .getDefaultDisplay().getRotation();
 
@@ -197,7 +196,8 @@ public class PieControlPanel extends FrameLayout implements OnNavButtonPressedLi
      * @see #isGravityPossible(int)
      */
     public boolean isGravityPossible(int gravity, boolean forceAssumePortrait) {
-        if (mRelocatePieOnRotation) {
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.PA_PIE_ALWAYS_RIGHT, 1) == 1) {
             int rot = forceAssumePortrait ? Surface.ROTATION_0 : ((WindowManager) mContext
                     .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
 
