@@ -401,7 +401,7 @@ public class KeyguardServiceDelegate {
             mKeyguardService.onBootCompleted();
         }
         mKeyguardState.bootCompleted = true;
-        sendStateChangeBroadcast(true);
+        //sendStateChangeBroadcast(true);
     }
 
     public void onActivityDrawn() {
