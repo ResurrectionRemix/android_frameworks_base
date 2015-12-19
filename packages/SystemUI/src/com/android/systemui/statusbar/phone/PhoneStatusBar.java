@@ -5721,7 +5721,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     }
 
     public boolean onMenuPressed() {
-        return mState == StatusBarState.KEYGUARD && mStatusBarKeyguardViewManager.onMenuPressed();
+       return mState == StatusBarState.KEYGUARD && mStatusBarKeyguardViewManager.isSecure();
     }
 
     public void endAffordanceLaunch() {
