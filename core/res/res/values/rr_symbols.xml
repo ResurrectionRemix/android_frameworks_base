@@ -116,10 +116,6 @@
   <!-- Screen record shortcut -->
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
 
-  <java-symbol type="drawable" name="ic_audio_notification_new" />
-  <java-symbol type="drawable" name="ic_audio_notification_mute_new" />
-  <java-symbol type="drawable" name="ic_audio_notification_mute_alpha" />
- 
   <!-- Power menu -->
   <java-symbol type="drawable" name="ic_lock_screenrecord" />
   <java-symbol type="string" name="global_action_screenrecord" />
