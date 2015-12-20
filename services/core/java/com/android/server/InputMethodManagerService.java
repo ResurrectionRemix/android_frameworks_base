@@ -1827,11 +1827,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                 mImeSwitcherNotification.setContentTitle(title)
                         .setContentText(summary)
                         .setContentIntent(mImeSwitchPendingIntent);
-                if ((mNotificationManager != null)
-                        && !mWindowManagerService.hasNavigationBar()) {
-                    if (DEBUG) {
-                        Slog.d(TAG, "--- show notification: label =  " + summary);
-                    }
+                    if (mNotificationManager != null) {
                     mNotificationManager.notifyAsUser(null,
                             com.android.internal.R.string.select_input_method,
                             mImeSwitcherNotification.build(), UserHandle.ALL);
