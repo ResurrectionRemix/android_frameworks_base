@@ -215,11 +215,10 @@ public class UsageStatsService extends SystemService implements
             mPowerManager = getContext().getSystemService(PowerManager.class);
 
             mScreenOnSystemTimeSnapshot = System.currentTimeMillis();
-            synchronized (this) {
-                mScreenOnTime = readScreenOnTimeLocked();
-            }
+
             mDisplayManager.registerDisplayListener(mDisplayListener, mHandler);
-            synchronized (this) {
+            synchronized (mLock) {
+                mScreenOnTime = readScreenOnTimeLocked();
                 updateDisplayLocked();
             }
         } else if (phase == PHASE_BOOT_COMPLETED) {
@@ -378,20 +377,24 @@ public class UsageStatsService extends SystemService implements
                             PackageManager.GET_DISABLED_COMPONENTS
                                 | PackageManager.GET_UNINSTALLED_PACKAGES,
                             userId);
+            final long timeNow;
+            final long screenOnTime;
+            final UserUsageStatsService service;
             synchronized (mLock) {
-                final long timeNow = checkAndGetTimeLocked();
-                final long screenOnTime = getScreenOnTimeLocked(timeNow);
-                UserUsageStatsService service = getUserDataAndInitializeIfNeededLocked(userId,
-                        timeNow);
-                final int packageCount = packages.size();
-                for (int p = 0; p < packageCount; p++) {
-                    final PackageInfo pi = packages.get(p);
-                    final String packageName = pi.packageName;
-                    final boolean isIdle = isAppIdleFiltered(packageName,
-                            UserHandle.getAppId(pi.applicationInfo.uid),
-                            userId, service, timeNow, screenOnTime);
-                    mHandler.sendMessage(mHandler.obtainMessage(MSG_INFORM_LISTENERS,
-                            userId, isIdle ? 1 : 0, packageName));
+                timeNow = checkAndGetTimeLocked();
+                screenOnTime = getScreenOnTimeLocked(timeNow);
+                service = getUserDataAndInitializeIfNeededLocked(userId, timeNow);
+            }
+            final int packageCount = packages.size();
+            for (int p = 0; p < packageCount; p++) {
+                final PackageInfo pi = packages.get(p);
+                final String packageName = pi.packageName;
+                final boolean isIdle = isAppIdleFiltered(packageName,
+                        UserHandle.getAppId(pi.applicationInfo.uid),
+                        userId, service, timeNow, screenOnTime);
+                mHandler.sendMessage(mHandler.obtainMessage(MSG_INFORM_LISTENERS,
+                        userId, isIdle ? 1 : 0, packageName));
+                synchronized (mLock) {
                     mAppIdleHistory.addEntry(packageName, userId, isIdle, timeNow);
                 }
             }
