@@ -72,3 +72,4 @@
         android:summary="@string/show_battery_percentage_summary"
         android:persistent="false" />
 </PreferenceScreen>
+

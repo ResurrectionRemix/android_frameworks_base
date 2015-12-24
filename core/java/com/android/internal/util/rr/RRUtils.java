@@ -18,6 +18,7 @@ package com.android.internal.util.rr;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 
 import java.util.Locale;
 
@@ -28,4 +29,10 @@ public class RRUtils {
                Locale.CHINESE.getLanguage());
     }
 
-} 
+    public static boolean isWifiOnly(Context context) {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        return (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) == false);
+    }
+
+}

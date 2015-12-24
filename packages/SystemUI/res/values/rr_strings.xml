@@ -122,4 +122,9 @@
     <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_power">Power</string>
 
+     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Show 4G instead of LTE</string>
+    <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+    <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+
 </resources>
