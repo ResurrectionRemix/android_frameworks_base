@@ -4624,8 +4624,14 @@ public final class Settings {
          * Volume key controls ringtone or media sound stream
          * @hide
          */
-        public static final String VOLUME_KEYS_CONTROL_RING_STREAM =
-                "volume_keys_control_ring_stream";
+        public static final String VOLUME_KEYS_CONTROL_RING_STREAM = "volume_keys_control_ring_stream";  
+
+        /**
+         * Whether to display set of animations when prompting the power menu
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

@@ -27,5 +27,15 @@
         <item name="windowEnterAnimation">@anim/recent_screen_enter_left</item>
         <item name="windowExitAnimation">@anim/recent_screen_exit_left</item>
     </style>
+  
+    <!-- Power Menu Animation -->
+    <style name="PowerMenuBottomAnimation">
+        <item name="windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="windowExitAnimation">@anim/slide_out_down</item>
+    </style>
+    <style name="PowerMenuTopAnimation">
+        <item name="windowEnterAnimation">@anim/slide_in_down</item>
+        <item name="windowExitAnimation">@anim/slide_out_up</item>
+    </style>
 
 </resources>
