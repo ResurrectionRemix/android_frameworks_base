@@ -97,4 +97,8 @@
   <java-symbol type="attr" name="unitsLeft" />
   <java-symbol type="attr" name="unitsRight" />
 
+  <!-- Power menu Animations  -->
+  <java-symbol type="style" name="PowerMenuBottomAnimation" />
+  <java-symbol type="style" name="PowerMenuTopAnimation" />
+
 </resources>
