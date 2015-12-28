@@ -82,6 +82,8 @@ public class KeyButtonView extends ImageView {
 
     private PerformanceManager mPerf;
 
+    private final Handler mHandler = new Handler();
+
     private final Runnable mCheckLongPress = new Runnable() {
         public void run() {
             if (isPressed()) {
@@ -335,15 +337,23 @@ public class KeyButtonView extends ImageView {
                 break;
         }
 
-        ViewParent parent = getParent();
-        while (parent != null && !(parent instanceof NavigationBarView)) {
-            parent = parent.getParent();
-        }
-        if (parent != null) {
-            ((NavigationBarView) parent).onNavButtonTouched();
-        }
+        mHandler.post(mNavButtonDimActivator);
+
         return true;
     }
+
+    private final Runnable mNavButtonDimActivator = new Runnable() {
+        @Override
+        public void run() {
+            ViewParent parent = getParent();
+            while (parent != null && !(parent instanceof NavigationBarView)) {
+                parent = parent.getParent();
+            }
+            if (parent != null) {
+                ((NavigationBarView) parent).onNavButtonTouched();
+            }
+        }
+    };
 
     public void playSoundEffect(int soundConstant) {
         mAudioManager.playSoundEffect(soundConstant, ActivityManager.getCurrentUser());
