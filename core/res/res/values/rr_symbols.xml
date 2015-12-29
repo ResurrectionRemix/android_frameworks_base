@@ -100,5 +100,6 @@
   <!-- Power menu Animations  -->
   <java-symbol type="style" name="PowerMenuBottomAnimation" />
   <java-symbol type="style" name="PowerMenuTopAnimation" />
+  <java-symbol type="style" name="PowerMenuRotateAnimation" />
 
 </resources>

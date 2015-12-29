@@ -26,5 +26,8 @@
         <item name="windowEnterAnimation">@anim/slide_in_down</item>
         <item name="windowExitAnimation">@anim/slide_out_up</item>
     </style>
+    <style name="PowerMenuRotateAnimation">
+        <item name="windowEnterAnimation">@anim/rotate</item>
+    </style>
 
 </resources>
