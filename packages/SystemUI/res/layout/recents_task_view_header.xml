@@ -36,7 +36,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
         android:textSize="16sp"
-        android:textColor="#ffffffff"
+        android:textColor="@color/task_view_header_text_color"
         android:text="@string/recents_empty_message"
         android:fontFamily="sans-serif-medium"
         android:singleLine="true"
@@ -63,6 +63,7 @@
         android:background="@drawable/recents_button_bg"
         android:visibility="invisible"
         android:src="@drawable/recents_dismiss_light" />
+<<<<<<< HEAD
   <com.android.systemui.recents.views.FixedSizeImageView 
         android:id="@+id/lock_to_app_fab" 
         android:layout_width="48.0dip" 
@@ -74,4 +75,6 @@
         android:visibility="invisible"
         android:src="@drawable/ic_pin" />
 
+=======
+>>>>>>> 9500061... Themes: Expose hard code for themes in SystemUI
 </com.android.systemui.recents.views.TaskViewHeader>
