@@ -4498,8 +4498,31 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON_COLOR = "lockscreen_lock_icon_color";
 
         /**
-         * Change the color of the lockscreen indication text
          *
+         * @hide
+         */
+        public static final String ANIMATION_IME_DURATION = "animation_ime_duration";
+
+        /**
+         *
+         * @hide
+         */
+        public static final String ANIMATION_IME_ENTER = "animation_ime_enter";
+
+        /**
+         *
+         * @hide
+         */
+        public static final String ANIMATION_IME_EXIT = "animation_ime_exit";
+
+        /**
+         *
+         * @hide
+         */
+        public static final String ANIMATION_IME_INTERPOLATOR = "animation_ime_interpolator";
+
+        /**
+         * Change the color of the lockscreen indication text
          * @hide
          */
         public static final String LOCKSCREEN_INDICATION_TEXT_COLOR = "lockscreen_indication_text_color";

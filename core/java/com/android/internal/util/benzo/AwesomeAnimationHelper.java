@@ -18,6 +18,8 @@ package com.android.internal.util.benzo;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,17 @@ public class AwesomeAnimationHelper {
     public final static int ANIMATION_GROW_SHRINK_BOTTOM = 11;
     public final static int ANIMATION_GROW_SHRINK_LEFT = 12;
     public final static int ANIMATION_GROW_SHRINK_RIGHT = 13;
+
+    public static final int INTERPOLATOR_NONE = 0;
+    public static final int INTERPOLATOR_ACCELERATE = 1;
+    public static final int INTERPOLATOR_DECELERATE = 2;
+    public static final int INTERPOLATOR_ACCELERATE_DECELERATE = 3;
+    public static final int INTERPOLATOR_ANTICIPATE = 4;
+    public static final int INTERPOLATOR_OVERSHOOT = 5;
+    public static final int INTERPOLATOR_ANTICIPATE_OVERSHOOT = 6;
+    public static final int INTERPOLATOR_BOUNCE = 7;
+    public static final int INTERPOLATOR_CYCLE = 8;
+    public static final int INTERPOLATOR_LINEAR = 9;
 
     public static int[] getAnimationsList() {
         ArrayList<Integer> animList = new ArrayList<Integer>();
@@ -173,5 +186,44 @@ public class AwesomeAnimationHelper {
 
         }
         return value;
+    }
+
+    public static String getProperName(Resources res, int index) {
+        String[] str = res.getStringArray(com.android.internal.R.array.anim_controls_entries);
+        return str[index];
+    }
+
+    public static Interpolator getInterpolator(Context ctx, int index) {
+        Interpolator itplr = null;
+        switch(index) {
+           case INTERPOLATOR_ACCELERATE:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.accelerate_interpolator);
+                break;
+           case INTERPOLATOR_DECELERATE:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.decelerate_interpolator);
+                break;
+           case INTERPOLATOR_ACCELERATE_DECELERATE:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.accelerate_decelerate_interpolator);
+                break;
+           case INTERPOLATOR_ANTICIPATE:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.anticipate_interpolator);
+                break;
+           case INTERPOLATOR_OVERSHOOT:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.overshoot_interpolator);
+                break;
+           case INTERPOLATOR_ANTICIPATE_OVERSHOOT:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.anticipate_overshoot_interpolator);
+                break;
+           case INTERPOLATOR_BOUNCE:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.bounce_interpolator);
+                break;
+           case INTERPOLATOR_CYCLE:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.cycle_interpolator);
+                break;
+           case INTERPOLATOR_LINEAR:
+                itplr = AnimationUtils.loadInterpolator(ctx, android.R.anim.linear_interpolator);
+                break;
+        }
+        return itplr;
     }
 }

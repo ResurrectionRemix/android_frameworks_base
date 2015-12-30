@@ -6,7 +6,7 @@
  * the License at
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.os.Bundle;
@@ -55,7 +56,10 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.BadTokenException;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.EditorInfo;
@@ -72,6 +76,7 @@ import android.widget.LinearLayout;
 
 import com.android.internal.statusbar.IStatusBarService;
 
+import com.android.internal.util.benzo.AwesomeAnimationHelper;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
@@ -80,7 +85,7 @@ import java.io.PrintWriter;
  * which final implementations can derive from and customize.  See the
  * base class {@link AbstractInputMethodService} and the {@link InputMethod}
  * interface for more information on the basics of writing input methods.
- * 
+ *
  * <p>In addition to the normal Service lifecycle methods, this class
  * introduces some new specific callbacks that most subclasses will want
  * to make use of:</p>
@@ -96,7 +101,7 @@ import java.io.PrintWriter;
  * <li> {@link #onStartInputView(EditorInfo, boolean)} to deal with input
  * starting within the input area of the IME.
  * </ul>
- * 
+ *
  * <p>An input method has significant discretion in how it goes about its
  * work: the {@link android.inputmethodservice.InputMethodService} provides
  * a basic framework for standard UI elements (input view, candidates view,
@@ -111,7 +116,7 @@ import java.io.PrintWriter;
  * execute callbacks as it needs information about them, and provides APIs for
  * programmatic control over them.  They layout of these elements is explicitly
  * defined:</p>
- * 
+ *
  * <ul>
  * <li>The soft input view, if available, is placed at the bottom of the
  * screen.
@@ -122,11 +127,11 @@ import java.io.PrintWriter;
  * the application and its top part will contain the extract text of what is
  * currently being edited by the application.
  * </ul>
- * 
- * 
+ *
+ *
  * <a name="SoftInputView"></a>
  * <h3>Soft Input View</h3>
- * 
+ *
  * <p>Central to most input methods is the soft input view.  This is where most
  * user interaction occurs: pressing on soft keys, drawing characters, or
  * however else your input method wants to generate text.  Most implementations
@@ -135,7 +140,7 @@ import java.io.PrintWriter;
  * as long as the input view is visible, you will see user interaction in
  * that view and can call back on the InputMethodService to interact with the
  * application as appropriate.</p>
- * 
+ *
  * <p>There are some situations where you want to decide whether or not your
  * soft input view should be shown to the user.  This is done by implementing
  * the {@link #onEvaluateInputViewShown()} to return true or false based on
@@ -145,17 +150,17 @@ import java.io.PrintWriter;
  * implementation always shows the input view unless there is a hard
  * keyboard available, which is the appropriate behavior for most input
  * methods.</p>
- * 
- * 
+ *
+ *
  * <a name="CandidatesView"></a>
  * <h3>Candidates View</h3>
- * 
+ *
  * <p>Often while the user is generating raw text, an input method wants to
  * provide them with a list of possible interpretations of that text that can
  * be selected for use.  This is accomplished with the candidates view, and
  * like the soft input view you implement {@link #onCreateCandidatesView()}
  * to instantiate your own view implementing your candidates UI.</p>
- * 
+ *
  * <p>Management of the candidates view is a little different than the input
  * view, because the candidates view tends to be more transient, being shown
  * only when there are possible candidates for the current text being entered
@@ -165,11 +170,11 @@ import java.io.PrintWriter;
  * UI in the same way as the soft input view: it will never cause application
  * windows to resize, only cause them to be panned if needed for the user to
  * see the current focus.</p>
- * 
- * 
+ *
+ *
  * <a name="FullscreenMode"></a>
  * <h3>Fullscreen Mode</h3>
- * 
+ *
  * <p>Sometimes your input method UI is too large to integrate with the
  * application UI, so you just want to take over the screen.  This is
  * accomplished by switching to full-screen mode, causing the input method
@@ -178,7 +183,7 @@ import java.io.PrintWriter;
  * there is a standard implementation for the extract editor that you should
  * not need to change.  The editor is placed at the top of the IME, above the
  * input and candidates views.</p>
- * 
+ *
  * <p>Similar to the input view, you control whether the IME is running in
  * fullscreen mode by implementing {@link #onEvaluateFullscreenMode()}
  * to return true or false based on
@@ -194,18 +199,18 @@ import java.io.PrintWriter;
  * {@link #onDisplayCompletions(CompletionInfo[])} to show completions
  * generated by your application, typically in your candidates view like you
  * would normally show candidates.
- * 
- * 
+ *
+ *
  * <a name="GeneratingText"></a>
  * <h3>Generating Text</h3>
- * 
+ *
  * <p>The key part of an IME is of course generating text for the application.
  * This is done through calls to the
  * {@link android.view.inputmethod.InputConnection} interface to the
  * application, which can be retrieved from {@link #getCurrentInputConnection()}.
  * This interface allows you to generate raw key events or, if the target
  * supports it, directly edit in strings of candidates and committed text.</p>
- * 
+ *
  * <p>Information about what the target is expected and supports can be found
  * through the {@link android.view.inputmethod.EditorInfo} class, which is
  * retrieved with {@link #getCurrentInputEditorInfo()} method.  The most
@@ -216,13 +221,13 @@ import java.io.PrintWriter;
  * raw key events to it.  An input method will also want to look at other
  * values here, to for example detect password mode, auto complete text views,
  * phone number entry, etc.</p>
- * 
+ *
  * <p>When the user switches between input targets, you will receive calls to
  * {@link #onFinishInput()} and {@link #onStartInput(EditorInfo, boolean)}.
  * You can use these to reset and initialize your input state for the current
  * target.  For example, you will often want to clear any input state, and
  * update a soft keyboard to be appropriate for the new inputType.</p>
- * 
+ *
  * @attr ref android.R.styleable#InputMethodService_imeFullscreenBackground
  * @attr ref android.R.styleable#InputMethodService_imeExtractEnterAnimation
  * @attr ref android.R.styleable#InputMethodService_imeExtractExitAnimation
@@ -320,11 +325,22 @@ public class InputMethodService extends AbstractInputMethodService {
      */
     boolean mShouldClearInsetOfPreviousIme;
 
+
     boolean mForcedAutoRotate;
-    Handler mHandler;
 
     private IStatusBarService mStatusBarService;
     private Object mServiceAquireLock = new Object();
+    Handler mHandler;
+
+    private Window mWindowIme;
+    private int mAnimationDuration;
+    private int mAnimationEnterIndex;
+    private int mAnimationExitIndex;
+    private int mInterpolatorIndex;
+    private boolean mExitOnly;
+    private boolean mReverseExit;
+
+    private SettingsObserver mSettingsObserver;
 
     final Insets mTmpInsets = new Insets();
     final int[] mTmpLocation = new int[2];
@@ -369,6 +385,46 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     };
+
+    private class SettingsObserver extends ContentObserver {
+
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.ANIMATION_IME_DURATION),
+                                    false, this);
+            getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.ANIMATION_IME_ENTER),
+                                    false, this);
+            getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.ANIMATION_IME_EXIT),
+                                    false, this);
+            getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.ANIMATION_IME_INTERPOLATOR),
+                                    false, this);
+
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
+    private void updateSettings() {
+        mAnimationEnterIndex = Settings.System.getInt(getContentResolver(),
+                      Settings.System.ANIMATION_IME_ENTER, 0);
+        mAnimationExitIndex = Settings.System.getInt(getContentResolver(),
+                      Settings.System.ANIMATION_IME_EXIT, 0);
+        mInterpolatorIndex = Settings.System.getInt(getContentResolver(),
+                      Settings.System.ANIMATION_IME_INTERPOLATOR, 0);
+        int temp = Settings.System.getInt(getContentResolver(),
+                      Settings.System.ANIMATION_IME_DURATION, 0);
+        mAnimationDuration = temp * 15;
+    }
     
     /**
      * Concrete implementation of
@@ -687,7 +743,8 @@ public class InputMethodService extends AbstractInputMethodService {
         return false;
     }
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         mTheme = Resources.selectSystemTheme(mTheme,
                 getApplicationInfo().targetSdkVersion,
                 android.R.style.Theme_InputMethod,
@@ -707,8 +764,13 @@ public class InputMethodService extends AbstractInputMethodService {
         if (mHardwareAccelerated) {
             mWindow.getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         }
+        mHandler = new Handler();
+        mSettingsObserver = new SettingsObserver(mHandler);
+        mSettingsObserver.observe();
         initViews();
         mWindow.getWindow().setLayout(MATCH_PARENT, WRAP_CONTENT);
+        mWindowIme = mWindow.getWindow();
+        updateSettings();
     }
 
     /**
@@ -769,7 +831,8 @@ public class InputMethodService extends AbstractInputMethodService {
         mHandler = new Handler();
     }
 
-    @Override public void onDestroy() {
+    @Override
+    public void onDestroy() {
         super.onDestroy();
         mRootView.getViewTreeObserver().removeOnComputeInternalInsetsListener(
                 mInsetsComputer);
@@ -799,7 +862,8 @@ public class InputMethodService extends AbstractInputMethodService {
      * {@link #onCreateInputView} and {@link #onStartInputView} and related
      * appropriate functions if the UI is displayed.
      */
-    @Override public void onConfigurationChanged(Configuration newConfig) {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         
         boolean visible = mWindowVisible;
@@ -1619,7 +1683,17 @@ public class InputMethodService extends AbstractInputMethodService {
      * for the window has occurred (creating its views etc).
      */
     public void onWindowShown() {
-        // Intentionally empty
+        if (mAnimationEnterIndex == 0) {
+            mWindow.getWindow().setWindowAnimations(android.R.style.Animation_InputMethod);
+            return;
+        }
+        Dialog dialog = this.getWindow();
+        mWindowIme = dialog.getWindow();
+        mWindowIme.setWindowAnimations(-1);
+        dialog.show();
+        Animation anim = retrieveAnimation(true);
+        if (anim == null) return;
+        mRootView.startAnimation(anim);
     }
     
     /**
@@ -1627,7 +1701,56 @@ public class InputMethodService extends AbstractInputMethodService {
      * after previously being visible.
      */
     public void onWindowHidden() {
-        // Intentionally empty
+        if (mAnimationExitIndex == 0) {
+            mWindow.getWindow().setWindowAnimations(android.R.style.Animation_InputMethod);
+            return;
+        }
+        final Dialog dialog = this.getWindow();
+        mWindowIme = dialog.getWindow();
+        mWindowIme.setWindowAnimations(-1);
+
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                     dialog.hide();
+                }
+        };
+
+        Animation anim = retrieveAnimation(false);
+        if (anim != null){
+            anim.setAnimationListener(new AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    handler.removeCallbacks(runnable);
+                    dialog.hide();
+                }
+            });
+            dialog.show();
+            mRootView.startAnimation(anim);
+            if (mAnimationDuration > 0) {
+                handler.postDelayed(runnable, (mAnimationDuration * 2));
+            } else {
+                handler.postDelayed(runnable, 1000);
+            }
+        }
+    }
+
+    private Animation retrieveAnimation(boolean enter){
+        int[] animArray = AwesomeAnimationHelper.getAnimations(enter ? mAnimationEnterIndex : mAnimationExitIndex, mExitOnly, mReverseExit);
+        int animInt = enter ? animArray[1] : animArray[0];
+        if (animInt == 0) return null;
+        Animation anim = AnimationUtils.loadAnimation(this, animInt);
+        Interpolator intplr= AwesomeAnimationHelper.getInterpolator(this, mInterpolatorIndex);
+        if (intplr != null) anim.setInterpolator(intplr);
+        if (mAnimationDuration > 0) {
+            anim.setDuration(mAnimationDuration);
+        }
+        return anim;
     }
 
     /**
@@ -2539,7 +2662,8 @@ public class InputMethodService extends AbstractInputMethodService {
      * Performs a dump of the InputMethodService's internal state.  Override
      * to add your own information to the dump.
      */
-    @Override protected void dump(FileDescriptor fd, PrintWriter fout, String[] args) {
+    @Override
+    protected void dump(FileDescriptor fd, PrintWriter fout, String[] args) {
         final Printer p = new PrintWriterPrinter(fout);
         p.println("Input method service state for " + this + ":");
         p.println("  mWindowCreated=" + mWindowCreated
