@@ -20,22 +20,29 @@ package com.android.systemui.qs.tiles;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.PowerManager;
-import android.view.View;
+import android.provider.Settings;
 
-import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
+import com.android.systemui.R;
 import com.android.internal.logging.MetricsLogger;
 
 /** Quick settings tile: Battery saver **/
 public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
-    private final PowerManager mPowerMan;
-    private boolean mEnabled;
+
+    private final PowerManager mPm;
     private boolean mListening;
 
     public BatterySaverTile(Host host) {
         super(host);
-        mPowerMan = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        mPm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+    }
+
+    @Override
+    public int getMetricsCategory() {
+        return MetricsLogger.FUELGAUGE_BATTERY_SAVER;
     }
 
     @Override
@@ -43,32 +50,10 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
         return new BooleanState();
     }
 
-    public void setListening(boolean listening) {
-        if (mListening == listening) return;
-        mListening = listening;
-    }
-
     @Override
     public void handleClick() {
-        if (powerSaveEnabled()) {
-            mPowerMan.setPowerSaveMode(false);
-        } else {
-            mPowerMan.setPowerSaveMode(true);
-        }
+        mPm.setPowerSaveMode(!mState.value);
         refreshState();
-    }
-
-    @Override
-    public int getMetricsCategory() {
-        return MetricsLogger.DISPLAY;
-    }
-
-    @Override
-    protected void handleSecondaryClick() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName("com.android.settings",
-            "com.android.settings.Settings$BatterySaverSettingsActivity");
-        mHost.startActivityDismissingKeyguard(intent);
     }
 
     @Override
@@ -81,17 +66,49 @@ public class BatterySaverTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        state.value = mPm.isPowerSaveMode();
         state.visible = true;
-        mEnabled = powerSaveEnabled();
-        state.label = mContext.getString(R.string.quick_settings_battery_saver);
-        if (mEnabled) {
+        state.label = mContext.getString(R.string.quick_settings_battery_saver_label);
+        if (state.value) {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_battery_saver_on);
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_battery_saver_on);
         } else {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_battery_saver_off);
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_battery_saver_off);
         }
     }
 
-    private boolean powerSaveEnabled() {
-        return mPowerMan.isPowerSaveMode();
+    @Override
+    protected String composeChangeAnnouncement() {
+        if (mState.value) {
+            return mContext.getString(
+                    R.string.accessibility_quick_settings_battery_saver_changed_on);
+        } else {
+            return mContext.getString(
+                    R.string.accessibility_quick_settings_battery_saver_changed_off);
+        }
+    }
+
+    private ContentObserver mObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            refreshState();
+        }
+    };
+
+    @Override
+    public void setListening(boolean listening) {
+        if (mListening == listening) return;
+        mListening = listening;
+
+        if (listening) {
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.Global.getUriFor(Settings.Global.LOW_POWER_MODE),
+                    false, mObserver);
+        } else {
+            mContext.getContentResolver().unregisterContentObserver(mObserver);
+        }
     }
 }
