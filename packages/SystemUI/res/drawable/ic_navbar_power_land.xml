@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2015 crDroid Android
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="17.995dp"
+    android:height="18dp"
+    android:viewportWidth="17.995"
+    android:viewportHeight="18">
+
+    <path
+        android:fillColor="#fff"
+        android:pathData="M7.3981,17.902c-3.2554-0.602-5.9998-3.072-7.0043-6.303-0.34873-1.122-0.42326-1.7591-0.38146-3.2594,0.031818-1.142,0.064886-1.4155,0.24478-2.0245,0.44151-1.4946,1.1335-2.701,2.1945-3.8263,1.1042-1.1709,1.7533-1.6146,2.3615-1.6144,0.7585,0.00025,1.3161,0.52593,1.3813,1.3023,0.053,0.6303-0.1452,0.9724-0.9321,1.6084-1.803,1.4573-2.6887,3.5226-2.4322,5.6713,0.4863,4.0726,4.4016,6.6126,8.1769,5.3046,1.7937-0.62133,3.2947-2.204,3.8619-4.0721,0.78968-2.6009,0.05488-5.0058-2.0958-6.8593-0.91517-0.78871-0.98105-0.89246-0.98105-1.545,0-0.47966,0.02439-0.56604,0.23606-0.83577,0.31119-0.39655,0.67051-0.57452,1.1603-0.57467,0.34824-0.00010955,0.46645,0.047304,0.9608,0.38535,0.58522,0.40019,1.6363,1.4299,2.0835,2.0412,0.82684,1.1302,1.3775,2.3899,1.637,3.7447,0.16269,0.84953,0.1436,2.6967-0.03693,3.5744-0.7677,3.7324-3.6777,6.6354-7.2998,7.2824-0.7811,0.13951-2.3778,0.13906-3.1352-0.0009zm0.9042-10.475c-0.144-0.0468-0.3775-0.2029-0.5189-0.3469l-0.257-0.2617,0.0005-2.8742c0.0002-1.7608,0.0316-2.9885,0.0809-3.1693,0.1809-0.66337,1.2851-0.97547,2.1346-0.60331,0.22214,0.097323,0.45432,0.25026,0.51594,0.33986,0.09357,0.1361,0.11201,0.67669,0.11201,3.2844v3.1215l-0.23664,0.22513c-0.3854,0.3674-1.191,0.4926-1.8307,0.2846z" />
+</vector>
