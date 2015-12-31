@@ -159,6 +159,10 @@
     <!-- headset icon -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+    <!-- Reboot -->
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.RECOVERY" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"

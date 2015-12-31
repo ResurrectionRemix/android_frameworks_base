@@ -81,5 +81,52 @@
     <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
-   
+
+
+    <!-- Quick settings -->
+    <string name="quick_settings_brightness_label">Brightness</string>
+    <string name="quick_settings_screen_off_label">Screen off</string>
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+
+    <!-- Expanded desktop tile -->
+    <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
+    <string name="quick_settings_expanded_desktop">Expanded</string>
+    <string name="quick_settings_expanded_desktop_off">Normal</string>
+    <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+    <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+    <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+    <string name="quick_settings_expanded_hide_both">Hide both</string>
+    <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
+
+    <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+
+    <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+
+    <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+
+    <!-- Music QS Tile -->
+    <string name="quick_settings_music_label">Music</string>
+    <string name="quick_settings_music_play">Play</string>
+    <string name="quick_settings_music_pause">Pause</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Reboot</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
+    <!-- Battery Saver QS Tile -->
+    <string name="quick_settings_battery_saver_label">Battery saver</string>
+
+    <!-- Content description of the battery saver tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_battery_saver_off">Battery saver off.</string>
+    <!-- Content description of the battery saver tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_battery_saver_on">Battery saver on.</string>
+
+    <!-- Announcement made when battery saver changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_battery_saver_changed_off">Battery saver turned off.</string>
+    <!-- Announcement made when battery saver changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_battery_saver_changed_on">Battery saver turned on.</string>
+
 </resources>

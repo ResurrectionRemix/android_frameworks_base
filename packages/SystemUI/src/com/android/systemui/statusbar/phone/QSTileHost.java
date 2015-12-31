@@ -39,7 +39,9 @@ import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.tiles.AdbOverNetworkTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.AmbientDisplayTile;
+import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
+import com.android.systemui.qs.tiles.BrightnessTile;
 import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
@@ -47,16 +49,21 @@ import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.CustomQSTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.EditTile;
+import com.android.systemui.qs.tiles.ExpandedDesktopTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
+import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
+import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenOffTile;
+import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
@@ -358,6 +365,13 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("lockscreen")) return  new LockscreenToggleTile(this);
         else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
         else if (tileSpec.equals("live_display")) return new LiveDisplayTile(this);
+        else if (tileSpec.equals("brightness")) return new BrightnessTile(this);
+        else if (tileSpec.equals("screen_off")) return new ScreenOffTile(this);
+        else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
+        else if (tileSpec.equals("expanded_desktop")) return new ExpandedDesktopTile(this);
+        else if (tileSpec.equals("music")) return new MusicTile(this);
+        else if (tileSpec.equals("reboot")) return new RebootTile(this);
+        else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -440,6 +454,11 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("lockscreen")) return R.string.quick_settings_lockscreen_label;
         else if (spec.equals("ambient_display")) return R.string.quick_settings_ambient_display_label;
         else if (spec.equals("live_display")) return R.string.live_display_title;
+        else if (spec.equals("brightness")) return R.string.quick_settings_brightness_label;
+        else if (spec.equals("screen_off")) return R.string.quick_settings_screen_off_label;
+        else if (spec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
+        else if (spec.equals("expanded_desktop")) return R.string.quick_settings_expanded_desktop_label;
+        else if (spec.equals("battery_saver")) return R.string.quick_settings_battery_saver_label;
         return 0;
     }
 
