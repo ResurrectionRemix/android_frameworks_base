@@ -104,15 +104,6 @@
    <java-symbol type="drawable" name="ic_shortcut_action_screenshot" />
    <java-symbol type="drawable" name="ic_shortcut_action_search" />
 
-  <!-- Slim recent app screen-->
-  <java-symbol type="integer" name="config_recentDefaultDur" />
-  <java-symbol type="integer" name="config_recentExitDur" />
-  <java-symbol type="style" name="Animation.RecentScreen" />
-  <java-symbol type="style" name="Animation.RecentScreen.Left" />
-  <java-symbol type="anim" name="recent_screen_enter" />
-  <java-symbol type="anim" name="recent_screen_enter_left" />
-  <java-symbol type="anim" name="recent_screen_fade_out" />
-
   <!-- Screen record shortcut -->
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
 

@@ -32,9 +32,6 @@
    <dimen name="config_app_sidebar_trigger_width">8dip</dimen>
 
 
-    <!-- Default value how much apps show the app screenshot on recents view entry -->
-    <integer name="expanded_items_default">2</integer>
-
     <!-- Enable PA Pie relocation to either stick to a physical side or default to the right side -->
     <bool name="config_relocatePieOnRotation">true</bool>
 
