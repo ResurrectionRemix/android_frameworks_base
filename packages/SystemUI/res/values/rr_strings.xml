@@ -116,8 +116,4 @@
     <string name="quick_settings_reboot_label">Reboot</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
 
-    <!-- Battery Saver QS Tile -->
-    <string name="quick_settings_battery_saver">Battery saver</string>
-    <string name="quick_settings_battery_saver_off">Battery saver off</string>
-
 </resources>
