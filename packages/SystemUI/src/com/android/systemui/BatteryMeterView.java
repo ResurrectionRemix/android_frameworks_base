@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
