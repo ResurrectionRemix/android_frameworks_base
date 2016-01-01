@@ -36,7 +36,7 @@
      <color name="lockscreen_bottom_shorcut_phone_background">@*android:color/accent_material_light</color>
      <!-- Lockscreen bottom shorcut info text color -->
      <color name="lockscreen_bottom_shorcut_info_text_color">@*android:color/secondary_text_default_material_light</color>
-<<<<<<< HEAD
+
      <!-- Lockscreen bottom shorcut phone inner background color -->
      <color name="lockscreen_bottom_shorcut_phone_inner_background">@android:color/black</color>
 
@@ -79,6 +79,4 @@
     <color name="task_item_background">#0000</color>
     <color name="task_item_text">#ffffffff</color>
 
-=======
->>>>>>> parent of 2a4f3da... Frameworks: Slim Recents app screen (1/2)
 </resources>
