@@ -75,62 +75,63 @@ public class AwesomeAnimationHelper {
         return anim;
     }
 
-    public static int[] getAnimations(int mAnim) {
+    public static int[] getAnimations(int mAnim, boolean enterOnly, boolean reverseExit) {
         int[] anim = new int[2];
         switch (mAnim) {
             case ANIMATION_FADE:
-                anim[0] = com.android.internal.R.anim.slow_fade_out;
+                anim[0] = reverseExit ? com.android.internal.R.anim.no_animation : com.android.internal.R.anim.slow_fade_out;
                 anim[1] = com.android.internal.R.anim.slow_fade_in;
                 break;
             case ANIMATION_SLIDE_RIGHT:
-                anim[0] = com.android.internal.R.anim.slide_out_right_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.slide_out_left_ribbon : com.android.internal.R.anim.slide_out_right_ribbon;
                 anim[1] = com.android.internal.R.anim.slide_in_right_ribbon;
                 break;
             case ANIMATION_SLIDE_LEFT:
-                anim[0] = com.android.internal.R.anim.slide_out_left_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.slide_out_right_ribbon : com.android.internal.R.anim.slide_out_left_ribbon;
                 anim[1] = com.android.internal.R.anim.slide_in_left_ribbon;
                 break;
             case ANIMATION_SLIDE_UP:
-                anim[0] = com.android.internal.R.anim.slide_out_down_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.slide_out_up : com.android.internal.R.anim.slide_out_down_ribbon;
                 anim[1] = com.android.internal.R.anim.slide_in_up_ribbon;
                 break;
             case ANIMATION_SLIDE_DOWN:
-                anim[0] = com.android.internal.R.anim.slide_out_up;
+                anim[0] = reverseExit ? com.android.internal.R.anim.slide_out_down_ribbon : com.android.internal.R.anim.slide_out_up;
                 anim[1] = com.android.internal.R.anim.slide_in_down;
                 break;
             case ANIMATION_SLIDE_RIGHT_NO_FADE:
-                anim[0] = com.android.internal.R.anim.slide_out_right_no_fade;
+                anim[0] = reverseExit ? com.android.internal.R.anim.slide_out_left_no_fade : com.android.internal.R.anim.slide_out_right_no_fade;
                 anim[1] = com.android.internal.R.anim.slide_in_right_no_fade;
                 break;
             case ANIMATION_SLIDE_LEFT_NO_FADE:
-                anim[0] = com.android.internal.R.anim.slide_out_left_no_fade;
+                anim[0] = reverseExit ? com.android.internal.R.anim.slide_out_right_no_fade : com.android.internal.R.anim.slide_out_left_no_fade;
                 anim[1] = com.android.internal.R.anim.slide_in_left_no_fade;
                 break;
             case ANIMATION_TRANSLUCENT:
-                anim[0] = com.android.internal.R.anim.translucent_exit_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.translucent_exit_left : com.android.internal.R.anim.translucent_exit_ribbon;
                 anim[1] = com.android.internal.R.anim.translucent_enter_ribbon;
                 break;
             case ANIMATION_GROW_SHRINK:
-                anim[0] = com.android.internal.R.anim.shrink_fade_out_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.shrink_fade_out_from_bottom_ribbon : com.android.internal.R.anim.shrink_fade_out_ribbon;
                 anim[1] = com.android.internal.R.anim.grow_fade_in_ribbon;
                 break;
             case ANIMATION_GROW_SHRINK_CENTER:
-                anim[0] = com.android.internal.R.anim.shrink_fade_out_center_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.no_animation : com.android.internal.R.anim.shrink_fade_out_center_ribbon;
                 anim[1] = com.android.internal.R.anim.grow_fade_in_center_ribbon;
                 break;
             case ANIMATION_GROW_SHRINK_LEFT:
-                anim[0] = com.android.internal.R.anim.shrink_fade_out_left_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.shrink_fade_out_right_ribbon : com.android.internal.R.anim.shrink_fade_out_left_ribbon;
                 anim[1] = com.android.internal.R.anim.grow_fade_in_left_ribbon;
                 break;
             case ANIMATION_GROW_SHRINK_RIGHT:
-                anim[0] = com.android.internal.R.anim.shrink_fade_out_right_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.shrink_fade_out_left_ribbon : com.android.internal.R.anim.shrink_fade_out_right_ribbon;
                 anim[1] = com.android.internal.R.anim.grow_fade_in_right_ribbon;
                 break;
             case ANIMATION_GROW_SHRINK_BOTTOM:
-                anim[0] = com.android.internal.R.anim.shrink_fade_out_from_bottom_ribbon;
+                anim[0] = reverseExit ? com.android.internal.R.anim.shrink_fade_out_ribbon : com.android.internal.R.anim.shrink_fade_out_from_bottom_ribbon;
                 anim[1] = com.android.internal.R.anim.grow_fade_in_from_bottom_ribbon;
                 break;
         }
+        if (enterOnly) anim[0] = com.android.internal.R.anim.no_animation;
         return anim;
     }
 
@@ -227,3 +228,4 @@ public class AwesomeAnimationHelper {
         return itplr;
     }
 }
+
