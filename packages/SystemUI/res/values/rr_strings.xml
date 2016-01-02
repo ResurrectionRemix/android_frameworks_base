@@ -183,5 +183,23 @@
 
     <!-- Recents membar text color -->
     <color name="recents_membar_text_color">@android:color/white</color>
+
+
+    <!-- Off/On/Toggle -->
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="toggle">Toggle</string>
+
+    <!-- Dialog Cancel/OK -->
+    <string name="cancel">Cancel</string>
+    <string name="dlg_ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Slim Shortcut Actions -->
+    <string name="shortcut_picker">Slim Shortcuts</string>
+    <string name="shortcut_rotation">Rotation</string>
+    <string name="shortcut_reboot">Reboot</string>
+    <string name="shortcut_recovery">Recovery</string>
 </resources>
 
