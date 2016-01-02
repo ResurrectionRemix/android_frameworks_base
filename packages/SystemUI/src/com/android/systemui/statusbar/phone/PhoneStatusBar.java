@@ -421,6 +421,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     boolean mExpandedVisible;
 
 
+
     // RR logo
     private boolean mRRlogo;
     private ImageView rrLogo;
@@ -434,6 +435,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private int mWeatherTempSize;
     private int mWeatherTempFontStyle = FONT_NORMAL;
     private WeatherControllerImpl mWeatherController;
+
+    private int mMaxKeyguardNotifConfig;
+    private boolean mCustomMaxKeyguard;
 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
@@ -579,6 +583,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_ALL);
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_FOURG),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -743,9 +750,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mWeatherTempFontStyle = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE, FONT_NORMAL, mCurrentUserId);
 
-
             mBlurRadius = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_BLUR_RADIUS, 14);
+
+            mMaxKeyguardNotifConfig = Settings.System.getIntForUser(resolver,
+                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 5, mCurrentUserId);
 
         }
     }
@@ -5071,7 +5080,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     @Override
     protected int getMaxKeyguardNotifications() {
-        return mKeyguardMaxNotificationCount;
+        mCustomMaxKeyguard = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.LOCK_SCREEN_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
+
+        if (mCustomMaxKeyguard) {
+            return mMaxKeyguardNotifConfig;
+        } else {
+            return mKeyguardMaxNotificationCount;
+        }        
     }
 
     public NavigationBarView getNavigationBarView() {
