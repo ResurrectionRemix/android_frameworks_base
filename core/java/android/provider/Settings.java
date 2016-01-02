@@ -4202,6 +4202,18 @@ public final class Settings {
         public static final String LOCKSCREEN_MEDIA_METADATA = "lockscreen_media_metadata";
 
         /**
+         * enable custom lockscreen max notifications config
+         * @hide
+         */
+        public static final String LOCK_SCREEN_CUSTOM_NOTIF = "lock_screen_custom_notif";
+
+        /**
+         * custom lockscreen max notification config
+         * @hide
+         */
+        public static final String LOCKSCREEN_MAX_NOTIF_CONFIG = "lockscreen_max_notif_cofig";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
