@@ -101,6 +101,7 @@ oneway interface IStatusBar
     void toggleFlashlight();
     void toggleNavigationEditor();
     void dispatchNavigationEditorResults(in Intent intent);
+    void setAutoRotate(boolean enabled);
 
     /**
      * Notifies the status bar that a camera launch gesture has been detected.
