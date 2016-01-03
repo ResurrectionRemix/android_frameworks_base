@@ -36,6 +36,8 @@
         android:layout_height="128dp"
         android:layout_gravity="center_horizontal|top" />
 
+    <include layout="@layout/recents_time_layout" />
+
     <!-- Nav Bar Scrim View -->
     <ImageView
         android:id="@+id/nav_bar_scrim"
