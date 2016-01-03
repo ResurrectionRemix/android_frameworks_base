@@ -391,27 +391,33 @@ public class KeyguardStatusView extends GridLayout implements
             mClockView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
         }
         if (lockClockFont == 4) {
-            mClockView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
+            mClockView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
         }
         if (lockClockFont == 5) {
-            mClockView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
+            mClockView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
         }
         if (lockClockFont == 6) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+            mClockView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
         }
         if (lockClockFont == 7) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
+            mClockView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
         }
         if (lockClockFont == 8) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         }
         if (lockClockFont == 9) {
-            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
+            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
         }
         if (lockClockFont == 10) {
-            mClockView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
         }
         if (lockClockFont == 11) {
+            mClockView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
+        }
+        if (lockClockFont == 12) {
+            mClockView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        }
+        if (lockClockFont == 13) {
             mClockView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
         }
 
