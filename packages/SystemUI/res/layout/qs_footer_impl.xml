@@ -96,6 +96,27 @@
             </com.android.systemui.statusbar.phone.MultiUserSwitch>
 
             <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
+                android:id="@+id/brightness_icon_container"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <com.android.systemui.statusbar.AlphaOptimizedImageView
+                    android:id="@+id/brightness_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:clipToPadding="false"
+                    android:focusable="true"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_qs_brightness_auto_off"
+                    android:contentDescription="@null"
+                    android:tint="?android:attr/colorForeground"/>
+            </com.android.systemui.statusbar.AlphaOptimizedFrameLayout>
+
+            <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
                 android:id="@+id/settings_button_container"
                 android:layout_width="@dimen/qs_footer_action_button_size"
                 android:layout_height="@dimen/qs_footer_action_button_size"
