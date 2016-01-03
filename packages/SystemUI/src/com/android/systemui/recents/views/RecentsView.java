@@ -33,6 +33,9 @@ import android.graphics.Outline;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.view.AppTransitionAnimationSpec;
@@ -46,6 +49,7 @@ import android.view.ViewPropertyAnimator;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.android.internal.logging.MetricsLogger;
@@ -91,6 +95,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,6 +139,9 @@ public class RecentsView extends FrameLayout {
 
     private ActivityManager mAm;
     private int mTotalMem;
+
+    TextClock mClock;
+    TextView mDate;
 
     public RecentsView(Context context) {
         this(context, null);
@@ -343,6 +351,9 @@ public class RecentsView extends FrameLayout {
         super.onAttachedToWindow();
 		mMemText = (TextView) ((View)getParent()).findViewById(R.id.recents_memory_text);
         mMemBar = (ProgressBar) ((View)getParent()).findViewById(R.id.recents_memory_bar);
+        mClock = (TextClock) ((View)getParent()).findViewById(R.id.recents_clock);
+        mDate = (TextView) ((View)getParent()).findViewById(R.id.recents_date);
+        updateTimeVisibility();
     }
 
     @Override
@@ -350,6 +361,35 @@ public class RecentsView extends FrameLayout {
         super.onDetachedFromWindow();
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().unregister(mTouchHandler);
+    }
+
+    public void updateTimeVisibility() {
+        boolean showClock = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.RECENTS_FULL_SCREEN_CLOCK, 0, UserHandle.USER_CURRENT) != 0;
+        boolean showDate = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.RECENTS_FULL_SCREEN_DATE, 0, UserHandle.USER_CURRENT) != 0;
+        boolean fullscreenEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.IMMERSIVE_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
+
+        if (fullscreenEnabled) {
+            if (showClock) {
+                mClock.setVisibility(View.VISIBLE);
+            } else {
+                mClock.setVisibility(View.GONE);
+            }
+            if (showDate) {
+                long dateStamp = System.currentTimeMillis();
+                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(mContext);
+                String currentDateString =  dateFormat.format(dateStamp);
+                mDate.setText(currentDateString);
+                mDate.setVisibility(View.VISIBLE);
+            } else {
+                mDate.setVisibility(View.GONE);
+            }
+        } else {
+            mClock.setVisibility(View.GONE);
+            mDate.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -365,6 +405,8 @@ public class RecentsView extends FrameLayout {
             mTaskStackView.measure(widthMeasureSpec, heightMeasureSpec);
         showMemDisplay();
         }
+
+        updateTimeVisibility();
 
         // Measure the empty view to the full size of the screen
         if (mEmptyView.getVisibility() != GONE) {

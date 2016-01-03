@@ -4237,6 +4237,18 @@ public final class Settings {
          */
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
 
+	/**
+         * Whether to display clock while recents are in full screen
+         * @hide
+         */
+        public static final String RECENTS_FULL_SCREEN_CLOCK = "recents_full_screen_clock";
+
+        /**
+         * Whether to display clock while recents are in full screen
+         * @hide
+         */
+        public static final String RECENTS_FULL_SCREEN_DATE = "recents_full_screen_date";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
