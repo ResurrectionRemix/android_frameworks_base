@@ -34,6 +34,8 @@
 
     <include layout="@layout/recents_membar" />
 
+    <include layout="@layout/recents_time_layout" />
+
     <!-- Empty View -->
     <ViewStub android:id="@+id/empty_view_stub"
            android:layout="@layout/recents_empty"
