@@ -33,10 +33,10 @@ import com.android.keyguard.AlphaOptimizedImageButton;
 
 public class SettingsButton extends AlphaOptimizedImageButton {
 
-    private static final long LONG_PRESS_LENGTH = 0;
-    private static final long ACCEL_LENGTH = 0;
-    private static final long FULL_SPEED_LENGTH = 0;
-    private static final long RUN_DURATION = 0;
+    private static final long LONG_PRESS_LENGTH = 1000;
+    private static final long ACCEL_LENGTH = 750;
+    private static final long FULL_SPEED_LENGTH = 375;
+    private static final long RUN_DURATION = 350;
 
     private boolean mUpToSpeed;
     private ObjectAnimator mAnimator;
