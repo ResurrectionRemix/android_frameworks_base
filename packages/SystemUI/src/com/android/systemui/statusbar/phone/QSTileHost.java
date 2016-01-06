@@ -60,6 +60,7 @@ import com.android.systemui.qs.tiles.LockscreenToggleTile;
 import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.RRTile;
 import com.android.systemui.qs.tiles.LteTile;
+import com.android.systemui.qs.tiles.ThemesTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
@@ -211,6 +212,12 @@ public class QSTileHost implements QSTile.Host, Tunable {
                 ctx.getSystemService(Context.TELEPHONY_SERVICE);
         return (tm.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE)
                 || tm.getLteOnGsmMode() != 0;
+    }
+ public static boolean deviceSupportsDdsSupported(Context context) {
+        TelephonyManager tm = (TelephonyManager)
+                context.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.isMultiSimEnabled()
+                && tm.getMultiSimConfiguration() == TelephonyManager.MultiSimVariants.DSDA;
     }
 
     @Override
@@ -386,6 +393,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("configurations")) return new RRTile(this);
         else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
 	else if (tileSpec.equals("lte")) return new LteTile(this);
+	else if (tileSpec.equals("themes")) return new ThemesTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -480,7 +488,8 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("reboot")) return R.string.quick_settings_reboot_label;
         else if (spec.equals("configurations")) return R.string.quick_settings_rrtools;
 	else if (spec.equals("heads_up")) return R.string.quick_settings_heads_up_label;
-	else if (spec.equals("lte") return R.string.qs_lte_label;
+	else if (spec.equals("lte")) return R.string.qs_lte_label;
+	else if (spec.equals("themes")) return R.string.quick_settings_themes;
         return 0;
     }
 
@@ -518,6 +527,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("configurations")) return R.drawable.ic_qs_rrtools;
 	else if (spec.equals("heads_up")) return R.drawable.ic_qs_heads_up_on;
 	else if (spec.equals("lte")) return R.drawable.ic_qs_lte_on;
+	else if (spec.equals("themes")) return R.drawable.ic_qs_themes;
         return 0;
     }
 
