@@ -1523,6 +1523,19 @@ public class NotificationManagerService extends SystemService {
         }
 
         @Override
+        public void setPackageKeyguard(String pkg, int uid, boolean keguard) {
+            checkCallerIsSystem();
+
+            mRankingHelper.setPackageKeyguard(pkg, uid, keguard);
+        }
+
+        @Override
+        public boolean getPackageKeyguard(String pkg, int uid) {
+            enforceSystemOrSystemUI("INotificationManager.getPackageKeyguard");
+            return mRankingHelper.getPackageKeyguard(pkg, uid);
+        }
+
+        @Override
         public void setPackageVisibilityOverride(String pkg, int uid, int visibility) {
             checkCallerIsSystem();
             mRankingHelper.setPackageVisibilityOverride(pkg, uid, visibility);

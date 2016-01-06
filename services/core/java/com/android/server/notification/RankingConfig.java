@@ -27,4 +27,8 @@ public interface RankingConfig {
     int getPackageVisibilityOverride(String packageName, int uid);
 
     void setPackageVisibilityOverride(String packageName, int uid, int visibility);
+
+    boolean getPackageKeyguard(String packageName, int uid);
+
+    void setPackageKeyguard(String packageName, int uid, boolean keyguard);
 }
