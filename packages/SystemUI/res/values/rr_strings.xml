@@ -143,8 +143,8 @@
 
  <string name="qs_lte_label">LTE</string>
 
- <string name="lte_on">LTE on </string>
- <string name="lte_off">LTE off</string>
+ <string name="lte_on">LTE ON </string>
+ <string name="lte_off">LTE OFF</string>
 
  <string name="quick_settings_themes">Themes</string>
 
