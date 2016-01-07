@@ -541,7 +541,8 @@ public class StatusBarKeyguardViewManager {
     }
 
     public boolean shouldDisableWindowAnimationsForUnlock() {
-        return mPhoneStatusBar.isInLaunchTransition();
+        return mPhoneStatusBar.isInLaunchTransition() ||
+                mPhoneStatusBar.mNotificationPanel.hasExternalKeyguardView();
     }
 
     public boolean isGoingToNotificationShade() {
