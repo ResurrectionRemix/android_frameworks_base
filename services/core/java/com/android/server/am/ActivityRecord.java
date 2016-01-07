@@ -38,6 +38,8 @@ import android.app.ActivityOptions;
 import android.app.PendingIntent;
 import android.app.ResultInfo;
 import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -56,6 +58,7 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.service.voice.IVoiceInteractionSession;
+import android.provider.Settings;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
@@ -679,6 +682,29 @@ final class ActivityRecord {
                         ? android.R.style.Theme
                         : android.R.style.Theme_Holo;
             }
+
+            String pkgName = aInfo.packageName;
+            String hideFromRecentsString = Settings.System.getStringForUser(service.mContext.getContentResolver(),
+                    Settings.System.HIDE_FROM_RECENTS_LIST, UserHandle.USER_CURRENT);
+            ArrayList<String> excludeFromRecentsList = new ArrayList();
+
+            // this converts the String we get from Settings to an actual ArrayList
+            if (hideFromRecentsString!=null && hideFromRecentsString.length()!=0){
+                String[] parts = hideFromRecentsString.split("\\|");
+                for(int i = 0; i < parts.length; i++){
+                    excludeFromRecentsList.add(parts[i]);
+                }
+            }
+
+            if (!excludeFromRecentsList.isEmpty()){
+                if (excludeFromRecentsList.contains(pkgName)) {
+                  // If our app is inside the ArrayList, hide it from the Recents.
+                  // For the case where that flag already was added by some other instance,
+                  // it most likely has a good reason to be, so do not force remove it
+                  intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                }
+            }
+
             if ((aInfo.flags&ActivityInfo.FLAG_HARDWARE_ACCELERATED) != 0) {
                 windowFlags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
             }
