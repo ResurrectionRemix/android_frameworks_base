@@ -3061,8 +3061,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         }
 
         // apply user lockscreen image
-        if (backdropBitmap == null && mMediaMetadata == null &&
-                !mNotificationPanel.hasExternalKeyguardView()) {
+        if (backdropBitmap == null && !mNotificationPanel.hasExternalKeyguardView()) {
             backdropBitmap = mKeyguardWallpaper;
         }
 
