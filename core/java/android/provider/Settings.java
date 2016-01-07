@@ -4308,6 +4308,13 @@ public final class Settings {
          */
         public static final String LOCK_SCREEN_WEATHER_HIDE_PANEL = "lock_screen_weather_hide_panel";
 
+
+        /**
+         * Whether to show Brightness Icon On Brightness Slider
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_ICON = "qs_show_brightness_icon";
+
         /**
          * Hide the weather panel when the visible lockscreen notifications will reach this number
          * 1: 1 notification (always)
@@ -4316,7 +4323,6 @@ public final class Settings {
          * 4: 4 notifications
          * 5: 5 notifications
          * 6: 6 notifications
-         * default: 4
          * @hide
          */
         public static final String LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS = "lock_screen_weather_number_of_notifications";
