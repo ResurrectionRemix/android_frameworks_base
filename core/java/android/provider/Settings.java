@@ -4222,10 +4222,16 @@ public final class Settings {
         public static final String COLLAPSE_ANIMATION_DURATION_RY = "collapse_anim_duration_ry";
 
         /**
-         * Pixel Anim Duration
          * @hide
          */
         public static final String COLLAPSE_ANIMATION_DURATION_BG = "collapse_anim_duration_bg";
+
+        /**
+         * Pixel Anim Duration
+        * List of Apps hidden from recents
+        * @hide
+        */
+        public static final String HIDE_FROM_RECENTS_LIST = "hide_from_recents_list";
 
         /**
          * Pixel Anim Duration
