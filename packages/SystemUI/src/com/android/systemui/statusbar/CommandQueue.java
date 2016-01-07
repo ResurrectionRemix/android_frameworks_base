@@ -75,6 +75,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_TOGGLE_APP_SPLIT_SCREEN       = 30 << MSG_SHIFT;
     private static final int MSG_APP_TRANSITION_FINISHED       = 31 << MSG_SHIFT;
     private static final int MSG_DISMISS_KEYBOARD_SHORTCUTS    = 32 << MSG_SHIFT;
+    private static final int MSG_SCREEN_PINNING_STATE_CHANGED  = 33 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -129,10 +130,19 @@ public class CommandQueue extends IStatusBar.Stub {
         void addQsTile(ComponentName tile);
         void remQsTile(ComponentName tile);
         void clickTile(ComponentName tile);
+        void screenPinningStateChanged(boolean enabled);
     }
 
     public CommandQueue(Callbacks callbacks) {
         mCallbacks = callbacks;
+    }
+
+    public void screenPinningStateChanged(boolean enabled) {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_SCREEN_PINNING_STATE_CHANGED);
+            mHandler.obtainMessage(MSG_SCREEN_PINNING_STATE_CHANGED,
+                    enabled ? 1 : 0, 0, null).sendToTarget();
+        }
     }
 
     public void setIcon(String slot, StatusBarIcon icon) {
@@ -502,6 +512,9 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_TOGGLE_APP_SPLIT_SCREEN:
                     mCallbacks.toggleSplitScreen();
+                    break;
+                case MSG_SCREEN_PINNING_STATE_CHANGED:
+                    mCallbacks.screenPinningStateChanged(msg.arg1 != 0);
                     break;
             }
         }
