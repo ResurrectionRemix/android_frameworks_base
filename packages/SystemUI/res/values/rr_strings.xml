@@ -201,5 +201,6 @@
     <string name="shortcut_rotation">Rotation</string>
     <string name="shortcut_reboot">Reboot</string>
     <string name="shortcut_recovery">Recovery</string>
+     <string name="shortcut_toggle_title">Action to perform</string>	
 </resources>
 
