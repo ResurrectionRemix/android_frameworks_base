@@ -68,20 +68,15 @@
             android:scaleType="centerInside"
             android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_weight="0"
-            systemui:keyRepeat="true" />
-        <View
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:visibility="invisible" />
+            systemui:keyRepeat="true" />
         <com.android.systemui.statusbar.policy.KeyButtonView
             android:id="@+id/three"
             android:scaleType="centerInside"
             android:layout_height="80dp"
             android:layout_width="match_parent"
             systemui:keyRepeat="true"
-            android:layout_weight="0" />
+            android:layout_weight="1" />
         <View
             android:layout_height="0dp"
             android:layout_width="match_parent"
@@ -92,7 +87,7 @@
             android:scaleType="centerInside"
             android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="1"
             systemui:keyRepeat="true" />
         <View
             android:layout_height="0dp"
@@ -104,7 +99,19 @@
             android:scaleType="centerInside"
             android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="1"
+            systemui:keyRepeat="true" />
+        <View
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+        <com.android.systemui.statusbar.policy.KeyButtonView
+            android:id="@+id/six"
+            android:scaleType="centerInside"
+            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             systemui:keyRepeat="true" />
     </LinearLayout>
     <FrameLayout
@@ -119,7 +126,7 @@
             android:scaleType="centerInside"
             systemui:keyRepeat="true" />
         <com.android.systemui.statusbar.policy.KeyButtonView
-            android:id="@+id/six"
+            android:id="@+id/sev"
             android:scaleType="centerInside"
             android:layout_height="40dp"
             android:layout_width="match_parent"
