@@ -56,6 +56,11 @@ import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
+import com.android.systemui.qs.tiles.AppCircleBarTile;
+import com.android.systemui.qs.tiles.KernelAdiutorTile;
+import com.android.systemui.qs.tiles.NavBarTile;
+import com.android.systemui.qs.tiles.PieTile;
+import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
 import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.RRTile;
@@ -394,6 +399,11 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
 	else if (tileSpec.equals("lte")) return new LteTile(this);
 	else if (tileSpec.equals("themes")) return new ThemesTile(this);
+	else if (tileSpec.equals("navbar")) return new NavBarTile(this);
+	else if (tileSpec.equals("appcirclebar")) return new AppCircleBarTile(this);
+	else if (tileSpec.equals("kernel_adiutor")) return new KernelAdiutorTile(this);
+	else if (tileSpec.equals("screenrecord")) return new ScreenrecordTile(this);
+	else if (tileSpec.equals("pie")) return new PieTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -490,6 +500,11 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("heads_up")) return R.string.quick_settings_heads_up_label;
 	else if (spec.equals("lte")) return R.string.qs_lte_label;
 	else if (spec.equals("themes")) return R.string.quick_settings_themes;
+	else if (spec.equals("navbar")) return R.string.quick_settings_navbar_title;
+	else if (spec.equals("appcirclebar")) return R.string.quick_settings_appcirclebar_title;
+	else if (spec.equals("kernel_adiutor")) return R.string.quick_settings_kernel_title;
+	else if (spec.equals("screenrecord")) return R.string.quick_settings_screenrecord;
+	else if (spec.equals("pie")) return R.string.quick_settings_pie;
         return 0;
     }
 
@@ -528,6 +543,11 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("heads_up")) return R.drawable.ic_qs_heads_up_on;
 	else if (spec.equals("lte")) return R.drawable.ic_qs_lte_on;
 	else if (spec.equals("themes")) return R.drawable.ic_qs_themes;
+	else if (spec.equals("navbar")) return R.drawable.ic_qs_navbar_on;
+	else if (spec.equals("appcirclebar")) return R.drawable.ic_qs_appcirclebar_on;
+	else if (spec.equals("kernel_adiutor")) return R.drawable.ic_qs_kernel_adiutor;	
+	else if (spec.equals("screenrecord")) return R.drawable.ic_qs_screenrecord;	
+	else if (spec.equals("pie")) return R.drawable.ic_qs_pie_on;	
         return 0;
     }
 
