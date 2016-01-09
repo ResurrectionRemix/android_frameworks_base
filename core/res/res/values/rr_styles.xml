@@ -41,5 +41,24 @@
     <style name="PowerMenuRotateAnimation">
         <item name="windowEnterAnimation">@anim/rotate</item>
     </style>
-
+    <style name="PowerMenuflyAnimation">
+        <item name="windowEnterAnimation">@anim/recent_enter</item>
+        <item name="windowExitAnimation">@anim/recent_exit</item>
+    </style>
+    <style name="PowerMenuTnAnimation">
+        <item name="windowEnterAnimation">@anim/tn_toast_enter</item>
+        <item name="windowExitAnimation">@anim/tn_toast_exit</item>
+    </style>
+    <style name="PowerMenuTranslucentAnimation">
+        <item name="windowEnterAnimation">@anim/translucent_enter</item>
+        <item name="windowExitAnimation">@anim/translucent_exit</item>
+    </style>
+    <style name="PowerMenuXylonAnimation">
+        <item name="windowEnterAnimation">@anim/xylon_toast_enter</item>
+        <item name="windowExitAnimation">@anim/xylon_toast_exit</item>
+    </style>
+    <style name="PowerMenuCardAnimation">
+        <item name="windowEnterAnimation">@anim/honami_toast_enter</item>
+        <item name="windowExitAnimation">@anim/honami_toast_exit</item>
+    </style>
 </resources>
