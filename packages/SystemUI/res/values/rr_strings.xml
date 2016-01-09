@@ -142,5 +142,25 @@
 
  <string name="quick_settings_themes">Themes</string>
 
+     <!-- NavBar tile -->
+    <string name="quick_settings_navbar_title">NavBar</string>	
+    <string name="quick_settings_navbar_on">NavBar On</string>
+    <string name="quick_settings_navbar_off">NavBar Off</string>
+    
+    <!-- App Circle Bar tile -->
+	<string name="quick_settings_appcirclebar_title">AppCircleBar</string>
+    <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
+    <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+
+    <!-- Kernel Adiutor Tile -->
+    <string name="quick_settings_kernel_title">Kernel Adiutor</string>
+    <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+
+    <!-- Quick settings -->
+    <string name="quick_settings_screenrecord">Screenrecord</string>
+    <string name="quick_settings_screenrecord_on">Recording ...</string>
+
+ <!-- Pie tile -->
+   <string name="quick_settings_pie">Pie</string>	
 </resources>
 
