@@ -85,7 +85,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     public static final boolean DEBUG_DRAG = false;
 
     private static final int MAX_ROW_COUNT = 3;
-    private static final int INITIAL_OFFSCREEN_PAGE_LIMIT = 3;
+    private static final int INITIAL_OFFSCREEN_PAGE_LIMIT = 10;
     private static final String BROADCAST_TILE_SPEC_PLACEHOLDER = "broadcast_placeholder";
 
     protected final ArrayList<QSPage> mPages = new ArrayList<>();
