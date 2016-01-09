@@ -60,6 +60,7 @@ import com.android.systemui.qs.tiles.AppCircleBarTile;
 import com.android.systemui.qs.tiles.AppsidebarTile;
 import com.android.systemui.qs.tiles.KernelAdiutorTile;
 import com.android.systemui.qs.tiles.NavBarTile;
+import com.android.systemui.qs.tiles.SystemUIRestartTile;
 import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
@@ -406,6 +407,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("screenrecord")) return new ScreenrecordTile(this);
 	else if (tileSpec.equals("pie")) return new PieTile(this);
 	else if (tileSpec.equals("appsidebar")) return new AppsidebarTile(this);
+	else if (tileSpec.equals("restartui")) return new SystemUIRestartTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -508,6 +510,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("screenrecord")) return R.string.quick_settings_screenrecord;
 	else if (spec.equals("pie")) return R.string.quick_settings_pie;
 	else if (spec.equals("appsidebar")) return R.string.quick_settings_app_sidebar;
+	else if (spec.equals("restartui")) return R.string.quick_settings_systemui_restart_label;
         return 0;
     }
 
@@ -552,6 +555,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("screenrecord")) return R.drawable.ic_qs_screenrecord;	
 	else if (spec.equals("pie")) return R.drawable.ic_qs_pie_on;	
 	else if (spec.equals("appsidebar")) return R.drawable.ic_qs_appsidebar_on;
+	else if (spec.equals("restartui")) return R.drawable.ic_qs_systemui_restart;
         return 0;
     }
 
