@@ -167,6 +167,9 @@
 
    <!-- Pie tile -->
    <string name="quick_settings_pie">Pie</string>
+
+<!-- Restart UI -->
+   <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
 	
 </resources>
 
