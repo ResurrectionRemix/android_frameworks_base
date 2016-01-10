@@ -176,5 +176,10 @@
    <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
    <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>	
 
+   <!-- Tuner UI -->
+   <string name="status_bar_tuner_title">Status bar tuner</string>   
+   <string name="status_bar_tuner">Status bar icons</string>   
+   <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>	
+
 </resources>
 

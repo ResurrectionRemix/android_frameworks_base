@@ -44,22 +44,6 @@ public class TunerActivity extends Activity {
 
         protected abstract Fragment getFragment();
 
-        @Override
-        public final boolean onOptionsItemSelected(MenuItem item) {
-            switch (item.getItemId()) {
-                case android.R.id.home:
-                    finish();
-                    return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public static final class DemoModeActivity extends FragmentTunerActivityBase {
-        @Override
-        protected Fragment getFragment() {
-            return new DemoModeFragment();
-        }
     }
 
     public static final class StatusBarIconActivity extends FragmentTunerActivityBase {
