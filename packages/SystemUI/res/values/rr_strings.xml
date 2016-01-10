@@ -171,6 +171,11 @@
    <!-- Restart UI -->
    <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
 
+   <!-- Gesture Anywehre -->
+   <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
+   <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
+   <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>	
+
    <!-- Tuner UI -->
    <string name="status_bar_tuner_title">Status bar tuner</string>   
    <string name="status_bar_tuner">Status bar icons</string>   
