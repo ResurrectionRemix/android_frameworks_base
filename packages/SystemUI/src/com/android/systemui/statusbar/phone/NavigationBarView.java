@@ -718,7 +718,6 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_CONDITIONAL_MENU, shouldShow);
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_SEARCH, shouldShowAlwaysMenu);
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_POWER, shouldShowAlwaysMenu);
-        setButtonWithTagVisibility(NavbarEditor.NAVBAR_NOTIFICATIONS, shouldShowAlwaysMenu);
     }
 
     @Override
