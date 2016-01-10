@@ -168,8 +168,13 @@
    <!-- Pie tile -->
    <string name="quick_settings_pie">Pie</string>
 
-<!-- Restart UI -->
+   <!-- Restart UI -->
    <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
 	
+   <!-- Gesture Anywehre -->
+   <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
+   <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
+   <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>	
+
 </resources>
 
