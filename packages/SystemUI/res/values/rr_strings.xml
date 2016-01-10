@@ -134,10 +134,11 @@
 
  <string name="quick_settings_themes">Themes</string>
 
-     <!-- NavBar tile -->
-    <string name="quick_settings_navbar_title">NavBar</string>	
-    <string name="quick_settings_navbar_on">NavBar On</string>
-    <string name="quick_settings_navbar_off">NavBar Off</string>
+    <!-- Navigation bar Tile -->
+    <string name="quick_settings_navigation_bar">Navigation bar</string>
+    <string name="quick_settings_smartbar_off">Navigation bar off</string>
+    <string name="quick_settings_smartbar">SmartBar</string>
+    <string name="quick_settings_fling">Fling gesture</string>
 
      <!-- Hw Keys tile -->
     <string name="quick_settings_hwkeys_title">Hardware Keys</string>	
