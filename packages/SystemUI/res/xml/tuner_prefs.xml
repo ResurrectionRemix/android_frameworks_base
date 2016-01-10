@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2015 The Android Open Source Project
+     Copyright (C) 2015 The Resurrection Remix Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,19 +16,23 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/system_ui_tuner">
-
+    android:title="@string/status_bar_tuner_title">
     <Preference
         android:key="statusbar_icon_blacklist"
-        android:title="@string/status_bar" />
+        android:title="@string/status_bar_tuner"
+        android:summary="@string/status_bar_tuner_summary" />
 
-    <Preference
-        android:key="demo_mode"
-        android:title="@string/demo_mode" />
+    <!-- tuner logo -->
+    <PreferenceScreen 
+        android:key="sys_tuner_logo"
+        android:selectable="false"
+        android:layout="@layout/tuner_logo" />
 
-    <Preference
-        android:summary="@string/tuner_persistent_warning"
-        android:selectable="false" />
+    <PreferenceScreen 
+        android:key="sys_tuner_info"
+        android:selectable="false"
+        android:layout="@layout/sys_tuner_info" />
+
 
 </PreferenceScreen>
 

@@ -168,8 +168,13 @@
    <!-- Pie tile -->
    <string name="quick_settings_pie">Pie</string>
 
-<!-- Restart UI -->
+   <!-- Restart UI -->
    <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
-	
+
+   <!-- Tuner UI -->
+   <string name="status_bar_tuner_title">Status bar tuner</string>   
+   <string name="status_bar_tuner">Status bar icons</string>   
+   <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>	
+
 </resources>
 

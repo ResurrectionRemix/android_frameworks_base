@@ -45,11 +45,8 @@ public class TunerFragment extends PreferenceFragment {
     private static final String TAG = "TunerFragment";
 
     private static final String KEY_STATUSBAR_BLACKLIST = "statusbar_icon_blacklist";
-    private static final String KEY_DEMO_MODE = "demo_mode";
 
     public static final String SETTING_SEEN_TUNER_WARNING = "seen_tuner_warning";
-
-    private static final int MENU_REMOVE = Menu.FIRST + 1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,16 +66,7 @@ public class TunerFragment extends PreferenceFragment {
                 return true;
             }
         });
-        findPreference(KEY_DEMO_MODE).setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(android.R.id.content, new DemoModeFragment(), "DemoMode");
-                ft.addToBackStack(null);
-                ft.commit();
-                return true;
-            }
-        });
+
         if (Settings.Secure.getInt(getContext().getContentResolver(), SETTING_SEEN_TUNER_WARNING,
                 0) == 0) {
             new AlertDialog.Builder(getContext())
@@ -94,22 +82,6 @@ public class TunerFragment extends PreferenceFragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        registerPrefs(getPreferenceScreen());
-        MetricsLogger.visibility(getContext(), MetricsLogger.TUNER, true);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        unregisterPrefs(getPreferenceScreen());
-        MetricsLogger.visibility(getContext(), MetricsLogger.TUNER, false);
-    }
-
     private void registerPrefs(PreferenceGroup group) {
         TunerService tunerService = TunerService.get(getContext());
         final int N = group.getPreferenceCount();
@@ -122,41 +94,4 @@ public class TunerFragment extends PreferenceFragment {
             }
         }
     }
-
-    private void unregisterPrefs(PreferenceGroup group) {
-        TunerService tunerService = TunerService.get(getContext());
-        final int N = group.getPreferenceCount();
-        for (int i = 0; i < N; i++) {
-            Preference pref = group.getPreference(i);
-            if (pref instanceof Tunable) {
-                tunerService.removeTunable((Tunable) pref);
-            } else if (pref instanceof PreferenceGroup) {
-                registerPrefs((PreferenceGroup) pref);
-            }
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.remove_from_settings);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().finish();
-                return true;
-            case MENU_REMOVE:
-                TunerService.showResetRequest(getContext(), new Runnable() {
-                    @Override
-                    public void run() {
-                        getActivity().finish();
-                    }
-                });
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
-
