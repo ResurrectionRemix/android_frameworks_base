@@ -656,10 +656,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             startForecastLongClickActivity();
         } else if (v == mMultiUserSwitch) {
             startUserLongClickActivity();
-        vibrateheader(20);
         } else if (v == mTaskManagerButton) {
             startTaskManagerLongClickActivity();
         }
+        vibrateheader(20);
         return false;
     }
 
