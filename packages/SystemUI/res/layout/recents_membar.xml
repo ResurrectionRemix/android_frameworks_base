@@ -42,6 +42,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/recents_membar_text_color"
         />
 </LinearLayout>
