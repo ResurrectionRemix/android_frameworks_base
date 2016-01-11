@@ -79,4 +79,9 @@
     <color name="task_item_background">#0000</color>
     <color name="task_item_text">#ffffffff</color>
 
+
+    <!-- Recents Fullscreen date time color -->
+    <color name="recents_full_screen_clock_text_color">@android:color/white</color>
+    <color name="recents_full_screen_clock_date_color">@android:color/white</color>
+
 </resources>
