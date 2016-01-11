@@ -181,5 +181,7 @@
    <string name="status_bar_tuner">Status bar icons</string>   
    <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>	
 
+    <!-- Recents membar text color -->
+    <color name="recents_membar_text_color">@android:color/white</color>
 </resources>
 
