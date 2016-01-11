@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.net.NetworkCapabilities;
 import android.os.Looper;
 import android.provider.Settings;
+import android.os.SystemProperties;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -240,6 +241,7 @@ public class MobileSignalController extends SignalController<
         int typeIcon = showDataIcon ? icons.mDataType : 0;
         mCallbackHandler.setMobileDataIndicators(statusIcon, qsIcon, typeIcon, qsTypeIcon,
                 activityIn, activityOut, dataContentDescription, description, icons.mIsWide,
+                mCurrentState.showSeparateRoaming,
                 mSubscriptionInfo.getSubscriptionId());
     }
 
@@ -400,7 +402,12 @@ public class MobileSignalController extends SignalController<
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isRoaming()) {
-            mCurrentState.iconGroup = TelephonyIcons.ROAMING;
+            mCurrentState.showSeparateRoaming = false;
+            if (SystemProperties.getBoolean("ro.config.always_show_roaming", false)) {
+                mCurrentState.showSeparateRoaming = true;
+            } else {
+                mCurrentState.iconGroup = TelephonyIcons.ROAMING;
+            }
         }
         if (isEmergencyOnly() != mCurrentState.isEmergency) {
             mCurrentState.isEmergency = isEmergencyOnly();
@@ -532,6 +539,7 @@ public class MobileSignalController extends SignalController<
         boolean airplaneMode;
         boolean carrierNetworkChangeMode;
         boolean isDefault;
+        boolean showSeparateRoaming;
 
         @Override
         public void copyFrom(State s) {
@@ -545,6 +553,7 @@ public class MobileSignalController extends SignalController<
             isEmergency = state.isEmergency;
             airplaneMode = state.airplaneMode;
             carrierNetworkChangeMode = state.carrierNetworkChangeMode;
+            showSeparateRoaming = state.showSeparateRoaming;
         }
 
         @Override
@@ -559,6 +568,7 @@ public class MobileSignalController extends SignalController<
             builder.append("isEmergency=").append(isEmergency).append(',');
             builder.append("airplaneMode=").append(airplaneMode).append(',');
             builder.append("carrierNetworkChangeMode=").append(carrierNetworkChangeMode);
+            builder.append("showSeparateRoaming=").append(showSeparateRoaming);
         }
 
         @Override
@@ -571,7 +581,8 @@ public class MobileSignalController extends SignalController<
                     && ((MobileState) o).isEmergency == isEmergency
                     && ((MobileState) o).airplaneMode == airplaneMode
                     && ((MobileState) o).carrierNetworkChangeMode == carrierNetworkChangeMode
-                    && ((MobileState) o).isDefault == isDefault;
+                    && ((MobileState) o).isDefault == isDefault
+                    && ((MobileState) o).showSeparateRoaming == showSeparateRoaming;
         }
     }
 }
