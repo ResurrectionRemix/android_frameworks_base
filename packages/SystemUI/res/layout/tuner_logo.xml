@@ -12,7 +12,7 @@
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="156dp"
+    android:layout_height="200dp"
     android:gravity="center">
 
     <ImageView
@@ -21,5 +21,6 @@
         android:src="@drawable/sys_tuner"
         android:tint="?android:attr/colorAccent"
         android:layout_gravity="center_horizontal"
+        android:paddingTop="65dp"
             />
 </FrameLayout>
