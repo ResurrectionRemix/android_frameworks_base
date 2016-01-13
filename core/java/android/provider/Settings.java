@@ -4876,6 +4876,12 @@ public final class Settings {
          */
         public static final String QS_TRANSPARENT_SHADE = "qs_transparent_shade";
 
+ 	/**
+         * Color of the clear all icon in the notification drawer
+         * @hide
+         */
+        public static final String NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR = "nd_clear_all_icon_color";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
