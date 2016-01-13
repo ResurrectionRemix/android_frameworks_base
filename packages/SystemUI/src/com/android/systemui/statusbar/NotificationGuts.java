@@ -19,6 +19,8 @@ package com.android.systemui.statusbar;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff.Mode;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import com.android.systemui.R;
@@ -56,6 +58,7 @@ public class NotificationGuts extends FrameLayout {
         if (mBackground != null) {
             mBackground.setCallback(this);
         }
+        updateBgColor();
     }
 
     @Override
@@ -101,4 +104,13 @@ public class NotificationGuts extends FrameLayout {
         // Prevents this view from creating a layer when alpha is animating.
         return false;
     }
+
+    public void updateBgColor() {
+        final int color = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.NOTIFICATION_GUTS_BG_COLOR, 0xff384248);
+        if (mBackground != null) {
+            mBackground.setColorFilter(color, Mode.SRC_ATOP);
+        }
+    }
+
 }

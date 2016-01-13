@@ -53,6 +53,7 @@ import android.widget.RemoteViews;
 
 import com.android.internal.R;
 import com.android.internal.util.NotificationColorUtil;
+import com.android.internal.util.rr.NotificationColorHelper;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -2107,6 +2108,7 @@ public class Notification implements Parcelable
         private int mVisibility = VISIBILITY_PRIVATE;
         private Notification mPublicVersion = null;
         private final NotificationColorUtil mColorUtil;
+        private final boolean mIsLegacy;
         private ArrayList<String> mPeople;
         private int mColor = COLOR_DEFAULT;
 
@@ -2171,9 +2173,9 @@ public class Notification implements Parcelable
             mAudioAttributes = AUDIO_ATTRIBUTES_DEFAULT;
             mPriority = PRIORITY_DEFAULT;
             mPeople = new ArrayList<String>();
-
+            mIsLegacy= context.getApplicationInfo().targetSdkVersion < Build.VERSION_CODES.LOLLIPOP ?
+                    true : false;
             mColorUtil = NotificationColorUtil.getInstance(mContext);
-
         }
 
         /**
@@ -2983,26 +2985,31 @@ public class Notification implements Parcelable
                 processSmallIconAsLarge(mSmallIcon, contentView);
             }
             if (mContentTitle != null) {
-                contentView.setTextViewText(R.id.title, processLegacyText(mContentTitle));
+                contentView.setTextViewText(R.id.title, processText(getTextColor(255), mContentTitle));
+                contentView.setTextColor(R.id.title, getTextColor(255));
             }
             if (mContentText != null) {
-                contentView.setTextViewText(R.id.text, processLegacyText(mContentText));
+                contentView.setTextViewText(R.id.text, processText(getTextColor(255), mContentText));
+                contentView.setTextColor(R.id.text, getTextColor(179));
                 showLine3 = true;
             }
             if (mContentInfo != null) {
-                contentView.setTextViewText(R.id.info, processLegacyText(mContentInfo));
+                contentView.setTextViewText(R.id.info, processText(getTextColor(255), mContentInfo));
+                contentView.setTextColor(R.id.info, getTextColor(179));
                 contentView.setViewVisibility(R.id.info, View.VISIBLE);
                 showLine3 = true;
             } else if (mNumber > 0) {
                 final int tooBig = mContext.getResources().getInteger(
                         R.integer.status_bar_notification_info_maxnum);
                 if (mNumber > tooBig) {
-                    contentView.setTextViewText(R.id.info, processLegacyText(
+                    contentView.setTextViewText(R.id.info, processText(getTextColor(255),
                             mContext.getResources().getString(
                                     R.string.status_bar_notification_info_overflow)));
+                    contentView.setTextColor(R.id.info, getTextColor(179));
                 } else {
                     NumberFormat f = NumberFormat.getIntegerInstance();
-                    contentView.setTextViewText(R.id.info, processLegacyText(f.format(mNumber)));
+                    contentView.setTextViewText(R.id.info, processText(getTextColor(255), f.format(mNumber)));
+                    contentView.setTextColor(R.id.info, getTextColor(179));
                 }
                 contentView.setViewVisibility(R.id.info, View.VISIBLE);
                 showLine3 = true;
@@ -3012,9 +3019,11 @@ public class Notification implements Parcelable
 
             // Need to show three lines?
             if (mSubText != null) {
-                contentView.setTextViewText(R.id.text, processLegacyText(mSubText));
+                contentView.setTextViewText(R.id.text, processText(getTextColor(255), mSubText));
+                contentView.setTextColor(R.id.text, getTextColor(179));
                 if (mContentText != null) {
-                    contentView.setTextViewText(R.id.text2, processLegacyText(mContentText));
+                    contentView.setTextViewText(R.id.text2, processText(getTextColor(255), mContentText));
+                    contentView.setTextColor(R.id.text2, getTextColor(179));
                     contentView.setViewVisibility(R.id.text2, View.VISIBLE);
                     showLine2 = true;
                     contentTextInLine2 = true;
@@ -3051,10 +3060,12 @@ public class Notification implements Parcelable
                     contentView.setViewVisibility(R.id.chronometer, View.VISIBLE);
                     contentView.setLong(R.id.chronometer, "setBase",
                             mWhen + (SystemClock.elapsedRealtime() - System.currentTimeMillis()));
+                    contentView.setTextColor(R.id.chronometer, getTextColor(179));
                     contentView.setBoolean(R.id.chronometer, "setStarted", true);
                 } else {
                     contentView.setViewVisibility(R.id.time, View.VISIBLE);
                     contentView.setLong(R.id.time, "setTime", mWhen);
+                    contentView.setTextColor(R.id.time, getTextColor(179));
                 }
             }
 
@@ -3183,7 +3194,8 @@ public class Notification implements Parcelable
                               : getActionLayoutResource());
             final Icon ai = action.getIcon();
             button.setTextViewCompoundDrawablesRelative(R.id.action0, ai, null, null, null);
-            button.setTextViewText(R.id.action0, processLegacyText(action.title));
+            button.setTextViewText(R.id.action0, processText(getTextColor(255), action.title));
+            button.setTextColor(R.id.action0, getTextColor(255));
             if (!tombstone) {
                 button.setOnClickPendingIntent(R.id.action0, action.actionIntent);
             }
@@ -3197,23 +3209,18 @@ public class Notification implements Parcelable
          *         doesn't create material notifications by itself) app.
          */
         private boolean isLegacy() {
-            return mColorUtil != null;
+            return mIsLegacy;
         }
 
         private void processLegacyAction(Action action, RemoteViews button) {
             if (!isLegacy() || mColorUtil.isGrayscaleIcon(mContext, action.getIcon())) {
                 button.setTextViewCompoundDrawablesRelativeColorFilter(R.id.action0, 0,
-                        mContext.getColor(R.color.notification_action_color_filter),
-                        PorterDuff.Mode.MULTIPLY);
+                        getIconColor(), PorterDuff.Mode.SRC_IN);
             }
         }
 
-        private CharSequence processLegacyText(CharSequence charSequence) {
-            if (isLegacy()) {
-                return mColorUtil.invertCharSequenceColors(charSequence);
-            } else {
-                return charSequence;
-            }
+        private CharSequence processText(int color, CharSequence charSequence) {
+            return mColorUtil.processCharSequenceColors(color, charSequence);
         }
 
         /**
@@ -3714,6 +3721,17 @@ public class Notification implements Parcelable
         private int getActionTombstoneLayoutResource() {
             return R.layout.notification_material_action_tombstone;
         }
+
+        private int getTextColor(int alpha) {
+            final int color = NotificationColorHelper.getCustomTextColor(mContext);
+            final int  textColor = (alpha << 24) | (color & 0x00ffffff);
+            return textColor;
+        }
+
+        private int getIconColor() {
+            int color = NotificationColorHelper.getCustomIconColor(mContext);
+            return NotificationColorHelper.getCustomIconColor(mContext);
+        }
     }
 
     /**
@@ -3790,7 +3808,8 @@ public class Notification implements Parcelable
                     mSummaryTextSet ? mSummaryText
                                     : mBuilder.mSubText;
             if (overflowText != null) {
-                contentView.setTextViewText(R.id.text, mBuilder.processLegacyText(overflowText));
+                contentView.setTextViewText(R.id.text, mBuilder.processText(mBuilder.getTextColor(255), overflowText));
+                contentView.setTextColor(R.id.text, mBuilder.getTextColor(179));
                 contentView.setViewVisibility(R.id.overflow_divider, View.VISIBLE);
                 contentView.setViewVisibility(R.id.line3, View.VISIBLE);
             } else {
@@ -4139,7 +4158,8 @@ public class Notification implements Parcelable
 
             mBuilder.mContentText = oldBuilderContentText;
 
-            contentView.setTextViewText(R.id.big_text, mBuilder.processLegacyText(mBigText));
+            contentView.setTextViewText(R.id.big_text, mBuilder.processText(mBuilder.getTextColor(255), mBigText));
+            contentView.setTextColor(R.id.big_text, mBuilder.getTextColor(179));
             contentView.setViewVisibility(R.id.big_text, View.VISIBLE);
             contentView.setInt(R.id.big_text, "setMaxLines", calculateMaxLines());
             contentView.setViewVisibility(R.id.text2, View.GONE);
@@ -4288,7 +4308,8 @@ public class Notification implements Parcelable
                 CharSequence str = mTexts.get(i);
                 if (str != null && !str.equals("")) {
                     contentView.setViewVisibility(rowIds[i], View.VISIBLE);
-                    contentView.setTextViewText(rowIds[i], mBuilder.processLegacyText(str));
+                    contentView.setTextViewText(rowIds[i], mBuilder.processText(mBuilder.getTextColor(255), str));
+                    contentView.setTextColor(rowIds[i], mBuilder.getTextColor(179));
                     if (largeText) {
                         contentView.setTextViewTextSize(rowIds[i], TypedValue.COMPLEX_UNIT_PX,
                                 subTextSize);
@@ -4302,6 +4323,7 @@ public class Notification implements Parcelable
 
             contentView.setViewVisibility(R.id.inbox_more,
                     mTexts.size() > rowIds.length ? View.VISIBLE : View.GONE);
+            contentView.setTextColor(R.id.inbox_more, mBuilder.getTextColor(179));
 
             applyTopPadding(contentView);
 
@@ -4527,10 +4549,8 @@ public class Notification implements Parcelable
          * Applies the special text colors for media notifications to all text views.
          */
         private void styleText(RemoteViews contentView) {
-            int primaryColor = mBuilder.mContext.getColor(
-                    R.color.notification_media_primary_color);
-            int secondaryColor = mBuilder.mContext.getColor(
-                    R.color.notification_media_secondary_color);
+            int primaryColor = mBuilder.getTextColor(255);
+            int secondaryColor = mBuilder.getTextColor(179);
             contentView.setTextColor(R.id.title, primaryColor);
             if (mBuilder.showsTimeOrChronometer()) {
                 if (mBuilder.mUseChronometer) {

@@ -32,19 +32,7 @@ public abstract class NotificationViewWrapper {
     protected final View mView;
 
     public static NotificationViewWrapper wrap(Context ctx, View v) {
-        if (v.getId() == com.android.internal.R.id.status_bar_latest_event_content) {
-            if (TAG_BIG_MEDIA_NARROW.equals(v.getTag())) {
-                return new NotificationBigMediaNarrowViewWrapper(ctx, v);
-            } else if (TAG_MEDIA.equals(v.getTag())) {
-                return new NotificationMediaViewWrapper(ctx, v);
-            } else if (TAG_BIG_PICTURE.equals(v.getTag())) {
-                return new NotificationBigMediaNarrowViewWrapper(ctx, v);
-            } else {
-                return new NotificationTemplateViewWrapper(ctx, v);
-            }
-        } else {
-            return new NotificationCustomViewWrapper(v);
-        }
+        return new NotificationCustomViewWrapper(v);
     }
 
     protected NotificationViewWrapper(View view) {
