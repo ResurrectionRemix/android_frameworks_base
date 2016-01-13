@@ -308,10 +308,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     public static final int FONT_THIN_ITALIC = 7;
     public static final int FONT_CONDENSED = 8;
     public static final int FONT_CONDENSED_ITALIC = 9;
-    public static final int FONT_CONDENSED_BOLD = 10;
-    public static final int FONT_CONDENSED_BOLD_ITALIC = 11;
-    public static final int FONT_MEDIUM = 12;
-    public static final int FONT_MEDIUM_ITALIC = 13;
+    public static final int FONT_CONDENSED_LIGHT = 10;
+    public static final int FONT_CONDENSED_LIGHT_ITALIC = 11;
+    public static final int FONT_CONDENSED_BOLD = 12;
+    public static final int FONT_CONDENSED_BOLD_ITALIC = 13;
+    public static final int FONT_MEDIUM = 14;
+    public static final int FONT_MEDIUM_ITALIC = 15;
+    public static final int FONT_BLACK = 16;
+    public static final int FONT_BLACK_ITALIC = 17;
 
     /** Allow some time inbetween the long press for back and recents. */
     private static final int LOCK_TO_APP_GESTURE_TOLERENCE = 200;
@@ -856,6 +860,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             case FONT_CONDENSED_ITALIC:
                 mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
                 break;
+            case FONT_CONDENSED_LIGHT:
+                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
+                break;
+            case FONT_CONDENSED_LIGHT_ITALIC:
+                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
+                break;
             case FONT_CONDENSED_BOLD:
                 mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
                 break;
@@ -867,6 +877,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 break;
             case FONT_MEDIUM_ITALIC:
                 mWeatherTempView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
+                break;
+            case FONT_BLACK:
+                mWeatherTempView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
+                break;
+            case FONT_BLACK_ITALIC:
+                mWeatherTempView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
                 break;
         }
         mWeatherTempView.setVisibility(View.VISIBLE);
