@@ -16,7 +16,7 @@
 package com.android.internal.logging;
 
 /**
- * Constants for mestrics logs.
+ * Constants for metrics logs.
  *
  * @hide
  */
