@@ -5616,6 +5616,12 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to enable or disable vibration on fingerprint auth error
+         * @hide
+         */
+        public static final String FP_ERROR_VIBRATE = "fp_error_vibrate";
+
+        /**
          * Whether to show charging animation on lock screen
          * @hide
          */
