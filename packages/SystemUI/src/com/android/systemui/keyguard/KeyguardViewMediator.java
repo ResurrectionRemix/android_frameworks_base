@@ -608,9 +608,6 @@ public class KeyguardViewMediator extends SystemUI {
                         if (mUpdateMonitor.isOnLastFingerprintAttempt()) {
                             mHandler.sendEmptyMessageDelayed(KEYGUARD_FINGERPRINT_TIMEOUT,
                                     FINGERPRINT_TIMEOUT_DELAY);
-                            mHandler.sendMessageDelayed(
-                                    mHandler.obtainMessage(KEYGUARD_FINGERPRINT_AUTH, 1, 0),
-                                    FINGERPRINT_TIMEOUT_DELAY);
                         }
                     }
                 } else if (mUpdateMonitor.isMaxFingerprintAttemptsReached()) {
@@ -626,9 +623,6 @@ public class KeyguardViewMediator extends SystemUI {
                         }
 
                         mHandler.sendEmptyMessageDelayed(KEYGUARD_FINGERPRINT_TIMEOUT,
-                                FINGERPRINT_TIMEOUT_DELAY);
-                        mHandler.sendMessageDelayed(
-                                mHandler.obtainMessage(KEYGUARD_FINGERPRINT_AUTH, 1, 0),
                                 FINGERPRINT_TIMEOUT_DELAY);
 
                     }
@@ -1659,6 +1653,7 @@ public class KeyguardViewMediator extends SystemUI {
                     break;
                 case KEYGUARD_FINGERPRINT_TIMEOUT:
                     mUpdateMonitor.clearFailedFingerprintAttempts();
+                    mHandler.obtainMessage(KEYGUARD_FINGERPRINT_AUTH, 1, 0).sendToTarget();
                     break;
             }
         }
