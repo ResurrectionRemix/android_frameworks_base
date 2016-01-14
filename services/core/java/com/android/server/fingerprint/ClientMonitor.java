@@ -24,8 +24,10 @@ import android.hardware.fingerprint.IFingerprintServiceReceiver;
 import android.media.AudioAttributes;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.util.Slog;
 
 import java.util.NoSuchElementException;
@@ -228,7 +230,9 @@ public abstract class ClientMonitor implements IBinder.DeathRecipient {
 
     public final void vibrateSuccess() {
         Vibrator vibrator = mContext.getSystemService(Vibrator.class);
-        if (vibrator != null) {
+        boolean FingerprintVib = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.FINGERPRINT_SUCCESS_VIB, 1, UserHandle.USER_CURRENT) == 1;
+        if (vibrator != null && FingerprintVib) {
             vibrator.vibrate(mSuccessVibrationEffect, FINGERPRINT_SONFICATION_ATTRIBUTES);
         }
     }
