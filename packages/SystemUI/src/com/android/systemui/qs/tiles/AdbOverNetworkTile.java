@@ -36,8 +36,6 @@ import org.cyanogenmod.internal.logging.CMMetricsLogger;
 
 public class AdbOverNetworkTile extends QSTile<QSTile.BooleanState> {
 
-    private boolean mListening;
-
     private static final Intent SETTINGS_DEVELOPMENT =
             new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
 
@@ -113,18 +111,16 @@ public class AdbOverNetworkTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void setListening(boolean listening) {
-        if (mListening != listening) {
-            mListening = listening;
-            if (listening) {
-                mContext.getContentResolver().registerContentObserver(
-                        CMSettings.Secure.getUriFor(CMSettings.Secure.ADB_PORT),
-                        false, mObserver);
-                mContext.getContentResolver().registerContentObserver(
-                        Settings.Secure.getUriFor(Settings.Global.ADB_ENABLED),
-                        false, mObserver);
-            } else {
-                mContext.getContentResolver().unregisterContentObserver(mObserver);
-            }
+        if (listening) {
+            mContext.getContentResolver().registerContentObserver(
+                    CMSettings.Secure.getUriFor(CMSettings.Secure.ADB_PORT),
+                    false, mObserver);
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.Secure.getUriFor(Settings.Global.ADB_ENABLED),
+                    false, mObserver);
+        } else {
+            mContext.getContentResolver().unregisterContentObserver(mObserver);
         }
     }
+
 }
