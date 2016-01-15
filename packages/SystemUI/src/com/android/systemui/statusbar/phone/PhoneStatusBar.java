@@ -471,9 +471,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     int mInitialTouchY;
 
 
+
     // last theme that was applied in order to detect theme change (as opposed
     // to some other configuration change).
     ThemeConfig mCurrentTheme;
+
     private boolean mRecreating = false;
     private int mBatterySaverWarningColor;
 
