@@ -18,7 +18,7 @@
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:systemui="http://schemas.android.com/apk/res-auto"
+    xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -68,7 +68,7 @@
             android:scaleType="centerInside"
             android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             systemui:keyRepeat="true" />
         <com.android.systemui.statusbar.policy.KeyButtonView
             android:id="@+id/three"
@@ -111,7 +111,7 @@
             android:scaleType="centerInside"
             android:layout_height="80dp"
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             systemui:keyRepeat="true" />
     </LinearLayout>
     <FrameLayout
