@@ -122,7 +122,7 @@
     <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
 
 	<!-- Configurations Tile -->
-    <string name="quick_settings_rrtools">Remix Configurations</string>
+    <string name="quick_settings_rrtools">Configurations</string>
 
      <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
@@ -180,9 +180,6 @@
    <string name="status_bar_tuner_title">Status bar tuner</string>   
    <string name="status_bar_tuner">Status bar icons</string>   
    <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>	
-
-    <!-- Recents membar text color -->
-    <color name="recents_membar_text_color">@android:color/white</color>
 
 
     <!-- Off/On/Toggle -->

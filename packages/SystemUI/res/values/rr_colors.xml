@@ -84,4 +84,7 @@
     <color name="recents_full_screen_clock_text_color">@android:color/white</color>
     <color name="recents_full_screen_clock_date_color">@android:color/white</color>
 
+    <!-- Recents membar text color -->
+    <color name="recents_membar_text_color">@android:color/white</color>
+
 </resources>
