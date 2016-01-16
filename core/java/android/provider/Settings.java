@@ -3785,6 +3785,19 @@ public final class Settings {
         public static final String TOAST_ICON = "toast_icon";
 
 
+
+	/*
+         * Whether to mute annoying notifications
+         * @hide
+         */
+        public static final String MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD = "mute_annoying_notifications_threshold";
+
+        /**
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above. */
+
         /**
          * Whether to use gesture anywhere feature.
          * @hide
