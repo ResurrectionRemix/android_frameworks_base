@@ -38,6 +38,7 @@ import com.android.internal.util.rr.NotificationColorHelper;
 
 import com.android.systemui.R;
 import com.android.systemui.ViewInvertHelper;
+import android.provider.Settings;
 
 /**
  * Base class for both {@link ExpandableNotificationRow} and {@link NotificationOverflowContainer}
@@ -132,12 +133,17 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
     private int mNormalColor;
     private int mMediaColor;
     private int mLowPriorityColor;
+    private final int mNColor;
+    private final int mLPriorityColor;	
     private boolean mIsBelowSpeedBump;
     private ViewInvertHelper mBackgroundNormalInvertHelper;
     private ViewInvertHelper mBackgroundDimmedInvertHelper;
+    private boolean MColorSwitch = false;
+    public Context mContext;		
 
     public ActivatableNotificationView(Context context, AttributeSet attrs) {
         super(context, attrs);
+	mContext = context;	
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mFastOutSlowInInterpolator =
                 AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in);
@@ -149,6 +155,9 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
         setClipChildren(false);
         setClipToPadding(false);
         mLegacyColor = context.getColor(R.color.notification_legacy_background_color);
+	mNColor = context.getColor(R.color.notification_material_background_color);
+        mLPriorityColor = context.getColor(
+                R.color.notification_material_background_low_priority_color);
         int roundedRectCornerRadius = getResources().getDimensionPixelSize(
                 R.dimen.notification_material_rounded_rect_radius);
         setRoundCornerRadius(roundedRectCornerRadius); // Themes: For drop-shadow rounded corners
@@ -158,11 +167,14 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
                 R.color.notification_ripple_color_low_priority);
         mNormalRippleColor = context.getColor(
                 R.color.notification_ripple_untinted_color);
+
     }
 
     @Override
     protected void onFinishInflate() {
-        super.onFinishInflate();
+        super.onFinishInflate();	    
+	MColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.NOTIF_COLOR_SWITCH, 0) == 1;
         mBackgroundNormal = (NotificationBackgroundView) findViewById(R.id.backgroundNormal);
         mBackgroundDimmed = (NotificationBackgroundView) findViewById(R.id.backgroundDimmed);
         mBackgroundNormal.setCustomBackground(R.drawable.notification_material_bg);
@@ -172,7 +184,12 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
         mBackgroundDimmedInvertHelper =
                 new ViewInvertHelper(mBackgroundDimmed, DARK_ANIMATION_LENGTH);
         updateBackground();
+	if (MColorSwitch) {			
         updateSettings();
+	} else {
+	updateBackgroundTint();
+	}
+	
     }
 
     private final Runnable mTapTimeoutRunnable = new Runnable() {
@@ -382,13 +399,24 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
      * Sets the tint color of the background
      */
     public void setTintColor(int color) {
+	Context context = mContext;
+	 MColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.NOTIF_COLOR_SWITCH, 0) == 1;
         mBgTint = color;
+        if (MColorSwitch) {			
         updateSettings();
+	} else {
+	updateBackgroundTint();
+	}
     }
 
     private void updateBackgroundTint() {
         int color = getBgColor();
         int rippleColor = getRippleColor();
+	 if (color == mNColor) {
+            // We don't need to tint a normal notification
+            color = 0;
+        }
         mBackgroundDimmed.setTint(color);
         mBackgroundNormal.setTint(color);
         mBackgroundDimmed.setRippleColor(rippleColor);
@@ -679,8 +707,15 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
     protected abstract View getContentView();
 
     private int getBgColor() {
+	Context context = mContext;	    
+	MColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.NOTIF_COLOR_SWITCH, 0) == 1;
         if (mBgTint != 0) {
-            return mMediaColor;
+		if (MColorSwitch) {
+            	return mMediaColor; 
+		} else {
+		return mBgTint;
+		}	
         } else if (mShowingLegacyBackground) {
             return mLegacyColor;
         } else if (mIsBelowSpeedBump) {

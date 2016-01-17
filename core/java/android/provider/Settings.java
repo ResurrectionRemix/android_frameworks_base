@@ -4234,6 +4234,13 @@ public final class Settings {
          */
         public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
 
+
+	/*
+         * Custom Colors Switch
+         * @hide
+         */
+        public static final String NOTIF_COLOR_SWITCH = "notif_color_switch";
+
          /**
          * Colorize the media notifications background
          * 0: never

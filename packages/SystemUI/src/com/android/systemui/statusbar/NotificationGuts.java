@@ -33,6 +33,7 @@ public class NotificationGuts extends FrameLayout {
     private Drawable mBackground;
     private int mClipTopAmount;
     private int mActualHeight;
+    public boolean MColorSwitch = false;
 
     public NotificationGuts(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -106,10 +107,15 @@ public class NotificationGuts extends FrameLayout {
     }
 
     public void updateBgColor() {
+	boolean MColorSwitch = false;
         final int color = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.NOTIFICATION_GUTS_BG_COLOR, 0xff384248);
+	MColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.NOTIF_COLOR_SWITCH, 0) == 1;
         if (mBackground != null) {
+		if (MColorSwitch){
             mBackground.setColorFilter(color, Mode.SRC_ATOP);
+		}
         }
     }
 
