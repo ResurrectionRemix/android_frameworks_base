@@ -36,6 +36,8 @@ import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -266,6 +268,9 @@ public class NotificationPanelView extends PanelView implements
     private boolean mTaskManagerShowing;
     private LinearLayout mTaskManagerPanel;
 
+    // QS alpha
+    private int mQSShadeAlpha;
+
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(!DEBUG);
@@ -331,6 +336,7 @@ public class NotificationPanelView extends PanelView implements
                 }
             }
         });
+        setQSBackgroundAlpha();
 
         mLockPatternUtils = new CmLockPatternUtils(getContext());
         if (mLockPatternUtils.isThirdPartyKeyguardEnabled()) {
@@ -2628,6 +2634,9 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TRANSPARENT_SHADE),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -2655,6 +2664,18 @@ public class NotificationPanelView extends PanelView implements
             mStatusBarLockedOnSecureKeyguard = Settings.Secure.getIntForUser(
                     resolver, Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD, 1,
                     UserHandle.USER_CURRENT) == 1;
+            mQSShadeAlpha = Settings.System.getInt(
+                    resolver, Settings.System.QS_TRANSPARENT_SHADE, 255);
+            setQSBackgroundAlpha();
+        }
+    }
+
+    private void setQSBackgroundAlpha() {
+        if (mQsContainer != null) {
+            mQsContainer.getBackground().setAlpha(mQSShadeAlpha);
+        }
+        if (mQsPanel != null) {
+            mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
         }
     }
 
