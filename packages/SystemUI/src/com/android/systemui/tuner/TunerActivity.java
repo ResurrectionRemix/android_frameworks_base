@@ -16,9 +16,7 @@
 package com.android.systemui.tuner;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 public class TunerActivity extends Activity {
 
@@ -29,27 +27,4 @@ public class TunerActivity extends Activity {
                 .commit();
     }
 
-    /**
-     * Base class for direct entry points into
-     * tuner fragments
-     */
-    private static abstract class FragmentTunerActivityBase extends Activity {
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getFragmentManager().beginTransaction().replace(android.R.id.content,
-                    getFragment()).commit();
-        }
-
-        protected abstract Fragment getFragment();
-
-    }
-
-    public static final class StatusBarIconActivity extends FragmentTunerActivityBase {
-        @Override
-        protected Fragment getFragment() {
-            return new StatusBarIconBlacklistFragment();
-        }
-    }
 }

@@ -16,23 +16,53 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/status_bar_tuner_title">
-    <Preference
-        android:key="statusbar_icon_blacklist"
-        android:title="@string/status_bar_tuner"
-        android:summary="@string/status_bar_tuner_summary" />
+    android:title="@string/status_bar">
 
-    <!-- tuner logo -->
-    <PreferenceScreen 
-        android:key="sys_tuner_logo"
-        android:selectable="false"
-        android:layout="@layout/tuner_logo" />
+        <PreferenceCategory
+            android:key="hide_statusbar_items"
+            android:title="@string/statusbar_tuner_category_title">
 
-    <PreferenceScreen 
-        android:key="sys_tuner_info"
-        android:selectable="false"
-        android:layout="@layout/sys_tuner_info" />
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="cast"
+            android:title="@string/quick_settings_cast_title" />
 
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="hotspot"
+            android:title="@string/quick_settings_hotspot_label" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="bluetooth"
+            android:title="@string/quick_settings_bluetooth_label" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="zen"
+            android:title="@string/quick_settings_dnd_label" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="alarm_clock"
+            android:title="@string/status_bar_alarm" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="managed_profile"
+            android:title="@string/status_bar_work" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="wifi"
+            android:title="@string/quick_settings_wifi_label" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="ethernet"
+            android:title="@string/status_bar_ethernet" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="mobile"
+            android:title="@string/quick_settings_cellular_detail_title" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="airplane"
+            android:title="@string/status_bar_airplane" />
+
+        </PreferenceCategory>
 
 </PreferenceScreen>
 
