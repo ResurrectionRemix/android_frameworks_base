@@ -243,7 +243,7 @@
                   android:enabled="true"
                   android:icon="@drawable/tuner"
                   android:theme="@android:style/Theme.Material.Settings"
-                  android:label="@string/system_ui_tuner"
+                  android:label="@string/status_bar_tuner"
                   android:process=":tuner"
                   android:exported="true">
             <intent-filter>

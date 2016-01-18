@@ -16,7 +16,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/status_bar">
+    android:title="@string/status_bar_tuner">
 
         <PreferenceCategory
             android:key="hide_statusbar_items"
