@@ -78,7 +78,7 @@
     <color name="keyguard_affordance">#ffffffff</color>
 
     <!-- The color of the legacy notification background -->
-    <color name="notification_legacy_background_color">#ff1a1a1a</color>
+    <color name="notification_legacy_background_color">#ffffffff</color>
 
     <!-- The color of the material notification background -->
     <color name="notification_material_background_color">#fffafafa</color>
@@ -87,7 +87,7 @@
     <color name="notification_material_background_dimmed_color">#d4ffffff</color>
 
     <!-- The color of the material notification background when low priority -->
-    <color name="notification_material_background_low_priority_color">#ffe0e0e0</color>
+    <color name="notification_material_background_low_priority_color">#ff282e34</color>
 
     <!-- The color of the material notification background for media notifications when no custom
          color is specified -->

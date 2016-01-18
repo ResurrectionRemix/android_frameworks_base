@@ -17,9 +17,16 @@
 package com.android.systemui.statusbar;
 
 import android.content.Context;
+import android.database.ContentObserver;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+
+import com.android.internal.util.rr.ColorHelper;
+import com.android.internal.util.rr.NotificationColorHelper;
+
 import com.android.systemui.R;
 
 /**
@@ -31,6 +38,32 @@ public class SpeedBumpView extends ExpandableView {
     private AlphaOptimizedView mLine;
     private boolean mIsVisible = true;
     private final Interpolator mFastOutSlowInInterpolator;
+    private boolean MColorSwitch = false;	
+
+    private SettingsObserver mSettingsObserver;
+
+    class SettingsObserver extends ContentObserver {
+	private boolean mColorSwitch = false;
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NOTIFICATION_BG_COLOR),
+                    false, this);
+        }
+
+        void unobserve() {
+            mContext.getContentResolver().unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateDividerColor();
+        }
+
+    }
 
     public SpeedBumpView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,12 +71,30 @@ public class SpeedBumpView extends ExpandableView {
                 .getDimensionPixelSize(R.dimen.speed_bump_height);
         mFastOutSlowInInterpolator = AnimationUtils.loadInterpolator(getContext(),
                 android.R.interpolator.fast_out_slow_in);
+        mSettingsObserver = new SettingsObserver(getHandler());
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mSettingsObserver.observe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mSettingsObserver.unobserve();
     }
 
     @Override
     protected void onFinishInflate() {
+	MColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.NOTIF_COLOR_SWITCH, 0) == 1;
         super.onFinishInflate();
         mLine = (AlphaOptimizedView) findViewById(R.id.speedbump_line);
+	if (MColorSwitch) {
+        updateDividerColor();
+	}
     }
 
     @Override
@@ -125,5 +176,11 @@ public class SpeedBumpView extends ExpandableView {
     public void performAddAnimation(long delay, long duration) {
         // TODO: Use duration
         performVisibilityAnimation(true, delay);
+    }
+
+    private void updateDividerColor() {
+        if (mLine != null) {
+            mLine.setBackgroundColor(NotificationColorHelper.getdividerColor(mContext));
+        }
     }
 }

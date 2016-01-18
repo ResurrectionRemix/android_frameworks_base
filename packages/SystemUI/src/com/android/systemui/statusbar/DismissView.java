@@ -57,6 +57,10 @@ public class DismissView extends StackScrollerDecorView {
         mDismissButton.showButton();
     }
 
+    public void updateIconColor(int color) {
+        mDismissButton.setIconColor(color);
+    }
+
     public void setDismissAllInProgress(boolean dismissAllInProgress) {
         if (dismissAllInProgress) {
             setClipBounds(null);

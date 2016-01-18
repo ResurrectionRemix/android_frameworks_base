@@ -40,6 +40,7 @@ import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.tiles.AdbOverNetworkTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.AmbientDisplayTile;
+import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.BrightnessTile;
 import com.android.systemui.qs.tiles.CastTile;
@@ -410,6 +411,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("appsidebar")) return new AppsidebarTile(this);
 	else if (tileSpec.equals("restartui")) return new SystemUIRestartTile(this);
 	else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
+        else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
@@ -514,6 +516,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("appsidebar")) return R.string.quick_settings_app_sidebar;
 	else if (spec.equals("restartui")) return R.string.quick_settings_systemui_restart_label;
         else if (spec.equals("gesture_anywhere")) return R.string.quick_settings_gesture_anywhere_label;
+        else if (spec.equals("battery_saver")) return R.string.quick_settings_battery_saver_label;
         return 0;
     }
 
@@ -560,6 +563,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("appsidebar")) return R.drawable.ic_qs_appsidebar_on;
 	else if (spec.equals("restartui")) return R.drawable.ic_qs_systemui_restart;
 	else if (spec.equals("gesture_anywhere")) return R.drawable.ic_qs_gestures_on;
+        else if (spec.equals("heads_up")) return R.drawable.ic_qs_battery_saver_on;
         return 0;
     }
 

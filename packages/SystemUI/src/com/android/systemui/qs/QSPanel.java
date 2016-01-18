@@ -631,6 +631,12 @@ public class QSPanel extends ViewGroup {
         fireScanStateChanged(scanState);
     }
 
+    public void setQSShadeAlphaValue(int alpha) {
+        if (mDetail != null) {
+            mDetail.getBackground().setAlpha(alpha);
+        }
+    }
+
     private class H extends Handler {
         private static final int SHOW_DETAIL = 1;
         private static final int SET_TILE_VISIBILITY = 2;
