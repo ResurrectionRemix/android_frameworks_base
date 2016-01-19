@@ -3889,6 +3889,13 @@ public final class Settings {
         public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
 
         /**
+         * Whether to display set of animations when prompting the power menu
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_LOCKSCREEN = "lockscreen_enable_power_menu";
+
+        /**
          * Change quick settings tiles animation style
          *
          * @hide
@@ -4123,6 +4130,12 @@ public final class Settings {
          * @hide
          */
         public static final String DOZE_SCREEN_BRIGHTNESS = "doze_screen_brightness";
+
+        /**
+         * whether to enable torch on lockscreen
+         * @hide
+         */
+        public static final String KEYGUARD_TOGGLE_TORCH = "keyguard_toggle_torch";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
