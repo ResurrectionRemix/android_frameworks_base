@@ -114,6 +114,7 @@
     <string name="quick_settings_title_header">Header</string>
     <string name="quick_settings_title_tiles">Tiles</string>
     <string name="quick_settings_title_show_weather">Show weather</string>
+    <string name="quick_settings_title_show_brightness_slider">Show brightness slider</string>
     <string name="quick_settings_title_enlarge_first_row">Enlarge first row</string>
 
     <!-- The text for the button in the notification window-shade that clears
