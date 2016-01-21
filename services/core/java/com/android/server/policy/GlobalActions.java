@@ -131,7 +131,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     // Power menu customizations
     String mActions;
-    private int mScreenshotDelay;	
+    private int mScreenshotDelay;
 
     /**
      * @param context everything needs a context :(
@@ -204,7 +204,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private void handleShow() {
         awakenIfNecessary();
-	checkSettings();
+        checkSettings();
         prepareDialog();
         WindowManager.LayoutParams attrs = mDialog.getWindow().getAttributes();
             attrs.setTitle("GlobalActions");
@@ -254,7 +254,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         if (powermenuAnimations == 10) {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-        }            
+
+        }    
+	attrs.alpha = setRebootDialogAlpha();        
         mDialog.getWindow().setAttributes(attrs);
         mDialog.show();
         mDialog.getWindow().getDecorView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_EXPAND);
@@ -263,6 +265,14 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private int getPowermenuAnimations() {
         return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.POWER_MENU_ANIMATIONS, 0);
+    }
+
+    private float setPowerMenuAlpha() {
+        int mPowerMenuAlpha = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_MENU, 100);
+        double dAlpha = mPowerMenuAlpha / 100.0;
+        float alpha = (float) dAlpha;
+        return alpha;
     }
 
     private Context getUiContext() {

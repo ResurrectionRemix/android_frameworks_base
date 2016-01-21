@@ -333,6 +333,9 @@ public final class ShutdownThread extends Thread {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
             }
+
+            attrs.alpha = setRebootDialogAlpha(context);
+
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
             sConfirmDialog.show();
         } else {
@@ -343,6 +346,15 @@ public final class ShutdownThread extends Thread {
     private static int getPowermenuAnimations(Context context) {
         return Settings.System.getInt(context.getContentResolver(),
                 Settings.System.POWER_MENU_ANIMATIONS, 0);
+    }
+
+    private static float setRebootDialogAlpha(Context context) {
+        int mRebootDialogAlpha = Settings.System.getInt(
+                context.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_MENU, 100);
+        double dAlpha = mRebootDialogAlpha / 100.0;
+        float alpha = (float) dAlpha;
+        return alpha;
     }
 
     private static void doSoftReboot() {
@@ -535,35 +547,38 @@ public final class ShutdownThread extends Thread {
            if (powermenuAnimations == 3) {
                 attrs.windowAnimations = R.style.PowerMenuRotateAnimation;
                 attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 4) {
+            }
+            if (powermenuAnimations == 4) {
                 attrs.windowAnimations = R.style.PowerMenuXylonAnimation;
                 attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 5) {
+            }
+            if (powermenuAnimations == 5) {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 6) {
+            }
+            if (powermenuAnimations == 6) {
                 attrs.windowAnimations = R.style.PowerMenuTnAnimation;
                 attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 7) {
+            }
+            if (powermenuAnimations == 7) {
                 attrs.windowAnimations = R.style.PowerMenuflyAnimation;
                 attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 8) {
+            }
+            if (powermenuAnimations == 8) {
                 attrs.windowAnimations = R.style.PowerMenuCardAnimation;
                 attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 9) {
+            }
+            if (powermenuAnimations == 9) {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-           }
-           if (powermenuAnimations == 10) {
+            }
+            if (powermenuAnimations == 10) {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-           }
+            }
+
+            attrs.alpha = setRebootDialogAlpha(context);
+
             pd.show();
         }
 
