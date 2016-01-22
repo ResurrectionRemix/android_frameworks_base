@@ -254,9 +254,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         if (powermenuAnimations == 10) {
                 attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-
         }    
-	attrs.alpha = setPowerMenuAlpha();      
+	attrs.alpha = setPowerMenuAlpha();
+	mDialog.getWindow().setDimAmount(setPowerMenuDialogDim());      
         mDialog.getWindow().setAttributes(attrs);
         mDialog.show();
         mDialog.getWindow().getDecorView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_EXPAND);
@@ -273,6 +273,14 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         double dAlpha = mPowerMenuAlpha / 100.0;
         float alpha = (float) dAlpha;
         return alpha;
+    }
+
+    private float setPowerMenuDialogDim() {
+        int mPowerMenuDialogDim = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_DIALOG_DIM, 50);
+        double dDim = mPowerMenuDialogDim / 100.0;
+        float dim = (float) dDim;
+        return dim;
     }
 
     private Context getUiContext() {

@@ -337,6 +337,7 @@ public final class ShutdownThread extends Thread {
             attrs.alpha = setRebootDialogAlpha(context);
 
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+            sConfirmDialog.getWindow().setDimAmount(setRebootDialogDim(context));
             sConfirmDialog.show();
         } else {
             beginShutdownSequence(context);
@@ -355,6 +356,14 @@ public final class ShutdownThread extends Thread {
         double dAlpha = mRebootDialogAlpha / 100.0;
         float alpha = (float) dAlpha;
         return alpha;
+    }
+
+    private static float setRebootDialogDim(Context context) {
+        int mRebootDialogDim = Settings.System.getInt(context.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_DIALOG_DIM, 50);
+        double dDim = mRebootDialogDim / 100.0;
+        float dim = (float) dDim;
+        return dim;
     }
 
     private static void doSoftReboot() {
@@ -579,6 +588,7 @@ public final class ShutdownThread extends Thread {
 
             attrs.alpha = setRebootDialogAlpha(context);
 
+            pd.getWindow().setDimAmount(setRebootDialogDim(context));
             pd.show();
         }
 

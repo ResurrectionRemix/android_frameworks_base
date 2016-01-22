@@ -5033,6 +5033,12 @@ public final class Settings {
         public static final String TRANSPARENT_POWER_MENU = "transparent_power_menu";
 
         /**
+         * Dim amount around power/reboot menu dialogs
+         * @hide
+         */
+        public static final String TRANSPARENT_POWER_DIALOG_DIM = "transparent_power_dialog_dim";
+
+        /**
          * Whether to display dashboard tiles in a double line layout
          * @hide
          */
