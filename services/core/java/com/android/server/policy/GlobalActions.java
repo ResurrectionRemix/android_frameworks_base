@@ -256,7 +256,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
 
         }    
-	attrs.alpha = setRebootDialogAlpha();        
+	attrs.alpha = setPowerMenuAlpha();      
         mDialog.getWindow().setAttributes(attrs);
         mDialog.show();
         mDialog.getWindow().getDecorView().setSystemUiVisibility(View.STATUS_BAR_DISABLE_EXPAND);
