@@ -3898,7 +3898,15 @@ public final class Settings {
          */
         public static final String RECENTS_FULL_SCREEN = "recents_full_screen";
 
+
+	/**
+         * Whether to disable showing arrows in network traffic indicators
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
+
         /**
+
          *  Enable navigation bar double tap gesture on to put device to sleep
          * @hide
          */
