@@ -176,9 +176,6 @@
     <color name="Red_800">#ffb93221</color>
 
     <color name="chooser_service_row_background_color">#fff5f5f5</color>
-
-    <color name="notification_material_action_textcolor">#ffffffff</color>
-    <color name="notification_button_text">#ffffffff</color>
    <!-- 87% black -->
     <color name="primary_text_default_material_light">#de000000</color>
     <!-- 54% black -->
