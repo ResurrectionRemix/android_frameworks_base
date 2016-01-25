@@ -659,7 +659,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v == mSettingsButton) {
-            startSettingsActivity();
+            if (mSettingsButton.isTunerClick()) {
+                mSettingsButton.consumeClick();
+                mQSPanel.getHost().setEditing(!mQSPanel.getHost().isEditing());
+            } else {
+		startSettingsActivity();
+		}
         } else if (v == mSystemIconsSuperContainer) {
             startBatteryActivity();
         } else if (v == mAlarmStatus && mNextAlarm != null) {
@@ -678,9 +683,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     @Override
     public boolean onLongClick(View v) {
-        if (v == mSettingsButton){
-            startSettingsLongClickActivity();
-        } else if (v == mSystemIconsSuperContainer) {
+	 if (v == mSystemIconsSuperContainer) {
             startBatteryLongClickActivity();
         } else if (v == mClock) {
             startClockLongClickActivity();
@@ -695,13 +698,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
 	vibrateheader(20);	
         return false;
-    }
-
-    private void startSettingsLongClickActivity() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName("com.android.settings",
-                "com.android.settings.rr.MainSettings");
-        mActivityStarter.startActivity(intent, true);
     }
 
     private void startSettingsActivity() {
