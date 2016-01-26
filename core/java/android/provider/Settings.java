@@ -4381,6 +4381,12 @@ public final class Settings {
          */
         public static final String SHOW_FOURG = "show_fourg";
 
+	/**
+         * Show 3g instead of H+
+         * @hide
+         */
+        public static final String SHOW_THREEG = "show_threeg";
+
         /**
          * A list of packages to include in app circle bar.
          * This should be a string of packages separated by |			

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkCapabilities;
 import android.os.Looper;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.os.SystemProperties;
 import android.telephony.PhoneStateListener;
@@ -66,7 +67,7 @@ public class MobileSignalController extends SignalController<
     private ServiceState mServiceState;
     private SignalStrength mSignalStrength;
     private MobileIconGroup mDefaultIcons;
-    private Config mConfig;
+    private Config mConfig;	
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -183,17 +184,20 @@ public class MobileSignalController extends SignalController<
             mDefaultIcons = TelephonyIcons.THREE_G;
         }
 
+       boolean mShow3G = Settings.System.getIntForUser(
+            mContext.getContentResolver(), Settings.System.SHOW_THREEG,
+                0, UserHandle.USER_CURRENT) == 1;
+
         MobileIconGroup hGroup = TelephonyIcons.THREE_G;
-        if (mConfig.hspaDataDistinguishable) {
+	MobileIconGroup hp = TelephonyIcons.THREE_G;
+ 	if(!mShow3G) {
             hGroup = TelephonyIcons.H;
+	    hp = TelephonyIcons.HP;
         }
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, hGroup);
-        if (mConfig.hspaDataDistinguishable) {
-            hGroup = TelephonyIcons.HP;
-        }
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hGroup);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hp);
 
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_FOURG, 0) == 1) {
