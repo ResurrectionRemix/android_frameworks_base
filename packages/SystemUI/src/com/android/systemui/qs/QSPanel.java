@@ -135,6 +135,7 @@ public class QSPanel extends ViewGroup {
         });
     }
 
+
     /**
      * Enable/disable brightness slider.
      */
@@ -144,9 +145,6 @@ public class QSPanel extends ViewGroup {
                 1, UserHandle.USER_CURRENT) == 1;
  	boolean brightnessIconEnabled = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.BRIGHTNESS_ICON,
-                1, UserHandle.USER_CURRENT) == 1;
-        boolean addtileenabled = Settings.System.getIntForUser(
-            mContext.getContentResolver(), Settings.System.PERSIST_ADD,
                 1, UserHandle.USER_CURRENT) == 1;
         ToggleSlider brightnessSlider = (ToggleSlider) findViewById(R.id.brightness_slider);
         ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
@@ -160,15 +158,9 @@ public class QSPanel extends ViewGroup {
             brightnessSlider.setVisibility(VISIBLE);
             
         } else {
-		if(addtileenabled){
             mBrightnessView.setVisibility(GONE);
-            brightnessSlider.setVisibility(INVISIBLE);
-            brightnessIcon.setVisibility(GONE);	
-		}else{    
-	    mBrightnessView.setVisibility(GONE);
             brightnessSlider.setVisibility(GONE);
-            brightnessIcon.setVisibility(GONE);	
-	    }   
+	    brightnessIcon.setVisibility(GONE);	       
         }
  	
         updateResources();
