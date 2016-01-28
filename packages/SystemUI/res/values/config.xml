@@ -297,5 +297,8 @@
     <!-- Default value how much apps show the app screenshot on recents view entry -->
     <integer name="expanded_items_default">2</integer>
 
+    <!-- Allow Flashlight service to use wakelock -->
+    <bool name="flashlight_use_wakelock">false</bool>
+
 </resources>
 
