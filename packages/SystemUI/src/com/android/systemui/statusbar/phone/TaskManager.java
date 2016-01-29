@@ -111,7 +111,6 @@ public class TaskManager {
     }
 
     public void refreshTaskManagerView () {
-        if (DEBUG) Log.e(TAG, "refreshTaskManagerView");
         loadRunningTasks();
         refreshMemoryUsagePanel();
         inflateTaskListView();
