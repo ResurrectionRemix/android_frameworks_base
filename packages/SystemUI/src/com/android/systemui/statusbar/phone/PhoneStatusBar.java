@@ -317,6 +317,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     public static final int FONT_MEDIUM_ITALIC = 15;
     public static final int FONT_BLACK = 16;
     public static final int FONT_BLACK_ITALIC = 17;
+    public static final int FONT_DANCINGSCRIPT = 18;
+    public static final int FONT_DANCINGSCRIPT_BOLD = 19;
+    public static final int FONT_COMINGSOON = 20;
+    public static final int FONT_NOTOSERIF = 21;
+    public static final int FONT_NOTOSERIF_ITALIC = 22;
+    public static final int FONT_NOTOSERIF_BOLD = 23;
+    public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
 
     /** Allow some time inbetween the long press for back and recents. */
     private static final int LOCK_TO_APP_GESTURE_TOLERENCE = 200;
@@ -911,6 +918,27 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 break;
             case FONT_BLACK_ITALIC:
                 mWeatherTempView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
+                break;
+            case FONT_DANCINGSCRIPT:
+                mWeatherTempView.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
+                break;
+            case FONT_DANCINGSCRIPT_BOLD:
+                mWeatherTempView.setTypeface(Typeface.create("cursive", Typeface.BOLD));
+                break;
+            case FONT_COMINGSOON:
+                mWeatherTempView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
+                break;
+            case FONT_NOTOSERIF:
+                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.NORMAL));
+                break;
+            case FONT_NOTOSERIF_ITALIC:
+                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.ITALIC));
+                break;
+            case FONT_NOTOSERIF_BOLD:
+                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.BOLD));
+                break;
+            case FONT_NOTOSERIF_BOLD_ITALIC:
+                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
                 break;
         }
         mWeatherTempView.setVisibility(View.VISIBLE);
