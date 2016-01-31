@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2015 The Dirty Unicorns Project
- *
+ * Copyright (C) 2016 RR 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -39,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.android.internal.logging.MetricsLogger;
-import cyanogenmod.providers.CMSettings;
 
 public class NavBarTile extends QSTile<QSTile.BooleanState> {
     private boolean mListening;
@@ -80,8 +78,8 @@ private static final Intent NAVBAR_Settings = new Intent().setComponent(new Comp
 
  protected void toggleState() {
 
-	CMSettings.Secure.putInt(mContext.getContentResolver(),
-                    CMSettings.Secure.DEV_FORCE_SHOW_NAVBAR, !HwkeysDisabled() ? 1 : 0);
+	Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.ENABLE_HW_KEYS, !HwkeysEnabled() ? 1 : 0);
          Settings.System.putInt(mContext.getContentResolver(),
                         Settings.System.NAVIGATION_BAR_SHOW, !navbarEnabled() ? 1 : 0);
     }
@@ -106,10 +104,10 @@ private static final Intent NAVBAR_Settings = new Intent().setComponent(new Comp
 
     }
 
-	private boolean HwkeysDisabled()
+	private boolean HwkeysEnabled()
 	{
-	return CMSettings.Secure.getInt(mContext.getContentResolver(),
-                CMSettings.Secure.DEV_FORCE_SHOW_NAVBAR, 1) == 1;
+	return Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.ENABLE_HW_KEYS, 0) == 1;
 	}
 
     @Override
@@ -144,4 +142,3 @@ private static final Intent NAVBAR_Settings = new Intent().setComponent(new Comp
         }
     }
 }
-
