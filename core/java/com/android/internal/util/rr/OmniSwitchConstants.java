@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.android.internal.util.omni;
+package com.android.internal.util.rr;
 
 import android.content.Intent;
 

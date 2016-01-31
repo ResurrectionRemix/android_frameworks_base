@@ -76,7 +76,7 @@ import android.widget.LinearLayout;
 
 import com.android.internal.statusbar.IStatusBarService;
 
-import com.android.internal.util.benzo.AwesomeAnimationHelper;
+import com.android.internal.util.rr.AwesomeAnimationHelper;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 

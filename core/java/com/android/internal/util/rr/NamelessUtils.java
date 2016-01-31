@@ -17,7 +17,7 @@
 * -->
 */
 
-package com.android.internal.util.nameless;
+package com.android.internal.util.rr;
 
 import android.app.ActivityManager;
 import android.content.Context;

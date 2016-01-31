@@ -40,7 +40,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.internal.util.benzo.*;
 import com.android.internal.util.rr.*;
 import com.android.internal.util.rr.DUSystemReceiver;
 import com.android.internal.util.rr.DUPackageMonitor.PackageState;

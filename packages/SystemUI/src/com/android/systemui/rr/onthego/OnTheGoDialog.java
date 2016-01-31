@@ -17,7 +17,7 @@
 * -->
 */
 
-package com.android.systemui.nameless.onthego;
+package com.android.systemui.rr.onthego;
 
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -34,7 +34,7 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
-import com.android.internal.util.nameless.NamelessUtils;
+import com.android.internal.util.rr.NamelessUtils;
 import com.android.systemui.R;
 
 public class OnTheGoDialog extends Dialog {

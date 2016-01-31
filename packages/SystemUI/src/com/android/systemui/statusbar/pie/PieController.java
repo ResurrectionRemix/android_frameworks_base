@@ -38,7 +38,7 @@ import android.widget.ImageView.ScaleType;
 
 import com.android.internal.util.gesture.EdgeGesturePosition;
 import com.android.internal.util.gesture.EdgeServiceConstants;
-import com.android.internal.util.pa.PieConstants;
+import com.android.internal.util.rr.PieConstants;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
 

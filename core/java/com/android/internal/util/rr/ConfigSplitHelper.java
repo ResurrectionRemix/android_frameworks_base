@@ -15,7 +15,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.pa;
+package com.android.internal.util.rr;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

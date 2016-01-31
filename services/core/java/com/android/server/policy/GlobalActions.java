@@ -94,7 +94,7 @@ import java.util.UUID;
 import static com.android.internal.util.cm.PowerMenuConstants.*;
 
 
-import com.android.internal.util.nameless.NamelessActions;
+import com.android.internal.util.rr.NamelessActions;
 
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that

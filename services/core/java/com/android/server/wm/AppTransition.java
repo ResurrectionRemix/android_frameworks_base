@@ -73,7 +73,7 @@ import static com.android.internal.R.styleable.WindowAnimation_wallpaperIntraOpe
 import static com.android.internal.R.styleable.WindowAnimation_wallpaperOpenEnterAnimation;
 import static com.android.internal.R.styleable.WindowAnimation_wallpaperOpenExitAnimation;
 
-import com.android.internal.util.benzo.AwesomeAnimationHelper;
+import com.android.internal.util.rr.AwesomeAnimationHelper;
 import android.widget.Toast;
 
 // State management of app transitions.  When we are preparing for a

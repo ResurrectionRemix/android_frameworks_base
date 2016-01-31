@@ -81,7 +81,7 @@ import java.io.OutputStreamWriter;
 
 import com.android.internal.R;
 
-import com.android.internal.util.benzo.Helpers;
+import com.android.internal.util.rr.Helpers;
 
 public final class ShutdownThread extends Thread {
     // constants

@@ -17,7 +17,7 @@
 * -->
 */
 
-package com.android.systemui.nameless.onthego;
+package com.android.systemui.rr.onthego;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -42,7 +42,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.android.internal.util.nameless.NamelessUtils;
+import com.android.internal.util.rr.NamelessUtils;
 import com.android.systemui.R;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.android.internal.util.benzo;
+package com.android.internal.util.rr;
 
 import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
