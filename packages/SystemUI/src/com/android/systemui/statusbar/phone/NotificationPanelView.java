@@ -2688,6 +2688,13 @@ public class NotificationPanelView extends PanelView implements
             mStatusBarLockedOnSecureKeyguard = Settings.Secure.getIntForUser(
                     resolver, Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD, 1,
                     UserHandle.USER_CURRENT) == 1;
+	
+            boolean liveLockScreenEnabled = CMSettings.Secure.getInt(
+                    resolver, CMSettings.Secure.LIVE_LOCK_SCREEN_ENABLED, 0) == 1;
+            if (liveLockScreenEnabled != mLiveLockScreenEnabled) {
+                mLiveLockScreenEnabled = liveLockScreenEnabled;
+                updateExternalKeyguardView();
+		}
             mQSShadeAlpha = Settings.System.getInt(
                     resolver, Settings.System.QS_TRANSPARENT_SHADE, 255);
             setQSBackgroundAlpha();
@@ -2702,15 +2709,7 @@ public class NotificationPanelView extends PanelView implements
             mQsPanel.setQSShadeAlphaValue(mQSShadeAlpha);
  		}
         }
-
-            boolean liveLockScreenEnabled = CMSettings.Secure.getInt(
-                    resolver, CMSettings.Secure.LIVE_LOCK_SCREEN_ENABLED, 0) == 1;
-            if (liveLockScreenEnabled != mLiveLockScreenEnabled) {
-                mLiveLockScreenEnabled = liveLockScreenEnabled;
-                updateExternalKeyguardView();
-		}
-           
-
+          
     @Override
     public boolean hasOverlappingRendering() {
         return !mDozing;
