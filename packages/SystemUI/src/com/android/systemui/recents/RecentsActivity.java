@@ -19,6 +19,7 @@ package com.android.systemui.recents;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.SearchManager;
+import android.app.StatusBarManager;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.BroadcastReceiver;
@@ -39,6 +40,7 @@ import android.widget.Toast;
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
+import com.android.systemui.SystemUIApplication;
 import com.android.systemui.recents.RecentsConfiguration;
 import com.android.systemui.recents.misc.Console;
 import com.android.systemui.recents.misc.DebugTrigger;
@@ -52,6 +54,8 @@ import com.android.systemui.recents.views.DebugOverlayView;
 import com.android.systemui.recents.views.RecentsView;
 import com.android.systemui.recents.views.SystemBarScrimViews;
 import com.android.systemui.recents.views.ViewAnimation;
+import com.android.systemui.statusbar.phone.NavigationBarView;
+import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import cyanogenmod.providers.CMSettings;
 
 import java.lang.ref.WeakReference;
@@ -88,6 +92,8 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
     // Runnable to be executed after we paused ourselves
     Runnable mAfterPauseRunnable;
+
+    static RecentsTaskLoadPlan plan;
 
     /**
      * A common Runnable to finish Recents either by calling finish() (with a custom animation) or
@@ -157,6 +163,10 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                 // Notify the fallback receiver that we have successfully got the broadcast
                 // See AlternateRecentsComponent.onAnimationStarted()
                 setResultCode(Activity.RESULT_OK);
+            } else if (action.equals(Recents.ACTION_CLEAR_RECENTS_ACTIVITY)) {
+                if (isActivityShowing()) {
+                    mRecentsView.dismissAllTasksAnimated();
+                }
             }
         }
     };
@@ -190,12 +200,27 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         }
     });
 
+    /** Updates the recents icon if there are tasks to clear */
+    public void setRecentHints(boolean showClearRecents) {
+        NavigationBarView mNavigationBarView = ((SystemUIApplication) getApplication())
+                .getComponent(PhoneStatusBar.class).getNavigationBarView();
+        if (mNavigationBarView == null) return;
+
+        int navigationHints = mNavigationBarView.getNavigationIconHints();
+        if (showClearRecents) {
+            navigationHints |= StatusBarManager.NAVIGATION_HINT_RECENT_ALT;
+        } else {
+            navigationHints &= ~StatusBarManager.NAVIGATION_HINT_RECENT_ALT;
+        }
+        mNavigationBarView.setNavigationIconHints(navigationHints, true);
+    }
+
     /** Updates the set of recent tasks */
     void updateRecentsTasks() {
         // If AlternateRecentsComponent has preloaded a load plan, then use that to prevent
         // reconstructing the task stack
         RecentsTaskLoader loader = RecentsTaskLoader.getInstance();
-        RecentsTaskLoadPlan plan = Recents.consumeInstanceLoadPlan();
+        plan = Recents.consumeInstanceLoadPlan();
         if (plan == null) {
             plan = loader.createLoadPlan(this);
         }
@@ -312,8 +337,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
     /** Dismisses recents if we are already visible and the intent is to toggle the recents view */
     boolean dismissRecentsToFocusedTaskOrHome(boolean checkFilteredStackState) {
-        SystemServicesProxy ssp = RecentsTaskLoader.getInstance().getSystemServicesProxy();
-        if (ssp.isRecentsTopMost(ssp.getTopMostTask(), null)) {
+        if (isActivityShowing()) {
             // If we currently have filtered stacks, then unfilter those first
             if (checkFilteredStackState &&
                 mRecentsView.unfilterFilteredStacks()) return true;
@@ -353,8 +377,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
     /** Dismisses Recents directly to Home if we currently aren't transitioning. */
     boolean dismissRecentsToHome(boolean animated) {
-        SystemServicesProxy ssp = RecentsTaskLoader.getInstance().getSystemServicesProxy();
-        if (ssp.isRecentsTopMost(ssp.getTopMostTask(), null)) {
+        if (isActivityShowing()) {
             // Return to Home
             dismissRecentsToHomeRaw(animated);
             return true;
@@ -433,6 +456,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         filter.addAction(Recents.ACTION_HIDE_RECENTS_ACTIVITY);
         filter.addAction(Recents.ACTION_TOGGLE_RECENTS_ACTIVITY);
         filter.addAction(Recents.ACTION_START_ENTER_ANIMATION);
+        filter.addAction(Recents.ACTION_CLEAR_RECENTS_ACTIVITY);
         registerReceiver(mServiceBroadcastReceiver, filter);
 
         // Register any broadcast receivers for the task loader
@@ -452,6 +476,8 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         if (!mConfig.launchedHasConfigurationChanged) {
             mRecentsView.disableLayersForOneFrame();
         }
+
+        updateNavigationIconHints();
     }
 
     @Override
@@ -489,6 +515,9 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         mConfig.launchedToTaskId = -1;
         mConfig.launchedWithAltTab = false;
         mConfig.launchedHasConfigurationChanged = false;
+
+        // Reload navigation bar icons
+        updateNavigationIconHints();
     }
 
     @Override
@@ -527,6 +556,30 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         // Animate the SystemUI scrim views
         mScrimViews.startEnterRecentsAnimation();
         mRecentsView.startFABanimation();
+    }
+
+    /**
+     * @return Whether recents has active tasks.
+     */
+    public static boolean hasTaskStacks() {
+        return plan != null && plan.hasTasks();
+    }
+
+    /** Reload proper recents icon for navigation bar */
+    private void updateNavigationIconHints() {
+        if (isActivityShowing() && hasTaskStacks()) {
+            setRecentHints(true);
+        } else {
+            setRecentHints(false);
+        }
+    }
+
+    /**
+     * @return Whether recents panel is showing.
+     */
+    public static boolean isActivityShowing() {
+        SystemServicesProxy ssp = RecentsTaskLoader.getInstance().getSystemServicesProxy();
+        return ssp.isRecentsTopMost(ssp.getTopMostTask(), null);
     }
 
     @Override

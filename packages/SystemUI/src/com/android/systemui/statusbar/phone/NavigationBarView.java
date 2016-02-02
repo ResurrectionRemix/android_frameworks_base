@@ -113,6 +113,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     private Drawable mRecentIcon;
     private Drawable mRecentLandIcon;
     private Drawable mHomeIcon, mHomeLandIcon;
+    private Drawable mRecentAltIcon, mRecentAltLandIcon;
 
     private NavigationBarViewTaskSwitchHelper mTaskSwitchHelper;
     private DeadZone mDeadZone;
@@ -462,7 +463,8 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         mRecentIcon = res.getDrawable(R.drawable.ic_sysbar_recent);
         mRecentLandIcon = res.getDrawable(R.drawable.ic_sysbar_recent_land);
         mHomeIcon = res.getDrawable(R.drawable.ic_sysbar_home);
-        mHomeLandIcon = res.getDrawable(R.drawable.ic_sysbar_home_land);
+        mRecentAltIcon = res.getDrawable(R.drawable.ic_sysbar_recent_clear);
+        mRecentAltLandIcon = mRecentAltIcon;
     }
 
     public void updateResources(Resources res) {
@@ -533,7 +535,10 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
                 ? (mVertical ? mBackAltLandIcon : mBackAltIcon)
                 : (mVertical ? mBackLandIcon : mBackIcon));
 
-        ((ImageView)getRecentsButton()).setImageDrawable(mVertical ? mRecentLandIcon : mRecentIcon);
+        ((ImageView)getRecentsButton()).setImageDrawable(
+                    (0 != (hints & StatusBarManager.NAVIGATION_HINT_RECENT_ALT))
+                            ? (mVertical ? mRecentAltLandIcon : mRecentAltIcon)
+                            : (mVertical ? mRecentLandIcon : mRecentIcon));
         ((ImageView)getHomeButton()).setImageDrawable(mVertical ? mHomeLandIcon : mHomeIcon);
 
         final boolean showImeButton = ((hints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) != 0)
@@ -583,6 +588,10 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
 
     private void setSideButtonVisibility(boolean left, int vis) {
         mSideButtonVisibilities[mVertical ? 1 : 0][left ? 0 : 1] = vis;
+    }
+
+    public int getNavigationIconHints() {
+        return mNavigationIconHints;
     }
 
     public void setDisabledFlags(int disabledFlags) {

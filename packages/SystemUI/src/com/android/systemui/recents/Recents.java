@@ -89,6 +89,7 @@ public class Recents extends SystemUI
     final public static String ACTION_START_ENTER_ANIMATION = "action_start_enter_animation";
     final public static String ACTION_TOGGLE_RECENTS_ACTIVITY = "action_toggle_recents_activity";
     final public static String ACTION_HIDE_RECENTS_ACTIVITY = "action_hide_recents_activity";
+    final public static String ACTION_CLEAR_RECENTS_ACTIVITY = "action_clear_recents_activity";
 
     final static int sMinToggleDelay = 350;
 
@@ -366,6 +367,12 @@ public class Recents extends SystemUI
         } catch (ActivityNotFoundException e) {
             Console.logRawError("Failed to launch RecentAppsIntent", e);
         }
+    }
+
+    /** Clear the Recents activity. */
+    public void clearRecents() {
+        Intent intent = createLocalBroadcastIntent(mContext, ACTION_CLEAR_RECENTS_ACTIVITY);
+        mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT);
     }
 
     /** Preloads info for the Recents activity. */
