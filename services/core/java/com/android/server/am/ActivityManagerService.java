@@ -2191,6 +2191,12 @@ public final class ActivityManagerService extends ActivityManagerNative
                 ActivityInfo root = resolveActivityInfo(targetIntent, targetIntent.getFlags(),
                         targetUserId);
 
+                if (root == null) {
+                    Slog.w(ActivityManagerService.TAG,
+                            "No activity info found for given intent " + targetIntent.toString());
+                    return;
+                }
+
                 try {
                     Intent protectedAppIntent = new Intent();
                     protectedAppIntent.setComponent(
