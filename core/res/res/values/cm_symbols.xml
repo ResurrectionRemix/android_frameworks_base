@@ -154,6 +154,13 @@
     <!-- Restricted fingerprint config -->
     <java-symbol type="bool" name="config_fingerprintRestrictedToSystemAndOwner" />
 
+
     <!-- Use alternative way to blur lockscreen -->
     <java-symbol type="bool" name="config_use_stackblur" />
+
+    <!-- Show battery fully charged notification -->
+    <java-symbol type="bool" name="config_showBatteryFullyChargedNotification" />
+    <java-symbol type="string" name="notify_battery_fully_charged_title" />
+    <java-symbol type="string" name="notify_battery_fully_charged_text" />
+
 </resources>
