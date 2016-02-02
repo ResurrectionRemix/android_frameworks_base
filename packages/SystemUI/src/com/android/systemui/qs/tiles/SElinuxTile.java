@@ -81,7 +81,7 @@ public class SElinuxTile extends QSTile<QSTile.BooleanState> {
     }
 
  protected void toggleState() {
-	if (CMDProcessor.runSuCommand("getenforce").getStdout().contains("Enforcing")) {
+	if (CMDProcessor.runShellCommand("getenforce").getStdout().contains("Enforcing")) {
    	  CMDProcessor.runSuCommand("setenforce 0");
 	} else {
 	 CMDProcessor.runSuCommand("setenforce 1");
