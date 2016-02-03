@@ -5326,6 +5326,13 @@ public final class Settings {
         public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
 
         /**
+         * Snooze time for heads up
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_SNOOZE_LENGTH_MS = "heads_up_snooze_length_ms";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
