@@ -206,6 +206,12 @@
     <string name="quick_settings_selinux_label">SElinux</string>
     <string name="quick_settings_selinux_permissive_title">Permissive</string>
     <string name="quick_settings_selinux_enforcing_title">Enforcing</string>
+
+     <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_torch">Torch</string>
+
+    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_torch">Torch</string>
 	
 </resources>
 

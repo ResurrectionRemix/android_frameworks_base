@@ -164,6 +164,8 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     private OnLongClickListener mLongPressHomeListener;
     private OnClickListener mNotificationsClickListener;
     private OnLongClickListener mNotificationsLongListener;
+    private OnClickListener mTorchClickListener;
+   private OnLongClickListener mTorchLongListener;
 
     private SettingsObserver mSettingsObserver;
     private boolean mShowDpadArrowKeys;
@@ -463,6 +465,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         mRecentIcon = res.getDrawable(R.drawable.ic_sysbar_recent);
         mRecentLandIcon = res.getDrawable(R.drawable.ic_sysbar_recent_land);
         mHomeIcon = res.getDrawable(R.drawable.ic_sysbar_home);
+	mHomeLandIcon = res.getDrawable(R.drawable.ic_sysbar_home_land);
         mRecentAltIcon = res.getDrawable(R.drawable.ic_sysbar_recent_clear);
         mRecentAltLandIcon = mRecentAltIcon;
     }
@@ -633,6 +636,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_RECENT, !disableRecent);
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_POWER, !disableRecent);
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_NOTIFICATIONS, !disableRecent);
+	setButtonWithTagVisibility(NavbarEditor.NAVBAR_TORCH, !disableRecent);
         setButtonWithTagVisibility(NavbarEditor.NAVBAR_SEARCH, !disableSearch);
     }
 
@@ -958,14 +962,15 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     void setListeners(OnClickListener recentsClickListener, OnTouchListener recentsPreloadListener,
                       OnLongClickListener recentsBackListener, OnTouchListener homeSearchActionListener,
                       OnLongClickListener longPressHomeListener, OnClickListener notificationsClickListener,
-                      OnLongClickListener notificationsLongListener) {
+                      OnLongClickListener notificationsLongListener,OnClickListener torchClickListener ) {
         mRecentsClickListener = recentsClickListener;
         mRecentsPreloadListener = recentsPreloadListener;
         mHomeSearchActionListener = homeSearchActionListener;
         mRecentsBackListener = recentsBackListener;
         mLongPressHomeListener = longPressHomeListener;
-        mNotificationsClickListener = notificationsClickListener;
-        mNotificationsLongListener = notificationsLongListener;
+	mNotificationsClickListener = notificationsClickListener;
+       mNotificationsLongListener = notificationsLongListener;
+        mTorchClickListener = torchClickListener;
         updateButtonListeners();
     }
 
@@ -1012,6 +1017,10 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
             notificationsView.setOnClickListener(mNotificationsClickListener);
             notificationsView.setLongClickable(true);
             notificationsView.setOnLongClickListener(mNotificationsLongListener);
+        }
+     View torchView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_TORCH);
+        if (torchView != null) {
+            torchView.setOnClickListener(mTorchClickListener);
         }
     }
 

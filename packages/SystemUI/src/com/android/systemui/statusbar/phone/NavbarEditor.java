@@ -154,11 +154,15 @@ public class NavbarEditor implements View.OnTouchListener {
             R.string.navbar_notifications_button, R.string.accessibility_notifications,
             0, R.drawable.ic_sysbar_notif, R.drawable.ic_sysbar_notif_land,
             R.drawable.ic_sysbar_notif_side);
+    public static final ButtonInfo NAVBAR_TORCH = new ButtonInfo("torch",
+            R.string.navbar_torch, R.string.accessibility_torch,
+            0, R.drawable.ic_sysbar_flashlight, R.drawable.ic_sysbar_flashlight,
+            R.drawable.ic_sysbar_flashlight);
 
     private static final ButtonInfo[] ALL_BUTTONS = new ButtonInfo[] {
         NAVBAR_EMPTY, NAVBAR_HOME, NAVBAR_BACK, NAVBAR_SEARCH,
         NAVBAR_RECENT, NAVBAR_CONDITIONAL_MENU, NAVBAR_ALWAYS_MENU,
-        NAVBAR_MENU_BIG, NAVBAR_POWER, NAVBAR_NOTIFICATIONS
+        NAVBAR_MENU_BIG, NAVBAR_POWER, NAVBAR_NOTIFICATIONS ,NAVBAR_TORCH
     };
 
     private static final String DEFAULT_SETTING_STRING = "empty|empty|back|home|recent|empty|menu0";

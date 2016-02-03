@@ -456,6 +456,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private int mStatusBarHeaderHeight;
 
+
+    private ActivityStarter mActivityStarter;
+
     // the tracker view
     int mTrackingPosition; // the position of the top of the tracking view.
 
@@ -1971,6 +1974,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
+    private final View.OnClickListener mTorchClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            toggletorch();
+        }
+    };
+
     private void awakenDreams() {
         if (mDreamManager != null) {
             try {
@@ -2001,12 +2010,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
     }
 
+    private void toggletorch() {
+ 	 if (mFlashlightController.isAvailable()) {
+                    mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+	}
+    }
+
     private void prepareNavigationBarView() {
         mNavigationBarView.reorient();
 
         mNavigationBarView.setListeners(mRecentsClickListener, mRecentsPreloadOnTouchListener,
                 mLongPressBackRecentsListener, mHomeActionListener, mLongPressHomeListener,
-                mNotificationsClickListener, mNotificationsLongListener);
+                mNotificationsClickListener, mNotificationsLongListener , mTorchClickListener );
         mAssistManager.onConfigurationChanged();
     }
 
