@@ -4194,7 +4194,7 @@ final class ActivityStack {
                         hasVisibleActivities = true;
                     }
                     final boolean remove;
-                    if ((!r.haveState && !r.stateNotNeeded) || r.finishing) {
+                    if ((!r.haveState && !r.stateNotNeeded) || r.finishing || app.removed) {
                         // Don't currently have state for the activity, or
                         // it is finishing -- always remove it.
                         remove = true;
