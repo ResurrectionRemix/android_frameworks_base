@@ -64,7 +64,7 @@
                 >
 
                 <com.android.systemui.statusbar.widget.CarrierLabel
-                    android:id="@+id/status_bar_carrier_label"
+                    android:id="@+id/left_statusbar_carrier_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -81,7 +81,18 @@
                     android:paddingEnd="1dip"
                     android:gravity="center"
                     android:visibility="gone"
-                    />               
+                    />    
+
+       	       <com.android.systemui.statusbar.widget.CarrierLabel
+                android:id="@+id/statusbar_carrier_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
+                android:paddingStart="4dp"
+                android:visibility="gone"
+                android:singleLine="true"
+                />           
 
                 <ImageView
                     android:id="@+id/rr_logo"
@@ -94,7 +105,7 @@
                     />
 
                 <com.android.systemui.statusbar.widget.CarrierLabel
-                    android:id="@+id/statusbar_carrier_text"
+                    android:id="@+id/left_statusbar_carrier_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -206,4 +217,5 @@
         android:layout_height="1dp"
         systemui:viewLocation="1" />
 </com.android.systemui.statusbar.phone.PhoneStatusBarView>
+
 
