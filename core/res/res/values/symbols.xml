@@ -2407,6 +2407,7 @@
   <java-symbol type="anim" name="last_app_out" />
 
   <java-symbol type="drawable" name="platlogo_m" />
+  <java-symbol type="bool" name="config_useSystemClockforSensors" />
 
   <java-symbol type="string" name="config_packagedKeyboardName" />
 </resources>
