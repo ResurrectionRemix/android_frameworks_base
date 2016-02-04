@@ -48,6 +48,7 @@ import android.content.res.Configuration;
 import android.content.res.ThemeChangeRequest.RequestType;
 import android.content.res.ThemeConfig;
 import android.content.res.Resources;
+import android.content.ServiceConnection;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -85,6 +86,8 @@ import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.Vibrator;
+import android.os.Message;
+import android.os.Messenger;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.NotificationListenerService.RankingMap;
@@ -114,6 +117,7 @@ import android.view.ViewStub;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
+import android.view.WindowManagerPolicyControl;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -158,6 +162,7 @@ import com.android.systemui.qs.QSTile;
 import com.android.systemui.recents.RecentsActivity;
 import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.settings.BrightnessController;
+import com.android.systemui.screenshot.TakeScreenshotService;
 import com.android.systemui.statusbar.ActivatableNotificationView;
 import com.android.systemui.statusbar.BackDropView;
 import com.android.systemui.statusbar.AppSidebar;
@@ -325,6 +330,20 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     /** Allow some time inbetween the long press for back and recents. */
     private static final int LOCK_TO_APP_GESTURE_TOLERENCE = 200;
 
+    //Expanded Desktop	
+    private static final int STATE_ENABLE_FOR_ALL = 0;
+    private static final int STATE_USER_CONFIGURABLE = 1;
+    private final List<Integer> mExpandedDesktopList = new ArrayList<>(); 
+    private int mExpandedDesktopState;
+    private int mExpandedDesktopStyle;
+    public static final Integer[] EXPANDED_SETTINGS = new Integer[]{
+            WindowManagerPolicyControl.ImmersiveDefaultStyles.IMMERSIVE_FULL,
+            WindowManagerPolicyControl.ImmersiveDefaultStyles.IMMERSIVE_STATUS,
+            WindowManagerPolicyControl.ImmersiveDefaultStyles.IMMERSIVE_NAVIGATION
+    };
+   private ExpandedDesktopObserver mObserver;
+	
+
     /** If true, the system is in the half-boot-to-decryption-screen state.
      * Prudently disable QS and notifications.  */
     private static final boolean ONLY_CORE_APPS;
@@ -455,6 +474,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
     private int mStatusBarHeaderHeight;
+
+
+    private ActivityStarter mActivityStarter;
+    private ServiceConnection mScreenshotConnection = null;
 
     // the tracker view
     int mTrackingPosition; // the position of the top of the tracking view.
@@ -1971,6 +1994,34 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
+    private final View.OnClickListener mTorchClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            toggletorch();
+        }
+    };
+
+	//Camera Button
+    private final View.OnClickListener mCameraClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+              startActivity(KeyguardBottomAreaView.INSECURE_CAMERA_INTENT,
+                    true /* dismissShade */);
+        }
+    };
+
+	//Screenshot
+    private final View.OnClickListener mScreenShotClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+		takescreen();
+	}
+    };
+
+	//Immersive Mode Button
+    private final View.OnClickListener mImmersiveClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+		expanddesktop();
+	}
+    };
+
     private void awakenDreams() {
         if (mDreamManager != null) {
             try {
@@ -2001,12 +2052,158 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
     }
 
+    private void toggletorch() {
+ 	 if (mFlashlightController.isAvailable()) {
+                    mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+	}
+    }
+
+  private void expanddesktop() {
+	toggleexpand();	
+	mObserver = new ExpandedDesktopObserver(mHandler);
+    }
+
+    private void userConfigurableSettings() {
+        mExpandedDesktopState = STATE_USER_CONFIGURABLE;
+        writeValue("");
+        WindowManagerPolicyControl.reloadFromSetting(mContext);
+    }
+
+    private int getExpandedDesktopState(ContentResolver cr) {
+        String value = Settings.Global.getString(cr, Settings.Global.POLICY_CONTROL);
+        if ("immersive.full=*".equals(value)) {
+            return STATE_ENABLE_FOR_ALL;
+        }
+        return STATE_USER_CONFIGURABLE;
+    }
+
+    private void writeValue(String value) {
+        Settings.Global.putString(mContext.getContentResolver(),
+             Settings.Global.POLICY_CONTROL, value);
+    }
+
+    protected void toggleexpand() {
+	 int state = mExpandedDesktopState;
+        switch (state) {
+            case STATE_ENABLE_FOR_ALL:
+                userConfigurableSettings();
+                break;
+            case STATE_USER_CONFIGURABLE:
+                enableForAll();
+                break;
+        }
+    }
+
+    private void enableForAll() {
+        mExpandedDesktopState = STATE_ENABLE_FOR_ALL;
+        writeValue("immersive.full=*");
+    }
+
+    private int getExpandedDesktopStyle() {
+        return Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.POLICY_CONTROL_STYLE,
+                WindowManagerPolicyControl.ImmersiveDefaultStyles.IMMERSIVE_FULL);
+    }
+
+  private class ExpandedDesktopObserver extends ContentObserver {
+        public ExpandedDesktopObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+        }
+
+        public void startObserving() {
+            mExpandedDesktopState = getExpandedDesktopState(mContext.getContentResolver());
+            mExpandedDesktopStyle = getExpandedDesktopStyle();
+            mContext.getContentResolver().registerContentObserver(
+                Settings.Global.getUriFor(Settings.Global.POLICY_CONTROL),
+                    false, mObserver);
+            mContext.getContentResolver().registerContentObserver(
+                Settings.Global.getUriFor(Settings.Global.POLICY_CONTROL_STYLE),
+                    false, mObserver);
+        }
+
+        public void endObserving() {
+            mContext.getContentResolver().unregisterContentObserver(mObserver);
+        }
+    }
+
+private final Object mScreenshotLock = new Object();
+   final Runnable mScreenshotTimeout = new Runnable() {
+        @Override
+        public void run() {
+            synchronized (mScreenshotLock) {
+                if (mScreenshotConnection != null) {
+                    mContext.unbindService(mScreenshotConnection);
+                    mScreenshotConnection = null;
+                }
+            }
+        }
+    };
+
+    private void takescreen() {
+        synchronized (mScreenshotLock) {
+            if (mScreenshotConnection != null) {
+                return;
+            }
+
+            Intent intent = new Intent(mContext, TakeScreenshotService.class);
+            ServiceConnection conn = new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    synchronized (mScreenshotLock) {
+                        if (mScreenshotConnection != this) {
+                            return;
+                        }
+
+                        Messenger messenger = new Messenger(service);
+                        Message msg = Message.obtain(null, 1);
+                        final ServiceConnection myConn = this;
+                        Handler h = new Handler(mHandler.getLooper()) {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                synchronized (mScreenshotLock) {
+                                    if (mScreenshotConnection == myConn) {
+                                        mContext.unbindService(mScreenshotConnection);
+                                        mScreenshotConnection = null;
+                                        mHandler.removeCallbacks(mScreenshotTimeout);
+                                    }
+                                }
+                            }
+                        };
+                        msg.replyTo = new Messenger(h);
+                        msg.arg1 = msg.arg2 = 0;
+
+                        // Take the screenshot
+                        try {
+                            messenger.send(msg);
+                        } catch (RemoteException e) {
+                            // Do nothing here
+                        }
+                    }
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    // Do nothing here
+                }
+            };
+
+            if (mContext.bindService(intent, conn, mContext.BIND_AUTO_CREATE)) {
+                mScreenshotConnection = conn;
+                mHandler.postDelayed(mScreenshotTimeout, 10000);
+         	  		 }
+         		}
+		}
+
     private void prepareNavigationBarView() {
         mNavigationBarView.reorient();
 
         mNavigationBarView.setListeners(mRecentsClickListener, mRecentsPreloadOnTouchListener,
                 mLongPressBackRecentsListener, mHomeActionListener, mLongPressHomeListener,
-                mNotificationsClickListener, mNotificationsLongListener);
+                mNotificationsClickListener, mNotificationsLongListener , mTorchClickListener ,mCameraClickListener, mScreenShotClickListener ,mImmersiveClickListener);
         mAssistManager.onConfigurationChanged();
     }
 

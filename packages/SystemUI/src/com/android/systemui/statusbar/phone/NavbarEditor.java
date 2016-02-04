@@ -154,11 +154,27 @@ public class NavbarEditor implements View.OnTouchListener {
             R.string.navbar_notifications_button, R.string.accessibility_notifications,
             0, R.drawable.ic_sysbar_notif, R.drawable.ic_sysbar_notif_land,
             R.drawable.ic_sysbar_notif_side);
+    public static final ButtonInfo NAVBAR_TORCH = new ButtonInfo("torch",
+            R.string.navbar_torch, R.string.accessibility_torch,
+            0, R.drawable.ic_sysbar_flashlight, R.drawable.ic_sysbar_flashlight,
+            R.drawable.ic_sysbar_flashlight);
+    public static final ButtonInfo NAVBAR_CAMERA = new ButtonInfo("camera",
+            R.string.navbar_camera, R.string.accessibility_camera,
+            0, R.drawable.ic_sysbar_picture, R.drawable.ic_sysbar_picture,
+            R.drawable.ic_sysbar_picture);
+    public static final ButtonInfo NAVBAR_SCREENSHOT = new ButtonInfo("screenshot",
+            R.string.navbar_screenshot, R.string.accessibility_screenshot,
+            0, R.drawable.ic_sysbar_ss, R.drawable.ic_sysbar_ss,
+            R.drawable.ic_sysbar_ss);
+    public static final ButtonInfo NAVBAR_EXPAND = new ButtonInfo("expand",
+            R.string.navbar_expand, R.string.accessibility_expand,
+            0, R.drawable.ic_sysbar_immersive_mode, R.drawable.ic_sysbar_immersive_mode,
+            R.drawable.ic_sysbar_immersive_mode);
 
     private static final ButtonInfo[] ALL_BUTTONS = new ButtonInfo[] {
         NAVBAR_EMPTY, NAVBAR_HOME, NAVBAR_BACK, NAVBAR_SEARCH,
         NAVBAR_RECENT, NAVBAR_CONDITIONAL_MENU, NAVBAR_ALWAYS_MENU,
-        NAVBAR_MENU_BIG, NAVBAR_POWER, NAVBAR_NOTIFICATIONS
+        NAVBAR_MENU_BIG, NAVBAR_POWER, NAVBAR_NOTIFICATIONS ,NAVBAR_TORCH ,NAVBAR_CAMERA , NAVBAR_SCREENSHOT ,NAVBAR_EXPAND
     };
 
     private static final String DEFAULT_SETTING_STRING = "empty|empty|back|home|recent|empty|menu0";
