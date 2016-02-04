@@ -63,7 +63,7 @@ public class ImeTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public CharSequence getTileLabel() {
-        return mContext.getString(R.string.quick_settings_ime_label);
+        return mContext.getString(R.string.quick_settings_ime_tile_label);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ImeTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
-        state.label = mContext.getString(R.string.quick_settings_ime_label);
+        state.label = mContext.getString(R.string.quick_settings_ime_tile_label);
         state.icon = ResourceIcon.get(R.drawable.ic_qs_ime);
     }
 }
