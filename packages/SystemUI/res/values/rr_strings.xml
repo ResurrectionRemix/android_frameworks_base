@@ -133,14 +133,24 @@
     <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
     <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
- <string name="quick_settings_heads_up_label">Heads up</string>
+    <string name="quick_settings_heads_up_label">Heads up</string>
 
- <string name="qs_lte_label">LTE</string>
+    <string name="qs_lte_label">LTE</string>
 
- <string name="lte_on">LTE ON </string>
- <string name="lte_off">LTE OFF</string>
+    <string name="lte_on">LTE ON </string>
+    <string name="lte_off">LTE OFF</string>
 
- <string name="quick_settings_themes">Themes</string>
+
+    <!-- Themes QS Tile -->
+    <string name="quick_settings_themes">Themes</string>
+    <string name="quick_settings_themes_icon_packs">Icon packs</string>
+    <string name="quick_settings_themes_app_theme">App theme</string>
+    <string name="quick_settings_themes_system_theme">System theme</string>
+    <string name="quick_settings_themes_changing_complete">Changing theme completed</string>
+    <string name="quick_settings_themes_default_theme">Default</string>
+    <string name="quick_settings_themes_match_system">Match system theme</string>
+
+    <string name="quick_settings_themes">Themes</string>
 
      <!-- NavBar tile -->
     <string name="quick_settings_navbar_title">NavBar</string>	
