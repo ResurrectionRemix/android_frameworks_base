@@ -4083,8 +4083,16 @@ public final class Settings {
          */
         public static final String DISABLE_IMMERSIVE_MESSAGE = "disable_immersive_message";
 
+
+	/**
+         * Enable double tap gesture anywhere on the lock screen put device to sleep
+         * @hide
+         */
+        public static final String DOUBLE_TAP_SLEEP_ANYWHERE = "double_tap_sleep_anywhere";
+
         /**
-         * Disable FC Notifications
+
+         * Disable FC Notifications (1/2)
          * @hide
          */
         public static final String DISABLE_FC_NOTIFICATIONS = "disable_fc_notifications";
