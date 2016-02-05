@@ -85,7 +85,7 @@
                     />              
 
                 <ImageView
-                    android:id="@+id/rr_logo"
+                    android:id="@+id/left_rr_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="4dip"
@@ -182,6 +182,17 @@
                 android:visibility="gone"
                 android:singleLine="true"
                 /> 
+
+      		 <ImageView
+                    android:id="@+id/rr_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/ic_status_bar_rr_logo"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+
         </com.android.keyguard.AlphaOptimizedLinearLayout>
     </LinearLayout>
 
