@@ -105,6 +105,9 @@ public class PhoneStatusBarView extends PanelBar {
             mCarrierLabel = (TextView) findViewById(R.id.left_statusbar_carrier_text);
         }
         if (mCarrierLabelSpot == 1) {
+            mCarrierLabel = (TextView) findViewById(R.id.center_statusbar_carrier_text);
+        }
+	if (mCarrierLabelSpot == 2) {
             mCarrierLabel = (TextView) findViewById(R.id.statusbar_carrier_text);
         }
 

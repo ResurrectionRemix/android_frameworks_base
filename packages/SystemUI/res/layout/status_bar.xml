@@ -129,6 +129,16 @@
             android:orientation="horizontal"
             >
 
+       	<com.android.systemui.statusbar.widget.CarrierLabel
+                android:id="@+id/center_statusbar_carrier_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
+                android:paddingStart="4dp"
+                android:visibility="gone"
+                android:singleLine="true"
+                /> 
 
  	<ImageView
                     android:id="@+id/center_rr_logo"
@@ -139,7 +149,6 @@
                     android:scaleType="center"
                     android:visibility="gone"
                     />
-
 
 
             <com.android.systemui.statusbar.policy.NetworkTraffic
