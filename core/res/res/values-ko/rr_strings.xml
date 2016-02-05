@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2015 Resurrection Remix Rom
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">    
+<!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">시스템UI 다시 시작</string>
+
+
+     <!-- AOKP custom system animations -->
+     <string name="animation_fade">페이드</string>
+     <string name="animation_slide_right">오른쪽에서 슬라이드</string>
+     <string name="animation_slide_left">왼쪽에서 슬라이드</string>
+     <string name="animation_slide_right_no_fade">오른쪽에서 슬라이드 (페이드 없음)</string>
+     <string name="animation_slide_left_no_fade">왼쪽에서 슬라이드 (페이드 없음)</string>
+     <string name="animation_slide_up">아래쪽에서 슬라이드</string>
+     <string name="animation_slide_down">위쪽에서 슬라이드</string>
+     <string name="animation_default">기본</string>
+     <string name="animation_translucent">반투명</string>
+     <string name="animation_grow_shrink">나타나기 (상단)</string>
+     <string name="animation_grow_shrink_center">나타나기 (중앙)</string>
+     <string name="animation_grow_shrink_bottom">나타나기 (하단)</string>
+     <string name="animation_grow_shrink_left">나타나기 (좌측)</string>
+     <string name="animation_grow_shrink_right">나타나기 (우측)</string>
+     <string name="action_null">없음</string>
+
+    <!-- Slimseekbar -->
+    <string name="default_string">기본</string>
+
+    <!-- label for item that takes On-The-Go in the phone options dialog -->
+    <string name="global_action_onthego">On-The-Go 모드</string>
+
+
+    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_resetBatteryStats">배터리 통계 초기화</string>
+    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_resetBatteryStats">애플리케이션이 낮은 수준의 배터리 현재 사용 내역을 초기화 할 수 있도록 허용합니다.</string>
+
+
+</resources>
