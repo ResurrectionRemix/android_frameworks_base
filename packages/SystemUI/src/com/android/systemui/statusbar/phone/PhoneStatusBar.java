@@ -772,9 +772,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
 	       if ( mRRLogoStyle == 0) {
                 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-            } else {
+            } else if ( mRRLogoStyle == 1) {
+			 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
+	    } else if ( mRRLogoStyle == 2) {
                 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-            }
+            } 
             showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
 
 
@@ -1619,10 +1621,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
                 UserHandle.USER_CURRENT);
         if ( mRRLogoStyle == 0) {
-            rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-        } else {
-            rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-        }
+                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
+            } else if ( mRRLogoStyle == 1) {
+                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
+            } else if ( mRRLogoStyle == 2) {
+			 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+		}
         mRRlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
         mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -4349,10 +4353,13 @@ private final Object mScreenshotLock = new Object();
         rrLogo.setColorFilter(color, Mode.SRC_IN);
         if (style == 0) {
             rrLogo.setVisibility(View.GONE);
-            rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-        } else {
+ 	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
+        } else if (style == 1){
+            rrLogo.setVisibility(View.GONE);        
+	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
+        }   else if (style == 2){
             rrLogo.setVisibility(View.GONE);
-            rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);       
         }
         rrLogo.setVisibility(View.VISIBLE);
 	}
