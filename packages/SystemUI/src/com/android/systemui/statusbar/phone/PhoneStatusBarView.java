@@ -110,6 +110,9 @@ public class PhoneStatusBarView extends PanelBar {
 	if (mCarrierLabelSpot == 2) {
             mCarrierLabel = (TextView) findViewById(R.id.statusbar_carrier_text);
         }
+	if (mCarrierLabelSpot == 3) {
+            mCarrierLabel = (TextView) findViewById(R.id.before_icons_statusbar_carrier_text);
+        }
 
         if (mCarrierLabel != null) {
             if (mShowCarrierLabel == 2) {
@@ -126,6 +129,10 @@ public class PhoneStatusBarView extends PanelBar {
         mCarrierLabel = (TextView) findViewById(R.id.left_statusbar_carrier_text);
         mCarrierLabel.setVisibility(View.GONE);
         mCarrierLabel = (TextView) findViewById(R.id.statusbar_carrier_text);
+        mCarrierLabel.setVisibility(View.GONE);
+	mCarrierLabel = (TextView) findViewById(R.id.center_statusbar_carrier_text);
+        mCarrierLabel.setVisibility(View.GONE);
+	mCarrierLabel = (TextView) findViewById(R.id.before_icons_statusbar_carrier_text);
         mCarrierLabel.setVisibility(View.GONE);
     }
 
