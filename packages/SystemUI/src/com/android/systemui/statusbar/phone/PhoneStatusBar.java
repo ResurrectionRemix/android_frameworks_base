@@ -776,6 +776,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
 	    } else if ( mRRLogoStyle == 2) {
                 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+            } else if ( mRRLogoStyle == 3) {
+                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
             } 
             showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
 
@@ -1626,6 +1628,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
             } else if ( mRRLogoStyle == 2) {
 			 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+	    }else if ( mRRLogoStyle == 3) {
+                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
 		}
         mRRlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
@@ -4354,12 +4358,15 @@ private final Object mScreenshotLock = new Object();
         if (style == 0) {
             rrLogo.setVisibility(View.GONE);
  	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-        } else if (style == 1){
+        } else if (style == 1) {
             rrLogo.setVisibility(View.GONE);        
 	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
-        }   else if (style == 2){
+        }   else if (style == 2) {
             rrLogo.setVisibility(View.GONE);
 	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);       
+        } else if (style == 3) {
+            rrLogo.setVisibility(View.GONE);
+	    rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);       
         }
         rrLogo.setVisibility(View.VISIBLE);
 	}

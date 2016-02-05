@@ -129,19 +129,8 @@
             android:orientation="horizontal"
             >
 
-       	<com.android.systemui.statusbar.widget.CarrierLabel
-                android:id="@+id/center_statusbar_carrier_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
-                android:paddingStart="4dp"
-                android:visibility="gone"
-                android:singleLine="true"
-                /> 
-
  	<ImageView
-                    android:id="@+id/center_rr_logo"
+                    android:id="@+id/before_icons_rr_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="4dip"
@@ -149,7 +138,6 @@
                     android:scaleType="center"
                     android:visibility="gone"
                     />
-
 
             <com.android.systemui.statusbar.policy.NetworkTraffic
                 android:id="@+id/networkTraffic"
@@ -224,6 +212,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
+
+ 	<ImageView
+                    android:id="@+id/center_rr_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/ic_status_bar_rr_logo"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
 
         <com.android.systemui.statusbar.policy.Clock
             android:id="@+id/center_clock"
