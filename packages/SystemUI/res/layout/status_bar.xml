@@ -63,15 +63,16 @@
                 android:layout_height="match_parent"
                 >
 
+
                 <com.android.systemui.statusbar.widget.CarrierLabel
                     android:id="@+id/left_statusbar_carrier_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
-           	        android:visibility="gone"
-                    android:singleLine="true" />
-
+                    android:visibility="gone"
+                    android:singleLine="true"
+                    />
                  <com.android.systemui.statusbar.policy.Clock
                     android:id="@+id/left_clock"
                     android:textAppearance="@style/TextAppearance.StatusBar.Clock"
@@ -81,18 +82,7 @@
                     android:paddingEnd="1dip"
                     android:gravity="center"
                     android:visibility="gone"
-                    />    
-
-       	       <com.android.systemui.statusbar.widget.CarrierLabel
-                android:id="@+id/statusbar_carrier_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
-                android:paddingStart="4dp"
-                android:visibility="gone"
-                android:singleLine="true"
-                />           
+                    />              
 
                 <ImageView
                     android:id="@+id/rr_logo"
@@ -104,15 +94,6 @@
                     android:visibility="gone"
                     />
 
-                <com.android.systemui.statusbar.widget.CarrierLabel
-                    android:id="@+id/left_statusbar_carrier_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
-                    android:visibility="gone"
-                    android:singleLine="true"
-                    />
 
                 <com.android.systemui.statusbar.StatusBarIconView android:id="@+id/moreIcon"
                     android:layout_width="@dimen/status_bar_icon_size"
@@ -190,6 +171,17 @@
                 android:paddingStart="7dp"
                 android:gravity="center_vertical|start"
                 />
+
+       	<com.android.systemui.statusbar.widget.CarrierLabel
+                android:id="@+id/statusbar_carrier_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
+                android:paddingStart="4dp"
+                android:visibility="gone"
+                android:singleLine="true"
+                /> 
         </com.android.keyguard.AlphaOptimizedLinearLayout>
     </LinearLayout>
 
