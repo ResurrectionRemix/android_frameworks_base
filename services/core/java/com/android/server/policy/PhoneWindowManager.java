@@ -2152,7 +2152,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         + deviceKeyHandlerLib, e);
             }
         }
-
     }
 
     private void updateKeyAssignments() {
