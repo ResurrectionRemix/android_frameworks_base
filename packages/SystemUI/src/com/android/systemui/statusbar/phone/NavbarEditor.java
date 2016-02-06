@@ -156,20 +156,20 @@ public class NavbarEditor implements View.OnTouchListener {
             R.drawable.ic_sysbar_notif_side);
     public static final ButtonInfo NAVBAR_TORCH = new ButtonInfo("torch",
             R.string.navbar_torch, R.string.accessibility_torch,
-            0, R.drawable.ic_sysbar_flashlight, R.drawable.ic_sysbar_flashlight,
-            R.drawable.ic_sysbar_flashlight);
+            0, R.drawable.ic_sysbar_torch_ime, R.drawable.ic_sysbar_torch_land,
+            R.drawable.ic_sysbar_torch_side);
     public static final ButtonInfo NAVBAR_CAMERA = new ButtonInfo("camera",
             R.string.navbar_camera, R.string.accessibility_camera,
-            0, R.drawable.ic_sysbar_picture, R.drawable.ic_sysbar_picture,
-            R.drawable.ic_sysbar_picture);
+            0, R.drawable.ic_sysbar_camera_ime, R.drawable.ic_sysbar_camera_land,
+            R.drawable.ic_sysbar_camera_side);
     public static final ButtonInfo NAVBAR_SCREENSHOT = new ButtonInfo("screenshot",
             R.string.navbar_screenshot, R.string.accessibility_screenshot,
-            0, R.drawable.ic_sysbar_ss, R.drawable.ic_sysbar_ss,
-            R.drawable.ic_sysbar_ss);
+            0, R.drawable.ic_sysbar_ss_ime, R.drawable.ic_sysbar_ss_land,
+            R.drawable.ic_sysbar_ss_side);
     public static final ButtonInfo NAVBAR_EXPAND = new ButtonInfo("expand",
             R.string.navbar_expand, R.string.accessibility_expand,
-            0, R.drawable.ic_sysbar_immersive_mode, R.drawable.ic_sysbar_immersive_mode,
-            R.drawable.ic_sysbar_immersive_mode);
+            0, R.drawable.ic_sysbar_expand_ime, R.drawable.ic_sysbar_expand_land,
+            R.drawable.ic_sysbar_expand_side);
 
     private static final ButtonInfo[] ALL_BUTTONS = new ButtonInfo[] {
         NAVBAR_EMPTY, NAVBAR_HOME, NAVBAR_BACK, NAVBAR_SEARCH,
