@@ -5107,6 +5107,12 @@ public final class Settings {
         public static final String DASHBOARD_TILEVIEW_DOUBLE_LINES = "dashboard_tileview_double_lines";
 
         /**
+         * Custom status bar header font style
+         * @hide
+         */
+        public static final String STATUS_BAR_HEADER_FONT_STYLE = "status_bar_header_font_style";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
