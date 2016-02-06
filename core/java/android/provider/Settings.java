@@ -3798,7 +3798,15 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CARRIER_SPOT = "status_bar_carrier_spot";
 
+
+	/*
+         * Custom carrier label font style
+         * @hide
+         */
+        public static final String STATUS_BAR_CARRIER_FONT_STYLE = "status_bar_carrier_font_style";
+
         /**
+
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
@@ -5047,6 +5055,12 @@ public final class Settings {
          * @hide
          */
         public static final String KEY_VOICEMAIL_BREATH = "voicemail_breath";
+
+        /**
+         * Give SMS notifications a breathing effect
+         * @hide
+         */
+        public static final String KEY_SMS_BREATH = "sms_breath";
 
         /**
          * Transparent qs header

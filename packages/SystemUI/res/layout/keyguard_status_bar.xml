@@ -25,7 +25,8 @@
     android:baselineAligned="false"
     >
 
-    <com.android.systemui.statusbar.phone.MultiUserSwitch android:id="@+id/multi_user_switch"
+    <com.android.systemui.statusbar.phone.MultiUserSwitch
+        android:id="@+id/multi_user_switch"
         android:layout_width="@dimen/multi_user_switch_width_keyguard"
         android:layout_height="@dimen/status_bar_header_height_keyguard"
         android:layout_alignParentEnd="true"
@@ -45,6 +46,16 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginStart="16dp"
         android:paddingEnd="@dimen/system_icons_keyguard_padding_end">
+	    <com.android.systemui.statusbar.widget.CarrierLabel
+            android:id="@+id/before_icons_keyguard_carrier_text"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/status_bar_header_height_keyguard"
+            android:layout_marginStart="@dimen/keyguard_carrier_text_margin"
+            android:gravity="center_vertical"
+            android:ellipsize="marquee"
+            android:visibility="gone"
+            android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
+            android:singleLine="true" />
         <FrameLayout android:id="@+id/system_icons_container"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/status_bar_height"
@@ -52,6 +63,7 @@
             >
             <include layout="@layout/system_icons" />
         </FrameLayout>
+
         <com.android.systemui.BatteryLevelTextView android:id="@+id/battery_level_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,16 +74,27 @@
             android:visibility="gone"
             android:textSize="@dimen/battery_level_text_size"
             android:importantForAccessibility="noHideDescendants"/>
+        <com.android.systemui.statusbar.widget.CarrierLabel
+            android:id="@+id/keyguard_carrier_text"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/status_bar_header_height_keyguard"
+            android:layout_marginStart="@dimen/keyguard_carrier_text_margin"
+            android:gravity="center_vertical"
+            android:ellipsize="marquee"
+            android:visibility="gone"
+            android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
+            android:singleLine="true" />
     </LinearLayout>
 
     <com.android.systemui.statusbar.widget.CarrierLabel
-        android:id="@+id/keyguard_carrier_text"
+        android:id="@+id/left_keyguard_carrier_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/status_bar_header_height_keyguard"
         android:layout_marginStart="@dimen/keyguard_carrier_text_margin"
         android:layout_toStartOf="@id/system_icons_super_container"
         android:gravity="center_vertical"
         android:ellipsize="marquee"
+        android:visibility="gone"
         android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
         android:singleLine="true" />
 
