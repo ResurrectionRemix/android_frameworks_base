@@ -3958,7 +3958,21 @@ public final class Settings {
          */
         public static final String DIM_NAV_BUTTONS_ANIMATE_DURATION = "dim_nav_buttons_animate_duration";
 
+
+	/*
+         * Hide lockscreen date
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_DATE = "hide_lockscreen_date";
+
         /**
+         * Hide lockscreen clock
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_CLOCK = "hide_lockscreen_clock";
+
+        /**
+
          * Whether to listen on the entire screen for touches to un-dim
          * the buttons instead of just listening on the navbar
          * @hide
