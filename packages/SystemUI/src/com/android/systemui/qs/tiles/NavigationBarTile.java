@@ -44,6 +44,9 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
     private static final String NAVBAR_MODE_ENTRIES_NAME = "systemui_navbar_mode_entries";
     private static final String NAVBAR_MODE_VALUES_NAME = "systemui_navbar_mode_values";
     private static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
+    private static final String NAVBAR_SETTINGS = "com.android.settings.Settings$NavigationSettingsActivity";
+    private static final String FLING_SETTINGS = "com.android.settings.Settings$FlingSettingsActivity";
+    private static final String SMARTBAR_SETTINGS = "com.android.settings.Settings$SmartbarSettingsActivity";
 
     private String[] mEntries, mValues;
     private boolean mShowingDetail;
@@ -134,17 +137,20 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
     @Override
     protected void handleSecondaryClick() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName("com.android.settings",
-            "com.android.settings.Settings$NavigationSettingsActivity");
+        intent.setClassName(SETTINGS_PACKAGE_NAME, NAVBAR_SETTINGS);
         mHost.startActivityDismissingKeyguard(intent);
     }
 
     @Override
     protected void handleLongClick() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setClassName("com.android.settings",
-            "com.android.settings.Settings$NavigationSettingsActivity");
-        mHost.startActivityDismissingKeyguard(intent);
+        if (navbarEnabled()) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setClassName(SETTINGS_PACKAGE_NAME, getNavigationBar() == 0 ? SMARTBAR_SETTINGS
+                    : FLING_SETTINGS);
+            mHost.startActivityDismissingKeyguard(intent);
+        } else {
+            // Do nothing
+        }
     }
 
     public static final class NavbarState extends QSTile.State {
@@ -220,8 +226,7 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
         @Override
         public Intent getSettingsIntent() {
             Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.setClassName("com.android.settings",
-                "com.android.settings.Settings$NavigationSettingsActivity");
+            intent.setClassName(SETTINGS_PACKAGE_NAME, NAVBAR_SETTINGS);
             return intent;
         }
 
