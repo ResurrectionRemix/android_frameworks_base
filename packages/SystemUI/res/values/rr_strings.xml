@@ -241,6 +241,30 @@
 
    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_expand">Immersive Mode</string>
+
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_config">Configurations</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_config">Configurations</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_pie">PIE</string>
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_pie">Pie</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_screenrecord">ScreenRecord</string>
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_screenrecord">ScreenRecord</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_killtask">Kill Task</string>
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_killtask">Kill Task</string>
+
 	
 </resources>
 
