@@ -122,7 +122,7 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
 
     private boolean navbarEnabled() {
         return Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.NAVIGATION_BAR_VISIBLE, 0) == 1;
+                Settings.Secure.NAVIGATION_BAR_VISIBLE, 1) == 1;
     }
 
     @Override
@@ -173,8 +173,13 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
                 state.label = mContext.getString(R.string.quick_settings_fling);
             }
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_smartbar_off);
-            state.label = mContext.getString(R.string.quick_settings_smartbar_off);
+            if (navMode == 0) {
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_smartbar_off);
+                state.label = mContext.getString(R.string.quick_settings_smartbar_off);
+            } else if (navMode == 1){
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_fling_off);
+                state.label = mContext.getString(R.string.quick_settings_fling_off);
+            }
         }
         state.visible = true;
     }

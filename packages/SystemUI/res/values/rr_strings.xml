@@ -136,9 +136,10 @@
 
     <!-- Navigation bar Tile -->
     <string name="quick_settings_navigation_bar">Navigation bar</string>
-    <string name="quick_settings_smartbar_off">Navigation bar off</string>
+    <string name="quick_settings_smartbar_off">SmartBar off</string>
     <string name="quick_settings_smartbar">SmartBar</string>
     <string name="quick_settings_fling">Fling gesture</string>
+    <string name="quick_settings_fling_off">Fling gesture off</string>
 
      <!-- Hw Keys tile -->
     <string name="quick_settings_hwkeys_title">Hardware Keys</string>	
