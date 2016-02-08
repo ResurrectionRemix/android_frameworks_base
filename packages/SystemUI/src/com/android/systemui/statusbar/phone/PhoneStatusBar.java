@@ -2145,23 +2145,35 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     }
 
     private void expandShade() {
-            try {
-                IStatusBarService.Stub.asInterface(
-                        ServiceManager.getService(mContext.STATUS_BAR_SERVICE)).expandNotificationsPanel();
-            } catch (RemoteException e) {
-                // A RemoteException is like a cold
-                // Let's hope we don't catch one!
-            }
+        try {
+            IStatusBarService.Stub.asInterface(
+                    ServiceManager.getService(mContext.STATUS_BAR_SERVICE)).expandNotificationsPanel();
+        } catch (RemoteException e) {
+            // A RemoteException is like a cold
+            // Let's hope we don't catch one!
+        }
     }
 
     private void expandShadeSettings() {
-            try {
-                IStatusBarService.Stub.asInterface(
-                        ServiceManager.getService(mContext.STATUS_BAR_SERVICE)).expandSettingsPanel();
-            } catch (RemoteException e) {
-                // A RemoteException is like a cold
-                // Let's hope we don't catch one!
-            }
+        // There is no check to see if shade is already expanded, so longpressing it
+        // while SettingsPanel is expanded doesn't do anything. This way, it at least
+        // closes the notification shade on longress if it's open
+        // Stupid way, I know LOL
+        try {
+            IStatusBarService.Stub.asInterface(
+                    ServiceManager.getService(mContext.STATUS_BAR_SERVICE)).collapsePanels();
+        } catch (RemoteException e) {
+            // A RemoteException is like a cold
+            // Let's hope we don't catch one!
+        }
+
+        try {
+            IStatusBarService.Stub.asInterface(
+                    ServiceManager.getService(mContext.STATUS_BAR_SERVICE)).expandSettingsPanel();
+        } catch (RemoteException e) {
+            // A RemoteException is like a cold
+            // Let's hope we don't catch one!
+        }
     }
 
     private void toggletorch() {
