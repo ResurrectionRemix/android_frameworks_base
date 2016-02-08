@@ -513,6 +513,19 @@
              </intent-filter>
         </activity>
 
+        <!-- App picker activity -->
+        <activity
+            android:name=".rr.apppicker.AppPickerActivity"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
+            android:label="@string/qs_app_picker_title"
+            android:enabled="true"
+            android:excludeFromRecents="true" >
+            <intent-filter>
+                <action android:name=".rr.apppicker.AppPickerActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".statusbar.sidebar.SidebarContentProvider"
             android:authorities="org.chameleonos.sidebar.contentprovider" >
