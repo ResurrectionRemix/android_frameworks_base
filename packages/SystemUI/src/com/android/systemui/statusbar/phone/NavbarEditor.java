@@ -186,11 +186,15 @@ public class NavbarEditor implements View.OnTouchListener {
             R.string.navbar_killtask, R.string.accessibility_killtask,
             0, R.drawable.ic_sysbar_kill, R.drawable.ic_sysbar_kill_land,
             R.drawable.ic_sysbar_kill_side);	
+    public static final ButtonInfo NAVBAR_APP_PICKER = new ButtonInfo("app_picker",
+            R.string.navbar_app_picker, R.string.accessibility_app_picker,
+            0, R.drawable.ic_sysbar_app_picker, R.drawable.ic_sysbar_app_picker,
+            R.drawable.ic_sysbar_app_picker);
 
     private static final ButtonInfo[] ALL_BUTTONS = new ButtonInfo[] {
         NAVBAR_EMPTY, NAVBAR_HOME, NAVBAR_BACK, NAVBAR_SEARCH,
         NAVBAR_RECENT, NAVBAR_CONDITIONAL_MENU, NAVBAR_ALWAYS_MENU,
-        NAVBAR_MENU_BIG, NAVBAR_POWER, NAVBAR_NOTIFICATIONS ,NAVBAR_TORCH ,NAVBAR_CAMERA , NAVBAR_SCREENSHOT ,NAVBAR_EXPAND ,NAVBAR_CONFIGURATIONS,NAVBAR_PIE ,NAVBAR_SCREENRECORD , NAVBAR_KILLTASK
+        NAVBAR_MENU_BIG, NAVBAR_POWER, NAVBAR_NOTIFICATIONS ,NAVBAR_TORCH ,NAVBAR_CAMERA , NAVBAR_SCREENSHOT ,NAVBAR_EXPAND ,NAVBAR_CONFIGURATIONS,NAVBAR_PIE ,NAVBAR_SCREENRECORD , NAVBAR_KILLTASK , NAVBAR_APP_PICKER
     };
 
     private static final String DEFAULT_SETTING_STRING = "empty|empty|back|home|recent|empty|menu0";

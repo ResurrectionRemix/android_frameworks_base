@@ -2127,6 +2127,13 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
 	}
     };
 
+    //App picker
+    private final View.OnClickListener mAppPickerClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            appPicker();
+        }
+    };
+
     private void awakenDreams() {
         if (mDreamManager != null) {
             try {
@@ -2416,12 +2423,17 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         			    }
        			 }
 
+    private void appPicker() {
+        Intent intent = new Intent(".aicp.apppicker.AppPickerActivity");
+        startActivity(intent, true);
+    }
+
     private void prepareNavigationBarView() {
         mNavigationBarView.reorient();
 
         mNavigationBarView.setListeners(mRecentsClickListener, mRecentsPreloadOnTouchListener,
                 mLongPressBackRecentsListener, mHomeActionListener, mLongPressHomeListener,
-                mNotificationsClickListener, mNotificationsLongListener , mTorchClickListener ,mCameraClickListener, mScreenShotClickListener ,mImmersiveClickListener ,mConfigClickListener ,mConfigLongListener ,mPieClickListener, mScreenClickListener ,mKillClickListener );
+                mNotificationsClickListener, mNotificationsLongListener , mTorchClickListener ,mCameraClickListener, mScreenShotClickListener ,mImmersiveClickListener ,mConfigClickListener ,mConfigLongListener ,mPieClickListener, mScreenClickListener ,mKillClickListener , mAppPickerClickListener );
         mAssistManager.onConfigurationChanged(); 
     }
 

@@ -265,6 +265,13 @@
   <!-- Dialog title for navigation bar button selection -->
     <string name="navbar_killtask">Kill Task</string>
 
+    <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_app_picker">Application picker</string>
+
+    <!-- Content description of the Application picker button for accessibility
+    (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_app_picker">Application picker</string>
+
 	
 </resources>
 
