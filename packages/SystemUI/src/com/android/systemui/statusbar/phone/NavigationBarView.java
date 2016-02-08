@@ -166,6 +166,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     private OnLongClickListener mNotificationsLongListener;
     private OnClickListener mTorchClickListener;
     private OnClickListener mCameraClickListener;
+    private OnLongClickListener mCameraLongClickListener;
     private OnClickListener mScreenShotClickListener;
     private OnClickListener mImmersiveClickListener;	
     private OnClickListener mConfigClickListener;
@@ -973,7 +974,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
     void setListeners(OnClickListener recentsClickListener, OnTouchListener recentsPreloadListener,
                       OnLongClickListener recentsBackListener, OnTouchListener homeSearchActionListener,
                       OnLongClickListener longPressHomeListener, OnClickListener notificationsClickListener,
-                      OnLongClickListener notificationsLongListener,OnClickListener torchClickListener ,  OnClickListener cameraClickListener ,OnClickListener screenshotClickListener ,OnClickListener immersiveClickListener , OnClickListener configClickListener , OnLongClickListener configLongListener ,OnClickListener pieClickListener , OnClickListener screenClickListener, OnClickListener killClickListener ,OnClickListener appPickerClickListener ) {
+                      OnLongClickListener notificationsLongListener,OnClickListener torchClickListener ,  OnClickListener cameraClickListener ,  OnLongClickListener cameraLongClickListener ,OnClickListener screenshotClickListener ,OnClickListener immersiveClickListener , OnClickListener configClickListener , OnLongClickListener configLongListener ,OnClickListener pieClickListener , OnClickListener screenClickListener, OnClickListener killClickListener ,OnClickListener appPickerClickListener ) {
         mRecentsClickListener = recentsClickListener;
         mRecentsPreloadListener = recentsPreloadListener;
         mHomeSearchActionListener = homeSearchActionListener;
@@ -984,6 +985,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         mTorchClickListener = torchClickListener;
 	mCameraClickListener = cameraClickListener;
 	mScreenShotClickListener = screenshotClickListener;
+        mCameraLongClickListener = cameraLongClickListener;
         mImmersiveClickListener = immersiveClickListener;
 	mConfigClickListener = configClickListener;
         mConfigLongListener = configLongListener;
@@ -1045,6 +1047,8 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         View cameraView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_CAMERA);
         if (cameraView != null) {
             cameraView.setOnClickListener(mCameraClickListener);
+            cameraView.setLongClickable(true);
+            cameraView.setOnLongClickListener(mCameraLongClickListener);
         }
   	View screenshotView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_SCREENSHOT);
         if (screenshotView != null) {

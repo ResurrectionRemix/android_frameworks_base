@@ -2112,6 +2112,14 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
                     true /* dismissShade */);
         }
     };
+    private final View.OnLongClickListener mCameraLongClickListener =
+            new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            startGallery();
+            return true;
+        }
+    };
 
 	//Screenshot
     private final View.OnClickListener mScreenShotClickListener = new View.OnClickListener() {
@@ -2440,12 +2448,19 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         startActivity(intent, true);
     }
 
+    private void startGallery(){
+        Intent galleryIntent = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivity(galleryIntent , true);
+    }
+
     private void prepareNavigationBarView() {
         mNavigationBarView.reorient();
 
         mNavigationBarView.setListeners(mRecentsClickListener, mRecentsPreloadOnTouchListener,
                 mLongPressBackRecentsListener, mHomeActionListener, mLongPressHomeListener,
-                mNotificationsClickListener, mNotificationsLongListener , mTorchClickListener ,mCameraClickListener, mScreenShotClickListener ,mImmersiveClickListener ,mConfigClickListener ,mConfigLongListener ,mPieClickListener, mScreenClickListener ,mKillClickListener , mAppPickerClickListener );
+                mNotificationsClickListener, mNotificationsLongListener , mTorchClickListener ,mCameraClickListener, mCameraLongClickListener , mScreenShotClickListener ,mImmersiveClickListener ,mConfigClickListener ,mConfigLongListener ,mPieClickListener, mScreenClickListener ,mKillClickListener , mAppPickerClickListener );
         mAssistManager.onConfigurationChanged(); 
     }
 
