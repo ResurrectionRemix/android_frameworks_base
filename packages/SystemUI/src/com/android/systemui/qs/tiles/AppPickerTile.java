@@ -34,14 +34,15 @@ import com.android.systemui.qs.QSTileView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+
+import com.android.internal.logging.MetricsLogger;
 
 
 public class AppPickerTile extends QSTile<QSTile.BooleanState> {
     private boolean mListening;
 
     private static final Intent APP_PICKER = new Intent().setComponent(new ComponentName(
-            "com.android.systemui", "com.android.systemui.aicp.apppicker.AppPickerActivity"));
+            "com.android.systemui", "com.android.systemui.rr.apppicker.AppPickerActivity"));
 
     public AppPickerTile(Host host) {
         super(host);
@@ -53,10 +54,11 @@ public class AppPickerTile extends QSTile<QSTile.BooleanState> {
     }
 
 
+ 
     @Override
     public int getMetricsCategory() {
-        return CMMetricsLogger.AICPEXTRAS;
-    }
+        return MetricsLogger.DONT_TRACK_ME_BRO;
+	}
 
 
     @Override

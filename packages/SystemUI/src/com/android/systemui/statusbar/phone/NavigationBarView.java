@@ -1075,6 +1075,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
 	View killView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_KILLTASK);
         if (killView != null) {
             killView.setOnClickListener(mKillClickListener);
+	}
         View appPickerView = mCurrentView.findViewWithTag(NavbarEditor.NAVBAR_APP_PICKER);
         if (appPickerView != null) {
             appPickerView.setOnClickListener(mAppPickerClickListener);

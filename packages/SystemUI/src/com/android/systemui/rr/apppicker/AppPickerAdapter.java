@@ -1,4 +1,4 @@
-package com.android.systemui.aicp.apppicker;
+package com.android.systemui.rr.apppicker;
 
 import java.util.List;
 

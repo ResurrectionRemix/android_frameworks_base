@@ -2444,7 +2444,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
        			 }
 
     private void appPicker() {
-        Intent intent = new Intent(".aicp.apppicker.AppPickerActivity");
+        Intent intent = new Intent(".rr.apppicker.AppPickerActivity");
         startActivity(intent, true);
     }
 
