@@ -1159,7 +1159,8 @@ public class NotificationPanelView extends PanelView implements
                 mAfforanceHelper.updatePreviews();
             }
         }
-        if (keyguardShowing) {
+        if (statusBarState == StatusBarState.KEYGUARD ||
+                statusBarState == StatusBarState.SHADE_LOCKED) {
             updateDozingVisibilities(false /* animate */);
             if (mThirdPartyKeyguardViewComponent != null) {
                 if (mKeyguardExternalView == null) {
