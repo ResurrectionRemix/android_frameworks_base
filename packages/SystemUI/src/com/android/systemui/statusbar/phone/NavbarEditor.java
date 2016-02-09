@@ -172,8 +172,8 @@ public class NavbarEditor implements View.OnTouchListener {
             R.drawable.ic_sysbar_expand_side);
     public static final ButtonInfo NAVBAR_CONFIGURATIONS = new ButtonInfo("configurations",
             R.string.navbar_config, R.string.accessibility_config,
-            0, R.drawable.ic_sysbar_configurations, R.drawable.ic_sysbar_configurations_land,
-            R.drawable.ic_sysbar_configurations_side);	
+            0, R.drawable.ic_sysbar_config, R.drawable.ic_sysbar_config_land,
+            R.drawable.ic_sysbar_config_side);	
     public static final ButtonInfo NAVBAR_PIE = new ButtonInfo("pie",
             R.string.navbar_pie, R.string.accessibility_pie,
             0, R.drawable.ic_sysbar_pie, R.drawable.ic_sysbar_pie_land,
@@ -184,8 +184,8 @@ public class NavbarEditor implements View.OnTouchListener {
             R.drawable.ic_sysbar_screenrecord_side);	
    public static final ButtonInfo NAVBAR_KILLTASK = new ButtonInfo("killtask",
             R.string.navbar_killtask, R.string.accessibility_killtask,
-            0, R.drawable.ic_sysbar_kill, R.drawable.ic_sysbar_kill_land,
-            R.drawable.ic_sysbar_kill_side);	
+            0, R.drawable.ic_sysbar_killtask, R.drawable.ic_sysbar_killtask_land,
+            R.drawable.ic_sysbar_killtask_side);	
     public static final ButtonInfo NAVBAR_APP_PICKER = new ButtonInfo("app_picker",
             R.string.navbar_app_picker, R.string.accessibility_app_picker,
             0, R.drawable.ic_sysbar_app_picker, R.drawable.ic_sysbar_app_picker_land,
