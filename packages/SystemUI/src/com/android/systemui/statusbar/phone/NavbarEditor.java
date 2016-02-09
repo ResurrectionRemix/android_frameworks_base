@@ -188,8 +188,8 @@ public class NavbarEditor implements View.OnTouchListener {
             R.drawable.ic_sysbar_kill_side);	
     public static final ButtonInfo NAVBAR_APP_PICKER = new ButtonInfo("app_picker",
             R.string.navbar_app_picker, R.string.accessibility_app_picker,
-            0, R.drawable.ic_sysbar_app_picker, R.drawable.ic_sysbar_app_picker,
-            R.drawable.ic_sysbar_app_picker);
+            0, R.drawable.ic_sysbar_app_picker, R.drawable.ic_sysbar_app_picker_land,
+            R.drawable.ic_sysbar_app_picker_side);
 
     private static final ButtonInfo[] ALL_BUTTONS = new ButtonInfo[] {
         NAVBAR_EMPTY, NAVBAR_HOME, NAVBAR_BACK, NAVBAR_SEARCH,
