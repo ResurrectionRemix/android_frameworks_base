@@ -533,13 +533,13 @@
 
         <!-- App picker activity -->
         <activity
-            android:name=".aicp.apppicker.AppPickerActivity"
+            android:name=".rr.apppicker.AppPickerActivity"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
             android:label="@string/accessibility_app_picker"
             android:enabled="true"
             android:excludeFromRecents="true" >
             <intent-filter>
-                <action android:name=".aicp.apppicker.AppPickerActivity" />
+                <action android:name=".rr.apppicker.AppPickerActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
