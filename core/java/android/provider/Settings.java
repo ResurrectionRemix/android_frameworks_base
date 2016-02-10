@@ -4039,6 +4039,47 @@ public final class Settings {
          */
         public static final String HEADER_ALARM_FONT_STYLE = "header_alarm_font_style";
 
+
+
+	/*
+         * Header Clock Color
+         * @hide
+         */
+        public static final String HEADER_CLOCK_COLOR = "header_clock_color";
+
+	/*
+         * Header Date Color
+         * @hide
+         */
+        public static final String HEADER_DETAIL_COLOR = "header_detail_color";
+
+	/*
+         * Header Weather Color
+         * @hide
+         */
+        public static final String HEADER_WEATHERONE_COLOR = "header_weatherone_color";
+
+	/*
+         * Header Weather Color
+         * @hide
+         */
+        public static final String HEADER_WEATHERTWO_COLOR = "header_weather2_color";
+
+
+
+	/*
+         * Header Battery Text Color
+         * @hide
+         */
+        public static final String HEADER_BATTERY_TEXT_COLOR = "header_battery_text_color";
+
+	/*
+         * Header alarm Color
+         * @hide
+         */
+        public static final String HEADER_ALARM_TEXT_COLOR = "header_alarm_text_color";
+
+
         /**
 
          * Whether to listen on the entire screen for touches to un-dim
