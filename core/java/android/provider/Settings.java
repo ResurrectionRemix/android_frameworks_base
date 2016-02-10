@@ -4039,7 +4039,11 @@ public final class Settings {
          */
         public static final String HEADER_ALARM_FONT_STYLE = "header_alarm_font_style";
 
-
+	/*
+         * Header Color Switch
+         * @hide
+         */
+        public static final String HEADER_COLOR_SWITCH = "header_color_switch";
 
 	/*
          * Header Clock Color
