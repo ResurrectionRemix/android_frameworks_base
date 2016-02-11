@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2015, Resurrection Remix project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Battery Saver Dimss -->
+    <string name="battery_saver_dismiss_title">無視</string>
+    <string name="battery_saver_notification_action_text_short">オフにする</string>
+
+
+    <string name="gestures_message">Draw gesture here</string>
+ 
+     <!-- App sidebar -->
+     <string name="default_folder_text">Folder</string>
+     <string name="title_activity_sidebar_configuration">Appbar content setup</string>
+     <string name="action_save">Save</string>
+     <string name="toast_items_saved">Appbar items have been saved.</string>
+     <string name="content_setup_instructions">Add items to the Appbar by long pressing any item on the right and drag it over to the Appbar.\n\nCombine items into folders by droping an item onto any existing item in the Appbar.\n\nTo remove an item simply drag it out of the \@appbar.</string>
+     <string name="content_setup_dismiss">Continue</string>
+     <string name="toast_not_installed">アプリはインストールされていません。</string>
+
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">Maximize</string>
+    <string name="app_float_item_title">Float view</string>
+    <string name="app_stop_item_title">Kill app</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">画面の録画中</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">停止</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">タッチ位置の表示</string>
+    <string name="screenrecord_notif_pointer_off">タッチ位置の非表示</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">画面の録画に失敗しました</string>
+
+
+    <!-- PA Pie controls -->
+    <string name="pie_date_format">yyyy MMM dd, ccc</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+
+    <!-- Kill app toast -->
+    <string name="app_killed_message">App Killed</string>
+
+
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go activated</string>
+    <string name="onthego_notif_title">On-The-Go が有効です</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">オプション</string>
+    <string name="onthego_notif_error">On-The-Go を開始できませんでした</string>
+    <string name="onthego_notif_restart">On-The-Go を再始動します</string>
+    <string name="onthego_notif_camera_changed">カメラのモードが変更されました</string>
+    <string name="onthego_transparency">透過度</string>
+    <string name="onthego_front_camera">フロントカメラを使用</string>
+    <string name="onthego_service_toggle">自動でサービスを再始動する</string>
+    <!-- To do: Add QS OnTheGo
+    <string name="quick_settings_onthego_back">Rear Camera</string>
+    <string name="quick_settings_onthego_front">Front Camera</string>-->
+
+
+    <!-- Quick settings -->
+    <string name="quick_settings_brightness_label">画面の明るさ</string>
+    <string name="quick_settings_screen_off_label">画面を消灯</string>
+    <string name="quick_settings_screenshot_label">スクリーンショット</string>
+
+    <!-- Expanded desktop detail tile -->
+    <string name="quick_settings_expanded_desktop">展開中</string>
+    <string name="quick_settings_expanded_desktop_off">標準</string>
+    <string name="quick_settings_expanded_desktop_detail_title">拡張デスクトップ</string>
+    <string name="quick_settings_expanded_hide_status">ステータスバーを非表示</string>
+    <string name="quick_settings_expanded_hide_navigation">ナビゲーションバーを非表示</string>
+    <string name="quick_settings_expanded_hide_both">両方を非表示</string>
+    <string name="accessibility_quick_settings_expanded_desktop_off">拡張デスクトップはオフになっています</string>
+
+    <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+
+    <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+
+    <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+
+    <!-- Music QS Tile -->
+    <string name="quick_settings_music_label">Music</string>
+    <string name="quick_settings_music_play">Play</string>
+    <string name="quick_settings_music_pause">Pause</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">再起動</string>
+    <string name="quick_settings_reboot_recovery_label">リカバリ</string>
+
+		<!-- 4G LTE switch -->
+    <string name="show_fourg_title">Show 4G instead of LTE</string>
+    <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+    <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+
+		<!-- Configurations Tile -->
+    <string name="quick_settings_rrtools">Configurations</string>
+
+		<!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+    <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+
+    <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+    <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+    <string name="quick_settings_heads_up_label">Heads up</string>
+
+    <string name="qs_lte_label">LTE</string>
+
+    <string name="lte_on">LTE ON </string>
+    <string name="lte_off">LTE OFF</string>
+
+
+    <!-- Themes QS Tile -->
+    <string name="quick_settings_themes">テーマ</string>
+    <string name="quick_settings_themes_icon_packs">Icon packs</string>
+    <string name="quick_settings_themes_app_theme">App theme</string>
+    <string name="quick_settings_themes_system_theme">System theme</string>
+    <string name="quick_settings_themes_changing_complete">Changing theme completed</string>
+    <string name="quick_settings_themes_default_theme">Default</string>
+    <string name="quick_settings_themes_match_system">Match system theme</string>
+
+     <!-- NavBar tile -->
+    <string name="quick_settings_navbar_title">ナビゲーションバー</string>	
+    <string name="quick_settings_navbar_on">ナビゲーションバー ON</string>
+    <string name="quick_settings_navbar_off">ナビゲーションバー OFF</string>
+    
+    <!-- App Circle Bar tile -->
+	<string name="quick_settings_appcirclebar_title">AppCircleBar</string>
+    <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
+    <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+
+    <!-- App Side Bar tile -->
+    <string name="quick_settings_app_sidebar">AppSideBar</string>
+    <string name="quick_settings_appsidebar_on">AppSideBar On</string>
+    <string name="quick_settings_appsidebar_off">AppSideBar Off</string>
+
+    <!-- Kernel Adiutor Tile -->
+    <string name="quick_settings_kernel_title">Kernel Adiutor</string>
+    <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+
+    <!-- Quick settings -->
+    <string name="quick_settings_screenrecord">画面の録画</string>
+    <string name="quick_settings_screenrecord_on">録画中...</string>
+
+   <!-- Pie tile -->
+   <string name="quick_settings_pie">Pie</string>
+
+   <!-- Power Menu -->
+   <string name="quick_settings_power_menu_label">電源メニュー</string>
+
+   <!-- Restart UI -->
+   <string name="quick_settings_systemui_restart_label">システムUIの再起動</string>
+	
+   <!-- Gesture Anywehre -->
+   <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
+   <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
+   <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>	
+
+   <!-- Tuner UI -->
+   <string name="status_bar_tuner_title">Status bar tuner</string>   
+   <string name="status_bar_tuner">Status bar icons</string>   
+   <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>	
+
+
+    <!-- Off/On/Toggle -->
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
+    <string name="toggle">Toggle</string>
+
+    <!-- Dialog Cancel/OK -->
+    <string name="cancel">キャンセル</string>
+    <string name="dlg_ok">OK</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+
+    <!-- Slim Shortcut Actions -->
+    <string name="shortcut_picker">Slim Shortcuts</string>
+    <string name="shortcut_rotation">Rotation</string>
+    <string name="shortcut_reboot">Reboot</string>
+    <string name="shortcut_recovery">Recovery</string>
+    <string name="shortcut_toggle_title">Action to perform</string>
+
+    <string name="quick_settings_selinux_label">SElinux</string>
+    <string name="quick_settings_selinux_permissive_title">Permissive</string>
+    <string name="quick_settings_selinux_enforcing_title">Enforcing</string>
+
+     <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_torch">Torch</string>
+
+    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_torch">Torch</string>
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_camera">カメラ</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_camera">カメラ</string>
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_screenshot">スクリーンショット</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_screenshot">スクリーンショット</string>
+
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_expand">Immersive Mode</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_expand">Immersive Mode</string>
+
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_config">設定</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_config">設定</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_pie">PIE</string>
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_pie">Pie</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_screenrecord">ScreenRecord</string>
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_screenrecord">ScreenRecord</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_killtask">Kill Task</string>
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_killtask">Kill Task</string>
+
+	
+</resources>
