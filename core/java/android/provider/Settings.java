@@ -1738,6 +1738,7 @@ public final class Settings {
 
         /**
          * Look up a boolean in the database.
+         * @hide
          * @param resolver to access the database with
          * @param name to look up in the table
          * @param def Value to return if the setting is not defined.
@@ -3848,7 +3849,7 @@ public final class Settings {
         @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_SHOW_TRIGGER = "gesture_anywhere_show_trigger";
 
-        /* Network speed indicator
+        /** Network speed indicator
          * 0 = disabled
 	 * 1 = show bits per second
 	 * 2 = show Bytes per second
@@ -3944,7 +3945,7 @@ public final class Settings {
         public static final String DIM_NAV_BUTTONS_ANIMATE_DURATION = "dim_nav_buttons_animate_duration";
 
 
-	/*
+	/**
          * Hide lockscreen date
          * @hide
          */
@@ -3957,25 +3958,25 @@ public final class Settings {
         public static final String HIDE_LOCKSCREEN_CLOCK = "hide_lockscreen_clock";
 
 
-	/*
+	/**
          * Hide panel clock
          * @hide
          */
         public static final String HIDE_PANEL_CLOCK = "hide_panel_clock";
 
-	/*
+	/**
          * Hide Date Of Header clock
          * @hide
          */
         public static final String HIDE_PANEL_DATE = "hide_panel_date";
 
-	/*
+	/**
          * Hide panel clock
          * @hide
          */
         public static final String HIDE_PANEL_CLOCKVALUE = "hide_panel_clockvalue";
 
-	/*
+	/**
          * Hide panel clock
          * @hide
          */
@@ -3988,58 +3989,58 @@ public final class Settings {
         public static final String HIDE_PANEL_BATTERY = "hide_panel_battery";
 
 
-	/*
+	/**
          * Hide panel icons
          * @hide
          */
         public static final String HIDE_PANEL_ICONS = "hide_panel_icons";
 
 
-	/*
+	/**
          * Hide Settings icon in Panel
          * @hide
          */
         public static final String HIDE_SETTINGS_ICON = "hide_settings_icon";
 
 
-	/*
+	/**
          * Hide user icon in Panel
          * @hide
          */
         public static final String HIDE_USER_ICON = "hide_user_icon";
 
-	/*
+	/**
          * Header Clock Font Style
          * @hide
          */
         public static final String HEADER_CLOCK_FONT_STYLE = "header_clock_font_style";
 
 
-	/*
+	/**
          * Hide Weather Font Style
          * @hide
          */
         public static final String HEADER_WEATHER_FONT_STYLE = "header_weather_font_style";
 
-	/*
+	/**
          * Hide AM/PM Font Style
          * @hide
          */
         public static final String HEADER_DETAIL_FONT_STYLE = "header_detail_font_style";
 
-	/*
+	/**
          * Hide Date Font Style
          * @hide
          */
         public static final String HEADER_DATE_FONT_STYLE = "header_date_font_style";
 
-	/*
+	/**
          * Hide Alarm Font Style
          * @hide
          */
         public static final String HEADER_ALARM_FONT_STYLE = "header_alarm_font_style";
 
-	/*
+	/**
          * Header Color Switch
          * @hide
          */
@@ -4051,19 +4052,19 @@ public final class Settings {
          */
         public static final String HEADER_CLOCK_COLOR = "header_clock_color";
 
-	/*
+	/**
          * Header Date Color
          * @hide
          */
         public static final String HEADER_DETAIL_COLOR = "header_detail_color";
 
-	/*
+	/**
          * Header Weather Color
          * @hide
          */
         public static final String HEADER_WEATHERONE_COLOR = "header_weatherone_color";
 
-	/*
+	/**
          * Header Weather Color
          * @hide
          */
@@ -4071,13 +4072,13 @@ public final class Settings {
 
 
 
-	/*
+	/**
          * Header Battery Text Color
          * @hide
          */
         public static final String HEADER_BATTERY_TEXT_COLOR = "header_battery_text_color";
 
-	/*
+	/**
          * Header alarm Color
          * @hide
          */
