@@ -4974,9 +4974,17 @@ public final class Settings {
          */
         public static final String VOLUME_KEYS_CONTROL_RING_STREAM = "volume_keys_control_ring_stream";  
 
+
+        /** 
+         * Position of date
+         * 0 - Left of clock
+         * 1 - Right of clock
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_DATE_POSITION = "statusbar_clock_date_position";
+
         /**
          * Whether to display set of animations when prompting the power menu
-         *
          * @hide
          */
         public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
