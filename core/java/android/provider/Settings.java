@@ -4040,7 +4040,7 @@ public final class Settings {
          */
         public static final String HEADER_ALARM_FONT_STYLE = "header_alarm_font_style";
 
-	/**
+	/*
          * Header Clock Color
          * @hide
          */
