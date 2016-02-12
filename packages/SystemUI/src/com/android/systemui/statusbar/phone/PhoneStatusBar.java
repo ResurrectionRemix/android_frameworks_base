@@ -270,7 +270,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private static final int MSG_CLOSE_PANELS = 1001;
     private static final int MSG_OPEN_SETTINGS_PANEL = 1002;
     private static final int MSG_LAUNCH_TRANSITION_TIMEOUT = 1003;
-    private static final int MSG_UPDATE_NOTIFICATIONS = 1004;
     // 1020-1040 reserved for BaseStatusBar
 
     // Time after we abort the launch transition.
@@ -2773,18 +2772,12 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         return entry.row.getParent() instanceof NotificationStackScrollLayout;
     }
 
-    private void handleUpdateNotifications() {
+    @Override
+    protected void updateNotifications() {
         mNotificationData.filterAndSort();
 
         updateNotificationShade();
         mIconController.updateNotificationIcons(mNotificationData);
-    }
-
-    @Override
-    protected void updateNotifications() {
-        if (!mHandler.hasMessages(MSG_UPDATE_NOTIFICATIONS)) {
-            mHandler.sendEmptyMessage(MSG_UPDATE_NOTIFICATIONS);
-        }
     }
 
     @Override
@@ -3461,9 +3454,6 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
                     break;
                 case MSG_LAUNCH_TRANSITION_TIMEOUT:
                     onLaunchTransitionTimeout();
-                    break;
-                case MSG_UPDATE_NOTIFICATIONS:
-                    handleUpdateNotifications();
                     break;
             }
         }
