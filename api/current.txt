@@ -26712,7 +26712,6 @@ package android.provider {
     field public static final java.lang.String END_BUTTON_BEHAVIOR = "end_button_behavior";
     field public static final java.lang.String FONT_SCALE = "font_scale";
     field public static final java.lang.String HAPTIC_FEEDBACK_ENABLED = "haptic_feedback_enabled";
-    field public static final java.lang.String HEADER_CLOCK_COLOR = "header_clock_color";
     field public static final java.lang.String HIDE_PANEL_BATTERY = "hide_panel_battery";
     field public static final deprecated java.lang.String HTTP_PROXY = "http_proxy";
     field public static final java.lang.String IMMERSIVE_RECENTS = "immersive_recents";
