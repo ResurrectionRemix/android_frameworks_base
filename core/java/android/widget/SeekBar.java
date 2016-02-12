@@ -28,7 +28,7 @@ import android.util.AttributeSet;
  * <p>
  * Clients of the SeekBar can attach a {@link SeekBar.OnSeekBarChangeListener} to
  * be notified of the user's actions.
- * @hide
+ *
  * @attr ref android.R.styleable#SeekBar_thumb
  */
 public class SeekBar extends AbsSeekBar {
@@ -38,7 +38,6 @@ public class SeekBar extends AbsSeekBar {
      * changed. This includes changes that were initiated by the user through a
      * touch gesture or arrow key/trackball as well as changes that were initiated
      * programmatically.
-     * @hide
      */
     public interface OnSeekBarChangeListener {
 
@@ -100,13 +99,13 @@ public class SeekBar extends AbsSeekBar {
      * provides notifications of when the user starts and stops a touch gesture within the SeekBar.
      *
      * @param l The seek bar notification listener
-     * @hide
+     *
      * @see SeekBar.OnSeekBarChangeListener
      */
     public void setOnSeekBarChangeListener(OnSeekBarChangeListener l) {
         mOnSeekBarChangeListener = l;
     }
-  /** {@hide} */
+
     @Override
     void onStartTrackingTouch() {
         super.onStartTrackingTouch();

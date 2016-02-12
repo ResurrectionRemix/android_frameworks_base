@@ -1812,7 +1812,7 @@ package android {
     field public static final int default_string = 17039384; // 0x1040018
     field public static final int dialog_alert_title = 17039380; // 0x1040014
     field public static final int emptyPhoneNumber = 17039366; // 0x1040006
-    field public static final int fingerprint_icon_content_description = 17039384; // 0x1040019
+    field public static final int fingerprint_icon_content_description = 17039385; // 0x1040019
     field public static final int httpErrorBadUrl = 17039367; // 0x1040007
     field public static final int httpErrorUnsupportedScheme = 17039368; // 0x1040008
     field public static final int no = 17039369; // 0x1040009
@@ -1967,7 +1967,7 @@ package android {
     field public static final int TextAppearance_Material_Widget_ActionMode_Title = 16974355; // 0x1030213
     field public static final int TextAppearance_Material_Widget_ActionMode_Title_Inverse = 16974356; // 0x1030214
     field public static final int TextAppearance_Material_Widget_Button = 16974357; // 0x1030215
-    field public static final int TextAppearance_Material_Widget_Button_Inverse = 16974548; // 0x10302e5
+    field public static final int TextAppearance_Material_Widget_Button_Inverse = 16974565; // 0x10302e5
     field public static final int TextAppearance_Material_Widget_DropDownHint = 16974358; // 0x1030216
     field public static final int TextAppearance_Material_Widget_DropDownItem = 16974359; // 0x1030217
     field public static final int TextAppearance_Material_Widget_EditText = 16974360; // 0x1030218
@@ -2012,8 +2012,8 @@ package android {
     field public static final int ThemeOverlay_Material_ActionBar = 16974409; // 0x1030249
     field public static final int ThemeOverlay_Material_Dark = 16974411; // 0x103024b
     field public static final int ThemeOverlay_Material_Dark_ActionBar = 16974412; // 0x103024c
-    field public static final int ThemeOverlay_Material_Dialog = 16974550; // 0x10302e4
-    field public static final int ThemeOverlay_Material_Dialog_Alert = 16974551; // 0x10302e6
+    field public static final int ThemeOverlay_Material_Dialog = 16974564; // 0x10302e4
+    field public static final int ThemeOverlay_Material_Dialog_Alert = 16974566; // 0x10302e6
     field public static final int ThemeOverlay_Material_Light = 16974410; // 0x103024a
     field public static final int Theme_Black = 16973832; // 0x1030008
     field public static final int Theme_Black_NoTitleBar = 16973833; // 0x1030009
@@ -2121,7 +2121,7 @@ package android {
     field public static final int Theme_Material_Light_Dialog_NoActionBar = 16974396; // 0x103023c
     field public static final int Theme_Material_Light_Dialog_NoActionBar_MinWidth = 16974397; // 0x103023d
     field public static final int Theme_Material_Light_Dialog_Presentation = 16974398; // 0x103023e
-    field public static final int Theme_Material_Light_LightStatusBar = 16974549; // 0x10302e3
+    field public static final int Theme_Material_Light_LightStatusBar = 16974563; // 0x10302e3
     field public static final int Theme_Material_Light_NoActionBar = 16974401; // 0x1030241
     field public static final int Theme_Material_Light_NoActionBar_Fullscreen = 16974402; // 0x1030242
     field public static final int Theme_Material_Light_NoActionBar_Overscan = 16974403; // 0x1030243
@@ -24105,13 +24105,16 @@ package android.preference {
     method public void setShowSilent(boolean);
   }
 
-  public class SlimSeekBarPreference extends android.preference.Preference {
+  public class SlimSeekBarPreference extends android.preference.Preference implements android.widget.SeekBar.OnSeekBarChangeListener {
     ctor public SlimSeekBarPreference(android.content.Context, android.util.AttributeSet);
     method public void disablePercentageValue(boolean);
     method public void disableText(boolean);
     method public void isMilliseconds(boolean);
     method public void minimumValue(int);
     method public void multiplyValue(int);
+    method public void onProgressChanged(android.widget.SeekBar, int, boolean);
+    method public void onStartTrackingTouch(android.widget.SeekBar);
+    method public void onStopTrackingTouch(android.widget.SeekBar);
     method public void setDefault(int);
     method public void setInitValue(int);
     method public void setInterval(int);
@@ -41173,6 +41176,20 @@ package android.widget {
     method public abstract int getPositionForSection(int);
     method public abstract int getSectionForPosition(int);
     method public abstract java.lang.Object[] getSections();
+  }
+
+  public class SeekBar extends android.widget.AbsSeekBar {
+    ctor public SeekBar(android.content.Context);
+    ctor public SeekBar(android.content.Context, android.util.AttributeSet);
+    ctor public SeekBar(android.content.Context, android.util.AttributeSet, int);
+    ctor public SeekBar(android.content.Context, android.util.AttributeSet, int, int);
+    method public void setOnSeekBarChangeListener(android.widget.SeekBar.OnSeekBarChangeListener);
+  }
+
+  public static abstract interface SeekBar.OnSeekBarChangeListener {
+    method public abstract void onProgressChanged(android.widget.SeekBar, int, boolean);
+    method public abstract void onStartTrackingTouch(android.widget.SeekBar);
+    method public abstract void onStopTrackingTouch(android.widget.SeekBar);
   }
 
   public class ShareActionProvider extends android.view.ActionProvider {
