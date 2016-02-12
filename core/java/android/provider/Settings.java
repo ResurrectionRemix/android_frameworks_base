@@ -3786,7 +3786,7 @@ public final class Settings {
 
 
 
-	/*
+	/**
          * Whether to mute annoying notifications
          * @hide
          */
@@ -4222,7 +4222,7 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CARRIER_COLOR = "status_bar_carrier_color";
 
-	/*
+	/**
          * Settings for carrier label font size
          * @hide
          */
@@ -4411,14 +4411,14 @@ public final class Settings {
          */
         public static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";
 
-	/*
+	/**
          * Settings for clock font style
          * @hide
          */
         public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
 
 
-	/*
+	/**
          * Custom Colors Switch
          * @hide
          */

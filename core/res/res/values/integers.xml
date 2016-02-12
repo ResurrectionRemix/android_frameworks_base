@@ -17,6 +17,14 @@
 */
 -->
 <resources>
+
+   <!-- SlimSeekBar ids -->
+   <java-symbol type="id" name="monitor_box" />
+   <java-symbol type="id" name="seek_bar" />
+
+   <java-symbol type="layout" name="slider_preference" />
+   <java-symbol type="string" name="default_string" />	
+	
     <integer name="kg_carousel_angle">75</integer>
     <integer name="kg_glowpad_rotation_offset">0</integer>
     <integer name="button_pressed_animation_duration">100</integer>
