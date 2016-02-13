@@ -140,19 +140,9 @@
     <string name="lte_on">LTE 켜짐</string>
     <string name="lte_off">LTE 꺼짐</string>
 
-
-    <!-- Themes QS Tile -->
-    <string name="quick_settings_themes">테마</string>
-    <string name="quick_settings_themes_icon_packs">아이콘 팩</string>
-    <string name="quick_settings_themes_app_theme">앱 테마</string>
-    <string name="quick_settings_themes_system_theme">시스템 테마</string>
-    <string name="quick_settings_themes_changing_complete">테마 변경이 완료됨</string>
-    <string name="quick_settings_themes_default_theme">기본</string>
-    <string name="quick_settings_themes_match_system">시스템 테마와 맞추기</string>
-
     <string name="quick_settings_themes">테마</string>
 
-     <!-- NavBar tile -->
+    <!-- NavBar tile -->
     <string name="quick_settings_navbar_title">네비바</string>	
     <string name="quick_settings_navbar_on">네비바 켜짐</string>
     <string name="quick_settings_navbar_off">네비바 꺼짐</string>
@@ -217,6 +207,9 @@
     <string name="quick_settings_selinux_permissive_title">허가</string>
     <string name="quick_settings_selinux_enforcing_title">시행</string>
 
+
+    <string name="qs_kill_app">앱 종료</string>
+
     <!-- Dialog title for navigation bar button selection -->
     <string name="navbar_torch">손전등</string>
 
@@ -241,5 +234,35 @@
 
     <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_expand">몰입 모드</string>
-	
+
+ 
+    <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_config">네비게이션바 버튼 설정</string>
+ 
+    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_config">네비게이션바 버튼 설정</string>
+ 
+    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_pie">PIE</string>
+ 
+    <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_pie">Pie</string>
+ 
+    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_screenrecord">화면 녹화</string>
+    <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_screenrecord">화면 녹화</string>
+ 
+    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_killtask">작업 종료</string>
+    <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_killtask">작업 종료</string>
+ 
+    <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_app_picker">애플리케이션 선택</string>
+ 
+	<!-- Content description of the Application picker button for accessibility
+    (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_app_picker">애플리케이션 선택</string>
+ 
 </resources>
