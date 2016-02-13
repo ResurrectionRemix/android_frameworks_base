@@ -4968,9 +4968,17 @@ public final class Settings {
          */
         public static final String VOLUME_KEYS_CONTROL_RING_STREAM = "volume_keys_control_ring_stream";  
 
+
+        /** 
+         * Position of date
+         * 0 - Left of clock
+         * 1 - Right of clock
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_DATE_POSITION = "statusbar_clock_date_position";
+
         /**
          * Whether to display set of animations when prompting the power menu
-         *
          * @hide
          */
         public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
@@ -5239,6 +5247,12 @@ public final class Settings {
          * @hide
          */
         public static final String NAV_BUTTONS_ROTATION = "nav_buttons_rotation";
+
+        /**
+         * Quick Settings Smart Pulldown
+         * @hide
+         */
+        public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
