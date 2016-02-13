@@ -612,9 +612,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CUSTOM_HEADER_DEFAULT), 
-                    false, this, UserHandle.USER_ALL);
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_ROTATION),
                     false, this, UserHandle.USER_ALL);
@@ -678,13 +675,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))) {
                	    recreateStatusBar();
-                    updateRowStates();
-                    updateSpeedbump();
-                    updateClearAll();
-                    updateEmptyShadeView();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CUSTOM_HEADER_DEFAULT))) {
-                    recreateStatusBar();
                     updateRowStates();
                     updateSpeedbump();
                     updateClearAll();
