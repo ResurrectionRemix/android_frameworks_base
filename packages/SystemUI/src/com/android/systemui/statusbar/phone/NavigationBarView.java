@@ -42,6 +42,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
