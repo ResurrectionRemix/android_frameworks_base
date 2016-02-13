@@ -169,7 +169,6 @@ import com.android.systemui.screenshot.TakeScreenshotService;
 import com.android.systemui.omni.screenrecord.TakeScreenrecordService;
 import com.android.systemui.statusbar.ActivatableNotificationView;
 import com.android.systemui.statusbar.BackDropView;
-import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.DismissView;
@@ -213,7 +212,6 @@ import com.android.systemui.statusbar.policy.SuControllerImpl;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.policy.ZenModeController;
-import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout.OnChildLocationsChangedListener;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
@@ -587,9 +585,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.APP_SIDEBAR_POSITION),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_RR_LOGO),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -795,18 +790,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
                 mNavigationBarView.setLeftInLandscape(navLeftInLandscape);
             }
-
-
-            // This method reads CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY
-            updateCustomRecentsLongPressHandler(false);
-
-            int sidebarPosition = Settings.System.getInt(
-                    resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
-            if (sidebarPosition != mSidebarPosition) {
-                mSidebarPosition = sidebarPosition;
-                removeSidebarView();
-                addSidebarView();
-		}
 
             final int oldWeatherState = mWeatherTempState;
             mWeatherTempState = Settings.System.getIntForUser(
@@ -1354,7 +1337,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         addGestureAnywhereView();
-        addSidebarView();
         addAppCircleSidebar();
 
         if (mNavigationBarView == null) {
@@ -4460,24 +4442,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
                 // detach PA Pie when screen is turned off
                 if (mPieController != null) mPieController.detachPie();
             }
-            else if (Intent.ACTION_CONFIGURATION_CHANGED.equals(action)) {
-                Configuration config = mContext.getResources().getConfiguration();
-                try {
-                    // position app sidebar on left if in landscape orientation and device has a navbar
-                    if (mWindowManagerService.hasNavigationBar() &&
-                            config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        mWindowManager.updateViewLayout(mAppSidebar,
-                                getAppSidebarLayoutParams(AppSidebar.SIDEBAR_POSITION_LEFT));
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mAppSidebar.setPosition(AppSidebar.SIDEBAR_POSITION_LEFT);
-                            }
-                        }, 500);
-                    }
-                } catch (RemoteException e) {
-                }
-            }
+
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 mScreenOn = true;
                 notifyNavigationBarScreenOn(true);
@@ -4821,7 +4786,6 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         if (updateStatusBar) {
             recreateStatusBar();
             observer.update();
-            addSidebarView();
         } else {
             loadDimens();
         }

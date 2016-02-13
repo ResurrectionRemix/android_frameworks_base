@@ -25,15 +25,7 @@
 
 
     <string name="gestures_message">Draw gesture here</string>
- 
-     <!-- App sidebar -->
-     <string name="default_folder_text">Folder</string>
-     <string name="title_activity_sidebar_configuration">Appbar content setup</string>
-     <string name="action_save">Save</string>
-     <string name="toast_items_saved">Appbar items have been saved.</string>
-     <string name="content_setup_instructions">Add items to the Appbar by long pressing any item on the right and drag it over to the Appbar.\n\nCombine items into folders by droping an item onto any existing item in the Appbar.\n\nTo remove an item simply drag it out of the \@appbar.</string>
-     <string name="content_setup_dismiss">Continue</string>
-     <string name="toast_not_installed">App is not installed</string>
+
 
     <!-- App circle sidebar -->
     <string name="app_float_maximize_item_title">Maximize</string>
@@ -151,11 +143,6 @@
 	<string name="quick_settings_appcirclebar_title">AppCircleBar</string>
     <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
     <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
-
-    <!-- App Side Bar tile -->
-    <string name="quick_settings_app_sidebar">AppSideBar</string>
-    <string name="quick_settings_appsidebar_on">AppSideBar On</string>
-    <string name="quick_settings_appsidebar_off">AppSideBar Off</string>
 
     <!-- Kernel Adiutor Tile -->
     <string name="quick_settings_kernel_title">Kernel Adiutor</string>

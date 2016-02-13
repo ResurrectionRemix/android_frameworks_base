@@ -29,7 +29,7 @@
     <!-- Network traffic monitor multi-line text size -->
     <dimen name="net_traffic_multi_text_size">8dp</dimen>
 
-     <!-- App sidebar -->
+     <!-- App circle sidebar -->
      <dimen name="app_sidebar_item_size">60dp</dimen>
      <dimen name="app_sidebar_item_padding">2dp</dimen>
      <dimen name="tab_width">16dp</dimen>
@@ -54,6 +54,7 @@
     <dimen name="app_sidebar_listview_width">160dp</dimen>
     <dimen name="app_sidebar_icon_width">72dp</dimen>
     <dimen name="app_sidebar_icon_height">72dp</dimen>
+
     <!-- PA Pie controls dimensions -->
     <dimen name="pie_snap_radius">45dp</dimen>
     <dimen name="pie_snap_outline">4dp</dimen>
