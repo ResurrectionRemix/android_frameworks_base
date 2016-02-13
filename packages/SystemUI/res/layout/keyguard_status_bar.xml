@@ -64,16 +64,33 @@
             android:importantForAccessibility="noHideDescendants"/>
     </LinearLayout>
 
-    <com.android.keyguard.CarrierText
-        android:id="@+id/keyguard_carrier_text"
+    <LinearLayout
+        android:id="@+id/keyguard_statusbar_contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/keyguard_carrier_text_margin"
-        android:layout_toStartOf="@id/system_icons_super_container"
-        android:gravity="center_vertical"
-        android:ellipsize="marquee"
+        android:paddingStart="6dp"
+        android:paddingEnd="8dp"
+        android:orientation="horizontal" >
+
+    <com.android.systemui.statusbar.policy.KeyguardClockLeft
+        android:id="@+id/keyguard_clock"
+        android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:singleLine="true"
+        android:paddingEnd="6dip"
+        android:gravity="center"
+        android:visibility="gone" />
+
+    <com.android.keyguard.CarrierText
+        android:id="@+id/keyguard_carrier_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#ffffff"
+        android:visibility="gone"
         android:singleLine="true" />
+
+    </LinearLayout>
 
 </com.android.systemui.statusbar.phone.KeyguardStatusBarView>
