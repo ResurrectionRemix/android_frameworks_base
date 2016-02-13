@@ -22,20 +22,20 @@ public class AppItemInfo extends ItemInfo {
     public String packageName;
     public String className;
     public Drawable icon;
-    
+
     public AppItemInfo() {
         itemType = TYPE_APPLICATION;
         container = CONTAINER_SIDEBAR;
     }
-    
+
     public void setIcon(Drawable d) {
         icon = d;
     }
 
     @Override
     public String toString() {
-        return String.format("%s, packageName: %s, className: %s", 
+        return String.format("%s, packageName: %s, className: %s",
                 super.toString(), packageName, className);
     }
-    
+
 }

@@ -30,24 +30,24 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 public class SidebarContentProvider extends ContentProvider {
-    
+
     private SidebarSQLiteHelper database;
-    
+
     // Used for the UriMatcher
     private static final int ITEMS = 10;
     private static final int ITEM_ID = 20;
-    
+
     private static final String AUTHORITY = "org.chameleonos.sidebar.contentprovider";
-    
+
     private static final String BASE_PATH = "sidebar_items";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
             + "/" + BASE_PATH);
-    
+
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/sidebar_items";
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/sidebar_item";
-    
+
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, ITEMS);
@@ -71,11 +71,11 @@ public class SidebarContentProvider extends ContentProvider {
             String id = uri.getLastPathSegment();
             if (TextUtils.isEmpty(selection)) {
                 rowsDeleted = sqlDB.delete(SidebarTable.TABLE_SIDEBAR,
-                        SidebarTable.COLUMN_ITEM_ID + "=" + id, 
+                        SidebarTable.COLUMN_ITEM_ID + "=" + id,
                         null);
             } else {
                 rowsDeleted = sqlDB.delete(SidebarTable.TABLE_SIDEBAR,
-                        SidebarTable.COLUMN_ITEM_ID + "=" + id 
+                        SidebarTable.COLUMN_ITEM_ID + "=" + id
                         + " and " + selection,
                         selectionArgs);
             }
@@ -131,16 +131,16 @@ public class SidebarContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
             String[] selectionArgs, String sortOrder) {
-        
+
         // Using SQLiteQueryBuilder instead of query() method
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        
+
         // Check if the caller has requested a column which does not exist
         checkColumns(projection);
-        
+
         // Set the table
         queryBuilder.setTables(SidebarTable.TABLE_SIDEBAR);
-        
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case ITEMS:
@@ -153,13 +153,13 @@ public class SidebarContentProvider extends ContentProvider {
         default:
             throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        
+
         SQLiteDatabase db = database.getWritableDatabase();
         Cursor cursor = queryBuilder.query(db, projection, selection,
                 selectionArgs, null, null, sortOrder);
         // Make sure that potential listeners are notified
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        
+
         return cursor;
     }
 
@@ -174,23 +174,23 @@ public class SidebarContentProvider extends ContentProvider {
         int rowsUpdated = 0;
         switch (uriType) {
         case ITEMS:
-            rowsUpdated = sqlDB.update(SidebarTable.TABLE_SIDEBAR, 
-                    values, 
+            rowsUpdated = sqlDB.update(SidebarTable.TABLE_SIDEBAR,
+                    values,
                     selection,
                     selectionArgs);
             break;
         case ITEM_ID:
             String id = uri.getLastPathSegment();
             if (TextUtils.isEmpty(selection)) {
-                rowsUpdated = sqlDB.update(SidebarTable.TABLE_SIDEBAR, 
+                rowsUpdated = sqlDB.update(SidebarTable.TABLE_SIDEBAR,
                         values,
-                        SidebarTable.COLUMN_ITEM_ID + "=" + id, 
+                        SidebarTable.COLUMN_ITEM_ID + "=" + id,
                         null);
             } else {
-                rowsUpdated = sqlDB.update(SidebarTable.TABLE_SIDEBAR, 
+                rowsUpdated = sqlDB.update(SidebarTable.TABLE_SIDEBAR,
                         values,
-                        SidebarTable.COLUMN_ITEM_ID + "=" + id 
-                        + " and " 
+                        SidebarTable.COLUMN_ITEM_ID + "=" + id
+                        + " and "
                         + selection,
                         selectionArgs);
             }

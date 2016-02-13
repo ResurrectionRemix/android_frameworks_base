@@ -213,6 +213,7 @@ import com.android.systemui.statusbar.policy.SuControllerImpl;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.policy.ZenModeController;
+import com.android.systemui.statusbar.AppSidebar;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout.OnChildLocationsChangedListener;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
@@ -4820,6 +4821,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         if (updateStatusBar) {
             recreateStatusBar();
             observer.update();
+            addSidebarView();
         } else {
             loadDimens();
         }

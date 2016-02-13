@@ -10,22 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal" >
-    
+
         <ScrollView
             android:id="@+id/sidebar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="2dp"
             android:background="@drawable/sidebar_drag_exit" >
-        
+
             <com.android.systemui.statusbar.sidebar.AppContainer
                 android:id="@+id/contents"
                 android:layout_width="@dimen/setup_sidebar_width"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-        
+
         </ScrollView>
-    
+
         <GridView
             android:id="@+id/available_apps"
             android:layout_width="0dip"

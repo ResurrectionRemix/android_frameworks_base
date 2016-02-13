@@ -47,15 +47,15 @@ import com.android.systemui.statusbar.sidebar.FolderInfo.FolderListener;
 public class Folder extends LinearLayout implements FolderListener,
         View.OnFocusChangeListener, TextView.OnEditorActionListener {
     protected FolderInfo mInfo;
-    
+
     private FolderIcon mIcon;
     private Context mContext;
     private ArrayList<View> mContents = new ArrayList<View>();
     private boolean mIsEditingName = false;
     FolderEditText mFolderName;
-    
+
     private static int sTextSize;
-    
+
     private GridView mContent;
     private FrameLayout mFolderFooter;
     private int mFolderNameHeight;
@@ -77,7 +77,7 @@ public class Folder extends LinearLayout implements FolderListener,
                 getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         sTextSize = context.getResources().getDimensionPixelSize(R.dimen.item_title_text_size);
     }
-    
+
     /**
      * Creates a new UserFolder, inflated from R.layout.setup_user_folder.
      *
@@ -133,7 +133,7 @@ public class Folder extends LinearLayout implements FolderListener,
         mContents.add(textView);
         return true;
     }
-    
+
     public int getItemCount() {
         return mContents.size();
     }
@@ -192,7 +192,7 @@ public class Folder extends LinearLayout implements FolderListener,
         if (v != null)
             removeView(v);
     }
-    
+
     public void removeView(View v) {
         mContents.remove(v);
         ContentsAdapter adapter = (ContentsAdapter)mContent.getAdapter();
@@ -263,7 +263,7 @@ public class Folder extends LinearLayout implements FolderListener,
             return false;
         }
     };
-    
+
     private class ContentsAdapter extends BaseAdapter {
 
         @Override
@@ -285,6 +285,5 @@ public class Folder extends LinearLayout implements FolderListener,
         public View getView(int position, View convertView, ViewGroup parent) {
             return mContents.get(position);
         }
-        
     }
 }

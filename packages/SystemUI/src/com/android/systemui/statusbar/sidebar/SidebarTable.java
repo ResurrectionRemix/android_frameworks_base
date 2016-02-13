@@ -38,7 +38,7 @@ public class SidebarTable {
     public static void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
     }
-    
+
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
             int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_SIDEBAR);

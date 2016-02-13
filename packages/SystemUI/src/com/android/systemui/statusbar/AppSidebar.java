@@ -20,6 +20,7 @@ import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_BACK;
 
 import android.app.AlarmManager;
+import android.app.KeyguardManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -37,7 +38,9 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -47,20 +50,20 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.systemui.R;
-import com.android.systemui.rr.TriggerOverlayView;
 import com.android.systemui.statusbar.sidebar.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AppSidebar extends TriggerOverlayView {
+public class AppSidebar extends FrameLayout {
     private static final String TAG = "AppSidebar";
     private static final boolean DEBUG_LAYOUT = false;
     private static final long AUTO_HIDE_DELAY = 3000;
@@ -89,6 +92,9 @@ public class AppSidebar extends TriggerOverlayView {
             1.0f
     );
 
+    private int mTriggerWidth;
+    private int mTriggerTop;
+    private int mTriggerBottom;
     private int mTriggerColor;
     private LinearLayout mAppContainer;
     private SnappingScrollView mScrollView;
@@ -102,6 +108,7 @@ public class AppSidebar extends TriggerOverlayView {
     private boolean mHideTextLabels = false;
     private boolean mUseTab = false;
     private int mPosition = SIDEBAR_POSITION_RIGHT;
+    private int mBarHeight;
 
     private TranslateAnimation mSlideIn;
     private TranslateAnimation mSlideOut;
@@ -109,6 +116,7 @@ public class AppSidebar extends TriggerOverlayView {
     private Context mContext;
     private SettingsObserver mSettingsObserver;
     private PackageManager mPm;
+    private WindowManager mWm;
 
     public AppSidebar(Context context) {
         this(context, null);
@@ -129,6 +137,8 @@ public class AppSidebar extends TriggerOverlayView {
         mIconBounds = new Rect(0, 0, iconSize, iconSize);
         mTriggerColor = resources.getColor(R.color.trigger_region_color);
         mPm = context.getPackageManager();
+        mWm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mBarHeight = getWindowHeight();
     }
 
     @Override
@@ -198,6 +208,45 @@ public class AppSidebar extends TriggerOverlayView {
                 break;
         }
         return false;
+    }
+
+    private void showTriggerRegion() {
+        setBackgroundResource(R.drawable.trigger_region);
+    }
+
+    private void hideTriggerRegion() {
+        setBackgroundColor(0x00000000);
+    }
+
+    private void setTopPercentage(float value) {
+        WindowManager.LayoutParams params = (WindowManager.LayoutParams)this.getLayoutParams();
+        mTriggerTop = (int)(mBarHeight * value);
+        params.y = mTriggerTop;
+        params.height = mTriggerBottom;
+        try {
+            mWm.updateViewLayout(this, params);
+        } catch (Exception e) {
+        }
+    }
+
+    private void setBottomPercentage(float value) {
+        WindowManager.LayoutParams params = (WindowManager.LayoutParams)this.getLayoutParams();
+        mTriggerBottom = (int)(mBarHeight * value);
+        params.height = mTriggerBottom;
+        try {
+            mWm.updateViewLayout(this, params);
+        } catch (Exception e) {
+        }
+    }
+
+    private void setTriggerWidth(int value) {
+        WindowManager.LayoutParams params = (WindowManager.LayoutParams)this.getLayoutParams();
+        mTriggerWidth = value;
+        params.width = mTriggerWidth;
+        try {
+            mWm.updateViewLayout(this, params);
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -288,6 +337,11 @@ public class AppSidebar extends TriggerOverlayView {
         }
     };
 
+    private boolean isKeyguardEnabled() {
+        KeyguardManager km = (KeyguardManager)mContext.getSystemService(Context.KEYGUARD_SERVICE);
+        return km.inKeyguardRestrictedInputMode();
+    }
+
     public void updateAutoHideTimer(long delay) {
         Context ctx = getContext();
         AlarmManager am = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
@@ -342,17 +396,41 @@ public class AppSidebar extends TriggerOverlayView {
         }
     };
 
-    @Override
-    protected void expandFromTriggerRegion() {
+    private int enableKeyEvents() {
+        return (0
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH);
+    }
+
+    private int disableKeyEvents() {
+        return (0
+                | WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH);
+    }
+
+    private void expandFromTriggerRegion() {
         WindowManager.LayoutParams params = (WindowManager.LayoutParams) getLayoutParams();
         params.y = 0;
         Rect r = new Rect();
         getWindowVisibleDisplayFrame(r);
-        mViewHeight = r.bottom - r.top;
-        params.height = mViewHeight;
+        mBarHeight = r.bottom - r.top;
+        params.height = mBarHeight;
         params.width = LayoutParams.WRAP_CONTENT;
         params.flags = enableKeyEvents();
-        mWM.updateViewLayout(this, params);
+        mWm.updateViewLayout(this, params);
+    }
+
+    private void reduceToTriggerRegion() {
+        WindowManager.LayoutParams params = (WindowManager.LayoutParams) getLayoutParams();
+        params.y = mTriggerTop;
+        params.height = mTriggerBottom;
+        params.width = mTriggerWidth;
+        params.flags = disableKeyEvents();
+        mWm.updateViewLayout(this, params);
     }
 
     private void setupAppContainer() {
@@ -363,6 +441,12 @@ public class AppSidebar extends TriggerOverlayView {
                 layoutItems();
             }
         });
+    }
+
+    private int getWindowHeight() {
+        Rect r = new Rect();
+        getWindowVisibleDisplayFrame(r);
+        return r.bottom - r.top;
     }
 
     private void layoutItems() {
@@ -413,6 +497,7 @@ public class AppSidebar extends TriggerOverlayView {
             // make the fading edge the size of a button (makes it more noticible that we can scroll
             mScrollView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             mScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+            mScrollView.setBackgroundResource(R.drawable.app_sidebar_background);
         }
         mScrollView.removeAllViews();
         mScrollView.addView(mAppContainer, SCROLLVIEW_LAYOUT_PARAMS);
@@ -598,7 +683,7 @@ public class AppSidebar extends TriggerOverlayView {
             }
             final Folder folder = mFolder = ((FolderIcon)v).getFolder();
             int iconY = v.getTop() - mScrollView.getScrollY();
-            mWM.addView(mFolder, getFolderLayoutParams(iconY, folder.getHeight()));
+            mWm.addView(mFolder, getFolderLayoutParams(iconY, folder.getHeight()));
             mFolder.setVisibility(View.VISIBLE);
             ArrayList<View> items = folder.getItemsInReadingOrder();
             updateAutoHideTimer(AUTO_HIDE_DELAY);
@@ -620,7 +705,7 @@ public class AppSidebar extends TriggerOverlayView {
 
     private void dismissFolderView() {
         if (mFolder != null) {
-            mWM.removeView(mFolder);
+            mWm.removeView(mFolder);
             mFolder = null;
             updateAutoHideTimer(AUTO_HIDE_DELAY);
         }
@@ -658,7 +743,7 @@ public class AppSidebar extends TriggerOverlayView {
                     TextView tv = createAppItem((AppItemInfo) item);
                     mContainerItems.add(tv);
                 } else {
-                    FolderIcon icon = FolderIcon.fromXml(R.layout.sidebar_folder_icon,
+                    FolderIcon icon = FolderIcon.fromXml(R.layout.folder_icon,
                             mAppContainer, null, (FolderInfo)item, mContext, true);
                     mContainerItems.add(icon);
                 }
@@ -678,7 +763,7 @@ public class AppSidebar extends TriggerOverlayView {
     }
 
     private TextView createAppItem(AppItemInfo info) {
-        TextView tv = (TextView) View.inflate(mContext, R.layout.sidebar_app_item, null);
+        TextView tv = new TextView(mContext);
         try {
             info.setIcon(mPm.getActivityIcon(new ComponentName(info.packageName, info.className)));
         } catch (NameNotFoundException e) {
@@ -688,6 +773,10 @@ public class AppSidebar extends TriggerOverlayView {
         tv.setCompoundDrawables(null, info.icon, null, null);
         tv.setTag(info);
         tv.setText(info.title);
+        tv.setSingleLine(true);
+        tv.setEllipsize(TruncateAt.END);
+        tv.setGravity(Gravity.CENTER);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mItemTextSize);
 
         return tv;
     }
@@ -708,7 +797,7 @@ public class AppSidebar extends TriggerOverlayView {
         if (mPosition == SIDEBAR_POSITION_LEFT)
             lp.x = getWidth();
         else
-            lp.x = mWM.getDefaultDisplay().getWidth() - getWidth() - mFolderWidth;
+            lp.x = mWm.getDefaultDisplay().getWidth() - getWidth() - mFolderWidth;
         if (iconY < 0)
             lp.y = 0;
         else {

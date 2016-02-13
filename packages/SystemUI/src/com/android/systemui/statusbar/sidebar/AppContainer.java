@@ -38,7 +38,7 @@ public class AppContainer extends LinearLayout {
         super(context, attrs, defStyle);
         mInsertDelta = context.getResources().getDimensionPixelSize(R.dimen.item_above_below_delta);
     }
-    
+
     public void repositionView(View view, float x, float y, boolean isFolder) {
         int index = indexOfChild(view);
         int childCount = getChildCount();
@@ -73,7 +73,7 @@ public class AppContainer extends LinearLayout {
             mAddToItem = null;
         }
     }
-    
+
     public ItemInfo getAddToItem() {
         return mAddToItem;
     }

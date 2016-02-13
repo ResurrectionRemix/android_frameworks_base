@@ -21,7 +21,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class SidebarSQLiteHelper extends SQLiteOpenHelper {
-    
+
     private static final String DATABASE_NAME = "sidebar.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -44,7 +44,7 @@ public class SidebarSQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         SidebarTable.onUpgrade(db, oldVersion, newVersion);
     }
-    
+
     public void resetDatabase(SQLiteDatabase db) {
         onUpgrade(db, DATABASE_VERSION - 1, DATABASE_VERSION);
     }

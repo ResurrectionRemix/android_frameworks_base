@@ -17,21 +17,21 @@
 package com.android.systemui.statusbar.sidebar;
 
 public class ItemInfo {
-    
+
     public static final int TYPE_APPLICATION = 0;
-    
+
     public static final int TYPE_FOLDER = 1;
-    
+
     public static final int CONTAINER_SIDEBAR = -100;
-    
+
     public static final int CONTAINER_FOLDER = -101;
-    
+
     public int itemType;
-    
+
     public CharSequence title;
-    
+
     public int container;
-    
+
     public int id;
 
     @Override
