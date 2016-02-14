@@ -40,6 +40,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -70,8 +72,11 @@ public class DaylightHeaderProvider implements
     private List<DaylightHeaderInfo> mHeadersList;
     private Resources mRes;
     private String mPackageName;
+    private String mHeaderName;
     private String mSettingHeaderPackage;
     private PendingIntent mAlarmHourly;
+    private boolean mRandomMode;
+    private int mRandomIndex;
 
     public DaylightHeaderProvider(Context context) {
         mContext = context;
@@ -138,19 +143,32 @@ public class DaylightHeaderProvider implements
         mAlarmHourly = PendingIntent.getBroadcast(mContext, 0, intent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
-        if (DEBUG) Log.i(TAG, "start hourly alarm");
-        alarmManager.setInexactRepeating(AlarmManager.RTC, c.getTimeInMillis(),
+        // make sure hourly alarm is aligned with hour
+        c.add(Calendar.HOUR_OF_DAY, 1);
+        c.set(Calendar.MINUTE, 0);
+        long hourlyStart = c.getTimeInMillis();
+        if (DEBUG) Log.i(TAG, "start hourly alarm with " + new Date(hourlyStart));
+        alarmManager.setInexactRepeating(AlarmManager.RTC, hourlyStart,
                 AlarmManager.INTERVAL_HOUR, mAlarmHourly);
     }
 
     private void loadCustomHeaderPackage() {
-        Log.i(TAG, "Load header pack " + mSettingHeaderPackage);
-        mPackageName = mSettingHeaderPackage;
+        if (DEBUG) Log.i(TAG, "Load header pack " + mSettingHeaderPackage);
+        int idx = mSettingHeaderPackage.indexOf("/");
+        if (idx != -1) {
+            String[] parts = mSettingHeaderPackage.split("/");
+            mPackageName = parts[0];
+            mHeaderName = parts[1];
+        } else {
+            mPackageName = mSettingHeaderPackage;
+            mHeaderName = null;
+        }
         try {
             PackageManager packageManager = mContext.getPackageManager();
             mRes = packageManager.getResourcesForApplication(mPackageName);
             loadHeaders();
         } catch (Exception e) {
+            Log.e(TAG, "Failed to load icon pack " + mHeaderName, e);
             mRes = null;
         }
         if (mRes == null) {
@@ -162,6 +180,7 @@ public class DaylightHeaderProvider implements
     private void loadDefaultHeaderPackage() {
         Log.i(TAG, "Load default header pack");
         mPackageName = HEADER_PACKAGE_DEFAULT;
+        mHeaderName = null;
         mSettingHeaderPackage = mPackageName;
         try {
             PackageManager packageManager = mContext.getPackageManager();
@@ -175,19 +194,25 @@ public class DaylightHeaderProvider implements
         }
     }
 
-    private void loadHeaders() {
+    private void loadHeaders() throws XmlPullParserException, IOException {
         mHeadersList = new ArrayList<DaylightHeaderInfo>();
         InputStream in = null;
         XmlPullParser parser = null;
 
         try {
-            in = mRes.getAssets().open("daylight_header.xml");
+            if (mHeaderName == null) {
+                if (DEBUG) Log.i(TAG, "Load header pack config daylight_header.xml");
+                in = mRes.getAssets().open("daylight_header.xml");
+            } else {
+                int idx = mHeaderName.lastIndexOf(".");
+                String headerConfigFile = mHeaderName.substring(idx + 1) + ".xml";
+                if (DEBUG) Log.i(TAG, "Load header pack config " + headerConfigFile);
+                in = mRes.getAssets().open(headerConfigFile);
+            }
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             parser = factory.newPullParser();
             parser.setInput(in, "UTF-8");
             loadResourcesFromXmlParser(parser);
-        } catch (XmlPullParserException e) {
-        } catch (IOException e) {
         } finally {
             // Cleanup resources
             if (parser instanceof XmlResourceParser) {
@@ -204,12 +229,16 @@ public class DaylightHeaderProvider implements
 
     private void loadResourcesFromXmlParser(XmlPullParser parser) throws XmlPullParserException, IOException {
         int eventType = parser.getEventType();
+        mRandomMode = false;
         do {
             if (eventType != XmlPullParser.START_TAG) {
                 continue;
             }
             // TODO support different hours for day headers
             if (parser.getName().equalsIgnoreCase("day_header")) {
+                if (mRandomMode) {
+                    continue;
+                }
                 DaylightHeaderInfo headerInfo = new DaylightHeaderInfo();
                 headerInfo.mType = 0;
                 String day = parser.getAttributeValue(null, "day");
@@ -228,6 +257,9 @@ public class DaylightHeaderProvider implements
                     mHeadersList.add(headerInfo);
                 }
             } else if (parser.getName().equalsIgnoreCase("hour_header")) {
+                if (mRandomMode) {
+                    continue;
+                }
                 DaylightHeaderInfo headerInfo = new DaylightHeaderInfo();
                 headerInfo.mType = 1;
                 String hour = parser.getAttributeValue(null, "hour");
@@ -241,8 +273,27 @@ public class DaylightHeaderProvider implements
                 if (headerInfo.mImage != null && headerInfo.mHour != -1) {
                     mHeadersList.add(headerInfo);
                 }
+            } else if (parser.getName().equalsIgnoreCase("random_header")) {
+                if (!mRandomMode) {
+                    if (DEBUG) Log.i(TAG, "Load random mode header pack");
+                    mRandomMode = true;
+                    mHeadersList.clear();
+                }
+                DaylightHeaderInfo headerInfo = new DaylightHeaderInfo();
+                headerInfo.mType = 2;
+                String image = parser.getAttributeValue(null, "image");
+                if (image != null) {
+                    headerInfo.mImage = image;
+                }
+                if (headerInfo.mImage != null) {
+                    mHeadersList.add(headerInfo);
+                }
             }
         } while ((eventType = parser.next()) != XmlPullParser.END_DOCUMENT);
+
+        if (mRandomMode) {
+            Collections.shuffle(mHeadersList);
+        }
     }
 
     /**
@@ -306,6 +357,19 @@ public class DaylightHeaderProvider implements
             loadDefaultHeaderPackage();
         }
         try {
+            if (mRandomMode) {
+                if (mHeadersList.size() == 0) {
+                    return null;
+                }
+                DaylightHeaderInfo header = mHeadersList.get(mRandomIndex);
+                mRandomIndex++;
+                if (mRandomIndex == mHeadersList.size()) {
+                    if (DEBUG) Log.i(TAG, "Shuffle random mode header pack");
+                    Collections.shuffle(mHeadersList);
+                    mRandomIndex = 0;
+                }
+                return mRes.getDrawable(mRes.getIdentifier(header.mImage, "drawable", mPackageName), null);
+            }
             // first check day headers
             Iterator<DaylightHeaderInfo> nextHeader = mHeadersList.iterator();
             while(nextHeader.hasNext()) {
