@@ -49,9 +49,9 @@
         android:layout_height="48dp"
         android:layout_marginEnd="80dp"
         android:layout_gravity="center_vertical|end"
-        android:padding="14dp"
+        android:padding="12dp"
         android:background="@drawable/recents_button_bg"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:src="@drawable/star" />
     <com.android.systemui.recents.views.FixedSizeImageView
         android:id="@+id/dismiss_task"
@@ -59,9 +59,9 @@
         android:layout_height="48dp"
         android:layout_marginEnd="4dp"
         android:layout_gravity="center_vertical|end"
-        android:padding="12dp"
+        android:padding="10dp"
         android:background="@drawable/recents_button_bg"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:src="@drawable/recents_dismiss_light" />
   <com.android.systemui.recents.views.FixedSizeImageView 
         android:id="@+id/lock_to_app_fab" 
@@ -69,8 +69,8 @@
         android:layout_height="48.0dip" 
         android:layout_marginEnd="40.0dip"
         android:layout_gravity="end|center" 
-        android:padding="12dip" 
+        android:padding="10dip" 
         android:background="@drawable/recents_button_bg" 
-        android:visibility="invisible"
+        android:visibility="gone"
         android:src="@drawable/ic_pin" />
 </com.android.systemui.recents.views.TaskViewHeader>
