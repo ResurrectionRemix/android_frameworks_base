@@ -878,6 +878,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private boolean mVolumeAnswerCall;
 
+    private HardkeyActionHandler mKeyHandler;
+
     private class PolicyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -957,6 +959,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mIsLongPress = true;
                     break;
                 }
+                case HardkeyActionHandler.MSG_FIRE_HOME:
+                    launchHomeFromHotKey();
+                    break;
+//                case HardkeyActionHandler.MSG_UPDATE_MENU_KEY:
+//                    synchronized (mLock) {
+//                        mHasPermanentMenuKey = msg.arg1 == 1;
+//                    }
+//                    break;
+                case HardkeyActionHandler.MSG_DO_HAPTIC_FB:
+                    performHapticFeedbackLw(null,
+                            HapticFeedbackConstants.LONG_PRESS, false);
+                    break;
             }
         }
     }
@@ -2068,6 +2082,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         try {
             mOrientationListener.setCurrentRotation(windowManager.getRotation());
         } catch (RemoteException ex) { }
+
+        // only for hwkey devices
+        if (!mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_showNavigationBar)) {
+            mKeyHandler = new HardkeyActionHandler(mContext, mHandler);
+        }
+
         mSettingsObserver = new SettingsObserver(mHandler);
         mShortcutManager = new ShortcutManager(context);
         mUiMode = context.getResources().getInteger(
@@ -2159,7 +2180,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mDeviceHardwareKeys = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
 
-        updateKeyAssignments();
+        readConfigurationDependentBehaviors();
 
         mAccessibilityManager = (AccessibilityManager) context.getSystemService(
                 Context.ACCESSIBILITY_SERVICE);
@@ -2341,82 +2362,27 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
-    private void updateKeyAssignments() {
-        int activeHardwareKeys = mDeviceHardwareKeys;
 
-        if (!mDevForceNavbar) {
-            activeHardwareKeys = 0;
-        }
-        final boolean hasMenu = (activeHardwareKeys & KEY_MASK_MENU) != 0;
-        final boolean hasHome = (activeHardwareKeys & KEY_MASK_HOME) != 0;
-        final boolean hasAssist = (activeHardwareKeys & KEY_MASK_ASSIST) != 0;
-        final boolean hasAppSwitch = (activeHardwareKeys & KEY_MASK_APP_SWITCH) != 0;
-
-        final ContentResolver resolver = mContext.getContentResolver();
+    /**
+     * Read values from config.xml that may be overridden depending on
+     * the configuration of the device.
+     * eg. Disable long press on home goes to recents on sw600dp.
+     */
+    private void readConfigurationDependentBehaviors() {
         final Resources res = mContext.getResources();
-
-        // Initialize all assignments to sane defaults.
-        mPressOnMenuBehavior = KEY_ACTION_MENU;
-
-        mLongPressOnMenuBehavior = mContext.getResources().getInteger(
-                com.android.internal.R.integer.config_longPressOnMenuBehavior);
-
-        if (mLongPressOnMenuBehavior == KEY_ACTION_NOTHING &&
-               (hasMenu && !hasAssist)) {
-            mLongPressOnMenuBehavior = KEY_ACTION_SEARCH;
-        }
-        mPressOnAssistBehavior = KEY_ACTION_SEARCH;
-        mLongPressOnAssistBehavior = KEY_ACTION_VOICE_SEARCH;
-        mPressOnAppSwitchBehavior = KEY_ACTION_APP_SWITCH;
-        mLongPressOnAppSwitchBehavior = res.getInteger(
-                com.android.internal.R.integer.config_longPressOnAppSwitchBehavior);
 
         mLongPressOnHomeBehavior = res.getInteger(
                 com.android.internal.R.integer.config_longPressOnHomeBehavior);
-        if (mLongPressOnHomeBehavior < KEY_ACTION_NOTHING ||
-                mLongPressOnHomeBehavior > KEY_ACTION_SLEEP) {
-            mLongPressOnHomeBehavior = KEY_ACTION_NOTHING;
+        if (mLongPressOnHomeBehavior < LONG_PRESS_HOME_NOTHING ||
+                mLongPressOnHomeBehavior > LAST_LONG_PRESS_HOME_BEHAVIOR) {
+            mLongPressOnHomeBehavior = LONG_PRESS_HOME_NOTHING;
         }
 
         mDoubleTapOnHomeBehavior = res.getInteger(
                 com.android.internal.R.integer.config_doubleTapOnHomeBehavior);
-        if (mDoubleTapOnHomeBehavior < KEY_ACTION_NOTHING ||
-                mDoubleTapOnHomeBehavior > KEY_ACTION_SLEEP) {
-            mDoubleTapOnHomeBehavior = KEY_ACTION_NOTHING;
-        }
-
-        // Check for custom assignments and whether KEY_ACTION_MENU is assigned.
-        if (hasHome) {
-            mLongPressOnHomeBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_HOME_LONG_PRESS_ACTION,
-                    mLongPressOnHomeBehavior, UserHandle.USER_CURRENT);
-            mDoubleTapOnHomeBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
-                    mDoubleTapOnHomeBehavior, UserHandle.USER_CURRENT);
-        }
-        if (hasMenu) {
-            mPressOnMenuBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_MENU_ACTION,
-                    mPressOnMenuBehavior, UserHandle.USER_CURRENT);
-            mLongPressOnMenuBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_MENU_LONG_PRESS_ACTION,
-                    mLongPressOnMenuBehavior, UserHandle.USER_CURRENT);
-        }
-        if (hasAssist) {
-            mPressOnAssistBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_ASSIST_ACTION,
-                    mPressOnAssistBehavior, UserHandle.USER_CURRENT);
-            mLongPressOnAssistBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_ASSIST_LONG_PRESS_ACTION,
-                    mLongPressOnAssistBehavior, UserHandle.USER_CURRENT);
-        }
-        if (hasAppSwitch) {
-            mPressOnAppSwitchBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_APP_SWITCH_ACTION,
-                    mPressOnAppSwitchBehavior, UserHandle.USER_CURRENT);
-            mLongPressOnAppSwitchBehavior = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
-                    mLongPressOnAppSwitchBehavior, UserHandle.USER_CURRENT);
+        if (mDoubleTapOnHomeBehavior < DOUBLE_TAP_HOME_NOTHING ||
+                mDoubleTapOnHomeBehavior > DOUBLE_TAP_HOME_RECENT_SYSTEM_UI) {
+            mDoubleTapOnHomeBehavior = LONG_PRESS_HOME_NOTHING;
         }
 
         mShortPressWindowBehavior = SHORT_PRESS_WINDOW_NOTHING;
@@ -2604,7 +2570,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mNavigationBarLeftInLandscape = CMSettings.System.getIntForUser(resolver,
                     CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
 
-            updateKeyAssignments();
             updateNavigationBarSize();
 
             // Configure rotation lock.
@@ -3007,6 +2972,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             int navigationPresence) {
         mHaveBuiltInKeyboard = (keyboardPresence & PRESENCE_INTERNAL) != 0;
 
+        readConfigurationDependentBehaviors();
         readLidState();
 
         if (config.keyboard == Configuration.KEYBOARD_NOKEYS
@@ -3732,9 +3698,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final int flags = event.getFlags();
         final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         final boolean canceled = event.isCanceled();
+        final int keyCode = event.getKeyCode();
         final boolean longPress = (flags & KeyEvent.FLAG_LONG_PRESS) != 0;
         final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
-        final int keyCode = event.getKeyCode();
 
         if (DEBUG_INPUT) {
             Log.d(TAG, "interceptKeyTi keyCode=" + keyCode + " down=" + down + " repeatCount="
@@ -3742,15 +3708,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     + " canceled=" + canceled);
         }
 
-        // If the boot mode is power off alarm, we should not dispatch the several physical keys
-        // in power off alarm UI to avoid pausing power off alarm UI.
-        boolean isAlarmBoot = SystemProperties.getBoolean("ro.alarm_boot", false);
-        if (isAlarmBoot && (keyCode == KeyEvent.KEYCODE_HOME
-                || keyCode == KeyEvent.KEYCODE_SEARCH
-                || keyCode == KeyEvent.KEYCODE_MENU
-                || keyCode == KeyEvent.KEYCODE_APP_SWITCH
-                || keyCode == KeyEvent.KEYCODE_BACK)) {
-            return -1;
+        // we only handle events from hardware key devices that originate from
+        // real button
+        // pushes. We ignore virtual key events as well since it didn't come
+        // from a hard key or
+        // it's the key handler synthesizing a back or menu key event for
+        // dispatch
+        // if keyguard is showing and secure, don't intercept and let aosp keycode
+        // implementation handle event
+        if (mKeyHandler != null && !keyguardOn && !virtualKey) {
+            boolean handled = mKeyHandler.handleKeyEvent(win, keyCode, repeatCount, down, canceled,
+                    longPress, keyguardOn);
+            if (handled)
+                return -1;
         }
 
         // If we think we might have a volume down & power key chord on the way
