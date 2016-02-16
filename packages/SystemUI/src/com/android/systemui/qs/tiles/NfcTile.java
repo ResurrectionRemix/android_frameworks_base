@@ -35,9 +35,7 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean newState = isEnabled(intent.getIntExtra(NfcAdapter.EXTRA_ADAPTER_STATE,
-                    NfcAdapter.STATE_OFF));
-            refreshState(newState);
+            refreshState();
         }
     };
     private final boolean mSupportsNfc;
@@ -56,7 +54,7 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
     protected void handleClick() {
         boolean newState = !getState().value;
         setState(newState);
-        refreshState(newState);
+        refreshState();
     }
 
     @Override
@@ -81,17 +79,17 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
         }
     }
 
-    private boolean isEnabled() {
+    private int getNfcAdapterState() {
         try {
             NfcAdapter nfcAdapter = NfcAdapter.getNfcAdapter(mContext);
             if (nfcAdapter == null) {
                 Log.e(TAG, "tried to get NFC state, but no NFC adapter was found");
-                return false;
+                return NfcAdapter.STATE_OFF;
             }
-            return isEnabled(nfcAdapter.getAdapterState());
+            return nfcAdapter.getAdapterState();
         } catch (UnsupportedOperationException e) {
             // ignore
-            return false;
+            return NfcAdapter.STATE_OFF;
         }
     }
 
@@ -113,20 +111,31 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
         }
     }
 
+    /**
+     * Helper method to determine intermediate states
+     * @param nfcState The current NFC adapter state.
+     * @return boolean representing if the adapter is in an intermediate state
+     */
+    private static boolean isEnablingDisabling(int nfcState) {
+        switch (nfcState) {
+            case NfcAdapter.STATE_TURNING_OFF:
+            case NfcAdapter.STATE_TURNING_ON:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = mSupportsNfc;
-
-        if (arg instanceof Boolean) {
-            state.value = (boolean) arg;
-        } else {
-            state.value = mSupportsNfc && isEnabled();
-        }
+        final int nfcState = getNfcAdapterState();
+        state.value = mSupportsNfc && isEnabled(nfcState);
+        state.enabled = mSupportsNfc && !isEnablingDisabling(nfcState);
 
         state.icon = ResourceIcon.get(state.value ?
                 R.drawable.ic_qs_nfc_on : R.drawable.ic_qs_nfc_off);
-        state.label = mContext.getString(state.value
-                ? R.string.quick_settings_nfc : R.string.quick_settings_nfc_off);
+        state.label = mContext.getString(R.string.quick_settings_nfc_label);
     }
 
     @Override
