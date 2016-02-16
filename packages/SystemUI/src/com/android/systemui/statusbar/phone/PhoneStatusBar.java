@@ -4316,10 +4316,16 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
 
     public void startActivityDismissingKeyguard(final Intent intent, boolean onlyProvisioned,
             final boolean dismissShade, final Callback callback) {
-        if (onlyProvisioned && !isDeviceProvisioned()) return;
-
         final boolean afterKeyguardGone = PreviewInflater.wouldLaunchResolverActivity(
                 mContext, intent, mCurrentUserId);
+        startActivityDismissingKeyguard(intent, onlyProvisioned, dismissShade, afterKeyguardGone,
+                callback);
+    }
+
+    public void startActivityDismissingKeyguard(final Intent intent, boolean onlyProvisioned,
+            final boolean dismissShade, final boolean afterKeyguardGone, final Callback callback) {
+        if (onlyProvisioned && !isDeviceProvisioned()) return;
+
         final boolean keyguardShowing = mStatusBarKeyguardViewManager.isShowing();
         Runnable runnable = new Runnable() {
             public void run() {

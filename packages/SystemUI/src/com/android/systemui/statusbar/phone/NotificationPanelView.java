@@ -1281,7 +1281,8 @@ public class NotificationPanelView extends PanelView implements
                         @Override
                         public void run() {
                             mStatusBar.showKeyguard();
-                            mStatusBar.startActivity(intent, true);
+                            mStatusBar.startActivityDismissingKeyguard(intent, false, true, true,
+                                    null);
                         }
                     });
                 }
