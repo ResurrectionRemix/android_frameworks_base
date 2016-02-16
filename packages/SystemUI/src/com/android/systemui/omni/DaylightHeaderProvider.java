@@ -24,7 +24,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -33,69 +36,53 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.SparseArray;
 
-import java.util.Calendar;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.android.systemui.R;
+import com.android.internal.util.omni.PackageUtils;
 
 public class DaylightHeaderProvider implements
         StatusBarHeaderMachine.IStatusBarHeaderProvider {
 
     public static final String TAG = "DaylightHeaderProvider";
+    private static final boolean DEBUG = false;
 
-    // Daily calendar periods
-    private static final int TIME_SUNRISE = 6;
-    private static final int DRAWABLE_SUNRISE = R.drawable.notifhead_sunrise;
-    private static final int DRAWABLE_SUNRISE_1 = R.drawable.notifhead_sunrise_1;
-    private static final int TIME_MORNING = 9;
-    private static final int DRAWABLE_MORNING = R.drawable.notifhead_morning;
-    private static final int DRAWABLE_MORNING_1 = R.drawable.notifhead_morning_1;
-    private static final int TIME_NOON = 11;
-    private static final int DRAWABLE_NOON = R.drawable.notifhead_noon;
-    private static final int DRAWABLE_NOON_1 = R.drawable.notifhead_noon_1;
-    private static final int TIME_AFTERNOON = 13;
-    private static final int DRAWABLE_AFTERNOON = R.drawable.notifhead_afternoon;
-    private static final int DRAWABLE_AFTERNOON_1 = R.drawable.notifhead_afternoon_1;
-    private static final int TIME_SUNSET = 19;
-    private static final int DRAWABLE_SUNSET = R.drawable.notifhead_sunset;
-    private static final int DRAWABLE_SUNSET_1 = R.drawable.notifhead_sunset_1;
-    private static final int TIME_NIGHT = 21;
-    private static final int DRAWABLE_NIGHT = R.drawable.notifhead_night;
-    private static final int DRAWABLE_NIGHT_1 = R.drawable.notifhead_night_1;
+    private class DaylightHeaderInfo {
+        public int mType = 0;
+        public int mHour = -1;
+        public int mDay = -1;
+        public int mMonth = -1;
+        public String mImage;
+    }
+    // default in SystemUI
+    private static final String HEADER_PACKAGE_DEFAULT = "com.android.systemui";
 
-    // Special events
-    // Christmas is on Dec 25th
-    private static final Calendar CAL_CHRISTMAS = Calendar.getInstance();
-    private static final int DRAWABLE_CHRISTMAS = R.drawable.notifhead_christmas;
-    private static final int DRAWABLE_CHRISTMAS_1 = R.drawable.notifhead_christmas_1;
-    // New years eve is on Dec 31st
-    private static final Calendar CAL_NEWYEARSEVE = Calendar.getInstance();
-    private static final int DRAWABLE_NEWYEARSEVE = R.drawable.notifhead_newyearseve;
-    private static final int DRAWABLE_NEWYEARSEVE_1 = R.drawable.notifhead_newyearseve_1;
-
-    // Default drawable (AOSP)
-    private static final int DRAWABLE_DEFAULT = R.drawable.notification_header_bg;
-
-    private SparseArray<Drawable> mCache;
     private Context mContext;
+    private List<DaylightHeaderInfo> mHeadersList;
+    private Resources mRes;
+    private String mPackageName;
+    private String mSettingHeaderPackage;
+    private PendingIntent mAlarmHourly;
 
     public DaylightHeaderProvider(Context context) {
         mContext = context;
-        // There is one downside with this method: it will only work once a
-        // year,
-        // if you don't reboot your phone. I hope you will reboot your phone
-        // once
-        // in a year.
-        CAL_CHRISTMAS.set(Calendar.MONTH, Calendar.DECEMBER);
-        CAL_CHRISTMAS.set(Calendar.DAY_OF_MONTH, 25);
 
-        CAL_NEWYEARSEVE.set(Calendar.MONTH, Calendar.DECEMBER);
-        CAL_NEWYEARSEVE.set(Calendar.DAY_OF_MONTH, 31);
+        final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
+                UserHandle.USER_CURRENT) == 1;
 
-        mCache = new SparseArray<Drawable>();
+        if (customHeader) {
+            settingsChanged();
+        }
     }
 
     @Override
@@ -104,57 +91,261 @@ public class DaylightHeaderProvider implements
     }
 
     @Override
+    public void settingsChanged() {
+        final String settingHeaderPackage = Settings.System.getStringForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_DAYLIGHT_HEADER_PACK,
+                UserHandle.USER_CURRENT);
+
+        if (settingHeaderPackage == null) {
+            loadDefaultHeaderPackage();
+        } else if (mSettingHeaderPackage == null || !settingHeaderPackage.equals(mSettingHeaderPackage)) {
+            mSettingHeaderPackage = settingHeaderPackage;
+            loadCustomHeaderPackage();
+        }
+    }
+
+    @Override
+    public void enableProvider() {
+        startAlarm();
+    }
+
+    @Override
+    public void disableProvider() {
+        stopAlarm();
+   }
+
+    private void stopAlarm() {
+        if (mAlarmHourly != null) {
+            final AlarmManager alarmManager = (AlarmManager) mContext
+                    .getSystemService(Context.ALARM_SERVICE);
+            if (DEBUG) Log.i(TAG, "stop hourly alarm");
+            alarmManager.cancel(mAlarmHourly);
+        }
+        mAlarmHourly = null;
+    }
+
+    private void startAlarm() {
+        // TODO actually this should find out the next needed alarm
+        // instead of forcing it every hour
+        final Calendar c = Calendar.getInstance();
+        final AlarmManager alarmManager = (AlarmManager) mContext
+                .getSystemService(Context.ALARM_SERVICE);
+
+        if (mAlarmHourly != null) {
+            alarmManager.cancel(mAlarmHourly);
+        }
+        Intent intent = new Intent(StatusBarHeaderMachine.STATUS_BAR_HEADER_UPDATE_ACTION);
+        mAlarmHourly = PendingIntent.getBroadcast(mContext, 0, intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        if (DEBUG) Log.i(TAG, "start hourly alarm");
+        alarmManager.setInexactRepeating(AlarmManager.RTC, c.getTimeInMillis(),
+                AlarmManager.INTERVAL_HOUR, mAlarmHourly);
+    }
+
+    private void loadCustomHeaderPackage() {
+        Log.i(TAG, "Load header pack " + mSettingHeaderPackage);
+        mPackageName = mSettingHeaderPackage;
+        try {
+            PackageManager packageManager = mContext.getPackageManager();
+            mRes = packageManager.getResourcesForApplication(mPackageName);
+            loadHeaders();
+        } catch (Exception e) {
+            mRes = null;
+        }
+        if (mRes == null) {
+            Log.w(TAG, "Header pack loading failed - loading default");
+            loadDefaultHeaderPackage();
+        }
+    }
+
+    private void loadDefaultHeaderPackage() {
+        Log.i(TAG, "Load default header pack");
+        mPackageName = HEADER_PACKAGE_DEFAULT;
+        mSettingHeaderPackage = mPackageName;
+        try {
+            PackageManager packageManager = mContext.getPackageManager();
+            mRes = packageManager.getResourcesForApplication(mPackageName);
+            loadHeaders();
+        } catch (Exception e) {
+            mRes = null;
+        }
+        if (mRes == null) {
+            Log.w(TAG, "No default package found");
+        }
+    }
+
+    private void loadHeaders() {
+        mHeadersList = new ArrayList<DaylightHeaderInfo>();
+        InputStream in = null;
+        XmlPullParser parser = null;
+
+        try {
+            in = mRes.getAssets().open("daylight_header.xml");
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            parser = factory.newPullParser();
+            parser.setInput(in, "UTF-8");
+            loadResourcesFromXmlParser(parser);
+        } catch (XmlPullParserException e) {
+        } catch (IOException e) {
+        } finally {
+            // Cleanup resources
+            if (parser instanceof XmlResourceParser) {
+                ((XmlResourceParser) parser).close();
+            }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
+
+    private void loadResourcesFromXmlParser(XmlPullParser parser) throws XmlPullParserException, IOException {
+        int eventType = parser.getEventType();
+        do {
+            if (eventType != XmlPullParser.START_TAG) {
+                continue;
+            }
+            // TODO support different hours for day headers
+            if (parser.getName().equalsIgnoreCase("day_header")) {
+                DaylightHeaderInfo headerInfo = new DaylightHeaderInfo();
+                headerInfo.mType = 0;
+                String day = parser.getAttributeValue(null, "day");
+                if (day != null) {
+                    headerInfo.mDay = Integer.valueOf(day);
+                }
+                String month = parser.getAttributeValue(null, "month");
+                if (month != null) {
+                    headerInfo.mMonth = Integer.valueOf(month);
+                }
+                String image = parser.getAttributeValue(null, "image");
+                if (image != null) {
+                    headerInfo.mImage = image;
+                }
+                if (headerInfo.mImage != null && headerInfo.mDay != -1 && headerInfo.mMonth != -1) {
+                    mHeadersList.add(headerInfo);
+                }
+            } else if (parser.getName().equalsIgnoreCase("hour_header")) {
+                DaylightHeaderInfo headerInfo = new DaylightHeaderInfo();
+                headerInfo.mType = 1;
+                String hour = parser.getAttributeValue(null, "hour");
+                if (hour != null) {
+                    headerInfo.mHour = Integer.valueOf(hour);
+                }
+                String image = parser.getAttributeValue(null, "image");
+                if (image != null) {
+                    headerInfo.mImage = image;
+                }
+                if (headerInfo.mImage != null && headerInfo.mHour != -1) {
+                    mHeadersList.add(headerInfo);
+                }
+            }
+        } while ((eventType = parser.next()) != XmlPullParser.END_DOCUMENT);
+    }
+
+    /**
+     * hour header with biggest hour
+     */
+    private DaylightHeaderInfo getLastHourHeader() {
+        if (mHeadersList == null || mHeadersList.size() == 0) {
+            return null;
+        }
+        Iterator<DaylightHeaderInfo> nextHeader = mHeadersList.iterator();
+        int hour = -1;
+        DaylightHeaderInfo last = null;
+        while(nextHeader.hasNext()) {
+            DaylightHeaderInfo header = nextHeader.next();
+            if (header.mType == 1) {
+                if (last == null) {
+                    last = header;
+                    hour = last.mHour;
+                } else if (header.mHour > hour) {
+                    last = header;
+                    hour = last.mHour;
+                }
+            }
+        }
+        return last;
+    }
+
+    /**
+     * hour header with lowest hour
+     */
+    private DaylightHeaderInfo getFirstHourHeader() {
+        if (mHeadersList == null || mHeadersList.size() == 0) {
+            return null;
+        }
+        Iterator<DaylightHeaderInfo> nextHeader = mHeadersList.iterator();
+        DaylightHeaderInfo first = null;
+        int hour = -1;
+        while(nextHeader.hasNext()) {
+            DaylightHeaderInfo header = nextHeader.next();
+            if (header.mType == 1) {
+                if (first == null) {
+                    first = header;
+                    hour = first.mHour;
+                } else if (header.mHour < hour) {
+                    first = header;
+                    hour = first.mHour;
+                }
+            }
+        }
+        return first;
+    }
+
+    @Override
     public Drawable getCurrent(final Calendar now) {
-
-
-        // Check special events first. They have the priority over any other
-        // period.
-  	 if (isItToday(CAL_CHRISTMAS)) {
-            // Merry christmas!
-            return loadOrFetch(DRAWABLE_CHRISTMAS);
-        } else if (isItToday(CAL_NEWYEARSEVE)) {
-            // Happy new year!
-            return loadOrFetch(DRAWABLE_NEWYEARSEVE);
-         }
-
-        // Now we check normal periods
-        final int hour = now.get(Calendar.HOUR_OF_DAY);
-
-     if (hour < TIME_SUNRISE || hour >= TIME_NIGHT) {
-            return loadOrFetch(DRAWABLE_NIGHT);
-        } else if (hour >= TIME_SUNRISE && hour < TIME_MORNING) {
-            return loadOrFetch(DRAWABLE_SUNRISE);
-        } else if (hour >= TIME_MORNING && hour < TIME_NOON) {
-            return loadOrFetch(DRAWABLE_MORNING);
-        } else if (hour >= TIME_NOON && hour < TIME_AFTERNOON) {
-            return loadOrFetch(DRAWABLE_NOON);
-        } else if (hour >= TIME_AFTERNOON && hour < TIME_SUNSET) {
-            return loadOrFetch(DRAWABLE_AFTERNOON);
-        } else if (hour >= TIME_SUNSET && hour < TIME_NIGHT) {
-            return loadOrFetch(DRAWABLE_SUNSET);
+        if (mRes == null || mHeadersList == null || mHeadersList.size() == 0) {
+            return null;
         }
 
-        // When all else fails, just be yourself
-        Log.w(TAG, "No drawable for status  bar when it is " + hour + "!");
+        if (!PackageUtils.isAvailableApp(mPackageName, mContext)) {
+            Log.i(TAG, "Header pack no longer available - loading default " + mPackageName);
+            loadDefaultHeaderPackage();
+        }
+        try {
+            // first check day headers
+            Iterator<DaylightHeaderInfo> nextHeader = mHeadersList.iterator();
+            while(nextHeader.hasNext()) {
+                // first check day entries - they overrule hour entries
+                DaylightHeaderInfo header = nextHeader.next();
+                if (header.mType == 0) {
+                    if (isItToday(now, header)){
+                        return mRes.getDrawable(mRes.getIdentifier(header.mImage, "drawable", mPackageName), null);
+                    }
+                }
+            }
+            DaylightHeaderInfo first = getFirstHourHeader();
+            DaylightHeaderInfo last = getLastHourHeader();
+            DaylightHeaderInfo prev = first;
+
+            nextHeader = mHeadersList.iterator();
+            while(nextHeader.hasNext()) {
+                DaylightHeaderInfo header = nextHeader.next();
+                if (header.mType == 1) {
+                    final int hour = now.get(Calendar.HOUR_OF_DAY);
+                    if (header.mHour > hour) {
+                        if (header == first) {
+                            // if before first return last
+                            return mRes.getDrawable(mRes.getIdentifier(last.mImage, "drawable", mPackageName), null);
+                        }
+                        // on the first bigger one return prev
+                        return mRes.getDrawable(mRes.getIdentifier(prev.mImage, "drawable", mPackageName), null);
+                    }
+                    prev = header;
+                }
+            }
+            return mRes.getDrawable(mRes.getIdentifier(last.mImage, "drawable", mPackageName), null);
+        } catch(Resources.NotFoundException e) {
+            Log.w(TAG, "No drawable found for " + now +" in " + mPackageName);
+        }
         return null;
     }
 
-    private Drawable loadOrFetch(int resId) {
-        Drawable res = mCache.get(resId);
-
-        if (res == null) {
-            // We don't have this drawable cached, do it!
-            final Resources r = mContext.getResources();
-            res = r.getDrawable(resId);
-            mCache.put(resId, res);
-        }
-
-        return res;
-    }
-
-    private static boolean isItToday(final Calendar date) {
-        final Calendar now = Calendar.getInstance();
-        return (now.get(Calendar.MONTH) == date.get(Calendar.MONTH) && now
-                .get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH));
+    private boolean isItToday(final Calendar now, DaylightHeaderInfo headerInfo) {
+        return now.get(Calendar.MONTH) +1 == headerInfo.mMonth && now
+                    .get(Calendar.DAY_OF_MONTH) == headerInfo.mDay;
     }
 }
