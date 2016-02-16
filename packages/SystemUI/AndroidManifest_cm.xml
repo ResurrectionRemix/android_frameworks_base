@@ -51,6 +51,8 @@
     <uses-permission android:name="cyanogenmod.permission.MANAGE_LIVEDISPLAY" />
      <!-- Weather Provider -->
     <uses-permission android:name="cyanogenmod.permission.READ_WEATHER" />
+    <!-- NFC Tile -->
+    <uses-permission android:name="android.permission.NFC" />
 
     <application>
         <provider android:name=".cm.SpamMessageProvider"
