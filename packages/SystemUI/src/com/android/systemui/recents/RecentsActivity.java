@@ -245,12 +245,10 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         mFinishLaunchHomeRunnable = new FinishRecentsRunnable(homeIntent,
-            ActivityOptions.makeCustomAnimation(this,
-                mConfig.launchedFromSearchHome ? R.anim.recents_to_search_launcher_enter :
-                        R.anim.recents_to_launcher_enter,
-                    mConfig.launchedFromSearchHome ? R.anim.recents_to_search_launcher_exit :
-                        R.anim.recents_to_launcher_exit));
-        setImmersiveRecents();
+            ActivityOptions.makeCustomAnimation(this,      
+                 R.anim.recents_to_search_launcher_enter,
+                    R.anim.recents_to_search_launcher_exit));
+	setImmersiveRecents();
 
         // Mark the task that is the launch target
         int taskStackCount = stacks.size();
@@ -471,6 +469,14 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         }
 
         updateNavigationIconHints();
+    }
+
+    @Override
+    protected void onResume() {
+        if (mConfig.searchBarEnabled && mConfig.launchedFromHome) {
+            overridePendingTransition(0, 0);
+        }
+        super.onResume();
     }
 
     @Override
