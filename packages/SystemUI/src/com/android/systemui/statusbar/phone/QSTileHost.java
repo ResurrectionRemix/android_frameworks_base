@@ -62,6 +62,7 @@ import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.AppCircleBarTile;
 import com.android.systemui.qs.tiles.KernelAdiutorTile;
 import com.android.systemui.qs.tiles.NavBarTile;
+import com.android.systemui.qs.tiles.HardwareKeysTile;
 import com.android.systemui.qs.tiles.SystemUIRestartTile;
 import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.GestureAnyWhereTile;
@@ -404,7 +405,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("music")) return new MusicTile(this);
         else if (tileSpec.equals("reboot")) return new RebootTile(this);
 	else if (tileSpec.equals("configurations")) return new RRTile(this);
-    else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
+        else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
 	else if (tileSpec.equals("lte")) return new LteTile(this);
 	else if (tileSpec.equals("themes")) return new ThemesTile(this);
 	else if (tileSpec.equals("navbar")) return new NavBarTile(this);
@@ -414,14 +415,15 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("pie")) return new PieTile(this);
 	else if (tileSpec.equals("restartui")) return new SystemUIRestartTile(this);
 	else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
-    else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
-    else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);
+    	else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
+    	else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);
 	else if (tileSpec.equals("selinux")) return new SElinuxTile(this);
-    else if (tileSpec.equals("app_picker")) return new AppPickerTile(this);
+    	else if (tileSpec.equals("app_picker")) return new AppPickerTile(this);
 	else if (tileSpec.equals("kill_app")) return new KillAppTile(this);
-    else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
-    else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
-    else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
+   	else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
+   	else if (tileSpec.equals("hw_keys")) return new HardwareKeysTile(this);	
+    	else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
+    	else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
 
     protected List<String> loadTileSpecs(String tileList) {
@@ -534,6 +536,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("app_picker")) return R.string.navbar_app_picker;
         else if (spec.equals("kill_app")) return R.string.qs_kill_app;
         else if (spec.equals("caffeine")) return R.string.quick_settings_caffeine_label;
+        else if (spec.equals("hw_keys")) return R.string.quick_settings_hwkeys_title;
         return 0;
     }
 
@@ -585,6 +588,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("app_picker")) return R.drawable.ic_sysbar_app_picker;
         else if (spec.equals("kill_app")) return R.drawable.ic_app_kill;
         else if (spec.equals("caffeine")) return R.drawable.ic_qs_caffeine_on;
+	else if (spec.equals("hw_keys")) return R.drawable.ic_qs_hwkeys_on;
         return 0;
     }
 

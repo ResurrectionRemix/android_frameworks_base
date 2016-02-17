@@ -138,6 +138,11 @@
     <string name="quick_settings_navbar_title">NavBar</string>	
     <string name="quick_settings_navbar_on">NavBar On</string>
     <string name="quick_settings_navbar_off">NavBar Off</string>
+
+     <!-- Hw Keys tile -->
+    <string name="quick_settings_hwkeys_title">Hardware Keys</string>	
+    <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
+    <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
     
     <!-- App Circle Bar tile -->
 	<string name="quick_settings_appcirclebar_title">AppCircleBar</string>
