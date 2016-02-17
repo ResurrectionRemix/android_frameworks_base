@@ -5174,6 +5174,12 @@ public final class Settings {
         public static final String TRANSPARENT_POWER_DIALOG_DIM = "transparent_power_dialog_dim";
 
         /**
+         * Whether to display dashboard dividers
+         * @hide
+         */
+        public static final String DASHBOARD_TILEVIEW_DIVIDERS = "dashboard_tileview_dividers";
+
+        /**
          * Whether to display dashboard tiles in a double line layout
          * @hide
          */
