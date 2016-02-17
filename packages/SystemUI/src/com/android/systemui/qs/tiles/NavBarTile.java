@@ -77,9 +77,6 @@ private static final Intent NAVBAR_Settings = new Intent().setComponent(new Comp
     }
 
  protected void toggleState() {
-
-	Settings.System.putInt(mContext.getContentResolver(),
-                    Settings.System.ENABLE_HW_KEYS, !HwkeysEnabled() ? 1 : 0);
          Settings.System.putInt(mContext.getContentResolver(),
                         Settings.System.NAVIGATION_BAR_SHOW, !navbarEnabled() ? 1 : 0);
     }
@@ -103,12 +100,6 @@ private static final Intent NAVBAR_Settings = new Intent().setComponent(new Comp
                 Settings.System.NAVIGATION_BAR_SHOW, 1) == 1;
 
     }
-
-	private boolean HwkeysEnabled()
-	{
-	return Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.ENABLE_HW_KEYS, 0) == 1;
-	}
 
     @Override
     public void setListening(boolean listening) {
