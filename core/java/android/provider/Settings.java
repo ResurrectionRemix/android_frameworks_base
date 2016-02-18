@@ -4333,15 +4333,6 @@ public final class Settings {
         public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
 
         /**
-         * Whether to use default custom header or poly hd
-         * 0 = default
-         * 1 = modern
-         * 2 = poly hd
-         * @hide
-         */
-        public static final String STATUS_BAR_CUSTOM_HEADER_DEFAULT = "status_bar_custom_header_default";
-
-        /**
          * Change fonts for the system lockscreen clock widget
          *
          * @hide

@@ -98,11 +98,6 @@ public class StatusBarHeaderMachine {
                             Settings.System
                                     .getUriFor(Settings.System.STATUS_BAR_CUSTOM_HEADER),
                             false, this, UserHandle.USER_ALL);
-            mContext.getContentResolver()
-                    .registerContentObserver(
-                            Settings.System
-                                    .getUriFor(Settings.System.STATUS_BAR_CUSTOM_HEADER_DEFAULT),
-                            false, this, UserHandle.USER_ALL);
         }
 
         @Override
