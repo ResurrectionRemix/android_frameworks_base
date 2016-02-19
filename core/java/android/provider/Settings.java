@@ -4022,6 +4022,13 @@ public final class Settings {
          */
         public static final String HEADER_WEATHER_FONT_STYLE = "header_weather_font_style";
 
+        /**
+         * Number of rows to display on the quick settings panel
+         * Default is 3
+         * @hide
+         */
+        public static final String QS_NUM_TILE_ROWS = "sysui_qs_num_tile_rows";
+
 	/**
          * Hide AM/PM Font Style
          * @hide

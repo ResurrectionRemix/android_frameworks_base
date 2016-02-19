@@ -110,6 +110,8 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     private int mLastRightShift = -1;
     private int mNumberOfColumns;	
     private int moreSlots;	
+    private int addRows;
+
     private boolean mRestored;
     private boolean mRestoring;
     // whether the current view we are dragging in has shifted tiles
@@ -746,9 +748,9 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 
     public int getTilesPerPage(boolean firstPage) {
         if ((!mFirstRowLarge && firstPage) || !firstPage) {
-            return QSTileHost.TILES_PER_PAGE + 3 * moreSlots + 1;
+            return QSTileHost.TILES_PER_PAGE + 3 * addRows + (3 + addRows) * moreSlots + 1;
         }
-        return QSTileHost.TILES_PER_PAGE + 2 * moreSlots;
+        return QSTileHost.TILES_PER_PAGE + 3 * addRows  + (2 + addRows) * moreSlots;
       }
 
     @Override
@@ -1753,7 +1755,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         mBrightnessPaddingTop = res.getDimensionPixelSize(R.dimen.qs_brightness_padding_top);
         mPageIndicatorHeight = res.getDimensionPixelSize(R.dimen.qs_panel_page_indicator_height);
         if (isLaidOut()) {
-            updateNumColumns();
+            updateQSLayout();
             if (mListening) {
                 refreshAllTiles();
             }
@@ -1761,9 +1763,15 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         }
     }
 
-    public void updateNumColumns() {
+    public void updateQSLayout() {
         final Resources res = mContext.getResources();
         final ContentResolver resolver = mContext.getContentResolver();
+        int defRows = Math.max(1, res.getInteger(R.integer.quick_settings_num_rows));
+        int rows = Settings.System.getIntForUser(resolver,
+                Settings.System.QS_NUM_TILE_ROWS, defRows,
+                UserHandle.USER_CURRENT);
+        addRows = rows - defRows;
+
         int defColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
         int columns = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_NUM_TILE_COLUMNS, defColumns,
@@ -1784,6 +1792,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         if (mColumns != columns) {
             mColumns = columns;
         }
+
         setTiles(mHost.getTiles());
         mPagerAdapter.notifyDataSetChanged();
 
