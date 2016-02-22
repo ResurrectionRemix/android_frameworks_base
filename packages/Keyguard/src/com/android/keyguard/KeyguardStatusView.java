@@ -318,7 +318,9 @@ public class KeyguardStatusView extends GridLayout implements
         boolean showTimestamp = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER_TIMESTAMP, 1) == 1;
         int iconNameValue = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);
+                Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);	
+  	boolean colorizeAllIcons = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_COLORIZE_ALL_ICONS, 0) == 1;
         boolean showAlarm = Settings.System.getIntForUser(resolver,
                 Settings.System.HIDE_LOCKSCREEN_ALARM, 1, UserHandle.USER_CURRENT) == 1;
         boolean showClock = Settings.System.getIntForUser(resolver,
@@ -333,6 +335,8 @@ public class KeyguardStatusView extends GridLayout implements
         int alarmTextAndIconColor = (128 << 24) | (primaryTextColor & 0x00ffffff);
         int defaultIconColor =
                 res.getColor(R.color.keyguard_default_icon_color);
+	int iconColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, defaultIconColor);
         int maxAllowedNotifications = 6;
         int currentVisibleNotifications = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_VISIBLE_NOTIFICATIONS, 0);
@@ -496,21 +500,20 @@ public class KeyguardStatusView extends GridLayout implements
             mAlarmStatusView.setTextColor(alarmColor);
         }
 
-        if (mIconNameValue != iconNameValue) {
+     if (mIconNameValue != iconNameValue) {
             mIconNameValue = iconNameValue;
             mWeatherController.updateWeather();
         }
-        Drawable[] drawables = mAlarmStatusView.getCompoundDrawablesRelative();
-        Drawable alarmIcon = null;
-        mAlarmStatusView.setCompoundDrawablesRelative(null, null, null, null);
-        if (drawables[0] != null) {
-            alarmIcon = drawables[0];
-            alarmIcon.setColorFilter(alarmTextAndIconColor, Mode.MULTIPLY);
-        }
-        mAlarmStatusView.setCompoundDrawablesRelative(alarmIcon, null, null, null);
+
         mWeatherConditionImage.setImageDrawable(null);
         Drawable weatherIcon = mWeatherConditionDrawable;
-        mWeatherConditionImage.setImageDrawable(weatherIcon);
+        if (iconNameValue == 0 || colorizeAllIcons) {
+            Bitmap coloredWeatherIcon =
+                    ImageHelper.getColoredBitmap(weatherIcon, iconColor);
+            mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
+        } else {
+            mWeatherConditionImage.setImageDrawable(weatherIcon);
+        }
     }
 
     private void updateClockColor() {
