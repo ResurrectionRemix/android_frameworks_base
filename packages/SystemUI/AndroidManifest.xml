@@ -163,9 +163,6 @@
     <uses-permission android:name="android.permission.REBOOT" />
     <uses-permission android:name="android.permission.RECOVERY" />
 
-    <uses-permission android:name="android.permission.REBOOT" />
-    <uses-permission android:name="android.permission.RECOVERY" />
-
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
@@ -356,56 +353,6 @@
             android:finishOnCloseSystemDialogs="true"
             android:launchMode="singleTop"
             android:excludeFromRecents="true" />
-
-        <!-- Slim shortcut picker -->
-        <activity
-            android:name="com.android.systemui.CreateShortcut"
-            android:label="@string/shortcut_picker"
-            android:icon="@drawable/ic_qs_reboot_recovery"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-            <intent-filter>
-                <action android:name="android.intent.action.CREATE_SHORTCUT" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <!-- Shortcut activities -->
-        <activity
-            android:name="com.android.systemui.shortcuts.Reboot"
-            android:label="@string/shortcut_reboot"
-            android:icon="@drawable/ic_qs_reboot"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.shortcuts.Recovery"
-            android:label="@string/shortcut_recovery"
-            android:icon="@drawable/ic_qs_reboot_recovery"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.shortcuts.Rotation"
-            android:label="@string/shortcut_rotation"
-            android:icon="@drawable/ic_qs_auto_rotate"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
 
         <!-- platform logo easter egg activity -->
         <activity

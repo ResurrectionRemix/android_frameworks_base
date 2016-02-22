@@ -188,13 +188,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <!-- Slim Shortcut Actions -->
-    <string name="shortcut_picker">Slim Shortcuts</string>
-    <string name="shortcut_rotation">Rotation</string>
-    <string name="shortcut_reboot">Reboot</string>
-    <string name="shortcut_recovery">Recovery</string>
-    <string name="shortcut_toggle_title">Action to perform</string>
-
     <string name="quick_settings_selinux_label">SElinux</string>
     <string name="quick_settings_selinux_permissive_title">Permissive</string>
     <string name="quick_settings_selinux_enforcing_title">Enforcing</string>
