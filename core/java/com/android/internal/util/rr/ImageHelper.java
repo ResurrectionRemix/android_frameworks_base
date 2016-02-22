@@ -39,6 +39,23 @@ import android.util.TypedValue;
 
 public class ImageHelper {
 
+  public static Bitmap getColoredBitmap(Drawable d, int color) {
+        if (d == null) {
+            return null;
+        }
+        Bitmap colorBitmap = ((BitmapDrawable) d).getBitmap();
+        Bitmap grayscaleBitmap = toGrayscale(colorBitmap);
+        Paint pp = new Paint();
+        pp.setAntiAlias(true);
+        PorterDuffColorFilter frontFilter =
+            new PorterDuffColorFilter(color, Mode.MULTIPLY);
+        pp.setColorFilter(frontFilter);
+        Canvas cc = new Canvas(grayscaleBitmap);
+        final Rect rect = new Rect(0, 0, grayscaleBitmap.getWidth(), grayscaleBitmap.getHeight());
+        cc.drawBitmap(grayscaleBitmap, rect, rect, pp);
+        return grayscaleBitmap;
+    }
+
     public static Drawable getColoredDrawable(Drawable d, int color) {
         if (d == null) {
             return null;

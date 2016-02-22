@@ -48,6 +48,7 @@ import android.widget.TextView;
 import com.android.internal.util.cm.WeatherController;
 import com.android.internal.util.cm.WeatherControllerImpl;
 import com.android.internal.widget.LockPatternUtils;
+import com.android.internal.util.rr.ImageHelper;
 
 import java.util.Date;
 import java.util.Locale;
@@ -77,6 +78,8 @@ public class KeyguardStatusView extends GridLayout implements
 
     private boolean mShowWeather;
     private int mIconNameValue = 0;
+    private int mPrimaryTextColor;
+    private int mIconColor;
 
     private WeatherController mWeatherController;
 
@@ -313,14 +316,16 @@ public class KeyguardStatusView extends GridLayout implements
                 mAlarmManager.getNextAlarmClock(UserHandle.USER_CURRENT); 
         mShowWeather = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER, 0) == 1;
+	mIconColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, -2);
+        mPrimaryTextColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_TEXT_COLOR, -2);
         boolean showLocation = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER_LOCATION, 1) == 1;
         boolean showTimestamp = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER_TIMESTAMP, 1) == 1;
         int iconNameValue = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);	
-  	boolean colorizeAllIcons = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_WEATHER_COLORIZE_ALL_ICONS, 0) == 1;
         boolean showAlarm = Settings.System.getIntForUser(resolver,
                 Settings.System.HIDE_LOCKSCREEN_ALARM, 1, UserHandle.USER_CURRENT) == 1;
         boolean showClock = Settings.System.getIntForUser(resolver,
@@ -333,10 +338,6 @@ public class KeyguardStatusView extends GridLayout implements
         int secondaryTextColor = (179 << 24) | (primaryTextColor & 0x00ffffff);
         // primaryTextColor with a transparency of 50%
         int alarmTextAndIconColor = (128 << 24) | (primaryTextColor & 0x00ffffff);
-        int defaultIconColor =
-                res.getColor(R.color.keyguard_default_icon_color);
-	int iconColor = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, defaultIconColor);
         int maxAllowedNotifications = 6;
         int currentVisibleNotifications = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_VISIBLE_NOTIFICATIONS, 0);
@@ -387,8 +388,8 @@ public class KeyguardStatusView extends GridLayout implements
         mClockView.setTextColor(primaryTextColor);
         noWeatherInfo.setTextColor(primaryTextColor);
 
-        mWeatherCity.setTextColor(primaryTextColor);
-        mWeatherConditionText.setTextColor(primaryTextColor);
+       	mWeatherCity.setTextColor(mPrimaryTextColor);
+       mWeatherConditionText.setTextColor(mPrimaryTextColor);
         mWeatherCurrentTemp.setTextColor(primaryTextColor);
         mWeatherHumidity.setTextColor(secondaryTextColor);
         mWeatherWind.setTextColor(secondaryTextColor);
@@ -507,12 +508,11 @@ public class KeyguardStatusView extends GridLayout implements
 
         mWeatherConditionImage.setImageDrawable(null);
         Drawable weatherIcon = mWeatherConditionDrawable;
-        if (iconNameValue == 0 || colorizeAllIcons) {
-            Bitmap coloredWeatherIcon =
-                    ImageHelper.getColoredBitmap(weatherIcon, iconColor);
-            mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
-        } else {
+         if (mIconColor == -2) {
             mWeatherConditionImage.setImageDrawable(weatherIcon);
+        } else {
+	    Bitmap coloredWeatherIcon =	ImageHelper.getColoredBitmap(weatherIcon, mIconColor);	
+            mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
         }
     }
 
