@@ -332,6 +332,19 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.HIDE_LOCKSCREEN_CLOCK, 1, UserHandle.USER_CURRENT) == 1;
         boolean showDate = Settings.System.getIntForUser(resolver,
                 Settings.System.HIDE_LOCKSCREEN_DATE, 1, UserHandle.USER_CURRENT) == 1;
+        int mTempColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_TEMP_COLOR, 0xFFFFFFFF);
+       	int mConditionColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_CON_COLOR, 0xFFFFFFFF);
+        int mTimeStampColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_STAMP_COLOR, 0xFFFFFFFF);
+        int mHumidityColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_HUM_COLOR, 0xFFFFFFFF);
+	int mCityColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR, 0xFFFFFFFF);
+        int mWindColor = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_WEATHER_WIND_COLOR, 0xFFFFFFFF);
+	
         int primaryTextColor =
                 res.getColor(R.color.keyguard_default_primary_text_color);
         // primaryTextColor with a transparency of 70%
@@ -389,7 +402,7 @@ public class KeyguardStatusView extends GridLayout implements
         noWeatherInfo.setTextColor(primaryTextColor);
 
        	mWeatherCity.setTextColor(mPrimaryTextColor);
-       mWeatherConditionText.setTextColor(mPrimaryTextColor);
+        mWeatherConditionText.setTextColor(mPrimaryTextColor);
         mWeatherCurrentTemp.setTextColor(primaryTextColor);
         mWeatherHumidity.setTextColor(secondaryTextColor);
         mWeatherWind.setTextColor(secondaryTextColor);
@@ -514,6 +527,31 @@ public class KeyguardStatusView extends GridLayout implements
 	    Bitmap coloredWeatherIcon =	ImageHelper.getColoredBitmap(weatherIcon, mIconColor);	
             mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
         }
+	mWeatherCurrentTemp = (TextView) findViewById(R.id.current_temp);
+        mWeatherHumidity = (TextView) findViewById(R.id.humidity);
+        mWeatherConditionText = (TextView) findViewById(R.id.condition);
+        mWeatherTimestamp = (TextView) findViewById(R.id.timestamp);
+        mWeatherCity = (TextView) findViewById(R.id.city);
+        mWeatherWind = (TextView) findViewById(R.id.wind);
+	if (mWeatherCurrentTemp != null) {
+	 mWeatherCurrentTemp.setTextColor(mTempColor);
+	} 
+	if (mWeatherConditionText != null) {
+	  mWeatherConditionText.setTextColor(mConditionColor);
+	}
+	if (mWeatherTimestamp != null) {
+	 mWeatherTimestamp.setTextColor(mTimeStampColor);
+	} 
+	if (mWeatherHumidity != null) {
+	  mWeatherHumidity.setTextColor(mHumidityColor);
+	}
+	if (mWeatherCity != null) {
+	  mWeatherCity.setTextColor(mCityColor);
+	} 
+	if (mWeatherWind != null) {
+	  mWeatherWind.setTextColor(mWindColor);
+	}
+
     }
 
     private void updateClockColor() {
