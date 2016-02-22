@@ -360,6 +360,12 @@ public class KeyguardStatusView extends GridLayout implements
                        Settings.System.LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS, 4);
         boolean forceHideByNumberOfNotifications = false;
 
+        int ownerInfoColor = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_OWNER_INFO_COLOR, 0xFFFFFFFF);
+        int alarmColor = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_ALARM_COLOR, 0xFFFFFFFF);
+
+
         if (hideMode == 0) {
             if (currentVisibleNotifications > maxAllowedNotifications) {
                 forceHideByNumberOfNotifications = true;
@@ -401,7 +407,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
         int lockClockFont = isPrimary ? getLockClockFont() : 0;
-
        
         if (lockClockFont == 0) {
             mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
@@ -477,6 +482,14 @@ public class KeyguardStatusView extends GridLayout implements
         }
         if (lockClockFont == 24) {
             mClockView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
+        }
+
+        if (mOwnerInfo != null) {
+            mOwnerInfo.setTextColor(ownerInfoColor);
+        }
+
+        if (mAlarmStatusView != null) {
+            mAlarmStatusView.setTextColor(alarmColor);
         }
 
         if (mIconNameValue != iconNameValue) {
