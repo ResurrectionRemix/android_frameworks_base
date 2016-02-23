@@ -2628,7 +2628,7 @@ public class NotificationPanelView extends PanelView implements
      * @param x the x-coordinate the touch event
      */
     private void updateVerticalPanelPosition(float x) {
-        if (mNotificationStackScroller.getWidth() * 1.75f > getWidth()) {
+        if (mNotificationStackScroller.getWidth() * 1.75f >= getWidth()) {
             resetVerticalPanelPosition();
             return;
         }
