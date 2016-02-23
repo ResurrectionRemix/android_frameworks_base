@@ -41,7 +41,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.pm.ThemeUtils;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.hardware.Sensor;
@@ -185,7 +184,6 @@ public final class PowerManagerService extends SystemService
     private static final int MAX_CPU_BOOST_TIME = 5000000;
 
     private final Context mContext;
-    private Context mUiContext;
     private final ServiceThread mHandlerThread;
     private final PowerManagerHandler mHandler;
 
@@ -2466,14 +2464,6 @@ public final class PowerManagerService extends SystemService
         updatePowerStateLocked();
     }
 
-    private Context getUiContext() {
-        if (mUiContext == null) {
-            mUiContext = ThemeUtils.createUiContext(mContext);
-            mUiContext.setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
-        }
-        return mUiContext != null ? mUiContext : mContext;
-    }
-
     private void shutdownOrRebootInternal(final boolean shutdown, final boolean confirm,
             final String reason, boolean wait) {
         if (mHandler == null || !mSystemReady) {
@@ -2485,9 +2475,9 @@ public final class PowerManagerService extends SystemService
             public void run() {
                 synchronized (this) {
                     if (shutdown) {
-                        ShutdownThread.shutdown(getUiContext(), confirm);
+                        ShutdownThread.shutdown(mContext, confirm);
                     } else {
-                        ShutdownThread.reboot(getUiContext(), reason, confirm);
+                        ShutdownThread.reboot(mContext, reason, confirm);
                     }
                 }
             }
