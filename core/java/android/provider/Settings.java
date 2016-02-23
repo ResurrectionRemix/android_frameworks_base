@@ -5306,6 +5306,7 @@ public final class Settings {
 
         /**
          * Define when Nfc polling is activated.
+	 * @hide
          */
         public static final String NFC_POLLING_MODE = "nfc_polling";
 
@@ -7903,6 +7904,12 @@ public final class Settings {
          */
         public static final String CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED =
                 "camera_double_tap_power_gesture_disabled";
+
+        /**
+         * Options to decide wether or not to show keyguard bouncer on secure lockscreen
+         * @hide
+         */
+        public static final String LOCKSCREEN_BOUNCER = "lockscreen_bouncer";
 
         /**
          * Boolean value whether to link ringtone and notification volume

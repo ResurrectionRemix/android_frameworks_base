@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.view.Gravity;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +85,7 @@ public class StatusBarKeyguardViewManager {
     private OnDismissAction mAfterKeyguardGoneAction;
     private boolean mDeviceWillWakeUp;
     private boolean mDeferScrimFadeOut;
+    private boolean mShowKgBouncer;
 
     private View mUnlockFab;
 
@@ -123,6 +126,12 @@ public class StatusBarKeyguardViewManager {
      * {@link KeyguardBouncer#needsFullscreenBouncer()}.
      */
     private void showBouncerOrKeyguard(boolean isBackPressed) {
+        int bouncerview = Settings.Secure.getIntForUser(mContext.getContentResolver(), 
+                Settings.Secure.LOCKSCREEN_BOUNCER, 0, UserHandle.USER_CURRENT);
+        mShowKgBouncer = mLockPatternUtils.isSecure(UserHandle.getCallingUserId()) && (bouncerview == 1 
+                || (bouncerview == 2 && !mPhoneStatusBar.hasActiveClearableNotifications()) 
+                || (bouncerview == 3 && !mPhoneStatusBar.hasActiveVisibleNotifications()) 
+                || (bouncerview == 4 && !mPhoneStatusBar.hasActiveClearableNotifications() && !mPhoneStatusBar.hasActiveVisibleNotifications()));
         switch (mBouncer.needsFullscreenBouncer()) {
             case KeyguardBouncer.UNLOCK_SEQUENCE_FORCE_BOUNCER:
                 // SIM PIN/PUK
