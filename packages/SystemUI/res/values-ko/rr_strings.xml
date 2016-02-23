@@ -146,16 +146,16 @@
     <string name="quick_settings_navbar_title">네비바</string>	
     <string name="quick_settings_navbar_on">네비바 켜짐</string>
     <string name="quick_settings_navbar_off">네비바 꺼짐</string>
-    
+
+    <!-- Hw Keys tile -->
+    <string name="quick_settings_hwkeys_title">하드웨어 버튼</string>	
+    <string name="quick_settings_hwkeys_on">하드웨어 버튼 사용</string>
+    <string name="quick_settings_hwkeys_off">하드웨어 버튼 사용안함</string>
+ 
     <!-- App Circle Bar tile -->
 	<string name="quick_settings_appcirclebar_title">앱서클바</string>
     <string name="quick_settings_appcirclebar_on">앱서클바 켜짐</string>
     <string name="quick_settings_appcirclebar_off">앱서클바 꺼짐</string>
-
-    <!-- App Side Bar tile -->
-    <string name="quick_settings_app_sidebar">앱사이드바</string>
-    <string name="quick_settings_appsidebar_on">앱사이드바 켜짐</string>
-    <string name="quick_settings_appsidebar_off">앱사이드바 꺼짐</string>
 
     <!-- Kernel Adiutor Tile -->
     <string name="quick_settings_kernel_title">Kernel Adiutor</string>
@@ -196,17 +196,9 @@
     <string name="yes">네</string>
     <string name="no">아니요</string>
 
-    <!-- Slim Shortcut Actions -->
-    <string name="shortcut_picker">Slim Shortcuts</string>
-    <string name="shortcut_rotation">화면 회전</string>
-    <string name="shortcut_reboot">다시 시작</string>
-    <string name="shortcut_recovery">복구 모드</string>
-    <string name="shortcut_toggle_title">실행할 행동</string>
-
     <string name="quick_settings_selinux_label">SELinux</string>
     <string name="quick_settings_selinux_permissive_title">허가</string>
     <string name="quick_settings_selinux_enforcing_title">시행</string>
-
 
     <string name="qs_kill_app">앱 종료</string>
 
@@ -265,4 +257,10 @@
     (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_app_picker">애플리케이션 선택</string>
  
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">소리 모드</string>
+    <string name="quick_settings_sound_ring">소리</string>
+    <string name="quick_settings_sound_vibrate">진동</string>
+    <string name="quick_settings_sound_silent">무음</string>
+
 </resources>
