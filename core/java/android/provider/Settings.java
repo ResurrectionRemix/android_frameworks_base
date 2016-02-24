@@ -4551,6 +4551,18 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
 
+	/*
+         * change lockscreen alpha color
+         * @hide
+         */
+        public static final String LOCKSCREEN_ALPHA = "lockscreen_alpha";
+
+        /**
+         * change lockscreen security alpha color
+         * @hide
+         */
+        public static final String LOCKSCREEN_SECURITY_ALPHA = "lockscreen_security_alpha";
+
         /**
          * Enable HW keys
          * @hide

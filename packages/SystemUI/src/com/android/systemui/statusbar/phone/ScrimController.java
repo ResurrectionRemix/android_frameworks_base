@@ -22,6 +22,8 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -88,6 +90,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener,
     private boolean mForceHideScrims;
     private boolean mSkipFirstFrame;
     private boolean mDontAnimateBouncerChanges;
+    private float mOverlayAlpha;
+    private float mSecurityOverlayAlpha;
 
     public ScrimController(ScrimView scrimBehind, ScrimView scrimInFront, View headsUpScrim,
             boolean scrimSrcEnabled) {
@@ -98,6 +102,20 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener,
         mUnlockMethodCache = UnlockMethodCache.getInstance(context);
         mScrimSrcEnabled = scrimSrcEnabled;
         updateHeadsUpScrim(false);
+        mOverlayAlpha = Settings.System.getFloatForUser(context.getContentResolver(),
+                Settings.System.LOCKSCREEN_ALPHA, 0.45f, UserHandle.USER_CURRENT);
+        mSecurityOverlayAlpha = Settings.System.getFloatForUser(context.getContentResolver(),
+                Settings.System.LOCKSCREEN_SECURITY_ALPHA, 0.75f, UserHandle.USER_CURRENT);
+    }
+
+    public void setOverlayAlpha(float alpha) {
+        mOverlayAlpha = alpha;
+        scheduleUpdate();
+    }
+
+    public void setSecurityOverlayAlpha(float alpha) {
+        mSecurityOverlayAlpha = alpha;
+        scheduleUpdate();
     }
 
     public void setKeyguardShowing(boolean showing) {
@@ -228,16 +246,16 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener,
             float fraction = 1 - behindFraction;
             fraction = (float) Math.pow(fraction, 0.8f);
             behindFraction = (float) Math.pow(behindFraction, 0.8f);
-            setScrimInFrontColor(fraction * SCRIM_IN_FRONT_ALPHA);
-            setScrimBehindColor(behindFraction * SCRIM_BEHIND_ALPHA_KEYGUARD);
+            setScrimInFrontColor(fraction * mSecurityOverlayAlpha);
+            setScrimBehindColor(behindFraction * mOverlayAlpha);
         } else if (mBouncerShowing) {
-            setScrimInFrontColor(SCRIM_IN_FRONT_ALPHA);
+            setScrimInFrontColor(mSecurityOverlayAlpha);
             setScrimBehindColor(0f);
         } else {
             float fraction = Math.max(0, Math.min(mFraction, 1));
             setScrimInFrontColor(0f);
             setScrimBehindColor(fraction
-                    * (SCRIM_BEHIND_ALPHA_KEYGUARD - SCRIM_BEHIND_ALPHA_UNLOCKING)
+                    * (mOverlayAlpha - SCRIM_BEHIND_ALPHA_UNLOCKING)
                     + SCRIM_BEHIND_ALPHA_UNLOCKING);
         }
     }
