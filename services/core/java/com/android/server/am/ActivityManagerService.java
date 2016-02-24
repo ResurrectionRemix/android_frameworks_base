@@ -12160,10 +12160,6 @@ public final class ActivityManagerService extends ActivityManagerNative
             boolean isAlarmBoot = SystemProperties.getBoolean("ro.alarm_boot", false);
             if (isAlarmBoot) {
                 startAlarmActivityLocked();
-            } else {
-                // Ensure we reset the flag
-                Settings.System.putInt(mContext.getContentResolver(),
-                        Settings.System.POWER_OFF_ALARM_MODE, 0);
             }
 
             try {
