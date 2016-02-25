@@ -5316,6 +5316,19 @@ public final class Settings {
          */
         public static final String QUICK_SETTINGS_ICON_VIBRATE = "quick_settings_icon_vibrate";
 
+        /** Whether to vibrate when Header Items are pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_HEADER_VIBRATE = "quick_settings_header_vibrate";
+
+        /** Whether to vibrate when Header Items are Long pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_HEADER_VIBRATE_LONG = "quick_settings_header_vibrate_long";
+
+
         /**
          * Quick Settings Smart Pulldown
          * @hide
