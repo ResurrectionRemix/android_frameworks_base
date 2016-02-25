@@ -29,6 +29,7 @@ import android.widget.FrameLayout;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSPanel;
+import com.android.systemui.qs.QSDragPanel;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
@@ -41,6 +42,7 @@ public class MultiUserSwitch extends FrameLayout implements View.OnClickListener
     public static final String INTENT_EXTRA_NEW_LOCAL_PROFILE = "newLocalProfile";
 
     private QSPanel mQsPanel;
+    private QSDragPanel mQSDragPanel;	
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
     private boolean mKeyguardMode;
     private UserSwitcherController.BaseUserAdapter mUserListener;
@@ -143,6 +145,7 @@ public class MultiUserSwitch extends FrameLayout implements View.OnClickListener
             } else {
                 getContext().startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
             }
+	    mQSDragPanel.vibrateTile(20);	
         }
     }
 

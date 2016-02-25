@@ -161,6 +161,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private View mTaskManagerButton;
 
     protected Vibrator mVibrator;
+    private boolean mQsVibLongpress = false;	
 
     /**
      * In collapsed QS, the clock and avatar are scaled down a bit post-layout to allow for a nice
@@ -919,7 +920,18 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         } else if (v == mWeatherContainer) {
             startForecastActivity();
         }
+	checktile();	
     }
+	
+     public void checktile() {
+	   mQsVibLongpress = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QUICK_SETTINGS_ICON_VIBRATE, 0) == 1;
+		if (mQsVibLongpress) {
+		 mQSPanel.vibrateTile(20);
+		} else { 
+		 mQSPanel.vibrateTile(0);
+		}
+	}
 
     @Override
     public boolean onLongClick(View v) {

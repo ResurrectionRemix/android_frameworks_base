@@ -4551,7 +4551,7 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
 
-	/*
+        /**
          * change lockscreen alpha color
          * @hide
          */
@@ -5297,6 +5297,24 @@ public final class Settings {
          * @hide
          */
         public static final String NAV_BUTTONS_ROTATION = "nav_buttons_rotation";
+
+        /** Whether to vibrate when quick settings tile is pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
+
+        /** Whether to vibrate when quick settings tile is Single pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_SP_VIBRATE = "quick_settings_sp_vibrate";
+
+        /** Whether to vibrate when Settings icon is pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_ICON_VIBRATE = "quick_settings_icon_vibrate";
 
         /**
          * Quick Settings Smart Pulldown
