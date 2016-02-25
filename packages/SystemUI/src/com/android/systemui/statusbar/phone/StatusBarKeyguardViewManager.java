@@ -157,6 +157,16 @@ public class StatusBarKeyguardViewManager {
                 mBouncer.prepare();
                 break;
         }
+	if (mShowKgBouncer) {
+            if (isBackPressed) {
+                mPhoneStatusBar.showKeyguard();
+                mBouncer.hide(false);
+                mBouncer.prepare();
+            } else {
+                mPhoneStatusBar.hideKeyguard();
+                mBouncer.show(true);
+            }
+         }
     }
 
     private void showBouncer() {
