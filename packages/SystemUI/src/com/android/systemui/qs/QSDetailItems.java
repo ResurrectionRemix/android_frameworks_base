@@ -33,8 +33,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.graphics.PorterDuff.Mode;
+
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
+
+
+import android.provider.Settings;
 
 /**
  * Quick settings common detail view with line items.
@@ -55,6 +60,7 @@ public class QSDetailItems extends FrameLayout {
     private TextView mEmptyText;
     private ImageView mEmptyIcon;
     private int mMaxItems;
+    private boolean mQsColorSwitch = false;
 
     public QSDetailItems(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -106,8 +112,18 @@ public class QSDetailItems extends FrameLayout {
     }
 
     public void setEmptyState(int icon, int text) {
+	int QsIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
+	int QsTextColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         mEmptyIcon.setImageResource(icon);
         mEmptyText.setText(text);
+	 if (mQsColorSwitch) {
+            mEmptyIcon.setColorFilter(QsIconColor, Mode.MULTIPLY);
+            mEmptyText.setTextColor(QsTextColor);
+        }
     }
 
     /**
@@ -203,6 +219,13 @@ public class QSDetailItems extends FrameLayout {
         });
         final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
         disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	int QsIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
+	if (mQsColorSwitch) {
+            disconnect.setColorFilter(QsIconColor, Mode.MULTIPLY);
+        }
         disconnect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

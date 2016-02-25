@@ -5336,6 +5336,50 @@ public final class Settings {
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
 
         /**
+         * Quick Settings Color Switch
+         * @hide
+         */
+        public static final String QS_COLOR_SWITCH = "qs_color_switch";
+
+        /**
+         * Quick Settings Header Text Color
+         * @hide
+         */
+        public static final String QS_HEADER_TEXT_COLOR = "qs_header_text_color";
+
+        /**
+         * Quick Settings Header Color
+         * @hide
+         */
+        public static final String QS_HEADER_COLOR = "qs_header_color";
+
+        /**
+         * Quick Settings Text Coor
+         * @hide
+         */
+        public static final String QS_TEXT_COLOR = "qs_text_color";
+
+        /**
+         * Quick Settings Icon Color
+         * @hide
+         */
+        public static final String QS_ICON_COLOR = "qs_icon_color";
+
+        /**
+         * Quick Settings BG Color
+         * @hide
+         */
+        public static final String QS_BACKGROUND_COLOR = "qs_bg_color";
+
+        /**
+         * Quick Settings Brightness Icon Color
+         * @hide
+         */
+        public static final String QS_BRIGHTNESS_ICON_COLOR = "qs_brightness_icon_color";
+
+
+
+        /**
          * header image package to use for daylight header - package name - null if default
          * @hide
          */

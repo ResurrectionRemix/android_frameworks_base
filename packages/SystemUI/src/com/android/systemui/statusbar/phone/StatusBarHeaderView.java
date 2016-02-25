@@ -206,6 +206,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     // QS header alpha
     private int mQSHeaderAlpha;
 
+    private boolean mQsColorSwitch = false ;	
+    private int mHeaderColor;
+
     // Font style
     public static final int FONT_NORMAL = 0;
     public static final int FONT_ITALIC = 1;
@@ -296,6 +299,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	setalarmtextcolor();   
 	setbatterytextcolor();     
         setQSHeaderAlpha();
+	setHeaderColor();
         setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
 	setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
 	setStatusBarHeaderFontStyle(mStatusBarHeaderFontStyle);
@@ -339,6 +343,30 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             ((RippleDrawable) d).setForceSoftware(true);
         }
     }
+
+    public void setHeaderColor() {
+	mHeaderView = findViewById(R.id.header);
+	mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
+	mBackgroundImage = (ImageView) findViewById(R.id.background_image);
+        int mHeaderColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_COLOR, 0xFFFFFFFF);
+	int mQsDetailColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_TEXT_COLOR, 0xFFFFFFFF);
+        mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+		Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	if (mQsColorSwitch) {
+	if (mHeaderView != null) {
+            mHeaderView.getBackground().setColorFilter(
+                        mHeaderColor, Mode.SRC_OVER);
+        }
+        if (mBackgroundImage != null) {
+            mBackgroundImage.setColorFilter(mHeaderColor);
+       	 }
+	if ( mQsDetailHeaderTitle != null) {
+	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
+	}
+     }
+   }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -1449,6 +1477,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     Settings.System.HEADER_DETAIL_FONT_STYLE), false, this, UserHandle.USER_ALL);
  resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
+ resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH), false, this,
+                    UserHandle.USER_ALL);
 	
             update();
         }

@@ -19,12 +19,15 @@ package com.android.systemui.qs;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff.Mode;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile.SignalState;
+
+import android.provider.Settings;
 
 /** View that represents a custom quick settings tile for displaying signal info (wifi/cell). **/
 public final class SignalTileView extends QSTileView {
@@ -36,6 +39,7 @@ public final class SignalTileView extends QSTileView {
     private ImageView mOverlay;
     private ImageView mIn;
     private ImageView mOut;
+    private boolean mQsColorSwitch = false;	
 
     private int mWideOverlayIconStartPadding;
 
@@ -50,8 +54,15 @@ public final class SignalTileView extends QSTileView {
     }
 
     private ImageView addTrafficView(int icon) {
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	int SignalColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
         final ImageView traffic = new ImageView(mContext);
         traffic.setImageResource(icon);
+	  if ( mQsColorSwitch ) {
+            traffic.setColorFilter(SignalColor, Mode.MULTIPLY);	  
+        }
         traffic.setAlpha(0f);
         addView(traffic);
         return traffic;
@@ -135,6 +146,19 @@ public final class SignalTileView extends QSTileView {
                 .start();
         } else {
             view.setAlpha(newAlpha);
+        }
+    }
+
+    public void setIconColor() {
+	int SignalColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (mQsColorSwitch) {
+            mSignal.setColorFilter(SignalColor, Mode.MULTIPLY);
+            mOverlay.setColorFilter(SignalColor, Mode.MULTIPLY);
+            mIn.setColorFilter(SignalColor, Mode.MULTIPLY);
+            mOut.setColorFilter(SignalColor, Mode.MULTIPLY);
         }
     }
 }
