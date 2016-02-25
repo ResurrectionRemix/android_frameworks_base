@@ -94,6 +94,9 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 
     private static final int MAX_ROW_COUNT = 3;
 
+    // how long to wait before resetting the page
+    private static final int PAGE_RESET_DELAY = 10000;
+
     protected final ArrayList<QSPage> mPages = new ArrayList<>();
 
     protected QSViewPager mViewPager;
@@ -132,6 +135,16 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 
     private Point mDisplaySize;
     private int[] mTmpLoc;
+
+    private Runnable mResetPage = new Runnable() {
+        @Override
+        public void run() {
+            if (!mListening) {
+                // only reset when the user isn't interacting at all
+                mViewPager.setCurrentItem(0);
+            }
+        }
+    };
 
     public QSDragPanel(Context context) {
         this(context, null);
@@ -408,6 +421,12 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     public void setListening(boolean listening) {
         if (mListening == listening) return;
         mListening = listening;
+        // reset the page when inactive for a while
+        if (listening) {
+            removeCallbacks(mResetPage);
+        } else {
+            postDelayed(mResetPage, PAGE_RESET_DELAY);
+        }
         for (TileRecord r : mRecords) {
             r.tile.setListening(mListening);
         }
@@ -530,36 +549,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     protected void updateDetailText() {
         super.updateDetailText();
         mDetailRemoveButton.setText(R.string.quick_settings_remove);
-    }
-
-    /**
-     * @return returns the number of pages that has at least 1 visible tile
-     */
-    protected int getVisibleTilePageCount() {
-        // if all tiles are invisible on the page, do not count it
-        int pages = 0;
-
-        int lastPage = -1;
-        boolean allTilesInvisible = true;
-
-        for (TileRecord record : mRecords) {
-            DragTileRecord dr = (DragTileRecord) record;
-            if (dr.destinationPage != lastPage) {
-                if (!allTilesInvisible) {
-                    pages++;
-                }
-                lastPage = dr.destinationPage;
-                allTilesInvisible = true;
-            }
-            if (allTilesInvisible && dr.tile.getState().visible) {
-                allTilesInvisible = false;
-            }
-        }
-        // last tile may have set this
-        if (!allTilesInvisible) {
-            pages++;
-        }
-        return pages;
     }
 
     public void setTiles(final Collection<QSTile<?>> tilesCollection) {
