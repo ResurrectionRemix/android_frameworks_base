@@ -5354,7 +5354,7 @@ public final class Settings {
         public static final String QS_HEADER_COLOR = "qs_header_color";
 
         /**
-         * Quick Settings Text Coor
+         * Quick Settings Text Color
          * @hide
          */
         public static final String QS_TEXT_COLOR = "qs_text_color";
