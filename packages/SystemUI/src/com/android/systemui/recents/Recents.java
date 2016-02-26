@@ -312,6 +312,7 @@ public class Recents extends SystemUI
     @Override
     public void onBootCompleted() {
         mBootCompleted = true;
+        reloadHeaderBarLayout();
     }
 
     /** Shows the Recents. */
@@ -592,10 +593,12 @@ public class Recents extends SystemUI
         // Try and pre-emptively bind the search widget on startup to ensure that we
         // have the right thumbnail bounds to animate to.
         // Note: We have to reload the widget id before we get the task stack bounds below
+	if (mBootCompleted == true) {
         if (mConfig.searchBarEnabled &&
                 mSystemServicesProxy.getOrBindSearchAppWidget(mContext, mAppWidgetHost) != null) {
             mConfig.getSearchBarBounds(mWindowRect.width(), mWindowRect.height(),
                     mStatusBarHeight, searchBarBounds);
+		}
         }
         mConfig.getAvailableTaskStackBounds(mWindowRect.width(), mWindowRect.height(),
                 mStatusBarHeight, (mConfig.hasTransposedNavBar ? mNavBarWidth : 0), searchBarBounds,
