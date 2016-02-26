@@ -4933,6 +4933,12 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_ALARM_COLOR = "lockscreen_alarm_color";
 
+  	/**
+	 *
+         * Whether to show switches for wifi/cell/bt in the settings dashboard
+         * @hide
+         */
+        public static final String DASHBOARD_SWITCHES = "dashboard_switches";
 
         /**
          * Change the color of the lockscreen date underneath the clock
