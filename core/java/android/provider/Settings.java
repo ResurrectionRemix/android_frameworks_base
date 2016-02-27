@@ -3721,6 +3721,18 @@ public final class Settings {
          */
         public static final String CLEAR_BUTTON_COLOR= "clear_button_color";
 
+       /**
+         * Recents Date Text Color
+         * @hide
+         */
+        public static final String RECENTS_DATE_COLOR= "recents_date_color";
+
+       /**
+         * Recents Clock Text Color
+         * @hide
+         */
+        public static final String RECENTS_CLOCK_COLOR= "recents_clock_color";
+
         /**
          * Whether to show or hide search bar in recents view
          * @hide
