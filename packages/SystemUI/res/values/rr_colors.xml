@@ -20,6 +20,7 @@
     <!-- Floating action button -->
     <color name="fab_color">#ffDC4C3C</color>
     <color name="floating_action_button_icon_color">#ffffff</color>
+    <color name="fab_color_white">#00ffffff</color>	
 
     <!-- Gesture Anywhere specific colors -->
     <color name="gesture_overlay_background_fill_color">#80000000</color>
