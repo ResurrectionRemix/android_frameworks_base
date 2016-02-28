@@ -161,6 +161,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private View mTaskManagerButton;
 
     protected Vibrator mVibrator;
+    private boolean mQsVibLongpress = false;	
+    private boolean mQsVibrateHeader = false;
+    private boolean mQsVibrateHeaderLong = false;
 
     /**
      * In collapsed QS, the clock and avatar are scaled down a bit post-layout to allow for a nice
@@ -202,6 +205,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     // QS header alpha
     private int mQSHeaderAlpha;
+
+    private boolean mQsColorSwitch = false ;	
+    private int mHeaderColor;
 
     // Font style
     public static final int FONT_NORMAL = 0;
@@ -293,6 +299,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	setalarmtextcolor();   
 	setbatterytextcolor();     
         setQSHeaderAlpha();
+	setHeaderColor();
         setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
 	setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
 	setStatusBarHeaderFontStyle(mStatusBarHeaderFontStyle);
@@ -336,6 +343,30 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             ((RippleDrawable) d).setForceSoftware(true);
         }
     }
+
+    public void setHeaderColor() {
+	mHeaderView = findViewById(R.id.header);
+	mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
+	mBackgroundImage = (ImageView) findViewById(R.id.background_image);
+        int mHeaderColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_COLOR, 0xFFFFFFFF);
+	int mQsDetailColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_TEXT_COLOR, 0xFFFFFFFF);
+        mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+		Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	if (mQsColorSwitch) {
+	if (mHeaderView != null) {
+            mHeaderView.getBackground().setColorFilter(
+                        mHeaderColor, Mode.SRC_OVER);
+        }
+        if (mBackgroundImage != null) {
+            mBackgroundImage.setColorFilter(mHeaderColor);
+       	 }
+	if ( mQsDetailHeaderTitle != null) {
+	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
+	}
+     }
+   }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -898,7 +929,16 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+	boolean mQsVibrateHeader = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QUICK_SETTINGS_HEADER_VIBRATE, 0) == 1;
+	mQsVibLongpress = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QUICK_SETTINGS_ICON_VIBRATE, 0) == 1;
         if (v == mSettingsButton) {
+	    	if (mQsVibLongpress) {
+		vibrateheader(20);
+		} else { 
+		 vibrateheader(0);
+		}
             if (mSettingsButton.isTunerClick()) {
                 mSettingsButton.consumeClick();
                 mQSPanel.getHost().setEditing(!mQSPanel.getHost().isEditing());
@@ -919,10 +959,21 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         } else if (v == mWeatherContainer) {
             startForecastActivity();
         }
+	if (mQsVibrateHeader) {
+	vibrateheader(20);	
+	} else {
+	vibrateheader(0);
+	}	
     }
+	
+     public void checktile() {
+
+	}
 
     @Override
     public boolean onLongClick(View v) {
+	boolean mQsVibrateHeaderLong = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QUICK_SETTINGS_HEADER_VIBRATE_LONG, 0) == 1;
 	 if (v == mSystemIconsSuperContainer) {
             startBatteryLongClickActivity();
         } else if (v == mClock) {
@@ -936,7 +987,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         } else if (v == mTaskManagerButton) {
             startTaskManagerLongClickActivity();
         }
+	if (mQsVibrateHeaderLong) {
 	vibrateheader(20);	
+	} else {
+	vibrateheader(0);
+	}
         return false;
     }
 
@@ -1422,6 +1477,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     Settings.System.HEADER_DETAIL_FONT_STYLE), false, this, UserHandle.USER_ALL);
  resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
+ resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH), false, this,
+                    UserHandle.USER_ALL);
 	
             update();
         }

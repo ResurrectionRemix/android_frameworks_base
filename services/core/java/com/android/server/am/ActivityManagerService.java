@@ -324,7 +324,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     // Amount of time after a call to stopAppSwitches() during which we will
     // prevent further untrusted switches from happening.
-    static final long APP_SWITCH_DELAY_TIME = 5*1000;
+    static final long APP_SWITCH_DELAY_TIME = 1*1000;
 
     // How long we wait for a launched process to attach to the activity manager
     // before we decide it's never going to come up for real.
@@ -1400,6 +1400,7 @@ public final class ActivityManagerService extends ActivityManagerNative
     static final int POST_PRIVACY_NOTIFICATION_MSG = 60;
     static final int CANCEL_PRIVACY_NOTIFICATION_MSG = 61;
     static final int POST_COMPONENT_PROTECTED_MSG = 62;
+    static final int CANCEL_PROTECTED_APP_NOTIFICATION = 63;
 
     static final int FIRST_ACTIVITY_STACK_MSG = 100;
     static final int FIRST_BROADCAST_QUEUE_MSG = 200;
@@ -2241,6 +2242,20 @@ public final class ActivityManagerService extends ActivityManagerNative
                     }
                 } catch (NameNotFoundException e) {
                     Slog.w(TAG, "Unable to create context for protected app notification", e);
+                }
+            } break;
+            case CANCEL_PROTECTED_APP_NOTIFICATION: {
+                INotificationManager inm = NotificationManager.getService();
+                if (inm == null) {
+                    return;
+                }
+                try {
+                    inm.cancelNotificationWithTag("android", null,
+                            R.string.notify_package_component_protected_title, msg.arg1);
+                } catch (RuntimeException e) {
+                    Slog.w(ActivityManagerService.TAG,
+                            "Error canceling notification for service", e);
+                } catch (RemoteException e) {
                 }
             } break;
             }

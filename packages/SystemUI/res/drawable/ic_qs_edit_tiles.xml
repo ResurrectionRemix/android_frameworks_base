@@ -14,17 +14,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+<!-- drawable/animation.xml -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="48dp"
-    android:height="48dp"
-    android:viewportWidth="48"
-    android:viewportHeight="48">
-
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M4,32h4v4H4V32z M4,20h4v-4C5.8,16,4,17.8,4,20z M8,44v-4H4 C4,42.2,5.8,44,8,44z
-M4,28h4v-4H4V28z M12,44h4v-4h-4V44z
-M44,8v20c0,2.2-1.8,4-4,4h-8v4h-4v-4h-8c-2.2,0-4-1.8-4-4v-8h-4v-4h4V8
-c0-2.2,1.8-4,4-4h20C42.2,4,44,5.8,44,8z M40,8H20v20h20V8z
-M28,44c2.2,0,4-1.8,4-4h-4V44z M20,44h4v-4h-4V44z" />
-</vector>
+android:height="24dp" 
+android:width="24dp" 
+android:viewportWidth="24" 
+android:viewportHeight="24">
+<path android:fillColor="#FFFFFFFF" android:pathData="M4,2C2.89,2 2,2.89 2,4V14H4V4H14V2H4M8,6C6.89,6 6,6.89 6,8V18H8V8H18V6H8M12,10C10.89,10 10,10.89 10,12V20C10,21.11 10.89,22 12,22H20C21.11,22 22,21.11 22,20V12C22,10.89 21.11,10 20,10H12Z"/></vector>

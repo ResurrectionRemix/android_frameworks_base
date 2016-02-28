@@ -896,7 +896,7 @@
     <string name="task_manager_title">Task Manager</string>
     <string name="message_switch_fail">Cannot switch to this task, because it has no interface.</string>
     <string name="tasklist_killall">Kill All</string>
-    <string name="tasklist_memory_usage">"Free/Total Memory: <xliff:g id="number">%s</xliff:g> / <xliff:g id="name">%s</xliff:g>"</string>
+    <string name="tasklist_memory_usage"><b>"Free / Total Memory : </b><xliff:g id="number">%s</xliff:g> / <xliff:g id="name">%s</xliff:g>"</string>
     <string name="message_keep_one_launcher">Should keep at least one home activity!</string>
 
     <!-- Footer device owned text [CHAR LIMIT=50] -->

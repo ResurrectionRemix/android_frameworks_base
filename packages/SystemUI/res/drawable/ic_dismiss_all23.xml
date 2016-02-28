@@ -1,0 +1,8 @@
+<!-- drawable/database-minus.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="24dp"
+    android:width="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path android:fillColor="#000" android:pathData="M15,17H23V19H15V17M9,3C13.42,3 17,4.79 17,7C17,9.21 13.42,11 9,11C4.58,11 1,9.21 1,7C1,4.79 4.58,3 9,3M1,9C1,11.21 4.58,13 9,13C13.42,13 17,11.21 17,9V12C17,13.19 15.95,14.27 14.29,15H13V15.46C11.82,15.81 10.46,16 9,16C4.58,16 1,14.21 1,12V9M1,14C1,16.21 4.58,18 9,18C10.46,18 11.82,17.81 13,17.46V20.46C11.82,20.81 10.46,21 9,21C4.58,21 1,19.21 1,17V14M17,14V15H16.75C16.91,14.68 17,14.35 17,14Z" />
+</vector>

@@ -165,6 +165,7 @@ public final class BatteryService extends SystemService {
     private int mBatteryLowARGB;
     private int mBatteryMediumARGB;
     private int mBatteryFullARGB;
+    private int mBatteryReallyFullARGB;
     private boolean mMultiColorLed;
 
     private boolean mSentLowBatteryBroadcast = false;
@@ -904,8 +905,13 @@ public final class BatteryService extends SystemService {
                 mBatteryLight.setModes(mNotificationLedBrightnessLevel,
                         mMultipleLedsEnabled);
                 if (status == BatteryManager.BATTERY_STATUS_FULL || level >= 90) {
-                    // Battery is full or charging and nearly full
-                    mBatteryLight.setColor(mBatteryFullARGB);
+                    if (level == 100) {
+                        // Battery is really full
+                        mBatteryLight.setColor(mBatteryReallyFullARGB);
+                    } else {
+                        // Battery is full or charging and nearly full
+                        mBatteryLight.setColor(mBatteryFullARGB);
+                    }
                 } else {
                     if (isHvdcpPresent()) {
                         // Blinking orange if HVDCP charger
@@ -1030,6 +1036,9 @@ public final class BatteryService extends SystemService {
                 resolver.registerContentObserver(
                         CMSettings.System.getUriFor(CMSettings.System.BATTERY_LIGHT_FULL_COLOR),
                         false, this, UserHandle.USER_ALL);
+                resolver.registerContentObserver(
+                        Settings.System.getUriFor(Settings.System.BATTERY_LIGHT_REALLY_FULL_COLOR),
+                        false, this, UserHandle.USER_ALL);
             }
 
             update();
@@ -1061,6 +1070,9 @@ public final class BatteryService extends SystemService {
             mBatteryFullARGB = CMSettings.System.getInt(resolver,
                     CMSettings.System.BATTERY_LIGHT_FULL_COLOR, res.getInteger(
                     com.android.internal.R.integer.config_notificationsBatteryFullARGB));
+            mBatteryReallyFullARGB = Settings.System.getInt(resolver,
+                    Settings.System.BATTERY_LIGHT_REALLY_FULL_COLOR, res.getInteger(
+                    com.android.internal.R.integer.config_notificationsBatteryReallyFullARGB));
 
             // Notification LED brightness
             if (mAdjustableNotificationLedBrightness) {

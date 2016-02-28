@@ -35,6 +35,9 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffColorFilter;
+
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
@@ -75,6 +78,8 @@ public class QSPanel extends ViewGroup {
     private boolean mExpanded;
     protected boolean mListening;
     private boolean mClosingDetail;
+
+    private boolean mQsColorSwitch = false;
 
     protected Record mDetailRecord;
     private Callback mCallback;
@@ -162,10 +167,22 @@ public class QSPanel extends ViewGroup {
             brightnessSlider.setVisibility(GONE);
 	    brightnessIcon.setVisibility(GONE);	       
         }
- 	
+ 	updatecolors();
         updateResources();
         return brightnessSliderEnabled;	
     }
+	
+   public void updatecolors() {
+	mQsColorSwitch = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	int mIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BRIGHTNESS_ICON_COLOR, 0xFFFFFFFF);
+        ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
+	if (mQsColorSwitch) {	
+	 brightnessIcon.setColorFilter(mIconColor, Mode.MULTIPLY);
+		}
+	}
+	
 
     protected void updateDetailText() {
         mDetailDoneButton.setText(R.string.quick_settings_done);

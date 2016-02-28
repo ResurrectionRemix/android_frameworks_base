@@ -3686,6 +3686,54 @@ public final class Settings {
         public static final String RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
 
         /**
+         * Recents Clear All Button Style
+         * @hide
+         */
+        public static final String CLEAR_RECENTS_STYLE = "clear_recents_style";
+
+       /**
+         * Recents Clear All Button Style Switch
+         * @hide
+         */
+        public static final String CLEAR_RECENTS_STYLE_ENABLE = "clear_recents_style_enable";
+
+       /**
+         * Recents Clear All Button Color
+         * @hide
+         */
+        public static final String FAB_BUTTON_COLOR= "fab_button_color";
+
+       /**
+         * Recents MemBar Color
+         * @hide
+         */
+        public static final String MEM_BAR_COLOR= "mem_bar_color";
+
+       /**
+         * Recents MemBar Text Color
+         * @hide
+         */
+        public static final String MEM_TEXT_COLOR= "mem_text_color";
+
+       /**
+         * Recents Clear Button Color
+         * @hide
+         */
+        public static final String CLEAR_BUTTON_COLOR= "clear_button_color";
+
+       /**
+         * Recents Date Text Color
+         * @hide
+         */
+        public static final String RECENTS_DATE_COLOR= "recents_date_color";
+
+       /**
+         * Recents Clock Text Color
+         * @hide
+         */
+        public static final String RECENTS_CLOCK_COLOR= "recents_clock_color";
+
+        /**
          * Whether to show or hide search bar in recents view
          * @hide
          */
@@ -4552,6 +4600,18 @@ public final class Settings {
         public static final String LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
 
         /**
+         * change lockscreen alpha color
+         * @hide
+         */
+        public static final String LOCKSCREEN_ALPHA = "lockscreen_alpha";
+
+        /**
+         * change lockscreen security alpha color
+         * @hide
+         */
+        public static final String LOCKSCREEN_SECURITY_ALPHA = "lockscreen_security_alpha";
+
+        /**
          * Enable HW keys
          * @hide
          */
@@ -4852,6 +4912,13 @@ public final class Settings {
         public static final String ANIMATION_IME_INTERPOLATOR = "animation_ime_interpolator";
 
         /**
+         *
+         * whether to enable or disable vibration on succesful fingerprint auth
+         * @hide
+         */
+        public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
+
+        /**
          * Change the color of the lockscreen indication text
          * @hide
          */
@@ -4878,6 +4945,12 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_ALARM_COLOR = "lockscreen_alarm_color";
 
+  	/**
+	 *
+         * Whether to show switches for wifi/cell/bt in the settings dashboard
+         * @hide
+         */
+        public static final String DASHBOARD_SWITCHES = "dashboard_switches";
 
         /**
          * Change the color of the lockscreen date underneath the clock
@@ -5286,6 +5359,37 @@ public final class Settings {
          */
         public static final String NAV_BUTTONS_ROTATION = "nav_buttons_rotation";
 
+        /** Whether to vibrate when quick settings tile is pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
+
+        /** Whether to vibrate when quick settings tile is Single pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_SP_VIBRATE = "quick_settings_sp_vibrate";
+
+        /** Whether to vibrate when Settings icon is pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_ICON_VIBRATE = "quick_settings_icon_vibrate";
+
+        /** Whether to vibrate when Header Items are pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_HEADER_VIBRATE = "quick_settings_header_vibrate";
+
+        /** Whether to vibrate when Header Items are Long pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_HEADER_VIBRATE_LONG = "quick_settings_header_vibrate_long";
+
+
         /**
          * Quick Settings Smart Pulldown
          * @hide
@@ -5293,10 +5397,66 @@ public final class Settings {
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
 
         /**
+         * Quick Settings Color Switch
+         * @hide
+         */
+        public static final String QS_COLOR_SWITCH = "qs_color_switch";
+
+        /**
+         * Quick Settings Header Text Color
+         * @hide
+         */
+        public static final String QS_HEADER_TEXT_COLOR = "qs_header_text_color";
+
+        /**
+         * Quick Settings Header Color
+         * @hide
+         */
+        public static final String QS_HEADER_COLOR = "qs_header_color";
+
+        /**
+         * Quick Settings Text Color
+         * @hide
+         */
+        public static final String QS_TEXT_COLOR = "qs_text_color";
+
+        /**
+         * Quick Settings Icon Color
+         * @hide
+         */
+        public static final String QS_ICON_COLOR = "qs_icon_color";
+
+        /**
+         * Quick Settings BG Color
+         * @hide
+         */
+        public static final String QS_BACKGROUND_COLOR = "qs_bg_color";
+
+        /**
+         * Quick Settings Brightness Icon Color
+         * @hide
+         */
+        public static final String QS_BRIGHTNESS_ICON_COLOR = "qs_brightness_icon_color";
+
+
+
+        /**
          * header image package to use for daylight header - package name - null if default
          * @hide
          */
         public static final String STATUS_BAR_DAYLIGHT_HEADER_PACK = "status_bar_daylight_header_pack";
+
+	/**
+         * What color to use for the battery LED while charging - really full (100%)
+         * @hide
+         */
+        public static final String BATTERY_LIGHT_REALLY_FULL_COLOR = "battery_light_really_full_color";
+
+        /**
+         * Define when Nfc polling is activated.
+	 * @hide
+         */
+        public static final String NFC_POLLING_MODE = "nfc_polling";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -7892,6 +8052,12 @@ public final class Settings {
          */
         public static final String CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED =
                 "camera_double_tap_power_gesture_disabled";
+
+        /**
+         * Options to decide wether or not to show keyguard bouncer on secure lockscreen
+         * @hide
+         */
+        public static final String LOCKSCREEN_BOUNCER = "lockscreen_bouncer";
 
         /**
          * Boolean value whether to link ringtone and notification volume

@@ -140,4 +140,6 @@
  <!-- Hardware keys on/off option -->
   <java-symbol type="bool" name="config_hwKeysPref" />
 
+  <java-symbol type="integer" name="config_notificationsBatteryReallyFullARGB" />
+
 </resources>
