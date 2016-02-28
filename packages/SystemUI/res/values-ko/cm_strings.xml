@@ -139,4 +139,10 @@
   <string name="hotspot_apm_message">비행기 모드가 활성화되어 있어 셀룰러 네트워크에 연결할 수 없습니다. 비행기 모드를 해제하고 다시 시도하세요.</string>
   <string name="quick_settings_tile_flashlight_not_title">손전등 켜짐</string>
   <string name="quick_settings_tile_flashlight_not_summary">탭하여 끄기</string>
+
+  <!-- Wi-Fi hotspot label when enabled -->
+  <plurals name="wifi_hotspot_connected_clients_label">
+      <item quantity="one">%1$d명의 사용자</item>
+      <item quantity="other">%1$d명의 사용자</item>
+  </plurals>
 </resources>
