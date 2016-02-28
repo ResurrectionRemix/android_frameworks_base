@@ -3188,6 +3188,16 @@ public final class Settings {
         public static final Validator VIBRATE_WHEN_RINGING_VALIDATOR = sBooleanValidator;
 
         /**
+         * Whether the incoming call should be shown as intrusive fullscreen pop-up.
+         * The value is boolean (1 or 0).
+         *    0 - Non-intrusive
+         *    1 - Fullscreen
+         *
+         * @hide
+         */
+        public static final String USE_INTRUSIVE_CALL = "use_intrusive_call";
+
+        /**
          * Whether the audible DTMF tones are played by the dialer when dialing. The value is
          * boolean (1 or 0).
          */

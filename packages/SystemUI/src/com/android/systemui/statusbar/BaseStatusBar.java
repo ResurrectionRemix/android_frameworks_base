@@ -2513,7 +2513,9 @@ public abstract class BaseStatusBar extends SystemUI implements
             return false;
         }
 
-        if (isSnoozedPackage(sbn)) {
+        // Give incoming call free passage here,
+        // we'll decide later if intrusive notification will be allowed
+        if (isSnoozedPackage(sbn) && !isIncomingCall(sbn)) {
             return false;
         }
 
@@ -2531,9 +2533,15 @@ public abstract class BaseStatusBar extends SystemUI implements
                 || notification.vibrate != null;
         boolean isHighPriority = sbn.getScore() >= INTERRUPTION_THRESHOLD;
         boolean isFullscreen = notification.fullScreenIntent != null;
+
+        // incoming call should be allowed to process
+        // to handle non-intrusive ui correctly
+        int defHeadsUp = (isIncomingCall(sbn) && isIntrusiveEnabled())
+                ? Notification.HEADS_UP_NEVER
+                : Notification.HEADS_UP_ALLOWED;
         boolean hasTicker = mHeadsUpTicker && !TextUtils.isEmpty(notification.tickerText);
         boolean isAllowed = notification.extras.getInt(Notification.EXTRA_AS_HEADS_UP,
-                Notification.HEADS_UP_ALLOWED) != Notification.HEADS_UP_NEVER;
+                defHeadsUp) != Notification.HEADS_UP_NEVER;
         boolean accessibilityForcesLaunch = isFullscreen
                 && mAccessibilityManager.isTouchExplorationEnabled();
         boolean justLaunchedFullScreenIntent = entry.hasJustLaunchedFullScreenIntent();
@@ -2560,6 +2568,15 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
         if (DEBUG) Log.d(TAG, "interrupt: " + interrupt);
         return interrupt;
+    }
+
+    private boolean isIncomingCall(StatusBarNotification sbn) {
+        return sbn.getPackageName().equals("com.android.dialer");
+    }
+
+    private boolean isIntrusiveEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.USE_INTRUSIVE_CALL, 0) != 0;
     }
 
     protected abstract boolean isSnoozedPackage(StatusBarNotification sbn);
