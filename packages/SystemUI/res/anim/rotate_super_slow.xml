@@ -9,5 +9,13 @@
         android:pivotY="50%"
         android:repeatMode="restart"
         android:toDegrees="360" />
+    <rotate
+        android:duration="700"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:repeatMode="restart"
+        android:toDegrees="360" />
+
 
 </set>

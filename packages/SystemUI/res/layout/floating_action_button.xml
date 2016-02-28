@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<!-- Copyright (C) 2016 Resurrection Remix Project 
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -241,4 +241,20 @@
             android:background="@drawable/floating_action_button"
             android:tint="@color/floating_action_button_icon_color"
             android:src="@drawable/ic_dismiss_all26"/>
+    <ImageButton
+            android:layout_width="@dimen/floating_action_button_width"
+            android:layout_height="@dimen/floating_action_button_height"
+            android:id="@+id/clear_recents27"
+	    android:visibility="gone"
+            android:background="@drawable/floating_action_button"
+            android:tint="@color/floating_action_button_icon_color"
+            android:src="@drawable/ic_dismiss_all27"/>
+    <ImageButton
+            android:layout_width="@dimen/floating_action_button_width"
+            android:layout_height="@dimen/floating_action_button_height"
+            android:id="@+id/clear_recents28"
+	    android:visibility="gone"
+            android:background="@drawable/floating_action_button"
+            android:tint="@color/floating_action_button_icon_color"
+            android:src="@drawable/ic_dismiss_all28"/>
 </FrameLayout>
