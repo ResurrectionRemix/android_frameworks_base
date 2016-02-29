@@ -572,7 +572,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;
 	mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FAB_BUTTON_COLOR, 0xFFFFFFFF);			
+                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);			
 	mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
 	if (mClearStyleSwitch) {
 	checkstyle(mClearStyle); 
@@ -607,9 +607,9 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;	
 	mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FAB_BUTTON_COLOR, 0xFFFFFFFF);	
+                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);	
 	int mbarcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.MEM_BAR_COLOR, 0xFFFFFFFF);	
+                Settings.System.MEM_BAR_COLOR, 0xff009688);	
 	int mtextcolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.MEM_TEXT_COLOR, 0xFFFFFFFF);
 	int mclearallcolor = Settings.System.getInt(mContext.getContentResolver(),
@@ -619,7 +619,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 	int mDatecolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.RECENTS_DATE_COLOR, 0xFFFFFFFF);
 	int mDefaultcolor = res.getColor(R.color.recents_membar_text_color);
-	int mSetfabcolor = res.getColor(R.color.fab_color_white);
+	int mSetfabcolor = res.getColor(R.color.fab_color);
 
 	mClearStyle = style;
 	if (mClearStyleSwitch) {
