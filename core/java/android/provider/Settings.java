@@ -3740,35 +3740,10 @@ public final class Settings {
         public static final String RECENTS_ROTATE_FAB= "recents_rotate_fab";
 
        /**
-         * Recents ClearAll animation
-         * @hide
-         */
-        public static final String RECENTS_ROTATE_CLEAR_ALL= "recents_rotate_clear_all";
-
-       /**
          * Recents FAB animation style
          * @hide
          */
         public static final String FAB_ANIMATION_STYLE= "fab_animation_style";
-
-       /**
-         * Clear animation style
-         * @hide
-         */
-        public static final String CLEAR_ANIMATION_STYLE= "clear_animation_style";
-
-       /**
-         * LongPress Switch for FAB
-         * @hide
-         */
-        public static final String RECENTS_FAB_LP= "recents_fab_lp";
-
-       /**
-         * LongPress Animation for FAB
-         * @hide
-         */
-        public static final String RECENTS_FAB_LP_ANIM= "recents_fab_lp_anim";
-
 
         /**
          * Whether to show or hide search bar in recents view

@@ -45,10 +45,7 @@ import android.os.Bundle;
 import android.os.IRemoteCallback;
 import android.os.RemoteException;
 import android.os.UserHandle;
-import android.os.storage.StorageManager;
-import android.os.storage.VolumeInfo;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -88,14 +85,13 @@ import java.util.List;
 import com.android.settingslib.applications.ApplicationsState;
 import com.android.settingslib.applications.ApplicationsState.AppEntry;
 import com.android.settingslib.applications.ApplicationsState.Callbacks;
-import com.android.systemui.qs.QSDragPanel;
 
 
 /**
  * This view is the the top level layout that contains TaskStacks (which are laid out according
  * to their SpaceNode bounds.
  */
-public  class RecentsView extends FrameLayout implements TaskStackView.TaskStackViewCallbacks, View.OnLongClickListener ,
+public  class RecentsView extends FrameLayout implements TaskStackView.TaskStackViewCallbacks ,
         RecentsPackageMonitor.PackageCallbacks  {
 
 	   static final String TAG = "RecentsView";
@@ -133,8 +129,6 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
     private ImageButton button;
     private boolean mButtonsRotation;
     private boolean mClearallRotation;
-    private boolean mLongPressFab;
-    private QSDragPanel Qspanel;
 
     TextClock mClock;
     TextView mDate;
@@ -566,7 +560,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
                 .withLayer()
                 .start();
     }
-
+    
     @Override
     protected void onAttachedToWindow () {
         super.onAttachedToWindow();
@@ -608,9 +602,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 				 Settings.System.RECENTS_ROTATE_FAB, 0) == 1;	
 	mClearStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.CLEAR_RECENTS_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-	mLongPressFab = Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.RECENTS_FAB_LP, 0) == 1;	
+                    UserHandle.USER_CURRENT);	
         final Resources res = getContext().getResources();
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;	
@@ -861,23 +853,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
                 updateMemoryStatus();
 		}
             }
-        });
-		if (mLongPressFab) {		 
-		  mClearRecents.setOnLongClickListener(this);
-		} else {
-	  	 mClearRecents.setOnClickListener(new View.OnClickListener() {
-            		public void onClick(View v) {
-               			if (mButtonsRotation) {
-				dismissAllTasksAnimated();
-				checkrotation();
-                		updateMemoryStatus();
-				} else {
-				dismissAllTasksAnimated();
-                		updateMemoryStatus();
-					}
-           	 		}
-       			 });
-		}
+        });		
 	} else {
 	mClearRecents.setVisibility(View.GONE);	
 	mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
@@ -902,14 +878,6 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 	}
      }
 
-      @Override
-      public boolean onLongClick(View v) {
-		  if(v == mClearRecents) {
-		   updateMemoryStatus();		
-		  }
-		return false;
-   	 }	
-
     public void checkrotation() {
 		final ContentResolver resolver = mContext.getContentResolver();
 		Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate_around_center);
@@ -932,201 +900,82 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 	        Animation animationdefault = AnimationUtils.loadAnimation(mContext, R.anim.fab_deault);
 		mButtonsRotation =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.RECENTS_ROTATE_FAB, 0) == 1;	
-		mClearallRotation =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.RECENTS_ROTATE_CLEAR_ALL, 0) == 1;
-		mLongPressFab = Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.RECENTS_FAB_LP, 0) == 1;
 		int mAnimStyle =  Settings.System.getIntForUser(
                     resolver, Settings.System.FAB_ANIMATION_STYLE, 0,
                     UserHandle.USER_CURRENT);
-		int ClearAnimstyle =  Settings.System.getIntForUser(
-                    resolver, Settings.System.CLEAR_ANIMATION_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-		int LongpressAnimStyle = Settings.System.getIntForUser(
-                    resolver, Settings.System.RECENTS_FAB_LP_ANIM, 0,
-                    UserHandle.USER_CURRENT);
 		if(mButtonsRotation) {	
 			if (mAnimStyle ==0) {	
-			mFloatingButton.startAnimation(animation); 
+			mFloatingButton.startAnimation(animation);
+			mClearRecents.startAnimation(animation);  
 			} 	
 			if (mAnimStyle ==1) {	
-	        	mFloatingButton.startAnimation(animation1); 
+	        	mFloatingButton.startAnimation(animation1);
+			mClearRecents.startAnimation(animation1);  
 			}
 			if (mAnimStyle ==2) {	 
 	        	mFloatingButton.startAnimation(animation2); 
+			mClearRecents.startAnimation(animation2); 
 			}
 			if (mAnimStyle ==3) {		
 	        	mFloatingButton.startAnimation(animation3); 
+			mClearRecents.startAnimation(animation3); 
 			}
 			if (mAnimStyle ==4) {		
 	        	mFloatingButton.startAnimation(animation4);
+			mClearRecents.startAnimation(animation4); 
 			} 
 			if (mAnimStyle ==5) {		
 	        	mFloatingButton.startAnimation(animation5); 
+			mClearRecents.startAnimation(animation5); 
 			}
 			if (mAnimStyle ==6) {		
 	        	mFloatingButton.startAnimation(animation6); 
+			mClearRecents.startAnimation(animation6); 
 			}
 			if (mAnimStyle ==7) {		
 	        	mFloatingButton.startAnimation(animation7); 
+			mClearRecents.startAnimation(animation7); 
 			}
 			if (mAnimStyle ==8) {		 
 	        	mFloatingButton.startAnimation(animation8); 
+			mClearRecents.startAnimation(animation8); 
 			}
 			if (mAnimStyle ==9) {		
 	        	mFloatingButton.startAnimation(animation9);
+			mClearRecents.startAnimation(animation9); 
 			} 
 			if (mAnimStyle ==10) {		
 	        	mFloatingButton.startAnimation(animation10); 
+			mClearRecents.startAnimation(animation10); 
 			}
 			if (mAnimStyle ==11) {		
 	        	mFloatingButton.startAnimation(animation11); 
+			mClearRecents.startAnimation(animation11); 
 			}
 			if (mAnimStyle ==12) {		
 	        	mFloatingButton.startAnimation(animation12); 
+			mClearRecents.startAnimation(animation12); 
 			}
 			if (mAnimStyle ==13) {		 
 	        	mFloatingButton.startAnimation(animation13); 
+			mClearRecents.startAnimation(animation13); 
 			}
 			if (mAnimStyle ==14) {		 
 	        	mFloatingButton.startAnimation(animation14); 
+			mClearRecents.startAnimation(animation14);
 			}
 			if (mAnimStyle ==15) {		 
 	        	mFloatingButton.startAnimation(animation15); 
+			mClearRecents.startAnimation(animation15); 
 			}
 			if (mAnimStyle ==16) {		 
 	        	mFloatingButton.startAnimation(animation16); 
+			mClearRecents.startAnimation(animation16); 
 			}
 		} else {
 		mFloatingButton.startAnimation(animationdefault);
-		}
-		if(mClearallRotation) {	
-			if (ClearAnimstyle ==0) {	
-			mClearRecents.startAnimation(animation); 
-			} 	
-			if (ClearAnimstyle ==1) {	
-	        	mClearRecents.startAnimation(animation1); 
-			}
-			if (ClearAnimstyle ==2) {	 
-	        	mClearRecents.startAnimation(animation2); 
-			}
-			if (ClearAnimstyle ==3) {		
-	        	mClearRecents.startAnimation(animation3); 
-			}
-			if (ClearAnimstyle ==4) {		
-	        	mClearRecents.startAnimation(animation4);
-			} 
-			if (ClearAnimstyle ==5) {		
-	        	mClearRecents.startAnimation(animation5); 
-			}
-			if (ClearAnimstyle ==6) {		
-	        	mClearRecents.startAnimation(animation6); 
-			}
-			if (ClearAnimstyle ==7) {		
-	        	mClearRecents.startAnimation(animation7); 
-			}
-			if (ClearAnimstyle ==8) {		 
-	        	mClearRecents.startAnimation(animation8); 
-			}
-			if (ClearAnimstyle ==9) {		
-	        	mClearRecents.startAnimation(animation9);
-			} 
-			if (ClearAnimstyle ==10) {		
-	        	mClearRecents.startAnimation(animation10);
-			}
-			if (ClearAnimstyle ==11) {		
-	        	mClearRecents.startAnimation(animation11); 
-			}
-			if (ClearAnimstyle ==12) {		
-	        	mClearRecents.startAnimation(animation12); 
-			}
-			if (ClearAnimstyle ==13) {		 
-	        	mClearRecents.startAnimation(animation13); 
-			}
-			if (ClearAnimstyle ==14) {		 
-	        	mClearRecents.startAnimation(animation14); 
-			}
-			if (ClearAnimstyle ==15) {		 
-	        	mClearRecents.startAnimation(animation15); 
-			}
-			if (ClearAnimstyle ==16) {		 
-	        	mClearRecents.startAnimation(animation16); 
-			}
-		}  else {
-		mClearRecents.startAnimation(animationdefault);
-		}
-		if(mLongPressFab) {	
-			if (LongpressAnimStyle ==0) {	
-			mClearRecents.startAnimation(animation); 
-			mFloatingButton.startAnimation(animation); 
-			} 	
-			if (LongpressAnimStyle ==1) {	
-	        	mClearRecents.startAnimation(animation1); 
-			mFloatingButton.startAnimation(animation1); 
-			}
-			if (LongpressAnimStyle ==2) {	 
-	        	mClearRecents.startAnimation(animation2); 
-			mFloatingButton.startAnimation(animation2); 
-			}
-			if (LongpressAnimStyle ==3) {		
-	        	mClearRecents.startAnimation(animation3); 
-			mFloatingButton.startAnimation(animation3); 
-			}
-			if (LongpressAnimStyle ==4) {		
-	        	mClearRecents.startAnimation(animation4); 
-			mFloatingButton.startAnimation(animation4); 
-			} 
-			if (LongpressAnimStyle ==5) {		
-	        	mClearRecents.startAnimation(animation5); 
-			mFloatingButton.startAnimation(animation5);  
-			}
-			if (LongpressAnimStyle ==6) {		
-	        	mClearRecents.startAnimation(animation6); 
-			mFloatingButton.startAnimation(animation6);  
-			}
-			if (LongpressAnimStyle ==7) {		
-	        	mClearRecents.startAnimation(animation7); 
-			mFloatingButton.startAnimation(animation7);  
-			}
-			if (LongpressAnimStyle ==8) {		 
-	        	mClearRecents.startAnimation(animation8); 
-			mFloatingButton.startAnimation(animation8);  
-			}
-			if (LongpressAnimStyle ==9) {		
-	        	mClearRecents.startAnimation(animation9); 
-			mFloatingButton.startAnimation(animation9); 
-			} 
-			if (LongpressAnimStyle ==10) {		
-	        	mClearRecents.startAnimation(animation10); 
-			mFloatingButton.startAnimation(animation10); 
-			}
-			if (LongpressAnimStyle ==11) {		
-	        	mClearRecents.startAnimation(animation11); 
-			mFloatingButton.startAnimation(animation11); 
-			}
-			if (LongpressAnimStyle ==12) {		
-	        	mClearRecents.startAnimation(animation12); 
-			mFloatingButton.startAnimation(animation12); 
-			}
-			if (LongpressAnimStyle ==13) {		 
-	        	mClearRecents.startAnimation(animation13); 
-			mFloatingButton.startAnimation(animation13);  
-			}
-			if (LongpressAnimStyle ==14) {		 
-	        	mClearRecents.startAnimation(animation14); 
-			mFloatingButton.startAnimation(animation14);  
-			}
-			if (LongpressAnimStyle ==15) {		 
-	        	mClearRecents.startAnimation(animation15); 
-			mFloatingButton.startAnimation(animation15);  
-			}
-			if (LongpressAnimStyle ==16) {		 
-	        	mClearRecents.startAnimation(animation16); 
-			mFloatingButton.startAnimation(animation16);  
-			}
-		}  else {
-		mClearRecents.startAnimation(animationdefault);
-		}
+		mClearRecents.startAnimation(animationdefault); 
+		}		
    }	
 
     public void updateTimeVisibility() {
