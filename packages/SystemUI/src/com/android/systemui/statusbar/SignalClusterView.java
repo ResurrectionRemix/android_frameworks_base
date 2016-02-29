@@ -41,6 +41,8 @@ import com.android.systemui.statusbar.policy.SecurityController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
+import android.provider.Settings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +83,7 @@ public class SignalClusterView
     private int mNoSimTint = Color.WHITE;
     private int mAirplaneModeTint = Color.WHITE;
     private float mDarkIntensity;
+    public boolean mColorSwitch = false ;
 
     ViewGroup mEthernetGroup, mWifiGroup;
     View mNoSimsCombo;
@@ -458,6 +461,8 @@ public class SignalClusterView
     }
 
     public void setIconTint(int signalTint, int noSimTint, int airplaneModeTint, float darkIntensity) {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         mNetworkSignalTint = signalTint;
         mNoSimTint = noSimTint;
         mAirplaneModeTint = airplaneModeTint;
@@ -466,6 +471,18 @@ public class SignalClusterView
             applyIconTint();
         }
     }
+
+    public void setIconStockTint (int tint, float darkIntensity) {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
+	boolean changed = tint != mIconTint || darkIntensity != mDarkIntensity;
+        mIconTint = tint;
+	mDarkIntensity = darkIntensity;
+	 if (changed && isAttachedToWindow()) {
+	 applyIconTint();
+	}
+    }
+	
 
     public void applyNetworkSignalTint(int tint) {
         mNetworkSignalTint = tint;
@@ -494,6 +511,9 @@ public class SignalClusterView
     }
 
     private void applyIconTint() {
+	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
+	if (mColorSwitch) {
         setTint(mVpn, mNetworkSignalTint);
         setTint(mNoSims, mNoSimTint);
         setTint(mNoSimsDark, mNoSimTint);
@@ -502,11 +522,19 @@ public class SignalClusterView
         setTint(mEthernet, mNetworkSignalTint);
         setTint(mEthernetDark, mNetworkSignalTint);
         setTint(mAirplane, mAirplaneModeTint);
+	} else {
+	setTint(mVpn, mIconTint);
+        setTint(mAirplane, mIconTint);
+	}
         applyDarkIntensity(mDarkIntensity, mNoSims, mNoSimsDark);
         applyDarkIntensity(mDarkIntensity, mWifi, mWifiDark);
         applyDarkIntensity(mDarkIntensity, mEthernet, mEthernetDark);
         for (int i = 0; i < mPhoneStates.size(); i++) {
-            mPhoneStates.get(i).setIconTint(mNetworkSignalTint, mDarkIntensity);
+	    if (mColorSwitch) {
+            mPhoneStates.get(i).setIconTint(mNetworkSignalTint, mDarkIntensity);  
+	    } else {
+	    mPhoneStates.get(i).setIconTint(mIconTint, mDarkIntensity);
+	   }
         }
     }
 
@@ -623,10 +651,16 @@ public class SignalClusterView
         }
 
         public void setIconTint(int tint, float darkIntensity) {
+	    mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
             applyDarkIntensity(darkIntensity, mMobile, mMobileDark);
+	    if (mColorSwitch) {
             setTint(mMobile, tint);
             setTint(mMobileDark, tint);
             setTint(mMobileType, tint);
+	    } else {
+	    setTint(mMobileType, tint);
+	   }
         }
     }
 }
