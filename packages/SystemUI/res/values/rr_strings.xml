@@ -265,6 +265,14 @@
     <string name="quick_settings_sound_vibrate">Vibrate</string>
     <string name="quick_settings_sound_silent">Silent</string>
 
-	
+     <!-- headset icon switch -->
+    <string name="status_bar_headset">Wired headset</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_vpn">VPN</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_volume">Vibration</string>
+
 </resources>
 

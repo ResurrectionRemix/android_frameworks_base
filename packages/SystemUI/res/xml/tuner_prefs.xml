@@ -62,6 +62,18 @@
             android:key="airplane"
             android:title="@string/status_bar_airplane" />
 
+       <com.android.systemui.tuner.StatusBarSwitch
+            android:key="headset"
+            android:title="@string/status_bar_headset" />
+
+   	<com.android.systemui.tuner.StatusBarSwitch
+            android:key="volume"
+            android:title="@string/status_bar_volume" />
+
+      <com.android.systemui.tuner.StatusBarSwitch
+            android:key="vpn"
+            android:title="@string/status_bar_vpn" />
+
         </PreferenceCategory>
 
 </PreferenceScreen>
