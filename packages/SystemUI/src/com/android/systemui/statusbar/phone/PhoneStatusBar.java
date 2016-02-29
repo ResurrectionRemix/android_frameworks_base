@@ -781,25 +781,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 updateNotificationIconsColor();
 	   }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_COLOR_SWITCH))) {
-                recreateStatusBar();
-                updateRowStates();
-                updateSpeedbump();
-                updateClearAll();
-                updateEmptyShadeView();
-	   }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_ICON_COLOR))) {
-                 recreateStatusBar();
-                updateRowStates();
-                updateSpeedbump();
-                updateClearAll();
-                updateEmptyShadeView();
-	   }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_TEXT_COLOR))) {
-                recreateStatusBar();
-                updateRowStates();
-                updateSpeedbump();
-                updateClearAll();
-                updateEmptyShadeView();
+              		updateNetworkSignalColor();
+	      		updateNoSimColor();
+	      		updateAirplaneModeColor();
+	      		updateStatusIconsColor();	
+	      		updateNotificationIconsColor();
+	      		updateNetworkIconColors();
+		 	updateRowStates();
+               		updateSpeedbump();
+                	updateClearAll();
+                	updateEmptyShadeView();
 	   } 
             update();
         }
@@ -3270,72 +3261,45 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     }
 
     private void updateNetworkIconColors() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
-	    if(mColorSwitch) {
             mIconController.updateNetworkIconColors();
-	   }
         }
         if (mKeyguardStatusBar != null) {
-	     if(mColorSwitch) {
             mKeyguardStatusBar.updateNetworkIconColors();
-	    }
         }
     }
 
     private void updateNetworkSignalColor() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
-	    if(mColorSwitch) {
             mIconController.updateNetworkSignalColor();
-		}
         }
         if (mKeyguardStatusBar != null) {
-	    if(mColorSwitch) {
             mKeyguardStatusBar.updateNetworkIconColors();
-	    }
         }
     }
 
     private void updateNoSimColor() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
-	     if(mColorSwitch) {
             mIconController.updateNoSimColor();
-	   }
         }
         if (mKeyguardStatusBar != null) {
-	     if(mColorSwitch) {
             mKeyguardStatusBar.updateNoSimColor();
-	   }
         }
     }
 
     private void updateAirplaneModeColor() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
-	    if(mColorSwitch) {
             mIconController.updateAirplaneModeColor();
-	   }
         }
         if (mKeyguardStatusBar != null) {
-	    if(mColorSwitch) {
             mKeyguardStatusBar.updateAirplaneModeColor();
-	    }
         }
     }
 
     private void updateStatusIconsColor() {
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
+
         if (mIconController != null) {
-	    if(mColorSwitch) {
             mIconController.updateStatusIconsColor();
-	    }
         }
     }
 
@@ -3343,9 +3307,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
 	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
         if (mIconController != null) {
-	    if(mColorSwitch) {
             mIconController.updateNotificationIconsColor();
-	    }
         }
     }
 
