@@ -126,6 +126,7 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
     public int mClearStyle;
     public boolean mClearStyleSwitch = false;
     private int mfabcolor ;
+    private int mclearallcolor ;
     private ImageButton button;
     private boolean mButtonsRotation;
     private boolean mClearallRotation;
@@ -572,7 +573,9 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;
 	mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);			
+                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);
+	mclearallcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CLEAR_BUTTON_COLOR, 0xFFFFFFFF);			
 	mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
 	if (mClearStyleSwitch) {
 	checkstyle(mClearStyle); 
@@ -605,31 +608,36 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
                     UserHandle.USER_CURRENT);	
         final Resources res = getContext().getResources();
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;	
-	mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);	
+                Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;	
+	    mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);
+	    mclearallcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CLEAR_BUTTON_COLOR, 0xFFFFFFFF);		
 	int mbarcolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.MEM_BAR_COLOR, 0xff009688);	
 	int mtextcolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.MEM_TEXT_COLOR, 0xFFFFFFFF);
-	int mclearallcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.CLEAR_BUTTON_COLOR, 0xFFFFFFFF);
 	int mClockcolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.RECENTS_CLOCK_COLOR, 0xFFFFFFFF);
 	int mDatecolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.RECENTS_DATE_COLOR, 0xFFFFFFFF);
 	int mDefaultcolor = res.getColor(R.color.recents_membar_text_color);
 	int mSetfabcolor = res.getColor(R.color.fab_color);
+    int mSetclearallcolor = res.getColor(R.color.floating_action_button_icon_color);
 
 	mClearStyle = style;
 	if (mClearStyleSwitch) {
 	mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
+	mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
 	mMemBar = (ProgressBar) ((View)getParent()).findViewById(R.id.recents_memory_bar);
 	mMemText = (TextView) ((View)getParent()).findViewById(R.id.recents_memory_text);
 	mClock = (TextClock) ((View)getParent()).findViewById(R.id.recents_clock);
-        mDate = (TextView) ((View)getParent()).findViewById(R.id.recents_date);
+    mDate = (TextView) ((View)getParent()).findViewById(R.id.recents_date);
 	mFloatingButton.getBackground().setColorFilter(mSetfabcolor, Mode.CLEAR); 
 	mFloatingButton.getBackground().setColorFilter(mfabcolor, Mode.SRC_IN); 
+	mClearRecents.getBackground().setColorFilter(mSetclearallcolor, Mode.CLEAR);
+	mClearRecents.getBackground().setColorFilter(mclearallcolor, Mode.SRC_IN); 
+
 	MemoryInfo memInfo = new MemoryInfo();
         mAm.getMemoryInfo(memInfo);
 	updateMemoryStatus();
