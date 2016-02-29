@@ -162,7 +162,7 @@
 
     <!-- Quick settings -->
     <string name="quick_settings_screenrecord">Enregistrement de l\'écran</string>
-    <string name="quick_settings_screenrecord_on">Enregistrement ...<string>
+    <string name="quick_settings_screenrecord_on">Enregistrement ...</string>
 
    <!-- Pie tile -->
    <string name="quick_settings_pie">Pie</string>
@@ -263,5 +263,5 @@
     <string name="quick_settings_sound_vibrate">Vibreur</string>
     <string name="quick_settings_sound_silent">Silencieux</string>
 
-	
+
 </resources>
