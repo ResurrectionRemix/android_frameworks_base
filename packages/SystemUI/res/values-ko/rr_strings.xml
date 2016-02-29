@@ -26,15 +26,6 @@
 
     <string name="gestures_message">여기에 제스처를 그리세요</string>
  
-    <!-- App sidebar -->
-    <string name="default_folder_text">폴더</string>
-    <string name="title_activity_sidebar_configuration">표시할 항목 설정</string>
-    <string name="action_save">저장</string>
-    <string name="toast_items_saved">수정된 내용이 저장되었습니다.</string>
-    <string name="content_setup_instructions">앱을 길게 누른 후 앱 사이드바로 드래그해서 추가합니다.\n\n사이드바에 있는 앱 위로 다른 앱을 겹치면 폴더가 생성됩니다.\n\n항목을 삭제하려면 \@appbar 밖으로 드래그하세요.</string>
-    <string name="content_setup_dismiss">계속</string>
-    <string name="toast_not_installed">앱이 설치되지 않음</string>
-
     <!-- App circle sidebar -->
     <string name="app_float_maximize_item_title">최대화</string>
     <string name="app_float_item_title">플로팅 보기</string>
@@ -139,6 +130,14 @@
 
     <string name="lte_on">LTE 켜짐</string>
     <string name="lte_off">LTE 꺼짐</string>
+
+    <!-- Themes QS Tile -->
+    <string name="quick_settings_themes">테마</string>
+    <string name="quick_settings_themes_icon_packs">아이콘 팩</string>
+    <string name="quick_settings_themes_app_theme">앱 테마</string>
+    <string name="quick_settings_themes_system_theme">시스템 테마</string>
+    <string name="quick_settings_themes_default_theme">기본</string>
+    <string name="quick_settings_themes_match_system">시스템 테마에 맞추기</string>
 
     <string name="quick_settings_themes">테마</string>
 

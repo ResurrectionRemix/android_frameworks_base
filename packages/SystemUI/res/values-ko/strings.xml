@@ -431,4 +431,11 @@
     <string name="enable_bluetooth_title" msgid="5027037706500635269">"블루투스를 켜시겠습니까?"</string>
     <string name="enable_bluetooth_message" msgid="9106595990708985385">"키보드를 태블릿에 연결하려면 먼저 블루투스를 켜야 합니다."</string>
     <string name="enable_bluetooth_confirmation_ok" msgid="6258074250948309715">"사용"</string>
+
+    <!-- Task Manager -->
+    <string name="task_manager_title">작업 관리자</string>
+    <string name="message_switch_fail">인터페이스가 없어 이 작업으로 전환할 수 없습니다.</string>
+    <string name="tasklist_killall">모두 종료</string>
+    <string name="tasklist_memory_usage"><b>"사용가능/총 메모리 : </b><xliff:g id="number">%s</xliff:g>/<xliff:g id="name">%s</xliff:g>"</string>
+    <string name="message_keep_one_launcher">최소한 한개의 홈 액티비티를 유지해야합니다!</string>
 </resources>
