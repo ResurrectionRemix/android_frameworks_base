@@ -4167,7 +4167,7 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR = "statusbar_battery_bar";
 
         /**
-         * Whether to show the battery bar
+         * Status Bar Colors Switch
          * @hide
          */
         public static final String STATUSBAR_COLOR_SWITCH = "statusbar_color_switch";
