@@ -17,9 +17,16 @@
 package com.android.systemui.qs;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffColorFilter;
+import android.net.Uri;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
@@ -61,10 +68,22 @@ public class QSDetailItems extends FrameLayout {
     private ImageView mEmptyIcon;
     private int mMaxItems;
     private boolean mQsColorSwitch = false;
+    private int QsTextColor;
+    private int mQsIconColor;
+    private int mTextColor;
+    private int mEmptyTextColor;
+    private SettingsObserver mSettingsObserver;	
 
     public QSDetailItems(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
+        mTag = TAG;
+    }
+
+    public QSDetailItems(Context context) {
+        super(context);
+        mContext = context;
+	mSettingsObserver = new SettingsObserver(mHandler);
         mTag = TAG;
     }
 
@@ -91,6 +110,7 @@ public class QSDetailItems extends FrameLayout {
         mMaxItems = getResources().getInteger(
                 R.integer.quick_settings_detail_max_item_count);
         setMinHeightInItems(mMaxItems);
+	updatecolors();
     }
 
     @Override
@@ -112,19 +132,27 @@ public class QSDetailItems extends FrameLayout {
     }
 
     public void setEmptyState(int icon, int text) {
-	int QsIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
-	int QsTextColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	updatecolors();
         mEmptyIcon.setImageResource(icon);
         mEmptyText.setText(text);
-	 if (mQsColorSwitch) {
-            mEmptyIcon.setColorFilter(QsIconColor, Mode.MULTIPLY);
-            mEmptyText.setTextColor(QsTextColor);
-        }
+	if (mQsColorSwitch) {
+            mEmptyIcon.setColorFilter(mQsIconColor, Mode.MULTIPLY);                        
+            mEmptyText.setTextColor(mEmptyTextColor);
+       	 } 
     }
+
+   public void updatecolors() {
+	final ContentResolver resolver = mContext.getContentResolver();
+	  mQsColorSwitch = Settings.System.getInt(resolver,
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        if (mQsColorSwitch) {
+            QsTextColor = Settings.System.getInt(resolver,
+                    Settings.System.QS_TEXT_COLOR, 0xffffffff);
+            mEmptyTextColor = (153 << 24) | (QsTextColor & 0x00ffffff); 
+            mQsIconColor = Settings.System.getInt(resolver,
+                    Settings.System.QS_ICON_COLOR, 0xffffffff);
+		}
+	}
 
     /**
      * Set the minimum height of this detail view, in item count.
@@ -196,6 +224,9 @@ public class QSDetailItems extends FrameLayout {
         view.setVisibility(mItemsVisible ? VISIBLE : INVISIBLE);
         final ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
         iv.setImageResource(item.icon);
+	if (mQsColorSwitch) {
+            iv.setColorFilter(mQsIconColor, Mode.MULTIPLY);
+        }
         iv.getOverlay().clear();
         if (item.overlay != null) {
             item.overlay.setBounds(0, 0, item.overlay.getIntrinsicWidth(),
@@ -204,6 +235,10 @@ public class QSDetailItems extends FrameLayout {
         }
         final TextView title = (TextView) view.findViewById(android.R.id.title);
         title.setText(item.line1);
+	updatecolors();
+	if (mQsColorSwitch) {
+ 	title.setTextColor(QsTextColor);
+	}
         final TextView summary = (TextView) view.findViewById(android.R.id.summary);
         final boolean twoLines = !TextUtils.isEmpty(item.line2);
         title.setMaxLines(twoLines ? 1 : 2);
@@ -219,12 +254,8 @@ public class QSDetailItems extends FrameLayout {
         });
         final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
         disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
-	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-	int QsIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
-	if (mQsColorSwitch) {
-            disconnect.setColorFilter(QsIconColor, Mode.MULTIPLY);
+	 if (mQsColorSwitch) {
+            disconnect.setColorFilter(mQsIconColor, Mode.MULTIPLY);
         }
         disconnect.setOnClickListener(new OnClickListener() {
             @Override
@@ -235,6 +266,7 @@ public class QSDetailItems extends FrameLayout {
             }
         });
     }
+
 
     private class H extends Handler {
         private static final int SET_ITEMS = 1;
@@ -269,5 +301,45 @@ public class QSDetailItems extends FrameLayout {
     public interface Callback {
         void onDetailItemClick(Item item);
         void onDetailItemDisconnect(Item item);
+    }
+class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+	   ContentResolver resolver = mContext.getContentResolver();        
+	if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH))) {
+		updatecolors();
+		}
+	 update();
+        }
+
+        public void update() {
+	ContentResolver resolver = mContext.getContentResolver();
+	mQsColorSwitch = Settings.System.getInt(resolver,
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+		updatecolors();      
+        }
     }
 }

@@ -116,6 +116,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     private int mNumberOfColumns;	
     private int moreSlots;	
     private int addRows;
+    public QSTileView mTileView;
 
     protected Vibrator mVibrator;
     private boolean mQsVibSignlepress = false;	
@@ -205,6 +206,10 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         addView(mViewPager);
         addView(mPageIndicator);
         addView(mFooter.getView());
+
+	mTileView = new QSTileView (mContext);
+
+	updateicons();
 
         mClipper = new QSDetailClipper(mDetail);
 
@@ -387,15 +392,22 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     }
 
   public void setDetailBackgroundColor(int color) {
+	final Resources res = getContext().getResources();
+	int mStockBg = res.getColor(R.color.quick_settings_panel_background);
         mQsColorSwitch = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
         if (mQsColorSwitch) {
             if (mDetail != null) {
                     mDetail.getBackground().setColorFilter(
-                            color, Mode.MULTIPLY);
+                            color, Mode.SRC_OVER);
+                } 		
+            } else {
+	if (mDetail != null) {
+                    mDetail.getBackground().setColorFilter(
+                           mStockBg, Mode.SRC_OVER);
                 }
-            }
-    }
+	 }    
+	}
 
     @Override
     public void setBrightnessMirror(BrightnessMirrorController c) {
@@ -774,17 +786,15 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         };
         r.tileView.init(click, clickSecondary, longClick);
         r.tile.setListening(mListening);
-        r.tile.refreshState();
-	int mQsText = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-	int mQsIcon = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
-        mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
 		Settings.System.QS_COLOR_SWITCH, 0) == 1;
-	 if (mQsColorSwitch) {
-                 r.tileView.setLabelColor();
-                 r.tileView.setIconColor();
+	updateicons();
+	if (mQsColorSwitch) {
+                r.tileView.setLabelColor();
+                r.tileView.setIconColor();
             }
+        r.tile.refreshState();
+	updateicons();
         r.tileView.setVisibility(mEditing ? View.VISIBLE : View.GONE);
         callback.onStateChanged(r.tile.getState());
 	
@@ -793,6 +803,13 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         }
         return r;
     }
+
+    public void updateicons() {
+	int mQsText = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
+	int mQsIcon = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
+	}
 
     private void removeDraggingRecord() {
         // what spec is this tile?

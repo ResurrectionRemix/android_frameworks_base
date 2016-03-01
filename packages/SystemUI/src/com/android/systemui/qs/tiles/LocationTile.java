@@ -97,6 +97,8 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleClick() {
+	 boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
         if(mController.isAdvancedSettingsEnabled()) {
             showDetail(true);
         } else {
@@ -106,8 +108,13 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
             refreshState();
         }
 
+  	if (!mQSCSwitch) {
         mEnable.setAllowAnimation(true);
         mDisable.setAllowAnimation(true);
+	} else {
+	 mEnable.setAllowAnimation(false);
+	  mDisable.setAllowAnimation(false);
+	}
     }
 
     @Override
@@ -118,14 +125,43 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         final int currentState = mController.getLocationCurrentState();
+	boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0) == 1;
 
         // Work around for bug 15916487: don't show location tile on top of lock screen. After the
         // bug is fixed, this should be reverted to only hiding it on secure lock screens:
         // state.visible = !(mKeyguard.isSecure() && mKeyguard.isShowing());
         state.visible = !mKeyguard.isShowing();
         state.label = mContext.getString(getStateLabelRes(currentState));
-
+	 if (mQSCSwitch) {
         switch (currentState) {
+            case Settings.Secure.LOCATION_MODE_OFF:
+                state.contentDescription = mContext.getString(
+                        R.string.accessibility_quick_settings_location_off);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_off);
+                break;
+            case Settings.Secure.LOCATION_MODE_BATTERY_SAVING:
+                state.contentDescription = mContext.getString(
+                        R.string.accessibility_quick_settings_location_battery_saving);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_battery_saving);
+                break;
+            case Settings.Secure.LOCATION_MODE_SENSORS_ONLY:
+                state.contentDescription = mContext.getString(
+                        R.string.accessibility_quick_settings_location_gps_only);
+                state.icon = state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
+                break;
+            case Settings.Secure.LOCATION_MODE_HIGH_ACCURACY:
+                state.contentDescription = mContext.getString(
+                        R.string.accessibility_quick_settings_location_high_accuracy);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
+                break;
+            default:
+                state.contentDescription = mContext.getString(
+                        R.string.accessibility_quick_settings_location_on);
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_location_on);
+        	} 
+	} else {
+	  switch (currentState) {
             case Settings.Secure.LOCATION_MODE_OFF:
                 state.contentDescription = mContext.getString(
                         R.string.accessibility_quick_settings_location_off);
@@ -150,6 +186,7 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
                 state.contentDescription = mContext.getString(
                         R.string.accessibility_quick_settings_location_on);
                 state.icon = mEnable;
+	   }
         }
     }
 

@@ -275,7 +275,6 @@ public class KeyguardStatusBarView extends RelativeLayout {
 	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
 	if(mColorSwitch) {
-        mSignalCluster.setIgnoreSystemUITuner(true);
         mSignalCluster.setIconTint(
                 StatusBarColorHelper.getNetworkSignalColor(mContext),
                 StatusBarColorHelper.getNoSimColor(mContext),

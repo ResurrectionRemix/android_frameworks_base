@@ -160,8 +160,11 @@ import com.android.systemui.doze.DozeLog;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.omni.StatusBarHeaderMachine;
 import com.android.systemui.qs.QSDragPanel;
+import com.android.systemui.qs.QSDetailItems;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QSTile;
+import com.android.systemui.qs.QSTileView;
+import com.android.systemui.qs.SignalTileView;
 import com.android.systemui.recents.RecentsActivity;
 import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.settings.BrightnessController;
@@ -412,6 +415,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private boolean mQsColorSwitch = false;
     public boolean mColorSwitch = false ;
+    public QSTileView mTileView;
+    private  View mIcon;
+    public QSDetailItems mQsDetail;
+    public SignalTileView mSignalView;	
 
     int mPixelFormat;
     Object mQueueLock = new Object();
@@ -425,6 +432,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     // settings
     private QSDragPanel mQSPanel;
+    private QSPanel mQsPanel;
 
     private QSTileHost mQSTileHost;
 
@@ -690,6 +698,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_TEXT_COLOR),
                     false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_ICON_COLOR),
+                    false, this, UserHandle.USER_ALL);
 
 		    update();
         }
@@ -786,7 +800,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 updateSpeedbump();
                 updateClearAll();
                 updateEmptyShadeView();
-	   } 
+	   }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH))) {
+                updateQsColors();
+	   } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_TEXT_COLOR))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_COLOR))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_ICON_COLOR))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_COLOR))) {
+               	   updateQsColors();
+            }  
             update();
         }
 
@@ -831,11 +857,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
 
 
+	   int  mQSBackgroundColor = Settings.System.getInt(
+                            resolver, Settings.System.QS_BACKGROUND_COLOR, 0xff263238);
+	   int SignalColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
+
+
             boolean mShow4G = Settings.System.getIntForUser(resolver,
                     Settings.System.SHOW_FOURG, 0, UserHandle.USER_CURRENT) == 1;
 	  
 	    boolean mShow3G = Settings.System.getIntForUser(resolver,
                     Settings.System.SHOW_THREEG, 0, UserHandle.USER_CURRENT) == 1;
+
 
             boolean showTaskManager = Settings.System.getIntForUser(resolver,
                     Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
@@ -1532,6 +1565,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mIconController = new StatusBarIconController(
                 mContext, mStatusBarView, mKeyguardStatusBar, this);
+
+	mTileView = new QSTileView (mContext);
+	mQsDetail = new QSDetailItems(mContext);
+	mSignalView = new SignalTileView(mContext);
+
+        mQsPanel = new QSPanel(mContext);
 
         // Background thread for any controllers that need it.
         mHandlerThread = new HandlerThread(TAG, Process.THREAD_PRIORITY_BACKGROUND);
@@ -3290,6 +3329,18 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
             mKeyguardStatusBar.updateAirplaneModeColor();
         }
     }
+
+   public void updateQsColors() {		
+	mHeader.setHeaderColor();
+	mQSPanel.updateicons();
+	mNotificationPanel.setQSBackgroundColor();
+	mNotificationPanel.setQSColors();
+	mQsPanel.updatecolors();
+	mSignalView.setIconColor();
+	mTileView.setIconColor();
+	mTileView.updateColors();
+	mStatusBarHeaderMachine.doUpdateStatusHeaderObservers(true);
+	}
 
     private void updateStatusIconsColor() {
 
