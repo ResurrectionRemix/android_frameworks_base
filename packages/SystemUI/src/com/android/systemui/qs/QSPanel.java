@@ -177,8 +177,6 @@ public class QSPanel extends ViewGroup {
     }
 	
    public void updatecolors() {
-	final Resources res = getContext().getResources();
-	int stock = res.getColor(R.color.system_accent_color);
 	mQsColorSwitch = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
 	int mIconColor = Settings.System.getInt(mContext.getContentResolver(),
@@ -187,9 +185,6 @@ public class QSPanel extends ViewGroup {
 	if (mQsColorSwitch) {	
 	 brightnessIcon.setColorFilter(mIconColor, Mode.SRC_IN);
 		}
-	else {
-	brightnessIcon.setColorFilter(stock, Mode.SRC_IN);
-	}
      }
 	
 
@@ -240,6 +235,7 @@ public class QSPanel extends ViewGroup {
             refreshAllTiles();
         }
         updateDetailText();
+	updatecolors();
     }
 
     @Override

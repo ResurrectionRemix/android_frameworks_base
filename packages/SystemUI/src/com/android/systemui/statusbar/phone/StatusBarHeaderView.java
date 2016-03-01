@@ -355,8 +355,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 Settings.System.QS_HEADER_COLOR, 0xFFFFFFFF);
 	int mQsDetailColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_HEADER_TEXT_COLOR, 0xFFFFFFFF);
-        mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-		Settings.System.QS_COLOR_SWITCH, 0) == 1;
+        mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_COLOR_SWITCH, 0,
+                UserHandle.USER_CURRENT) == 1;
 	if (mQsColorSwitch) {
 	if (mHeaderView != null) {
             mHeaderView.getBackground().setColorFilter(
@@ -368,19 +369,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	if ( mQsDetailHeaderTitle != null) {
 	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
 	}
-     } else {
-		if (mHeaderView != null) {
-            mHeaderView.getBackground().setColorFilter(
-                        mStockHeader, Mode.SRC_OVER);
-        }
-        if (mBackgroundImage != null) {
-            mBackgroundImage.setColorFilter(mStockHeader);
-       	 }
-	if ( mQsDetailHeaderTitle != null) {
-	    mQsDetailHeaderTitle.setTextColor(mStockHeaderText);
-		}
-	}
-	
+     }	
    }
 
     @Override

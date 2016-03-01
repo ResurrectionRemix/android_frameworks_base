@@ -143,6 +143,7 @@ public final class SignalTileView extends QSTileView {
         final boolean shown = isShown();
         setVisibility(mIn, shown, s.activityIn);
         setVisibility(mOut, shown, s.activityOut);
+	updateIconColor();
     }
 
     private void setVisibility(View view, boolean shown, boolean visible) {
