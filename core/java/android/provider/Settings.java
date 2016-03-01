@@ -4564,6 +4564,12 @@ public final class Settings {
         public static final String STATUS_BAR_DATE_FORMAT = "status_bar_date_format";
 
          /**
+         * Switch for clock color
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCKCOLOR_SWITCH = "statusbar_clockcolor_switch";
+
+         /**
          * Setting for clock color
          * @hide
          */
