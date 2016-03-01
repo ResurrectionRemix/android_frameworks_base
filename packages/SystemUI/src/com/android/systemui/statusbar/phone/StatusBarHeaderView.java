@@ -361,15 +361,26 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	if (mQsColorSwitch) {
 	if (mHeaderView != null) {
             mHeaderView.getBackground().setColorFilter(
-                        mHeaderColor, Mode.SRC_OVER);
+                        mHeaderColor, Mode.SRC_IN);
         }
-        if (mBackgroundImage != null) {
+	if (mBackgroundImage != null) {
             mBackgroundImage.setColorFilter(mHeaderColor);
        	 }
 	if ( mQsDetailHeaderTitle != null) {
 	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
 	}
-     }	
+
+	} else {
+	if (mHeaderView != null) {
+            mHeaderView.getBackground().setColorFilter(null);
+        }
+        if (mBackgroundImage != null) {
+            mBackgroundImage.setColorFilter(null);
+       	 }
+	if ( mQsDetailHeaderTitle != null) {
+	    mQsDetailHeaderTitle.setTextColor(mStockHeaderText);
+		}
+	}	
    }
 
     @Override
