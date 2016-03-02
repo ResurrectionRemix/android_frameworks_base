@@ -477,7 +477,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mRRlogo;
     private ImageView rrLogo;
     private int mRRLogoColor;	
-    private int  mRRLogoStyle;	
+    private int mRRLogoStyle;
+    private int mIconColor;	
 
     // Weather temperature
     TextView mWeatherTempView;
@@ -807,16 +808,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 updateSpeedbump();
                 updateClearAll();
                 updateEmptyShadeView();
-		updateQsColors();
+		        updateQsColors();
+       } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_ICON_COLOR))) {
+                recreateStatusBar();
+                updateRowStates();
+                updateSpeedbump();
+                updateClearAll();
+                updateEmptyShadeView();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_TEXT_COLOR))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_COLOR))
                     || uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_ICON_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR))) {
-               	   updateQsColors();
+               	updateQsColors();
             }  
             update();
         }
@@ -842,7 +848,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT) == 1;
          mQsColorSwitch = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
-
+            mIconColor = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
              mRRLogoStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
                     UserHandle.USER_CURRENT);
@@ -1733,6 +1740,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
        showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
 
+        mIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 
         mKeyguardUserSwitcher = new KeyguardUserSwitcher(mContext,
                 (ViewStub) mStatusBarWindowContent.findViewById(R.id.keyguard_user_switcher),
