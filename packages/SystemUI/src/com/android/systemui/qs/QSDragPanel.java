@@ -766,7 +766,6 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
                     r.tile.secondaryClick();
 		mQsVibSignlepress = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QUICK_SETTINGS_SP_VIBRATE, 0) == 1;
-                    r.tile.click();
 			if (mQsVibSignlepress) {
 	  	    vibrateTile(20);	
 		   } else {
