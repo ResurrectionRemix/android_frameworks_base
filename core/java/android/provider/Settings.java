@@ -3682,13 +3682,32 @@ public final class Settings {
 
 	public static final String STATUS_BAR_RR_LOGO_COLOR = "status_bar_rr_logo_color";
 
-  /**
+  	/**
          * Style of Status bar logo
          * 0 - Left (default)
          * 1 - Right
          * @hide
          */
         public static final String STATUS_BAR_RR_LOGO_STYLE = "status_bar_rr_logo_style";
+
+        /**
+         * Statusbar Custom logos
+         * @hide
+         */
+        public static final String SHOW_CUSTOM_LOGO = "show_custom_logo";
+
+	/**
+         * Statusbar Custom logos Color
+         * @hide
+         */
+
+	public static final String CUSTOM_LOGO_COLOR = "custom_logo_color";
+
+ 	 /**
+         * Take your Pick 
+         * @hide
+         */
+        public static final String CUSTOM_LOGO_STYLE = "custom_logo_style";
 
 	/**
          * show clear all recents button

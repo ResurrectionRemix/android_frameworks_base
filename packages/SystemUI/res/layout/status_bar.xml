@@ -93,6 +93,9 @@
                     android:visibility="gone"
                     />
 
+	
+            	<include layout="@layout/custom_icons" />
+
                 <com.android.systemui.statusbar.widget.CarrierLabel
                     android:id="@+id/statusbar_carrier_text"
                     android:layout_width="wrap_content"
