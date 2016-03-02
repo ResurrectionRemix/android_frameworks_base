@@ -2176,6 +2176,7 @@
          "settings" = An action to launch settings
          "lockdown" = lock the phone down
          "bugreport" = Take bug report, if available
+         "torch" = Toggle torch
          "silent" = silent mode
          "users" = list of users
          -->
