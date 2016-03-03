@@ -5257,6 +5257,19 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         if (updateStatusBar) {
             recreateStatusBar();
             observer.update();
+        // lets handle the child notifications now
+        updateNotificationShadeForChildren();
+
+        // clear the map again for the next usage
+        mTmpChildOrderMap.clear();
+
+        updateRowStates();
+        updateSpeedbump();
+        updateClearAll();
+        updateEmptyShadeView();
+
+        updateQsExpansionEnabled();
+        mShadeUpdates.check();
         } else {
             loadDimens();
         }
