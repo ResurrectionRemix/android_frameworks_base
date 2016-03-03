@@ -521,7 +521,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("heads_up")) return R.string.quick_settings_heads_up_label;
         else if (spec.equals("lte")) return R.string.qs_lte_label;
         else if (spec.equals("themes")) return R.string.quick_settings_themes;
-        else if (spec.equals("navbar")) return R.string.quick_settings_navbar_title;
+        else if (spec.equals("navbar")) return R.string.quick_settings_navigation_bar;
         else if (spec.equals("appcirclebar")) return R.string.quick_settings_appcirclebar_title;
         else if (spec.equals("kernel_adiutor")) return R.string.quick_settings_kernel_title;
         else if (spec.equals("screenrecord")) return R.string.quick_settings_screenrecord;

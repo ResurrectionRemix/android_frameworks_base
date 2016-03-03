@@ -40,6 +40,8 @@ import com.android.systemui.qs.QSTile;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import cyanogenmod.app.StatusBarPanelCustomTile;
+
 public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
 
     private static final String NAVBAR_MODE_ENTRIES_NAME = "systemui_navbar_mode_entries";
@@ -228,6 +230,11 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
         @Override
         public Boolean getToggleState() {
             return navbarEnabled();
+        }
+        
+        @Override
+        public StatusBarPanelCustomTile getCustomTile() {
+            return null;
         }
 
         @Override

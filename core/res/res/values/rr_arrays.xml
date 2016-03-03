@@ -14,8 +14,8 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
-    <!-- Animation Control - Animation Chooser List -->
+  
+   <!-- Animation Control - Animation Chooser List -->
     <string-array name="anim_controls_entries">
         <item>@string/animation_default</item>
         <item>@string/animation_fade</item>

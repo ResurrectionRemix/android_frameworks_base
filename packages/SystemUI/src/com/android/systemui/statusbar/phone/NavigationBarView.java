@@ -241,7 +241,7 @@ public class NavigationBarView extends BaseNavigationBar {
         }
         if (mDoubleTapToSleep) {
             mDoubleTapGesture.onTouchEvent(event);
-        }
+        }  
         return super.onTouchEvent(event);
     }
 
