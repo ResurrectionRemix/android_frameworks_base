@@ -398,10 +398,10 @@ public class KeyguardServiceDelegate {
 
     public void onBootCompleted() {
         if (mKeyguardService != null) {
-            mKeyguardService.onBootCompleted();
-	    sendStateChangeBroadcast(true);	
+            mKeyguardService.onBootCompleted();	
         }
         mKeyguardState.bootCompleted = true;
+        sendStateChangeBroadcast(true);
     }
 
     public void onActivityDrawn() {
