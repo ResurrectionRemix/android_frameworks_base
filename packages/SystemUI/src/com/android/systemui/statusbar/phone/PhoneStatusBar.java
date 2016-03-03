@@ -724,6 +724,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.CUSTOM_LOGO_STYLE),
+                    false, this, UserHandle.USER_ALL);                   
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE),
+                    false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE_ENABLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_NUM_TILE_COLUMNS),
+                    false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GESTURE_ANYWHERE_ENABLED),
                     false, this, UserHandle.USER_ALL);
 
 		    update();
@@ -851,7 +863,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR))) {
                 updateNotificationIconsColor();
 	   }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_ICON_COLOR))) {
+                   updatebatterycolor(); 
+	   } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_TEXT_COLOR))) {
+                   updatebatterycolor(); 
+	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_COLOR_SWITCH))) {
+                updatebatterycolor();    
                 recreateStatusBar();
         // lets handle the child notifications now
         updateNotificationShadeForChildren();
@@ -865,7 +884,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateEmptyShadeView();
 
         updateQsExpansionEnabled();
-        mShadeUpdates.check();
+        mShadeUpdates.check();	
 	   }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
                 recreateStatusBar();
@@ -937,7 +956,63 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         updateQsExpansionEnabled();
         mShadeUpdates.check();
-	   }
+	   } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) 
+                    {
+               	recreateStatusBar();
+        // lets handle the child notifications now
+        updateNotificationShadeForChildren();
+
+        // clear the map again for the next usage
+        mTmpChildOrderMap.clear();
+
+        updateRowStates();
+        updateSpeedbump();
+        updateClearAll();
+        updateEmptyShadeView();
+
+        updateQsExpansionEnabled();
+        mShadeUpdates.check();
+	  }else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_NUM_TILE_ROWS))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_NUM_TILE_COLUMNS))) 
+                    {
+               	recreateStatusBar();
+        // lets handle the child notifications now
+        updateNotificationShadeForChildren();
+
+        // clear the map again for the next usage
+        mTmpChildOrderMap.clear();
+
+        updateRowStates();
+        updateSpeedbump();
+        updateClearAll();
+        updateEmptyShadeView();
+
+        updateQsExpansionEnabled();
+        mShadeUpdates.check();
+	  }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.GESTURE_ANYWHERE_ENABLED))) {
+                checkgestureview();
+                recreateStatusBar();
+        // lets handle the child notifications now
+        updateNotificationShadeForChildren();
+
+        // clear the map again for the next usage
+        mTmpChildOrderMap.clear();
+
+        updateRowStates();
+        updateSpeedbump();
+        updateClearAll();
+        updateEmptyShadeView();
+
+        updateQsExpansionEnabled();
+        mShadeUpdates.check();
+        }
+
             update();
         }
 
@@ -1024,7 +1099,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
 
 
-
+       
+           boolean mGestureAnywhere = Settings.System.getIntForUser(resolver,
+                    Settings.System.GESTURE_ANYWHERE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
 
 
 	   int  mQSBackgroundColor = Settings.System.getInt(
@@ -1626,9 +1703,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             // no window manager? good luck with that
         }
 
-        addGestureAnywhereView();
-        addAppCircleSidebar();
-
         if (mNavigationBarView == null) {
             mNavigationBarView =
                 (NavigationBarView) View.inflate(context, R.layout.navigation_bar, null);
@@ -1733,6 +1807,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         // set the inital view visibility
         setAreThereNotifications();
+        
+        checkgestureview();
 
         mMinitBatteryController = new MinitBatteryController(mContext, mStatusBarView, mHeader, mKeyguardStatusBar);
         mPackageMonitor.addListener(mMinitBatteryController);
@@ -3509,6 +3585,17 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
             mDismissView.updateIconColor(color);
         }
     }
+    
+    
+   public void checkgestureview() {
+            boolean mGestureAnywhere = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.GESTURE_ANYWHERE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+                    
+                    	if (mGestureAnywhere) {
+                    	if (mGestureAnywhereView ==null) {
+			  addGestureAnywhereView(); }
+			} 
+		}
 
     private void updateNetworkIconColors() {
         if (mIconController != null) {
@@ -3517,6 +3604,17 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         if (mKeyguardStatusBar != null) {
             mKeyguardStatusBar.updateNetworkIconColors();
         }
+    }
+    
+    public void updatebatterycolor() {
+    int mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
+      if (mIconController != null) {
+     mIconController.applyIconTint(); 
+     }
+     if (mKeyguardStatusBar != null) {
+     mKeyguardStatusBar.updateBatteryviews();
+     }
     }
 
     private void updateNetworkSignalColor() {

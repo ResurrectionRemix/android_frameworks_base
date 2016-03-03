@@ -420,7 +420,16 @@ public class BatteryMeterView extends View implements DemoMode,
         if (mBatteryMeterDrawable != null) {
             int backgroundColor = getBackgroundColor(darkIntensity);
             int fillColor = getFillColor(darkIntensity);
+            mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
+	    mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
+	    if (mColorSwitch) {
+	    mBatteryMeterDrawable.setDarkIntensity(backgroundColor, mBatteryIconColor);
+	     } else {
             mBatteryMeterDrawable.setDarkIntensity(backgroundColor, fillColor);
+            
+	     }
         }
     }
 
@@ -431,7 +440,7 @@ public class BatteryMeterView extends View implements DemoMode,
 
     private int getFillColor(float darkIntensity) {
         return getColorForDarkIntensity(
-                darkIntensity, mLightModeFillColor, mDarkModeFillColor);
+                darkIntensity, mLightModeFillColor, mDarkModeFillColor);               
     }
 
     private int getColorForDarkIntensity(float darkIntensity, int lightColor, int darkColor) {
@@ -751,21 +760,11 @@ public class BatteryMeterView extends View implements DemoMode,
         public void setDarkIntensity(int backgroundColor, int fillColor) {
 	    mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
-	    mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	    if (mColorSwitch) {
-		mBatteryIconColor = fillColor;
-		mFramePaint.setColor(backgroundColor);
-                mBoltPaint.setColor(fillColor);
-                mChargeColor = fillColor;
-                invalidate();
-		} else {	
             	mIconTint = fillColor;
 		mFramePaint.setColor(backgroundColor);
                 mBoltPaint.setColor(fillColor);
                 mChargeColor = fillColor;
                 invalidate();
-	    }
         }
 
         @Override
@@ -885,21 +884,10 @@ public class BatteryMeterView extends View implements DemoMode,
 
         @Override
         public void setDarkIntensity(int backgroundColor, int fillColor) {
-	    mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
-	    mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	    if (mColorSwitch) {
-	    mBatteryIconColor = fillColor;
-	    mBoltPaint.setColor(fillColor);
-            mChargeColor = fillColor;
-            invalidate();
-	    } else {
             mIconTint = fillColor;
 	    mBoltPaint.setColor(fillColor);
             mChargeColor = fillColor;
             invalidate();
-	    }
         }
 
         @Override
