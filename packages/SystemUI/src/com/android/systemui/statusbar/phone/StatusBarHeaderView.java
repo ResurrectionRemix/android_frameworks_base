@@ -124,6 +124,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private View mQsDetailHeader;
     private TextView mQsDetailHeaderTitle;
     private Switch mQsDetailHeaderSwitch;
+    private ImageView mWeatherimage;
     private ImageView mQsDetailHeaderProgress;
     private TextView mEmergencyCallsOnly;
     private BatteryLevelTextView mBatteryLevel;
@@ -282,6 +283,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mWeatherContainer = (LinearLayout) findViewById(R.id.weather_container);
         mWeatherContainer.setOnClickListener(this);
         mWeatherContainer.setOnLongClickListener(this);
+        mWeatherimage = (ImageView) findViewById(R.id.no_weather_image);
         mWeatherLine1 = (TextView) findViewById(R.id.weather_line_1);
         mWeatherLine2 = (TextView) findViewById(R.id.weather_line_2);
         mEditTileDoneText = (TextView) findViewById(R.id.done);
@@ -840,9 +842,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     @Override
     public void onWeatherChanged(WeatherController.WeatherInfo info) {
         if (info.temp == null || info.condition == null) {
-            mWeatherLine1.setText(mContext.getString(R.string.weather_info_not_available));
+			mWeatherimage = (ImageView) findViewById(R.id.no_weather_image);
+			mWeatherimage.setVisibility(VISIBLE);
+            mWeatherLine1.setText(null);
             mWeatherLine2.setText(null);
         } else {
+            mWeatherimage.setVisibility(GONE);
             mWeatherLine1.setText(mContext.getString(
                     R.string.status_bar_expanded_header_weather_format,
                     info.temp,
@@ -1217,6 +1222,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         applyAlpha(mSettingsContainer, values.settingsAlpha);
         applyAlpha(mTaskManagerButton, values.settingsAlpha);
         applyAlpha(mWeatherLine1, values.settingsAlpha);
+        applyAlpha(mWeatherimage, values.settingsAlpha);
         applyAlpha(mWeatherLine2, values.settingsAlpha);
         applyAlpha(mSignalCluster, values.signalClusterAlpha);
         if (!mExpanded) {

@@ -209,6 +209,26 @@
             android:textSize="@dimen/weather_text_size"
             android:textAppearance="@style/TextAppearance.StatusBar.Expanded.WeatherTemp"
             android:importantForAccessibility="noHideDescendants"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="20dp"
+        android:gravity="center">
+
+     <ImageView
+        android:id="@+id/no_weather_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:paddingEnd="20dp"
+        android:visibility="gone"
+        android:background="@drawable/weather_off"
+        android:importantForAccessibility="noHideDescendants"/>
+        
+</FrameLayout>
+
     <TextView
             android:id="@+id/weather_line_2"
             android:layout_width="match_parent"
