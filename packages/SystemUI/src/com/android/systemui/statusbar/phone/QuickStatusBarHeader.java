@@ -63,6 +63,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
     private TextView mAlarmStatus;
     private View mAlarmStatusCollapsed;
+    private View mClock;
+    private View mDate;
 
     private QSPanel mQsPanel;
 
@@ -112,6 +114,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mDateTimeGroup = (ViewGroup) findViewById(R.id.date_time_group);
         mDateTimeGroup.setPivotX(0);
         mDateTimeGroup.setPivotY(0);
+        mClock = findViewById(R.id.clock);
+        mClock.setOnClickListener(this);
+        mDate = findViewById(R.id.date);
+        mDate.setOnClickListener(this);
+
         mShowFullAlarm = getResources().getBoolean(R.bool.quick_settings_show_full_alarm);
 
         mExpandIndicator = (ExpandableIndicator) findViewById(R.id.expand_indicator);
@@ -374,11 +381,26 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             if (showIntent != null && showIntent.isActivity()) {
                 mActivityStarter.startActivity(showIntent.getIntent(), true /* dismissShade */);
             }
+        } else if (v == mClock) {
+            startAlarmsActivity();
+        } else if (v == mDate) {
+            startCalendarActivity();
         }
     }
 
     private void startSettingsActivity() {
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
+                true /* dismissShade */);
+    }
+
+    private void startCalendarActivity() {
+        Intent calIntent = new Intent(Intent.ACTION_MAIN);
+        calIntent.addCategory(Intent.CATEGORY_APP_CALENDAR);
+        mActivityStarter.startActivity(calIntent, true /* dismissShade */);
+    }
+
+    private void startAlarmsActivity() {
+        mActivityStarter.startActivity(new Intent(android.provider.AlarmClock.ACTION_SHOW_ALARMS),
                 true /* dismissShade */);
     }
 
