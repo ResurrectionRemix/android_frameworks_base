@@ -162,7 +162,7 @@
                     android:scaleType="center"
                     android:visibility="gone"
                     />                
-		<ImageView
+                <ImageView
                     android:id="@+id/custom_15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -279,5 +279,87 @@
                     android:src="@drawable/cat"
                     android:scaleType="center"
                     android:visibility="gone"
-		  />
+                    />
+                <ImageView
+                    android:id="@+id/custom_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/android1"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/bike"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/candycane"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/shit"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/chart_bubble"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/emotion_cool"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/fish"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+
+                <ImageView
+                    android:id="@+id/custom_35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/gender_male"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/gender_female"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
 </LinearLayout>

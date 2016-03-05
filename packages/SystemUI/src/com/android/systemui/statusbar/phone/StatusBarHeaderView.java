@@ -354,9 +354,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
 	mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         int mHeaderColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_HEADER_COLOR, 0xFFFFFFFF);
+                Settings.System.QS_HEADER_COLOR, 0xFFFFFF);
 	int mQsDetailColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_HEADER_TEXT_COLOR, 0xFFFFFFFF);
+                Settings.System.QS_HEADER_TEXT_COLOR, 0xFFFFFF);
         mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0,
                 UserHandle.USER_CURRENT) == 1;
@@ -685,7 +685,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	mTime = (TextView) findViewById(R.id.time_view);
 	mAmPm = (TextView) findViewById(R.id.am_pm_view);
         int color = Settings.System.getInt(resolver,
-                Settings.System.HEADER_CLOCK_COLOR, 0xFFFFFFFF);
+                Settings.System.HEADER_CLOCK_COLOR, 0xFFFFFF);
 
         if (mTime != null) {
             mTime.setTextColor(color);
@@ -700,7 +700,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	ContentResolver resolver = getContext().getContentResolver();
 	mBatteryLevel = (BatteryLevelTextView) findViewById(R.id.battery_level_text);
         int color = Settings.System.getInt(resolver,
-                Settings.System.HEADER_BATTERY_TEXT_COLOR, 0xFFFFFFFF);
+                Settings.System.HEADER_BATTERY_TEXT_COLOR, 0xFFFFFF);
 
         if (mBatteryLevel != null) {
             mBatteryLevel.setTextColor(color);
@@ -712,7 +712,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	ContentResolver resolver = getContext().getContentResolver();
 	mAlarmStatus = (TextView) findViewById(R.id.alarm_status);
         int color = Settings.System.getInt(resolver,
-                Settings.System.HEADER_ALARM_TEXT_COLOR, 0xFFFFFFFF);
+                Settings.System.HEADER_ALARM_TEXT_COLOR, 0xFFFFFF);
 
         if (mAlarmStatus != null) {
             mAlarmStatus.setTextColor(color);
@@ -725,7 +725,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	mDateCollapsed = (TextView) findViewById(R.id.date_collapsed);
         mDateExpanded = (TextView) findViewById(R.id.date_expanded);
         int color = Settings.System.getInt(resolver,
-                Settings.System.HEADER_DETAIL_COLOR, 0xFFFFFFFF);
+                Settings.System.HEADER_DETAIL_COLOR, 0xFFFFFF);
 
         if (mDateCollapsed != null) {
             mDateCollapsed.setTextColor(color);
@@ -740,7 +740,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	ContentResolver resolver = getContext().getContentResolver();
 	mWeatherLine1 = (TextView) findViewById(R.id.weather_line_1);
         int color = Settings.System.getInt(resolver,
-                Settings.System.HEADER_WEATHERONE_COLOR, 0xFFFFFFFF);
+                Settings.System.HEADER_WEATHERONE_COLOR, 0xFFFFFF);
 
         if (mWeatherLine1 != null) {
             mWeatherLine1.setTextColor(color);
@@ -752,7 +752,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	ContentResolver resolver = getContext().getContentResolver();
 	mWeatherLine2 = (TextView) findViewById(R.id.weather_line_2);
         int color = Settings.System.getInt(resolver,
-                Settings.System.HEADER_WEATHERTWO_COLOR, 0xFFFFFFFF);
+                Settings.System.HEADER_WEATHERTWO_COLOR, 0xFFFFFF);
 
         if (mWeatherLine2 != null) {
             mWeatherLine2.setTextColor(color);

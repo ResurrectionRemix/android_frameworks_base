@@ -597,150 +597,150 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         protected void observe() {
             super.observe();
 
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SCREEN_BRIGHTNESS_MODE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_RR_LOGO),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-		    false, this, UserHandle.USER_ALL);	
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.BATTERY_SAVER_MODE_COLOR),
-		    false, this, UserHandle.USER_ALL);
- 	   resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_SIZE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
-                    false, this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_ROTATION),
-                    false, this, UserHandle.USER_ALL);
-    	   resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ENABLE_TASK_MANAGER),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_ALPHA),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_SECURITY_ALPHA),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.USE_SLIM_RECENTS), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.RECENT_CARD_BG_COLOR), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.RECENT_CARD_TEXT_COLOR), false, this,
-                    UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SHOW_FOURG),
-                    false, this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SHOW_THREEG),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
-		    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR),
-                    false, this, UserHandle.USER_ALL);
-	   resolver.registerContentObserver(Settings.System.getUriFor(
-            	    Settings.System.STATUS_BAR_RR_LOGO),
-                    false, this, UserHandle.USER_ALL);
-           resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-                    false, this, UserHandle.USER_ALL);
-           resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_RR_LOGO_STYLE),
-                    false, this, UserHandle.USER_ALL);
-	   resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_NUM_TILE_COLUMNS), false, this,
-                    UserHandle.USER_ALL);
-	   resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
-                    false, this, UserHandle.USER_ALL);
-           resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_NUM_TILE_ROWS), false, this,
-                    UserHandle.USER_ALL);
-	   resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH),
-                    false, this, UserHandle.USER_ALL);        
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_NO_SIM_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_AIRPLANE_MODE_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_STATUS_ICONS_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUSBAR_COLOR_SWITCH),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.BATTERY_ICON_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.BATTERY_TEXT_COLOR),
-                    false, this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_BACKGROUND_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_ICON_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NAVBAR_RECENTS_SWITCH),
-                    false, this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SHOW_CUSTOM_LOGO),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_STYLE),
-                    false, this, UserHandle.USER_ALL);                   
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.CLEAR_RECENTS_STYLE),
-                    false, this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.CLEAR_RECENTS_STYLE_ENABLE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_NUM_TILE_COLUMNS),
-                    false, this, UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.GESTURE_ANYWHERE_ENABLED),
-                    false, this, UserHandle.USER_ALL);
+	ContentResolver resolver = mContext.getContentResolver();
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SCREEN_BRIGHTNESS_MODE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO_COLOR),
+	        false, this, UserHandle.USER_ALL);	
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.BATTERY_SAVER_MODE_COLOR),
+	        false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_SIZE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_ROTATION),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.ENABLE_TASK_MANAGER),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_ALPHA),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_SECURITY_ALPHA),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.USE_SLIM_RECENTS), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.RECENT_CARD_BG_COLOR), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.RECENT_CARD_TEXT_COLOR), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SHOW_FOURG),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SHOW_THREEG),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
+	        false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_RR_LOGO_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_NUM_TILE_COLUMNS), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_NUM_TILE_ROWS), false, this,
+			UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_COLOR_SWITCH),
+			false, this, UserHandle.USER_ALL);        
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NETWORK_ICONS_NO_SIM_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NETWORK_ICONS_AIRPLANE_MODE_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_STATUS_ICONS_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUSBAR_COLOR_SWITCH),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.BATTERY_ICON_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.BATTERY_TEXT_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_BACKGROUND_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_ICON_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.NAVBAR_RECENTS_SWITCH),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.SHOW_CUSTOM_LOGO),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CUSTOM_LOGO_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CUSTOM_LOGO_STYLE),
+			false, this, UserHandle.USER_ALL);                   
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CLEAR_RECENTS_STYLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.CLEAR_RECENTS_STYLE_ENABLE),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_NUM_TILE_COLUMNS),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.GESTURE_ANYWHERE_ENABLED),
+			false, this, UserHandle.USER_ALL);
 
 		    update();
         }
@@ -1036,95 +1036,114 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             UserHandle.USER_CURRENT);
             mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
             mBrightnessControl = CMSettings.System.getIntForUser(
-                    resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
-                    UserHandle.USER_CURRENT) == 1;
-         mQsColorSwitch = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
-            mIconColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
-             mRRLogoStyle = Settings.System.getIntForUser(
-                    resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-            mRRlogo = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
-            mRRLogoColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+			resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
+			UserHandle.USER_CURRENT) == 1;
+		mQsColorSwitch = Settings.System.getIntForUser(resolver,
+			Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
+		mIconColor = Settings.System.getIntForUser(resolver,
+			Settings.System.QS_ICON_COLOR, 0xFFFFFF, mCurrentUserId);
+		mRRLogoStyle = Settings.System.getIntForUser(
+			resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
+			UserHandle.USER_CURRENT);
+		mRRlogo = Settings.System.getIntForUser(resolver,
+			Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
+		mRRLogoColor = Settings.System.getIntForUser(resolver,
+			Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
 	       if ( mRRLogoStyle == 0) {
-                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
-            } else if ( mRRLogoStyle == 1) {
-			 rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
-	    } else if ( mRRLogoStyle == 2) {
-                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-            } else if ( mRRLogoStyle == 3) {
-                rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
-            } 
-            showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
+			} else if ( mRRLogoStyle == 1) {
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.center_rr_logo);
+			} else if ( mRRLogoStyle == 2) {
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+			} else if ( mRRLogoStyle == 3) {
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.before_icons_rr_logo);
+			} 
+			showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
 
-            mCustomlogoStyle = Settings.System.getIntForUser(
-                    resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-            mCustomlogo = Settings.System.getIntForUser(resolver,
-                    Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
-            mCustomlogoColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-	       if ( mCustomlogoStyle == 0) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-            } else if ( mCustomlogoStyle == 1) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-	    } else if ( mCustomlogoStyle == 2) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-            } else if ( mCustomlogoStyle == 3) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-            }  else if ( mCustomlogoStyle == 4) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-	    } else if ( mCustomlogoStyle == 5) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-            } else if ( mCustomlogoStyle == 6) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-            } else if ( mCustomlogoStyle == 7) {
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-            } else if ( mCustomlogoStyle == 8) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-	    } else if ( mCustomlogoStyle == 9) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-            } else if ( mCustomlogoStyle == 10) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-            }  else if ( mCustomlogoStyle == 11) {
+		mCustomlogoStyle = Settings.System.getIntForUser(
+		resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
+		UserHandle.USER_CURRENT);
+		mCustomlogo = Settings.System.getIntForUser(resolver,
+		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
+		mCustomlogoColor = Settings.System.getIntForUser(resolver,
+		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
+		if ( mCustomlogoStyle == 0) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+		} else if ( mCustomlogoStyle == 1) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
+		} else if ( mCustomlogoStyle == 2) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
+		} else if ( mCustomlogoStyle == 3) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
+		} else if ( mCustomlogoStyle == 4) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
+		} else if ( mCustomlogoStyle == 5) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
+		} else if ( mCustomlogoStyle == 6) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
+		} else if ( mCustomlogoStyle == 7) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
+		} else if ( mCustomlogoStyle == 8) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
+		} else if ( mCustomlogoStyle == 9) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
+		} else if ( mCustomlogoStyle == 10) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
+		} else if ( mCustomlogoStyle == 11) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-	    } else if ( mCustomlogoStyle == 12) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-            } else if ( mCustomlogoStyle == 13) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-            } else if ( mCustomlogoStyle == 14) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-            } else if ( mCustomlogoStyle == 15) {
+		} else if ( mCustomlogoStyle == 12) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
+		} else if ( mCustomlogoStyle == 13) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
+		} else if ( mCustomlogoStyle == 14) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
+		} else if ( mCustomlogoStyle == 15) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_15);
-	    } else if ( mCustomlogoStyle == 16) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
-            } else if ( mCustomlogoStyle == 17) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
-            }  else if ( mCustomlogoStyle == 18) {
+		} else if ( mCustomlogoStyle == 16) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
+		} else if ( mCustomlogoStyle == 17) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
+		} else if ( mCustomlogoStyle == 18) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_18);
-	    } else if ( mCustomlogoStyle == 19) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
-            } else if ( mCustomlogoStyle == 20) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
-            } else if ( mCustomlogoStyle == 21) {
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
-            } else if ( mCustomlogoStyle == 22) {
+		} else if ( mCustomlogoStyle == 19) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
+		} else if ( mCustomlogoStyle == 20) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
+		} else if ( mCustomlogoStyle == 21) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
+		} else if ( mCustomlogoStyle == 22) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_22);
-	    } else if ( mCustomlogoStyle == 23) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
-            } else if ( mCustomlogoStyle == 24) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
-            }  else if ( mCustomlogoStyle == 25) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
-	    } else if ( mCustomlogoStyle == 26) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
-            } else if ( mCustomlogoStyle == 27) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
-            }
-            showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
+		} else if ( mCustomlogoStyle == 23) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
+		} else if ( mCustomlogoStyle == 24) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
+		} else if ( mCustomlogoStyle == 25) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
+		} else if ( mCustomlogoStyle == 26) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
+		} else if ( mCustomlogoStyle == 27) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
+		} else if ( mCustomlogoStyle == 28) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_28);
+		} else if ( mCustomlogoStyle == 29) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_29);
+		} else if ( mCustomlogoStyle == 30) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_30);
+		} else if ( mCustomlogoStyle == 31) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_31);
+		} else if ( mCustomlogoStyle == 32) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_32);
+		} else if ( mCustomlogoStyle == 33) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_33);
+		} else if ( mCustomlogoStyle == 34) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_34);
+		} else if ( mCustomlogoStyle == 35) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
+		} else if ( mCustomlogoStyle == 36) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		}
+
+		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 
 
 
@@ -1136,7 +1155,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	   int  mQSBackgroundColor = Settings.System.getInt(
                             resolver, Settings.System.QS_BACKGROUND_COLOR, 0xff263238);
 	   int SignalColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
+                Settings.System.QS_ICON_COLOR, 0xFFFFFF);
 
 
             boolean mShow4G = Settings.System.getIntForUser(resolver,
@@ -1181,7 +1200,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT);
 
             mWeatherTempColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
+                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFF, mCurrentUserId);
 
             mWeatherTempSize = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_WEATHER_SIZE, 14, mCurrentUserId);
@@ -1971,7 +1990,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
+                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFF, mCurrentUserId);
         mWeatherTempFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE, FONT_NORMAL, mCurrentUserId);
         mWeatherTempSize = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -2007,7 +2026,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mRRlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
         mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
+                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
        showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
 
 	mCustomlogoStyle = Settings.System.getIntForUser(mContext.getContentResolver(), 
@@ -2016,68 +2035,86 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCustomlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
             mCustomlogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-	     if ( mCustomlogoStyle == 0) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-            } else if ( mCustomlogoStyle == 1) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-	    } else if ( mCustomlogoStyle == 2) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-            } else if ( mCustomlogoStyle == 3) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-            }  else if ( mCustomlogoStyle == 4) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-	    } else if ( mCustomlogoStyle == 5) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-            } else if ( mCustomlogoStyle == 6) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-            } else if ( mCustomlogoStyle == 7) {
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-            } else if ( mCustomlogoStyle == 8) {
+                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
+		if ( mCustomlogoStyle == 0) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+		} else if ( mCustomlogoStyle == 1) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
+		} else if ( mCustomlogoStyle == 2) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
+		} else if ( mCustomlogoStyle == 3) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
+		} else if ( mCustomlogoStyle == 4) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
+		} else if ( mCustomlogoStyle == 5) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
+		} else if ( mCustomlogoStyle == 6) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
+		} else if ( mCustomlogoStyle == 7) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
+		} else if ( mCustomlogoStyle == 8) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-	    } else if ( mCustomlogoStyle == 9) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-            } else if ( mCustomlogoStyle == 10) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-            }  else if ( mCustomlogoStyle == 11) {
-			  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-	    } else if ( mCustomlogoStyle == 12) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-            } else if ( mCustomlogoStyle == 13) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-            } else if ( mCustomlogoStyle == 14) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-            } else if ( mCustomlogoStyle == 15) {
-			  mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_15);
-	    } else if ( mCustomlogoStyle == 16) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
-            } else if ( mCustomlogoStyle == 17) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
-            }  else if ( mCustomlogoStyle == 18) {
+		} else if ( mCustomlogoStyle == 9) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
+		} else if ( mCustomlogoStyle == 10) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
+		} else if ( mCustomlogoStyle == 11) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
+		} else if ( mCustomlogoStyle == 12) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
+		} else if ( mCustomlogoStyle == 13) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
+		} else if ( mCustomlogoStyle == 14) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
+		} else if ( mCustomlogoStyle == 15) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_15);
+		} else if ( mCustomlogoStyle == 16) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
+		} else if ( mCustomlogoStyle == 17) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
+		} else if ( mCustomlogoStyle == 18) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_18);
-	    } else if ( mCustomlogoStyle == 19) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
-            } else if ( mCustomlogoStyle == 20) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
-            } else if ( mCustomlogoStyle == 21) {
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
-            } else if ( mCustomlogoStyle == 22) {
+		} else if ( mCustomlogoStyle == 19) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
+		} else if ( mCustomlogoStyle == 20) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
+		} else if ( mCustomlogoStyle == 21) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
+		} else if ( mCustomlogoStyle == 22) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_22);
-	    } else if ( mCustomlogoStyle == 23) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
-            } else if ( mCustomlogoStyle == 24) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
-            }  else if ( mCustomlogoStyle == 25) {
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
-	    } else if ( mCustomlogoStyle == 26) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
-            } else if ( mCustomlogoStyle == 27) {
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
-            }
-            showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
+		} else if ( mCustomlogoStyle == 23) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
+		} else if ( mCustomlogoStyle == 24) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
+		} else if ( mCustomlogoStyle == 25) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
+		} else if ( mCustomlogoStyle == 26) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
+		} else if ( mCustomlogoStyle == 27) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
+		} else if ( mCustomlogoStyle == 28) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_28);
+		} else if ( mCustomlogoStyle == 29) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_29);
+		} else if ( mCustomlogoStyle == 30) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_30);
+		} else if ( mCustomlogoStyle == 31) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_31);
+		} else if ( mCustomlogoStyle == 32) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_32);
+		} else if ( mCustomlogoStyle == 33) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_33);
+		} else if ( mCustomlogoStyle == 34) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_34);
+		} else if ( mCustomlogoStyle == 35) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
+		} else if ( mCustomlogoStyle == 36) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		}
+		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 
         mIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
+                Settings.System.QS_ICON_COLOR, 0xFFFFFF, mCurrentUserId);
 
         mKeyguardUserSwitcher = new KeyguardUserSwitcher(mContext,
                 (ViewStub) mStatusBarWindowContent.findViewById(R.id.keyguard_user_switcher),
@@ -3568,7 +3605,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
                 if (DEBUG_MEDIA_FAKE_ARTWORK) {
                     final int c = 0xFF000000 | (int)(Math.random() * 0xFFFFFF);
                     Log.v(TAG, String.format("DEBUG_MEDIA: setting new color: 0x%08x", c));
-                    mBackdropBack.setBackgroundColor(0xFFFFFFFF);
+                    mBackdropBack.setBackgroundColor(0xFFFFFF);
                     mBackdropBack.setImageDrawable(new ColorDrawable(c));
                 } else {
                     mBackdropBack.setImageBitmap(backdropBitmap);
@@ -3638,7 +3675,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     private void UpdateNotifDrawerClearAllIconColor() {
         int color = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR,
-                0xffffffff, mCurrentUserId);
+                0xffffff, mCurrentUserId);
         if (mDismissView != null) {
             mDismissView.updateIconColor(color);
         }
@@ -3668,7 +3705,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     
     public void updatebatterycolor() {
     int mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
+                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFF);
       if (mIconController != null) {
      mIconController.applyIconTint(); 
      }
@@ -5100,93 +5137,120 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
             return;
         }
 
-	mCLogo.setColorFilter(color, Mode.MULTIPLY);
-     	      if ( style == 0) {
-		 mCLogo.setVisibility(View.GONE);
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
-            } else if ( style == 1) {
-		 mCLogo.setVisibility(View.GONE);
+		mCLogo.setColorFilter(color, Mode.MULTIPLY);
+		if ( style == 0) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+		} else if ( style == 1) {
+		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_1);
-	    } else if ( style == 2) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
-            } else if ( style == 3) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
-            }  else if ( style == 4) {
-		 mCLogo.setVisibility(View.GONE);
-	         mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
-	    } else if ( style == 5) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
-            } else if ( style == 6) {
-		 mCLogo.setVisibility(View.GONE);
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
-	    } else if ( style == 7) {
-		 mCLogo.setVisibility(View.GONE);
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
-            } else if ( style == 8) {
-		 mCLogo.setVisibility(View.GONE);
+		} else if ( style == 2) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_2);
+		} else if ( style == 3) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_3);
+		} else if ( style == 4) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_4);
+		} else if ( style == 5) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_5);
+		} else if ( style == 6) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_6);
+		} else if ( style == 7) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_7);
+		} else if ( style == 8) {
+		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_8);
-	    } else if ( style == 9) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
-            } else if ( style == 10) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
-            }  else if ( style == 11) {
-		 mCLogo.setVisibility(View.GONE);
-	         mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
-	    } else if ( style == 12) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
-            } else if ( style == 13) {
-		 mCLogo.setVisibility(View.GONE);
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
-	    } else if ( style == 14) {
-		 mCLogo.setVisibility(View.GONE);
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
-	     }  else if ( style  == 15) {
+		} else if ( style == 9) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_9);
+		} else if ( style == 10) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_10);
+		}  else if ( style == 11) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_11);
+		} else if ( style == 12) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_12);
+		} else if ( style == 13) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_13);
+		} else if ( style == 14) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_14);
+		} else if ( style  == 15) {
 		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_15);
-	    } else if ( style  == 16) {
+		} else if ( style  == 16) {
 		mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
-            } else if ( style  == 17) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
-            }  else if ( style  == 18) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_16);
+		} else if ( style  == 17) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_17);
+		} else if ( style  == 18) {
 		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_18);
-	    } else if ( style  == 19) {
-	         mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
-            } else if ( style  == 20) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
-            } else if ( style  == 21) {
+		} else if ( style  == 19) {
 		mCLogo.setVisibility(View.GONE);
-                mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
-            } else if ( style  == 22) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_19);
+		} else if ( style  == 20) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_20);
+		} else if ( style  == 21) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_21);
+		} else if ( style  == 22) {
 		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_22);
-	    } else if ( style  == 23) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
-            } else if ( style  == 24) {
-	         mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
-            }  else if ( style  == 25) {
-		 mCLogo.setVisibility(View.GONE);
-		 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
-	    } else if ( style  == 26) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
-            } else if ( style  == 27) {
-		 mCLogo.setVisibility(View.GONE);
-                 mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
-            }
-        mCLogo.setVisibility(View.VISIBLE);
+		} else if ( style  == 23) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_23);
+		} else if ( style  == 24) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_24);
+		} else if ( style  == 25) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_25);
+		} else if ( style  == 26) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_26);
+		} else if ( style  == 27) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_27);
+		} else if ( style == 28) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_28);
+		} else if ( style == 29) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_29);
+		} else if ( style == 30) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_30);
+		} else if ( style == 31) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_31);
+		} else if ( style == 32) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_32);
+		} else if ( style == 33) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_33);
+		} else if ( style == 34) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_34);
+		} else if ( style == 35) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
+		} else if ( style == 36) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		}
+		mCLogo.setVisibility(View.VISIBLE);
 
 	}
   
