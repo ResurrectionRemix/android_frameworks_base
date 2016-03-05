@@ -434,8 +434,12 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
 
             List<Item> itemList = new ArrayList<>();
 
+            // sort in ascending order but make sure the "default" theme is always first
+            String sortOrder = "(" + ThemesContract.ThemesColumns.IS_DEFAULT_THEME + "=1) DESC, "
+                    + ThemesContract.ThemesColumns.TITLE + " ASC";
+
             Cursor c = getHost().getContext().getContentResolver()
-                    .query(ThemesContract.ThemesColumns.CONTENT_URI, null, filter, null, null);
+                    .query(ThemesContract.ThemesColumns.CONTENT_URI, null, filter, null, sortOrder);
 
             while (c.moveToNext()) {
 
