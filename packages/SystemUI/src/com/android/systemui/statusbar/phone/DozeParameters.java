@@ -18,6 +18,8 @@ package com.android.systemui.statusbar.phone;
 
 import android.content.Context;
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.MathUtils;
@@ -64,6 +66,13 @@ public class DozeParameters {
         pw.print("    getPickupPerformsProxCheck(): "); pw.println(getPickupPerformsProxCheck());
     }
 
+    public boolean getOverwriteValue() {
+        final int values = Settings.System.getIntForUser(mContext.getContentResolver(),
+               Settings.System.DOZE_OVERWRITE_VALUE, 0,
+                    UserHandle.USER_CURRENT);
+        return values != 0;
+    }
+
     public boolean getDisplayStateSupported() {
         return getBoolean("doze.display.supported", R.bool.doze_display_state_supported);
     }
@@ -73,16 +82,31 @@ public class DozeParameters {
     }
 
     public int getPulseInDuration(boolean pickup) {
+        if (getOverwriteValue()) {
+            return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_PULSE_DURATION_IN, 500,
+                    UserHandle.USER_CURRENT);
+        }
         return pickup
                 ? getInt("doze.pulse.duration.in.pickup", R.integer.doze_pulse_duration_in_pickup)
                 : getInt("doze.pulse.duration.in", R.integer.doze_pulse_duration_in);
     }
 
     public int getPulseVisibleDuration() {
+        if (getOverwriteValue()) {
+            return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_PULSE_DURATION_VISIBLE, 3000,
+                    UserHandle.USER_CURRENT);
+        }
         return getInt("doze.pulse.duration.visible", R.integer.doze_pulse_duration_visible);
     }
 
     public int getPulseOutDuration() {
+        if (getOverwriteValue()) {
+            return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_PULSE_DURATION_OUT, 500,
+                    UserHandle.USER_CURRENT);
+        }
         return getInt("doze.pulse.duration.out", R.integer.doze_pulse_duration_out);
     }
 
@@ -95,6 +119,12 @@ public class DozeParameters {
     }
 
     public boolean getPulseOnPickup() {
+        if (getOverwriteValue()) {
+            final int values = Settings.System.getIntForUser(mContext.getContentResolver(),
+                   Settings.System.DOZE_PULSE_ON_PICKUP, 1,
+                    UserHandle.USER_CURRENT);
+            return values != 0;
+        }
         return getBoolean("doze.pulse.pickup", R.bool.doze_pulse_on_pick_up);
     }
 
@@ -111,6 +141,12 @@ public class DozeParameters {
     }
 
     public boolean getPulseOnNotifications() {
+        if (getOverwriteValue()) {
+            final int values = Settings.System.getIntForUser(mContext.getContentResolver(),
+                   Settings.System.DOZE_PULSE_ON_NOTIFICATIONS, 1,
+                    UserHandle.USER_CURRENT);
+            return values != 0;
+        }
         return getBoolean("doze.pulse.notifications", R.bool.doze_pulse_on_notifications);
     }
 
@@ -141,6 +177,17 @@ public class DozeParameters {
 
     private String getString(String propName, int resId) {
         return SystemProperties.get(propName, mContext.getString(resId));
+    }
+
+    public int getDozeBrightness() {
+	final int dozeBrightnessDefault = mContext.getResources().getInteger(
+                    com.android.internal.R.integer.config_screenBrightnessDoze);
+        if (getOverwriteValue()) {
+            return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOZE_SCREEN_BRIGHTNESS, dozeBrightnessDefault,
+                    UserHandle.USER_CURRENT);
+        }
+        return dozeBrightnessDefault;
     }
 
     public static class PulseSchedule {

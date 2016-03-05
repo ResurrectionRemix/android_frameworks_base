@@ -107,4 +107,11 @@
   <java-symbol type="style" name="PowerMenuflyAnimation" />
   <java-symbol type="style" name="PowerMenuCardAnimation" />
 
+
+  <!-- Doze invert -->
+  <java-symbol type="bool" name="config_invert_colors_on_doze" />
+
+  <!-- Doze mode -->
+  <java-symbol type="bool" name="config_doze_enabled_by_default" />
+
 </resources>
