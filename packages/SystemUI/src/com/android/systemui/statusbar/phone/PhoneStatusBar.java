@@ -757,7 +757,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mBatterySaverWarningColor = mContext.getResources()
                                 .getColor(com.android.internal.R.color.battery_saver_mode_color);
                     }
-            }   else if (uri.equals(Settings.System.getUriFor(
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_COLOR))
@@ -812,7 +812,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         updateQsExpansionEnabled();
         mShadeUpdates.check();
-	}  else if (uri.equals(Settings.System.getUriFor(
+	} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_THREEG))) {
                     mShow3G = Settings.System.getIntForUser(
                             mContext.getContentResolver(),
@@ -851,29 +851,29 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         updateQsExpansionEnabled();
         mShadeUpdates.check();
-	}  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR))) {
-                updateNetworkSignalColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_NO_SIM_COLOR))) {
-                updateNoSimColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NETWORK_ICONS_AIRPLANE_MODE_COLOR))) {
-                updateAirplaneModeColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_STATUS_ICONS_COLOR))) {
-                updateStatusIconsColor();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR))) {
-                updateNotificationIconsColor();
-	   }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_ICON_COLOR))) {
-                   updatebatterycolor(); 
-	   } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_TEXT_COLOR))) {
-                   updatebatterycolor(); 
-	   } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUSBAR_COLOR_SWITCH))) {
+		}  else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR))) {
+		updateNetworkSignalColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NETWORK_ICONS_NO_SIM_COLOR))) {
+		updateNoSimColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NETWORK_ICONS_AIRPLANE_MODE_COLOR))) {
+		updateAirplaneModeColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_STATUS_ICONS_COLOR))) {
+		updateStatusIconsColor();
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUS_BAR_NOTIFICATION_ICONS_COLOR))) {
+		updateNotificationIconsColor();
+		}  else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.BATTERY_ICON_COLOR))) {
+		updatebatterycolor(); 
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.BATTERY_TEXT_COLOR))) {
+		updatebatterycolor(); 
+		} else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.STATUSBAR_COLOR_SWITCH))) {
                 updatebatterycolor();    
                 recreateStatusBar();
         // lets handle the child notifications now
@@ -1141,6 +1141,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
 		} else if ( mCustomlogoStyle == 36) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		} else if ( mCustomlogoStyle == 37) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_37);
+		} else if ( mCustomlogoStyle == 38) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_38);
+		} else if ( mCustomlogoStyle == 39) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
+		} else if ( mCustomlogoStyle == 40) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
 		}
 
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
@@ -2110,6 +2118,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_35);
 		} else if ( mCustomlogoStyle == 36) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		} else if ( mCustomlogoStyle == 37) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_37);
+		} else if ( mCustomlogoStyle == 38) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_38);
+		} else if ( mCustomlogoStyle == 39) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
+		} else if ( mCustomlogoStyle == 40) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
 		}
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 

@@ -330,7 +330,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="4dip"
-                    android:src="@drawable/emotion_cool"
+                    android:src="@drawable/google1"
                     android:scaleType="center"
                     android:visibility="gone"
                     />
@@ -359,6 +359,42 @@
                     android:layout_height="wrap_content"
                     android:paddingEnd="4dip"
                     android:src="@drawable/gender_female"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/pb_logo"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_38"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/rr_original_logo_1"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/custom_39"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/rr_logo_half"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />                    
+                <ImageView
+                    android:id="@+id/custom_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/rr_noring"
                     android:scaleType="center"
                     android:visibility="gone"
                     />
