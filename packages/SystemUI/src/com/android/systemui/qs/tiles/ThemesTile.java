@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ThemeChangeRequest;
-import android.content.res.ThemeChangeRequest.RequestType;
 import android.content.res.ThemeConfig;
 import android.content.res.ThemeManager;
 import android.database.Cursor;
@@ -34,6 +33,7 @@ import android.provider.ThemesContract;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.R;
@@ -142,6 +142,8 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
         if (mode == Mode.APP_THEME) {
             showDetail(false);
         }
+
+        Toast.makeText(getHost().getContext(), R.string.quick_settings_themes_changing_complete, Toast.LENGTH_LONG).show();
     }
 
     private final class ThemesDetailAdapter implements DetailAdapter, QSDetailItems.Callback {
@@ -186,7 +188,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
                 builder.setAppOverlay(getTopApp(), pkg);
             }
 
-            mService.requestThemeChange(builder.build(), false);
+            mService.requestThemeChange(builder.build(), true);
 
         }
 
@@ -314,7 +316,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
         private String getCurrentTheme(String app) {
             ThemeConfig themeConfig = getHost().getContext().getResources().getConfiguration().themeConfig;
 
-            if (themeConfig != null && themeConfig.getAppThemes().get(app) != null) {
+            if (themeConfig.getAppThemes().get(app) != null) {
                 return themeConfig.getAppThemes().get(app).getOverlayPkgName();
             } else {
                 return "default";
