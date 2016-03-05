@@ -313,14 +313,24 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
 
         }
 
+        //TODO: Maybe there is better way?
         private String getCurrentTheme(String app) {
-            ThemeConfig themeConfig = getHost().getContext().getResources().getConfiguration().themeConfig;
+
+            ThemeConfig themeConfig;
+
+            try {
+                themeConfig = ActivityManagerNative.getDefault().getConfiguration().themeConfig;
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
 
             if (themeConfig.getAppThemes().get(app) != null) {
                 return themeConfig.getAppThemes().get(app).getOverlayPkgName();
             } else {
                 return "default";
             }
+
+
         }
 
         private String getCurrentTheme() {
