@@ -1000,7 +1000,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mShadeUpdates.check();
 	  }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.GESTURE_ANYWHERE_ENABLED))) {
-                checkgestureview();
                 recreateStatusBar();
         // lets handle the child notifications now
         updateNotificationShadeForChildren();
@@ -3647,13 +3646,15 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     
     
    public void checkgestureview() {
-            boolean mGestureAnywhere = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.GESTURE_ANYWHERE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+            boolean mGestureAnywhere = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.GESTURE_ANYWHERE_ENABLED, 0) == 1;
                     
                     	if (mGestureAnywhere) {
-                    	if (mGestureAnywhereView ==null) {
-			  addGestureAnywhereView(); }
-			} 
+			  addGestureAnywhereView();
+			} else {
+			if (mGestureAnywhereView !=null) {
+			removeGestureAnywhereView(); }
+			}
 		}
 
     private void updateNetworkIconColors() {
