@@ -985,7 +985,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     private void updateLockIconColor() {
         ContentResolver resolver = getContext().getContentResolver();
         int color = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_LOCK_ICON_COLOR, 0xFFFFFF);
+                Settings.System.LOCKSCREEN_LOCK_ICON_COLOR, 0xFFFFFFFF);
 
         if (mLockIcon != null) {
             mLockIcon.setColorFilter(color);
@@ -995,7 +995,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     private void updateIndicationTextColor() {
         ContentResolver resolver = getContext().getContentResolver();
         int color = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0xFFFFFF);
+                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0xFFFFFFFF);
 
         if (mIndicationText != null) {
             mIndicationText.setTextColor(color);

@@ -889,7 +889,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         updateQsExpansionEnabled();
         mShadeUpdates.check();	
-	   }  else if (uri.equals(Settings.System.getUriFor(
+	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
                 recreateStatusBar();
         // lets handle the child notifications now
@@ -928,7 +928,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR))) {
                	updateQsColors();
-            }   else if (uri.equals(Settings.System.getUriFor(
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_CUSTOM_LOGO))) {
                 recreateStatusBar();
         // lets handle the child notifications now
@@ -979,7 +979,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         updateQsExpansionEnabled();
         mShadeUpdates.check();
-	  }else if (uri.equals(Settings.System.getUriFor(
+	  } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_NUM_TILE_ROWS))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_NUM_TILE_COLUMNS))) 
@@ -998,7 +998,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         updateQsExpansionEnabled();
         mShadeUpdates.check();
-	  }  else if (uri.equals(Settings.System.getUriFor(
+	  } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.GESTURE_ANYWHERE_ENABLED))) {
                 recreateStatusBar();
         // lets handle the child notifications now
@@ -1041,14 +1041,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mQsColorSwitch = Settings.System.getIntForUser(resolver,
 			Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
 		mIconColor = Settings.System.getIntForUser(resolver,
-			Settings.System.QS_ICON_COLOR, 0xFFFFFF, mCurrentUserId);
+			Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 		mRRLogoStyle = Settings.System.getIntForUser(
 			resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
 			UserHandle.USER_CURRENT);
 		mRRlogo = Settings.System.getIntForUser(resolver,
 			Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
 		mRRLogoColor = Settings.System.getIntForUser(resolver,
-			Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
+			Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
 	       if ( mRRLogoStyle == 0) {
 			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.left_rr_logo);
 			} else if ( mRRLogoStyle == 1) {
@@ -1066,7 +1066,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCustomlogo = Settings.System.getIntForUser(resolver,
 		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
 		mCustomlogoColor = Settings.System.getIntForUser(resolver,
-		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
+		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
 		if ( mCustomlogoStyle == 0) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
 		} else if ( mCustomlogoStyle == 1) {
@@ -1163,7 +1163,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	   int  mQSBackgroundColor = Settings.System.getInt(
                             resolver, Settings.System.QS_BACKGROUND_COLOR, 0xff263238);
 	   int SignalColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFF);
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
 
 
             boolean mShow4G = Settings.System.getIntForUser(resolver,
@@ -1208,7 +1208,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT);
 
             mWeatherTempColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFF, mCurrentUserId);
+                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
 
             mWeatherTempSize = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_WEATHER_SIZE, 14, mCurrentUserId);
@@ -1998,7 +1998,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFF, mCurrentUserId);
+                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
         mWeatherTempFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE, FONT_NORMAL, mCurrentUserId);
         mWeatherTempSize = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -2034,7 +2034,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mRRlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
         mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
+                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
        showRRLogo(mRRlogo, mRRLogoColor,  mRRLogoStyle);
 
 	mCustomlogoStyle = Settings.System.getIntForUser(mContext.getContentResolver(), 
@@ -2043,7 +2043,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCustomlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
             mCustomlogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFF, mCurrentUserId);
+                    Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
 		if ( mCustomlogoStyle == 0) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
 		} else if ( mCustomlogoStyle == 1) {
@@ -2130,7 +2130,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 
         mIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFF, mCurrentUserId);
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 
         mKeyguardUserSwitcher = new KeyguardUserSwitcher(mContext,
                 (ViewStub) mStatusBarWindowContent.findViewById(R.id.keyguard_user_switcher),
@@ -3619,9 +3619,9 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
                 }
 
                 if (DEBUG_MEDIA_FAKE_ARTWORK) {
-                    final int c = 0xFF000000 | (int)(Math.random() * 0xFFFFFF);
+                    final int c = 0xFF000000 | (int)(Math.random() * 0xFFFFFFFF);
                     Log.v(TAG, String.format("DEBUG_MEDIA: setting new color: 0x%08x", c));
-                    mBackdropBack.setBackgroundColor(0xFFFFFF);
+                    mBackdropBack.setBackgroundColor(0xFFFFFFFF);
                     mBackdropBack.setImageDrawable(new ColorDrawable(c));
                 } else {
                     mBackdropBack.setImageBitmap(backdropBitmap);
@@ -3691,7 +3691,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     private void UpdateNotifDrawerClearAllIconColor() {
         int color = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR,
-                0xffffff, mCurrentUserId);
+                0xFFFFFFFF, mCurrentUserId);
         if (mDismissView != null) {
             mDismissView.updateIconColor(color);
         }
@@ -3721,7 +3721,7 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
     
     public void updatebatterycolor() {
     int mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFF);
+                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
       if (mIconController != null) {
      mIconController.applyIconTint(); 
      }

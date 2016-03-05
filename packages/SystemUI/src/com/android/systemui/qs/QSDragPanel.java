@@ -171,7 +171,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
 	int QsTextColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xFFFFFF);
+                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
 	 if (mQsColorSwitch) {
             mDetailDoneButton.setTextColor(QsTextColor);
             mDetailSettingsButton.setTextColor(QsTextColor);
@@ -210,7 +210,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 	mTileView = new QSTileView (mContext);
 
 	int color = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BACKGROUND_COLOR, 0xFFFFFF);
+                Settings.System.QS_BACKGROUND_COLOR, 0xFFFFFFFF);
 	setDetailBackgroundColor(color);
 
         mClipper = new QSDetailClipper(mDetail);
@@ -807,9 +807,9 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 
     public void updateicons() {
 	int mQsText = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_TEXT_COLOR, 0xFFFFFF);
+                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
 	int mQsIcon = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_ICON_COLOR, 0xFFFFFF);
+                Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
 	}
 
     private void removeDraggingRecord() {

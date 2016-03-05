@@ -180,7 +180,7 @@ public class QSPanel extends ViewGroup {
 	mQsColorSwitch = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
 	int mIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_BRIGHTNESS_ICON_COLOR, 0xFFFFFF);
+                Settings.System.QS_BRIGHTNESS_ICON_COLOR, 0xFFFFFFFF);
         ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
 	if (mQsColorSwitch) {	
 	 brightnessIcon.setColorFilter(mIconColor, Mode.SRC_IN);

@@ -147,10 +147,10 @@ public class QSDetailItems extends FrameLayout {
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
         if (mQsColorSwitch) {
             QsTextColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_TEXT_COLOR, 0xffffff);
+                    Settings.System.QS_TEXT_COLOR, 0xffffffff);
             mEmptyTextColor = (153 << 24) | (QsTextColor & 0x00ffffff); 
             mQsIconColor = Settings.System.getInt(resolver,
-                    Settings.System.QS_ICON_COLOR, 0xffffff);
+                    Settings.System.QS_ICON_COLOR, 0xffffffff);
 		}
 	}
 
