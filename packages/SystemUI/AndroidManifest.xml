@@ -236,7 +236,7 @@
         </activity>
 
         <activity android:name=".tuner.TunerActivity"
-                  android:enabled="true"
+                  android:enabled="false"
                   android:icon="@drawable/tuner"
                   android:theme="@android:style/Theme.Material.Settings"
                   android:label="@string/status_bar_tuner"

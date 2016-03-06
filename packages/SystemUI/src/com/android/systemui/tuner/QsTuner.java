@@ -308,7 +308,6 @@ public class QsTuner extends Fragment implements Callback {
             else if (mSpec.equals("cast")) return R.drawable.ic_qs_cast_on;
             else if (mSpec.equals("hotspot")) return R.drawable.ic_hotspot_enable;
             else if (mSpec.equals("adb_network")) return R.drawable.ic_qs_network_adb_on;
-            else if (mSpec.equals("headsup")) return R.drawable.ic_qs_heads_up_on;
             return R.drawable.android;
         }
 
