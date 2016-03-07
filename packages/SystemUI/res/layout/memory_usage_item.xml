@@ -59,7 +59,7 @@
             android:layout_height="54dp"
             android:layout_gravity="center"
             android:clickable="true"
-            android:background="@drawable/floating_action_button_tm"
+            android:background="@drawable/ripple_drawable"
             android:tint="@color/floating_action_button_icon_color"
             android:src="@drawable/ic_dismiss_all9"/>
     </RelativeLayout>
