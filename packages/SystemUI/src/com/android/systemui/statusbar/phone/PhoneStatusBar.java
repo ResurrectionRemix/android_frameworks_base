@@ -5275,14 +5275,8 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         int nNotifs = mNotificationData.size();
         ArrayList<Pair<String, StatusBarNotification>> notifications = new ArrayList<>(nNotifs);
         copyNotifications(notifications, mNotificationData);
-        // now remove all the notification views since we'll be re-inflating these with the copied
-        // data
-        for (int i = 0; i < nNotifs; i++) {
-            final NotificationData.Entry entry = mNotificationData.get(i);
-            if (entry != null) {
-                removeNotificationViews(entry.key, rankingMap);
-            }
-        }
+        // now remove all the notifications since we'll be re-creating these with the copied data
+        mNotificationData.clear();
 
         if (mCustomTileListenerService != null) {
             try {
