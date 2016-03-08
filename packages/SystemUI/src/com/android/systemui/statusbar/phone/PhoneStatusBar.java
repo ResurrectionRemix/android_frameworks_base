@@ -765,20 +765,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_WEATHER_SIZE))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))) {
-               	    recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+               	    DontStressOnRecreate();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.USE_SLIM_RECENTS))) {
                 updateRecents();
@@ -798,59 +785,20 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             mContext.getContentResolver(),
                             Settings.System.SHOW_FOURG,
                             0, UserHandle.USER_CURRENT) == 1;
-                            recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                            DontStressOnRecreate();
 	} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_THREEG))) {
                     mShow3G = Settings.System.getIntForUser(
                             mContext.getContentResolver(),
                             Settings.System.SHOW_THREEG,
                             0, UserHandle.USER_CURRENT) == 1;
-                            recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                            DontStressOnRecreate();
 	} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR))) {
                     UpdateNotifDrawerClearAllIconColor();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_RR_LOGO_STYLE))) {
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                DontStressOnRecreate();
 		}  else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.STATUS_BAR_NETWORK_ICONS_SIGNAL_COLOR))) {
 		updateNetworkSignalColor();
@@ -875,52 +823,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		} else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.STATUSBAR_COLOR_SWITCH))) {
                 updatebatterycolor();    
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();	
+                DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                DontStressOnRecreate();
        } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_ICON_COLOR))) {
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_TEXT_COLOR))
                     || uri.equals(Settings.System.getUriFor(
@@ -928,95 +837,30 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR))) {
                	updateQsColors();
-            } else if (uri.equals(Settings.System.getUriFor(
+       } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_CUSTOM_LOGO))) {
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CUSTOM_LOGO_STYLE))) {
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CLEAR_RECENTS_STYLE))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) 
                     {
-               	recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
-	  } else if (uri.equals(Settings.System.getUriFor(
+               	DontStressOnRecreate();
+	    } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_NUM_TILE_ROWS))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_NUM_TILE_COLUMNS))) 
                     {
-               	recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+               	DontStressOnRecreate();
 	  } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.GESTURE_ANYWHERE_ENABLED))) {
-                recreateStatusBar();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
+                DontStressOnRecreate();
         }
 
-            update();
+         update();
         }
 
         @Override
@@ -4606,6 +4450,19 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
                 : MODE_OPAQUE;
     }
 
+    private void DontStressOnRecreate() { // Update maps and remove children,views after the recreate statusbar .Provides to rest in the recreate
+        recreateStatusBar();
+        updateNotificationShadeForChildren();
+        mTmpChildOrderMap.clear();
+        updateRowStates();
+        updateSpeedbump();
+        updateClearAll();
+        updateEmptyShadeView();
+        updateQsExpansionEnabled();
+        mShadeUpdates.check();
+        mNotificationPanel.resetViews();
+    }    
+
     private void checkBarModes() {
         if (mDemoMode) return;
         checkBarMode(mStatusBarMode, mStatusBarWindowState, mStatusBarView.getBarTransitions(),
@@ -5538,21 +5395,8 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         final boolean updateNavBar = shouldUpdateNavbar(mCurrentTheme, newTheme);
         if (newTheme != null) mCurrentTheme = (ThemeConfig) newTheme.clone();
         if (updateStatusBar) {
-            recreateStatusBar();
+            DontStressOnRecreate();
             observer.update();
-        // lets handle the child notifications now
-        updateNotificationShadeForChildren();
-
-        // clear the map again for the next usage
-        mTmpChildOrderMap.clear();
-
-        updateRowStates();
-        updateSpeedbump();
-        updateClearAll();
-        updateEmptyShadeView();
-
-        updateQsExpansionEnabled();
-        mShadeUpdates.check();
         } else {
             loadDimens();
         }
