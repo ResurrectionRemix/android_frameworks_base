@@ -202,17 +202,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
     /** Updates the recents icon if there are tasks to clear */
     public void setRecentHints(boolean showClearRecents) {
-        NavigationBarView mNavigationBarView = ((SystemUIApplication) getApplication())
-                .getComponent(PhoneStatusBar.class).getNavigationBarView();
-        if (mNavigationBarView == null) return;
-
-        int navigationHints = mNavigationBarView.getNavigationIconHints();
-        if (showClearRecents) {
-            navigationHints |= StatusBarManager.NAVIGATION_HINT_RECENT_ALT;
-        } else {
-            navigationHints &= ~StatusBarManager.NAVIGATION_HINT_RECENT_ALT;
-        }
-        mNavigationBarView.setNavigationIconHints(navigationHints, true);
+	    return;
     }
 
     /** Updates the set of recent tasks */

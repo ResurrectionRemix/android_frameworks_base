@@ -58,9 +58,80 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:id="@+id/container"
+	    android:animateLayoutChanges="true"
             >
+	  <!-- navigation controls -->
+            <View
+                android:layout_width="@dimen/navigation_side_padding"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:visibility="invisible"
+                />
+            <com.android.systemui.statusbar.policy.KeyButtonView android:id="@+id/back"
+                android:layout_width="@dimen/navigation_key_width"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sysbar_back"
+                systemui:keyCode="4"
+                android:layout_weight="0"
+                android:scaleType="center"
+                android:contentDescription="@string/accessibility_back"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                />
+            <com.android.systemui.statusbar.policy.KeyButtonView android:id="@+id/home"
+                android:layout_width="@dimen/navigation_key_width"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sysbar_home"
+                systemui:keyCode="3"
+                systemui:keyRepeat="false"
+                android:layout_weight="0"
+                android:scaleType="center"
+                android:contentDescription="@string/accessibility_home"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                />
+            <com.android.systemui.statusbar.policy.KeyButtonView android:id="@+id/recent_apps"
+                android:layout_width="@dimen/navigation_key_width"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sysbar_recent"
+                android:layout_weight="0"
+                android:scaleType="center"
+                android:contentDescription="@string/accessibility_recent"
+                />
+            <FrameLayout
+                android:layout_width="@dimen/navigation_side_padding"
+                android:layout_height="match_parent"
+                android:layout_weight="0" >
+                <com.android.systemui.statusbar.policy.KeyButtonView
+                    android:id="@+id/menu"
+                    android:layout_width="@dimen/navigation_extra_key_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/accessibility_menu"
+                    android:src="@drawable/ic_sysbar_menu"
+                    android:visibility="invisible"
+                    android:scaleType="centerInside"
+                    android:layout_gravity="end"
+                    systemui:keyCode="82" />
 
-            <include layout="@layout/mid_navigation_bar_port"/>
+                <com.android.systemui.statusbar.policy.KeyButtonView
+                    android:id="@+id/ime_switcher"
+                    android:layout_width="@dimen/navigation_extra_key_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/accessibility_ime_switch_button"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_ime_switcher_default"
+                    android:visibility="invisible"
+                    android:layout_gravity="end" />
+            </FrameLayout>
+
 
         </LinearLayout>
 

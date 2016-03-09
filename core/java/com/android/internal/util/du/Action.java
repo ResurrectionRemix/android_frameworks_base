@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.slim;
+package com.android.internal.util.du;
 
 import android.app.Activity;
 import android.app.ActivityManagerNative;
@@ -41,6 +41,8 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
 
+import com.android.internal.statusbar.IStatusBarService;
+
 import java.net.URISyntaxException;
 
 public class Action {
@@ -65,6 +67,12 @@ public class Action {
                         WindowManagerGlobal.getWindowManagerService().isKeyguardLocked();
             } catch (RemoteException e) {
                 Log.w("Action", "Error getting window manager service", e);
+            }
+
+            IStatusBarService barService = IStatusBarService.Stub.asInterface(
+                    ServiceManager.getService(Context.STATUS_BAR_SERVICE));
+            if (barService == null) {
+                return; // ouch
             }
 
             // process the actions
@@ -117,7 +125,7 @@ public class Action {
                     if (searchManager != null) {
                         searchManager.stopSearch();
                     }
-                    startActivity(context, intent);
+                    startActivity(context, intent, barService, isKeyguardShowing);
                 } catch (ActivityNotFoundException e) {
                     Log.e("SlimActions:", "No activity to handle assist long press action.", e);
                 }
@@ -184,7 +192,7 @@ public class Action {
                 // ToDo: Send for secure keyguard secure camera intent.
                 // We need to add support for it first.
                 Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA, null);
-                startActivity(context, intent);
+                startActivity(context, intent, barService, isKeyguardShowing);
                 return;
             } else if (action.equals(ActionConstants.ACTION_MEDIA_PREVIOUS)) {
                 dispatchMediaKeyWithWakeLock(KeyEvent.KEYCODE_MEDIA_PREVIOUS, context);
@@ -211,21 +219,10 @@ public class Action {
                     Log.e("SlimActions:", "URISyntaxException: [" + action + "]");
                     return;
                 }
-                startActivity(context, intent);
+                startActivity(context, intent, barService, isKeyguardShowing);
                 return;
             }
 
-    }
-
-    public static boolean isNavBarEnabled(Context context) {
-        return Settings.Secure.getIntForUser(context.getContentResolver(),
-                Settings.Secure.NAVIGATION_BAR_VISIBLE ,
-                isNavBarDefault(context) ? 1 : 0, UserHandle.USER_CURRENT) == 1;
-    }
-
-    public static boolean isNavBarDefault(Context context) {
-        return context.getResources().getBoolean(
-                com.android.internal.R.bool.config_showNavigationBar);
     }
 
     public static boolean isActionKeyEvent(String action) {
@@ -240,21 +237,32 @@ public class Action {
         return false;
     }
 
-    private static void startActivity(Context context, Intent intent) {
+    private static void startActivity(Context context, Intent intent,
+            IStatusBarService barService, boolean isKeyguardShowing) {
         if (intent == null) {
             return;
         }
-        try {
-            WindowManagerGlobal.getWindowManagerService().dismissKeyguard();
-        } catch (RemoteException e) {
-            Log.w("Action", "Error dismissing keyguard", e);
+        if (isKeyguardShowing) {
+            // Have keyguard show the bouncer and launch the activity if the user succeeds.
+            try {
+                barService.showCustomIntentAfterKeyguard(intent);
+            } catch (RemoteException e) {
+                Log.w("Action", "Error starting custom intent on keyguard", e);
+            }
+        } else {
+            // otherwise let us do it here
+            try {
+                WindowManagerGlobal.getWindowManagerService().dismissKeyguard();
+            } catch (RemoteException e) {
+                Log.w("Action", "Error dismissing keyguard", e);
+            }
+            intent.addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivityAsUser(intent,
+                    new UserHandle(UserHandle.USER_CURRENT));
         }
-        intent.addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP
-                | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivityAsUser(intent,
-                new UserHandle(UserHandle.USER_CURRENT));
     }
 
     private static void dispatchMediaKeyWithWakeLock(int keycode, Context context) {

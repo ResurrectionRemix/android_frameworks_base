@@ -14,3 +14,6 @@
 -keep class com.android.systemui.statusbar.phone.PhoneStatusBar
 -keep class com.android.systemui.statusbar.tv.TvStatusBar
 -keep class com.android.systemui.recents.*
+
+# org.dirtyunicorns.navigation trail-drawaing library fix
+-dontwarn com.google.common.annotations.VisibleForTesting

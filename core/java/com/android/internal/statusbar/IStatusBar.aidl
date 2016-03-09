@@ -17,6 +17,9 @@
 package com.android.internal.statusbar;
 
 import android.os.Bundle;
+import android.content.Intent;
+
+import com.android.internal.statusbar.StatusBarIcon;
 import android.service.notification.StatusBarNotification;
 
 import com.android.internal.statusbar.StatusBarIcon;
@@ -62,6 +65,13 @@ oneway interface IStatusBar
     void appTransitionCancelled();
 
     /**
+     * Notifies the status bar that a camera launch gesture has been detected.
+     *
+     * @param source the identifier for the gesture, see {@link StatusBarManager}
+     */
+    void onCameraLaunchGestureDetected(int source);
+
+    /**
      * Notifies the status bar that an app transition is now being executed.
      *
      * @param statusBarAnimationsStartTime the desired start time for all visual animations in the
@@ -74,13 +84,8 @@ oneway interface IStatusBar
     void showAssistDisclosure();
     void startAssist(in Bundle args);
 
-    /**
-     * Notifies the status bar that a camera launch gesture has been detected.
-     *
-     * @param source the identifier for the gesture, see {@link StatusBarManager}
-     */
-    void onCameraLaunchGestureDetected(int source);
-
     void setAutoRotate(boolean enabled);
+    void showCustomIntentAfterKeyguard(inout Intent intent);
+    void screenPinningStateChanged(boolean enabled);
 }
 

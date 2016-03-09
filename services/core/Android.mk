@@ -9,7 +9,7 @@ LOCAL_SRC_FILES += \
     java/com/android/server/EventLogTags.logtags \
     java/com/android/server/am/EventLogTags.logtags
 
-LOCAL_JAVA_LIBRARIES := services.net telephony-common
+LOCAL_JAVA_LIBRARIES := services.net telephony-common org.dirtyunicorns.utils
 LOCAL_STATIC_JAVA_LIBRARIES := tzdata_update
 
 LOCAL_JAVA_LIBRARIES += services.accessibility
