@@ -148,5 +148,5 @@
   
    <!-- Hardware key binding -->
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
-
+  
 </resources>

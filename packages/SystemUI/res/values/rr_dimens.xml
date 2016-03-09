@@ -94,28 +94,5 @@
     <dimen name="recent_app_sidebar_item_padding">2dp</dimen>
     <dimen name="recent_app_sidebar_item_title_text_size">11sp</dimen>
 
-    <!-- The width of the view containing navigation buttons -->
-    <dimen name="navigation_key_width">70dp</dimen>
-
-    <!-- The width of the view containing the menu/ime navigation bar icons -->
-    <dimen name="navigation_extra_key_width">36dp</dimen>
-
-    <!-- The padding on the side of the navigation bar. Must be greater than or equal to
-         navigation_extra_key_width -->
-    <dimen name="navigation_side_padding">36dp</dimen>
-
-    <!-- Default distance beyond which snaps to the matching target -->
-    <dimen name="navbar_search_snap_margin">40dip</dimen>
-
-    <!-- Diameter of outer shape drawable shown in navbar search-->
-    <dimen name="navbar_search_outerring_diameter">340dp</dimen>
-
-    <!-- Diameter of outer shape drawable shown in navbar search. Should be 1/2 of above value -->
-    <dimen name="navbar_search_outerring_radius">170dp</dimen>
-
-
-    <!-- Height of search panel including navigation bar height -->
-    <dimen name="navbar_search_panel_height">230dip</dimen>  
-
     <dimen name="qs_detail_item_height_twoline">72dp</dimen>
 </resources>
