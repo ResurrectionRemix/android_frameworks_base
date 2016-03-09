@@ -6374,13 +6374,14 @@ private final View.OnClickListener mKillClickListener = new View.OnClickListener
         mStartedGoingToSleep = false;
         mDeviceInteractive = false;
         mWakeUpComingFromTouch = false;
-        mShowTaskList = false;
-        mNotificationPanel.setTouchDisabled(true);
         mWakeUpTouchLocation = null;
         mStackScroller.setAnimationsEnabled(false);
         mStatusBarWindowManager.setHeadsUpShowing(false);
         updateVisibleToUser();
         mVisualizerView.setVisible(false);
+        if (mQSTileHost.isEditing()) {
+            mQSTileHost.setEditing(false);
+        }
         if (mLaunchCameraOnFinishedGoingToSleep) {
             mLaunchCameraOnFinishedGoingToSleep = false;
 

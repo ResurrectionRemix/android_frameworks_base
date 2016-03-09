@@ -38,8 +38,8 @@
     <!-- Default screen brightness, from 0 to 255.  102 is 40%. -->
     <integer name="def_screen_brightness">102</integer>
     <bool name="def_screen_brightness_automatic_mode">false</bool>
-    <fraction name="def_window_animation_scale">75%</fraction>
-    <fraction name="def_window_transition_scale">75%</fraction>
+    <fraction name="def_window_animation_scale">100%</fraction>
+    <fraction name="def_window_transition_scale">100%</fraction>
     <bool name="def_haptic_feedback">true</bool>
     <bool name="def_dozeEnabledByDefault">false</bool>
 
@@ -160,7 +160,7 @@
     <integer name="def_download_manager_recommended_max_bytes_over_mobile">-1</integer>
 
     <!-- Default for Settings.Secure.LONG_PRESS_TIMEOUT_MILLIS -->
-    <integer name="def_long_press_timeout_millis">400</integer>
+    <integer name="def_long_press_timeout_millis">500</integer>
 
     <!-- Default for Settings.System.POINTER_SPEED -->
     <integer name="def_pointer_speed">0</integer>
