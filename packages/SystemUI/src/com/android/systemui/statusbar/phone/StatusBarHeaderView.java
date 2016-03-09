@@ -59,7 +59,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.widget.ImageView;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.ColorMatrix;
@@ -68,6 +67,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.internal.util.cm.WeatherController;
 import com.android.internal.util.cm.WeatherControllerImpl;
@@ -124,7 +125,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private View mQsDetailHeader;
     private TextView mQsDetailHeaderTitle;
     private Switch mQsDetailHeaderSwitch;
-    private ImageView mWeatherimage;
+    private ImageButton mWeatherimage;
     private ImageView mQsDetailHeaderProgress;
     private TextView mEmergencyCallsOnly;
     private BatteryLevelTextView mBatteryLevel;
@@ -283,7 +284,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mWeatherContainer = (LinearLayout) findViewById(R.id.weather_container);
         mWeatherContainer.setOnClickListener(this);
         mWeatherContainer.setOnLongClickListener(this);
-        mWeatherimage = (ImageView) findViewById(R.id.no_weather_image);
+        mWeatherimage = (ImageButton) findViewById(R.id.no_weather_image);
         mWeatherLine1 = (TextView) findViewById(R.id.weather_line_1);
         mWeatherLine2 = (TextView) findViewById(R.id.weather_line_2);
         mEditTileDoneText = (TextView) findViewById(R.id.done);
@@ -840,7 +841,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     @Override
     public void onWeatherChanged(WeatherController.WeatherInfo info) {
         if (info.temp == null || info.condition == null) {
-			mWeatherimage = (ImageView) findViewById(R.id.no_weather_image);
+			mWeatherimage = (ImageButton) findViewById(R.id.no_weather_image);
 			mWeatherimage.setVisibility(VISIBLE);
             mWeatherLine1.setText(null);
             mWeatherLine2.setText(null);
