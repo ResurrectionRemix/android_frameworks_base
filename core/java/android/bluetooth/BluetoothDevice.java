@@ -1045,9 +1045,10 @@ public final class BluetoothDevice implements Parcelable {
         public void onBluetoothServiceUp(IBluetooth bluetoothService)
                 throws RemoteException {
             synchronized (BluetoothDevice.class) {
-                if (sService == null) {
-                    sService = bluetoothService;
+                if (sService != null) {
+                    Log.w(TAG, "sService is not NULL");
                 }
+                sService = bluetoothService;
             }
         }
 
