@@ -68,7 +68,7 @@ public class QSDetailItems extends FrameLayout {
     private ImageView mEmptyIcon;
     private int mMaxItems;
     private boolean mQsColorSwitch = false;
-    private int QsTextColor;
+    private int mLabelColor;
     private int mQsIconColor;
     private int mTextColor;
     private int mEmptyTextColor;
@@ -146,9 +146,9 @@ public class QSDetailItems extends FrameLayout {
 	  mQsColorSwitch = Settings.System.getInt(resolver,
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
         if (mQsColorSwitch) {
-            QsTextColor = Settings.System.getInt(resolver,
+            mLabelColor = Settings.System.getInt(resolver,
                     Settings.System.QS_TEXT_COLOR, 0xffffffff);
-            mEmptyTextColor = (153 << 24) | (QsTextColor & 0x00ffffff); 
+            mEmptyTextColor = (153 << 24) | (mLabelColor & 0x00ffffff); 
             mQsIconColor = Settings.System.getInt(resolver,
                     Settings.System.QS_ICON_COLOR, 0xffffffff);
 		}
@@ -237,7 +237,7 @@ public class QSDetailItems extends FrameLayout {
         title.setText(item.line1);
 	updatecolors();
 	if (mQsColorSwitch) {
- 	title.setTextColor(QsTextColor);
+ 	title.setTextColor(mLabelColor);
 	}
         final TextView summary = (TextView) view.findViewById(android.R.id.summary);
         final boolean twoLines = !TextUtils.isEmpty(item.line2);

@@ -476,7 +476,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private ImageView rrLogo;
     private int mRRLogoColor;	
     private int mRRLogoStyle;
-    private int mIconColor;
+
+    // QS Colors
+    private int mQsIconColor;
+    private int mLabelColor;
 
    // Custom Logos
 
@@ -706,6 +709,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.QS_ICON_COLOR),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_TEXT_COLOR),
+			false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.NAVBAR_RECENTS_SWITCH),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
@@ -818,6 +824,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
        } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_ICON_COLOR))) {
                 DontStressOnRecreate();
+       } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_TEXT_COLOR))) {
+                DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_TEXT_COLOR))
                     || uri.equals(Settings.System.getUriFor(
@@ -868,8 +877,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			UserHandle.USER_CURRENT) == 1;
 		mQsColorSwitch = Settings.System.getIntForUser(resolver,
 			Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
-		mIconColor = Settings.System.getIntForUser(resolver,
+		mQsIconColor = Settings.System.getIntForUser(resolver,
 			Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
+		mLabelColor = Settings.System.getIntForUser(resolver,
+			Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF, mCurrentUserId);
 		mRRLogoStyle = Settings.System.getIntForUser(
 			resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
 			UserHandle.USER_CURRENT);
@@ -1967,9 +1978,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		}
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 
-        mIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+        mQsIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 
+        mLabelColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF, mCurrentUserId);
+                
         mKeyguardUserSwitcher = new KeyguardUserSwitcher(mContext,
                 (ViewStub) mStatusBarWindowContent.findViewById(R.id.keyguard_user_switcher),
                 mKeyguardStatusBar, mNotificationPanel, mUserSwitcherController);
