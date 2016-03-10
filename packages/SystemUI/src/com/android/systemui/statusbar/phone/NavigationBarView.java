@@ -100,6 +100,7 @@ public class NavigationBarView extends BaseNavigationBar {
     private boolean mWakeAndUnlocking;
 
     private GestureDetector mDoubleTapGesture;
+    private boolean mIsHandlerCallbackActive = false;
 
     private class NavTransitionListener implements TransitionListener {
         private boolean mBackTransitioning;
@@ -153,6 +154,26 @@ public class NavigationBarView extends BaseNavigationBar {
                     .showInputMethodPicker(true /* showAuxiliarySubtypes */);
         }
     };
+    
+     // provides a listener for the empty space in the navbar
+    private final OnTouchListener mNavButtonsTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+                if (mDoubleTapToSleep) {
+                     mDoubleTapGesture.onTouchEvent(event);
+                }
+                onNavButtonTouched();
+            return true;
+        }
+    };
+    
+    public void onNavButtonTouched() {
+        if (mIsHandlerCallbackActive) {
+            mIsHandlerCallbackActive = false;
+        }
+
+        final ViewGroup navButtons = getNavButtons();       
+    }
 
     public NavigationBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -343,6 +364,10 @@ public class NavigationBarView extends BaseNavigationBar {
 
     public void setDisabledFlags(int disabledFlags) {
         setDisabledFlags(disabledFlags, false);
+    }
+    
+    public ViewGroup getNavButtons() {
+        return (ViewGroup) mCurrentView.findViewById(R.id.nav_buttons);
     }
 
     public void setDisabledFlags(int disabledFlags, boolean force) {
