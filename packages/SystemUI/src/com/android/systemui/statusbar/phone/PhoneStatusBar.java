@@ -303,8 +303,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private static final int BRIGHTNESS_CONTROL_LONG_PRESS_TIMEOUT = 750; // ms
     private static final int BRIGHTNESS_CONTROL_LINGER_THRESHOLD = 20;
 
-    public static final int FADE_KEYGUARD_START_DELAY = 50;
-    public static final int FADE_KEYGUARD_DURATION = 150;
+    public static final int FADE_KEYGUARD_START_DELAY = 100;
+    public static final int FADE_KEYGUARD_DURATION = 300;
     public static final int FADE_KEYGUARD_DURATION_PULSING = 96;
 
     // Weather temperature
@@ -335,9 +335,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
 
     /** Allow some time inbetween the long press for back and recents. */
-
-    private static final int LOCK_TO_APP_GESTURE_TOLERENCE = 100;
-
+    private static final int LOCK_TO_APP_GESTURE_TOLERENCE = 200;
 	
 
     /** If true, the system is in the half-boot-to-decryption-screen state.
@@ -3074,7 +3072,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                                 + mBackdropBack.getDrawable());
                     }
                     mBackdropFront.animate()
-                            .setDuration(200)
+                            .setDuration(250)
                             .alpha(0f).withEndAction(mHideBackdropFront);
                 }
             }
@@ -3098,7 +3096,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             // libhwui.
                             .alpha(0.002f)
                             .setInterpolator(mBackdropInterpolator)
-                            .setDuration(250)
+                            .setDuration(300)
                             .setStartDelay(0)
                             .withEndAction(new Runnable() {
                                 @Override
