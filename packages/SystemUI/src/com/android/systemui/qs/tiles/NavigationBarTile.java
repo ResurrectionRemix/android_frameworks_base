@@ -181,7 +181,7 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
                 state.icon = ResourceIcon.get(R.drawable.ic_smartbar_off);
                 state.label = mContext.getString(R.string.quick_settings_smartbar_off);
             } else if (navMode == 1){
-                state.icon = ResourceIcon.get(R.drawable.ic_smartbar_off);
+                state.icon = ResourceIcon.get(R.drawable.ic_fling_off);
                 state.label = mContext.getString(R.string.quick_settings_fling_off);
             }
         }
