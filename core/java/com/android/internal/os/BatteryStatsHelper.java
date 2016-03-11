@@ -248,17 +248,6 @@ public final class BatteryStatsHelper {
     private void clearAllStats() {
         clearStats();
         sStatsXfer = null;
-        sDockStatsXfer = null;
-        sBatteryBroadcastXfer = null;
-        for (File f : sFileXfer.keySet()) {
-            f.delete();
-        }
-        sFileXfer.clear();
-    }
-
-    private void clearAllStats() {
-        clearStats();
-        sStatsXfer = null;
         sBatteryBroadcastXfer = null;
         for (File f : sFileXfer.keySet()) {
             f.delete();
