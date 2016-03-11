@@ -170,18 +170,18 @@ public class NavigationBarTile extends QSTile<NavigationBarTile.NavbarState> {
 
         if (navbarEnabled()) {
             if (navMode == 0) {
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_smartbar);
+                state.icon = ResourceIcon.get(R.drawable.ic_smartbar_on);
                 state.label = mContext.getString(R.string.quick_settings_smartbar);
             } else if (navMode == 1){
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_fling);
+                state.icon = ResourceIcon.get(R.drawable.ic_fling);
                 state.label = mContext.getString(R.string.quick_settings_fling);
             }
         } else {
             if (navMode == 0) {
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_gestures_off);
+                state.icon = ResourceIcon.get(R.drawable.ic_smartbar_off);
                 state.label = mContext.getString(R.string.quick_settings_smartbar_off);
             } else if (navMode == 1){
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_gestures_off);
+                state.icon = ResourceIcon.get(R.drawable.ic_smartbar_off);
                 state.label = mContext.getString(R.string.quick_settings_fling_off);
             }
         }
