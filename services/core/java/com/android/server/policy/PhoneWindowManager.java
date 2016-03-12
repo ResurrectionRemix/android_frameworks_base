@@ -89,6 +89,8 @@ import android.speech.RecognizerIntent;
 import android.telecom.TelecomManager;
 import com.android.internal.os.DeviceKeyHandler;
 import com.android.internal.util.cm.ActionUtils;
+
+import cyanogenmod.hardware.CMHardwareManager;
 import cyanogenmod.providers.CMSettings;
 import dalvik.system.DexClassLoader;
 import android.text.Html;
@@ -774,6 +776,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mHasPermanentMenuKey;
     private boolean mClearedBecauseOfForceShow;
     private boolean mTopWindowIsKeyguard;
+    private CMHardwareManager mCMHardware;
 
     private CameraManager mCameraManager;
     private boolean mTorchEnabled;
@@ -1775,7 +1778,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
 
         mSettingsObserver = new SettingsObserver(mHandler);
-        mSettingsObserver.observe();
         mShortcutManager = new ShortcutManager(context);
         mUiMode = context.getResources().getInteger(
                 com.android.internal.R.integer.config_defaultUiModeType);
@@ -2283,6 +2285,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (mWakeGestureEnabledSetting != wakeGestureEnabledSetting) {
                 mWakeGestureEnabledSetting = wakeGestureEnabledSetting;
                 updateWakeGestureListenerLp();
+            }
+            
+	      mDevForceNavbar = Settings.System.getIntForUser(resolver,
+                    Settings.System.ENABLE_HW_KEYS, 0, UserHandle.USER_CURRENT) == 1;
+                if (mCMHardware.isSupported(CMHardwareManager.FEATURE_KEY_DISABLE)) {
+                    mCMHardware.set(CMHardwareManager.FEATURE_KEY_DISABLE, mDevForceNavbar);
+                }
             }
 
             mNavigationBarLeftInLandscape = CMSettings.System.getIntForUser(resolver,
@@ -7273,6 +7282,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public void systemReady() {
         mKeyguardDelegate = new KeyguardServiceDelegate(mContext);
         mKeyguardDelegate.onSystemReady();
+
+        mCMHardware = CMHardwareManager.getInstance(mContext);
+        // Ensure observe happens in systemReady() since we need
+        // CMHardwareService to be up and running
+        mSettingsObserver.observe();
 
         readCameraLensCoverState();
         updateUiMode();
