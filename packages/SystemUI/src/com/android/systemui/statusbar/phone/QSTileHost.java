@@ -62,7 +62,6 @@ import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.AppCircleBarTile;
 import com.android.systemui.qs.tiles.KernelAdiutorTile;
 import com.android.systemui.qs.tiles.HardwareKeysTile;
-import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.GestureAnyWhereTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
@@ -411,7 +410,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("appcirclebar")) return new AppCircleBarTile(this);
 	else if (tileSpec.equals("kernel_adiutor")) return new KernelAdiutorTile(this);
 	else if (tileSpec.equals("screenrecord")) return new ScreenrecordTile(this);
-	else if (tileSpec.equals("pie")) return new PieTile(this);
 	else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
 	else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
 	else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);
@@ -525,7 +523,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("appcirclebar")) return R.string.quick_settings_appcirclebar_title;
         else if (spec.equals("kernel_adiutor")) return R.string.quick_settings_kernel_title;
         else if (spec.equals("screenrecord")) return R.string.quick_settings_screenrecord;
-        else if (spec.equals("pie")) return R.string.quick_settings_pie;
         else if (spec.equals("restartui")) return R.string.quick_settings_systemui_restart_label;
         else if (spec.equals("gesture_anywhere")) return R.string.quick_settings_gesture_anywhere_label;
         else if (spec.equals("battery_saver")) return R.string.quick_settings_battery_saver_label;
@@ -577,7 +574,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("appcirclebar")) return R.drawable.ic_qs_appcirclebar_on;
         else if (spec.equals("kernel_adiutor")) return R.drawable.ic_qs_kernel_adiutor;	
         else if (spec.equals("screenrecord")) return R.drawable.ic_qs_screenrecord;	
-        else if (spec.equals("pie")) return R.drawable.ic_qs_pie_on;	
         else if (spec.equals("restartui")) return R.drawable.ic_qs_systemui_restart;
         else if (spec.equals("gesture_anywhere")) return R.drawable.ic_qs_gestures_on;
         else if (spec.equals("battery_saver")) return R.drawable.ic_qs_battery_saver_on;

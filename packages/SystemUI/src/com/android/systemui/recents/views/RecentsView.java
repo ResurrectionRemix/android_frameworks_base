@@ -16,8 +16,6 @@
 
 package com.android.systemui.recents.views;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
 import android.app.ActivityOptions;
@@ -539,28 +537,6 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
         }
     }
 
-    public void startFABanimation() {
-        // Animate the action button in
-        mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
-        mFloatingButton.animate().alpha(1f)
-                .setStartDelay(mConfig.taskBarEnterAnimDelay)
-                .setDuration(mConfig.taskBarEnterAnimDuration)
-                .setInterpolator(mConfig.fastOutLinearInInterpolator)
-                .withLayer()
-                .start();
-    }
-
-    public void endFABanimation() {
-        // Animate the action button away
-        mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
-        mFloatingButton.animate().alpha(0f)
-                .setStartDelay(0)
-                .setDuration(mConfig.taskBarExitAnimDuration)
-                .setInterpolator(mConfig.fastOutLinearInInterpolator)
-                .withLayer()
-                .start();
-    }
-    
     @Override
     protected void onAttachedToWindow () {
         super.onAttachedToWindow();

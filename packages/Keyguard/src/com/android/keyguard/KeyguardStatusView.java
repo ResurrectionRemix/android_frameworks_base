@@ -65,6 +65,10 @@ public class KeyguardStatusView extends GridLayout implements
     private TextClock mDateView;
     private TextClock mClockView;
     private TextView mOwnerInfo;
+    //On the first boot, keygard will start to receiver TIME_TICK intent.
+    //And onScreenTurnedOff will not get called if power off when keyguard is not started.
+    //Set initial value to false to skip the above case.
+    private boolean mEnableRefresh = false;
 
     private View mWeatherView;
     private TextView mWeatherCity;
@@ -87,40 +91,45 @@ public class KeyguardStatusView extends GridLayout implements
 
         @Override
         public void onTimeChanged() {
-	   refresh();
+            if (mEnableRefresh) {
                 updateClockColor();
                 updateClockDateColor();
+                refresh();
+            }
         }
 
         @Override
         public void onKeyguardVisibilityChanged(boolean showing) {
             if (showing) {
                 if (DEBUG) Slog.v(TAG, "refresh statusview showing:" + showing);
-                refresh();
-                updateOwnerInfo();
                 updateClockColor();
                 updateClockDateColor();
+                refresh();
+                updateOwnerInfo();
             }
         }
 
         @Override
         public void onStartedWakingUp() {
             setEnableMarquee(true);
+            mEnableRefresh = true;
             updateClockColor();
             updateClockDateColor();
+            refresh();
         }
 
         @Override
         public void onFinishedGoingToSleep(int why) {
+            updateClockColor();
+            updateClockDateColor();
             setEnableMarquee(false);
+            mEnableRefresh = false;
         }
 
         @Override
         public void onUserSwitchComplete(int userId) {
             refresh();
             updateOwnerInfo();
-            updateClockColor();
-            updateClockDateColor();
         }
     };
 
@@ -332,6 +341,10 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.HIDE_LOCKSCREEN_CLOCK, 1, UserHandle.USER_CURRENT) == 1;
         boolean showDate = Settings.System.getIntForUser(resolver,
                 Settings.System.HIDE_LOCKSCREEN_DATE, 1, UserHandle.USER_CURRENT) == 1;
+        int clockColor = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_CLOCK_COLOR, 0xFFFFFFFF);
+        int clockDateColor = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_CLOCK_DATE_COLOR, 0xFFFFFFFF);
         int mTempColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_TEMP_COLOR, 0xFFFFFFFF);
        	int mConditionColor = Settings.System.getInt(resolver,
@@ -340,7 +353,7 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCK_SCREEN_WEATHER_STAMP_COLOR, 0xFFFFFFFF);
         int mHumidityColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_HUM_COLOR, 0xFFFFFFFF);
-	int mCityColor = Settings.System.getInt(resolver,
+        int mCityColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR, 0xFFFFFFFF);
         int mWindColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_WIND_COLOR, 0xFFFFFFFF);
@@ -504,6 +517,14 @@ public class KeyguardStatusView extends GridLayout implements
         }
         if (lockClockFont == 24) {
             mClockView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
+        }
+
+        if (mClockView != null) {
+              mClockView.setTextColor(clockColor);
+        }
+
+        if (mDateView != null) {
+            mDateView.setTextColor(clockDateColor);
         }
 
         if (mOwnerInfo != null) {

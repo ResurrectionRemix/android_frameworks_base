@@ -567,23 +567,15 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     }
 
     public void updateEverything() {
-        updateHeights();
-        updateVisibilities();
-        updateSystemIconsLayoutParams();
-        updateClickTargets();
-        updateMultiUserSwitch();
-        updateClockScale();
-        updateAvatarScale();
-        updateClockLp();
-        requestCaptureValues();
+	updateHeights();
+	updateVisibilities();
+	updateSystemIconsLayoutParams();
+	updateMultiUserSwitch();
+	updateClockScale();
+	updateAvatarScale();
+	updateClockLp();
+	requestCaptureValues();
 	hidepanelItems();
-	setclockcolor();
-	setdetailcolor();
-	setweathercolor1();
-	setweathercolor2();
-	setalarmtextcolor();
-	    
-	setbatterytextcolor();
 	     	
     }
 

@@ -67,11 +67,8 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_START_ASSIST               = 23 << MSG_SHIFT;
     private static final int MSG_CAMERA_LAUNCH_GESTURE      = 24 << MSG_SHIFT;
     private static final int MSG_SET_AUTOROTATE_STATUS      = 25 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_LAST_APP            = 26 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_KILL_APP            = 27 << MSG_SHIFT;
-    private static final int MSG_TOGGLE_SCREENSHOT          = 28 << MSG_SHIFT;
-	private static final int MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD = 29 << MSG_SHIFT;
-    private static final int MSG_SCREEN_PINNING_STATE_CHANGED = 30 << MSG_SHIFT;
+    private static final int MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD = 26 << MSG_SHIFT;
+    private static final int MSG_SCREEN_PINNING_STATE_CHANGED = 27 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -121,11 +118,7 @@ public class CommandQueue extends IStatusBar.Stub {
         public void startAssist(Bundle args);
         public void onCameraLaunchGestureDetected(int source);
         public void setAutoRotate(boolean enabled);
-        public void toggleLastApp();
-        public void toggleKillApp();
-	public void toggleScreenshot();
-        public void toggleOrientationListener(boolean enable);
-		public void showCustomIntentAfterKeyguard(Intent intent);
+	public void showCustomIntentAfterKeyguard(Intent intent);
         public void screenPinningStateChanged(boolean enabled);
     }
 
@@ -242,10 +235,6 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
-    public void toggleOrientationListener(boolean enable) {
-        mCallbacks.toggleOrientationListener(enable);
-    }
-
     public void setWindowState(int window, int state) {
         synchronized (mList) {
             // don't coalesce these
@@ -336,27 +325,6 @@ public class CommandQueue extends IStatusBar.Stub {
             mHandler.removeMessages(MSG_SET_AUTOROTATE_STATUS);
             mHandler.obtainMessage(MSG_SET_AUTOROTATE_STATUS,
                 enabled ? 1 : 0, 0, null).sendToTarget();
- 	 }
-    }
-
-    public void toggleLastApp() {
-        synchronized (mList) {
-            mHandler.removeMessages(MSG_TOGGLE_LAST_APP);
-            mHandler.obtainMessage(MSG_TOGGLE_LAST_APP, 0, 0, null).sendToTarget();
-        }
-    }
-
-    public void toggleKillApp() {
-        synchronized (mList) {
-            mHandler.removeMessages(MSG_TOGGLE_KILL_APP);
-            mHandler.obtainMessage(MSG_TOGGLE_KILL_APP, 0, 0, null).sendToTarget();
-        }
-    }
-
-    public void toggleScreenshot() {
-        synchronized (mList) {
-            mHandler.removeMessages(MSG_TOGGLE_SCREENSHOT);
-            mHandler.obtainMessage(MSG_TOGGLE_SCREENSHOT, 0, 0, null).sendToTarget();
         }
     }
 	
@@ -481,17 +449,8 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_SET_AUTOROTATE_STATUS:
                     mCallbacks.setAutoRotate(msg.arg1 != 0);
-		    break;		
-                case MSG_TOGGLE_LAST_APP:
-                    mCallbacks.toggleLastApp();
                     break;
-                case MSG_TOGGLE_KILL_APP:
-                    mCallbacks.toggleKillApp();
-                    break;
-                case MSG_TOGGLE_SCREENSHOT:
-                    mCallbacks.toggleScreenshot();
-                    break;
-				case MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD:
+		case MSG_START_CUSTOM_INTENT_AFTER_KEYGUARD:
                     mCallbacks.showCustomIntentAfterKeyguard((Intent) msg.obj);
                     break;	
                 case MSG_SCREEN_PINNING_STATE_CHANGED:

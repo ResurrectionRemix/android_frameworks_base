@@ -31,18 +31,6 @@
    <!-- configurable width dimension for the app sidebar trigger area -->
    <dimen name="config_app_sidebar_trigger_width">8dip</dimen>
 
-
-    <!-- Enable PA Pie relocation to either stick to a physical side or default to the right side -->
-    <bool name="config_relocatePieOnRotation">true</bool>
-
-    <!-- Enable force PA Pie centered -->
-    <bool name="config_forcePieCentered">true</bool>
-
-    <!-- Sensivity of pie gestures controlls.
-        Must be minimum 1 and maximum 10 (See @EdgeServiceConstants.java).
-        Default for pie is high sensivity -->
-    <integer name="pie_gesture_sensivity">10</integer>
-
    <!-- On-The-Go -->
    <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
    <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
@@ -51,5 +39,7 @@
     <!-- Doze: alternate schedule -->
     <string name="doze_pulse_schedule_alternate" translatable="false">1s</string>
 
-   
+    <!-- Default value how much apps show the app screenshot on recents view entry -->
+    <integer name="expanded_items_default">2</integer>
+
 </resources>

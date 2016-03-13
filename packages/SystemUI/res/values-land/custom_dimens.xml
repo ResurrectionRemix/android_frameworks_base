@@ -22,13 +22,4 @@
     <dimen name="floating_action_button_translation_z">12dp</dimen>
     <dimen name="floating_action_button_margin_side">78dp</dimen>
     <dimen name="floating_action_button_margin_bottom">42dp</dimen>
-
-
-    <!-- Lockscreen Shortcuts -->
-    <dimen name="phone_height">210dp</dimen>
-    <dimen name="phone_width">420dp</dimen>
-
-    <!-- PA Pie -->
-    <dimen name="pie_panel_padding">100dp</dimen>
-
 </resources>
