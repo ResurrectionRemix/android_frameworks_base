@@ -399,13 +399,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mCaptureValues = false;
             updateLayoutValues(mCurrentT);
         }
-
-        if (getLayoutDirection() == LAYOUT_DIRECTION_RTL) {
-            mAlarmStatus.setX(mDateGroup.getLeft() + mDateCollapsed.getLeft()
-                    - mAlarmStatus.getWidth());
-        } else {
-            mAlarmStatus.setX(mDateGroup.getLeft() + mDateCollapsed.getRight());
-        }
+        mAlarmStatus.setX(mDateGroup.getLeft() + mDateCollapsed.getRight());
     }
 
     @Override
