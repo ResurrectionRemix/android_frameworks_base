@@ -1882,16 +1882,12 @@ public class AccountManager {
         handler = (handler == null) ? mMainHandler : handler;
         handler.post(new Runnable() {
             public void run() {
-                synchronized (mAccountsUpdatedListeners) {
-                    try {
-                        if (mAccountsUpdatedListeners.containsKey(listener)) {
-                            listener.onAccountsUpdated(accountsCopy);
-                        }
-                    } catch (SQLException e) {
-                        // Better luck next time.  If the problem was disk-full,
-                        // the STORAGE_OK intent will re-trigger the update.
-                        Log.e(TAG, "Can't update accounts", e);
-                    }
+                try {
+                    listener.onAccountsUpdated(accountsCopy);
+                } catch (SQLException e) {
+                    // Better luck next time.  If the problem was disk-full,
+                    // the STORAGE_OK intent will re-trigger the update.
+                    Log.e(TAG, "Can't update accounts", e);
                 }
             }
         });
