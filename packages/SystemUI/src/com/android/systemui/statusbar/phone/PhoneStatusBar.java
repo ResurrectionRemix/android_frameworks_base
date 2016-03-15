@@ -4063,7 +4063,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 : (vis & View.SYSTEM_UI_TRANSPARENT) != 0 ? MODE_TRANSPARENT
                 : (vis & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0 ? MODE_LIGHTS_OUT
                 : MODE_OPAQUE;
-    }  
+    }
+
+    private void DontStressOnRecreate() { // Update maps and remove children,views after the recreate statusbar .Provides to rest in the recreate
+        recreateStatusBar();
+        updateRowStates();
+        updateSpeedbump();
+        checkBarModes();
+        updateClearAll();
+        updateEmptyShadeView();
+    }    
 
     private void checkBarModes() {
         if (mDemoMode) return;
@@ -5014,12 +5023,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mNavigationController.updateNavbarOverlay(getNavbarThemedResources());
         }
     }
-
-    private void DontStressOnRecreate() {
-        recreateStatusBar();
-        updateEmptyShadeView();
-        loadDimens();            
-    }  
 
     /**
      * Determines if we need to recreate the status bar due to a theme change.  We currently
