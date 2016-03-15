@@ -564,6 +564,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	updateHeights();
 	updateVisibilities();
 	updateSystemIconsLayoutParams();
+	updateClickTargets();
 	updateMultiUserSwitch();
 	updateClockScale();
 	updateAvatarScale();
