@@ -48,7 +48,6 @@
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Impossible d\'enregistrer l\'écran</string>
 
-
     <!-- PA Pie controls -->
     <string name="pie_date_format">ccc, dd MMM yyyy</string>
     <string name="pie_hour_format_12">hh:mm</string>
@@ -108,7 +107,7 @@
     <string name="quick_settings_reboot_label">Redémarrer</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
 
-    <!-- 4G LTE switch -->
+     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Afficher l\'icône de 4G plutôt que l\'icône LTE</string>
     <string name="show_fourg_summary">Remplacer l\'indicateur LTE dans la barre d\'état par celle de 4G</string>
     <string name="statusbar_tuner_category_title">Cacher certains éléments de la barre d\'état</string>
@@ -125,28 +124,23 @@
     <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
     <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
-    <string name="quick_settings_heads_up_label">Heads up</string>
+ <string name="quick_settings_heads_up_label">Heads up</string>
 
-    <string name="qs_lte_label">LTE</string>
+ <string name="qs_lte_label">LTE</string>
 
-    <string name="lte_on">LTE activé </string>
-    <string name="lte_off">LTE désactivé</string>
+ <string name="lte_on">LTE activé </string>
+ <string name="lte_off">LTE désactivé</string>
 
+ <string name="quick_settings_themes">Themes</string>
 
-    <!-- Themes QS Tile -->
-    <string name="quick_settings_themes">Thèmes</string>
-    <string name="quick_settings_themes_icon_packs">Packs d\'icônes</string>
-    <string name="quick_settings_themes_app_theme">Thème application</string>
-    <string name="quick_settings_themes_system_theme">Thème système</string>
-    <string name="quick_settings_themes_default_theme">Par défaut</string>
-    <string name="quick_settings_themes_match_system">Correspond au thème système</string>
+    <!-- Navigation bar Tile -->
+    <string name="quick_settings_navigation_bar">Barre de navigation</string>
+    <string name="quick_settings_smartbar_off">SmartBar désactivée</string>
+    <string name="quick_settings_smartbar">SmartBar</string>
+    <string name="quick_settings_fling">Fling</string>
+    <string name="quick_settings_fling_off">Fling désactivé</string>
 
-    <!-- NavBar tile -->
-    <string name="quick_settings_navbar_title">Barre de navigation</string>
-    <string name="quick_settings_navbar_on">La barre de navigation est activée</string>
-    <string name="quick_settings_navbar_off">La barre de navigation est désactivée</string>
-
-    <!-- Hw Keys tile -->
+     <!-- Hw Keys tile -->
     <string name="quick_settings_hwkeys_title">Boutons physiques</string>	
     <string name="quick_settings_hwkeys_on">Les boutons physiques sont activés</string>
     <string name="quick_settings_hwkeys_off">Les boutons physiques sont désactivés</string>
@@ -195,11 +189,6 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
 
-    <string name="quick_settings_selinux_label">SElinux</string>
-    <string name="quick_settings_selinux_permissive_title">Permissive</string>
-    <string name="quick_settings_selinux_enforcing_title">Enforcing</string>
-
-
     <string name="qs_kill_app">Tuer l\'application</string>
 
      <!-- Dialog title for navigation bar button selection -->
@@ -226,6 +215,7 @@
 
    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_expand">Bureau étendu</string>
+
 
 
   <!-- Dialog title for navigation bar button selection -->
@@ -263,5 +253,13 @@
     <string name="quick_settings_sound_vibrate">Vibreur</string>
     <string name="quick_settings_sound_silent">Silencieux</string>
 
+     <!-- headset icon switch -->
+    <string name="status_bar_headset">Casque filaire</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_vpn">VPN</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_volume">Vibration</string>
 
 </resources>
