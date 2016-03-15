@@ -222,6 +222,7 @@ public:
     void setInputDeviceEnabled(uint32_t deviceId, bool enabled);
     void setShowTouches(bool enabled);
     void setVolumeKeysRotation(int mode);
+    void setSwapKeys(bool enabled);
     void setInteractive(bool interactive);
     void reloadCalibration();
     void setPointerIconType(int32_t iconId);
@@ -305,6 +306,9 @@ private:
         // Volume keys rotation mode (0 - off, 1 - phone, 2 - tablet)
         int32_t volumeKeysRotationMode;
 
+        // Swap back with recents buttons.
+        bool swapKeys;
+
         // Sprite controller singleton, created on first use.
         sp<SpriteController> spriteController;
 
@@ -351,6 +355,7 @@ NativeInputManager::NativeInputManager(jobject contextObj,
         mLocked.pointerCapture = false;
         mLocked.pointerDisplayId = ADISPLAY_ID_DEFAULT;
         mLocked.volumeKeysRotationMode = 0;
+        mLocked.swapKeys = false;
     }
     mInteractive = true;
 
@@ -556,6 +561,7 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
 
         outConfig->showTouches = mLocked.showTouches;
         outConfig->volumeKeysRotationMode = mLocked.volumeKeysRotationMode;
+        outConfig->swapKeys = mLocked.swapKeys;
 
         outConfig->pointerCapture = mLocked.pointerCapture;
 
@@ -964,6 +970,22 @@ void NativeInputManager::setVolumeKeysRotation(int mode) {
 
     mInputManager->getReader()->requestRefreshConfiguration(
             InputReaderConfiguration::CHANGE_VOLUME_KEYS_ROTATION);
+}
+
+void NativeInputManager::setSwapKeys(bool enabled) {
+    { // acquire lock
+        AutoMutex _l(mLock);
+
+        if (mLocked.swapKeys == enabled) {
+            return;
+        }
+
+        ALOGI("Setting swap keys feature to %s.", enabled ? "enabled" : "disabled");
+        mLocked.swapKeys = enabled;
+    } // release lock
+
+    mInputManager->getReader()->requestRefreshConfiguration(
+            InputReaderConfiguration::CHANGE_SWAP_KEYS);
 }
 
 void NativeInputManager::setInteractive(bool interactive) {
@@ -1640,6 +1662,13 @@ static void nativeSetVolumeKeysRotation(JNIEnv* env,
     im->setVolumeKeysRotation(mode);
 }
 
+static void nativeSetSwapKeys(JNIEnv* /* env */,
+        jclass /* clazz */, jlong ptr, jboolean enabled) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+
+    im->setSwapKeys(enabled);
+}
+
 static void nativeSetInteractive(JNIEnv* env,
         jclass clazz, jlong ptr, jboolean interactive) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
@@ -1841,6 +1870,8 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetShowTouches },
     { "nativeSetVolumeKeysRotation", "(JI)V",
             (void*) nativeSetVolumeKeysRotation },
+    { "nativeSetSwapKeys", "(JZ)V",
+            (void*) nativeSetSwapKeys },
     { "nativeSetInteractive", "(JZ)V",
             (void*) nativeSetInteractive },
     { "nativeReloadCalibration", "(J)V",
