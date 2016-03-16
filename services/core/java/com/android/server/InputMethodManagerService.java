@@ -144,6 +144,7 @@ import java.util.List;
 import java.util.Locale;
 
 import cyanogenmod.providers.CMSettings;
+import cyanogenmod.hardware.CMHardwareManager;
 
 import org.cyanogenmod.internal.util.QSUtils;
 import org.cyanogenmod.internal.util.QSUtils.OnQSChanged;
@@ -202,6 +203,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
     private final HardKeyboardListener mHardKeyboardListener;
     private final WindowManagerService mWindowManagerService;
     private final AppOpsManager mAppOpsManager;
+    private CMHardwareManager mCMHardware;
 
     final InputBindResult mNoBinding = new InputBindResult(null, null, null, -1, -1);
 
@@ -1066,6 +1068,8 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                     mSettings.getEnabledInputMethodListLocked(), newUserId,
                     mContext.getBasePackageName());
         }
+        updateTouchHovering();
+        updateTouchSensitivity();
 
         if (DEBUG) Slog.d(TAG, "Switching user stage 3/3. newUserId=" + newUserId
                 + " selectedIme=" + mSettings.getSelectedInputMethod());
@@ -1974,6 +1978,27 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
         mSwitchingController.resetCircularListLocked(mContext);
 
     }
+    
+    private void updateTouchSensitivity() {
+        if (!mCMHardware.isSupported(CMHardwareManager.FEATURE_HIGH_TOUCH_SENSITIVITY)) {
+            return;
+        }
+        boolean touchSensitivityEnable = CMSettings.System.getInt(mContext.getContentResolver(),
+                CMSettings.System.HIGH_TOUCH_SENSITIVITY_ENABLE, 0) == 1;
+        mCMHardware.set(CMHardwareManager.FEATURE_HIGH_TOUCH_SENSITIVITY,
+                touchSensitivityEnable);
+    }
+
+    private void updateTouchHovering() {
+        if (!mCMHardware.isSupported(CMHardwareManager.FEATURE_TOUCH_HOVERING)) {
+            return;
+        }
+        boolean touchHovering = CMSettings.Secure.getInt(mContext.getContentResolver(),
+                CMSettings.Secure.FEATURE_TOUCH_HOVERING, 0) == 1;
+        mCMHardware.set(CMHardwareManager.FEATURE_TOUCH_HOVERING,
+                touchHovering);
+    }
+
 
     public void updateKeyboardFromSettingsLocked() {
         mShowImeWithHardKeyboard = mSettings.isShowImeWithHardKeyboardEnabled();
