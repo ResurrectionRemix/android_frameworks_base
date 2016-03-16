@@ -870,7 +870,7 @@ public final class PowerManagerService extends SystemService
         mKeyboardBrightness = CMSettings.Secure.getIntForUser(resolver,
                 CMSettings.Secure.KEYBOARD_BRIGHTNESS, mKeyboardBrightnessSettingDefault,
                 UserHandle.USER_CURRENT);
-        mForceNavbar = Settings.Seystem.getIntForUser(resolver,
+        mForceNavbar = Settings.System.getIntForUser(resolver,
                 Settings.System.ENABLE_HW_KEYS, 0, UserHandle.USER_CURRENT) == 1;
         mDirty |= DIRTY_SETTINGS;
     }
@@ -1750,7 +1750,7 @@ public final class PowerManagerService extends SystemService
                                 buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
                                 keyboardBrightness = mButtonBrightnessOverrideFromWindowManager;
                             } else {
-                                if (!mForceNavbar) {
+                                if (mForceNavbar) {
                                     buttonBrightness = mButtonBrightness;
                                 } else {
                                     buttonBrightness = 0;

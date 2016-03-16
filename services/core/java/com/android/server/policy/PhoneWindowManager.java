@@ -998,7 +998,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 	    resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAVIGATION_BAR_VISIBLE), false, this,
                     UserHandle.USER_ALL);
-
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAVIGATION_BAR_HEIGHT), false, this,
                     UserHandle.USER_ALL);
@@ -2292,7 +2291,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 if (mCMHardware.isSupported(CMHardwareManager.FEATURE_KEY_DISABLE)) {
                     mCMHardware.set(CMHardwareManager.FEATURE_KEY_DISABLE, mDevForceNavbar);
                 }
-            }
 
             mNavigationBarLeftInLandscape = CMSettings.System.getIntForUser(resolver,
                     CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0, UserHandle.USER_CURRENT) == 1;
