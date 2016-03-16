@@ -343,11 +343,6 @@ public class NotificationPanelView extends PanelView implements
                 }
             }
         });
-        setQSBackgroundAlpha();
-	mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0,
-                UserHandle.USER_CURRENT) == 1;
-            setQSBackgroundColor();
 
         mLockPatternUtils = new CmLockPatternUtils(getContext());
         if (mLockPatternUtils.isThirdPartyKeyguardEnabled() && mLiveLockScreenEnabled) {
@@ -2683,21 +2678,12 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TRANSPARENT_SHADE),
-                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(CMSettings.Secure.getUriFor(
                     CMSettings.Secure.LIVE_LOCK_SCREEN_ENABLED), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SMART_PULLDOWN),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_BACKGROUND_COLOR),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -2715,27 +2701,6 @@ public class NotificationPanelView extends PanelView implements
         @Override
         public void onChange(boolean selfChange, Uri uri) {
 	   ContentResolver resolver = mContext.getContentResolver();
-
-	  if (uri.equals(Settings.System.getUriFor(
-                        Settings.System.QS_HEADER_TEXT_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
-                        Settings.System.QS_HEADER_COLOR))) {
-
-                    setQSBackgroundColor();
-                } else if (uri.equals(Settings.System.getUriFor(
-                        Settings.System.QS_ICON_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
-                        Settings.System.QS_TEXT_COLOR))) {
-                    setQSColors();
-                }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH))) {
-                setQSBackgroundColor();
-		setQSColors();
-		} else if (uri.equals(Settings.System.getUriFor(
-                        Settings.System.QS_BACKGROUND_COLOR))) {
-		    setQSBackgroundColor();
-                    setQSColors();
-                } 
 		update();
         }
 
@@ -2911,16 +2876,7 @@ public class NotificationPanelView extends PanelView implements
        		if (mQsPanel != null) {
             		mQsPanel.setDetailBackgroundColor(mQSBackgroundColor);
        			 }
-			}  else {
-
-		if (mQsContainer != null) {
-               		 mQsContainer.getBackground().setColorFilter(
-                         mStockBg, Mode.SRC_OVER);
-           		 }
-       		if (mQsPanel != null) {
-            		mQsPanel.setDetailBackgroundColor(mStockBg);
-       			 }
-		}
+			} 
 	}
 
     public void setQSColors() {
