@@ -91,19 +91,14 @@ public class KeyguardStatusView extends GridLayout implements
 
         @Override
         public void onTimeChanged() {
-            if (mEnableRefresh) {
-                updateClockColor();
-                updateClockDateColor();
+            mEnableRefresh = true;
                 refresh();
-            }
         }
 
         @Override
         public void onKeyguardVisibilityChanged(boolean showing) {
             if (showing) {
                 if (DEBUG) Slog.v(TAG, "refresh statusview showing:" + showing);
-                updateClockColor();
-                updateClockDateColor();
                 refresh();
                 updateOwnerInfo();
             }
@@ -113,17 +108,13 @@ public class KeyguardStatusView extends GridLayout implements
         public void onStartedWakingUp() {
             setEnableMarquee(true);
             mEnableRefresh = true;
-            updateClockColor();
-            updateClockDateColor();
             refresh();
         }
 
         @Override
         public void onFinishedGoingToSleep(int why) {
-            updateClockColor();
-            updateClockDateColor();
             setEnableMarquee(false);
-            mEnableRefresh = false;
+            mEnableRefresh = true;
         }
 
         @Override

@@ -294,7 +294,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         loadDimens();
         updateVisibilities();
         updateClockScale();
-        updateAvatarScale();
+	updateAvatarScale();
 	hidepanelItems();
 	setclockcolor();
 	setdetailcolor();
@@ -302,14 +302,14 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	setweathercolor2();
 	setalarmtextcolor();   
 	setbatterytextcolor();     
-        setQSHeaderAlpha();
+	setQSHeaderAlpha();
 	setHeaderColor();
-        setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
+	setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
 	setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
 	setStatusBarHeaderFontStyle(mStatusBarHeaderFontStyle);
 	setStatusBarAlarmFontStyle(mStatusBarHeaderAlarmFont);
 	setStatusBarDateFontStyle(mStatusBarHeaderDateFont);
-        setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
+	setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
         addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right,
@@ -492,13 +492,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         if (mMultiUserSwitch != null) {
             mMultiUserSwitch.setActivityStarter(activityStarter);
         }
-	setclockcolor();
-	setdetailcolor();
-	setweathercolor1();
-	setweathercolor2();
-	setalarmtextcolor();
-	    
-	setbatterytextcolor();
 	     	
     }
 
@@ -604,13 +597,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
         mEmergencyCallsOnly.setVisibility(mExpanded && mShowEmergencyCallsOnly ? VISIBLE : GONE);
         mBatteryLevel.setForceShown(mExpanded && mShowBatteryTextExpanded);
-        mBatteryLevel.setVisibility(View.VISIBLE);
-	    setclockcolor();
-	    setdetailcolor();
-	    setweathercolor1();
-	    setweathercolor2();	
-	    setalarmtextcolor();	        
-	    setbatterytextcolor();	         		
+        mBatteryLevel.setVisibility(View.VISIBLE);        		
         if (mDockBatteryLevel != null) {
             mDockBatteryLevel.setForceShown(mExpanded && mShowBatteryTextExpanded);
             mDockBatteryLevel.setVisibility(View.VISIBLE);
@@ -1479,43 +1466,43 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             super.observe();
 
             ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.STATUS_BAR_SHOW_WEATHER), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.STATUS_BAR_BATTERY_STYLE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TRANSPARENT_HEADER), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_HEADER_FONT_STYLE), false, this, UserHandle.USER_ALL);
-  resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_PANEL_CLOCK), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_PANEL_DATE), false, this, UserHandle.USER_ALL);
-  resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_PANEL_CLOCKVALUE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_PANEL_BATTERY), false, this, UserHandle.USER_ALL);
-  resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_PANEL_ICONS), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_SETTINGS_ICON), false, this, UserHandle.USER_ALL);
-           resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_USER_ICON), false, this, UserHandle.USER_ALL);
-	            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADER_CLOCK_FONT_STYLE), false, this, UserHandle.USER_ALL);
-  resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HIDE_PANEL_ALARM), false, this, UserHandle.USER_ALL);
-  resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
-  resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADER_DETAIL_FONT_STYLE), false, this, UserHandle.USER_ALL);
- resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
- resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH), false, this,
-                    UserHandle.USER_ALL);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.STATUS_BAR_SHOW_WEATHER), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.STATUS_BAR_BATTERY_STYLE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_TRANSPARENT_HEADER), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUS_BAR_HEADER_FONT_STYLE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_PANEL_CLOCK), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_PANEL_DATE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_PANEL_CLOCKVALUE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_PANEL_BATTERY), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_PANEL_ICONS), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_SETTINGS_ICON), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_USER_ICON), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HEADER_CLOCK_FONT_STYLE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HIDE_PANEL_ALARM), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HEADER_DETAIL_FONT_STYLE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_COLOR_SWITCH), false, this,
+			UserHandle.USER_ALL);
 	
             update();
         }
@@ -1589,19 +1576,19 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 UserHandle.USER_CURRENT);
 
 	    setStatusBarHeaderFontStyle	(mStatusBarHeaderFontStyle);
-            setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
+        setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
 	    setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
 	    setStatusBarAlarmFontStyle(mStatusBarHeaderAlarmFont);
 	    setStatusBarDateFontStyle(mStatusBarHeaderDateFont);
-            setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
+        setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
 	    setclockcolor();
 	    setdetailcolor();
 	    setweathercolor1();
 	    setweathercolor2();	
 	    setalarmtextcolor();
 	    setbatterytextcolor();	    
-            updateVisibilities();
-            requestCaptureValues();
+	    updateVisibilities();
+	    requestCaptureValues();
 	    setHeaderColor();
         }
     }
