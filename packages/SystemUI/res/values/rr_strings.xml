@@ -262,9 +262,13 @@
 
     <!-- vpn icon switch -->
     <string name="status_bar_volume">Vibration</string>
-    
+
         <!-- Tuner -->
     <string name="systemui_tuner_qs_title">UI Tuner</string>
+      
+    <!-- Heads up toast -->
+    <string name="heads_up_enabled">Heads up notifications are enabled</string>
+    <string name="heads_up_disabled">Heads up notifications are disabled</string>
 
 </resources>
 
