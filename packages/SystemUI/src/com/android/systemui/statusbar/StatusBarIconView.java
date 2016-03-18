@@ -33,6 +33,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewDebug;
+import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 
@@ -178,7 +179,7 @@ public class StatusBarIconView extends AnimatedImageView {
             invalidate();
         }
         if (!visibilityEquals || force) {
-            setVisibility(icon.visible && !mBlocked ? VISIBLE : GONE);
+            setVisibility(icon.visible && !mBlocked ? View.VISIBLE : View.GONE);
         }
         return true;
     }

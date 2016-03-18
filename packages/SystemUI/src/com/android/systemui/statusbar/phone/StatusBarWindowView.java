@@ -192,7 +192,7 @@ public class StatusBarWindowView extends FrameLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (mBrightnessMirror != null && mBrightnessMirror.getVisibility() == VISIBLE) {
+        if (mBrightnessMirror != null && mBrightnessMirror.getVisibility() == View.VISIBLE) {
             // Disallow new pointers while the brightness mirror is visible. This is so that you
             // can't touch anything other than the brightness slider while the mirror is showing
             // and the rest of the panel is transparent.
