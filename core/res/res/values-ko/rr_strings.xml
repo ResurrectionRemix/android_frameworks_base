@@ -44,11 +44,7 @@
     <!-- label for item that takes On-The-Go in the phone options dialog -->
     <string name="global_action_onthego">On-The-Go 모드</string>
 
-
-    <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permlab_resetBatteryStats">배터리 통계 초기화</string>
-    <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permdesc_resetBatteryStats">애플리케이션이 낮은 수준의 배터리 현재 사용 내역을 초기화 할 수 있도록 허용합니다.</string>
-
+    <!-- Powermenu Torch -->
+    <string name="global_action_torch">손전등</string>
 
 </resources>
