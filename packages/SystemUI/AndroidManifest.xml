@@ -48,13 +48,6 @@
     <!-- Screen recording -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
-
-
-    <!-- Themes tile -->
-    <uses-permission android:name="android.permission.ACCESS_THEME_MANAGER" />
-    <uses-permission android:name="android.permission.READ_THEMES" />
-    <uses-permission android:name="android.permission.WRITE_THEMES" />
-
     <!-- Networking and telephony -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -169,6 +162,11 @@
     <!-- Reboot -->
     <uses-permission android:name="android.permission.REBOOT" />
     <uses-permission android:name="android.permission.RECOVERY" />
+
+    <!-- Themes tile -->
+    <uses-permission android:name="cyanogenmod.permission.ACCESS_THEME_MANAGER" />
+    <uses-permission android:name="cyanogenmod.permission.READ_THEMES" />
+    <uses-permission android:name="cyanogenmod.permission.WRITE_THEMES" />
 
     <!-- Visualizer -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
