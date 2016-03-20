@@ -24,13 +24,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.ThemeChangeRequest;
-import android.content.res.ThemeChangeRequest.RequestType;
 import android.content.res.ThemeConfig;
-import android.content.res.ThemeManager;
 import android.database.Cursor;
 import android.os.RemoteException;
-import android.provider.ThemesContract;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +42,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import cyanogenmod.app.StatusBarPanelCustomTile;
+import cyanogenmod.providers.ThemesContract;
+import cyanogenmod.themes.ThemeChangeRequest;
+import cyanogenmod.themes.ThemeManager;
+
+import org.cyanogenmod.internal.logging.CMMetricsLogger;
 
 /**
  * Quick settings tile: Themes mode
@@ -66,9 +67,9 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
     public ThemesTile(Host host) {
         super(host);
         mDetailAdapter = new ThemesDetailAdapter();
-        mService = (ThemeManager) getHost().getContext().getSystemService(Context.THEME_SERVICE);
+        mService = ThemeManager.getInstance();
         mState.value = true;
-        mService.addClient(this);
+        mService.registerThemeChangeListener(this);
         // Log.d("ThemesTile", "new");
         i++;
         localI = i;
@@ -83,7 +84,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
     protected void handleDestroy() {
         // Log.d("ThemesTile", "destroy");
         super.handleDestroy();
-        mService.removeClient(this);
+        mService.unregisterThemeChangeListener(this);
     }
 
     @Override
