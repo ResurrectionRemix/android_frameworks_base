@@ -334,10 +334,16 @@ public final class ShutdownThread extends Thread {
                 attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
             }
 
-            attrs.alpha = setRebootDialogAlpha(context);
+            if (Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.TRANSPARENT_POWER_MENU, 100) != 100) {
+                attrs.alpha = setRebootDialogAlpha(context);
+            }
 
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-            sConfirmDialog.getWindow().setDimAmount(setRebootDialogDim(context));
+            if (Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.TRANSPARENT_POWER_DIALOG_DIM, 50) != 50) {
+                sConfirmDialog.getWindow().setDimAmount(setRebootDialogDim(context));
+            }
             sConfirmDialog.show();
         } else {
             beginShutdownSequence(context);
