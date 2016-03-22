@@ -16,4 +16,5 @@
 -->
 
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/rr_logo" />
+    android:src="@drawable/rr_logo" 
+    android:tint="@color/dexopt_progressTint"/>
