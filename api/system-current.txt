@@ -40623,6 +40623,7 @@ package android.view.inputmethod {
     ctor public EditorInfo();
     method public int describeContents();
     method public void dump(android.util.Printer, java.lang.String);
+    method public final void formalTextInput(boolean);
     method public final void makeCompatible(int);
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.view.inputmethod.EditorInfo> CREATOR;

@@ -159,17 +159,17 @@ public class QSPanel extends ViewGroup {
         ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
         if (brightnessSliderEnabled) {
   	if (brightnessIconEnabled) {
-              brightnessIcon.setVisibility(VISIBLE);
+            brightnessIcon.setVisibility(View.VISIBLE);
             } else {
-                brightnessIcon.setVisibility(GONE);
+            brightnessIcon.setVisibility(View.GONE);
             }
-            mBrightnessView.setVisibility(VISIBLE);
-            brightnessSlider.setVisibility(VISIBLE);
+            mBrightnessView.setVisibility(View.VISIBLE);
+            brightnessSlider.setVisibility(View.VISIBLE);
             
         } else {
-            mBrightnessView.setVisibility(GONE);
-            brightnessSlider.setVisibility(GONE);
-	    brightnessIcon.setVisibility(GONE);	       
+            mBrightnessView.setVisibility(View.GONE);
+            brightnessSlider.setVisibility(View.GONE);
+	        brightnessIcon.setVisibility(View.GONE);	       
         }
  	updatecolors();
         updateResources();
@@ -177,11 +177,11 @@ public class QSPanel extends ViewGroup {
     }
 	
    public void updatecolors() {
+	ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
 	mQsColorSwitch = Settings.System.getInt(getContext().getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
 	int mIconColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_BRIGHTNESS_ICON_COLOR, 0xFFFFFFFF);
-        ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
 	if (mQsColorSwitch) {	
 	 brightnessIcon.setColorFilter(mIconColor, Mode.SRC_IN);
 		}

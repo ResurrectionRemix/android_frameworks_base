@@ -2184,6 +2184,9 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(CMSettings.Secure.getUriFor(
                     CMSettings.Secure.QS_USE_MAIN_TILES), false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH),
+                    false, this, UserHandle.USER_ALL);	
             update();
         }
 

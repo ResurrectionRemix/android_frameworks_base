@@ -110,6 +110,7 @@ public class QSDetailItems extends FrameLayout {
         mMaxItems = getResources().getInteger(
                 R.integer.quick_settings_detail_max_item_count);
         setMinHeightInItems(mMaxItems);
+	updatecolors();
     }
 
     @Override
@@ -308,6 +309,9 @@ class SettingsObserver extends ContentObserver {
 
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -324,6 +328,10 @@ class SettingsObserver extends ContentObserver {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
 	   ContentResolver resolver = mContext.getContentResolver();        
+	if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH))) {
+		updatecolors();
+		}
 	 update();
         }
 
