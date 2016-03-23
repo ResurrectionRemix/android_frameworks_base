@@ -628,7 +628,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         @Override
         protected void observe() {
             super.observe();
-
 	ContentResolver resolver = mContext.getContentResolver();
 	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
@@ -670,12 +669,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.ENABLE_TASK_MANAGER),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.LOCKSCREEN_ALPHA),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.LOCKSCREEN_SECURITY_ALPHA),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.USE_SLIM_RECENTS), false, this,
@@ -1100,18 +1093,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 Settings.System.NAVBAR_RECENTS_SWITCH, 0,
                 UserHandle.USER_CURRENT) == 1;
 
-
-            float overlayalpha = Settings.System.getFloatForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_ALPHA, 0.45f, UserHandle.USER_CURRENT);
-            if (mScrimController != null) {
-                mScrimController.setOverlayAlpha(overlayalpha);
-            }
-
-            float securityoverlayalpha = Settings.System.getFloatForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_SECURITY_ALPHA, 0.75f, UserHandle.USER_CURRENT);
-            if (mScrimController != null) {
-                mScrimController.setSecurityOverlayAlpha(securityoverlayalpha);
-            }
         }
     }
 	

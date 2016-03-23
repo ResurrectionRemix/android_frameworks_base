@@ -4611,18 +4611,6 @@ public final class Settings {
         public static final String DOUBLE_TAP_SLEEP_NAVBAR = "double_tap_sleep_navbar";
 
         /**
-         * change lockscreen alpha color
-         * @hide
-         */
-        public static final String LOCKSCREEN_ALPHA = "lockscreen_alpha";
-
-        /**
-         * change lockscreen security alpha color
-         * @hide
-         */
-        public static final String LOCKSCREEN_SECURITY_ALPHA = "lockscreen_security_alpha";
-
-        /**
          * Enable HW keys
          * @hide
          */
@@ -5321,7 +5309,7 @@ public final class Settings {
 
         /**
          * Define when Nfc polling is activated.
-	 * @hide
+         * @hide
          */
         public static final String NFC_POLLING_MODE = "nfc_polling";
 
@@ -7925,12 +7913,6 @@ public final class Settings {
          */
         public static final String CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED =
                 "camera_double_tap_power_gesture_disabled";
-
-        /**
-         * Options to decide wether or not to show keyguard bouncer on secure lockscreen
-         * @hide
-         */
-        public static final String LOCKSCREEN_BOUNCER = "lockscreen_bouncer";
 
         /**
          * Boolean value whether to link ringtone and notification volume
