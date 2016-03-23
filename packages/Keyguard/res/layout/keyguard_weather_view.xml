@@ -60,16 +60,6 @@
                 android:textSize="15sp"
                 android:textColor="@color/keyguard_default_primary_text_color" />
 
-            <TextView
-                android:id="@+id/wind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:includeFontPadding="false"
-                android:textStyle="normal|bold"
-                android:textSize="12sp"
-                android:textColor="@color/keyguard_default_secondary_text_color" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -108,16 +98,6 @@
                 android:textStyle="normal|bold"
                 android:textColor="@color/keyguard_default_primary_text_color" />
 
-            <TextView
-                android:id="@+id/humidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:includeFontPadding="false"
-                android:textStyle="normal|bold"
-                android:textSize="12sp"
-                android:textColor="@color/keyguard_default_secondary_text_color" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -130,15 +110,5 @@
         android:textSize="12sp"
         android:textStyle="normal|bold"
         android:textColor="@color/keyguard_default_primary_text_color" />
-
-    <TextView
-        android:id="@+id/timestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:includeFontPadding="false"
-        android:textStyle="normal|bold"
-        android:textSize="8sp"
-        android:textColor="@color/keyguard_default_secondary_text_color" />
 
 </LinearLayout>
