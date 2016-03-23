@@ -151,7 +151,7 @@ public class QSTileView extends ViewGroup {
                 UserHandle.USER_CURRENT) == 1;
 	    mLabelColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
-        if (mLabel != null) {
+        if (mLabel != null && mLabel.isAttachedToWindow()) {
             labelText = mLabel.getText();
             removeView(mLabel);
         }
@@ -173,7 +173,7 @@ public class QSTileView extends ViewGroup {
                 if (mQsColorSwitch) {
                 mDualLabel.setTextColor(mLabelColor);
            	 } else {
-                mDualLabel.setTextColor(res.getColor(R.color.qs_tile_text));
+                mDualLabel.setTextColor(mContext.getColor(R.color.qs_tile_text));
           	}
                 mDualLabel.setPadding(0, mDualTileVerticalPaddingPx, 0, mDualTileVerticalPaddingPx);
                 mDualLabel.setTypeface(CONDENSED);
