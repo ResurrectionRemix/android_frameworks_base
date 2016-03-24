@@ -4254,13 +4254,6 @@ public final class Settings {
         public static final String DISABLE_FC_NOTIFICATIONS = "disable_fc_notifications";
 
         /**
-         * Whether to enable status and navigation bar color in battery saver mode.
-         *
-         * @hide
-         */
-        public static final String BATTERY_SAVER_MODE_COLOR = "battery_save_mode_color";
-
-        /**
          * Status bar weather temperature
          * 0: Hide the temperature
          * 1: Display the temperature with scale
