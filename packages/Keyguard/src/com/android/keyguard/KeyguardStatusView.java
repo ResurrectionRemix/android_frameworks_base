@@ -383,7 +383,7 @@ public class KeyguardStatusView extends GridLayout implements
             mWeatherConditionText.setTextColor(mPrimaryTextColor);
         }
         if (mWeatherCurrentTemp != null) {
-            mWeatherCurrentTemp.setTextColor(secondaryTextColor);
+            mWeatherCurrentTemp.setTextColor(mPrimaryTextColor);
         }
 
 
