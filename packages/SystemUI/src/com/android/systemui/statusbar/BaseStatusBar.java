@@ -2536,9 +2536,11 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_METHOD)
     protected void addGestureAnywhereView() {
+      if (mGestureAnywhereView == null) {
         mGestureAnywhereView = (GestureAnywhereView)View.inflate(
                 mContext, R.layout.gesture_anywhere_overlay, null);
         mWindowManager.addView(mGestureAnywhereView, getGestureAnywhereViewLayoutParams(Gravity.LEFT));
+        }
         mGestureAnywhereView.setStatusBar(this);
     }
 
@@ -2569,8 +2571,10 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     protected void addAppCircleSidebar() {
+	    if (mAppCircleSidebar == null) {
             mAppCircleSidebar = (AppCircleSidebar) View.inflate(mContext, R.layout.app_circle_sidebar, null);
             mWindowManager.addView(mAppCircleSidebar, getAppCircleSidebarLayoutParams());
+            }
     }
 
     protected void removeAppCircleSidebar() {

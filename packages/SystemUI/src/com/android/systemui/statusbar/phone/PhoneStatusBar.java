@@ -135,9 +135,9 @@ import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.cm.ActionUtils;
-import com.android.internal.util.cm.WeatherController;
-import com.android.internal.util.cm.WeatherControllerImpl;
-import com.android.internal.util.cm.WeatherController.WeatherInfo;
+import com.android.systemui.statusbar.policy.WeatherController;
+import com.android.systemui.statusbar.policy.WeatherControllerImpl;
+import com.android.systemui.statusbar.policy.WeatherController.WeatherInfo;
 import com.android.internal.util.cm.Blur;
 import com.android.internal.utils.du.ActionHandler;
 import com.android.internal.utils.du.DUActionUtils;
@@ -750,13 +750,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.CLEAR_RECENTS_STYLE_ENABLE),
 			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.GESTURE_ANYWHERE_ENABLED),
-			false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.ENABLE_APP_CIRCLE_BAR),
-			false, this, UserHandle.USER_ALL);
-
 		    update();
         }
 
@@ -857,12 +850,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) 
                     {
                	DontStressOnRecreate();
-	  }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.GESTURE_ANYWHERE_ENABLED))) {
-              DontStressOnRecreate();
-	} else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.ENABLE_APP_CIRCLE_BAR))) {
-           DontStressOnRecreate();
 	}
          update();
         }
@@ -1002,12 +989,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		}
 
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
-
-
-
-       
-           boolean mGestureAnywhere = Settings.System.getIntForUser(resolver,
-                    Settings.System.GESTURE_ANYWHERE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
 
 
 	   int  mQSBackgroundColor = Settings.System.getInt(
@@ -1595,28 +1576,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         } catch (RemoteException ex) {
             // no window manager? good luck with that
         }
-         boolean mAppcircle = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.ENABLE_APP_CIRCLE_BAR, 0) == 1;
-              if(mAppcircle) {      
-        addAppCircleSidebar();
-        } else {
-        if (mAppCircleSidebar !=null) {
-        try { 
-       removeAppCircleSidebar();
-       } catch (Exception e) { }
-	}
-       }
-        boolean mGestureAnywhere = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.GESTURE_ANYWHERE_ENABLED, 0) == 1;
-	if(mGestureAnywhere) {
-	addGestureAnywhereView();
-	} else { 
-	if (mGestureAnywhereView !=null) {
-	try { 
-	removeGestureAnywhereView();
-	   } catch (Exception e) { }
-	  }
-	}
+        
+	if (!mRecreating) {
+            addGestureAnywhereView();
+            addAppCircleSidebar();
+        }
 
 
         if (mAssistManager == null) {

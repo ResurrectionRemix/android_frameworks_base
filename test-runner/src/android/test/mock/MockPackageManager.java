@@ -590,10 +590,10 @@ public class MockPackageManager extends PackageManager {
     @Override
     public List<VolumeInfo> getPackageCandidateVolumes(ApplicationInfo app) {
         throw new UnsupportedOperationException();
-    }
-
+    }    
+    
     /** {@hide} */
-    @Override
+     @Override
     public List<VolumeInfo> getPackageCandidateVolumesForceable(ApplicationInfo app) {
         throw new UnsupportedOperationException();
     }
