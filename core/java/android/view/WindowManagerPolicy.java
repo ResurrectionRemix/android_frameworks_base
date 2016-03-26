@@ -1253,6 +1253,11 @@ public interface WindowManagerPolicy {
     public boolean needsNavigationBar();
 
     /**
+     * Navigation bar window is currently capable of being vertical
+     */
+    public boolean navigationBarCanMove();
+
+    /**
      * Lock the device now.
      */
     public void lockNow(Bundle options);

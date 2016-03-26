@@ -258,6 +258,11 @@ interface IWindowManager
     boolean needsNavigationBar();
 
     /**
+     * Navigation bar window is currently capable of being vertical
+     */
+    boolean navigationBarCanMove();
+
+    /**
      * Lock the device immediately with the specified options (can be null).
      */
     void lockNow(in Bundle options);
