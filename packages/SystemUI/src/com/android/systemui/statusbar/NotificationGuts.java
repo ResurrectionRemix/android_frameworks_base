@@ -30,9 +30,9 @@ import com.android.systemui.R;
  */
 public class NotificationGuts extends FrameLayout {
 
-    protected Drawable mBackground;
-    protected int mClipTopAmount;
-    protected int mActualHeight;
+    private Drawable mBackground;
+    private int mClipTopAmount;
+    private int mActualHeight;
     public boolean MColorSwitch = false;
 
     public NotificationGuts(Context context, AttributeSet attrs) {

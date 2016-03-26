@@ -42,7 +42,7 @@ public abstract class ExpandableView extends FrameLayout {
     private boolean mDark;
     private ArrayList<View> mMatchParentViews = new ArrayList<View>();
     private int mClipTopOptimization;
-    private Rect mClipRect = new Rect();
+    private static Rect mClipRect = new Rect();
     private boolean mWillBeGone;
     private int mMinClipTopAmount = 0;
 
