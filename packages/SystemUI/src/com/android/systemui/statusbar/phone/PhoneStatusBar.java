@@ -4920,6 +4920,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (newTheme != null) mCurrentTheme = (ThemeConfig) newTheme.clone();
         if (updateStatusBar) {
             recreateStatusBar();
+            updateNotificationShadeForChildren();
+            mTmpChildOrderMap.clear();
             if (mNavigationBarView != null) {
                 mNavigationBarView.onRecreateStatusbar();
             }
