@@ -68,7 +68,11 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
         mAccessibilityMgr = Dependency.get(AccessibilityManagerWrapper.class);
         Resources resources = context.getResources();
         mMinimumDisplayTime = resources.getInteger(R.integer.heads_up_notification_minimum_time);
-        mAutoDismissNotificationDecay = resources.getInteger(R.integer.heads_up_notification_decay);
+        int defaultHeadsUpNotificationDecayMs =
+                resources.getInteger(R.integer.heads_up_notification_decay);
+        mAutoDismissNotificationDecay = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.HEADS_UP_TIMEOUT,
+                defaultHeadsUpNotificationDecayMs, UserHandle.USER_CURRENT);
         mTouchAcceptanceDelay = resources.getInteger(R.integer.touch_acceptance_delay);
         mSnoozedPackages = new ArrayMap<>();
         int defaultSnoozeLengthMs =
@@ -387,6 +391,10 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
             mSnoozeLengthMs = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.HEADS_UP_NOTIFICATION_SNOOZE,
                 mContext.getResources().getInteger(R.integer.heads_up_default_snooze_length_ms),
+                UserHandle.USER_CURRENT);
+            mAutoDismissNotificationDecay = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.HEADS_UP_TIMEOUT,
+                mContext.getResources().getInteger(R.integer.heads_up_notification_decay),
                 UserHandle.USER_CURRENT);
             super.updateEntry(updatePostTime);
         }
