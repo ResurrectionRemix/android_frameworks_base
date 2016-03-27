@@ -402,7 +402,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private boolean mQsColorSwitch = false;
     public boolean mColorSwitch = false ;
-    public QSTileView mTileView;
     private  View mIcon;
     public QSDetailItems mQsDetail;
     public SignalTileView mSignalView;	
@@ -1663,14 +1662,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         setAreThereNotifications();
 
         mIconController = new StatusBarIconController(
-                mContext, mStatusBarView, mKeyguardStatusBar, this);      
-
-	mTileView = new QSTileView (mContext);
-	mQsDetail = new QSDetailItems(mContext);
-	mSignalView = new SignalTileView(mContext);
-
-        mQsPanel = new QSPanel(mContext);
-
+                mContext, mStatusBarView, mKeyguardStatusBar, this);     
+	
         // Background thread for any controllers that need it.
         mHandlerThread = new HandlerThread(TAG, Process.THREAD_PRIORITY_BACKGROUND);
         mHandlerThread.start();
@@ -2155,9 +2148,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
-	if (mStatusBarHeaderMachine == null) {
         mStatusBarHeaderMachine = new StatusBarHeaderMachine(mContext);
-        }
         mStatusBarHeaderMachine.addObserver(mHeader);
         mStatusBarHeaderMachine.updateEnablement();
         UpdateNotifDrawerClearAllIconColor();
@@ -3138,10 +3129,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	mQSPanel.updateicons();
 	mNotificationPanel.setQSBackgroundColor();
 	mNotificationPanel.setQSColors();
-	mQsPanel.updatecolors();
-	mSignalView.setIconColor();
-	mTileView.setIconColor();
-	mTileView.updateColors();
 	mStatusBarHeaderMachine.doUpdateStatusHeaderObservers(true);
 	}
 
