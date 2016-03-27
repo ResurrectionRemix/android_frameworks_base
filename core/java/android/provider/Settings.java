@@ -4992,7 +4992,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
           * @hide
           */
          public static final String LOCKSCREEN_CHARGING_CURRENT = "lockscreen_charging_current";
- 
+
         /**
          * Pie toggles torch
          * @hide
@@ -5073,6 +5073,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String USE_EDGE_SERVICE_FOR_GESTURES = "edge_service_for_gestures";
+
+        /**
+         * Heads up timeout configuration
+         * @hide
+         */
+        public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
 
         /**
          * Whether the user has enabled headsup (Default 1)
