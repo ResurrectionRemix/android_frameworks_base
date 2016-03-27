@@ -24,6 +24,8 @@ import android.database.ContentObserver;
 import android.os.SystemClock;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.ArrayMap;
 import android.provider.Settings;
 import android.util.Log;
@@ -70,7 +72,10 @@ public class HeadsUpManager {
         mContext = context;
         Resources resources = context.getResources();
         mMinimumDisplayTime = resources.getInteger(R.integer.heads_up_notification_minimum_time);
-        mHeadsUpNotificationDecay = resources.getInteger(R.integer.heads_up_notification_decay);
+        mHeadsUpNotificationDecay = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.HEADS_UP_TIMEOUT,
+                context.getResources().getInteger(R.integer.heads_up_notification_decay),
+                UserHandle.USER_CURRENT);
         mTouchAcceptanceDelay = resources.getInteger(R.integer.touch_acceptance_delay);
         mSnoozedPackages = new ArrayMap<>();
         int defaultSnoozeLengthMs =
@@ -475,7 +480,10 @@ public class HeadsUpManager {
 
         public void updateEntry(boolean updatePostTime) {
             if (DEBUG) Log.v(TAG, "updateEntry");
-
+            mHeadsUpNotificationDecay = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.HEADS_UP_TIMEOUT,
+                    mContext.getResources().getInteger(R.integer.heads_up_notification_decay),
+                    UserHandle.USER_CURRENT);
             long currentTime = mClock.currentTimeMillis();
             earliestRemovaltime = currentTime + mMinimumDisplayTime;
             if (updatePostTime) {
