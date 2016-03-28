@@ -129,10 +129,7 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
 	boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
 
-        // Work around for bug 15916487: don't show location tile on top of lock screen. After the
-        // bug is fixed, this should be reverted to only hiding it on secure lock screens:
-        // state.visible = !(mKeyguard.isSecure() && mKeyguard.isShowing());
-        state.visible = !mKeyguard.isShowing();
+        state.visible = true;
         state.label = mContext.getString(getStateLabelRes(currentState));
 	 if (mQSCSwitch) {
         switch (currentState) {
