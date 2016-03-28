@@ -1330,4 +1330,6 @@ public interface WindowManagerPolicy {
      * @param fadeoutDuration the duration of the exit animation, in milliseconds
      */
     public void startKeyguardExitAnimation(long startTime, long fadeoutDuration);
+
+    public void setLiveLockscreenEdgeDetector(boolean enable);
 }

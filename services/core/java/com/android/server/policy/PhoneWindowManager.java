@@ -779,7 +779,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mTorchEnabled;
     private boolean mIsTorchActive;
     private boolean mWasTorchActive;
-
+    private boolean mShowKeyguardOnLeftSwipe;
 
     private class PolicyHandler extends Handler {
         @Override
@@ -1924,6 +1924,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         if (mNavigationBar != null && !mNavigationBarOnBottom &&
                                 mNavigationBarLeftInLandscape) {
                             requestTransientBars(mNavigationBar);
+                        }
+                        if (mShowKeyguardOnLeftSwipe && isKeyguardShowingOrOccluded()) {
+                            // Show keyguard
+                            mKeyguardDelegate.showKeyguard();
+                            mShowKeyguardOnLeftSwipe = false;
                         }
                     }
                     @Override
@@ -8337,5 +8342,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mKeyguardDelegate != null) {
             mKeyguardDelegate.dump(prefix, pw);
         }
+    }
+
+    @Override
+    public void setLiveLockscreenEdgeDetector(boolean enable) {
+        mShowKeyguardOnLeftSwipe = enable;
     }
 }
