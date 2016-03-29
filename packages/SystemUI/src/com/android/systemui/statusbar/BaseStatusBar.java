@@ -750,6 +750,10 @@ public abstract class BaseStatusBar extends SystemUI implements
         mContext.registerReceiverAsUser(mAllUsersReceiver, UserHandle.ALL, allUsersFilter,
                 null, null);
         updateCurrentProfilesCache();
+
+        SettingsObserver observer = new SettingsObserver(mHandler);
+        observer.observe();
+ 
     }
 
     protected void notifyUserAboutHiddenNotifications() {
@@ -2364,6 +2368,11 @@ public abstract class BaseStatusBar extends SystemUI implements
             return false;
         }
 
+        // check if package is blacklisted first
+        if (isPackageBlacklisted(sbn.getPackageName()) || isPackageInDnd(getTopLevelPackage())) {
+            return false;
+        }
+ 
         Notification notification = sbn.getNotification();
         // some predicates to make the boolean logic legible
         boolean whiteListed = isPackageWhitelisted(sbn.getPackageName());
