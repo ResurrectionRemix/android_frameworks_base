@@ -117,6 +117,13 @@ static void nativeAcquireSuspendBlocker(JNIEnv *env, jclass /* clazz */, jstring
     acquire_wake_lock(PARTIAL_WAKE_LOCK, name.c_str());
 }
 
+static void nativeCpuBoost(JNIEnv *env, jobject clazz, jint duration) {
+    // Tell the Power HAL to boost the CPU
+    if (gPowerModule && gPowerModule->powerHint) {
+        gPowerModule->powerHint(gPowerModule, POWER_HINT_CPU_BOOST, (void *) duration);
+    }
+}
+
 static void nativeReleaseSuspendBlocker(JNIEnv *env, jclass /* clazz */, jstring nameStr) {
     ScopedUtfChars name(env, nameStr);
     release_wake_lock(name.c_str());
@@ -190,6 +197,8 @@ static JNINativeMethod gPowerManagerServiceMethods[] = {
             (void*) nativeSetFeature },
     { "nativeGetFeature", "(I)I",
             (void*) nativeGetFeature },
+    { "nativeCpuBoost", "(I)V",
+            (void*) nativeCpuBoost },
 };
 
 #define FIND_CLASS(var, className) \

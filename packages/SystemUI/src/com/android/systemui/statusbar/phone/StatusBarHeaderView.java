@@ -47,6 +47,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.os.PowerManager;
 import android.provider.CalendarContract.Events;
 import android.provider.Settings;
 import android.net.Uri;
@@ -105,7 +106,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     private boolean mExpanded;
     private boolean mListening;
-
+    private PowerManager mPowerManager;
+    
     private View mHeaderView;
     private ViewGroup mSystemIconsContainer;
     private ViewGroup mWeatherContainer;
@@ -291,6 +293,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mEditTileDoneText = (TextView) findViewById(R.id.done);
         mSettingsObserver = new SettingsObserver(new Handler());
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
+        mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         loadDimens();
         updateVisibilities();
         updateClockScale();
@@ -410,7 +413,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         FontSizeUtils.updateFontSize(this, R.id.empty_time_view, R.dimen.qs_time_expanded_size);
 
         mEmergencyCallsOnly.setText(com.android.internal.R.string.emergency_calls_only);
-
         mClockCollapsedSize = getResources().getDimensionPixelSize(R.dimen.qs_time_collapsed_size);
         mClockExpandedSize = getResources().getDimensionPixelSize(R.dimen.qs_time_expanded_size);
         mClockCollapsedScaleFactor = (float) mClockCollapsedSize / (float) mClockExpandedSize;
@@ -556,6 +558,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         updateClockScale();
         updateClockLp();
         requestCaptureValues();
+        mPowerManager.cpuBoost(2500000);
 	     	
     }
 
