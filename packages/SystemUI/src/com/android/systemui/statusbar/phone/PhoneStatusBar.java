@@ -4722,7 +4722,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         final boolean updateNavBar = shouldUpdateNavbar(mCurrentTheme, newTheme);
         if (newTheme != null) mCurrentTheme = (ThemeConfig) newTheme.clone();
         if (updateStatusBar) {
-            recreateStatusBar();
+            DontStressOnRecreate();
             if (mNavigationBarView != null) {
                 mNavigationBarView.onRecreateStatusbar();
             }
@@ -4757,6 +4757,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         checkBarModes();
         updateClearAll();
         updateEmptyShadeView();
+        mDeviceInteractive = true;
+        mStackScroller.setAnimationsEnabled(true);
+        mNotificationPanel.setTouchDisabled(false);
+        updateVisibleToUser();
+
     }   
 
     /**
