@@ -506,6 +506,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mExpanded = expanded;
         if (changed) {
             updateEverything();
+            mPowerManager.cpuBoost(2500000);
         }
     }
 
@@ -518,7 +519,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         updateClockScale();
         updateClockLp();
         requestCaptureValues();
-        mPowerManager.cpuBoost(2500000);
 	     	
     }
 
