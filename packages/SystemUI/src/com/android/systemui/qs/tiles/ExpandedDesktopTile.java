@@ -25,6 +25,7 @@ import android.database.ContentObserver;
 import android.os.Handler;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManagerGlobal;
@@ -280,10 +281,6 @@ public class ExpandedDesktopTile extends QSTile<QSTile.BooleanState> {
             return MetricsConstants.DONT_TRACK_ME_BRO;
         }
 
-        @Override
-        public StatusBarPanelCustomTile getCustomTile() {
-            return null;
-        }
 
         @Override
         public View createDetailView(Context context, View convertView, ViewGroup parent) {
@@ -296,6 +293,7 @@ public class ExpandedDesktopTile extends QSTile<QSTile.BooleanState> {
             final ListView list = mDetails.getListView();
             list.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
             list.setOnItemClickListener(this);
+            mDetails.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 
             return mDetails;
         }

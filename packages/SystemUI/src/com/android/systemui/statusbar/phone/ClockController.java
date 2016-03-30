@@ -142,8 +142,4 @@ public class ClockController {
             FontSizeUtils.updateFontSize(mActiveClock, R.dimen.status_bar_clock_size);
         }
     }
-
-    public void cleanup() {
-        mSettingsObserver.unobserve();
-    }
 }

@@ -4687,6 +4687,12 @@ public final class Settings {
         public static final String ANIMATION_IME_DURATION = "animation_ime_duration";
 
         /**
+         * Whether to show four tiles per row.
+         * @hide
+         */
+        public static final String QS_USE_FOUR_COLUMNS = "qs_use_four_columns";
+
+	/**
          *
          * @hide
          */
@@ -4719,6 +4725,14 @@ public final class Settings {
 
         /**
          * Change the color of the lockscreen clock
+         * Number of columns to display on the quick settings panel
+         * Default is 3
+         * @hide
+         */
+        public static final String QS_NUM_TILE_COLUMNS = "sysui_qs_num_tile_columns";
+
+        /**
+         * Whether to display set of animations when prompting the power menu
          *
          * @hide
          */
@@ -5199,11 +5213,6 @@ public final class Settings {
          */
         public static final String NAV_BUTTONS_ROTATION = "nav_buttons_rotation";
 
-        /** Whether to vibrate when quick settings tile is pressed.
-         *
-         * @hide
-         */
-        public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
 
         /** Whether to vibrate when quick settings tile is Single pressed.
          *
@@ -5228,7 +5237,15 @@ public final class Settings {
          * @hide
          */
         public static final String QUICK_SETTINGS_HEADER_VIBRATE_LONG = "quick_settings_header_vibrate_long";
-
+        
+       
+        /**
+         * Use "main" tiles on the first row of the quick settings panel
+         * 0 = no, 1 = yes
+         * @hide
+         */
+         
+        public static final String QS_USE_MAIN_TILES = "qs_use_main_tiles";
 
         /**
          * Quick Settings Smart Pulldown
@@ -5295,6 +5312,12 @@ public final class Settings {
          * @hide
          */
         public static final String NFC_POLLING_MODE = "nfc_polling";
+
+        /** Whether to vibrate when quick settings tile is pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

@@ -19,14 +19,9 @@ package com.android.systemui.qs;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffColorFilter;
-import android.net.Uri;
 import android.os.Handler;
-import android.os.UserHandle;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
@@ -40,11 +35,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import android.graphics.PorterDuff.Mode;
-
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
-
 
 import android.provider.Settings;
 
@@ -72,18 +64,10 @@ public class QSDetailItems extends FrameLayout {
     private int mQsIconColor;
     private int mTextColor;
     private int mEmptyTextColor;
-    private SettingsObserver mSettingsObserver;	
 
     public QSDetailItems(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        mTag = TAG;
-    }
-
-    public QSDetailItems(Context context) {
-        super(context);
-        mContext = context;
-	mSettingsObserver = new SettingsObserver(mHandler);
         mTag = TAG;
     }
 
@@ -110,7 +94,6 @@ public class QSDetailItems extends FrameLayout {
         mMaxItems = getResources().getInteger(
                 R.integer.quick_settings_detail_max_item_count);
         setMinHeightInItems(mMaxItems);
-	updatecolors();
     }
 
     @Override
@@ -132,15 +115,15 @@ public class QSDetailItems extends FrameLayout {
     }
 
     public void setEmptyState(int icon, int text) {
-	updatecolors();
         mEmptyIcon.setImageResource(icon);
         mEmptyText.setText(text);
-	if (mQsColorSwitch) {
+        if (mQsColorSwitch) {
             mEmptyIcon.setColorFilter(mQsIconColor, Mode.MULTIPLY);                        
             mEmptyText.setTextColor(mEmptyTextColor);
        	 } 
     }
-
+    
+    
    public void updatecolors() {
 	final ContentResolver resolver = mContext.getContentResolver();
 	  mQsColorSwitch = Settings.System.getInt(resolver,
@@ -153,6 +136,7 @@ public class QSDetailItems extends FrameLayout {
                     Settings.System.QS_ICON_COLOR, 0xffffffff);
 		}
 	}
+
 
     /**
      * Set the minimum height of this detail view, in item count.
@@ -224,7 +208,8 @@ public class QSDetailItems extends FrameLayout {
         view.setVisibility(mItemsVisible ? VISIBLE : INVISIBLE);
         final ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
         iv.setImageResource(item.icon);
-	if (mQsColorSwitch) {
+        updatecolors();
+        if (mQsColorSwitch) {
             iv.setColorFilter(mQsIconColor, Mode.MULTIPLY);
         }
         iv.getOverlay().clear();
@@ -235,7 +220,7 @@ public class QSDetailItems extends FrameLayout {
         }
         final TextView title = (TextView) view.findViewById(android.R.id.title);
         title.setText(item.line1);
-	updatecolors();
+        updatecolors();
 	if (mQsColorSwitch) {
  	title.setTextColor(mLabelColor);
 	}
@@ -254,7 +239,7 @@ public class QSDetailItems extends FrameLayout {
         });
         final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
         disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
-	 if (mQsColorSwitch) {
+         if (mQsColorSwitch) {
             disconnect.setColorFilter(mQsIconColor, Mode.MULTIPLY);
         }
         disconnect.setOnClickListener(new OnClickListener() {
@@ -266,7 +251,6 @@ public class QSDetailItems extends FrameLayout {
             }
         });
     }
-
 
     private class H extends Handler {
         private static final int SET_ITEMS = 1;
@@ -301,45 +285,5 @@ public class QSDetailItems extends FrameLayout {
     public interface Callback {
         void onDetailItemClick(Item item);
         void onDetailItemDisconnect(Item item);
-    }
-class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH),
-                    false, this, UserHandle.USER_ALL);
-            update();
-        }
-
-        void unobserve() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.unregisterContentObserver(this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            update();
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-	   ContentResolver resolver = mContext.getContentResolver();        
-	if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_COLOR_SWITCH))) {
-		updatecolors();
-		}
-	 update();
-        }
-
-        public void update() {
-	ContentResolver resolver = mContext.getContentResolver();
-	mQsColorSwitch = Settings.System.getInt(resolver,
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-		updatecolors();      
-        }
     }
 }

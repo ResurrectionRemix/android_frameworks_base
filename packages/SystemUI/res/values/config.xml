@@ -117,8 +117,18 @@
     <!-- The number of columns that the top level tiles span in the QuickSettings -->
     <integer name="quick_settings_user_time_settings_tile_span">1</integer>
 
+    <!-- The default tiles to display in QuickSettings -->
+    <string name="quick_settings_tiles_default" translatable="false">
+        wifi,bt,inversion,cell,airplane,dnd,rotation,flashlight,location,cast,hotspot,adb_network,compass,nfc,profiles,sync,volume_panel,usb_tether,screen_timeout,performance,ambient_display,live_display,music,brightness,screen_off,screenshot,expanded_desktop,reboot,configurations,heads_up,lte,themes,navbar,appcirclebar,kernel_adiutor,screenrecord,gesture_anywhere,battery_saver,power_menu,app_picker,kill_app,caffeine,hw_keys,sound
+    </string>
+
+    <!-- The default tiles to reset to in QuickSettings -->
+    <string name="quick_settings_tiles_reset" translatable="false">
+        wifi,bt,inversion,cell,airplane,dnd,rotation,flashlight,location,cast,hotspot
+    </string>
+
     <!-- The tiles to display in QuickSettings -->
-    <string name="quick_settings_tiles" translatable="false">default</string>
+    <string name="quick_settings_tiles" translatable="false">wifi,bt,inversion,cell,airplane,dnd,rotation,flashlight,location,cast,hotspot</string>
 
     <!-- Whether or not the RSSI tile is capitalized or not. -->
     <bool name="quick_settings_rssi_tile_capitalization">true</bool>

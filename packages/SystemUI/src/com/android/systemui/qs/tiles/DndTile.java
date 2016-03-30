@@ -123,11 +123,6 @@ public class DndTile extends QSTile<QSTile.BooleanState> {
     }
 
     @Override
-    protected void handleSecondaryClick() {
-        handleClick();
-    }
-
-    @Override
     public void handleLongClick() {
         mHost.startActivityDismissingKeyguard(ZEN_SETTINGS);
     }
@@ -200,11 +195,6 @@ public class DndTile extends QSTile<QSTile.BooleanState> {
         }
     }
 
-    @Override
-    public boolean hasDualTargetsDetails() {
-        return true;
-    }
-
     private final OnSharedPreferenceChangeListener mPrefListener
             = new OnSharedPreferenceChangeListener() {
         @Override
@@ -247,11 +237,6 @@ public class DndTile extends QSTile<QSTile.BooleanState> {
         @Override
         public Intent getSettingsIntent() {
             return ZEN_SETTINGS;
-        }
-
-        @Override
-        public StatusBarPanelCustomTile getCustomTile() {
-            return null;
         }
 
         @Override

@@ -25,6 +25,7 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.Settings;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -289,11 +290,6 @@ public class ScreenTimeoutTile extends QSTile<ScreenTimeoutTile.TimeoutState> {
         }
 
         @Override
-        public StatusBarPanelCustomTile getCustomTile() {
-            return null;
-        }
-
-        @Override
         public void setToggleState(boolean state) {
             // noop
         }
@@ -308,6 +304,7 @@ public class ScreenTimeoutTile extends QSTile<ScreenTimeoutTile.TimeoutState> {
             mItems = QSDetailItemsList.convertOrInflate(context, convertView, parent);
             ListView listView = mItems.getListView();
             listView.setOnItemClickListener(this);
+            mItems.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             listView.setDivider(null);
             RadioAdapter adapter = new RadioAdapter(context,

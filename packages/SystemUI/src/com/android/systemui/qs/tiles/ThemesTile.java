@@ -258,11 +258,6 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
             return intent;
         }
 
-    	@Override
-        public StatusBarPanelCustomTile getCustomTile() {
-            return null;
-        }
-
 
         @Override
         public void setToggleState(boolean state) {

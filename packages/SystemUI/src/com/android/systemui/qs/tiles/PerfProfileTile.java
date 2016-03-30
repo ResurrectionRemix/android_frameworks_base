@@ -201,11 +201,6 @@ public class PerfProfileTile extends QSTile<PerfProfileTile.ProfileState> {
         }
 
         @Override
-        public StatusBarPanelCustomTile getCustomTile() {
-            return null;
-        }
-
-        @Override
         public void setToggleState(boolean state) {
             // noop
         }

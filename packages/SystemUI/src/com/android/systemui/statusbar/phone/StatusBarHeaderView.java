@@ -80,7 +80,6 @@ import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.omni.StatusBarHeaderMachine;
-import com.android.systemui.qs.QSDragPanel;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.statusbar.policy.BatteryController;
@@ -88,7 +87,6 @@ import com.android.systemui.statusbar.policy.DockBatteryController;
 import com.android.systemui.statusbar.policy.NetworkControllerImpl.EmergencyListener;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.UserInfoController;
-import com.android.systemui.tuner.TunerService;
 
 import java.text.NumberFormat;
 
@@ -122,8 +120,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private TextView mDateExpanded;
     private LinearLayout mSystemIcons;
     private View mSignalCluster;
-    private SettingsButton mSettingsButton;
-    private View mSettingsContainer;
+    private View mSettingsButton;
     private View mQsDetailHeader;
     private TextView mQsDetailHeaderTitle;
     private Switch mQsDetailHeaderSwitch;
@@ -134,7 +131,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private BatteryLevelTextView mDockBatteryLevel;
     private TextView mAlarmStatus;
     private TextView mWeatherLine1, mWeatherLine2;
-    private TextView mEditTileDoneText;
 
     private boolean mShowEmergencyCallsOnly;
     private boolean mAlarmShowing;
@@ -180,7 +176,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private ActivityStarter mActivityStarter;
     private NextAlarmController mNextAlarmController;
     private WeatherController mWeatherController;
-    private QSDragPanel mQSPanel;
+    private QSPanel mQSPanel;
 
     private final Rect mClipBounds = new Rect();
 
@@ -197,15 +193,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private boolean mShowWeather;
     private boolean mShowBatteryTextExpanded;
 
-    private QSTile.DetailAdapter mEditingDetailAdapter;
-    private boolean mEditing;
-
 
     private ImageView mBackgroundImage;
     private Drawable mCurrentBackground;
     private float mLastHeight;
-    private UserInfoController mUserInfoController;
-
 
     // QS header alpha
     private int mQSHeaderAlpha;
@@ -266,9 +257,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mMultiUserAvatar = (ImageView) findViewById(R.id.multi_user_avatar);
         mDateCollapsed = (TextView) findViewById(R.id.date_collapsed);
         mDateExpanded = (TextView) findViewById(R.id.date_expanded);
-        mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
-        mSettingsContainer = findViewById(R.id.settings_button_container);
+        mSettingsButton = findViewById(R.id.settings_button);
         mSettingsButton.setOnClickListener(this);
+        mSettingsButton.setOnLongClickListener(this);
         mTaskManagerButton = findViewById(R.id.task_manager_button);
         mTaskManagerButton.setOnLongClickListener(this);
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
@@ -290,7 +281,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mWeatherimage = (ImageButton) findViewById(R.id.no_weather_image);
         mWeatherLine1 = (TextView) findViewById(R.id.weather_line_1);
         mWeatherLine2 = (TextView) findViewById(R.id.weather_line_2);
-        mEditTileDoneText = (TextView) findViewById(R.id.done);
         mSettingsObserver = new SettingsObserver(new Handler());
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -334,29 +324,13 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             }
         });
         requestCaptureValues();
-
-        // RenderThread is doing more harm than good when touching the header (to expand quick
-        // settings), so disable it for this view
-        Drawable d = getBackground();
-        if (d instanceof RippleDrawable) {
-            ((RippleDrawable) d).setForceSoftware(true);
-        }
-        d = mSettingsButton.getBackground();
-        if (d instanceof RippleDrawable) {
-            ((RippleDrawable) d).setForceSoftware(true);
-        }
-        d = mSystemIconsSuperContainer.getBackground();
-        if (d instanceof RippleDrawable) {
-            ((RippleDrawable) d).setForceSoftware(true);
-        }
     }
 
     public void setHeaderColor() {
 	final Resources res = getContext().getResources();
 	mHeaderView = findViewById(R.id.header);
-	int mStockHeader = res.getColor(R.color.system_secondary_color);
-	int mStockHeaderText = res.getColor(R.color.qs_edit_header_instruction_text_color);
 	mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
+	int mStockHeaderText = res.getColor(R.color.qs_tile_text);
 	mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         int mHeaderColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_HEADER_COLOR, 0xFFFFFFFF);
@@ -372,8 +346,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
 	if ( mQsDetailHeaderTitle != null) {
 	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
-	}
-
+	  }
 	} else {
 	if (mHeaderView != null) {
             mHeaderView.getBackground().setColorFilter(null);
@@ -428,21 +401,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	     
     }
 
-
     public void vibrateheader(int duration) {
         if (mVibrator != null) {
             if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
         	}
 	}
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mUserInfoController != null) {
-            mUserInfoController.removeListener(mUserInfoChangedListener);
-        }
-        setListening(false);
-    }
 
     private void updateClockCollapsedMargin() {
         Resources res = getResources();
@@ -542,9 +505,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         boolean changed = expanded != mExpanded;
         mExpanded = expanded;
         if (changed) {
-            if (mShowingDetail && !expanded) {
-                mQsPanelCallback.onShowingDetail(null);
-            }
             updateEverything();
         }
     }
@@ -583,10 +543,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mDateCollapsed.setVisibility(mExpanded && mAlarmShowing ? View.VISIBLE : View.INVISIBLE);
         mDateExpanded.setVisibility(mExpanded && mAlarmShowing ? View.INVISIBLE : View.VISIBLE);
         mAlarmStatus.setVisibility(mExpanded && mAlarmShowing ? View.VISIBLE : View.INVISIBLE);
-        mSettingsContainer.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
+        mSettingsButton.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
         mWeatherContainer.setVisibility(mExpanded && mShowWeather ? View.VISIBLE : View.GONE);
         mTaskManagerButton.setVisibility(mExpanded && mShowTaskManager ? View.VISIBLE : View.GONE);
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.GONE);
+        mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.INVISIBLE);
         if (mSignalCluster != null) {
             updateSignalClusterDetachment();
         }
@@ -598,6 +559,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mDockBatteryLevel.setVisibility(View.VISIBLE);
         }
          applyHeaderBackgroundShadow();
+        mBatteryLevel.setVisibility(View.VISIBLE);
     }
 
 	public void hidepanelItems() {
@@ -646,10 +608,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 		}
 	if (Settings.System.getInt(mContext.getContentResolver(),
                Settings.System.HIDE_SETTINGS_ICON, 1) == 1) {
-	mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
+	 mSettingsButton = findViewById(R.id.settings_button);
 	mSettingsButton.setVisibility(View.VISIBLE);
 	} else {	
-	mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
+	mSettingsButton = findViewById(R.id.settings_button);
 	mSettingsButton.setVisibility(View.INVISIBLE);
         	}
 	if (Settings.System.getInt(mContext.getContentResolver(),
@@ -766,7 +728,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         RelativeLayout.LayoutParams lp = (LayoutParams) mSystemIconsSuperContainer
                 .getLayoutParams();
         int rule = mExpanded
-                ? mSettingsContainer.getId()
+                ? mSettingsButton.getId()
                 : mMultiUserSwitch.getId();
         int taskManager = mShowTaskManager && mExpanded
                 ? mTaskManagerButton.getId() : rule;
@@ -920,21 +882,14 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         setClipBounds(mClipBounds);
         invalidateOutline();
     }
-
-    private UserInfoController.OnUserInfoChangedListener mUserInfoChangedListener =
-            new UserInfoController.OnUserInfoChangedListener() {
-        @Override
-        public void onUserInfoChanged(String name, Drawable picture) {
-            mMultiUserAvatar.setImageDrawable(picture);
-        }
-    };
-
+    
     public void setUserInfoController(UserInfoController userInfoController) {
-        mUserInfoController = userInfoController;
-        userInfoController.addListener(mUserInfoChangedListener);
-        if (mMultiUserSwitch != null) {
-            mMultiUserSwitch.setUserInfoController(mUserInfoController);
-        }
+        userInfoController.addListener(new UserInfoController.OnUserInfoChangedListener() {
+            @Override
+            public void onUserInfoChanged(String name, Drawable picture) {
+                mMultiUserAvatar.setImageDrawable(picture);
+            }
+        });
     }
 
     @Override
@@ -949,12 +904,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 		} else { 
 		 vibrateheader(0);
 		}
-            if (mSettingsButton.isTunerClick()) {
-                mSettingsButton.consumeClick();
-                mQSPanel.getHost().setEditing(!mQSPanel.getHost().isEditing());
-            } else {
 		startSettingsActivity();
-		}
         } else if (v == mSystemIconsSuperContainer) {
             startBatteryActivity();
         } else if (v == mAlarmStatus && mNextAlarm != null) {
@@ -984,6 +934,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     public boolean onLongClick(View v) {
 	boolean mQsVibrateHeaderLong = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QUICK_SETTINGS_HEADER_VIBRATE_LONG, 0) == 1;
+	if (v == mSettingsButton) {
+            startSettingsLongClickActivity();
+        } 
 	 if (v == mSystemIconsSuperContainer) {
             startBatteryLongClickActivity();
         } else if (v == mClock) {
@@ -1009,6 +962,14 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
                 true /* dismissShade */);
     }
+    
+       private void startSettingsLongClickActivity() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+	intent.setClassName("com.android.systemui",
+            "com.android.systemui.tuner.QsActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
 
     private void startBatteryActivity() {
         mActivityStarter.startActivity(new Intent(Intent.ACTION_POWER_USAGE_SUMMARY),
@@ -1075,7 +1036,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
-     public void setQSPanel(QSDragPanel qsp) {
+     public void setQSPanel(QSPanel qsp) {
         mQSPanel = qsp;
         if (mQSPanel != null) {
             mQSPanel.setCallback(mQsPanelCallback);
@@ -1127,12 +1088,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
         target.batteryY = mSystemIconsSuperContainer.getTop() + mSystemIconsContainer.getTop();
         target.batteryLevelAlpha = getAlphaForVisibility(mBatteryLevel);
-        target.settingsAlpha = getAlphaForVisibility(mSettingsContainer);
+	target.settingsAlpha = getAlphaForVisibility(mSettingsButton);
         target.settingsTranslation = mExpanded
                 ? 0
-                : mMultiUserSwitch.getLeft() - mSettingsContainer.getLeft();
-        target.taskManagerAlpha = getAlphaForVisibility(mTaskManagerButton);
-	target.taskManagerTranslation = mExpanded
+                : mMultiUserSwitch.getLeft() - mSettingsButton.getLeft();
+        target.taskManagerTranslation = mExpanded
                 ? 0
                 : mSettingsButton.getLeft() - mTaskManagerButton.getLeft();
         target.signalClusterAlpha = mSignalClusterDetached ? 0f : 1f;
@@ -1187,14 +1147,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mSignalCluster.setTranslationX(0f);
             mSignalCluster.setTranslationY(0f);
         }
-        if (!mSettingsButton.isAnimating()) {
-            mSettingsContainer.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
-            mSettingsContainer.setTranslationX(values.settingsTranslation);
-            mSettingsButton.setRotation(values.settingsRotation);
-	}
-            mTaskManagerButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
-            mTaskManagerButton.setTranslationX(values.settingsTranslation);
-            mTaskManagerButton.setRotation(values.settingsRotation);
+        mTaskManagerButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+        mTaskManagerButton.setTranslationX(values.settingsTranslation);
+        mTaskManagerButton.setRotation(values.settingsRotation);
+        mSettingsButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+        mSettingsButton.setTranslationX(values.settingsTranslation);
+        mSettingsButton.setRotation(values.settingsRotation);
         applyAlpha(mEmergencyCallsOnly, values.emergencyCallsOnlyAlpha);
         if (!mShowingDetail && !mDetailTransitioning) {
             // Otherwise it needs to stay invisible
@@ -1206,8 +1164,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         if (mDockBatteryLevel != null) {
             applyAlpha(mDockBatteryLevel, values.batteryLevelAlpha);
         }
-        applyAlpha(mSettingsContainer, values.settingsAlpha);
         applyAlpha(mTaskManagerButton, values.settingsAlpha);
+        applyAlpha(mSettingsButton, values.settingsAlpha);
         applyAlpha(mWeatherLine1, values.settingsAlpha);
         applyAlpha(mWeatherimage, values.settingsAlpha);
         applyAlpha(mWeatherLine2, values.settingsAlpha);
@@ -1217,50 +1175,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mTime.setScaleY(1f);
         }
         updateAmPmTranslation();
-    }
-
-    public void setEditing(boolean editing) {
-        mEditing = editing;
-        if (editing && mEditingDetailAdapter == null) {
-            mEditingDetailAdapter = new QSTile.DetailAdapter() {
-                @Override
-                public int getTitle() {
-                    return R.string.quick_settings_edit_label;
-                }
-
-                @Override
-                public Boolean getToggleState() {
-                    return null;
-                }
-
-                @Override
-                public View createDetailView(Context context, View convertView, ViewGroup parent) {
-                    return null;
-                }
-
-                @Override
-                public Intent getSettingsIntent() {
-                    return null;
-                }
-
-                @Override
-                public StatusBarPanelCustomTile getCustomTile() {
-                    return null;
-                }
-
-                @Override
-                public void setToggleState(boolean state) {
-
-                }
-
-                @Override
-                public int getMetricsCategory() {
-                    return CMMetricsLogger.DONT_LOG;
-                }
-            };
-        }
-        mQsPanelCallback.onShowingDetail(mEditing ? mEditingDetailAdapter : null);
-        updateEverything();
     }
 
     /**
@@ -1344,7 +1258,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             post(new Runnable() {
                 @Override
                 public void run() {
-                    handleShowingDetail(mEditing && detail == null ? mEditingDetailAdapter : detail);
+                    handleShowingDetail(detail);
                 }
             });
         }
@@ -1376,7 +1290,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             }
         }
 
-        private void handleShowingDetail(final QSTile.DetailAdapter detail) {
+            private void handleShowingDetail(final QSTile.DetailAdapter detail) {
             final boolean showingDetail = detail != null;
             transition(mClock, !showingDetail);
             transition(mDateGroup, !showingDetail);
@@ -1384,30 +1298,18 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 transition(mWeatherContainer, !showingDetail);
             }
             if (mAlarmShowing) {
-                transition(mAlarmStatus, !showingDetail && !mDetailTransitioning);
+                transition(mAlarmStatus, !showingDetail);
             }
             transition(mQsDetailHeader, showingDetail);
             mShowingDetail = showingDetail;
             if (showingDetail) {
                 mQsDetailHeaderTitle.setText(detail.getTitle());
                 final Boolean toggleState = detail.getToggleState();
-                if (detail.getTitle() == R.string.quick_settings_edit_label) {
-                    mEditTileDoneText.setVisibility(View.VISIBLE);
-                    mQsDetailHeaderSwitch.setVisibility(View.INVISIBLE);
-                    mQsDetailHeader.setClickable(true);
-                    mQsDetailHeader.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mQSPanel.getHost().setEditing(false);
-                        }
-                    });
-                } else if (toggleState == null) {
-                    mQsDetailHeaderSwitch.setVisibility(View.INVISIBLE);
-                    mEditTileDoneText.setVisibility(View.GONE);
+                if (toggleState == null) {
+                    mQsDetailHeaderSwitch.setVisibility(INVISIBLE);
                     mQsDetailHeader.setClickable(false);
                 } else {
-                    mEditTileDoneText.setVisibility(View.GONE);
-                    mQsDetailHeaderSwitch.setVisibility(View.VISIBLE);
+                    mQsDetailHeaderSwitch.setVisibility(VISIBLE);
                     mQsDetailHeaderSwitch.setChecked(toggleState);
                     mQsDetailHeader.setClickable(true);
                     mQsDetailHeader.setOnClickListener(new OnClickListener() {
@@ -1502,7 +1404,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     Settings.System.QS_HEADER_COLOR))) {
                	   setHeaderColor();
             } 
-            update();
 	}
 
         @Override
@@ -1658,7 +1559,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mQsDetailHeaderTitle.setShadowLayer(5, 0, 0, Color.BLACK);
         mWeatherLine1.setShadowLayer(5, 0, 0, Color.BLACK);
         mWeatherLine2.setShadowLayer(5, 0, 0, Color.BLACK);
-        mEditTileDoneText.setShadowLayer(5, 0, 0, Color.BLACK);
     }
 
     /**
@@ -1674,7 +1574,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mQsDetailHeaderTitle.setShadowLayer(0, 0, 0, Color.BLACK);
         mWeatherLine1.setShadowLayer(0, 0, 0, Color.BLACK);
         mWeatherLine2.setShadowLayer(0, 0, 0, Color.BLACK);
-        mEditTileDoneText.setShadowLayer(0, 0, 0, Color.BLACK);
     }
 
     private void setQSHeaderAlpha() {
@@ -2160,127 +2059,102 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             default:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
                 break;
             case FONT_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
                 break;
             case FONT_BOLD:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
                 break;
             case FONT_BOLD_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
                 break;
             case FONT_LIGHT:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
                 break;
             case FONT_LIGHT_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
                 break;
             case FONT_THIN:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
                 break;
             case FONT_THIN_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
                 break;
             case FONT_CONDENSED:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                 break;
             case FONT_CONDENSED_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
                 break;
             case FONT_CONDENSED_LIGHT:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
                 break;
             case FONT_CONDENSED_LIGHT_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
                 break;
             case FONT_CONDENSED_BOLD:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
                 break;
             case FONT_CONDENSED_BOLD_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
                 break;
             case FONT_MEDIUM:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                 break;
             case FONT_MEDIUM_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
                 break;
             case FONT_BLACK:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
                 break;
             case FONT_BLACK_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
                 break;
             case FONT_DANCINGSCRIPT:
                 mBatteryLevel.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
                 break;
             case FONT_DANCINGSCRIPT_BOLD:
                 mBatteryLevel.setTypeface(Typeface.create("cursive", Typeface.BOLD));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("cursive", Typeface.BOLD));
-                mEditTileDoneText.setTypeface(Typeface.create("cursive", Typeface.BOLD));
                 break;
             case FONT_COMINGSOON:
                 mBatteryLevel.setTypeface(Typeface.create("casual", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("casual", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("casual", Typeface.NORMAL));
                 break;
             case FONT_NOTOSERIF:
                 mBatteryLevel.setTypeface(Typeface.create("serif", Typeface.NORMAL));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("serif", Typeface.NORMAL));
-                mEditTileDoneText.setTypeface(Typeface.create("serif", Typeface.NORMAL));
                 break;
             case FONT_NOTOSERIF_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("serif", Typeface.ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("serif", Typeface.ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("serif", Typeface.ITALIC));
                 break;
             case FONT_NOTOSERIF_BOLD:
                 mBatteryLevel.setTypeface(Typeface.create("serif", Typeface.BOLD));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("serif", Typeface.BOLD));
-                mEditTileDoneText.setTypeface(Typeface.create("serif", Typeface.BOLD));
                 break;
             case FONT_NOTOSERIF_BOLD_ITALIC:
                 mBatteryLevel.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
                 mQsDetailHeaderTitle.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
-                mEditTileDoneText.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
                 break;
         }
     }

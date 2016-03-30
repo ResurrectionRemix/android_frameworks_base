@@ -61,7 +61,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.android.systemui.cm.UserContentObserver;
-import com.android.systemui.qs.tiles.LockscreenToggleTile;
 import cyanogenmod.app.Profile;
 import cyanogenmod.app.ProfileManager;
 
@@ -697,14 +696,9 @@ public class KeyguardViewMediator extends SystemUI {
                         CMSettings.Secure.LOCKSCREEN_INTERNALLY_ENABLED,
                         getPersistedDefaultOldSetting() ? 1 : 0,
                         UserHandle.USER_CURRENT) == 0;
-
-                synchronized (KeyguardViewMediator.this) {
-                    if (mKeyguardBound) {
-                        if (newDisabledState != mInternallyDisabled) {
-                            // it was updated,
-                            setKeyguardEnabledInternal(!newDisabledState);
-                        }
-                    }
+                if (newDisabledState != mInternallyDisabled && mKeyguardBound) {
+                    // it was updated,
+                    setKeyguardEnabledInternal(!newDisabledState);
                 }
             }
         };

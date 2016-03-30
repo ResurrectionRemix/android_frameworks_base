@@ -134,8 +134,6 @@
     <string name="quick_settings_themes_default_theme">Default</string>
     <string name="quick_settings_themes_match_system">Match system theme</string>
 
-    <string name="quick_settings_themes">Themes</string>
-
     <!-- Navigation bar Tile -->
     <string name="quick_settings_navigation_bar">Navigation bar</string>
     <string name="quick_settings_smartbar_off">SmartBar off</string>
@@ -264,6 +262,9 @@
 
     <!-- vpn icon switch -->
     <string name="status_bar_volume">Vibration</string>
+    
+        <!-- Tuner -->
+    <string name="systemui_tuner_qs_title">UI Tuner</string>
 
 </resources>
 

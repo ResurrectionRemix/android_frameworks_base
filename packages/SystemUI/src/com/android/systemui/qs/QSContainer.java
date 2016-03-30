@@ -63,7 +63,7 @@ public class QSContainer extends FrameLayout {
      */
     public int getDesiredHeight() {
         if (mQSPanel.isClosingDetail()) {
-            return mQSPanel.getGridHeight() + getPaddingBottom();
+            return mQSPanel.getGridHeight() + getPaddingTop() + getPaddingBottom();
         } else {
             return getMeasuredHeight();
         }

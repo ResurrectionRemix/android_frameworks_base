@@ -74,10 +74,6 @@ public final class UserInfoController {
         mCallbacks.add(callback);
     }
 
-    public void removeListener (OnUserInfoChangedListener callback) {
-        mCallbacks.remove(callback);
-    }
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

@@ -10,28 +10,19 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the mSpecific language governing permissions and
  * limitations under the License.
  */
 package com.android.systemui.tuner;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Canvas;
-import android.graphics.Point;
-import android.graphics.PointF;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.DragEvent;
@@ -39,9 +30,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -49,8 +42,6 @@ import android.widget.ScrollView;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.R;
-import com.android.systemui.qs.QSDragPanel;
-import com.android.systemui.qs.QSPage;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.QSTile.Host.Callback;
@@ -61,7 +52,6 @@ import com.android.systemui.statusbar.phone.QSTileHost;
 import com.android.systemui.statusbar.policy.SecurityController;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class QsTuner extends Fragment implements Callback {
@@ -69,12 +59,15 @@ public class QsTuner extends Fragment implements Callback {
     private static final String TAG = "QsTuner";
 
     private static final int MENU_RESET = Menu.FIRST;
-    private static final int MENU_EDIT = Menu.FIRST + 1;
 
     private DraggableQsPanel mQsPanel;
     private CustomHost mTileHost;
 
+    private FrameLayout mDropTarget;
+
     private ScrollView mScrollRoot;
+
+    private FrameLayout mAddTarget;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +78,6 @@ public class QsTuner extends Fragment implements Callback {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add(0, MENU_RESET, 0, com.android.internal.R.string.reset);
-        menu.add(0, MENU_EDIT, 0, "toggle edit");
     }
 
     public void onResume() {
@@ -101,11 +93,8 @@ public class QsTuner extends Fragment implements Callback {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_EDIT:
-                mQsPanel.setEditing(!mQsPanel.isEditing());
-                break;
             case MENU_RESET:
-                mTileHost.resetTiles();
+                mTileHost.reset();
                 break;
             case android.R.id.home:
                 getFragmentManager().popBackStack();
@@ -116,7 +105,7 @@ public class QsTuner extends Fragment implements Callback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         mScrollRoot = (ScrollView) inflater.inflate(R.layout.tuner_qs, container, false);
 
         mQsPanel = new DraggableQsPanel(getContext());
@@ -127,6 +116,10 @@ public class QsTuner extends Fragment implements Callback {
         mQsPanel.refreshAllTiles();
         ((ViewGroup) mScrollRoot.findViewById(R.id.all_details)).addView(mQsPanel, 0);
 
+        mDropTarget = (FrameLayout) mScrollRoot.findViewById(R.id.remove_target);
+        setupDropTarget();
+        mAddTarget = (FrameLayout) mScrollRoot.findViewById(R.id.add_target);
+        setupAddTarget();
         return mScrollRoot;
     }
 
@@ -136,27 +129,113 @@ public class QsTuner extends Fragment implements Callback {
         super.onDestroyView();
     }
 
+    private void setupDropTarget() {
+        QSTileView tileView = new QSTileView(getContext());
+        QSTile.State state = new QSTile.State();
+        state.visible = true;
+        state.icon = ResourceIcon.get(R.drawable.ic_delete);
+        state.label = getString(com.android.internal.R.string.delete);
+        tileView.onStateChanged(state);
+        mDropTarget.addView(tileView);
+        mDropTarget.setVisibility(View.GONE);
+        new DragHelper(tileView, new DropListener() {
+            @Override
+            public void onDrop(String sourceText) {
+                mTileHost.remove(sourceText);
+                mQsPanel.refreshAllTiles();
+            }
+        });
+    }
+
+    private void setupAddTarget() {
+        QSTileView tileView = new QSTileView(getContext());
+        QSTile.State state = new QSTile.State();
+        state.visible = true;
+        state.icon = ResourceIcon.get(R.drawable.ic_add_circle_qs);
+        state.label = getString(R.string.add_tile);
+        tileView.onStateChanged(state);
+        mAddTarget.addView(tileView);
+        tileView.setClickable(true);
+        tileView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTileHost.showAddDialog();
+            }
+        });
+    }
+
+    public void onStartDrag() {
+        mDropTarget.post(new Runnable() {
+            @Override
+            public void run() {
+                mDropTarget.setVisibility(View.VISIBLE);
+                mAddTarget.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void stopDrag() {
+        mDropTarget.post(new Runnable() {
+            @Override
+            public void run() {
+                mDropTarget.setVisibility(View.GONE);
+                mAddTarget.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     @Override
     public void onTilesChanged() {
         mQsPanel.setTiles(mTileHost.getTiles());
+        mQsPanel.refreshAllTiles();
     }
 
-    @Override
-    public void setEditing(boolean editing) {
-        mQsPanel.setEditing(editing);
-    }
-
-    @Override
-    public boolean isEditing() {
-        return mTileHost.isEditing();
-    }
-
-    @Override
-    public void goToSettingsPage() {
-    }
-
-    @Override
-    public void resetTiles() {
+    public static int getLabelResource(String mSpec) {
+        if (mSpec.equals("wifi")) return R.string.quick_settings_wifi_label;
+        else if (mSpec.equals("bt")) return R.string.quick_settings_bluetooth_label;
+        else if (mSpec.equals("inversion")) return R.string.quick_settings_inversion_label;
+        else if (mSpec.equals("cell")) return R.string.quick_settings_cellular_detail_title;
+        else if (mSpec.equals("airplane")) return R.string.airplane_mode;
+        else if (mSpec.equals("dnd")) return R.string.quick_settings_dnd_label;
+        else if (mSpec.equals("rotation")) return R.string.quick_settings_rotation_locked_label;
+        else if (mSpec.equals("flashlight")) return R.string.quick_settings_flashlight_label;
+        else if (mSpec.equals("location")) return R.string.quick_settings_location_label;
+        else if (mSpec.equals("cast")) return R.string.quick_settings_cast_title;
+        else if (mSpec.equals("hotspot")) return R.string.quick_settings_hotspot_label;
+        else if (mSpec.equals("adb_network")) return R.string.quick_settings_network_adb_label;
+        else if (mSpec.equals("compass")) return R.string.quick_settings_compass_label;
+        else if (mSpec.equals("nfc")) return R.string.quick_settings_nfc_label;
+        else if (mSpec.equals("profiles")) return R.string.quick_settings_profiles;
+        else if (mSpec.equals("sync")) return R.string.quick_settings_sync_label;
+        else if (mSpec.equals("volume_panel")) return R.string.quick_settings_volume_panel_label;
+        else if (mSpec.equals("usb_tether")) return R.string.quick_settings_usb_tether_label;
+        else if (mSpec.equals("screen_timeout")) return R.string.quick_settings_screen_timeout_detail_title;
+        else if (mSpec.equals("performance")) return R.string.qs_tile_performance;
+        else if (mSpec.equals("ambient_display")) return R.string.quick_settings_ambient_display_label;
+        else if (mSpec.equals("live_display")) return R.string.live_display_title;
+        else if (mSpec.equals("music")) return R.string.quick_settings_music_label;
+        else if (mSpec.equals("brightness")) return R.string.quick_settings_brightness_label;
+        else if (mSpec.equals("screen_off")) return R.string.quick_settings_screen_off_label;
+        else if (mSpec.equals("screenshot")) return R.string.quick_settings_screenshot_label;
+        else if (mSpec.equals("expanded_desktop")) return R.string.quick_settings_expanded_desktop_label;
+        else if (mSpec.equals("reboot")) return R.string.quick_settings_reboot_label;
+        else if (mSpec.equals("configurations")) return R.string.quick_settings_rrtools;
+        else if (mSpec.equals("heads_up")) return R.string.quick_settings_heads_up_label;
+        else if (mSpec.equals("lte")) return R.string.qs_lte_label;
+        else if (mSpec.equals("themes")) return R.string.quick_settings_themes;
+        else if (mSpec.equals("navbar")) return R.string.quick_settings_navigation_bar;
+        else if (mSpec.equals("appcirclebar")) return R.string.quick_settings_appcirclebar_title;
+        else if (mSpec.equals("kernel_adiutor")) return R.string.quick_settings_kernel_title;
+        else if (mSpec.equals("screenrecord")) return R.string.quick_settings_screenrecord;
+        else if (mSpec.equals("gesture_anywhere")) return R.string.quick_settings_gesture_anywhere_label;
+        else if (mSpec.equals("battery_saver")) return R.string.quick_settings_battery_saver_label;
+        else if (mSpec.equals("power_menu")) return R.string.quick_settings_power_menu_label;
+        else if (mSpec.equals("app_picker")) return R.string.navbar_app_picker;
+        else if (mSpec.equals("kill_app")) return R.string.qs_kill_app;
+        else if (mSpec.equals("caffeine")) return R.string.quick_settings_caffeine_label;
+        else if (mSpec.equals("hw_keys")) return R.string.quick_settings_hwkeys_title;
+        else if (mSpec.equals("sound")) return R.string.quick_settings_sound_label;
+        return 0;
     }
 
     private static class CustomHost extends QSTileHost {
@@ -167,7 +246,7 @@ public class QsTuner extends Fragment implements Callback {
         }
 
         @Override
-        public QSTile<?> createTile(String tileSpec) {
+        protected QSTile<?> createTile(String tileSpec) {
             return new DraggableTile(this, tileSpec);
         }
 
@@ -186,6 +265,80 @@ public class QsTuner extends Fragment implements Callback {
             order.remove(newTile);
             order.add(index, newTile);
             setTiles(order);
+        }
+
+        public void remove(String tile) {
+            MetricsLogger.action(getContext(), MetricsLogger.TUNER_QS_REMOVE, tile);
+            List<String> tiles = new ArrayList<>(mTileSpecs);
+            tiles.remove(tile);
+            setTiles(tiles);
+        }
+
+        public void add(String tile) {
+            MetricsLogger.action(getContext(), MetricsLogger.TUNER_QS_ADD, tile);
+            List<String> tiles = new ArrayList<>(mTileSpecs);
+            tiles.add(tile);
+            setTiles(tiles);
+        }
+
+      public void reset() {
+            Secure.putStringForUser(getContext().getContentResolver(), TILES_SETTING,
+                    getContext().getString(R.string.quick_settings_tiles_reset),
+                    ActivityManager.getCurrentUser());
+        }
+        
+
+        private void setTiles(List<String> tiles) {
+            Secure.putStringForUser(getContext().getContentResolver(), TILES_SETTING,
+                    TextUtils.join(",", tiles), ActivityManager.getCurrentUser());
+        }
+
+        public void showAddDialog() {
+            List<String> tiles = mTileSpecs;
+            int numBroadcast = 0;
+            for (int i = 0; i < tiles.size(); i++) {
+                if (tiles.get(i).startsWith(IntentTile.PREFIX)) {
+                    numBroadcast++;
+                }
+            }
+            String[] defaults =
+                getContext().getString(R.string.quick_settings_tiles_default).split(",");
+            final String[] available = new String[defaults.length + 1
+                                                  - (tiles.size() - numBroadcast)];
+            final String[] availableTiles = new String[available.length];
+            int index = 0;
+            for (int i = 0; i < defaults.length; i++) {
+                if (tiles.contains(defaults[i])) {
+                    continue;
+                }
+                int resource = getLabelResource(defaults[i]);
+                if (resource != 0) {
+                    availableTiles[index] = defaults[i];
+                    available[index++] = getContext().getString(resource);
+                } else {
+                    availableTiles[index] = defaults[i];
+                    available[index++] = defaults[i];
+                }
+            }
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.add_tile)
+                    .setItems(available, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which < available.length - 1) {
+                                add(availableTiles[which]);
+                            }
+                        }
+                    }).show();
+        }
+
+        private boolean isValid(String action) {
+            for (int i = 0; i < action.length(); i++) {
+                char c = action.charAt(i);
+                if (!Character.isAlphabetic(c) && !Character.isDigit(c) && c != '.') {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private static class BlankSecurityController implements SecurityController {
@@ -238,7 +391,8 @@ public class QsTuner extends Fragment implements Callback {
         }
     }
 
-    public static class DraggableTile extends QSTile<QSTile.State> {
+    private static class DraggableTile extends QSTile<QSTile.State>
+            implements DropListener {
         private String mSpec;
         private QSTileView mView;
 
@@ -252,11 +406,6 @@ public class QsTuner extends Fragment implements Callback {
         public QSTileView createTileView(Context context) {
             mView = super.createTileView(context);
             return mView;
-        }
-
-        @Override
-        public boolean hasDualTargetsDetails() {
-            return "wifi".equals(mSpec) || "bt".equals(mSpec);
         }
 
         @Override
@@ -280,7 +429,7 @@ public class QsTuner extends Fragment implements Callback {
         }
 
         private String getLabel() {
-            int resource = QSTileHost.getLabelResource(mSpec);
+            int resource = getLabelResource(mSpec);
             if (resource != 0) {
                 return mContext.getString(resource);
             }
@@ -308,6 +457,38 @@ public class QsTuner extends Fragment implements Callback {
             else if (mSpec.equals("cast")) return R.drawable.ic_qs_cast_on;
             else if (mSpec.equals("hotspot")) return R.drawable.ic_hotspot_enable;
             else if (mSpec.equals("adb_network")) return R.drawable.ic_qs_network_adb_on;
+            else if (mSpec.equals("compass")) return R.drawable.ic_qs_compass_on;
+	    else if (mSpec.equals("nfc")) return R.drawable.ic_qs_nfc_on;
+	    else if (mSpec.equals("profiles")) return R.drawable.ic_qs_profiles_on;
+	    else if (mSpec.equals("sync")) return R.drawable.ic_qs_sync_on;
+	    else if (mSpec.equals("volume_panel")) return R.drawable.ic_qs_volume_panel;
+	    else if (mSpec.equals("usb_tether")) return R.drawable.ic_qs_usb_tether_on;
+	    else if (mSpec.equals("screen_timeout")) return R.drawable.ic_qs_screen_timeout_short_avd;
+	    else if (mSpec.equals("performance")) return R.drawable.ic_qs_perf_profile;
+	    else if (mSpec.equals("ambient_display")) return R.drawable.ic_qs_ambientdisplay_on;
+	    else if (mSpec.equals("live_display")) return R.drawable.ic_livedisplay_auto;
+	    else if (mSpec.equals("music")) return R.drawable.ic_qs_media_play;
+	    else if (mSpec.equals("brightness")) return R.drawable.ic_qs_brightness_auto_on;
+	    else if (mSpec.equals("screen_off")) return R.drawable.ic_qs_power;
+	    else if (mSpec.equals("screenshot")) return R.drawable.ic_qs_screenshot;
+	    else if (mSpec.equals("expanded_desktop")) return R.drawable.ic_qs_expanded_desktop;
+	    else if (mSpec.equals("reboot")) return R.drawable.ic_qs_reboot;
+	    else if (mSpec.equals("configurations")) return R.drawable.ic_qs_rrtools;
+	    else if (mSpec.equals("heads_up")) return R.drawable.ic_qs_heads_up_on;
+	    else if (mSpec.equals("lte")) return R.drawable.ic_qs_lte_on;
+	    else if (mSpec.equals("themes")) return R.drawable.ic_qs_themes;
+	    else if (mSpec.equals("navbar")) return R.drawable.ic_qs_navbar_on;
+	    else if (mSpec.equals("appcirclebar")) return R.drawable.ic_qs_appcirclebar_on;
+	    else if (mSpec.equals("kernel_adiutor")) return R.drawable.ic_qs_kernel_adiutor;	
+	    else if (mSpec.equals("screenrecord")) return R.drawable.ic_qs_screenrecord;	
+	    else if (mSpec.equals("gesture_anywhere")) return R.drawable.ic_qs_gestures_on;
+	    else if (mSpec.equals("battery_saver")) return R.drawable.ic_qs_battery_saver_on;
+	    else if (mSpec.equals("power_menu")) return R.drawable.ic_qs_power_menu;
+	    else if (mSpec.equals("app_picker")) return R.drawable.ic_qs_app_picker;
+	    else if (mSpec.equals("kill_app")) return R.drawable.ic_app_kill;
+	    else if (mSpec.equals("caffeine")) return R.drawable.ic_qs_caffeine_on;
+	    else if (mSpec.equals("hw_keys")) return R.drawable.ic_qs_hwkeys_on;
+	    else if (mSpec.equals("sound")) return R.drawable.ic_qs_ringer_silent;
             return R.drawable.android;
         }
 
@@ -325,19 +506,81 @@ public class QsTuner extends Fragment implements Callback {
         }
 
         @Override
-        public String toString() {
-            return mSpec;
+        public void onDrop(String sourceText) {
+            ((CustomHost) mHost).replace(mSpec, sourceText);
         }
+
     }
 
-    private class DraggableQsPanel extends QSDragPanel {
+    private class DragHelper implements OnDragListener {
 
-        public DraggableQsPanel(Context context) {
-            super(context);
+        private final View mView;
+        private final DropListener mListener;
 
-            setEditing(true);
+        public DragHelper(View view, DropListener dropListener) {
+            mView = view;
+            mListener = dropListener;
+            mView.setOnDragListener(this);
         }
 
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    mView.setBackgroundColor(0x77ffffff);
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    stopDrag();
+                case DragEvent.ACTION_DRAG_EXITED:
+                    mView.setBackgroundColor(0x0);
+                    break;
+                case DragEvent.ACTION_DROP:
+                    stopDrag();
+                    String text = event.getClipData().getItemAt(0).getText().toString();
+                    mListener.onDrop(text);
+                    break;
+            }
+            return true;
+        }
+
+    }
+
+    public interface DropListener {
+        void onDrop(String sourceText);
+    }
+
+    private class DraggableQsPanel extends QSPanel implements OnTouchListener {
+        public DraggableQsPanel(Context context) {
+            super(context);
+            mBrightnessView.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            for (TileRecord r : mRecords) {
+                new DragHelper(r.tileView, (DraggableTile) r.tile);
+                r.tileView.setTag(r.tile);
+                r.tileView.setOnTouchListener(this);
+
+                for (int i = 0; i < r.tileView.getChildCount(); i++) {
+                    r.tileView.getChildAt(i).setClickable(false);
+                }
+            }
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    String tileSpec = (String) ((DraggableTile) v.getTag()).mSpec;
+                    ClipData data = ClipData.newPlainText(tileSpec, tileSpec);
+                    v.startDrag(data, new View.DragShadowBuilder(v), null, 0);
+                    onStartDrag();
+                    return true;
+            }
+            return false;
+        }
     }
 
 }
