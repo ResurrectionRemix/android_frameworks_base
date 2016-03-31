@@ -191,6 +191,9 @@ public class NetworkTraffic extends TextView {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_COLOR), false,
+                    this, UserHandle.USER_ALL);
         }
 
         /*
