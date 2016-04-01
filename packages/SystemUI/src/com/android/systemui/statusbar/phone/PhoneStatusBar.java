@@ -136,6 +136,7 @@ import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.cm.ActionUtils;
+import com.android.internal.util.rr.Helpers;
 import com.android.systemui.statusbar.policy.WeatherController;
 import com.android.systemui.statusbar.policy.WeatherControllerImpl;
 import com.android.systemui.statusbar.policy.WeatherController.WeatherInfo;
@@ -828,6 +829,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
                 DontStressOnRecreate();
+                Helpers.restartSystemUI();
        } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_ICON_COLOR))) {
                 DontStressOnRecreate();
@@ -4729,7 +4731,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         final boolean updateNavBar = shouldUpdateNavbar(mCurrentTheme, newTheme);
         if (newTheme != null) mCurrentTheme = (ThemeConfig) newTheme.clone();
         if (updateStatusBar) {
-            DontStressOnRecreate();
             if (mNavigationBarView != null) {
                 mNavigationBarView.onRecreateStatusbar();
             }
