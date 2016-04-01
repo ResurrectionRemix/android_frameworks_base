@@ -84,7 +84,7 @@ public class RRTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
-        state.icon = ResourceIcon.get(R.drawable.ic_qs_rrtools);
+        state.icon = ResourceIcon.get(R.drawable.ic_rr_tools);
         state.label = mContext.getString(R.string.quick_settings_rrtools);
 
 	}
