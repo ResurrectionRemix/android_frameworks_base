@@ -195,6 +195,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     // for heads up notifications
     protected HeadsUpManager mHeadsUpManager;
+    protected boolean mForceAllHeads;
 
     protected int mCurrentUserId = 0;
     final protected SparseArray<UserInfo> mCurrentProfiles = new SparseArray<UserInfo>();
@@ -336,6 +337,8 @@ public abstract class BaseStatusBar extends SystemUI implements
                     CMSettings.System.HEADS_UP_BLACKLIST_VALUES), false, this);
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.HEADS_UP_WHITELIST_VALUES), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_FORCE_ALL), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -353,6 +356,8 @@ public abstract class BaseStatusBar extends SystemUI implements
                     CMSettings.System.HEADS_UP_BLACKLIST_VALUES);
             final String whiteString = CMSettings.System.getString(resolver,
                     CMSettings.System.HEADS_UP_WHITELIST_VALUES);
+            mForceAllHeads = Settings.System.getIntForUser(resolver,
+                    Settings.System.HEADS_UP_FORCE_ALL, 0, UserHandle.USER_CURRENT) == 1;
             splitAndAddToArrayList(mDndList, dndString, "\\|");
             splitAndAddToArrayList(mBlacklist, blackString, "\\|");
             splitAndAddToArrayList(mWhitelist, whiteString, "\\|");
@@ -2375,7 +2380,7 @@ public abstract class BaseStatusBar extends SystemUI implements
  
         Notification notification = sbn.getNotification();
         // some predicates to make the boolean logic legible
-        boolean whiteListed = isPackageWhitelisted(sbn.getPackageName());
+        boolean whiteListed = mForceAllHeads || isPackageWhitelisted(sbn.getPackageName());
         boolean isNoisy = (notification.defaults & Notification.DEFAULT_SOUND) != 0
                 || (notification.defaults & Notification.DEFAULT_VIBRATE) != 0
                 || notification.sound != null
