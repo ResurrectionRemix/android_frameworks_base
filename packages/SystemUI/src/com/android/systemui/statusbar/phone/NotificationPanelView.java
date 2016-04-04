@@ -2987,6 +2987,10 @@ public class NotificationPanelView extends PanelView implements
     public void setQSColors() {
         if (mQsPanel != null) {
             mQsPanel.refreshAllTiles();
-        }
+	}
+       }
+
+    public void slideLockScreenOut() {
+        mSwipeCallback.onChildDismissed(this);
     }
 }
