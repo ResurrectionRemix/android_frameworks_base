@@ -34,7 +34,8 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
 
     private static final Intent LOCK_SCREEN_SETTINGS =
             new Intent("android.settings.LOCK_SCREEN_SETTINGS");
-
+            
+    private KeyguardViewMediator mKeyguardViewMediator;
     private KeyguardMonitor mKeyguard;
     private boolean mListening;
 
@@ -53,7 +54,7 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
 
              @Override
             public void update() {
-                boolean newState = Settings.Secure.getIntForUser(
+                boolean newState = CMSettings.Secure.getIntForUser(
                         mContext.getContentResolver(),
                         CMSettings.Secure.LOCKSCREEN_INTERNALLY_ENABLED,
                         getPersistedDefaultOldSetting() ? 1 : 0,
