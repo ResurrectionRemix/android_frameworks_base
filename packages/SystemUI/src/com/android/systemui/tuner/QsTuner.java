@@ -235,6 +235,7 @@ public class QsTuner extends Fragment implements Callback {
         else if (mSpec.equals("caffeine")) return R.string.quick_settings_caffeine_label;
         else if (mSpec.equals("hw_keys")) return R.string.quick_settings_hwkeys_title;
         else if (mSpec.equals("sound")) return R.string.quick_settings_sound_label;
+        else if (mSpec.equals("lockscreen")) return R.string.quick_settings_lockscreen_label;
         return 0;
     }
 
@@ -489,6 +490,7 @@ public class QsTuner extends Fragment implements Callback {
 	    else if (mSpec.equals("caffeine")) return R.drawable.ic_qs_caffeine_on;
 	    else if (mSpec.equals("hw_keys")) return R.drawable.ic_qs_hwkeys_on;
 	    else if (mSpec.equals("sound")) return R.drawable.ic_qs_ringer_silent;
+	    else if (mSpec.equals("lockscreen")) return R.drawable.ic_qs_lock_screen_on;
             return R.drawable.android;
         }
 
