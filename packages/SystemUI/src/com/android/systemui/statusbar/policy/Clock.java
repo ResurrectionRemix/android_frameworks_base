@@ -79,6 +79,35 @@ public class Clock extends TextView implements DemoMode {
 
     public static final int STYLE_DATE_LEFT  = 0;
     public static final int STYLE_DATE_RIGHT = 1;
+    
+     public static final int FONT_NORMAL = 0;
+     public static final int FONT_ITALIC = 1;
+     public static final int FONT_BOLD = 2;
+     public static final int FONT_BOLD_ITALIC = 3;
+     public static final int FONT_LIGHT = 4;
+     public static final int FONT_LIGHT_ITALIC = 5;
+     public static final int FONT_THIN = 6;
+     public static final int FONT_THIN_ITALIC = 7;
+     public static final int FONT_CONDENSED = 8;
+     public static final int FONT_CONDENSED_ITALIC = 9;
+     public static final int FONT_CONDENSED_LIGHT = 10;
+     public static final int FONT_CONDENSED_LIGHT_ITALIC = 11;
+     public static final int FONT_CONDENSED_BOLD = 12;
+     public static final int FONT_CONDENSED_BOLD_ITALIC = 13;
+     public static final int FONT_MEDIUM = 14;
+     public static final int FONT_MEDIUM_ITALIC = 15;
+     public static final int FONT_BLACK = 16;
+     public static final int FONT_BLACK_ITALIC = 17;
+     public static final int FONT_DANCINGSCRIPT = 18;
+     public static final int FONT_DANCINGSCRIPT_BOLD = 19;
+     public static final int FONT_COMINGSOON = 20;
+     public static final int FONT_NOTOSERIF = 21;
+     public static final int FONT_NOTOSERIF_ITALIC = 22;
+     public static final int FONT_NOTOSERIF_BOLD = 23;
+     public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
+     private int mClockFontStyle = FONT_NORMAL;
+     private int mClockFontSize = 14;
+     public boolean mClockcolor = false;
 
     protected int mClockDateDisplay = CLOCK_DATE_DISPLAY_GONE;
     protected int mClockDateStyle = CLOCK_DATE_STYLE_REGULAR;
@@ -106,6 +135,12 @@ public class Clock extends TextView implements DemoMode {
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_POSITION), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_FONT_STYLE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                   .getUriFor(Settings.System.STATUSBAR_CLOCK_FONT_SIZE), false,
                     this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -195,6 +230,12 @@ public class Clock extends TextView implements DemoMode {
         if (mDemoMode || mCalendar == null) return;
 
         ContentResolver resolver = mContext.getContentResolver();
+        mClockFontStyle = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_FONT_STYLE, FONT_NORMAL,
+                UserHandle.USER_CURRENT);
+       mClockFontSize = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_FONT_SIZE, 14,
+                UserHandle.USER_CURRENT);
 
         int defaultColor = mContext.getResources().getColor(R.color.status_bar_clock_color);
         int clockColor = Settings.System.getInt(mContext.getContentResolver(),
@@ -210,6 +251,8 @@ public class Clock extends TextView implements DemoMode {
 	    setTextColor(clockColor);
 
 	  }
+	getFontStyle(mClockFontStyle);
+        setTextSize(mClockFontSize);
 	}
         mCalendar.setTimeInMillis(System.currentTimeMillis());
         setText(getSmallTime());
@@ -349,6 +392,87 @@ public class Clock extends TextView implements DemoMode {
                 UserHandle.USER_CURRENT);
 
         updateClock();
+    }
+    
+    public void getFontStyle(int font) {
+         switch (font) {
+             case FONT_NORMAL:
+             default:
+                 setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+                break;
+            case FONT_ITALIC:
+                setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
+                break;
+            case FONT_BOLD:
+                setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+                break;
+            case FONT_BOLD_ITALIC:
+                setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
+                break;
+            case FONT_LIGHT:
+                setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                break;
+            case FONT_LIGHT_ITALIC:
+                setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
+                break;
+            case FONT_THIN:
+                setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
+                break;
+            case FONT_THIN_ITALIC:
+                setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
+                break;
+            case FONT_CONDENSED:
+                setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+                break;
+            case FONT_CONDENSED_ITALIC:
+                setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
+                break;
+            case FONT_CONDENSED_LIGHT:
+                setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
+                break;
+            case FONT_CONDENSED_LIGHT_ITALIC:
+                setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
+                break;
+            case FONT_CONDENSED_BOLD:
+                setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+                break;
+            case FONT_CONDENSED_BOLD_ITALIC:
+                setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
+                break;
+            case FONT_MEDIUM:
+                setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                break;
+            case FONT_MEDIUM_ITALIC:
+                setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
+                break;
+            case FONT_BLACK:
+                setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
+                break;
+            case FONT_BLACK_ITALIC:
+                setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
+                break;
+            case FONT_DANCINGSCRIPT:
+                setTypeface(Typeface.create("cursive", Typeface.NORMAL));
+                break;
+            case FONT_DANCINGSCRIPT_BOLD:
+                setTypeface(Typeface.create("cursive", Typeface.BOLD));
+                break;
+            case FONT_COMINGSOON:
+                setTypeface(Typeface.create("casual", Typeface.NORMAL));
+                break;
+            case FONT_NOTOSERIF:
+                setTypeface(Typeface.create("serif", Typeface.NORMAL));
+               break;
+            case FONT_NOTOSERIF_ITALIC:
+                setTypeface(Typeface.create("serif", Typeface.ITALIC));
+                break;
+            case FONT_NOTOSERIF_BOLD:
+                setTypeface(Typeface.create("serif", Typeface.BOLD));
+                break;
+            case FONT_NOTOSERIF_BOLD_ITALIC:
+                setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
+                break;
+        }
     }
 
     private boolean mDemoMode;
