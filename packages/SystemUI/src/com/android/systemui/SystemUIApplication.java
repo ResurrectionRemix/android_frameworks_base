@@ -26,8 +26,6 @@ import android.content.res.ThemeConfig;
 import android.os.SystemProperties;
 import android.util.Log;
 
-import com.android.internal.util.rr.Helpers;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -142,7 +140,6 @@ public class SystemUIApplication extends Application {
         if (isThemeChange(mConfig, newConfig)) {
             // theme resource changed so recreate styles and attributes
             recreateTheme();
-            Helpers.restartSystemUI();
         }
 
         mConfig.setTo(newConfig);
