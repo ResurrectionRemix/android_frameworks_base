@@ -398,4 +398,22 @@
                     android:scaleType="center"
                     android:visibility="gone"
                     />
+		<ImageView
+                    android:id="@+id/custom_41"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/spider1"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
+		<ImageView
+                    android:id="@+id/custom_42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="4dip"
+                    android:src="@drawable/spider2"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    />
 </LinearLayout>

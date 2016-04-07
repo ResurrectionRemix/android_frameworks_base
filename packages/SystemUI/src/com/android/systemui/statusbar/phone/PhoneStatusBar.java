@@ -986,6 +986,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
 		} else if ( mCustomlogoStyle == 40) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
+		} else if ( mCustomlogoStyle == 41) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_41);
+		} else if ( mCustomlogoStyle == 42) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_42);
 		}
 
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
@@ -1890,6 +1894,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
 		} else if ( mCustomlogoStyle == 40) {
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
+		} else if ( mCustomlogoStyle == 41) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_41);
+		} else if ( mCustomlogoStyle == 42) {
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_42);
 		}
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 
@@ -4487,6 +4495,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		} else if ( style == 36) {
 		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_36);
+		} else if ( style == 37) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_37);
+		} else if ( style == 38) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_38);
+		} else if ( style == 39) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_39);
+		} else if ( style == 40) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_40);
+		} else if ( style == 41) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_41);
+		} else if ( style == 42) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_42);
 		}
 		mCLogo.setVisibility(View.VISIBLE);
 
