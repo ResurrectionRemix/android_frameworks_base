@@ -170,7 +170,11 @@ public class QSTileView extends ViewGroup {
             mDualLabel.setId(View.generateViewId());
             mDualLabel.setBackgroundResource(R.drawable.btn_borderless_rect);
             mDualLabel.setFirstLineCaret(mContext.getDrawable(R.drawable.qs_dual_tile_caret));
-            mDualLabel.setTextColor(mContext.getColor(R.color.qs_tile_text));
+            if (mQsColorSwitch) {
+            mDualLabel.setTextColor(mLabelColor);
+	    } else {
+	    mDualLabel.setTextColor(res.getColor(R.color.qs_tile_text));
+	    }
             mDualLabel.setPadding(0, mDualTileVerticalPaddingPx, 0, mDualTileVerticalPaddingPx);
             mDualLabel.setTypeface(CONDENSED);
             mDualLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX,
@@ -203,7 +207,7 @@ public class QSTileView extends ViewGroup {
             updateColors();
             if (mQsColorSwitch) {
                 mLabel.setTextColor(mLabelColor);
-           	 }	
+           }	
         }
     }
     
