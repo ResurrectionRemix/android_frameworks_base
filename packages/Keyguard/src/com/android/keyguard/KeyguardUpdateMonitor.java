@@ -851,6 +851,10 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         }
     }
 
+    public BatteryStatus getBatteryStatus() {
+        return mBatteryStatus;
+    }
+
     public static class BatteryStatus {
         public static final int CHARGING_UNKNOWN = -1;
         public static final int CHARGING_SLOWLY = 0;

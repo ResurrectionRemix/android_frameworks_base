@@ -34,6 +34,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.MathUtils;
@@ -44,6 +45,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.GestureDetector;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -2419,7 +2421,7 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE), false, this, UserHandle.USER_ALL);2)
+                    Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE), false, this, UserHandle.USER_ALL);
             update();
         }
 

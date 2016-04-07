@@ -47,4 +47,15 @@
         android:gravity="center"
         android:visibility="gone"
         />
+    <TextView
+        android:id="@+id/ambient_display_battery_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="6dp"
+        android:drawableStart="@drawable/ic_battery_full"
+        android:textColor="@color/clock_white"
+        style="@style/widget_label"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        />
 </LinearLayout>
