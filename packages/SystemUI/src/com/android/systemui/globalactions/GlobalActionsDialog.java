@@ -65,6 +65,8 @@ import android.service.dreams.DreamService;
 import android.service.dreams.IDreamManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -107,6 +109,7 @@ import com.android.systemui.statusbar.phone.ScrimController;
 import com.android.systemui.volume.SystemUIInterpolators.LogAccelerateInterpolator;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 /**
@@ -180,6 +183,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private String[] mCurrentMenuActions;
     private boolean mRebootMenu;
 
+    private BitSet mAirplaneModeBits;
+    private final List<PhoneStateListener> mPhoneStateListeners = new ArrayList<>();
+
     /**
      * @param context everything needs a context :(
      */
@@ -206,9 +212,15 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         mHasTelephony = cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE);
 
         // get notified of phone state changes
-        TelephonyManager telephonyManager =
-                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        telephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SERVICE_STATE);
+        SubscriptionManager.from(mContext).addOnSubscriptionsChangedListener(
+                new SubscriptionManager.OnSubscriptionsChangedListener() {
+            @Override
+            public void onSubscriptionsChanged() {
+                super.onSubscriptionsChanged();
+                setupAirplaneModeListeners();
+            }
+        });
+        setupAirplaneModeListeners();
         mContext.getContentResolver().registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.AIRPLANE_MODE_ON), true,
                 mAirplaneModeObserver);
@@ -220,6 +232,56 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
         mScreenshotHelper = new ScreenshotHelper(context);
+    }
+
+    /**
+     * Since there are two ways of handling airplane mode (with telephony, we depend on the internal
+     * device telephony state), and MSIM devices do not report phone state for missing SIMs, we
+     * need to dynamically setup listeners based on subscription changes.
+     *
+     * So if there is _any_ active SIM in the device, we can depend on the phone state,
+     * otherwise fall back to {@link Settings.Global#AIRPLANE_MODE_ON}.
+     */
+    private void setupAirplaneModeListeners() {
+        TelephonyManager telephonyManager =
+                (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+
+        for (PhoneStateListener listener : mPhoneStateListeners) {
+            telephonyManager.listen(listener, PhoneStateListener.LISTEN_NONE);
+        }
+        mPhoneStateListeners.clear();
+
+        final List<SubscriptionInfo> subInfoList = SubscriptionManager.from(mContext)
+                .getActiveSubscriptionInfoList();
+        if (subInfoList != null) {
+            mHasTelephony = true;
+            mAirplaneModeBits = new BitSet(subInfoList.size());
+            for (int i = 0; i < subInfoList.size(); i++) {
+                final int finalI = i;
+                PhoneStateListener subListener = new PhoneStateListener(subInfoList.get(finalI)
+                        .getSubscriptionId()) {
+                    @Override
+                    public void onServiceStateChanged(ServiceState serviceState) {
+                        final boolean inAirplaneMode = serviceState.getState()
+                                == ServiceState.STATE_POWER_OFF;
+                        mAirplaneModeBits.set(finalI, inAirplaneMode);
+
+                        // we're in airplane mode if _any_ of the subscriptions say we are
+                        mAirplaneState = mAirplaneModeBits.cardinality() > 0
+                                ? ToggleAction.State.On : ToggleAction.State.Off;
+
+                        mAirplaneModeOn.updateState(mAirplaneState);
+                        if (mAdapter != null) {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                };
+                mPhoneStateListeners.add(subListener);
+                telephonyManager.listen(subListener, PhoneStateListener.LISTEN_SERVICE_STATE);
+            }
+        } else {
+            mHasTelephony = false;
+        }
 
         mDefaultMenuActions = mContext.getResources().getStringArray(
                 com.android.internal.R.array.config_globalActionsList);
@@ -1602,17 +1664,6 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                     changeAirplaneModeSystemSetting(true);
                 }
             }
-        }
-    };
-
-    PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
-        @Override
-        public void onServiceStateChanged(ServiceState serviceState) {
-            if (!mHasTelephony) return;
-            final boolean inAirplaneMode = serviceState.getState() == ServiceState.STATE_POWER_OFF;
-            mAirplaneState = inAirplaneMode ? ToggleAction.State.On : ToggleAction.State.Off;
-            mAirplaneModeOn.updateState(mAirplaneState);
-            mAdapter.notifyDataSetChanged();
         }
     };
 
