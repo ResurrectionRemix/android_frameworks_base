@@ -4952,6 +4952,16 @@ public final class Settings {
         private static final Validator LOCK_HIDE_STATUS_BAR_VALIDATOR =
                BOOLEAN_VALIDATOR;
 
+       /**
+        * Defines the global heads up notification snooze
+        * @hide
+        */
+        public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
+
+        /** @hide */
+        private static final Validator HEADS_UP_NOTIFICATION_SNOOZE_VALIDATOR =
+              new SettingsValidators.InclusiveIntegerRangeValidator(0, 1200000);
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5068,6 +5078,7 @@ public final class Settings {
             STATUS_BAR_LOGO_STYLE,N,
             OMNI_DOZE_ON_CHARGE,
             LOCK_HIDE_STATUS_BAR,
+            HEADS_UP_NOTIFICATION_SNOOZE,
             // AICP Settings end
         };
 
@@ -5221,6 +5232,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_POSITION);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_STYLE);
             PRIVATE_SETTINGS.add(LOCK_HIDE_STATUS_BAR);
+            PRIVATE_SETTINGS.add(HEADS_UP_NOTIFICATION_SNOOZE);
             // AICP Settings end
         }
 
@@ -5348,6 +5360,7 @@ public final class Settings {
             VALIDATORS.put(STATUS_BAR_LOGO_POSITION, STATUS_BAR_LOGO_POSITION_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO_STYLE, STATUS_BAR_LOGO_STYLE_VALIDATOR);
             VALIDATORS.put(LOCK_HIDE_STATUS_BAR,LOCK_HIDE_STATUS_BAR_VALIDATOR);
+            VALIDATORS.put(HEADS_UP_NOTIFICATION_SNOOZE,HEADS_UP_NOTIFICATION_SNOOZE_VALIDATOR);
             // AICP Settings end
         }
 
