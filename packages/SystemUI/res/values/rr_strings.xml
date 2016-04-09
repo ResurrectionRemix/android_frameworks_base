@@ -150,4 +150,8 @@
     <!-- Kill app toast -->
     <string name="app_killed_message">App Killed</string>
 
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute">Heads up is snoozing for 1 minute.</string>
+    <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+
 </resources>
