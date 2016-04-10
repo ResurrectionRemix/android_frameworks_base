@@ -62,7 +62,7 @@
         android:src="@drawable/ic_settings"
         android:contentDescription="@string/accessibility_desc_settings" />
 
-    <ImageButton android:id="@+id/heads_up_button"
+    <com.android.keyguard.AlphaOptimizedImageButton android:id="@+id/heads_up_button"
         style="@android:style/Widget.Material.Button.Borderless"
         android:layout_toStartOf="@id/settings_button"
         android:layout_width="48dp"
@@ -71,7 +71,7 @@
         android:layout_marginStart="8dp"
         android:visibility="gone"/>
 
-    <ImageButton android:id="@+id/task_manager_button"
+    <com.android.keyguard.AlphaOptimizedImageButton android:id="@+id/task_manager_button"
         style="@android:style/Widget.Material.Button.Borderless"
         android:layout_toStartOf="@id/heads_up_button"
         android:layout_width="48dp"
