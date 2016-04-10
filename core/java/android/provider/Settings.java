@@ -4056,14 +4056,6 @@ public final class Settings {
          */
         public static final String HIDE_PANEL_ICONS = "hide_panel_icons";
 
-
-	/**
-         * Hide Settings icon in Panel
-         * @hide
-         */
-        public static final String HIDE_SETTINGS_ICON = "hide_settings_icon";
-
-
 	/**
          * Hide user icon in Panel
          * @hide

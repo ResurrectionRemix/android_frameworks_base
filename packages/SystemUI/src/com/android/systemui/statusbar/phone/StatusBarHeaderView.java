@@ -603,14 +603,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	mSystemIconsContainer.setVisibility(View.INVISIBLE);
 		}
 	if (Settings.System.getInt(mContext.getContentResolver(),
-               Settings.System.HIDE_SETTINGS_ICON, 1) == 1) {
-	mSettingsButton = findViewById(R.id.settings_button);
-	mSettingsButton.setVisibility(View.VISIBLE);
-	} else {	
-	mSettingsButton = findViewById(R.id.settings_button);
-	mSettingsButton.setVisibility(View.INVISIBLE);
-        	}
-	if (Settings.System.getInt(mContext.getContentResolver(),
               Settings.System.HIDE_USER_ICON, 1) == 1) {
 	mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
 	mMultiUserSwitch.setVisibility(View.VISIBLE);
