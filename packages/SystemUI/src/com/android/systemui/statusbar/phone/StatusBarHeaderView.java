@@ -1426,8 +1426,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.HIDE_PANEL_ICONS), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_SETTINGS_ICON), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.HIDE_USER_ICON), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.HEADER_CLOCK_FONT_STYLE), false, this, UserHandle.USER_ALL);
