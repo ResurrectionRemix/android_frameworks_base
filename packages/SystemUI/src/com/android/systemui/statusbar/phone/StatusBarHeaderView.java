@@ -270,6 +270,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mHeadsUpButton = findViewById(R.id.heads_up_button);
         mHeadsUpButton.setOnClickListener(this);
         mHeadsUpButton.setOnLongClickListener(this);
+        updateHeadsUpState();
+        updateStatusBarButtonsState();
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
         mQsDetailHeader.setAlpha(0);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -517,10 +519,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     void setTaskManagerEnabled(boolean enabled) {
         mShowTaskManager = enabled;
-        updateVisibilities();
-        updateSystemIconsLayoutParams();
-        updateMultiUserSwitch();
-        requestCaptureValues();
     }
 
     private void updateHeights() {
@@ -538,10 +536,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mAlarmStatus.setVisibility(mExpanded && mAlarmShowing ? View.VISIBLE : View.INVISIBLE);
         mSettingsButton.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
         mWeatherContainer.setVisibility(mExpanded && mShowWeather ? View.VISIBLE : View.GONE);
-        mTaskManagerButton.setVisibility(mExpanded && mShowTaskManager ? View.VISIBLE : View.GONE);
-        if (mHeadsUpButton != null) {
-            mHeadsUpButton.setVisibility(mExpanded && mShowHeadsUpButton ? View.VISIBLE : View.GONE);
-        }
+        mHeadsUpButton.setVisibility(mExpanded && mShowHeadsUpButton ? View.VISIBLE : mShowHeadsUpButton ? View.INVISIBLE : View.GONE);
+        mTaskManagerButton.setVisibility(mExpanded && mShowTaskManager ? View.VISIBLE : mShowTaskManager ? View.INVISIBLE : View.GONE);
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.GONE);
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.INVISIBLE);
         if (mSignalCluster != null) {
@@ -715,10 +711,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
   private void updateSystemIconsLayoutParams() {
         RelativeLayout.LayoutParams lp = (LayoutParams) mSystemIconsSuperContainer.getLayoutParams();
-        int headsUp = mHeadsUpButton != null
-                ? mHeadsUpButton.getId() : mSettingsButton.getId();
-        int taskManager = mShowTaskManager && mExpanded
-                ? mTaskManagerButton.getId() : headsUp;
+        int headsUp = mShowHeadsUpButton && mExpanded ? mHeadsUpButton.getId() : mSettingsButton.getId();
+        int taskManager = mShowTaskManager && mExpanded ? mTaskManagerButton.getId() : headsUp;
         int ruleHeadsUpButton = mExpanded
                 ? headsUp
                 : mMultiUserSwitch.getId();
@@ -1114,23 +1108,23 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         }
         target.batteryY = mSystemIconsSuperContainer.getTop() + mSystemIconsContainer.getTop();
         target.batteryLevelAlpha = getAlphaForVisibility(mBatteryLevel);
-	target.settingsAlpha = getAlphaForVisibility(mSettingsButton);
-        target.headsUpAlpha = getAlphaForVisibility(mHeadsUpButton);
+        target.settingsAlpha = getAlphaForVisibility(mSettingsButton);
         target.settingsTranslation = mExpanded
                 ? 0
                 : mMultiUserSwitch.getLeft() - mSettingsButton.getLeft();
+        // heads up ALWAYS translates off of fixed settings button
+        target.headsUpAlpha = getAlphaForVisibility(mHeadsUpButton);
+        target.headsUpTranslation = mExpanded
+                ? 0
+                : mSettingsButton.getLeft() - mHeadsUpButton.getLeft();
+        // task manager may translate off of heads up OR settings
+        final int whichButton = mShowHeadsUpButton
+                ? mHeadsUpButton.getLeft()
+                : mSettingsButton.getLeft();
+        target.taskManagerAlpha = getAlphaForVisibility(mTaskManagerButton);
         target.taskManagerTranslation = mExpanded
                 ? 0
-                    :  mSettingsButton.getLeft() - mTaskManagerButton.getLeft();
-        if (mHeadsUpButton != null && mTaskManagerButton != null) {
-            target.headsUpTranslation = mExpanded
-                    ? 0
-                    :  mTaskManagerButton.getLeft() - mHeadsUpButton.getLeft();
-        } else if (mHeadsUpButton != null && mTaskManagerButton == null) {
-            target.headsUpTranslation = mExpanded
-                    ? 0
-                    :  mSettingsButton.getLeft() - mHeadsUpButton.getLeft();
-        }
+                : whichButton - mTaskManagerButton.getLeft();
         target.signalClusterAlpha = mSignalClusterDetached ? 0f : 1f;
         target.settingsRotation = !mExpanded ? 90f : 0f;
     }
@@ -1183,17 +1177,15 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mSignalCluster.setTranslationX(0f);
             mSignalCluster.setTranslationY(0f);
         }
-        mTaskManagerButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
-        mTaskManagerButton.setTranslationX(values.settingsTranslation);
-        mTaskManagerButton.setRotation(values.settingsRotation);
         mSettingsButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
         mSettingsButton.setTranslationX(values.settingsTranslation);
         mSettingsButton.setRotation(values.settingsRotation);
-        if (mHeadsUpButton != null) {
-            mHeadsUpButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
-            mHeadsUpButton.setTranslationX(values.headsUpTranslation);
-            mHeadsUpButton.setRotation(values.settingsRotation);
-        }
+        mHeadsUpButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+        mHeadsUpButton.setTranslationX(values.headsUpTranslation);
+        mHeadsUpButton.setRotation(values.settingsRotation);
+        mTaskManagerButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+        mTaskManagerButton.setTranslationX(values.taskManagerTranslation);
+        mTaskManagerButton.setRotation(values.settingsRotation);
         applyAlpha(mEmergencyCallsOnly, values.emergencyCallsOnlyAlpha);
         if (!mShowingDetail && !mDetailTransitioning) {
             // Otherwise it needs to stay invisible
@@ -1206,8 +1198,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             applyAlpha(mDockBatteryLevel, values.batteryLevelAlpha);
         }
         applyAlpha(mHeadsUpButton, values.headsUpAlpha);
-        applyAlpha(mTaskManagerButton, values.settingsAlpha);
         applyAlpha(mSettingsButton, values.settingsAlpha);
+        applyAlpha(mTaskManagerButton, values.taskManagerAlpha);
         applyAlpha(mWeatherLine1, values.settingsAlpha);
         applyAlpha(mWeatherimage, values.settingsAlpha);
         applyAlpha(mWeatherLine2, values.settingsAlpha);
@@ -1258,10 +1250,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             avatarY = v1.avatarY * (1 - t) + v2.avatarY * t;
             batteryX = v1.batteryX * (1 - t) + v2.batteryX * t;
             batteryY = v1.batteryY * (1 - t) + v2.batteryY * t;
-            headsUpTranslation =
-                    v1.headsUpTranslation * (1 - t) + v2.headsUpTranslation * t;
-            taskManagerTranslation =
-                    v1.taskManagerTranslation * (1 - t) + v2.taskManagerTranslation * t;
+            headsUpTranslation = v1.headsUpTranslation * (1 - t) + v2.headsUpTranslation * t;
+            taskManagerTranslation = v1.taskManagerTranslation * (1 - t) + v2.taskManagerTranslation * t;
             settingsTranslation = v1.settingsTranslation * (1 - t) + v2.settingsTranslation * t;
             weatherY = v1.weatherY * (1 - t) + v2.weatherY * t;
 
@@ -1440,7 +1430,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 			UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED), false, this);
-	            update();
+	resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_SHOW_STATUS_BUTTON), false, this);
+            update();
         }
 
 
@@ -1530,23 +1522,26 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	    setHeaderColor();
 	    hidepanelItems();   
 	    updateEverything();
-            updateVisibilities();
-            updateHeadsUpButton();
-            requestCaptureValues();
+            updateHeadsUpState();
+            updateStatusBarButtonsState();
         }
     }
 
+    private void updateStatusBarButtonsState() {
+        mShowHeadsUpButton = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.HEADS_UP_SHOW_STATUS_BUTTON, 0, ActivityManager.getCurrentUser()) == 1;
+        mShowTaskManager = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.ENABLE_TASK_MANAGER, 0, ActivityManager.getCurrentUser()) == 1;
+    }
 
-
-    private void updateHeadsUpButton() {
-        Drawable d = getResources().getDrawable(R.drawable.ic_heads_up_status_on);
-        ImageView image = (ImageView)findViewById(R.id.heads_up_button);
-        if (mHeadsUpEnabled) {
-            image.setImageDrawable(d);
-        } else {
-            image.setImageDrawable(
-                    getResources().getDrawable(R.drawable.ic_heads_up_status_off));
-        }
+    private void updateHeadsUpState() {
+        mHeadsUpEnabled = Settings.Global.getInt(
+                getContext().getContentResolver(), Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED, 1) == 1;
+        Drawable d = getResources().getDrawable(mHeadsUpEnabled
+                ? R.drawable.ic_heads_up_status_on
+                : R.drawable.ic_heads_up_status_off);
+        final ImageView v = (ImageView) mHeadsUpButton;
+        v.setImageDrawable(d);
     }
 
     private void doUpdateStatusBarCustomHeader(final Drawable next, final boolean force) {

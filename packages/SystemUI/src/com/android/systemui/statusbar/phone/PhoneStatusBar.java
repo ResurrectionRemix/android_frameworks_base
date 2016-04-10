@@ -622,7 +622,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         protected void observe() {
             super.observe();
 	ContentResolver resolver = mContext.getContentResolver();
-	resolver.registerContentObserver(CMSettings.System.getUriFor(
+		resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
 			UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1010,7 +1010,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
             boolean showTaskManager = Settings.System.getIntForUser(resolver,
                     Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
-	    if (mShowTaskManager != showTaskManager) {
+            if (mShowTaskManager != showTaskManager) {
                 if (!mShowTaskManager) {
                     // explicitly reset click state when disabled
                     mShowTaskList = false;
