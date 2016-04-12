@@ -572,6 +572,12 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(musicPackage, STORAGE_PERMISSIONS, userId);
             }
 
+	    // LockClock
+	    PackageParser.Package lockClock = getDefaultProviderAuthorityPackageLPr(
+		    "com.cyanogenmod.lockclock", userId);
+	    if (lockClock != null) {
+		grantRuntimePermissionsLPw(lockClock, LOCATION_PERMISSIONS, true, userId);
+	    }
             // Android Wear Home
             if (mService.hasSystemFeature(PackageManager.FEATURE_WATCH)) {
                 Intent homeIntent = new Intent(Intent.ACTION_MAIN);
