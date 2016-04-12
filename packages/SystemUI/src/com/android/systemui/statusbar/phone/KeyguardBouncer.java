@@ -56,6 +56,7 @@ public class KeyguardBouncer {
     private boolean mShowingSoon;
     private int mBouncerPromptReason;
     final int userId = UserHandle.myUserId();
+    private PhoneStatusBar mPhoneStatusBar;
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallback =
             new KeyguardUpdateMonitorCallback() {
                 @Override
@@ -66,12 +67,13 @@ public class KeyguardBouncer {
 
     public KeyguardBouncer(Context context, ViewMediatorCallback callback,
             LockPatternUtils lockPatternUtils, StatusBarWindowManager windowManager,
-            ViewGroup container) {
+            ViewGroup container, PhoneStatusBar phoneStatusBar) {
         mContext = context;
         mCallback = callback;
         mLockPatternUtils = lockPatternUtils;
         mContainer = container;
         mWindowManager = windowManager;
+        mPhoneStatusBar = phoneStatusBar;
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mUpdateMonitorCallback);
     }
 
@@ -85,7 +87,7 @@ public class KeyguardBouncer {
         if (mRoot.getVisibility() == View.VISIBLE || mShowingSoon) {
             return;
         }
-
+        mPhoneStatusBar.mKeyguardBottomArea.setVisibility(View.GONE);
         // Try to dismiss the Keyguard. If no security pattern is set, this will dismiss the whole
         // Keyguard. If we need to authenticate, show the bouncer.
         if (!mKeyguardView.dismiss()) {
