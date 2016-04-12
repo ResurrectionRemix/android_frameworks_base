@@ -102,7 +102,7 @@ public class StatusBarKeyguardViewManager {
         if (mBouncer != null) mBouncer.removeView();
         mFingerprintUnlockController = fingerprintUnlockController;
         mBouncer = new KeyguardBouncer(mContext, mViewMediatorCallback, mLockPatternUtils,
-                mStatusBarWindowManager, container);
+                mStatusBarWindowManager, container, mPhoneStatusBar);
     }
 
     /**
@@ -395,7 +395,6 @@ public class StatusBarKeyguardViewManager {
     public void dismiss() {
         if ((mDeviceInteractive || mDeviceWillWakeUp)) {
             showBouncer();
-            mPhoneStatusBar.mKeyguardBottomArea.setVisibility(View.GONE);
         }
     }
 
