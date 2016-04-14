@@ -68,9 +68,14 @@ public class KeyButtonRipple extends Drawable {
     private final HashSet<Animator> mRunningAnimations = new HashSet<>();
     private final ArrayList<Animator> mTmpArray = new ArrayList<>();
 
+    private int mRippleColor;
+    private int mRippleColorDark;
+
     public KeyButtonRipple(Context ctx, View targetView) {
         mMaxWidth =  ctx.getResources().getDimensionPixelSize(R.dimen.key_button_ripple_max_width);
         mTargetView = targetView;
+        mRippleColor = ctx.getResources().getColor(R.color.navbutton_ripple_color);
+        mRippleColorDark = ctx.getResources().getColor(R.color.navbutton_ripple_color_dark);
     }
 
     public void setDarkIntensity(float darkIntensity) {
@@ -81,7 +86,7 @@ public class KeyButtonRipple extends Drawable {
         if (mRipplePaint == null) {
             mRipplePaint = new Paint();
             mRipplePaint.setAntiAlias(true);
-            mRipplePaint.setColor(mLastDark ? 0xff000000 : 0xffffffff);
+            mRipplePaint.setColor(mLastDark ? mRippleColorDark : mRippleColor);
         }
         return mRipplePaint;
     }
