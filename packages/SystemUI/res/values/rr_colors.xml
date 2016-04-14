@@ -85,4 +85,17 @@
 
     <color name="ripple_material_light">#40000000</color>
     <color name="ripple_material_dark">#40ffffff</color>
+	
+	  <!-- Volume panel border coler -->
+    <color name="volume_panel_border_color">#ff2962ff</color><!-- blue A700 -->
+
+    <color name="system_primary_color">@*android:color/material_pixel_blue_dark</color>
+    <color name="system_secondary_color">@*android:color/material_pixel_blue_light</color>
+    <color name="system_accent_color">@*android:color/material_pixel_blue_bright</color>
+
+    <!-- Custom Carrier Label -->
+    <color name="status_bar_carrier_color">#FFFFFFFF</color>
+
+    <!-- Navigation button ripple color -->
+    <color name="navbutton_ripple_color">#FFFFFFFF</color>
 </resources>
