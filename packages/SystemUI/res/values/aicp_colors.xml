@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2015 AICP
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <!-- Volume panel border coler -->
+    <color name="volume_panel_border_color">#ff2962ff</color><!-- blue A700 -->
+
+    <color name="system_primary_color">@*android:color/material_pixel_blue_dark</color>
+    <color name="system_secondary_color">@*android:color/material_pixel_blue_light</color>
+    <color name="system_accent_color">@*android:color/material_pixel_blue_bright</color>
+
+    <!-- Custom Carrier Label -->
+    <color name="status_bar_carrier_color">#FFFFFFFF</color>
+
+    <!-- Custom Navbar Color -->
+    <color name="icon_color_back">@android:color/white</color>
+    <color name="icon_color_ime_switcher">@android:color/white</color>
+    <color name="icon_color_split_screen">@android:color/white</color>
+    <color name="icon_color_home">@android:color/white</color>
+    <color name="icon_color_overview">@android:color/white</color>
+
+
+    <!-- Navigation button ripple color -->
+    <color name="navbutton_ripple_color">#FFFFFFFF</color>
+
+</resources>
