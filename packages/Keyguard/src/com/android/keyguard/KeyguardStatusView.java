@@ -394,21 +394,21 @@ public class KeyguardStatusView extends GridLayout implements
             mClockView.setVisibility(View.VISIBLE);
         } else {
             mClockView = (TextClock) findViewById(R.id.clock_view);
-            mClockView.setVisibility(View.GONE);
+            mClockView.setVisibility(View.INVISIBLE);
         }
         if (showDate) {
             mDateView = (TextClock) findViewById(R.id.date_view);
             mDateView.setVisibility(View.VISIBLE);
         } else {
             mDateView = (TextClock) findViewById(R.id.date_view);
-            mDateView.setVisibility(View.GONE);
+            mDateView.setVisibility(View.INVISIBLE);
         }
         if (showAlarm && nextAlarm != null) {
             mAlarmStatusView = (TextView) findViewById(R.id.alarm_status);
             mAlarmStatusView.setVisibility(View.VISIBLE);
         } else {
             mAlarmStatusView = (TextView) findViewById(R.id.alarm_status);
-            mAlarmStatusView.setVisibility(View.GONE);
+            mAlarmStatusView.setVisibility(View.INVISIBLE);
         }
        
         if (lockClockFont == 0) {
