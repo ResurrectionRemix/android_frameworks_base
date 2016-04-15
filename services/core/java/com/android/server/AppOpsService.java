@@ -1129,7 +1129,7 @@ public class AppOpsService extends IAppOpsService.Stub {
     public int checkPackage(int uid, String packageName) {
         Preconditions.checkNotNull(packageName);
         synchronized (this) {
-            if (getOpsRawLocked(uid, packageName, true) != null) {
+            if (packageName != null && getOpsRawLocked(uid, packageName, true) != null) {
                 return AppOpsManager.MODE_ALLOWED;
             } else {
                 return AppOpsManager.MODE_ERRORED;
