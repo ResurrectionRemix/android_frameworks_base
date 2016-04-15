@@ -636,7 +636,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
 	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.System.STATUS_BAR_CLOCK), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(CMSettings.System.getUriFor(
+	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.STATUS_BAR_RR_LOGO),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
@@ -895,6 +895,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mClockLocation = CMSettings.System.getIntForUser(mContext.getContentResolver(), 
            CMSettings.System.STATUS_BAR_CLOCK, 0xFFFFFFFF, mCurrentUserId);
         int defaultColor = mContext.getColor(R.color.status_bar_clock_color);
+        mClockColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
+                UserHandle.USER_CURRENT);
         if (mClockColor == Integer.MIN_VALUE) {
             // flag to reset the color
             mClockColor = defaultColor;
