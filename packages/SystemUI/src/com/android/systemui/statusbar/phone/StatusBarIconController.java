@@ -21,10 +21,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.res.ColorStateList;
+import android.database.ContentObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -113,6 +116,7 @@ public class StatusBarIconController implements Tunable {
 
     private int mDarkModeIconColorSingleTone;
     private int mLightModeIconColorSingleTone;
+    private int mClockColor;
 
     private static final int STATUS_ICONS_COLOR         = 0;
     private static final int NETWORK_SIGNAL_COLOR       = 1;
@@ -164,6 +168,7 @@ public class StatusBarIconController implements Tunable {
         mHandler = new Handler();
         mClockController = new ClockController(statusBar, mNotificationIcons, mHandler);
         mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
+        mClockController.setTextColor(mClockColor);
         updateResources();
 
         TunerService.get(mContext).addTunable(this, ICON_BLACKLIST);
@@ -225,8 +230,17 @@ public class StatusBarIconController implements Tunable {
 
     public void addSystemIcon(String slot, int index, int viewIndex, StatusBarIcon icon) {
         boolean blocked = mIconBlacklist.contains(slot);
+        ContentResolver resolver = mContext.getContentResolver();
 	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
+        int defaultColor = mContext.getColor(R.color.status_bar_clock_color);
+        mClockColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
+                UserHandle.USER_CURRENT);
+        if (mClockColor == Integer.MIN_VALUE) {
+            // flag to reset the color
+            mClockColor = defaultColor;
+        }
         StatusBarIconView view = new StatusBarIconView(mContext, slot, null, blocked);
         view.set(icon);
         mStatusIcons.addView(view, viewIndex, new LinearLayout.LayoutParams(
@@ -242,14 +256,24 @@ public class StatusBarIconController implements Tunable {
     }
 
     public void updateSystemIcon(String slot, int index, int viewIndex,
-            StatusBarIcon old, StatusBarIcon icon) {	
-	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
+        StatusBarIcon old, StatusBarIcon icon) {
+        ContentResolver resolver = mContext.getContentResolver();	
+        mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
+        int defaultColor = mContext.getColor(R.color.status_bar_clock_color);
+        mClockColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
+                UserHandle.USER_CURRENT);
+        if (mClockColor == Integer.MIN_VALUE) {
+            // flag to reset the color
+            mClockColor = defaultColor;
+        }
         StatusBarIconView view = (StatusBarIconView) mStatusIcons.getChildAt(viewIndex);
         view.set(icon);
         view = (StatusBarIconView) mStatusIconsKeyguard.getChildAt(viewIndex);
         view.set(icon);
         applyIconTint();
+        mClockController.setTextColor(mClockColor);
         if(mColorSwitch) {
         updateStatusIconsKeyguardColor();
 	}
@@ -478,6 +502,15 @@ public class StatusBarIconController implements Tunable {
     }
 
     public void applyIconTint() {
+		ContentResolver resolver = mContext.getContentResolver();	
+        int defaultColor = mContext.getColor(R.color.status_bar_clock_color);
+        mClockColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
+                UserHandle.USER_CURRENT);
+        if (mClockColor == Integer.MIN_VALUE) {
+            // flag to reset the color
+            mClockColor = defaultColor;
+        }
 	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;	
 	int batterytext = Settings.System.getInt(mContext.getContentResolver(),
@@ -503,10 +536,10 @@ public class StatusBarIconController implements Tunable {
         mMoreIcon.setImageTintList(ColorStateList.valueOf(mIconTint));
 	mBatteryLevelTextView.setTextColor(mIconTint);
         mBatteryMeterView.setDarkIntensity(mDarkIntensity);
-        }
-        //mClockController.setTextColor(mIconTint);
-        applyNotificationIconsTint();	
-    }
+        mClockController.setTextColor(mClockColor);
+        applyNotificationIconsTint();
+ 	}
+      }
 
     private void applyNotificationIconsTint() {
 	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),

@@ -107,7 +107,7 @@ public class Clock extends TextView implements DemoMode {
      public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
      private int mClockFontStyle = FONT_NORMAL;
      private int mClockFontSize = 14;
-     protected int mclockColor;;
+     private int mClockColor;
 
     protected int mClockDateDisplay = CLOCK_DATE_DISPLAY_GONE;
     protected int mClockDateStyle = CLOCK_DATE_STYLE_REGULAR;
@@ -230,7 +230,7 @@ public class Clock extends TextView implements DemoMode {
         if (mDemoMode || mCalendar == null) return;
         mCalendar.setTimeInMillis(System.currentTimeMillis());
         setText(getSmallTime());
-        setTextColor(mclockColor);
+        setTextColor(mClockColor);
         getFontStyle(mClockFontStyle);
         setTextSize(mClockFontSize);
     }
@@ -374,14 +374,16 @@ public class Clock extends TextView implements DemoMode {
                 Settings.System.STATUSBAR_CLOCK_FONT_SIZE, 14,
                 UserHandle.USER_CURRENT);
         int defaultColor = getResources().getColor(R.color.status_bar_clock_color);
-        mclockColor = Settings.System.getIntForUser(resolver,
+        mClockColor = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
                 UserHandle.USER_CURRENT);
-        if (mclockColor == Integer.MIN_VALUE) {
+        if (mClockColor == Integer.MIN_VALUE) {
             // flag to reset the color
-            mclockColor = defaultColor;
+            mClockColor = defaultColor;
         }
         if (mAttached) {
+            setTextColor(mClockColor);
+            getFontStyle(mClockFontStyle);
             updateClock();
         }
     }
