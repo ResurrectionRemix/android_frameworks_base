@@ -8,6 +8,7 @@ import android.database.ContentObserver;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.View;
 import com.android.systemui.R;
 import com.android.systemui.cm.UserContentObserver;
@@ -33,6 +34,7 @@ public class ClockController {
     private int mClockLocation;
     private int mAmPmStyle;
     private int mIconTint = Color.WHITE;
+    private int mClockColor;
 
     class SettingsObserver extends UserContentObserver {
         SettingsObserver(Handler handler) {
@@ -47,6 +49,8 @@ public class ClockController {
                     CMSettings.System.STATUS_BAR_AM_PM), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.STATUS_BAR_CLOCK), false, this, UserHandle.USER_ALL);
+ 	        resolver.registerContentObserver(Settings.System.getUriFor(
+			        Settings.System.STATUSBAR_CLOCK_COLOR), false, this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -115,6 +119,14 @@ public class ClockController {
         mClockLocation = CMSettings.System.getIntForUser(
                 resolver, CMSettings.System.STATUS_BAR_CLOCK, STYLE_CLOCK_RIGHT,
                 UserHandle.USER_CURRENT);
+        int defaultColor = mContext.getColor(R.color.status_bar_clock_color);
+        mClockColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
+                UserHandle.USER_CURRENT);
+        if (mClockColor == Integer.MIN_VALUE) {
+            // flag to reset the color
+            mClockColor = defaultColor;
+        } 
         updateActiveClock();
     }
 
