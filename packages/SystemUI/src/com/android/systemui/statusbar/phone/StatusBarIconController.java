@@ -220,7 +220,7 @@ public class StatusBarIconController implements Tunable {
                 com.android.internal.R.dimen.status_bar_icon_size);
         mIconHPadding = mContext.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_padding);
-        mClockController.updateFontSize();
+        //mClockController.updateFontSize();
     }
 
     public void addSystemIcon(String slot, int index, int viewIndex, StatusBarIcon icon) {
