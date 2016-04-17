@@ -250,6 +250,7 @@ import static com.android.systemui.statusbar.BarTransitions.MODE_TRANSPARENT;
 import static com.android.systemui.statusbar.BarTransitions.MODE_WARNING;
 
 import cyanogenmod.providers.CMSettings;
+import com.android.systemui.cm.UserContentObserver;
 import cyanogenmod.themes.IThemeService;
 
 public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
@@ -467,6 +468,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private int mQsIconColor;
     private int mLabelColor;
 
+    private int mClockLocation;
+    private int mClockColor;
    // Custom Logos
 
     private boolean mCustomlogo;
@@ -631,6 +634,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.Secure.RECENTS_LONG_PRESS_ACTIVITY), false, this);
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
+			CMSettings.System.STATUS_BAR_CLOCK), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.STATUS_BAR_RR_LOGO),
 			false, this, UserHandle.USER_ALL);
@@ -748,6 +753,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.CLEAR_RECENTS_STYLE_ENABLE),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.STATUSBAR_CLOCK_COLOR),
+			false, this, UserHandle.USER_ALL);
+	 resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_NUM_TILE_COLUMNS), false, this,
                     UserHandle.USER_ALL);
 		    update();
@@ -823,6 +831,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 updatebatterycolor();    
                 DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_CLOCK_COLOR))) {
+	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
                 DontStressOnRecreate();
        } else if (uri.equals(Settings.System.getUriFor(
@@ -840,6 +850,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                	updateQsColors();
        } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_CUSTOM_LOGO))) {
+                DontStressOnRecreate();
+       } else if (uri.equals(CMSettings.System.getUriFor(
+                    CMSettings.System.STATUS_BAR_CLOCK))) {
                 DontStressOnRecreate();
 	   } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CUSTOM_LOGO_STYLE))) {
@@ -879,6 +892,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 		mLabelColor = Settings.System.getIntForUser(resolver,
 			Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF, mCurrentUserId);
+        mClockLocation = CMSettings.System.getIntForUser(mContext.getContentResolver(), 
+           CMSettings.System.STATUS_BAR_CLOCK, 0xFFFFFFFF, mCurrentUserId);
+        int defaultColor = mContext.getColor(R.color.status_bar_clock_color);
+        mClockColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
+                UserHandle.USER_CURRENT);
+        if (mClockColor == Integer.MIN_VALUE) {
+            // flag to reset the color
+            mClockColor = defaultColor;
+        }
+
 		mRRLogoStyle = Settings.System.getIntForUser(
 			resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
 			UserHandle.USER_CURRENT);
@@ -1903,10 +1927,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mQsIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
-
         mLabelColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF, mCurrentUserId);
-                
+        mClockLocation = CMSettings.System.getIntForUser(mContext.getContentResolver(), 
+                CMSettings.System.STATUS_BAR_CLOCK, 0xFFFFFFFF, mCurrentUserId);
+        ContentResolver resolver = mContext.getContentResolver();
+        int defaultColor = mContext.getColor(R.color.status_bar_clock_color);
+        mClockColor = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUSBAR_CLOCK_COLOR, defaultColor,
+                UserHandle.USER_CURRENT);
+        if (mClockColor == Integer.MIN_VALUE) {
+            // flag to reset the color
+            mClockColor = defaultColor;
+        }   
         mKeyguardUserSwitcher = new KeyguardUserSwitcher(mContext,
                 (ViewStub) mStatusBarWindowContent.findViewById(R.id.keyguard_user_switcher),
                 mKeyguardStatusBar, mNotificationPanel, mUserSwitcherController);
