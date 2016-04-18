@@ -72,6 +72,7 @@ import com.android.systemui.R;
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.classifier.FalsingManager;
 import com.android.systemui.qs.QSContainer;
+import com.android.systemui.qs.QSDetailClipper;
 import com.android.systemui.statusbar.ExpandableNotificationRow;
 import com.android.systemui.statusbar.ExpandableView;
 import com.android.systemui.statusbar.FlingAnimationUtils;
@@ -227,6 +228,7 @@ public class NotificationPanelView extends PanelView implements
     private LockPatternUtils mLockPatternUtils;
 
     private boolean mStatusBarLockedOnSecureKeyguard;
+    private QSDetailClipper mClipper;
 
     private Runnable mHeadsUpExistenceChangedRunnable = new Runnable() {
         @Override
@@ -321,6 +323,7 @@ public class NotificationPanelView extends PanelView implements
         mKeyguardStatusBar = (KeyguardStatusBarView) findViewById(R.id.keyguard_header);
         mKeyguardStatusView = (KeyguardStatusView) findViewById(R.id.keyguard_status_view);
         mTaskManagerPanel = (LinearLayout) findViewById(R.id.task_manager_panel);
+        mClipper = new QSDetailClipper(mTaskManagerPanel);
         mClockView = (TextView) findViewById(R.id.clock_view);
 
         mNotificationContainerParent = (NotificationsQuickSettingsContainer)
@@ -1729,16 +1732,37 @@ public class NotificationPanelView extends PanelView implements
         }
     }
 
-    public void setTaskManagerVisibility(boolean mTaskManagerShowing) {
-        if (mShowTaskManager) {
-            cancelAnimation();
-            boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
-            mQsContainer.getQsPanel().setVisibility(expandVisually && !mTaskManagerShowing
-                    ? View.VISIBLE : View.GONE);
-            mTaskManagerPanel.setVisibility(expandVisually && taskManagerShowing
-                    && !mKeyguardShowing ? View.VISIBLE : View.GONE);
+    void setTaskManagerEnabled(boolean enabled) {
+        mShowTaskManager = enabled;
+        // explicity restore visibility states when disabled
+        // and TaskManager last state was showing
+        if (!enabled && mTaskManagerShowing) {
+            mTaskManagerShowing = false;
+            mQsPanel.setVisibility(View.VISIBLE);
+            mTaskManagerPanel.setVisibility(View.GONE);
         }
     }
+
+    public void setTaskManagerVisibility(boolean taskManagerShowing) {
+        if (mShowTaskManager && !mKeyguardShowing) {
+            mTaskManagerShowing = taskManagerShowing;
+            cancelAnimation();
+            int x = mQsPanel.getLeft() + mQsPanel.getWidth() / 2;
+            int y = mQsPanel.getTop() + mQsPanel.getHeight() / 2;
+            if (!taskManagerShowing) {
+                mQsPanel.setVisibility(View.VISIBLE);
+            }
+            mClipper.animateCircularClip(x, y, taskManagerShowing, mHideQsPanelWhenDone);
+        }
+    }
+
+   private final AnimatorListenerAdapter mHideQsPanelWhenDone = new AnimatorListenerAdapter() {
+        public void onAnimationEnd(Animator animation) {
+            if (mTaskManagerShowing) {
+                mQsPanel.setVisibility(View.GONE);
+            }
+        };
+    };
 
     private void cancelAnimation() {
         if (mQsExpansionAnimator != null) {
