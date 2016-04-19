@@ -1165,9 +1165,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             return;
         }
 
+
         mNavigationBarView = mNavigationController.getNavigationBarView(mContext);
         mNavigationBarView.setDisabledFlags(mDisabled1);
-        addNavigationBarCallback(mNavigationBarView);
+//      addNavigationBarCallback(mNavigationBarView);
         mNavigationBarView.notifyInflateFromUser(); // let bar know we're not starting from boot
         addNavigationBar(true); // dynamically adding nav bar, reset System UI visibility!
 
