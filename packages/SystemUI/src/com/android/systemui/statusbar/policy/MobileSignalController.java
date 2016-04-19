@@ -187,26 +187,25 @@ public class MobileSignalController extends SignalController<
        boolean mShow3G = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.SHOW_THREEG,
                 0, UserHandle.USER_CURRENT) == 1;
-
-        MobileIconGroup hGroup = TelephonyIcons.THREE_G;
-	MobileIconGroup hp = TelephonyIcons.THREE_G;
- 	if(!mShow3G) {
-            hGroup = TelephonyIcons.H;
-	    hp = TelephonyIcons.HP;
-        }
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, hGroup);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, hGroup);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, hGroup);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hp);
-
+ 	if(mShow3G) {	
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyIcons.THREE_G);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyIcons.THREE_G);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, TelephonyIcons.THREE_G);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.THREE_G);
+        } else {
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyIcons.H);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyIcons.H);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, TelephonyIcons.H);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.HP);
+	}
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_FOURG, 0) == 1) {
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
                 TelephonyIcons.FOUR_G_PLUS);
         } else {
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.LTE);
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA, TelephonyIcons.LTE);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.LTE);
+        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA, TelephonyIcons.LTE);
         }
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_IWLAN, TelephonyIcons.WFC);
     }
