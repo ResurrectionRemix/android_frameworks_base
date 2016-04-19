@@ -87,11 +87,6 @@ public class BarTransitions {
         }
     }
     
-    public void setWarningColor(int color) {
-            if (!DEBUG_COLORS) {
-                mWarning = color;
-            }
-        }
     /*
      * This is only called when navbar overlay changes and does not impact Statusbar transitions
      */
@@ -249,6 +244,12 @@ public class BarTransitions {
         protected void onBoundsChange(Rect bounds) {
             super.onBoundsChange(bounds);
             mGradient.setBounds(bounds);
+        }
+        
+        public void setWarningColor(int color) {
+            if (!DEBUG_COLORS) {
+                mWarning = color;
+            }
         }
 
 
