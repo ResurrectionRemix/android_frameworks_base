@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2015, Resurrection Remix project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Battery Saver Dimss -->
+    <string name="battery_saver_dismiss_title">Dismiss</string>
+    <string name="battery_saver_notification_action_text_short">Отключить</string>
+
+
+    <string name="gestures_message">Нарисуйте жест здесь</string>
+
+
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">Maximize</string>
+    <string name="app_float_item_title">Float view</string>
+    <string name="app_stop_item_title">Закрыть приложение</string>
+
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Ведётся запись экрана</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Запись экрана</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Стоп</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Показывать указатель</string>
+    <string name="screenrecord_notif_pointer_off">Скрывать указатель</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Не удалось записать экран</string>
+
+    <!-- Kill app toast -->
+    <string name="app_killed_message">Приложение закрыто</string>
+
+
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">Режим "На ходу" активирован</string>
+    <string name="onthego_notif_title">Режим "На ходу" активен</string>
+    <string name="onthego_notif_stop">Стоп</string>
+    <string name="onthego_notif_options">Настройки</string>
+    <string name="onthego_notif_error">Не удалось активировать режим "На ходу"</string>
+    <string name="onthego_notif_restart">Перезапустить</string>
+    <string name="onthego_notif_camera_changed">Режим камеры изменён</string>
+    <string name="onthego_transparency">Прозрачность</string>
+    <string name="onthego_front_camera">Использвать фронтальную камеру</string>
+    <string name="onthego_service_toggle">Автоматически перезагружать</string>
+    <!-- To do: Add QS OnTheGo
+    <string name="quick_settings_onthego_back">Rear Camera</string>
+    <string name="quick_settings_onthego_front">Front Camera</string>-->
+
+
+    <!-- Quick settings -->
+    <string name="quick_settings_brightness_label">Яркость</string>
+    <string name="quick_settings_screen_off_label">Отключить экран</string>
+    <string name="quick_settings_screenshot_label">Скриншот</string>
+
+    <!-- Expanded desktop tile -->
+    <string name="quick_settings_expanded_desktop_label">Расширенный экран</string>
+    <string name="quick_settings_expanded_desktop">Расширенный</string>
+    <string name="quick_settings_expanded_desktop_off">Нормально</string>
+    <string name="quick_settings_expanded_desktop_detail_title">Режим расширенного экрана</string>
+    <string name="quick_settings_expanded_hide_status">Скрывать строку состояния</string>
+    <string name="quick_settings_expanded_hide_navigation">Скрывать панель навигации</string>
+    <string name="quick_settings_expanded_hide_both">Скрывать строку состояния и нав. панель</string>
+    <string name="accessibility_quick_settings_expanded_desktop_off">Расширенный экран отключен</string>
+
+    <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+
+    <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+
+    <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+
+    <!-- Music QS Tile -->
+    <string name="quick_settings_music_label">Музыка</string>
+    <string name="quick_settings_music_play">Играть</string>
+    <string name="quick_settings_music_pause">Пауза</string>
+
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Перезагрузка</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+
+     <!-- 4G LTE switch -->
+    <string name="show_fourg_title">Показывать 4G вместо LTE</string>
+    <string name="show_fourg_summary">Заменить LTE в строке состояния на 4G</string>
+    <string name="statusbar_tuner_category_title">Убрать из строки состояния</string>
+
+	<!-- Configurations Tile -->
+    <string name="quick_settings_rrtools">Расширенные настройки</string>
+
+    <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+    <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+
+    <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+    <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+    <string name="quick_settings_heads_up_label">Heads up</string>
+
+    <string name="qs_lte_label">LTE</string>
+
+    <string name="lte_on">LTE включено</string>
+    <string name="lte_off">LTE отключено</string>
+
+
+    <!-- Themes QS Tile -->
+    <string name="quick_settings_themes">Темы</string>
+    <string name="quick_settings_themes_icon_packs">Значки</string>
+    <string name="quick_settings_themes_app_theme">Тема приложения</string>
+    <string name="quick_settings_themes_system_theme">Тема системы</string>
+    <string name="quick_settings_themes_default_theme">По умолчанию</string>
+    <string name="quick_settings_themes_match_system">Применить тему системы</string>
+
+    <!-- Navigation bar Tile -->
+    <string name="quick_settings_navigation_bar">Панель навигации</string>
+    <string name="quick_settings_smartbar_off">Панель навигации отключёна</string>
+    <string name="quick_settings_smartbar">Панель навигации</string>
+    <string name="quick_settings_fling">Жесты Fling</string>
+    <string name="quick_settings_fling_off">Жесты Fling отключены</string>
+
+     <!-- Hw Keys tile -->
+    <string name="quick_settings_hwkeys_title">Аппаратные кнопки</string>	
+    <string name="quick_settings_hwkeys_on">Аппаратные кнопки включены</string>
+    <string name="quick_settings_hwkeys_off">Аппаратные кнопки отключены</string>
+    
+    <!-- App Circle Bar tile -->
+	<string name="quick_settings_appcirclebar_title">Круг приложений</string>
+    <string name="quick_settings_appcirclebar_on">Круг приложений включен</string>
+    <string name="quick_settings_appcirclebar_off">Круг приложений отключен</string>
+
+    <!-- Kernel Adiutor Tile -->
+    <string name="quick_settings_kernel_title">Kernel Adiutor</string>
+    <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+
+    <!-- Quick settings -->
+    <string name="quick_settings_screenrecord">Запись экрана</string>
+    <string name="quick_settings_screenrecord_on">Идёт запись...</string>
+
+   <!-- Pie tile -->
+   <string name="quick_settings_pie">Pie</string>
+
+   <!-- Power Menu -->
+   <string name="quick_settings_power_menu_label">Меню питания</string>
+
+   <!-- Restart UI -->
+   <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
+	
+   <!-- Gesture Anywehre -->
+   <string name="quick_settings_gesture_anywhere_label">"Жесты везде"</string>
+   <string name="quick_settings_gesture_anywhere_on">Жесты включены</string>
+   <string name="quick_settings_gesture_anywhere_off">Жесты отключены</string>	
+
+   <!-- Tuner UI -->
+   <string name="status_bar_tuner_title">Status bar tuner</string>   
+   <string name="status_bar_tuner">Status bar icons</string>   
+   <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>	
+
+
+    <!-- Off/On/Toggle -->
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="toggle">Toggle</string>
+
+    <!-- Dialog Cancel/OK -->
+    <string name="cancel">Отмена</string>
+    <string name="dlg_ok">OK</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <string name="qs_kill_app">Закрыть приложение</string>
+
+     <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_torch">Torch</string>
+
+    <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_torch">Torch</string>
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_camera">Камера</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_camera">Камера</string>
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_screenshot">Скриншот</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_screenshot">Скриншот</string>
+
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_expand">Immersive Mode</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_expand">Immersive Mode</string>
+
+
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_config">Configurations</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_config">Configurations</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_pie">PIE</string>
+
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_pie">Pie</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_screenrecord">ScreenRecord</string>
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_screenrecord">ScreenRecord</string>
+
+   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_killtask">Kill Task</string>
+  <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_killtask">Kill Task</string>
+
+    <!-- Dialog title for navigation bar button selection -->
+    <string name="navbar_app_picker">Запуск приложения</string>
+
+    <!-- Content description of the Application picker button for accessibility
+    (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_app_picker">Запуск приложения</string>
+
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Звук</string>
+    <string name="quick_settings_sound_ring">Звонок</string>
+    <string name="quick_settings_sound_vibrate">Вибрация</string>
+    <string name="quick_settings_sound_silent">Беззвучный</string>
+
+     <!-- headset icon switch -->
+    <string name="status_bar_headset">Wired headset</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_vpn">VPN</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_volume">Вибрация</string>
+
+        <!-- Tuner -->
+    <string name="systemui_tuner_qs_title">UI Tuner</string>
+      
+    <!-- Heads up toast -->
+    <string name="heads_up_enabled">Всплывающие уведомления включены</string>
+    <string name="heads_up_disabled">Всплывающие уведомления отключены</string>
+
+</resources>
+
