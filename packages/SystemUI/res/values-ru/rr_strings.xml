@@ -136,8 +136,8 @@
 
     <!-- Navigation bar Tile -->
     <string name="quick_settings_navigation_bar">Панель навигации</string>
-    <string name="quick_settings_smartbar_off">SmartBar отключён</string>
-    <string name="quick_settings_smartbar">SmartBar</string>
+    <string name="quick_settings_smartbar_off">Панель навигации отключёна</string>
+    <string name="quick_settings_smartbar">Панель навигации</string>
     <string name="quick_settings_fling">Жесты Fling</string>
     <string name="quick_settings_fling_off">Жесты Fling отключены</string>
 
