@@ -626,7 +626,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         protected void observe() {
             super.observe();
 	ContentResolver resolver = mContext.getContentResolver();
-		resolver.registerContentObserver(CMSettings.System.getUriFor(
+	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
 			UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
@@ -660,7 +660,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.LOCKSCREEN_ROTATION),
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
+			Settings.System.LOCKSCREEN_BLUR_RADIUS), 
+			false, this);	
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.ENABLE_TASK_MANAGER),
 			false, this, UserHandle.USER_ALL);
@@ -671,8 +672,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			Settings.System.RECENT_CARD_BG_COLOR), false, this,
 			UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.RECENT_CARD_TEXT_COLOR), false, this,
-			UserHandle.USER_ALL);
+			Settings.System.RECENT_CARD_TEXT_COLOR),
+			false, this,UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.SHOW_FOURG),
 			false, this, UserHandle.USER_ALL);
@@ -681,7 +682,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
-		    false, this, UserHandle.USER_ALL);
+			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR),
 			false, this, UserHandle.USER_ALL);
@@ -830,35 +831,35 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		Settings.System.STATUSBAR_COLOR_SWITCH))) {
                 updatebatterycolor();    
                 DontStressOnRecreate();
-	   } else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH))) {
                 DontStressOnRecreate();
-       } else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_ICON_COLOR))) {
                 DontStressOnRecreate();
-       } else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_TEXT_COLOR))) {
                 DontStressOnRecreate();
-	   } else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_TEXT_COLOR))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_COLOR))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR))) {
                	updateQsColors();
-       } else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_CUSTOM_LOGO))) {
                 DontStressOnRecreate();
-	   } else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CUSTOM_LOGO_STYLE))) {
                 DontStressOnRecreate();
-	   } else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CLEAR_RECENTS_STYLE))
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) 
                     {
                	DontStressOnRecreate();
-	} else if (uri.equals(Settings.System.getUriFor(
+		} else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR))) {
                     mBatterySaverWarningColor = Settings.System.getIntForUser(
                             mContext.getContentResolver(),
@@ -867,7 +868,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     if (mBatterySaverWarningColor != 0) {
                         mBatterySaverWarningColor = mContext.getResources()
                                 .getColor(com.android.internal.R.color.battery_saver_mode_color);
-                    }
+                }
             } 
          update();
         }
