@@ -640,7 +640,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-	        false, this, UserHandle.USER_ALL);	
+			false, this, UserHandle.USER_ALL);	
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
 			false, this, UserHandle.USER_ALL);
@@ -681,7 +681,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
-	        false, this, UserHandle.USER_ALL);
+		    false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR),
 			false, this, UserHandle.USER_ALL);
@@ -770,6 +770,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		Settings.System.STATUS_BAR_WEATHER_SIZE))
 		|| uri.equals(Settings.System.getUriFor(
 		Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))) {
+		updateTempView();
 		DontStressOnRecreate();
 		} else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.USE_SLIM_RECENTS))) {
@@ -1053,6 +1054,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             if (oldWeatherState != mWeatherTempState) {
                 updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
                         mWeatherTempColor, mWeatherTempSize, mWeatherTempFontStyle);
+                         updateTempView();
             }
 
             mWeatherTempStyle = Settings.System.getIntForUser(
@@ -1790,6 +1792,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         } else {
             mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
         }
+        updateTempView();
 
         mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
@@ -4655,6 +4658,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mShowTaskList = false;
         }
     }
+    
+     private void updateTempView() {
+        if (mWeatherTempView != null) {
+            mWeatherTempView.setVisibility(View.GONE);
+            if (mWeatherTempStyle == 0) {
+                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
+            } else {
+                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
+            }
+        }
+    }
+
 
 
     private static void copyNotifications(ArrayList<Pair<String, StatusBarNotification>> dest,
