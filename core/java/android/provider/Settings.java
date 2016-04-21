@@ -3658,6 +3658,11 @@ public final class Settings {
         public static final String T9_SEARCH_INPUT_LOCALE = "t9_search_input_locale";
 
         /**
+         * @hide
+         */
+        public static final String SHOW_SU_INDICATOR = "show_su_indicator";
+
+        /**
          * Whether to use the custom status bar header or not
          * @hide
          */

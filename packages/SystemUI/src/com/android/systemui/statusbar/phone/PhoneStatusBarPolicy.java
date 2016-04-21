@@ -97,6 +97,7 @@ public class PhoneStatusBarPolicy implements Callback {
     private final UserInfoController mUserInfoController;
     private boolean mAlarmIconVisible;
     private final SuController mSuController;
+    private boolean mSuIndicatorVisible;
     private int mHeadsetIconVisible;
 
     // Assume it's all good unless we hear otherwise.  We don't always seem
@@ -200,6 +201,9 @@ public class PhoneStatusBarPolicy implements Callback {
                 CMSettings.System.getUriFor(CMSettings.System.SHOW_ALARM_ICON),
                 false, mSettingsObserver);
         mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.SHOW_SU_INDICATOR),
+                false, mSettingsObserver);
+        mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.SHOW_HEADSET_ICON),
                 false, mSettingsObserver);
 
@@ -245,8 +249,10 @@ public class PhoneStatusBarPolicy implements Callback {
         public void onChange(boolean selfChange, Uri uri) {
             mAlarmIconVisible = CMSettings.System.getInt(mContext.getContentResolver(),
                     CMSettings.System.SHOW_ALARM_ICON, 1) == 1;
+            mSuIndicatorVisible = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SHOW_SU_INDICATOR, 1) == 1;
             updateAlarm();
-
+            updateSu();
 
             mHeadsetIconVisible = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.SHOW_HEADSET_ICON, 1);
@@ -535,7 +541,7 @@ public class PhoneStatusBarPolicy implements Callback {
     };
 
     private void updateSu() {
-        mService.setIconVisibility(SLOT_SU, mSuController.hasActiveSessions());
+        mService.setIconVisibility(SLOT_SU, mSuController.hasActiveSessions() && mSuIndicatorVisible);
         final int userId = UserHandle.myUserId();
         if (isSuEnabledForUser(userId)) {
             publishSuCustomTile();
