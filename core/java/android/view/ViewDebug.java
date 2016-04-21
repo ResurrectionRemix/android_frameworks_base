@@ -1731,7 +1731,7 @@ public class ViewDebug {
                     + param + " is of type " + f.getType().getSimpleName());
         }
 
-        f.set(p, Integer.valueOf(value));
+        f.setInt(p, value);
 
         view.post(new Runnable() {
             @Override
