@@ -321,9 +321,11 @@ public class HeadsUpManager implements ViewTreeObserver.OnComputeInternalInsetsL
             String packageName = entry.entry.notification.getPackageName();
             mSnoozedPackages.put(snoozeKey(packageName, mUser),
                     SystemClock.elapsedRealtime() + mSnoozeLengthMs);
-            Toast.makeText(mContext,
-                    mContext.getString(R.string.heads_up_snooze_message,
-                    mSnoozeLengthMs / 60 / 1000), Toast.LENGTH_LONG).show();
+            if (mSnoozeLengthMs != 0) {
+                Toast.makeText(mContext,
+                        mContext.getString(R.string.heads_up_snooze_message,
+                        mSnoozeLengthMs / 60 / 1000), Toast.LENGTH_LONG).show();
+            }
         }
         mReleaseOnExpandFinish = true;
     }
