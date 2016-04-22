@@ -43,7 +43,7 @@
         android:id="@+id/task_manager_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/task_manager_background"
+        android:background="@drawable/qs_detail_background"
         android:orientation="vertical"
         android:visibility="gone" >
         <include
