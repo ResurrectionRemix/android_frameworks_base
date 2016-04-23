@@ -1545,14 +1545,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private final Runnable mScreenshotRunnable = new Runnable() {
         @Override
         public void run() {
+	    if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREEN_SHOT_SHORTCUT_SWITCH, 0) == 1) {
             takeScreenshot();
-        }
+            } else {
+             Slog.d(TAG, "ScreenShot Shortcut Disabled");
+	     }
+          }
     };
 
     private final Runnable mScreenrecordRunnable = new Runnable() {
         @Override
         public void run() {
+	    if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREEN_RECORD_SHORTCUT_SWITCH, 0) == 1) {
             takeScreenrecord();
+            } else {
+             Slog.d(TAG, "ScreenRecord Shortcut Disabled");
+            }
         }
     };
 

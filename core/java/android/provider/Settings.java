@@ -4388,6 +4388,20 @@ public final class Settings {
          * @hide
          */
         public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
+        
+       /**
+         * Switch to Enable/Disable ScreenRecord Shorcut.
+         *
+         * @hide
+         */
+        public static final String SCREEN_RECORD_SHORTCUT_SWITCH = "screen_record_shortcut";
+        
+	/**
+         * Switch to Enable/Disable ScreenShot Shorcut.
+         *
+         * @hide
+         */
+        public static final String SCREEN_SHOT_SHORTCUT_SWITCH = "screen_shot_shortcut";
 
         /**
          * Change fonts for the system lockscreen clock widget
