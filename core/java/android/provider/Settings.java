@@ -4350,6 +4350,13 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_SHORTCUTS_LONGPRESS =
                 "lockscreen_shortcuts_longpress";
+                
+        /**
+         * Color of Lockscreen Shortcuts Icons
+         * @hide
+         */
+        public static final String LS_SHORTCUT_ICON_COLOR =
+                "ls_shortcut_icon_color";
 
 
         /**
