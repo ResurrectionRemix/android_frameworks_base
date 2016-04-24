@@ -22,6 +22,7 @@ import android.app.ActivityManagerNative;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ThemeConfig;
@@ -58,6 +59,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
     private final ThemesDetailAdapter mDetailAdapter;
     private ThemeManager mService;
     private Mode mode;
+    private String mTopAppLabel;
 
     public ThemesTile(Host host) {
         super(host);
@@ -101,6 +103,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
             mode = Mode.ICON_PACK;
         } else {
             mode = Mode.APP_THEME;
+            mTopAppLabel = getTopAppLabel(getTopActivity());
         }
 
         showDetail(true);
@@ -115,7 +118,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
 
     @Override
     public int getMetricsCategory() {
-        return CMMetricsLogger.TILE_THEMES;
+        return CMMetricsLogger.DONT_LOG;
     }
 
     @Override
@@ -131,7 +134,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
         }
     }
 
-    private final class ThemesDetailAdapter implements DetailAdapter,
+    private final class ThemesDetailAdapter implements CustomTitleDetailAdapter,
             AdapterView.OnItemClickListener {
 
         private QSDetailItemsList mItemsList;
@@ -146,15 +149,22 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
                 case ICON_PACK:
                     return R.string.quick_settings_themes_icon_packs;
                 case APP_THEME:
-                    return R.string.quick_settings_themes_app_theme;
+                    return USES_CUSTOM_DETAIL_ADAPTER_TITLE;
                 default:
-                    return -1;
+                    return R.string.quick_settings_themes;
             }
         }
 
         @Override
-        public StatusBarPanelCustomTile getCustomTile() {
-            return null;
+        public String getCustomTitle() {
+            switch (mode) {
+                case APP_THEME:
+                    final String topAppLabel = mTopAppLabel;
+                    return mContext.getString(
+                            R.string.quick_settings_themes_app_theme_with_label, topAppLabel);
+                default:
+                    return mContext.getString(R.string.quick_settings_themes_app_theme);
+            }
         }
 
         @Override
@@ -178,10 +188,6 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
         private void updateItems() {
 
             if (mItemsList == null) return;
-
-            if (isTopActivityLauncher()) {
-                // Log.d("ThemesTile", "This is launcher");
-            }
 
             items.clear();
 
@@ -221,7 +227,7 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
 
         @Override
         public int getMetricsCategory() {
-            return CMMetricsLogger.TILE_THEMES;
+            return CMMetricsLogger.DONT_LOG;
         }
 
         @Override
@@ -427,7 +433,6 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
             return itemList;
 
         }
-
     }
 
 
@@ -444,6 +449,18 @@ public class ThemesTile extends QSTile<QSTile.BooleanState> implements ThemeMana
 
     private String getTopApp() {
         return getTopActivity().getPackageName();
+    }
+
+    private String getTopAppLabel(ComponentName componentName) {
+        String label = null;
+        PackageManager pm = mContext.getPackageManager();
+        try {
+            ApplicationInfo info = pm.getApplicationInfo(componentName.getPackageName(), 0);
+            label = info.loadLabel(pm).toString();
+        } catch (Exception e) {
+            label = mContext.getString(R.string.quick_settings_themes_app_theme);
+        }
+        return label;
     }
 
     private boolean isActivityLauncher(ComponentName componentName) {

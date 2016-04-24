@@ -54,6 +54,7 @@ import java.util.Objects;
  * state update pass on tile looper.
  */
 public abstract class QSTile<TState extends State> implements Listenable {
+    public static int USES_CUSTOM_DETAIL_ADAPTER_TITLE = -2;
     protected final String TAG = "QSTile." + getClass().getSimpleName();
     protected static final boolean DEBUG = Log.isLoggable("QSTile", Log.DEBUG);
 
@@ -105,6 +106,26 @@ public abstract class QSTile<TState extends State> implements Listenable {
         Intent getSettingsIntent();
         void setToggleState(boolean state);
         int getMetricsCategory();
+    }
+
+    /**
+     *
+     * Return USES_CUSTOM_DETAIL_ADAPTER_TITLE in parent getTitle() to invoke this method
+     * This design is a bit "creative" but better than writing an abstract class
+     * and redesigning half of the tiles
+     *
+     */
+    public interface CustomTitleDetailAdapter extends DetailAdapter {
+        String getCustomTitle();
+    }
+
+    public static String getDetailAdapterTitle(Context context, DetailAdapter adapter) {
+        int res = adapter.getTitle();
+        if (res == USES_CUSTOM_DETAIL_ADAPTER_TITLE && adapter instanceof CustomTitleDetailAdapter) {
+            return ((CustomTitleDetailAdapter) adapter).getCustomTitle();
+        } else {
+            return context.getString(res);
+        }
     }
 
     // safe to call from any thread
