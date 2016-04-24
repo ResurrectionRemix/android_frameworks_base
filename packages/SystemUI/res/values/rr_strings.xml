@@ -269,6 +269,11 @@
     <!-- Heads up toast -->
     <string name="heads_up_enabled">Heads up notifications are enabled</string>
     <string name="heads_up_disabled">Heads up notifications are disabled</string>
+    
+    <!-- Pulse Tile -->
+    <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
+    <string name="quick_settings_pulse_disabled">No Visualizer</string>
+    <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
 
 </resources>
 
