@@ -255,7 +255,7 @@ import cyanogenmod.themes.IThemeService;
 
 public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         DragDownHelper.DragDownCallback, ActivityStarter, OnUnlockMethodChangedListener,
-        HeadsUpManager.OnHeadsUpChangedListener {
+        HeadsUpManager.OnHeadsUpChangedListener, WeatherController.Callback {
     static final String TAG = "PhoneStatusBar";
     public static final boolean DEBUG = BaseStatusBar.DEBUG;
     public static final boolean SPEW = false;
@@ -476,7 +476,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private int mCustomlogoStyle;	
 
     // Weather temperature
-    TextView mWeatherTempView;
+    private TextView mWeatherTempView;
     private int mWeatherTempState;
     private int mWeatherTempStyle;
     private int mWeatherTempColor;
@@ -778,7 +778,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		|| uri.equals(Settings.System.getUriFor(
 		Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))) {
 		updateTempView();
-		DontStressOnRecreate();
 		} else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.USE_SLIM_RECENTS))) {
 		updateRecents();
@@ -1060,15 +1059,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mNavigationBarView.setLeftInLandscape(navLeftInLandscape);
             }
 
-            final int oldWeatherState = mWeatherTempState;
             mWeatherTempState = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                     UserHandle.USER_CURRENT);
-            if (oldWeatherState != mWeatherTempState) {
-                updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
-                        mWeatherTempColor, mWeatherTempSize, mWeatherTempFontStyle);
-                         updateTempView();
-            }
 
             mWeatherTempStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
@@ -1089,9 +1082,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mMaxKeyguardNotifConfig = Settings.System.getIntForUser(resolver,
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 5, mCurrentUserId);
 
-	    mNavSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
+            mNavSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.NAVBAR_RECENTS_SWITCH, 0,
                 UserHandle.USER_CURRENT) == 1;
+
+            updateTempView();
 
         }
     }
@@ -1189,6 +1184,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 break;
         }
         mWeatherTempView.setVisibility(View.VISIBLE);
+    }
+
+    private void updateTempView() {
+        if (mWeatherTempView != null) {
+            mWeatherTempView.setVisibility(View.GONE);
+            if (mWeatherTempStyle == 0) {
+                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
+            } else {
+                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
+            }
+	    updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
+                    mWeatherTempColor, mWeatherTempSize, mWeatherTempFontStyle);
+        }
     }
 
     private void forceAddNavigationBar() {
@@ -1805,7 +1813,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         } else {
             mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
         }
-        updateTempView();
 
         mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
@@ -1816,19 +1823,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mWeatherTempState = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
-        mWeatherController = new WeatherControllerImpl(mContext);
-        if (mWeatherController == null) {            
-	    mWeatherController = new WeatherControllerImpl(mContext);
-            mWeatherController.addCallback(new WeatherController.Callback() {
-                @Override
-                public void onWeatherChanged(WeatherInfo temp) {
-                    updateWeatherTextState(temp.temp, mWeatherTempColor, mWeatherTempSize, mWeatherTempFontStyle);
-                }
-            });
+        if (mWeatherController == null) {
+            mWeatherController = new WeatherControllerImpl(mContext);
         }
+ 	updateTempView();
+        mWeatherController.addCallback(new WeatherController.Callback() {
+            @Override
+            public void onWeatherChanged(WeatherInfo temp) {
+                updateWeatherTextState(temp.temp, mWeatherTempColor, mWeatherTempSize, mWeatherTempFontStyle);
+            }
+        });
         updateWeatherTextState(mWeatherController.getWeatherInfo().temp, mWeatherTempColor,
                 mWeatherTempSize, mWeatherTempFontStyle);
-
 
 	 mRRLogoStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
@@ -2015,6 +2021,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mKeyguardStatusBar.setBatteryController(mBatteryController);
         mHeader.setDockBatteryController(mDockBatteryController);
         mKeyguardStatusBar.setDockBatteryController(mDockBatteryController);
+        mHeader.setNextAlarmController(mNextAlarmController);
+        mHeader.setWeatherController(mWeatherController);
+
         if (mDockBatteryController != null) {
             DockBatteryMeterView dockBatteryMeterView =
                     ((DockBatteryMeterView) mStatusBarView.findViewById(R.id.dock_battery));
@@ -2033,9 +2042,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mStatusBarView.removeView(dockBatteryLevel);
             }
         }
-
-        mHeader.setNextAlarmController(mNextAlarmController);
-        mHeader.setWeatherController(mWeatherController);
 
         PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mBroadcastReceiver.onReceive(mContext,
@@ -2091,6 +2097,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         UpdateNotifDrawerClearAllIconColor();
         updateNetworkIconColors();
         return mStatusBarView;
+    }
+
+    @Override
+    public void onWeatherChanged(WeatherController.WeatherInfo info) {
+        SettingsObserver observer = new SettingsObserver(mHandler);
+        if (info.temp == null || info.condition == null) {
+            mWeatherTempView.setText(null);
+           // observer.update();
+        } else {
+            mWeatherTempView.setText(info.temp);
+           // observer.update();
+        }
     }
 
     private void clearAllNotifications() {
@@ -4671,19 +4689,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mShowTaskList = false;
         }
     }
-    
-     private void updateTempView() {
-        if (mWeatherTempView != null) {
-            mWeatherTempView.setVisibility(View.GONE);
-            if (mWeatherTempStyle == 0) {
-                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
-            } else {
-                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
-            }
-        }
-    }
-
-
 
     private static void copyNotifications(ArrayList<Pair<String, StatusBarNotification>> dest,
             NotificationData source) {

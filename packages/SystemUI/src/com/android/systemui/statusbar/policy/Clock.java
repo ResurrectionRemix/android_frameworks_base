@@ -107,7 +107,7 @@ public class Clock extends TextView implements DemoMode {
      public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
      private int mClockFontStyle = FONT_NORMAL;
      private int mClockFontSize = 14;
-     protected int mclockColor;;
+     protected int mclockColor;
 
     protected int mClockDateDisplay = CLOCK_DATE_DISPLAY_GONE;
     protected int mClockDateStyle = CLOCK_DATE_STYLE_REGULAR;
