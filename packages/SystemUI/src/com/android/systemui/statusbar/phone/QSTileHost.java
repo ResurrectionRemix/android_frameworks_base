@@ -57,6 +57,7 @@ import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
+import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.AppCircleBarTile;
 import com.android.systemui.qs.tiles.ExpandedDesktopTile;
 import com.android.systemui.qs.tiles.KernelAdiutorTile;
@@ -371,6 +372,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("sound")) return new SoundTile(this);
 	else if (tileSpec.equals("lockscreen")) return new LockscreenToggleTile(this);
 	else if (tileSpec.equals("pulse")) return new PulseTile(this);
+	else if (tileSpec.equals("pie")) return new PieTile(this);
 	else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
 	else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }

@@ -74,5 +74,28 @@
     <dimen name="recent_app_sidebar_item_title_text_size">11sp</dimen>
 
     <dimen name="qs_detail_item_height_twoline">72dp</dimen>
+    
+       <!-- PA Pie controls dimensions -->
+    <dimen name="pie_snap_radius">45dp</dimen>
+    <dimen name="pie_snap_outline">4dp</dimen>
+    <dimen name="pie_item_size">30dp</dimen>
+    <dimen name="pie_outline">2dp</dimen>
+    <dimen name="pie_radius_start">65dp</dimen>
+    <dimen name="pie_radius_increment">80dp</dimen>
+    <dimen name="pie_chevron_start">230dp</dimen>
+    <dimen name="pie_chevron_increment">2dp</dimen>
+    <dimen name="pie_battery_start">155dp</dimen>
+    <dimen name="pie_battery_increment">10dp</dimen>
+    <dimen name="pie_status_start">155dp</dimen>
+    <dimen name="pie_clock_size">54dp</dimen>
+    <dimen name="pie_clock_offset">-20dp</dimen>
+    <dimen name="pie_am_pm_size">14dp</dimen>
+    <dimen name="pie_am_pm_offset">-52dp</dimen>
+    <dimen name="pie_status_size">12dp</dimen>
+    <dimen name="pie_status_offset">-14dp</dimen>
+    <dimen name="pie_snap_thickness">6dp</dimen>
+    <dimen name="pie_touch_offset">15dp</dimen>
+    <dimen name="pie_tab_title_height">24dp</dimen>
+    <dimen name="pie_panel_padding">20dp</dimen>
 
 </resources>
