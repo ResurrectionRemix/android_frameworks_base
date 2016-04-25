@@ -204,7 +204,7 @@
     <dimen name="qs_detail_margin_top">28dp</dimen>
     <dimen name="qs_data_usage_text_size">14sp</dimen>
     <dimen name="qs_data_usage_usage_text_size">36sp</dimen>
-    <dimen name="qs_battery_padding">2dp</dimen>
+    <dimen name="qs_battery_padding">0dp</dimen>
     <dimen name="qs_detail_items_padding_top">4dp</dimen>
 
     <dimen name="segmented_button_spacing">0dp</dimen>
@@ -398,10 +398,10 @@
     <dimen name="keyguard_carrier_text_margin">16dp</dimen>
 
     <!-- Margin on the left side of the battery % in the header. -->
-    <dimen name="header_battery_margin_expanded">6dp</dimen>
+    <dimen name="header_battery_margin_expanded">4dp</dimen>
 
     <!-- Margin on the left side of the battery % when on Keyguard. -->
-    <dimen name="header_battery_margin_keyguard">6dp</dimen>
+    <dimen name="header_battery_margin_keyguard">4dp</dimen>
 
     <!-- Margin on the right side of the system icon group on Keyguard. -->
     <dimen name="system_icons_keyguard_padding_end">4dp</dimen>
