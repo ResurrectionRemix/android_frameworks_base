@@ -4163,6 +4163,25 @@ public final class Settings {
          * @hide
          */
         public static final String HEADER_WEATHERTWO_COLOR = "header_weather2_color";
+        
+        
+        /**
+         * Dashboard custom colors switch
+         * @hide
+         */
+        public static final String DASHBOARD_CUSTOM_COLORS = "db_custom_colors";
+
+	/**
+         * Dashboard icon colors
+         * @hide
+         */
+        public static final String DB_ICON_COLOR = "db_icon_color";
+
+	/**
+         * Dashboard text color
+         * @hide
+         */
+        public static final String DB_TEXT_COLOR = "db_text_color";
 
 
 
