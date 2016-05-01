@@ -198,7 +198,7 @@ public class QSPanel extends ViewGroup {
 	int mIconColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_BRIGHTNESS_ICON_COLOR, 0xFFFFFFFF);
 	if (mQsColorSwitch) {	
-	 brightnessIcon.setColorFilter(mIconColor, Mode.SRC_IN);
+	 brightnessIcon.setColorFilter(mIconColor, Mode.SRC_ATOP);
 		}
      }
      
@@ -211,12 +211,12 @@ public class QSPanel extends ViewGroup {
         if (mQsColorSwitch) {
             if (mDetail != null) {
                     mDetail.getBackground().setColorFilter(
-                            color, Mode.SRC_OVER);
+                            color, Mode.SRC_ATOP);
                 } 		
             } else {
 	if (mDetail != null) {
                     mDetail.getBackground().setColorFilter(
-                           mStockBg, Mode.SRC_OVER);
+                           mStockBg, Mode.SRC_ATOP);
                 }
 	 }    
 	}

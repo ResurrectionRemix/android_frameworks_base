@@ -67,7 +67,7 @@ public final class SignalTileView extends QSTileView {
         final ImageView traffic = new ImageView(mContext);
         traffic.setImageResource(icon);
 	  if ( mQSColorSwitch) {
-            traffic.setColorFilter(mIconColor, Mode.MULTIPLY);	  
+            traffic.setColorFilter(mIconColor, Mode.SRC_ATOP);	  
         }
         traffic.setAlpha(0f);
         addView(traffic);
@@ -82,7 +82,7 @@ public final class SignalTileView extends QSTileView {
         mIconFrame.addView(mSignal);
         mOverlay = new ImageView(mContext);
 	 if (mQSColorSwitch) {
-            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mSignal.setColorFilter(mIconColor, Mode.SRC_ATOP);
         }
         mIconFrame.addView(mOverlay, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         return mIconFrame;
@@ -172,10 +172,10 @@ public final class SignalTileView extends QSTileView {
       public void setIconColor() {
 	updateIconColor();
         if (mQSColorSwitch) {
-            mSignal.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mOverlay.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mIn.setColorFilter(mIconColor, Mode.MULTIPLY);
-            mOut.setColorFilter(mIconColor, Mode.MULTIPLY);
+            mSignal.setColorFilter(mIconColor, Mode.SRC_ATOP);
+            mOverlay.setColorFilter(mIconColor, Mode.SRC_ATOP);
+            mIn.setColorFilter(mIconColor, Mode.SRC_ATOP);
+            mOut.setColorFilter(mIconColor, Mode.SRC_ATOP);
        		 }
 	}
 

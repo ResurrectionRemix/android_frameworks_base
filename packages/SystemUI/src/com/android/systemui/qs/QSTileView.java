@@ -264,7 +264,7 @@ public class QSTileView extends ViewGroup {
         icon.setScaleType(ScaleType.CENTER_INSIDE);
         updateColors();
         if (mQsColorSwitch) {
-            icon.setColorFilter(mIconColor, Mode.MULTIPLY);
+            icon.setColorFilter(mIconColor, Mode.SRC_ATOP);
         } 
         return icon;
     }
@@ -382,7 +382,7 @@ public class QSTileView extends ViewGroup {
         	if (mIcon instanceof ImageView) {
 		updateColors();
            	ImageView iv = (ImageView) mIcon;
-            	iv.setColorFilter(mIconColor, Mode.MULTIPLY);
+            	iv.setColorFilter(mIconColor, Mode.SRC_ATOP);
 		    }	
     }
     
