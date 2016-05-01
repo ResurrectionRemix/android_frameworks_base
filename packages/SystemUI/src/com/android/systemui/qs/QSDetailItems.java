@@ -210,7 +210,7 @@ public class QSDetailItems extends FrameLayout {
         iv.setImageResource(item.icon);
         updatecolors();
         if (mQsColorSwitch) {
-            iv.setColorFilter(mQsIconColor, Mode.MULTIPLY);
+            iv.setColorFilter(mQsIconColor, Mode.SRC_ATOP);
         }
         iv.getOverlay().clear();
         if (item.overlay != null) {
@@ -240,7 +240,7 @@ public class QSDetailItems extends FrameLayout {
         final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
         disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
          if (mQsColorSwitch) {
-            disconnect.setColorFilter(mQsIconColor, Mode.MULTIPLY);
+            disconnect.setColorFilter(mQsIconColor, Mode.SRC_ATOP);
         }
         disconnect.setOnClickListener(new OnClickListener() {
             @Override
