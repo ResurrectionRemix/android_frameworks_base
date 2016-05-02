@@ -6936,11 +6936,6 @@ public final class Settings {
          */
         public static final String FORCE_EXPANDED_NOTIFICATIONS = "force_expanded_notifications";
 
-       /*
-         * @hide
-         */
-        public static final String DEVICE_IDLE_CONSTANTS_USER = "device_idle_constants_user";
-
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -17186,6 +17181,12 @@ public final class Settings {
         public static final String ALLOW_SIGNATURE_FAKE = "allow_signature_fake";
 
         private static final Validator ALLOW_SIGNATURE_FAKE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+       /*
+         * @hide
+         */
+        public static final String DEVICE_IDLE_CONSTANTS_USER = "device_idle_constants_user";
+
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
