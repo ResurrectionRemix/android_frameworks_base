@@ -182,6 +182,7 @@ class AlarmManagerService extends SystemService {
     private long mLastTickRemoved;
     int mBroadcastRefCount = 0;
     PowerManager.WakeLock mWakeLock;
+    private QCNsrmAlarmExtension qcNsrmExt = new QCNsrmAlarmExtension(this);
     boolean mLastWakeLockUnimportantForLogging;
     ArrayList<Alarm> mPendingNonWakeupAlarms = new ArrayList<>();
     ArrayList<InFlight> mInFlight = new ArrayList<>();
@@ -1860,6 +1861,16 @@ class AlarmManagerService extends SystemService {
                 FileDescriptor err, String[] args, ShellCallback callback,
                 ResultReceiver resultReceiver) {
             (new ShellCmd()).exec(this, in, out, err, args, callback, resultReceiver);
+        }
+
+        @Override
+        /* updates the blocked uids, so if a wake lock is acquired to only fire
+         * alarm for it, it can be released.
+         */
+        public void updateBlockedUids(int uid, boolean isBlocked) {
+            synchronized(mLock) {
+                qcNsrmExt.processBlockedUids(uid, isBlocked, mWakeLock);
+            }
         }
     };
 
@@ -3627,11 +3638,10 @@ class AlarmManagerService extends SystemService {
                 mWakeLock.setWorkSource(new WorkSource(uid));
                 return;
             }
+            // Something went wrong; fall back to attributing the lock to the OS
+            mWakeLock.setWorkSource(null);
         } catch (Exception e) {
         }
-
-        // Something went wrong; fall back to attributing the lock to the OS
-        mWakeLock.setWorkSource(null);
     }
 
     private class AlarmHandler extends Handler {
@@ -4072,9 +4082,13 @@ class AlarmManagerService extends SystemService {
             if (DEBUG_WAKELOCK) {
                 Slog.d(TAG, "mBroadcastRefCount -> " + mBroadcastRefCount);
             }
+            qcNsrmExt.removeTriggeredUid(inflight.mUid);
+
             if (mBroadcastRefCount == 0) {
                 mHandler.obtainMessage(AlarmHandler.REPORT_ALARMS_ACTIVE, 0).sendToTarget();
-                mWakeLock.release();
+                if (mWakeLock.isHeld()) {
+                    mWakeLock.release();
+                }
                 if (mInFlight.size() > 0) {
                     mLog.w("Finished all dispatches with " + mInFlight.size()
                             + " remaining inflights");
@@ -4236,7 +4250,9 @@ class AlarmManagerService extends SystemService {
                 setWakelockWorkSource(alarm.operation, alarm.workSource,
                         alarm.type, alarm.statsTag, (alarm.operation == null) ? alarm.uid : -1,
                         true);
+                if (!mWakeLock.isHeld()) {
                 mWakeLock.acquire();
+                }
                 mHandler.obtainMessage(AlarmHandler.REPORT_ALARMS_ACTIVE, 1).sendToTarget();
             }
             final InFlight inflight = new InFlight(AlarmManagerService.this,
@@ -4244,6 +4260,9 @@ class AlarmManagerService extends SystemService {
                     alarm.packageName, alarm.type, alarm.statsTag, nowELAPSED);
             mInFlight.add(inflight);
             mBroadcastRefCount++;
+            qcNsrmExt.addTriggeredUid((alarm.operation != null) ?
+                                    alarm.operation.getCreatorUid() :
+                                    alarm.uid);
             if (allowWhileIdle) {
                 // Record the last time this uid handled an ALLOW_WHILE_IDLE alarm.
                 mLastAllowWhileIdleDispatch.put(alarm.creatorUid, nowELAPSED);
