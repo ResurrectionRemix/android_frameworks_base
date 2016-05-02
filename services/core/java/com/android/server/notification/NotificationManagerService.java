@@ -342,6 +342,8 @@ public class NotificationManagerService extends SystemService {
     private boolean mDisableDuckingWhileMedia;
     private boolean mActiveMedia;
 
+    private boolean mMultiColorNotificationLed;
+
     private static final int MY_UID = Process.myUid();
     private static final int MY_PID = Process.myPid();
     private static final int REASON_DELEGATE_CLICK = 1;
@@ -1212,6 +1214,9 @@ public class NotificationManagerService extends SystemService {
                 R.integer.config_defaultNotificationLedOn);
         mDefaultNotificationLedOff = resources.getInteger(
                 R.integer.config_defaultNotificationLedOff);
+
+        mMultiColorNotificationLed = resources.getBoolean(
+                R.bool.config_multiColorNotificationLed);
 
         mNotificationPulseCustomLedValues = new HashMap<String, NotificationLedValues>();
 
@@ -3564,6 +3569,9 @@ public class NotificationManagerService extends SystemService {
 
     private int generateLedColorForNotification(NotificationRecord ledNotification) {
         if (!mAutoGenerateNotificationColor) {
+            return mDefaultNotificationColor;
+        }
+        if (!mMultiColorNotificationLed) {
             return mDefaultNotificationColor;
         }
         final String packageName = ledNotification.sbn.getPackageName();
