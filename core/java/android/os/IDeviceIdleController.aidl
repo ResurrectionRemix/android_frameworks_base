@@ -48,4 +48,6 @@ interface IDeviceIdleController {
     void unregisterMaintenanceActivityListener(IMaintenanceActivityListener listener);
     int setPreIdleTimeoutMode(int Mode);
     void resetPreIdleTimeoutMode();
+    int getIdleStateDetailed();
+    int getLightIdleStateDetailed();
 }

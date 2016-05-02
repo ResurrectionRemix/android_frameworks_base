@@ -138,7 +138,7 @@ public final class PowerManagerService extends SystemService
     private static final int MSG_WAKE_UP = 5;
 
     // Dirty bit: mWakeLocks changed
-    private static final int DIRTY_WAKE_LOCKS = 1 << 0;
+    protected static final int DIRTY_WAKE_LOCKS = 1 << 0;
     // Dirty bit: mWakefulness changed
     private static final int DIRTY_WAKEFULNESS = 1 << 1;
     // Dirty bit: user activity was poked or may have timed out
@@ -274,7 +274,7 @@ public final class PowerManagerService extends SystemService
 
     // A bitfield that indicates what parts of the power state have
     // changed and need to be recalculated.
-    private int mDirty;
+    protected int mDirty;
 
     // Indicates whether the device is awake or asleep or somewhere in between.
     // This is distinct from the screen power state, which is managed separately.
@@ -293,7 +293,7 @@ public final class PowerManagerService extends SystemService
     private final ArrayList<SuspendBlocker> mSuspendBlockers = new ArrayList<SuspendBlocker>();
 
     // Table of all wake locks acquired by applications.
-    private final ArrayList<WakeLock> mWakeLocks = new ArrayList<WakeLock>();
+    protected final ArrayList<WakeLock> mWakeLocks = new ArrayList<WakeLock>();
 
     // A bitfield that summarizes the state of all active wakelocks.
     private int mWakeLockSummary;
@@ -556,6 +556,8 @@ public final class PowerManagerService extends SystemService
 
     // Some uids have actually changed while mUidsChanging was true.
     private boolean mUidsChanged;
+    private QCNsrmPowerExtension qcNsrmPowExt;
+
 
     // True if theater mode is enabled
     private boolean mTheaterModeEnabled;
@@ -813,6 +815,7 @@ public final class PowerManagerService extends SystemService
         mBatterySaverStateMachine = new BatterySaverStateMachine(
                 mLock, mContext, mBatterySaverController);
 
+        qcNsrmPowExt = new QCNsrmPowerExtension(this);
         synchronized (mLock) {
             mWakeLockSuspendBlocker =
                     mInjector.createSuspendBlocker(this, "PowerManagerService.WakeLocks");
@@ -1177,6 +1180,7 @@ public final class PowerManagerService extends SystemService
                 }
                 mWakeLocks.add(wakeLock);
                 setWakeLockDisabledStateLocked(wakeLock);
+                qcNsrmPowExt.checkPmsBlockedWakelocks(uid, pid, flags, tag, wakeLock);
                 notifyAcquire = true;
             }
 
@@ -1351,7 +1355,7 @@ public final class PowerManagerService extends SystemService
         return -1;
     }
 
-    private void notifyWakeLockAcquiredLocked(WakeLock wakeLock) {
+    protected void notifyWakeLockAcquiredLocked(WakeLock wakeLock) {
         if (mSystemReady && !wakeLock.mDisabled) {
             wakeLock.mNotifiedAcquired = true;
             mNotifier.onWakeLockAcquired(wakeLock.mFlags, wakeLock.mTag, wakeLock.mPackageName,
@@ -1407,7 +1411,7 @@ public final class PowerManagerService extends SystemService
         }
     }
 
-    private void notifyWakeLockReleasedLocked(WakeLock wakeLock) {
+    protected void notifyWakeLockReleasedLocked(WakeLock wakeLock) {
         if (mSystemReady && wakeLock.mNotifiedAcquired) {
             wakeLock.mNotifiedAcquired = false;
             wakeLock.mAcquireTime = 0;
@@ -1763,7 +1767,7 @@ public final class PowerManagerService extends SystemService
      * each time something important changes, and ensure that we do it the same
      * way each time.  The point is to gather all of the transition logic here.
      */
-    private void updatePowerStateLocked() {
+    protected void updatePowerStateLocked() {
         if (!mSystemReady || mDirty == 0) {
             return;
         }
@@ -4130,7 +4134,7 @@ public final class PowerManagerService extends SystemService
     /**
      * Represents a wake lock that has been acquired by an application.
      */
-    private final class WakeLock implements IBinder.DeathRecipient {
+    protected final class WakeLock implements IBinder.DeathRecipient {
         public final IBinder mLock;
         public int mFlags;
         public String mTag;
@@ -5001,6 +5005,17 @@ public final class PowerManagerService extends SystemService
                 }
             } finally {
                 Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+        @Override
+        /* updates the blocked uids, so if a wake lock is acquired for it
+         * can be released.
+         */
+        public void updateBlockedUids(int uid, boolean isBlocked) {
+            synchronized(mLock) {
+                qcNsrmPowExt.processPmsBlockedUid(uid, isBlocked,
+                                                             mWakeLocks);
             }
         }
     }

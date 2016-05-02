@@ -84,4 +84,7 @@ interface IPowerManager
 
     // Forces the system to suspend even if there are held wakelocks.
     boolean forceSuspend();
+
+    // update the uids being synchronized by network socket request manager
+    void updateBlockedUids(int uid, boolean isBlocked);
 }
