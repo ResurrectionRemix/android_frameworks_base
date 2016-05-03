@@ -4182,6 +4182,40 @@ public final class Settings {
          * @hide
          */
         public static final String DB_TEXT_COLOR = "db_text_color";
+        
+        
+        /**
+         * Dashboard category text color
+         * @hide
+         */
+        public static final String SETTINGS_CATEGORY_TEXT_COLOR = "settings_category_text_color";
+        
+        
+         /**
+         * Dashboard color
+         * @hide
+         */
+        public static final String SETTINGS_BG_COLOR = "settings_bg_color";
+        
+        
+        /**
+         * Dashboard title text size
+         * @hide
+         */
+        public static final String SETTINGS_TITLE_TEXT_SIZE = "settings_title_text_size";
+
+        /**
+         * Dashboard category text size
+         * @hide
+         */
+        public static final String SETTINGS_CATEGORY_TEXT_SIZE = "settings_category_text_size";
+        
+        
+        /**
+         * Settings Dash Font Style
+         * @hide
+         */
+        public static final String DASHBOARD_FONT_STYLE = "dashboard_font_style";
 
 
 
