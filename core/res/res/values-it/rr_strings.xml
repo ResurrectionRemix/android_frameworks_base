@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2015 Resurrection Remix Rom
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">    
+<!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">Riavvia SystemUI</string>
+
+
+    <!-- AOKP custom system animations -->
+    <string name="animation_fade">Dissolvenza</string>
+    <string name="animation_slide_right">Scorri da destra</string>
+    <string name="animation_slide_left">Scorri da sinistra</string>
+    <string name="animation_slide_right_no_fade">Scorri da destra (No dissolvenza)</string>
+    <string name="animation_slide_left_no_fade">Scorri da sinistra (No dissolvenza)</string>
+    <string name="animation_slide_up">Scorri in basso</string>
+    <string name="animation_slide_down">Scorri in alto</string>
+    <string name="animation_default">Predefinito</string>
+    <string name="animation_translucent">Traslucido</string>
+    <string name="animation_grow_shrink">Cresce dall\'alto</string>
+    <string name="animation_grow_shrink_center">Cresce dal centro</string>
+    <string name="animation_grow_shrink_bottom">Cresce dal basso</string>
+    <string name="animation_grow_shrink_left">Cresce da sinistra</string>
+    <string name="animation_grow_shrink_right">Cresce da destra</string>
+    <string name="action_null">Vuoto</string>
+
+    <!-- Slimseekbar -->
+    <string name="default_string">Predefinito</string>
+
+    <!-- label for item that takes On-The-Go in the phone options dialog -->
+    <string name="global_action_onthego">Modalità On-The-Go</string>
+        
+    <!-- Powermenu Torch -->
+    <string name="global_action_torch">Torcia elettrica</string>
+    
+    <!-- Floating Window -->
+    <string name="floating_window_snap_top">Snap alto</string>
+    <string name="floating_window_snap_bottom">Snap basso</string>
+    <string name="floating_window_snap_left">Snap sinistra</string>
+    <string name="floating_window_snap_right">Snap destra</string>
+    <string name="floating_window_minimize">Minimizza</string>
+
+
+</resources>
