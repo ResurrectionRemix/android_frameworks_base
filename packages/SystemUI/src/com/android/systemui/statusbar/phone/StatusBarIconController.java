@@ -21,11 +21,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.res.ColorStateList;
+import android.database.ContentObserver;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -128,6 +132,9 @@ public class StatusBarIconController implements Tunable {
     private Animator mColorTransitionAnimator;
     public Boolean mColorSwitch = false ;
 
+    private TextView mCarrierLabel;
+    private int mCarrierLabelMode;
+
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
 
     private final Runnable mTransitionDeferringDoneRunnable = new Runnable() {
@@ -161,10 +168,18 @@ public class StatusBarIconController implements Tunable {
                 android.R.interpolator.fast_out_slow_in);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
+
+        mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mHandler = new Handler();
+
         mClockController = new ClockController(statusBar, mNotificationIcons, mHandler);
         mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
+
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
+
         updateResources();
+        carrierLabelVisibility();
 
         TunerService.get(mContext).addTunable(this, ICON_BLACKLIST);
 	
@@ -221,6 +236,7 @@ public class StatusBarIconController implements Tunable {
         mIconHPadding = mContext.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_padding);
         //mClockController.updateFontSize();
+        carrierLabelVisibility();
     }
 
     public void addSystemIcon(String slot, int index, int viewIndex, StatusBarIcon icon) {
@@ -315,6 +331,7 @@ public class StatusBarIconController implements Tunable {
         }
 
         applyNotificationIconsTint();
+        carrierLabelVisibility();
     }
 
     public void hideSystemIconArea(boolean animate) {
@@ -339,6 +356,47 @@ public class StatusBarIconController implements Tunable {
 
     public void setClockVisibility(boolean visible) {
         mClockController.setVisibility(visible);
+
+    }
+
+    public void carrierLabelVisibility() {
+        final ContentResolver resolver = mContext.getContentResolver();
+
+        mCarrierLabelMode = Settings.System.getIntForUser(resolver,
+                Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
+
+        boolean mUserDisabledStatusbarCarrier = false;
+
+        if (mCarrierLabelMode == 0 || mCarrierLabelMode == 1) {
+            mUserDisabledStatusbarCarrier = true;
+        }
+
+        boolean hideCarrier = Settings.System.getInt(resolver,
+                Settings.System.HIDE_CARRIER_MAX_SWITCH, 0) == 1;
+
+        int maxAllowedIcons = Settings.System.getInt(resolver,
+                Settings.System.HIDE_CARRIER_MAX_NOTIFICATION, 1);
+
+        boolean forceHideByNumberOfIcons = false;
+        int currentVisibleNotificationIcons = 0;
+
+        if (mNotificationIcons != null) {
+            currentVisibleNotificationIcons = mNotificationIcons.getChildCount();
+        }
+
+        if (mCarrierLabelMode == 2 || mCarrierLabelMode == 3) {
+            if (hideCarrier && currentVisibleNotificationIcons >= maxAllowedIcons) {
+               forceHideByNumberOfIcons = true;
+            }
+        }
+
+        if (mCarrierLabel != null) {
+            if (!forceHideByNumberOfIcons && !mUserDisabledStatusbarCarrier ) {
+               mCarrierLabel.setVisibility(View.VISIBLE);
+            } else {
+               mCarrierLabel.setVisibility(View.GONE);
+            }
+        }
     }
 
     public void dump(PrintWriter pw) {
@@ -636,6 +694,7 @@ public class StatusBarIconController implements Tunable {
         refreshAllIconsForLayout(mStatusIcons);
         refreshAllIconsForLayout(mStatusIconsKeyguard);
         refreshAllIconsForLayout(mNotificationIcons);
+        carrierLabelVisibility();
     }
 
     public LinearLayout getStatusIcons() {
@@ -738,4 +797,36 @@ public class StatusBarIconController implements Tunable {
 	applyIconTint();
 		}
 	}
+
+    public int getCurrentVisibleNotificationIcons() {
+        return mNotificationIcons.getChildCount();
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+    }
+
+    void observe() {
+         ContentResolver resolver = mContext.getContentResolver();
+         resolver.registerContentObserver(Settings.System
+                 .getUriFor(Settings.System.HIDE_CARRIER_MAX_SWITCH),
+                 false, this, UserHandle.USER_CURRENT);
+         resolver.registerContentObserver(Settings.System
+                 .getUriFor(Settings.System.HIDE_CARRIER_MAX_NOTIFICATION),
+                 false, this, UserHandle.USER_CURRENT);
+    }
+
+    @Override
+    public void onChange(boolean selfChange, Uri uri) {
+        super.onChange(selfChange, uri);
+
+        if (uri.equals(Settings.System.getUriFor(
+            Settings.System.HIDE_CARRIER_MAX_SWITCH))
+            || uri.equals(Settings.System.getUriFor(
+            Settings.System.HIDE_CARRIER_MAX_NOTIFICATION))) {
+            carrierLabelVisibility();
+            }
+        }
+    }
 }

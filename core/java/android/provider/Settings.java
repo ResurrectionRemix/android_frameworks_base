@@ -5669,6 +5669,25 @@ public final class Settings {
         public static final String PA_PIE_ALWAYS_RIGHT = "pa_pie_always_right";
 
         /**
+         * Hide carrier label based on number of notification icons
+         * @hide
+         */
+        public static final String HIDE_CARRIER_MAX_SWITCH = "hide_carrier_max_switch";
+
+        /**
+         * Hide the carrier label on the status bar depending on the amount of notifications
+         *
+         * 1 notification icon (always)
+         * 2 notification icons
+         * 3 notification icons
+         * 4 notification icons
+         * 5 notification icons
+         * 6 notification icons
+         * @hide
+         */
+        public static final String HIDE_CARRIER_MAX_NOTIFICATION = "hide_carrier_max_notification";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
