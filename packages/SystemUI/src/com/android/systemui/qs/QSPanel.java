@@ -173,18 +173,22 @@ public class QSPanel extends ViewGroup {
                 0, UserHandle.USER_CURRENT) == 1;
         ToggleSlider brightnessSlider = (ToggleSlider) findViewById(R.id.brightness_slider);
         ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
-        if (brightnessSliderEnabled) {
-            mBrightnessView.setVisibility(View.VISIBLE);
-            brightnessSlider.setVisibility(View.VISIBLE);
-            if (brightnessIconEnabled) {
-                brightnessIcon.setVisibility(View.VISIBLE);
-            } else {
-                brightnessIcon.setVisibility(View.GONE);
-            }
-        } else {
-            mBrightnessView.setVisibility(View.GONE);
-            brightnessSlider.setVisibility(View.GONE);
-            brightnessIcon.setVisibility(View.GONE);
+        if(brightnessSlider!=null) {
+	    if (brightnessSliderEnabled) {
+		mBrightnessView.setVisibility(View.VISIBLE);
+		brightnessSlider.setVisibility(View.VISIBLE);
+			if(brightnessIcon!=null) {
+				  if (brightnessIconEnabled) {
+				 brightnessIcon.setVisibility(View.VISIBLE);
+				  } else {
+				  brightnessIcon.setVisibility(View.GONE);
+				  }
+			}
+		} else {
+		mBrightnessView.setVisibility(View.GONE);
+		brightnessSlider.setVisibility(View.GONE);
+		brightnessIcon.setVisibility(View.GONE);
+	      }
         }
         updateResources();
         updatecolors();
@@ -197,9 +201,11 @@ public class QSPanel extends ViewGroup {
                 Settings.System.QS_COLOR_SWITCH, 0) == 1;
 	int mIconColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_BRIGHTNESS_ICON_COLOR, 0xFFFFFFFF);
-	if (mQsColorSwitch) {	
-	 brightnessIcon.setColorFilter(mIconColor, Mode.SRC_ATOP);
+        if(brightnessIcon!=null) {        
+		if (mQsColorSwitch) {	
+		brightnessIcon.setColorFilter(mIconColor, Mode.SRC_ATOP);
 		}
+	}	
      }
      
         
@@ -608,7 +614,10 @@ public class QSPanel extends ViewGroup {
         sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
         fireShowingDetail(show ? detailAdapter : null);
         if (visibleDiff) {
+	    try {
             mClipper.animateCircularClip(x, y, show, listener);
+            } catch(IllegalStateException e) {
+            }
         }
     }
 
