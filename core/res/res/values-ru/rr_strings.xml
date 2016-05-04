@@ -18,7 +18,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">    
 <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Перезагрузить пользовательский интерфейс</string>
+  <string name="reboot_systemui">Перезагрузить интерфейс системы</string>
 
 
      <!-- AOKP custom system animations -->
@@ -35,7 +35,7 @@
      <string name="animation_grow_shrink_center">Появление по центру</string>
      <string name="animation_grow_shrink_bottom">Появление снизу</string>
      <string name="animation_grow_shrink_left">Появление слева</string>
-     <string name="animation_grow_shrink_right">Появлениеn справа</string>
+     <string name="animation_grow_shrink_right">Появление справа</string>
      <string name="action_null">Пусто</string>
 
     <!-- Slimseekbar -->
