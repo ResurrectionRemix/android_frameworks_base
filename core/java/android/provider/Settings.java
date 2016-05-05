@@ -3797,6 +3797,42 @@ public final class Settings {
          * @hide
          */
         public static final String FAB_ANIMATION_STYLE= "fab_animation_style";
+               
+        /**
+         * TaskView Pin Color
+         * @hide
+         */
+        public static final String PIN_BUTTON_COLOR = "pin_button_color";
+
+       /**
+         * TaskView MW button Color 
+         * @hide
+         */
+        public static final String MW_BUTTON_COLOR= "mw_button_color";
+
+       /**
+         * TaskView Float Button Color
+         * @hide
+         */
+        public static final String FLOAT_BUTTON_COLOR= "float_button_color";
+
+       /**
+         * TaskView Kill Button Color
+         * @hide
+         */
+        public static final String KILL_APP_BUTTON_COLOR= "kill_app_button_color";
+
+       /**
+         * TaskView App Color
+         * @hide
+         */
+        public static final String TV_APP_COLOR= "tv_app_color";
+        
+        /**
+         * TaskView App Description Text Color
+         * @hide
+         */
+        public static final String TV_APP_TEXT_COLOR= "tv_app_text_color";
 
         /**
          * Whether to show or hide search bar in recents view
