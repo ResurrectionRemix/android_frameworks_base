@@ -42,7 +42,7 @@
     <string name="default_string">По умолчанию</string>
 
     <!-- label for item that takes On-The-Go in the phone options dialog -->
-    <string name="global_action_onthego">Режим На ходу</string>
+    <string name="global_action_onthego">Режим «На ходу»</string>
         
     <!-- Powermenu Torch -->
     <string name="global_action_torch">Фонарик</string>
