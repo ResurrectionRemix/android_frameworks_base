@@ -118,7 +118,7 @@
     <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
     <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
-    <string name="quick_settings_heads_up_label">Heads up</string>
+    <string name="quick_settings_heads_up_label">Всплывающие уведомления</string>
 
     <string name="qs_lte_label">LTE</string>
 
