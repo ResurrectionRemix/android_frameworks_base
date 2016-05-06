@@ -264,6 +264,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
+
+import cyanogenmod.power.PerformanceManagerInternal;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -1093,6 +1096,8 @@ public final class ActivityManagerService extends ActivityManagerNative
      * sleeping while it is active.
      */
     private IVoiceInteractionSession mRunningVoice;
+
+    PerformanceManagerInternal mPerf;
 
     /**
      * For some direct access we need to power manager.
@@ -3446,6 +3451,17 @@ public final class ActivityManagerService extends ActivityManagerNative
                 null /* entryPoint */, null /* entryPointArgs */);
     }
 
+    void launchBoost(int pid, String packageName) {
+        if (mPerf == null) {
+            mPerf = LocalServices.getService(PerformanceManagerInternal.class);
+            if (mPerf == null) {
+                Slog.e(TAG, "PerformanceManager not ready!");
+                return;
+            }
+        }
+        mPerf.launchBoost(pid, packageName);
+    }
+
     private final void startProcessLocked(ProcessRecord app, String hostingType,
             String hostingNameStr, String abiOverride, String entryPoint, String[] entryPointArgs) {
         long startTime = SystemClock.elapsedRealtime();
@@ -3608,6 +3624,9 @@ public final class ActivityManagerService extends ActivityManagerNative
             checkTime(startTime, "startProcess: building log message");
             StringBuilder buf = mStringBuilder;
             buf.setLength(0);
+            if (hostingType.equals("activity")) {
+                mPerf.launchBoost(startResult.pid, app.processName);
+            }
             buf.append("Start proc ");
             buf.append(startResult.pid);
             buf.append(':');
