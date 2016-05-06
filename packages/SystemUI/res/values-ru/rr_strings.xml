@@ -269,6 +269,30 @@
     <!-- Heads up toast -->
     <string name="heads_up_enabled">Всплывающие уведомления включены</string>
     <string name="heads_up_disabled">Всплывающие уведомления отключены</string>
+    
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message">Всплывающие уведомления скрыты на <xliff:g id="number">%d</xliff:g> минут.</string>
+    
+    <!-- Pulse Tile -->
+    <string name="quick_settings_pulse_enabled">Пульс включен</string>
+    <string name="quick_settings_pulse_disabled">Нет визуализации</string>
+    <string name="quick_settings_pulse_label">Визуализация панели навигации</string>
+
+    <!-- Title shown in recents popup for showing app launch in floating mode -->
+    <string name="recent_float_mode_title">Плавающий режим</string>
+
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">Maximize</string>
+    <string name="app_float_item_title">Плавающий режим</string>
+    <string name="app_stop_item_title">Закрыть приложение</string>
+
+    <!-- Floating Windows tile -->
+    <string name="quick_settings_floating_windows_on">Плавающий режим включен</string>
+    <string name="quick_settings_floating_windows_off">Плавающий режим отключен</string>
+
+    <!-- Floating Windows tile -->
+    <string name="quick_settings_slim_floats_on">Плавающий режим Slim включен</string>
+    <string name="quick_settings_slim_floats_off">Плавающий режим Slim отключен</string>
 
 </resources>
 
