@@ -128,7 +128,7 @@
     <!-- Themes QS Tile -->
     <string name="quick_settings_themes">Темы</string>
     <string name="quick_settings_themes_icon_packs">Применить набор значков</string>
-    <string name="quick_settings_themes_app_theme_with_label">Применить тему к <xliff:g id="application">%1$s</xliff:g></string
+    <string name="quick_settings_themes_app_theme_with_label">Применить тему к <xliff:g id="application">%1$s</xliff:g></string>
     <string name="quick_settings_themes_app_theme">Применить тему к приложению</string>
     <string name="quick_settings_themes_system_theme">Применить тему</string>
     <string name="quick_settings_themes_default_theme">По умолчанию</string>
