@@ -25,9 +25,8 @@ public interface WeatherController {
         void onWeatherChanged(WeatherInfo temp);
     }
     public static class WeatherInfo {
-        public double temp = Double.NaN;
+        public String temp = null;
         public String city = null;
         public String condition = null;
-        public int tempUnit;
     }
 }
