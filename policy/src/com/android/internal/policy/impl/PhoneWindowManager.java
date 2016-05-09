@@ -2185,7 +2185,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
 
             final boolean useEdgeService = Settings.System.getIntForUser(resolver,
-                    Settings.System.USE_EDGE_SERVICE_FOR_GESTURES, 1, UserHandle.USER_CURRENT) == 1;
+                    Settings.System.USE_EDGE_SERVICE_FOR_GESTURES, 0, UserHandle.USER_CURRENT) == 1;
             if (useEdgeService ^ mUsingEdgeGestureServiceForGestures && mSystemReady) {
                 if (!mUsingEdgeGestureServiceForGestures && useEdgeService) {
                     mUsingEdgeGestureServiceForGestures = true;
@@ -3677,7 +3677,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         // Display task switcher for ALT-TAB.
         if (down && repeatCount == 0 && keyCode == KeyEvent.KEYCODE_TAB) {
-            if (mRecentAppsHeldModifiers == 0 && !keyguardOn) {
+            if (mRecentAppsHeldModifiers == 0 && !keyguardOn && isUserSetupComplete()) {
                 final int shiftlessModifiers = event.getModifiers() & ~KeyEvent.META_SHIFT_MASK;
                 if (KeyEvent.metaStateHasModifiers(shiftlessModifiers, KeyEvent.META_ALT_ON)) {
                     mRecentAppsHeldModifiers = shiftlessModifiers;
@@ -5826,7 +5826,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (isValidGlobalKey(keyCode)
                 && mGlobalKeyManager.shouldHandleGlobalKey(keyCode, event)) {
             if (isWakeKey) {
-                wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey);
+                wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, true);
             }
             return result;
         }
@@ -6172,7 +6172,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         if (isWakeKey) {
-            wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey);
+            wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, true);
         }
 
         return result;
@@ -6518,15 +6518,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void wakeUpFromPowerKey(long eventTime) {
-        wakeUp(eventTime, mAllowTheaterModeWakeFromPowerKey);
+        wakeUp(eventTime, mAllowTheaterModeWakeFromPowerKey, true);
     }
 
     private boolean wakeUp(long wakeTime, boolean wakeInTheaterMode) {
+        return wakeUp(wakeTime, wakeInTheaterMode, false);
+    }
+
+    private boolean wakeUp(long wakeTime, boolean wakeInTheaterMode,
+            boolean withProximityCheck) {
         if (!wakeInTheaterMode && isTheaterModeEnabled()) {
             return false;
         }
 
-        mPowerManager.wakeUp(wakeTime);
+        if (withProximityCheck) {
+            mPowerManager.wakeUpWithProximityCheck(wakeTime);
+        } else {
+            mPowerManager.wakeUp(wakeTime);
+        }
         return true;
     }
 

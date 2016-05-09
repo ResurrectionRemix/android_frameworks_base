@@ -183,6 +183,7 @@ public class KeyguardViewMediator extends SystemUI {
     private static final int ON_ACTIVITY_DRAWN = 19;
     private static final int KEYGUARD_DONE_PENDING_TIMEOUT = 20;
     private static final int KEYGUARD_FINGERPRINT_AUTH = 21;
+    private static final int KEYGUARD_FINGERPRINT_TIMEOUT = 22;
 
     /**
      * The default amount of time we stay awake (used for all key input)
@@ -208,7 +209,12 @@ public class KeyguardViewMediator extends SystemUI {
      * listening for new fingerprints. Buffer useful to not process two reported attempts
      * before the user has a change to lift their finger off the sensor (if it is sensitive).
      */
-    private static final int FINGERPRINT_FAILED_RESTART_DELAY = 1000;
+    private static final int FINGERPRINT_FAILED_RESTART_DELAY = 800;
+
+    /**
+     * How long to wait before resetting failed fingerprint attempts.
+     */
+    private static final int FINGERPRINT_TIMEOUT_DELAY = 15000;
 
     /**
      * Secure setting whether analytics are collected on the keyguard.
@@ -599,10 +605,11 @@ public class KeyguardViewMediator extends SystemUI {
                             || mUpdateMonitor.isOnLastFingerprintAttempt()) {
                         vibrateFingerprintFailure(mUpdateMonitor.isMaxFingerprintAttemptsReached());
 
-                        mSkipToBouncer = true;
-                        mPM.wakeUp(SystemClock.uptimeMillis());
+                        if (mUpdateMonitor.isOnLastFingerprintAttempt()) {
+                            mHandler.sendEmptyMessageDelayed(KEYGUARD_FINGERPRINT_TIMEOUT,
+                                    FINGERPRINT_TIMEOUT_DELAY);
+                        }
                     }
-
                 } else if (mUpdateMonitor.isMaxFingerprintAttemptsReached()) {
                     if (DBG_FINGERPRINT) {
                         Log.i(TAG, "onFingerprintAttemptFailed() LIMIT REACHED and screen is on");
@@ -614,6 +621,10 @@ public class KeyguardViewMediator extends SystemUI {
                         if (!mStatusBarKeyguardViewManager.isBouncerShowing() && !mSkipToBouncer) {
                             mStatusBarKeyguardViewManager.showBouncerHideNotifications();
                         }
+
+                        mHandler.sendEmptyMessageDelayed(KEYGUARD_FINGERPRINT_TIMEOUT,
+                                FINGERPRINT_TIMEOUT_DELAY);
+
                     }
                 } else {
                     // screen on state, restart fingerprint auth
@@ -1639,6 +1650,10 @@ public class KeyguardViewMediator extends SystemUI {
                     } else {
                         stopAuthenticatingFingerprint();
                     }
+                    break;
+                case KEYGUARD_FINGERPRINT_TIMEOUT:
+                    mUpdateMonitor.clearFailedFingerprintAttempts();
+                    mHandler.obtainMessage(KEYGUARD_FINGERPRINT_AUTH, 1, 0).sendToTarget();
                     break;
             }
         }
