@@ -117,6 +117,8 @@ public final class PowerManagerService extends SystemService
     private static final int MSG_SANDMAN = 2;
     // Message: Sent when the screen brightness boost expires.
     private static final int MSG_SCREEN_BRIGHTNESS_BOOST_TIMEOUT = 3;
+    // Message: Sent when the sandman fails to acknowledge the dream state change.
+    private static final int MSG_SANDMAN_TIMEOUT = 4;
 
     private static final int MSG_WAKE_UP = 5;
 
@@ -144,6 +146,8 @@ public final class PowerManagerService extends SystemService
     private static final int DIRTY_DOCK_STATE = 1 << 10;
     // Dirty bit: brightness boost changed
     private static final int DIRTY_SCREEN_BRIGHTNESS_BOOST = 1 << 11;
+    // Dirty bit: sandman state changed
+    private static final int DIRTY_SANDMAN_STATE = 1 << 12;
 
     // Summarizes the state of all active wakelocks.
     private static final int WAKE_LOCK_CPU = 1 << 0;
@@ -187,6 +191,9 @@ public final class PowerManagerService extends SystemService
 
     // Max time (microseconds) to allow a CPU boost for
     private static final int MAX_CPU_BOOST_TIME = 5000000;
+
+    // Max time (milliseconds) to wait for the sandman to acknowledge dream state changes
+    private static final int SANDMAN_RESPONSE_TIMEOUT = 2 * 1000;
 
     private final Context mContext;
     private final ServiceThread mHandlerThread;
@@ -291,6 +298,13 @@ public final class PowerManagerService extends SystemService
 
     // True if the display suspend blocker has been acquired.
     private boolean mHoldingDisplaySuspendBlocker;
+
+    // The suspend blocker used to keep the CPU alive when dreams are requesting to be
+    // started.
+    private final SuspendBlocker mDreamSuspendBlocker;
+
+    // True if the dream suspend blocker has been acquired.
+    private boolean mHoldingDreamSuspendBlocker;
 
     // True if systemReady() has been called.
     private boolean mSystemReady;
@@ -553,6 +567,7 @@ public final class PowerManagerService extends SystemService
         synchronized (mLock) {
             mWakeLockSuspendBlocker = createSuspendBlockerLocked("PowerManagerService.WakeLocks");
             mDisplaySuspendBlocker = createSuspendBlockerLocked("PowerManagerService.Display");
+            mDreamSuspendBlocker = createSuspendBlockerLocked("PowerManagerService.Dreams");
             mDisplaySuspendBlocker.acquire();
             mHoldingDisplaySuspendBlocker = true;
             mHalAutoSuspendModeEnabled = false;
@@ -1966,15 +1981,16 @@ public final class PowerManagerService extends SystemService
                 | DIRTY_PROXIMITY_POSITIVE
                 | DIRTY_BATTERY_STATE)) != 0 || displayBecameReady) {
             if (mDisplayReady) {
-                scheduleSandmanLocked();
+                scheduleSandmanLocked(false);
             }
         }
     }
 
-    private void scheduleSandmanLocked() {
+    private void scheduleSandmanLocked(boolean fromDreamService) {
         if (!mSandmanScheduled) {
             mSandmanScheduled = true;
             Message msg = mHandler.obtainMessage(MSG_SANDMAN);
+            msg.arg1 = fromDreamService ? 1 : 0;
             msg.setAsynchronous(true);
             mHandler.sendMessage(msg);
         }
@@ -1987,7 +2003,7 @@ public final class PowerManagerService extends SystemService
      * the dream and we don't want to hold our lock while doing so.  There is a risk that
      * the device will wake or go to sleep in the meantime so we have to handle that case.
      */
-    private void handleSandman() { // runs on handler thread
+    private void handleSandman(boolean fromDreamService) { // runs on handler thread
         // Handle preconditions.
         final boolean startDreaming;
         final int wakefulness;
@@ -1999,6 +2015,30 @@ public final class PowerManagerService extends SystemService
                 mSandmanSummoned = false;
             } else {
                 startDreaming = false;
+            }
+            // We hold the display suspend blocker as long as mSandmanSummoned is true
+            // That guarantees this code to be run before the system enters suspend.  However,
+            // once we exit this lock, we are no longer guaranteed to stay awake.  Hold a wake
+            // lock that is released once the dream service has acknowledged the request
+            // to start.
+            if (mDreamManager != null) {
+                if (startDreaming) {
+                    if (!mHoldingDreamSuspendBlocker) {
+                        mDreamSuspendBlocker.acquire();
+                        mHoldingDreamSuspendBlocker = true;
+                        Message msg = mHandler.obtainMessage(MSG_SANDMAN_TIMEOUT);
+                        msg.setAsynchronous(true);
+                        mHandler.sendMessageDelayed(msg, SANDMAN_RESPONSE_TIMEOUT);
+                        mDirty |= DIRTY_SANDMAN_STATE;
+                        updatePowerStateLocked();
+                    }
+                } else if (fromDreamService) {
+                    mHandler.removeMessages(MSG_SANDMAN_TIMEOUT);
+                    if (mHoldingDreamSuspendBlocker) {
+                        mDreamSuspendBlocker.release();
+                        mHoldingDreamSuspendBlocker = false;
+                    }
+                }
             }
         }
 
@@ -2429,6 +2469,11 @@ public final class PowerManagerService extends SystemService
         if (mScreenBrightnessBoostInProgress) {
             return true;
         }
+
+        if (mSandmanSummoned) {
+            return true;
+        }
+
         // Let the system suspend if the screen is off or dozing.
         return false;
     }
@@ -3037,7 +3082,7 @@ public final class PowerManagerService extends SystemService
         @Override
         public void onReceive(Context context, Intent intent) {
             synchronized (mLock) {
-                scheduleSandmanLocked();
+                scheduleSandmanLocked(true);
             }
         }
     }
@@ -3094,7 +3139,8 @@ public final class PowerManagerService extends SystemService
                     handleUserActivityTimeout();
                     break;
                 case MSG_SANDMAN:
-                    handleSandman();
+                    boolean fromDreamService = msg.arg1 == 1;
+                    handleSandman(fromDreamService);
                     break;
                 case MSG_SCREEN_BRIGHTNESS_BOOST_TIMEOUT:
                     handleScreenBrightnessBoostTimeout();
@@ -3102,6 +3148,10 @@ public final class PowerManagerService extends SystemService
                 case MSG_WAKE_UP:
                     cleanupProximity();
                     ((Runnable) msg.obj).run();
+                    break;
+                case MSG_SANDMAN_TIMEOUT:
+                    Slog.w(TAG, "Sandman unresponsive, releasing suspend blocker");
+                    handleSandman(true);
                     break;
             }
         }
