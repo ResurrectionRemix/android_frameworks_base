@@ -701,8 +701,10 @@ public class BatteryMeterView extends View implements DemoMode,
 
             mPathEffect = new DashPathEffect(new float[]{3,2},0);
             final float widthDiv2 = mWidth / 2f;
-            mTextAndBoltPaint.setTextSize(widthDiv2);
-            mWarningTextPaint.setTextSize(widthDiv2);
+            // text size is width / 2 - 2dp for wiggle room
+            final float textSize = widthDiv2 - getResources().getDisplayMetrics().density * 2;
+            mTextAndBoltPaint.setTextSize(textSize);
+            mWarningTextPaint.setTextSize(textSize);
 
             int pLeft = getPaddingLeft();
             Rect iconBounds = new Rect(pLeft, 0, pLeft + mWidth, mHeight);
