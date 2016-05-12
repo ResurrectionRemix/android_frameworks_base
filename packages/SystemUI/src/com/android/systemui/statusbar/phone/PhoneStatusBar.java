@@ -4841,11 +4841,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
         if (parent instanceof AdapterView) {
             //We know that when it's AdapterView it's from CM's QS detail items list
+            try {
             QSDetailItemsList.QSDetailListAdapter adapter =
-                    (QSDetailItemsList.QSDetailListAdapter) ((AdapterView) parent).getAdapter();
-
+                    (QSDetailItemsList.QSDetailListAdapter) ((AdapterView) parent).getAdapter();	    
             adapter.clear();
             adapter.notifyDataSetInvalidated();
+            } catch (ClassCastException e) { /*Catch it*/}
         } else {
             parent.removeAllViews();
         }
