@@ -3932,9 +3932,7 @@ public final class Settings {
          */
         public static final String TOAST_ICON = "toast_icon";
 
-
-
-	/**
+        /**
          * Whether to mute annoying notifications
          * @hide
          */
@@ -4334,7 +4332,13 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CARRIER_COLOR = "status_bar_carrier_color";
 
-	/**
+        /**
+         * Custom carrier label font style
+         * @hide
+         */
+        public static final String STATUS_BAR_CARRIER_FONT_STYLE = "status_bar_carrier_font_style";
+        
+        /**
          * Settings for carrier label font size
          * @hide
          */
