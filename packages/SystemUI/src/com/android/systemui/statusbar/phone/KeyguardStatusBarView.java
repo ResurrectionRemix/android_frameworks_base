@@ -430,6 +430,7 @@ public class KeyguardStatusBarView extends RelativeLayout {
                 "status_bar_show_carrier"), false, mObserver);
         getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                 "status_bar_carrier_font_style"), false, mObserver);
+        updateBatteryviews();    
     }
 
     public void updateNetworkIconColors() {
@@ -474,8 +475,10 @@ public class KeyguardStatusBarView extends RelativeLayout {
     	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
 	if(mColorSwitch) {
-	mBatteryMeterView.setDarkIntensity(mBatteryIconColor);
-	  }   
+		if(mBatteryMeterView != null) {
+		mBatteryMeterView.setDarkIntensity(mBatteryIconColor);
+		}   
+	    }
 	}
     @Override
     public void onDetachedFromWindow() {
