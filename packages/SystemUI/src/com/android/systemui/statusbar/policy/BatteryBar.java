@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2016 The PAC-ROM Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.android.systemui.statusbar.policy;
 
 import android.content.BroadcastReceiver;
@@ -5,8 +22,10 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.provider.Settings;
@@ -39,7 +58,14 @@ public class BatteryBar extends RelativeLayout implements Animatable {
 
     private int mColor = 0xFFFFFFFF;
     private int mChargingColor = 0xFFFFFFFF;
-    private int mBatteryLowColor = 0xFFFFFFFF;
+    private int mBatteryLowColorWarning = 0xFFFFFFFF;
+
+    private int mLowColor = 0xFFFF0000;
+    private int mHighColor = 0xFF00FF00;
+    private int mAnimOffset;
+    GradientDrawable mBarGradient;
+    int[] mGradientColors;
+    private boolean useGradientColor = false;
 
     private Handler mHandler = new Handler();
 
@@ -63,18 +89,36 @@ public class BatteryBar extends RelativeLayout implements Animatable {
         void observer() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.STATUSBAR_BATTERY_BAR), false, this);
-            resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.STATUSBAR_BATTERY_BAR_COLOR), false,
-                    this);
-            resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.STATUSBAR_BATTERY_BAR_CHARGING_COLOR),
+                    Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_BATTERY_BAR),
                     false, this);
             resolver.registerContentObserver(
                     Settings.System.getUriFor(
-                            Settings.System.STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR), false, this);
+                    Settings.System.STATUSBAR_BATTERY_BAR_COLOR),
+                    false, this);
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.STATUSBAR_BATTERY_BAR_ANIMATE),
+                    Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_BATTERY_BAR_CHARGING_COLOR),
+                    false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR_WARNING),
+                    false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_BATTERY_BAR_ANIMATE),
+                    false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_BATTERY_BAR_HIGH_COLOR),
+                    false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_BATTERY_BAR_LOW_COLOR),
+                    false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(
+                    Settings.System.STATUSBAR_BATTERY_BAR_USE_GRADIENT_COLOR),
                     false, this);
         }
 
@@ -109,6 +153,14 @@ public class BatteryBar extends RelativeLayout implements Animatable {
 
     public BatteryBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        Resources res = getResources();
+
+        mGradientColors = new int[2];
+        mGradientColors[0] = mLowColor;
+        mGradientColors[1] = mHighColor;
+
+        mBarGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, mGradientColors);
     }
 
     @Override
@@ -192,15 +244,32 @@ public class BatteryBar extends RelativeLayout implements Animatable {
     private void updateSettings() {
         ContentResolver resolver = getContext().getContentResolver();
 
-        mColor = Settings.System.getInt(resolver, Settings.System.STATUSBAR_BATTERY_BAR_COLOR,
+        mColor = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_BATTERY_BAR_COLOR,
                 0xFFFFFFFF);
-        mChargingColor = Settings.System.getInt(resolver, Settings.System.STATUSBAR_BATTERY_BAR_CHARGING_COLOR,
+
+        mChargingColor = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_BATTERY_BAR_CHARGING_COLOR,
                 0xFFFFFFFF);
-        mBatteryLowColor = Settings.System.getInt(resolver, Settings.System.STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR,
+
+        mBatteryLowColorWarning = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR_WARNING,
                 0xFFFFFFFF);
+
+        mLowColor = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_BATTERY_BAR_LOW_COLOR,
+                0xFFFF4444);
+
+        mHighColor = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_BATTERY_BAR_HIGH_COLOR,
+                0xFF99CC00);
 
         shouldAnimateCharging = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_BATTERY_BAR_ANIMATE, 0) == 1;
+
+
+        useGradientColor = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_BATTERY_BAR_USE_GRADIENT_COLOR, 0) == 1;
 
         if (mBatteryCharging && mBatteryLevel < 100 && shouldAnimateCharging) {
             start();
@@ -228,10 +297,41 @@ public class BatteryBar extends RelativeLayout implements Animatable {
             mBatteryBarLayout.setLayoutParams(params);
         }
 
-        // Update color
-        mBatteryBar.setBackgroundColor(mBatteryCharging ? mChargingColor :
-                (n > BATTERY_LOW_VALUE ? mColor : mBatteryLowColor));
+        if (useGradientColor) {
+            float size = n / 100f;
+            mGradientColors[1] = mixColors(mHighColor, mLowColor, size);
+            mBarGradient.setColors(mGradientColors);
+            mBatteryBar.setBackgroundDrawable(mBarGradient);
+        } else {
+            mBatteryBar.setBackgroundColor(mBatteryCharging ?
+                    mChargingColor : (n > BATTERY_LOW_VALUE ?
+                    mColor : mBatteryLowColorWarning));
+        }
+    }
 
+    private int mixColors(int color1, int color2, float mix) {
+        int[] rgb1 = colorToRgb(color1);
+        int[] rgb2 = colorToRgb(color2);
+
+        rgb1[0] = mixedValue(rgb1[0], rgb2[0], mix);
+        rgb1[1] = mixedValue(rgb1[1], rgb2[1], mix);
+        rgb1[2] = mixedValue(rgb1[2], rgb2[2], mix);
+        rgb1[3] = mixedValue(rgb1[3], rgb2[3], mix);
+
+        return rgbToColor(rgb1);
+    }
+
+    private int[] colorToRgb(int color) {
+        int[] rgb = {(color & 0xFF000000) >> 24, (color & 0xFF0000) >> 16, (color & 0xFF00) >> 8, (color & 0xFF)};
+        return rgb;
+    }
+
+    private int rgbToColor(int[] rgb) {
+        return (rgb[0] << 24) + (rgb[1] << 16) + (rgb[2] << 8) + rgb[3];
+    }
+
+    private int mixedValue(int val1, int val2, float mix) {
+        return (int)Math.min((mix * val1 + (1f - mix) * val2), 255f);
     }
 
     @Override
