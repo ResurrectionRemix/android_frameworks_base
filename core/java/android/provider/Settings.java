@@ -5007,6 +5007,21 @@ public final class Settings {
          */
         public static final String RECENTS_MAX_APPS = "recents_max_apps";
 
+	/**
+         * Change quick settings tiles animation style
+         *
+         * @hide
+         */
+        public static final String ANIM_TILE_STYLE = "anim_tile_style";
+
+
+        /**
+         * Change quick settings tiles animation duration
+         *
+         * @hide
+         */
+        public static final String ANIM_TILE_DURATION = "anim_tile_duration";
+
         /**
          * Whether recent panel gravity is left or right (default = Gravity.RIGHT).
          * @hide
