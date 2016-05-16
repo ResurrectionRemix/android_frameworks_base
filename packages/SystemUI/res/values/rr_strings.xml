@@ -299,6 +299,11 @@
     <!-- Floating Windows tile -->
     <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
     <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
+    
+    <string name="quick_settings_visualizer_label">AudioFX</string>
+    <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
+    
 
 </resources>
 

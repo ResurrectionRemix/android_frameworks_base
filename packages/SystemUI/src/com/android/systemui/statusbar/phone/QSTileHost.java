@@ -87,6 +87,7 @@ import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.WifiTile;
+import com.android.systemui.qs.tiles.VisualizerTile;
 import com.android.systemui.statusbar.CustomTileData;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BluetoothController;
@@ -375,6 +376,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("pulse")) return new PulseTile(this);
 	else if (tileSpec.equals("pie")) return new PieTile(this);
 	else if (tileSpec.equals("float_mode")) return new FloatingWindowsTile(this);
+	else if (tileSpec.equals("visualizer")) return new VisualizerTile(this);
 	else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
 	else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
