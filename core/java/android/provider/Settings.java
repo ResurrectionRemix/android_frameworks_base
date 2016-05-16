@@ -3866,6 +3866,20 @@ public final class Settings {
          */
         public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
 
+		/**
+         * Change quick settings tiles animation style
+         *
+         * @hide
+         */
+        public static final String ANIM_TILE_STYLE = "anim_tile_style";
+
+		/**
+         * Change quick settings tiles animation duration
+         *
+         * @hide
+         */
+        public static final String ANIM_TILE_DURATION = "anim_tile_duration";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
