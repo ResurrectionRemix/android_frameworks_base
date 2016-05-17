@@ -21,12 +21,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.audiofx.AudioEffect;
 import android.os.AsyncTask;
 import android.os.PowerManager;
+import android.os.UserHandle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
@@ -41,6 +44,7 @@ import com.pheelicks.visualizer.AudioData;
 import com.pheelicks.visualizer.FFTData;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.Renderer;
+import com.android.systemui.navigation.pulse.PulseController;
 
 import org.cyanogenmod.internal.logging.CMMetricsLogger;
 
@@ -55,6 +59,7 @@ public class VisualizerTile extends QSTile<QSTile.BooleanState>  implements Keyg
     private boolean mLinked;
     private boolean mListening;
     private boolean mPowerSaveModeEnabled;
+    private PulseController Pulse;
 
     private MediaMonitor mMediaMonitor;
 
@@ -189,7 +194,13 @@ public class VisualizerTile extends QSTile<QSTile.BooleanState>  implements Keyg
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+    	boolean isPulseEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.FLING_PULSE_ENABLED, 0) == 1;
+        if (isPulseEnabled) {         
+        state.visible = false;
+        } else {
         state.visible = true;
+        }
         state.label = mContext.getString(R.string.quick_settings_visualizer_label);
         state.contentDescription = mContext.getString(
                 R.string.accessibility_quick_settings_visualizer);
@@ -198,6 +209,7 @@ public class VisualizerTile extends QSTile<QSTile.BooleanState>  implements Keyg
             mUiHandler.post(mUpdateVisibilities);
         }
     }
+    
 
     @Override
     public void setListening(boolean listening) {
