@@ -304,6 +304,7 @@
     <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
     
-
+    <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
+  
 </resources>
 
