@@ -298,6 +298,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         updateVisibilities();
         updateClockScale();
 	updateAvatarScale();
+	setHeaderColor();
         addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right,
@@ -1401,49 +1402,23 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 			CMSettings.System.STATUS_BAR_BATTERY_STYLE), false, this, UserHandle.USER_ALL);
 	resolver.registerContentObserver(CMSettings.System.getUriFor(
 			CMSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.QS_TRANSPARENT_HEADER), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.STATUS_BAR_HEADER_FONT_STYLE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_PANEL_CLOCK), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_PANEL_DATE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_PANEL_CLOCKVALUE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_PANEL_BATTERY), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_PANEL_ICONS), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HIDE_USER_ICON), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HEADER_CLOCK_FONT_STYLE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HEADER_DETAIL_FONT_STYLE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.HEADER_ALARM_FONT_STYLE), false, this, UserHandle.USER_ALL);
-	resolver.registerContentObserver(Settings.System.getUriFor(
-			Settings.System.QS_COLOR_SWITCH), false, this,
-			UserHandle.USER_ALL);
 	resolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED), false, this);
 	resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_SHOW_STATUS_BUTTON), false, this);
+        resolver.registerContentObserver(Settings.System.getUriFor(
+			Settings.System.QS_HEADER_COLOR), false, this);
             update();
         }
 
 
 	@Override
         public void onChange(boolean selfChange, Uri uri) {
-	 if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_HEADER_TEXT_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
+        if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_COLOR))) {
                	   setHeaderColor();
             } 
+	 update();
 	}
 
         @Override
@@ -1483,9 +1458,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     resolver, Settings.System.QS_TRANSPARENT_HEADER, 255);
             setQSHeaderAlpha();
 
-	    mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-		Settings.System.QS_COLOR_SWITCH, 0) == 1;
-
             mStatusBarHeaderFontStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_HEADER_FONT_STYLE, FONT_NORMAL,
                 UserHandle.USER_CURRENT);
@@ -1508,19 +1480,19 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 Settings.System.HEADS_UP_SHOW_STATUS_BUTTON, 0) == 1;
 
 	    setStatusBarHeaderFontStyle	(mStatusBarHeaderFontStyle);
-        setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
+	    setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
 	    setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
 	    setStatusBarAlarmFontStyle(mStatusBarHeaderAlarmFont);
 	    setStatusBarDateFontStyle(mStatusBarHeaderDateFont);
-        setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
+	    setStatusBarDetailFontStyle(mStatusBarHeaderDetailFont);
 	    setclockcolor();
 	    setdetailcolor();
 	    setweathercolor1();
 	    setweathercolor2();	
 	    setalarmtextcolor();
-	    setbatterytextcolor();	    
+	    setbatterytextcolor();
+	    hidepanelItems();
 	    setHeaderColor();
-	    hidepanelItems();   
 	    updateEverything();
             updateHeadsUpState();
             updateStatusBarButtonsState();
