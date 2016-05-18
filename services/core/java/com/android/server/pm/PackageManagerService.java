@@ -8319,10 +8319,13 @@ public class PackageManagerService extends IPackageManager.Stub {
         String internalPath = APK_PATH_TO_OVERLAY + target + File.separator;
         String resPath = ThemeUtils.getTargetCacheDir(target, pkg);
         final int sharedGid = UserHandle.getSharedAppGid(pkg.applicationInfo.uid);
+        final boolean isCommonResources = COMMON_OVERLAY.equals(target);
         int pkgId;
         if ("android".equals(target)) {
             pkgId = Resources.THEME_FRAMEWORK_PKG_ID;
-        } else if (COMMON_OVERLAY.equals(target)) {
+        } else if ("cyanogenmod.platform".equals(target)) {
+            pkgId = Resources.THEME_CM_PKG_ID;
+        } else if (isCommonResources) {
             pkgId = Resources.THEME_COMMON_PKG_ID;
         } else {
             pkgId = Resources.THEME_APP_PKG_ID;
