@@ -20,70 +20,70 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Dismiss</string>
-  <string name="battery_saver_notification_action_text_short">Turn off</string>
-  <string name="gestures_message">Draw gesture here</string>
+  <string name="battery_saver_dismiss_title">Odrzuć</string>
+  <string name="battery_saver_notification_action_text_short">Wyłącz</string>
+  <string name="gestures_message">Narysuj gest tutaj</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">Maksymalizuj</string>
+  <string name="app_float_item_title">Pływający widok</string>
+  <string name="app_stop_item_title">Zabij aplikację</string>
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+  <string name="screenrecord_notif_ticker">Ekran jest nagrywany</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Recording screen</string>
+  <string name="screenrecord_notif_title">Nagrywanie ekranu</string>
   <!-- Screenrecord notification action: Stop -->
-  <string name="screenrecord_notif_stop">Stop</string>
+  <string name="screenrecord_notif_stop">Zatrzymaj</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Show pointer</string>
-  <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+  <string name="screenrecord_notif_pointer_on">Pokaż wskaźnik</string>
+  <string name="screenrecord_notif_pointer_off">Ukryj wskaźnik</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Unable to record screen</string>
+  <string name="screenrecord_notif_error">Nie można nagrać ekranu</string>
   <!-- Kill app toast -->
-  <string name="app_killed_message">App Killed</string>
+  <string name="app_killed_message">Aplikacja została zabita</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go activated</string>
-  <string name="onthego_notif_title">On-The-Go is active</string>
-  <string name="onthego_notif_stop">Stop</string>
-  <string name="onthego_notif_options">Options</string>
-  <string name="onthego_notif_error">Unable to start On-The-Go</string>
-  <string name="onthego_notif_restart">Restart On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Camera mode changed</string>
+  <string name="onthego_notif_ticker">Tryb On-The-Go aktywowany</string>
+  <string name="onthego_notif_title">Tryb On-The-Go jest aktywny</string>
+  <string name="onthego_notif_stop">Zatrzymaj</string>
+  <string name="onthego_notif_options">Opcje</string>
+  <string name="onthego_notif_error">Nie można uruchomić trybu On-The-Go</string>
+  <string name="onthego_notif_restart">Uruchom ponownie tryb On-The-Go</string>
+  <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
   <string name="onthego_transparency">Transparency</string>
-  <string name="onthego_front_camera">Use front camera</string>
-  <string name="onthego_service_toggle">Automatically restart service</string>
+  <string name="onthego_front_camera">Użyj przedniej kamery</string>
+  <string name="onthego_service_toggle">Automatycznie restartuj usługę</string>
   <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Brightness</string>
-  <string name="quick_settings_screen_off_label">Screen off</string>
-  <string name="quick_settings_screenshot_label">Screenshot</string>
+  <string name="quick_settings_brightness_label">Jasność</string>
+  <string name="quick_settings_screen_off_label">Ekran wyłączony</string>
+  <string name="quick_settings_screenshot_label">Zrzut ekranu</string>
   <!-- Expanded desktop tile -->
-  <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
-  <string name="quick_settings_expanded_desktop">Expanded</string>
-  <string name="quick_settings_expanded_desktop_off">Normal</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
-  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
-  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
-  <string name="quick_settings_expanded_hide_both">Hide both</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
+  <string name="quick_settings_expanded_desktop_label">Rozszerzony pulpit</string>
+  <string name="quick_settings_expanded_desktop">Rozszerzony</string>
+  <string name="quick_settings_expanded_desktop_off">Zwykły</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Tryb rozszerzonego pulpitu</string>
+  <string name="quick_settings_expanded_hide_status">Ukryj pasek stanu</string>
+  <string name="quick_settings_expanded_hide_navigation">Ukryj pasek nawigacyjny</string>
+  <string name="quick_settings_expanded_hide_both">Ukryj oba</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Rozszerzony pulpit wyłączony</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+  <string name="accessibility_quick_settings_brightness">Panel głośności.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+  <string name="accessibility_quick_settings_screen_off">Ekran wyłączony.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+  <string name="accessibility_quick_settings_screenshot">Zrzut ekranu.</string>
   <!-- Music QS Tile -->
-  <string name="quick_settings_music_label">Music</string>
-  <string name="quick_settings_music_play">Play</string>
-  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_music_label">Muzyka</string>
+  <string name="quick_settings_music_play">Odtwórz</string>
+  <string name="quick_settings_music_pause">Pauza</string>
   <!-- Reboot/Recovery QS Tile -->
-  <string name="quick_settings_reboot_label">Reboot</string>
-  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="quick_settings_reboot_label">Zrestartuj</string>
+  <string name="quick_settings_reboot_recovery_label">Restart do recovery</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Show 4G instead of LTE</string>
-  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
-  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+  <string name="show_fourg_title">Pokaż 4G zamiast LTE</string>
+  <string name="show_fourg_summary">Zastępuje wskaźnik LTE poprzez 4G</string>
+  <string name="statusbar_tuner_category_title">Ukrywanie elementów paska stanu</string>
   <!-- Configurations Tile -->
   <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -217,9 +217,9 @@
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">Maksymalizuj</string>
+  <string name="app_float_item_title">Pływający widok</string>
+  <string name="app_stop_item_title">Zabij aplikację</string>
   <!-- Floating Windows tile -->
   <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
   <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
