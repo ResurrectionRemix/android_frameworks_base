@@ -550,7 +550,7 @@
 		</activity>
 		 <activity
 			android:name=".n1"
-			android:label="Google colors" >
+			android:label="Google pixels" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -559,7 +559,7 @@
 		</activity>
 		 <activity
 			android:name=".n3"
-			android:label="Google pixels" >
+			android:label="Google colors" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
