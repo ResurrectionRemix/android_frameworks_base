@@ -1123,7 +1123,8 @@ public class NotificationPanelView extends PanelView implements
             mStatusBar.resetQsPanelVisibility();
         }
         if (mTwoFingerQsExpandPossible && isOpenQsEvent(event)
-                && event.getY(event.getActionIndex()) < mStatusBarMinHeight) {
+                && event.getY(event.getActionIndex()) < mStatusBarMinHeight
+                && mExpandedHeight < mQsPeekHeight) {
             MetricsLogger.count(mContext, COUNTER_PANEL_OPEN_QS, 1);
             mQsExpandImmediate = true;
             requestPanelHeightUpdate();
