@@ -270,7 +270,7 @@ public class TaskViewHeader extends FrameLayout {
 	int mKillColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.KILL_APP_BUTTON_COLOR, 0xFFFFFFFF);
 	int mAppColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.TV_APP_COLOR, 0x00FFFFFF);
+                Settings.System.TV_APP_COLOR, 0x00000000);
         int mTextColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.TV_APP_TEXT_COLOR, 0xFFFFFFFF);       
 	if (mClearStyleSwitch) {
