@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -407,7 +408,7 @@ public class BatteryMeterView extends View implements DemoMode,
     }
 
     public void setDarkIntensity(float darkIntensity) {
-        if (mBatteryMeterDrawable != null) {
+	 if (mBatteryMeterDrawable != null) {
             mCurrentBackgroundColor = getBackgroundColor(darkIntensity);
             mCurrentFillColor = getFillColor(darkIntensity);
             mBatteryMeterDrawable.setDarkIntensity(mCurrentBackgroundColor, mCurrentFillColor);
@@ -559,15 +560,7 @@ public class BatteryMeterView extends View implements DemoMode,
 
         @Override
         public void setDarkIntensity(int backgroundColor, int fillColor) {
-	    mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
-            mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
-	    if (mColorSwitch) {	
-	    mBatteryIconColor = fillColor;
-	    } else {
             mIconTint = fillColor;
-            }
             // Make bolt fully opaque for increased visibility
             mBoltDrawable.setTint(0xff000000 | fillColor);
             mFrameDrawable.setTint(backgroundColor);
@@ -653,7 +646,8 @@ public class BatteryMeterView extends View implements DemoMode,
                 }
             }
 
-
+            mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),Settings.System.BATTERY_ICON_COLOR, 0xFFFFFFFF);
+	     mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
             int drawableResId = getBatteryDrawableResourceForMode(mode);
             mBatteryDrawable = (LayerDrawable) res.getDrawable(drawableResId);
             mFrameDrawable = mBatteryDrawable.findDrawableByLayerId(R.id.battery_frame);
@@ -663,6 +657,11 @@ public class BatteryMeterView extends View implements DemoMode,
             // set the animated vector drawable we will be stop animating
             Drawable levelDrawable = mBatteryDrawable.findDrawableByLayerId(R.id.battery_fill);
             mLevelDrawable = new StopMotionVectorDrawable(levelDrawable);
+            if(mColorSwitch) {
+		  if(levelDrawable != null) {
+		  levelDrawable.setColorFilter(mBatteryIconColor,Mode.SRC_ATOP);
+		  }
+            }        
             mBoltDrawable = mBatteryDrawable.findDrawableByLayerId(R.id.battery_charge_indicator);
         }
 
