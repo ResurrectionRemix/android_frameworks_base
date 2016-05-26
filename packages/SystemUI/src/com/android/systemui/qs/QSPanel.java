@@ -19,6 +19,7 @@ package com.android.systemui.qs;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimatior;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
