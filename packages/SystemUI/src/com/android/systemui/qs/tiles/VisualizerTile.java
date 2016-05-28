@@ -122,7 +122,7 @@ public class VisualizerTile extends QSTile<QSTile.BooleanState>  implements Keyg
     public QSTileView createTileView(Context context) {
         return new QSTileView(context) {
             @Override
-            protected View createIcon() {
+            public View createIcon() {
                 Resources r = mContext.getResources();
 
                 boolean mQSCSwitch = Settings.System.getInt(getContext().getContentResolver(),
