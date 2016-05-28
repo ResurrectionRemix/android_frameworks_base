@@ -19,16 +19,16 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">SystemUI herstarten</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
+  <string name="animation_fade">Vervagen</string>
+  <string name="animation_slide_right">Rechts inschuiven</string>
+  <string name="animation_slide_left">Links inschuiven</string>
+  <string name="animation_slide_right_no_fade">Rechts inschuiven (zonder vervagen)</string>
+  <string name="animation_slide_left_no_fade">Links inschuiven (Niet vervagen)</string>
   <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
+  <string name="animation_slide_down">Van boven inschuiven</string>
+  <string name="animation_default">Standaard</string>
   <string name="animation_translucent">Translucent</string>
   <string name="animation_grow_shrink">Grow in (Top)</string>
   <string name="animation_grow_shrink_center">Grow in (Center)</string>
@@ -37,15 +37,15 @@
   <string name="animation_grow_shrink_right">Grow in (Right)</string>
   <string name="action_null">Blank</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">Standaard</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">On-The-Go modus</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">Zaklamp</string>
   <!-- Floating Window -->
   <string name="floating_window_snap_top">Snap top</string>
   <string name="floating_window_snap_bottom">Snap bottom</string>
   <string name="floating_window_snap_left">Snap left</string>
   <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_minimize">Minimaliseren</string>
 </resources>

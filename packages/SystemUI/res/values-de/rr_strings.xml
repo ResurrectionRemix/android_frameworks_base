@@ -32,9 +32,9 @@
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Bildschirmaufzeichnung</string>
   <!-- Screenrecord notification action: Stop -->
-  <string name="screenrecord_notif_stop">Stop</string>
+  <string name="screenrecord_notif_stop">Stopp</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Zeiger anzeigen</string>
+  <string name="screenrecord_notif_pointer_on">Cursor anzeigen</string>
   <string name="screenrecord_notif_pointer_off">Cursor ausblenden</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Bildschirm konnte nicht aufgenommen werden</string>
@@ -57,11 +57,11 @@
   <!-- Quick settings -->
   <string name="quick_settings_brightness_label">Helligkeit</string>
   <string name="quick_settings_screen_off_label">Bildschirm aus</string>
-  <string name="quick_settings_screenshot_label">Bildschirmfoto</string>
+  <string name="quick_settings_screenshot_label">Screenshot</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Erweiterter Desktop</string>
   <string name="quick_settings_expanded_desktop">Erweitert</string>
-  <string name="quick_settings_expanded_desktop_off">normal</string>
+  <string name="quick_settings_expanded_desktop_off">Normal</string>
   <string name="quick_settings_expanded_desktop_detail_title">Erweiterter Desktop-Modus</string>
   <string name="quick_settings_expanded_hide_status">Statusleiste ausblenden</string>
   <string name="quick_settings_expanded_hide_navigation">Navigationsleiste ausblenden</string>
@@ -75,8 +75,8 @@
   <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Musik</string>
-  <string name="quick_settings_music_play">Spielen</string>
-  <string name="quick_settings_music_pause">Anhalten</string>
+  <string name="quick_settings_music_play">Play</string>
+  <string name="quick_settings_music_pause">Pause</string>
   <!-- Reboot/Recovery QS Tile -->
   <string name="quick_settings_reboot_label">Neustarten</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
@@ -149,19 +149,19 @@
   <string name="dlg_ok">Ok</string>
   <string name="yes">Ja</string>
   <string name="no">Nein</string>
-  <string name="qs_kill_app">App schließen</string>
+  <string name="qs_kill_app">App beenden</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Lampe</string>
+  <string name="navbar_torch">Taschenlampe</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Lampe</string>
+  <string name="accessibility_torch">Taschenlampe</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_camera">Kamera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_camera">Kamera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Bildschirmfoto</string>
+  <string name="navbar_screenshot">Screenshot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Bildschirmfoto</string>
+  <string name="accessibility_screenshot">Screenshot</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Erweiterter Desktop</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -179,21 +179,21 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_screenrecord">Bildschirmaufnahme</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">App beenden</string>
+  <string name="accessibility_killtask">Prozess beenden</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">App beenden</string>
+  <string name="navbar_killtask">Prozess beenden</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_app_picker">App-Auswahl</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_app_picker">App-Auswahl</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Audio</string>
+  <string name="quick_settings_sound_label">Sound</string>
   <string name="quick_settings_sound_ring">Klingeln</string>
   <string name="quick_settings_sound_vibrate">Vibrieren</string>
   <string name="quick_settings_sound_silent">Stumm</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Headset mit Kabel</string>
+  <string name="status_bar_headset">Kabelgebundenes Headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
@@ -206,7 +206,7 @@
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads-up ist für <xliff:g id="number">%d </xliff:g> Minuten ausgeschaltet.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse eingeschaltet</string>
+  <string name="quick_settings_pulse_enabled">Pulse aktiviert</string>
   <string name="quick_settings_pulse_disabled">Kein Visualizer</string>
   <string name="quick_settings_pulse_label">Navigationsleisten Visualizer</string>
   <!-- PA Pie controls -->
@@ -221,11 +221,11 @@
   <string name="app_float_item_title">Fenster Ansicht</string>
   <string name="app_stop_item_title">Anwendung beenden</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
-  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
+  <string name="quick_settings_floating_windows_on">Float-Modus aktiviert</string>
+  <string name="quick_settings_floating_windows_off">Float-Modus deaktiviert</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
-  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
+  <string name="quick_settings_slim_floats_on">Slim Float-Modus aktiviert</string>
+  <string name="quick_settings_slim_floats_off">Slim Float-Modus deaktiviert</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Visualizer.</string>

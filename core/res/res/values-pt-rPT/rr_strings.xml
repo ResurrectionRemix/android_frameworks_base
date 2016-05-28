@@ -28,7 +28,7 @@
   <string name="animation_slide_left_no_fade">Deslizar para a esquerda (Sem desvanecimento)</string>
   <string name="animation_slide_up">Deslizar para baixo</string>
   <string name="animation_slide_down">Deslizar para cima</string>
-  <string name="animation_default">Predefinido</string>
+  <string name="animation_default">Predefinida</string>
   <string name="animation_translucent">Translúcido</string>
   <string name="animation_grow_shrink">Crescer (Topo)</string>
   <string name="animation_grow_shrink_center">Crescer (Centro)</string>

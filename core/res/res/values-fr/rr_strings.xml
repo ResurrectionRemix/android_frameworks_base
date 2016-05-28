@@ -19,33 +19,33 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Redémarrez le système</string>
+  <string name="reboot_systemui">Redémarrer SystemUI</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_fade">Fondu</string>
+  <string name="animation_slide_right">Glisser vers la droite</string>
+  <string name="animation_slide_left">Glisser vers la gauche</string>
+  <string name="animation_slide_right_no_fade">Glisser vers la droite (Sans fondu)</string>
+  <string name="animation_slide_left_no_fade">Glisser vers la gauche (Sans fondu)</string>
+  <string name="animation_slide_up">Glisser vers le bas</string>
+  <string name="animation_slide_down">Glisser vers le haut</string>
+  <string name="animation_default">Défaut</string>
+  <string name="animation_translucent">Translucide</string>
+  <string name="animation_grow_shrink">Agrandir (Haut)</string>
+  <string name="animation_grow_shrink_center">Agrandir (Centre)</string>
+  <string name="animation_grow_shrink_bottom">Agrandir (Bas)</string>
+  <string name="animation_grow_shrink_left">Agrandir (Gauche)</string>
+  <string name="animation_grow_shrink_right">Agrandir (Droite)</string>
+  <string name="action_null">Vide</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">Défaut</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">Mode On-The-Go</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">Lampe torche</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_snap_top">Aligner en haut</string>
+  <string name="floating_window_snap_bottom">Aligner en bas</string>
+  <string name="floating_window_snap_left">Aligner à gauche</string>
+  <string name="floating_window_snap_right">Aligner à droite</string>
   <string name="floating_window_minimize">Réduire</string>
 </resources>

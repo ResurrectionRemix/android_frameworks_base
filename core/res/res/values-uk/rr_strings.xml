@@ -26,26 +26,26 @@
   <string name="animation_slide_left">Зсув ліворуч</string>
   <string name="animation_slide_right_no_fade">Зсув праворуч (без згасання)</string>
   <string name="animation_slide_left_no_fade">Зсув ліворуч (без згасання)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_slide_up">Зсунути вниз</string>
+  <string name="animation_slide_down">Зсунути вверх</string>
+  <string name="animation_default">Стандартно</string>
+  <string name="animation_translucent">Прозорість</string>
+  <string name="animation_grow_shrink">Збільшення (зверху)</string>
+  <string name="animation_grow_shrink_center">Збільшення (всередину)</string>
+  <string name="animation_grow_shrink_bottom">Збільшення (знизу)</string>
+  <string name="animation_grow_shrink_left">Збільшення (ліворуч)</string>
+  <string name="animation_grow_shrink_right">Збільшення (праворуч)</string>
+  <string name="action_null">Порожня</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">Стандартно</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">Режим On-The-Go</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">Ліхтарик</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_snap_top">Приліпити зверху</string>
+  <string name="floating_window_snap_bottom">Приліпити знизу</string>
+  <string name="floating_window_snap_left">Пристосувати до лівого краю</string>
+  <string name="floating_window_snap_right">Приліпити зправа</string>
+  <string name="floating_window_minimize">Згорнути</string>
 </resources>

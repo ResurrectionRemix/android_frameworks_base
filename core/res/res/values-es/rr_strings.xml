@@ -21,20 +21,20 @@
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">Reiniciar SystemUI</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Desvanecimiento</string>
+  <string name="animation_fade">Desvanecer</string>
   <string name="animation_slide_right">Deslizar desde la derecha</string>
   <string name="animation_slide_left">Deslizar desde la izquierda</string>
-  <string name="animation_slide_right_no_fade">Deslizar desde la derecha (sin desvanecerse)</string>
-  <string name="animation_slide_left_no_fade">Deslizar desde la izquierda (sin desvanecerse)</string>
+  <string name="animation_slide_right_no_fade">Deslizar desde la derecha (sin desvanecer)</string>
+  <string name="animation_slide_left_no_fade">Deslizar desde la izquierda (sin desvanecer)</string>
   <string name="animation_slide_up">Deslizar desde abajo</string>
   <string name="animation_slide_down">Deslizar desde arriba</string>
   <string name="animation_default">Por Defecto</string>
   <string name="animation_translucent">Translúcido</string>
-  <string name="animation_grow_shrink">Aparecer (desde arriba)</string>
-  <string name="animation_grow_shrink_center">Aparecer (desde el centro)</string>
-  <string name="animation_grow_shrink_bottom">Aparecer (desde abajo)</string>
-  <string name="animation_grow_shrink_left">Aparecer (desde la izquierda)</string>
-  <string name="animation_grow_shrink_right">Aparecer (desde la derecha)</string>
+  <string name="animation_grow_shrink">Aparecer (por arriba)</string>
+  <string name="animation_grow_shrink_center">Aparecer (por el centro)</string>
+  <string name="animation_grow_shrink_bottom">Aparecer (por abajo)</string>
+  <string name="animation_grow_shrink_left">Aparecer (por izquierda)</string>
+  <string name="animation_grow_shrink_right">Aparecer (por derecha)</string>
   <string name="action_null">Vacío</string>
   <!-- Slimseekbar -->
   <string name="default_string">Por Defecto</string>
@@ -43,8 +43,8 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Linterna</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Anclar en la parte superior</string>
-  <string name="floating_window_snap_bottom">Anclar en la parte inferior</string>
+  <string name="floating_window_snap_top">Anclar arriba</string>
+  <string name="floating_window_snap_bottom">Anclar abajo</string>
   <string name="floating_window_snap_left">Anclar a la izquierda</string>
   <string name="floating_window_snap_right">Anclar a la derecha</string>
   <string name="floating_window_minimize">Minimizar</string>

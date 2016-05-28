@@ -22,7 +22,7 @@
   <string name="reboot_systemui">Reiniciar SystemUI</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Esmaecer</string>
-  <string name="animation_slide_right">Desliza para direita</string>
+  <string name="animation_slide_right">Deslizar para direita</string>
   <string name="animation_slide_left">Deslize para a esquerda </string>
   <string name="animation_slide_right_no_fade">Deslize para direita (Sem desvanecer) </string>
   <string name="animation_slide_left_no_fade">Deslize para esquerda(Sem desvanecer) </string>

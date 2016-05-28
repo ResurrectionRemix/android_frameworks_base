@@ -20,53 +20,53 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Negeer</string>
-  <string name="battery_saver_notification_action_text_short">Uitzetten</string>
-  <string name="gestures_message">Teken gesture hier</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximaliseren</string>
+  <string name="app_float_maximize_item_title">Maximize</string>
   <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">App stoppen</string>
+  <string name="app_stop_item_title">Kill app</string>
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Scherm wordt opgenomen</string>
+  <string name="screenrecord_notif_ticker">Screen is being recorded</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Scherm wordt opgenomen</string>
+  <string name="screenrecord_notif_title">Recording screen</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Stop</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Toon aanwijzer</string>
-  <string name="screenrecord_notif_pointer_off">Aanwijzer verbergen</string>
+  <string name="screenrecord_notif_pointer_on">Show pointer</string>
+  <string name="screenrecord_notif_pointer_off">Hide pointer</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Kan scherm niet opnemen</string>
+  <string name="screenrecord_notif_error">Unable to record screen</string>
   <!-- Kill app toast -->
-  <string name="app_killed_message">App Gestopt</string>
+  <string name="app_killed_message">App Killed</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go geactiveerd</string>
-  <string name="onthego_notif_title">On-The-Go is actief</string>
+  <string name="onthego_notif_ticker">On-The-Go activated</string>
+  <string name="onthego_notif_title">On-The-Go is active</string>
   <string name="onthego_notif_stop">Stop</string>
-  <string name="onthego_notif_options">Opties</string>
+  <string name="onthego_notif_options">Options</string>
   <string name="onthego_notif_error">Unable to start On-The-Go</string>
-  <string name="onthego_notif_restart">Herstart On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Cameramodus is gewijzigd</string>
-  <string name="onthego_transparency">Transparantie</string>
-  <string name="onthego_front_camera">Gebruik camera aan de voorzijde</string>
-  <string name="onthego_service_toggle">Service automatisch opnieuw starten</string>
+  <string name="onthego_notif_restart">Restart On-The-Go</string>
+  <string name="onthego_notif_camera_changed">Camera mode changed</string>
+  <string name="onthego_transparency">Transparency</string>
+  <string name="onthego_front_camera">Use front camera</string>
+  <string name="onthego_service_toggle">Automatically restart service</string>
   <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Helderheid</string>
-  <string name="quick_settings_screen_off_label">Scherm uit</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">Screenshot</string>
   <!-- Expanded desktop tile -->
-  <string name="quick_settings_expanded_desktop_label">Uitgebreid Bureaublad</string>
-  <string name="quick_settings_expanded_desktop">Uitgebreid</string>
-  <string name="quick_settings_expanded_desktop_off">Normaal</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Uitgebreide desktop modus</string>
-  <string name="quick_settings_expanded_hide_status">Statusbalk verbergen</string>
-  <string name="quick_settings_expanded_hide_navigation">Navigatiebalk verbergen</string>
-  <string name="quick_settings_expanded_hide_both">Verberg beide</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Uitgebreid bureaublad uitgeschakeld</string>
+  <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
+  <string name="quick_settings_expanded_desktop">Expanded</string>
+  <string name="quick_settings_expanded_desktop_off">Normal</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+  <string name="quick_settings_expanded_hide_both">Hide both</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_brightness">Volume panel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -217,9 +217,9 @@
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximaliseren</string>
+  <string name="app_float_maximize_item_title">Maximize</string>
   <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">App stoppen</string>
+  <string name="app_stop_item_title">Kill app</string>
   <!-- Floating Windows tile -->
   <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
   <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>

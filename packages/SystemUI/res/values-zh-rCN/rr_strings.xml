@@ -20,80 +20,80 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Dismiss</string>
-  <string name="battery_saver_notification_action_text_short">Turn off</string>
-  <string name="gestures_message">Draw gesture here</string>
+  <string name="battery_saver_dismiss_title">拒绝</string>
+  <string name="battery_saver_notification_action_text_short">关闭</string>
+  <string name="gestures_message">请在此画出您的手势</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">最大化</string>
+  <string name="app_float_item_title">悬浮视图</string>
+  <string name="app_stop_item_title">终止程序</string>
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+  <string name="screenrecord_notif_ticker">屏幕将被录制</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Recording screen</string>
+  <string name="screenrecord_notif_title">正在录制屏幕</string>
   <!-- Screenrecord notification action: Stop -->
-  <string name="screenrecord_notif_stop">Stop</string>
+  <string name="screenrecord_notif_stop">停止</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Show pointer</string>
-  <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+  <string name="screenrecord_notif_pointer_on">显示触摸操作</string>
+  <string name="screenrecord_notif_pointer_off">隐藏触摸操作</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Unable to record screen</string>
+  <string name="screenrecord_notif_error">无法开始录制！</string>
   <!-- Kill app toast -->
-  <string name="app_killed_message">App Killed</string>
+  <string name="app_killed_message">应用已终止</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go activated</string>
-  <string name="onthego_notif_title">On-The-Go is active</string>
-  <string name="onthego_notif_stop">Stop</string>
-  <string name="onthego_notif_options">Options</string>
-  <string name="onthego_notif_error">Unable to start On-The-Go</string>
-  <string name="onthego_notif_restart">Restart On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Camera mode changed</string>
-  <string name="onthego_transparency">Transparency</string>
-  <string name="onthego_front_camera">Use front camera</string>
-  <string name="onthego_service_toggle">Automatically restart service</string>
+  <string name="onthego_notif_ticker">On-The-Go已激活</string>
+  <string name="onthego_notif_title">On-The-Go正在运行</string>
+  <string name="onthego_notif_stop">停止</string>
+  <string name="onthego_notif_options">选项</string>
+  <string name="onthego_notif_error">无法启动OTG</string>
+  <string name="onthego_notif_restart">重新启动On-The-Go</string>
+  <string name="onthego_notif_camera_changed">相机模式已更改</string>
+  <string name="onthego_transparency">透明度</string>
+  <string name="onthego_front_camera">使用前置摄像头</string>
+  <string name="onthego_service_toggle">自动重启服务</string>
   <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Brightness</string>
-  <string name="quick_settings_screen_off_label">Screen off</string>
-  <string name="quick_settings_screenshot_label">Screenshot</string>
+  <string name="quick_settings_brightness_label">亮度</string>
+  <string name="quick_settings_screen_off_label">屏幕关闭</string>
+  <string name="quick_settings_screenshot_label">屏幕截图</string>
   <!-- Expanded desktop tile -->
-  <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
-  <string name="quick_settings_expanded_desktop">Expanded</string>
-  <string name="quick_settings_expanded_desktop_off">Normal</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
-  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
-  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
-  <string name="quick_settings_expanded_hide_both">Hide both</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
+  <string name="quick_settings_expanded_desktop_label">扩展桌面</string>
+  <string name="quick_settings_expanded_desktop">已展开</string>
+  <string name="quick_settings_expanded_desktop_off">标准</string>
+  <string name="quick_settings_expanded_desktop_detail_title">扩展桌面样式</string>
+  <string name="quick_settings_expanded_hide_status">隐藏状态栏</string>
+  <string name="quick_settings_expanded_hide_navigation">隐藏导航栏</string>
+  <string name="quick_settings_expanded_hide_both">全部隐藏</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">扩展桌面已关闭</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+  <string name="accessibility_quick_settings_brightness">声音面板</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+  <string name="accessibility_quick_settings_screen_off">屏幕关闭</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+  <string name="accessibility_quick_settings_screenshot">屏幕截图</string>
   <!-- Music QS Tile -->
-  <string name="quick_settings_music_label">Music</string>
-  <string name="quick_settings_music_play">Play</string>
-  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_music_label">音乐</string>
+  <string name="quick_settings_music_play">Play商店</string>
+  <string name="quick_settings_music_pause">暂停</string>
   <!-- Reboot/Recovery QS Tile -->
-  <string name="quick_settings_reboot_label">Reboot</string>
-  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="quick_settings_reboot_label">重新启动</string>
+  <string name="quick_settings_reboot_recovery_label">恢复模式</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Show 4G instead of LTE</string>
-  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
-  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+  <string name="show_fourg_title">LTE 网络下使用 4G 图标</string>
+  <string name="show_fourg_summary">显示 4G 网络指示图标而非 LTE 图标</string>
+  <string name="statusbar_tuner_category_title">隐藏状态栏项目</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Configurations</string>
+  <string name="quick_settings_rrtools">设置</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+  <string name="accessibility_quick_settings_heads_up_off">浮动通知已关闭。</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+  <string name="accessibility_quick_settings_heads_up_on">浮动通知已开启。</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭。</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启。</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE ON </string>
@@ -139,14 +139,14 @@
   <!-- Tuner UI -->
   <string name="status_bar_tuner_title">Status bar tuner</string>
   <string name="status_bar_tuner">Status bar icons</string>
-  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
+  <string name="status_bar_tuner_summary">启用或禁用状态栏系统图标</string>
   <!-- Off/On/Toggle -->
   <string name="off">Off</string>
   <string name="on">On</string>
   <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Cancel</string>
-  <string name="dlg_ok">Ok</string>
+  <string name="cancel">取消</string>
+  <string name="dlg_ok">确定</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="qs_kill_app">Kill App</string>
@@ -165,69 +165,69 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Immersive Mode</string>
+  <string name="accessibility_expand">沉浸模式</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Configurations</string>
+  <string name="navbar_config">设置</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Configurations</string>
+  <string name="accessibility_config">设置</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">ScreenRecord</string>
+  <string name="accessibility_screenrecord">屏幕录像</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">ScreenRecord</string>
+  <string name="navbar_screenrecord">屏幕录像</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Kill Task</string>
+  <string name="accessibility_killtask">杀死任务</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Kill Task</string>
+  <string name="navbar_killtask">结束程序</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Application picker</string>
+  <string name="navbar_app_picker">应用程序选择器</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Application picker</string>
+  <string name="accessibility_app_picker">应用程序选择器</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
-  <string name="quick_settings_sound_ring">Ring</string>
-  <string name="quick_settings_sound_vibrate">Vibrate</string>
-  <string name="quick_settings_sound_silent">Silent</string>
+  <string name="quick_settings_sound_label">声音：</string>
+  <string name="quick_settings_sound_ring">响铃</string>
+  <string name="quick_settings_sound_vibrate">震动</string>
+  <string name="quick_settings_sound_silent">静音</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Wired headset</string>
+  <string name="status_bar_headset">有线耳机​​​​​​​​​</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Vibration</string>
+  <string name="status_bar_volume">振动</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">UI Tuner</string>
+  <string name="systemui_tuner_qs_title">UI 调谐器</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads up notifications are enabled</string>
-  <string name="heads_up_disabled">Heads up notifications are disabled</string>
+  <string name="heads_up_enabled">浮动通知已启用</string>
+  <string name="heads_up_disabled">浮动通知已禁用</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+  <string name="heads_up_snooze_message">浮动通知已被禁用 <xliff:g id="number">%d</xliff:g> 分钟。</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
-  <string name="quick_settings_pulse_disabled">No Visualizer</string>
-  <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
+  <string name="quick_settings_pulse_enabled">脉冲已启用</string>
+  <string name="quick_settings_pulse_disabled">没有可视化工具</string>
+  <string name="quick_settings_pulse_label">导航可视化工具</string>
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, dd MMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Float Mode</string>
+  <string name="recent_float_mode_title">浮动模式</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">最大化</string>
+  <string name="app_float_item_title">悬浮视图</string>
+  <string name="app_stop_item_title">终止程序</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
-  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
+  <string name="quick_settings_floating_windows_on">启用浮动模式</string>
+  <string name="quick_settings_floating_windows_off">浮法模式禁用</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
-  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
+  <string name="quick_settings_slim_floats_on">启用Slim浮动模式</string>
+  <string name="quick_settings_slim_floats_off">关闭Slim浮动模式</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
+  <string name="accessibility_quick_settings_visualizer">可视化工具。</string>
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
 </resources>

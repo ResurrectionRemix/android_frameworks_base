@@ -22,10 +22,10 @@
   <string name="reboot_systemui">Riavvia \"SystemUI\"</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Dissolvenza</string>
-  <string name="animation_slide_right">Scorri verso destra</string>
-  <string name="animation_slide_left">Scorri verso sinistra</string>
-  <string name="animation_slide_right_no_fade">Scorrimento da destra (senza dissolvenza)</string>
-  <string name="animation_slide_left_no_fade">Scorrimento da sinistra (senza dissolvenza)</string>
+  <string name="animation_slide_right">Scorri da destra</string>
+  <string name="animation_slide_left">Scorri da sinistra</string>
+  <string name="animation_slide_right_no_fade">Scorri da destra (senza dissolvenza)</string>
+  <string name="animation_slide_left_no_fade">Scorri da sinistra (senza dissolvenza)</string>
   <string name="animation_slide_up">Scorrimento dal basso</string>
   <string name="animation_slide_down">Scorrimento dall\'alto</string>
   <string name="animation_default">Predefinito</string>

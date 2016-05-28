@@ -19,33 +19,33 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">Restartovat SystemUI</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_fade">Animace slábnutí</string>
+  <string name="animation_slide_right">Posunutí vpravo</string>
+  <string name="animation_slide_left">Posunutí vlevo</string>
+  <string name="animation_slide_right_no_fade">Posunutí vpravo (bez slábnutí)</string>
+  <string name="animation_slide_left_no_fade">Posunutí vlevo (bez slábnutí)</string>
+  <string name="animation_slide_up">Posunutí dolů</string>
+  <string name="animation_slide_down">Posunutí nahoru</string>
+  <string name="animation_default">Výchozí</string>
+  <string name="animation_translucent">Průhlednost</string>
+  <string name="animation_grow_shrink">Růst (nahoru)</string>
+  <string name="animation_grow_shrink_center">Růst (uprostřed)</string>
+  <string name="animation_grow_shrink_bottom">Růst (dole)</string>
+  <string name="animation_grow_shrink_left">Růst (zleva)</string>
+  <string name="animation_grow_shrink_right">Růst (zprava)</string>
+  <string name="action_null">Prázdný</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">Výchozí</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">Režim On-The-Go</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">Svítilna</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_snap_top">Přichytit nahoru</string>
+  <string name="floating_window_snap_bottom">Přichytit dolů</string>
+  <string name="floating_window_snap_left">Přichytit vlevo</string>
+  <string name="floating_window_snap_right">Přichytit vpravo</string>
+  <string name="floating_window_minimize">Minimalizovat</string>
 </resources>

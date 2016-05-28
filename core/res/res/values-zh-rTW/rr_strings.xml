@@ -19,33 +19,33 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">重新啟動系統使用者介面</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_fade">淡出</string>
+  <string name="animation_slide_right">從右側滑入</string>
+  <string name="animation_slide_left">從左側滑入</string>
+  <string name="animation_slide_right_no_fade">從右側滑入 (無淡化效果)</string>
+  <string name="animation_slide_left_no_fade">從左側滑入 (無淡化效果)</string>
+  <string name="animation_slide_up">從底部滑入</string>
+  <string name="animation_slide_down">從頂部滑入</string>
+  <string name="animation_default">預設值</string>
+  <string name="animation_translucent">半透明</string>
+  <string name="animation_grow_shrink">縮放 (頂部)</string>
+  <string name="animation_grow_shrink_center">縮放(中間)</string>
+  <string name="animation_grow_shrink_bottom">縮放(底部)</string>
+  <string name="animation_grow_shrink_left">縮放 (左測)</string>
+  <string name="animation_grow_shrink_right">縮放 (右側)</string>
+  <string name="action_null">空白</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">預設值</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">On-The-Go 模式</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">手電筒</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_snap_top">貼齊頂部</string>
+  <string name="floating_window_snap_bottom">貼齊底部</string>
+  <string name="floating_window_snap_left">貼齊左測</string>
+  <string name="floating_window_snap_right">貼齊右測</string>
+  <string name="floating_window_minimize">最小化</string>
 </resources>

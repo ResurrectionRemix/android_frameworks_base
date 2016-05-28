@@ -22,7 +22,7 @@
   <string name="reboot_systemui">Restart SystemUI</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in righti</string>
+  <string name="animation_slide_right">Slide in right</string>
   <string name="animation_slide_left">Slide in left</string>
   <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
   <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>

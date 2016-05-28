@@ -19,7 +19,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Перезагрузить пользовательски интерфейс</string>
+  <string name="reboot_systemui">Перезагрузить пользовательский интерфейс</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Затухание</string>
   <string name="animation_slide_right">Сдвиг вправо</string>
@@ -39,7 +39,7 @@
   <!-- Slimseekbar -->
   <string name="default_string">По умолчанию</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">Режим \"На ходу\"</string>
+  <string name="global_action_onthego">Режим «На ходу»</string>
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Фонарик</string>
   <!-- Floating Window -->

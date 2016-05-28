@@ -48,7 +48,7 @@
   <string name="onthego_notif_error">Nie można uruchomić trybu On-The-Go</string>
   <string name="onthego_notif_restart">Uruchom ponownie tryb On-The-Go</string>
   <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
-  <string name="onthego_transparency">Transparency</string>
+  <string name="onthego_transparency">Przeźroczystość</string>
   <string name="onthego_front_camera">Użyj przedniej kamery</string>
   <string name="onthego_service_toggle">Automatycznie restartuj usługę</string>
   <!-- To do: Add QS OnTheGo
@@ -85,35 +85,35 @@
   <string name="show_fourg_summary">Zastępuje wskaźnik LTE poprzez 4G</string>
   <string name="statusbar_tuner_category_title">Ukrywanie elementów paska stanu</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Configurations</string>
+  <string name="quick_settings_rrtools">Konfiguracja</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+  <string name="accessibility_quick_settings_heads_up_off">Wyskakujące powiadomienia wył.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Wyskakujące powiadomienia wł.</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Wyskakujące powiadomienia wyłączone.</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
-  <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Wyskakujące powiadomienia włączone.</string>
+  <string name="quick_settings_heads_up_label">Powiadomienia Heads-Up</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="lte_on">LTE Włączone </string>
+  <string name="lte_off">LTE Wyłączone</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Themes</string>
-  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
-  <string name="quick_settings_themes_system_theme">Apply theme</string>
-  <string name="quick_settings_themes_default_theme">Default</string>
-  <string name="quick_settings_themes_match_system">Match system theme</string>
+  <string name="quick_settings_themes">Motywy</string>
+  <string name="quick_settings_themes_icon_packs">Wybierz pakiet ikon</string>
+  <string name="quick_settings_themes_app_theme_with_label">Zastosuj motyw dla <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Zastosuj motyw dla aplikacji</string>
+  <string name="quick_settings_themes_system_theme">Zastosuj motyw</string>
+  <string name="quick_settings_themes_default_theme">Domyślny</string>
+  <string name="quick_settings_themes_match_system">Dopasowanie motywu systemowego</string>
   <!-- Navigation bar Tile -->
-  <string name="quick_settings_navigation_bar">Navigation bar</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
+  <string name="quick_settings_navigation_bar">Pasek nawigacji</string>
+  <string name="quick_settings_smartbar_off">SmartBar wył</string>
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_fling">Fling gesture</string>
   <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
+  <string name="quick_settings_hwkeys_title">Przyciski sprzętowe</string>
   <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
   <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
@@ -124,34 +124,34 @@
   <string name="quick_settings_kernel_title">Kernel Adiutor</string>
   <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
   <!-- Quick settings -->
-  <string name="quick_settings_screenrecord">Screenrecord</string>
-  <string name="quick_settings_screenrecord_on">Recording ...</string>
+  <string name="quick_settings_screenrecord">Nagrywanie Ekranu</string>
+  <string name="quick_settings_screenrecord_on">Nagrywanie ...</string>
   <!-- Pie tile -->
-  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_pie">Wysuwane przyciski nawigacji</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Power Menu</string>
+  <string name="quick_settings_power_menu_label">Menu zasilania</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
+  <string name="quick_settings_systemui_restart_label">Uruchom ponownie SystemUI</string>
   <!-- Gesture Anywehre -->
-  <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
-  <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
-  <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
+  <string name="quick_settings_gesture_anywhere_label">Gesty gdziekolwiek</string>
+  <string name="quick_settings_gesture_anywhere_on">Gesty włączone</string>
+  <string name="quick_settings_gesture_anywhere_off">Gesty wyłączne</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Status bar tuner</string>
-  <string name="status_bar_tuner">Status bar icons</string>
-  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
+  <string name="status_bar_tuner_title">Edytor paska stanu</string>
+  <string name="status_bar_tuner">Ikony paska stanu</string>
+  <string name="status_bar_tuner_summary">Włącz lub wyłącz ikony systemowe pasek stanu</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Off</string>
-  <string name="on">On</string>
-  <string name="toggle">Toggle</string>
+  <string name="off">Wyłączone</string>
+  <string name="on">Włączone</string>
+  <string name="toggle">Przełącznik</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Cancel</string>
+  <string name="cancel">Anuluj</string>
   <string name="dlg_ok">Ok</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="qs_kill_app">Kill App</string>
+  <string name="yes">Tak</string>
+  <string name="no">Nie</string>
+  <string name="qs_kill_app">Zabij aplikacje</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Torch</string>
+  <string name="navbar_torch">Latarka</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_torch">Torch</string>
   <!-- Dialog title for navigation bar button selection -->
@@ -228,6 +228,6 @@
   <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
+  <string name="accessibility_quick_settings_visualizer">Wizualizacja.</string>
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
 </resources>

@@ -31,13 +31,13 @@
   <string name="animation_default">Standart</string>
   <string name="animation_translucent">Transparent</string>
   <string name="animation_grow_shrink">Einblenden (Oben)</string>
-  <string name="animation_grow_shrink_center">Einblenden (aus der Mitte)</string>
+  <string name="animation_grow_shrink_center">einblenden (aus der Mitte)</string>
   <string name="animation_grow_shrink_bottom">Einblenden (von unten)</string>
   <string name="animation_grow_shrink_left">einblenden (von links)</string>
   <string name="animation_grow_shrink_right">Einblenden (von rechts)</string>
   <string name="action_null">Leer</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Standart</string>
+  <string name="default_string">Standard</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
   <string name="global_action_onthego">On-The-Go Modus</string>
   <!-- Powermenu Torch -->
