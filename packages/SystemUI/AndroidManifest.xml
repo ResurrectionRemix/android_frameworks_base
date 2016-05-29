@@ -348,6 +348,13 @@
                   android:process=":screenshot"
                   android:exported="false" />
 
+        <!-- Callback for editing screenshot notification -->
+        <activity android:name=".screenshot.GlobalScreenshot$EditScreenshotActivity"
+                  android:process=":screenshot"
+                  android:exported="false"
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true" />
+
         <!-- started from UsbDeviceSettingsManager -->
         <activity android:name=".usb.UsbConfirmActivity"
             android:exported="true"
@@ -581,5 +588,10 @@
                 <action android:name="android.intent.action.SHOW_KEYBOARD_SHORTCUTS" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".screenshot.ScreenshotEditor"
+            android:theme="@style/ScreenshotEditorStyle" />
+
     </application>
 </manifest>
