@@ -31,20 +31,20 @@
   <string name="animation_default">Domyślne</string>
   <string name="animation_translucent">Przezroczyste</string>
   <string name="animation_grow_shrink">Wyrastanie (Z góry)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_grow_shrink_center">Powiększenie (do środka)</string>
+  <string name="animation_grow_shrink_bottom">Powiększenie (od dołu)</string>
+  <string name="animation_grow_shrink_left">Powiększenie (z lewej)</string>
+  <string name="animation_grow_shrink_right">Powiększenie (z prawej)</string>
+  <string name="action_null">Pusto</string>
   <!-- Slimseekbar -->
   <string name="default_string">Domyślne</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">Tryb \"W ruchu\"</string>
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Latarka</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_top">Przyciągaj do góry ekranu</string>
+  <string name="floating_window_snap_bottom">Przyciągaj do dołu ekranu</string>
   <string name="floating_window_snap_left">Przypnij po lewej</string>
   <string name="floating_window_snap_right">Przypnij po prawej</string>
   <string name="floating_window_minimize">Minimalizuj</string>

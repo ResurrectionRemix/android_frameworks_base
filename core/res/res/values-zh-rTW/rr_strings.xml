@@ -19,7 +19,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">重新啟動系統使用者介面</string>
+  <string name="reboot_systemui">重新啟動「系統 UI」</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">淡出</string>
   <string name="animation_slide_right">從右側滑入</string>

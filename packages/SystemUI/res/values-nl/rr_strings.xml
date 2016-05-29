@@ -43,9 +43,9 @@
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go geactiveerd</string>
   <string name="onthego_notif_title">On-The-Go is actief</string>
-  <string name="onthego_notif_stop">Stop</string>
+  <string name="onthego_notif_stop">Stoppen</string>
   <string name="onthego_notif_options">Opties</string>
-  <string name="onthego_notif_error">Unable to start On-The-Go</string>
+  <string name="onthego_notif_error">Niet in staat om On-The-Go te starten</string>
   <string name="onthego_notif_restart">Herstart On-The-Go</string>
   <string name="onthego_notif_camera_changed">Cameramodus is gewijzigd</string>
   <string name="onthego_transparency">Transparantie</string>
@@ -68,54 +68,54 @@
   <string name="quick_settings_expanded_hide_both">Verberg beide</string>
   <string name="accessibility_quick_settings_expanded_desktop_off">Uitgebreid bureaublad uitgeschakeld</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+  <string name="accessibility_quick_settings_brightness">Volume paneel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+  <string name="accessibility_quick_settings_screen_off">Scherm uit.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+  <string name="accessibility_quick_settings_screenshot">Schermafbeelding.</string>
   <!-- Music QS Tile -->
-  <string name="quick_settings_music_label">Music</string>
-  <string name="quick_settings_music_play">Play</string>
-  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_music_label">Muziek</string>
+  <string name="quick_settings_music_play">Afspelen</string>
+  <string name="quick_settings_music_pause">Onderbreken</string>
   <!-- Reboot/Recovery QS Tile -->
-  <string name="quick_settings_reboot_label">Reboot</string>
-  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="quick_settings_reboot_label">Opnieuw opstarten</string>
+  <string name="quick_settings_reboot_recovery_label">Herstelmodus</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Show 4G instead of LTE</string>
-  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
-  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+  <string name="show_fourg_title">Toon 4G in plaats van LTE</string>
+  <string name="show_fourg_summary">Vervang LTE statusbalk icoon door 4G</string>
+  <string name="statusbar_tuner_category_title">Items van statusbalk verbergen</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Configurations</string>
+  <string name="quick_settings_rrtools">Aanpassingen</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+  <string name="accessibility_quick_settings_heads_up_off">Heads-up uit.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Heads-up aan.</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up uitgeschakeld.</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up ingeschakeld.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE ON </string>
   <string name="lte_off">LTE OFF</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Themes</string>
-  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
-  <string name="quick_settings_themes_system_theme">Apply theme</string>
-  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes">Thema\'s</string>
+  <string name="quick_settings_themes_icon_packs">Icon pakket toepassen</string>
+  <string name="quick_settings_themes_app_theme_with_label">Thema toepassen voor <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Pas thema toe voor app</string>
+  <string name="quick_settings_themes_system_theme">Thema toepassen</string>
+  <string name="quick_settings_themes_default_theme">Standaard</string>
   <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
-  <string name="quick_settings_navigation_bar">Navigation bar</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
+  <string name="quick_settings_navigation_bar">Navigatiebalk</string>
+  <string name="quick_settings_smartbar_off">SmartBar uit</string>
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_fling">Fling gesture</string>
   <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
-  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
-  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
+  <string name="quick_settings_hwkeys_title">Hardware toetsen</string>
+  <string name="quick_settings_hwkeys_on">Hardware toetsen aan</string>
+  <string name="quick_settings_hwkeys_off">Hardware toetsen uit</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
   <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
@@ -124,17 +124,17 @@
   <string name="quick_settings_kernel_title">Kernel Adiutor</string>
   <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
   <!-- Quick settings -->
-  <string name="quick_settings_screenrecord">Screenrecord</string>
-  <string name="quick_settings_screenrecord_on">Recording ...</string>
+  <string name="quick_settings_screenrecord">Schermopname</string>
+  <string name="quick_settings_screenrecord_on">Opnemen ...</string>
   <!-- Pie tile -->
   <string name="quick_settings_pie">Pie</string>
   <!-- Power Menu -->
   <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
+  <string name="quick_settings_systemui_restart_label">SystemUI herstarten</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
-  <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
+  <string name="quick_settings_gesture_anywhere_on">Gebaren aan</string>
   <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
   <!-- Tuner UI -->
   <string name="status_bar_tuner_title">Status bar tuner</string>
@@ -191,27 +191,27 @@
   <string name="quick_settings_sound_label">Sound</string>
   <string name="quick_settings_sound_ring">Ring</string>
   <string name="quick_settings_sound_vibrate">Vibrate</string>
-  <string name="quick_settings_sound_silent">Silent</string>
+  <string name="quick_settings_sound_silent">Stil</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Wired headset</string>
+  <string name="status_bar_headset">Bedrade headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Vibration</string>
+  <string name="status_bar_volume">Trillen</string>
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads up notifications are enabled</string>
-  <string name="heads_up_disabled">Heads up notifications are disabled</string>
+  <string name="heads_up_enabled">Heads-up meldingen zijn ingeschakeld</string>
+  <string name="heads_up_disabled">Heads-up meldingen zijn uitgeschakeld</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+  <string name="heads_up_snooze_message">Heads-up is uitgeschakeld voor <xliff:g id="number">%d </xliff:g> minuten.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
-  <string name="quick_settings_pulse_disabled">No Visualizer</string>
+  <string name="quick_settings_pulse_enabled">Pulse ingeschakeld</string>
+  <string name="quick_settings_pulse_disabled">Geen Visualizer</string>
   <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, dd MMM yyyy</string>
-  <string name="pie_hour_format_12">hh:mm</string>
+  <string name="pie_hour_format_12">uu:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->

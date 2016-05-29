@@ -26,16 +26,16 @@
   <string name="animation_slide_left">Links inschuiven</string>
   <string name="animation_slide_right_no_fade">Rechts inschuiven (zonder vervagen)</string>
   <string name="animation_slide_left_no_fade">Links inschuiven (Niet vervagen)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
+  <string name="animation_slide_up">Van onder inschuiven</string>
   <string name="animation_slide_down">Van boven inschuiven</string>
   <string name="animation_default">Standaard</string>
-  <string name="animation_translucent">Translucent</string>
+  <string name="animation_translucent">Doorzichtig</string>
   <string name="animation_grow_shrink">Grow in (Top)</string>
   <string name="animation_grow_shrink_center">Grow in (Center)</string>
   <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
   <string name="animation_grow_shrink_left">Grow in (Left)</string>
   <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="action_null">Blanco</string>
   <!-- Slimseekbar -->
   <string name="default_string">Standaard</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
@@ -43,9 +43,9 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Zaklamp</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_snap_top">Boven uitlijnen</string>
+  <string name="floating_window_snap_bottom">Onder uitlijnen</string>
+  <string name="floating_window_snap_left">Links uitlijnen</string>
+  <string name="floating_window_snap_right">Rechts uitlijnen</string>
   <string name="floating_window_minimize">Minimaliseren</string>
 </resources>

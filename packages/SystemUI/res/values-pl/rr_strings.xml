@@ -110,12 +110,12 @@
   <string name="quick_settings_navigation_bar">Pasek nawigacji</string>
   <string name="quick_settings_smartbar_off">SmartBar wył</string>
   <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_fling">Fling gesture</string>
-  <string name="quick_settings_fling_off">Fling gesture off</string>
+  <string name="quick_settings_fling">Gest Fling</string>
+  <string name="quick_settings_fling_off">Gest Fling wył</string>
   <!-- Hw Keys tile -->
   <string name="quick_settings_hwkeys_title">Przyciski sprzętowe</string>
-  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
-  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
+  <string name="quick_settings_hwkeys_on">Przyciski sprzętowe włączone</string>
+  <string name="quick_settings_hwkeys_off">Przyciski sprzętowe wyłączone</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
   <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
@@ -153,79 +153,79 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_torch">Latarka</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Torch</string>
+  <string name="accessibility_torch">Latarka</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Camera</string>
+  <string name="navbar_camera">Aparat</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Camera</string>
+  <string name="accessibility_camera">Aparat</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">ScreenShot</string>
+  <string name="navbar_screenshot">Zrzut ekranu</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">ScreenShot</string>
+  <string name="accessibility_screenshot">Zrzut ekranu</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Immersive Mode</string>
+  <string name="navbar_expand">Tryb pełnoekranowy</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Immersive Mode</string>
+  <string name="accessibility_expand">Tryb pełnoekranowy</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Configurations</string>
+  <string name="navbar_config">Konfiguracje</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Configurations</string>
+  <string name="accessibility_config">Konfiguracje</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">Pie</string>
+  <string name="navbar_pie">Wysuwane przyciski nawigacji</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">ScreenRecord</string>
+  <string name="accessibility_screenrecord">Nagrywanie ekranu</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">ScreenRecord</string>
+  <string name="navbar_screenrecord">Nagrywanie ekranu</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Kill Task</string>
+  <string name="accessibility_killtask">Zabij zadanie</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Kill Task</string>
+  <string name="navbar_killtask">Zabij zadanie</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Application picker</string>
+  <string name="navbar_app_picker">Wybór aplikacji</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Application picker</string>
+  <string name="accessibility_app_picker">Wybór aplikacji</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
-  <string name="quick_settings_sound_ring">Ring</string>
-  <string name="quick_settings_sound_vibrate">Vibrate</string>
-  <string name="quick_settings_sound_silent">Silent</string>
+  <string name="quick_settings_sound_label">Dźwięk</string>
+  <string name="quick_settings_sound_ring">Dzwonek</string>
+  <string name="quick_settings_sound_vibrate">Wibracje</string>
+  <string name="quick_settings_sound_silent">Wyciszenie</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Wired headset</string>
+  <string name="status_bar_headset">Słuchawki przewodowe</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Vibration</string>
+  <string name="status_bar_volume">Wibracje</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">UI Tuner</string>
+  <string name="systemui_tuner_qs_title">Tuner interfejsu użytkownika</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads up notifications are enabled</string>
-  <string name="heads_up_disabled">Heads up notifications are disabled</string>
+  <string name="heads_up_enabled">Wyskakujące powiadomienia są włączone</string>
+  <string name="heads_up_disabled">Wyskakujące powiadomienia są wyłączone</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+  <string name="heads_up_snooze_message">Wyskakujące powiadomienia zostały wyłączone na <xliff:g id="number">%d</xliff:g> minut.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
-  <string name="quick_settings_pulse_disabled">No Visualizer</string>
-  <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
+  <string name="quick_settings_pulse_disabled">Brak wizualizacji</string>
+  <string name="quick_settings_pulse_label">Wizualizacja na pasku nawigacji</string>
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, dd MMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
+  <string name="pie_am_pm">rano</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Float Mode</string>
+  <string name="recent_float_mode_title">Tryb pływający</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maksymalizuj</string>
   <string name="app_float_item_title">Pływający widok</string>
   <string name="app_stop_item_title">Zabij aplikację</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
-  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
+  <string name="quick_settings_floating_windows_on">Tryb pływający włączony</string>
+  <string name="quick_settings_floating_windows_off">Tryb pływający wyłączony</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
-  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
+  <string name="quick_settings_slim_floats_on">Tryb pływający włączony</string>
+  <string name="quick_settings_slim_floats_off">Tryb pływający wyłączony</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Wizualizacja.</string>
