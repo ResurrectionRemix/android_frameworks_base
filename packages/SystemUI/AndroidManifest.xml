@@ -511,6 +511,7 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
 		<activity
 			android:name=".nature"
 			android:label="Nature - time based" >
@@ -854,5 +855,11 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
+        <service
+            android:name=".screenshot.ScreenshotEditor"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 </manifest>

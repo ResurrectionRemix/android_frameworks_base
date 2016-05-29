@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/upperLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+
+    <com.android.systemui.screenshot.CropImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/buttonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/crop_buttons"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/cropper_bg">
+
+            <ImageButton
+                android:id="@+id/workMode"
+                android:layout_width="@dimen/crop_buttons"
+                android:layout_height="@dimen/crop_buttons"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_light"
+                android:padding="2dp"
+                android:scaleType="centerInside" />
+
+            <LinearLayout
+                android:id="@+id/layout_work_mode_crop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/cropMode"
+                    android:layout_width="@dimen/crop_buttons"
+                    android:layout_height="@dimen/crop_buttons"
+                    android:background="@drawable/selector_light"
+                    android:padding="2dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_image_crop_square" />
+
+                <ImageButton
+                    android:id="@+id/doneCrop"
+                    android:layout_width="@dimen/crop_buttons"
+                    android:layout_height="@dimen/crop_buttons"
+                    android:background="@drawable/selector_light"
+                    android:padding="2dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_menu_done" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_work_mode_draw"
+                android:layout_width="@dimen/crop_buttons"
+                android:layout_height="@dimen/crop_buttons"
+                android:background="@drawable/selector_light"
+                android:orientation="horizontal"
+                android:gravity="center" >
+
+                <ImageButton
+                    android:id="@+id/drawColor"
+                    android:layout_width="@dimen/crop_color_rect"
+                    android:layout_height="@dimen/crop_color_rect"
+                    android:background="@drawable/selector_light"
+                    android:scaleType="centerInside" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/recover"
+                android:layout_width="@dimen/crop_buttons"
+                android:layout_height="@dimen/crop_buttons"
+                android:background="@drawable/selector_light"
+                android:padding="2dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_menu_recover" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/crop_buttons"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/cropper_bg" >
+
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="@dimen/crop_buttons"
+                android:layout_height="@dimen/crop_buttons"
+                android:background="@drawable/selector_light"
+                android:padding="2dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_delete" />
+
+            <ImageButton
+                android:id="@+id/save"
+                android:layout_width="@dimen/crop_buttons"
+                android:layout_height="@dimen/crop_buttons"
+                android:background="@drawable/selector_light"
+                android:padding="2dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_menu_save" />
+
+            <ImageButton
+                android:id="@+id/share"
+                android:layout_width="@dimen/crop_buttons"
+                android:layout_height="@dimen/crop_buttons"
+                android:background="@drawable/selector_light"
+                android:padding="2dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_screenshot_share_white" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@android:color/white"
+        android:visibility="gone" />
+
+
+</RelativeLayout>
