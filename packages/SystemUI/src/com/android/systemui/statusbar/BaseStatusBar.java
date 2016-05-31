@@ -1199,18 +1199,19 @@ public abstract class BaseStatusBar extends SystemUI implements
                     removeNotification(sbn.getKey(), null);
                 }
             });
-
-            if (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.FLOATING_WINDOW_MODE, 0) == 1) {
-                floatButton.setVisibility(View.VISIBLE);
-            } else {
-                floatButton.setVisibility(View.GONE);
-            }
-            floatButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+	    if (floatButton!=null) {
+		  if (Settings.System.getInt(mContext.getContentResolver(),
+			Settings.System.FLOATING_WINDOW_MODE, 0) == 1) {
+			floatButton.setVisibility(View.VISIBLE);
+		  } else {
+			floatButton.setVisibility(View.GONE);
+		  }
+		  floatButton.setOnClickListener(new View.OnClickListener() {
+		  public void onClick(View v) {
                     launchFloating(contentIntent);
-                }
-            });
+		    }
+		});
+            }
 			
 			final Intent appSettingsQueryIntent
                     = new Intent(Intent.ACTION_MAIN)
