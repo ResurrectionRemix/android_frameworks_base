@@ -504,7 +504,7 @@
         </receiver>
 
        <activity android:name=".DaylightHeaderDefault"
-                android:label="Default" >
+                android:label="Default - time based" >
             <intent-filter>
                 <action android:name="org.omnirom.DaylightHeaderPack" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -513,7 +513,7 @@
 
 		<activity
 			android:name=".nature"
-			android:label="Nature - Time based" >
+			android:label="Nature - time based" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -523,7 +523,7 @@
 
 		<activity
 			android:name=".poly"
-			android:label="Poly - Time based" >
+			android:label="Poly - time based" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -532,7 +532,7 @@
 		</activity>
 		<activity
 			android:name=".naturerandom"
-			android:label="Nature - Random" >
+			android:label="Nature - random" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -577,7 +577,7 @@
 		</activity>
 		 <activity
 			android:name=".color_layer_header_base"
-			android:label="Colors texture - Smart" >
+			android:label="Colors texture - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -603,8 +603,8 @@
 			</intent-filter>
 		</activity>
 		 <activity
-			android:name=".getr1"
-			android:label="Get resurrected" >
+			android:name=".getr_smart"
+			android:label="Get resurrected - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -612,8 +612,8 @@
 			</intent-filter>
 		</activity>
 		 <activity
-			android:name=".getr1_p"
-			android:label="Get resurrected paper" >
+			android:name=".getr1"
+			android:label="Get resurrected2" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -649,7 +649,7 @@
 		</activity>
 		 <activity
 			android:name=".NT"
-			android:label="Color with texture - Smart" >
+			android:label="Color with texture - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -658,7 +658,7 @@
 		</activity>
 		 <activity
 			android:name=".texture"
-			android:label="Texture - Smart" >
+			android:label="Texture - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -667,7 +667,7 @@
 		</activity>
 		 <activity
 			android:name=".texture1"
-			android:label="Texture1 - Smart" >
+			android:label="Texture1 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -676,7 +676,7 @@
 		</activity>
 		 <activity
 			android:name=".texture3"
-			android:label="Texture3 - Smart" >
+			android:label="Texture3 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -685,7 +685,7 @@
 		</activity>
 		 <activity
 			android:name=".texture4"
-			android:label="Texture4 - Smart" >
+			android:label="Texture4 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -694,7 +694,7 @@
 		</activity>
 		 <activity
 			android:name=".texture5"
-			android:label="Texture5 - Smart" >
+			android:label="Texture5 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -703,7 +703,7 @@
 		</activity>
 		 <activity
 			android:name=".texture6"
-			android:label="Texture6 - Smart" >
+			android:label="Texture6 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -712,7 +712,7 @@
 		</activity>
 		 <activity
 			android:name=".texture7"
-			android:label="Texture7 - Smart" >
+			android:label="Texture7 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -721,7 +721,7 @@
 		</activity>
 		 <activity
 			android:name=".lines"
-			android:label="Texture8 - Smart" >
+			android:label="Texture8 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
@@ -730,7 +730,7 @@
 		</activity>
 		 <activity
 			android:name=".dots_smart"
-			android:label="Texture9 - Smart" >
+			android:label="Texture9 - smart" >
 			<intent-filter>
 				<action android:name="org.omnirom.DaylightHeaderPack1" />
 
