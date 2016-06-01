@@ -465,7 +465,7 @@ public class QSPanel extends ViewGroup {
         int animStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.ANIM_TILE_STYLE, 0, UserHandle.USER_CURRENT);
         int animDuration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_DURATION, 2000, UserHandle.USER_CURRENT);
+                Settings.System.ANIM_TILE_DURATION, 1500, UserHandle.USER_CURRENT);
         if (animStyle == 0) {
             //No animation
         }
