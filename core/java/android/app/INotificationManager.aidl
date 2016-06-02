@@ -55,9 +55,6 @@ interface INotificationManager
     void setPackageVisibilityOverride(String pkg, int uid, int visibility);
     int getPackageVisibilityOverride(String pkg, int uid);
 
-    void setPackageKeyguard(String pkg, int uid, boolean keyguard);
-    boolean getPackageKeyguard(String pkg, int uid);
-
     // TODO: Remove this when callers have been migrated to the equivalent
     // INotificationListener method.
     StatusBarNotification[] getActiveNotifications(String callingPkg);
