@@ -31,4 +31,7 @@
   <java-symbol type="string" name="ambient_recognition_notification" />
   <java-symbol type="string" name="ambient_recognition_information" />
 
+  <!-- Usb drive persistent notification -->
+  <java-symbol type="bool" name="config_persistUsbDriveNotification" />
+
 </resources>
