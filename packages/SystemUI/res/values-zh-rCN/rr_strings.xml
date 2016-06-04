@@ -94,76 +94,76 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭。</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启。</string>
-  <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="quick_settings_heads_up_label">浮动通知</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="lte_on">LTE 开启 </string>
+  <string name="lte_off">LTE 关闭</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Themes</string>
-  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
-  <string name="quick_settings_themes_system_theme">Apply theme</string>
-  <string name="quick_settings_themes_default_theme">Default</string>
-  <string name="quick_settings_themes_match_system">Match system theme</string>
+  <string name="quick_settings_themes">主题</string>
+  <string name="quick_settings_themes_icon_packs">应用图标包</string>
+  <string name="quick_settings_themes_app_theme_with_label">将主题应用于 <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">将主题应用到应用程序</string>
+  <string name="quick_settings_themes_system_theme">应用主题</string>
+  <string name="quick_settings_themes_default_theme">默认</string>
+  <string name="quick_settings_themes_match_system">匹配系统主题</string>
   <!-- Navigation bar Tile -->
-  <string name="quick_settings_navigation_bar">Navigation bar</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_fling">Fling gesture</string>
-  <string name="quick_settings_fling_off">Fling gesture off</string>
+  <string name="quick_settings_navigation_bar">导航栏</string>
+  <string name="quick_settings_smartbar_off">智能通知栏关闭</string>
+  <string name="quick_settings_smartbar">智能通知栏</string>
+  <string name="quick_settings_fling">挥动手势</string>
+  <string name="quick_settings_fling_off">挥动手势关闭</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
-  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
-  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
+  <string name="quick_settings_hwkeys_title">实体按键</string>
+  <string name="quick_settings_hwkeys_on">实体按键开启</string>
+  <string name="quick_settings_hwkeys_off">实体按键关闭</string>
   <!-- App Circle Bar tile -->
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+  <string name="quick_settings_appcirclebar_title">应用程序环形栏</string>
+  <string name="quick_settings_appcirclebar_on">应用程序环形栏开启</string>
+  <string name="quick_settings_appcirclebar_off">应用程序环形栏关闭</string>
   <!-- Kernel Adiutor Tile -->
   <string name="quick_settings_kernel_title">Kernel Adiutor</string>
   <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
   <!-- Quick settings -->
-  <string name="quick_settings_screenrecord">Screenrecord</string>
-  <string name="quick_settings_screenrecord_on">Recording ...</string>
+  <string name="quick_settings_screenrecord">屏幕录像</string>
+  <string name="quick_settings_screenrecord_on">正在录制...</string>
   <!-- Pie tile -->
-  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_pie">饼</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Power Menu</string>
+  <string name="quick_settings_power_menu_label">电源菜单</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
+  <string name="quick_settings_systemui_restart_label">重新启动 SystemUI</string>
   <!-- Gesture Anywehre -->
-  <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
-  <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
-  <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
+  <string name="quick_settings_gesture_anywhere_label">自由手势</string>
+  <string name="quick_settings_gesture_anywhere_on">手势开启</string>
+  <string name="quick_settings_gesture_anywhere_off">手势关闭</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Status bar tuner</string>
-  <string name="status_bar_tuner">Status bar icons</string>
+  <string name="status_bar_tuner_title">状态栏调整</string>
+  <string name="status_bar_tuner">状态栏图标</string>
   <string name="status_bar_tuner_summary">启用或禁用状态栏系统图标</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Off</string>
-  <string name="on">On</string>
-  <string name="toggle">Toggle</string>
+  <string name="off">关闭</string>
+  <string name="on">开启</string>
+  <string name="toggle">切换</string>
   <!-- Dialog Cancel/OK -->
   <string name="cancel">取消</string>
   <string name="dlg_ok">确定</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="qs_kill_app">Kill App</string>
+  <string name="yes">是</string>
+  <string name="no">否</string>
+  <string name="qs_kill_app">终止程序</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Torch</string>
+  <string name="navbar_torch">手电筒</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Torch</string>
+  <string name="accessibility_torch">手电筒</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Camera</string>
+  <string name="navbar_camera">照相机</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Camera</string>
+  <string name="accessibility_camera">照相机</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">ScreenShot</string>
+  <string name="navbar_screenshot">屏幕截图</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">ScreenShot</string>
+  <string name="accessibility_screenshot">屏幕截图</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Immersive Mode</string>
+  <string name="navbar_expand">沉浸模式</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_expand">沉浸模式</string>
   <!-- Dialog title for navigation bar button selection -->

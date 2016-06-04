@@ -22,7 +22,7 @@
   <!-- Battery Saver Dimss -->
   <string name="battery_saver_dismiss_title">Go back</string>
   <string name="battery_saver_notification_action_text_short">Turn off</string>
-  <string name="gestures_message">Draw gesture here</string>
+  <string name="gestures_message">Draw your gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
   <string name="app_float_item_title">Float view</string>
@@ -62,7 +62,7 @@
   <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
   <string name="quick_settings_expanded_desktop">Expanded</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop style</string>
   <string name="quick_settings_expanded_hide_status">Hide status bar</string>
   <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
   <string name="quick_settings_expanded_hide_both">Hide both</string>
@@ -96,7 +96,7 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
+  <string name="lte_on">LTE ON</string>
   <string name="lte_off">LTE OFF</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Themes</string>

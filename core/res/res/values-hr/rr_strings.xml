@@ -19,33 +19,33 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">Korisničko sučelje sustava</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
+  <string name="animation_fade">Blijeđenje</string>
+  <string name="animation_slide_right">Klizanje udesno</string>
+  <string name="animation_slide_left">Klizanje ulijevo</string>
+  <string name="animation_slide_right_no_fade">Klizanje udesno (bez blijeđenja)</string>
+  <string name="animation_slide_left_no_fade">Klizanje ulijevo (bez blijeđenja)</string>
+  <string name="animation_slide_up">Klizanje prema dolje</string>
+  <string name="animation_slide_down">Klizanje prema gore</string>
   <string name="animation_default">Zadano</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_translucent">Prozirno</string>
+  <string name="animation_grow_shrink">Širenje u rastu (gore)</string>
+  <string name="animation_grow_shrink_center">Širenje u rastu (sredina)</string>
+  <string name="animation_grow_shrink_bottom">Širenje u rastu (dno)</string>
+  <string name="animation_grow_shrink_left">Širenje u rastu (lijevo)</string>
+  <string name="animation_grow_shrink_right">Širenje u rastu (desno)</string>
+  <string name="action_null">Prazno</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">Zadano</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">Način rada u pokretu</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">Svjetiljka</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_snap_top">Pomakni gore</string>
+  <string name="floating_window_snap_bottom">Pomakni dolje</string>
+  <string name="floating_window_snap_left">Pomakni ulijevo</string>
+  <string name="floating_window_snap_right">Pomakni udesno</string>
+  <string name="floating_window_minimize">Smanji</string>
 </resources>
