@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<daylight_headers>
+    <hour_header hour="6" image="orioles_alpha" />
+    <hour_header hour="9" image="orioles_alpha" />
+    <hour_header hour="11" image="orioles_alpha" />
+    <hour_header hour="13" image="orioles_alpha" />
+    <hour_header hour="19" image="orioles_alpha" />
+    <hour_header hour="21" image="orioles_alpha" />
+</daylight_headers>
