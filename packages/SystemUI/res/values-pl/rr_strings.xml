@@ -117,9 +117,9 @@
   <string name="quick_settings_hwkeys_on">Przyciski sprzętowe włączone</string>
   <string name="quick_settings_hwkeys_off">Przyciski sprzętowe wyłączone</string>
   <!-- App Circle Bar tile -->
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+  <string name="quick_settings_appcirclebar_title">Okrągły pasek aplikacji</string>
+  <string name="quick_settings_appcirclebar_on">Okrągły pasek aplikacji włączony</string>
+  <string name="quick_settings_appcirclebar_off">Okrągły pasek aplikacji wyłączony</string>
   <!-- Kernel Adiutor Tile -->
   <string name="quick_settings_kernel_title">Kernel Adiutor</string>
   <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
@@ -206,7 +206,7 @@
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Wyskakujące powiadomienia zostały wyłączone na <xliff:g id="number">%d</xliff:g> minut.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
+  <string name="quick_settings_pulse_enabled">Pulsacja włączona</string>
   <string name="quick_settings_pulse_disabled">Brak wizualizacji</string>
   <string name="quick_settings_pulse_label">Wizualizacja na pasku nawigacji</string>
   <!-- PA Pie controls -->
@@ -229,5 +229,5 @@
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Wizualizacja.</string>
-  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
+  <string name="pulse_toast_message">Kafelek wizualizacji nie będzie działać z włączoną pulsacją</string>
 </resources>

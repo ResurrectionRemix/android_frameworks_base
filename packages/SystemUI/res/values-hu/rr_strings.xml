@@ -102,7 +102,7 @@
   <string name="quick_settings_themes">Témák</string>
   <string name="quick_settings_themes_icon_packs">Ikoncsomag alkalmazása</string>
   <string name="quick_settings_themes_app_theme_with_label">Téma alkalmazása erre: <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Téma alkalmazása alkalmazásra</string>
+  <string name="quick_settings_themes_app_theme">Téma illesztése alkalmazásra</string>
   <string name="quick_settings_themes_system_theme">Téma alkalmazása</string>
   <string name="quick_settings_themes_default_theme">Alapértelmezett</string>
   <string name="quick_settings_themes_match_system">Rendszertémához igazítás</string>

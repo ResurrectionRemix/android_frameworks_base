@@ -30,11 +30,11 @@
   <string name="animation_slide_down">Beúszás felűlről</string>
   <string name="animation_default">Alapértelmezett</string>
   <string name="animation_translucent">Áttetsző</string>
-  <string name="animation_grow_shrink">Nyúlás (Felülről)</string>
-  <string name="animation_grow_shrink_center">Nyúlás (Középről)</string>
-  <string name="animation_grow_shrink_bottom">Nyúlás (Alulról)</string>
-  <string name="animation_grow_shrink_left">Nyúlás (Balról)</string>
-  <string name="animation_grow_shrink_right">Nyúlás (Jobbról)</string>
+  <string name="animation_grow_shrink">Nyújtás (Felülről)</string>
+  <string name="animation_grow_shrink_center">Nyújtás (Középről)</string>
+  <string name="animation_grow_shrink_bottom">Nyújtás (Alulról)</string>
+  <string name="animation_grow_shrink_left">Nyújtás (Balról)</string>
+  <string name="animation_grow_shrink_right">Nyújtás (Jobbról)</string>
   <string name="action_null">Üres</string>
   <!-- Slimseekbar -->
   <string name="default_string">Alapértelmezett</string>
