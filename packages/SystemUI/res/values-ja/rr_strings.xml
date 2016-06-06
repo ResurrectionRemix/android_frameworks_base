@@ -24,7 +24,7 @@
   <string name="battery_saver_notification_action_text_short">オフにする</string>
   <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
+  <string name="app_float_maximize_item_title">最大化</string>
   <string name="app_float_item_title">Float view</string>
   <string name="app_stop_item_title">アプリを強制終了</string>
   <!-- Screenrecord Notification Ticker -->
@@ -70,7 +70,7 @@
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_brightness">音量パネル</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+  <string name="accessibility_quick_settings_screen_off">画面を消灯</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_screenshot">スクリーンショット</string>
   <!-- Music QS Tile -->
@@ -104,7 +104,7 @@
   <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
   <string name="quick_settings_themes_app_theme">Apply theme to app</string>
   <string name="quick_settings_themes_system_theme">テーマを適用する</string>
-  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes_default_theme">デフォルト</string>
   <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">ナビゲーションバー</string>
@@ -141,27 +141,27 @@
   <string name="status_bar_tuner">Status bar icons</string>
   <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Off</string>
-  <string name="on">On</string>
+  <string name="off">オフ</string>
+  <string name="on">オン</string>
   <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Cancel</string>
-  <string name="dlg_ok">Ok</string>
+  <string name="cancel">キャンセル</string>
+  <string name="dlg_ok">はい</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
-  <string name="qs_kill_app">Kill App</string>
+  <string name="qs_kill_app">アプリを終了</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Torch</string>
+  <string name="navbar_torch">ライト</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Torch</string>
+  <string name="accessibility_torch">ライト</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Camera</string>
+  <string name="navbar_camera">カメラ</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Camera</string>
+  <string name="accessibility_camera">カメラ</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">ScreenShot</string>
+  <string name="navbar_screenshot">スクリーンショット</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">ScreenShot</string>
+  <string name="accessibility_screenshot">スクリーンショット</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -175,20 +175,20 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">ScreenRecord</string>
+  <string name="accessibility_screenrecord">画面の録画</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">ScreenRecord</string>
+  <string name="navbar_screenrecord">画面の録画</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Kill Task</string>
+  <string name="accessibility_killtask">タスクを終了</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Kill Task</string>
+  <string name="navbar_killtask">タスクを終了</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_app_picker">Application picker</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
+  <string name="quick_settings_sound_label">サウンド</string>
   <string name="quick_settings_sound_ring">着信</string>
   <string name="quick_settings_sound_vibrate">マナーモード</string>
   <string name="quick_settings_sound_silent">サイレント</string>
@@ -201,13 +201,13 @@
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads up notifications are enabled</string>
-  <string name="heads_up_disabled">Heads up notifications are disabled</string>
+  <string name="heads_up_enabled">ヘッドアップ通知は有効です</string>
+  <string name="heads_up_disabled">ヘッドアップ通知は無効です</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
-  <string name="quick_settings_pulse_disabled">No Visualizer</string>
+  <string name="quick_settings_pulse_enabled">Pulse 有効</string>
+  <string name="quick_settings_pulse_disabled">ビィジュアライザー なし</string>
   <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, dd MMM yyyy</string>
@@ -217,7 +217,7 @@
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
+  <string name="app_float_maximize_item_title">最大化</string>
   <string name="app_float_item_title">Float view</string>
   <string name="app_stop_item_title">アプリを強制終了</string>
   <!-- Floating Windows tile -->

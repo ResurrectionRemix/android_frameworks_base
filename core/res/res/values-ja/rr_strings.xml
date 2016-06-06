@@ -21,13 +21,13 @@
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">システムUIの再起動</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
+  <string name="animation_fade">フェード</string>
+  <string name="animation_slide_right">右にスライド</string>
+  <string name="animation_slide_left">左にスライド</string>
+  <string name="animation_slide_right_no_fade">右にスライド(フェードなし)</string>
+  <string name="animation_slide_left_no_fade">左にスライド(フェードなし)</string>
+  <string name="animation_slide_up">下にスライド</string>
+  <string name="animation_slide_down">上にスライド</string>
   <string name="animation_default">デフォルト</string>
   <string name="animation_translucent">Translucent</string>
   <string name="animation_grow_shrink">Grow in (Top)</string>
