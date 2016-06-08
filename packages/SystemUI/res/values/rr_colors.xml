@@ -88,4 +88,10 @@
     <color name="battery_background">#ffffff</color>
     <color name="status">#ffffff</color>
 
+    <!-- No recents logo and text colors --> 
+    <color name="no_recents_one">#5affffff</color>
+    <color name="no_recents_two">#5affffff</color>
+    <color name="no_recents_three">#5affffff</color>
+    <color name="no_recents_text_color">#b2ffffff</color>
+
 </resources>
