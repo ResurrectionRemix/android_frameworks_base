@@ -39,7 +39,7 @@
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Não é possível gravar ecrã</string>
   <!-- Kill app toast -->
-  <string name="app_killed_message">Aplicação terminada</string>
+  <string name="app_killed_message">Aplicação fechada</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go activado</string>
   <string name="onthego_notif_title">On-The-Go está activo</string>
@@ -50,7 +50,7 @@
   <string name="onthego_notif_camera_changed">Modo de câmara alterado</string>
   <string name="onthego_transparency">Transparência</string>
   <string name="onthego_front_camera">Usar a câmara frontal</string>
-  <string name="onthego_service_toggle">Reiniciar automaticamente o serviço</string>
+  <string name="onthego_service_toggle">Reiniciar o serviço automaticamente</string>
   <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
@@ -72,7 +72,7 @@
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_screen_off">Ecrã desligado.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Captura de Ecrâ.</string>
+  <string name="accessibility_quick_settings_screenshot">Captura de Ecrã.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Música</string>
   <string name="quick_settings_music_play">Reproduzir</string>
@@ -111,7 +111,7 @@
   <string name="quick_settings_smartbar_off">SmartBar desligada</string>
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_fling">Gestos Fling</string>
-  <string name="quick_settings_fling_off">Gestos Fling desligado</string>
+  <string name="quick_settings_fling_off">Gestos Fling desativado</string>
   <!-- Hw Keys tile -->
   <string name="quick_settings_hwkeys_title">Teclas Físicas</string>
   <string name="quick_settings_hwkeys_on">Teclas Físicas Ativadas</string>
@@ -131,9 +131,9 @@
   <!-- Power Menu -->
   <string name="quick_settings_power_menu_label">Menu de energia</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Reiniciar SistemaUI</string>
+  <string name="quick_settings_systemui_restart_label">Reiniciar Sistema UI</string>
   <!-- Gesture Anywehre -->
-  <string name="quick_settings_gesture_anywhere_label">Gesto em qualquer lugar</string>
+  <string name="quick_settings_gesture_anywhere_label">Gestos em qualquer lugar</string>
   <string name="quick_settings_gesture_anywhere_on">Gestos ativados</string>
   <string name="quick_settings_gesture_anywhere_off">Gestos desativados</string>
   <!-- Tuner UI -->
@@ -204,14 +204,14 @@
   <string name="heads_up_enabled">Notificações pop-up estão ativadas</string>
   <string name="heads_up_disabled">Notificações pop-up estão desativadas</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Notificações pop-up está adormecido por <xliff:g id="number">%d</xliff:g> minutos.</string>
+  <string name="heads_up_snooze_message">Notificações pop-up estão adormecidas por <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse Ativado</string>
   <string name="quick_settings_pulse_disabled">Nenhum Visualizador</string>
   <string name="quick_settings_pulse_label">Visualizador da Barra de Navegação</string>
   <!-- PA Pie controls -->
-  <string name="pie_date_format">cCC, dd MMM AAAA</string>
-  <string name="pie_hour_format_12">hh:mm Am/Pm</string>
+  <string name="pie_date_format">CCC, dd MMM AAAA</string>
+  <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->

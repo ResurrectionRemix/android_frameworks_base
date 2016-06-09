@@ -19,17 +19,17 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Reiniciar SistemaUI</string>
+  <string name="reboot_systemui">Reiniciar Sistema UI</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Desvanecer</string>
   <string name="animation_slide_right">Deslizar para a direita</string>
   <string name="animation_slide_left">Deslizar para a esquerda</string>
-  <string name="animation_slide_right_no_fade">Deslizar para a direita (Sem desvanecimiento)</string>
+  <string name="animation_slide_right_no_fade">Deslizar para a direita (Sem desvanecimento)</string>
   <string name="animation_slide_left_no_fade">Deslizar para a esquerda (Sem desvanecimento)</string>
   <string name="animation_slide_up">Deslizar para baixo</string>
   <string name="animation_slide_down">Deslizar para cima</string>
   <string name="animation_default">Predefinida</string>
-  <string name="animation_translucent">Translúcido</string>
+  <string name="animation_translucent">Translúcida</string>
   <string name="animation_grow_shrink">Crescer (Topo)</string>
   <string name="animation_grow_shrink_center">Crescer (Centro)</string>
   <string name="animation_grow_shrink_bottom">Crescer (Inferior)</string>
