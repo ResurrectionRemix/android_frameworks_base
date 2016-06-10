@@ -207,7 +207,7 @@
   <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse 有効</string>
-  <string name="quick_settings_pulse_disabled">ビィジュアライザー なし</string>
+  <string name="quick_settings_pulse_disabled">ビジュアライザー なし</string>
   <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, dd MMM yyyy</string>

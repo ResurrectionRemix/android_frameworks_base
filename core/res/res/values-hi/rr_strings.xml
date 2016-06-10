@@ -24,17 +24,17 @@
   <string name="animation_fade">धुंधला करें</string>
   <string name="animation_slide_right">दायें से फिसलन</string>
   <string name="animation_slide_left">बाएं से फिसलन</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
+  <string name="animation_slide_right_no_fade">दायें में स्लाइड (फीके के बिना)</string>
+  <string name="animation_slide_left_no_fade">बाएं में स्लाइड (फीके के बिना)</string>
+  <string name="animation_slide_up">तल में स्लाइड</string>
+  <string name="animation_slide_down">शीर्ष में स्लाइड</string>
   <string name="animation_default">डिफ़ॉल्ट</string>
   <string name="animation_translucent">पारभासी</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
+  <string name="animation_grow_shrink">(शीर्ष) में हो जाना</string>
+  <string name="animation_grow_shrink_center">(केन्द्र में) हो जाना</string>
+  <string name="animation_grow_shrink_bottom">(तल) में हो जाना</string>
+  <string name="animation_grow_shrink_left">(बाईं ओर) में हो जाना</string>
+  <string name="animation_grow_shrink_right">(सही में) हो जाना</string>
   <string name="action_null">रिक्त</string>
   <!-- Slimseekbar -->
   <string name="default_string">डिफ़ॉल्ट</string>
@@ -43,9 +43,9 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">टॉर्च</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_snap_top">शीर्ष तस्वीर</string>
+  <string name="floating_window_snap_bottom">नीचे तस्वीर</string>
+  <string name="floating_window_snap_left">स्नैप छोड़ दिया</string>
+  <string name="floating_window_snap_right">सही तस्वीर</string>
   <string name="floating_window_minimize">छोटा करें</string>
 </resources>
