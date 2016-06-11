@@ -61,7 +61,7 @@
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Bureau étendu</string>
   <string name="quick_settings_expanded_desktop">Étendu</string>
-  <string name="quick_settings_expanded_desktop_off">Standard</string>
+  <string name="quick_settings_expanded_desktop_off">Normal</string>
   <string name="quick_settings_expanded_desktop_detail_title">Mode Bureau étendu</string>
   <string name="quick_settings_expanded_hide_status">Masquer la barre d\'état</string>
   <string name="quick_settings_expanded_hide_navigation">Masquer la barre de navigation</string>
