@@ -19,33 +19,33 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">SystemUI 다시 시작</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_fade">서서히 사라짐</string>
+  <string name="animation_slide_right">오른쪽으로 슬라이드</string>
+  <string name="animation_slide_left">왼쪽으로 슬라이드</string>
+  <string name="animation_slide_right_no_fade">오른쪽으로 슬라이드 (페이드 없음)</string>
+  <string name="animation_slide_left_no_fade">왼쪽으로 슬라이드 (페이드 없음)</string>
+  <string name="animation_slide_up">하단으로 슬라이드</string>
+  <string name="animation_slide_down">위로 슬라이드</string>
+  <string name="animation_default">기본값</string>
+  <string name="animation_translucent">반투명</string>
+  <string name="animation_grow_shrink">커지기 (위에서)</string>
+  <string name="animation_grow_shrink_center">커지기 (가운데에서)</string>
+  <string name="animation_grow_shrink_bottom">커지기 (아래에서)</string>
+  <string name="animation_grow_shrink_left">커지기 (왼쪽에서)</string>
+  <string name="animation_grow_shrink_right">커지기 (오른쪽에서)</string>
+  <string name="action_null">공백</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">기본값</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">On-The-Go 모드</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">손전등</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_snap_top">상단에 맞춤</string>
+  <string name="floating_window_snap_bottom">하단에 맞춤</string>
+  <string name="floating_window_snap_left">왼쪽에 맞춤</string>
+  <string name="floating_window_snap_right">오른쪽에 맞춤</string>
+  <string name="floating_window_minimize">최소화</string>
 </resources>

@@ -20,80 +20,80 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Dismiss</string>
-  <string name="battery_saver_notification_action_text_short">Turn off</string>
-  <string name="gestures_message">Draw gesture here</string>
+  <string name="battery_saver_dismiss_title">무시</string>
+  <string name="battery_saver_notification_action_text_short"> 끄기</string>
+  <string name="gestures_message">여기에 제스쳐 그리기</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">최대화</string>
+  <string name="app_float_item_title">플로팅 뷰</string>
+  <string name="app_stop_item_title">앱 종료</string>
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+  <string name="screenrecord_notif_ticker">화면이 녹화되고 있습니다.</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Recording screen</string>
+  <string name="screenrecord_notif_title">화면 녹화 중...</string>
   <!-- Screenrecord notification action: Stop -->
-  <string name="screenrecord_notif_stop">Stop</string>
+  <string name="screenrecord_notif_stop">중단</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Show pointer</string>
-  <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+  <string name="screenrecord_notif_pointer_on">터치 표시</string>
+  <string name="screenrecord_notif_pointer_off">터치 숨기기</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Unable to record screen</string>
+  <string name="screenrecord_notif_error">화면을 녹화할 수 없습니다.</string>
   <!-- Kill app toast -->
-  <string name="app_killed_message">App Killed</string>
+  <string name="app_killed_message">애플리케이션 종료됨</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go activated</string>
-  <string name="onthego_notif_title">On-The-Go is active</string>
-  <string name="onthego_notif_stop">Stop</string>
-  <string name="onthego_notif_options">Options</string>
-  <string name="onthego_notif_error">Unable to start On-The-Go</string>
-  <string name="onthego_notif_restart">Restart On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Camera mode changed</string>
-  <string name="onthego_transparency">Transparency</string>
-  <string name="onthego_front_camera">Use front camera</string>
-  <string name="onthego_service_toggle">Automatically restart service</string>
+  <string name="onthego_notif_ticker">On-The-Go 모드 활성화</string>
+  <string name="onthego_notif_title">On-The-Go 모드 활성화</string>
+  <string name="onthego_notif_stop">중단</string>
+  <string name="onthego_notif_options">옵션</string>
+  <string name="onthego_notif_error">On-The-Go 모드를 시작할 수 없습니다.</string>
+  <string name="onthego_notif_restart">On-The-Go 모드 재시작</string>
+  <string name="onthego_notif_camera_changed">카메라 모드 변경</string>
+  <string name="onthego_transparency">투명도</string>
+  <string name="onthego_front_camera">전면 카메라 사용</string>
+  <string name="onthego_service_toggle">자동으로 서비스 다시 시작</string>
   <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Brightness</string>
-  <string name="quick_settings_screen_off_label">Screen off</string>
-  <string name="quick_settings_screenshot_label">Screenshot</string>
+  <string name="quick_settings_brightness_label">밝기</string>
+  <string name="quick_settings_screen_off_label">화면 끄기</string>
+  <string name="quick_settings_screenshot_label">스크린샷</string>
   <!-- Expanded desktop tile -->
-  <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
-  <string name="quick_settings_expanded_desktop">Expanded</string>
-  <string name="quick_settings_expanded_desktop_off">Normal</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
-  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
-  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
-  <string name="quick_settings_expanded_hide_both">Hide both</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
+  <string name="quick_settings_expanded_desktop_label">확장 데스크탑</string>
+  <string name="quick_settings_expanded_desktop">확장됨</string>
+  <string name="quick_settings_expanded_desktop_off">보통</string>
+  <string name="quick_settings_expanded_desktop_detail_title">확장 데스크탑 모드</string>
+  <string name="quick_settings_expanded_hide_status">상단바 숨기기</string>
+  <string name="quick_settings_expanded_hide_navigation">네비게이션 바 숨기기</string>
+  <string name="quick_settings_expanded_hide_both">모두 숨기기</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">확장 데스크탑 꺼짐</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+  <string name="accessibility_quick_settings_brightness">볼륨 패널</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+  <string name="accessibility_quick_settings_screen_off">화면 끄기</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+  <string name="accessibility_quick_settings_screenshot">스크린샷</string>
   <!-- Music QS Tile -->
-  <string name="quick_settings_music_label">Music</string>
-  <string name="quick_settings_music_play">Play</string>
-  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_music_label">음악</string>
+  <string name="quick_settings_music_play">플레이</string>
+  <string name="quick_settings_music_pause">일시 중지</string>
   <!-- Reboot/Recovery QS Tile -->
-  <string name="quick_settings_reboot_label">Reboot</string>
-  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="quick_settings_reboot_label">재시작</string>
+  <string name="quick_settings_reboot_recovery_label">리커버리 모드</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Show 4G instead of LTE</string>
-  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
-  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+  <string name="show_fourg_title">LTE 대신 4G 표시</string>
+  <string name="show_fourg_summary">4G LTE 상태 표시줄 표시기를 바꿉니다.</string>
+  <string name="statusbar_tuner_category_title">상태 표시줄에서 항목 숨기기</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Configurations</string>
+  <string name="quick_settings_rrtools">설정</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+  <string name="accessibility_quick_settings_heads_up_off">헤드 업 꺼짐</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+  <string name="accessibility_quick_settings_heads_up_on">헤드 업 켜짐</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">헤드 업 꺼짐</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">헤드 업 켜짐</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE ON </string>
@@ -165,69 +165,69 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Immersive Mode</string>
+  <string name="accessibility_expand">몰입 모드</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Configurations</string>
+  <string name="navbar_config">설정</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Configurations</string>
+  <string name="accessibility_config">설정</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_pie">PIE</string>
+  <string name="accessibility_pie">PIE 컨트롤</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">Pie</string>
+  <string name="navbar_pie">Pie 컨트롤</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">ScreenRecord</string>
+  <string name="accessibility_screenrecord">화면 기록</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">ScreenRecord</string>
+  <string name="navbar_screenrecord">화면 기록</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Kill Task</string>
+  <string name="accessibility_killtask">태스크 종료</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Kill Task</string>
+  <string name="navbar_killtask">태스크 종료</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Application picker</string>
+  <string name="navbar_app_picker">어플리케이션 선택</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Application picker</string>
+  <string name="accessibility_app_picker">어플리케이션 선택</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
-  <string name="quick_settings_sound_ring">Ring</string>
-  <string name="quick_settings_sound_vibrate">Vibrate</string>
-  <string name="quick_settings_sound_silent">Silent</string>
+  <string name="quick_settings_sound_label">소리</string>
+  <string name="quick_settings_sound_ring">벨소리</string>
+  <string name="quick_settings_sound_vibrate">진동</string>
+  <string name="quick_settings_sound_silent">무음</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Wired headset</string>
+  <string name="status_bar_headset">유선 헤드셋</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Vibration</string>
+  <string name="status_bar_volume">진동</string>
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads up notifications are enabled</string>
-  <string name="heads_up_disabled">Heads up notifications are disabled</string>
+  <string name="heads_up_enabled">헤드 업 알림이 활성화됨</string>
+  <string name="heads_up_disabled">헤드 업 알림이 활성화됨</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+  <string name="heads_up_snooze_message">헤드 업을 <xliff:g id="number">%d</xliff:g> 분 동안 중지합니다.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
-  <string name="quick_settings_pulse_disabled">No Visualizer</string>
-  <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
+  <string name="quick_settings_pulse_enabled">펄스 켜짐</string>
+  <string name="quick_settings_pulse_disabled">비주얼 없음</string>
+  <string name="quick_settings_pulse_label">네비게이션 바 비주얼</string>
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, dd MMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Float Mode</string>
+  <string name="recent_float_mode_title">Float 모드</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">최대화</string>
+  <string name="app_float_item_title">플로팅 뷰</string>
+  <string name="app_stop_item_title">앱 종료</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
-  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
+  <string name="quick_settings_floating_windows_on">Float 모드 켜짐</string>
+  <string name="quick_settings_floating_windows_off">Float 모드 꺼짐</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
-  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
+  <string name="quick_settings_slim_floats_on">Slim Float 모드 켜짐</string>
+  <string name="quick_settings_slim_floats_off">Slim Float 모드 꺼짐</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
-  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
+  <string name="accessibility_quick_settings_visualizer">시각화 도우미</string>
+  <string name="pulse_toast_message">시각화 도우미 타일 펄스 사용 작동 하지 않습니다.</string>
 </resources>
