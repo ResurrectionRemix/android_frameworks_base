@@ -107,5 +107,6 @@
     <dimen name="button_height">40dp</dimen>
     <dimen name="crop_buttons">48dp</dimen>
     <dimen name="crop_color_rect">32dp</dimen>
+    <dimen name="crop_buttons_inlet">32dp</dimen>
 
 </resources>

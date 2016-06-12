@@ -21,6 +21,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -122,10 +123,10 @@ public class CropImageView extends ImageView {
 
     //Draw
     private List<Point> points = new ArrayList<Point>();
-    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Canvas mCanvas;
     private List<Integer> newLine = new ArrayList<Integer>();
     private int mDrawColor = Color.RED;
+    private int mPenSize = 10;
 
     private Bitmap mBitmap;
     private Bitmap mBackupBitmap;
@@ -163,14 +164,6 @@ public class CropImageView extends ImageView {
         mOverlayColor = TRANSLUCENT_BLACK;
         mHandleColor = WHITE;
         mGuideColor = TRANSLUCENT_WHITE;
-
-        paint.setColor(mDrawColor);
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setDither(true);
-        paint.setStrokeWidth(8);
 
         // handle Styleable
         handleStyleable(context, attrs, defStyle, mDensity);
@@ -266,9 +259,8 @@ public class CropImageView extends ImageView {
         }
     }
 
-    Path path = new Path();
     ArrayList<Path> paths = new ArrayList<>();
-    ArrayList<Integer> colors = new ArrayList<>();
+    ArrayList<Point> pathAttr = new ArrayList<>();
     Matrix matrix = new Matrix();
 
     @Override
@@ -286,31 +278,48 @@ public class CropImageView extends ImageView {
                 canvas.drawBitmap(bm, matrix, mPaintBitmap);
 
                 if(mIsDrawEnabled) {
-                    path.reset();
                     paths.clear();
-                    colors.clear();
-                    int oldColor = 0;
+                    pathAttr.clear();
+                    Point oldPoint = new Point();
+                    boolean firstEntry = true;
+                    Path path = null;
+
                     for (int i = 0; i<points.size(); i++) {
+                        boolean startNewPath = false;
                         Point newPoint;
-                        path.setFillType(Path.FillType.EVEN_ODD);
                         if (newLine.contains(i)||i==0){
+                            path = new Path();
+                            path.setFillType(Path.FillType.EVEN_ODD);
                             newPoint = points.get(i);
                             path.moveTo(newPoint.x, newPoint.y);
                         } else {
                             newPoint = points.get(i);
                             path.lineTo(newPoint.x, newPoint.y);
                         }
-                        if(oldColor == 0 || newPoint.color != oldColor){
+                        if (firstEntry) {
+                            firstEntry = false;
+                            startNewPath = true;
+                        } else {
+                            if(newPoint.color != oldPoint.color){
+                                startNewPath = true;
+                            }
+                            if(newPoint.penSize != oldPoint.penSize){
+                                startNewPath = true;
+                            }
+                        }
+                        if (startNewPath) {
                             paths.add(path);
-                            oldColor = newPoint.color;
-                            colors.add(oldColor);
-                            path.reset();
-                            path.moveTo(newPoint.x, newPoint.y);
+                            oldPoint.color = newPoint.color;
+                            oldPoint.penSize = newPoint.penSize;
+                            pathAttr.add(newPoint);
                         }
                     }
+                    final Paint paint = getDrawPaint();
                     for(int j = 0; j < paths.size(); j++){
                         Path currentPath = paths.get(j);
-                        paint.setColor(colors.get(j));
+                        Point currentPathAttr = pathAttr.get(j);
+                        paint.setColor(currentPathAttr.color);
+                        paint.setStrokeWidth(currentPathAttr.penSize);
                         Matrix invertMatrix = new Matrix();
                         matrix.invert(invertMatrix);
                         currentPath.transform(invertMatrix);
@@ -534,6 +543,7 @@ public class CropImageView extends ImageView {
             point.x = event.getX();
             point.y = event.getY();
             point.color = mDrawColor;
+            point.penSize = mPenSize;
             points.add(point);
             if(newLine.isEmpty())
                 newLine.add(0);
@@ -1341,7 +1351,10 @@ public class CropImageView extends ImageView {
 
     public void setDrawColor(int color){
         mDrawColor = color;
-        paint.setColor(mDrawColor);
+    }
+
+    public void setPenSize(int penSize){
+        mPenSize = penSize;
     }
 
     /**
@@ -1570,6 +1583,16 @@ public class CropImageView extends ImageView {
         return (mFrameRect.bottom - mFrameRect.top);
     }
 
+    private Paint getDrawPaint() {
+        final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setDither(true);
+        return paint;
+    }
+
     // Enum ////////////////////////////////////////////////////////////////////////////////////////
 
     private enum TouchArea {
@@ -1620,10 +1643,11 @@ public class CropImageView extends ImageView {
     class Point {
         float x, y;
         int color;
+        int penSize;
 
         @Override
         public String toString() {
-            return x + ", " + y;
+            return x + ", " + y + " " + color + ":" + penSize;
         }
     }
 

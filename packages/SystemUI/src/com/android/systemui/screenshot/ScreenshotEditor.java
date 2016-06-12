@@ -10,11 +10,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -32,11 +35,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.systemui.screenshot.CropImageView;
@@ -65,9 +70,13 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
     private int nCropMode = 0;
     private int nOverlayColor;
     private int drawColor;
+    private int penSize = 10;
     private int workMode = 0;
     private boolean isShowing = false;
-    private boolean isPopUpWorkModeShowing = false, isPopUpColorShowing = false, isPopUpCropModeShowing = false;
+    private boolean isPopUpWorkModeShowing = false;
+    private boolean isPopUpColorShowing = false;
+    private boolean isPopUpCropModeShowing = false;
+    private boolean isPopUpPenSizeShowing = false;
     private boolean receiverRegistered = false;
     Handler mainHandler;
     HandlerThread handlerThread = null;
@@ -79,13 +88,14 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
     static String KEY_NOTIFICATION_ACCESS_SWITCH = "notification_access_switch";
     static String KEY_CATEGORY_MAIN = "category_main";
     static String KEY_CROP_BEHAVIOR = "crop_behavior";
-    static String KEY_ACTION_COLOR = "action_color";
     static String KEY_DRAW_COLOR = "draw_color";
     static String KEY_CROP_MODE = "crop_mode";
     static String KEY_WORK_MODE = "work_mode";
     static String KEY_CREDITS = "credits";
+    static String KEY_PEN_SIZE = "pen_size";
 
     private SharedPreferences preferences;
+    private float mDensity;
 
     public ScreenshotEditor() {
 
@@ -97,7 +107,7 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
 
         mContext = ScreenshotEditor.this;
         preferences = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
-
+        mDensity = getResources().getDisplayMetrics().density;
 
         mainHandler = new Handler(getMainLooper());
 
@@ -124,7 +134,7 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
         buttonBar = (RelativeLayout) mainLayout.findViewById(R.id.buttonBar);
         buttonBar.setVisibility(View.VISIBLE);
 
-        nOverlayColor = preferences.getInt(KEY_ACTION_COLOR, Color.parseColor("#263238"));
+        nOverlayColor = getResources().getColor(R.color.crop_action_overlay);
 
         initButtons();
 
@@ -169,7 +179,6 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
     Bitmap screenshot = null;
 
     private void addView() {
-        nOverlayColor = preferences.getInt(KEY_ACTION_COLOR, Color.parseColor("#263238"));
         if (!isShowing)
            initButtons();
         mainHandler.post(new Runnable() {
@@ -251,13 +260,11 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
         cropView.setGuideShowMode(CropImageView.ShowMode.SHOW_ON_TOUCH);
 
         cropModeButton = (ImageButton) mainLayout.findViewById(R.id.cropMode);
-        nCropMode++;
         final ListPopupWindow listPopupWindowCropMode = new ListPopupWindow(mContext);
         nCropMode = preferences.getInt(KEY_WORK_MODE, 0);
         ImageArrayAdapter cropModeAdapter = new ImageArrayAdapter(mContext,
                 new Integer[]{R.drawable.ic_image_crop_free, R.drawable.ic_image_crop_square, R.drawable.ic_image_crop_circle});
         listPopupWindowCropMode.setAdapter(cropModeAdapter);
-        listPopupWindowCropMode.setSelection(nCropMode);
         listPopupWindowCropMode.setAnchorView(cropModeButton);
         listPopupWindowCropMode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -318,14 +325,12 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
 
         final ListPopupWindow listPopupWindowColorPicker = new ListPopupWindow(mContext);
         listPopupWindowColorPicker.setAdapter(new ColorArrayAdapter(mContext, colors));
-        listPopupWindowColorPicker.setWidth(ListPopupWindow.WRAP_CONTENT);
-
         int width = mContext.getResources().getDimensionPixelSize(R.dimen.crop_buttons);
         final ImageButton drawColorButton = (ImageButton) mainLayout.findViewById(R.id.drawColor);
         listPopupWindowColorPicker.setAnchorView(drawColorButton);
         drawColor = preferences.getInt(KEY_DRAW_COLOR, getResources().getColor(R.color.crop_draw_color_1));
         cropView.setDrawColor(drawColor);
-        drawColorButton.setImageDrawable(new ColorDrawable(drawColor));
+        drawColorButton.setImageDrawable(createColorImage(drawColor));
 
         listPopupWindowColorPicker.setDropDownGravity(Gravity.CENTER);
         drawColorButton.setOnClickListener(new View.OnClickListener() {
@@ -347,10 +352,49 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 drawColor = colors[position];
-                drawColorButton.setImageDrawable(new ColorDrawable(drawColor));
+                drawColorButton.setImageDrawable(createColorImage(drawColor));
                 preferences.edit().putInt(KEY_DRAW_COLOR, drawColor).apply();
                 cropView.setDrawColor(drawColor);
                 listPopupWindowColorPicker.dismiss();
+            }
+        });
+
+
+        final String [] penSizeValues = getResources().getStringArray(R.array.crop_pen_size_entries);
+        final ListPopupWindow listPopupPenSizerPicker = new ListPopupWindow(mContext);
+        listPopupPenSizerPicker.setAdapter(new PenSizeArrayAdapter(this, android.R.layout.simple_list_item_1, penSizeValues));
+        final ImageButton penSizeButton = (ImageButton) mainLayout.findViewById(R.id.penSize);
+        listPopupPenSizerPicker.setAnchorView(penSizeButton);
+        final int penSizeValue = preferences.getInt(KEY_PEN_SIZE, 5);
+        penSize = Math.round(penSizeValue * mDensity);
+        cropView.setPenSize(penSize);
+        penSizeButton.setImageDrawable(createPenSizeImage(penSize));
+
+        listPopupPenSizerPicker.setDropDownGravity(Gravity.CENTER);
+        penSizeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isPopUpColorShowing) {
+                    listPopupPenSizerPicker.show();
+                    isPopUpPenSizeShowing = true;
+                }
+            }
+        });
+        listPopupPenSizerPicker.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                isPopUpPenSizeShowing = false;
+            }
+        });
+        listPopupPenSizerPicker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final int penSizeValue = Integer.valueOf(penSizeValues[position]);
+                preferences.edit().putInt(KEY_PEN_SIZE, penSizeValue).apply();
+                penSize = Math.round(penSizeValue * mDensity);
+                penSizeButton.setImageDrawable(createPenSizeImage(penSize));
+                cropView.setPenSize(penSize);
+                listPopupPenSizerPicker.dismiss();
             }
         });
 
@@ -363,7 +407,6 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
         ImageArrayAdapter adapter = new ImageArrayAdapter(mContext,
                 new Integer[]{R.drawable.ic_image_crop, R.drawable.ic_image_edit, R.drawable.ic_action_visibility});
         listPopupWindow.setAdapter(adapter);
-        listPopupWindow.setSelection(workMode);
         listPopupWindow.setAnchorView(workModeButton);
         listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -606,5 +649,37 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
+    }
+
+    private BitmapDrawable createPenSizeImage(int penSize){
+        final int width = getResources().getDimensionPixelSize(R.dimen.crop_buttons_inlet);
+        final Canvas canvas = new Canvas();
+        canvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,Paint.FILTER_BITMAP_FLAG));
+        final Bitmap bmp = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bmp);
+        final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(penSize);
+        canvas.drawLine(0, width / 2, width, width / 2, paint);
+        return new BitmapDrawable(getResources(), bmp);
+    }
+
+    private BitmapDrawable createColorImage(int color){
+        final int width = getResources().getDimensionPixelSize(R.dimen.crop_buttons_inlet);
+        final Canvas canvas = new Canvas();
+        canvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,Paint.FILTER_BITMAP_FLAG));
+        final Bitmap bmp = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bmp);
+        // inside
+        final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(color);
+        canvas.drawRect(0, 0, width, width, paint);
+        // border
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2);
+        paint.setColor(Color.BLACK);
+        canvas.drawRect(0, 0, width, width, paint);
+        return new BitmapDrawable(getResources(), bmp);
     }
 }

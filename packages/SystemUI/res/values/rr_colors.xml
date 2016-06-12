@@ -101,6 +101,7 @@
     <color name="crop_handle">#E0E0E0</color>
     <color name="crop_frame">#E0E0E0</color>
     <color name="crop_guide">#E0E0E0</color>
+    <color name="crop_action_overlay">#263238</color>
     <color name="crop_draw_color_1">@android:color/white</color>
     <color name="crop_draw_color_2">@android:color/black</color>
     <color name="crop_draw_color_3">#9E9E9E</color>
