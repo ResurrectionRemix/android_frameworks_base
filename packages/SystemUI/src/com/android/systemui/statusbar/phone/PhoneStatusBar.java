@@ -3880,7 +3880,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                                 != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
                         && mFingerprintUnlockController.getMode()
                                 != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK);
-                mIconController.setIconsDark(allowLight && light, animate);
             }
             // restore the recents bit
             if (wasRecentsVisible) {

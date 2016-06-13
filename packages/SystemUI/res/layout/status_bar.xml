@@ -29,6 +29,13 @@
     android:descendantFocusability="afterDescendants"
     >
 
+    <ImageView android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/recents_status_gradient"
+        android:scaleType="centerCrop"/>
+
     <ImageView
         android:id="@+id/notification_lights_out"
         android:layout_width="@dimen/status_bar_icon_size"
