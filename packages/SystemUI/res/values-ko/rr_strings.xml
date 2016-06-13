@@ -20,7 +20,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">무시</string>
+  <string name="battery_saver_dismiss_title">닫기</string>
   <string name="battery_saver_notification_action_text_short"> 끄기</string>
   <string name="gestures_message">여기에 제스쳐 그리기</string>
   <!-- App circle sidebar -->
@@ -94,76 +94,76 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">헤드 업 꺼짐</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">헤드 업 켜짐</string>
-  <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="quick_settings_heads_up_label">헤드 업</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="lte_on">LTE 켜기</string>
+  <string name="lte_off">LTE 끄기</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Themes</string>
-  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
-  <string name="quick_settings_themes_system_theme">Apply theme</string>
-  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes">테마</string>
+  <string name="quick_settings_themes_icon_packs">아이콘팩 적용</string>
+  <string name="quick_settings_themes_app_theme_with_label"><xliff:g id="application">%1$s </xliff:g>에 테마 적용</string>
+  <string name="quick_settings_themes_app_theme">앱에 테마 적용하기</string>
+  <string name="quick_settings_themes_system_theme">테마 적용하기</string>
+  <string name="quick_settings_themes_default_theme">기본</string>
   <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
-  <string name="quick_settings_navigation_bar">Navigation bar</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_navigation_bar">소프트 키</string>
+  <string name="quick_settings_smartbar_off">스마트바 비활성화</string>
+  <string name="quick_settings_smartbar">스마트바</string>
   <string name="quick_settings_fling">Fling gesture</string>
   <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
-  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
-  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
+  <string name="quick_settings_hwkeys_title">하드웨어 키</string>
+  <string name="quick_settings_hwkeys_on">하드웨어 키 켬</string>
+  <string name="quick_settings_hwkeys_off">하드웨어 키 끔</string>
   <!-- App Circle Bar tile -->
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+  <string name="quick_settings_appcirclebar_title">앱 서클 바</string>
+  <string name="quick_settings_appcirclebar_on">앱 서클 바 켜짐</string>
+  <string name="quick_settings_appcirclebar_off">앱 서클바 꺼짐</string>
   <!-- Kernel Adiutor Tile -->
   <string name="quick_settings_kernel_title">Kernel Adiutor</string>
-  <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+  <string name="quick_settings_kernel_adiutor">커널 수정기</string>
   <!-- Quick settings -->
-  <string name="quick_settings_screenrecord">Screenrecord</string>
-  <string name="quick_settings_screenrecord_on">Recording ...</string>
+  <string name="quick_settings_screenrecord">화면 녹화</string>
+  <string name="quick_settings_screenrecord_on">녹음중...</string>
   <!-- Pie tile -->
-  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_pie">Pie 컨트롤</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Power Menu</string>
+  <string name="quick_settings_power_menu_label">전원 메뉴</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
+  <string name="quick_settings_systemui_restart_label">SystemUI 재시작</string>
   <!-- Gesture Anywehre -->
-  <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
-  <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
-  <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
+  <string name="quick_settings_gesture_anywhere_label">모든곳 제스처</string>
+  <string name="quick_settings_gesture_anywhere_on">제스쳐들 켬</string>
+  <string name="quick_settings_gesture_anywhere_off">제스쳐들 끔</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Status bar tuner</string>
-  <string name="status_bar_tuner">Status bar icons</string>
-  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
+  <string name="status_bar_tuner_title">상태 바 튜너</string>
+  <string name="status_bar_tuner">상태 바 아이콘들</string>
+  <string name="status_bar_tuner_summary">상태 표시바의 시스템 아이콘 활성화 또는 비활성화</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Off</string>
-  <string name="on">On</string>
-  <string name="toggle">Toggle</string>
+  <string name="off">끔</string>
+  <string name="on">켬</string>
+  <string name="toggle">토글</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Cancel</string>
-  <string name="dlg_ok">Ok</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="qs_kill_app">Kill App</string>
+  <string name="cancel">취소</string>
+  <string name="dlg_ok">확인</string>
+  <string name="yes">네</string>
+  <string name="no">아니요</string>
+  <string name="qs_kill_app">앱 종료</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Torch</string>
+  <string name="navbar_torch">손전등</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Torch</string>
+  <string name="accessibility_torch">손전등</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Camera</string>
+  <string name="navbar_camera">카메라</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Camera</string>
+  <string name="accessibility_camera">카메라</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">ScreenShot</string>
+  <string name="navbar_screenshot">스크린샷</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">ScreenShot</string>
+  <string name="accessibility_screenshot">스크린샷</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Immersive Mode</string>
+  <string name="navbar_expand">몰입 모드</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_expand">몰입 모드</string>
   <!-- Dialog title for navigation bar button selection -->
