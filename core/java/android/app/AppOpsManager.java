@@ -663,8 +663,8 @@ public class AppOpsManager {
      */
     private static int[] sOpToSwitch = new int[] {
             OP_COARSE_LOCATION,                 // COARSE_LOCATION
-            OP_COARSE_LOCATION,                 // FINE_LOCATION
-            OP_COARSE_LOCATION,                 // GPS
+            OP_FINE_LOCATION,                   // FINE_LOCATION
+            OP_GPS,                             // GPS
             OP_VIBRATE,                         // VIBRATE
             OP_READ_CONTACTS,                   // READ_CONTACTS
             OP_WRITE_CONTACTS,                  // WRITE_CONTACTS
@@ -703,8 +703,8 @@ public class AppOpsManager {
             OP_AUDIO_NOTIFICATION_VOLUME,       // AUDIO_NOTIFICATION_VOLUME
             OP_AUDIO_BLUETOOTH_VOLUME,          // AUDIO_BLUETOOTH_VOLUME
             OP_WAKE_LOCK,                       // WAKE_LOCK
-            OP_COARSE_LOCATION,                 // MONITOR_LOCATION
-            OP_COARSE_LOCATION,                 // MONITOR_HIGH_POWER_LOCATION
+            OP_FINE_LOCATION,                   // MONITOR_LOCATION
+            OP_FINE_LOCATION,                   // MONITOR_HIGH_POWER_LOCATION
             OP_GET_USAGE_STATS,                 // GET_USAGE_STATS
             OP_MUTE_MICROPHONE,                 // MUTE_MICROPHONE
             OP_TOAST_WINDOW,                    // TOAST_WINDOW
@@ -739,7 +739,7 @@ public class AppOpsManager {
             OP_ACCEPT_HANDOVER,                 // ACCEPT_HANDOVER
             OP_MANAGE_IPSEC_TUNNELS,            // MANAGE_IPSEC_HANDOVERS
             OP_START_FOREGROUND,                // START_FOREGROUND
-            OP_COARSE_LOCATION,                 // BLUETOOTH_SCAN
+            OP_BLUETOOTH_SCAN,                  // BLUETOOTH_SCAN
             OP_BOOT_COMPLETED,                  // AppOp Boot Completed
     };
 
