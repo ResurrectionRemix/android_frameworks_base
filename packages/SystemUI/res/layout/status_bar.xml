@@ -32,9 +32,11 @@
     <ImageView android:id="@+id/background_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/recents_status_gradient"
-        android:scaleType="centerCrop"/>
+        android:layout_gravity="center"     
+        android:background="@drawable/status_gradient"
+        android:scaleType="centerCrop"
+	android.visibility="gone"  
+	/>
 
     <ImageView
         android:id="@+id/notification_lights_out"

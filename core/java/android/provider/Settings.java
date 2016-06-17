@@ -3694,6 +3694,12 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_RR_LOGO_STYLE = "status_bar_rr_logo_style";
+        
+        /**
+         * Statusbar Dark Icons On Light StatusBar
+         * @hide
+         */
+        public static final String SHOW_DARK_ICONS = "show_dark_icons";
 
         /**
          * Statusbar Custom logos

@@ -474,7 +474,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mCustomlogo;
     private ImageView mCLogo;
     private int mCustomlogoColor;	
-    private int mCustomlogoStyle;	
+    private int mCustomlogoStyle;
+    private ImageView mSbgradient;
 
     // Weather temperature
     private TextView mWeatherTempView;
@@ -758,6 +759,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.FLING_PULSE_ENABLED),
                     false, this, UserHandle.USER_ALL);
+        resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System. SHOW_DARK_ICONS),
+                    false, this, UserHandle.USER_ALL);
 		    update();
         }
 
@@ -875,7 +879,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		}  else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.FLING_PULSE_ENABLED))) {
 		    makepulsetoast();
-		}
+		} else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_DARK_ICONS))) {
+                DontStressOnRecreate();
+		} 
          update();
         }
 
@@ -1948,7 +1955,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_43);
 		}
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
-
+		boolean mShowdarkIcons= Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.SHOW_DARK_ICONS, 0, UserHandle.USER_CURRENT) == 1; 
+		    if (mShowdarkIcons) {    
+		    mSbgradient = (ImageView) mStatusBarView.findViewById(R.id.background_image);  
+		    mSbgradient.setVisibility(View.GONE);
+		    } else {
+		    mSbgradient = (ImageView) mStatusBarView.findViewById(R.id.background_image);  
+		    mSbgradient.setVisibility(View.VISIBLE); 
+		    }
         mQsIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 
@@ -3870,7 +3885,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mSystemUiVisibility &= ~View.NAVIGATION_BAR_UNHIDE;
             }
 
-            if ((diff & View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR) != 0 || sbModeChanged) {
+	if ((diff & View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR) != 0 || sbModeChanged) {
                 boolean isTransparentBar = (mStatusBarMode == MODE_TRANSPARENT
                         || mStatusBarMode == MODE_LIGHTS_OUT_TRANSPARENT);
                 boolean allowLight = isTransparentBar && !mBatteryController.isPowerSave();
@@ -3880,7 +3895,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                                 != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
                         && mFingerprintUnlockController.getMode()
                                 != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK);
-            }
+		boolean mShowdarkIcons= Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.SHOW_DARK_ICONS, 0, UserHandle.USER_CURRENT) == 1;     
+		    if (mShowdarkIcons) {
+				 mIconController.setIconsDark(allowLight && light, animate);
+			}	
+	    }     
             // restore the recents bit
             if (wasRecentsVisible) {
                 mSystemUiVisibility |= View.RECENT_APPS_VISIBLE;
