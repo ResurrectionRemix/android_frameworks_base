@@ -120,6 +120,7 @@ public class QsTuner extends Fragment implements Callback {
         setupDropTarget();
         mAddTarget = (FrameLayout) mScrollRoot.findViewById(R.id.add_target);
         setupAddTarget();
+        mQsPanel.updateResources();
         return mScrollRoot;
     }
 
@@ -143,6 +144,7 @@ public class QsTuner extends Fragment implements Callback {
             public void onDrop(String sourceText) {
                 mTileHost.remove(sourceText);
                 mQsPanel.refreshAllTiles();
+                mQsPanel.updateResources();
             }
         });
     }
@@ -160,6 +162,7 @@ public class QsTuner extends Fragment implements Callback {
             @Override
             public void onClick(View v) {
                 mTileHost.showAddDialog();
+                mQsPanel.updateResources();
             }
         });
     }
@@ -188,6 +191,7 @@ public class QsTuner extends Fragment implements Callback {
     public void onTilesChanged() {
         mQsPanel.setTiles(mTileHost.getTiles());
         mQsPanel.refreshAllTiles();
+        mQsPanel.updateResources();
     }
 
     public static int getLabelResource(String mSpec) {
