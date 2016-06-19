@@ -199,9 +199,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private boolean mShowBatteryTextExpanded;
 
 
+
     private ImageView mBackgroundImage;
     private Drawable mCurrentBackground;
     private float mLastHeight;
+    private UserInfoController mUserInfoController;
+
 
     // QS header alpha
     private int mQSHeaderAlpha;
@@ -322,6 +325,21 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             }
         });
         requestCaptureValues();
+
+        // RenderThread is doing more harm than good when touching the header (to expand quick
+        // settings), so disable it for this view
+        Drawable d = getBackground();
+        if (d instanceof RippleDrawable) {
+            ((RippleDrawable) d).setForceSoftware(true);
+        }
+        d = mSettingsButton.getBackground();
+        if (d instanceof RippleDrawable) {
+            ((RippleDrawable) d).setForceSoftware(true);
+        }
+        d = mSystemIconsSuperContainer.getBackground();
+        if (d instanceof RippleDrawable) {
+            ((RippleDrawable) d).setForceSoftware(true);
+        }
     }
 
     public void setHeaderColor() {
@@ -399,11 +417,21 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	     
     }
 
+
     public void vibrateheader(int duration) {
         if (mVibrator != null) {
             if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
         	}
 	}
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mUserInfoController != null) {
+            mUserInfoController.removeListener(mUserInfoChangedListener);
+        }
+        setListening(false);
+    }
 
     private void updateClockCollapsedMargin() {
         Resources res = getResources();
@@ -875,14 +903,19 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         setClipBounds(mClipBounds);
         invalidateOutline();
     }
-    
+
+
+    private UserInfoController.OnUserInfoChangedListener mUserInfoChangedListener =
+            new UserInfoController.OnUserInfoChangedListener() {
+        @Override
+        public void onUserInfoChanged(String name, Drawable picture) {
+            mMultiUserAvatar.setImageDrawable(picture);
+        }
+    };
+
     public void setUserInfoController(UserInfoController userInfoController) {
-        userInfoController.addListener(new UserInfoController.OnUserInfoChangedListener() {
-            @Override
-            public void onUserInfoChanged(String name, Drawable picture) {
-                mMultiUserAvatar.setImageDrawable(picture);
-            }
-        });
+        mUserInfoController = userInfoController;
+        userInfoController.addListener(mUserInfoChangedListener);
     }
 
     @Override
