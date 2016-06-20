@@ -85,6 +85,7 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
 
     public static final int WORK_MODE_CROP = 0;
     public static String KEY_SERVICE_SWITCH = "service_switch";
+    static final String SCREENSHOT_FILE_PATH = "android:screenshot_file_path";
     static String KEY_NOTIFICATION_ACCESS_SWITCH = "notification_access_switch";
     static String KEY_CATEGORY_MAIN = "category_main";
     static String KEY_CROP_BEHAVIOR = "crop_behavior";
@@ -96,10 +97,6 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
 
     private SharedPreferences preferences;
     private float mDensity;
-
-    public ScreenshotEditor() {
-
-    }
 
     @Override
     public void onCreate() {
@@ -171,7 +168,7 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        screenshotPath = intent.getStringExtra("screenshotPath");
+        screenshotPath = intent.getStringExtra(SCREENSHOT_FILE_PATH);
         addView();
         return Service.START_STICKY;
     }
