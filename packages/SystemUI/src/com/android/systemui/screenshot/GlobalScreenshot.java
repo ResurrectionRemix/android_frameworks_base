@@ -299,7 +299,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                 editIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
                 final PendingIntent editAction = PendingIntent.getActivity(context,  0,
-                        editIntent.putExtra(GlobalScreenshot.CANCEL_ID, mNotificationId)
+                        editIntent.putExtra(GlobalScreenshot.CANCEL_ID, GlobalScreenshot.SCREENSHOT_NOTIFICATION_ID)
                                 .putExtra(GlobalScreenshot.SCREENSHOT_FILE_PATH, mImageFilePath),
                         PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
                 mNotificationBuilder.addAction(R.drawable.ic_image_edit,
@@ -382,7 +382,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                 mNotificationManager.notify(GlobalScreenshot.SCREENSHOT_NOTIFICATION_ID, n);
             } else{
                 Intent startIntent = new Intent(params.context, com.android.systemui.screenshot.ScreenshotEditor.class);
-                startIntent.putExtra("screenshotPath", mImageFilePath);
+                startIntent.putExtra(GlobalScreenshot.SCREENSHOT_FILE_PATH, mImageFilePath);
                 params.context.startService(startIntent);
             }
         }
@@ -425,7 +425,7 @@ class GlobalScreenshot {
 
     static final String CANCEL_ID = "android:cancel_id";
     static final String SCREENSHOT_URI_ID = "android:screenshot_uri_id";
-    static final String SCREENSHOT_FILE_PATH = "android:screenshot_file_path";
+    public static final String SCREENSHOT_FILE_PATH = "android:screenshot_file_path";
 
     /*package*/  static final int SCREENSHOT_NOTIFICATION_ID = 6789;
     private static final int SCREENSHOT_FLASH_TO_PEAK_DURATION = 130;
@@ -907,7 +907,7 @@ class GlobalScreenshot {
             nm.cancel(id);
 
             Intent startIntent = new Intent(this, com.android.systemui.screenshot.ScreenshotEditor.class);
-            startIntent.putExtra(ScreenshotEditor.SCREENSHOT_FILE_PATH, imageFilePath);
+            startIntent.putExtra(SCREENSHOT_FILE_PATH, imageFilePath);
             startService(startIntent);
             finish();
         }
