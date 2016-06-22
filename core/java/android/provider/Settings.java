@@ -5778,6 +5778,13 @@ public final class Settings {
         public static final String VOLUME_DIALOG_STROKE_THICKNESS = "volume_dialog_stroke_thickness";
 
         /**
+         * Volume dialog custom corner radius
+         * 2dp is system default for VolumeDialog
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_CORNER_RADIUS = "volume_dialog_corner_radius";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
