@@ -15,5 +15,5 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="keyguard_wallpaper_instructions">Постави тапет закључаног екрана</string>
+  <string name="keyguard_wallpaper_instructions">設置鎖定螢幕桌布</string>
 </resources>

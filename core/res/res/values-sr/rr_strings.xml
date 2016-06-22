@@ -19,33 +19,33 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">Рестартуј системско сучеље</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_fade">Изблеђивање</string>
+  <string name="animation_slide_right">Клизање удесно</string>
+  <string name="animation_slide_left">Клизање улево</string>
+  <string name="animation_slide_right_no_fade">Клизање удесно (без изблеђивања)</string>
+  <string name="animation_slide_left_no_fade">Клизање улево (без изблеђивања)</string>
+  <string name="animation_slide_up">Клизање на доле</string>
+  <string name="animation_slide_down">Клизање на горе</string>
+  <string name="animation_default">Подразумевано</string>
+  <string name="animation_translucent">Прозирност</string>
+  <string name="animation_grow_shrink">Раст (ка горе)</string>
+  <string name="animation_grow_shrink_center">Раст (из центра)</string>
+  <string name="animation_grow_shrink_bottom">Раст (ка доле)</string>
+  <string name="animation_grow_shrink_left">Раст (улево)</string>
+  <string name="animation_grow_shrink_right">Раст (удесно)</string>
+  <string name="action_null">Празно</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">Подразумевано</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">Режим у-покрету</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">Блиц</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_snap_top">Уклопи на врху</string>
+  <string name="floating_window_snap_bottom">Уклопи на дну</string>
+  <string name="floating_window_snap_left">Уклопи лево</string>
+  <string name="floating_window_snap_right">Уклопи десно</string>
+  <string name="floating_window_minimize">Минимизуј</string>
 </resources>

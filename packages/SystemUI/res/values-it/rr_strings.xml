@@ -64,7 +64,7 @@
   <string name="quick_settings_expanded_desktop_off">Normale</string>
   <string name="quick_settings_expanded_desktop_detail_title">Modalità desktop esteso</string>
   <string name="quick_settings_expanded_hide_status">Nascondi Barra di Stato</string>
-  <string name="quick_settings_expanded_hide_navigation">Nascondi la barra di navigazione</string>
+  <string name="quick_settings_expanded_hide_navigation">Nascondi barra di navigazione</string>
   <string name="quick_settings_expanded_hide_both">Nascondi entrambi</string>
   <string name="accessibility_quick_settings_expanded_desktop_off">Desktop esteso disattivato</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -79,7 +79,7 @@
   <string name="quick_settings_music_pause">Pausa</string>
   <!-- Reboot/Recovery QS Tile -->
   <string name="quick_settings_reboot_label">Riavvia</string>
-  <string name="quick_settings_reboot_recovery_label">Riavvia in recovery</string>
+  <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <!-- 4G LTE switch -->
   <string name="show_fourg_title">Visualizza 4G invece di LTE</string>
   <string name="show_fourg_summary">Sostituisce l\'indicatore LTE nella barra delle notifiche con il 4G</string>
@@ -137,8 +137,8 @@
   <string name="quick_settings_gesture_anywhere_on">Gesti On</string>
   <string name="quick_settings_gesture_anywhere_off">Gesti Off</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Sintonizzatore della barra di stato</string>
-  <string name="status_bar_tuner">Icone della barra di stato</string>
+  <string name="status_bar_tuner_title">Sintonizzatore barra di stato</string>
+  <string name="status_bar_tuner">Icone barra di stato</string>
   <string name="status_bar_tuner_summary">Attiva o disattiva le icone di sistema della barra di stato</string>
   <!-- Off/On/Toggle -->
   <string name="off">Off</string>
@@ -146,7 +146,7 @@
   <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
   <string name="cancel">Annulla</string>
-  <string name="dlg_ok">OK</string>
+  <string name="dlg_ok">Ok</string>
   <string name="yes">Si</string>
   <string name="no">No</string>
   <string name="qs_kill_app">Chiudi applicazione</string>
@@ -155,13 +155,13 @@
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_torch">Torcia</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Camera</string>
+  <string name="navbar_camera">Fotocamera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Camera</string>
+  <string name="accessibility_camera">Fotocamera</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_screenshot">Cattura Schermo</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Cattura screenshot</string>
+  <string name="accessibility_screenshot">Cattura Schermo</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Modalità Immersiva</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->

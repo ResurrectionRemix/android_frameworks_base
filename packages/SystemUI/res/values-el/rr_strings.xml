@@ -229,5 +229,5 @@
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
-  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
+  <string name="pulse_toast_message">Η εφαρμογή δεν δουλεύει με ενεργοποιημένο παλμο</string>
 </resources>
