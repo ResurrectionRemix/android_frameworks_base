@@ -93,5 +93,8 @@
     <color name="no_recents_two">#5affffff</color>
     <color name="no_recents_three">#5affffff</color>
     <color name="no_recents_text_color">#b2ffffff</color>
+    
+    <!-- Volume panel border coler -->
+    <color name="volume_panel_border_color">#ff2962ff</color><!-- blue A700 -->
 
 </resources>
