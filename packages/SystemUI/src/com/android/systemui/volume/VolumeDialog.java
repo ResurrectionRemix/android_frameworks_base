@@ -1193,7 +1193,7 @@ public class VolumeDialog {
 
     public void setVolumeStroke () {
         mVolumeDialogStroke = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.VOLUME_DIALOG_STROKE, 1);
+                    Settings.System.VOLUME_DIALOG_STROKE, 0);
         mCustomStrokeColor = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.VOLUME_DIALOG_STROKE_COLOR, mContext.getResources().getColor(R.color.system_accent_color));
         mCustomStrokeThickness = Settings.System.getInt(mContext.getContentResolver(),

@@ -2899,7 +2899,7 @@ public class NotificationPanelView extends PanelView implements
                     resolver, Settings.System.QS_SMART_PULLDOWN, 0,
                     UserHandle.USER_CURRENT);
             mQSStroke = Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.QS_STROKE, 1);
+                        Settings.System.QS_STROKE, 0);
             mCustomStrokeColor = Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.QS_STROKE_COLOR, mContext.getResources().getColor(R.color.system_accent_color));
             mCustomStrokeThickness = Settings.System.getInt(mContext.getContentResolver(),
