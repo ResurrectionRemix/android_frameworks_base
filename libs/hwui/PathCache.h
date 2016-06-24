@@ -306,6 +306,14 @@ private:
 
     bool mDebugEnabled;
 
+    /**
+     * Driver allocated 4k/8k/16k memory for small path cache,
+     * limit the PathTexture cache numbers in case occupy too much memory in hardware.
+     */
+    uint32_t mTexNum;
+    uint32_t mMaxNum;
+    uint32_t mAlignment;
+
     sp<PathProcessor> mProcessor;
 
     Vector<uint32_t> mGarbage;

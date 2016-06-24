@@ -195,6 +195,16 @@ enum DebugLevel {
 #define PROPERTY_DROP_SHADOW_CACHE_SIZE "ro.hwui.drop_shadow_cache_size"
 #define PROPERTY_FBO_CACHE_SIZE "ro.hwui.fbo_cache_size"
 
+/**
+ * Used to align HWUI cache size with hardware allocated memory size.
+ *
+ * HWUI calculates the texture size as w*h*bpp. In some case, the
+ * calculated path cache is small, but the actual memory allocated
+ * in driver is 4k/8k/16k, much bigger than HWUI calculates. Defalult is 16k.
+ */
+#define PROPERTY_TEXTURE_CACHE_ALIGNMENT "ro.hwui.texture_cache_alignment"
+
+
 // These properties are defined in percentage (range 0..1)
 #define PROPERTY_TEXTURE_CACHE_FLUSH_RATE "ro.hwui.texture_cache_flushrate"
 
@@ -242,6 +252,8 @@ enum DebugLevel {
 #define DEFAULT_GRADIENT_CACHE_SIZE 0.5f
 #define DEFAULT_DROP_SHADOW_CACHE_SIZE 2.0f
 #define DEFAULT_FBO_CACHE_SIZE 0
+
+#define DEFAULT_TEXTURE_CACHE_ALIGNMENT 16 //16kB
 
 #define DEFAULT_TEXTURE_CACHE_FLUSH_RATE 0.6f
 
