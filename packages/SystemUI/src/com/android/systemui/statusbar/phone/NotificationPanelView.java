@@ -789,6 +789,12 @@ public class NotificationPanelView extends PanelView implements
 
             Context context = mNotificationPanelView.getContext();
             mScreenDimens = DisplayUtils.getRealScreenDimensions(context);
+            
+            //We don't want SystemUI to crash for Arithmetic Exception
+            if(mBlurScale==0){
+                mBlurScale=1;
+            }
+
             mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(context, mBlurScale);
         }
 
@@ -801,6 +807,11 @@ public class NotificationPanelView extends PanelView implements
 
                 mCallback.dominantColor(DisplayUtils.getDominantColorByPixelsSampling(mScreenBitmap, 20, 20));
 
+                //We don't want SystemUI to crash for Arithmetic Exception
+                if(mBlurRadius == 0){
+                    mBlurRadius=1;
+                }
+                
                 mScreenBitmap = mBlurUtils.renderScriptBlur(mScreenBitmap, mBlurRadius);
                 return mScreenBitmap;
 
