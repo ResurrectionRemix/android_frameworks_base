@@ -5785,6 +5785,20 @@ public final class Settings {
         public static final String VOLUME_DIALOG_CORNER_RADIUS = "volume_dialog_corner_radius";
 
         /**
+         * Volume dialog custom stroke dash width
+         * Set 0 to disable (default)
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_DASH_WIDTH = "volume_dialog_stroke_dash_width";
+
+        /**
+         * Volume dialog custom stroke dash gap
+         * 10 is default for AICP
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_DASH_GAP = "volume_dialog_stroke_dash_gap";
+
+        /**
          * Quick settings stroke
          * 0 = disabled
          * 1 = use accent color (default)
