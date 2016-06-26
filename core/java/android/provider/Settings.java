@@ -5772,7 +5772,7 @@ public final class Settings {
 
         /**
          * Volume dialog stroke custom thickness
-         * 4dp is default for AICP
+         * 4dp is default for RR
          * @hide
          */
         public static final String VOLUME_DIALOG_STROKE_THICKNESS = "volume_dialog_stroke_thickness";
@@ -5793,7 +5793,7 @@ public final class Settings {
 
         /**
          * Volume dialog custom stroke dash gap
-         * 10 is default for AICP
+         * 10 is default for RR
          * @hide
          */
         public static final String VOLUME_DIALOG_STROKE_DASH_GAP = "volume_dialog_stroke_dash_gap";
@@ -5816,7 +5816,7 @@ public final class Settings {
 
         /**
          * Quick settings stroke custom thickness
-         * 4dp is default for AICP
+         * 4dp is default for RR
          * @hide
          */
         public static final String QS_STROKE_THICKNESS = "qs_stroke_thickness";
@@ -5837,10 +5837,31 @@ public final class Settings {
 
         /**
          * Quick settings custom stroke dash gap
-         * 10 is default for AICP
+         * 10 is default for RR
          * @hide
          */
         public static final String QS_STROKE_DASH_GAP = "qs_stroke_dash_gap";
+
+        /**
+         * Quick settings RR logo
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_LOGO = "qs_panel_logo";
+
+        /**
+         * Quick settings RR logo color
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_LOGO_COLOR = "qs_panel_logo_color";
+
+        /**
+         * Quick settings RR logo alpha
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_LOGO_ALPHA = "qs_panel_logo_alpha";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
