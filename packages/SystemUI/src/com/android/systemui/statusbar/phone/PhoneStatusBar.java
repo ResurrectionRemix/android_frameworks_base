@@ -1768,9 +1768,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mDockBatteryController = new DockBatteryController(mContext, mHandler);
             }
 	}
-        if (mNetworkController == null) {
-            mNetworkController = new NetworkControllerImpl(mContext, mHandlerThread.getLooper());
-        }
+
+        mNetworkController = new NetworkControllerImpl(mContext, mHandlerThread.getLooper());
+
         if (mHotspotController == null) {
             mHotspotController = new HotspotControllerImpl(mContext);
         }
