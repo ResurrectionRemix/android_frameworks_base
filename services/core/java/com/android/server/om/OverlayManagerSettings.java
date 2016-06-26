@@ -193,7 +193,7 @@ final class OverlayManagerSettings {
             notifyOverlayAdded(current);
             notifySettingsChanged();
         } else if (current.state != previous.state) {
-            notifyOverlayChanged(current, previous);
+            notifyOverlayChanged(current, previous, shouldWait);
             notifySettingsChanged();
         }
     }
@@ -625,7 +625,7 @@ final class OverlayManagerSettings {
         }
     }
 
-    private void notifyOverlayRemoved(@NonNull final OverlayInfo oi) {
+    private void notifyOverlayRemoved(@NonNull final OverlayInfo oi, final boolean shouldWait) {
         if (DEBUG) {
             assertNotNull(oi);
         }
