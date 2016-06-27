@@ -793,14 +793,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		mContext.getContentResolver(),
 		Settings.System.SHOW_FOURG,
 		0, UserHandle.USER_CURRENT) == 1;
-		DontStressOnRecreate();
+		mNetworkController.onConfigurationChanged();
 		} else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.SHOW_THREEG))) {
 		mShow3G = Settings.System.getIntForUser(
 		mContext.getContentResolver(),
 		Settings.System.SHOW_THREEG,
 		0, UserHandle.USER_CURRENT) == 1;
-		DontStressOnRecreate();
+		mNetworkController.onConfigurationChanged();
 		} else if (uri.equals(Settings.System.getUriFor(
 		Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR))) {
 		UpdateNotifDrawerClearAllIconColor();
@@ -1768,9 +1768,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 mDockBatteryController = new DockBatteryController(mContext, mHandler);
             }
 	}
-
-        mNetworkController = new NetworkControllerImpl(mContext, mHandlerThread.getLooper());
-
+	if (mNetworkController == null) {
+	    mNetworkController = new NetworkControllerImpl(mContext, mHandlerThread.getLooper());
+	}
         if (mHotspotController == null) {
             mHotspotController = new HotspotControllerImpl(mContext);
         }
