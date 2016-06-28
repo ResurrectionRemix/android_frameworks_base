@@ -5772,7 +5772,7 @@ public final class Settings {
 
         /**
          * Volume dialog stroke custom thickness
-         * 4dp is default for AICP
+         * 4dp is default for RR
          * @hide
          */
         public static final String VOLUME_DIALOG_STROKE_THICKNESS = "volume_dialog_stroke_thickness";
@@ -5783,6 +5783,20 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_DIALOG_CORNER_RADIUS = "volume_dialog_corner_radius";
+
+        /**
+         * Volume dialog custom stroke dash width
+         * Set 0 to disable (default)
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_DASH_WIDTH = "volume_dialog_stroke_dash_width";
+
+        /**
+         * Volume dialog custom stroke dash gap
+         * 10 is default for RR
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_DASH_GAP = "volume_dialog_stroke_dash_gap";
 
         /**
          * Quick settings stroke
@@ -5802,7 +5816,7 @@ public final class Settings {
 
         /**
          * Quick settings stroke custom thickness
-         * 4dp is default for AICP
+         * 4dp is default for RR
          * @hide
          */
         public static final String QS_STROKE_THICKNESS = "qs_stroke_thickness";
@@ -5813,6 +5827,41 @@ public final class Settings {
          * @hide
          */
         public static final String QS_CORNER_RADIUS = "qs_corner_radius";
+
+        /**
+         * Quick settings custom stroke dash width
+         * Set 0 to disable (default)
+         * @hide
+         */
+        public static final String QS_STROKE_DASH_WIDTH = "qs_stroke_dash_width";
+
+        /**
+         * Quick settings custom stroke dash gap
+         * 10 is default for RR
+         * @hide
+         */
+        public static final String QS_STROKE_DASH_GAP = "qs_stroke_dash_gap";
+
+        /**
+         * Quick settings RR logo
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_LOGO = "qs_panel_logo";
+
+        /**
+         * Quick settings RR logo color
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_LOGO_COLOR = "qs_panel_logo_color";
+
+        /**
+         * Quick settings RR logo alpha
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_LOGO_ALPHA = "qs_panel_logo_alpha";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
