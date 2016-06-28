@@ -25,7 +25,7 @@
   <string name="gestures_message">Намалюйте жест тут</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Розгорнути</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">Плаваючий вигляд</string>
   <string name="app_stop_item_title">Вбити програму</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Екран записується</string>
@@ -82,7 +82,7 @@
   <string name="quick_settings_reboot_recovery_label">Режим відновлення</string>
   <!-- 4G LTE switch -->
   <string name="show_fourg_title">Показати 4G, замість LTE</string>
-  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+  <string name="show_fourg_summary">Замінити LTE в рядку стану на 4G</string>
   <string name="statusbar_tuner_category_title">Приховати елементи з рядка стану</string>
   <!-- Configurations Tile -->
   <string name="quick_settings_rrtools">Налаштування</string>
@@ -100,18 +100,18 @@
   <string name="lte_off">LTE викл</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Теми</string>
-  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
+  <string name="quick_settings_themes_icon_packs">Застосувати набір значків</string>
+  <string name="quick_settings_themes_app_theme_with_label">Застосувати тему до <xliff:g id="application">%1$s </xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Застосувати тему до додатка</string>
   <string name="quick_settings_themes_system_theme">Застосувати тему</string>
   <string name="quick_settings_themes_default_theme">Стандартно</string>
-  <string name="quick_settings_themes_match_system">Match system theme</string>
+  <string name="quick_settings_themes_match_system">Слідувати системну тему</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Навігаційна панель</string>
   <string name="quick_settings_smartbar_off">SmartBar вимк</string>
   <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_fling">Fling gesture</string>
-  <string name="quick_settings_fling_off">Fling gesture off</string>
+  <string name="quick_settings_fling">Жести Fling</string>
+  <string name="quick_settings_fling_off">Жести Fling вимкнені</string>
   <!-- Hw Keys tile -->
   <string name="quick_settings_hwkeys_title">Апаратні кнопки</string>
   <string name="quick_settings_hwkeys_on">Апаратні кнопки вкл</string>
@@ -218,7 +218,7 @@
   <string name="recent_float_mode_title">Float режим</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Розгорнути</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">Плаваючий вигляд</string>
   <string name="app_stop_item_title">Вбити програму</string>
   <!-- Floating Windows tile -->
   <string name="quick_settings_floating_windows_on">Float режим включений</string>

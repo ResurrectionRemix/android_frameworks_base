@@ -91,7 +91,7 @@
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_on">開啟浮動通知</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">已關閉淨動通知</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">已關閉浮動通知</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">已開啟浮動通知</string>
   <string name="quick_settings_heads_up_label">浮動通知</string>
@@ -151,9 +151,9 @@
   <string name="no">否</string>
   <string name="qs_kill_app">關閉應用程式</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">電筒</string>
+  <string name="navbar_torch">手電筒</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">電筒</string>
+  <string name="accessibility_torch">手電筒</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_camera">相機</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -173,7 +173,7 @@
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">圓餅形</string>
+  <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_screenrecord">螢幕錄影</string>
   <!-- Dialog title for navigation bar button selection -->

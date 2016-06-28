@@ -22,7 +22,7 @@
   <!-- Battery Saver Dimss -->
   <string name="battery_saver_dismiss_title">Ignora</string>
   <string name="battery_saver_notification_action_text_short">Disattiva</string>
-  <string name="gestures_message">Tracciare il segno qui</string>
+  <string name="gestures_message">Traccia qui il gesto</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Ingrandisci</string>
   <string name="app_float_item_title">Visione fluttuante</string>
@@ -96,8 +96,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up acceso.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE acceso </string>
-  <string name="lte_off">LTE spento</string>
+  <string name="lte_on">LTE ON </string>
+  <string name="lte_off">LTE OFF</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Temi</string>
   <string name="quick_settings_themes_icon_packs">Applica pacchetto icone</string>
@@ -108,7 +108,7 @@
   <string name="quick_settings_themes_match_system">Uguaglia tema di sistema</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Barra di navigazione</string>
-  <string name="quick_settings_smartbar_off">SmartBar spenta</string>
+  <string name="quick_settings_smartbar_off">SmartBar off</string>
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_fling">Gesto Fling</string>
   <string name="quick_settings_fling_off">Gesto Fling spento</string>
@@ -129,11 +129,11 @@
   <!-- Pie tile -->
   <string name="quick_settings_pie">Pie</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Menù alimentazione</string>
+  <string name="quick_settings_power_menu_label">Menù Alimentazione</string>
   <!-- Restart UI -->
   <string name="quick_settings_systemui_restart_label">Riavvia \"SystemUI\"</string>
   <!-- Gesture Anywehre -->
-  <string name="quick_settings_gesture_anywhere_label">Gesto ovunque</string>
+  <string name="quick_settings_gesture_anywhere_label">Gesti ovunque</string>
   <string name="quick_settings_gesture_anywhere_on">Gesti On</string>
   <string name="quick_settings_gesture_anywhere_off">Gesti Off</string>
   <!-- Tuner UI -->
@@ -149,7 +149,7 @@
   <string name="dlg_ok">Ok</string>
   <string name="yes">Si</string>
   <string name="no">No</string>
-  <string name="qs_kill_app">Chiudi applicazione</string>
+  <string name="qs_kill_app">Termina app</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_torch">Torcia</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->

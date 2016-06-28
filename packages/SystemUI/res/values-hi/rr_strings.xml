@@ -55,35 +55,35 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_brightness_label">चमक</string>
   <string name="quick_settings_screen_off_label">स्क्रीन ऑफ</string>
   <string name="quick_settings_screenshot_label">स्क्रीनशॉट</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">विस्तारित डेस्कटॉप</string>
   <string name="quick_settings_expanded_desktop">विस्तारित</string>
   <string name="quick_settings_expanded_desktop_off">सामान्य</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
-  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
-  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
-  <string name="quick_settings_expanded_hide_both">Hide both</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
+  <string name="quick_settings_expanded_desktop_detail_title">विस्तारित डेस्कटॉप मोड</string>
+  <string name="quick_settings_expanded_hide_status">स्थिति पट्टी छुपाएँ</string>
+  <string name="quick_settings_expanded_hide_navigation">नेविगेशन पट्टी छुपाएँ</string>
+  <string name="quick_settings_expanded_hide_both">दोनों छुपाएँ</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">विस्तारित डेस्कटॉप अक्षम</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
+  <string name="accessibility_quick_settings_brightness">वॉल्यूम पैनल</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_screen_off">Screen off.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
+  <string name="accessibility_quick_settings_screenshot">स्क्रीनशॉट.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">संगीत</string>
-  <string name="quick_settings_music_play">Play</string>
-  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_music_play">चलायें</string>
+  <string name="quick_settings_music_pause">विराम दें</string>
   <!-- Reboot/Recovery QS Tile -->
   <string name="quick_settings_reboot_label">रीबूट करें</string>
   <string name="quick_settings_reboot_recovery_label">रिकवरी</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Show 4G instead of LTE</string>
+  <string name="show_fourg_title">LTE के बजाय 4G दिखाएँ</string>
   <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
-  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
+  <string name="statusbar_tuner_category_title">स्थिति पट्टी से चिह्न छुपाएँ</string>
   <!-- Configurations Tile -->
   <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -95,20 +95,20 @@
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
-  <string name="qs_lte_label">LTE</string>
+  <string name="qs_lte_label">4G</string>
   <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="lte_off">4G बंद</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Themes</string>
-  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes">थीम्स</string>
+  <string name="quick_settings_themes_icon_packs">चिह्न पैक लागू करो</string>
+  <string name="quick_settings_themes_app_theme_with_label">लागू करने के लिए <xliff:g id="application">%1$s </xliff:g></string>
   <string name="quick_settings_themes_app_theme">Apply theme to app</string>
   <string name="quick_settings_themes_system_theme">Apply theme</string>
-  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes_default_theme">सामान्य</string>
   <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
-  <string name="quick_settings_navigation_bar">Navigation bar</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
+  <string name="quick_settings_navigation_bar">नेविगेशन पट्टी</string>
+  <string name="quick_settings_smartbar_off">SmartBar बंद</string>
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_fling">Fling gesture</string>
   <string name="quick_settings_fling_off">Fling gesture off</string>
@@ -137,19 +137,19 @@
   <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
   <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Status bar tuner</string>
-  <string name="status_bar_tuner">Status bar icons</string>
-  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
+  <string name="status_bar_tuner_title">स्थिति पट्टी ट्यूनर</string>
+  <string name="status_bar_tuner">स्थिति पट्टी चिह्न</string>
+  <string name="status_bar_tuner_summary">स्थिति पट्टी सिस्टम चिह्न को अक्षम या सक्षम करे</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Off</string>
-  <string name="on">On</string>
-  <string name="toggle">Toggle</string>
+  <string name="off">बंद</string>
+  <string name="on">चालू</string>
+  <string name="toggle">टॉगल</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Cancel</string>
-  <string name="dlg_ok">Ok</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="qs_kill_app">Kill App</string>
+  <string name="cancel">रद्द करें</string>
+  <string name="dlg_ok">ठीक है</string>
+  <string name="yes">हां</string>
+  <string name="no">नहीं</string>
+  <string name="qs_kill_app">अनुप्रयोग नष्ट करे</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_torch">Torch</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -173,7 +173,7 @@
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">Pie</string>
+  <string name="navbar_pie">पाई</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_screenrecord">ScreenRecord</string>
   <!-- Dialog title for navigation bar button selection -->
@@ -188,16 +188,16 @@
     (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
-  <string name="quick_settings_sound_ring">Ring</string>
-  <string name="quick_settings_sound_vibrate">Vibrate</string>
-  <string name="quick_settings_sound_silent">Silent</string>
+  <string name="quick_settings_sound_label">ध्वनि</string>
+  <string name="quick_settings_sound_ring">रिंग</string>
+  <string name="quick_settings_sound_vibrate">वाइब्रेट</string>
+  <string name="quick_settings_sound_silent">मौन</string>
   <!-- headset icon switch -->
   <string name="status_bar_headset">Wired headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Vibration</string>
+  <string name="status_bar_volume">कंपन</string>
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
@@ -212,7 +212,7 @@
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, dd MMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
+  <string name="pie_hour_format_24">Hh: mm</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Float Mode</string>

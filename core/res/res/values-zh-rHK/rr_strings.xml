@@ -21,7 +21,7 @@
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">重新啟動「系統 UI」</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">淡出</string>
+  <string name="animation_fade">淡化效果</string>
   <string name="animation_slide_right">從右側滑入</string>
   <string name="animation_slide_left">從左側滑入</string>
   <string name="animation_slide_right_no_fade">從右側滑入 (無淡化效果)</string>
@@ -30,7 +30,7 @@
   <string name="animation_slide_down">從頂部滑入</string>
   <string name="animation_default">預設值</string>
   <string name="animation_translucent">半透明</string>
-  <string name="animation_grow_shrink">縮放 (頂部)</string>
+  <string name="animation_grow_shrink">縮放 （頂部）</string>
   <string name="animation_grow_shrink_center">縮放(中間)</string>
   <string name="animation_grow_shrink_bottom">縮放(底部)</string>
   <string name="animation_grow_shrink_left">縮放 (左測)</string>
@@ -41,7 +41,7 @@
   <!-- label for item that takes On-The-Go in the phone options dialog -->
   <string name="global_action_onthego">On-The-Go 模式</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">手電筒</string>
+  <string name="global_action_torch">電筒</string>
   <!-- Floating Window -->
   <string name="floating_window_snap_top">貼齊頂部</string>
   <string name="floating_window_snap_bottom">貼齊底部</string>

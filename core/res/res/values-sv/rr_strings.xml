@@ -19,17 +19,17 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">Starta om SystemUI</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
+  <string name="animation_fade">Tona bort</string>
+  <string name="animation_slide_right">Glida in höger</string>
+  <string name="animation_slide_left">Glida in vänster</string>
+  <string name="animation_slide_right_no_fade">Glida åt höger (Inte tona bort)</string>
+  <string name="animation_slide_left_no_fade">Glida in vänster (Inte tona ut)</string>
+  <string name="animation_slide_up">Glida in botten</string>
+  <string name="animation_slide_down">Glida från toppen</string>
+  <string name="animation_default">Standard</string>
+  <string name="animation_translucent">Genomskinlig</string>
   <string name="animation_grow_shrink">Grow in (Top)</string>
   <string name="animation_grow_shrink_center">Grow in (Center)</string>
   <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
@@ -39,13 +39,13 @@
   <!-- Slimseekbar -->
   <string name="default_string">Default</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">On-The-Go Läge</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">Ficklampa</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_top">Fästa till toppen</string>
+  <string name="floating_window_snap_bottom">Fästa till botten</string>
+  <string name="floating_window_snap_left">Fästa till vänster</string>
   <string name="floating_window_snap_right">Snap right</string>
   <string name="floating_window_minimize">Minimize</string>
 </resources>

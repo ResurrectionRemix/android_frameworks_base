@@ -20,7 +20,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">退出</string>
+  <string name="battery_saver_dismiss_title">關閉</string>
   <string name="battery_saver_notification_action_text_short">關閉</string>
   <string name="gestures_message">請在此畫出您的手勢</string>
   <!-- App circle sidebar -->
@@ -47,7 +47,7 @@
   <string name="onthego_notif_options">選項</string>
   <string name="onthego_notif_error">無法啟動 On-The-Go</string>
   <string name="onthego_notif_restart">重新啟動On-The-Go</string>
-  <string name="onthego_notif_camera_changed">相機模式已變更</string>
+  <string name="onthego_notif_camera_changed">已變更相機模式</string>
   <string name="onthego_transparency">透明度</string>
   <string name="onthego_front_camera">使用前置鏡頭</string>
   <string name="onthego_service_toggle">自動重新啟動服務</string>
@@ -91,7 +91,7 @@
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_on">開啟浮動通知</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">已關閉淨動通知</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">已關閉浮動通知</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">已開啟浮動通知</string>
   <string name="quick_settings_heads_up_label">浮動通知</string>
@@ -173,7 +173,7 @@
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">圓餅形</string>
+  <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_screenrecord">螢幕錄影</string>
   <!-- Dialog title for navigation bar button selection -->
@@ -204,7 +204,7 @@
   <string name="heads_up_enabled">迅速瀏覽通知已啟用</string>
   <string name="heads_up_disabled">迅速瀏覽通知已停用</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">浮動通知彈被停用 <xliff:g id="number">%d</xliff:g> 分鐘</string>
+  <string name="heads_up_snooze_message">浮動通知被停用 <xliff:g id="number">%d</xliff:g> 分鐘</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">已啟用脈衝</string>
   <string name="quick_settings_pulse_disabled">沒有可視化工具</string>
@@ -213,7 +213,7 @@
   <string name="pie_date_format">ccc, dd MMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">上午</string>
+  <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">浮動模式</string>
   <!-- App circle sidebar -->
@@ -224,8 +224,8 @@
   <string name="quick_settings_floating_windows_on">啟用浮動模式</string>
   <string name="quick_settings_floating_windows_off">停用浮動模式</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">啟用超薄浮動模式</string>
-  <string name="quick_settings_slim_floats_off">停用超薄浮動模式</string>
+  <string name="quick_settings_slim_floats_on">啟用Slim浮動模式</string>
+  <string name="quick_settings_slim_floats_off">停用Slim浮動模式</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">視覺化</string>

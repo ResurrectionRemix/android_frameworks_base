@@ -30,11 +30,11 @@
   <string name="animation_slide_down">Van boven inschuiven</string>
   <string name="animation_default">Standaard</string>
   <string name="animation_translucent">Doorzichtig</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
+  <string name="animation_grow_shrink">Ingroeien (Boven)</string>
+  <string name="animation_grow_shrink_center">Ingroeien (midden)</string>
+  <string name="animation_grow_shrink_bottom">Ingroeien (onder)</string>
+  <string name="animation_grow_shrink_left">Ingroeien (links)</string>
+  <string name="animation_grow_shrink_right">Ingroeien (Rechts)</string>
   <string name="action_null">Blanco</string>
   <!-- Slimseekbar -->
   <string name="default_string">Standaard</string>

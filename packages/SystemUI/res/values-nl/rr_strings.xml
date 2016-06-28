@@ -25,7 +25,7 @@
   <string name="gestures_message">Teken gesture hier</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximaliseren</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">Zweefweergave</string>
   <string name="app_stop_item_title">App stoppen</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Scherm wordt opgenomen</string>
@@ -95,9 +95,9 @@
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up ingeschakeld.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
-  <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="qs_lte_label">4G</string>
+  <string name="lte_on">4G AAN</string>
+  <string name="lte_off">4G UIT</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Thema\'s</string>
   <string name="quick_settings_themes_icon_packs">Icon pakket toepassen</string>
@@ -105,92 +105,92 @@
   <string name="quick_settings_themes_app_theme">Pas thema toe voor app</string>
   <string name="quick_settings_themes_system_theme">Thema toepassen</string>
   <string name="quick_settings_themes_default_theme">Standaard</string>
-  <string name="quick_settings_themes_match_system">Match system theme</string>
+  <string name="quick_settings_themes_match_system">Match met systeemthema</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Navigatiebalk</string>
   <string name="quick_settings_smartbar_off">SmartBar uit</string>
   <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_fling">Fling gesture</string>
-  <string name="quick_settings_fling_off">Fling gesture off</string>
+  <string name="quick_settings_fling">Gooigebaar</string>
+  <string name="quick_settings_fling_off">Gooigebaar uit</string>
   <!-- Hw Keys tile -->
   <string name="quick_settings_hwkeys_title">Hardware toetsen</string>
   <string name="quick_settings_hwkeys_on">Hardware toetsen aan</string>
   <string name="quick_settings_hwkeys_off">Hardware toetsen uit</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+  <string name="quick_settings_appcirclebar_on">AppCircleBar aan</string>
+  <string name="quick_settings_appcirclebar_off">AppCircleBar uit</string>
   <!-- Kernel Adiutor Tile -->
-  <string name="quick_settings_kernel_title">Kernel Adiutor</string>
-  <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+  <string name="quick_settings_kernel_title">Kernhelper</string>
+  <string name="quick_settings_kernel_adiutor">Kernhelper</string>
   <!-- Quick settings -->
   <string name="quick_settings_screenrecord">Schermopname</string>
   <string name="quick_settings_screenrecord_on">Opnemen ...</string>
   <!-- Pie tile -->
-  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_pie">Taart</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Power Menu</string>
+  <string name="quick_settings_power_menu_label">Afsluitmenu</string>
   <!-- Restart UI -->
   <string name="quick_settings_systemui_restart_label">SystemUI herstarten</string>
   <!-- Gesture Anywehre -->
-  <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
+  <string name="quick_settings_gesture_anywhere_label">Gebaar Overal</string>
   <string name="quick_settings_gesture_anywhere_on">Gebaren aan</string>
-  <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
+  <string name="quick_settings_gesture_anywhere_off">Gebaren uit</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Status bar tuner</string>
-  <string name="status_bar_tuner">Status bar icons</string>
-  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
+  <string name="status_bar_tuner_title">Statusbalk fijnsteller</string>
+  <string name="status_bar_tuner">Statusbalk iconen</string>
+  <string name="status_bar_tuner_summary">Statusbalk systeemiconen in- of uitschakelen</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Off</string>
-  <string name="on">On</string>
-  <string name="toggle">Toggle</string>
+  <string name="off">Uit</string>
+  <string name="on">Aan</string>
+  <string name="toggle">Aan/uit</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Cancel</string>
-  <string name="dlg_ok">Ok</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
-  <string name="qs_kill_app">Kill App</string>
+  <string name="cancel">Annuleer</string>
+  <string name="dlg_ok">Oké</string>
+  <string name="yes">Ja</string>
+  <string name="no">Nee</string>
+  <string name="qs_kill_app">App Beëindigen</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Torch</string>
+  <string name="navbar_torch">Toorts</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Torch</string>
+  <string name="accessibility_torch">Toorts</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">ScreenShot</string>
+  <string name="navbar_screenshot">Schermafbeelding</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">ScreenShot</string>
+  <string name="accessibility_screenshot">Schermafbeelding</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Immersive Mode</string>
+  <string name="navbar_expand">Schermvullende modus</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Immersive Mode</string>
+  <string name="accessibility_expand">Schermvullende modus</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Configurations</string>
+  <string name="navbar_config">Configuraties</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Configurations</string>
+  <string name="accessibility_config">Configuraties</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_pie">PIE</string>
+  <string name="accessibility_pie">TAART</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">Pie</string>
+  <string name="navbar_pie">Taart</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">ScreenRecord</string>
+  <string name="accessibility_screenrecord">SchermOpname</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">ScreenRecord</string>
+  <string name="navbar_screenrecord">SchermOpname</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Kill Task</string>
+  <string name="accessibility_killtask">Taak beëindigen</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Kill Task</string>
+  <string name="navbar_killtask">Taak beëindigen</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Application picker</string>
+  <string name="navbar_app_picker">Applicatiekiezer</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Application picker</string>
+  <string name="accessibility_app_picker">Applicatiekiezer</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
-  <string name="quick_settings_sound_ring">Ring</string>
-  <string name="quick_settings_sound_vibrate">Vibrate</string>
+  <string name="quick_settings_sound_label">Geluid</string>
+  <string name="quick_settings_sound_ring">Rinkelen</string>
+  <string name="quick_settings_sound_vibrate">Trillen</string>
   <string name="quick_settings_sound_silent">Stil</string>
   <!-- headset icon switch -->
   <string name="status_bar_headset">Bedrade headset</string>
@@ -199,35 +199,35 @@
   <!-- vpn icon switch -->
   <string name="status_bar_volume">Trillen</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">UI Tuner</string>
+  <string name="systemui_tuner_qs_title">UI Verfijner</string>
   <!-- Heads up toast -->
   <string name="heads_up_enabled">Heads-up meldingen zijn ingeschakeld</string>
   <string name="heads_up_disabled">Heads-up meldingen zijn uitgeschakeld</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads-up is uitgeschakeld voor <xliff:g id="number">%d </xliff:g> minuten.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse ingeschakeld</string>
+  <string name="quick_settings_pulse_enabled">Pulseren ingeschakeld</string>
   <string name="quick_settings_pulse_disabled">Geen Visualizer</string>
-  <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
+  <string name="quick_settings_pulse_label">Navigatiebalk Visualisator</string>
   <!-- PA Pie controls -->
-  <string name="pie_date_format">ccc, dd MMM yyyy</string>
+  <string name="pie_date_format">ccc, dd, MMM jjjj</string>
   <string name="pie_hour_format_12">uu:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
+  <string name="pie_hour_format_24">UU:mm</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Float Mode</string>
+  <string name="recent_float_mode_title">Zweefmodus</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximaliseren</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">Zweefweergave</string>
   <string name="app_stop_item_title">App stoppen</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
-  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
+  <string name="quick_settings_floating_windows_on">Zweefmodus ingeschakeld</string>
+  <string name="quick_settings_floating_windows_off">Zweefmodus ingeschakeld</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
-  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
-  <string name="quick_settings_visualizer_label">AudioFX</string>
+  <string name="quick_settings_slim_floats_on">Smalle Zweefmodus ingeschakeld</string>
+  <string name="quick_settings_slim_floats_off">Smalle Zweefmodus ingeschakeld</string>
+  <string name="quick_settings_visualizer_label">GeluidFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
-  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
+  <string name="accessibility_quick_settings_visualizer">Visualisator.</string>
+  <string name="pulse_toast_message">Visualisator Tegel werkt niet terwijl pulseren actief is</string>
 </resources>
