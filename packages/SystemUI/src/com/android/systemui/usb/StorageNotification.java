@@ -393,9 +393,12 @@ public class StorageNotification extends SystemUI {
                             mContext.getString(R.string.ext_media_unmount_action),
                             buildUnmountPendingIntent(vol)))
                     .setContentIntent(browseIntent)
-                    .setOngoing(mContext.getResources().getBoolean(
-                            R.bool.config_persistUsbDriveNotification))
                     .setCategory(Notification.CATEGORY_SYSTEM);
+            // USB disks notification can be persistent
+            if (disk.isUsb()) {
+                builder.setOngoing(mContext.getResources().getBoolean(
+                        R.bool.config_persistUsbDriveNotification));
+            }
             // USB disks notification can be persistent
             if (disk.isUsb()) {
                 builder.setOngoing(true);
