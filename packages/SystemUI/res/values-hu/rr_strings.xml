@@ -149,7 +149,7 @@
   <string name="dlg_ok">Ok</string>
   <string name="yes">Igen</string>
   <string name="no">Nem</string>
-  <string name="qs_kill_app">Alkalmazás kilövése</string>
+  <string name="qs_kill_app">Alkalmazás leállítása</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_torch">Zseblámpa</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -212,7 +212,7 @@
   <!-- PA Pie controls -->
   <string name="pie_date_format">ccc, nn HHH éééé</string>
   <string name="pie_hour_format_12">óó:pp</string>
-  <string name="pie_hour_format_24">Óó: PP</string>
+  <string name="pie_hour_format_24">ÓÓ:PP</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Lebegő mód</string>

@@ -15,5 +15,5 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="weather_info_not_available">Időjárási információ nem elérhető</string>
+  <string name="weather_info_not_available">Időjárási információ nem érhető el</string>
 </resources>
