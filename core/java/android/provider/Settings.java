@@ -3840,6 +3840,21 @@ public final class Settings {
          */
         public static final String TV_APP_TEXT_COLOR= "tv_app_text_color";
 
+	/**
+         *
+         * Whether to apply a shadow on  the text of header
+         * value is the radius of the shadow that is to be applied.
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW = "status_bar_custom_header_text_shadow";
+
+        /**
+         *
+         * Apply a custom color to the text shadow on the header
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW_COLOR = "status_bar_custom_header_text_shadow_color";
+
         /**
          * Whether to show or hide search bar in recents view
          * @hide

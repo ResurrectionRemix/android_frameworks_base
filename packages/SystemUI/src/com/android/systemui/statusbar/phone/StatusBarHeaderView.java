@@ -212,6 +212,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private boolean mQsColorSwitch = false ;	
     private int mHeaderColor;
     private int headerShadow;
+    private float textShadow;
+    private int tShadowColor;
     private int customHeader;
 
     // Font style
@@ -581,8 +583,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mDockBatteryLevel.setForceShown(mExpanded && mShowBatteryTextExpanded);
             mDockBatteryLevel.setVisibility(View.VISIBLE);
         }
-         applyHeaderBackgroundShadow();
-        mBatteryLevel.setVisibility(View.VISIBLE);
+        applyTextShadow();
+        applyHeaderBackgroundShadow();
     }
 
 	public void hidepanelItems() {
@@ -1447,6 +1449,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 			Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW), false, this, UserHandle.USER_ALL);
         resolver.registerContentObserver(Settings.System.getUriFor(
 			Settings.System.STATUS_BAR_CUSTOM_HEADER), false, this, UserHandle.USER_ALL);
+	resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW), false, this, UserHandle.USER_ALL);
+         resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW_COLOR), false, this, UserHandle.USER_ALL);
         update();
         }
 
@@ -1519,6 +1525,13 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 Settings.System.HEADS_UP_SHOW_STATUS_BUTTON, 0) == 1;          
             headerShadow = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW, 0,
+                    UserHandle.USER_CURRENT);
+            textShadow = Settings.System.getFloatForUser(mContext.getContentResolver(),
+                    Settings.System.STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW, 0,
+                    UserHandle.USER_CURRENT);
+
+            tShadowColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW_COLOR, 0,
                     UserHandle.USER_CURRENT);
             customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
@@ -1598,12 +1611,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             ColorDrawable shadow = new ColorDrawable(Color.BLACK);
             shadow.setAlpha(headerShadow);
             mBackgroundImage.setForeground(shadow);
-            enableTextShadow();
         } else if (customHeader == 0) {
             ColorDrawable shadow = new ColorDrawable(Color.BLACK);
             shadow.setAlpha(0);
             mBackgroundImage.setForeground(shadow);
-	    disableTextShadow();
         }
     }
 
@@ -1613,7 +1624,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
              public void run() {
                 // TODO we dont need to do this every time but we dont have
                 // an other place to know right now when custom header is enabled
-                enableTextShadow();
                 doUpdateStatusBarCustomHeader(headerImage, force);
             }
         });
@@ -1625,40 +1635,22 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
              public void run() {
                 mCurrentBackground = null;
                 mBackgroundImage.setVisibility(View.GONE);
-                disableTextShadow();
             }
         });
     }
 
-    /**
-     * makes text more readable on light backgrounds
-     */
-    private void enableTextShadow() {
-        mTime.setShadowLayer(5, 0, 0, Color.BLACK);
-        mAmPm.setShadowLayer(5, 0, 0, Color.BLACK);
-        mDateCollapsed.setShadowLayer(5, 0, 0, Color.BLACK);
-        mDateExpanded.setShadowLayer(5, 0, 0, Color.BLACK);
-        mBatteryLevel.setShadowLayer(5, 0, 0, Color.BLACK);
-        mAlarmStatus.setShadowLayer(5, 0, 0, Color.BLACK);
-        mQsDetailHeaderTitle.setShadowLayer(5, 0, 0, Color.BLACK);
-        mWeatherLine1.setShadowLayer(5, 0, 0, Color.BLACK);
-        mWeatherLine2.setShadowLayer(5, 0, 0, Color.BLACK);
+    private void applyTextShadow() {
+        mTime.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mAmPm.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mDateCollapsed.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mDateExpanded.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mBatteryLevel.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mAlarmStatus.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mQsDetailHeaderTitle.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mWeatherLine1.setShadowLayer(textShadow, 0, 0, tShadowColor);
+        mWeatherLine2.setShadowLayer(textShadow, 0, 0, tShadowColor);
     }
 
-    /**
-     * default
-     */
-    private void disableTextShadow() {
-        mTime.setShadowLayer(0, 0, 0, Color.BLACK);
-        mAmPm.setShadowLayer(0, 0, 0, Color.BLACK);
-        mDateCollapsed.setShadowLayer(0, 0, 0, Color.BLACK);
-        mDateExpanded.setShadowLayer(0, 0, 0, Color.BLACK);
-        mBatteryLevel.setShadowLayer(0, 0, 0, Color.BLACK);
-        mAlarmStatus.setShadowLayer(0, 0, 0, Color.BLACK);
-        mQsDetailHeaderTitle.setShadowLayer(0, 0, 0, Color.BLACK);
-        mWeatherLine1.setShadowLayer(0, 0, 0, Color.BLACK);
-        mWeatherLine2.setShadowLayer(0, 0, 0, Color.BLACK);
-    }
 
     private void setQSHeaderAlpha() {
         if (Settings.System.getInt(mContext.getContentResolver(),
