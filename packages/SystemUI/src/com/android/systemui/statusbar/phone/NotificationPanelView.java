@@ -2886,6 +2886,9 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_PANEL_LOGO_ALPHA),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_COLOR),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -2933,18 +2936,20 @@ public class NotificationPanelView extends PanelView implements
             mCustomCornerRadius = Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.QS_CORNER_RADIUS, 0);
             mCustomDashWidth = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_STROKE_DASH_WIDTH, 0);
+                        Settings.System.QS_STROKE_DASH_WIDTH, 0);
             mCustomDashGap = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_STROKE_DASH_GAP, 10);
+                        Settings.System.QS_STROKE_DASH_GAP, 10);
             mQSPanelLogo = Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.QS_PANEL_LOGO, 0);
             mQSPanelLogoColor = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_PANEL_LOGO_COLOR, mContext.getResources().getColor(R.color.system_accent_color));
+                        Settings.System.QS_PANEL_LOGO_COLOR, mContext.getResources().getColor(R.color.system_accent_color));
             mQSPanelLogoAlpha = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_PANEL_LOGO_ALPHA, 51);
-
+                        Settings.System.QS_PANEL_LOGO_ALPHA, 51);
+            mQSBackgroundColor = Settings.System.getInt( mContext.getContentResolver(), 
+			Settings.System.QS_BACKGROUND_COLOR, 0xff263238);
             setQSPanelLogo();
             setQSStroke();
+            setQSBackgroundColor();
             setQSBackgroundAlpha();
         }
     }
@@ -3077,8 +3082,6 @@ public class NotificationPanelView extends PanelView implements
         mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_COLOR_SWITCH, 0,
                 UserHandle.USER_CURRENT) == 1;
-        int mQSBackgroundColor = Settings.System.getInt( mContext.getContentResolver(), 
-			Settings.System.QS_BACKGROUND_COLOR, 0xff263238);
 	if (mQsColorSwitch) {
         	if (mQsContainer != null) {
                		 mQsContainer.getBackground().setColorFilter(
