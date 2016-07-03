@@ -5879,6 +5879,13 @@ public final class Settings {
         public static final String QS_PANEL_LOGO_ALPHA = "qs_panel_logo_alpha";
 
         /**
+         * Volume dialog timeout
+         *
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
