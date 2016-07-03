@@ -21,7 +21,7 @@
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">重新啟動「系統 UI」</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">淡出</string>
+  <string name="animation_fade">淡化</string>
   <string name="animation_slide_right">從右側滑入</string>
   <string name="animation_slide_left">從左側滑入</string>
   <string name="animation_slide_right_no_fade">從右側滑入 (無淡化效果)</string>
@@ -31,8 +31,8 @@
   <string name="animation_default">預設值</string>
   <string name="animation_translucent">半透明</string>
   <string name="animation_grow_shrink">縮放 (頂部)</string>
-  <string name="animation_grow_shrink_center">縮放(中間)</string>
-  <string name="animation_grow_shrink_bottom">縮放(底部)</string>
+  <string name="animation_grow_shrink_center">縮放 (中央)</string>
+  <string name="animation_grow_shrink_bottom">縮放 (底部)</string>
   <string name="animation_grow_shrink_left">縮放 (左測)</string>
   <string name="animation_grow_shrink_right">縮放 (右側)</string>
   <string name="action_null">空白</string>

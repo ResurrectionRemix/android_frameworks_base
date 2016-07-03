@@ -179,9 +179,9 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_screenrecord">Képernyő felvétel</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Feladat kilövése</string>
+  <string name="accessibility_killtask">Feladat befejezése</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Feladat kilövése</string>
+  <string name="navbar_killtask">Feladat befejezése</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_app_picker">Alkalmazás választó</string>
   <!-- Content description of the Application picker button for accessibility

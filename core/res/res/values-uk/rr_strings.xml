@@ -28,8 +28,8 @@
   <string name="animation_slide_left_no_fade">Зсув ліворуч (без згасання)</string>
   <string name="animation_slide_up">Зсунути вниз</string>
   <string name="animation_slide_down">Зсунути вверх</string>
-  <string name="animation_default">Стандартно</string>
-  <string name="animation_translucent">Прозорість</string>
+  <string name="animation_default">За замовчуванням</string>
+  <string name="animation_translucent">Напівпрозорий</string>
   <string name="animation_grow_shrink">Збільшення (зверху)</string>
   <string name="animation_grow_shrink_center">Збільшення (всередину)</string>
   <string name="animation_grow_shrink_bottom">Збільшення (знизу)</string>
@@ -37,7 +37,7 @@
   <string name="animation_grow_shrink_right">Збільшення (праворуч)</string>
   <string name="action_null">Порожня</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Стандартно</string>
+  <string name="default_string">За замовчуванням</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
   <string name="global_action_onthego">Режим On-The-Go</string>
   <!-- Powermenu Torch -->

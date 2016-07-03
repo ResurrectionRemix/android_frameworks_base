@@ -26,7 +26,7 @@
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Розгорнути</string>
   <string name="app_float_item_title">Плаваючий вигляд</string>
-  <string name="app_stop_item_title">Вбити програму</string>
+  <string name="app_stop_item_title">Закрити додаток</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Екран записується</string>
   <!-- Screenrecord notification title -->
@@ -56,7 +56,7 @@
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
   <string name="quick_settings_brightness_label">Яскравість</string>
-  <string name="quick_settings_screen_off_label">Екран вимкнено</string>
+  <string name="quick_settings_screen_off_label">Вимкнути екран</string>
   <string name="quick_settings_screenshot_label">Знімок екрана</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Розширений робочий стіл</string>
@@ -85,7 +85,7 @@
   <string name="show_fourg_summary">Замінити LTE в рядку стану на 4G</string>
   <string name="statusbar_tuner_category_title">Приховати елементи з рядка стану</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Налаштування</string>
+  <string name="quick_settings_rrtools">Розширені налаштування</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">Спливаючі сповіщення вимкнено.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -97,14 +97,14 @@
   <string name="quick_settings_heads_up_label">Спливаючі сповіщення</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE вкл </string>
-  <string name="lte_off">LTE викл</string>
+  <string name="lte_off">LTE вимк</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Теми</string>
   <string name="quick_settings_themes_icon_packs">Застосувати набір значків</string>
   <string name="quick_settings_themes_app_theme_with_label">Застосувати тему до <xliff:g id="application">%1$s </xliff:g></string>
   <string name="quick_settings_themes_app_theme">Застосувати тему до додатка</string>
   <string name="quick_settings_themes_system_theme">Застосувати тему</string>
-  <string name="quick_settings_themes_default_theme">Стандартно</string>
+  <string name="quick_settings_themes_default_theme">За замовчуванням</string>
   <string name="quick_settings_themes_match_system">Слідувати системну тему</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Навігаційна панель</string>
@@ -129,21 +129,21 @@
   <!-- Pie tile -->
   <string name="quick_settings_pie">Pie</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Меню вимкнення</string>
+  <string name="quick_settings_power_menu_label">Меню кнопки живлення</string>
   <!-- Restart UI -->
   <string name="quick_settings_systemui_restart_label">Перезапуститити SystemUI</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Жест будь-де</string>
-  <string name="quick_settings_gesture_anywhere_on">Жести вкл</string>
-  <string name="quick_settings_gesture_anywhere_off">Жести вимк</string>
+  <string name="quick_settings_gesture_anywhere_on">Жести увімкнені</string>
+  <string name="quick_settings_gesture_anywhere_off">Жести вимкнені</string>
   <!-- Tuner UI -->
   <string name="status_bar_tuner_title">Налаштування панелі статусу</string>
-  <string name="status_bar_tuner">Іконки в статус барі</string>
-  <string name="status_bar_tuner_summary">Увімкнути або вимкнути іконки в статус барі</string>
+  <string name="status_bar_tuner">Значки статус бару</string>
+  <string name="status_bar_tuner_summary">Увімкнути або вимкнути системні значки рядка стану</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Виключити</string>
-  <string name="on">Увімкнено</string>
-  <string name="toggle">Переключити</string>
+  <string name="off">Вимк</string>
+  <string name="on">Увімк</string>
+  <string name="toggle">Перемкнути</string>
   <!-- Dialog Cancel/OK -->
   <string name="cancel">Відміна</string>
   <string name="dlg_ok">Ок</string>
@@ -199,14 +199,14 @@
   <!-- vpn icon switch -->
   <string name="status_bar_volume">Вібрація</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">UI Тюнер</string>
+  <string name="systemui_tuner_qs_title">Налаштування користувацького інтерфейсу</string>
   <!-- Heads up toast -->
   <string name="heads_up_enabled">Спливаючі сповіщення увімкнені</string>
   <string name="heads_up_disabled">Спливаючі сповіщення вимкнено</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Спливаючі сповіщення вимкнено на <xliff:g id="number">%d</xliff:g> хвилин.</string>
+  <string name="heads_up_snooze_message">Повтор спливаючих сповіщень через <xliff:g id="number">%d</xliff:g> хвилин.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">\"Пульс\" увімкнений</string>
+  <string name="quick_settings_pulse_enabled">\"Пульс\" увімкнено</string>
   <string name="quick_settings_pulse_disabled">Без віртуалізації</string>
   <string name="quick_settings_pulse_label">Віртуалізація навбару</string>
   <!-- PA Pie controls -->
@@ -215,19 +215,19 @@
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Float режим</string>
+  <string name="recent_float_mode_title">Плаваючий режим</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Розгорнути</string>
   <string name="app_float_item_title">Плаваючий вигляд</string>
-  <string name="app_stop_item_title">Вбити програму</string>
+  <string name="app_stop_item_title">Закрити додаток</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Float режим включений</string>
-  <string name="quick_settings_floating_windows_off">Float режим виключений</string>
+  <string name="quick_settings_floating_windows_on">Плаваючий режим увімкнено</string>
+  <string name="quick_settings_floating_windows_off">Плаваючий режим вимкнено</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim Float режим включений</string>
-  <string name="quick_settings_slim_floats_off">Slim Float режим виключений</string>
+  <string name="quick_settings_slim_floats_on">Тонкий плаваючий режим увімкнено</string>
+  <string name="quick_settings_slim_floats_off">Тонкий плаваючий режим вимкнено</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Віртуалізатор.</string>
-  <string name="pulse_toast_message">Віртуалізація не буде працювати коли \"Пульс\" включений</string>
+  <string name="pulse_toast_message">Віртуалізація не буде працювати коли \"Пульс\" увімкнено</string>
 </resources>

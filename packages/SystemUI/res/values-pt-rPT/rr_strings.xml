@@ -101,7 +101,7 @@
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Temas</string>
   <string name="quick_settings_themes_icon_packs">Aplicar o pacote de ícones</string>
-  <string name="quick_settings_themes_app_theme_with_label">Aplicar um tema para <xliff:g id="application">%1$s </xliff:g></string>
+  <string name="quick_settings_themes_app_theme_with_label">Aplicar um tema para <xliff:g id="application"> %1$s </xliff:g></string>
   <string name="quick_settings_themes_app_theme">Aplicar um tema à app</string>
   <string name="quick_settings_themes_system_theme">Aplicar tema</string>
   <string name="quick_settings_themes_default_theme">Predefinido</string>
@@ -204,7 +204,7 @@
   <string name="heads_up_enabled">Notificações pop-up estão ativadas</string>
   <string name="heads_up_disabled">Notificações pop-up estão desativadas</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Notificações pop-up estão adormecidas por <xliff:g id="number">%d</xliff:g> minutos.</string>
+  <string name="heads_up_snooze_message">Notificações pop-up estão adormecidas por <xliff:g id="number"> %d </xliff:g> minutos.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse Ativado</string>
   <string name="quick_settings_pulse_disabled">Nenhum Visualizador</string>
