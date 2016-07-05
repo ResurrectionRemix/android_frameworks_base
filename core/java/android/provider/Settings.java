@@ -8611,6 +8611,13 @@ public final class Settings {
         public static final String FLING_PULSE_LAVALAMP_SPEED = "fling_pulse_lavalamp_speed";
 
         /**
+         * Pulse renderer implementation
+         *
+         * @hide
+         */
+        public static final String PULSE_RENDER_STYLE_URI = "pulse_render_style";
+
+        /**
          * time it takes to execute Fling long press action
          *
          * @hide
