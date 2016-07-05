@@ -5205,6 +5205,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
 
         /**
+         * Transition effect in RR tabs
+         *
+         * @hide
+         */
+        public static final String RR_SETTINGS_TABS_EFFECT = "rr_settings_tabs_effect";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
