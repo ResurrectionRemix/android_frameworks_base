@@ -209,11 +209,7 @@
   <string name="quick_settings_pulse_enabled">Pulse Etkin</string>
   <string name="quick_settings_pulse_disabled">Görselleştirme yok</string>
   <string name="quick_settings_pulse_label">Gezinti Çubuğu Görselleştirme</string>
-  <!-- PA Pie controls -->
-  <string name="pie_date_format">ccc, gg AAA yyyy</string>
-  <string name="pie_hour_format_12">ss:dd</string>
-  <string name="pie_hour_format_24">SS:dd</string>
-  <string name="pie_am_pm">a</string>
+  
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Yüzme Modu</string>
   <!-- App circle sidebar -->
