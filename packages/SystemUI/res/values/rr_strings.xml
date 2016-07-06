@@ -141,11 +141,11 @@
     <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
 
-    <!-- PA Pie controls -->
+        <!-- PA Pie controls -->
     <string name="pie_date_format" translatable="false">ccc, dd MMM yyyy</string>
-    <string name="pie_hour_format_12">hh:mm</string>
-    <string name="pie_hour_format_24">HH:mm</string>
-    <string name="pie_am_pm">a</string>
+    <string name="pie_hour_format_12" translatable="false">hh:mm</string>
+    <string name="pie_hour_format_24" translatable="false">HH:mm</string>
+    <string name="pie_am_pm" translatable="false">a</string>
 
     <!-- Kill app toast -->
     <string name="app_killed_message">App Killed</string>
