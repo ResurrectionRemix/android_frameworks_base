@@ -210,10 +210,6 @@
   <string name="quick_settings_pulse_disabled">沒有可視化工具</string>
   <string name="quick_settings_pulse_label">導覽列視覺化檢視</string>
   <!-- PA Pie controls -->
-  <string name="pie_date_format">ccc, dd MMM yyyy</string>
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">浮動模式</string>
   <!-- App circle sidebar -->

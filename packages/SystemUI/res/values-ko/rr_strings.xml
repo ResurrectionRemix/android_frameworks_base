@@ -105,13 +105,13 @@
   <string name="quick_settings_themes_app_theme">앱에 테마 적용하기</string>
   <string name="quick_settings_themes_system_theme">테마 적용하기</string>
   <string name="quick_settings_themes_default_theme">기본</string>
-  <string name="quick_settings_themes_match_system">Match system theme</string>
+  <string name="quick_settings_themes_match_system">시스템 테마 맟추기</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">소프트 키</string>
   <string name="quick_settings_smartbar_off">스마트바 비활성화</string>
   <string name="quick_settings_smartbar">스마트바</string>
-  <string name="quick_settings_fling">Fling gesture</string>
-  <string name="quick_settings_fling_off">Fling gesture off</string>
+  <string name="quick_settings_fling">날 뛰는 제스처</string>
+  <string name="quick_settings_fling_off">날 뛰는 제스처 끄기</string>
   <!-- Hw Keys tile -->
   <string name="quick_settings_hwkeys_title">하드웨어 키</string>
   <string name="quick_settings_hwkeys_on">하드웨어 키 켬</string>
@@ -210,10 +210,6 @@
   <string name="quick_settings_pulse_disabled">비주얼 없음</string>
   <string name="quick_settings_pulse_label">네비게이션 바 비주얼</string>
   <!-- PA Pie controls -->
-  <string name="pie_date_format">ccc, dd MMM yyyy</string>
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Float 모드</string>
   <!-- App circle sidebar -->

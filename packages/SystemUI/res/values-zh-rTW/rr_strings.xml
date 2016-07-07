@@ -210,10 +210,6 @@
   <string name="quick_settings_pulse_disabled">律動 關閉</string>
   <string name="quick_settings_pulse_label">導覽列音樂視覺化效果</string>
   <!-- PA Pie controls -->
-  <string name="pie_date_format">ccc, dd MMM yyyy</string>
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">懸浮模式</string>
   <!-- App circle sidebar -->

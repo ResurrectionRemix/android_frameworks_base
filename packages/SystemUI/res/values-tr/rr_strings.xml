@@ -209,7 +209,7 @@
   <string name="quick_settings_pulse_enabled">Pulse Etkin</string>
   <string name="quick_settings_pulse_disabled">Görselleştirme yok</string>
   <string name="quick_settings_pulse_label">Gezinti Çubuğu Görselleştirme</string>
-  
+  <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Yüzme Modu</string>
   <!-- App circle sidebar -->

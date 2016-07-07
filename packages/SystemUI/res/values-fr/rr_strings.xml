@@ -210,10 +210,6 @@
   <string name="quick_settings_pulse_disabled">Aucun aperçu</string>
   <string name="quick_settings_pulse_label">Aperçu de la barre de navigation</string>
   <!-- PA Pie controls -->
-  <string name="pie_date_format">ccc, jj MMM aaaa</string>
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">un</string>
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Mode flottant</string>
   <!-- App circle sidebar -->
