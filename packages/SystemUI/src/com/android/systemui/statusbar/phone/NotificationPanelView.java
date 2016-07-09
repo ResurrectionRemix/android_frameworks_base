@@ -2969,11 +2969,12 @@ public class NotificationPanelView extends PanelView implements
     private void setQSStroke() {
         final GradientDrawable qSGd = new GradientDrawable();
         if (mQsContainer != null) {
-            if (mQSStroke == 0) { // Disable by setting border thickness to 0
-                qSGd.setColor(mContext.getResources().getColor(R.color.system_primary_color));
+            if (mQSStroke == 0) {
+                /*qSGd.setColor(mContext.getResources().getColor(R.color.system_primary_color));
                 qSGd.setStroke(0, mContext.getResources().getColor(R.color.system_accent_color));
                 qSGd.setCornerRadius(mCustomCornerRadius);
-                mQsContainer.setBackground(qSGd);
+                mQsContainer.setBackground(qSGd);*/
+                // Don't do anything when disabled, it fucks up themes that use drawable instead of color
             } else if (mQSStroke == 1) { // use accent color for border
                 qSGd.setColor(mContext.getResources().getColor(R.color.system_primary_color));
                 qSGd.setStroke(mCustomStrokeThickness, mContext.getResources().getColor(R.color.system_accent_color),
