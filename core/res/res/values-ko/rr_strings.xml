@@ -19,14 +19,14 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">SystemUI 다시 시작</string>
+  <string name="reboot_systemui">시스템UI 다시 시작</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">서서히 사라짐</string>
   <string name="animation_slide_right">오른쪽으로 슬라이드</string>
   <string name="animation_slide_left">왼쪽으로 슬라이드</string>
   <string name="animation_slide_right_no_fade">오른쪽으로 슬라이드 (페이드 없음)</string>
   <string name="animation_slide_left_no_fade">왼쪽으로 슬라이드 (페이드 없음)</string>
-  <string name="animation_slide_up">하단으로 슬라이드</string>
+  <string name="animation_slide_up">아래로 슬라이드</string>
   <string name="animation_slide_down">위로 슬라이드</string>
   <string name="animation_default">기본값</string>
   <string name="animation_translucent">반투명</string>

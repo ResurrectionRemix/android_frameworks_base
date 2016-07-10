@@ -22,7 +22,7 @@
   <!-- Battery Saver Dimss -->
   <string name="battery_saver_dismiss_title">닫기</string>
   <string name="battery_saver_notification_action_text_short"> 끄기</string>
-  <string name="gestures_message">여기에 제스쳐 그리기</string>
+  <string name="gestures_message">여기에 제스쳐 그리세요</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">최대화</string>
   <string name="app_float_item_title">플로팅 뷰</string>
