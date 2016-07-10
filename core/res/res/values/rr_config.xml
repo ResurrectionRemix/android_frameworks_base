@@ -96,4 +96,7 @@
 
     <bool name="config_enableScreenrecordChord">true</bool>
 
+    <!-- Whether device has dash charging support -->
+    <bool name="config_hasDashCharger">false</bool>
+
 </resources>
