@@ -6545,15 +6545,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
    public void setBackgroundBitmap(Bitmap bmp) {
-        if (bmp != null) {
-            if (mBlurLockRadius != 0) {
-                mBlurredImage = blurBitmap(bmp,mBlurLockRadius);
-            } else {
-                mBlurredImage = bmp;
-            }
+        if (bmp == null && mBlurredImage == null) return;
+
+        if (bmp != null && mBlurRadius != 0) {
+            mBlurredImage = Blur.blurBitmap(mContext, bmp, mBlurRadius);
         } else {
-            mBlurredImage = null;
-        }
+            mBlurredImage = bmp;
+	}
 
         mHandler.post(new Runnable() {
             @Override

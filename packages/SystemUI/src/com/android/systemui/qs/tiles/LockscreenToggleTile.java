@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+package com.android.systemui.qs.tiles;
 
 import android.content.Intent;
 import android.os.UserHandle;
@@ -109,38 +110,14 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
         state.label = mContext.getString(lockscreenEnforced
                 ? R.string.quick_settings_lockscreen_label_enforced
                 : R.string.quick_settings_lockscreen_label);
-            final boolean lockscreenEnforced = mediator.lockscreenEnforcedByDevicePolicy();
-            final boolean lockscreenEnabled = lockscreenEnforced ||
-                arg != null ? (Boolean) arg : mediator.getKeyguardEnabledInternal();
-
-            state.visible = mediator.isKeyguardBound();
-
-            if (mediator.isProfileDisablingKeyguard()) {
-                state.value = false;
-                state.enabled = false;
-                state.label = mContext.getString(
-                        R.string.quick_settings_lockscreen_label_locked_by_profile);
-            } else if (lockscreenEnforced) {
-                state.value = true;
-                state.enabled = false;
-                state.label = mContext.getString(
-                        R.string.quick_settings_lockscreen_label_enforced);
-            } else {
-                state.value = lockscreenEnabled;
-                state.enabled = !mKeyguard.isShowing() || !mKeyguard.isSecure();
-
-                state.label = mContext.getString(R.string.quick_settings_lockscreen_label);
-            }
-            // update icon
-            if (lockscreenEnabled) {
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_lock_screen_on);
-                state.contentDescription = mContext.getString(
-                        R.string.accessibility_quick_settings_lock_screen_on);
-            } else {
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_lock_screen_off);
-                state.contentDescription = mContext.getString(
-                        R.string.accessibility_quick_settings_lock_screen_off);
-            }
+        if (lockscreenEnabled) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_lock_screen_on);
+            state.contentDescription = mContext.getString(
+                    R.string.accessibility_quick_settings_lock_screen_on);
+        } else {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_lock_screen_off);
+            state.contentDescription = mContext.getString(
+                    R.string.accessibility_quick_settings_lock_screen_off);
         }
 
       }  
@@ -172,3 +149,4 @@ public class LockscreenToggleTile extends QSTile<QSTile.BooleanState>
                 enabled ? 1 : 0, UserHandle.USER_CURRENT);
     }
 }
+

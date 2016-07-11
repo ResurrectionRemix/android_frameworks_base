@@ -146,7 +146,7 @@ public class NotificationPanelView extends PanelView implements
     private StatusBarHeaderView mHeader;
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
     private KeyguardStatusBarView mKeyguardStatusBar;
-    private QSContainer mQsContainer;
+    private static QSContainer mQsContainer;
     private QSPanel mQsPanel;
     private KeyguardStatusView mKeyguardStatusView;
     private ObservableScrollView mScrollView;
@@ -177,7 +177,7 @@ public class NotificationPanelView extends PanelView implements
     private boolean mQsExpanded;
     private boolean mQsExpandedWhenExpandingStarted;
     private boolean mQsFullyExpanded;
-    private boolean mKeyguardShowing;
+    public static boolean mKeyguardShowing;
     private boolean mKeyguardOrShadeShowing;
     public static boolean mHeadsUpShowing;
     private boolean mDozing;
@@ -643,7 +643,6 @@ public class NotificationPanelView extends PanelView implements
             mBlurredView.setVisibility(View.INVISIBLE);
 
             handleQuickSettingsBackround();
-            mKeyguardWeatherInfo = (TextView) mKeyguardStatusView.findViewById(R.id.weather_info);
     }
     private static void handleQuickSettingsBackround() {
 
@@ -3284,7 +3283,6 @@ public class NotificationPanelView extends PanelView implements
             mBlurLightColorFilter = Color.DKGRAY;
             mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
             handleQuickSettingsBackround();
-            StatusBarHeaderView.handleStatusBarHeaderViewBackround();
             setQSPanelLogo();
             setQSStroke();
             setQSBackgroundColor();
