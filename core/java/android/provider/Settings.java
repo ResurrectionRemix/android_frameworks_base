@@ -5322,6 +5322,12 @@ public final class Settings {
          */
         public static final String LOCK_SCREEN_WEATHER_CITY_COLOR = "lock_screen_weather_city_color";
 
+        /**
+         * Master switch for clock color
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_COLOR_SWITCH = "statusbar_clock_color_switch";
+
   	 /**
          * Color of the weather condition icons on the lock screen
          * @hide

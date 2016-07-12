@@ -103,6 +103,7 @@ public class ClockController {
         mActiveClock.setAmPmStyle(mAmPmStyle);
 
         setClockAndDateStatus();
+	setTextColor(mIconTint);
     }
 
     private void updateSettings() {
@@ -127,6 +128,13 @@ public class ClockController {
             mActiveClock.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     }
+
+    public void setTextColor(int iconTint) {
+        mIconTint = iconTint;
+        if (mActiveClock != null) {
+            mActiveClock.setTextColor(iconTint);
+        }
+}
     
     public void cleanup() {
         mSettingsObserver.unobserve();
