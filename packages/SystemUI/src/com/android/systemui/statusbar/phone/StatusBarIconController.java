@@ -89,6 +89,7 @@ public class StatusBarIconController implements Tunable {
     private BatteryMeterView mBatteryMeterView;
     private ClockController mClockController;
     private View mCenterClockLayout;
+    private TextView mCarrier;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -177,7 +178,6 @@ public class StatusBarIconController implements Tunable {
 
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
-
         updateResources();
         carrierLabelVisibility();
 
@@ -567,6 +567,13 @@ public class StatusBarIconController implements Tunable {
             mClockController.setTextColor(mIconTint);
         }
         mBatteryMeterView.setDarkIntensity(mDarkIntensity);
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CARRIER_COLOR,
+                mContext.getResources().getColor(R.color.status_bar_clock_color),
+                UserHandle.USER_CURRENT) == mContext.getResources().
+                getColor(R.color.status_bar_clock_color)) {
+            mCarrierLabel.setTextColor(mIconTint);
+        }
         applyNotificationIconsTint();
     }
 
