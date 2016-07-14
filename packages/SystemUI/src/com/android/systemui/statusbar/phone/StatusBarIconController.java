@@ -546,7 +546,7 @@ public class StatusBarIconController implements Tunable {
 
     public void applyIconTint() {
 	mColorSwitch =  Settings.System.getInt(mContext.getContentResolver(),
-				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;	
+				 Settings.System.STATUSBAR_COLOR_SWITCH, 0) == 1;
 	int batterytext = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.BATTERY_TEXT_COLOR, 0xFFFFFFFF);
         int mBatteryIconColor = Settings.System.getInt(mContext.getContentResolver(),
@@ -581,22 +581,32 @@ public class StatusBarIconController implements Tunable {
                 mContext.getResources().getColor(R.color.status_bar_clock_color),
                 UserHandle.USER_CURRENT) == mContext.getResources().
                 getColor(R.color.status_bar_clock_color)) {
+	if (mCarrierLabel !=null) {
             mCarrierLabel.setTextColor(mIconTint);
+	    }
         }
 	if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF,
                 UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
-        mRRLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
-        mRRLogoCenter.setImageTintList(ColorStateList.valueOf(mIconTint));
-        mRRLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
-        mRRLogoBefore.setImageTintList(ColorStateList.valueOf(mIconTint));
+		if (mRRLogo != null) {
+       		 mRRLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
+		} if (mRRLogoCenter != null) {
+        	mRRLogoCenter.setImageTintList(ColorStateList.valueOf(mIconTint));
+		} if (mRRLogoRight != null) {
+       		 mRRLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
+		} if (mRRLogoBefore != null) {
+       		 mRRLogoBefore.setImageTintList(ColorStateList.valueOf(mIconTint));
+		}
 	}
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF,
                 UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
-            mWeather.setTextColor(mIconTint);
-            mWeatherLeft.setTextColor(mIconTint);
-        }
+		if (mWeather !=null) {
+         	   mWeather.setTextColor(mIconTint);
+		} if (mWeatherLeft !=null) {
+       	     	   mWeatherLeft.setTextColor(mIconTint);
+       	        }
+	}
         applyNotificationIconsTint();
     }
 
