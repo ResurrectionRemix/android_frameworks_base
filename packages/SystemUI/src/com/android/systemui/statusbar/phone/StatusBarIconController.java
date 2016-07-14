@@ -135,6 +135,10 @@ public class StatusBarIconController implements Tunable {
 
     private TextView mCarrierLabel;
     private int mCarrierLabelMode;
+    private ImageView mRRLogo;
+    private ImageView mRRLogoRight;
+    private ImageView mRRLogoCenter;
+    private ImageView mRRLogoBefore;
 
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
 
@@ -169,7 +173,10 @@ public class StatusBarIconController implements Tunable {
                 android.R.interpolator.fast_out_slow_in);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
-
+	mRRLogo = (ImageView) statusBar.findViewById(R.id.left_rr_logo);
+	mRRLogoRight = (ImageView) statusBar.findViewById(R.id.rr_logo);
+	mRRLogoCenter = (ImageView) statusBar.findViewById(R.id.center_rr_logo);
+	mRRLogoBefore = (ImageView) statusBar.findViewById(R.id.before_icons_rr_logo);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mHandler = new Handler();
 
@@ -574,6 +581,14 @@ public class StatusBarIconController implements Tunable {
                 getColor(R.color.status_bar_clock_color)) {
             mCarrierLabel.setTextColor(mIconTint);
         }
+	if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
+        mRRLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
+        mRRLogoCenter.setImageTintList(ColorStateList.valueOf(mIconTint));
+        mRRLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
+        mRRLogoBefore.setImageTintList(ColorStateList.valueOf(mIconTint));
+	}
         applyNotificationIconsTint();
     }
 
