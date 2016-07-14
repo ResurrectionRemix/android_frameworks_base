@@ -90,6 +90,8 @@ public class StatusBarIconController implements Tunable {
     private ClockController mClockController;
     private View mCenterClockLayout;
     private TextView mCarrier;
+    private TextView mWeather;
+    private TextView mWeatherLeft;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -178,11 +180,11 @@ public class StatusBarIconController implements Tunable {
 	mRRLogoCenter = (ImageView) statusBar.findViewById(R.id.center_rr_logo);
 	mRRLogoBefore = (ImageView) statusBar.findViewById(R.id.before_icons_rr_logo);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
+        mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
+        mWeatherLeft = (TextView) statusBar.findViewById(R.id.left_weather_temp);
         mHandler = new Handler();
-
         mClockController = new ClockController(statusBar, mNotificationIcons, mHandler);
         mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
-
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
         updateResources();
@@ -589,6 +591,12 @@ public class StatusBarIconController implements Tunable {
         mRRLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
         mRRLogoBefore.setImageTintList(ColorStateList.valueOf(mIconTint));
 	}
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
+            mWeather.setTextColor(mIconTint);
+            mWeatherLeft.setTextColor(mIconTint);
+        }
         applyNotificationIconsTint();
     }
 
