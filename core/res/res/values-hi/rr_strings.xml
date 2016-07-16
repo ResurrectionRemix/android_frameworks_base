@@ -43,9 +43,9 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">टॉर्च</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Snap top</string>
-  <string name="floating_window_snap_bottom">Snap bottom</string>
-  <string name="floating_window_snap_left">Snap left</string>
-  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_snap_top">तस्वीर ऊपर</string>
+  <string name="floating_window_snap_bottom">तस्वीर का तल</string>
+  <string name="floating_window_snap_left">तस्वीर बाएं</string>
+  <string name="floating_window_snap_right">तस्वीर दाईं</string>
   <string name="floating_window_minimize">छोटा करें</string>
 </resources>

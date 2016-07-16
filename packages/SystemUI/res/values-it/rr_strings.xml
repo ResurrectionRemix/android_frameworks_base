@@ -81,7 +81,7 @@
   <string name="quick_settings_reboot_label">Riavvia</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Visualizza 4G invece di LTE</string>
+  <string name="show_fourg_title">Mostra 4G invece di LTE</string>
   <string name="show_fourg_summary">Sostituisce l\'indicatore LTE nella barra delle notifiche con il 4G</string>
   <string name="statusbar_tuner_category_title">Nascondi elementi dalla barra delle notifiche</string>
   <!-- Configurations Tile -->
