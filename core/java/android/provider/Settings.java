@@ -8926,7 +8926,13 @@ public final class Settings {
         public static final String HALO_SIZE = "halo_size";
 
         /**
-         * HALO message box?, should default to 1 (yes, show message box on incoming notification)
+         * Whether to use one tap tile action to enable or disable data 
+         * @hide
+         */
+        public static final String QS_DATA_ADVANCED = "qs_data_advanced";
+
+        /**
+         * HALO message box?, should default to 1 (yes, show message box on incoming notification) [1/2]
          * @hide
          */
         public static final String HALO_MSGBOX = "halo_msgbox";
