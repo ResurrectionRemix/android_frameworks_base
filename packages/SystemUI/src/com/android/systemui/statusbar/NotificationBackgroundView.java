@@ -18,12 +18,20 @@ package com.android.systemui.statusbar;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.net.Uri;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.android.systemui.statusbar.phone.NotificationPanelView;
 
 /**
  * A view that can be used for both the dimmed and normal background of an notification.
@@ -33,9 +41,12 @@ public class NotificationBackgroundView extends View {
     private Drawable mBackground;
     private int mClipTopAmount;
     private int mActualHeight;
+    private int mNotificationsAlpha;
+    private SettingsObserver mSettingsObserver;
 
     public NotificationBackgroundView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mSettingsObserver = new SettingsObserver(new Handler());
     }
 
     @Override
@@ -46,8 +57,21 @@ public class NotificationBackgroundView extends View {
     private void draw(Canvas canvas, Drawable drawable) {
         if (drawable != null && mActualHeight > mClipTopAmount) {
             drawable.setBounds(0, mClipTopAmount, getWidth(), mActualHeight);
+            drawable.setAlpha(mNotificationsAlpha);
             drawable.draw(canvas);
         }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mSettingsObserver.observe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mSettingsObserver.unobserve();
     }
 
     @Override
@@ -70,6 +94,40 @@ public class NotificationBackgroundView extends View {
     public void drawableHotspotChanged(float x, float y) {
         if (mBackground != null) {
             mBackground.setHotspot(x, y);
+        }
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NOTIFICATION_ALPHA), false, this);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mNotificationsAlpha = Settings.System.getIntForUser(resolver,
+                    Settings.System.NOTIFICATION_ALPHA, 255, UserHandle.USER_CURRENT);
         }
     }
 

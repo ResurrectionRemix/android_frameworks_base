@@ -5944,6 +5944,13 @@ public final class Settings {
         public static final String QS_TASK_ANIMATION = "qs_task_animation";
 
         /**
+         * Notifications alpha
+         *
+         * @hide
+         */
+        public static final String NOTIFICATION_ALPHA = "notification_alpha";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
