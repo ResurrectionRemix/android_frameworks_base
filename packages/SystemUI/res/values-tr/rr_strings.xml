@@ -87,14 +87,14 @@
   <!-- Configurations Tile -->
   <string name="quick_settings_rrtools">Kişiselleştirme</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_off">Heads up kapalı.</string>
+  <string name="accessibility_quick_settings_heads_up_off">Bildirim pencereleri kapalı.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_on">Heads up açık.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Bildirim pencereleri açık.</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up kapatıldı.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pencereleri kapatıldı.</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up açıldı.</string>
-  <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pencereleri açıldı.</string>
+  <string name="quick_settings_heads_up_label">Bildirim pencereleri</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE AÇIK </string>
   <string name="lte_off">LTE KAPALI</string>
@@ -201,10 +201,10 @@
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">Hızlı Ayarlar Kareleri</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads up bildirimler etkinleştirildi</string>
-  <string name="heads_up_disabled">Heads up bildirimler devre dışı bırakıldı</string>
+  <string name="heads_up_enabled">Bildirim pencereleri etkinleştirildi</string>
+  <string name="heads_up_disabled">Bildirim pencereleri devre dışı bırakıldı</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads up bildirimleri <xliff:g id="number">%d</xliff:g> dakikalığına devre dışı.</string>
+  <string name="heads_up_snooze_message">Bildirim pencereleri <xliff:g id="number">%d</xliff:g> dakikalığına devre dışı.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse Etkin</string>
   <string name="quick_settings_pulse_disabled">Görselleştirme yok</string>

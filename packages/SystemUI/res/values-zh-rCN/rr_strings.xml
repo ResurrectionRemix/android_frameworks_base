@@ -20,7 +20,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">拒绝</string>
+  <string name="battery_saver_dismiss_title">忽略</string>
   <string name="battery_saver_notification_action_text_short">关闭</string>
   <string name="gestures_message">请在此画出您的手势</string>
   <!-- App circle sidebar -->

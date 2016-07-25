@@ -22,7 +22,7 @@
   <!-- Battery Saver Dimss -->
   <string name="battery_saver_dismiss_title">Odmítnout</string>
   <string name="battery_saver_notification_action_text_short">Vypnout</string>
-  <string name="gestures_message">Kreslení gest zde</string>
+  <string name="gestures_message">Zde nakreslete gesto</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximalizovat</string>
   <string name="app_float_item_title">Plovoucí zobrazení</string>

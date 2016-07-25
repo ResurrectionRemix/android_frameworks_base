@@ -41,12 +41,12 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikacja została zabita</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">Tryb On-The-Go aktywowany</string>
-  <string name="onthego_notif_title">Tryb On-The-Go jest aktywny</string>
+  <string name="onthego_notif_ticker">Tryb \"W ruchu\" aktywowany</string>
+  <string name="onthego_notif_title">Tryb \"W ruchu\" jest aktywny</string>
   <string name="onthego_notif_stop">Zatrzymaj</string>
   <string name="onthego_notif_options">Opcje</string>
-  <string name="onthego_notif_error">Nie można uruchomić trybu On-The-Go</string>
-  <string name="onthego_notif_restart">Uruchom ponownie tryb On-The-Go</string>
+  <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
+  <string name="onthego_notif_restart">Uruchom ponownie tryb \"W ruchu\"</string>
   <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
   <string name="onthego_transparency">Przeźroczystość</string>
   <string name="onthego_front_camera">Użyj przedniej kamery</string>
@@ -94,7 +94,7 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Wyskakujące powiadomienia wyłączone.</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">Wyskakujące powiadomienia włączone.</string>
-  <string name="quick_settings_heads_up_label">Powiadomienia Heads-Up</string>
+  <string name="quick_settings_heads_up_label">Wyskakujące powiadomienia</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE Włączone </string>
   <string name="lte_off">LTE Wyłączone</string>
@@ -125,7 +125,7 @@
   <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
   <!-- Quick settings -->
   <string name="quick_settings_screenrecord">Nagrywanie Ekranu</string>
-  <string name="quick_settings_screenrecord_on">Nagrywanie ...</string>
+  <string name="quick_settings_screenrecord_on">Nagrywanie...</string>
   <!-- Pie tile -->
   <string name="quick_settings_pie">Wysuwane przyciski nawigacji</string>
   <!-- Power Menu -->

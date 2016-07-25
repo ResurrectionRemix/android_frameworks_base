@@ -42,7 +42,7 @@
   <string name="app_killed_message">已終止應用程式</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go 已啟動</string>
-  <string name="onthego_notif_title">On-The-Go 正在運行</string>
+  <string name="onthego_notif_title">正在使用 On-The-Go</string>
   <string name="onthego_notif_stop">停止</string>
   <string name="onthego_notif_options">選項</string>
   <string name="onthego_notif_error">無法啟動 On-The-Go</string>
@@ -60,8 +60,8 @@
   <string name="quick_settings_screenshot_label">擷取螢幕畫面</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">擴展桌面</string>
-  <string name="quick_settings_expanded_desktop">已擴展</string>
-  <string name="quick_settings_expanded_desktop_off">一般</string>
+  <string name="quick_settings_expanded_desktop">擴展</string>
+  <string name="quick_settings_expanded_desktop_off">正常</string>
   <string name="quick_settings_expanded_desktop_detail_title">擴展桌面模式</string>
   <string name="quick_settings_expanded_hide_status">隱藏狀態列</string>
   <string name="quick_settings_expanded_hide_navigation">隱藏導覽列</string>

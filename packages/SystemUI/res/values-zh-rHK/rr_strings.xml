@@ -107,7 +107,7 @@
   <string name="quick_settings_themes_default_theme">預設值</string>
   <string name="quick_settings_themes_match_system">與系統主題相同</string>
   <!-- Navigation bar Tile -->
-  <string name="quick_settings_navigation_bar">導航列</string>
+  <string name="quick_settings_navigation_bar">導覽列</string>
   <string name="quick_settings_smartbar_off">關閉智能列</string>
   <string name="quick_settings_smartbar">智能列</string>
   <string name="quick_settings_fling">掃動手勢</string>

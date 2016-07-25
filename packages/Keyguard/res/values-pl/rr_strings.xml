@@ -15,5 +15,5 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="weather_info_not_available">Informacje o pogodzie niedostępne</string>
+  <string name="weather_info_not_available">Niestety, informacje o pogodzie są niedostępne</string>
 </resources>

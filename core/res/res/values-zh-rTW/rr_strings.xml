@@ -28,7 +28,7 @@
   <string name="animation_slide_left_no_fade">從左側滑入 (無淡化效果)</string>
   <string name="animation_slide_up">從底部滑入</string>
   <string name="animation_slide_down">從頂部滑入</string>
-  <string name="animation_default">預設值</string>
+  <string name="animation_default">預設</string>
   <string name="animation_translucent">半透明</string>
   <string name="animation_grow_shrink">縮放 (頂部)</string>
   <string name="animation_grow_shrink_center">縮放 (中央)</string>
@@ -37,7 +37,7 @@
   <string name="animation_grow_shrink_right">縮放 (右側)</string>
   <string name="action_null">空白</string>
   <!-- Slimseekbar -->
-  <string name="default_string">預設值</string>
+  <string name="default_string">預設</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
   <string name="global_action_onthego">On-The-Go 模式</string>
   <!-- Powermenu Torch -->

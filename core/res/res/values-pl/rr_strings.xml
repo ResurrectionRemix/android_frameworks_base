@@ -39,7 +39,7 @@
   <!-- Slimseekbar -->
   <string name="default_string">Domyślne</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">Tryb \"W ruchu\"</string>
+  <string name="global_action_onthego">Tryb w drodze</string>
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Latarka</string>
   <!-- Floating Window -->
