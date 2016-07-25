@@ -305,6 +305,8 @@
     <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
     
     <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
+
+    <string name="recents_custom_android_n">CLEAR ALL</string>
   
 </resources>
 

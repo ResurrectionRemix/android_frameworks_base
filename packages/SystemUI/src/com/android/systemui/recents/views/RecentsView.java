@@ -838,8 +838,6 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 	mClearRecents.setVisibility(View.GONE);
 	mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents29);
 	mClearallText =  (TextView) ((View)getParent()).findViewById(R.id.clear_recents29);
-	mClearallText.setText("CLEAR ALL");
-        mClearallText.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL)); 
 	mClearallText.setTextColor(mclearallcolor);
 	mClearallText.setVisibility(View.VISIBLE);
 	mClearRecents.setVisibility(View.VISIBLE);
