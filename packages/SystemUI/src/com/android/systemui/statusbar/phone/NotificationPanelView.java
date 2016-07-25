@@ -1936,12 +1936,14 @@ public class NotificationPanelView extends PanelView implements
                     ? View.VISIBLE : View.GONE);
             mTaskManagerPanel.setVisibility(expandVisually && taskManagerShowing
                     && !mKeyguardShowing ? View.VISIBLE : View.GONE);
-            if (mTaskManagerShowing) {
-                mTaskManagerPanel.startAnimation(getAnimation(true));
-                mQsPanel.startAnimation(getAnimation(false));
-            } else {
-                mQsPanel.startAnimation(getAnimation(true));
-                mTaskManagerPanel.startAnimation(getAnimation(false));
+	if(!mKeyguardShowing) {
+           	 if (mTaskManagerShowing) {
+               	 mTaskManagerPanel.startAnimation(getAnimation(true));
+               	 mQsPanel.startAnimation(getAnimation(false));
+            	 } else {
+                 mQsPanel.startAnimation(getAnimation(true));
+                 mTaskManagerPanel.startAnimation(getAnimation(false));
+            	 }
             }
             updateQsState();
         }
@@ -1951,8 +1953,7 @@ public class NotificationPanelView extends PanelView implements
         ContentResolver resolver = mContext.getContentResolver();
         int animationResId = 0;
         final int style = Settings.System.getInt(resolver,
-                Settings.System.QS_TASK_ANIMATION, 0);
- 
+                Settings.System.QS_TASK_ANIMATION, 7);
         if (style == 0) {
             animationResId = isIn ? R.anim.push_down_in : R.anim.push_down_out;
         } else if (style == 1) {
@@ -1967,6 +1968,24 @@ public class NotificationPanelView extends PanelView implements
             animationResId = isIn ? R.anim.turn_in : R.anim.turn_out;
         } else if (style == 6) {
             animationResId = isIn ? R.anim.push_up_in : R.anim.push_up_out;
+        } else if (style == 7) {
+            animationResId = isIn ? R.anim.recent_enter : R.anim.recent_exit;
+        } else if (style == 8) {
+            animationResId = isIn ? R.anim.fade_in : R.anim.fade_out;
+        } else if (style == 9) {
+            animationResId = isIn ? R.anim.slide_out_left : R.anim.slide_out_right;
+        } else if (style == 10) {
+            animationResId = isIn ? R.anim.last_app_in : R.anim.last_app_out;
+        } else if (style == 11) {
+            animationResId = isIn ? R.anim.rotate : R.anim.rotate_around_center;
+        } else if (style == 12) {
+            animationResId = isIn ? R.anim.task_open_enter : R.anim.task_open_exit;
+        } else if (style == 13) {
+            animationResId = isIn ? R.anim.xylon_toast_enter : R.anim.xylon_toast_exit;
+        } else if (style == 14) {
+            animationResId = isIn ? R.anim.search_bar_enter : R.anim.search_bar_exit;
+        } else if (style == 15) {
+            animationResId = isIn ? R.anim.toko_toast_enter : R.anim.toko_toast_exit;
         }
         return AnimationUtils.loadAnimation(mContext, animationResId);
     }
