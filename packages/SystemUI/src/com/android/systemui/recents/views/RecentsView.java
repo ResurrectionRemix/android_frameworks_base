@@ -584,18 +584,18 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
 
     public void checkstyle(int style) {
 	final ContentResolver resolver = mContext.getContentResolver();
+        final Resources res = getContext().getResources();
 	mButtonsRotation =  Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.RECENTS_ROTATE_FAB, 0) == 1;	
 	mClearStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.CLEAR_RECENTS_STYLE, 0,
-                    UserHandle.USER_CURRENT);	
-        final Resources res = getContext().getResources();
+                    UserHandle.USER_CURRENT);
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
 				 Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;
 	mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);	
+                Settings.System.FAB_BUTTON_COLOR, 0xffDC4C3C);
 	int mbarcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.MEM_BAR_COLOR, 0xff009688);	
+                Settings.System.MEM_BAR_COLOR, 0xff009688);
 	int mtextcolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.MEM_TEXT_COLOR, 0xFFFFFFFF);
 	int mclearallcolor = Settings.System.getInt(mContext.getContentResolver(),
@@ -604,8 +604,6 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
                 Settings.System.RECENTS_CLOCK_COLOR, 0xFFFFFFFF);
 	int mDatecolor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.RECENTS_DATE_COLOR, 0xFFFFFFFF);
-        ClearallTasks =   Settings.System.getInt(mContext.getContentResolver(),
-		     Settings.System.RECENTS_CLEAR_ALL_DISMISS_ALL, 1) == 1;	
 	int mDefaultcolor = res.getColor(R.color.recents_membar_text_color);
 	int mSetfabcolor = res.getColor(R.color.fab_color);
 
@@ -856,9 +854,9 @@ public  class RecentsView extends FrameLayout implements TaskStackView.TaskStack
             }
         });		
 	} else {
-	mClearRecents.setVisibility(View.GONE);	
+	mClearRecents.setVisibility(View.GONE);
 	mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
-	mClearRecents.setVisibility(View.VISIBLE); 
+	mClearRecents.setVisibility(View.VISIBLE);
 	mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
 	mMemBar = (ProgressBar) ((View)getParent()).findViewById(R.id.recents_memory_bar);
 	mMemText = (TextView) ((View)getParent()).findViewById(R.id.recents_memory_text);
