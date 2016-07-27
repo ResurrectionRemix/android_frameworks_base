@@ -763,18 +763,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System. SHOW_DARK_ICONS),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
+        resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
+        resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CUSTOM_HEADER_TEXT_SHADOW_COLOR), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
+        resolver.registerContentObserver(Settings.System.getUriFor(
 		    Settings.System.QS_STROKE), false, this,
 		    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
+        resolver.registerContentObserver(Settings.System.getUriFor(
 		    Settings.System.STATUSBAR_CLOCK_COLOR_SWITCH), false, this,
 		    UserHandle.USER_ALL);
+        resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.NAVBAR_BUTTONS_ALPHA),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -904,14 +907,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     if (mQSStroke == 0) {
                     DontStressOnRecreate();
                     }
-            } else if (uri.equals(Settings.System.getUriFor(
+               } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_CLOCK_COLOR_SWITCH))) {
                     int mClockColorSwitch = Settings.System.getIntForUser(
                             mContext.getContentResolver(),
                             Settings.System.STATUSBAR_CLOCK_COLOR_SWITCH, 0,
                             UserHandle.USER_CURRENT);
                    DontStressOnRecreate();
-            }
+	      } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.NAVBAR_BUTTONS_ALPHA))) {
+		   mNavigationController.updateNavbarOverlay(getNavbarThemedResources());
+           }
          update();
 	}
 
