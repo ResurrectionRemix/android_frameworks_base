@@ -5892,12 +5892,6 @@ public final class Settings {
         public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
 
         /**
-         * Force Volume panel in expanded mode
-         * @hide
-         */
-        public static final String VOLUME_DIALOG_FORCE_EXPANDED = "volume_dialog_force_expanded";
-
-        /**
          * Animation of panels during task manager/quick settings change
          * @hide
          */

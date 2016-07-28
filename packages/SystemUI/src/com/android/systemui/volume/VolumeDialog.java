@@ -115,11 +115,9 @@ public class VolumeDialog {
     private final ColorStateList mActiveSliderTint;
     private final ColorStateList mInactiveSliderTint;
     private final VolumeDialogMotion mMotion;
-    private Context vContext;
 
     private boolean mShowing;
     private boolean mExpanded;
-    private boolean mForceExpanded;
     private int mActiveStream;
     private boolean mShowHeaders = VolumePrefs.DEFAULT_SHOW_HEADERS;
     private boolean mAutomute = VolumePrefs.DEFAULT_ENABLE_AUTOMUTE;
@@ -148,7 +146,6 @@ public class VolumeDialog {
     public VolumeDialog(Context context, int windowType, VolumeDialogController controller,
                         ZenModeController zenModeController, Callback callback) {
         mContext = context;
-        vContext = context;
         mController = controller;
         mCallback = callback;
         mSpTexts = new SpTexts(mContext);
@@ -230,7 +227,6 @@ public class VolumeDialog {
 
         controller.addCallback(mControllerCallbackH, mHandler);
         controller.getState();
-        updateForceExpanded();
     }
 
     private ColorStateList loadColorStateList(int colorResId) {
@@ -351,7 +347,6 @@ public class VolumeDialog {
         writer.println(VolumeDialog.class.getSimpleName() + " state:");
         writer.print("  mShowing: "); writer.println(mShowing);
         writer.print("  mExpanded: "); writer.println(mExpanded);
-        writer.print("  mForceExpanded: "); writer.println(mForceExpanded);
         writer.print("  mExpandButtonAnimationRunning: ");
         writer.println(mExpandButtonAnimationRunning);
         writer.print("  mActiveStream: "); writer.println(mActiveStream);
@@ -485,7 +480,7 @@ public class VolumeDialog {
         if (mSafetyWarning != null) return 5000;
         int mVolumeDialogTimeout = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.VOLUME_DIALOG_TIMEOUT, 3000);
-        if (mExpanded || mForceExpanded) return mVolumeDialogTimeout;
+        if (mExpanded || mExpandButtonAnimationRunning) return mVolumeDialogTimeout;
         if (mActiveStream == AudioManager.STREAM_MUSIC) return mVolumeDialogTimeout;
         return mVolumeDialogTimeout;
     }
@@ -570,8 +565,6 @@ public class VolumeDialog {
 
     private void updateExpandButtonH() {
         if (D.BUG) Log.d(TAG, "updateExpandButtonH");
-        // TO DO: Make button unclickable when force expanded view, need to
-        // update "off" state for this to be done without causing ui issues
         mExpandButton.setClickable(!mExpandButtonAnimationRunning);
         if (mExpandButtonAnimationRunning && isAttached()) return;
         final int res = mExpanded ? R.drawable.ic_volume_collapse_animation
@@ -584,7 +577,7 @@ public class VolumeDialog {
     }
 
     private boolean isVisibleH(VolumeRow row, boolean isActive) {
-        return mExpanded || mForceExpanded && row.view.getVisibility() == View.VISIBLE
+        return mExpanded && row.view.getVisibility() == View.VISIBLE
                 || (mExpanded && (row.important || isActive))
                 || !mExpanded && isActive;
     }
@@ -594,7 +587,6 @@ public class VolumeDialog {
         final VolumeRow activeRow = getActiveRow();
         updateFooterH();
         updateExpandButtonH();
-        updateForceExpanded();
         setVolumeStroke();
         setVolumeAlpha();
         if (!mShowing) {
@@ -799,7 +791,7 @@ public class VolumeDialog {
     }
 
     private void updateVolumeRowSliderTintH(VolumeRow row, boolean isActive) {
-        if (isActive && mForceExpanded) {
+        if (isActive && mExpanded) {
             row.slider.requestFocus();
         }
         final ColorStateList tint = isActive && row.slider.isEnabled() ? mActiveSliderTint
@@ -1237,10 +1229,5 @@ public class VolumeDialog {
             volumeDialogGd.setCornerRadius(mCustomCornerRadius);
             mDialogView.setBackground(volumeDialogGd);
         }
-    }
-
-    private void updateForceExpanded() {
-        mForceExpanded = Settings.System.getInt(vContext.getContentResolver(),
-                Settings.System.VOLUME_DIALOG_FORCE_EXPANDED, 0) == 1;
     }
 }
