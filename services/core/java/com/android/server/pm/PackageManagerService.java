@@ -4741,7 +4741,7 @@ public class PackageManagerService extends IPackageManager.Stub {
 
     private boolean shouldIncludeResolveActivity(Intent intent) {
         // Don't call into AppSuggestManager before it comes up later in the SystemServer init!
-        if (!mSystemReady) {
+        if (!mSystemReady || mOnlyCore) {
             return false;
         }
         synchronized(mPackages) {
