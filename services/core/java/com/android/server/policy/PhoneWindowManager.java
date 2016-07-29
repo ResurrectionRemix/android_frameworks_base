@@ -2841,6 +2841,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         case TYPE_INPUT_CONSUMER:
             return 6;
         case TYPE_SYSTEM_DIALOG:
+        case TYPE_RECENTS_OVERLAY:
             return 7;
         case TYPE_TOAST:
             // toasts and the plugged-in battery thing
