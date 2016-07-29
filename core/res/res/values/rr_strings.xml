@@ -54,5 +54,8 @@
     <string name="floating_window_snap_right">Snap right</string>
     <string name="floating_window_minimize">Minimize</string>
 
+    <!-- ADB enabled, but not connected notification & custom tile title -->
+    <string name="adb_not_connected_notification_title">ADB inactive</string>
+    <string name="adb_active_custom_tile_not_connected">inactive</string>
 
 </resources>

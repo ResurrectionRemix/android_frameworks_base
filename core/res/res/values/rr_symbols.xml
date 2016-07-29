@@ -191,4 +191,7 @@
   <java-symbol type="string" name="floating_window_snap_right"/>
   <java-symbol type="string" name="floating_window_minimize"/>
 
+  <!-- ADB enabled, but not connected notification & custom tile title -->
+  <java-symbol type="string" name="adb_not_connected_notification_title" />
+  <java-symbol type="string" name="adb_active_custom_tile_not_connected" />
 </resources>

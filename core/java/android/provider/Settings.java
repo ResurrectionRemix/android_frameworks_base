@@ -9203,6 +9203,12 @@ public final class Settings {
         public static final String ADB_ENABLED = "adb_enabled";
 
         /**
+         * Whether to display the ADB notification even if not connected.
+         * @hide
+         */
+        public static final String ADB_ALWAYS_NOTIFY = "adb_always_notify";
+
+        /**
          * String to contain power menu actions
          * @deprecated Use {@link CMSettings.Secure#POWER_MENU_ACTIONS} instead
          * @hide
