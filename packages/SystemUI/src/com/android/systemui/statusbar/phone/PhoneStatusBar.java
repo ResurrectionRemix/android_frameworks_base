@@ -2022,7 +2022,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		}
 		showmCustomlogo(mCustomlogo, mCustomlogoColor,  mCustomlogoStyle);
 		boolean mShowdarkIcons= Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.SHOW_DARK_ICONS, 0, UserHandle.USER_CURRENT) == 1; 
+                    Settings.System.SHOW_DARK_ICONS, 1, UserHandle.USER_CURRENT) == 1; 
 		    if (mShowdarkIcons) {    
 		    mSbgradient = (ImageView) mStatusBarView.findViewById(R.id.background_image);  
 		    mSbgradient.setVisibility(View.GONE);
@@ -3960,7 +3960,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         && mFingerprintUnlockController.getMode()
                                 != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK);
 		boolean mShowdarkIcons= Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.SHOW_DARK_ICONS, 0, UserHandle.USER_CURRENT) == 1;     
+                    Settings.System.SHOW_DARK_ICONS, 1, UserHandle.USER_CURRENT) == 1;     
 		    if (mShowdarkIcons) {
 				 mIconController.setIconsDark(allowLight && light, animate);
 			}	
