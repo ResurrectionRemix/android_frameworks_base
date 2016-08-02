@@ -440,7 +440,29 @@ final class UserController {
                 }
             }
 
+            /**
+             * For boosting right after boot
+             */
+            final int mBoostParamVal[] = mInjector.getContext().getResources().getIntArray(
+                    com.android.internal.R.array.onbootboost_param_value);
+            final boolean lIsPerfBoostEnabled = mBoostParamVal.length != 0;
+
+            if (lIsPerfBoostEnabled) {
+                int mBoostDuration = mInjector.getContext().getResources().getInteger(
+                        com.android.internal.R.integer.onbootboost_duration);
+
+                BoostFramework mPerf = new BoostFramework();
+
+                Slog.i(TAG, "Bootup boost was triggered for " + mBoostDuration + " seconds!");
+
+                if (mBoostDuration != 0)
+                    mBoostDuration = mBoostDuration * 1000; // Convert seconds to milliseconds
+
+                mPerf.perfLockAcquire(mBoostDuration, mBoostParamVal);
+            }
+
             Slog.i(TAG, "Sending BOOT_COMPLETE user #" + userId);
+
             // Do not report secondary users, runtime restarts or first boot/upgrade
             if (userId == UserHandle.USER_SYSTEM
                     && !mInjector.isRuntimeRestarted() && !mInjector.isFirstBootOrUpgrade()) {
