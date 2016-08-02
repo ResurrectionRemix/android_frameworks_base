@@ -307,6 +307,10 @@
     <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
 
     <string name="recents_custom_android_n">CLEAR ALL</string>
+
+     <!-- Slim recents app sidebar queue app toast -->
+    <string name="toast_recents_queue_app">Launch %s after closing recents</string>
+    <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
   
 </resources>
 

@@ -20,6 +20,8 @@ package com.android.systemui.slimrecent;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_BACK;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
@@ -33,6 +35,7 @@ import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -65,6 +68,9 @@ public class AppSidebar extends FrameLayout {
             );
 
     public static float DEFAULT_SCALE_FACTOR = 1.0f;
+    private static final float SWIPE_THRESHOLD_FACTOR = 0.5f;
+    private static final float SWIPE_ANIMATION_JUMP_FACTOR = 0.2f;
+    private static final int SWIPE_ANIMATION_DURATION = 300;
 
     private LinearLayout mAppContainer;
     private SnappingScrollView mScrollView;
@@ -76,6 +82,10 @@ public class AppSidebar extends FrameLayout {
     private int mBackgroundColor;
     private int mLabelColor;
     private boolean mHideTextLabels = false;
+    private float mSwipeThreshold;
+    private boolean mSwipedLeft;
+    private String mSwipeAction = null;
+    private Toast mSwipeToast;
 
     private float mScaleFactor = DEFAULT_SCALE_FACTOR;
 
@@ -95,6 +105,7 @@ public class AppSidebar extends FrameLayout {
     public AppSidebar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
+        mItemSwipeGestureDetector = new GestureDetector(mContext, mItemSwipeListener);
         Resources resources = context.getResources();
         mItemTextSize = resources
                 .getDimensionPixelSize(R.dimen.recent_app_sidebar_item_title_text_size);
@@ -107,6 +118,7 @@ public class AppSidebar extends FrameLayout {
         mScaledItemTextSize = Math.round(mItemTextSize * mScaleFactor);
         mScaledIconSize = Math.round(mIconSize * mScaleFactor);
         mScaledIconBounds = new Rect(0, 0, mScaledIconSize, mScaledIconSize);
+        mSwipeThreshold = mScaledIconSize * SWIPE_THRESHOLD_FACTOR;
     }
 
     @Override
@@ -163,6 +175,7 @@ public class AppSidebar extends FrameLayout {
         @Override
         public void onClick(View view) {
             Action.processAction(mContext, ((ActionConfig)view.getTag()).getClickAction(), false);
+            cancelPendingSwipeAction();
             hideSlimRecent();
         }
     };
@@ -173,6 +186,7 @@ public class AppSidebar extends FrameLayout {
             String action = ((ActionConfig)view.getTag()).getLongpressAction();
             if (!ActionConstants.ACTION_NULL.equals(action)) {
                 Action.processAction(mContext, action, false);
+                cancelPendingSwipeAction();
                 hideSlimRecent();
                 return true;
             }
@@ -180,9 +194,100 @@ public class AppSidebar extends FrameLayout {
         }
     };
 
+    private OnTouchListener mItemTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            if (mItemSwipeGestureDetector.onTouchEvent(event)) {
+                handleSwipe(view);
+                return true;
+            }
+            return false;
+        }
+    };
+
+    private GestureDetector mItemSwipeGestureDetector;
+
+    private GestureDetector.SimpleOnGestureListener mItemSwipeListener =
+                new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                            float velocityY) {
+                        float diffY = Math.abs(e1.getY() - e2.getY());
+                        float diffX = Math.abs(e1.getX() - e2.getX());
+                        if (diffX > diffY && diffX >= mSwipeThreshold) {
+                            mSwipedLeft = e1.getX() > e2.getX();
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+               };
+
+    private void handleSwipe(View view) {
+        // Swipe animation
+        int jumpX = (int) (mScaledIconSize * SWIPE_ANIMATION_JUMP_FACTOR);
+        if (mSwipedLeft) {
+            jumpX *= -1;
+        }
+        AnimatorSet animatorSet =  new AnimatorSet();
+        animatorSet.play(ObjectAnimator.ofFloat(view, "translationX", 0, jumpX, 0));
+        animatorSet.setDuration(SWIPE_ANIMATION_DURATION);
+        animatorSet.start();
+        // Swipe action
+        ActionConfig config = (ActionConfig)view.getTag();
+        String clickAction = config.getClickAction();
+        String longPressAction = config.getLongpressAction();
+        if (mSwipeAction != null) {
+            if (mSwipeAction.equals(clickAction)) {
+                if (!ActionConstants.ACTION_NULL.equals(longPressAction)) {
+                    mSwipeAction = longPressAction;
+                } else {
+                    mSwipeAction = null;
+                }
+            } else if (mSwipeAction.equals(longPressAction)) {
+                mSwipeAction = null;
+            } else {
+                mSwipeAction = clickAction;
+            }
+        } else {
+            mSwipeAction = clickAction;
+        }
+        // Toast notification
+        if (mSwipeToast != null) {
+            mSwipeToast.cancel();
+        }
+        String toastText;
+        if (mSwipeAction != null && mSwipeAction.equals(clickAction)) {
+            toastText = mContext.getString(R.string.toast_recents_queue_app,
+                            config.getClickActionDescription());
+        } else if (mSwipeAction != null && mSwipeAction.equals(longPressAction)) {
+            toastText = mContext.getString(R.string.toast_recents_queue_app,
+                            config.getLongpressActionDescription());
+        } else {
+            toastText = mContext.getString(R.string.toast_recents_cancel_queued_app);
+        }
+        mSwipeToast = Toast.makeText(mContext, toastText , Toast.LENGTH_SHORT);
+        mSwipeToast.show();
+    }
+
+    public void launchPendingSwipeAction() {
+        if (mSwipeAction != null) {
+            Action.processAction(mContext, mSwipeAction, false);
+            cancelPendingSwipeAction();
+        }
+    }
+
+    public void cancelPendingSwipeAction() {
+        mSwipeAction = null;
+        if (mSwipeToast != null) {
+            mSwipeToast.cancel();
+        }
+    }
+
     class SnappingScrollView extends ScrollView {
 
         private boolean mSnapTrigger = false;
+        private float mActionDownY = -1f;
 
         public SnappingScrollView(Context context) {
             super(context);
@@ -213,8 +318,17 @@ public class AppSidebar extends FrameLayout {
             int action = ev.getAction();
             if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
                 mSnapTrigger = true;
+                // Allow swipe actions
+                if (mActionDownY >= 0f) {
+                    float diffY = Math.abs(ev.getY() - mActionDownY);
+                    mActionDownY = -1f;
+                    if (diffY < mScaledIconSize) {
+                        return false;
+                    }
+                }
             } else if (action == MotionEvent.ACTION_DOWN) {
                 mSnapTrigger = false;
+                mActionDownY = ev.getY();
             }
             return super.onTouchEvent(ev);
         }
@@ -338,6 +452,7 @@ public class AppSidebar extends FrameLayout {
         for (View icon : mContainerItems) {
             icon.setOnClickListener(mItemClickedListener);
             icon.setOnLongClickListener(mItemLongClickedListener);
+            icon.setOnTouchListener(mItemTouchListener);
             if (mHideTextLabels) {
                 ((TextView)icon).setTextSize(0);
             }
