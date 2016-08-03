@@ -26,6 +26,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.AsyncTask;
@@ -86,7 +87,7 @@ public class AppIconLoader {
     /**
      * Loads the actual app icon.
      */
-    private static Bitmap getAppIcon(ResolveInfo info, Context context, float scaleFactor) {
+    private static Drawable getAppIcon(ResolveInfo info, Context context, float scaleFactor) {
         if (context == null) {
             return null;
         }
@@ -133,11 +134,13 @@ public class AppIconLoader {
      * The reality shows that a lot apps do not care about and add just one big icon for
      * all screen resolution.
      */
-    private static Bitmap getResizedBitmap(Drawable source, Context context, float scaleFactor) {
+    private static Drawable getResizedBitmap(Drawable source, Context context, float scaleFactor) {
         if (source == null) {
             return null;
         }
-
+        if (source instanceof VectorDrawable) {
+            return source;
+        }
         final int iconSize = (int) (context.getResources()
                 .getDimensionPixelSize(R.dimen.recent_app_icon_size) * scaleFactor);
 
@@ -160,15 +163,15 @@ public class AppIconLoader {
         canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2,
                 middleY - bitmap.getHeight() / 2, paint);
 
-        return scaledBitmap;
+        return new BitmapDrawable(context.getResources(), scaledBitmap);
     }
 
     /**
      * AsyncTask loader for the app icon.
      */
-    private static class BitmapDownloaderTask extends AsyncTask<ResolveInfo, Void, Bitmap> {
+    private static class BitmapDownloaderTask extends AsyncTask<ResolveInfo, Void, Drawable> {
 
-        private Bitmap mAppIcon;
+        private Drawable mAppIcon;
 
         private final WeakReference<RecentImageView> rImageViewReference;
         private final WeakReference<Context> rContext;
@@ -187,7 +190,7 @@ public class AppIconLoader {
         }
 
         @Override
-        protected Bitmap doInBackground(ResolveInfo... params) {
+        protected Drawable doInBackground(ResolveInfo... params) {
             // Save current thread priority and set it during the loading
             // to background priority.
             mOrigPri = Process.getThreadPriority(Process.myTid());
@@ -200,7 +203,7 @@ public class AppIconLoader {
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap) {
+        protected void onPostExecute(Drawable bitmap) {
             if (isCancelled()) {
                 bitmap = null;
             }
@@ -218,12 +221,12 @@ public class AppIconLoader {
             if (rImageViewReference != null) {
                 final RecentImageView imageView = rImageViewReference.get();
                 if (imageView != null) {
-                    imageView.setImageBitmap(bitmap);
+                    imageView.setImageDrawable(bitmap);
                 }
-                if (bitmap != null && context != null) {
+                if (bitmap != null && context != null && bitmap instanceof BitmapDrawable) {
                     // Put our bitmap intu LRU cache for later use.
                     CacheController.getInstance(context)
-                            .addBitmapToMemoryCache(mLRUCacheKey, bitmap);
+                            .addBitmapDrawableToMemoryCache(mLRUCacheKey, (BitmapDrawable)bitmap);
                 }
             }
         }
