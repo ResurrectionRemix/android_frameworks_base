@@ -4572,7 +4572,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCLogo.setVisibility(View.GONE);
             return;
         }
+	if (color != 0xFFFFFFFF) {
 		mCLogo.setColorFilter(color, Mode.MULTIPLY);
+	} else {
+		mCLogo.clearColorFilter();
+	}
 		if ( style == 0) {
 		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
@@ -4702,6 +4706,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		} else if ( style == 42) {
 		mCLogo.setVisibility(View.GONE);
 		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_42);
+		} else if ( style == 43) {
+		mCLogo.setVisibility(View.GONE);
+		mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_43);
 		}
 		mCLogo.setVisibility(View.VISIBLE);
 

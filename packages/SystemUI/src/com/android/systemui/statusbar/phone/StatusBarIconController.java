@@ -25,6 +25,7 @@ import android.content.ContentResolver;
 import android.content.res.ColorStateList;
 import android.database.ContentObserver;
 import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,7 @@ import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.policy.Clock;
+import com.android.systemui.statusbar.policy.NetworkTraffic;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
@@ -142,6 +144,10 @@ public class StatusBarIconController implements Tunable {
     private ImageView mRRLogoCenter;
     private ImageView mRRLogoBefore;
 
+    private int mCustomLogo;
+    private ImageView mCLogo;
+    private NetworkTraffic mNetworkTraffic;
+
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
 
     private final Runnable mTransitionDeferringDoneRunnable = new Runnable() {
@@ -182,6 +188,8 @@ public class StatusBarIconController implements Tunable {
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
         mWeatherLeft = (TextView) statusBar.findViewById(R.id.left_weather_temp);
+	getcustomlogos(statusBar);
+	mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
         mHandler = new Handler();
         mClockController = new ClockController(statusBar, mNotificationIcons, mHandler);
         mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
@@ -607,6 +615,26 @@ public class StatusBarIconController implements Tunable {
        	     	   mWeatherLeft.setTextColor(mIconTint);
        	        }
 	}
+	mCustomLogo = Settings.System.getIntForUser(
+		mContext.getContentResolver(), Settings.System.CUSTOM_LOGO_STYLE, 0,
+		UserHandle.USER_CURRENT);
+	int mCustomlogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
+        if (mCustomlogoColor == 0xFFFFFFFF || mCustomLogo !=0 || mCustomLogo !=1) { 
+	// we cant set imagetintlist on 1st 2 logos and the last one. They are non colorable. Hence use a condition.
+		if (mCLogo!=null) {
+		    if (mCustomLogo == 43) {
+		    mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
+		    } else {
+         	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
+		    }
+		} 
+	} 
+	if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.NETWORK_TRAFFIC_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
+ 	mNetworkTraffic.setDarkIntensity(mDarkIntensity);
+	}
         applyNotificationIconsTint();
     }
 
@@ -849,6 +877,98 @@ public class StatusBarIconController implements Tunable {
 	applyIconTint();
 		}
 	}
+
+   public void getcustomlogos(View statusBar) {
+	mCustomLogo = Settings.System.getIntForUser(
+		mContext.getContentResolver(), Settings.System.CUSTOM_LOGO_STYLE, 0,
+		UserHandle.USER_CURRENT);
+		if ( mCustomLogo == 2) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_2);
+		} else if ( mCustomLogo == 3) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_3);
+		} else if ( mCustomLogo == 4) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_4);
+		} else if ( mCustomLogo == 5) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_5);
+		} else if ( mCustomLogo == 6) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_6);
+		} else if ( mCustomLogo == 7) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_7);
+		} else if ( mCustomLogo == 8) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_8);
+		} else if ( mCustomLogo == 9) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_9);
+		} else if ( mCustomLogo == 10) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_10);
+		} else if ( mCustomLogo == 11) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_11);
+		} else if ( mCustomLogo == 12) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_12);
+		} else if ( mCustomLogo == 13) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_13);
+		} else if ( mCustomLogo == 14) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_14);
+		} else if ( mCustomLogo  == 15) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_15);
+		} else if ( mCustomLogo  == 16) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_16);
+		} else if ( mCustomLogo  == 17) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_17);
+		} else if ( mCustomLogo  == 18) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_18);
+		} else if ( mCustomLogo  == 19) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_19);
+		} else if ( mCustomLogo  == 20) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_20);
+		} else if ( mCustomLogo  == 21) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_21);
+		} else if ( mCustomLogo  == 22) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_22);
+		} else if ( mCustomLogo  == 23) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_23);
+		} else if ( mCustomLogo  == 24) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_24);
+		} else if ( mCustomLogo  == 25) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_25);
+		} else if ( mCustomLogo  == 26) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_26);
+		} else if ( mCustomLogo  == 27) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_27);
+		} else if ( mCustomLogo == 28) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_28);
+		} else if ( mCustomLogo == 29) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_29);
+		} else if ( mCustomLogo == 30) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_30);
+		} else if ( mCustomLogo == 31) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_31);
+		} else if ( mCustomLogo == 32) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_32);
+		} else if ( mCustomLogo == 33) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_33);
+		} else if ( mCustomLogo == 34) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_34);
+		} else if ( mCustomLogo == 35) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_35);
+		} else if ( mCustomLogo == 36) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_36);
+		} else if ( mCustomLogo == 37) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_37);
+		} else if ( mCustomLogo == 38) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_38);
+		} else if ( mCustomLogo == 39) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_39);
+		} else if ( mCustomLogo == 40) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_40);
+		} else if ( mCustomLogo == 41) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_41);
+		} else if ( mCustomLogo == 42) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_42);
+		} else if ( mCustomLogo == 43) {
+		mCLogo = (ImageView) statusBar.findViewById(R.id.custom_43);
+		}
+
+    }
 
     public int getCurrentVisibleNotificationIcons() {
         return mNotificationIcons.getChildCount();
