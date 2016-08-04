@@ -22,4 +22,7 @@
     <dimen name="floating_action_button_translation_z">12dp</dimen>
     <dimen name="floating_action_button_margin_side">78dp</dimen>
     <dimen name="floating_action_button_margin_bottom">42dp</dimen>
+
+    <!-- Halo -->
+    <dimen name="halo_content_max_width">350dp</dimen>
 </resources>

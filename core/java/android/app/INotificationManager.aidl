@@ -100,4 +100,8 @@ interface INotificationManager
     void applyRestore(in byte[] payload, int user);
 
     ParceledListSlice getAppActiveNotifications(String callingPkg, int userId);
+
+    // Halo
+    void setHaloPolicyBlack(String pkg, int uid, boolean halo);
+    boolean isPackageAllowedForHalo(String pkg, int uid);
 }

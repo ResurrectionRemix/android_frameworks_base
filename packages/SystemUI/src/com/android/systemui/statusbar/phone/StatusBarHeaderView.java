@@ -121,6 +121,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private LinearLayout mSystemIcons;
     private View mSignalCluster;
     private View mSettingsButton;
+    private View mHaloButton;
     private View mQsDetailHeader;
     private TextView mQsDetailHeaderTitle;
     private Switch mQsDetailHeaderSwitch;
@@ -274,6 +275,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsButton.setOnLongClickListener(this);
         mTaskManagerButton = findViewById(R.id.task_manager_button);
         mTaskManagerButton.setOnLongClickListener(this);
+        mHaloButton = findViewById(R.id.halo_button);
+        mHaloButton.setOnClickListener(this);
         mHeadsUpButton = findViewById(R.id.heads_up_button);
         mHeadsUpButton.setOnClickListener(this);
         mHeadsUpButton.setOnLongClickListener(this);
@@ -335,6 +338,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             ((RippleDrawable) d).setForceSoftware(true);
         }
         d = mSettingsButton.getBackground();
+        if (d instanceof RippleDrawable) {
+            ((RippleDrawable) d).setForceSoftware(true);
+        }
+        d = mHaloButton.getBackground();
         if (d instanceof RippleDrawable) {
             ((RippleDrawable) d).setForceSoftware(true);
         }
@@ -568,6 +575,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mDateExpanded.setVisibility(mExpanded && mAlarmShowing ? View.INVISIBLE : View.VISIBLE);
         mAlarmStatus.setVisibility(mExpanded && mAlarmShowing ? View.VISIBLE : View.INVISIBLE);
         mSettingsButton.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
+		mHaloButton.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
         mWeatherContainer.setVisibility(mExpanded && mShowWeather ? View.VISIBLE : View.GONE);
         mHeadsUpButton.setVisibility(mExpanded && mShowHeadsUpButton ? View.VISIBLE : mShowHeadsUpButton ? View.INVISIBLE : View.GONE);
         mTaskManagerButton.setVisibility(mExpanded && mShowTaskManager ? View.VISIBLE : mShowTaskManager ? View.INVISIBLE : View.GONE);
@@ -744,13 +752,18 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
   private void updateSystemIconsLayoutParams() {
         RelativeLayout.LayoutParams lp = (LayoutParams) mSystemIconsSuperContainer.getLayoutParams();
-        int headsUp = mShowHeadsUpButton && mExpanded ? mHeadsUpButton.getId() : mSettingsButton.getId();
+        int halo = mHaloButton != null 
+                ? mHaloButton.getId() : mSettingsButton.getId();
+        int headsUp = mShowHeadsUpButton && mExpanded ? mHeadsUpButton.getId() : halo;
         int taskManager = mShowTaskManager && mExpanded ? mTaskManagerButton.getId() : headsUp;
+        int ruleHalo = mExpanded
+                ? halo
+                : mMultiUserSwitch.getId();
         int ruleHeadsUpButton = mExpanded
-                ? headsUp
+                ? halo
                 : mMultiUserSwitch.getId();
         int ruleTaskManager = mExpanded
-                ? taskManager
+                ? headsUp
                 : mMultiUserSwitch.getId();
         if (ruleHeadsUpButton != lp.getRules()[RelativeLayout.START_OF] &&
                 ruleTaskManager != lp.getRules()[RelativeLayout.START_OF]) {
@@ -948,6 +961,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             startForecastActivity();
         } else if (v == mHeadsUpButton) {
             startHeadsUpActivity();
+         } else if (v == mHaloButton) {
+            toggleHalo();
         }
 	if (mQsVibrateHeader) {
 	vibrateheader(20);	
@@ -1150,11 +1165,15 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         target.settingsTranslation = mExpanded
                 ? 0
                 : mMultiUserSwitch.getLeft() - mSettingsButton.getLeft();
+        target.haloButtonAlpha = getAlphaForVisibility(mHaloButton);
+        target.haloButtonTranslation = mExpanded
+                ? 0
+                : mSettingsButton.getLeft() - mHaloButton.getLeft();
         // heads up ALWAYS translates off of fixed settings button
         target.headsUpAlpha = getAlphaForVisibility(mHeadsUpButton);
         target.headsUpTranslation = mExpanded
                 ? 0
-                : mSettingsButton.getLeft() - mHeadsUpButton.getLeft();
+                : mHaloButton.getLeft() - mHeadsUpButton.getLeft();
         // task manager may translate off of heads up OR settings
         final int whichButton = mShowHeadsUpButton
                 ? mHeadsUpButton.getLeft()
@@ -1218,6 +1237,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
         mSettingsButton.setTranslationX(values.settingsTranslation);
         mSettingsButton.setRotation(values.settingsRotation);
+        mHaloButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+        mHaloButton.setTranslationX(values.headsUpTranslation);
+        mHaloButton.setRotation(values.settingsRotation);
         mHeadsUpButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
         mHeadsUpButton.setTranslationX(values.headsUpTranslation);
         mHeadsUpButton.setRotation(values.settingsRotation);
@@ -1235,6 +1257,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         if (mDockBatteryLevel != null) {
             applyAlpha(mDockBatteryLevel, values.batteryLevelAlpha);
         }
+        applyAlpha(mHaloButton, values.haloButtonAlpha);
         applyAlpha(mHeadsUpButton, values.headsUpAlpha);
         applyAlpha(mSettingsButton, values.settingsAlpha);
         applyAlpha(mTaskManagerButton, values.taskManagerAlpha);
@@ -1275,6 +1298,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         float taskManagerTranslation;
         float settingsAlpha;
         float settingsTranslation;
+        float haloButtonAlpha;
+        float haloButtonTranslation;
         float signalClusterAlpha;
         float settingsRotation;
         float weatherY;
@@ -1291,6 +1316,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             headsUpTranslation = v1.headsUpTranslation * (1 - t) + v2.headsUpTranslation * t;
             taskManagerTranslation = v1.taskManagerTranslation * (1 - t) + v2.taskManagerTranslation * t;
             settingsTranslation = v1.settingsTranslation * (1 - t) + v2.settingsTranslation * t;
+            haloButtonTranslation =
+                    v1.haloButtonTranslation * (1 -t) + v2.haloButtonTranslation * t;
             weatherY = v1.weatherY * (1 - t) + v2.weatherY * t;
 
             float t1 = Math.max(0, t - 0.5f) * 2;
@@ -1303,6 +1330,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
             float t3 = Math.max(0, t - 0.7f) / 0.3f;
             batteryLevelAlpha = v1.batteryLevelAlpha * (1 - t3) + v2.batteryLevelAlpha * t3;
+            haloButtonAlpha = v1.haloButtonAlpha * (1 - t3) + v2.haloButtonAlpha * t3;
             headsUpAlpha = v1.headsUpAlpha * (1 - t3) + v2.headsUpAlpha * t3;
             taskManagerAlpha = v1.taskManagerAlpha * (1 - t3) + v2.taskManagerAlpha * t3;
             settingsAlpha = v1.settingsAlpha * (1 - t3) + v2.settingsAlpha * t3;
@@ -1423,6 +1451,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     .start();
         }
     };
+
+    private boolean toggleHalo() {
+        return Settings.Secure.putInt(mContext.getContentResolver(),
+                    Settings.Secure.HALO_ACTIVE, 1);
+    }
 
     class SettingsObserver extends UserContentObserver {
         SettingsObserver(Handler handler) {
