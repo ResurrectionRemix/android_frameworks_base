@@ -30,14 +30,14 @@
   <string name="animation_slide_down">Glida från toppen</string>
   <string name="animation_default">Standard</string>
   <string name="animation_translucent">Genomskinlig</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_grow_shrink">Väx i (Överst)</string>
+  <string name="animation_grow_shrink_center">Väx i (Center)</string>
+  <string name="animation_grow_shrink_bottom">Väx i (Botten)</string>
+  <string name="animation_grow_shrink_left">Väx i (Vänster)</string>
+  <string name="animation_grow_shrink_right">Väx i (Höger)</string>
+  <string name="action_null">Tom</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">Standard</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
   <string name="global_action_onthego">On-The-Go Läge</string>
   <!-- Powermenu Torch -->
@@ -46,6 +46,11 @@
   <string name="floating_window_snap_top">Fästa till toppen</string>
   <string name="floating_window_snap_bottom">Fästa till botten</string>
   <string name="floating_window_snap_left">Fästa till vänster</string>
-  <string name="floating_window_snap_right">Snap right</string>
-  <string name="floating_window_minimize">Minimize</string>
+  <string name="floating_window_snap_right">Fäst till höger</string>
+  <string name="floating_window_minimize">Minimera</string>
+  <!-- ADB enabled, but not connected notification & custom tile title -->
+  <string name="adb_not_connected_notification_title">ADB inactive</string>
+  <string name="adb_active_custom_tile_not_connected">inactive</string>
+  <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
 </resources>
