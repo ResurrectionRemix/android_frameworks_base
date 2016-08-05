@@ -52,11 +52,13 @@ public class RankingHelper implements RankingConfig {
     private static final String ATT_PEEKABLE = "peekable";
     private static final String ATT_VISIBILITY = "visibility";
     private static final String ATT_KEYGUARD = "keyguard";
+    private static final String ATT_HALO = "halo";
 
     private static final int DEFAULT_PRIORITY = Notification.PRIORITY_DEFAULT;
     private static final boolean DEFAULT_PEEKABLE = true;
     private static final int DEFAULT_VISIBILITY =
             NotificationListenerService.Ranking.VISIBILITY_NO_OVERRIDE;
+    private static final boolean DEFAULT_HALO = true;
 
     private final NotificationSignalExtractor[] mSignalExtractors;
     private final NotificationComparator mPreliminaryComparator = new NotificationComparator();
@@ -146,6 +148,7 @@ public class RankingHelper implements RankingConfig {
                     int vis = safeInt(parser, ATT_VISIBILITY, DEFAULT_VISIBILITY);
                     int keyguard = safeInt(parser, ATT_KEYGUARD,
                             Notification.SHOW_ALL_NOTI_ON_KEYGUARD);
+                    boolean halo = safeBool(parser, ATT_HALO, DEFAULT_HALO);
                     String name = parser.getAttributeValue(null, ATT_NAME);
 
                     if (!TextUtils.isEmpty(name)) {
@@ -178,6 +181,9 @@ public class RankingHelper implements RankingConfig {
                         if (keyguard != Notification.SHOW_ALL_NOTI_ON_KEYGUARD) {
                             r.keyguard = keyguard;
                         }
+                        if (halo != DEFAULT_HALO) {
+                            r.halo = halo;
+                        }
                     }
                 }
             }
@@ -207,7 +213,7 @@ public class RankingHelper implements RankingConfig {
             final Record r = mRecords.valueAt(i);
             if (r.priority == DEFAULT_PRIORITY && r.peekable == DEFAULT_PEEKABLE
 	      && r.visibility == DEFAULT_VISIBILITY
-              && r.keyguard == Notification.SHOW_ALL_NOTI_ON_KEYGUARD) {
+              && r.keyguard == Notification.SHOW_ALL_NOTI_ON_KEYGUARD && r.halo == DEFAULT_HALO) {
             mRecords.removeAt(i);
             }
         }
@@ -236,6 +242,9 @@ public class RankingHelper implements RankingConfig {
             }
             if (r.keyguard != Notification.SHOW_ALL_NOTI_ON_KEYGUARD) {
                 out.attribute(null, ATT_KEYGUARD, Integer.toBinaryString(r.keyguard));
+            }
+            if (r.halo != DEFAULT_HALO) {
+                out.attribute(null, ATT_HALO, Boolean.toString(r.halo));
             }
             if (!forBackup) {
                 out.attribute(null, ATT_UID, Integer.toString(r.uid));
@@ -404,6 +413,22 @@ public class RankingHelper implements RankingConfig {
         updateConfig();
     }
 
+    @Override
+    public boolean isPackageAllowedForHalo(String packageName, int uid) {
+        final Record r = mRecords.get(recordKey(packageName, uid));
+        return r != null ? r.halo : DEFAULT_HALO;
+    }
+
+    @Override
+    public void setHaloPolicyBlack(String packageName, int uid, boolean halo) {
+        if (halo == isPackageAllowedForHalo(packageName, uid)) {
+            return;
+        }
+        getOrCreateRecord(packageName, uid).halo = halo;
+        removeDefaultRecords();
+        updateConfig();
+    }
+
     public void dump(PrintWriter pw, String prefix, NotificationManagerService.DumpFilter filter) {
         if (filter == null) {
             final int N = mSignalExtractors.length;
@@ -448,6 +473,10 @@ public class RankingHelper implements RankingConfig {
                     pw.print(" visibility=");
                     pw.print(Notification.visibilityToString(r.visibility));
                 }
+                if (r.halo != DEFAULT_HALO) {
+                    pw.print("halo=");
+                    pw.print(r.halo);
+                }
                 pw.println();
             }
         }
@@ -487,6 +516,7 @@ public class RankingHelper implements RankingConfig {
         boolean peekable = DEFAULT_PEEKABLE;
         int visibility = DEFAULT_VISIBILITY;
         int keyguard = Notification.SHOW_ALL_NOTI_ON_KEYGUARD;
+        boolean halo = DEFAULT_HALO;
     }
 
 }

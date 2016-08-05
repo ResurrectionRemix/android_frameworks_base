@@ -11297,6 +11297,14 @@ package android.graphics {
     ctor public ColorFilter();
   }
 
+  public class ColorFilterMaker {
+    ctor public ColorFilterMaker();
+    method public static android.graphics.ColorFilter changeBWColor(int, float);
+    method public static android.graphics.ColorFilter changeColor(int, float);
+    method public static android.graphics.ColorFilter changeColorAlpha(int, float, float);
+    method public static android.graphics.ColorFilter changeHue(int, int);
+  }
+
   public class ColorMatrix {
     ctor public ColorMatrix();
     ctor public ColorMatrix(float[]);
@@ -28776,6 +28784,9 @@ package android.service.notification {
     method public boolean isOngoing();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.service.notification.StatusBarNotification> CREATOR;
+    field public final android.app.Notification notification;
+    field public final java.lang.String pkg;
+    field public final android.os.UserHandle user;
   }
 
 }
