@@ -6878,6 +6878,18 @@ public final class Settings {
         private static final Validator STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Color of toast message icon
+         * @hide
+         */
+        public static final String TOAST_ICON_COLOR = "toast_icon_color";
+
+        /**
+         * Color of toast message test
+         * @hide
+         */
+        public static final String TOAST_TEXT_COLOR = "toast_text_color";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

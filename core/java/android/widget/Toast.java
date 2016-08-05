@@ -23,12 +23,16 @@ import android.annotation.StringRes;
 import android.annotation.UnsupportedAppUsage;
 import android.app.INotificationManager;
 import android.app.ITransientNotification;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.content.res.ColorStateList;
+import android.content.res.Configuration;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.IBinder;
@@ -49,6 +53,8 @@ import com.android.internal.custom.longshot.LongScreenshotManagerService;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import com.android.internal.util.rr.RandomColorHelper;
 
 /**
  * A toast is a view containing a quick little message for the user.  The toast class
@@ -100,6 +106,7 @@ public class Toast {
     public static final int LENGTH_LONG = 1;
 
     final Context mContext;
+    static Context tContext;
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     final TN mTN;
     @UnsupportedAppUsage
@@ -123,6 +130,7 @@ public class Toast {
      */
     public Toast(@NonNull Context context, @Nullable Looper looper) {
         mContext = context;
+        tContext = context;
         mTN = new TN(context.getPackageName(), looper);
         mTN.mY = context.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.toast_y_offset);
@@ -290,12 +298,13 @@ public class Toast {
             @NonNull CharSequence text, @Duration int duration) {
         Toast result = new Toast(context, looper);
 
+        final ColorStateList textColor = RandomColorHelper.getToastTextColorList(tContext);
         LayoutInflater inflate = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);
         TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);
         tv.setText(text);
-
+        tv.setTextColor(textColor);
         result.mNextView = v;
         result.mDuration = duration;
 
@@ -493,6 +502,7 @@ public class Toast {
                 }
 
                 ImageView appIcon = (ImageView) mView.findViewById(android.R.id.icon);
+                final ColorStateList iconColor = RandomColorHelper.getToastIconColorList(tContext);
                 if ((Settings.Global.getInt(context.getContentResolver(), Settings.Global.TOAST_ICON, 1) == 1)) {
                     if (appIcon != null) {
                         PackageManager pm = context.getPackageManager();
@@ -503,6 +513,8 @@ public class Toast {
                             // nothing to do
                         }
                         appIcon.setImageDrawable(icon);
+                        appIcon.setImageTintList(iconColor);
+                        appIcon.setImageTintMode(Mode.MULTIPLY);
                     }
                 }
                 mWM = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
