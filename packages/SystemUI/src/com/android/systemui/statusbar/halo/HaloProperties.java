@@ -128,9 +128,13 @@ public class HaloProperties extends FrameLayout {
         mHaloMessage = mContext.getResources().getDrawable(R.drawable.halo_message);
 
         mHaloSpeechL = mContext.getResources().getDrawable(R.drawable.halo_speech_l_u);
+        mHaloSpeechL.setColorFilter(mContext.getResources().getColor(R.color.notification_material_background_color), Mode.SRC_IN);
         mHaloSpeechR = mContext.getResources().getDrawable(R.drawable.halo_speech_r_u);
+        mHaloSpeechR.setColorFilter(mContext.getResources().getColor(R.color.notification_material_background_color), Mode.SRC_IN);
         mHaloSpeechLD = mContext.getResources().getDrawable(R.drawable.halo_speech_l_d);
+        mHaloSpeechLD.setColorFilter(mContext.getResources().getColor(R.color.notification_material_background_color), Mode.SRC_IN);
         mHaloSpeechRD = mContext.getResources().getDrawable(R.drawable.halo_speech_r_d);
+        mHaloSpeechRD.setColorFilter(mContext.getResources().getColor(R.color.notification_material_background_color), Mode.SRC_IN);
 
         mHaloIconMessage = mContext.getResources().getDrawable(R.drawable.halo_batch_message);
         mHaloIconPersistent = mContext.getResources().getDrawable(R.drawable.halo_system_message);
