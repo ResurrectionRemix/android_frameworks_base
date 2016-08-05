@@ -3277,16 +3277,18 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
             mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY, 60);
-
+            setQSPanelLogo();
+            setQSStroke();
+            setQSBackgroundColor();
+	    if (mTranslucentQuickSettings || mBlurredStatusBarExpandedEnabled) {
             mBlurDarkColorFilter = Color.LTGRAY;
             mBlurMixedColorFilter = Color.GRAY;
             mBlurLightColorFilter = Color.DKGRAY;
             mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
-            handleQuickSettingsBackround();
-            setQSPanelLogo();
-            setQSStroke();
-            setQSBackgroundColor();
-            setQSBackgroundAlpha();
+	    handleQuickSettingsBackround();
+	    } else { 
+	    setQSBackgroundAlpha();
+	    }
         }
     }
 

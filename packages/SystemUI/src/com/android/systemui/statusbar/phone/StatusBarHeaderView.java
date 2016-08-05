@@ -1575,7 +1575,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
             mQSHeaderAlpha = Settings.System.getInt(
                     resolver, Settings.System.QS_TRANSPARENT_HEADER, 255);
-            setQSHeaderAlpha();
 
             mStatusBarHeaderFontStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_HEADER_FONT_STYLE, FONT_NORMAL,
@@ -1632,12 +1631,14 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 Settings.System.TRANSLUCENT_HEADER_PREFERENCE_KEY, 0, currentUserId) == 1;
             mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.TRANSLUCENT_HEADER_PRECENTAGE_PREFERENCE_KEY, 70);
-
+	    if(mTranslucentHeader) {
             mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
             handleStatusBarHeaderViewBackround();
-            updateEverything();
+	    updateEverything();
             updateVisibilities();
             requestCaptureValues();
+	    }
+
         }
     }
 
@@ -1734,19 +1735,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mQsDetailHeaderTitle.setShadowLayer(textShadow, 0, 0, tShadowColor);
         mWeatherLine1.setShadowLayer(textShadow, 0, 0, tShadowColor);
         mWeatherLine2.setShadowLayer(textShadow, 0, 0, tShadowColor);
-    }
-
-
-    private void setQSHeaderAlpha() {
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_TRANSPARENT_HEADER, 255) != 255) {
-            if (mHeaderView != null) {
-                 mHeaderView.getBackground().setAlpha(mQSHeaderAlpha);
-            }
-            if (mBackgroundImage != null) {
-                mBackgroundImage.setAlpha(mQSHeaderAlpha);
-            }
-        }
     }
         
     private void setStatusBarDetailFontStyle(int font) {
