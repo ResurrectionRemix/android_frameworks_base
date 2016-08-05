@@ -752,21 +752,22 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
   private void updateSystemIconsLayoutParams() {
         RelativeLayout.LayoutParams lp = (LayoutParams) mSystemIconsSuperContainer.getLayoutParams();
-        int halo = mHaloButton != null 
-                ? mHaloButton.getId() : mSettingsButton.getId();
+        int halo = mHaloButton != null ? mHaloButton.getId() : mSettingsButton.getId();
         int headsUp = mShowHeadsUpButton && mExpanded ? mHeadsUpButton.getId() : halo;
         int taskManager = mShowTaskManager && mExpanded ? mTaskManagerButton.getId() : headsUp;
         int ruleHalo = mExpanded
                 ? halo
                 : mMultiUserSwitch.getId();
         int ruleHeadsUpButton = mExpanded
-                ? halo
-                : mMultiUserSwitch.getId();
-        int ruleTaskManager = mExpanded
                 ? headsUp
                 : mMultiUserSwitch.getId();
+        int ruleTaskManager = mExpanded
+                ? taskManager
+                : mMultiUserSwitch.getId();
         if (ruleHeadsUpButton != lp.getRules()[RelativeLayout.START_OF] &&
-                ruleTaskManager != lp.getRules()[RelativeLayout.START_OF]) {
+            ruleTaskManager != lp.getRules()[RelativeLayout.START_OF] && 
+	    ruleHalo != lp.getRules()[RelativeLayout.START_OF]) {
+	    lp.addRule(RelativeLayout.START_OF, ruleHalo);
             lp.addRule(RelativeLayout.START_OF, ruleHeadsUpButton);
             lp.addRule(RelativeLayout.START_OF, ruleTaskManager);
         }
