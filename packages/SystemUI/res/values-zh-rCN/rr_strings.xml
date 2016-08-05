@@ -226,8 +226,8 @@
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">可视化工具。</string>
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
-  <string name="recents_custom_android_n">CLEAR ALL</string>
+  <string name="recents_custom_android_n">全部清除</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Launch %s after closing recents</string>
-  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
+  <string name="toast_recents_cancel_queued_app">取消应用程序启动</string>
 </resources>
