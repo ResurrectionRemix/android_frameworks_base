@@ -8592,6 +8592,13 @@ public final class Settings {
         public static final String ADVANCED_REBOOT_ONECLICK = "advanced_reboot_oneclick";
 
         /**
+         * Enable Disable Halo In Extended Statusbar
+         * @hide
+         */
+        public static final String HALO_ENABLE = "halo_enable";
+
+
+        /**
          * HALO, should default to 0 (no, do not show)
          * @hide
          */

@@ -70,7 +70,8 @@
         android:layout_toStartOf="@id/settings_button"
         style="@android:style/Widget.Material.Button.Borderless"
 	android:layout_marginStart="7dp"
-        android:background="@drawable/ripple_drawable" />
+        android:background="@drawable/ripple_drawable"
+	android:visibility="gone" />
 
     <com.android.keyguard.AlphaOptimizedImageButton android:id="@+id/heads_up_button"
         style="@android:style/Widget.Material.Button.Borderless"
