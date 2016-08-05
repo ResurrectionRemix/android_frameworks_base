@@ -954,6 +954,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                                         Settings.System.TRANSLUCENT_HEADER_PREFERENCE_KEY,
                                         0, UserHandle.USER_CURRENT) == 1;
                     DontStressOnRecreate();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY))) {
+                    DontStressOnRecreate();
+            }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY))) {
+                    DontStressOnRecreate();
             }
             update();
         }
