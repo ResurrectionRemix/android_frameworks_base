@@ -50,7 +50,7 @@
   <string name="floating_window_minimize">Minimizar</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB inativo</string>
-  <string name="adb_active_custom_tile_not_connected">inactivo</string>
+  <string name="adb_active_custom_tile_not_connected">inativo</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">A tua imagem de fornecedor não coincide com o sistema. Por favor flasha a imagem do fornecedor de <xliff:g id="string">%s </xliff:g> para o teu dispositivo</string>
+  <string name="system_error_vendorprint">Sua imagem de fornecedor não coincide com o sistema. Por favor faça o flash da imagem de fornecedor de <xliff:g id="string">%s </xliff:g> para o seu dispositivo</string>
 </resources>

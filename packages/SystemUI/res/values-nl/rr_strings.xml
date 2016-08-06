@@ -22,7 +22,7 @@
   <!-- Battery Saver Dimss -->
   <string name="battery_saver_dismiss_title">Negeer</string>
   <string name="battery_saver_notification_action_text_short">Uitzetten</string>
-  <string name="gestures_message">Teken gesture hier</string>
+  <string name="gestures_message">Teken gebaar hier</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximaliseren</string>
   <string name="app_float_item_title">Zweefweergave</string>
@@ -45,7 +45,7 @@
   <string name="onthego_notif_title">On-The-Go is actief</string>
   <string name="onthego_notif_stop">Stoppen</string>
   <string name="onthego_notif_options">Opties</string>
-  <string name="onthego_notif_error">Niet in staat om On-The-Go te starten</string>
+  <string name="onthego_notif_error">Kan on On-The-Go niet starten</string>
   <string name="onthego_notif_restart">Herstart On-The-Go</string>
   <string name="onthego_notif_camera_changed">Cameramodus is gewijzigd</string>
   <string name="onthego_transparency">Transparantie</string>
@@ -85,7 +85,7 @@
   <string name="show_fourg_summary">Vervang LTE statusbalk icoon door 4G</string>
   <string name="statusbar_tuner_category_title">Items van statusbalk verbergen</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Aanpassingen</string>
+  <string name="quick_settings_rrtools">Configuraties</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">Heads-up uit.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -226,8 +226,18 @@
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Visualisator.</string>
   <string name="pulse_toast_message">Visualisator Tegel werkt niet terwijl pulseren actief is</string>
-  <string name="recents_custom_android_n">CLEAR ALL</string>
+  <string name="recents_custom_android_n">Alles wissen</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
-  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
+  <string name="toast_recents_queue_app">Start %s na het sluiten van recente weergave</string>
+  <string name="toast_recents_cancel_queued_app">Opstarten van app geannuleerd</string>
+  <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_halo">Create notification halo.</string>
+  <!-- HALO -->
+  <string name="halo_dismiss">Dismiss notification</string>
+  <string name="halo_hide">Hide</string>
+  <string name="halo_clear_all">Dismiss all notifications</string>
+  <string name="halo_silence">Hide &amp; silence until woken</string>
+  <string name="halo_tutorial1">This is HALO</string>
+  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
+  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
 </resources>
