@@ -31,7 +31,7 @@ import com.android.internal.logging.MetricsLogger;
 /** Quick settings tile: KernelAdiutor **/
 public class KernelAdiutorTile extends QSTile<QSTile.BooleanState> {
 	private static final Intent APP_KERNEL_TILE = new Intent().setComponent(new ComponentName(
-            "com.grarak.kerneladiutor", "com.grarak.kerneladiutor.MainActivity"));
+            "com.grarak.kerneladiutor", "com.grarak.kerneladiutor.activities.MainActivity"));
 
     public KernelAdiutorTile(Host host) {
         super(host);
