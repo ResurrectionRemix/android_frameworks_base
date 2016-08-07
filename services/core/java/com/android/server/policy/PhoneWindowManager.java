@@ -3703,6 +3703,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final int keyCode = event.getKeyCode();
         final boolean longPress = (flags & KeyEvent.FLAG_LONG_PRESS) != 0;
         final boolean virtualKey = event.getDeviceId() == KeyCharacterMap.VIRTUAL_KEYBOARD;
+        final int scanCode = event.getScanCode();
 
         if (DEBUG_INPUT) {
             Log.d(TAG, "interceptKeyTi keyCode=" + keyCode + " down=" + down + " repeatCount="
@@ -4063,7 +4064,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
             // Disable back key if navbar hw keys is set to off
-            if (scanCode != 0 && !hasHwKeysEnabled() && !mContext.getResources().getBoolean(com.android.internal.R.bool.config_hwKeysBackAlwaysOn)) {
+            if (scanCode != 0 && isHwKeysDisabled() && !mContext.getResources().getBoolean(com.android.internal.R.bool.config_hwKeysBackAlwaysOn)) {
                 Log.i(TAG, "Ignoring Back Key: we have hw keys disabled");
                 return 0;
             }
@@ -6587,6 +6588,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    private boolean isHwKeysDisabled() {
+        return mKeyHandler != null ? mKeyHandler.isHwKeysDisabled() : false;
+    }
+
     /** {@inheritDoc} */
     @Override
     public int interceptKeyBeforeQueueing(KeyEvent event, int policyFlags) {
@@ -6679,7 +6684,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         boolean useHapticFeedback = down
                 && (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0
-                && event.getRepeatCount() == 0;
+                && event.getRepeatCount() == 0
+                && !isHwKeysDisabled();
 
         // Specific device key handling
         if (mDeviceKeyHandler != null) {

@@ -8032,6 +8032,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String DOZE_ENABLED = "doze_enabled";
 
         /**
+        /**
+         * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
+
+        /**
          * The current night mode that has been selected by the user.  Owned
          * and controlled by UiModeManagerService.  Constants are as per
          * UiModeManager.
