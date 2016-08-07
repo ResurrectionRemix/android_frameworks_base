@@ -4395,6 +4395,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mDefaultDisplayPolicy.setHdmiPlugged(plugged, true /* force */);
     }
 
+    private boolean isHwKeysDisabled() {
+        return mKeyHandler != null ? mKeyHandler.isHwKeysDisabled() : false;
+    }
+
     // TODO(b/117479243): handle it in InputPolicy
     /** {@inheritDoc} */
     @Override
@@ -4566,7 +4570,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && hapticFeedbackRequested
                 && event.getRepeatCount() == 0
                 // Trigger haptic feedback only for "real" events.
-                && source != InputDevice.SOURCE_CUSTOM;
+                && source != InputDevice.SOURCE_CUSTOM
+                && !isHwKeysDisabled();
 
         // Specific device key handling
         if (mDeviceKeyHandler != null) {

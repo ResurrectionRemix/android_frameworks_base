@@ -10741,6 +10741,12 @@ public final class Settings {
                 "search_global_search_activity";
 
         /**
+         * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
+
+        /**
          * The number of promoted sources in GlobalSearch.
          * @hide
          */
