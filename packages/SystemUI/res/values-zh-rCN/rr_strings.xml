@@ -228,16 +228,16 @@
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
   <string name="recents_custom_android_n">全部清除</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
+  <string name="toast_recents_queue_app">关闭最近任务后启动%s</string>
   <string name="toast_recents_cancel_queued_app">取消应用程序启动</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">创建 Halo 通知。</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_dismiss">清除通知</string>
+  <string name="halo_hide">隐藏</string>
+  <string name="halo_clear_all">清除所有通知</string>
+  <string name="halo_silence">隐藏并静音直到唤醒</string>
+  <string name="halo_tutorial1">这是 HALO</string>
+  <string name="halo_tutorial2">移动我： 双击并拖动</string>
+  <string name="halo_tutorial3">浏览任务： 水平拖动</string>
 </resources>

@@ -231,13 +231,13 @@
   <string name="toast_recents_queue_app">Lanzar %s tras el cierre de recientes</string>
   <string name="toast_recents_cancel_queued_app">Lanzamiento de la app cancelado</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">Crear halo de notificación.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_dismiss">Descartar notificación</string>
+  <string name="halo_hide">Esconder</string>
+  <string name="halo_clear_all">Descartar todas las notificaciones</string>
+  <string name="halo_silence">Ocultar &amp; silencio hasta que despierte</string>
+  <string name="halo_tutorial1">Esto es HALO</string>
+  <string name="halo_tutorial2">Mover: doble toque &amp; y arrastre</string>
+  <string name="halo_tutorial3">Examinar las tareas: Arrastre Horizontal</string>
 </resources>

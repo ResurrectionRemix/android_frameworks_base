@@ -231,13 +231,13 @@
   <string name="toast_recents_queue_app">Spustit %s po zavření nedávných</string>
   <string name="toast_recents_cancel_queued_app">Zrušit spouštění aplikací</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">Vytvořit Halo upozornění.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_dismiss">Odstranit oznámení Halo</string>
+  <string name="halo_hide">Skrýt Halo</string>
+  <string name="halo_clear_all">Zrušit všechna Halo upozornění</string>
+  <string name="halo_silence">Skrýt &amp; umlčet dokud se probudí</string>
+  <string name="halo_tutorial1">Tohle je HALO</string>
+  <string name="halo_tutorial2">Přesuň si mě: dvakrát klepněte &amp; přetáhněte</string>
+  <string name="halo_tutorial3">Procházejte úkoly vodorovným taženín</string>
 </resources>

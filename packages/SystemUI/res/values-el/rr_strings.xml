@@ -231,13 +231,13 @@
   <string name="toast_recents_queue_app">Έναρξη %s μετά το κλείσιμο πρόσφατα</string>
   <string name="toast_recents_cancel_queued_app">Ακυρώθηκε η έναρξη εφαρμογής</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">Δημιουργία ειδοποίησης φωτοστέφανου.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
+  <string name="halo_dismiss">Απόρριψη ειδοποιήσης</string>
+  <string name="halo_hide">Απόκρυψη</string>
+  <string name="halo_clear_all">Απόρριψη όλων των ειδοποιήσεων</string>
+  <string name="halo_silence">Απόκρυψη &amp; αποσιώπηση μέχρι να αφυπνιστεί</string>
   <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial2">Μετακίνησε με: διπλό άγγιγμα &amp; σύρσημο</string>
+  <string name="halo_tutorial3">Αναζήτηση εργασίων: σύρσιμο οριζόντια</string>
 </resources>

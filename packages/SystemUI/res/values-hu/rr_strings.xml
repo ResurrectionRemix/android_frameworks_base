@@ -231,13 +231,13 @@
   <string name="toast_recents_queue_app">%s indítása az előzmények bezárása után</string>
   <string name="toast_recents_cancel_queued_app">Alkalmazás indításának megszakítása</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">Halo értesítések létrehozása.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_dismiss">Értesítés elutasítása</string>
+  <string name="halo_hide">Elrejtés</string>
+  <string name="halo_clear_all">Minden értesítés elutasítása</string>
+  <string name="halo_silence">Elrejtés és néma ébresztésig</string>
+  <string name="halo_tutorial1">Ez a HALO</string>
+  <string name="halo_tutorial2">Mozgatás: kettős érintés és húzás</string>
+  <string name="halo_tutorial3">Feladatok tallózása: Vízszintes húzás</string>
 </resources>

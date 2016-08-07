@@ -49,8 +49,8 @@
   <string name="floating_window_snap_right">तस्वीर दाईं</string>
   <string name="floating_window_minimize">छोटा करें</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
-  <string name="adb_not_connected_notification_title">ADB inactive</string>
-  <string name="adb_active_custom_tile_not_connected">inactive</string>
+  <string name="adb_not_connected_notification_title">एडीबी निष्क्रिय</string>
+  <string name="adb_active_custom_tile_not_connected">निष्क्रिय</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+  <string name="system_error_vendorprint">अपने विक्रेता छवि प्रणाली से मेल नहीं खाता। कृपया अपने डिवाइस के लिए <xliff:g id="string">%s</xliff:g> विक्रेता छवि फ़्लैश करे</string>
 </resources>

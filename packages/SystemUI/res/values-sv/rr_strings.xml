@@ -236,8 +236,8 @@
   <string name="halo_dismiss">Avvisa avisering</string>
   <string name="halo_hide">Göm</string>
   <string name="halo_clear_all">Avvisa alla aviseringar</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
+  <string name="halo_silence">Dölj &amp; tyst tills vaken</string>
   <string name="halo_tutorial1">Detta är HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
+  <string name="halo_tutorial2">Flytta mig: dubbeltryck &amp; dra</string>
   <string name="halo_tutorial3">Bläddra i uppgifter: horisontellt drag</string>
 </resources>
