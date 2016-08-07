@@ -111,6 +111,7 @@ public class HardkeyActionHandler {
 //    private PowerManager mPm;
     private Context mContext;
     private IActivityManager mActivityManager;
+    private boolean mHwKeysDisabled = false;
 
     public HardkeyActionHandler(Context context, Handler handler) {
         mContext = context;
@@ -136,9 +137,25 @@ public class HardkeyActionHandler {
 //        }
     }
 
+    public boolean isHwKeysDisabled() {
+        return mHwKeysDisabled;
+    }
+
+    private boolean filterDisabledKey(int keyCode) {
+        return mHwKeysDisabled && (keyCode == KeyEvent.KEYCODE_HOME
+                || keyCode == KeyEvent.KEYCODE_MENU
+                || keyCode == KeyEvent.KEYCODE_APP_SWITCH
+                || keyCode == KeyEvent.KEYCODE_ASSIST
+                || keyCode == KeyEvent.KEYCODE_BACK);
+    }
+
     public boolean handleKeyEvent(WindowState win, int keyCode, int repeatCount, boolean down,
             boolean canceled,
             boolean longPress, boolean keyguardOn) {
+        if (filterDisabledKey(keyCode)) {
+            return true;
+        }
+
         if (keyCode == KeyEvent.KEYCODE_HOME) {
             if (!down && mHomeButton.isPressed()) {
                 mHomeButton.setPressed(false);
@@ -653,6 +670,9 @@ public class HardkeyActionHandler {
                     Settings.Secure.getUriFor(ActionConstants.getDefaults(ActionConstants.HWKEYS)
                             .getUri()), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false, this,
+                    UserHandle.USER_ALL);
             updateKeyAssignments();
         }
 
@@ -664,6 +684,10 @@ public class HardkeyActionHandler {
 
     private void updateKeyAssignments() {
         synchronized (mLock) {
+            mHwKeysDisabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
+                    UserHandle.USER_CURRENT) != 0;
+
             final boolean hasMenu = (mDeviceHardwareKeys & KEY_MASK_MENU) != 0;
             final boolean hasHome = (mDeviceHardwareKeys & KEY_MASK_HOME) != 0;
             final boolean hasAssist = (mDeviceHardwareKeys & KEY_MASK_ASSIST) != 0;
