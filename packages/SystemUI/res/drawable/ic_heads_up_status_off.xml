@@ -1,25 +1,31 @@
-<!--
-Copyright (C) 2015 The crDroid Android Project
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="27.555"
+    android:viewportHeight="27.555">
 
     <path
         android:fillColor="#4DFFFFFF"
-        android:pathData="M11.5,22.0c1.1,0.0 2.0,-0.9 2.0,-2.0l-4.0,0.0C9.5,21.1 10.4,22.0 11.5,22.0zM18.0,10.5c0.0,-3.1 -2.1,-5.6 -5.0,-6.3L13.0,3.5C13.0,2.7 12.3,2.0 11.5,2.0C10.7,2.0 10.0,2.7 10.0,3.5l0.0,0.7C9.5,4.3 9.0,4.5 8.6,4.7l9.4,9.4L18.0,10.5zM17.7,19.0l2.0,2.0l1.3,-1.3L4.3,3.0L3.0,4.3l2.9,2.9C5.3,8.2 5.0,9.3 5.0,10.5L5.0,16.0l-2.0,2.0l0.0,1.0L17.7,19.0z" />
+        android:pathData="M13.777,0 C7.108,0,1.701,5.407,1.701,12.076
+C1.701,15.526,3.155,18.629,5.474,20.828 L5.07,27.555 L10.806,23.768
+C11.758,24.009,12.75,24.151,13.777,24.151
+C20.447,24.151,25.853,18.745,25.853,12.075 C25.854,5.407,20.447,0,13.777,0 Z
+M9.151,10.694 L9.151,13.117 L6.541,13.117 L6.541,11.108
+C6.541,10.368,6.695,9.784,7.003,9.356 C7.312,8.928,7.839,8.55,8.587,8.222
+L9.151,9.29 C8.691,9.506,8.373,9.721,8.197,9.935
+C8.021,10.149,7.923,10.402,7.903,10.694 L9.151,10.694 Z M13.154,10.694
+L13.154,13.117 L10.544,13.117 L10.544,11.108
+C10.544,10.368,10.698,9.784,11.006,9.356 C11.314,8.928,11.842,8.55,12.59,8.222
+L13.154,9.29 C12.694,9.506,12.376,9.721,12.2,9.935
+C12.024,10.149,11.926,10.402,11.906,10.694 L13.154,10.694 Z M17.01,12.68
+C17.01,13.42,16.857,14.004,16.549,14.432
+C16.24,14.86,15.713,15.239,14.965,15.567 L14.4,14.498
+C14.86,14.281,15.177,14.066,15.354,13.853
+C15.53,13.638,15.628,13.385,15.648,13.093 L14.4,13.093 L14.4,10.67 L17.009,10.67
+L17.009,12.68 Z M21.014,12.68 C21.014,13.42,20.86,14.004,20.551,14.432
+C20.243,14.86,19.715,15.239,18.967,15.567 L18.404,14.499
+C18.864,14.282,19.182,14.067,19.358,13.854
+C19.534,13.639,19.631,13.386,19.652,13.094 L18.403,13.094 L18.403,10.67
+L21.012,10.67 L21.012,12.68 L21.014,12.68 Z" />
 </vector>
