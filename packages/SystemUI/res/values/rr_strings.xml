@@ -323,6 +323,9 @@
     <string name="halo_tutorial1">This is HALO</string>
     <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
     <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+    <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+    <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+    <string name="halo_tutorial6">Disable if you want to install any apk</string>
   
 </resources>
 

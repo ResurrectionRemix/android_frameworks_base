@@ -398,10 +398,25 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
                                                 .getString(R.string.halo_tutorial3), 0, 3000);
                                         mHandler.postDelayed(new Runnable() {
                                             public void run() {
-                                                mState = STATE_IDLE;
-                                                mEffect.nap(0);
-                                                mEffect.setHaloOverlay
-                                                        (HaloProperties.Overlay.NONE, 0f);
+                                                mEffect.ticker(mContext.getResources()
+                                                        .getString(R.string.halo_tutorial4), 0, 3000);
+                                                mHandler.postDelayed(new Runnable() {
+                                                    public void run() {
+                                                        mEffect.ticker(mContext.getResources()
+                                                                .getString(R.string.halo_tutorial5), 0, 3000);
+                                                        mHandler.postDelayed(new Runnable() {
+                                                            public void run() {
+                                                                mEffect.ticker(mContext.getResources()
+                                                                        .getString(R.string.halo_tutorial6), 0, 3000);
+                                                                mHandler.postDelayed(new Runnable() {
+                                                                    public void run() {
+                                                                        mState = STATE_IDLE;
+                                                                        mEffect.nap(0);
+                                                                        mEffect.setHaloOverlay
+                                                                                (HaloProperties.Overlay.NONE, 0f);
+                                                                    }}, 6000);
+                                                            }}, 6000);
+                                                    }}, 6000);
                                             }}, 6000);
                                     }}, 6000);
                             }}, 6000);
