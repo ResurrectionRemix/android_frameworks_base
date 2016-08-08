@@ -1505,7 +1505,9 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
             if (notification.notification.contentIntent == null) return;
 
             Intent notif = new Intent();
-            notif.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            notif.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK);
             try {
                 n.contentIntent.send(mContext, 0, notif);
             } catch (PendingIntent.CanceledException e) {
