@@ -168,6 +168,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
     private boolean mAttached = false;
     private boolean mHapticFeedback;
     private boolean mHaloHide;
+    private boolean mHaloFloatNotifications = false;
     private boolean mFirstStart = true;
     private boolean mInitialized = false;
     private boolean mTickerLeft = true;
@@ -211,13 +212,17 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
                     Settings.Secure.HALO_NOTIFY_COUNT), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HAPTIC_FEEDBACK_ENABLED), false, this);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.HALO_FLOAT_NOTIFICATIONS), false, this);
         }
 
         @Override
         public void onChange(boolean selfChange) {
             ContentResolver resolver = mContext.getContentResolver();
             mHaloHide = Settings.Secure.getInt(resolver,
-                                Settings.Secure.HALO_HIDE, 0) == 1;
+                        Settings.Secure.HALO_HIDE, 0) == 1;
+            mHaloFloatNotifications = Settings.Secure.getInt(resolver,
+                        Settings.Secure.HALO_FLOAT_NOTIFICATIONS, 0) == 1;
             if (!selfChange) {
                 mEffect.wake();
                 mBar.restartHalo();
@@ -279,6 +284,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         // Init variables
         mHaloHide =
                 Settings.Secure.getInt(resolver, Settings.Secure.HALO_HIDE, 0) == 1;
+        mHaloFloatNotifications = Settings.Secure.getInt(resolver, Settings.Secure.HALO_FLOAT_NOTIFICATIONS, 0) == 1;
         mHaloSize = Settings.Secure.getFloat(resolver, Settings.Secure.HALO_SIZE, 1.0f);
         mHaloColor = Settings.System.getInt(resolver, Settings.Secure.HALO_COLOR, 0xffbbbbbb);
         mHapticFeedback = Settings.System.getInt(resolver,
@@ -505,7 +511,11 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         }
 
         try {
-            launchFloating();
+            if (mHaloFloatNotifications) {
+            	launchFloating();
+            } else {
+                launchNotification();
+            }
             ActivityManagerNative.getDefault().resumeAppSwitches();
         } catch (RemoteException e) {
             // ...
@@ -1481,6 +1491,23 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
             overlay.addFlags(Intent.FLAG_FLOATING_WINDOW);
             try {
                 n.contentIntent.send(mContext, 0, overlay);
+            } catch (PendingIntent.CanceledException e) {
+                // Do nothing
+            }
+        }
+    }
+
+    private void launchNotification() {
+        StatusBarNotification notification;
+        for (int i = 0; i < mNotificationData.size(); i++) {
+            notification = mNotificationData.get(i).notification;
+            Notification n = notification.notification;
+            if (notification.notification.contentIntent == null) return;
+
+            Intent notif = new Intent();
+            notif.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            try {
+                n.contentIntent.send(mContext, 0, notif);
             } catch (PendingIntent.CanceledException e) {
                 // Do nothing
             }
