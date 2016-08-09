@@ -53,6 +53,7 @@ import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.FloatingWindowsTile;
+import com.android.systemui.qs.tiles.HaloTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
@@ -377,6 +378,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("pie")) return new PieTile(this);
 	else if (tileSpec.equals("float_mode")) return new FloatingWindowsTile(this);
 	else if (tileSpec.equals("visualizer")) return new VisualizerTile(this);
+        else if (tileSpec.equals("halo")) return new HaloTile(this);
 	else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
 	else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
