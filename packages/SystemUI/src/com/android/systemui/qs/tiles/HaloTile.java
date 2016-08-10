@@ -87,7 +87,7 @@ public class HaloTile extends QSTile<QSTile.BooleanState> {
             state.icon = ResourceIcon.get(R.drawable.ic_notify_halo_normal);
             state.label = mContext.getString(R.string.quick_settings_halo_on);
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_notify_halo_pressed);
+            state.icon = ResourceIcon.get(R.drawable.ic_notify_halo_deactivated);
             state.label = mContext.getString(R.string.quick_settings_halo_off);
         }
     }
