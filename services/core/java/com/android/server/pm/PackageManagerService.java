@@ -4745,11 +4745,10 @@ public class PackageManagerService extends IPackageManager.Stub {
         if (!mSystemReady || mOnlyCore) {
             return false;
         }
-        synchronized(mPackages) {
-            AppSuggestManager suggest = AppSuggestManager.getInstance(mContext);
-            return mResolverReplaced && (suggest.getService() != null) ?
-                    suggest.handles(intent) : false;
-        }
+
+        AppSuggestManager suggest = AppSuggestManager.getInstance(mContext);
+        return mResolverReplaced && (suggest.getService() != null) ?
+                suggest.handles(intent) : false;
     }
 
     @Override
