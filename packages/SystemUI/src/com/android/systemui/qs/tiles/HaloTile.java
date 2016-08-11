@@ -60,7 +60,6 @@ public class HaloTile extends QSTile<QSTile.BooleanState> {
         return MetricsLogger.DONT_TRACK_ME_BRO;
     }
 
-
     @Override
     protected void handleClick() {
         toggleState();
@@ -73,6 +72,10 @@ public class HaloTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void handleLongClick() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.android.settings",
+            "com.android.settings.Settings$HaloSettingsActivity");
+        mHost.startActivityDismissingKeyguard(intent);
     }
 
     protected void toggleState() {
