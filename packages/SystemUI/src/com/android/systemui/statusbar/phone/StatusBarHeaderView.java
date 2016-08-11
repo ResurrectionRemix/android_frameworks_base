@@ -1635,9 +1635,6 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.TRANSLUCENT_HEADER_PRECENTAGE_PREFERENCE_KEY, 70);
             mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
-            mShowhaloButton = Settings.Secure.getInt(resolver,
-                    Settings.Secure.HALO_ENABLE, 0) == 1;
-
             mHaloActive = Settings.Secure.getInt(resolver,
                     Settings.Secure.HALO_ACTIVE, 0) == 1;
             handleStatusBarHeaderViewBackround();
