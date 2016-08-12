@@ -1473,8 +1473,8 @@
   <public type="id" name="selectTextMode" id="0x0102002d" />
 
   <!--SlimSeekBar ids -->
-  <public type="id" name="monitor_box" id="0x01020031" />
-  <public type="id" name="seek_bar" id="0x01020032" />
+  <public type="id" name="monitor_box" id="0x01020041" />
+  <public type="id" name="seek_bar" id="0x01020042" />
 
   <public type="dimen" name="dialog_min_width_major" id="0x01050003" />
   <public type="dimen" name="dialog_min_width_minor" id="0x01050004" />
@@ -1970,7 +1970,7 @@
 
   <public type="string" name="status_bar_notification_info_overflow" id="0x01040017" />
 
-  <public type="string" name="default_string" id="0x01040018" />
+  <public type="string" name="default_string" id="0x01040019" />
 
   <public type="color" name="holo_blue_light" id="0x01060012" />
   <public type="color" name="holo_blue_dark" id="0x01060013" />
@@ -2737,4 +2737,10 @@
     <public type="id" name="icon_frame" id="0x0102003e" />
     <public type="id" name="list_container" id="0x0102003f" />
     <public type="id" name="switch_widget" id="0x01020040" />
+
+    <public type="attr" name="interval" />
+    <public type="attr" name="min" />
+    <public type="attr" name="unitsLeft" />
+    <public type="attr" name="unitsRight" />
+
 </resources>
