@@ -134,4 +134,15 @@
   <java-symbol type="anim" name="slide_out_left_no_fade" />
   <java-symbol type="anim" name="slide_in_left_no_fade" />
   <java-symbol type="anim" name="slide_out_right_no_fade" />
+
+  <!-- SlimSeekBarPreference -->
+  <java-symbol type="layout" name="seek_bar_preference" />
+  <java-symbol type="id" name="seekBarPrefBarContainer" />
+  <java-symbol type="id" name="seekBarPrefValue" />
+  <java-symbol type="id" name="seekBarPrefUnitsRight" />
+  <java-symbol type="id" name="seekBarPrefUnitsLeft" />
+  <java-symbol type="attr" name="interval" />
+  <java-symbol type="attr" name="min" />
+  <java-symbol type="attr" name="unitsLeft" />
+  <java-symbol type="attr" name="unitsRight" />
 </resources>

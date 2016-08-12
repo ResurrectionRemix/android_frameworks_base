@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
@@ -22,7 +21,10 @@
 
     <!-- Base attributes available to SlimSeekBarPreference. -->
     <declare-styleable name="SlimSeekBarPreference">
-        <!-- No added attributes at this time -->
+        <attr name="interval" format="integer" />
+        <attr name="min" format="integer" />
+        <attr name="unitsLeft" format="string|reference" />
+        <attr name="unitsRight" format="string|reference" />
     </declare-styleable>
 
 </resources>
