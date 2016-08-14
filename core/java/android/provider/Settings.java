@@ -6193,7 +6193,14 @@ public final class Settings {
          * Animation of panels during task manager/quick settings change
          * @hide
          */
+
         public static final String QS_TASK_ANIMATION = "qs_task_animation";
+
+        /**
+         * Recents Blur 
+         * @hide
+         */
+        public static final String RECENT_APPS_ENABLED_PREFERENCE_KEY = "blurred_recent_app_enabled_pref";
 
         /**
          * Notifications alpha

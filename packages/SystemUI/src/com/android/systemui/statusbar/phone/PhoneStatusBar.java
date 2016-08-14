@@ -458,7 +458,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private Bitmap mKeyguardWallpaper;
 
     int mKeyguardMaxNotificationCount;
-
     boolean mExpandedVisible;
 
     // RR logo
@@ -501,6 +500,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private int mHeaderTranslucencyPercentage;
     private int mQSTranslucencyPercentage;
     private int mNotTranslucencyPercentage;
+    private boolean mTranslucentRecents;
 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
@@ -812,6 +812,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.QS_CUSTOM_MASTER_SWITCH), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_MASTER_SWITCH), false, this, UserHandle.USER_ALL);       
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY), false, this,
+                    UserHandle.USER_ALL);
             update();
         }
 
@@ -970,6 +973,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_MASTER_SWITCH))) {
                     DontStressOnRecreate();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY))) {
+                    mTranslucentRecents = Settings.System.getIntForUser(
+                                        mContext.getContentResolver(),
+                                        Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY,
+                                        0, UserHandle.USER_CURRENT) == 1;
+                    RecentsActivity.startBlurTask();
+                    updatePreferences(mContext);
             }
             update();
         }
@@ -1179,6 +1190,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
             mTranslucentHeader = Settings.System.getIntForUser(resolver,
                     Settings.System.TRANSLUCENT_HEADER_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
+            mTranslucentRecents = Settings.System.getIntForUser(resolver,
+                    Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
             mQSTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY, 60);
             mHeaderTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
@@ -2265,7 +2278,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         if (NotificationPanelView.mKeyguardShowing) {
                             return;
                         }
-                        //RecentsActivity.onConfigurationChanged();
+                        RecentsActivity.onConfigurationChanged();
 
                         if (mExpandedVisible && NotificationPanelView.mBlurredStatusBarExpandedEnabled && (!NotificationPanelView.mKeyguardShowing)) {
                             makeExpandedInvisible();
@@ -2278,7 +2291,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             intent.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
             this.mContext.registerReceiver(receiver, intent);
 
-            //RecentsActivity.init(this.mContext);
+            RecentsActivity.init(this.mContext);
 
             updatePreferences(this.mContext);
         } catch (Exception e){
@@ -2305,6 +2318,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
       }
     public static void updatePreferences(Context context) {
+        RecentsActivity.updatePreferences(context);
         BaseStatusBar.updatePreferences();
     }
 
