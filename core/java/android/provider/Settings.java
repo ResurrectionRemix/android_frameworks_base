@@ -9196,6 +9196,12 @@ public final class Settings {
          */
         public static final String HALO_FLOAT_NOTIFICATIONS = "halo_float_notifications";
 
+	/**
+         * Components that the Themes qstile modifies
+         * @hide
+         */
+        public static final String THEMES_TILE_COMPONENTS = "themes_tile_components";
+
         /**
          * This are the settings to be backed up.
          *
