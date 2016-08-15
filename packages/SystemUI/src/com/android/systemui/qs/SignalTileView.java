@@ -45,7 +45,7 @@ public final class SignalTileView extends QSTileView {
     private ImageView mOverlay;
     private ImageView mIn;
     private ImageView mOut;
-    private boolean mQSColorSwitch = false;
+    private int mQSColorSwitch;
     private int  mIconColor;
 
     private int mWideOverlayIconStartPadding;
@@ -64,9 +64,11 @@ public final class SignalTileView extends QSTileView {
 	updateIconColor();
         final ImageView traffic = new ImageView(mContext);
         traffic.setImageResource(icon);
-	  if ( mQSColorSwitch) {
+	  if ( mQSColorSwitch == 1 || mQSColorSwitch == 2) {
             traffic.setColorFilter(mIconColor, Mode.SRC_ATOP);	  
-        }
+        } else if ( mQSColorSwitch == 3 || mQSColorSwitch == 4) {
+	    traffic.clearColorFilter();
+	}
         traffic.setAlpha(0f);
         addView(traffic);
         return traffic;
@@ -79,9 +81,11 @@ public final class SignalTileView extends QSTileView {
         mSignal = new ImageView(mContext);
         mIconFrame.addView(mSignal);
         mOverlay = new ImageView(mContext);
-	 if (mQSColorSwitch) {
+	  if ( mQSColorSwitch == 1 || mQSColorSwitch == 2) {
             mSignal.setColorFilter(mIconColor, Mode.SRC_ATOP);
-        }
+        } else if ( mQSColorSwitch == 3 || mQSColorSwitch == 4) {
+	   mSignal.clearColorFilter();	
+	}	
         mIconFrame.addView(mOverlay, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         return mIconFrame;
     }
@@ -142,7 +146,6 @@ public final class SignalTileView extends QSTileView {
         final boolean shown = isShown();
         setVisibility(mIn, shown, s.activityIn);
         setVisibility(mOut, shown, s.activityOut);
-	updateIconColor();
     }
 
     private void setVisibility(View view, boolean shown, boolean visible) {
@@ -160,8 +163,8 @@ public final class SignalTileView extends QSTileView {
 
 	public void updateIconColor() {
         mQSColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        if (mQSColorSwitch) {
+                    Settings.System.QS_COLOR_SWITCH, 0);
+        if (mQSColorSwitch == 1 || mQSColorSwitch == 2) {
             mIconColor = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.QS_ICON_COLOR, 0xffffffff);
         	}
@@ -169,11 +172,16 @@ public final class SignalTileView extends QSTileView {
 
       public void setIconColor() {
 	updateIconColor();
-        if (mQSColorSwitch) {
+        if (mQSColorSwitch == 1 || mQSColorSwitch == 2) {
             mSignal.setColorFilter(mIconColor, Mode.SRC_ATOP);
             mOverlay.setColorFilter(mIconColor, Mode.SRC_ATOP);
             mIn.setColorFilter(mIconColor, Mode.SRC_ATOP);
             mOut.setColorFilter(mIconColor, Mode.SRC_ATOP);
-       		 }
+       	   } else if (mQSColorSwitch == 3 || mQSColorSwitch == 4) {
+            mSignal.clearColorFilter();
+            mOverlay.clearColorFilter();
+            mIn.clearColorFilter();
+            mOut.clearColorFilter();
+	   }
 	}
 }

@@ -34,6 +34,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -71,6 +73,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.internal.util.cm.WeatherController;
 import com.android.internal.util.cm.WeatherControllerImpl;
+import com.android.internal.util.rr.SBEHeaderColorHelper;
 import com.android.internal.logging.MetricsConstants;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.systemui.BatteryLevelTextView;
@@ -179,6 +182,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private boolean mQsVibrateHeader = false;
     private boolean mQsVibrateHeaderLong = false;
 
+    private GradientDrawable gradientDrawable;
+    private boolean mQsMasterSwitch;
+
     /**
      * In collapsed QS, the clock and avatar are scaled down a bit post-layout to allow for a nice
      * transition. These values determine that factor.
@@ -216,7 +222,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     // QS header alpha
     private int mQSHeaderAlpha;
 
-    private boolean mQsColorSwitch = false ;	
+    private int mQsColorSwitch ;	
     private int mHeaderColor;
     private int headerShadow;
     private float textShadow;
@@ -311,11 +317,13 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsObserver = new SettingsObserver(new Handler());
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+	gradientDrawable = new GradientDrawable();
         loadDimens();
         updateVisibilities();
         updateClockScale();
 	updateAvatarScale();
 	setHeaderColor();
+	setSBEHStroke();
         addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right,
@@ -383,14 +391,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
 	int mStockHeaderText = res.getColor(R.color.qs_tile_text);
 	mBackgroundImage = (ImageView) findViewById(R.id.background_image);
-        int mHeaderColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_HEADER_COLOR, 0xFFFFFFFF);
 	int mQsDetailColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_HEADER_TEXT_COLOR, 0xFFFFFFFF);
-        mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0,
-                UserHandle.USER_CURRENT) == 1;
-	if (mQsColorSwitch) {
+	if (mQsColorSwitch == 1 || mQsColorSwitch == 3) {
 	if (mHeaderView != null) {
             mHeaderView.getBackground().setColorFilter(
                         mHeaderColor, Mode.SRC_IN);
@@ -398,7 +401,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	if ( mQsDetailHeaderTitle != null) {
 	    mQsDetailHeaderTitle.setTextColor(mQsDetailColor);
 	  }
-	} else {
+	} else if (mQsColorSwitch == 0) {
 	if (mHeaderView != null) {
             mHeaderView.getBackground().setColorFilter(null);
         }
@@ -446,12 +449,69 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 	setdetailcolor();
 	setweathercolor1();
 	setweathercolor2();	
-	setalarmtextcolor();
-	    
+	setalarmtextcolor();	    
 	setbatterytextcolor();
 	     
     }
 
+
+  private void setSBEHStroke() {
+        ContentResolver resolver = mContext.getContentResolver();
+        final int mSBEHStroke = Settings.System.getInt(
+                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE, 1);
+        final int mSBEHStrokeColor = Settings.System.getInt(
+                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE_COLOR, mContext.getResources().getColor(R.color.system_accent_color));
+        final int mSBEHStrokeThickness = Settings.System.getInt(
+                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE_THICKNESS, 4);
+        final int mSBEHCornerRadius = Settings.System.getInt(
+                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_CORNER_RADIUS, 0);
+        final int mSBEHCustomDashWidth = Settings.System.getInt(
+                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE_DASH_GAP, 0);
+        final int mSBEHCustomDashGap = Settings.System.getInt(
+                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE_DASH_WIDTH, 10);
+        if (mQsMasterSwitch) {
+        if (mSBEHStroke == 0) { // Disable by setting border color to match bg color
+	    if (mQsColorSwitch == 0) {
+            gradientDrawable.setColor(mContext.getResources().getColor(R.color.system_secondary_color));
+	    } else if (mQsColorSwitch == 1 || mQsColorSwitch == 3) {
+	    gradientDrawable.setColor(mHeaderColor);
+	    } else {
+	    gradientDrawable.setColors(SBEHeaderColorHelper.getBackgroundColors(mContext));
+	    }
+            gradientDrawable.setStroke(0, mSBEHStrokeColor);
+            gradientDrawable.setCornerRadius(mSBEHCornerRadius);
+            setBackground(gradientDrawable);
+        } else if (mSBEHStroke == 1) { // use accent color for border
+	    if (mQsColorSwitch == 0) {
+            gradientDrawable.setColor(mContext.getResources().getColor(R.color.system_secondary_color));
+	    } else if (mQsColorSwitch == 1 || mQsColorSwitch == 3) {
+	    gradientDrawable.setColor(mHeaderColor);
+	    } else {
+	    gradientDrawable.setColors(SBEHeaderColorHelper.getBackgroundColors(mContext));
+	    }
+            gradientDrawable.setStroke(mSBEHStrokeThickness, mContext.getResources().getColor(R.color.system_accent_color),
+                    mSBEHCustomDashWidth, mSBEHCustomDashGap);
+        } else if (mSBEHStroke == 2) { // use custom border color
+	    if (mQsColorSwitch == 0) {
+            gradientDrawable.setColor(mContext.getResources().getColor(R.color.system_secondary_color));
+	    } else if (mQsColorSwitch == 1 || mQsColorSwitch == 3) {
+	    gradientDrawable.setColor(mHeaderColor);
+	    } else {
+	    gradientDrawable.setColors(SBEHeaderColorHelper.getBackgroundColors(mContext));
+	    }
+            gradientDrawable.setStroke(mSBEHStrokeThickness, mSBEHStrokeColor, mSBEHCustomDashWidth, mSBEHCustomDashGap);
+        }
+
+        if (mSBEHStroke != 0) {
+            gradientDrawable.setCornerRadius(mSBEHCornerRadius);
+            setBackground(gradientDrawable);
+        }
+     }
+        if (mQsColorSwitch == 2 || mQsColorSwitch == 4 ) {
+        gradientDrawable.setColors(SBEHeaderColorHelper.getBackgroundColors(mContext));
+        setBackground(gradientDrawable);
+        }
+}
 
     public void vibrateheader(int duration) {
         if (mVibrator != null) {
@@ -1530,6 +1590,28 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     Settings.System.TRANSLUCENT_HEADER_PRECENTAGE_PREFERENCE_KEY), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.HALO_ACTIVE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_COLOR_START),
+                    false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_COLOR_CENTER),
+                    false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_COLOR_END),
+                    false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_GRADIENT_USE_CENTER_COLOR),
+                    false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_GRADIENT_ORIENTATION),
+                    false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLOR_SWITCH),
+                    false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_MASTER_SWITCH), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_CUSTOM_MASTER_SWITCH), false, this);
             update();
         }
 
@@ -1539,7 +1621,29 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_COLOR))) {
                	   setHeaderColor();
-            } 
+        }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_COLOR_START))
+                || uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_COLOR_CENTER))
+                || uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_COLOR_END))
+                || uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_GRADIENT_USE_CENTER_COLOR))
+                || uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_EXPANDED_HEADER_CORNER_RADIUS))) {
+                setSBEHStroke();
+	}  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.HEADER_BACKGROUND_GRADIENT_ORIENTATION))) {
+                updateBgGradientOrientation();
+        } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_MASTER_SWITCH))) {
+                    setSBEHStroke();
+                    setHeaderColor();
+        } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_CUSTOM_MASTER_SWITCH))) {
+                    setSBEHStroke();
+                    setHeaderColor();
+           }
 	 update();
 	}
 
@@ -1614,6 +1718,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
                     UserHandle.USER_CURRENT);
+            mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
+            mHeaderColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_COLOR, 0xFFFFFFFF);
+            mQsMasterSwitch = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_HEADER_MASTER_SWITCH, 0, UserHandle.USER_CURRENT) == 1;
 	    setStatusBarHeaderFontStyle	(mStatusBarHeaderFontStyle);
 	    setStatusBarWeatherFontStyle(mStatusBarHeaderWeatherFont);
 	    setStatusBarClockFontStyle(mStatusBarHeaderClockFont);
@@ -1642,6 +1752,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mHaloButton.setActivated(mHaloActive);
             updateVisibilities();
             requestCaptureValues();
+	    updateBgGradientOrientation();
+	    setSBEHStroke();
 
         }
     }
@@ -1653,6 +1765,28 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                 Settings.System.ENABLE_TASK_MANAGER, 0, ActivityManager.getCurrentUser()) == 1;
 	mShowhaloButton = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                Settings.Secure.HALO_ENABLE, 0, ActivityManager.getCurrentUser()) == 1;
+    }
+
+ private void updateBgGradientOrientation() {
+        Orientation orientation = Orientation.TOP_BOTTOM;
+        int mBgOrientation =
+                SBEHeaderColorHelper.getBgGradientOrientation(mContext);
+        if (mBgOrientation == 45) {
+            orientation = Orientation.BL_TR;
+        } else if (mBgOrientation == 90) {
+            orientation = Orientation.BOTTOM_TOP;
+        } else if (mBgOrientation == 135) {
+            orientation = Orientation.BR_TL;
+        } else if (mBgOrientation == 180) {
+            orientation = Orientation.RIGHT_LEFT;
+        } else if (mBgOrientation == 225) {
+            orientation = Orientation.TR_BL;
+        } else if (mBgOrientation == 270) {
+            orientation = Orientation.TOP_BOTTOM;
+        } else if (mBgOrientation == 315) {
+            orientation = Orientation.TL_BR;
+        }
+        gradientDrawable.setOrientation(orientation);
     }
 
     private void updateHeadsUpState() {

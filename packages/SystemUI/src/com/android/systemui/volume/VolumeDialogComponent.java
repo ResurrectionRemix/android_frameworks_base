@@ -19,18 +19,23 @@ package com.android.systemui.volume;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.ContentResolver;
 import android.media.AudioManager;
 import android.media.VolumePolicy;
 import android.os.Bundle;
 import android.os.Handler;
+import android.net.Uri;
 import android.provider.Settings;
 import android.view.WindowManager;
+
 
 import com.android.systemui.SystemUI;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import com.android.systemui.statusbar.policy.ZenModeController;
+
+import com.android.systemui.cm.UserContentObserver;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -44,6 +49,8 @@ public class VolumeDialogComponent implements VolumeComponent {
     private final VolumeDialogController mController;
     private final ZenModeController mZenModeController;
     private VolumeDialog mDialog;
+    private SettingsObserver mSettingsObserver;
+    private boolean mDialogSwitch;
     private final VolumePolicy mVolumePolicy = new VolumePolicy(
             true,  // volumeDownToEnterSilent
             true,  // volumeUpToExitSilent
@@ -64,6 +71,8 @@ public class VolumeDialogComponent implements VolumeComponent {
         mZenModeController = zen;
         mDialog = new VolumeDialog(context, WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY,
                 mController, zen, mVolumeDialogCallback);
+	mSettingsObserver = new SettingsObserver(new Handler());
+	mSettingsObserver.observe();
         applyConfiguration();
     }
 
@@ -144,5 +153,45 @@ public class VolumeDialogComponent implements VolumeComponent {
         mDialog = new VolumeDialog(mContext, WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY,
                 mController, mZenModeController, mVolumeDialogCallback);
         applyConfiguration();
+    }
+
+    class SettingsObserver extends UserContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+            
+        @Override
+        protected void observe() {
+        super.observe();
+        ContentResolver resolver = mContext.getContentResolver();
+        resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.VOLUME_DIALOG_COLOR_SWITCH),
+                    false, this);
+            update();
+        }
+
+
+	@Override
+        public void onChange(boolean selfChange, Uri uri) {
+        if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.VOLUME_DIALOG_COLOR_SWITCH))) {
+               	   recreateDialog();
+        } 
+	 update();
+	}
+
+        @Override
+        protected void unobserve() {
+            super.unobserve();
+
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void update() {
+	mDialogSwitch = Settings.System.getInt(mContext.getContentResolver(),
+               Settings.System.VOLUME_DIALOG_COLOR_SWITCH, 0) == 1 ;
+        }
     }
 }

@@ -407,7 +407,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private BatteryMeterView mBatteryView;
     private BatteryLevelTextView mBatteryTextView;
 
-    private boolean mQsColorSwitch = false;
+    private int mQsColorSwitch;
     public boolean mColorSwitch = false ;
     private  View mIcon;
     public SignalTileView mSignalView;	
@@ -808,6 +808,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.TRANSLUCENT_HEADER_PRECENTAGE_PREFERENCE_KEY), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.TRANSLUCENT_NOTIFICATIONS_PRECENTAGE_PREFERENCE_KEY), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_CUSTOM_MASTER_SWITCH), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_MASTER_SWITCH), false, this, UserHandle.USER_ALL);       
             update();
         }
 
@@ -960,6 +964,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY))) {
                     DontStressOnRecreate();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_CUSTOM_MASTER_SWITCH))) {
+                    DontStressOnRecreate();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_MASTER_SWITCH))) {
+                    DontStressOnRecreate();
             }
             update();
         }
@@ -983,8 +993,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = CMSettings.System.getIntForUser(
 			resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
 			UserHandle.USER_CURRENT) == 1;
-		mQsColorSwitch = Settings.System.getIntForUser(resolver,
-			Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
+		mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
 		mQsIconColor = Settings.System.getIntForUser(resolver,
 			Settings.System.QS_ICON_COLOR, 0xFFFFFFFF, mCurrentUserId);
 		mLabelColor = Settings.System.getIntForUser(resolver,
@@ -3252,7 +3262,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 
-   public void updateQsColors() {		
+   public void updateQsColors() {
 	mNotificationPanel.setQSBackgroundColor();
 	mNotificationPanel.setQSColors();
 	}

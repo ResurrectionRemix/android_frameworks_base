@@ -59,7 +59,7 @@ public class QSDetailItems extends FrameLayout {
     private TextView mEmptyText;
     private ImageView mEmptyIcon;
     private int mMaxItems;
-    private boolean mQsColorSwitch = false;
+    private int mQsColorSwitch ;
     private int mLabelColor;
     private int mQsIconColor;
     private int mTextColor;
@@ -117,24 +117,25 @@ public class QSDetailItems extends FrameLayout {
     public void setEmptyState(int icon, int text) {
         mEmptyIcon.setImageResource(icon);
         mEmptyText.setText(text);
-        if (mQsColorSwitch) {
-            mEmptyIcon.setColorFilter(mQsIconColor, Mode.MULTIPLY);                        
-            mEmptyText.setTextColor(mEmptyTextColor);
+	mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
+        if (mQsColorSwitch != 0) {
+	    mEmptyText.setTextColor(mEmptyTextColor);
+	    if (mQsColorSwitch ==1 ||mQsColorSwitch == 2 ) 
+            mEmptyIcon.setColorFilter(mQsIconColor, Mode.MULTIPLY);
        	 } 
     }
     
     
    public void updatecolors() {
 	final ContentResolver resolver = mContext.getContentResolver();
-	  mQsColorSwitch = Settings.System.getInt(resolver,
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
-        if (mQsColorSwitch) {
+        mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
             mLabelColor = Settings.System.getInt(resolver,
                     Settings.System.QS_TEXT_COLOR, 0xffffffff);
             mEmptyTextColor = (153 << 24) | (mLabelColor & 0x00ffffff); 
             mQsIconColor = Settings.System.getInt(resolver,
                     Settings.System.QS_ICON_COLOR, 0xffffffff);
-		}
 	}
 
 
@@ -209,7 +210,7 @@ public class QSDetailItems extends FrameLayout {
         final ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
         iv.setImageResource(item.icon);
         updatecolors();
-        if (mQsColorSwitch) {
+         if (mQsColorSwitch == 1 || mQsColorSwitch == 2) {
             iv.setColorFilter(mQsIconColor, Mode.SRC_ATOP);
         }
         iv.getOverlay().clear();
@@ -221,7 +222,7 @@ public class QSDetailItems extends FrameLayout {
         final TextView title = (TextView) view.findViewById(android.R.id.title);
         title.setText(item.line1);
         updatecolors();
-	if (mQsColorSwitch) {
+	 if (mQsColorSwitch != 0) {
  	title.setTextColor(mLabelColor);
 	}
         final TextView summary = (TextView) view.findViewById(android.R.id.summary);
@@ -239,7 +240,7 @@ public class QSDetailItems extends FrameLayout {
         });
         final ImageView disconnect = (ImageView) view.findViewById(android.R.id.icon2);
         disconnect.setVisibility(item.canDisconnect ? VISIBLE : GONE);
-         if (mQsColorSwitch) {
+          if (mQsColorSwitch == 1 || mQsColorSwitch == 2) {
             disconnect.setColorFilter(mQsIconColor, Mode.SRC_ATOP);
         }
         disconnect.setOnClickListener(new OnClickListener() {

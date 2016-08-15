@@ -98,8 +98,8 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleClick() {
-	 boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	int mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
         if(mController.isAdvancedSettingsEnabled()) {
             showDetail(true);
         } else {
@@ -109,7 +109,7 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
             refreshState();
         }
 
-  	if (!mQSCSwitch) {
+  	if (mQsColorSwitch == 0) {
         mEnable.setAllowAnimation(true);
         mDisable.setAllowAnimation(true);
 	} else {
@@ -126,12 +126,12 @@ public class LocationTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         final int currentState = mController.getLocationCurrentState();
-	boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	int mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
 
         state.visible = true;
         state.label = mContext.getString(getStateLabelRes(currentState));
-	 if (mQSCSwitch) {
+	if (mQsColorSwitch == 1 || mQsColorSwitch == 2) {
         switch (currentState) {
             case Settings.Secure.LOCATION_MODE_OFF:
                 state.contentDescription = mContext.getString(

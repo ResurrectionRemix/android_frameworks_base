@@ -5610,10 +5610,115 @@ public final class Settings {
         public static final String QS_HEADER_TEXT_COLOR = "qs_header_text_color";
 
         /**
-         * Quick Settings Header Color
+         * Color of the quick settings panel background
+         * @hide
+         */
+        public static final String HEADER_BACKGROUND_GRADIENT_USE_CENTER_COLOR = "header_background_gradient_use_center_color";
+
+        /**
+         * Orientation of the background colors of expanded header
+         * @hide
+         */
+        public static final String HEADER_BACKGROUND_GRADIENT_ORIENTATION = "header_background_gradient_orientation";
+
+        /**
+         * Use a center color for header background
+         * @hide
+         */
+        public static final String HEADER_BACKGROUND_COLOR_START = "header_background_color_start";
+
+        /**
+         * Start color of the status bar header
+         * @hide
+         */
+        public static final String HEADER_BACKGROUND_COLOR_CENTER = "header_background_color_center";
+
+        /**
+         * Center color of the status bar header
+         * @hide
+         */
+        public static final String HEADER_BACKGROUND_COLOR_END = "header_background_color_end";
+
+	/**
+         * Color of the quick settings panel background
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_BACKGROUND_GRADIENT_USE_CENTER_COLOR = "volume_dialog_background_gradient_use_center_color";
+
+        /**
+         * Orientation of the background colors of expanded header
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_BACKGROUND_GRADIENT_ORIENTATION = "volume_dialog_background_gradient_orientation";
+
+        /**
+         * Use a center color for header background
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_BACKGROUND_COLOR_START = "volume_dialog_background_color_start";
+
+        /**
+         * Start color of the status bar header
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_BACKGROUND_COLOR_CENTER = "volume_dialog_background_color_center";
+
+        /**
+         * Center color of the status bar header
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_BACKGROUND_COLOR_END = "volume_dialog_background_color_end";
+
+        /**
+         * Expanded header stroke
+         * 0 = disabled
+         * 1 = use accent color (default)
+         * 2 = use custom color
+         * @hide
+         */
+        public static final String STATUS_BAR_EXPANDED_HEADER_STROKE = "status_bar_expanded_header_stroke";
+
+        /**
+         * Expanded header stroke custom color
+         * Accent color is used as default
+         * @hide
+         */
+        public static final String STATUS_BAR_EXPANDED_HEADER_STROKE_COLOR = "status_bar_expanded_header_stroke_color";
+
+        /**
+         * Expanded header stroke custom thickness
+         * 4dp is default for Cyanide
+         * @hide
+         */
+        public static final String STATUS_BAR_EXPANDED_HEADER_STROKE_THICKNESS = "status_bar_expanded_header_stroke_thickness";
+
+        /**
+         * Expanded header custom corner radius
+         * 0dp is default
+         * @hide
+         */
+        public static final String STATUS_BAR_EXPANDED_HEADER_CORNER_RADIUS = "status_bar_expanded_header_corner_radius";
+
+        /**
+         * Expanded header custom stroke dash width
+         * Set 0 to disable (default)
+         * @hide
+         */
+        public static final String STATUS_BAR_EXPANDED_HEADER_STROKE_DASH_WIDTH = "status_bar_expanded_header_stroke_dash_width";
+
+        /**
+         * Expanded header custom stroke dash width
+         * Set 0 to disable (default)
+         * @hide
+         */
+        public static final String STATUS_BAR_EXPANDED_HEADER_STROKE_DASH_GAP = "status_bar_expanded_header_stroke_dash_gap";
+
+        /**
+         * Use a center color for header background
          * @hide
          */
         public static final String QS_HEADER_COLOR = "qs_header_color";
+
 
         /**
          * Quick Settings Text Color
@@ -5632,6 +5737,37 @@ public final class Settings {
          * @hide
          */
         public static final String QS_BACKGROUND_COLOR = "qs_bg_color";
+
+       /**
+         * Color of the quick settings panel background
+         * @hide
+         */
+        public static final String QS_BACKGROUND_GRADIENT_USE_CENTER_COLOR = "qs_background_gradient_use_center_color";
+
+        /**
+         * Color of the quick settings panel background
+         * @hide
+         */
+        public static final String QS_BACKGROUND_GRADIENT_ORIENTATION = "qs_background_gradient_orientation";
+
+        /**
+         * Color of the quick settings panel background
+         * @hide
+         */
+        public static final String QS_BACKGROUND_COLOR_START = "qs_background_color_start";
+
+        /**
+         * Color of the quick settings panel background
+         * @hide
+         */
+        public static final String QS_BACKGROUND_COLOR_CENTER = "qs_background_color_center";
+
+        /**
+         * Color of the quick settings panel background
+         * @hide
+         */
+        public static final String QS_BACKGROUND_COLOR_END = "qs_background_color_end";
+
 
         /**
          * Quick Settings Brightness Icon Color
@@ -5958,6 +6094,28 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_DIALOG_STROKE_DASH_GAP = "volume_dialog_stroke_dash_gap";
+
+        /**
+         * Volume dialog color
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_COLOR_SWITCH = "volume_dialog_color_switch";
+        
+                /**
+         * Quick settings stroke
+         * 0 = disabled
+         * 1 = use accent color (default)
+         * 2 = use custom color
+         * @hide
+         */
+        public static final String QS_CUSTOM_MASTER_SWITCH = "qs_custom_master_switch";
+        
+         /**
+         * Quick settings stroke
+         * master switch
+         * @hide
+         */
+        public static final String QS_HEADER_MASTER_SWITCH = "qs_header_master_switch";
 
         /**
          * Quick settings stroke

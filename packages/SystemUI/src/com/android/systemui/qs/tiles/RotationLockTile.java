@@ -81,8 +81,8 @@ public class RotationLockTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
-	 boolean mQSCSwitch = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0) == 1;
+	int mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
         if (mController == null) return;
         final boolean rotationLocked = arg != null ? ((UserBoolean) arg).value
                 : mController.isRotationLocked();
@@ -94,7 +94,7 @@ public class RotationLockTile extends QSTile<QSTile.BooleanState> {
         }
         state.value = rotationLocked;
         final boolean portrait = isCurrentOrientationLockPortrait();
-	if (mQSCSwitch) {
+	if (mQsColorSwitch == 1 || mQsColorSwitch == 2) {
         if (rotationLocked) {
             final int label = portrait ? R.string.quick_settings_rotation_locked_portrait_label
                     : R.string.quick_settings_rotation_locked_landscape_label;

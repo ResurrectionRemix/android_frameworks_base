@@ -70,7 +70,7 @@ public class QSTileView extends ViewGroup {
     private int mTilePaddingBelowIconPx;
     private final int mDualTileVerticalPaddingPx;
     private final View mTopBackgroundView;
-    private boolean mQsColorSwitch = false;
+    private int mQsColorSwitch ;
     public int mIconColor;
     public int mLabelColor;
 
@@ -146,9 +146,8 @@ public class QSTileView extends ViewGroup {
     void recreateLabel() {
         CharSequence labelText = null;
         CharSequence labelDescription = null;
-         mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0,
-                UserHandle.USER_CURRENT) == 1;
+        mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
 	    mLabelColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
         if (mLabel != null) {
@@ -170,7 +169,7 @@ public class QSTileView extends ViewGroup {
             mDualLabel.setId(View.generateViewId());
             mDualLabel.setBackgroundResource(R.drawable.btn_borderless_rect);
             mDualLabel.setFirstLineCaret(mContext.getDrawable(R.drawable.qs_dual_tile_caret));
-            if (mQsColorSwitch) {
+            if (mQsColorSwitch != 0) {
             mDualLabel.setTextColor(mLabelColor);
 	    } else {
 	    mDualLabel.setTextColor(res.getColor(R.color.qs_tile_text));
@@ -205,7 +204,7 @@ public class QSTileView extends ViewGroup {
             }
             addView(mLabel);
             updateColors();
-            if (mQsColorSwitch) {
+           if (mQsColorSwitch != 0) {
                 mLabel.setTextColor(mLabelColor);
            }	
         }
@@ -263,9 +262,11 @@ public class QSTileView extends ViewGroup {
         icon.setId(android.R.id.icon);
         icon.setScaleType(ScaleType.CENTER_INSIDE);
         updateColors();
-        if (mQsColorSwitch) {
+        if (mQsColorSwitch == 1 || mQsColorSwitch == 2) {
             icon.setColorFilter(mIconColor, Mode.SRC_ATOP);
-        } 
+        } else if (mQsColorSwitch == 3 || mQsColorSwitch == 4) {
+	     icon.clearColorFilter();
+	}
         return icon;
     }
 
@@ -388,15 +389,12 @@ public class QSTileView extends ViewGroup {
     
     public void updateColors() {
         final ContentResolver resolver = mContext.getContentResolver();
-          mQsColorSwitch = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.QS_COLOR_SWITCH, 0,
-                UserHandle.USER_CURRENT) == 1;
-        if (mQsColorSwitch) {
+        mQsColorSwitch = Settings.System.getInt(resolver,
+                    Settings.System.QS_COLOR_SWITCH, 0);
            mLabelColor = Settings.System.getInt(resolver,
                     Settings.System.QS_TEXT_COLOR, 0xFFFFFFFF);
            mIconColor = Settings.System.getInt(resolver,
                     Settings.System.QS_ICON_COLOR, 0xFFFFFFFF);
-        }
     }
 
     public void onStateChanged(QSTile.State state) {
