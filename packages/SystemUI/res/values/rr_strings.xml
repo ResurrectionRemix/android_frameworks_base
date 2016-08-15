@@ -197,6 +197,8 @@
     <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
     <string name="quick_settings_expanded_desktop">Expanded</string>
     <string name="quick_settings_expanded_desktop_off">Normal</string>
+    <string name="quick_settings_expanded_navigation_off">Hide navbar</string>
+    <string name="quick_settings_expanded_statusbar_off">Hide statusbar</string>
 
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>

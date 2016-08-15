@@ -25,6 +25,8 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.RemoteException;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.View;
 import android.view.WindowManagerGlobal;
@@ -41,11 +43,14 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 public class ExpandedDesktopTile extends QSTileImpl<BooleanState> {
 
     private static final int STATE_ENABLE_FOR_ALL = 1;
-    private static final int STATE_USER_CONFIGURABLE = 2;
+    private static final int STATE_ENABLE_FOR_STATUSBAR = 2;
+    private static final int STATE_ENABLE_FOR_NAVBAR = 3;
+    private static final int STATE_USER_CONFIGURABLE = 4;
 
     private int mExpandedDesktopState;
     private ExpandedDesktopObserver mObserver;
     private boolean mListening;
+    private boolean mHasNavigationBar;
 
     public ExpandedDesktopTile(QSHost host) {
         super(host);
@@ -85,6 +90,12 @@ public class ExpandedDesktopTile extends QSTileImpl<BooleanState> {
         if (mExpandedDesktopState == 1) {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_desktop);
             state.label = mContext.getString(R.string.quick_settings_expanded_desktop);
+        } else if (mExpandedDesktopState == 2) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_statusbar_off);
+            state.label = mContext.getString(R.string.quick_settings_expanded_statusbar_off);
+        } else if (mExpandedDesktopState == 3) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_navigation_off);
+            state.label = mContext.getString(R.string.quick_settings_expanded_navigation_off);
         } else {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_expanded_desktop_off);
             state.label = mContext.getString(R.string.quick_settings_expanded_desktop_off);
@@ -92,9 +103,24 @@ public class ExpandedDesktopTile extends QSTileImpl<BooleanState> {
     }
 
     protected void toggleState() {
+        try {
+            mHasNavigationBar = WindowManagerGlobal.getWindowManagerService().hasNavigationBar();
+        } catch (RemoteException e) {
+            // Do nothing
+        }
         int state = mExpandedDesktopState;
         switch (state) {
             case STATE_ENABLE_FOR_ALL:
+                if (mHasNavigationBar) {
+                  enableForStatusbar();
+                } else {
+                  userConfigurableSettings();
+                }
+                break;
+            case STATE_ENABLE_FOR_STATUSBAR:
+                enableForNavbar();
+                break;
+            case STATE_ENABLE_FOR_NAVBAR:
                 userConfigurableSettings();
                 break;
             case STATE_USER_CONFIGURABLE:
@@ -113,6 +139,16 @@ public class ExpandedDesktopTile extends QSTileImpl<BooleanState> {
         writeValue("immersive.full=*");
     }
 
+    private void enableForStatusbar() {
+        mExpandedDesktopState = STATE_ENABLE_FOR_STATUSBAR;
+        writeValue("immersive.status=*");
+    }
+
+    private void enableForNavbar() {
+        mExpandedDesktopState = STATE_ENABLE_FOR_NAVBAR;
+        writeValue("immersive.navigation=*");
+    }
+
     private void userConfigurableSettings() {
         mExpandedDesktopState = STATE_USER_CONFIGURABLE;
         writeValue("");
@@ -123,6 +159,12 @@ public class ExpandedDesktopTile extends QSTileImpl<BooleanState> {
         String value = Settings.Global.getString(cr, Settings.Global.POLICY_CONTROL);
         if ("immersive.full=*".equals(value)) {
             return STATE_ENABLE_FOR_ALL;
+        }
+        if ("immersive.status=*".equals(value)) {
+            return STATE_ENABLE_FOR_STATUSBAR;
+        }
+        if ("immersive.navigation=*".equals(value)) {
+            return STATE_ENABLE_FOR_NAVBAR;
         }
         return STATE_USER_CONFIGURABLE;
     }
