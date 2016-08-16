@@ -18,6 +18,7 @@ package com.android.systemui.volume;
 import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.PorterDuff.Mode;
 import android.provider.Settings.Global;
 import android.service.notification.ZenModeConfig;
 import android.util.AttributeSet;
@@ -26,8 +27,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.provider.Settings;
+
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.ZenModeController;
+
+import com.android.internal.util.rr.VolumeDialogColorHelper;
 
 import java.util.Objects;
 
@@ -47,6 +52,8 @@ public class ZenFooter extends LinearLayout {
     private int mZen = -1;
     private ZenModeConfig mConfig;
     private ZenModeController mController;
+
+    public boolean mDialogSwitch;
 
     public ZenFooter(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -124,6 +131,7 @@ public class ZenFooter extends LinearLayout {
 
     public void update() {
         mIcon.setImageResource(isZenNone() ? R.drawable.ic_dnd_total_silence : R.drawable.ic_dnd);
+	updatecolor(mIcon);
         final String line1 =
                 isZenPriority() ? mContext.getString(R.string.interruption_level_priority)
                 : isZenAlarms() ? mContext.getString(R.string.interruption_level_alarms)
@@ -147,5 +155,15 @@ public class ZenFooter extends LinearLayout {
     public void cleanup() {
         mController.removeCallback(mZenModeCallback);
     }
-
+  
+    void updatecolor(ImageView icon) {
+	boolean mDialogSwitch = Settings.System.getInt(mContext.getContentResolver(),
+               Settings.System.VOLUME_DIALOG_COLOR_SWITCH, 0) == 1 ;
+	int mExpandButtonColor = VolumeDialogColorHelper.getExpandButtonColor(mContext);
+        if(mDialogSwitch) {
+			if(icon != null) {
+			icon.setColorFilter(mExpandButtonColor, Mode.MULTIPLY);
+			}
+   	}
+   }
 }

@@ -167,6 +167,9 @@ public class VolumeDialogComponent implements VolumeComponent {
         resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_DIALOG_COLOR_SWITCH),
                     false, this);
+        resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.VOLUME_DIALOG_ICON_COLOR),
+                    false, this);
             update();
         }
 
@@ -175,6 +178,9 @@ public class VolumeDialogComponent implements VolumeComponent {
         public void onChange(boolean selfChange, Uri uri) {
         if (uri.equals(Settings.System.getUriFor(
                     Settings.System.VOLUME_DIALOG_COLOR_SWITCH))) {
+               	   recreateDialog();
+        } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.VOLUME_DIALOG_ICON_COLOR))) {
                	   recreateDialog();
         } 
 	 update();

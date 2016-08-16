@@ -6100,6 +6100,36 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_DIALOG_COLOR_SWITCH = "volume_dialog_color_switch";
+
+	/**
+         * Icon color of the volume dialog
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_ICON_COLOR = "volume_dialog_icon_color";
+
+        /**
+         * Slider color of the volume dialog
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_SLIDER_COLOR = "volume_dialog_slider_color";
+
+        /**
+         * Slider icon color of the volume dialog
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_SLIDER_ICON_COLOR = "volume_dialog_slider_icon_color";
+
+        /**
+         * Inactive color of the volume dialog slider
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_SLIDER_INACTIVE_COLOR = "volume_dialog_slider_inactive_color";
+
+        /**
+         * Slider icon color of the volume dialog
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_EXPAND_BUTTON_COLOR = "volume_dialog_expand_button_color";
         
                 /**
          * Quick settings stroke
@@ -6125,6 +6155,24 @@ public final class Settings {
          * @hide
          */
         public static final String QS_STROKE = "qs_stroke";
+
+        /**
+         * Color of the quick settings icon background ripple effect
+         * @hide
+         */
+        public static final String QS_RIPPLE_COLOR = "qs_ripple_color";
+
+        /**
+         *  Color of the used portion of the qs brightness slider
+         * @hide
+         */
+        public static final String QS_BRIGHTNESS_SLIDER_COLOR = "qs_brightness_slider_color";
+
+        /**
+         *  Color of the unused portion of the qs brightness slider
+         * @hide
+         */
+        public static final String QS_BRIGHTNESS_SLIDER_BG_COLOR = "qs_brightness_slider_bg_color";
 
         /**
          * Quick settings stroke custom color

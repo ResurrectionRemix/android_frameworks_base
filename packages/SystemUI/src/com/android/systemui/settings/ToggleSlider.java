@@ -17,8 +17,10 @@
 package com.android.systemui.settings;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.drawable.RippleDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +33,10 @@ import android.widget.TextView;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.BrightnessMirrorController;
+
+import com.android.internal.util.rr.QSColorHelper;
+import android.provider.Settings;
+
 
 public class ToggleSlider extends RelativeLayout {
     public interface Listener {
@@ -135,6 +141,38 @@ public class ToggleSlider extends RelativeLayout {
             copy.recycle();
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void setColors() {
+	int mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_COLOR_SWITCH, 0);
+        final int rippleColor = QSColorHelper.getRippleColor(mContext);
+        final int sliderColor = QSColorHelper.getBrightnessSliderColor(mContext);
+        final int sliderEmptyColor = QSColorHelper.getBrightnessSliderEmptyColor(mContext);
+	if (mQsColorSwitch !=0) {
+        mSlider.setProgressBackgroundTintList(ColorStateList.valueOf(sliderEmptyColor));
+        mSlider.setProgressTintList(ColorStateList.valueOf(sliderColor));
+        updateRippleColor(rippleColor);
+	}
+    }
+
+    private void updateRippleColor(int rippleColor) {
+        RippleDrawable toggleRipple = (RippleDrawable) mContext.getDrawable(R.drawable.ripple_drawable);
+        RippleDrawable sliderRipple = (RippleDrawable) mContext.getDrawable(R.drawable.ripple_drawable);
+
+        int states[][] = new int[][] {
+            new int[] {
+                com.android.internal.R.attr.state_enabled
+            }
+        };
+        int colors[] = new int[] {
+            rippleColor
+        };
+        ColorStateList color = new ColorStateList(states, colors);
+        toggleRipple.setColor(color);
+        sliderRipple.setColor(color);
+        mToggle.setBackground(toggleRipple);
+        mSlider.setBackground(sliderRipple);
     }
 
     private final OnCheckedChangeListener mCheckListener = new OnCheckedChangeListener() {

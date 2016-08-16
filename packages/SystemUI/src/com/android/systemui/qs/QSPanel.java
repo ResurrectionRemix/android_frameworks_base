@@ -205,6 +205,7 @@ public class QSPanel extends ViewGroup {
     }
     
      public void updatecolors() {
+	refreshAllTiles();
 	ImageView brightnessIcon = (ImageView) findViewById(R.id.brightness_icon);
         mQsColorSwitch = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.QS_COLOR_SWITCH, 0);
@@ -214,7 +215,8 @@ public class QSPanel extends ViewGroup {
 		if (mQsColorSwitch == 1 || mQsColorSwitch == 2) {	
 		brightnessIcon.setColorFilter(mIconColor, Mode.SRC_ATOP);
 		}
-	}	
+	}
+	mBrightnessController.setColors();	
      }
      
         
@@ -232,8 +234,8 @@ public class QSPanel extends ViewGroup {
 	if (mDetail != null) {
                     mDetail.getBackground().setColorFilter(
                            mStockBg, Mode.SRC_ATOP);
-                }
-	 }    
+              	  }
+	   } 
 	}
 	
   public void setQSShadeAlphaValue(int alpha) {

@@ -25,6 +25,23 @@ public class QSColorHelper {
 
     private static int WHITE = 0xffffffff;
 
+   public static int getBrightnessSliderColor(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.QS_BRIGHTNESS_SLIDER_COLOR, WHITE);
+    }
+
+    public static int getRippleColor(Context context) {
+        int color = Settings.System.getInt(context.getContentResolver(),
+                Settings.System.QS_RIPPLE_COLOR, WHITE);
+        int colorToUse =  (74 << 24) | (color & 0x00ffffff);
+        return colorToUse;
+    }
+
+    public static int getBrightnessSliderEmptyColor(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+                Settings.System.QS_BRIGHTNESS_SLIDER_BG_COLOR, WHITE);
+    }
+
     public static int getQsBgGradientOrientation(Context context) {
         return Settings.System.getInt(context.getContentResolver(),
                 Settings.System.QS_BACKGROUND_GRADIENT_ORIENTATION, 270);

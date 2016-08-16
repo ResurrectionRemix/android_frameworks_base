@@ -813,8 +813,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_MASTER_SWITCH), false, this, UserHandle.USER_ALL);       
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY), false, this,
-                    UserHandle.USER_ALL);
+                    Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BRIGHTNESS_SLIDER_COLOR), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_RIPPLE_COLOR), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BRIGHTNESS_SLIDER_BG_COLOR), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -981,7 +986,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                                         0, UserHandle.USER_CURRENT) == 1;
                     RecentsActivity.startBlurTask();
                     updatePreferences(mContext);
-            }
+            } else if (uri.equals(Settings.System.getUriFor(
+		Settings.System.QS_BRIGHTNESS_SLIDER_COLOR))
+		|| uri.equals(Settings.System.getUriFor(
+		Settings.System.QS_RIPPLE_COLOR))
+		|| uri.equals(Settings.System.getUriFor(
+		Settings.System.QS_BRIGHTNESS_SLIDER_BG_COLOR))) {
+		DontStressOnRecreate();
+	    } 
             update();
         }
 
