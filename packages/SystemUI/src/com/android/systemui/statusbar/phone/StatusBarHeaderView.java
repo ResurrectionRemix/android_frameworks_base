@@ -458,7 +458,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
   private void setSBEHStroke() {
         ContentResolver resolver = mContext.getContentResolver();
         final int mSBEHStroke = Settings.System.getInt(
-                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE, 1);
+                resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE, 0);
         final int mSBEHStrokeColor = Settings.System.getInt(
                 resolver, Settings.System.STATUS_BAR_EXPANDED_HEADER_STROKE_COLOR, mContext.getResources().getColor(R.color.system_accent_color));
         final int mSBEHStrokeThickness = Settings.System.getInt(
