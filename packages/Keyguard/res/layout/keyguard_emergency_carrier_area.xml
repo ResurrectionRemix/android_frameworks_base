@@ -49,7 +49,7 @@
         style="?android:attr/buttonBarButtonStyle"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="@dimen/kg_status_line_font_size"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="@android:color/white"
         android:textAllCaps="@bool/kg_use_all_caps" />
 
 </com.android.keyguard.EmergencyCarrierArea>
