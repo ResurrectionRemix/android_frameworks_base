@@ -73,7 +73,7 @@ class VoiceInteractionManagerServiceImpl implements VoiceInteractionSessionConne
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(intent.getAction())) {
                 String reason = intent.getStringExtra("reason");
-                if (!CLOSE_REASON_VOICE_INTERACTION.equals(reason) && !"dream".equals(reason)) {
+                if (!CLOSE_REASON_VOICE_INTERACTION.equals(reason) && !"dream".equals(reason) && !"assist".equals(reason)) {
                     synchronized (mLock) {
                         if (mActiveSession != null && mActiveSession.mSession != null) {
                             try {
