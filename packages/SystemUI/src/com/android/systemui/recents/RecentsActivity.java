@@ -1100,6 +1100,8 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         mBlurDarkColorFilter = Color.LTGRAY;
         mBlurMixedColorFilter = Color.GRAY;
         mBlurLightColorFilter = Color.DKGRAY;
+	try {
         mBlurredRecentAppsEnabled = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY, 0) == 1);
+	} catch(Exception e) {}
     }
 }

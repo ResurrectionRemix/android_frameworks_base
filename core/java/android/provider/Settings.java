@@ -6263,6 +6263,12 @@ public final class Settings {
          */
         public static final String BLUETOOTH_SHOW_BATTERY = "bluetooth_show_battery";
 
+        /**
+         * Hide Zen icon in statusbar
+         * @hide
+         */
+        public static final String SHOW_ZEN_ICON = "show_zen_icon";
+
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

@@ -331,5 +331,8 @@
     <string name="quick_settings_halo_on">Halo</string>
     <string name="quick_settings_halo_off">Halo disabled</string>
 
+    <!-- Zen icon in statusbar -->
+    <string name="show_zen_icon_title">Zen icon</string>
+
 </resources>
 

@@ -108,6 +108,7 @@ public class PhoneStatusBarPolicy implements Callback {
     IccCardConstants.State mSimState = IccCardConstants.State.READY;
 
     private boolean mZenVisible;
+    private boolean mShowZenIcon;
     private boolean mVolumeVisible;
     private boolean mCurrentUserSetup;
     private Float mBluetoothBatteryLevel = null;
@@ -222,6 +223,9 @@ public class PhoneStatusBarPolicy implements Callback {
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.SHOW_HEADSET_ICON),
                 false, mSettingsObserver);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.SHOW_ZEN_ICON),
+                false, mSettingsObserver);
 
         // zen
         mService.setIcon(SLOT_ZEN, R.drawable.stat_sys_zen_important, 0, null);
@@ -269,6 +273,10 @@ public class PhoneStatusBarPolicy implements Callback {
                     Settings.System.SHOW_SU_INDICATOR, 1) == 1;
             updateAlarm();
             updateSu();
+
+            mShowZenIcon = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SHOW_ZEN_ICON, 1) == 1;
+            updateVolumeZen();
 
             mHeadsetIconVisible = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.SHOW_HEADSET_ICON, 1);
@@ -398,11 +406,14 @@ public class PhoneStatusBarPolicy implements Callback {
             volumeDescription = mContext.getString(R.string.accessibility_ringer_vibrate);
         }
 
-        if (zenVisible) {
+        if (zenVisible && mShowZenIcon) {
             mService.setIcon(SLOT_ZEN, zenIconId, 0, zenDescription);
         }
+        if (zenVisible && !mShowZenIcon) {
+            mService.setIconVisibility(SLOT_ZEN, false);
+        }
         if (zenVisible != mZenVisible) {
-            mService.setIconVisibility(SLOT_ZEN, zenVisible);
+            mService.setIconVisibility(SLOT_ZEN, (zenVisible && mShowZenIcon));
             mZenVisible = zenVisible;
         }
 

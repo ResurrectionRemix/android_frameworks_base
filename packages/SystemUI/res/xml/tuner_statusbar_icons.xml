@@ -54,4 +54,9 @@
             android:key="airplane"
             android:title="@string/status_bar_airplane"/>
 
+    <com.android.systemui.rr.SystemSettingSwitchPreference
+        android:key="show_zen_icon"
+        android:title="@string/show_zen_icon_title"
+        android:defaultValue="true" />
+
 </PreferenceScreen>
