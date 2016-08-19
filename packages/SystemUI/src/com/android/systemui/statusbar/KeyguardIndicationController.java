@@ -76,6 +76,7 @@ public class KeyguardIndicationController {
     private boolean mPowerCharged;
     private int mChargingSpeed;
     private int mChargingCurrent;
+    private boolean mShowChargingCurrent;
     private String mMessageToShowOnScreenOn;
     private boolean mShowcurrent;
     private IndicationDirection mIndicationDirection;
@@ -273,28 +274,20 @@ public class KeyguardIndicationController {
         }
 
         String chargingCurrent = "";
-
-        if (mChargingCurrent != 0) {
-            chargingCurrent = "\n" + (mChargingCurrent / 1000) + "mA/h";
+        mShowChargingCurrent = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.LOCK_SCREEN_SHOW_CURRENT, 0, UserHandle.USER_CURRENT) == 1;
+        if (mChargingCurrent != 0 && mShowChargingCurrent) {
+            chargingCurrent = "\n" + "Max " + (mChargingCurrent / 1000) + "mA/h";
         }
-	mShowcurrent = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_SCREEN_SHOW_CURRENT, 0) == 1;
+
         if (hasChargingTime) {
             String chargingTimeFormatted = Formatter.formatShortElapsedTimeRoundingUpToMinutes(
                     mContext, chargingTimeRemaining);
-            if (mShowcurrent) {        
             String chargingText = mContext.getResources().getString(chargingId, chargingTimeFormatted);
             return chargingText + chargingCurrent;
-            } else {
-            return mContext.getResources().getString(chargingId, chargingTimeFormatted);
-            }
         } else {
-	    if (mShowcurrent) {
             String chargingText = mContext.getResources().getString(chargingId);
             return chargingText + chargingCurrent;
-            } else {
-            return mContext.getResources().getString(chargingId);
-            }
         }
     }
 
