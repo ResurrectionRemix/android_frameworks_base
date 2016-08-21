@@ -49,8 +49,8 @@
   <string name="floating_window_snap_right">Rechts anheften</string>
   <string name="floating_window_minimize">Minimieren</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
-  <string name="adb_not_connected_notification_title">ADB inactive</string>
-  <string name="adb_active_custom_tile_not_connected">inactive</string>
+  <string name="adb_not_connected_notification_title">ADB inaktiv</string>
+  <string name="adb_active_custom_tile_not_connected">inaktive</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+  <string name="system_error_vendorprint">Dein Anbieter-Bild übereinstimmt nicht im System. Bitte flashe das <xliff:g id="string">%s</xliff:g> Anbieter-Bild für dein System</string>
 </resources>

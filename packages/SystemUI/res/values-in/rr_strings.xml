@@ -20,17 +20,17 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Dismiss</string>
-  <string name="battery_saver_notification_action_text_short">Turn off</string>
-  <string name="gestures_message">Draw gesture here</string>
+  <string name="battery_saver_dismiss_title">Singkirkan</string>
+  <string name="battery_saver_notification_action_text_short">Matikan</string>
+  <string name="gestures_message">Gambar gerakan di sini</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">Tampilan mengambang</string>
   <string name="app_stop_item_title">Kill app</string>
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+  <string name="screenrecord_notif_ticker">Layar sedang direkam</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Recording screen</string>
+  <string name="screenrecord_notif_title">Merekam layar</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Stop</string>
   <!-- Screenrecord notification action: show/hide pointer -->
@@ -44,11 +44,11 @@
   <string name="onthego_notif_ticker">On-The-Go activated</string>
   <string name="onthego_notif_title">On-The-Go is active</string>
   <string name="onthego_notif_stop">Stop</string>
-  <string name="onthego_notif_options">Options</string>
-  <string name="onthego_notif_error">Unable to start On-The-Go</string>
+  <string name="onthego_notif_options">Pilihan</string>
+  <string name="onthego_notif_error">Tidak dapat memulai On-The-Go</string>
   <string name="onthego_notif_restart">Restart On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Camera mode changed</string>
-  <string name="onthego_transparency">Transparency</string>
+  <string name="onthego_notif_camera_changed">Modus kamera berubah</string>
+  <string name="onthego_transparency">Transparansi</string>
   <string name="onthego_front_camera">Use front camera</string>
   <string name="onthego_service_toggle">Automatically restart service</string>
   <!-- To do: Add QS OnTheGo
@@ -214,7 +214,7 @@
   <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">Tampilan mengambang</string>
   <string name="app_stop_item_title">Kill app</string>
   <!-- Floating Windows tile -->
   <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
@@ -240,4 +240,12 @@
   <string name="halo_tutorial1">This is HALO</string>
   <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
   <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

@@ -206,7 +206,7 @@
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
+  <string name="quick_settings_pulse_enabled">Пулс укључен</string>
   <string name="quick_settings_pulse_disabled">No Visualizer</string>
   <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
   <!-- PA Pie controls -->
@@ -226,7 +226,7 @@
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
-  <string name="recents_custom_android_n">CLEAR ALL</string>
+  <string name="recents_custom_android_n">ОЧИСТИ СВЕ</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Launch %s after closing recents</string>
   <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
@@ -234,10 +234,18 @@
   <string name="accessibility_halo">Create notification halo.</string>
   <!-- HALO -->
   <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
+  <string name="halo_hide">Сакриј</string>
   <string name="halo_clear_all">Dismiss all notifications</string>
   <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
+  <string name="halo_tutorial1">Ово је ХАЛО</string>
+  <string name="halo_tutorial2">Премести ме: двотап и превуци</string>
   <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

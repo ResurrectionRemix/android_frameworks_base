@@ -228,16 +228,24 @@
   <string name="pulse_toast_message">Віртуалізація не буде працювати коли \"Пульс\" увімкнено</string>
   <string name="recents_custom_android_n">ОЧИСТИТИ ВСІ</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
-  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
+  <string name="toast_recents_queue_app">Запустити %s після закриття нещодавніх</string>
+  <string name="toast_recents_cancel_queued_app">Скасовано запуск додатка</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">Створити сповіщення halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
+  <string name="halo_dismiss">Відхилити сповіщення</string>
   <string name="halo_hide">Приховати</string>
   <string name="halo_clear_all">Відхилити всі сповіщення</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
+  <string name="halo_silence">Приховати або мовчати поки не прокинеться</string>
   <string name="halo_tutorial1">Це HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial2">Перемісти мене: натисніть двічі та перетягніть</string>
+  <string name="halo_tutorial3">Перегляд завдань: горизонтальне перетягування</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

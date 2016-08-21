@@ -20,9 +20,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Dismiss</string>
-  <string name="battery_saver_notification_action_text_short">Turn off</string>
-  <string name="gestures_message">Draw gesture here</string>
+  <string name="battery_saver_dismiss_title">Hylkää</string>
+  <string name="battery_saver_notification_action_text_short">Poista käytöstä</string>
+  <string name="gestures_message">Piirrä eleesi tähän</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
   <string name="app_float_item_title">Float view</string>
@@ -240,4 +240,12 @@
   <string name="halo_tutorial1">This is HALO</string>
   <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
   <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

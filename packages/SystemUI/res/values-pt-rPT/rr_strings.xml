@@ -240,4 +240,12 @@
   <string name="halo_tutorial1">Isto é o HALO</string>
   <string name="halo_tutorial2">Mover-me: toque duplo &amp; arraste</string>
   <string name="halo_tutorial3">Procurar tarefas: arraste Horizontalmente</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

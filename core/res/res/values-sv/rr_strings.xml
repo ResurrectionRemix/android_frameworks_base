@@ -24,8 +24,8 @@
   <string name="animation_fade">Tona bort</string>
   <string name="animation_slide_right">Glida in höger</string>
   <string name="animation_slide_left">Glida in vänster</string>
-  <string name="animation_slide_right_no_fade">Glida åt höger (Inte tona bort)</string>
-  <string name="animation_slide_left_no_fade">Glida in vänster (Inte tona ut)</string>
+  <string name="animation_slide_right_no_fade">Glid in från höger (Tona inte ut)</string>
+  <string name="animation_slide_left_no_fade">Glid in från vänster (Tona inte ut)</string>
   <string name="animation_slide_up">Glida in botten</string>
   <string name="animation_slide_down">Glida från toppen</string>
   <string name="animation_default">Standard</string>

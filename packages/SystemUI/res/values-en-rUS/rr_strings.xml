@@ -202,7 +202,7 @@
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
   <string name="heads_up_enabled">Heads up notifications are enabled</string>
-  <string name="heads_up_disabled">Heads up notifications are disabled</string>
+  <string name="heads_up_disabled">Heads up notifications are enabled</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
@@ -240,4 +240,12 @@
   <string name="halo_tutorial1">This is HALO</string>
   <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
   <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

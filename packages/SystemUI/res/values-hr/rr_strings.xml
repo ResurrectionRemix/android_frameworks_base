@@ -49,7 +49,7 @@
   <string name="onthego_notif_restart">Ponovno pokreni</string>
   <string name="onthego_notif_camera_changed">Način kamere je promijenjen.</string>
   <string name="onthego_transparency">Prozirnost</string>
-  <string name="onthego_front_camera">Upotrebljavaj prednju kameru</string>
+  <string name="onthego_front_camera">Upotrijebi prednju kameru</string>
   <string name="onthego_service_toggle">Auto. ponovno pokreni uslugu</string>
   <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
@@ -240,4 +240,12 @@
   <string name="halo_tutorial1">This is HALO</string>
   <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
   <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

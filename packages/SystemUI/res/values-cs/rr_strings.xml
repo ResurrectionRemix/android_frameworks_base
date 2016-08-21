@@ -60,7 +60,7 @@
   <string name="quick_settings_screenshot_label">Snímek obrazovky</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Rozšířená plocha</string>
-  <string name="quick_settings_expanded_desktop">Rozšířený</string>
+  <string name="quick_settings_expanded_desktop">Rozšířená</string>
   <string name="quick_settings_expanded_desktop_off">Normalní</string>
   <string name="quick_settings_expanded_desktop_detail_title">Režim rozšířené plochy</string>
   <string name="quick_settings_expanded_hide_status">Skrýt stavový řádek</string>
@@ -93,7 +93,7 @@
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_off">Vypnout Heads up.</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Zapnout Heads up.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up zapnuto.</string>
   <string name="quick_settings_heads_up_label">Plovoucí upozornění</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE ON </string>
@@ -114,7 +114,7 @@
   <string name="quick_settings_fling_off">Psané gesto vypnuto</string>
   <!-- Hw Keys tile -->
   <string name="quick_settings_hwkeys_title">Hardwarová tlačítka</string>
-  <string name="quick_settings_hwkeys_on">Zapnout hardvarovéá tlačítka</string>
+  <string name="quick_settings_hwkeys_on">Zapnout hardvarová tlačítka</string>
   <string name="quick_settings_hwkeys_off">Vypnout hardwarová tlačítka</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
@@ -204,11 +204,11 @@
   <string name="heads_up_enabled">Plovoucí oznámení jsou povoleny</string>
   <string name="heads_up_disabled">Plovoucí oznámení jsou vypnuty</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads up je odložen na <xliff:g id="number">%d </xliff:g> minut.</string>
+  <string name="heads_up_snooze_message">Plovoucí oznámení jsou odložena na <xliff:g id="number">%d </xliff:g> minut.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse povoleno</string>
   <string name="quick_settings_pulse_disabled">Žádné vizualizace</string>
-  <string name="quick_settings_pulse_label">Navigační lišta Visualizeru</string>
+  <string name="quick_settings_pulse_label">Vizualizace navigační lišty</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Plovoucí režim</string>
@@ -224,7 +224,7 @@
   <string name="quick_settings_slim_floats_off">Slim Float Mode zakázán</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Vizualizer.</string>
+  <string name="accessibility_quick_settings_visualizer">Vizualizér.</string>
   <string name="pulse_toast_message">Vizualizace nebude fungovat s pulzní volbou</string>
   <string name="recents_custom_android_n">VYMAZAT VŠE</string>
   <!-- Slim recents app sidebar queue app toast -->
@@ -240,4 +240,12 @@
   <string name="halo_tutorial1">Tohle je HALO</string>
   <string name="halo_tutorial2">Přesuň si mě: dvakrát klepněte &amp; přetáhněte</string>
   <string name="halo_tutorial3">Procházejte úkoly vodorovným taženín</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

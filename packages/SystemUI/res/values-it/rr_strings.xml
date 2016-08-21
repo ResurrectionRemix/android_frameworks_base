@@ -57,14 +57,14 @@
   <!-- Quick settings -->
   <string name="quick_settings_brightness_label">Luminosità</string>
   <string name="quick_settings_screen_off_label">Spegni schermo</string>
-  <string name="quick_settings_screenshot_label">Screenshot</string>
+  <string name="quick_settings_screenshot_label">Cattura Schermo</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Desktop esteso</string>
   <string name="quick_settings_expanded_desktop">Espandi</string>
   <string name="quick_settings_expanded_desktop_off">Normale</string>
   <string name="quick_settings_expanded_desktop_detail_title">Modalità desktop esteso</string>
   <string name="quick_settings_expanded_hide_status">Nascondi Barra di Stato</string>
-  <string name="quick_settings_expanded_hide_navigation">Nascondi barra di navigazione</string>
+  <string name="quick_settings_expanded_hide_navigation">Nascondi la barra di navigazione</string>
   <string name="quick_settings_expanded_hide_both">Nascondi entrambi</string>
   <string name="accessibility_quick_settings_expanded_desktop_off">Desktop esteso disattivato</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -81,7 +81,7 @@
   <string name="quick_settings_reboot_label">Riavvia</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Mostra 4G invece di LTE</string>
+  <string name="show_fourg_title">Visualizza 4G invece di LTE</string>
   <string name="show_fourg_summary">Sostituisce l\'indicatore LTE nella barra delle notifiche con il 4G</string>
   <string name="statusbar_tuner_category_title">Nascondi elementi dalla barra delle notifiche</string>
   <!-- Configurations Tile -->
@@ -96,8 +96,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up acceso.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="lte_on">LTE acceso </string>
+  <string name="lte_off">LTE spento</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Temi</string>
   <string name="quick_settings_themes_icon_packs">Applica pacchetto icone</string>
@@ -108,10 +108,10 @@
   <string name="quick_settings_themes_match_system">Uguaglia tema di sistema</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Barra di navigazione</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
+  <string name="quick_settings_smartbar_off">SmartBar spenta</string>
   <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_fling">Gesto Fling</string>
-  <string name="quick_settings_fling_off">Gesto Fling spento</string>
+  <string name="quick_settings_fling">Fling gesture</string>
+  <string name="quick_settings_fling_off">Fling gesture spenta</string>
   <!-- Hw Keys tile -->
   <string name="quick_settings_hwkeys_title">Tasti fisici</string>
   <string name="quick_settings_hwkeys_on">Tasti fisici On</string>
@@ -141,7 +141,7 @@
   <string name="status_bar_tuner">Icone barra di stato</string>
   <string name="status_bar_tuner_summary">Attiva o disattiva le icone di sistema della barra di stato</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Off</string>
+  <string name="off">Spento</string>
   <string name="on">On</string>
   <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
@@ -226,18 +226,26 @@
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Visualizzatore.</string>
   <string name="pulse_toast_message">La visualizzazione dei tile non funzionerà con pulse attivato</string>
-  <string name="recents_custom_android_n">CLEAR ALL</string>
+  <string name="recents_custom_android_n">Cancella tutto</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
-  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
+  <string name="toast_recents_queue_app">Avvia %s dopo la chiusura dei recenti</string>
+  <string name="toast_recents_cancel_queued_app">Avvio delle app annullato</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">Crea una notifica Halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_dismiss">Rimuovi notifica</string>
+  <string name="halo_hide">Nascondi</string>
+  <string name="halo_clear_all">Disattivare tutte le notifiche</string>
+  <string name="halo_silence">Nascondi &amp; silenzia fino a quando si sveglia</string>
+  <string name="halo_tutorial1">Questo è HALO</string>
+  <string name="halo_tutorial2">Muovimi: doppio tocco &amp; trascina</string>
+  <string name="halo_tutorial3">Sfoglia notifiche: movimento orizzontale</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

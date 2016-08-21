@@ -206,8 +206,8 @@
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Повтор всплывающих уведомлений через <xliff:g id="number">%d</xliff:g> минут.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Пульс включён</string>
-  <string name="quick_settings_pulse_disabled">Пульс выключен</string>
+  <string name="quick_settings_pulse_enabled">Pulse включён</string>
+  <string name="quick_settings_pulse_disabled">Pulse выключен</string>
   <string name="quick_settings_pulse_label">Визуализация панели навигации</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
@@ -225,19 +225,27 @@
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Визуализатор.</string>
-  <string name="pulse_toast_message">Плитка Визуализатора не будет работать при включённом Пульсе</string>
-  <string name="recents_custom_android_n">CLEAR ALL</string>
+  <string name="pulse_toast_message">Плитка Визуализатора не будет работать при включённом Pulse</string>
+  <string name="recents_custom_android_n">ОЧИСТИТЬ ВСЁ</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
-  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
+  <string name="toast_recents_queue_app">Запустить %s после закрытия недавних приложений</string>
+  <string name="toast_recents_cancel_queued_app">Запуск приложения отменен</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">Создать уведомление для halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_dismiss">Отклонить уведомление</string>
+  <string name="halo_hide">Скрыть</string>
+  <string name="halo_clear_all">Отклонить все уведомления</string>
+  <string name="halo_silence">Скрыть и молчать до пробуждения</string>
+  <string name="halo_tutorial1">Это HALO</string>
+  <string name="halo_tutorial2">Переместите меня: дважды нажмите и перетащите</string>
+  <string name="halo_tutorial3">Просмотр задач: горизонтальное перетаскивание</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <!-- Halo Tile -->
+  <string name="quick_settings_halo_on">Halo</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
+  <!-- Zen icon in statusbar -->
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>
