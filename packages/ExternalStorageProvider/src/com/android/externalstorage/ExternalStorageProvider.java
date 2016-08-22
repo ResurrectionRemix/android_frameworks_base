@@ -388,7 +388,7 @@ public class ExternalStorageProvider extends DocumentsProvider {
 
     @Override
     public void deleteDocument(String docId) throws FileNotFoundException {
-        final File file = getFileForDocId(docId);
+        final File file = getFileForDocId(docId,true);
         final boolean isDirectory = file.isDirectory();
         if (isDirectory) {
             FileUtils.deleteContents(file);
