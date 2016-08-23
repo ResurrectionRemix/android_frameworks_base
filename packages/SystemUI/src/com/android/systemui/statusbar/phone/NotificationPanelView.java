@@ -340,6 +340,7 @@ public class NotificationPanelView extends PanelView implements
     private int mQSPanelLogo;
     private int mQSPanelLogoColor;
     private int mQSPanelLogoAlpha;
+    private int mQsPanelLogoStyle;
 
     // Used to identify whether showUnlock() can dismiss the keyguard
     // or not.
@@ -531,7 +532,6 @@ public class NotificationPanelView extends PanelView implements
         mKeyguardStatusView = (KeyguardStatusView) findViewById(R.id.keyguard_status_view);
         mQsContainer = (QSContainer) findViewById(R.id.quick_settings_container);
         mQsPanel = (QSPanel) findViewById(R.id.quick_settings_panel);
-        mRRPanelLogo = (ImageView) findViewById(R.id.rr_panel_logo);
         mTaskManagerPanel = (LinearLayout) findViewById(R.id.task_manager_panel);
         mClockView = (TextView) findViewById(R.id.clock_view);
         mScrollView = (ObservableScrollView) findViewById(R.id.scroll_view);
@@ -551,7 +551,7 @@ public class NotificationPanelView extends PanelView implements
                 android.R.interpolator.fast_out_linear_in);
         mDozeAnimationInterpolator = AnimationUtils.loadInterpolator(getContext(),
                 android.R.interpolator.linear_out_slow_in);
-
+	findrrlogo();
         mViewLinker = new ViewLinker<NotificationStackScrollLayout>(mNotificationStackScroller,
                 new ViewLinker.LinkInfo(mKeyguardStatusBar, ViewLinker.LINK_ALPHA),
                 new ViewLinker.LinkInfo(mKeyguardStatusView, ViewLinker.LINK_ALPHA
@@ -3204,6 +3204,9 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.QS_PANEL_LOGO_ALPHA),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_LOGO_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_BACKGROUND_COLOR), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_COLOR_SWITCH), false, this);
@@ -3315,6 +3318,9 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.QS_COLOR_SWITCH, 0);
             mQsMasterSwitch = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_CUSTOM_MASTER_SWITCH, 0, UserHandle.USER_CURRENT) == 1;
+	    mQsPanelLogoStyle = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_PANEL_LOGO_STYLE, 0);
+	    findrrlogo();
             setQSPanelLogo();
             setQSStroke();
             setQSBackgroundColor();
@@ -3396,17 +3402,35 @@ public class NotificationPanelView extends PanelView implements
 	   }
     }
 
+    private void findrrlogo() {
+	if (mQsPanelLogoStyle == 0) {
+            mRRPanelLogo = (ImageView) findViewById(R.id.rr_panel_logo);
+	} else if (mQsPanelLogoStyle == 1) {
+	   mRRPanelLogo = (ImageView) findViewById(R.id.rr_panel_logo_1);
+	} else if (mQsPanelLogoStyle == 2) {
+	   mRRPanelLogo = (ImageView) findViewById(R.id.rr_panel_logo_2);
+	} else if (mQsPanelLogoStyle == 3) {
+	   mRRPanelLogo = (ImageView) findViewById(R.id.rr_panel_logo_3);
+	} else if (mQsPanelLogoStyle == 4) {
+	   mRRPanelLogo = (ImageView) findViewById(R.id.rr_panel_logo_4);
+	}
+   }
+
     private void setQSPanelLogo() {
         if (mQSPanelLogo == 0) {
             mRRPanelLogo.setVisibility(View.GONE);
         } else if (mQSPanelLogo == 1) {
+	    if(mRRPanelLogo != null) {
             mRRPanelLogo.setImageAlpha(mQSPanelLogoAlpha);
             mRRPanelLogo.setColorFilter(mContext.getResources().getColor(R.color.system_accent_color));
             mRRPanelLogo.setVisibility(View.VISIBLE);
+	    }
         } else if (mQSPanelLogo == 2) {
+	    if(mRRPanelLogo != null) {
             mRRPanelLogo.setImageAlpha(mQSPanelLogoAlpha);
             mRRPanelLogo.setColorFilter(mQSPanelLogoColor);
             mRRPanelLogo.setVisibility(View.VISIBLE);
+	    }
         }
     }
 

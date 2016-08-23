@@ -820,6 +820,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.QS_RIPPLE_COLOR), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_BRIGHTNESS_SLIDER_BG_COLOR), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_LOGO_STYLE), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -993,7 +995,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		|| uri.equals(Settings.System.getUriFor(
 		Settings.System.QS_BRIGHTNESS_SLIDER_BG_COLOR))) {
 		DontStressOnRecreate();
-	    } 
+	    } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_LOGO_STYLE))) {
+                    DontStressOnRecreate();
+            }
             update();
         }
 

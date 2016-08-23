@@ -6210,6 +6210,14 @@ public final class Settings {
         public static final String QS_STROKE_DASH_GAP = "qs_stroke_dash_gap";
 
         /**
+         * Quick settings RR logo style
+         *
+         * @hide
+         */
+        public static final String QS_PANEL_LOGO_STYLE = "qs_panel_logo_style";
+
+
+        /**
          * Quick settings RR logo
          *
          * @hide
