@@ -3418,15 +3418,17 @@ public class NotificationPanelView extends PanelView implements
 
     private void setQSPanelLogo() {
         if (mQSPanelLogo == 0) {
+	    if (mRRPanelLogo != null) {
             mRRPanelLogo.setVisibility(View.GONE);
+	    }
         } else if (mQSPanelLogo == 1) {
-	    if(mRRPanelLogo != null) {
+	    if (mRRPanelLogo != null) {
             mRRPanelLogo.setImageAlpha(mQSPanelLogoAlpha);
             mRRPanelLogo.setColorFilter(mContext.getResources().getColor(R.color.system_accent_color));
             mRRPanelLogo.setVisibility(View.VISIBLE);
 	    }
         } else if (mQSPanelLogo == 2) {
-	    if(mRRPanelLogo != null) {
+	    if (mRRPanelLogo != null) {
             mRRPanelLogo.setImageAlpha(mQSPanelLogoAlpha);
             mRRPanelLogo.setColorFilter(mQSPanelLogoColor);
             mRRPanelLogo.setVisibility(View.VISIBLE);
