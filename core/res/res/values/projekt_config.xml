@@ -21,4 +21,6 @@
     <bool name="config_useDarkBgNotificationIconTextTinting">false</bool>
     <bool name="config_useDarkBgNotificationTinting_override">false</bool>
     <bool name="config_notificationTinting_override">false</bool>
+    <bool name="config_allowNotificationIconTinting">true</bool>
+    <bool name="config_useDarkBgNotificationIconTinting">false</bool>
 </resources>

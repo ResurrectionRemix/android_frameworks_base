@@ -472,8 +472,10 @@ public class NotificationColorUtil {
      */
     public static int resolveContrastColor(Context context, int notificationColor,
             int backgroundColor) {
+        boolean isDark = context.getResources()
+                .getBoolean(com.android.internal.R.bool.config_useDarkBgNotificationIconTinting);
         return NotificationColorUtil.resolveContrastColor(context, notificationColor,
-                backgroundColor, false /* isDark */);
+                backgroundColor, isDark);
     }
 
     /**

@@ -34,6 +34,10 @@
   <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
   <java-symbol type="bool" name="config_useDarkBgNotificationTinting_override" />
   <java-symbol type="bool" name="config_notificationTinting_override" />
+  <java-symbol type="bool" name="config_allowNotificationIconTinting" />
+  <java-symbol type="bool" name="config_useDarkBgNotificationIconTinting" />
+  <java-symbol type="color" name="notification_icon_default_color" />
+  <java-symbol type="color" name="notification_ambient_icon_default_color" />
 
   <!-- Fastscroller text color (Launcher3) -->
   <java-symbol type="color" name="fastscroller_text_color" />

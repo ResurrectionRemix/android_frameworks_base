@@ -4429,7 +4429,8 @@ public class Notification implements Parcelable
         }
 
         private CharSequence processTextSpans(CharSequence text) {
-            if (hasForegroundColor()) {
+            if (hasForegroundColor() || mContext.getResources()
+                .getBoolean(R.bool.config_useDarkBgNotificationIconTinting)) {
                 return NotificationColorUtil.clearColorSpans(text);
             }
             return text;
@@ -5435,6 +5436,9 @@ public class Notification implements Parcelable
         }
 
         int resolveContrastColor() {
+            if (!mContext.getResources().getBoolean(R.bool.config_allowNotificationIconTinting)) {
+                return mContext.getColor(R.color.notification_icon_default_color);
+            }
             if (mCachedContrastColorIsFor == mN.color && mCachedContrastColor != COLOR_INVALID) {
                 return mCachedContrastColor;
             }
@@ -5446,8 +5450,10 @@ public class Notification implements Parcelable
                 ensureColors();
                 color = NotificationColorUtil.resolveDefaultColor(mContext, background);
             } else {
+                boolean isDark = mInNightMode || mContext.getResources()
+                        .getBoolean(R.bool.config_useDarkBgNotificationIconTinting);
                 color = NotificationColorUtil.resolveContrastColor(mContext, mN.color,
-                        background, mInNightMode);
+                        background, isDark);
             }
             if (Color.alpha(color) < 255) {
                 // alpha doesn't go well for color filters, so let's blend it manually
@@ -5472,6 +5478,9 @@ public class Notification implements Parcelable
         }
 
         int resolveAmbientColor() {
+            if (!mContext.getResources().getBoolean(R.bool.config_allowNotificationIconTinting)) {
+                return mContext.getColor(R.color.notification_ambient_icon_default_color);
+            }
             if (mCachedAmbientColorIsFor == mN.color && mCachedAmbientColorIsFor != COLOR_INVALID) {
                 return mCachedAmbientColor;
             }
