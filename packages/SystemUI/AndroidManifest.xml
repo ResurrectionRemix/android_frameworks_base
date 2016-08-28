@@ -294,7 +294,7 @@
                 android:exported="true" />
 
         <activity android:name=".tuner.TunerActivity"
-                  android:enabled="false"
+                  android:enabled="true"
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/system_ui_tuner"
