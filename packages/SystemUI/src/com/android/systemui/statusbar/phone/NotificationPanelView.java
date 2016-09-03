@@ -138,13 +138,8 @@ public class NotificationPanelView extends PanelView implements
     private KeyguardAffordanceHelper mAffordanceHelper;
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
     private KeyguardStatusBarView mKeyguardStatusBar;
-<<<<<<< HEAD
     private QS mQs;
     private FrameLayout mQsFrame;
-=======
-    public static QSContainer mQsContainer;
-    private AutoReinflateContainer mQsAutoReinflateContainer;
->>>>>>> 155ec78... [SQUASHED] Implement XOSP Blur personalization options (1/2)
     private KeyguardStatusView mKeyguardStatusView;
     private View mReserveNotificationSpace;
     private View mQsNavbarScrim;
@@ -294,6 +289,9 @@ public class NotificationPanelView extends PanelView implements
     private static int mTranslucencyPercentage;
     private static AlphaAnimation mAlphaAnimation;
     private static boolean mTranslucentQuickSettings;
+    private static FrameLayout mInnerBlurredView;
+    private Handler mHandler = new Handler();
+    private SettingsObserver mSettingsObserver;
     
     private static Animation.AnimationListener mAnimationListener = new Animation.AnimationListener() {
 
@@ -314,6 +312,7 @@ public class NotificationPanelView extends PanelView implements
         super(context, attrs);
         setWillNotDraw(!DEBUG);
         mLockPatternUtils = new LockPatternUtils(context);
+        mSettingsObserver = new SettingsObserver(mHandler);
         mFalsingManager = FalsingManager.getInstance(context);
         mPowerManager = context.getSystemService(PowerManager.class);
         mDoubleTapGesture = new GestureDetector(mContext,
@@ -358,6 +357,7 @@ public class NotificationPanelView extends PanelView implements
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         FragmentHostManager.get(this).addTagListener(QS.TAG, mFragmentListener);
+        mSettingsObserver.observe();
         Dependency.get(TunerService.class).addTunable(this,
                 STATUS_BAR_QUICK_QS_PULLDOWN,
                 DOUBLE_TAP_SLEEP_GESTURE);
@@ -366,6 +366,7 @@ public class NotificationPanelView extends PanelView implements
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        mSettingsObserver.unobserve();
         FragmentHostManager.get(this).removeTagListener(QS.TAG, mFragmentListener);
         Dependency.get(TunerService.class).removeTunable(this);
     }
@@ -502,17 +503,19 @@ public class NotificationPanelView extends PanelView implements
     
     public static void recycle() {
 
-        if (mBlurredView != null &&
-                mBlurredView.getBackground() != null) {
-            if (mBlurredView.getBackground() instanceof BitmapDrawable) {
+        mBlurredView.setBackground(null);
 
-                Bitmap bitmap = ((BitmapDrawable) mBlurredView.getBackground()).getBitmap();
+        if (mInnerBlurredView != null && mInnerBlurredView.getBackground() != null) {
+            
+            if (mInnerBlurredView.getBackground() instanceof BitmapDrawable) {
+
+                Bitmap bitmap = ((BitmapDrawable) mInnerBlurredView.getBackground()).getBitmap();
                 if (bitmap != null) {
                     bitmap.recycle();
                     bitmap = null;
                 }
             }
-            mBlurredView.setBackground(null);
+            mInnerBlurredView.setBackground(null);
         }
 
         mBlurredView.setTag("ready_to_blur");
@@ -2899,5 +2902,86 @@ public class NotificationPanelView extends PanelView implements
                 || mStatusBarState == StatusBarState.SHADE_LOCKED;
         return mLockPatternUtils.isSecure(KeyguardUpdateMonitor.getCurrentUser()) && mQsSecureExpandDisabled &&
                 keyguardOrShadeShowing;
+    }
+
+    private static void handleQuickSettingsBackround() {
+
+        if (mQsFrame == null)
+            return;
+        if (mKeyguardShowing) {
+            mQsFrame.getBackground().setAlpha(255);
+        } else {
+            mQsFrame.getBackground().setAlpha(mTranslucentQuickSettings ? mTranslucencyPercentage : 255);
+        }
+     }
+
+    class SettingsObserver extends UserContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void observe() {
+            super.observe();
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUR_SCALE_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUR_RADIUS_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY), false, this);      
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUR_DARK_COLOR_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUR_LIGHT_COLOR_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY), false, this);
+            update();
+        }
+
+        @Override
+        protected void unobserve() {
+            super.unobserve();
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        @Override
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mBlurScale = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.BLUR_SCALE_PREFERENCE_KEY, 10);
+            mBlurRadius = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.BLUR_RADIUS_PREFERENCE_KEY, 5);
+            mTranslucentQuickSettings =  Settings.System.getIntForUser(resolver,
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
+            mBlurredStatusBarExpandedEnabled = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
+            mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY, 60);
+
+            mBlurDarkColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
+                    Settings.System.BLUR_DARK_COLOR_PREFERENCE_KEY, Color.LTGRAY);
+            mBlurMixedColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
+                    Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY, Color.GRAY);
+            mBlurLightColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
+                    Settings.System.BLUR_LIGHT_COLOR_PREFERENCE_KEY, Color.DKGRAY);
+            mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
+            handleQuickSettingsBackround();
+        }
     }
 }
