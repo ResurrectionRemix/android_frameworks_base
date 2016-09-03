@@ -1167,10 +1167,13 @@ public class RecentsActivity extends Activity implements ViewTreeObserver.OnPreD
         mBlurRadius = mRadiusRecents;
     }
 
+    public static void updateBlurColors(int mDarkColorRecents, int mMixedColorRecents, int mLightColorRecents){
+        mBlurDarkColorFilter = mDarkColorRecents;
+        mBlurMixedColorFilter = mMixedColorRecents;
+        mBlurLightColorFilter = mLightColorRecents;
+    }
+
     public static void updatePreferences(Context mContext) {
-        mBlurDarkColorFilter = Color.LTGRAY;
-        mBlurMixedColorFilter = Color.GRAY;
-        mBlurLightColorFilter = Color.DKGRAY;
         mBlurredRecentAppsEnabled = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY, 0) == 1);
     }
 }
