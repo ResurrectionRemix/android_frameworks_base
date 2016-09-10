@@ -58,6 +58,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.systemui.R;
 import com.android.systemui.SystemUI;
@@ -903,10 +904,11 @@ class GlobalScreenshot {
             }
 
             // Clear the notification
-            final NotificationManager nm =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            final NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             final Uri uri = Uri.parse(intent.getStringExtra(SCREENSHOT_URI_ID));
             nm.cancel(R.id.notification_screenshot);
+
+            Toast.makeText(context, R.string.delete_screenshot_toast, Toast.LENGTH_SHORT).show();
 
             // And delete the image from the media store
             new DeleteImageInBackgroundTask(context).execute(uri);
