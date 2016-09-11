@@ -69,4 +69,5 @@
     <string name="animation_random">Random</string>
     <string name="action_null">Blank</string>
 
+    <string name="default_string">Default</string>
 </resources>
