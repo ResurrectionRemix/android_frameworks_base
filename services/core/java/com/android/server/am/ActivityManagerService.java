@@ -11688,6 +11688,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                 && (info.flags & PERSISTENT_MASK) == PERSISTENT_MASK
                 && r.processName.equals(info.processName)) {
             r.persistent = true;
+            r.maxAdj = ProcessList.PERSISTENT_PROC_ADJ;
         }
         addProcessNameLocked(r);
         return r;
