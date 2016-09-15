@@ -4344,6 +4344,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String SHOW_LOCKSCREEN_ALARM = "show_lockscreen_alarm";
 
+        /**
+         * Disable dashboard conditions in settings
+         * @hide
+         */
+        public static final String DISABLE_DASHBOARD_CONDITIONS = "disable_dashboard_conditions";
+
+
         /** 
          * Whether to allow one finger quick settings expansion on the right side of the statusbar.
          * @hide
