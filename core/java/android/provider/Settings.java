@@ -3801,6 +3801,12 @@ public final class Settings {
          */
         public static final String SHOW_FOURG = "show_fourg";
 
+		/**
+         * Show 3G instead of h+
+         * @hide
+         */
+        public static final String SHOW_THREEG = "show_threeg";
+
         /**
          * Toast icon
          * @hide
