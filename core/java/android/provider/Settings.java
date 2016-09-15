@@ -3794,6 +3794,13 @@ public final class Settings {
          */
         public static final String DISABLE_TRANSITION_ANIMATIONS = "disable_transition_animations";
 
+
+		/**
+         * Show four g instead of lte
+         * @hide
+         */
+        public static final String SHOW_FOURG = "show_fourg";
+
         /**
          * Toast icon
          * @hide
