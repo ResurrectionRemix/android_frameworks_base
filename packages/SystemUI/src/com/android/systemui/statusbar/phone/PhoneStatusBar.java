@@ -488,6 +488,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = CMSettings.System.getIntForUser(
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
+			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
             mRRlogo = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
             showRRLogo(mRRlogo);
@@ -986,6 +987,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         R.id.keyguard_indication_text),
                 mKeyguardBottomArea.getLockIcon());
         mKeyguardBottomArea.setKeyguardIndicationController(mKeyguardIndicationController);
+		rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+
+		mRRlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
+        showRRLogo(mRRlogo);
 
         if (ENABLE_LOCKSCREEN_WALLPAPER) {
             mLockscreenWallpaper = new LockscreenWallpaper(mContext, this, mHandler);
@@ -3727,11 +3733,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public void showRRLogo(boolean show) {
         if (mStatusBarView == null) return;
-        ContentResolver resolver = mContext.getContentResolver();
-        rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-        if (rrLogo != null) {
-            rrLogo.setVisibility(show ? (mRRlogo ? View.VISIBLE : View.GONE) : View.GONE);
-        }
+ 	 	if (!show) {
+            rrLogo.setVisibility(View.GONE);
+            return;
+		}
+		rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+		rrLogo.setVisibility(View.VISIBLE);
     }
 
     public void resetUserExpandedStates() {
