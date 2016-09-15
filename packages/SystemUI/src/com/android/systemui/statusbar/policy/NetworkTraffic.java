@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -279,6 +280,7 @@ public class NetworkTraffic extends TextView {
                 UserHandle.USER_CURRENT);
 
         mState = Settings.System.getInt(resolver, Settings.System.NETWORK_TRAFFIC_STATE, 0);
+		updateTrafficDrawable();
         if (isSet(mState, MASK_UNIT)) {
             KB = KILOBYTE;
         } else {
@@ -321,7 +323,7 @@ public class NetworkTraffic extends TextView {
 
     private void updateTrafficDrawable() {
         int intTrafficDrawable;
-        Drawable drw = null;
+		Drawable drawTrafficIcon = null;
         if (!mHideArrow) {
             if (isSet(mState, MASK_UP + MASK_DOWN)) {
                 intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
@@ -332,9 +334,12 @@ public class NetworkTraffic extends TextView {
             } else {
                 intTrafficDrawable = 0;
             }
-        } else {
-            drw = null;
-        }
-        setCompoundDrawablesWithIntrinsicBounds(null, null, drw, null);
-    }
+			if (intTrafficDrawable != 0) {
+                drawTrafficIcon = getResources().getDrawable(intTrafficDrawable);
+            	}
+        	} else {
+            drawTrafficIcon = null;
+			}
+        setCompoundDrawablesWithIntrinsicBounds(null, null, drawTrafficIcon, null);
+	}
 }
