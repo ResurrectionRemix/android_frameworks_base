@@ -54,6 +54,12 @@
     <string name="quick_settings_screenrecord_mq_label">Screenrecord 720p</string>
     <string name="quick_settings_screenrecord_hq_label">Screenrecord 720p+</string>
 
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Sound</string>
+    <string name="quick_settings_sound_ring">Ring</string>
+    <string name="quick_settings_sound_vibrate">Vibrate</string>
+    <string name="quick_settings_sound_dnd">Do not disturb</string>
+
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot deleted</string>
 
