@@ -175,6 +175,10 @@
     <uses-permission android:name="cyanogenmod.permission.WRITE_SETTINGS" />
     <uses-permission android:name="cyanogenmod.permission.WRITE_SECURE_SETTINGS" />
 
+    <!-- Reboot -->
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.RECOVERY" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
