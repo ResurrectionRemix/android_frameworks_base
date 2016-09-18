@@ -27,4 +27,7 @@
 
     <!-- Keyguard affordance circle background -->
     <color name="keyguard_affordance_circle_background">@android:color/white</color>
+
+    <!-- QS edit page background color -->
+    <color name="qs_edit_item_decoration_bg">@*android:color/secondary_device_default_settings_light</color>
 </resources>
