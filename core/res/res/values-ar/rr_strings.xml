@@ -19,14 +19,14 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">اعادة تشغيل واجهة النظام</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
+  <string name="animation_slide_right">انزلاق إلى اليمين</string>
+  <string name="animation_slide_left">انزلاق إلى اليسار</string>
+  <string name="animation_slide_right_no_fade">انزلاق إلى اليمين (بدون تلاشي)</string>
+  <string name="animation_slide_left_no_fade">انزلاق إلى اليسار (بدون تلاشي)</string>
+  <string name="animation_slide_up">انزلاق إلى الأسفل</string>
   <string name="animation_slide_down">Slide in top</string>
   <string name="animation_default">Default</string>
   <string name="animation_translucent">Translucent</string>

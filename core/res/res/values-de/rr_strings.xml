@@ -28,12 +28,12 @@
   <string name="animation_slide_left_no_fade">Von links einblenden (ohne Verblassen)</string>
   <string name="animation_slide_up">Von unten einblenden</string>
   <string name="animation_slide_down">Von oben einblenden</string>
-  <string name="animation_default">Standart</string>
+  <string name="animation_default">Standard</string>
   <string name="animation_translucent">Transparent</string>
   <string name="animation_grow_shrink">Einblenden (Oben)</string>
-  <string name="animation_grow_shrink_center">einblenden (aus der Mitte)</string>
+  <string name="animation_grow_shrink_center">Einblenden (aus der Mitte)</string>
   <string name="animation_grow_shrink_bottom">Einblenden (von unten)</string>
-  <string name="animation_grow_shrink_left">einblenden (von links)</string>
+  <string name="animation_grow_shrink_left">Einblenden (von links)</string>
   <string name="animation_grow_shrink_right">Einblenden (von rechts)</string>
   <string name="action_null">Leer</string>
   <!-- Slimseekbar -->
@@ -50,7 +50,7 @@
   <string name="floating_window_minimize">Minimieren</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB inaktiv</string>
-  <string name="adb_active_custom_tile_not_connected">inaktive</string>
+  <string name="adb_active_custom_tile_not_connected">inaktiv</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Dein Anbieter-Bild übereinstimmt nicht im System. Bitte flashe das <xliff:g id="string">%s</xliff:g> Anbieter-Bild für dein System</string>
+  <string name="system_error_vendorprint">Dein Anbieter-Image stimmt nicht mit deinem System überein. Bitte flashe das <xliff:g id="string">%s</xliff:g> Anbieter-Image für dein Gerät</string>
 </resources>

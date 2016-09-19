@@ -49,8 +49,8 @@
   <string name="floating_window_snap_right">貼齊右測</string>
   <string name="floating_window_minimize">最小化</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
-  <string name="adb_not_connected_notification_title">ADB inactive</string>
+  <string name="adb_not_connected_notification_title">ADB處於非活動狀態</string>
   <string name="adb_active_custom_tile_not_connected">未啟用</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+  <string name="system_error_vendorprint">您的供應商image與系統不相容。請為您的設備刷 <xliff:g id="string">%s </xliff:g> 的供應商image</string>
 </resources>

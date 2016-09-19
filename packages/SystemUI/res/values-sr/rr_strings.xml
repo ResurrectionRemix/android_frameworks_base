@@ -179,9 +179,9 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_screenrecord">Снимање екрана</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Kill Task</string>
+  <string name="accessibility_killtask">Убиј задатак</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Kill Task</string>
+  <string name="navbar_killtask">Убиј задатак</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_app_picker">Бирач апликације</string>
   <!-- Content description of the Application picker button for accessibility
@@ -193,18 +193,18 @@
   <string name="quick_settings_sound_vibrate">Вибрирање</string>
   <string name="quick_settings_sound_silent">Нечујно</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Wired headset</string>
+  <string name="status_bar_headset">Бежичне слушалице</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">ВПН</string>
   <!-- vpn icon switch -->
   <string name="status_bar_volume">Вибрирање</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">UI Tuner</string>
+  <string name="systemui_tuner_qs_title">УИ штимер</string>
   <!-- Heads up toast -->
   <string name="heads_up_enabled">Искачућа обавештења су укључена</string>
-  <string name="heads_up_disabled">Heads up notifications are disabled</string>
+  <string name="heads_up_disabled">Искачућа обавештења су искључена</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+  <string name="heads_up_snooze_message">Искачућа обавештења су одложена <xliff:g id="number">%d</xliff:g> минута.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Пулс укључен</string>
   <string name="quick_settings_pulse_disabled">No Visualizer</string>
@@ -228,14 +228,14 @@
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
   <string name="recents_custom_android_n">ОЧИСТИ СВЕ</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
+  <string name="toast_recents_queue_app">Покрени %s након затварања недавних</string>
   <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_halo">Create notification halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
+  <string name="halo_dismiss">Отпусти обавештење</string>
   <string name="halo_hide">Сакриј</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
+  <string name="halo_clear_all">Отпусти сва обавештења</string>
   <string name="halo_silence">Hide &amp; silence until woken</string>
   <string name="halo_tutorial1">Ово је ХАЛО</string>
   <string name="halo_tutorial2">Премести ме: двотап и превуци</string>
@@ -244,8 +244,8 @@
   <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
   <string name="halo_tutorial6">Disable if you want to install any apk</string>
   <!-- Halo Tile -->
-  <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo disabled</string>
+  <string name="quick_settings_halo_on">Хало</string>
+  <string name="quick_settings_halo_off">Хало искључен</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen icon</string>
+  <string name="show_zen_icon_title">Зен икона</string>
 </resources>

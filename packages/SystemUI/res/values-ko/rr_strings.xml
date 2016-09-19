@@ -22,7 +22,7 @@
   <!-- Battery Saver Dimss -->
   <string name="battery_saver_dismiss_title">닫기</string>
   <string name="battery_saver_notification_action_text_short"> 끄기</string>
-  <string name="gestures_message">여기에 제스쳐 그리세요</string>
+  <string name="gestures_message">여기에 제스처를 그리세요</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">최대화</string>
   <string name="app_float_item_title">플로팅 뷰</string>
@@ -226,26 +226,26 @@
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">시각화 도우미</string>
   <string name="pulse_toast_message">시각화 도우미 타일 펄스 사용 작동 하지 않습니다.</string>
-  <string name="recents_custom_android_n">CLEAR ALL</string>
+  <string name="recents_custom_android_n">모두 지우기</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
-  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
+  <string name="toast_recents_queue_app">최근앱목록을 지운 후에 %s 를 엽니다.</string>
+  <string name="toast_recents_cancel_queued_app">앱 실행 취소</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Create notification halo.</string>
+  <string name="accessibility_halo">알림 halo 생성</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
+  <string name="halo_dismiss">알림 제거</string>
+  <string name="halo_hide">숨김</string>
+  <string name="halo_clear_all">모든 알림 제거</string>
   <string name="halo_silence">Hide &amp; silence until woken</string>
   <string name="halo_tutorial1">This is HALO</string>
   <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
   <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
-  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
-  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
-  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <string name="halo_tutorial4">Halo는 헤드업 알림을 자동으로 비활성화 합니다.</string>
+  <string name="halo_tutorial5">빨간원으로 드래그하여 halo 비활성화</string>
+  <string name="halo_tutorial6">앱을 설치하고자 할때 비활성화</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo disabled</string>
+  <string name="quick_settings_halo_off">Halo 비활성화됨</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen icon</string>
+  <string name="show_zen_icon_title">Zen 아이콘</string>
 </resources>

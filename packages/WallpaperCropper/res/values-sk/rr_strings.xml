@@ -15,5 +15,5 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="keyguard_wallpaper_instructions">Nastaviť tapetu uzamykacej obrazovky</string>
+  <string name="keyguard_wallpaper_instructions">Nastaviť tapetu uzamknutej obrazovky</string>
 </resources>

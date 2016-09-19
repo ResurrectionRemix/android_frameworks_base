@@ -159,9 +159,9 @@
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_camera">Câmara</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Captura de Ecrâ</string>
+  <string name="navbar_screenshot">Captura de Ecrã</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Captura de Ecrâ</string>
+  <string name="accessibility_screenshot">Captura de Ecrã</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Modo imersivo</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -235,17 +235,17 @@
   <!-- HALO -->
   <string name="halo_dismiss">Dispensar notificação</string>
   <string name="halo_hide">Ocultar</string>
-  <string name="halo_clear_all">Descartar todas as notificações</string>
-  <string name="halo_silence">Ocultar &amp; silênciar até ser acordado</string>
+  <string name="halo_clear_all">Dispensar todas as notificações</string>
+  <string name="halo_silence">Ocultar &amp; e silênciar até ser acordado</string>
   <string name="halo_tutorial1">Isto é o HALO</string>
-  <string name="halo_tutorial2">Mover-me: toque duplo &amp; arraste</string>
-  <string name="halo_tutorial3">Procurar tarefas: arraste Horizontalmente</string>
-  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
-  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
-  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <string name="halo_tutorial2">Mover-me: toque duplo &amp; e arraste</string>
+  <string name="halo_tutorial3">Procurar tarefas: arrasta Horizontalmente</string>
+  <string name="halo_tutorial4">Halo desativa Pop-Up automaticamente</string>
+  <string name="halo_tutorial5">Desativar Halo, arrastando-o para o círculo vermelho</string>
+  <string name="halo_tutorial6">Desativar se desejares instalar qualquer apk</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo disabled</string>
+  <string name="quick_settings_halo_off">Halo desativado</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen icon</string>
+  <string name="show_zen_icon_title">Ícone Zen</string>
 </resources>

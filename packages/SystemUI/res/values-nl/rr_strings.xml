@@ -25,7 +25,7 @@
   <string name="gestures_message">Teken gebaar hier</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximaliseren</string>
-  <string name="app_float_item_title">Zweefweergave</string>
+  <string name="app_float_item_title">Zwevende weergave</string>
   <string name="app_stop_item_title">App stoppen</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Scherm wordt opgenomen</string>
@@ -43,12 +43,12 @@
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go geactiveerd</string>
   <string name="onthego_notif_title">On-The-Go is actief</string>
-  <string name="onthego_notif_stop">Stoppen</string>
+  <string name="onthego_notif_stop">Stop</string>
   <string name="onthego_notif_options">Opties</string>
   <string name="onthego_notif_error">Kan on On-The-Go niet starten</string>
   <string name="onthego_notif_restart">Herstart On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Cameramodus is gewijzigd</string>
-  <string name="onthego_transparency">Transparantie</string>
+  <string name="onthego_notif_camera_changed">Cameramodus gewijzigd</string>
+  <string name="onthego_transparency">Doorzichtigheid</string>
   <string name="onthego_front_camera">Gebruik camera aan de voorzijde</string>
   <string name="onthego_service_toggle">Service automatisch opnieuw starten</string>
   <!-- To do: Add QS OnTheGo
@@ -56,7 +56,7 @@
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
   <string name="quick_settings_brightness_label">Helderheid</string>
-  <string name="quick_settings_screen_off_label">Scherm uit</string>
+  <string name="quick_settings_screen_off_label">Scherm uitschakelen</string>
   <string name="quick_settings_screenshot_label">Screenshot</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Uitgebreid Bureaublad</string>
@@ -72,7 +72,7 @@
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_screen_off">Scherm uit.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Schermafbeelding.</string>
+  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Muziek</string>
   <string name="quick_settings_music_play">Afspelen</string>
@@ -95,9 +95,9 @@
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up ingeschakeld.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
-  <string name="qs_lte_label">4G</string>
-  <string name="lte_on">4G AAN</string>
-  <string name="lte_off">4G UIT</string>
+  <string name="qs_lte_label">LTE</string>
+  <string name="lte_on">LTE AAN </string>
+  <string name="lte_off">LTE UIT</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Thema\'s</string>
   <string name="quick_settings_themes_icon_packs">Icon pakket toepassen</string>
@@ -125,11 +125,11 @@
   <string name="quick_settings_kernel_adiutor">Kernhelper</string>
   <!-- Quick settings -->
   <string name="quick_settings_screenrecord">Schermopname</string>
-  <string name="quick_settings_screenrecord_on">Opnemen ...</string>
+  <string name="quick_settings_screenrecord_on">Bezig met opnemen ...</string>
   <!-- Pie tile -->
   <string name="quick_settings_pie">Taart</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Afsluitmenu</string>
+  <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
   <string name="quick_settings_systemui_restart_label">SystemUI herstarten</string>
   <!-- Gesture Anywehre -->
@@ -151,17 +151,17 @@
   <string name="no">Nee</string>
   <string name="qs_kill_app">App Beëindigen</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Toorts</string>
+  <string name="navbar_torch">Zaklamp</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Toorts</string>
+  <string name="accessibility_torch">Zaklamp</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Schermafbeelding</string>
+  <string name="navbar_screenshot">Screenshot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Schermafbeelding</string>
+  <string name="accessibility_screenshot">Screenshot</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Schermvullende modus</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -175,7 +175,7 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_pie">Taart</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">SchermOpname</string>
+  <string name="accessibility_screenrecord">Schermopname</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_screenrecord">SchermOpname</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -199,7 +199,7 @@
   <!-- vpn icon switch -->
   <string name="status_bar_volume">Trillen</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">UI Verfijner</string>
+  <string name="systemui_tuner_qs_title">UI Aanpasser</string>
   <!-- Heads up toast -->
   <string name="heads_up_enabled">Heads-up meldingen zijn ingeschakeld</string>
   <string name="heads_up_disabled">Heads-up meldingen zijn uitgeschakeld</string>
@@ -214,7 +214,7 @@
   <string name="recent_float_mode_title">Zweefmodus</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximaliseren</string>
-  <string name="app_float_item_title">Zweefweergave</string>
+  <string name="app_float_item_title">Zwevende weergave</string>
   <string name="app_stop_item_title">App stoppen</string>
   <!-- Floating Windows tile -->
   <string name="quick_settings_floating_windows_on">Zweefmodus ingeschakeld</string>
@@ -233,19 +233,19 @@
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_halo">Create notification halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Dismiss notification</string>
-  <string name="halo_hide">Hide</string>
-  <string name="halo_clear_all">Dismiss all notifications</string>
-  <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">This is HALO</string>
-  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
-  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
-  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
-  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <string name="halo_dismiss">Verwijder notificatie</string>
+  <string name="halo_hide">Verberg</string>
+  <string name="halo_clear_all">Verwijder alle notificaties</string>
+  <string name="halo_silence">Verberg &amp; demp totdat gewekt</string>
+  <string name="halo_tutorial1">Dit is HALO</string>
+  <string name="halo_tutorial2">Verplaats me: Dubbel tappen &amp; slepen</string>
+  <string name="halo_tutorial3">Blader door taken: Horizontaal slepen</string>
+  <string name="halo_tutorial4">Halo schakelt HeadsUp automatisch uit</string>
+  <string name="halo_tutorial5">Halo uitschakelen door naar de rode cirkel te slepen</string>
+  <string name="halo_tutorial6">Uitschakelen als u een apk wilt installeren</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo disabled</string>
+  <string name="quick_settings_halo_off">Halo uitgeschakeld</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen icon</string>
+  <string name="show_zen_icon_title">Zen, pictogram</string>
 </resources>

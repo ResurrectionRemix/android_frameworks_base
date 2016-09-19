@@ -75,7 +75,7 @@
   <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Musik</string>
-  <string name="quick_settings_music_play">Play</string>
+  <string name="quick_settings_music_play">Wiedergabe</string>
   <string name="quick_settings_music_pause">Pause</string>
   <!-- Reboot/Recovery QS Tile -->
   <string name="quick_settings_reboot_label">Neustarten</string>
@@ -226,26 +226,26 @@
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
   <string name="pulse_toast_message">Visualizer-Taste wird nicht mit aktiviertem Pulse funktionieren</string>
-  <string name="recents_custom_android_n">Alles löschen</string>
+  <string name="recents_custom_android_n">ALLE LÖSCHEN</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Starte %s nach dem Schließen der vorherigen</string>
-  <string name="toast_recents_cancel_queued_app">Abgebrochener App-Start</string>
+  <string name="toast_recents_queue_app">Starte %s nach dem Schließen des Anwendingsverlaufs</string>
+  <string name="toast_recents_cancel_queued_app">App-Start abgebrochen</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_halo">Erstelle Halo Benachrichtigung.</string>
   <!-- HALO -->
   <string name="halo_dismiss">Benachrichtigung schließen</string>
   <string name="halo_hide">Verstecken</string>
   <string name="halo_clear_all">Alle Benachrichtigungen schließen</string>
-  <string name="halo_silence">Verstecke &amp; ruhe bis zum Aufwachen</string>
+  <string name="halo_silence">Verstecke &amp; schweige bis aufgeweckt</string>
   <string name="halo_tutorial1">Dies ist HALO</string>
   <string name="halo_tutorial2">Bewege mich: Doppelt tippen &amp; ziehen</string>
   <string name="halo_tutorial3">Aufgaben durchsuchen: waagrecht ziehen</string>
-  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
-  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
-  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <string name="halo_tutorial4">Halo deaktiviert automatisch HeadsUp</string>
+  <string name="halo_tutorial5">Deaktiviere Halo durchs Ziehen zum roten Kreis</string>
+  <string name="halo_tutorial6">Deaktivieren, wenn du jede apk installieren möchtest</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo disabled</string>
+  <string name="quick_settings_halo_off">Halo ist deaktiviert</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen icon</string>
+  <string name="show_zen_icon_title">Zen Icon</string>
 </resources>

@@ -21,7 +21,7 @@
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">Restartovat SystemUI</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Animace slábnutí</string>
+  <string name="animation_fade">Slábnutí</string>
   <string name="animation_slide_right">Posunutí vpravo</string>
   <string name="animation_slide_left">Posunutí vlevo</string>
   <string name="animation_slide_right_no_fade">Posunutí vpravo (bez slábnutí)</string>

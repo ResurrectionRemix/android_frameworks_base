@@ -20,7 +20,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Zavrieť</string>
+  <string name="battery_saver_dismiss_title">Zamietnuť</string>
   <string name="battery_saver_notification_action_text_short">Vypnúť</string>
   <string name="gestures_message">Sem nakreslite gesto</string>
   <!-- App circle sidebar -->
@@ -240,12 +240,12 @@
   <string name="halo_tutorial1">Toto je HALO</string>
   <string name="halo_tutorial2">Presuňte si ma: dvakrát kliknite &amp; pretiahnite</string>
   <string name="halo_tutorial3">Prechádzajte úlohy vodorovným pažením</string>
-  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
-  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
-  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <string name="halo_tutorial4">Halo automaticky zakáže plávajúce upozornenie</string>
+  <string name="halo_tutorial5">Zakázať Halo pretiahnutím na červený kruh</string>
+  <string name="halo_tutorial6">Zakázať, pokiaľ chcete nainštalovať aplikáciu</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo disabled</string>
+  <string name="quick_settings_halo_off">Halo zakázané</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen icon</string>
+  <string name="show_zen_icon_title">Ikona Zen</string>
 </resources>

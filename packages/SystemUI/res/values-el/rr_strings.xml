@@ -240,12 +240,12 @@
   <string name="halo_tutorial1">This is HALO</string>
   <string name="halo_tutorial2">Μετακίνησε με: διπλό άγγιγμα &amp; σύρσημο</string>
   <string name="halo_tutorial3">Αναζήτηση εργασίων: σύρσιμο οριζόντια</string>
-  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
-  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
-  <string name="halo_tutorial6">Disable if you want to install any apk</string>
+  <string name="halo_tutorial4">Halo απενεργοποιεί αυτόματα HeadsUp</string>
+  <string name="halo_tutorial5">Απενεργοποίηση Halo με σύρσιμο προς τον κόκκινο κύκλο</string>
+  <string name="halo_tutorial6">Απενεργοποιήσετε αν θέλετε να εγκαταστήσετε οποιαδήποτε εφαρμογή</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo disabled</string>
+  <string name="quick_settings_halo_off">Halo απενεργοποιημένο</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen icon</string>
+  <string name="show_zen_icon_title">Εικονίδιο του Ζεν</string>
 </resources>

@@ -43,7 +43,7 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Фонарик</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Закрепить вверху</string>
+  <string name="floating_window_snap_top">Закрепить cверху</string>
   <string name="floating_window_snap_bottom">Закрепить снизу</string>
   <string name="floating_window_snap_left">Закрепить слева</string>
   <string name="floating_window_snap_right">Закрепить справа</string>
