@@ -44,6 +44,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /** This class calls its monitor every minute. Killing this process if they don't return **/
 public class Watchdog extends Thread {
@@ -348,6 +353,35 @@ public class Watchdog extends Thread {
         return builder.toString();
     }
 
+    private int getSystemNotRespondingAction(IActivityController controller, String subject) {
+        int action = -1;
+        FutureTask<Integer> task = new FutureTask<>(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                int res = -1;
+                try {
+                    res = controller.systemNotResponding(subject);
+                } catch (RemoteException e) {
+                }
+                return res;
+            }
+        });
+        try {
+            new Thread(task).start();
+            action = task.get(5000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            Log.e(TAG, "getSystemNotRespondingAction", e);
+        } catch (ExecutionException e) {
+            Log.e(TAG, "getSystemNotRespondingAction", e);
+        } catch (TimeoutException e) {
+            if (!task.isDone()) {
+                task.cancel(true);
+            }
+            Log.e(TAG, "getSystemNotRespondingAction", e);
+        }
+        return action;
+    }
+
     @Override
     public void run() {
         boolean waitedHalf = false;
@@ -496,16 +530,13 @@ public class Watchdog extends Thread {
             }
             if (controller != null) {
                 Slog.i(TAG, "Reporting stuck state to activity controller");
-                try {
-                    Binder.setDumpDisabled("Service dumps disabled due to hung system process.");
-                    // 1 = keep waiting, -1 = kill system
-                    int res = controller.systemNotResponding(subject);
-                    if (res >= 0) {
-                        Slog.i(TAG, "Activity controller requested to coninue to wait");
-                        waitedHalf = false;
-                        continue;
-                    }
-                } catch (RemoteException e) {
+                Binder.setDumpDisabled("Service dumps disabled due to hung system process.");
+                // 1 = keep waiting, -1 = kill system
+                int res = getSystemNotRespondingAction(controller, subject);
+                if (res >= 0) {
+                    Slog.i(TAG, "Activity controller requested to coninue to wait");
+                    waitedHalf = false;
+                    continue;
                 }
             }
 
