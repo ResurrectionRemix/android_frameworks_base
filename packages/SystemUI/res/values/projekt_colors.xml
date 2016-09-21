@@ -23,4 +23,8 @@
     <!-- QS edit page background color -->
     <color name="qs_edit_item_decoration_bg">#ff384248</color>
 
+    <!-- Nav bar tuner colors -->
+    <color name="navbar_tuner_background_color">@android:color/white</color>
+    <color name="navbar_tuner_text_color">@*android:color/material_deep_teal_500</color>
+
 </resources>
