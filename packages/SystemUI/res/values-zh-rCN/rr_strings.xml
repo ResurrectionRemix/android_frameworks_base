@@ -240,8 +240,8 @@
   <string name="halo_tutorial1">这是 HALO</string>
   <string name="halo_tutorial2">移动我： 双击并拖动</string>
   <string name="halo_tutorial3">浏览任务： 水平拖动</string>
-  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
-  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial4">Halo自动禁用浮动通知</string>
+  <string name="halo_tutorial5">把Halo拖动到红色圈中以关闭</string>
   <string name="halo_tutorial6">如果您想要安装任何 apk 请禁用此选项</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
