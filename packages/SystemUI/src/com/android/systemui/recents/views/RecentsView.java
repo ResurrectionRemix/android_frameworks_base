@@ -82,6 +82,14 @@ import com.android.systemui.recents.views.RecentsTransitionHelper.AnimationSpecC
 import com.android.systemui.stackdivider.WindowManagerProxy;
 import com.android.systemui.statusbar.FlingAnimationUtils;
 
+import com.android.internal.app.procstats.IProcessStats;
+import com.android.internal.app.procstats.ProcessState;
+import com.android.internal.app.procstats.ProcessStats;
+import com.android.internal.app.procstats.ProcessStats.ProcessDataCollection;
+import com.android.internal.app.procstats.ProcessStats.TotalMemoryUseCollection;
+import com.android.internal.app.procstats.ServiceState;
+import com.android.internal.util.MemInfoReader;
+
 import android.provider.Settings;
 
 import java.io.FileDescriptor;
@@ -134,6 +142,8 @@ public class RecentsView extends FrameLayout {
 
     private ActivityManager mAm;
     private int mTotalMem;
+	private MemInfo mMemInfo;
+	private boolean mShowMax;
 
     public RecentsView(Context context) {
         this(context, null);
@@ -402,20 +412,84 @@ public class RecentsView extends FrameLayout {
         if (mMemText.getVisibility() == View.GONE
                 || mMemBar.getVisibility() == View.GONE) return;
 
-        MemoryInfo memInfo = new MemoryInfo();
-        mAm.getMemoryInfo(memInfo);
-            int available = (int)(memInfo.availMem / 1048576L);
-            int max = (int)(getTotalMemory() / 1048576L);
+        MemInfo memInfo = getMemInfo();;
+            int available = (int) (memInfo.realFreeRam + 0.5d);
+            int max = (int) (memInfo.realTotalRam + 0.5d);
             mMemText.setText("Free RAM: " + String.valueOf(available) + "MB");
             mMemBar.setMax(max);
             mMemBar.setProgress(available);
     }
 
-    public long getTotalMemory() {
-        MemoryInfo memInfo = new MemoryInfo();
-        mAm.getMemoryInfo(memInfo);
-        long totalMem = memInfo.totalMem;
-        return totalMem;
+    public MemInfo getMemInfo() {
+        return mMemInfo;
+    }
+
+	public static class MemInfo {
+        public double realUsedRam;
+        public double realFreeRam;
+        public double realTotalRam;
+        long baseCacheRam;
+
+        double[] mMemStateWeights = new double[ProcessStats.STATE_COUNT];
+        double freeWeight;
+        double usedWeight;
+        double weightToRam;
+        double totalRam;
+        double totalScale;
+        long memTotalTime;
+
+        private MemInfo(Context context, ProcessStats.TotalMemoryUseCollection totalMem,
+                long memTotalTime) {
+            this.memTotalTime = memTotalTime;
+            calculateWeightInfo(context, totalMem, memTotalTime);
+
+            double usedRam = (usedWeight * 1024) / memTotalTime;
+            double freeRam = (freeWeight * 1024) / memTotalTime;
+            totalRam = usedRam + freeRam;
+            totalScale = realTotalRam / totalRam;
+            weightToRam = totalScale / memTotalTime * 1024;
+
+            realUsedRam = usedRam * totalScale;
+            realFreeRam = freeRam * totalScale;
+
+            ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+            ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryInfo(
+                    memInfo);
+            if (memInfo.hiddenAppThreshold >= realFreeRam) {
+                realUsedRam = freeRam;
+                realFreeRam = 0;
+                baseCacheRam = (long) realFreeRam;
+            } else {
+                realUsedRam += memInfo.hiddenAppThreshold;
+                realFreeRam -= memInfo.hiddenAppThreshold;
+                baseCacheRam = memInfo.hiddenAppThreshold;
+            }
+        }
+
+        private void calculateWeightInfo(Context context, TotalMemoryUseCollection totalMem,
+                long memTotalTime) {
+            MemInfoReader memReader = new MemInfoReader();
+            memReader.readMemInfo();
+            realTotalRam = memReader.getTotalSize();
+            freeWeight = totalMem.sysMemFreeWeight + totalMem.sysMemCachedWeight;
+            usedWeight = totalMem.sysMemKernelWeight + totalMem.sysMemNativeWeight;
+            if (!totalMem.hasSwappedOutPss) {
+                usedWeight += totalMem.sysMemZRamWeight;
+            }
+            for (int i = 0; i < ProcessStats.STATE_COUNT; i++) {
+                if (i == ProcessStats.STATE_SERVICE_RESTARTING) {
+                    // These don't really run.
+                    mMemStateWeights[i] = 0;
+                } else {
+                    mMemStateWeights[i] = totalMem.processStateWeight[i];
+                    if (i >= ProcessStats.STATE_HOME) {
+                        freeWeight += totalMem.processStateWeight[i];
+                    } else {
+                        usedWeight += totalMem.processStateWeight[i];
+                    }
+                }
+            }
+        }
     }
 
 
