@@ -29,9 +29,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v17-leanback \
     framework-protos \
     SystemUI-proto-tags \
-    org.cyanogenmod.platform.internal \
-    android-support-v7-palette \
-    android-support-v4
+    org.cyanogenmod.platform.internal
 
 LOCAL_JAVA_LIBRARIES := telephony-common
 LOCAL_FULL_LIBS_MANIFEST_FILES := $(LOCAL_PATH)/AndroidManifest_cm.xml
@@ -53,7 +51,7 @@ LOCAL_RESOURCE_DIR := \
 
 LOCAL_AAPT_FLAGS := --auto-add-overlay \
     --extra-packages com.android.keyguard:android.support.v7.recyclerview:android.support.v7.preference:android.support.v14.preference:android.support.v7.appcompat \
-	--extra-packages android.support.v17.leanback
+    --extra-packages android.support.v17.leanback
 
 ifneq ($(SYSTEM_UI_INCREMENTAL_BUILDS),)
     LOCAL_PROGUARD_ENABLED := disabled

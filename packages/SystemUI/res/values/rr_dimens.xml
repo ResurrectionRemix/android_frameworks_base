@@ -28,14 +28,6 @@
 
 	<dimen name="net_traffic_multi_text_size">8dp</dimen>
 
-    <dimen name="lockscreen_icon_side_padding">10dp</dimen>
-    <dimen name="lockscreen_icon_size">35dp</dimen>
-    <dimen name="phone_side_padding">10dp</dimen>
-    <dimen name="phone_bottom_padding">40dp</dimen>
-    <dimen name="phone_width">320dp</dimen>
-    <dimen name="phone_height">420dp</dimen>
-
-
     <!-- App sidebar -->
     <dimen name="app_sidebar_item_size">60dp</dimen>
     <dimen name="app_sidebar_item_padding">2dp</dimen>
@@ -50,4 +42,5 @@
     <dimen name="folder_width">290dp</dimen>
     <dimen name="folder_height">480dp</dimen>
     <dimen name="setup_sidebar_width">90dp</dimen>
+
 </resources>

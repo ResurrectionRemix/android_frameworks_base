@@ -1977,9 +1977,13 @@ public class NotificationPanelView extends PanelView implements
         });
         rightIcon = getLayoutDirection() == LAYOUT_DIRECTION_RTL ? !rightIcon : rightIcon;
         if (rightIcon) {
-            mStatusBar.onCameraHintStarted(mKeyguardBottomArea.getRightHint());
+            mStatusBar.onCameraHintStarted();
         } else {
-            mStatusBar.onLeftHintStarted(mKeyguardBottomArea.getLeftHint());
+            if (mKeyguardBottomArea.isLeftVoiceAssist()) {
+                mStatusBar.onVoiceAssistHintStarted();
+            } else {
+                mStatusBar.onPhoneHintStarted();
+            }
         }
     }
 
