@@ -174,15 +174,13 @@ public class KeyguardStatusBarView extends RelativeLayout
         } else if (mMultiUserSwitch.getParent() == this && mKeyguardUserSwitcherShowing) {
             removeView(mMultiUserSwitch);
         }
-        boolean showBatteryLevel = getResources().getBoolean(R.bool.config_showBatteryPercentage);
-        mBatteryLevel.setVisibility(
-                mBatteryCharging || showBatteryLevel ? View.VISIBLE : View.GONE);
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.KEYGUARD_SHOW_CLOCK, 0) == 1) {
             mKeyguardClock.setVisibility(View.VISIBLE);
         } else {
             mKeyguardClock.setVisibility(View.GONE);
         }
+        mBatteryLevel.setVisibility(mBatteryCharging ? View.VISIBLE : View.GONE);
     }
 
     private void updateSystemIconsLayoutParams() {
