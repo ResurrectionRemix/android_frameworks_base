@@ -28,8 +28,8 @@ import com.android.systemui.SystemUI;
 import com.android.systemui.pip.tv.PipManager;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.CommandQueue.Callbacks;
-
-import java.util.ArrayList;
+import com.android.systemui.statusbar.policy.NetworkController;
+import com.android.systemui.tv.pip.PipManager;
 
 /**
  * Status bar implementation for "large screen" products that mostly present no on-screen nav
@@ -59,5 +59,8 @@ public class TvStatusBar extends SystemUI implements Callbacks {
             // If the system process isn't there we're doomed anyway.
         }
     }
-
+    @Override
+    public NetworkController getNetworkController() {
+        return null;
+    }
 }

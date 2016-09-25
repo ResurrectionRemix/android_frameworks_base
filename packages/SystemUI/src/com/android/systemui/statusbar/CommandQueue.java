@@ -153,6 +153,7 @@ public class CommandQueue extends IStatusBar.Stub {
         default void toggleFlashlight() {}
         default void toggleNavigationEditor() {}
         default void dispatchNavigationEditorResults(Intent intent) {}
+        default void toggleOrientationListener(boolean enable) {}
     }
 
     @VisibleForTesting
@@ -384,6 +385,10 @@ public class CommandQueue extends IStatusBar.Stub {
             mHandler.removeMessages(MSG_SHOW_PICTURE_IN_PICTURE_MENU);
             mHandler.obtainMessage(MSG_SHOW_PICTURE_IN_PICTURE_MENU).sendToTarget();
         }
+    }
+
+    public void toggleOrientationListener(boolean enable) {
+        mCallbacks.toggleOrientationListener(enable);
     }
 
     public void setWindowState(int window, int state) {
