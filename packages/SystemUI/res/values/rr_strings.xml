@@ -301,4 +301,14 @@
     <string name="no_navigation_warning_title">All navigation methods disabled</string>
     <string name="no_navigation_warning_text">Tap to enable</string>
 
+    <!-- Pie controls -->
+    <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+    <string name="pie_hour_format_12">hh:mm</string>
+    <string name="pie_hour_format_24">HH:mm</string>
+    <string name="pie_am_pm">a</string>
+    <string name="pie_state_name">Pie controls</string>
+    <string name="pie_state_summary">Use pie controls while in immersive mode</string>
+    <string name="pie_battery_level">"BATTERY LEVEL "</string>
+    <string name="quick_settings_pie">Pie</string>
+
 </resources>

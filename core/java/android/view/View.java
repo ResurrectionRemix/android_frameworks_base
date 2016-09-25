@@ -2737,6 +2737,26 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     public static final int OVER_SCROLL_NEVER = 2;
 
     /**
+     * Flag for enforcing Immersive mode on the navigation bar.
+     *
+     * For use with the {@link android.provider.Settings.System#SYSTEM_DESIGN_FLAGS} setting.
+     *
+     * @see #SYSTEM_DESIGN_FLAG_IMMERSIVE_STATUS
+     * @hide
+     */
+    public static final int SYSTEM_DESIGN_FLAG_IMMERSIVE_NAV = 0x00000001;
+
+    /**
+     * Flag for enforcing Immersive mode on the status bar.
+     *
+     * For use with the {@link android.provider.Settings.System#SYSTEM_DESIGN_FLAGS} setting.
+     *
+     * @see #SYSTEM_DESIGN_FLAG_IMMERSIVE_NAV
+     * @hide
+     */
+    public static final int SYSTEM_DESIGN_FLAG_IMMERSIVE_STATUS = 0x00000002;
+
+    /**
      * Special constant for {@link #setSystemUiVisibility(int)}: View has
      * requested the system UI (status bar) to be visible (the default).
      *

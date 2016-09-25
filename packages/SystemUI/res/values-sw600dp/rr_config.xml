@@ -24,4 +24,13 @@
     <!-- Default value how much apps show the app screenshot on recents view entry -->
     <integer name="expanded_items_default">3</integer>
 
+    <!-- Enable Pie relocation to either stick to a physical side or default to the right side -->
+    <bool name="config_relocatePieOnRotation">false</bool>
+
+    <!-- Enable force pie centered -->
+    <bool name="config_forcePieCentered">false</bool>
+
+    <!-- Indicates wether device is a tablet or not -->
+    <bool name="config_isTablet">true</bool>
+
 </resources>

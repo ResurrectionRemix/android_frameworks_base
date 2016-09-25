@@ -78,4 +78,5 @@ interface IStatusBarService
     void setAutoRotate(boolean enabled);
     // SystemUI Restart API for masquerade
     void restartUI();
+    void toggleOrientationListener(boolean enable);
 }

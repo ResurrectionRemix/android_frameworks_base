@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 The ParanoidAndroid Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:name="logo"
+        android:fillColor="#FFFFFF"
+        android:pathData="M20.8223139,10.3125 C20.9372435,10.9142571 21,11.5443429 21,12.2024143 C21.0000437,17.3437714 17.4876491,21 12.1838743,21 C7.10987121,21 3,16.9724143 3,12 C3,7.02758571 7.10987121,3 12.1838743,3 C14.6636515,3 16.7354024,3.8943 18.3256558,5.34557143 L15.736503,7.88258571 L15.736503,7.8768 C14.7723711,6.97671429 13.5498663,6.51557143 12.1838743,6.51557143 C9.15332697,6.51557143 6.69086788,9.0243 6.69086788,11.9944714 C6.69086788,14.9640429 9.15328324,17.4788143 12.1838743,17.4788143 C14.9333076,17.4788143 16.8043252,15.9374571 17.1894794,13.8225857 L12.1838743,13.8225857 L12.1838743,10.3125 L20.8223139,10.3125 L20.8223139,10.3125 Z" />
+
+</vector>

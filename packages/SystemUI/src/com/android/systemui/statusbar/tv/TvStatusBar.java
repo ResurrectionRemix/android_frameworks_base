@@ -28,6 +28,7 @@ import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.statusbar.ActivatableNotificationView;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.NotificationData;
+import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.tv.pip.PipManager;
 
 /**
@@ -229,5 +230,10 @@ public class TvStatusBar extends BaseStatusBar {
     @Override
     public void handleSystemNavigationKey(int arg1) {
         // Not implemented
+    }
+
+    @Override
+    public NetworkController getNetworkController() {
+        return null;
     }
 }

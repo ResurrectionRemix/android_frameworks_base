@@ -24,4 +24,7 @@
     <!-- Default value how much apps show the app screenshot on recents view entry -->
     <integer name="expanded_items_default">1</integer>
 
+    <!-- Maximum amount of notification icons allowed to show in PIE -->
+    <integer name="pie_maximum_notifications">5</integer>
+
 </resources>

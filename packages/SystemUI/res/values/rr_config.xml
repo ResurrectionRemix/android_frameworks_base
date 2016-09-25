@@ -36,4 +36,28 @@
 
     <!-- Most Devices support LTE. Hence LTE tile is visibile. Devices like Galaxy s2, s3 require this to be false -->
     <bool name="device_supports_lte">true</bool>
+
+    <!-- Enable Pie relocation to either stick to a physical side or default to the right side -->
+    <bool name="config_relocatePieOnRotation">true</bool>
+
+    <!-- Enable force pie centered -->
+    <bool name="config_forcePieCentered">true</bool>
+
+    <!-- Sensitivity of pie gestures controls.
+         Must be minimum 1 and maximum 10 (See @EdgeServiceConstants.java).
+         Default for pie is high sensitivity -->
+    <integer name="pie_gesture_sensitivity">10</integer>
+
+    <!-- Indicates wether device is a tablet or not -->
+    <bool name="config_isTablet">false</bool>
+
+    <!-- Overall pie animation speed -->
+    <integer name="pie_animation_speed">275</integer>
+
+    <!-- Maximum amount of notification icons allowed to show in PIE -->
+    <integer name="pie_maximum_notifications">8</integer>
+
+    <!-- Pie letter spacing -->
+    <item name="pie_status_letter_spacing" format="float" type="integer">0.2</item>
+    <item name="pie_clock_letter_spacing" format="float" type="integer">0.1</item>
 </resources>
