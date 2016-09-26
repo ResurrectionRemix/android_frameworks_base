@@ -395,7 +395,7 @@ public final class JobPackageTracker {
             return 0;
         }
         final long now = SystemClock.uptimeMillis();
-        long time = cur.getActiveTime(now) + cur.getPendingTime(now);
+        long time = cur != null ? cur.getActiveTime(now) + cur.getPendingTime(now) : 0;
         long period = mCurDataSet.getTotalTime(now);
         if (last != null) {
             time += last.getActiveTime(now) + last.getPendingTime(now);
