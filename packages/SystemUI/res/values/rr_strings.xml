@@ -78,5 +78,6 @@
     <string name="quick_settings_music_play">Play</string>
     <string name="quick_settings_music_pause">Pause</string>
     <string name="quick_settings_ime_label">IME</string>
+	<string name="rr_qs_tile">Configurations</string>
 
 </resources>

@@ -113,6 +113,7 @@ public class NotificationPanelView extends PanelView implements
     protected NotificationsQuickSettingsContainer mNotificationContainerParent;
     protected NotificationStackScrollLayout mNotificationStackScroller;
     private boolean mAnimateNextTopPadmOneFingerQuickSettingsInterceptdingChange;
+	private boolean mAnimateNextTopPaddingChange;
 
     private int mTrackingPointer;
     private VelocityTracker mVelocityTracker;
