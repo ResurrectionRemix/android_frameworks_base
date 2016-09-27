@@ -105,7 +105,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        hotspot,inversion,saver,work,cast,screenshot,sound,volume,adb_network,sync,expanded_desktop,reboot,usb_tether,music,ime
+        hotspot,inversion,saver,work,cast,screenshot,sound,volume,adb_network,sync,reboot,usb_tether,music,ime
     </string>
 
     <!-- The tiles to display in QuickSettings -->

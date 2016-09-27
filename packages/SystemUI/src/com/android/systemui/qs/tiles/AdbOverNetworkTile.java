@@ -30,6 +30,8 @@ import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
+import cyanogenmod.providers.CMSettings;
+
 import java.net.InetAddress;
 
 public class AdbOverNetworkTile extends QSTile<QSTile.BooleanState> {
@@ -41,8 +43,8 @@ public class AdbOverNetworkTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     protected void handleClick() {
-        Settings.Secure.putIntForUser(mContext.getContentResolver(),
-                Settings.Secure.ADB_PORT, getState().value ? -1 : 5555,
+        CMSettings.Secure.putIntForUser(mContext.getContentResolver(),
+                CMSettings.Secure.ADB_PORT, getState().value ? -1 : 5555,
                 UserHandle.USER_CURRENT);
     }
 
@@ -91,8 +93,8 @@ public class AdbOverNetworkTile extends QSTile<QSTile.BooleanState> {
     }
 
     private boolean isAdbNetworkEnabled() {
-        return Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.ADB_PORT, 0) > 0;
+        return CMSettings.Secure.getInt(mContext.getContentResolver(),
+                CMSettings.Secure.ADB_PORT, 0) > 0;
     }
 
     public AdbOverNetworkTile(Host host) {
@@ -115,7 +117,7 @@ public class AdbOverNetworkTile extends QSTile<QSTile.BooleanState> {
     public void setListening(boolean listening) {
         if (listening) {
             mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.ADB_PORT),
+                    CMSettings.Secure.getUriFor(CMSettings.Secure.ADB_PORT),
                     false, mObserver);
             mContext.getContentResolver().registerContentObserver(
                     Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
