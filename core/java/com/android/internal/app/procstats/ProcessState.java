@@ -381,10 +381,8 @@ public final class ProcessState {
     }
 
     public void setState(int state, long now) {
-        if(!ensureNotDead()) {
-            return;
-        }
-        if (mCurState != state) {
+        ensureNotDead();
+        if (!mDead && (mCurState != state)) {
             //Slog.i(TAG, "Setting state in " + mName + "/" + mPackage + ": " + state);
             commitStateTime(now);
             mCurState = state;
