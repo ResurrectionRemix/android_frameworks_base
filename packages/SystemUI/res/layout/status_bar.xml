@@ -64,6 +64,16 @@
             >
 
 
+            <TextView
+                android:id="@+id/weather_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:gravity="right|center_vertical"
+                android:textAppearance="@style/TextAppearance.StatusBar.WeatherTemp"
+                android:paddingStart="2dp"
+                android:paddingEnd="4dp"
+                android:visibility="gone" />
 
              <ImageView
                     android:id="@+id/rr_logo"

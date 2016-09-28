@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.statusbar.policy.NetworkTraffic;
@@ -82,6 +83,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
 	private ImageView mRRLogo;
 	private NetworkTraffic mNetworkTraffic;
+
+	private TextView mWeather;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -141,6 +144,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
 		mRRLogo = (ImageView) statusBar.findViewById(R.id.rr_logo);
 		mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
+		mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
         mHandler = new Handler();
         mClockController = new ClockController(statusBar, mNotificationIconAreaController, mHandler);
         mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
@@ -548,6 +552,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mClockController.setTextColor(mTintArea, mIconTint);
 		mRRLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
 		mNetworkTraffic.setDarkIntensity(mDarkIntensity);
+        mWeather.setTextColor(mIconTint);
     }
 
     public void appTransitionPending() {
