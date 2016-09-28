@@ -47,4 +47,8 @@
     <!-- On-The-Go -->
     <string name="global_action_onthego">On-The-Go Mode</string>
 
+    <!-- ADB enabled, but not connected notification title -->
+    <string name="adb_not_connected_notification_title">ADB inactive</string>
+    <string name="adb_active_custom_tile_not_connected">inactive</string>
+
 </resources>

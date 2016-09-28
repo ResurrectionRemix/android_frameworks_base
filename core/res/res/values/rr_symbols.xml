@@ -151,4 +151,8 @@
   <java-symbol type="string" name="global_action_onthego" />
   <java-symbol type="drawable" name="ic_lock_onthego" />
 
+  <!-- ADB enabled, but not connected notification title -->
+  <java-symbol type="string" name="adb_not_connected_notification_title" />
+  <java-symbol type="string" name="adb_active_custom_tile_not_connected" />
+
 </resources>
