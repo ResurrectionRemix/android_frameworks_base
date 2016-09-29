@@ -69,7 +69,6 @@ import android.service.notification.INotificationListener;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AccelerateInterpolator;
@@ -502,7 +501,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         loadLastNotification(true);
     }
 
-    void launchTask(NotificationClicker intent) {
+    void launchTask(int markerIndex) {
         // Do not launch tasks in hidden state or protected lock screen
         if (mState == STATE_HIDDEN
             || mState == STATE_SILENT
@@ -512,19 +511,15 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
 
         try {
             if (mHaloFloatNotifications) {
-            	launchFloating();
+                launchFloating(markerIndex);
             } else {
-                launchNotification();
+                launchNotification(markerIndex);
             }
             ActivityManagerNative.getDefault().resumeAppSwitches();
         } catch (RemoteException e) {
             // ...
         }
         mDismissDelay = 1500;
-
-        if (intent!= null) {
-            intent.onClick(mRoot);
-        }
     }
 
     class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -544,7 +539,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent event) {
             if (mState != STATE_DRAG) {
-                launchTask(mContentIntent);
+                //launchTask(mContentIntent);
             }
             return true;
         }
@@ -661,10 +656,8 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
 
                 if (mGesture == GESTURE_TASK) {
                     // Launch tasks
-                    if (mTaskIntent != null) {
-                        playSoundEffect(SoundEffectConstants.CLICK);
-                        launchTask(mTaskIntent);
-                    }
+                    playSoundEffect(SoundEffectConstants.CLICK);
+                    launchTask(mMarkerIndex);
                     mEffect.nap(100);
                 } else if (mGesture == GESTURE_DOWN2) {
                     // Hide & silence
@@ -1480,39 +1473,39 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         mEffect.invalidate();
     }
 
-    private void launchFloating() {
+    private void launchFloating(int markerIndex) {
         StatusBarNotification notification;
-        for (int i = 0; i < mNotificationData.size(); i++) {
-            notification = mNotificationData.get(i).notification;
-            Notification n = notification.notification;
-            if (notification.notification.contentIntent == null) return;
+        if (markerIndex >= mNotificationData.size()) return;
 
-            Intent overlay = new Intent();
-            overlay.addFlags(Intent.FLAG_FLOATING_WINDOW);
-            try {
-                n.contentIntent.send(mContext, 0, overlay);
-            } catch (PendingIntent.CanceledException e) {
-                // Do nothing
-            }
+        notification = mNotificationData.get(markerIndex).notification;
+        Notification n = notification.notification;
+        if (notification.notification.contentIntent == null) return;
+
+        Intent overlay = new Intent();
+        overlay.addFlags(Intent.FLAG_FLOATING_WINDOW);
+        try {
+            n.contentIntent.send(mContext, 0, overlay);
+        } catch (PendingIntent.CanceledException e) {
+            // Do nothing
         }
     }
 
-    private void launchNotification() {
+    private void launchNotification(int markerIndex) {
         StatusBarNotification notification;
-        for (int i = 0; i < mNotificationData.size(); i++) {
-            notification = mNotificationData.get(i).notification;
-            Notification n = notification.notification;
-            if (notification.notification.contentIntent == null) return;
+        if (markerIndex >= mNotificationData.size()) return;
 
-            Intent notif = new Intent();
-            notif.addFlags(
+        notification = mNotificationData.get(markerIndex).notification;
+        Notification n = notification.notification;
+        if (notification.notification.contentIntent == null) return;
+
+        Intent notif = new Intent();
+        notif.addFlags(
                 Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            try {
-                n.contentIntent.send(mContext, 0, notif);
-            } catch (PendingIntent.CanceledException e) {
-                // Do nothing
-            }
+        try {
+            n.contentIntent.send(mContext, 0, notif);
+        } catch (PendingIntent.CanceledException e) {
+            // Do nothing
         }
     }
 
