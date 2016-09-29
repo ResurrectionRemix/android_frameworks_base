@@ -51,6 +51,7 @@ import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
 //import com.android.systemui.qs.tiles.ExpandedDesktopTile;
+import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.ImeTile;
@@ -86,6 +87,7 @@ import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.NightModeTile;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
+import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,6 +95,8 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.android.internal.telephony.PhoneConstants;
 
 /** Platform implementation of the quick settings tile host **/
 public class QSTileHost implements QSTile.Host, Tunable {
@@ -211,6 +215,21 @@ public class QSTileHost implements QSTile.Host, Tunable {
     @Override
     public void startActivityDismissingKeyguard(PendingIntent intent) {
         mStatusBar.postStartActivityDismissingKeyguard(intent);
+    }
+
+
+    public static boolean deviceSupportsLte(Context ctx) {
+        final TelephonyManager tm = (TelephonyManager)
+                ctx.getSystemService(Context.TELEPHONY_SERVICE);
+        return (tm.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE)
+                || tm.getLteOnGsmMode() != 0;
+    }
+
+    public static boolean deviceSupportsDdsSupported(Context context) {
+        TelephonyManager tm = (TelephonyManager)
+                context.getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.isMultiSimEnabled()
+                && tm.getMultiSimConfiguration() == TelephonyManager.MultiSimVariants.DSDA;
     }
 
     @Override
@@ -463,6 +482,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
         else if (tileSpec.equals("adb_network")) return new AdbOverNetworkTile(this);
         else if (tileSpec.equals("sync")) return new SyncTile(this);
+		else if (tileSpec.equals("lte")) return new LteTile(this);
         //else if (tileSpec.equals("expanded_desktop")) return new ExpandedDesktopTile(this);
         else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
         else if (tileSpec.equals("music")) return new MusicTile(this);

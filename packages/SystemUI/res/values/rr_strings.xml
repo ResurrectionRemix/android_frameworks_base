@@ -95,5 +95,8 @@
     <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
     <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
 	<string name="qs_app_picker_title">App Picker</string>
+    <string name="quick_settings_lte_label">LTE</string>
+    <string name="lte_on">LTE ON </string>
+    <string name="lte_off">LTE OFF</string>
 
 </resources>
