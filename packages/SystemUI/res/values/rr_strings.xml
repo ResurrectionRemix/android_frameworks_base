@@ -101,5 +101,7 @@
 	<string name="quick_settings_nfc">NFC</string>
     <string name="quick_settings_nfc_label">NFC</string>
     <string name="quick_settings_nfc_off">NFC off</string>
+    <string name="quick_settings_kernel_title">Kernel Adiutor</string>
+    <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
 
 </resources>
