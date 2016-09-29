@@ -53,13 +53,8 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public Intent getLongClickIntent() {
-        return null;
-    }
-
-    @Override
-    protected void handleLongClick() {
-        super.handleLongClick();
-         mHost.startActivityDismissingKeyguard(MOBILE_NETWORK_SETTINGS);
+           return new Intent().setComponent(new ComponentName(
+            "com.android.phone", "com.android.phone.MobileNetworkSettings"));
     }
 
     @Override
@@ -98,14 +93,14 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
             case Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
             case Phone.NT_MODE_LTE_TDSCDMA_GSM_WCDMA:
             case Phone.NT_MODE_LTE_TDSCDMA_WCDMA:
+				state.visible=true;
                 state.icon= ResourceIcon.get(R.drawable.ic_qs_lte_on);
 				state.label = mContext.getString(R.string.lte_on);
-				state.visible=true;
                 break;
             default:
+				state.visible=true;
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_lte_off);
 				state.label = mContext.getString(R.string.lte_off);
-				state.visible=true;
                 break;
         }
     }

@@ -49,7 +49,8 @@ public class KernelAdiutorTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public Intent getLongClickIntent() {
-        return null;
+            return new Intent().setComponent(new ComponentName(
+            "com.grarak.kerneladiutor", "com.grarak.kerneladiutor.activities.MainActivity"));
     }
 
     @Override
