@@ -85,6 +85,7 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
         // TODO: Should be spawning off a tile per sim
 	    if (!QSTileHost.deviceSupportsLte(mContext) || QSTileHost.deviceSupportsDdsSupported(mContext))
               /*  || QSTileHost.deviceSupportsDdsSupported(mContext)) */{
+			state.visible=false;
             return;
         }
 
@@ -99,11 +100,12 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
             case Phone.NT_MODE_LTE_TDSCDMA_WCDMA:
                 state.icon= ResourceIcon.get(R.drawable.ic_qs_lte_on);
 				state.label = mContext.getString(R.string.lte_on);
+				state.visible=true;
                 break;
             default:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_lte_off);
 				state.label = mContext.getString(R.string.lte_off);
-		
+				state.visible=true;
                 break;
         }
     }

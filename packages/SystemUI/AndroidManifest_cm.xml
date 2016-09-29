@@ -28,6 +28,9 @@
      <!-- Weather Provider -->
     <uses-permission android:name="cyanogenmod.permission.READ_WEATHER" />
 
+    <!-- NFC Tile -->
+    <uses-permission android:name="android.permission.NFC" />
+
     <application>
 
         <activity-alias
