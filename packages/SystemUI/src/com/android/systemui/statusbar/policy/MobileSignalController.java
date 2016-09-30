@@ -230,40 +230,30 @@ public class MobileSignalController extends SignalController<
                     TelephonyIcons.THREE_G);
             mDefaultIcons = TelephonyIcons.THREE_G;
         }
-<<<<<<< HEAD
 
-       boolean mShow3G = Settings.System.getIntForUser(
-            mContext.getContentResolver(), Settings.System.SHOW_THREEG,
+ 	boolean mShow3G = Settings.System.getIntForUser(
+		mContext.getContentResolver(), Settings.System.SHOW_THREEG,
                 0, UserHandle.USER_CURRENT) == 1;
-
- 		if(mShow3G) {	
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyIcons.THREE_G);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyIcons.THREE_G);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, TelephonyIcons.THREE_G);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.THREE_G);
-        } else {
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyIcons.H);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyIcons.H);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, TelephonyIcons.H);
-		mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.H);
-		}
-
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_FOURG, 0) == 1) {
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
-=======
+ 
+	boolean mShow4G = Settings.System.getIntForUser(
+		mContext.getContentResolver(), Settings.System.SHOW_FOURG,
+		0, UserHandle.USER_CURRENT) == 1;
+	    
         if (mContext.getResources().getBoolean(R.bool.show_network_indicators)) {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_EDGE, TelephonyIcons.E);
         }
         MobileIconGroup hGroup = TelephonyIcons.THREE_G;
-        if (mConfig.hspaDataDistinguishable) {
+        if (mConfig.hspaDataDistinguishable || !mShow3G) {
             hGroup = TelephonyIcons.H;
         }
+	
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hGroup);
-        if (mContext.getResources().getBoolean(R.bool.config_show4gForHspap)) {
+        
+	    
+	    if (mContext.getResources().getBoolean(R.bool.config_show4gForHspap)) {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.FOUR_G);
         } else {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hGroup);
@@ -278,7 +268,7 @@ public class MobileSignalController extends SignalController<
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.H_PLUS);
         }
 
-        if (mConfig.show4gForLte) {
+        if (mShow4G) {
             if (mContext.getResources().getBoolean(R.bool.show_4glte_icon_for_lte)) {
                 mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE,
                         TelephonyIcons.FOUR_G_LTE);
@@ -287,7 +277,6 @@ public class MobileSignalController extends SignalController<
             } else {
                 mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
             }
->>>>>>> 552d81e... Merge branch 'android-framework.lnx.2.0.r5-rel' of git://codeaurora.org/platform/frameworks/base into cm-14.0
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
                 TelephonyIcons.FOUR_G_PLUS);
         } else {
