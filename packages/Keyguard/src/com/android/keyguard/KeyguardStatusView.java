@@ -300,16 +300,9 @@ public class KeyguardStatusView extends GridLayout implements
             updateSettings(true);
         } else {
             mWeatherConditionDrawable = info.conditionDrawable;
-
-            if (mWeatherCity != null) {
                 mWeatherCity.setText(info.city);
-            }
-            if (mWeatherCurrentTemp != null) {
                 mWeatherCurrentTemp.setText(info.temp);
-            }
-            if (mWeatherConditionText != null) {
                 mWeatherConditionText.setText(info.condition);
-            }
             if (mWeatherView != null) {
                 mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
             }
