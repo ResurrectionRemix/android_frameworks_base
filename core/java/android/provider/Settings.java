@@ -4094,6 +4094,12 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_DATE_POSITION = "statusbar_clock_date_position";
 
         /**
+         * RR OTA FAB SWITCH
+         * @hide
+         */
+        public static final String RR_OTA_FAB = "rr_ota_fab";
+
+        /**
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
