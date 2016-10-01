@@ -47,9 +47,9 @@ public class RRTile extends QSTile<QSTile.BooleanState> {
     private boolean mListening;
     private RRObserver mObserver;
     private static final Intent RR_SETTINGS = new Intent().setComponent(new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$MainSettingsActivity"));
+            "com.android.settings", "com.android.settings.Settings$MainSettingsLayoutActivity"));
     private static final Intent RR_OTA = new Intent().setComponent(new ComponentName(
-            "com.resurrection.ota", "com.resurrection.ota.MainActivity"));
+            "com.rr.ota", "com.rr.center.OTACenter"));
 
     public RRTile(Host host) {
         super(host);
@@ -78,7 +78,7 @@ public class RRTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void handleLongClick() {
-      mHost.startActivityDismissingKeyguard(RR_SETTINGS);
+      mHost.startActivityDismissingKeyguard(RR_OTA);
     }
 
     @Override
