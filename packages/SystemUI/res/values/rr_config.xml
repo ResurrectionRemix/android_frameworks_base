@@ -34,4 +34,7 @@
     <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
     <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
 
+    <integer name="config_qs_num_rows_landscape_default">2</integer>
+    <integer name="config_qs_num_columns_landscape_default">5</integer>
+
 </resources>
