@@ -32,4 +32,7 @@
     <!-- app sidebar item text shadow color -->
     <color name="sidebar_item_text_shadow_color">#ff000000</color>
 
+    <!-- Volume panel border coler -->
+    <color name="volume_panel_border_color">#ff2962ff</color><!-- blue A700 -->
+
 </resources>

@@ -4469,6 +4469,118 @@ public final class Settings {
                 "mute_annoying_notifications_threshold";
 
         /**
+         * Transparent volume dialog
+         * @hide
+         */
+        public static final String TRANSPARENT_VOLUME_DIALOG = "transparent_volume_dialog";
+
+        /**
+         * Volume dialog stroke
+         * 0 = disabled
+         * 1 = use accent color (default)
+         * 2 = use custom color
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE = "volume_dialog_stroke";
+
+        /**
+         * Volume dialog stroke custom color
+         * Accent color is used as default
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_COLOR = "volume_dialog_stroke_color";
+
+        /**
+         * Volume dialog stroke custom thickness
+         * 4dp is default for AICP
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_THICKNESS = "volume_dialog_stroke_thickness";
+
+        /**
+         * Volume dialog custom corner radius
+         * 10dp is system default for VolumeDialog
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_CORNER_RADIUS = "volume_dialog_corner_radius";
+
+        /**
+         * Volume dialog custom stroke dash width
+         * Set 0 to disable (default)
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_DASH_WIDTH = "volume_dialog_stroke_dash_width";
+
+        /**
+         * Volume dialog custom stroke dash gap
+         * 10 is default for AICP
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_STROKE_DASH_GAP = "volume_dialog_stroke_dash_gap";
+
+        /**
+         * Transparent power menu and dialogs
+         * @hide
+         */
+        public static final String TRANSPARENT_POWER_MENU = "transparent_power_menu";
+
+        /**
+         * Dim amount around power/reboot menu dialogs
+         * @hide
+         */
+        public static final String TRANSPARENT_POWER_DIALOG_DIM = "transparent_power_dialog_dim";
+
+        /**
+         * Transparent qs shade
+         * @hide
+         */
+        public static final String QS_TRANSPARENT_SHADE = "qs_transparent_shade";
+
+        /**
+         * Quick settings stroke
+         * 0 = disabled
+         * 1 = use accent color (default)
+         * 2 = use custom color
+         * @hide
+         */
+        public static final String QS_STROKE = "qs_stroke";
+
+        /**
+         * Quick settings stroke custom color
+         * Accent color is used as default
+         * @hide
+         */
+        public static final String QS_STROKE_COLOR = "qs_stroke_color";
+
+        /**
+         * Quick settings stroke custom thickness
+         * 4dp is default for AICP
+         * @hide
+         */
+        public static final String QS_STROKE_THICKNESS = "qs_stroke_thickness";
+
+        /**
+         * Quick settings custom corner radius
+         * 0dp is default
+         * @hide
+         */
+        public static final String QS_CORNER_RADIUS = "qs_corner_radius";
+
+        /**
+         * Quick settings custom stroke dash width
+         * Set 0 to disable (default)
+         * @hide
+         */
+        public static final String QS_STROKE_DASH_WIDTH = "qs_stroke_dash_width";
+
+        /**
+         * Quick settings custom stroke dash gap
+         * 10 is default for AICP
+         * @hide
+         */
+        public static final String QS_STROKE_DASH_GAP = "qs_stroke_dash_gap";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
