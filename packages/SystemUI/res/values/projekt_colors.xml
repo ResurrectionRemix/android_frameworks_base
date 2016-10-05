@@ -27,4 +27,13 @@
     <color name="navbar_tuner_background_color">@android:color/white</color>
     <color name="navbar_tuner_text_color">@*android:color/material_deep_teal_500</color>
 
+    <!-- QS alarm status text color -->
+    <color name="qs_alarm_status_text_color">#64ffffff</color>
+
+    <!-- QS edit page toolbar text color -->
+    <color name="qs_edit_toolbar_text_color">#FFFFFF</color>
+
+    <!-- QS edit button text color -->
+    <color name="qs_edit_button_text_color">#64FFFFFF</color>
+
 </resources>
