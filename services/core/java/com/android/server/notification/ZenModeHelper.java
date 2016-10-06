@@ -75,8 +75,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import cyanogenmod.providers.CMSettings;
-
 /**
  * NotificationManagerService helper for functionality related to zen mode.
  */
@@ -106,7 +104,6 @@ public class ZenModeHelper {
     private AudioManagerInternal mAudioManager;
     private PackageManager mPm;
     private long mSuppressedEffects;
-    private boolean mAllowLights;
 
     public static final long SUPPRESSED_EFFECT_NOTIFICATIONS = 1;
     public static final long SUPPRESSED_EFFECT_CALLS = 1 << 1;
@@ -724,15 +721,6 @@ public class ZenModeHelper {
         }
     }
 
-    public boolean getAreLightsAllowed() {
-        return mAllowLights;
-    }
-
-    public void readLightsAllowedModeFromSetting() {
-        mAllowLights = CMSettings.System.getIntForUser(mContext.getContentResolver(),
-                CMSettings.System.ZEN_ALLOW_LIGHTS, 1, UserHandle.USER_CURRENT) == 1;
-    }
-
     private void applyRestrictions() {
         final boolean zen = mZenMode != Global.ZEN_MODE_OFF;
 
@@ -1034,7 +1022,6 @@ public class ZenModeHelper {
 
     private final class SettingsObserver extends ContentObserver {
         private final Uri ZEN_MODE = Global.getUriFor(Global.ZEN_MODE);
-        private final Uri ZEN_ALLOW_LIGHTS = CMSettings.System.getUriFor(CMSettings.System.ZEN_ALLOW_LIGHTS);
 
         public SettingsObserver(Handler handler) {
             super(handler);
@@ -1043,7 +1030,6 @@ public class ZenModeHelper {
         public void observe() {
             final ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(ZEN_MODE, false /*notifyForDescendents*/, this);
-            resolver.registerContentObserver(ZEN_ALLOW_LIGHTS, false /*notifyForDescendents*/, this);
             update(null);
         }
 
@@ -1058,8 +1044,6 @@ public class ZenModeHelper {
                     if (DEBUG) Log.d(TAG, "Fixing zen mode setting");
                     setZenModeSetting(mZenMode);
                 }
-            } else if (ZEN_ALLOW_LIGHTS.equals(uri)) {
-                readLightsAllowedModeFromSetting();
             }
         }
     }
