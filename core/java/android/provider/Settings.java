@@ -3742,6 +3742,14 @@ public final class Settings {
          */
         public static final String STATUS_BAR_RR_LOGO = "status_bar_rr_logo";
 
+		/**
+         * Statusbar RR logo color setting
+         * @hide
+         */
+
+		public static final String STATUS_BAR_RR_LOGO_COLOR = "status_bar_rr_logo_color";
+
+
         /**
          * AOKP Custom System Animations
          * @hide
@@ -3877,6 +3885,13 @@ public final class Settings {
          * @hide
          */
         public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
+
+	 	/**
+         * Network stats Color style
+         * @hide
+         */
+
+		public static final String NETWORK_TRAFFIC_COLOR = "network_traffic_color";
 
         /**
          * Colors used for the color picker panel puttons
@@ -4264,12 +4279,6 @@ public final class Settings {
         public static final String STATUS_BAR_WEATHER_TEMP_STYLE = "status_bar_weather_temp_style";
 
         /**
-         * Statusbar weather color setting
-         * @hide
-         */
-        public static final String STATUS_BAR_WEATHER_COLOR = "status_bar_weather_color";
-
-        /**
          * Statusbar weather font size setting
          * @hide
          */
@@ -4280,6 +4289,12 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_WEATHER_FONT_STYLE = "status_bar_weather_font_style";
+
+        /**
+         * Statusbar weather color setting
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_COLOR = "status_bar_weather_color";
 
         /*
          * Whether to show the weather info on the lock screen

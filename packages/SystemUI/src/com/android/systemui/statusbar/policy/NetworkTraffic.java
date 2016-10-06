@@ -13,6 +13,7 @@ import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -63,6 +64,7 @@ public class NetworkTraffic extends TextView {
     private boolean mAutoHide;
     private boolean mHideArrow;
     private int mAutoHideThreshold;
+    private int mNetworkTrafficColor;
     private int mDarkModeBackgroundColor;
     private int mDarkModeFillColor;
     private int mLightModeBackgroundColor;
@@ -195,6 +197,9 @@ public class NetworkTraffic extends TextView {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_COLOR), false,
+                    this, UserHandle.USER_ALL);
         }
 
         /*
@@ -228,8 +233,8 @@ public class NetworkTraffic extends TextView {
         final Resources resources = getResources();
         txtSizeSingle = resources.getDimensionPixelSize(R.dimen.net_traffic_single_text_size);
         txtSizeMulti = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
-		mDarkModeBackgroundColor =
-                context.getColor(R.color.dark_mode_icon_color_dual_tone_background);
+        mDarkModeBackgroundColor =
+                 context.getColor(R.color.dark_mode_icon_color_dual_tone_background);
         mDarkModeFillColor = context.getColor(R.color.dark_mode_icon_color_dual_tone_fill);
         mLightModeBackgroundColor =
                 context.getColor(R.color.light_mode_icon_color_dual_tone_background);
@@ -281,6 +286,9 @@ public class NetworkTraffic extends TextView {
     private void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
 
+        int defaultColor = Settings.System.getInt(resolver,
+                Settings.System.NETWORK_TRAFFIC_COLOR, 0xFFFFFFFF);
+
         mAutoHide = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_AUTOHIDE, 0,
                 UserHandle.USER_CURRENT) == 1;
@@ -294,9 +302,20 @@ public class NetworkTraffic extends TextView {
                 UserHandle.USER_CURRENT);
 
         mState = Settings.System.getInt(resolver, Settings.System.NETWORK_TRAFFIC_STATE, 0);
-		int mNetworkTrafficColor = mIconTint;
-		setTextColor(mNetworkTrafficColor);
-		updateTrafficDrawable(mNetworkTrafficColor);
+
+        mNetworkTrafficColor = Settings.System.getInt(resolver,
+                Settings.System.NETWORK_TRAFFIC_COLOR, 0xFFFFFFFF);
+	if (mNetworkTrafficColor != 0xFFFFFFFF ) {
+            if (mNetworkTrafficColor == Integer.MIN_VALUE
+                || mNetworkTrafficColor == -2) {
+            mNetworkTrafficColor = defaultColor;
+            }
+        } else {
+	mNetworkTrafficColor = mIconTint;
+	}
+            setTextColor(mNetworkTrafficColor);
+            updateTrafficDrawable(mNetworkTrafficColor);
+
         if (isSet(mState, MASK_UNIT)) {
             KB = KILOBYTE;
         } else {
@@ -339,7 +358,7 @@ public class NetworkTraffic extends TextView {
 
     private void updateTrafficDrawable(int trafcolor) {
         int intTrafficDrawable;
-		Drawable drawTrafficIcon = null;
+        Drawable drw = null;
         if (!mHideArrow) {
             if (isSet(mState, MASK_UP + MASK_DOWN)) {
                 intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
@@ -350,18 +369,23 @@ public class NetworkTraffic extends TextView {
             } else {
                 intTrafficDrawable = 0;
             }
-			if (intTrafficDrawable != 0) {
-                drawTrafficIcon = getResources().getDrawable(intTrafficDrawable);
-                drawTrafficIcon.setColorFilter(null);
-                drawTrafficIcon.setColorFilter(trafcolor, PorterDuff.Mode.SRC_ATOP);
-            	}
-        	} else {
-            drawTrafficIcon = null;
-			}
-        setCompoundDrawablesWithIntrinsicBounds(null, null, drawTrafficIcon, null);
-	}
+            if (intTrafficDrawable != 0) {
+		if (trafcolor !=0xFFFFFFFF) {
+                drw = getContext().getResources().getDrawable(intTrafficDrawable);
+                drw.setColorFilter(mNetworkTrafficColor, PorterDuff.Mode.SRC_ATOP);
+		} else {
+		drw = getResources().getDrawable(intTrafficDrawable);
+                drw.setColorFilter(null);
+                drw.setColorFilter(trafcolor, PorterDuff.Mode.SRC_ATOP);
+		}
+            }
+        } else {
+            drw = null;
+        }
+        setCompoundDrawablesWithIntrinsicBounds(null, null, drw, null);
+    }
 
-    private int getColorForDarkIntensity(float darkIntensity, int lightColor, int darkColor) {
+  private int getColorForDarkIntensity(float darkIntensity, int lightColor, int darkColor) {
         return (int) ArgbEvaluator.getInstance().evaluate(darkIntensity, lightColor, darkColor);
     }
 
@@ -369,5 +393,5 @@ public class NetworkTraffic extends TextView {
         mIconTint = getColorForDarkIntensity(
                 darkIntensity, mLightModeFillColor, mDarkModeFillColor);
         updateSettings();
-     }
+   }     
 }
