@@ -3749,6 +3749,13 @@ public final class Settings {
 
 		public static final String STATUS_BAR_RR_LOGO_COLOR = "status_bar_rr_logo_color";
 
+        /**
+		 * RR Config Setting
+		 * @hide
+		 */
+
+		public static final String RR_CONFIG_STYLE = "rr_config_style";
+
 
         /**
          * AOKP Custom System Animations
