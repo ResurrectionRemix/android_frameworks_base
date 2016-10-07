@@ -896,8 +896,6 @@ public class NotificationPanelView extends PanelView implements
 
         final float w = getMeasuredWidth();
         final float x = event.getX();
- final float w = getMeasuredWidth();
-        final float x = event.getX();
         float region = w * 1.f / 4.f; // TODO overlay region fraction?
         boolean showQsOverride = false;
 
@@ -915,7 +913,6 @@ public class NotificationPanelView extends PanelView implements
         showQsOverride &= mStatusBarState == StatusBarState.SHADE;
 
         return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
-}
     }
 
     private void handleQsDown(MotionEvent event) {
