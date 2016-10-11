@@ -454,7 +454,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // RR logo
     private boolean mRRlogo;
     private ImageView rrLogo;
+    private ImageView rrLogoright;
 	private int  mRRLogoColor;
+	private int mRRlogoStyle;
 	private boolean mShow4G;
 	private boolean mShow3G;
 
@@ -580,7 +582,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     false, this, UserHandle.USER_ALL);
 			resolver.registerContentObserver(Settings.System.getUriFor(
 					Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-					false, this, UserHandle.USER_ALL);	
+					false, this, UserHandle.USER_ALL);
+			resolver.registerContentObserver(Settings.System.getUriFor(
+					Settings.System.STATUS_BAR_RR_LOGO_STYLE),
+					false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -637,7 +642,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE))) {
                 	updateQSRowsColumnsLandscape();
-           } 
+           } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_RR_LOGO_STYLE))) {
+					if (mIconController != null) {
+                    	mIconController.onDensityOrFontScaleChanged();
+                	}
+		   }
 
 		update();
 	}
@@ -654,11 +664,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
 			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+			rrLogoright = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_right);
             mRRlogo = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
        		mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-            showRRLogo(mRRlogo,mRRLogoColor);
+            mRRlogoStyle = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
+                    UserHandle.USER_CURRENT);
+            showRRLogo(mRRlogo,mRRLogoColor,mRRlogoStyle);
 
 
             mWeatherTempState = Settings.System.getIntForUser(
@@ -847,7 +861,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private void updateTempView() {
         if (mWeatherTempView != null) {
             mWeatherTempView.setVisibility(View.GONE);
-                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
+                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp); 
 	    		updateWeatherTextState(mWeatherController1.getWeatherInfo().temp,
                     mWeatherTempSize, mWeatherTempFontStyle,mWeatherTempColor);
         }
@@ -1332,14 +1346,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         R.id.keyguard_indication_text),
                 mKeyguardBottomArea.getLockIcon());
         mKeyguardBottomArea.setKeyguardIndicationController(mKeyguardIndicationController);
-		rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-
-		mRRlogo = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
-       	mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-        showRRLogo(mRRlogo, mRRLogoColor);
-
         mBatterySaverWarningColor = Settings.System.getIntForUser(
                 mContext.getContentResolver(),
                 Settings.System.BATTERY_SAVER_MODE_COLOR, 1,
@@ -1440,7 +1446,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
         mWeatherController = new WeatherControllerImpl(mContext);
-		mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
 
 		if (mWeatherController1 == null) {
 		mWeatherController1 = new WeatherControllerImp(mContext);
@@ -4214,19 +4219,27 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
-    public void showRRLogo(boolean show ,int color) {
+    public void showRRLogo(boolean show ,int color,int style) {
         if (mStatusBarView == null) return;
  	 	if (!show) {
-            rrLogo.setVisibility(View.GONE);
+            rrLogo.setVisibility(View.GONE);;
+			rrLogoright.setVisibility(View.GONE);
             return;
 		}
 		if (color != 0xFFFFFFFF) {
-       	    rrLogo.setColorFilter(color, Mode.SRC_IN);
+            rrLogo.setColorFilter(color, Mode.SRC_IN);
+            rrLogoright.setColorFilter(color, Mode.SRC_IN);
 		} else {
              rrLogo.clearColorFilter();
+             rrLogoright.clearColorFilter();
         }
-		rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-		rrLogo.setVisibility(View.VISIBLE);
+ 		if (style == 0) {
+            rrLogo.setVisibility(View.VISIBLE);
+			rrLogoright.setVisibility(View.GONE);
+        } else if (style == 1) {
+            rrLogo.setVisibility(View.GONE);
+			rrLogoright.setVisibility(View.VISIBLE);
+        }
     }
 
     public void resetUserExpandedStates() {

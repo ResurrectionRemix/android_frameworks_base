@@ -3755,6 +3755,13 @@ public final class Settings {
          */
 
 		public static final String STATUS_BAR_RR_LOGO_COLOR = "status_bar_rr_logo_color";
+	
+        /**
+         * Statusbar RR logo style
+         * @hide
+         */
+
+		public static final String STATUS_BAR_RR_LOGO_STYLE = "status_bar_rr_logo_style";
 
         /**
 		 * RR Config Setting
