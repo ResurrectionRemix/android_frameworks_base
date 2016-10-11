@@ -181,4 +181,7 @@
 
   <java-symbol type="layout" name="single_hand_window" />
 
+  <!-- Notifications Battery Really Full -->
+  <java-symbol type="integer" name="config_notificationsBatteryReallyFullARGB" />
+
 </resources>
