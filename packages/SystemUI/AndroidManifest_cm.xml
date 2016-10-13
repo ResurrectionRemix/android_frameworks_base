@@ -33,6 +33,9 @@
     <!-- NFC Tile -->
     <uses-permission android:name="android.permission.NFC" />
 
+    <!-- Blur surface -->
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
+
     <application>
 
         <activity-alias
