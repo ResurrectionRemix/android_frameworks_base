@@ -642,13 +642,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE))) {
                 	updateQSRowsColumnsLandscape();
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_RR_LOGO_STYLE))) {
-					if (mIconController != null) {
-                    	mIconController.onDensityOrFontScaleChanged();
-                	}
-		   }
-
+           }
 		update();
 	}
 
