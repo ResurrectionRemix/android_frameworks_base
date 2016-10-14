@@ -28,11 +28,10 @@ public interface WeatherController {
     }
     public static class WeatherInfo {
         public double temp = Double.NaN;
-        public String city = null;
         public int conditionCode = 0;
         public Drawable conditionDrawable = null;
+        public String city = null;
         public String condition = null;
         public int tempUnit;
-		public String humidity = null;
     }
 }

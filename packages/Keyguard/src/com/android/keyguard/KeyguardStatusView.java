@@ -32,6 +32,8 @@ import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Slog;
@@ -42,17 +44,17 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
-import com.android.internal.util.cm.WeatherControl;
-import com.android.internal.util.cm.WeatherControllerImp;
 import com.android.internal.util.rr.ImageHelper;
 import com.android.internal.widget.LockPatternUtils;
+
+import cyanogenmod.weather.util.WeatherUtils;
 
 import java.util.Date;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 public class KeyguardStatusView extends GridLayout implements
-        WeatherControl.Callback {
+        WeatherController.Callback {
     private static final boolean DEBUG = KeyguardConstants.DEBUG;
     private static final String TAG = "KeyguardStatusView";
 
@@ -79,7 +81,7 @@ public class KeyguardStatusView extends GridLayout implements
     private int mIconColor;
     private int mPrimaryTextColor;
 
-	private WeatherControl mWeatherController;
+	private WeatherController mWeatherController;
 
     private KeyguardUpdateMonitorCallback mInfoCallback = new KeyguardUpdateMonitorCallback() {
 
@@ -126,7 +128,7 @@ public class KeyguardStatusView extends GridLayout implements
         super(context, attrs, defStyle);
         mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         mLockPatternUtils = new LockPatternUtils(getContext());
-		mWeatherController = new WeatherControllerImp(mContext);
+		mWeatherController = new WeatherControllerImpl(mContext);
     }
 
     private void setEnableMarquee(boolean enabled) {
@@ -290,8 +292,9 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
 	@Override
-    public void onWeatherChanged(WeatherControl.WeatherInfo info) {
-        if (info.temp == null || info.condition == null) {
+    public void onWeatherChanged(WeatherController.WeatherInfo info) {
+		String Condition ="";
+        if (Double.isNaN(info.temp) || info.condition == null) {
             mWeatherCity.setText("--");
             mWeatherConditionDrawable = null;
             mWeatherCurrentTemp.setText(null);
@@ -301,8 +304,11 @@ public class KeyguardStatusView extends GridLayout implements
         } else {
             mWeatherConditionDrawable = info.conditionDrawable;
                 mWeatherCity.setText(info.city);
-                mWeatherCurrentTemp.setText(info.temp);
                 mWeatherConditionText.setText(info.condition);
+                mWeatherCurrentTemp.setText(mContext.getString(
+                    R.string.keyguard_status_view_weather_format,
+                    WeatherUtils.formatTemperature(info.temp, info.tempUnit),
+                    Condition));
             if (mWeatherView != null) {
                 mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
             }

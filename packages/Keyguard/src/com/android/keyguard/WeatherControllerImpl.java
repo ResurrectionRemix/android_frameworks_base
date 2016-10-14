@@ -65,9 +65,8 @@ public class WeatherControllerImpl implements WeatherController {
             CURRENT_TEMPERATURE,
             CURRENT_TEMPERATURE_UNIT,
 			"condition_code",
-            CURRENT_CITY,
             CURRENT_CONDITION,
-			"humidity"
+            CURRENT_CITY
 			
     };
 
@@ -156,9 +155,8 @@ public class WeatherControllerImpl implements WeatherController {
                 mCachedInfo.tempUnit = mWeatherUnit;
                 mCachedInfo.conditionCode = c.getInt(2);
                 mCachedInfo.conditionDrawable = getIcon(mCachedInfo.conditionCode);
-                mCachedInfo.city = c.getString(2);
                 mCachedInfo.condition = c.getString(3);
-				mCachedInfo.humidity = c.getString(4);
+                mCachedInfo.city = c.getString(4);
             } finally {
                 c.close();
             }
