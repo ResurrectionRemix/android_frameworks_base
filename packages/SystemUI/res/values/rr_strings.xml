@@ -181,6 +181,13 @@
     <string name="quick_settings_screenrecord_mq_label">Screenrecord MQ</string>
     <string name="quick_settings_screenrecord_hq_label">Screenrecord HQ</string>
 
+    <!-- Navigation bar Tile -->
+    <string name="quick_settings_navigation_bar">Navigation bar</string>
+    <string name="quick_settings_smartbar">SmartBar</string>
+    <string name="quick_settings_fling">Fling</string>
+    <string name="quick_settings_navigation_default">Stock</string>
+    <string name="quick_settings_navigation_disabled">Disabled</string>
+
     <string name="omnijaws_service_error">Error</string>
     <string name="omnijaws_service_unkown">No weather data</string>
     <string name="omnijaws_service_error_long">Error loading weather data</string>
@@ -217,5 +224,4 @@
     <string name="pie_battery_level">"BATTERY LEVEL "</string>
     <string name="quick_settings_pie">Pie</string>
     <string name="recents_custom_android_n">CLEAR ALL</string>
-
 </resources>
