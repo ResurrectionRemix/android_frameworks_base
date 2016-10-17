@@ -4501,6 +4501,12 @@ public final class Settings {
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
         /**
+         * Configure the vibration when double tapping the power button to launch the camera
+         * @hide
+         */
+        public static final String DT2L_CAMERA_VIBRATE_CONFIG = "dt2l_camera_vibrate_config";
+
+        /**
          * Whether the proximity sensor will adjust call to speaker
          * @hide
          */

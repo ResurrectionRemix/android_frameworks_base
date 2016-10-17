@@ -425,6 +425,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     View mExpandedContents;
     TextView mNotificationPanelDebugText;
 
+    // DT2L camera vibration config
+    private int mDt2lCameraVibrateConfig;
+
     // settings
     private QSPanel mQSPanel;
     private DevForceNavbarObserver mDevForceNavbarObserver;
@@ -622,7 +625,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 			resolver.registerContentObserver(Settings.System.getUriFor(
 					Settings.System.STATUS_BAR_RR_LOGO_STYLE),
 					false, this, UserHandle.USER_ALL);
-            update();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.DT2L_CAMERA_VIBRATE_CONFIG),
+                   false, this, UserHandle.USER_ALL);
+           update();
         }
 
         @Override
@@ -729,6 +735,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
             mMaxKeyguardNotifConfig = Settings.System.getIntForUser(resolver,
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 5, mCurrentUserId);
+
+
+            mDt2lCameraVibrateConfig = Settings.System.getIntForUser(resolver,
+                    Settings.System.DT2L_CAMERA_VIBRATE_CONFIG, 1, mCurrentUserId);
 
             int sidebarPosition = Settings.System.getInt(
                     resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
@@ -5470,8 +5480,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     }
 
     private void vibrateForCameraGesture() {
-        // Make sure to pass -1 for repeat so VibratorService doesn't stop us when going to sleep.
-        mVibrator.vibrate(new long[]{0, 750L}, -1 /* repeat */);
+        mVibrator.vibrate(new long[] { 0, mDt2lCameraVibrateConfig }, -1 /* repeat */);
     }
 
     public void onScreenTurnedOn() {
