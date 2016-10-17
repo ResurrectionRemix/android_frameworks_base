@@ -1190,6 +1190,7 @@ public class NotificationManagerService extends SystemService {
         }
         mZenModeHelper.initZenMode();
         mZenModeHelper.readAllowLightsFromSettings();
+        mZenModeHelper.readVibrationModeFromSettings();
         mInterruptionFilter = mZenModeHelper.getZenModeListenerInterruptionFilter();
 
         mUserProfiles.updateCache(getContext());
@@ -2216,7 +2217,7 @@ public class NotificationManagerService extends SystemService {
         }
 
         @Override
-        public boolean matchesCallFilter(Bundle extras) {
+        public boolean[] matchesCallFilter(Bundle extras) {
             enforceSystemOrSystemUI("INotificationManager.matchesCallFilter");
             return mZenModeHelper.matchesCallFilter(
                     Binder.getCallingUserHandle(),
@@ -3012,14 +3013,20 @@ public class NotificationManagerService extends SystemService {
         boolean hasValidVibrate = false;
         boolean hasValidSound = false;
 
-        if (disableEffects == null
+        boolean readyForBeepOrBuzz = disableEffects == null
                 && (record.getUserId() == UserHandle.USER_ALL ||
                     record.getUserId() == currentUser ||
                     mUserProfiles.isCurrentProfile(record.getUserId()))
-                && canInterrupt
                 && mSystemReady
                 && !notificationIsAnnoying(pkg)
-                && mAudioManager != null) {
+                && mAudioManager != null;
+
+        boolean canBeep = readyForBeepOrBuzz && canInterrupt;
+        boolean canBuzz = readyForBeepOrBuzz &&
+                (canInterrupt ||
+                        (aboveThreshold && mZenModeHelper.allowVibrationForNotifications()));
+
+        if (canBeep || canBuzz) {
             if (DBG) Slog.v(TAG, "Interrupting!");
 
             // should we use the default notification sound? (indicated either by
@@ -3065,7 +3072,7 @@ public class NotificationManagerService extends SystemService {
 
                 sendAccessibilityEvent(notification, record.sbn.getPackageName());
 
-                if (hasValidSound) {
+                if (canBeep && hasValidSound) {
                     boolean looping =
                             (notification.flags & Notification.FLAG_INSISTENT) != 0;
                     AudioAttributes audioAttributes = audioAttributesForNotification(notification);
@@ -3093,8 +3100,8 @@ public class NotificationManagerService extends SystemService {
                     }
                 }
 
-                if (hasValidVibrate && !(mAudioManager.getRingerModeInternal()
-                        == AudioManager.RINGER_MODE_SILENT)) {
+                if (canBuzz && hasValidVibrate &&
+                        mAudioManager.getRingerModeInternal() != AudioManager.RINGER_MODE_SILENT) {
                     mVibrateNotificationKey = key;
 
                     if (useDefaultVibrate || convertSoundToVibration) {
