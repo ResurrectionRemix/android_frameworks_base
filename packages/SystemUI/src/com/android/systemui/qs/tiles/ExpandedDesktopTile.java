@@ -28,7 +28,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.view.WindowManagerGlobal;
-//import android.view.WindowManagerPolicyControl;
+import android.view.WindowManagerPolicyControl;
 
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
@@ -113,7 +113,7 @@ public class ExpandedDesktopTile extends QSTile<QSTile.BooleanState> {
     private void userConfigurableSettings() {
         mExpandedDesktopState = STATE_USER_CONFIGURABLE;
         writeValue("");
-        //WindowManagerPolicyControl.reloadFromSetting(mContext);
+        WindowManagerPolicyControl.reloadFromSetting(mContext);
     }
 
     private int getExpandedDesktopState(ContentResolver cr) {
