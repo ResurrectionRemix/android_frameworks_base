@@ -498,8 +498,6 @@ public interface WindowManagerPolicy {
          * Retrieves the {@param outBounds} from the stack with id {@param stackId}.
          */
         void getStackBounds(int stackId, Rect outBounds);
-
-        void addSystemUIVisibilityFlag(int flags);
     }
 
     public interface PointerEventListener {

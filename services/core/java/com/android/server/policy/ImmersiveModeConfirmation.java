@@ -42,7 +42,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.view.WindowManagerPolicyControl;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
@@ -137,7 +136,7 @@ public class ImmersiveModeConfirmation {
             boolean userSetupComplete) {
         mHandler.removeMessages(H.SHOW);
         if (isImmersiveMode) {
-            final boolean disabled = WindowManagerPolicyControl.disableImmersiveConfirmation(pkg);
+            final boolean disabled = PolicyControl.disableImmersiveConfirmation(pkg);
             if (DEBUG) Slog.d(TAG, String.format("immersiveModeChanged() disabled=%s mConfirmed=%s",
                     disabled, mConfirmed));
             if (!disabled
