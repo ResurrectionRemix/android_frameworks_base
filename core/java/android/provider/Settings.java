@@ -16631,6 +16631,16 @@ public final class Settings {
         public static final String SHOW_ROTATION_BUTTON = "show_rotation_button";
 
         /**
+         * Whether applications can fake a signature.
+         * 1 = permit apps to fake signature
+         * 0 = disable this feature
+         * @hide
+         */
+        public static final String ALLOW_SIGNATURE_FAKE = "allow_signature_fake";
+
+        private static final Validator ALLOW_SIGNATURE_FAKE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -16756,6 +16766,7 @@ public final class Settings {
             VALIDATORS.put(START_SCREEN_STATE_SERVICE, START_SCREEN_STATE_SERVICE_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_OFF_DELAY, SCREEN_STATE_OFF_DELAY_VALIDATOR);
             VALIDATORS.put(SCREEN_STATE_ON_DELAY, SCREEN_STATE_ON_DELAY_VALIDATOR);
+            VALIDATORS.put(ALLOW_SIGNATURE_FAKE, ALLOW_SIGNATURE_FAKE_VALIDATOR);
         }
 
         /**
