@@ -749,6 +749,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         protected void observe() {
             super.observe();
             ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(CMSettings.Global.getUriFor(
+                    CMSettings.Global.DEV_FORCE_SHOW_NAVBAR), false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -756,13 +758,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             boolean visible = CMSettings.Global.getIntForUser(mContext.getContentResolver(),
                     CMSettings.Global.DEV_FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) == 1;
 
+            if (visible) {
+                forceAddNavigationBar();
+            } else {
+                removeNavigationBar();
+            }
+
             // Send a broadcast to Settings to update Key disabling when user changes
             Intent intent = new Intent("com.cyanogenmod.action.UserChanged");
             intent.setPackage("com.android.settings");
             mContext.sendBroadcastAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
         }
     }
-
 
 
   private void updateWeatherTextState(Double temp, int size, int font ,int color) {
@@ -1432,6 +1439,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (mShowCarrierInPanel) {
             mCarrierLabel.setVisibility(mShowCarrierInPanel ? View.VISIBLE : View.INVISIBLE);
         }
+
         mFlashlightController = new FlashlightController(mContext);
         mKeyguardBottomArea.setFlashlightController(mFlashlightController);
         mKeyguardBottomArea.setPhoneStatusBar(this);
