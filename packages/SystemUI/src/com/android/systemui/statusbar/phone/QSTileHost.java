@@ -65,6 +65,10 @@ import com.android.systemui.qs.tiles.NavigationBarTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SoundTile;
+import com.android.systemui.qs.tiles.AppCircleBarTile;
+import com.android.systemui.qs.tiles.AppSideBarTile;
+import com.android.systemui.qs.tiles.GestureAnyWhereTile;
+import com.android.systemui.qs.tiles.PulseTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.SyncTile;
@@ -485,9 +489,13 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("ime")) return new ImeTile(this);
         else if (tileSpec.equals("configurations")) return new RRTile(this);
         else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
+        else if (tileSpec.equals("navigation_bar")) return new NavigationBarTile(this);
+        else if (tileSpec.equals("pulse")) return new PulseTile(this);
+        else if (tileSpec.equals("app_circle_bar")) return new AppCircleBarTile(this);
+        else if (tileSpec.equals("app_side_bar")) return new AppSideBarTile(this);
+        else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
         else if (tileSpec.equals(NightModeTile.NIGHT_MODE_SPEC))
             return new NightModeTile(this);
-        else if (tileSpec.equals("navigation_bar")) return new NavigationBarTile(this);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(this,tileSpec);

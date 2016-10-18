@@ -117,5 +117,17 @@
     <string name="quick_settings_smartbar_off">SmartBar off</string>
     <string name="quick_settings_fling">Fling</string>
     <string name="quick_settings_fling_off">Fling off</string>
+	<string name="quick_settings_appcirclebar_title">AppCircleBar</string>
+    <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
+    <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+    <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
+    <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
+    <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
+	<string name="quick_settings_appsidebar_title">AppSideBar</string>
+    <string name="quick_settings_appsidebar_on">AppSideBar On</string>
+    <string name="quick_settings_appsidebar_off">AppSideBar Off</string>
+    <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
+    <string name="quick_settings_pulse_disabled">No Visualizer</string>
+    <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
 
 </resources>
