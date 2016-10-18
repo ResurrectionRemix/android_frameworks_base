@@ -100,6 +100,7 @@ public class MobileSignalController extends SignalController<
         super("MobileSignalController(" + info.getSubscriptionId() + ")", context,
                 NetworkCapabilities.TRANSPORT_CELLULAR, callbackHandler,
                 networkController);
+
         mCallbackHandler = callbackHandler;
         mNetworkToIconLookup = new SparseArray<>();
         mConfig = config;
@@ -334,7 +335,7 @@ public class MobileSignalController extends SignalController<
                         && mCurrentState.activityOut;
         if (!mContext.getResources().getBoolean(R.bool.show_roaming_and_network_icons)) {
               showDataIcon &= mCurrentState.isDefault
-                || mCurrentState.iconGroup == TelephonyIcons.ROAMING
+                || (mCurrentState.iconGroup == TelephonyIcons.ROAMING || isRoaming())
                 || dataDisabled;
         }
         showDataIcon &= (mStyle == STATUS_BAR_STYLE_ANDROID_DEFAULT
@@ -367,7 +368,7 @@ public class MobileSignalController extends SignalController<
             public void run() {
                 mNetworkController.updateNetworkLabelView();
             }
-       });
+        });
     }
 
     private int getEmbmsIconId() {
