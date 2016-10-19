@@ -67,6 +67,8 @@
             android:singleLine="true"
             />
 
+        <include layout="@layout/custom_icons" />
+
         <TextView
             android:id="@+id/left_weather_temp"
             android:layout_width="wrap_content"
