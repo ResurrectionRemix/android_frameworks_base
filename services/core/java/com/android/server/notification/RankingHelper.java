@@ -53,7 +53,7 @@ public class RankingHelper implements RankingConfig {
     private static final String ATT_VISIBILITY = "visibility";
     private static final String ATT_KEYGUARD = "keyguard";
     private static final String ATT_HALO = "halo";
-
+    private static final String ATT_SOUND_TIMEOUT = "sound-timeout";
     private static final int DEFAULT_PRIORITY = Notification.PRIORITY_DEFAULT;
     private static final boolean DEFAULT_PEEKABLE = true;
     private static final int DEFAULT_VISIBILITY =
@@ -149,6 +149,7 @@ public class RankingHelper implements RankingConfig {
                     int keyguard = safeInt(parser, ATT_KEYGUARD,
                             Notification.SHOW_ALL_NOTI_ON_KEYGUARD);
                     boolean halo = safeBool(parser, ATT_HALO, DEFAULT_HALO);
+                    long soundTimeout = safeInt(parser, ATT_SOUND_TIMEOUT, 0);
                     String name = parser.getAttributeValue(null, ATT_NAME);
 
                     if (!TextUtils.isEmpty(name)) {
@@ -184,6 +185,9 @@ public class RankingHelper implements RankingConfig {
                         if (halo != DEFAULT_HALO) {
                             r.halo = halo;
                         }
+                        if (soundTimeout != 0) {
+                            r.notificationSoundTimeout = soundTimeout;
+                        }
                     }
                 }
             }
@@ -213,7 +217,8 @@ public class RankingHelper implements RankingConfig {
             final Record r = mRecords.valueAt(i);
             if (r.priority == DEFAULT_PRIORITY && r.peekable == DEFAULT_PEEKABLE
 	      && r.visibility == DEFAULT_VISIBILITY
-              && r.keyguard == Notification.SHOW_ALL_NOTI_ON_KEYGUARD && r.halo == DEFAULT_HALO) {
+              && r.keyguard == Notification.SHOW_ALL_NOTI_ON_KEYGUARD && r.halo == DEFAULT_HALO)
+              && r.notificationSoundTimeout == 0) {
             mRecords.removeAt(i);
             }
         }
@@ -245,6 +250,9 @@ public class RankingHelper implements RankingConfig {
             }
             if (r.halo != DEFAULT_HALO) {
                 out.attribute(null, ATT_HALO, Boolean.toString(r.halo));
+            }
+            if (r.notificationSoundTimeout != 0) {
+                out.attribute(null, ATT_SOUND_TIMEOUT, Long.toString(r.notificationSoundTimeout));
             }
             if (!forBackup) {
                 out.attribute(null, ATT_UID, Integer.toString(r.uid));
@@ -429,6 +437,19 @@ public class RankingHelper implements RankingConfig {
         updateConfig();
     }
 
+    public long getPackageNotificationSoundTimeout(String packageName, int uid) {
+        final Record r = mRecords.get(recordKey(packageName, uid));
+        return r != null ? r.notificationSoundTimeout : 0;
+    }
+
+    public void setPackageNotificationSoundTimeout(String packageName, int uid, long timeout) {
+        if (timeout == getPackageNotificationSoundTimeout(packageName, uid)) {
+            return;
+        }
+        getOrCreateRecord(packageName, uid).notificationSoundTimeout = timeout;
+        removeDefaultRecords();
+    }
+
     public void dump(PrintWriter pw, String prefix, NotificationManagerService.DumpFilter filter) {
         if (filter == null) {
             final int N = mSignalExtractors.length;
@@ -517,6 +538,7 @@ public class RankingHelper implements RankingConfig {
         int visibility = DEFAULT_VISIBILITY;
         int keyguard = Notification.SHOW_ALL_NOTI_ON_KEYGUARD;
         boolean halo = DEFAULT_HALO;
+        long notificationSoundTimeout = 0;
     }
 
 }
