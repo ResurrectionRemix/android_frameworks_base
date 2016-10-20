@@ -84,6 +84,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
 	private ImageView mRRLogo;
 	private ImageView mRRLogoRight;
+	private ImageView mRRLogoLeft;
 	private NetworkTraffic mNetworkTraffic;
 
 	private TextView mWeather;
@@ -148,6 +149,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
         mRRLogo = (ImageView) statusBar.findViewById(R.id.rr_logo);
         mRRLogoRight = (ImageView) statusBar.findViewById(R.id.rr_logo_right);
+		mRRLogoLeft = (ImageView) statusBar.findViewById(R.id.rr_logo_left);
 		mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
 		mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
         mHandler = new Handler();
@@ -334,11 +336,19 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
         animateHide(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1) {
+            animateHide(mRRLogoLeft, animate);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1) {
+            animateShow(mRRLogoLeft, animate);
+        }
     }
 
     public void hideNotificationIconArea(boolean animate) {
@@ -554,6 +564,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
        	mRRLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
 		mRRLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
+        mRRLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
 		}
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF,

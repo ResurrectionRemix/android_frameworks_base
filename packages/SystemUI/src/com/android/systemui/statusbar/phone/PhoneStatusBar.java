@@ -462,6 +462,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mRRlogo;
     private ImageView rrLogo;
     private ImageView rrLogoright;
+    private ImageView rrLogoleft;
 	private int  mRRLogoColor;
 	private int mRRlogoStyle;
 	private boolean mShow4G;
@@ -701,6 +702,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT) == 1;
 			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
 			rrLogoright = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_right);
+			rrLogoleft = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_left);
             mRRlogo = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
        		mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -4241,10 +4243,15 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
  		if (style == 0) {
             rrLogo.setVisibility(View.VISIBLE);
 			rrLogoright.setVisibility(View.GONE);
+             rrLogoleft.setVisibility(View.GONE);
         } else if (style == 1) {
             rrLogo.setVisibility(View.GONE);
 			rrLogoright.setVisibility(View.VISIBLE);
-        }
+            rrLogoleft.setVisibility(View.GONE);
+        } else if (style == 2) {
+            rrLogoright.setVisibility(View.GONE);
+            rrLogo.setVisibility(View.GONE);
+            rrLogoleft.setVisibility(View.VISIBLE);
     }
 
     public void resetUserExpandedStates() {
