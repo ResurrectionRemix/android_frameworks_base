@@ -4074,6 +4074,18 @@ public final class Settings {
         public static final String SYSTEM_UI_THEME = "system_ui_theme";
 
         /**
+         * show carrier in statusbar. The value is
+         * int (1: Show or 0: Hide).
+         */
+        public static final String STATUS_BAR_CARRIER = "status_bar_carrier";
+
+        /**
+         * custom carrier label. The value is
+         * String.
+         */
+        public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
