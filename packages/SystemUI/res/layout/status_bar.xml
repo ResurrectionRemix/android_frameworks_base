@@ -54,6 +54,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout="@layout/operator_name" />
+
+        <com.android.systemui.carrierlabel.CarrierLabel
+            android:id="@+id/statusbar_carrier_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="start|center_vertical"
+            android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
+            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+            android:visibility="gone"
+            android:singleLine="true"/>
+
         <FrameLayout
             android:layout_height="match_parent"
             android:layout_width="0dp"
