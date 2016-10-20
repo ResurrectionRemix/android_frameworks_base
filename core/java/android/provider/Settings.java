@@ -5361,6 +5361,31 @@ public final class Settings {
         private static final Validator LOCKSCREEN_MAX_NOTIF_CONFIG_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(1, 3);
 
+          /**
+          * Status bar carrier label
+          * 0: Hide
+          * 1: Display on keyguard status bar
+          * 2: Display on Normal status bar
+          * 3: Enabled for both
+          * @hide
+          */
+         public static final String STATUS_BAR_SHOW_CARRIER = "status_bar_show_carrier";
+
+         /** @hide */
+         private static final Validator STATUS_BAR_SHOW_CARRIER_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
+
+         /**
+          * custom carrier label. The value is
+          * String.
+          * @hide
+          */
+         public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
+
+         /** @hide */
+         private static final Validator CUSTOM_CARRIER_LABEL_VALIDATOR =
+                 ANY_STRING_VALIDATOR;
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5528,6 +5553,8 @@ public final class Settings {
             ENABLE_SUGGESTIONS,
             LOCK_SCREEN_CUSTOM_NOTIF,
             LOCKSCREEN_MAX_NOTIF_CONFIG,
+            STATUS_BAR_SHOW_CARRIER,
+            CUSTOM_CARRIER_LABEL,
             // AICP Settings end
         };
 
@@ -5722,6 +5749,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ENABLE_SUGGESTIONS);
             PRIVATE_SETTINGS.add(LOCK_SCREEN_CUSTOM_NOTIF);
             PRIVATE_SETTINGS.add(LOCKSCREEN_MAX_NOTIF_CONFIG);
+            PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_CARRIER);
+            PRIVATE_SETTINGS.add(CUSTOM_CARRIER_LABEL);
             // AICP Settings end
         }
 
@@ -5891,6 +5920,8 @@ public final class Settings {
             VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
             VALIDATORS.put(LOCK_SCREEN_CUSTOM_NOTIF, LOCK_SCREEN_CUSTOM_NOTIF_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_MAX_NOTIF_CONFIG, LOCKSCREEN_MAX_NOTIF_CONFIG_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_SHOW_CARRIER,STATUS_BAR_SHOW_CARRIER_VALIDATOR);
+            VALIDATORS.put(CUSTOM_CARRIER_LABEL,CUSTOM_CARRIER_LABEL_VALIDATOR);
             // AICP Settings end
         }
 
