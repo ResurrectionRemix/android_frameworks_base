@@ -214,4 +214,8 @@ public class NotificationIconAreaController {
             mNotificationIcons.setClockAndDateStatus(mode);
         }
     }
+
+    public int getNotificationIconsCount() {
+        return mNotificationIcons.getChildCount();
+    }
 }
