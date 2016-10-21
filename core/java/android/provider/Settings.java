@@ -4796,6 +4796,36 @@ public final class Settings {
 
 
         /**
+         * Wether to show the ticker on the status bar
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_TICKER = "status_bar_show_ticker";
+
+        /**
+         * Color of the status bar notification text
+         * @hide
+         */
+        public static final String STATUS_BAR_TICKER_TEXT_COLOR = "status_bar_ticker_text_color";
+
+        /**
+         * Ticker Icon Color
+         * @hide
+         */
+        public static final String STATUS_BAR_TICKER_ICON_COLOR = "status_bar_ticker_icon_color";
+
+        /**
+         * Ticker Font Style
+         * @hide
+         */
+        public static final String STATUS_BAR_TICKER_FONT_STYLE = "status_bar_ticker_font_style";
+
+        /**
+         * Ticker Text Size
+         * @hide
+         */
+        public static final String STATUS_BAR_TICKER_FONT_SIZE = "status_bar_ticker_font_size";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
