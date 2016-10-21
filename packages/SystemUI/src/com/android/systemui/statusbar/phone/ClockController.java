@@ -31,7 +31,8 @@ public class ClockController implements TunerService.Tunable {
 
     private final NotificationIconAreaController mNotificationIconAreaController;
     private final Context mContext;
-    private Clock mRightClock, mCenterClock, mLeftClock, mActiveClock;
+    private Clock mRightClock, mLeftClock;
+    public static Clock mCenterClock, mActiveClock;
 
     private int mAmPmStyle = AM_PM_STYLE_GONE;
     private int mClockPosition = STYLE_CLOCK_RIGHT;
