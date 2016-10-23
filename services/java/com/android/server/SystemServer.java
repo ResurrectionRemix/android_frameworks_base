@@ -88,6 +88,7 @@ import com.android.server.notification.NotificationManagerService;
 import com.android.server.om.OverlayManagerService;
 import com.android.server.os.RegionalizationService;
 import com.android.server.os.SchedulingPolicyService;
+import com.android.server.pocket.PocketService;
 import com.android.server.pm.BackgroundDexOptService;
 import com.android.server.gesture.EdgeGestureService;
 import com.android.server.pm.Installer;
@@ -1283,6 +1284,9 @@ public final class SystemServer {
             } catch (Throwable e) {
                 Slog.e(TAG, "Failure starting EdgeGesture service", e);
             }
+
+            Slog.i(TAG, "Starting PocketService");
+            mSystemServiceManager.startService(PocketService.class);
         }
 
         if (!disableNonCoreServices && !disableMediaProjection) {
