@@ -279,6 +279,8 @@ LOCAL_SRC_FILES += \
 	core/java/android/os/storage/IStorageEventListener.aidl \
 	core/java/android/os/storage/IStorageShutdownObserver.aidl \
 	core/java/android/os/storage/IObbActionListener.aidl \
+	core/java/android/pocket/IPocketService.aidl \
+	core/java/android/pocket/IPocketCallback.aidl \
 	core/java/android/security/IKeystoreService.aidl \
 	core/java/android/security/keymaster/IKeyAttestationApplicationIdProvider.aidl \
 	core/java/android/service/autofill/IAutoFillService.aidl \
