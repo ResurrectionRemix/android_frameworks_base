@@ -87,6 +87,12 @@ public class PieTile extends QSTile<QSTile.BooleanState> {
         return null;
     }
 
+    @Override
+    public CharSequence getTileLabel() {
+        return mContext.getString(R.string.quick_settings_pie);
+    }
+
+
     protected void toggleState() {
          Settings.System.putInt(mContext.getContentResolver(),
                         Settings.System.PA_PIE_STATE, !isPieEnabled() ? 1 : 0);

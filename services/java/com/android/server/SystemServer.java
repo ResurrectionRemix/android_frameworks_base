@@ -1404,6 +1404,7 @@ public final class SystemServer {
             } catch (Throwable e) {
                 reportWtf("making Gesture Sensor Service ready", e);
             }
+        }
         if (edgeGestureService != null) {
             try {
                 edgeGestureService.systemReady();

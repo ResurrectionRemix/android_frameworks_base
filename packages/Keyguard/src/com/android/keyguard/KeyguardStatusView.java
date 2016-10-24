@@ -212,6 +212,7 @@ public class KeyguardStatusView extends GridLayout implements
 
         refreshTime();
         refreshAlarmStatus(nextAlarm);
+        updateclocksize();
     }
 
     void refreshAlarmStatus(AlarmManager.AlarmClockInfo nextAlarm) {
@@ -420,6 +421,14 @@ public class KeyguardStatusView extends GridLayout implements
         }
     }
 
+    public void updateclocksize() {
+        if (mClockView != null) {
+            if (mLockClockFontSize != getResources().getDimensionPixelSize(R.dimen.widget_big_font_size)) {
+                mClockView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mLockClockFontSize);
+            }
+        }
+    }
+
  private void  updateSettings(boolean forcehide) {
         final ContentResolver resolver = getContext().getContentResolver();
         final Resources res = getContext().getResources();
@@ -492,12 +501,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         if (mWeatherConditionImage != null) {
             mWeatherConditionImage.setImageDrawable(null);
-        }
-
-        if (mClockView != null) {
-            if (mLockClockFontSize != getResources().getDimensionPixelSize(R.dimen.widget_big_font_size)) {
-                mClockView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mLockClockFontSize);
-            }
         }
 
         if (mDateView != null) {
@@ -715,7 +718,7 @@ public class KeyguardStatusView extends GridLayout implements
                  updateSettings(false);
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.LOCKCLOCK_FONT_SIZE))) {
-                 updateSettings(false);
+                 updateclocksize();
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.LOCKDATE_FONT_SIZE))) {
                  updateSettings(false);
@@ -762,6 +765,7 @@ public class KeyguardStatusView extends GridLayout implements
 		     UserHandle.USER_CURRENT);
 			 hideLockscreenItems();
 			 refreshLockFont();
+             updateclocksize();
 			 updateSettings(false);
          }
      }
