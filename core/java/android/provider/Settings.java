@@ -4293,6 +4293,12 @@ public final class Settings {
          */
         public static final String LOCKCLOCK_FONT_SIZE = "lockclock_font_size";
 
+         /**
+         * show lockscreen alarm
+         *  @hide
+         */
+        public static final String SHOW_LOCKSCREEN_ALARM = "show_lockscreen_alarm";
+
         /** 
          * Whether to allow one finger quick settings expansion on the right side of the statusbar.
          * @hide
