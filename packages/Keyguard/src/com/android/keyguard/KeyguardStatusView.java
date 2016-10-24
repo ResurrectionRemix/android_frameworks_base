@@ -305,9 +305,7 @@ public class KeyguardStatusView extends GridLayout implements
                     R.string.keyguard_status_view_weather_format,
                     WeatherUtils.formatTemperature(info.temp, info.tempUnit),
                     Condition));
-            if (mWeatherView != null) {
                 mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
-            }
            updateSettings(false);
         }
      }   
@@ -470,29 +468,24 @@ public class KeyguardStatusView extends GridLayout implements
                 forceHideByNumberOfNotifications = true;
             }
         }
+        if (mWeatherView != null) {
         mWeatherView.setVisibility(
                 (mShowWeather && !forceHideByNumberOfNotifications) ? View.VISIBLE : View.GONE);
-        if (forcehide) {
-	    noWeatherInfo.setVisibility(View.VISIBLE);
-	    weatherPanel.setVisibility(View.GONE);
-        } else {
-         if (weatherPanel != null) {
-		noWeatherInfo.setVisibility(View.GONE);
-		weatherPanel.setVisibility(View.VISIBLE);  }
-	  
         }
-        if (mWeatherCity != null) {
+      if (forcehide) {
+            noWeatherInfo.setVisibility(View.VISIBLE);
+            weatherPanel.setVisibility(View.GONE);
+            mWeatherConditionText.setVisibility(View.GONE);
+        } else {
+            noWeatherInfo.setVisibility(View.GONE);
+            weatherPanel.setVisibility(View.VISIBLE);
+            mWeatherConditionText.setVisibility(View.VISIBLE);
             mWeatherCity.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
         }
-        if (mWeatherCity != null) {
-            mWeatherCity.setTextColor(mPrimaryTextColor);
-        }
-        if (mWeatherConditionText != null) {
-            mWeatherConditionText.setTextColor(mPrimaryTextColor);
-        }
-        if (mWeatherCurrentTemp != null) {
-            mWeatherCurrentTemp.setTextColor(mPrimaryTextColor);
-        }
+        noWeatherInfo.setTextColor(primaryTextColor);
+        mWeatherCity.setTextColor(primaryTextColor);
+        mWeatherConditionText.setTextColor(primaryTextColor);
+        mWeatherCurrentTemp.setTextColor(secondaryTextColor);
 
     	if (mIconNameValue != iconNameValue) {
             mIconNameValue = iconNameValue;
