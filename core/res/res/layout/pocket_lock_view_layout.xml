@@ -1,0 +1,42 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@android:color/black">
+
+    <LinearLayout
+        android:id="@+id/pocket_hint_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/pocket_hint_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:src="@android:drawable/ic_lock_lock"
+            android:tint="@android:color/white"
+            android:alpha="1.0"/>
+
+        <TextView
+            android:id="@+id/pocket_hint_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="@android:string/pocket_lock_message_long_press"
+            android:textColor="@android:color/white"
+            android:alpha="0.7"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

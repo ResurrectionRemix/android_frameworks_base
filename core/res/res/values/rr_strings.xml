@@ -63,5 +63,8 @@
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_restartUI">Restart SystemUIService so that system bars can load themed resources</string>
 
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Long press power button to interact</string>
+
 
 </resources>
