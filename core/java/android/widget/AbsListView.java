@@ -85,6 +85,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputContentInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RemoteViews.OnClickHandler;
 
@@ -1592,7 +1593,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         switch (action) {
             case AccessibilityNodeInfo.ACTION_SCROLL_FORWARD:
             case R.id.accessibilityActionScrollDown: {
-                if (isEnabled() && getLastVisiblePosition() < getCount() - 1) {
+                if (isEnabled() && canScrollDown()) {
                     final int viewportHeight = getHeight() - mListPadding.top - mListPadding.bottom;
                     smoothScrollBy(viewportHeight, PositionScroller.SCROLL_DURATION);
                     return true;
@@ -1600,7 +1601,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             } return false;
             case AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD:
             case R.id.accessibilityActionScrollUp: {
-                if (isEnabled() && mFirstPosition > 0) {
+                if (isEnabled() && canScrollUp()) {
                     final int viewportHeight = getHeight() - mListPadding.top - mListPadding.bottom;
                     smoothScrollBy(-viewportHeight, PositionScroller.SCROLL_DURATION);
                     return true;
@@ -6174,6 +6175,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         @Override
         public void closeConnection() {
             getTarget().closeConnection();
+        }
+
+        @Override
+        public boolean commitContent(InputContentInfo inputContentInfo, int flags, Bundle opts) {
+            return getTarget().commitContent(inputContentInfo, flags, opts);
         }
     }
 

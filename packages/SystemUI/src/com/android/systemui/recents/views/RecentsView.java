@@ -125,7 +125,7 @@ public class RecentsView extends FrameLayout {
     private boolean mLastTaskLaunchedWasFreeform;
 
     @ViewDebug.ExportedProperty(category="recents")
-    private Rect mSystemInsets = new Rect();
+    Rect mSystemInsets = new Rect();
     private int mDividerSize;
 
     private Drawable mBackgroundScrim = new ColorDrawable(
@@ -177,8 +177,6 @@ public class RecentsView extends FrameLayout {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         if (RecentsDebugFlags.Static.EnableStackActionButton) {
-            float cornerRadius = context.getResources().getDimensionPixelSize(
-                    R.dimen.recents_task_view_rounded_corners_radius);
             mStackActionButton = (TextView) inflater.inflate(R.layout.recents_stack_action_button,
                     this, false);
             mStackActionButton.setOnClickListener(new View.OnClickListener() {
@@ -189,13 +187,6 @@ public class RecentsView extends FrameLayout {
                 }
             });
             addView(mStackActionButton);
-            mStackActionButton.setClipToOutline(true);
-            mStackActionButton.setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), cornerRadius);
-                }
-            });
         }
         mEmptyView = (TextView) inflater.inflate(R.layout.recents_empty, this, false);
         addView(mEmptyView);
@@ -932,9 +923,10 @@ public class RecentsView extends FrameLayout {
                         ? overrideHintAlpha
                         : viewState.hintTextAlpha;
                 Rect bounds = isDefaultDockState
-                        ? dockState.getPreDockedBounds(getMeasuredWidth(), getMeasuredHeight())
+                        ? dockState.getPreDockedBounds(getMeasuredWidth(), getMeasuredHeight(),
+                                mSystemInsets)
                         : dockState.getDockedBounds(getMeasuredWidth(), getMeasuredHeight(),
-                        mDividerSize, mSystemInsets, getResources());
+                                mDividerSize, mSystemInsets, getResources());
                 if (viewState.dockAreaOverlay.getCallback() != this) {
                     viewState.dockAreaOverlay.setCallback(this);
                     viewState.dockAreaOverlay.setBounds(bounds);

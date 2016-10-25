@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.phone;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -95,8 +96,10 @@ public class KeyguardStatusBarView extends RelativeLayout
 
     private BatteryController mBatteryController;
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
+    private UserSwitcherController mUserSwitcherController;
 
     private int mSystemIconsSwitcherHiddenExpandedMargin;
+    private int mSystemIconsBaseMargin;
     private View mSystemIconsContainer;
 
     private ContentObserver mObserver = new ContentObserver(new Handler()) {
@@ -213,8 +216,11 @@ public class KeyguardStatusBarView extends RelativeLayout
     }
 
     private void loadDimens() {
-        mSystemIconsSwitcherHiddenExpandedMargin = getResources().getDimensionPixelSize(
+        Resources res = getResources();
+        mSystemIconsSwitcherHiddenExpandedMargin = res.getDimensionPixelSize(
                 R.dimen.system_icons_switcher_hidden_expanded_margin);
+        mSystemIconsBaseMargin = res.getDimensionPixelSize(
+                R.dimen.system_icons_super_container_avatarless_margin_end);
     }
 
     private void updateVisibilities() {
@@ -232,6 +238,16 @@ public class KeyguardStatusBarView extends RelativeLayout
         } else {
             mKeyguardClock.setVisibility(View.GONE);
         }
+        if (mKeyguardUserSwitcher == null) {
+            // If we have no keyguard switcher, the screen width is under 600dp. In this case,
+            // we don't show the multi-user avatar unless there is more than 1 user on the device.
+            if (mUserSwitcherController != null
+                    && mUserSwitcherController.getSwitchableUserCount() > 1) {
+                mMultiUserSwitch.setVisibility(View.VISIBLE);
+            } else {
+                mMultiUserSwitch.setVisibility(View.GONE);
+            }
+        }
         mBatteryLevel.setVisibility(mBatteryCharging ? View.VISIBLE : View.GONE);
         if (mCarrierLabel != null) {
             if (mShowCarrierLabel == 1) {
@@ -248,7 +264,13 @@ public class KeyguardStatusBarView extends RelativeLayout
     private void updateSystemIconsLayoutParams() {
         RelativeLayout.LayoutParams lp =
                 (LayoutParams) mSystemIconsSuperContainer.getLayoutParams();
-        int marginEnd = mKeyguardUserSwitcherShowing ? mSystemIconsSwitcherHiddenExpandedMargin : 0;
+        // If the avatar icon is gone, we need to have some end margin to display the system icons
+        // correctly.
+        int baseMarginEnd = mMultiUserSwitch.getVisibility() == View.GONE
+                ? mSystemIconsBaseMargin
+                : 0;
+        int marginEnd = mKeyguardUserSwitcherShowing ? mSystemIconsSwitcherHiddenExpandedMargin :
+                baseMarginEnd;
         if (marginEnd != lp.getMarginEnd()) {
             lp.setMarginEnd(marginEnd);
             mSystemIconsSuperContainer.setLayoutParams(lp);
@@ -280,6 +302,7 @@ public class KeyguardStatusBarView extends RelativeLayout
     }
 
     public void setUserSwitcherController(UserSwitcherController controller) {
+        mUserSwitcherController = controller;
         mMultiUserSwitch.setUserSwitcherController(controller);
     }
 
@@ -380,6 +403,9 @@ public class KeyguardStatusBarView extends RelativeLayout
             mSystemIconsSuperContainer.animate().cancel();
             mMultiUserSwitch.animate().cancel();
             mMultiUserSwitch.setAlpha(1f);
+        } else {
+            updateVisibilities();
+            updateSystemIconsLayoutParams();
         }
     }
 

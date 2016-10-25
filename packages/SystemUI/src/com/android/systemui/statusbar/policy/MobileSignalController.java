@@ -525,6 +525,10 @@ public class MobileSignalController extends SignalController<
             }
             mServiceState = state;
             mDataNetType = state.getDataNetworkType();
+            if (mDataNetType == TelephonyManager.NETWORK_TYPE_LTE && mServiceState != null &&
+                    mServiceState.isUsingCarrierAggregation()) {
+                mDataNetType = TelephonyManager.NETWORK_TYPE_LTE_CA;
+            }
             updateTelephony();
         }
 
@@ -536,6 +540,10 @@ public class MobileSignalController extends SignalController<
             }
             mDataState = state;
             mDataNetType = networkType;
+            if (mDataNetType == TelephonyManager.NETWORK_TYPE_LTE && mServiceState != null &&
+                    mServiceState.isUsingCarrierAggregation()) {
+                mDataNetType = TelephonyManager.NETWORK_TYPE_LTE_CA;
+            }
             updateTelephony();
         }
 

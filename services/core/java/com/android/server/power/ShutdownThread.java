@@ -499,7 +499,6 @@ public final class ShutdownThread extends Thread {
         pd.setCancelable(false);
         pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 
-<<<<<<< HEAD
 		WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
 
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
@@ -565,9 +564,7 @@ public final class ShutdownThread extends Thread {
 
             pd.show();
         }
-=======
-        pd.show();
->>>>>>> 85582013... Revert "BootAnimation: Play boot/shutdown animation and music"
+
 
         sInstance.mProgressDialog = pd;
         sInstance.mContext = context;
@@ -819,7 +816,8 @@ public final class ShutdownThread extends Thread {
                 }
 
                 try {
-                    bluetoothOff = bluetooth == null || !bluetooth.isEnabled();
+                    bluetoothOff = bluetooth == null ||
+                            bluetooth.getState() == BluetoothAdapter.STATE_OFF;
                     if (!bluetoothOff) {
                         Log.w(TAG, "Disabling Bluetooth...");
                         bluetooth.disable(false);  // disable but don't persist new state
@@ -853,7 +851,7 @@ public final class ShutdownThread extends Thread {
 
                     if (!bluetoothOff) {
                         try {
-                            bluetoothOff = !bluetooth.isEnabled();
+                            bluetoothOff = bluetooth.getState() == BluetoothAdapter.STATE_OFF;
                         } catch (RemoteException ex) {
                             Log.e(TAG, "RemoteException during bluetooth shutdown", ex);
                             bluetoothOff = true;
