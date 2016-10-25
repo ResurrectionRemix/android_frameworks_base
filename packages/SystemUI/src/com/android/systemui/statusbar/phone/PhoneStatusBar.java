@@ -55,6 +55,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -473,6 +474,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private ImageView rrLogoleft;
 	private int  mRRLogoColor;
 	private int mRRlogoStyle;
+
+    private boolean mAnimatedlogo;
+    /*private ImageView animatedLogo;
+    private ImageView animatedLogoright;
+    private ImageView animatedLogoleft;;
+	private int mAnimatedlogoStyle;*/
+    AnimationDrawable AnimationLeft, AnimationRight, AnimationCenter;
+
 	private boolean mShow4G;
 	private boolean mShow3G;
 
@@ -600,25 +609,25 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     false, this, UserHandle.USER_ALL);
     		resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_THREEG),
-					false, this, UserHandle.USER_ALL);
+            		false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.APP_SIDEBAR_POSITION),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
                     false, this, UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
-					false, this, UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_WEATHER_SIZE),
-					false, this, UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
-					false, this, UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_WEATHER_COLOR),
-					false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+            		false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_WEATHER_SIZE),
+            		false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
+            		false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_WEATHER_COLOR),
+            		false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR),
                     false, this, UserHandle.USER_ALL);
@@ -634,12 +643,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE),
                     false, this, UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-					false, this, UserHandle.USER_ALL);
-			resolver.registerContentObserver(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_RR_LOGO_STYLE),
-					false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_RR_LOGO_COLOR),
+            		false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_RR_LOGO_STYLE),
+            		false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.DT2L_CAMERA_VIBRATE_CONFIG),
                    false, this, UserHandle.USER_ALL);
@@ -648,6 +657,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_SU_INDICATOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ANIMATED_RR_LOGO),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -666,25 +678,25 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             mContext.getContentResolver(),
                             Settings.System.SHOW_FOURG,
                             0, UserHandle.USER_CURRENT) == 1;
-							mNetworkController.onConfigurationChanged();
-			} else if (uri.equals(Settings.System.getUriFor(
+                        	mNetworkController.onConfigurationChanged();
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_THREEG))) {
                     mShow3G = Settings.System.getIntForUser(
                             mContext.getContentResolver(),
                             Settings.System.SHOW_THREEG,
                             0, UserHandle.USER_CURRENT) == 1;
-							mNetworkController.onConfigurationChanged();
-			} else if (uri.equals(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_WEATHER_SIZE))
-					|| uri.equals(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))
-					|| uri.equals(Settings.System.getUriFor(
-					Settings.System.STATUS_BAR_WEATHER_COLOR))) {
-					updateTempView();
-			} else if (uri.equals(Settings.System.getUriFor(
+                        	mNetworkController.onConfigurationChanged();
+            } else if (uri.equals(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_WEATHER_SIZE))
+            		|| uri.equals(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))
+            		|| uri.equals(Settings.System.getUriFor(
+            		Settings.System.STATUS_BAR_WEATHER_COLOR))) {
+            		updateTempView();
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP))) {
-					updateTempView();
-			} else if (uri.equals(Settings.System.getUriFor(
+            		updateTempView();
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR))) {
                     mBatterySaverWarningColor = Settings.System.getIntForUser(
                             mContext.getContentResolver(),
@@ -729,9 +741,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = CMSettings.System.getIntForUser(
                     resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
-			rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-			rrLogoright = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_right);
-			rrLogoleft = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_left);
+            rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
+            rrLogoright = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_right);
+            rrLogoleft = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_left);
             mRRlogo = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
        		mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -739,8 +751,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mRRlogoStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
                     UserHandle.USER_CURRENT);
-            showRRLogo(mRRlogo,mRRLogoColor,mRRlogoStyle);
-
+            mAnimatedlogo = Settings.System.getIntForUser(resolver,
+                    Settings.System.ANIMATED_RR_LOGO, 0, mCurrentUserId) == 1;
+            showRRLogo(mRRlogo,mRRLogoColor,mRRlogoStyle,mAnimatedlogo);
 
             mWeatherTempState = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
@@ -755,13 +768,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         	mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
 
-			updateTempView();
-			
+            updateTempView();
+            
             boolean mShow4G = Settings.System.getIntForUser(resolver,
                     Settings.System.SHOW_FOURG, 0, UserHandle.USER_CURRENT) == 1;
 	  
 	    	boolean mShow3G = Settings.System.getIntForUser(resolver,
-					Settings.System.SHOW_THREEG, 0, UserHandle.USER_CURRENT) == 1;
+            		Settings.System.SHOW_THREEG, 0, UserHandle.USER_CURRENT) == 1;
 
 
             mMaxKeyguardNotifConfig = Settings.System.getIntForUser(resolver,
@@ -809,9 +822,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
   private void updateWeatherTextState(Double temp, int size, int font ,int color) {
         if (mWeatherTempState == 0 || Double.isNaN(temp)) {
-			mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
-			mWeatherTempView.setVisibility(View.GONE);
-			return;
+            mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
+            mWeatherTempView.setVisibility(View.GONE);
+            return;
         }
         if (temp == null) {
         	mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
@@ -4383,32 +4396,62 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         }
     };
 
-    public void showRRLogo(boolean show ,int color,int style) {
+    public void showRRLogo(boolean show ,int color,int style,boolean animate) {
         if (mStatusBarView == null) return;
+        AnimationLeft = (AnimationDrawable) rrLogoleft.getDrawable();
+        AnimationRight = (AnimationDrawable) rrLogoright.getDrawable();
+        AnimationCenter = (AnimationDrawable) rrLogo.getDrawable();
  	 	if (!show) {
-            rrLogo.setVisibility(View.GONE);;
-			rrLogoright.setVisibility(View.GONE);
+            rrLogo.setVisibility(View.GONE);
+            rrLogoright.setVisibility(View.GONE);
+            rrLogoleft.setVisibility(View.GONE);
             return;
 		}
 		if (color != 0xFFFFFFFF) {
             rrLogo.setColorFilter(color, Mode.SRC_IN);
             rrLogoright.setColorFilter(color, Mode.SRC_IN);
+            rrLogoleft.setColorFilter(color, Mode.SRC_IN);
 		} else {
              rrLogo.clearColorFilter();
              rrLogoright.clearColorFilter();
+             rrLogoleft.clearColorFilter();
         }
  		if (style == 0) {
+            rrLogoright.setVisibility(View.GONE);
+            rrLogoleft.setVisibility(View.GONE);
             rrLogo.setVisibility(View.VISIBLE);
-			rrLogoright.setVisibility(View.GONE);
-             rrLogoleft.setVisibility(View.GONE);
+            if (animate) {
+            AnimationCenter.start();
+            AnimationRight.stop();
+            AnimationLeft.stop();
+            } else {
+            AnimationCenter.stop();
+            AnimationCenter.selectDrawable(0); //reset to the beginning of the animation
+            }
         } else if (style == 1) {
             rrLogo.setVisibility(View.GONE);
-			rrLogoright.setVisibility(View.VISIBLE);
             rrLogoleft.setVisibility(View.GONE);
+            rrLogoright.setVisibility(View.VISIBLE);
+            if (animate) {
+            AnimationRight.start();
+            AnimationCenter.stop();
+            AnimationLeft.stop();
+            } else {
+            AnimationRight.stop();
+            AnimationRight.selectDrawable(0); //reset to the beginning of the animation
+            }
         } else if (style == 2) {
             rrLogoright.setVisibility(View.GONE);
             rrLogo.setVisibility(View.GONE);
             rrLogoleft.setVisibility(View.VISIBLE);
+            if (animate) {
+            AnimationLeft.start();
+            AnimationCenter.stop();
+            AnimationRight.stop();
+            } else {
+            AnimationLeft.stop();
+            AnimationLeft.selectDrawable(0); //reset to the beginning of the animation
+            }
 		}
     }
 

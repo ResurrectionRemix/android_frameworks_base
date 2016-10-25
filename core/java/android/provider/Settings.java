@@ -3790,6 +3790,18 @@ public final class Settings {
 		public static final String STATUS_BAR_RR_LOGO_STYLE = "status_bar_rr_logo_style";
 
         /**
+         * Statusbar Aniamted Logo
+         * @hide
+         */
+        public static final String ANIMATED_RR_LOGO = "animated_rr_logo";
+
+        /**
+         * Statusbar Aniamted Logo Style
+         * @hide
+         */
+        public static final String ANIMATED_RR_LOGO_STYLE = "animated_rr_logo_style";
+
+        /**
 		 * RR Config Setting
 		 * @hide
 		 */

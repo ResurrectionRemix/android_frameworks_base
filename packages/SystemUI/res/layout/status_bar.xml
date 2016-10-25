@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="4dip"
-                android:src="@drawable/ic_status_bar_rr_logo"
+                android:src="@drawable/ic_status_bar_rr_logo_animated"
                 android:scaleType="center"
                 android:visibility="gone"
 					/>
@@ -101,11 +101,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="4dip"
-                android:src="@drawable/ic_status_bar_rr_logo"
+                android:src="@drawable/ic_status_bar_rr_logo_animated"
                 android:scaleType="center"
                 android:visibility="gone"
 					/>
-
 
             <com.android.systemui.statusbar.policy.NetworkTraffic
                 android:id="@+id/networkTraffic"
@@ -133,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="4dip"
-                android:src="@drawable/ic_status_bar_rr_logo"
+                android:src="@drawable/ic_status_bar_rr_logo_animated"
                 android:scaleType="center"
                 android:visibility="gone"
 					/>

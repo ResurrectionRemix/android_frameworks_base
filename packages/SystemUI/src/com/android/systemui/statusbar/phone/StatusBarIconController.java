@@ -347,7 +347,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         animateHide(mSystemIconArea, animate);
         animateHide(mCenterClockLayout, animate);
         if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1) {
+                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1  &&
+           (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_RR_LOGO_STYLE,  0,
+                UserHandle.USER_CURRENT) == 2)) {
             animateHide(mRRLogoLeft, animate);
         }
         if ((Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -363,10 +366,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mCenterClockLayout, animate);
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1) {
-            animateShow(mRRLogoLeft, animate);
-        }
         if ((Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
                 UserHandle.USER_CURRENT) == 2) ||
@@ -374,6 +373,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
                 UserHandle.USER_CURRENT) == 3)) {
         animateShow(mCarrierLabel,animate);
+        }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1  &&
+           (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_RR_LOGO_STYLE,  0,
+                UserHandle.USER_CURRENT) == 2)){
+            animateShow(mRRLogoLeft, animate);
         }
     }
 
