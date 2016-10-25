@@ -67,6 +67,11 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
     private static final boolean DEBUG = PocketConstants.DEBUG;
 
     /**
+     * The rate proximity sensor events are delivered at.
+     */
+    private static final int PROXIMITY_SENSOR_DELAY = 400000;
+
+    /**
      * Wheater we don't have yet a valid proximity sensor event or pocket service not running.
      */
     private static final int PROXIMITY_UNKNOWN = 0;
@@ -430,7 +435,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
 
         if (!mProximityRegistered) {
             mSensorManager.registerListener(mProximityListener, mProximitySensor,
-                    SensorManager.SENSOR_DELAY_NORMAL, mHandler);
+                    PROXIMITY_SENSOR_DELAY, mHandler);
             mProximityRegistered = true;
         }
     }
