@@ -88,7 +88,6 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.StatusBarNotification;
 import android.text.style.RelativeSizeSpan;
-import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.DisplayMetrics;
 import android.graphics.Typeface;
@@ -107,7 +106,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewParent;
 import android.view.ViewStub;
 import android.view.ViewTreeObserver;
@@ -300,13 +298,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     /** Allow some time inbetween the long press for back and recents. */
     private static final int LOCK_TO_APP_GESTURE_TOLERENCE = 200;
 
-    /**
-     * A key that is used to retrieve the value of the checkbox
-     * in Settings application that allows a user to add or remove
-     * the operator name in statusbar.
-     */
-    protected static final String SHOW_OPERATOR_NAME = "show_network_name_mode";
-
     /** If true, the system is in the half-boot-to-decryption-screen state.
      * Prudently disable QS and notifications.  */
     private static final boolean ONLY_CORE_APPS;
@@ -462,9 +453,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     int mMaxAllowedKeyguardNotifications;
 
-    // carrier label
-    private TextView mCarrierLabel;
-    private boolean mShowCarrierInPanel = false;
     boolean mExpandedVisible;
 
     // RR logo
@@ -1463,15 +1451,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         initSignalCluster(mStatusBarView);
         initSignalCluster(mKeyguardStatusBar);
-
-        mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
-        final boolean showCarrierLabel = mContext.getResources().getBoolean(
-                R.bool.config_showCarrierLabel);
-        mShowCarrierInPanel = showCarrierLabel && (mCarrierLabel != null);
-        if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
-        if (mShowCarrierInPanel) {
-            mCarrierLabel.setVisibility(mShowCarrierInPanel ? View.VISIBLE : View.INVISIBLE);
-        }
 
         mFlashlightController = new FlashlightController(mContext);
         mKeyguardBottomArea.setFlashlightController(mFlashlightController);
@@ -2527,33 +2506,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     public void requestNotificationUpdate() {
         updateNotifications();
-    }
-
-    protected void updateCarrierLabelVisibility() {
-        if (!mShowCarrierInPanel) return;
-
-        final boolean makeVisible = mStackScroller.getVisibility() == View.VISIBLE
-                && mState != StatusBarState.KEYGUARD;
-
-        if ((mCarrierLabel.getVisibility() == View.VISIBLE) != makeVisible) {
-            if (DEBUG) {
-                Log.d(TAG, "making carrier label " + (makeVisible?"visible":"invisible"));
-            }
-
-            mCarrierLabel.setVisibility(makeVisible ? View.VISIBLE : View.INVISIBLE);
-        }
-    }
-
-    protected boolean hasActiveVisibleNotifications() {
-        return mNotificationData.hasActiveVisibleNotifications();
-    }
-
-    protected boolean hasActiveOngoingNotifications() {
-        return mNotificationData.hasActiveOngoingNotifications();
-    }
-
-    protected boolean hasActiveClearableNotifications() {
-        return mNotificationData.hasActiveClearableNotifications();
     }
 
     @Override
@@ -5207,7 +5159,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         updateStackScrollerState(goingToFullShade, fromShadeLocked);
         updateNotifications();
         checkBarModes();
-        updateCarrierLabelVisibility();
         updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
         mKeyguardMonitor.notifyKeyguardState(mStatusBarKeyguardViewManager.isShowing(),
                 mStatusBarKeyguardViewManager.isSecure());

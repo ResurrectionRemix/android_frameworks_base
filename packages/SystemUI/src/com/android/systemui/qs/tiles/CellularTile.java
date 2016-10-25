@@ -141,9 +141,6 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
                 : R.drawable.ic_qs_signal_no_signal;
         state.icon = ResourceIcon.get(iconId);
         state.isOverlayIconWide = cb.isDataTypeIconWide;
-        state.isShowRoaming = (!(cb.noSim || !cb.enabled || cb.airplaneModeEnabled)
-                && cb.mobileSignalIconId > 0);
-        state.subId = cb.subId;
         state.autoMirrorDrawable = !cb.noSim;
         state.overlayIconId = cb.enabled && (cb.dataTypeIconId > 0) ? cb.dataTypeIconId : 0;
         state.filter = iconId != R.drawable.ic_qs_no_sim;
@@ -214,7 +211,6 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
         String enabledDesc;
         boolean noSim;
         boolean isDataTypeIconWide;
-        int subId;
     }
 
     private final class CellSignalCallback extends SignalCallbackAdapter {
@@ -228,9 +224,8 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
 
         @Override
         public void setMobileDataIndicators(IconState statusIcon, IconState qsIcon, int statusType,
-                int qsType, boolean activityIn, boolean activityOut, int dataActivityId,
-                int mobileActivityId, int stackedDataIcon, int stackedVoiceIcon,
-                String typeContentDescription, String description, boolean isWide, int subId) {
+                int qsType, boolean activityIn, boolean activityOut, String typeContentDescription,
+                String description, boolean isWide, int subId) {
             if (qsIcon == null) {
                 // Not data sim, don't display.
                 return;
@@ -244,7 +239,6 @@ public class CellularTile extends QSTile<QSTile.SignalState> {
             mInfo.activityOut = activityOut;
             mInfo.enabledDesc = description;
             mInfo.isDataTypeIconWide = qsType != 0 && isWide;
-            mInfo.subId = subId;
             refreshState(mInfo);
         }
 
