@@ -2171,7 +2171,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                     @Override
                     public void onSwipeFromRight() {
-                        if (mNavigationBar != null && mNavigationBarPosition == NAV_BAR_RIGHT && !mNavigationBarLeftInLandscape) {
+                        if (mNavigationBar != null && mNavigationBarPosition == NAV_BAR_RIGHT) {
                             requestTransientBars(mNavigationBar);
                         }
                     }
