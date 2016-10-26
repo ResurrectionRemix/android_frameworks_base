@@ -345,11 +345,11 @@ public class LockPatternUtils {
      * always returns true.
      * @param pattern The pattern to check.
      * @return Whether the pattern matches the stored one.
-     */
+     
     public boolean checkPattern(List<LockPatternView.Cell> pattern, int userId)
             throws RequestThrottledException {
-        return checkPattern(pattern, userId, null /* progressCallback */);
-    }
+        return checkPattern(pattern, userId, null /* progressCallback );
+    } */
 
     /**
      * Check to see if a pattern matches the saved pattern.  If no pattern exists,
@@ -362,7 +362,7 @@ public class LockPatternUtils {
             throws RequestThrottledException {
         try {
             VerifyCredentialResponse response =
-                    getLockSettings().checkPattern(patternToString(pattern), userId,
+                    getLockSettings().checkPattern(patternToString(pattern,userId), userId,
                             wrapCallback(progressCallback));
 
             if (response.getResponseCode() == VerifyCredentialResponse.RESPONSE_OK) {

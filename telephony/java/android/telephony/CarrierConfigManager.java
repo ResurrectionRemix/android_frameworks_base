@@ -779,6 +779,21 @@ public class CarrierConfigManager {
     public static final String KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL =
             "allow_non_emergency_calls_in_ecm_bool";
 
+
+    /**
+     * If carriers require differentiate un-provisioned status: cold sim or out of credit sim
+     * a package name and activity name can be provided to launch a supported carrier application
+     * that check the sim provisioning status
+     * The first element is the package name and the second element is the activity name
+     * of the provisioning app
+     * example:
+     * <item>com.google.android.carrierPackageName</item>
+     * <item>com.google.android.carrierPackageName.CarrierActivityName</item>
+     * @hide
+     */
+     public static final String KEY_SIM_PROVISIONING_STATUS_DETECTION_CARRIER_APP_STRING_ARRAY =
+"sim_state_detection_carrier_app_string_array";
+
     /**
      * Flag indicating whether to allow carrier video calls to emergency numbers.
      * When {@code true}, video calls to emergency numbers will be allowed.  When {@code false},

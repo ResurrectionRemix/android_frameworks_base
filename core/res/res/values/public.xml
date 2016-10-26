@@ -2738,10 +2738,10 @@
     <public type="id" name="list_container" id="0x0102003f" />
     <public type="id" name="switch_widget" id="0x01020040" />
 
-    <public type="attr" name="interval" />
+    <!--public type="attr" name="interval" />
     <public type="attr" name="min" />
     <public type="attr" name="unitsLeft" />
-    <public type="attr" name="unitsRight" />
+    <public type="attr" name="unitsRight" /-->
   <!-- ===============================================================
        Resources added in version N MR1 of the platform
        =============================================================== -->
