@@ -1053,8 +1053,8 @@ public final class BluetoothHeadset implements BluetoothProfile {
         }
     }
 
-    private final ServiceConnection mConnection
-            = new ServiceConnection()  {
+    private final IBluetoothProfileServiceConnection mConnection
+            = new IBluetoothProfileServiceConnection.Stub()  {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             if (DBG) Log.d(TAG, "Proxy object connected");
