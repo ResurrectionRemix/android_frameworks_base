@@ -52,6 +52,7 @@ public class FlashlightController {
 
     private static final String ACTION_TURN_FLASHLIGHT_OFF =
             "com.android.systemui.action.TURN_FLASHLIGHT_OFF";
+
     private final CameraManager mCameraManager;
     private final Context mContext;
     /** Call {@link #ensureHandler()} before using */
