@@ -2030,27 +2030,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         if (DEBUG) Log.v(TAG, "addNavigationBar: about to add " + mNavigationController.getBar());
         if (mNavigationController.getBar() == null) return;
 
-        try {
-            WindowManagerGlobal.getWindowManagerService()
-                    .watchRotation(new IRotationWatcher.Stub() {
-                @Override
-                public void onRotationChanged(int rotation) throws RemoteException {
-                    // We need this to be scheduled as early as possible to beat the redrawing of
-                    // window in response to the orientation change.
-                    Message msg = Message.obtain(mHandler, () -> {
-                        if (mNavigationBarView != null
-                                && mNavigationBarView.needsReorient(rotation)) {
-                            repositionNavigationBar();
-                        }
-                    });
-                    msg.setAsynchronous(true);
-                    mHandler.sendMessageAtFrontOfQueue(msg);
-                }
-            });
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-
         prepareNavigationBarView();
 
         mWindowManager.addView(mNavigationController.getBar().getBaseView(), getNavigationBarLayoutParams());
@@ -2079,7 +2058,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                     | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                     | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH
-                    | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
                     | WindowManager.LayoutParams.FLAG_SLIPPERY,
                 PixelFormat.TRANSLUCENT);
         // this will allow the navbar to run in an overlay on devices that support this
@@ -5448,10 +5427,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             previousView.makeInactive(true /* animate */);
         }
         mStackScroller.setActivatedChild(view);
-    }
-
-    public ButtonDispatcher getHomeButton() {
-        return mNavigationBarView.getHomeButton();
     }
 
     /**

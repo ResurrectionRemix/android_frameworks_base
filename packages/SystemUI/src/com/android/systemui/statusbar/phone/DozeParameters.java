@@ -175,6 +175,23 @@ public class DozeParameters {
         return SystemProperties.get(propName, mContext.getString(resId));
     }
 
+    public boolean getPickupSubtypePerformsProxCheck(int subType) {
+        String spec = getString("doze.pickup.proxcheck",
+                R.string.doze_pickup_subtype_performs_proximity_check);
+
+        if (TextUtils.isEmpty(spec)) {
+            // Fall back to non-subtype based property.
+            return mContext.getResources().getBoolean(R.bool.doze_pickup_performs_proximity_check);
+        }
+
+        if (sPickupSubtypePerformsProxMatcher == null
+                || !TextUtils.equals(spec, sPickupSubtypePerformsProxMatcher.mSpec)) {
+            sPickupSubtypePerformsProxMatcher = new IntInOutMatcher(spec);
+        }
+
+        return sPickupSubtypePerformsProxMatcher.isIn(subType);
+    }
+
     public int getDozeBrightness() {
 	final int dozeBrightnessDefault = mContext.getResources().getInteger(
                     com.android.internal.R.integer.config_screenBrightnessDoze);
@@ -185,11 +202,6 @@ public class DozeParameters {
         }
         return dozeBrightnessDefault;
     }
-
-    public static class PulseSchedule  extends IntInOutMatcher{
-        private static final Pattern PATTERN = Pattern.compile("(\\d+?)s", 0);
-   }
-
 
     /**
      * Parses a spec of the form `1,2,3,!5,*`. The resulting object will match numbers that are

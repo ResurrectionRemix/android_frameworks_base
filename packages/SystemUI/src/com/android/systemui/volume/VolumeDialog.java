@@ -643,7 +643,6 @@ public class VolumeDialog implements TunerService.Tunable {
 
     private void updateRowsH(final VolumeRow activeRow) {
         if (D.BUG) Log.d(TAG, "updateRowsH");
-        final VolumeRow activeRow = getActiveRow();
         setVolumeStroke();
         setVolumeAlpha();
         if (!mShowing) {

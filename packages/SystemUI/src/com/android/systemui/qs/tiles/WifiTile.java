@@ -127,7 +127,8 @@ public class WifiTile extends QSTile<QSTile.SignalState> {
             mController.setWifiEnabled(true);
             mState.value = true;
             }
-    }
+        }
+     }
 
     @Override
     protected void handleLongClick() {

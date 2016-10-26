@@ -547,15 +547,6 @@ public final class ShutdownThread extends Thread {
             attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
             attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
         }
-
-        // acquire audio focus to make the other apps to stop playing muisc
-        mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.requestAudioFocus(null,
-                AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-
-        if (!checkAnimationFileExist()) {
-            // throw up an indeterminate system dialog to indicate radio is
-            // shutting down.
             pd.setCancelable(false);
             pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 
@@ -563,7 +554,6 @@ public final class ShutdownThread extends Thread {
             pd.getWindow().setDimAmount(setRebootDialogDim(context));
 
             pd.show();
-        }
 
 
         sInstance.mProgressDialog = pd;

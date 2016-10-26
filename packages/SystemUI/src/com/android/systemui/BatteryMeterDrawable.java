@@ -349,11 +349,7 @@ public class BatteryMeterDrawable extends Drawable implements
 
     @Override
     public void draw(Canvas c) {
-        final boolean showChargingAnim
-                = mContext.getResources().getBoolean(R.bool.config_show_battery_charging_anim);
-        final int level = showChargingAnim
-                ? updateChargingAnimLevel()
-                : mLevel;
+        final int level = mLevel;
 
         if (level == -1) return;
 

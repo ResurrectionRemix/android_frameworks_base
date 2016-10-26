@@ -202,7 +202,7 @@ public class MobileSignalController extends SignalController<
 		mContext.getContentResolver(), Settings.System.SHOW_FOURG,
 		0, UserHandle.USER_CURRENT) == 1;
 
-        MobileIconGroup hGroup;
+       MobileIconGroup hGroup;
 		if (mShow3G){
 		hGroup = TelephonyIcons.THREE_G;
 		} else {
@@ -212,36 +212,8 @@ public class MobileSignalController extends SignalController<
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hGroup);
-        
-	    
-	    if (mContext.getResources().getBoolean(R.bool.config_show4gForHspap)) {
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.FOUR_G);
-        } else {
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hGroup);
-        }
-        if (mContext.getResources().getBoolean(R.bool.show_network_indicators)) {
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA,
-                    TelephonyIcons.THREE_G_PLUS);
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA,
-                    TelephonyIcons.THREE_G_PLUS);
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA,
-                    TelephonyIcons.THREE_G_PLUS);
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.H_PLUS);
-        }
 
         if (mShow4G) {
-            if (mContext.getResources().getBoolean(R.bool.show_4glte_icon_for_lte)) {
-                mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE,
-                        TelephonyIcons.FOUR_G_LTE);
-            } else if (mContext.getResources().getBoolean(R.bool.show_network_indicators)) {
-                mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.LTE);
-            } else {
-                mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
-            }
-            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
-                TelephonyIcons.FOUR_G_PLUS);
-
-        if (!mShow4G) {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
             if (mConfig.hideLtePlus) {
                 mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE_CA,
@@ -260,7 +232,6 @@ public class MobileSignalController extends SignalController<
                         TelephonyIcons.LTE_PLUS);
             }
         }
-
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_IWLAN, TelephonyIcons.WFC);
     }
 
