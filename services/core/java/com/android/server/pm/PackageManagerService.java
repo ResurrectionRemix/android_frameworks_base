@@ -8143,10 +8143,6 @@ public class PackageManagerService extends IPackageManager.Stub {
             pkg.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_PRIVILEGED;
         }
 
-        if ((policyFlags & PackageParser.PARSE_ENFORCE_CODE) != 0) {
-            enforceCodePolicy(pkg);
-        }
-
         if (mCustomResolverComponentName != null &&
                 mCustomResolverComponentName.getPackageName().equals(pkg.packageName)) {
             setUpCustomResolverActivity(pkg);
