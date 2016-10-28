@@ -51,8 +51,9 @@
     <color name="battery_background">#ffffff</color>
     <color name="status">#ffffff</color>
 
-    <color name="system_primary_color">@*android:color/primary_material_dark</color>
-    <color name="system_accent_color">@*android:color/material_deep_teal_700</color>
+    <color name="system_primary_color">@*android:color/material_pixel_blue_dark</color>
+    <color name="system_secondary_color">@*android:color/material_pixel_blue_light</color>
+    <color name="system_accent_color">@*android:color/material_pixel_blue_bright</color>
 
     <!-- Custom Navbar Color -->
     <color name="icon_color_back">@android:color/white</color>
