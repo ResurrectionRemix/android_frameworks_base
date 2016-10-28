@@ -31,6 +31,7 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_SEMI_TRAN
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSLUCENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSPARENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
+import static com.android.systemui.statusbar.phone.BarTransitions.MODE_POWERSAVE_WARNING;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -3905,7 +3906,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         final boolean anim = !mNoAnimationOnNextBarModeChange && mDeviceInteractive
                 && windowState != WINDOW_STATE_HIDDEN && !powerSave;
         if (powerSave && getBarState() == StatusBarState.SHADE) {
-            mode = MODE_WARNING;
+            mode = MODE_POWERSAVE_WARNING;
         }
         if (mode == MODE_WARNING) {
             transitions.setBatterySaverColor(mBatterySaverColor);

@@ -30,4 +30,7 @@
 
     <!-- QS edit page background color -->
     <color name="qs_edit_item_decoration_bg">@*android:color/secondary_device_default_settings_light</color>
+
+    <!-- Power save warning color -->
+    <color name="powersave_warning_color">#ffff0000</color> <!-- red -->
 </resources>

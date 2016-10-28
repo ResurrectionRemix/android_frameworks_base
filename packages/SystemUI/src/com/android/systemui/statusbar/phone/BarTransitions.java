@@ -49,6 +49,7 @@ public class BarTransitions {
     public static final int MODE_TRANSPARENT = 4;
     public static final int MODE_WARNING = 5;
     public static final int MODE_LIGHTS_OUT_TRANSPARENT = 6;
+    public static final int MODE_POWERSAVE_WARNING = 7;
 
     public static final int LIGHTS_IN_DURATION = 250;
     public static final int LIGHTS_OUT_DURATION = 1500;
@@ -152,6 +153,7 @@ public class BarTransitions {
         private final int mSemiTransparent;
         private final int mTransparent;
         private int mWarning;
+        private final int mPowerSaveWarning;
         private final Drawable mGradient;
 
         private int mMode = -1;
@@ -175,12 +177,14 @@ public class BarTransitions {
                 mSemiTransparent = 0x7f0000ff;
                 mTransparent = 0x2f0000ff;
                 mWarning = 0xffff0000;
+                mPowerSaveWarning = 0xffff0000;
             } else {
                 mOpaque = context.getColor(R.color.system_bar_background_opaque);
                 mSemiTransparent = context.getColor(
                         com.android.internal.R.color.system_bar_background_semi_transparent);
                 mTransparent = context.getColor(R.color.system_bar_background_transparent);
                 mWarning = Utils.getColorAttr(context, android.R.attr.colorError);
+                mPowerSaveWarning = context.getColor(R.color.powersave_warning_color);
             }
             mGradient = context.getDrawable(gradientResourceId);
         }
@@ -258,6 +262,8 @@ public class BarTransitions {
             int targetGradientAlpha = 0, targetColor = 0;
             if (mMode == MODE_WARNING) {
                 targetColor = mWarning;
+            } else if (mMode == MODE_POWERSAVE_WARNING) {
+                targetColor = mPowerSaveWarning;
             } else if (mMode == MODE_TRANSLUCENT) {
                 targetColor = mSemiTransparent;
             } else if (mMode == MODE_SEMI_TRANSPARENT) {
