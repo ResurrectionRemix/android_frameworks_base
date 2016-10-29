@@ -4099,9 +4099,14 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String VOLUME_ADJUST_SOUNDS_ENABLED = "volume_adjust_sounds_enabled";
 
+        /**
+         * Whether to disable ripple on lockscreen pin entry
+         * @hide
+         */
+        public static final String LOCKSCREEN_PIN_RIPPLE = "lockscreen_pin_ripple";
+
     	/**
          * Whether or not to use the app sidebar
-         *
          * @hide
          */
         public static final String APP_SIDEBAR_ENABLED = "app_sidebar_enabled";
