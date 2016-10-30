@@ -27,7 +27,6 @@
 #include <sys/stat.h>
 
 #include <private/android_filesystem_config.h> // for AID_SYSTEM
-#include <private/regionalization/Environment.h>
 
 #include "androidfw/Asset.h"
 #include "androidfw/AssetManager.h"
@@ -130,7 +129,7 @@ jint copyValue(JNIEnv* env, jobject outValue, const ResTable* table,
 }
 
 // This is called by zygote (running as user root) as part of preloadResources.
-static void verifySystemIdmaps(const char* overlay_dir)
+static void verifySystemIdmaps()
 {
     pid_t pid;
     char system_id[10];
@@ -187,10 +186,9 @@ static void verifySystemIdmaps(const char* overlay_dir)
 
                 // Directories to scan for overlays
                 // /vendor/overlay
-
-               if (stat(overlay_dir, &st) == 0) {
-                   argv[argc++] = overlay_dir;
-                }
+                if (stat(AssetManager::OVERLAY_DIR, &st) == 0) {
+                    argv[argc++] = AssetManager::OVERLAY_DIR;
+                 }
 
                 // Finally, invoke idmap (if any overlay directory exists)
                 if (argc > 5) {
@@ -2079,20 +2077,7 @@ static jintArray android_content_AssetManager_getStyleAttributes(JNIEnv* env, jo
 static void android_content_AssetManager_init(JNIEnv* env, jobject clazz, jboolean isSystem)
 {
     if (isSystem) {
-        // Load frameworks-res.apk's overlay through regionalization environment
-        if (Environment::isSupported()) {
-            Environment* environment = new Environment();
-            if (environment != NULL) {
-                const char* overlay_dir = environment->getOverlayDir();
-                if (overlay_dir != NULL && strcmp(overlay_dir, "") != 0) {
-                    ALOGD("Regionalization - getOverlayDir:%s", overlay_dir);
-                    verifySystemIdmaps(overlay_dir);
-                }
-                delete environment;
-            }
-        }
-
-        verifySystemIdmaps(AssetManager::OVERLAY_DIR);
+        verifySystemIdmaps();
     }
     AssetManager* am = new AssetManager();
     if (am == NULL) {
