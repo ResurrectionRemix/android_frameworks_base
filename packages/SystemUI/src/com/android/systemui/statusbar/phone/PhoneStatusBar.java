@@ -1749,6 +1749,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             mNavigationController.getBar().getBaseView().setVisibility(View.GONE);
         }
         mNavigationController.getBar().notifyInflateFromUser();
+        mNavigationController.getBar().setNavigationIconHints(mNavigationIconHints);
         addNavigationBar();
     }
 
