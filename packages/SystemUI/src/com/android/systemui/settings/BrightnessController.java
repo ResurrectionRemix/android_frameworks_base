@@ -216,7 +216,7 @@ public class BrightnessController implements ToggleSlider.Listener {
             try {
                 switch (msg.what) {
                     case MSG_UPDATE_ICON:
-                        updateIcon(msg.arg1 != 0);
+                        updateIcon(mAutomatic);
                         break;
                     case MSG_UPDATE_SLIDER:
                         mControl.setMax(msg.arg1);
