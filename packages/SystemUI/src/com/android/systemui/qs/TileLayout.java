@@ -1,7 +1,10 @@
 package com.android.systemui.qs;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     protected int mCellMarginHorizontal;
     protected int mCellMarginVertical;
     protected int mSidePadding;
+    protected int mDefaultColumns;
 
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     private int mCellMarginTop;
@@ -76,17 +80,12 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
 
     public boolean updateResources() {
         final Resources res = mContext.getResources();
-        final int columns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
         mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height);
         mCellMarginHorizontal = res.getDimensionPixelSize(R.dimen.qs_tile_margin_horizontal);
         mCellMarginVertical= res.getDimensionPixelSize(R.dimen.qs_tile_margin_vertical);
         mCellMarginTop = res.getDimensionPixelSize(R.dimen.qs_tile_margin_top);
         mSidePadding = res.getDimensionPixelOffset(R.dimen.qs_tile_layout_margin_side);
-        if (mColumns != columns) {
-            mColumns = columns;
-            requestLayout();
-            return true;
-        }
+        updateSettings();
         return false;
     }
 
@@ -154,5 +153,23 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     private int getColumnStart(int column) {
         return getPaddingStart() + mSidePadding + mCellMarginHorizontal / 2 +
                 column *  (mCellWidth + mCellMarginHorizontal);
+    }
+
+    @Override
+    public void updateSettings() {
+        final Resources res = mContext.getResources();
+        mDefaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        boolean isPortrait = res.getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT;
+        int columns = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, mDefaultColumns,
+                UserHandle.USER_CURRENT);
+        int columnsLandscape = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, mDefaultColumns,
+                UserHandle.USER_CURRENT);
+        if (mColumns != (isPortrait ? columns : columnsLandscape)) {
+            mColumns = isPortrait ? columns : columnsLandscape;
+            requestLayout();
+        }
     }
 }
