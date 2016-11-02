@@ -2754,7 +2754,14 @@ public class NotificationManagerService extends SystemService {
                 && canInterrupt
                 && mSystemReady
                 && !notificationIsAnnoying(pkg)
-                && mAudioManager != null) {
+                && mAudioManager != null;
+
+        boolean canBeep = readyForBeepOrBuzz && canInterrupt;
+        boolean canBuzz = readyForBeepOrBuzz &&
+            (canInterrupt || (aboveThreshold && mZenModeHelper.allowVibrationForNotifications()));
+        boolean hasValidSound = false;
+
+        if (canBeep || canBuzz) {
             if (DBG) Slog.v(TAG, "Interrupting!");
 
             sendAccessibilityEvent(notification, record.sbn.getPackageName());
