@@ -3791,6 +3791,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String STATUS_BAR_RR_LOGO = "status_bar_rr_logo";
 
+        /**
+         * Whether to allow fullscreen screenshots or let the user select which area to screenshot
+         * @hide
+         */
+        public static final String SCREENSHOT_TYPE = "screenshot_type";
+
 		/**
          * Statusbar RR logo color setting
          * @hide

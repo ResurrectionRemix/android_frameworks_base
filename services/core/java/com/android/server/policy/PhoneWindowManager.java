@@ -1690,7 +1690,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             + SCREENSHOT_CHORD_DEBOUNCE_DELAY_MILLIS) {
                 mScreenshotChordVolumeDownKeyConsumed = true;
                 cancelPendingPowerKeyAction();
-                mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+                    mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_SELECTED_REGION);
+                } else {
+                    mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
+                }
                 mHandler.postDelayed(mScreenshotRunnable, getScreenshotChordLongPressDelay());
             }
         }
@@ -1739,15 +1744,26 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     };
 
     private class ScreenshotRunnable implements Runnable {
-        private int mScreenshotType = TAKE_SCREENSHOT_FULLSCREEN;
+        private int mScreenshotFullscreen = TAKE_SCREENSHOT_FULLSCREEN;
+        private int mScreenshotSelectedRegion = TAKE_SCREENSHOT_SELECTED_REGION;
 
         public void setScreenshotType(int screenshotType) {
-            mScreenshotType = screenshotType;
+	    if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+            mScreenshotSelectedRegion = screenshotType;
+            } else {
+            mScreenshotFullscreen = screenshotType;
+            }
         }
 
         @Override
         public void run() {
-            takeScreenshot(mScreenshotType);
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+                takeScreenshot(mScreenshotSelectedRegion);
+            } else {
+                takeScreenshot(mScreenshotFullscreen);
+            }
         }
     }
 
@@ -3942,9 +3958,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } else if (keyCode == KeyEvent.KEYCODE_S && event.isMetaPressed()
                 && event.isCtrlPressed()) {
             if (down && repeatCount == 0) {
-                int type = event.isShiftPressed() ? TAKE_SCREENSHOT_SELECTED_REGION
-                        : TAKE_SCREENSHOT_FULLSCREEN;
-                mScreenshotRunnable.setScreenshotType(type);
+                int selectedregion = TAKE_SCREENSHOT_SELECTED_REGION;
+                int fullscreen = TAKE_SCREENSHOT_FULLSCREEN;
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+                        mScreenshotRunnable.setScreenshotType(selectedregion);
+                } else {
+                        mScreenshotRunnable.setScreenshotType(fullscreen);
+                }
                 mHandler.post(mScreenshotRunnable);
                 return -1;
             }
@@ -4004,7 +4025,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         } else if (keyCode == KeyEvent.KEYCODE_SYSRQ) {
             if (down && repeatCount == 0) {
-                mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+                    mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_SELECTED_REGION);
+                } else {
+                    mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
+                }
                 mHandler.post(mScreenshotRunnable);
             }
             return -1;

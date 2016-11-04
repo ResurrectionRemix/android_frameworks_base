@@ -27,6 +27,8 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.View;
 
 import com.android.systemui.R;
@@ -35,12 +37,18 @@ import com.android.systemui.qs.QSTile;
 
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
+import static android.view.WindowManager.TAKE_SCREENSHOT_FULLSCREEN;
+import static android.view.WindowManager.TAKE_SCREENSHOT_SELECTED_REGION;
+
 /** Quick settings tile: Screenshot **/
 public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
 
     private boolean mListening;
     private final Object mScreenshotLock = new Object();
     private ServiceConnection mScreenshotConnection = null;
+
+    private int mScreenshotFullscreen = TAKE_SCREENSHOT_FULLSCREEN;
+    private int mScreenshotSelectedRegion = TAKE_SCREENSHOT_SELECTED_REGION;
 
     public ScreenshotTile(Host host) {
         super(host);
@@ -65,7 +73,12 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
         } catch (InterruptedException ie) {
              // Do nothing
         }
-        takeScreenshot();
+        if (Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+        takeScreenshot(mScreenshotSelectedRegion);
+        } else {
+        takeScreenshot(mScreenshotFullscreen);
+        }
     }
 
     @Override
@@ -90,9 +103,34 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
         return MetricsEvent.QUICK_SETTINGS;
     }
 
-    final Runnable mScreenshotTimeout = new Runnable() {
+    class ScreenshotRunnable implements Runnable {
+        private int mScreenshotFullscreen = TAKE_SCREENSHOT_FULLSCREEN;
+        private int mScreenshotSelectedRegion = TAKE_SCREENSHOT_SELECTED_REGION;
+
+        public void setScreenshotType(int screenshotType) {
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+            mScreenshotSelectedRegion = screenshotType;
+            } else {
+            mScreenshotFullscreen = screenshotType;
+            }
+        }
+
         @Override
         public void run() {
+        if (Settings.System.getInt(mContext.getContentResolver(),
+              Settings.System.SCREENSHOT_TYPE, 0) == 1) {
+           takeScreenshot(mScreenshotSelectedRegion);
+        } else {
+           takeScreenshot(mScreenshotFullscreen);
+           }
+        }
+    }
+
+    private final ScreenshotRunnable mScreenshotRunnable = new ScreenshotRunnable();
+
+    final Runnable mScreenshotTimeout = new Runnable() {
+        @Override public void run() {
             synchronized (mScreenshotLock) {
                 if (mScreenshotConnection != null) {
                     mContext.unbindService(mScreenshotConnection);
@@ -102,13 +140,15 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
         }
     };
 
-    private void takeScreenshot() {
+    private void takeScreenshot(final int screenshotType) {
         synchronized (mScreenshotLock) {
             if (mScreenshotConnection != null) {
                 return;
             }
-
-            Intent intent = new Intent(mContext, TakeScreenshotService.class);
+            ComponentName cn = new ComponentName("com.android.systemui",
+                    "com.android.systemui.screenshot.TakeScreenshotService");
+            Intent intent = new Intent();
+            intent.setComponent(cn);
             ServiceConnection conn = new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder service) {
@@ -116,9 +156,8 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
                         if (mScreenshotConnection != this) {
                             return;
                         }
-
                         Messenger messenger = new Messenger(service);
-                        Message msg = Message.obtain(null, 1);
+                        Message msg = Message.obtain(null, screenshotType);
                         final ServiceConnection myConn = this;
                         Handler h = new Handler(mHandler.getLooper()) {
                             @Override
@@ -143,14 +182,11 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
                         }
                     }
                 }
-
                 @Override
-                public void onServiceDisconnected(ComponentName name) {
-                    // Do nothing here
-                }
+                public void onServiceDisconnected(ComponentName name) {}
             };
-
-            if (mContext.bindService(intent, conn, mContext.BIND_AUTO_CREATE)) {
+            if (mContext.bindServiceAsUser(
+                    intent, conn, Context.BIND_AUTO_CREATE, UserHandle.CURRENT)) {
                 mScreenshotConnection = conn;
                 mHandler.postDelayed(mScreenshotTimeout, 10000);
             }
