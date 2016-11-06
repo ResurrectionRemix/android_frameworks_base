@@ -181,6 +181,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
             "com.android.systemui.omni.screenrecord.TakeScreenrecordService";
 
     private FlashlightController mFlashlightController;
+    private int mScreenshotDelay;
 
     /**
      * @param context everything needs a context :(
@@ -316,6 +317,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private void handleShow() {
         awakenIfNecessary();
         mDialog = createDialog();
+        checkSettings();
         prepareDialog();
 
         // If we only have 1 item and it's a simple press action, just do this action.
@@ -662,7 +664,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                         Intent intent = new Intent(Intent.ACTION_SCREENSHOT);
                         mContext.sendBroadcast(intent);
                     }
-                }, 500);
+                }, mScreenshotDelay);
             }
 
             @Override
@@ -1928,6 +1930,11 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                 mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
             }
         }
+    }
+
+   private void checkSettings() {
+        mScreenshotDelay = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_DELAY, 100);
     }
 
 }

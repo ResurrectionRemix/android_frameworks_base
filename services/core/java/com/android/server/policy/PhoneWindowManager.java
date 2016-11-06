@@ -888,6 +888,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private int mCurrentUserId;
     private boolean haveEnableGesture = false;
 
+    private int mScreenshotDelay;
+
     // Maps global key codes to the components that will handle them.
     private GlobalKeyManager mGlobalKeyManager;
 
@@ -1566,6 +1568,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && (event.getFlags() & KeyEvent.FLAG_FALLBACK) == 0) {
             mScreenshotChordPowerKeyTriggered = true;
             mScreenshotChordPowerKeyTime = event.getDownTime();
+            checkSettings();
             interceptScreenshotChord();
             interceptScreenrecordChord();
         }
@@ -6662,6 +6665,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         };
                         msg.replyTo = new Messenger(h);
                         msg.arg1 = msg.arg2 = 0;
+
+                        // Needs delay or else we'll be taking a screenshot of the dialog each time
+                        try {
+                            Thread.sleep(mScreenshotDelay);
+                        } catch (InterruptedException ie) {
+                            // Do nothing
+                        }
+
                         if (mStatusBar != null && mStatusBar.isVisibleLw())
                             msg.arg1 = 1;
                         if (mNavigationBar != null && mNavigationBar.isVisibleLw())
@@ -6962,6 +6973,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             mScreenshotChordVolumeDownKeyConsumed = false;
                             cancelPendingPowerKeyAction();
                             cancelPendingScreenrecordChordAction();
+                            checkSettings();
                             interceptScreenshotChord();
                             interceptAccessibilityShortcutChord();
                         }
@@ -9818,5 +9830,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mTorchEnabled = false;
             cancelTorchOff();
         }
+    }
+
+    private void checkSettings() {
+        mScreenshotDelay = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_DELAY, 100);
     }
 }
