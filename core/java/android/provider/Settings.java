@@ -3797,6 +3797,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String SCREENSHOT_TYPE = "screenshot_type";
 
+        /**
+         * Change the delay when a screenshot is taken
+         * @hide
+         */
+        public static final String SCREENSHOT_DELAY = "screenshot_delay";
+
 		/**
          * Statusbar RR logo color setting
          * @hide
