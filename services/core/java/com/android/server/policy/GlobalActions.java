@@ -123,6 +123,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private static final boolean SHOW_SILENT_TOGGLE = true;
 
+    private final Object mScreenshotLock = new Object();
+    private ServiceConnection mScreenshotConnection = null;
     private int mScreenshotFullscreen = TAKE_SCREENSHOT_FULLSCREEN;
     private int mScreenshotSelectedRegion = TAKE_SCREENSHOT_SELECTED_REGION;
 
