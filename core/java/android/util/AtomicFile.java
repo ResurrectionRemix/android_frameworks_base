@@ -97,6 +97,7 @@ public class AtomicFile {
                 }
             } else {
                 mBaseName.delete();
+                mBackupName.renameTo(mBaseName);
             }
         }
         FileOutputStream str = null;
