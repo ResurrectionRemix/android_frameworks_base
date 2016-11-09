@@ -25,8 +25,8 @@ public class PowerMenuConstants {
     public static final String GLOBAL_ACTION_KEY_USERS = "users";
     public static final String GLOBAL_ACTION_KEY_SETTINGS = "settings";
     public static final String GLOBAL_ACTION_KEY_LOCKDOWN = "lockdown";
-    public static final String GLOBAL_ACTION_KEY_BUGREPORT = "bugreport";
     public static final String GLOBAL_ACTION_KEY_TORCH = "torch";
+    public static final String GLOBAL_ACTION_KEY_BUGREPORT = "bugreport";
     public static final String GLOBAL_ACTION_KEY_SILENT = "silent";
     public static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
     public static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
@@ -41,10 +41,10 @@ public class PowerMenuConstants {
         GLOBAL_ACTION_KEY_USERS,
         GLOBAL_ACTION_KEY_SETTINGS,
         GLOBAL_ACTION_KEY_LOCKDOWN,
+        GLOBAL_ACTION_KEY_TORCH,
         GLOBAL_ACTION_KEY_BUGREPORT,
         GLOBAL_ACTION_KEY_SILENT,
         GLOBAL_ACTION_KEY_VOICEASSIST,
-        GLOBAL_ACTION_KEY_TORCH,
         GLOBAL_ACTION_KEY_ASSIST
     };
 
