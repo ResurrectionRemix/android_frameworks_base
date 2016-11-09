@@ -19,7 +19,7 @@
     android:height="32dp"
     android:viewportWidth="48"
     android:viewportHeight="48"
-    android:tint="?attr/colorAccent">
+    android:tint="?attr/colorControlNormal">
 
     <path
         android:fillColor="@color/white"
