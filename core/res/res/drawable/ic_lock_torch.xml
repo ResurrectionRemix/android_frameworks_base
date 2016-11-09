@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Copyright (c) 2015 SlimRoms
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
--->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="32dp"
-    android:height="32dp"
-    android:viewportWidth="48"
-    android:viewportHeight="48"
-    android:tint="?attr/colorAccent">
+    android:height="28.0dip" 
+	android:width="28.0dip"
+    android:viewportWidth="574.399"
+    android:viewportHeight="574.4">
 
     <path
-        android:fillColor="@color/white"
-        android:pathData="M18.393
-31.781c-0.001-4.075-0.001-8.151-0.002-12.226-2.907-1.446-4.132-4.899-3.82-7.983
-0.112-0.427 1.002-0.065 1.418-0.185h17.447c0.264 2.983-0.741 6.32-3.45
-7.914-0.719 0.206-0.247 1.096-0.382 1.638v23.066h-11.208c-0.001-4.073
-0-8.157-0.003-12.224zm5.916-4.099c2.117-0.134 3.221-2.955
-1.81-4.505-1.211-1.593-3.997-1.166-4.672 0.72-0.82 1.86 0.83 4.073 2.862
-3.785zm-9.738-21.73v-1.9567h18.867v3.9134h-18.867v-1.9567z" />
+        android:fillColor="?attr/colorControlNormal"
+        android:pathData="M299.625,110.612 C279.225,114.437,261.375,128.462,251.175,147.587 L229.5,188.387
+L71.4,188.387 C31.875,188.387,0,220.262,0,258.512 L0,315.887
+C0,355.412,31.875,387.287,71.4,387.287 L230.775,387.287 L252.45,428.087
+C262.65,447.212,280.5,459.962,300.9,463.787 L300.9,110.612 L299.625,110.612 Z" />
+    <path
+        android:fillColor="?attr/colorControlNormal"
+        android:pathData="M320.025,109.337 L320.025,465.062 C374.849,462.512,418.2,417.887,418.2,361.788
+L418.2,212.612 C418.2,157.788,374.85,111.887,320.025,109.337 Z" />
+    <path
+        android:fillColor="?attr/colorControlNormal"
+        android:pathData="M554.625,268.712 L465.375,268.712 C455.175,268.712,446.25,277.637,446.25,287.837
+S453.9,306.962,465.375,306.962 L554.625,306.962
+C564.825,306.962,573.75,298.037,573.75,287.837 S566.1,268.712,554.625,268.712 Z" />
+    <path
+        android:fillColor="?attr/colorControlNormal"
+        android:pathData="M561,393.663 L469.2,366.888 C459,364.338,448.8,369.438,446.25,379.638
+S448.8,400.038,459,402.588 L550.8,430.638
+C552.075,430.638,554.625,431.913,555.901,431.913
+C563.55,431.913,571.201,426.812,573.751,419.163
+C576.3,406.413,569.925,396.212,561,393.663 Z" />
+    <path
+        android:fillColor="?attr/colorControlNormal"
+        android:pathData="M464.1,210.062 C465.375,210.062,467.925,210.062,469.201,208.787 L561.001,180.737
+C571.201,178.187,576.301,167.987,573.751,157.787
+C571.201,147.587,561.001,142.487,550.801,145.037 L459,174.362
+C448.8,176.912,443.7,187.112,446.25,197.312
+C448.8,204.962,456.45,210.062,464.1,210.062 Z" />
+    <path
+        android:fillColor="?attr/colorControlNormal"
+        android:pathData="M123.675,124.637 L110.925,124.637 C90.525,124.637,73.95,141.212,73.95,161.612
+L160.65,161.612 C160.65,142.487,144.075,124.637,123.675,124.637 Z" />
 </vector>

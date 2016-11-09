@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-/*
- * Copyright 2013, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
--->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="30.0dip" 
+	android:width="30.0dip"
+    android:viewportWidth="611.998"
+    android:viewportHeight="611.998">
 
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/ic_lock_airplane_mode_off_am_alpha"
-    android:autoMirrored="true"
-    android:tint="?attr/colorControlNormal" />
+    <path
+        android:fillColor="?attr/colorControlNormal"
+        android:pathData="M600.427,329.764 L407.49,301.822
+C405.283,292.718,402.357,284.027,398.818,275.839 L449.265,275.839
+C456.724,275.839,462.772,269.79,462.772,262.332 S456.723,248.825,449.265,248.825
+L383.554,248.825 C367.037,225.968,344.618,210.375,319.472,206.223
+L319.472,144.351 C319.472,136.892,313.423,130.844,305.965,130.844
+C298.506,130.844,292.458,136.893,292.458,144.351 L292.458,206.223
+C267.313,210.375,244.896,225.968,228.376,248.825 L162.733,248.825
+C155.274,248.825,149.226,254.874,149.226,262.332
+S155.275,275.839,162.733,275.839 L213.11,275.839
+C209.56,284.049,206.626,292.766,204.419,301.897 L11.579,329.761
+C4.566,330.774,-0.472,337.031,0.036,344.098
+C0.544,351.165,6.425,356.638,13.508,356.638 L97.745,356.638 L97.745,365.321
+C81.431,370.945,69.66,386.417,69.66,404.617
+C69.66,427.55,88.319,446.209,111.252,446.209 S152.844,427.55,152.844,404.617
+C152.844,386.417,141.074,370.946,124.759,365.321 L124.759,356.638
+L200.084,356.638 C205.336,426.428,250.81,481.154,305.963,481.154
+S406.593,426.428,411.845,356.638 L476.313,356.638 L476.313,365.321
+C459.999,370.948,448.228,386.417,448.228,404.617
+C448.228,427.55,466.887,446.209,489.82,446.209
+C512.753,446.209,531.412,427.55,531.412,404.617
+C531.412,386.417,519.642,370.946,503.327,365.321 L503.327,356.638
+L598.489,356.638 C605.572,356.638,611.453,351.168,611.961,344.1
+C612.473,337.036,607.437,330.777,600.427,329.764 Z M125.829,404.616
+C125.829,412.656,119.291,419.193,111.252,419.193
+C103.215,419.193,96.675,412.655,96.675,404.616 S103.215,390.039,111.252,390.039
+C119.292,390.039,125.829,396.577,125.829,404.616 Z M243.73,288.58 L292.4,291.3
+L292.4,319.836 L238.849,298.594 L243.73,288.58 Z M320.525,319.836 L320.525,291.3
+L369.195,288.58 L374.074,298.597 L320.525,319.836 Z M504.4,404.616
+C504.4,412.656,497.862,419.193,489.823,419.193 S475.246,412.655,475.246,404.616
+S481.784,390.039,489.823,390.039 S504.4,396.577,504.4,404.616 Z" />
+</vector>
