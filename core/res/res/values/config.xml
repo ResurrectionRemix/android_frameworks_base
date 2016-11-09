@@ -2215,10 +2215,12 @@
         <item>screenrecord</item>
         <item>airplane</item>
         <item>torch</item>
+        <item>users</item>
         <item>settings</item>
         <item>lockdown</item>
         <item>bugreport</item>
-        <item>users</item>
+        <item>voiceassist</item>
+        <item>assist</item>
         <item>silent</item>
     </string-array>
 
