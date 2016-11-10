@@ -18,12 +18,12 @@
 -->
 <resources>
     <!-- Floating action button -->
-    <color name="fab_color">#ff009688</color>
+    <color name="fab_color">@*android:color/material_pixel_blue_bright</color>
     <color name="floating_action_button_icon_color">#ffffff</color>
 
     <!-- Gesture Anywhere specific colors -->
     <color name="gesture_overlay_background_fill_color">#80000000</color>
-    <color name="gesture_color">@android:color/holo_blue_light</color>
+    <color name="gesture_color">@*android:color/material_pixel_blue_bright</color>
 
     <!-- app sidebar trigger region color -->
     <color name="trigger_region_color">#8015a0e5</color>
@@ -45,7 +45,7 @@
     <color name="pie_select">#ff009688</color>
     <color name="pie_outlines">#ff1b1f23</color>
     <color name="chevron">#ff009688</color>
-    <color name="battery_juice">#ff00ff00</color>
+    <color name="battery_juice">@*android:color/material_pixel_blue_bright</color>
     <color name="battery_juice_low">#ffbb33</color>
     <color name="battery_juice_critical">#ff4444</color>
     <color name="battery_background">#ffffff</color>
