@@ -2745,7 +2745,7 @@ public class NotificationManagerService extends SystemService {
             ZenLog.traceDisableEffects(record, disableEffects);
         }
 
-        if ((disableEffects == null)
+        boolean readyForBeepOrBuzz = disableEffects == null
                 && (!(record.isUpdate
                     && (notification.flags & Notification.FLAG_ONLY_ALERT_ONCE) != 0 ))
                 && (record.getUserId() == UserHandle.USER_ALL ||
@@ -2777,7 +2777,6 @@ public class NotificationManagerService extends SystemService {
                                    .equals(notification.sound);
 
             Uri soundUri = null;
-            boolean hasValidSound = false;
 
             if (useDefaultSound) {
                 soundUri = Settings.System.DEFAULT_NOTIFICATION_URI;

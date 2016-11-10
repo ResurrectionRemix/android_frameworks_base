@@ -3671,7 +3671,6 @@ public final class ActivityManagerService extends ActivityManagerNative
                         true /*replacingPid*/);
             }
             synchronized (mPidsSelfLocked) {
-                ProcessRecord oldApp;
                 // If there is already an app occupying that pid that hasn't been cleaned up
                 if ((oldApp = mPidsSelfLocked.get(startResult.pid)) != null && !app.isolated) {
                     // Clean up anything relating to this pid first
