@@ -24,6 +24,7 @@ import android.app.SynchronousUserSwitchObserver;
 import android.bluetooth.BluetoothAssignedNumbers;
 import android.bluetooth.BluetoothHeadset;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -91,7 +92,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final DataSaverController mDataSaver;
     private StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
     private final SuController mSuController;
-    private boolean mShowBluetoothBattery;
     private boolean mSuIndicatorVisible;
 
     // Assume it's all good unless we hear otherwise.  We don't always seem
@@ -110,6 +110,45 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private boolean mManagedProfileInQuietMode = false;
 
     private BluetoothController mBluetooth;
+
+    private boolean mShowBluetoothBattery;
+
+ 
+    private BTSettingsObserver mBTSettingsObserver;
+ 
+    protected class BTSettingsObserver extends ContentObserver {
+         BTSettingsObserver(Handler handler) {
+             super(handler);
+         }
+ 
+         void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.BLUETOOTH_SHOW_BATTERY),
+                   false, this, UserHandle.USER_ALL);
+            updateSettings();
+         }
+ 
+         @Override
+         public void onChange(boolean selfChange, Uri uri) {
+             super.onChange(selfChange, uri);
+             if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.BLUETOOTH_SHOW_BATTERY))) {
+                     mShowBluetoothBattery = Settings.System.getIntForUser(
+                             mContext.getContentResolver(),
+                             Settings.System.BLUETOOTH_SHOW_BATTERY,
+                             0, UserHandle.USER_CURRENT) == 1;
+                     updateBluetooth();
+             }
+             updateSettings();
+         }
+ 
+         public void updateSettings() {
+             ContentResolver resolver = mContext.getContentResolver();
+             boolean mShowBluetoothBattery = Settings.System.getIntForUser(resolver,
+                     Settings.System.BLUETOOTH_SHOW_BATTERY, 0, UserHandle.USER_CURRENT) == 1;
+         }
+    }
 
     public PhoneStatusBarPolicy(Context context, StatusBarIconController iconController,
             CastController cast, HotspotController hotspot, UserInfoController userInfoController,
@@ -172,14 +211,14 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mIconController.setIcon(mSlotTty,  R.drawable.stat_sys_tty_mode, null);
         mIconController.setIconVisibility(mSlotTty, false);
 
+        // Bluetooth battery level monitor
+        if (mBTSettingsObserver == null) {
+            mBTSettingsObserver = new BTSettingsObserver(new Handler());
+        }
+        mBTSettingsObserver.observe();
+
         // bluetooth status
         updateBluetooth();
-
-        //Bluetooth icon
-        mBTIconObserver.onChange(true);
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.BLUETOOTH_SHOW_BATTERY),
-                false, mBTIconObserver);
 
         // Alarm clock
         mIconController.setIcon(mSlotAlarmClock, R.drawable.stat_sys_alarm, null);
@@ -239,6 +278,8 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
             onChange(selfChange, null);
         }
     };
+
+ 
 
     private ContentObserver mSettingsObserver = new ContentObserver(null) {
         @Override
