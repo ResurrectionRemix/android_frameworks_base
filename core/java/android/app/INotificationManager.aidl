@@ -107,4 +107,6 @@ interface INotificationManager
     // Halo
     void setHaloPolicyBlack(String pkg, int uid, boolean halo);
     boolean isPackageAllowedForHalo(String pkg, int uid);
+
+    boolean deviceLightsCan(int lightCapability);
 }
