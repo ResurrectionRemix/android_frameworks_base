@@ -63,10 +63,12 @@ import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_CODE_END;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_CODE_START;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.KEY_IMAGE_DELIM;
-import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME;
+import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME_ROTATE;
+import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.MENU_IME_ALWAYS_SHOW;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAVSPACE;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.NAV_BAR_VIEWS;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.RECENT;
+import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.SEARCH;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.SIZE_MOD_END;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.SIZE_MOD_START;
 import static com.android.systemui.statusbar.phone.NavigationBarInflaterView.WEIGHT_SUFFIX;
@@ -185,6 +187,10 @@ public class NavBarEditor extends TunerPreferenceFragment implements TunerServic
             return context.getString(R.string.left);
         } else if (button.startsWith(RIGHT)) {
             return context.getString(R.string.right);
+        } else if (button.equals(MENU_IME_ALWAYS_SHOW)) {
+            return context.getString(R.string.menu_ime_always_show);
+        } else if (button.startsWith(SEARCH)) {
+            return context.getString(R.string.search);
         /*} else if (button.equals(MENU_IME)) {
             return context.getString(R.string.menu_ime);*/
         /*} else if (button.startsWith(CLIPBOARD)) {
@@ -409,7 +415,7 @@ public class NavBarEditor extends TunerPreferenceFragment implements TunerServic
 
         private void showAddDialog(final Context context) {
             final String[] options = new String[] {
-                    BACK, HOME, RECENT, NAVSPACE, LEFT, RIGHT
+                    BACK, HOME, RECENT, MENU_IME_ALWAYS_SHOW, SEARCH, NAVSPACE, LEFT, RIGHT
             };
             final CharSequence[] labels = new CharSequence[options.length];
             for (int i = 0; i < options.length; i++) {

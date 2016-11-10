@@ -135,6 +135,7 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     private KeyButtonDrawable mDockedIcon;
     private KeyButtonDrawable mImeIcon;
     private KeyButtonDrawable mMenuIcon;
+    private KeyButtonDrawable mSearchIcon;
     private KeyButtonDrawable mAccessibilityIcon;
     private TintedKeyButtonDrawable mRotateSuggestionIcon;
 
@@ -302,6 +303,8 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         mButtonDispatchers.put(R.id.home, new ButtonDispatcher(R.id.home));
         mButtonDispatchers.put(R.id.recent_apps, new ButtonDispatcher(R.id.recent_apps));
         mButtonDispatchers.put(R.id.menu, new ButtonDispatcher(R.id.menu));
+        mButtonDispatchers.put(R.id.menu_always_show, new ButtonDispatcher(R.id.menu_always_show));
+        mButtonDispatchers.put(R.id.search, new ButtonDispatcher(R.id.search));
         mButtonDispatchers.put(R.id.ime_switcher, new ButtonDispatcher(R.id.ime_switcher));
         mButtonDispatchers.put(R.id.accessibility_button,
                 new ButtonDispatcher(R.id.accessibility_button));
@@ -416,6 +419,10 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         return mButtonDispatchers.get(R.id.menu);
     }
 
+    public ButtonDispatcher getMenuAlwaysShowButton() {
+        return mButtonDispatchers.get(R.id.menu_always_show);
+    }
+
     public ButtonDispatcher getBackButton() {
         return mButtonDispatchers.get(R.id.back);
     }
@@ -426,6 +433,10 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
 
     public ButtonDispatcher getImeSwitchButton() {
         return mButtonDispatchers.get(R.id.ime_switcher);
+    }
+
+    public ButtonDispatcher getSearchButton() {
+        return mButtonDispatchers.get(R.id.search);
     }
 
     public ButtonDispatcher getAccessibilityButton() {
@@ -498,6 +509,7 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
             mBackIcon = getBackDrawable(lightContext, darkContext);
             mRecentIcon = getDrawable(lightContext, darkContext, R.drawable.ic_sysbar_recent);
             mMenuIcon = getDrawable(lightContext, darkContext, R.drawable.ic_sysbar_menu);
+            mSearchIcon = getDrawable(lightContext, darkContext, R.drawable.ic_sysbar_search_default);
 
             mAccessibilityIcon = getDrawable(lightContext, darkContext,
                     R.drawable.ic_sysbar_accessibility_button, false /* hasShadow */);
@@ -656,6 +668,8 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         // Update menu button, visibility logic in method
         setMenuVisibility(mShowMenu, true);
         getMenuButton().setImageDrawable(mMenuIcon);
+        getSearchButton().setImageDrawable(mSearchIcon);
+        getMenuAlwaysShowButton().setImageDrawable(mMenuIcon);
 
         // Update rotate button, visibility altered by a11y button logic
         getRotateSuggestionButton().setImageDrawable(mRotateSuggestionIcon);
@@ -673,6 +687,8 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         boolean disableRecent = mUseCarModeUi || !isOverviewEnabled();
 
         boolean disableBack = ((mDisabledFlags & View.STATUS_BAR_DISABLE_BACK) != 0) && !useAltBack;
+
+        final boolean disableSearch = ((mDisabledFlags & View.STATUS_BAR_DISABLE_SEARCH) != 0);
 
         // When screen pinning, don't hide back and home when connected service or back and
         // recents buttons when disconnected from launcher service in screen pinning mode,
@@ -703,6 +719,7 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
         getBackButton().setVisibility(disableBack      ? View.INVISIBLE : View.VISIBLE);
         getHomeButton().setVisibility(disableHome      ? View.INVISIBLE : View.VISIBLE);
         getRecentsButton().setVisibility(disableRecent ? View.INVISIBLE : View.VISIBLE);
+        getSearchButton().setVisibility(disableSearch ? View.INVISIBLE : View.VISIBLE);
     }
 
     public boolean inScreenPinning() {
@@ -821,8 +838,12 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
                 !mShowAccessibilityButton &&
                 !mShowRotateButton &&
                 ((mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) == 0);
+        final boolean shouldShowAlwaysMenu = (mNavigationIconHints &
+                StatusBarManager.NAVIGATION_HINT_IME_SHOWN) == 0;
 
         getMenuButton().setVisibility(shouldShow ? View.VISIBLE : View.INVISIBLE);
+        getMenuAlwaysShowButton().setVisibility(shouldShowAlwaysMenu ? View.VISIBLE : View.INVISIBLE);
+        getSearchButton().setVisibility(shouldShowAlwaysMenu ? View.VISIBLE : View.INVISIBLE);
     }
 
     public void setAccessibilityButtonState(final boolean visible, final boolean longClickable) {
