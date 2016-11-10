@@ -178,15 +178,13 @@ public class KeyguardStatusView extends GridLayout implements
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-        getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
+        mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,mLockClockFontSize);
         mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         MarginLayoutParams layoutParams = (MarginLayoutParams) mClockView.getLayoutParams();
         layoutParams.bottomMargin = getResources().getDimensionPixelSize(
                 R.dimen.bottom_text_spacing_digital);
         mClockView.setLayoutParams(layoutParams);
-        mDateView.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-        getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
+        mDateView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mLockDateFontSize);
         mOwnerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
     }
