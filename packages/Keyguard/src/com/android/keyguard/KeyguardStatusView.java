@@ -184,7 +184,7 @@ public class KeyguardStatusView extends GridLayout implements
         layoutParams.bottomMargin = getResources().getDimensionPixelSize(
                 R.dimen.bottom_text_spacing_digital);
         mClockView.setLayoutParams(layoutParams);
-        mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLockDateFontSize);
+        refreshdatesize();
         mOwnerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
     }
@@ -431,6 +431,89 @@ public class KeyguardStatusView extends GridLayout implements
         }
     }
 
+    public void refreshdatesize() {
+    int size = mLockDateFontSize;
+		if (size == 0) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_1));
+		} else if (size == 1) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_1));
+		} else if (size == 2) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_2));
+		} else if (size == 3) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_3));
+		} else if (size == 4) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_4));
+		} else if (size == 5) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_5));
+		} else if (size == 6) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_6));
+		} else if (size == 7) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_7));
+		} else if (size == 8) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_8));
+		} else if (size == 9) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_9));
+		} else if (size == 10) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_10));
+		} else if (size == 11) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_11));
+		} else if (size == 12) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_12));
+		} else if (size == 13) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_13));
+		} else if (size == 14) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
+		}  else if (size == 15) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_15));
+		} else if (size == 16) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_16));
+		} else if (size == 17) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_17));
+		} else if (size == 18) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_18));
+		} else if (size == 19) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_19));
+		} else if (size == 20) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_20));
+		} else if (size == 21) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_21));
+		} else if (size == 22) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_22));
+		} else if (size == 23) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_23));
+		} else if (size == 24) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_24));
+		} else if (size == 25) {
+		mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_25));
+		}
+	}
+
  private void  updateSettings(boolean forcehide) {
         final ContentResolver resolver = getContext().getContentResolver();
         final Resources res = getContext().getResources();
@@ -498,12 +581,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         if (mWeatherConditionImage != null) {
             mWeatherConditionImage.setImageDrawable(null);
-        }
-
-        if (mDateView != null) {
-            if (mLockDateFontSize != getResources().getDimensionPixelSize(R.dimen.widget_label_font_size)) {
-                mDateView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mLockDateFontSize);
-            }
         }
         
 		if (dateFont == 0) {
@@ -712,7 +789,7 @@ public class KeyguardStatusView extends GridLayout implements
                  refreshLockFont();
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.LOCK_DATE_FONTS))) {
-                 updateSettings(false);
+                 refreshdatesize();
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.LOCKCLOCK_FONT_SIZE))) {
                  updateclocksize();
@@ -747,7 +824,7 @@ public class KeyguardStatusView extends GridLayout implements
                      resolver, Settings.System.HIDE_LOCKSCREEN_DATE, 1, currentUserId) == 1;
 
            dateFont = Settings.System.getIntForUser(resolver,
-                Settings.System.LOCK_DATE_FONTS, 4, UserHandle.USER_CURRENT);
+                Settings.System.LOCK_DATE_FONTS, 14, UserHandle.USER_CURRENT);
 
            mShowWeather = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER, 0) == 1;
@@ -763,6 +840,7 @@ public class KeyguardStatusView extends GridLayout implements
 			 hideLockscreenItems();
 			 refreshLockFont();
              updateclocksize();
+             refreshdatesize();
 			 updateSettings(false);
          }
      }

@@ -22,6 +22,11 @@
         android:key="status_bar"
         android:title="@string/status_bar" >
 
+    <com.android.systemui.tuner.TunerSwitch
+        android:key="qs_show_brightness"
+        android:title="@string/show_brightness"
+        sysui:defValue="true" />
+
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="rotate"
             android:title="@string/status_bar_settings_auto_rotation" />

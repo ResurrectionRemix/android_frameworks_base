@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/dimens.xml
+**
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources> 
+
+<!-- Lock clock parameters -->
+<dimen name="lock_date_font_size_1">1sp</dimen>
+<dimen name="lock_date_font_size_2">2sp</dimen>
+<dimen name="lock_date_font_size_3">3sp</dimen>
+<dimen name="lock_date_font_size_4">4sp</dimen>
+<dimen name="lock_date_font_size_5">5sp</dimen>
+<dimen name="lock_date_font_size_6">6sp</dimen>
+<dimen name="lock_date_font_size_7">7sp</dimen>
+<dimen name="lock_date_font_size_8">8sp</dimen>
+<dimen name="lock_date_font_size_9">9sp</dimen>
+<dimen name="lock_date_font_size_10">10sp</dimen>
+<dimen name="lock_date_font_size_11">11sp</dimen>
+<dimen name="lock_date_font_size_12">12sp</dimen>
+<dimen name="lock_date_font_size_13">13sp</dimen>
+<dimen name="lock_date_font_size_15">15sp</dimen>
+<dimen name="lock_date_font_size_16">16sp</dimen>
+<dimen name="lock_date_font_size_17">17sp</dimen>
+<dimen name="lock_date_font_size_18">18sp</dimen>
+<dimen name="lock_date_font_size_19">19sp</dimen>
+<dimen name="lock_date_font_size_20">20sp</dimen>
+<dimen name="lock_date_font_size_21">21sp</dimen>
+<dimen name="lock_date_font_size_22">22sp</dimen>
+<dimen name="lock_date_font_size_23">23sp</dimen>
+<dimen name="lock_date_font_size_24">24sp</dimen>
+<dimen name="lock_date_font_size_25">25sp</dimen>  
+  
+</resources>  
