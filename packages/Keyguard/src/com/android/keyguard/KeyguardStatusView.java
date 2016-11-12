@@ -573,15 +573,6 @@ public class KeyguardStatusView extends GridLayout implements
         mWeatherConditionText.setTextColor(primaryTextColor);
         mWeatherCurrentTemp.setTextColor(secondaryTextColor);
 
-    	if (mIconNameValue != iconNameValue) {
-            mIconNameValue = iconNameValue;
-            mWeatherController.updateWeather();
-        }
-
-        if (mWeatherConditionImage != null) {
-            mWeatherConditionImage.setImageDrawable(null);
-        }
-        
 		if (dateFont == 0) {
             mDateView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         }
@@ -658,18 +649,14 @@ public class KeyguardStatusView extends GridLayout implements
             mDateView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
         }
 
-        Drawable weatherIcon = mWeatherConditionDrawable;
-        if (mWIconColor == -2) {
-            if (mWeatherConditionImage != null) {
-                mWeatherConditionImage.setImageDrawable(weatherIcon);
-            }
-        } else {
-            Bitmap coloredWeatherIcon =
-                    ImageHelper.getColoredBitmap(weatherIcon, mWIconColor);
-            if (mWeatherConditionImage != null) {
-                mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
-            }
+        if (mIconNameValue != iconNameValue) {
+            mIconNameValue = iconNameValue;
+            mWeatherController.updateWeather();
         }
+
+        mWeatherConditionImage.setImageDrawable(null);
+        Drawable weatherIcon = mWeatherConditionDrawable;
+        mWeatherConditionImage.setImageDrawable(weatherIcon);
 	}
 
     public void setDozing(boolean dozing) {
