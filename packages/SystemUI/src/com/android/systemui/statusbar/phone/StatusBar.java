@@ -503,6 +503,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mExpandedVisible;
 
     private boolean mFpDismissNotifications;
+    private boolean mGaEnabled;
 
     private final int[] mAbsPos = new int[2];
     private final ArrayList<Runnable> mPostCollapseRunnables = new ArrayList<>();
@@ -2317,6 +2318,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SHOW_EXPANDINDICATOR),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.GESTURE_ANYWHERE_ENABLED),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -2373,12 +2377,24 @@ public class StatusBar extends SystemUI implements DemoMode,
             setGestureNavOptions();
             setHapticFeedbackForBackGesture();
             setMediaHeadsup();
+            refreshGA();
         }
     }
 
     private void setMediaHeadsup() {
         if (mMediaManager != null) {
             mMediaManager.setMediaHeadsup();
+        }
+    }
+
+    private void refreshGA() {
+        mGaEnabled = Settings.System.getInt(
+                    mContext.getContentResolver(), Settings.System.GESTURE_ANYWHERE_ENABLED, 0) == 1;
+        if (mGaEnabled) {
+            Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.GESTURE_ANYWHERE_SHOW_TRIGGER, 1);
+            Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.GESTURE_ANYWHERE_SHOW_TRIGGER, 0);
         }
     }
 
