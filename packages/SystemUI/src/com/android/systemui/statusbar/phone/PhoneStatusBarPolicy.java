@@ -264,21 +264,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mIconController.setIconVisibility(mSlotDataSaver, false);
         mDataSaver.addListener(this);
     }
-
-    private ContentObserver mBTIconObserver = new ContentObserver(null) {
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            mShowBluetoothBattery = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.BLUETOOTH_SHOW_BATTERY, 0) == 1;
-            updateBluetooth();
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            onChange(selfChange, null);
-        }
-    };
-
  
 
     private ContentObserver mSettingsObserver = new ContentObserver(null) {
