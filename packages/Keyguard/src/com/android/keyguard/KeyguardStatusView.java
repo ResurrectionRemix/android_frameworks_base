@@ -47,6 +47,9 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.android.internal.util.rr.WeatherController;
+import com.android.internal.util.rr.WeatherControllerImpl;
+
 import com.android.internal.util.rr.ImageHelper;
 import com.android.internal.widget.LockPatternUtils;
 
@@ -293,24 +296,20 @@ public class KeyguardStatusView extends GridLayout implements
 
 	@Override
     public void onWeatherChanged(WeatherController.WeatherInfo info) {
-		String Condition ="";
-        if (Double.isNaN(info.temp) || info.condition == null) {
-            mWeatherCity.setText("--");
+        if (info.temp == null || info.condition == null) {
+            mWeatherCity.setText(null);
             mWeatherConditionDrawable = null;
             mWeatherCurrentTemp.setText(null);
             mWeatherConditionText.setText(null);
             mWeatherView.setVisibility(View.GONE);
             updateSettings(true);
         } else {
+            mWeatherCity.setText(info.city);
             mWeatherConditionDrawable = info.conditionDrawable;
-                mWeatherCity.setText(info.city);
-                mWeatherConditionText.setText(info.condition);
-                mWeatherCurrentTemp.setText(mContext.getString(
-                    R.string.keyguard_status_view_weather_format,
-                    WeatherUtils.formatTemperature(info.temp, info.tempUnit),
-                    Condition));
-                mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
-           updateSettings(false);
+            mWeatherCurrentTemp.setText(info.temp);
+            mWeatherConditionText.setText(info.condition);
+            mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
+            updateSettings(false);
         }
      }   
 

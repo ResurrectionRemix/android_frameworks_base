@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The CyanogenMod Project
+ * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package com.android.keyguard;
+package com.android.internal.util.rr;
+
 import android.graphics.drawable.Drawable;
 
 public interface WeatherController {
     void addCallback(Callback callback);
-    void removeCallback(Callback callback);	
-	void updateWeather();
+    void removeCallback(Callback callback);
+    void updateWeather();
     WeatherInfo getWeatherInfo();
 
     public interface Callback {
         void onWeatherChanged(WeatherInfo temp);
     }
     public static class WeatherInfo {
-        public double temp = Double.NaN;
-        public int conditionCode = 0;
-        public Drawable conditionDrawable = null;
         public String city = null;
         public String condition = null;
-        public int tempUnit;
+        public int conditionCode = 0;
+        public Drawable conditionDrawable = null;
+        public String temp = null;
     }
 }

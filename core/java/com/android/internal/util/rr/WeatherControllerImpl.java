@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.cm;
+package com.android.internal.util.rr;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -31,9 +31,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class WeatherControllerImp implements WeatherControl {
+public class WeatherControllerImpl implements WeatherController {
 
-    private static final String TAG = WeatherControl.class.getSimpleName();
+    private static final String TAG = WeatherController.class.getSimpleName();
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     public static final ComponentName COMPONENT_WEATHER_FORECAST = new ComponentName(
@@ -47,12 +47,9 @@ public class WeatherControllerImp implements WeatherControl {
             = Uri.parse("content://com.cyanogenmod.lockclock.weather.provider/weather/current");
     public static final String[] WEATHER_PROJECTION = new String[]{
             "city",
-            "wind",
+            "condition",
             "condition_code",
-            "temperature",
-            "humidity",
-            "condition"
-
+            "temperature"
     };
     public static final String LOCK_CLOCK_PACKAGE_NAME = "com.cyanogenmod.lockclock";
 
@@ -65,7 +62,7 @@ public class WeatherControllerImp implements WeatherControl {
 
     private WeatherInfo mCachedInfo = new WeatherInfo();
 
-    public WeatherControllerImp(Context context) {
+    public WeatherControllerImpl(Context context) {
         mContext = context;
                 mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         queryWeather();
@@ -125,12 +122,10 @@ public class WeatherControllerImp implements WeatherControl {
             try {
                 c.moveToFirst();
                 mCachedInfo.city = c.getString(0);
-                mCachedInfo.wind = c.getString(1);
+                mCachedInfo.condition = c.getString(1);
                 mCachedInfo.conditionCode = c.getInt(2);
                 mCachedInfo.conditionDrawable = getIcon(mCachedInfo.conditionCode);
                 mCachedInfo.temp = c.getString(3);
-                mCachedInfo.humidity = c.getString(4);
-                mCachedInfo.condition = c.getString(5);
             } finally {
                 c.close();
             }
