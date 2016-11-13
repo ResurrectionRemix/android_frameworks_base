@@ -31,7 +31,7 @@
     android:letterSpacing="0.14"
     android:text="@string/gestures_message"
     android:fontFamily="sans-serif-condensed"
-    android:textStyle="normal"/>
+    android:textStyle="normal|bold"/>
         <ImageView
             android:id="@+id/cancel_gesturing"
             android:layout_width="wrap_content"
