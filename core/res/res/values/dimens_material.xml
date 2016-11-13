@@ -79,8 +79,8 @@
     <dimen name="text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="text_size_menu_material">16sp</dimen>
     <dimen name="text_size_menu_header_material">14sp</dimen>
-    <dimen name="text_size_body_2_material">14sp</dimen>
-    <dimen name="text_size_body_1_material">14sp</dimen>
+    <dimen name="text_size_body_2_material">12sp</dimen>
+    <dimen name="text_size_body_1_material">13sp</dimen>
     <dimen name="text_size_caption_material">12sp</dimen>
     <dimen name="text_size_button_material">14sp</dimen>
 

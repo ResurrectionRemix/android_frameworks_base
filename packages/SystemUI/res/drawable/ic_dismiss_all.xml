@@ -1,8 +1,18 @@
-<!-- drawable/delete.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:height="24dp"
     android:width="24dp"
+    android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
-    <path android:fillColor="#ffffff" android:pathData="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M14.69,12.001 L19.262,16.573 C19.559,16.87,19.559,17.352,19.262,17.649
+L17.649,19.262 C17.352,19.559,16.87,19.559,16.573,19.262 L12,14.69 L7.427,19.262
+C7.13,19.559,6.648,19.559,6.352,19.262 L4.738,17.649
+C4.441,17.352,4.441,16.87,4.738,16.573 L9.311,12.001 L4.738,7.428
+C4.441,7.131,4.441,6.649,4.738,6.352 L6.353,4.739
+C6.65,4.442,7.132,4.442,7.428,4.739 L12,9.312 L16.573,4.739
+C16.87,4.442,17.352,4.442,17.649,4.739 L19.262,6.353
+C19.559,6.65,19.559,7.132,19.262,7.429 L14.69,12.001 Z" />
 </vector>
