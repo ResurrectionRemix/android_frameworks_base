@@ -78,14 +78,9 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     public boolean updateResources() {
         final Resources res = mContext.getResources();
         final ContentResolver resolver = mContext.getContentResolver();
-        final boolean isPortrait = res.getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
-        final int columnsPortrait = Settings.System.getInt(resolver,
-                Settings.System.QS_COLUMNS_PORTRAIT, 3);
-        final int columnsLandscape = Settings.System.getInt(resolver,
-                Settings.System.QS_COLUMNS_LANDSCAPE, res.getInteger(
-                R.integer.config_qs_num_columns_landscape_default));
-        final int columns = Math.max(1, isPortrait ? columnsPortrait : columnsLandscape);
+        final int columnsConfig = Settings.Secure.getInt(resolver,
+                Settings.Secure.QS_COLUMNS, 3);
+        final int columns = Math.max(1, columnsConfig);
         mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height);
         mCellMargin = res.getDimensionPixelSize(R.dimen.qs_tile_margin);
         mCellMarginTop = res.getDimensionPixelSize(R.dimen.qs_tile_margin_top);
