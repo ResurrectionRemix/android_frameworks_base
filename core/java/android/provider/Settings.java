@@ -4937,6 +4937,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String ENABLE_APP_CIRCLE_BAR = "enable_app_circle_bar";
 
+<<<<<<< HEAD
         /**
          * A list of packages to include in app circle bar.
          * This should be a string of packages separated by |
@@ -4964,6 +4965,8 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String APP_CIRCLE_BAR_TRIGGER_HEIGHT = "app_circle_bar_trigger_height";
+=======
+>>>>>>> a2321b4... Cleanup QS Tile rows/columns
 
         /**
          * Whether to display the trigger region or not
@@ -8408,6 +8411,28 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
 
         public static final String QS_DATA_ADVANCED = "qs_data_advanced";
+
+
+        /**
+         * Number of rows used for the Quick Settings (portrait)
+         *
+         * @hide
+         */
+        public static final String QS_ROWS_PORTRAIT = "qs_rows_portrait";
+
+        /**
+         * Number of rows used for the Quick Settings (landscape)
+         *
+         * @hide
+         */
+        public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
+
+        /**
+         * Number of columns used for the Quick Settings
+         *
+         * @hide
+         */
+        public static final String QS_COLUMNS = "qs_columns";
 
         /**
          * Whether or not the automatic storage manager is enabled and should run on the device.

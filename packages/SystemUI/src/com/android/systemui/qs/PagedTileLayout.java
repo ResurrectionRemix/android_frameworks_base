@@ -283,11 +283,11 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
             final ContentResolver resolver = mContext.getContentResolver();
             final boolean isPortrait = res.getConfiguration().orientation
                     == Configuration.ORIENTATION_PORTRAIT;
-            final int columnsPortrait = Settings.System.getInt(resolver,
-                    Settings.System.QS_ROWS_PORTRAIT, 3);
-            final int columnsLandscape = Settings.System.getInt(resolver,
-                    Settings.System.QS_ROWS_LANDSCAPE, res.getInteger(
-                    R.integer.config_qs_num_rows_landscape_default));
+            final int columnsPortrait = Settings.Secure.getInt(resolver,
+                    Settings.Secure.QS_ROWS_PORTRAIT, 3);
+            final int columnsLandscape = Settings.Secure.getInt(resolver,
+                    Settings.Secure.QS_ROWS_LANDSCAPE, res.getInteger(
+                    com.android.internal.R.integer.config_qs_num_rows_landscape_default));
             final int columns = Math.max(1, isPortrait ? columnsPortrait : columnsLandscape);
             return Math.max(1, isPortrait ? columnsPortrait : columnsLandscape);
         }
