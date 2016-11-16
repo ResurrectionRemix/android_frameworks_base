@@ -48,4 +48,5 @@ public abstract class BaseStatusBarHeader extends RelativeLayout implements
     public abstract void setUserInfoController(UserInfoController userInfoController);
     public abstract void setCallback(Callback qsPanelCallback);
     public abstract void setWeatherController(WeatherController weatherController);
+    public abstract void updateSettings();
 }
