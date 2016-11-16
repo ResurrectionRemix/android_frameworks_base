@@ -984,7 +984,7 @@ public class KeyguardStatusView extends GridLayout implements
                      resolver, Settings.System.HIDE_LOCKSCREEN_DATE, 1, currentUserId) == 1;
 
            dateFont = Settings.System.getIntForUser(resolver,
-                Settings.System.LOCK_DATE_FONTS, 14, UserHandle.USER_CURRENT);
+                Settings.System.LOCK_DATE_FONTS, 8, UserHandle.USER_CURRENT);
 
            mShowWeather = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER, 0) == 1;
