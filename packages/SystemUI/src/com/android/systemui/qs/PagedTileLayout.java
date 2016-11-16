@@ -1,10 +1,8 @@
 package com.android.systemui.qs;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.provider.Settings;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -280,16 +278,11 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
 
         private int getRows() {
             final Resources res = getContext().getResources();
-            final ContentResolver resolver = mContext.getContentResolver();
-            final boolean isPortrait = res.getConfiguration().orientation
-                    == Configuration.ORIENTATION_PORTRAIT;
-            final int columnsPortrait = Settings.Secure.getInt(resolver,
-                    Settings.Secure.QS_ROWS_PORTRAIT, 3);
-            final int columnsLandscape = Settings.Secure.getInt(resolver,
-                    Settings.Secure.QS_ROWS_LANDSCAPE, res.getInteger(
-                    com.android.internal.R.integer.config_qs_num_rows_landscape_default));
-            final int columns = Math.max(1, isPortrait ? columnsPortrait : columnsLandscape);
-            return Math.max(1, isPortrait ? columnsPortrait : columnsLandscape);
+            if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                // Always have 3 rows in portrait.
+                return 3;
+            }
+            return Math.max(1, res.getInteger(R.integer.quick_settings_num_rows));
         }
 
         public void setMaxRows(int maxRows) {
@@ -330,5 +323,13 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
 
     public interface PageListener {
         void onPageChanged(boolean isFirst);
+    }
+
+    @Override
+    public void updateSettings() {
+        for (int i = 0; i < mPages.size(); i++) {
+            mPages.get(i).updateSettings();
+        }
+        postDistributeTiles();
     }
 }
