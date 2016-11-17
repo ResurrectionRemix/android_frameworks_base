@@ -436,7 +436,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     // settings
     private QSPanel mQSPanel;
-    private DevForceNavbarObserver mDevForceNavbarObserver;
 
     // top bar
     BaseStatusBarHeader mHeader;
@@ -789,32 +788,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
     }
-
-    class DevForceNavbarObserver extends UserContentObserver {
-        DevForceNavbarObserver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        protected void observe() {
-            super.observe();
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(CMSettings.Global.getUriFor(
-                    CMSettings.Global.DEV_FORCE_SHOW_NAVBAR), false, this, UserHandle.USER_ALL);
-        }
-
-        @Override
-        public void update() {
-            boolean visible = CMSettings.Global.getIntForUser(mContext.getContentResolver(),
-                    CMSettings.Global.DEV_FORCE_SHOW_NAVBAR, 0, UserHandle.USER_CURRENT) == 1;
-
-            // Send a broadcast to Settings to update Key disabling when user changes
-            Intent intent = new Intent("com.cyanogenmod.action.UserChanged");
-            intent.setPackage("com.android.settings");
-            mContext.sendBroadcastAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
-        }
-    }
-
 
   private void updateWeatherTextState(String temp, int size, int font ,int color) {
         if (mWeatherTempState == 0 || TextUtils.isEmpty(temp)) {
@@ -1206,16 +1179,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         addNavigationBar();
 
-        // Developer options - Force Navigation bar
-        try {
-            boolean needsNav = mWindowManagerService.needsNavigationBar();
-            if (!needsNav) {
-                mDevForceNavbarObserver = new DevForceNavbarObserver(mHandler);
-                mDevForceNavbarObserver.observe();
-            }
-        } catch (RemoteException ex) {
-            // no window manager? good luck with that
-        }
 
         SettingsObserver observer = new SettingsObserver(mHandler);
         observer.observe();

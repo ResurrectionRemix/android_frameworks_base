@@ -155,4 +155,7 @@
   <java-symbol type="string" name="adb_not_connected_notification_title" />
   <java-symbol type="string" name="adb_active_custom_tile_not_connected" />
 
+ <!-- Hardware keys on/off option -->
+  <java-symbol type="bool" name="config_hwKeysPref" />
+
 </resources>
