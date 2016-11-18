@@ -675,8 +675,8 @@ final class DefaultPermissionGrantPolicy {
             PackageParser.Package cLockPackage = getDefaultProviderAuthorityPackageLPr(
                     "com.cyanogenmod.lockclock", userId);
             if (cLockPackage != null) {
-                grantRuntimePermissionsLPw(cLockPackage, CALENDAR_PERMISSIONS, userId);
-		        grantRuntimePermissionsLPw(cLockPackage, LOCATION_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(cLockPackage, CALENDAR_PERMISSIONS, true, userId);
+		        grantRuntimePermissionsLPw(cLockPackage, LOCATION_PERMISSIONS, true, userId);
             }
 
             // Google Account
