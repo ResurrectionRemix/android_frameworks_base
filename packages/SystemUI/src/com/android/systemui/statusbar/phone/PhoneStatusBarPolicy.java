@@ -252,6 +252,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.SHOW_SU_INDICATOR),
                 false, mSettingsObserver);
+                updateSu();
 
         // managed profile
         mIconController.setIcon(mSlotManagedProfile, R.drawable.stat_sys_managed_profile_status,

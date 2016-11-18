@@ -720,7 +720,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     initTickerView();
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_SU_INDICATOR))) {
-                    onDensityOrFontScaleChanged();
+                    UpdateSomeViews();
            }
             update();
         }
@@ -5721,6 +5721,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mStackScroller.setAnimationsEnabled(true);
         mNotificationPanel.setTouchDisabled(false);
         updateVisibleToUser();
+    }
+
+    public void UpdateSomeViews() {
+        onDensityOrFontScaleChanged();
+        updateNotifications();
+        updateRowStates();
+        updateSpeedbump();
     }
 
     public void onScreenTurningOn() {
