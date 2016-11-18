@@ -733,6 +733,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         loadDimens();
         mNotificationIconAreaController.onDensityOrFontScaleChanged(mContext);
         updateClock();
+        updateBatteryLevelText();
         for (int i = 0; i < mStatusIcons.getChildCount(); i++) {
             View child = mStatusIcons.getChildAt(i);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -831,5 +832,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             carrierLabelVisibility();
             }
         }
+    }
+    private void updateBatteryLevelText() {
+        FontSizeUtils.updateFontSize(mBatteryLevelView, R.dimen.battery_level_text_size);
     }
 }
