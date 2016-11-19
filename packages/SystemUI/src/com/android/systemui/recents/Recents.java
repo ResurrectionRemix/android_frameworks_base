@@ -346,6 +346,8 @@ public class Recents extends SystemUI
             return;
         }
 
+        RecentsActivity.startBlurTask();
+
         int growTarget = getComponent(Divider.class).getView().growsRecents();
 
         int currentUser = sSystemServicesProxy.getCurrentUser();
