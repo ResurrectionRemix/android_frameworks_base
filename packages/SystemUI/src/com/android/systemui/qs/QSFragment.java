@@ -16,17 +16,23 @@ package com.android.systemui.qs;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.drawable.BitmapDrawable;
 import android.app.Fragment;
 import android.content.res.Configuration;
+import android.database.ContentObserver
 import android.graphics.Rect;
+import android.graphics.*;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.animation.*;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -39,8 +45,11 @@ import com.android.systemui.R;
 import com.android.systemui.R.id;
 import com.android.systemui.plugins.qs.QS;
 import com.android.systemui.qs.customize.QSCustomizer;
+import com.android.systemui.statusbar.*;
 import com.android.systemui.statusbar.phone.NotificationsQuickSettingsContainer;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
+
+import android.provider.Settings;
 
 public class QSFragment extends Fragment implements QS {
     private static final String TAG = "QS";
@@ -51,7 +60,7 @@ public class QSFragment extends Fragment implements QS {
     private final Rect mQsBounds = new Rect();
     private boolean mQsExpanded;
     private boolean mHeaderAnimating;
-    private boolean mKeyguardShowing;
+    public static boolean mKeyguardShowing;
     private boolean mStackScrollerOverscrolling;
 
     private long mDelay;
@@ -63,7 +72,7 @@ public class QSFragment extends Fragment implements QS {
     protected QSPanel mQSPanel;
     private QSDetail mQSDetail;
     private boolean mListening;
-    private QSContainerImpl mContainer;
+    public static QSContainerImpl mContainer;
     private int mLayoutDirection;
     private QSFooter mFooter;
 
@@ -71,6 +80,39 @@ public class QSFragment extends Fragment implements QS {
 
     // omni additions
     private boolean mSecureExpandDisabled;
+
+    
+     public static boolean mBlurredStatusBarExpandedEnabled;
+     public static QsFragment mNotificationPanelView;
+ 
+     private static int mBlurScale;
+     private static int mBlurRadius;
+     private static BlurUtils mBlurUtils;
+     private static FrameLayout mBlurredView;
+     private static ColorFilter mColorFilter;
+     private static int mBlurDarkColorFilter;
+     private static int mBlurMixedColorFilter;
+     private static int mBlurLightColorFilter;
+     private static int mTranslucencyPercentage;
+     private static AlphaAnimation mAlphaAnimation;
+     private static boolean mTranslucentQuickSettings;
+     private Handler mHandler = new Handler();
+     private SettingsObserver mSettingsObserver;
+     
+     private static Animation.AnimationListener mAnimationListener = new Animation.AnimationListener() {
+ 
+         @Override
+         public void onAnimationStart(Animation anim) {
+             mBlurredView.setVisibility(View.VISIBLE);
+         }
+ 
+         @Override
+         public void onAnimationEnd(Animation anim) {}
+ 
+         @Override
+         public void onAnimationRepeat(Animation anim) {}
+ 
+     };
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -80,7 +122,7 @@ public class QSFragment extends Fragment implements QS {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceStatef) {
         super.onViewCreated(view, savedInstanceState);
         mQSPanel = view.findViewById(R.id.quick_settings_panel);
         mQSDetail = view.findViewById(R.id.qs_detail);
@@ -107,6 +149,21 @@ public class QSFragment extends Fragment implements QS {
             mQSCustomizer.setEditLocation(x, y);
             mQSCustomizer.restoreInstanceState(savedInstanceState);
         }
+        mSettingsObserver = new SettingsObserver(mHandler);
+        inirBlurprefs();
+    }
+
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mSettingsObserver.observe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mSettingsObserver.unobserve();
     }
 
     @Override
@@ -428,4 +485,259 @@ public class QSFragment extends Fragment implements QS {
             updateQsState();
         }
     };
+
+
+    private static void handleQuickSettingsBackround() {
+
+        if (mContainer == null)
+            return;
+        if (mKeyguardShowing) {
+            mContainer.getBackground().setAlpha(255);
+        } else {
+            mContainer.getBackground().setAlpha(mTranslucentQuickSettings ? mTranslucencyPercentage : 255);
+        }
+    }
+
+    public static void startBlurTask() {
+
+        if (!mBlurredStatusBarExpandedEnabled)
+            return;
+        try {
+            if (mBlurredView.getTag().toString().equals("blur_applied"))
+                return;
+        } catch (Exception e){
+        }
+        if (mNotificationPanelView == null)
+            return;  
+        if (mKeyguardShowing)
+            return;
+       
+        BlurTask.setBlurTaskCallback(new BlurUtils.BlurTaskCallback() {
+
+            @Override
+            public void blurTaskDone(Bitmap blurredBitmap) {
+
+                if (blurredBitmap != null) {
+
+                    int[] screenDimens = BlurTask.getRealScreenDimensions();
+                    mBlurredView.getLayoutParams().width = screenDimens[0];
+                    mBlurredView.requestLayout();
+
+                    BitmapDrawable drawable = new BitmapDrawable(blurredBitmap);
+                    drawable.setColorFilter(mColorFilter);
+
+                    mBlurredView.setBackground(drawable);
+
+                    mBlurredView.setTag("blur_applied");
+
+                } else {
+
+                    mBlurredView.setBackgroundColor(mBlurLightColorFilter);
+
+                    mBlurredView.setTag("error");
+
+                }
+                mBlurredView.startAnimation(mAlphaAnimation);
+            }
+
+            @Override
+            public void dominantColor(int color) {
+
+                double lightness = DisplayUtils.getColorLightness(color);
+
+                if (lightness >= 0.0 && color <= 1.0) {
+                    if (lightness <= 0.33) {
+                        mColorFilter = new PorterDuffColorFilter(mBlurLightColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                    } else if (lightness >= 0.34 && lightness <= 0.66) {
+                        mColorFilter = new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY);
+
+                    } else if (lightness >= 0.67 && lightness <= 1.0) {
+                        mColorFilter = new PorterDuffColorFilter(mBlurDarkColorFilter, PorterDuff.Mode.MULTIPLY);
+                    }
+
+                } else {
+                    mColorFilter = new PorterDuffColorFilter(mBlurMixedColorFilter, PorterDuff.Mode.MULTIPLY);
+                }
+            }
+        });
+
+        BlurTask.setBlurEngine(BlurUtils.BlurEngine.RenderScriptBlur);
+
+        new BlurTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public static void recycle() {
+
+        if (mBlurredView != null &&
+                mBlurredView.getBackground() != null) {
+            if (mBlurredView.getBackground() instanceof BitmapDrawable) {
+
+                Bitmap bitmap = ((BitmapDrawable) mBlurredView.getBackground()).getBitmap();
+                if (bitmap != null) {
+                    bitmap.recycle();
+                    bitmap = null;
+                }
+            }
+            mBlurredView.setBackground(null);
+        }
+
+        mBlurredView.setTag("ready_to_blur");
+
+        mBlurredView.setVisibility(View.INVISIBLE);
+
+   }
+
+   public void initBlurprefs() {
+            mNotificationPanelView = this;
+
+            mBlurUtils = new BlurUtils(mNotificationPanelView.getContext());
+
+            mAlphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+            mAlphaAnimation.setDuration(75);
+            mAlphaAnimation.setAnimationListener(mAnimationListener);
+
+            mBlurredView = new FrameLayout(mNotificationPanelView.getContext());
+
+            mNotificationPanelView.addView(mBlurredView, 0, new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            mNotificationPanelView.requestLayout();
+            setQSStroke();
+            mBlurredView.setTag("ready_to_blur");
+
+            mBlurredView.setVisibility(View.INVISIBLE);
+
+            handleQuickSettingsBackround();
+    }
+
+    public static class BlurTask extends AsyncTask<Void, Void, Bitmap> {
+
+        private static int[] mScreenDimens;
+        private static BlurUtils.BlurEngine mBlurEngine;
+        private static BlurUtils.BlurTaskCallback mCallback;
+
+        private Bitmap mScreenBitmap;
+
+        public static void setBlurEngine(BlurUtils.BlurEngine blurEngine) {
+            mBlurEngine = blurEngine;
+        }
+
+        public static void setBlurTaskCallback(BlurUtils.BlurTaskCallback callBack) {
+            mCallback = callBack;
+        }
+
+        public static int[] getRealScreenDimensions() {
+            return mScreenDimens;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+            Context context = mNotificationPanelView.getContext();
+            mScreenDimens = DisplayUtils.getRealScreenDimensions(context);
+            
+            //We don't want SystemUI to crash for Arithmetic Exception
+            if(mBlurScale==0){
+                mBlurScale=1;
+            }
+
+            mScreenBitmap = DisplayUtils.takeSurfaceScreenshot(context, mBlurScale);
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... arg0) {
+
+            try {
+                if (mScreenBitmap == null)
+                    return null;
+
+                mCallback.dominantColor(DisplayUtils.getDominantColorByPixelsSampling(mScreenBitmap, 20, 20));
+
+                //We don't want SystemUI to crash for Arithmetic Exception
+                if(mBlurRadius == 0){
+                    mBlurRadius=1;
+                }
+                
+                mScreenBitmap = mBlurUtils.renderScriptBlur(mScreenBitmap, mBlurRadius);
+                return mScreenBitmap;
+
+            } catch (OutOfMemoryError e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if (bitmap != null) {
+                mCallback.blurTaskDone(bitmap);
+
+            } else {
+                mCallback.blurTaskDone(null);
+            }
+        }
+   }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void observe() {
+            super.observe();
+            
+            ContentResolver resolver = getContext().getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUR_SCALE_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BLUR_RADIUS_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY), false, this);
+            update();
+        }
+
+        @Override
+        protected void unobserve() {
+            super.unobserve();
+            ContentResolver resolver = getContext().getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        @Override
+        public void update() {
+            ContentResolver resolver = getContext().getContentResolver();
+            mBlurScale = Settings.System.getInt(getContext().getContentResolver(),
+                    Settings.System.BLUR_SCALE_PREFERENCE_KEY, 10);
+            mBlurRadius = Settings.System.getInt(getContext().getContentResolver(),
+                    Settings.System.BLUR_RADIUS_PREFERENCE_KEY, 5);
+            mTranslucentQuickSettings =  Settings.System.getIntForUser(resolver,
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
+            mBlurredStatusBarExpandedEnabled = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
+            mTranslucencyPercentage = Settings.System.getInt(getContext().getContentResolver(),
+                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY, 60);
+
+            mBlurDarkColorFilter = Color.LTGRAY;
+            mBlurMixedColorFilter = Color.GRAY;
+            mBlurLightColorFilter = Color.DKGRAY;
+            mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
+            handleQuickSettingsBackround();
+        }
+    }
+
 }
