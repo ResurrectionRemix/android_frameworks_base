@@ -66,6 +66,19 @@
             android:visibility="gone"
             android:singleLine="true"
             />
+
+        <TextView
+            android:id="@+id/left_weather_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.StatusBar.WeatherTemp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:visibility="gone"
+            />
+
         <!-- The alpha of this area is controlled from both PhoneStatusBarTransitions and
              PhoneStatusBar (DISABLE_NOTIFICATION_ICONS). -->
         <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
