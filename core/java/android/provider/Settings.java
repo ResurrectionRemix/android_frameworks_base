@@ -3799,6 +3799,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
    
         public static final String TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY = "translucent_notifications_pref";
 
+        public static final String RECENT_APPS_ENABLED_PREFERENCE_KEY = "blurred_recent_app_enabled_pref";
+
+        public static final String RECENT_APPS_SCALE_PREFERENCE_KEY = "blurred_recent_app_scale_pref";
+
+        public static final String RECENT_APPS_RADIUS_PREFERENCE_KEY = "blurred_recent_app_radius_pref";
+
         /**
          * Whether lock-to-app will be triggered by long-press on recents.
          * @hide
