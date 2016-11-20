@@ -47,6 +47,7 @@ import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.statusbar.policy.NetworkTraffic;
 import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
+import com.android.systemui.FontSizeUtils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.SystemUIFactory;

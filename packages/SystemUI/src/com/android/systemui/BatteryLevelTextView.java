@@ -51,8 +51,8 @@ public class BatteryLevelTextView extends TextView implements
         boolean changed = mBatteryCharging != charging;
         mBatteryCharging = charging;
         if (changed) {
-            mForceBatteryText = Settings.Secure.getInt(getContext().getContentResolver(),
-                    Settings.Secure.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
+            mForceBatteryText = CMSettings.System.getInt(getContext().getContentResolver(),
+                    CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
             setVisibility(mBatteryCharging || mRequestedVisibility || mForceBatteryText ? View.VISIBLE : View.GONE);
         }
     }
@@ -84,8 +84,8 @@ public class BatteryLevelTextView extends TextView implements
         switch (key) {
             case STATUS_BAR_SHOW_BATTERY_PERCENT:
                 mRequestedVisibility = newValue != null && Integer.parseInt(newValue) == 2;
-                mForceBatteryText = Settings.Secure.getInt(getContext().getContentResolver(),
-                        Settings.Secure.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
+                mForceBatteryText = CMSettings.System.getInt(getContext().getContentResolver(),
+                        CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
                 setVisibility(mBatteryCharging || mRequestedVisibility || mForceBatteryText ? View.VISIBLE : View.GONE);
                 break;
             case STATUS_BAR_BATTERY_STYLE:
