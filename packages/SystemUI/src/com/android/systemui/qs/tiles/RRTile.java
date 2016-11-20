@@ -49,7 +49,7 @@ public class RRTile extends QSTile<QSTile.BooleanState> {
     private static final Intent RR_SETTINGS = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.Settings$MainSettingsLayoutActivity"));
     private static final Intent RR_OTA = new Intent().setComponent(new ComponentName(
-            "com.rr.ota", "com.rr.center.OTACenter"));
+            "com.resurrection.ota", "com.resurrection.ota.MainActivity"));
 
     public RRTile(Host host) {
         super(host);
