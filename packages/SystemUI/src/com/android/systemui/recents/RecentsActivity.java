@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.graphics.*;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -42,6 +43,10 @@ import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
+import android.widget.FrameLayout;
+
+import com.android.systemui.statusbar.BlurUtils;
+import com.android.systemui.statusbar.DisplayUtils;
 
 import java.lang.reflect.Field;
 import java.lang.ref.WeakReference;
@@ -132,6 +137,7 @@ public class RecentsActivity extends Activity implements ViewTreeObserver.OnPreD
     private Configuration mLastConfig;
     
     //Blur Stuff
+    public static boolean mBlurredRecentAppsEnabled;
     private static int mBlurScale;
     private static int mBlurRadius;
     private static Context mContext;
