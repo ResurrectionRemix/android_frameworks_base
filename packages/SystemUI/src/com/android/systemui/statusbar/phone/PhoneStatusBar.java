@@ -99,6 +99,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.Vibrator;
 import android.provider.Settings;
+import com.android.systemui.recents.RecentsActivity;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.StatusBarNotification;
