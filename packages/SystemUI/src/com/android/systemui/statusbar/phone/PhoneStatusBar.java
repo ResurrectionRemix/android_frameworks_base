@@ -484,6 +484,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // Custom Logos
     private boolean mCustomlogo;
     private ImageView mCLogo;
+    private ImageView mCLogoright;
+    private ImageView mCLogoleft;
+    private int mCustomLogoPos;
     private int mCustomlogoColor;	
     private int mCustomlogoStyle;
 
@@ -679,6 +682,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                    Settings.System.CUSTOM_LOGO_STYLE),
                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.CUSTOM_LOGO_POSITION),
+                   false, this, UserHandle.USER_ALL);
            update();
         }
 
@@ -760,12 +766,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
           }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_CUSTOM_LOGO))
                     || uri.equals(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_STYLE))) {
+                    Settings.System.CUSTOM_LOGO_STYLE))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_LOGO_POSITION))) {
             		mCustomlogo = Settings.System.getIntForUser(resolver,
             		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
             		mCustomlogoColor = Settings.System.getIntForUser(resolver,
             		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-				    showmCustomlogo(mCustomlogo,mCustomlogoColor);
+                    mCustomLogoPos = Settings.System.getIntForUser(
+                    resolver, Settings.System.CUSTOM_LOGO_POSITION, 0,
+                    UserHandle.USER_CURRENT);
+                    showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
            }
             update();
         }
@@ -831,9 +842,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
             mCustomlogoColor = Settings.System.getIntForUser(resolver,
             Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-			mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom);
+            mCustomLogoPos = Settings.System.getIntForUser(
+                    resolver, Settings.System.CUSTOM_LOGO_POSITION, 0,
+                    UserHandle.USER_CURRENT);
+            mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_center);
+            mCLogoright = (ImageView) mStatusBarView.findViewById(R.id.custom_right);
+            mCLogoleft = (ImageView) mStatusBarView.findViewById(R.id.custom_left);
 
-	        showmCustomlogo(mCustomlogo,mCustomlogoColor);
+	        showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
 
 
             mDt2lCameraVibrateConfig = Settings.System.getIntForUser(resolver,
@@ -4572,9 +4588,11 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 		}
     }
 
- public void showmCustomlogo(boolean show,int color) { 
+ public void showmCustomlogo(boolean show,int color ,int pos) { 
         if (!show) {
             mCLogo.setVisibility(View.GONE);
+            mCLogoleft.setVisibility(View.GONE);
+            mCLogoright.setVisibility(View.GONE);
             return;
         }
         Drawable d = null;
@@ -4669,13 +4687,33 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         d = mContext.getResources().getDrawable(R.drawable.orioles_logo);
 		}
 	    mCLogo.setImageDrawable(null);
+	    mCLogoright.setImageDrawable(null);
+	    mCLogoleft.setImageDrawable(null);
 	    mCLogo.setImageDrawable(d);
+	    mCLogoright.setImageDrawable(d);
+	    mCLogoleft.setImageDrawable(d);
 		if (color != 0xFFFFFFFF) {
 		mCLogo.setColorFilter(color, Mode.MULTIPLY);
+		mCLogoleft.setColorFilter(color, Mode.MULTIPLY);
+		mCLogoright.setColorFilter(color, Mode.MULTIPLY);
 		} else {
 		mCLogo.clearColorFilter();
+		mCLogoleft.clearColorFilter();
+		mCLogoright.clearColorFilter();
 		}
-		mCLogo.setVisibility(View.VISIBLE);
+        if (pos == 0) {
+            mCLogoright.setVisibility(View.GONE);
+            mCLogoleft.setVisibility(View.VISIBLE);
+            mCLogo.setVisibility(View.GONE);
+        } else if (pos == 1) {
+            mCLogo.setVisibility(View.VISIBLE);
+            mCLogoleft.setVisibility(View.GONE);
+            mCLogoright.setVisibility(View.GONE);
+        } else if (pos == 2) {
+            mCLogoright.setVisibility(View.VISIBLE);
+            mCLogo.setVisibility(View.GONE);
+            mCLogoleft.setVisibility(View.GONE);
+        }
    }
 
     public void resetUserExpandedStates() {

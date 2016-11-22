@@ -67,7 +67,15 @@
             android:singleLine="true"
             />
 
-        <include layout="@layout/custom_icons" />
+        <ImageView
+                android:id="@+id/custom_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="4dip"
+                android:src="@drawable/custom"
+                android:scaleType="center"
+                android:visibility="gone"
+         />
 
         <TextView
             android:id="@+id/left_weather_temp"
@@ -119,6 +127,16 @@
                 android:visibility="gone"
 					/>
 
+           <ImageView
+                android:id="@+id/custom_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="4dip"
+                android:src="@drawable/custom"
+                android:scaleType="center"
+                android:visibility="gone"
+             />
+
             <com.android.systemui.statusbar.policy.NetworkTraffic
                 android:id="@+id/networkTraffic"
                 android:layout_width="wrap_content"
@@ -147,6 +165,16 @@
                 android:paddingEnd="@dimen/status_bar_clock_end_padding"
                 android:gravity="center_vertical|start"
                 />
+
+           <ImageView
+                android:id="@+id/custom_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="4dip"
+                android:src="@drawable/custom"
+                android:scaleType="center"
+                android:visibility="gone"
+             />
 
              <ImageView
                 android:id="@+id/rr_logo_right"

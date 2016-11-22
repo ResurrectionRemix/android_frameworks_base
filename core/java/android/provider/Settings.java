@@ -3837,6 +3837,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String CUSTOM_LOGO_STYLE = "custom_logo_style";
 
+ 	    /**
+         * Position of Custom logo
+         * @hide
+         */
+        public static final String CUSTOM_LOGO_POSITION = "custom_logo_position";
+
         /**
          * Statusbar Aniamted Logo
          * @hide
