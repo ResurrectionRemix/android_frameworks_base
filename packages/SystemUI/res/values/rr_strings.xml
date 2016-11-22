@@ -159,4 +159,6 @@
     <string name="screenshot_abort_title">No screenshot taken</string>
     <string name="screenshot_abort_text">Operation aborted</string>
 
+    <string name="recents_custom_android_n">CLEAR ALL</string>
+
 </resources>

@@ -41,6 +41,7 @@
         android:layout_gravity="top|left"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
+        android:textColor="@color/recents_membar_text_color"
         android:layout_marginLeft="25dp"
         />
 </LinearLayout>
