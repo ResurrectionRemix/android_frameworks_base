@@ -18,7 +18,8 @@
 -->
 <resources>
     <!-- Floating action button -->
-    <color name="fab_color">@*android:color/primary_dark_material_settings</color>
+    <color name="fab_color">#ffffffff</color>
+    <color name="fab_color_ripple">#ff7a7a7a</color>
     <color name="floating_action_button_icon_color">@*android:color/accent_material_dark</color>
 
     <!-- Gesture Anywhere specific colors -->
