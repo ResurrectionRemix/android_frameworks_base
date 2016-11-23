@@ -388,19 +388,27 @@ public class RecentsView extends FrameLayout {
 
     public void updatebuttoncolor() {
         if (mClearStyleSwitch) {
-            mClearRecents.setColorFilter(mclearallcolor, Mode.SRC_IN);
-	        if(mClearStyle != 29) {
-            mFloatingButton.getBackground().setColorFilter(mfabcolor, Mode.SRC_IN);
-	        }
+	        mClearRecents.setColorFilter(mclearallcolor, Mode.SRC_IN);
+	        mFloatingButton.getBackground().setColorFilter(mfabcolor, Mode.SRC_IN);
+	        if(mClearStyle == 29) {
+	        int zero = 0x00000000;
+	        mClearallText.setTextColor(mclearallcolor);
+	        mFloatingButton.getBackground().setColorFilter(zero, Mode.SRC_IN);
+            }
          } else {
           mFloatingButton.getBackground().clearColorFilter();
           mClearRecents.clearColorFilter();
-     }
-  }
+	        if(mClearStyle == 29) {
+	        int zero = 0x00000000;
+	        int white = Color.WHITE;
+	        mClearallText.setTextColor(white);
+	        mFloatingButton.getBackground().setColorFilter(zero, Mode.SRC_IN);
+	        }
+         }
+    }
 
     public void checkbutton() {
     Drawable d = null;
-	mClearallText =  (TextView) ((View)getParent()).findViewById(R.id.clear_recents_text);
 	if (mClearStyle == 0) {
     mClearRecents.setImageDrawable(null);
     d = getResources().getDrawable(R.drawable.ic_dismiss_all);
@@ -492,7 +500,6 @@ public class RecentsView extends FrameLayout {
 	else if (mClearStyle == 29) {
 	int zero = 0x00000000;
     d = null;
-	mClearallText.setTextColor(mclearallcolor);
 	mClearallText.setVisibility(View.VISIBLE);
 	mFloatingButton.getBackground().setColorFilter(zero,Mode.SRC_IN);
 	}
@@ -537,17 +544,6 @@ public class RecentsView extends FrameLayout {
 	    mDate.setTextColor(mDefaultcolor);
         }
     }
-
-   public void destroybutton() {
-         try {
-              ViewGroup parent = (ViewGroup) mClearRecents.getParent();
-               if (parent != null) {
-               parent.removeView(mClearRecents);
-               parent.addView(mClearRecents);
-               } 
-             } catch (Exception e) { }
-    }
-
 
     public void updateeverything() {
      checkbutton();
@@ -1100,9 +1096,6 @@ public class RecentsView extends FrameLayout {
      * Shows the stack action button.
      */
     private void showStackActionButton(final int duration, final boolean translate) {
-        if (!RecentsDebugFlags.Static.EnableStackActionButton) {
-            return;
-        }
         if (!mNativeClearall) {
             return;
         }
@@ -1149,7 +1142,7 @@ public class RecentsView extends FrameLayout {
      */
     private void hideStackActionButton(int duration, boolean translate,
                                        final ReferenceCountedTrigger postAnimationTrigger) {
-        if (!RecentsDebugFlags.Static.EnableStackActionButton) {
+        if (RecentsDebugFlags.Static.EnableStackActionButton) {
             return;
         }
 
@@ -1313,7 +1306,6 @@ public class RecentsView extends FrameLayout {
                  checkrotation();
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.CLEAR_RECENTS_STYLE))) {
-                  //destroybutton();
                   checkbutton();
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) {
@@ -1346,8 +1338,9 @@ public class RecentsView extends FrameLayout {
         mClock = (TextClock) ((View)getParent()).findViewById(R.id.recents_clock);
         mDate = (TextView) ((View)getParent()).findViewById(R.id.recents_date);
         mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
-	    mClearRecents = (ImageButton) ((View)getParent()).findViewById(R.id.clear_recents);
-	    final ContentResolver resolver = mContext.getContentResolver();
+        mClearRecents = (ImageButton) ((View)getParent()).findViewById(R.id.clear_recents);
+        mClearallText =  (TextView) ((View)getParent()).findViewById(R.id.clear_recents_text);
+        final ContentResolver resolver = mContext.getContentResolver();
         final Resources res = getContext().getResources();
         mSetfabcolor = res.getColor(R.color.fab_color);
 	    mButtonsRotation =  Settings.System.getInt(mContext.getContentResolver(),
