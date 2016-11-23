@@ -664,9 +664,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.SHOW_SU_INDICATOR),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ANIMATED_RR_LOGO),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
                     false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
@@ -802,9 +799,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mRRlogoStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
                     UserHandle.USER_CURRENT);
-            mAnimatedlogo = Settings.System.getIntForUser(resolver,
-                    Settings.System.ANIMATED_RR_LOGO, 0, mCurrentUserId) == 1;
-            showRRLogo(mRRlogo,mRRLogoColor,mRRlogoStyle,mAnimatedlogo);
+            showRRLogo(mRRlogo,mRRLogoColor,mRRlogoStyle);
 
             mWeatherTempState = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
@@ -4529,11 +4524,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         }
     };
 
-    public void showRRLogo(boolean show ,int color,int style,boolean animate) {
+    public void showRRLogo(boolean show ,int color,int style) {
         if (mStatusBarView == null) return;
-        AnimationLeft = (AnimationDrawable) rrLogoleft.getDrawable();
-        AnimationRight = (AnimationDrawable) rrLogoright.getDrawable();
-        AnimationCenter = (AnimationDrawable) rrLogo.getDrawable();
  	 	if (!show) {
             rrLogo.setVisibility(View.GONE);
             rrLogoright.setVisibility(View.GONE);
@@ -4553,38 +4545,14 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             rrLogoright.setVisibility(View.GONE);
             rrLogoleft.setVisibility(View.GONE);
             rrLogo.setVisibility(View.VISIBLE);
-            if (animate) {
-            AnimationCenter.start();
-            AnimationRight.stop();
-            AnimationLeft.stop();
-            } else {
-            AnimationCenter.stop();
-            AnimationCenter.selectDrawable(0); //reset to the beginning of the animation
-            }
         } else if (style == 1) {
             rrLogo.setVisibility(View.GONE);
             rrLogoleft.setVisibility(View.GONE);
             rrLogoright.setVisibility(View.VISIBLE);
-            if (animate) {
-            AnimationRight.start();
-            AnimationCenter.stop();
-            AnimationLeft.stop();
-            } else {
-            AnimationRight.stop();
-            AnimationRight.selectDrawable(0); //reset to the beginning of the animation
-            }
         } else if (style == 2) {
             rrLogoright.setVisibility(View.GONE);
             rrLogo.setVisibility(View.GONE);
             rrLogoleft.setVisibility(View.VISIBLE);
-            if (animate) {
-            AnimationLeft.start();
-            AnimationCenter.stop();
-            AnimationRight.stop();
-            } else {
-            AnimationLeft.stop();
-            AnimationLeft.selectDrawable(0); //reset to the beginning of the animation
-            }
 		}
     }
 
