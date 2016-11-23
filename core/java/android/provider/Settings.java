@@ -4234,6 +4234,19 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String STATUSBAR_CLOCK_DATE_POSITION = "statusbar_clock_date_position";
 
         /**
+         * Custom RR Summary for configurations in dashboard
+         * @hide
+         */
+        public static final String RR_SETTINGS_SUMMARY = "rr_settings_summary";
+
+        /**
+         * Random RR Summary for configurations in dashboard
+         * @hide
+         */
+        public static final String RR_SETTINGS_RANDOM_SUMMARY = "rr_settings_random_summary";
+
+
+        /**
          * RR OTA FAB SWITCH
          * @hide
          */

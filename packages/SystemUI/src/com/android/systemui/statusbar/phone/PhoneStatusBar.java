@@ -68,7 +68,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -470,13 +469,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private ImageView rrLogoleft;
 	private int  mRRLogoColor;
 	private int mRRlogoStyle;
-
-    private boolean mAnimatedlogo;
-    /*private ImageView animatedLogo;
-    private ImageView animatedLogoright;
-    private ImageView animatedLogoleft;;
-	private int mAnimatedlogoStyle;*/
-    AnimationDrawable AnimationLeft, AnimationRight, AnimationCenter;
 
 	private boolean mShow4G;
 	private boolean mShow3G;
