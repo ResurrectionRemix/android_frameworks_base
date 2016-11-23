@@ -168,8 +168,6 @@ public class RecentsView extends FrameLayout {
     private int mSetfabcolor;
     private int mAnimStyle;
 
-    private boolean mNativeClearall;
-
     TextClock mClock;
     TextView mDate;
 
@@ -1096,7 +1094,9 @@ public class RecentsView extends FrameLayout {
      * Shows the stack action button.
      */
     private void showStackActionButton(final int duration, final boolean translate) {
-        if (!mNativeClearall) {
+        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
+        if (showClearAllRecents) {
             return;
         }
         final ReferenceCountedTrigger postAnimationTrigger = new ReferenceCountedTrigger();
@@ -1285,8 +1285,6 @@ public class RecentsView extends FrameLayout {
                      Settings.System.RECENTS_DATE_COLOR), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
-             resolver.registerContentObserver(Settings.System.getUriFor(
-                     Settings.System.SHOW_NATIVE_CLEAR_ALL), false, this, UserHandle.USER_ALL);
 
              update();
          }
@@ -1348,8 +1346,6 @@ public class RecentsView extends FrameLayout {
 	    mClearStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.CLEAR_RECENTS_STYLE, 0,
                     UserHandle.USER_CURRENT);
-        mNativeClearall = Settings.System.getInt(mContext.getContentResolver(),
-                 Settings.System.SHOW_NATIVE_CLEAR_ALL, 0) == 1;	
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
                  Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;
         mfabcolor = Settings.System.getInt(mContext.getContentResolver(),

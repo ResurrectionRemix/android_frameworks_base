@@ -4501,12 +4501,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String LOCK_SCREEN_WEATHER_HIDE_PANEL = "lock_screen_weather_hide_panel";
 
-		/*
-         * show native clear all recents button
-         *  @hide
-         */
-        public static final String SHOW_NATIVE_CLEAR_ALL = "show_native_clear_all";
-
 
 		/*
          * show clear all recents button
