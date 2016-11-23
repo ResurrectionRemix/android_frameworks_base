@@ -203,6 +203,8 @@ public class RuntimeInit {
         RuntimeHooks.setUncaughtExceptionPreHandler(loggingHandler);
         Thread.setDefaultUncaughtExceptionHandler(new KillApplicationHandler(loggingHandler));
 
+        Build.adjustBuildTypeIfNeeded();
+
         /*
          * Install a time zone supplier that uses the Android persistent time zone system property.
          */
