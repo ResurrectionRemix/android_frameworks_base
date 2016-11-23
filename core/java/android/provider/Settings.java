@@ -8207,6 +8207,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String SLEEP_TIMEOUT = "sleep_timeout";
 
+        /**
+         * Whether to sync the battery tile stile with the statusbar battery icon style
+         * @hide
+         */
+        public static final String STATUS_BAR_BATTERY_STYLE_TILE = "status_bar_battery_style_tile";
+
+
          /** Protected Components
          * @hide
          */
@@ -8529,6 +8536,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
             CAMERA_DOUBLE_TWIST_TO_FLIP_ENABLED,
             CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
             SYSTEM_NAVIGATION_KEYS_ENABLED,
+            STATUS_BAR_BATTERY_STYLE_TILE
         };
 
         /**
