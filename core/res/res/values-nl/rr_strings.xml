@@ -43,11 +43,11 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Zaklamp</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Boven uitlijnen</string>
-  <string name="floating_window_snap_bottom">Onder uitlijnen</string>
-  <string name="floating_window_snap_left">Links uitlijnen</string>
-  <string name="floating_window_snap_right">Rechts uitlijnen</string>
-  <string name="floating_window_minimize">Minimaliseren</string>
+  <string name="floating_window_snap_top">Snap top</string>
+  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB inactief</string>
   <string name="adb_active_custom_tile_not_connected">inactief</string>

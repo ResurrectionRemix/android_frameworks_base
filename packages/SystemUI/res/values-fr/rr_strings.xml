@@ -20,9 +20,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Rejeter</string>
-  <string name="battery_saver_notification_action_text_short">Désactiver</string>
-  <string name="gestures_message">Dessiner geste ici</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Agrandir</string>
   <string name="app_float_item_title">Vue détachée</string>
@@ -55,24 +55,24 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Luminosité</string>
-  <string name="quick_settings_screen_off_label">Éteindre l\'écran</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">Capture d\'écran</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Bureau étendu</string>
   <string name="quick_settings_expanded_desktop">Étendu</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Mode Bureau étendu</string>
-  <string name="quick_settings_expanded_hide_status">Masquer la barre d\'état</string>
-  <string name="quick_settings_expanded_hide_navigation">Masquer la barre de navigation</string>
-  <string name="quick_settings_expanded_hide_both">Masquer les deux</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Bureau étendu désactivé</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+  <string name="quick_settings_expanded_hide_both">Hide both</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Panneau de volume.</string>
+  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Éteindre l\'écran.</string>
+  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Capture d\'écran.</string>
+  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Musique</string>
   <string name="quick_settings_music_play">Lecture</string>
@@ -81,11 +81,11 @@
   <string name="quick_settings_reboot_label">Redémarrer</string>
   <string name="quick_settings_reboot_recovery_label">Récupération</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Afficher 4G au lieu de LTE</string>
-  <string name="show_fourg_summary">Utiliser l\'icône 4G dans la barre d\'état plutôt que LTE</string>
-  <string name="statusbar_tuner_category_title">Masquer des éléments de la barre d\'état</string>
+  <string name="show_fourg_title">Show 4G instead of LTE</string>
+  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Paramètres</string>
+  <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">Notifications flottantes désactivées.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -95,27 +95,27 @@
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes activées.</string>
   <string name="quick_settings_heads_up_label">Notifications flottantes</string>
-  <string name="qs_lte_label">4G</string>
+  <string name="qs_lte_label">LTE</string>
   <string name="lte_on">4G activée </string>
   <string name="lte_off">4G désactivée</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Thèmes</string>
-  <string name="quick_settings_themes_icon_packs">Appliquer le pack d’icônes</string>
-  <string name="quick_settings_themes_app_theme_with_label">Appliquer le thème à <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Appliquer le thème à l\'application</string>
-  <string name="quick_settings_themes_system_theme">Appliquer un thème</string>
-  <string name="quick_settings_themes_default_theme">Par défaut</string>
-  <string name="quick_settings_themes_match_system">Correspond au thème système</string>
+  <string name="quick_settings_themes">Themes</string>
+  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
+  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
+  <string name="quick_settings_themes_system_theme">Apply theme</string>
+  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Barre de navigation</string>
   <string name="quick_settings_smartbar_off">Barre intelligente désactivée</string>
   <string name="quick_settings_smartbar">Barre intelligente</string>
-  <string name="quick_settings_fling">Geste de jet</string>
-  <string name="quick_settings_fling_off">Geste de jet désactivé</string>
+  <string name="quick_settings_fling">Fling gesture</string>
+  <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Boutons physiques</string>
-  <string name="quick_settings_hwkeys_on">Boutons physiques activés</string>
-  <string name="quick_settings_hwkeys_off">Boutons physiques désactivés</string>
+  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
+  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
+  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">Barre ronde d\'application</string>
   <string name="quick_settings_appcirclebar_on">Barre ronde d\'application activée</string>
@@ -129,123 +129,123 @@
   <!-- Pie tile -->
   <string name="quick_settings_pie">Diagramme</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Menu marche/arrêt</string>
+  <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Redémarrer SystemUI</string>
+  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Geste Partout</string>
   <string name="quick_settings_gesture_anywhere_on">Gestes activés</string>
   <string name="quick_settings_gesture_anywhere_off">Gestes désactivés</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Paramétrage de la barre d\'état</string>
-  <string name="status_bar_tuner">Icônes de la barre d\'état</string>
-  <string name="status_bar_tuner_summary">Activer ou désactiver les icônes de la barre d\'état système</string>
+  <string name="status_bar_tuner_title">Status bar tuner</string>
+  <string name="status_bar_tuner">Status bar icons</string>
+  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Désactivé</string>
-  <string name="on">Activé</string>
-  <string name="toggle">Interrupteur</string>
+  <string name="off">Off</string>
+  <string name="on">On</string>
+  <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Annuler</string>
-  <string name="dlg_ok">OK</string>
-  <string name="yes">Oui</string>
-  <string name="no">Non</string>
-  <string name="qs_kill_app">Arrêt forcé de l’application</string>
+  <string name="cancel">Cancel</string>
+  <string name="dlg_ok">Ok</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+  <string name="qs_kill_app">Kill App</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Lampe torche</string>
+  <string name="navbar_torch">Torch</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Lampe torche</string>
+  <string name="accessibility_torch">Torch</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Appareil photo</string>
+  <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Appareil photo</string>
+  <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Capture d\'écran</string>
+  <string name="navbar_screenshot">ScreenShot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Capture d\'écran</string>
+  <string name="accessibility_screenshot">ScreenShot</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Mode immersif</string>
+  <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Mode immersif</string>
+  <string name="accessibility_expand">Immersive Mode</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Paramètres</string>
+  <string name="navbar_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Paramètres</string>
+  <string name="accessibility_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_pie">Diagramme</string>
+  <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">Diagramme</string>
+  <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">Capture vidéo</string>
+  <string name="accessibility_screenrecord">ScreenRecord</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">Capture vidéo</string>
+  <string name="navbar_screenrecord">ScreenRecord</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Arrêter la tâche</string>
+  <string name="accessibility_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Arrêter la tâche</string>
+  <string name="navbar_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Sélecteur d\'applications</string>
+  <string name="navbar_app_picker">Application picker</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Sélecteur d\'applications</string>
+  <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">Son</string>
   <string name="quick_settings_sound_ring">Sonnerie</string>
   <string name="quick_settings_sound_vibrate">Vibreur</string>
-  <string name="quick_settings_sound_silent">Muet</string>
+  <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Casque filaire</string>
+  <string name="status_bar_headset">Wired headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
   <string name="status_bar_volume">Vibration</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">Personnalisation de l\'interface</string>
+  <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Notifications flottantes activées</string>
-  <string name="heads_up_disabled">Notifications flottantes désactivées</string>
+  <string name="heads_up_enabled">Heads up notifications are enabled</string>
+  <string name="heads_up_disabled">Heads up notifications are disabled</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Les notification sont ignorées pendant <xliff:g id="number">%d </xliff:g> minutes.</string>
+  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Impulsion activée</string>
   <string name="quick_settings_pulse_disabled">Aucun aperçu</string>
   <string name="quick_settings_pulse_label">Aperçu de la barre de navigation</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Mode flottant</string>
+  <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Agrandir</string>
   <string name="app_float_item_title">Vue détachée</string>
   <string name="app_stop_item_title">Arrêt forcé de l’application</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Mode flottant activé</string>
-  <string name="quick_settings_floating_windows_off">Mode flottant désactivé</string>
+  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
+  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Mini mode flottant activé</string>
-  <string name="quick_settings_slim_floats_off">Mini mode flottant désactivé</string>
+  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
+  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Aperçu.</string>
-  <string name="pulse_toast_message">L\'aperçu mosaïque impossible si le mode impulsion est activé</string>
+  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
+  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
   <string name="recents_custom_android_n">TOUT EFFACER</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Lancer %s après la fermeture des récents</string>
-  <string name="toast_recents_cancel_queued_app">Lancement de l\'application annulé</string>
+  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
+  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Créer un halo de notification.</string>
+  <string name="accessibility_halo">Create notification halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Effacer la notification</string>
-  <string name="halo_hide">Masquer</string>
-  <string name="halo_clear_all">Effacer toutes les notifications</string>
-  <string name="halo_silence">Cacher &amp; muet jusqu\'au réveil</string>
-  <string name="halo_tutorial1">Voici Halo</string>
-  <string name="halo_tutorial2">Déplacez-moi : touchez deux fois &amp; glissez</string>
-  <string name="halo_tutorial3">Parcourir les tâches : glisser Horizontal</string>
-  <string name="halo_tutorial4">Halo désactive automatiquement l\'affichage tête-haute</string>
-  <string name="halo_tutorial5">Désactiver Halo en faisant glisser vers le cercle rouge</string>
-  <string name="halo_tutorial6">Désactiver si vous souhaitez installer n’importe quelle apk</string>
+  <string name="halo_dismiss">Dismiss notification</string>
+  <string name="halo_hide">Hide</string>
+  <string name="halo_clear_all">Dismiss all notifications</string>
+  <string name="halo_silence">Hide &amp; silence until woken</string>
+  <string name="halo_tutorial1">This is HALO</string>
+  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
+  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo désactivé</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Icône Zen</string>
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

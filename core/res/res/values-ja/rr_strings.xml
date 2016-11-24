@@ -22,19 +22,19 @@
   <string name="reboot_systemui">システムUIの再起動</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">フェード</string>
-  <string name="animation_slide_right">右にスライド</string>
-  <string name="animation_slide_left">左にスライド</string>
-  <string name="animation_slide_right_no_fade">右にスライド(フェードなし)</string>
-  <string name="animation_slide_left_no_fade">左にスライド(フェードなし)</string>
-  <string name="animation_slide_up">下にスライド</string>
-  <string name="animation_slide_down">上にスライド</string>
+  <string name="animation_slide_right">右からスライド</string>
+  <string name="animation_slide_left">左からスライド</string>
+  <string name="animation_slide_right_no_fade">右からスライド(フェードなし)</string>
+  <string name="animation_slide_left_no_fade">左からスライド(フェードなし)</string>
+  <string name="animation_slide_up">下からスライド</string>
+  <string name="animation_slide_down">上からスライド</string>
   <string name="animation_default">デフォルト</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
+  <string name="animation_translucent">半透明</string>
+  <string name="animation_grow_shrink">拡大(上)</string>
+  <string name="animation_grow_shrink_center">拡大(中央)</string>
+  <string name="animation_grow_shrink_bottom">拡大(下)</string>
+  <string name="animation_grow_shrink_left">拡大(左)</string>
+  <string name="animation_grow_shrink_right">拡大(右)</string>
   <string name="action_null">Blank</string>
   <!-- Slimseekbar -->
   <string name="default_string">デフォルト</string>

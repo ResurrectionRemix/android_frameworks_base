@@ -25,43 +25,43 @@
   <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">תצוגה צפה</string>
   <string name="app_stop_item_title">Kill app</string>
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+  <string name="screenrecord_notif_ticker">מסך מוקלט</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Recording screen</string>
+  <string name="screenrecord_notif_title">מסך הקלטה</string>
   <!-- Screenrecord notification action: Stop -->
-  <string name="screenrecord_notif_stop">Stop</string>
+  <string name="screenrecord_notif_stop">עצור</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Show pointer</string>
-  <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+  <string name="screenrecord_notif_pointer_on">הצג מצביע</string>
+  <string name="screenrecord_notif_pointer_off">הסתר מצביע</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Unable to record screen</string>
+  <string name="screenrecord_notif_error">לא ניתן להקליט מסך</string>
   <!-- Kill app toast -->
-  <string name="app_killed_message">App Killed</string>
+  <string name="app_killed_message">היישום נסגר</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go activated</string>
-  <string name="onthego_notif_title">On-The-Go is active</string>
-  <string name="onthego_notif_stop">Stop</string>
-  <string name="onthego_notif_options">Options</string>
-  <string name="onthego_notif_error">Unable to start On-The-Go</string>
-  <string name="onthego_notif_restart">Restart On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Camera mode changed</string>
-  <string name="onthego_transparency">Transparency</string>
-  <string name="onthego_front_camera">Use front camera</string>
-  <string name="onthego_service_toggle">Automatically restart service</string>
+  <string name="onthego_notif_ticker">On-The-Go הופעל</string>
+  <string name="onthego_notif_title">On-The-Go פעיל</string>
+  <string name="onthego_notif_stop">עצור</string>
+  <string name="onthego_notif_options">אפשרויות</string>
+  <string name="onthego_notif_error">לא ניתן להפעיל On-The-Go</string>
+  <string name="onthego_notif_restart">הפעל מחדש On-The-Go</string>
+  <string name="onthego_notif_camera_changed">מצב מצלמה שונה</string>
+  <string name="onthego_transparency">שקיפות</string>
+  <string name="onthego_front_camera">השתמש במצלמה קדמית</string>
+  <string name="onthego_service_toggle">אתחל מחדש את השירות אוטומטית</string>
   <!-- To do: Add QS OnTheGo
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
   <string name="quick_settings_brightness_label">Brightness</string>
   <string name="quick_settings_screen_off_label">Screen off</string>
-  <string name="quick_settings_screenshot_label">Screenshot</string>
+  <string name="quick_settings_screenshot_label">צילום מסך</string>
   <!-- Expanded desktop tile -->
-  <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
-  <string name="quick_settings_expanded_desktop">Expanded</string>
-  <string name="quick_settings_expanded_desktop_off">Normal</string>
+  <string name="quick_settings_expanded_desktop_label">שולחן עבודה מורחב</string>
+  <string name="quick_settings_expanded_desktop">מורחב</string>
+  <string name="quick_settings_expanded_desktop_off">רגיל</string>
   <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
   <string name="quick_settings_expanded_hide_status">Hide status bar</string>
   <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
@@ -74,12 +74,12 @@
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
-  <string name="quick_settings_music_label">Music</string>
-  <string name="quick_settings_music_play">Play</string>
-  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_music_label">מוזיקה</string>
+  <string name="quick_settings_music_play">נגינה</string>
+  <string name="quick_settings_music_pause">השהיה</string>
   <!-- Reboot/Recovery QS Tile -->
-  <string name="quick_settings_reboot_label">Reboot</string>
-  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="quick_settings_reboot_label">אתחול מחדש</string>
+  <string name="quick_settings_reboot_recovery_label">שחזור</string>
   <!-- 4G LTE switch -->
   <string name="show_fourg_title">Show 4G instead of LTE</string>
   <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
@@ -188,9 +188,9 @@
     (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
-  <string name="quick_settings_sound_ring">Ring</string>
-  <string name="quick_settings_sound_vibrate">Vibrate</string>
+  <string name="quick_settings_sound_label">שמע</string>
+  <string name="quick_settings_sound_ring">צלצול</string>
+  <string name="quick_settings_sound_vibrate">רטט</string>
   <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
   <string name="status_bar_headset">Wired headset</string>
@@ -214,7 +214,7 @@
   <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">תצוגה צפה</string>
   <string name="app_stop_item_title">Kill app</string>
   <!-- Floating Windows tile -->
   <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>

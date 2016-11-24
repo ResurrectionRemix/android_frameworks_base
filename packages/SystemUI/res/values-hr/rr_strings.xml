@@ -20,9 +20,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Odbaci</string>
-  <string name="battery_saver_notification_action_text_short">Isključi</string>
-  <string name="gestures_message">Ovdje nacrtajte gestu.</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Povećaj</string>
   <string name="app_float_item_title">Plutajući prikaz</string>
@@ -55,24 +55,24 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Svjetlina</string>
-  <string name="quick_settings_screen_off_label">Isključi zaslon</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">Snimka zaslona</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Proširena radna površina</string>
   <string name="quick_settings_expanded_desktop">Prošireno</string>
   <string name="quick_settings_expanded_desktop_off">Normalno</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Način proširene radne površine</string>
-  <string name="quick_settings_expanded_hide_status">Sakrij statusnu traku</string>
-  <string name="quick_settings_expanded_hide_navigation">Sakrij navigacijsku traku</string>
-  <string name="quick_settings_expanded_hide_both">Sakrij oboje</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Proširena radna površina je onemogućena.</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+  <string name="quick_settings_expanded_hide_both">Hide both</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Ploča glasnoće.</string>
+  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Isključi zaslon.</string>
+  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Snimka zaslona.</string>
+  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Glazba</string>
   <string name="quick_settings_music_play">Pokreni</string>
@@ -81,11 +81,11 @@
   <string name="quick_settings_reboot_label">Ponovno pokreni</string>
   <string name="quick_settings_reboot_recovery_label">Oporavak</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Prikaži 4G umjesto LTE</string>
-  <string name="show_fourg_summary">Zamjenjuje LTE pokazivač u statusnoj traci 4G-om</string>
-  <string name="statusbar_tuner_category_title">Sakrij stavke iz statusne trake</string>
+  <string name="show_fourg_title">Show 4G instead of LTE</string>
+  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Podešavanja</string>
+  <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">Plutajuće su obavijesti isključene.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -99,23 +99,23 @@
   <string name="lte_on">LTE uključen </string>
   <string name="lte_off">LTE isključen</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Teme</string>
-  <string name="quick_settings_themes_icon_packs">Primijeni paket ikona</string>
-  <string name="quick_settings_themes_app_theme_with_label">Primijeni temu u aplikaciji <xliff:g id="application">%1$s</xliff:g>.</string>
-  <string name="quick_settings_themes_app_theme">Primijeni temu na aplikaciju</string>
-  <string name="quick_settings_themes_system_theme">Primijeni temu</string>
-  <string name="quick_settings_themes_default_theme">Zadana</string>
-  <string name="quick_settings_themes_match_system">Podudara se s temom sustava</string>
+  <string name="quick_settings_themes">Themes</string>
+  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
+  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
+  <string name="quick_settings_themes_system_theme">Apply theme</string>
+  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Navigacijska traka</string>
   <string name="quick_settings_smartbar_off">Pametna traka isključena</string>
   <string name="quick_settings_smartbar">Pametna traka</string>
-  <string name="quick_settings_fling">Navigacija kretnjama</string>
-  <string name="quick_settings_fling_off">Navigacija kretnjama isključena</string>
+  <string name="quick_settings_fling">Fling gesture</string>
+  <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardverske tipke</string>
-  <string name="quick_settings_hwkeys_on">Hardverske tipke uključene</string>
-  <string name="quick_settings_hwkeys_off">Hardverske tipke isključene</string>
+  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
+  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
+  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">Okrugla traka aplikacija</string>
   <string name="quick_settings_appcirclebar_on">Okrugla traka aplikacija uklj.</string>
@@ -129,103 +129,103 @@
   <!-- Pie tile -->
   <string name="quick_settings_pie">Pita</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Izbornik isključivanja</string>
+  <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Ponovno pokreni sučelje sustava</string>
+  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Pokret bilo gdje</string>
   <string name="quick_settings_gesture_anywhere_on">Geste uključene</string>
   <string name="quick_settings_gesture_anywhere_off">Geste isključene</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Ugađanje statusne trake</string>
-  <string name="status_bar_tuner">Ikone statusne trake</string>
-  <string name="status_bar_tuner_summary">Omogućite ili onemogućite sistemske ikone u statusnoj traci.</string>
+  <string name="status_bar_tuner_title">Status bar tuner</string>
+  <string name="status_bar_tuner">Status bar icons</string>
+  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Isklj.</string>
-  <string name="on">Uklj.</string>
-  <string name="toggle">Prekidač</string>
+  <string name="off">Off</string>
+  <string name="on">On</string>
+  <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Odustani</string>
-  <string name="dlg_ok">U redu</string>
-  <string name="yes">Da</string>
-  <string name="no">Ne</string>
-  <string name="qs_kill_app">Zatvori aplikaciju</string>
+  <string name="cancel">Cancel</string>
+  <string name="dlg_ok">Ok</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+  <string name="qs_kill_app">Kill App</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Svjetiljka</string>
+  <string name="navbar_torch">Torch</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Svjetiljka</string>
+  <string name="accessibility_torch">Torch</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Fotoaparat</string>
+  <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Fotoaparat</string>
+  <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Snimka zaslona</string>
+  <string name="navbar_screenshot">ScreenShot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Snimka zaslona</string>
+  <string name="accessibility_screenshot">ScreenShot</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Cijelozaslonski način rada</string>
+  <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Cijelozaslonski način rada</string>
+  <string name="accessibility_expand">Immersive Mode</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Podešavanja</string>
+  <string name="navbar_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Podešavanja</string>
+  <string name="accessibility_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_pie">PITA</string>
+  <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">Pita</string>
+  <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">Snimanje zaslona</string>
+  <string name="accessibility_screenrecord">ScreenRecord</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">Snimanje zaslona</string>
+  <string name="navbar_screenrecord">ScreenRecord</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Završi zadatak</string>
+  <string name="accessibility_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Završi zadatak</string>
+  <string name="navbar_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Odabir aplikacije</string>
+  <string name="navbar_app_picker">Application picker</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Odabir aplikacije</string>
+  <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">Zvuk</string>
   <string name="quick_settings_sound_ring">Zvono</string>
   <string name="quick_settings_sound_vibrate">Vibracija</string>
-  <string name="quick_settings_sound_silent">Bešumno</string>
+  <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Žičane slušalice</string>
+  <string name="status_bar_headset">Wired headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Vibracija</string>
+  <string name="status_bar_volume">Vibration</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">Ugađanje sučelja</string>
+  <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Plutajuće su obavijesti omogućene.</string>
-  <string name="heads_up_disabled">Plutajuće su obavijesti onemogućene.</string>
+  <string name="heads_up_enabled">Heads up notifications are enabled</string>
+  <string name="heads_up_disabled">Heads up notifications are disabled</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Plutajuće su obavijesti utišane na <xliff:g id="number">%d</xliff:g> minuta.</string>
+  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Puls omogućen</string>
   <string name="quick_settings_pulse_disabled">Nema vizualizatora</string>
   <string name="quick_settings_pulse_label">Vizualizator navigacijske trake</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Plutajući način</string>
+  <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Povećaj</string>
   <string name="app_float_item_title">Plutajući prikaz</string>
   <string name="app_stop_item_title">Zatvori aplikaciju</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Plutajući je način omogućen.</string>
-  <string name="quick_settings_floating_windows_off">Plutajući je način onemogućen.</string>
+  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
+  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Tanki je plutajući način omogućen.</string>
-  <string name="quick_settings_slim_floats_off">Tanki je plutajući način onemogućen.</string>
+  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
+  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Vizualizator.</string>
-  <string name="pulse_toast_message">Pločica vizualizaotra neće raditi ako je puls omogućen.</string>
+  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
+  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
   <string name="recents_custom_android_n">CLEAR ALL</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Launch %s after closing recents</string>

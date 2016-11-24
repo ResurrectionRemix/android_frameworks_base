@@ -43,11 +43,11 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">電筒</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">貼齊頂部</string>
-  <string name="floating_window_snap_bottom">貼齊底部</string>
-  <string name="floating_window_snap_left">貼齊左測</string>
-  <string name="floating_window_snap_right">貼齊右測</string>
-  <string name="floating_window_minimize">最小化</string>
+  <string name="floating_window_snap_top">Snap top</string>
+  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB處於非活動狀態</string>
   <string name="adb_active_custom_tile_not_connected">未啟用</string>

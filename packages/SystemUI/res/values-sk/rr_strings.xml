@@ -20,9 +20,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Zamietnuť</string>
-  <string name="battery_saver_notification_action_text_short">Vypnúť</string>
-  <string name="gestures_message">Sem nakreslite gesto</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximalizovať</string>
   <string name="app_float_item_title">Plávajúce zobrazenie</string>
@@ -32,7 +32,7 @@
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Nahrávam obrazovku</string>
   <!-- Screenrecord notification action: Stop -->
-  <string name="screenrecord_notif_stop">Ukončiť</string>
+  <string name="screenrecord_notif_stop">Zastaviť</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Zobraziť ukazovateľ</string>
   <string name="screenrecord_notif_pointer_off">Skryť ukazovateľ</string>
@@ -55,24 +55,24 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Jas</string>
-  <string name="quick_settings_screen_off_label">Vyp. obrazovku</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Rozšírená plocha</string>
   <string name="quick_settings_expanded_desktop">Rozšírené</string>
   <string name="quick_settings_expanded_desktop_off">Normálna</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Rozšírený režim pracovnej plochy</string>
-  <string name="quick_settings_expanded_hide_status">Skryť stavový riadok</string>
-  <string name="quick_settings_expanded_hide_navigation">Skryť navigačný panel</string>
-  <string name="quick_settings_expanded_hide_both">Skryť oba</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Rozšírená plocha zakázaná</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+  <string name="quick_settings_expanded_hide_both">Hide both</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Panel hlasitosti.</string>
+  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Vypnúť obrazovku.</string>
+  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Snímka obrazovky.</string>
+  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Hudba</string>
   <string name="quick_settings_music_play">Hrať</string>
@@ -81,11 +81,11 @@
   <string name="quick_settings_reboot_label">Reštart</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Zobraziť 4G namiesto LTE</string>
-  <string name="show_fourg_summary">Náhradné indikátor LTE v stavovej lište ukazovateľom 4G</string>
-  <string name="statusbar_tuner_category_title">Skryť položky v stavovom riadku</string>
+  <string name="show_fourg_title">Show 4G instead of LTE</string>
+  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Konfigurácia</string>
+  <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">Heads up vypnuté.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -96,156 +96,156 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up zapnuté.</string>
   <string name="quick_settings_heads_up_label">Plávajúce oznámenia</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="lte_on">LTE zapnuté </string>
+  <string name="lte_off">LTE vypnuté</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Témy</string>
-  <string name="quick_settings_themes_icon_packs">Použiť icon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Použiť motív na <xliff:g id="application">%1$s </xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Použiť motív na aplikáciu</string>
-  <string name="quick_settings_themes_system_theme">Aplikovať tému</string>
-  <string name="quick_settings_themes_default_theme">Východzia</string>
-  <string name="quick_settings_themes_match_system">Zhoda téma systému</string>
+  <string name="quick_settings_themes">Themes</string>
+  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
+  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
+  <string name="quick_settings_themes_system_theme">Apply theme</string>
+  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Navigačný panel</string>
-  <string name="quick_settings_smartbar_off">Chytrá lišta vypnutá</string>
-  <string name="quick_settings_smartbar">Chytrá lišta</string>
-  <string name="quick_settings_fling">Písané gesto</string>
-  <string name="quick_settings_fling_off">Písané gesto vypnuté</string>
+  <string name="quick_settings_smartbar_off">Inteligentná lišta vypnutá</string>
+  <string name="quick_settings_smartbar">Inteligentná lišta</string>
+  <string name="quick_settings_fling">Fling gesture</string>
+  <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardvérové tlačidlá</string>
-  <string name="quick_settings_hwkeys_on">Zapnúť hardvérové tlačidlá</string>
-  <string name="quick_settings_hwkeys_off">Vypnúť hardvérové tlačidlá</string>
+  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
+  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
+  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">Zapnúť AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_off">Vypnúť AppCircleBar</string>
+  <string name="quick_settings_appcirclebar_title">Kruh s aplikáciami</string>
+  <string name="quick_settings_appcirclebar_on">Zapnúť kruh s aplikáciami</string>
+  <string name="quick_settings_appcirclebar_off">Vypnúť kruh s aplikáciami</string>
   <!-- Kernel Adiutor Tile -->
-  <string name="quick_settings_kernel_title">Kernel Auditor</string>
-  <string name="quick_settings_kernel_adiutor">Kernel Auditor</string>
+  <string name="quick_settings_kernel_title">Správca Kernelu</string>
+  <string name="quick_settings_kernel_adiutor">Správca Kernelu</string>
   <!-- Quick settings -->
-  <string name="quick_settings_screenrecord">Videozáznam obrazovky</string>
+  <string name="quick_settings_screenrecord">Nahrávanie obrazovky</string>
   <string name="quick_settings_screenrecord_on">Nahrávanie...</string>
   <!-- Pie tile -->
   <string name="quick_settings_pie">Pie</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Ponuka napájania</string>
+  <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Reštartujte SystemUI</string>
+  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Gesto kdekoľvek</string>
-  <string name="quick_settings_gesture_anywhere_on">Zapnutie gest</string>
-  <string name="quick_settings_gesture_anywhere_off">Vypnutie gest</string>
+  <string name="quick_settings_gesture_anywhere_on">Gestá zapnuté</string>
+  <string name="quick_settings_gesture_anywhere_off">Gestá vypnuté</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Úprava stavového riadku</string>
-  <string name="status_bar_tuner">Ikona stavového riadka</string>
-  <string name="status_bar_tuner_summary">Zapnúť alebo vypnúť systémové ikony v stavovom riadku</string>
+  <string name="status_bar_tuner_title">Status bar tuner</string>
+  <string name="status_bar_tuner">Status bar icons</string>
+  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Vypnúť</string>
-  <string name="on">Zapnúť</string>
-  <string name="toggle">Prepínač</string>
+  <string name="off">Off</string>
+  <string name="on">On</string>
+  <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Prerušiť</string>
+  <string name="cancel">Cancel</string>
   <string name="dlg_ok">Ok</string>
-  <string name="yes">Áno</string>
-  <string name="no">Nie</string>
-  <string name="qs_kill_app">Ukončiť aplikáciu</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+  <string name="qs_kill_app">Kill App</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Svietidlo</string>
+  <string name="navbar_torch">Torch</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Svietidlo</string>
+  <string name="accessibility_torch">Torch</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Fotoaparát</string>
+  <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Fotoaparát</string>
+  <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Snímka obrazovky</string>
+  <string name="navbar_screenshot">ScreenShot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Snímka obrazovky</string>
+  <string name="accessibility_screenshot">ScreenShot</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Pohlcujúci režim</string>
+  <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Pohlcujúci režim</string>
+  <string name="accessibility_expand">Immersive Mode</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Konfigurácia</string>
+  <string name="navbar_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Konfigurácia</string>
+  <string name="accessibility_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">Videozáznam obrazovky</string>
+  <string name="accessibility_screenrecord">ScreenRecord</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">Videozáznam obrazovky</string>
+  <string name="navbar_screenrecord">ScreenRecord</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Ukončiť úlohu</string>
+  <string name="accessibility_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Ukončiť úlohu</string>
+  <string name="navbar_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Výber aplikácie</string>
+  <string name="navbar_app_picker">Application picker</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Výber aplikácie</string>
+  <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">Zvuk</string>
   <string name="quick_settings_sound_ring">Zvonenie</string>
   <string name="quick_settings_sound_vibrate">Vibrácie</string>
-  <string name="quick_settings_sound_silent">Ticho</string>
+  <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Káblové slúchadlá</string>
+  <string name="status_bar_headset">Wired headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Vibrácie</string>
+  <string name="status_bar_volume">Vibration</string>
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads up oznámenia sú povolené</string>
-  <string name="heads_up_disabled">Hlavy oznámenia sú zakázané</string>
+  <string name="heads_up_enabled">Heads up notifications are enabled</string>
+  <string name="heads_up_disabled">Heads up notifications are disabled</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Plávajúce oznámenia sú uložené na <xliff:g id="number">%d</xliff:g> minút.</string>
+  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse povolené</string>
   <string name="quick_settings_pulse_disabled">Žiadna vizualizácia</string>
   <string name="quick_settings_pulse_label">Vizualizácia navigačnej lišty</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Plávajúci režim</string>
+  <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximalizovať</string>
   <string name="app_float_item_title">Plávajúce zobrazenie</string>
   <string name="app_stop_item_title">Ukončiť aplikáciu</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Plávajúci režim povolený</string>
-  <string name="quick_settings_floating_windows_off">Plávajúci režim zakázaný</string>
+  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
+  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim Float Mode povolený</string>
-  <string name="quick_settings_slim_floats_off">Slim Float Mode zakázaný</string>
+  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
+  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Vizualizér.</string>
-  <string name="pulse_toast_message">Vizualizácia nebude fungovať s pulznou voľbou</string>
+  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
+  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
   <string name="recents_custom_android_n">VYMAZAŤ VŠETKO</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Spustiť %s po zatvorení nedávnych</string>
-  <string name="toast_recents_cancel_queued_app">Zrušiť spúšťanie aplikácií</string>
+  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
+  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Vytvoriť Halo upozornenia.</string>
+  <string name="accessibility_halo">Create notification halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Zrušiť upozornenia</string>
-  <string name="halo_hide">Skryť</string>
-  <string name="halo_clear_all">Zrušiť všetky upozornenias</string>
-  <string name="halo_silence">Skryť &amp; umlčať kým sa prebudí</string>
-  <string name="halo_tutorial1">Toto je HALO</string>
-  <string name="halo_tutorial2">Presuňte si ma: dvakrát kliknite &amp; pretiahnite</string>
-  <string name="halo_tutorial3">Prechádzajte úlohy vodorovným pažením</string>
-  <string name="halo_tutorial4">Halo automaticky zakáže plávajúce upozornenie</string>
-  <string name="halo_tutorial5">Zakázať Halo pretiahnutím na červený kruh</string>
-  <string name="halo_tutorial6">Zakázať, pokiaľ chcete nainštalovať aplikáciu</string>
+  <string name="halo_dismiss">Dismiss notification</string>
+  <string name="halo_hide">Hide</string>
+  <string name="halo_clear_all">Dismiss all notifications</string>
+  <string name="halo_silence">Hide &amp; silence until woken</string>
+  <string name="halo_tutorial1">This is HALO</string>
+  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
+  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo zakázané</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Ikona Zen</string>
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

@@ -43,11 +43,11 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Svjetiljka</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Pomakni gore</string>
-  <string name="floating_window_snap_bottom">Pomakni dolje</string>
-  <string name="floating_window_snap_left">Pomakni ulijevo</string>
-  <string name="floating_window_snap_right">Pomakni udesno</string>
-  <string name="floating_window_minimize">Smanji</string>
+  <string name="floating_window_snap_top">Snap top</string>
+  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB inactive</string>
   <string name="adb_active_custom_tile_not_connected">inactive</string>

@@ -19,29 +19,29 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Restart SystemUI</string>
+  <string name="reboot_systemui">אתחול SystemUI</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Fade</string>
-  <string name="animation_slide_right">Slide in right</string>
-  <string name="animation_slide_left">Slide in left</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
-  <string name="animation_slide_up">Slide in bottom</string>
-  <string name="animation_slide_down">Slide in top</string>
-  <string name="animation_default">Default</string>
-  <string name="animation_translucent">Translucent</string>
-  <string name="animation_grow_shrink">Grow in (Top)</string>
-  <string name="animation_grow_shrink_center">Grow in (Center)</string>
-  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
-  <string name="animation_grow_shrink_left">Grow in (Left)</string>
-  <string name="animation_grow_shrink_right">Grow in (Right)</string>
-  <string name="action_null">Blank</string>
+  <string name="animation_fade">העלמות</string>
+  <string name="animation_slide_right">החלקה מימין</string>
+  <string name="animation_slide_left">החלקה משמאל</string>
+  <string name="animation_slide_right_no_fade">החלקה מימין (ללא עמעום)</string>
+  <string name="animation_slide_left_no_fade">החלקה משמאל (ללא עמעום)</string>
+  <string name="animation_slide_up">החלקה מלמטה</string>
+  <string name="animation_slide_down">החלקה מלמעלה</string>
+  <string name="animation_default">ברירת מחדל</string>
+  <string name="animation_translucent">שקוף למחצה</string>
+  <string name="animation_grow_shrink">גדילה (מלמעלה)</string>
+  <string name="animation_grow_shrink_center">גדילה (מהמרכז)</string>
+  <string name="animation_grow_shrink_bottom">גדילה (מלמטה)</string>
+  <string name="animation_grow_shrink_left">גדילה (משמאל)</string>
+  <string name="animation_grow_shrink_right">גדילה (מימין)</string>
+  <string name="action_null">ריק</string>
   <!-- Slimseekbar -->
-  <string name="default_string">Default</string>
+  <string name="default_string">ברירת מחדל</string>
   <!-- label for item that takes On-The-Go in the phone options dialog -->
-  <string name="global_action_onthego">On-The-Go Mode</string>
+  <string name="global_action_onthego">מצב On-The-Go</string>
   <!-- Powermenu Torch -->
-  <string name="global_action_torch">Flashlight</string>
+  <string name="global_action_torch">פנס</string>
   <!-- Floating Window -->
   <string name="floating_window_snap_top">Snap top</string>
   <string name="floating_window_snap_bottom">Snap bottom</string>
@@ -49,8 +49,8 @@
   <string name="floating_window_snap_right">Snap right</string>
   <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
-  <string name="adb_not_connected_notification_title">ADB inactive</string>
-  <string name="adb_active_custom_tile_not_connected">inactive</string>
+  <string name="adb_not_connected_notification_title">ADB לא פעיל</string>
+  <string name="adb_active_custom_tile_not_connected">לא פעיל</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+  <string name="system_error_vendorprint">תמונת הספק שלך אינה תואמת את המערכת. אנא צרוב את <xliff:g id="string">%s</xliff:g> תמונת הספק למכשיר שלך</string>
 </resources>

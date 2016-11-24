@@ -20,9 +20,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Elutasít</string>
-  <string name="battery_saver_notification_action_text_short">Kikapcsolás</string>
-  <string name="gestures_message">Rajzoljon gesztust itt</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximalizálás</string>
   <string name="app_float_item_title">Lebegő nézet</string>
@@ -55,24 +55,24 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Fényerő</string>
-  <string name="quick_settings_screen_off_label">Képernyő ki</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">Képernyőmentés</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">Kiterjesztett képernyő</string>
   <string name="quick_settings_expanded_desktop">Kiterjesztett</string>
   <string name="quick_settings_expanded_desktop_off">Normál</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Kiterjesztett képernyő mód</string>
-  <string name="quick_settings_expanded_hide_status">Állapotsor elrejtése</string>
-  <string name="quick_settings_expanded_hide_navigation">Navigációs sáv elrejtése</string>
-  <string name="quick_settings_expanded_hide_both">Mindkettő elrejtése</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">Kiterjesztett képernyő letiltva</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+  <string name="quick_settings_expanded_hide_both">Hide both</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">Hangerő panel.</string>
+  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">Képernyő ki.</string>
+  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">Képernyőmentés.</string>
+  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">Zene</string>
   <string name="quick_settings_music_play">Lejátszás</string>
@@ -81,11 +81,11 @@
   <string name="quick_settings_reboot_label">Újraindítás</string>
   <string name="quick_settings_reboot_recovery_label">Helyreállító mód</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">4G mutatása LTE helyett</string>
-  <string name="show_fourg_summary">LTE állapotsori jelző helyett 4G</string>
-  <string name="statusbar_tuner_category_title">Állapotsori elemek elrejtése</string>
+  <string name="show_fourg_title">Show 4G instead of LTE</string>
+  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Beállítások</string>
+  <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">Lebegő értesítések ki.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -99,23 +99,23 @@
   <string name="lte_on">LTE BE </string>
   <string name="lte_off">LTE KI</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Témák</string>
-  <string name="quick_settings_themes_icon_packs">Ikoncsomag alkalmazása</string>
-  <string name="quick_settings_themes_app_theme_with_label">Téma alkalmazása erre: <xliff:g id="application">%1$s</xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Téma illesztése alkalmazásra</string>
-  <string name="quick_settings_themes_system_theme">Téma alkalmazása</string>
-  <string name="quick_settings_themes_default_theme">Alapértelmezett</string>
-  <string name="quick_settings_themes_match_system">Rendszertémához igazítás</string>
+  <string name="quick_settings_themes">Themes</string>
+  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
+  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
+  <string name="quick_settings_themes_system_theme">Apply theme</string>
+  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Navigációs sáv</string>
   <string name="quick_settings_smartbar_off">SmartBar ki</string>
   <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_fling">Fling gesztus</string>
-  <string name="quick_settings_fling_off">Fling gesztus ki</string>
+  <string name="quick_settings_fling">Fling gesture</string>
+  <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardver gombok</string>
-  <string name="quick_settings_hwkeys_on">Hardver gombok be</string>
-  <string name="quick_settings_hwkeys_off">Hardver gombok ki</string>
+  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
+  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
+  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">Alkalmazás körsáv</string>
   <string name="quick_settings_appcirclebar_on">Alkalmazás körsáv be</string>
@@ -129,123 +129,123 @@
   <!-- Pie tile -->
   <string name="quick_settings_pie">Pie</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Kikapcsoló menü</string>
+  <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">SystemUI újraindítása</string>
+  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Gesztus bárhol</string>
   <string name="quick_settings_gesture_anywhere_on">Gesztusok be</string>
   <string name="quick_settings_gesture_anywhere_off">Gesztusok ki</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Állapotsor hangoló</string>
-  <string name="status_bar_tuner">Állapotsor ikonjai</string>
-  <string name="status_bar_tuner_summary">Engedélyezheti vagy letilthatja az állapotsori rendszer ikonokat</string>
+  <string name="status_bar_tuner_title">Status bar tuner</string>
+  <string name="status_bar_tuner">Status bar icons</string>
+  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Ki</string>
-  <string name="on">Be</string>
-  <string name="toggle">Váltás</string>
+  <string name="off">Off</string>
+  <string name="on">On</string>
+  <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Mégsem</string>
+  <string name="cancel">Cancel</string>
   <string name="dlg_ok">Ok</string>
-  <string name="yes">Igen</string>
-  <string name="no">Nem</string>
-  <string name="qs_kill_app">Alkalmazás leállítása</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+  <string name="qs_kill_app">Kill App</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Zseblámpa</string>
+  <string name="navbar_torch">Torch</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Zseblámpa</string>
+  <string name="accessibility_torch">Torch</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Kamera</string>
+  <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Kamera</string>
+  <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Képernyőmentés</string>
+  <string name="navbar_screenshot">ScreenShot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Képernyőmentés</string>
+  <string name="accessibility_screenshot">ScreenShot</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Teljes képernyős mód</string>
+  <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Teljes képernyős mód</string>
+  <string name="accessibility_expand">Immersive Mode</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Beállítások</string>
+  <string name="navbar_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Beállítások</string>
+  <string name="accessibility_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">Képernyő felvétel</string>
+  <string name="accessibility_screenrecord">ScreenRecord</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">Képernyő felvétel</string>
+  <string name="navbar_screenrecord">ScreenRecord</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Feladat befejezése</string>
+  <string name="accessibility_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Feladat befejezése</string>
+  <string name="navbar_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Alkalmazás választó</string>
+  <string name="navbar_app_picker">Application picker</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Alkalmazás választó</string>
+  <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">Hang</string>
   <string name="quick_settings_sound_ring">Csengés</string>
   <string name="quick_settings_sound_vibrate">Rezgés</string>
-  <string name="quick_settings_sound_silent">Néma</string>
+  <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Vezetékes fülhallgató</string>
+  <string name="status_bar_headset">Wired headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">Rezgések</string>
+  <string name="status_bar_volume">Vibration</string>
   <!-- Tuner -->
-  <string name="systemui_tuner_qs_title">UI hangoló</string>
+  <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Lebegő értesítések engedélyezve</string>
-  <string name="heads_up_disabled">Lebegő értesítések letiltva</string>
+  <string name="heads_up_enabled">Heads up notifications are enabled</string>
+  <string name="heads_up_disabled">Heads up notifications are disabled</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Lebegő értesítés szundi <xliff:g id="number">%d</xliff:g> percig.</string>
+  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse engedélyezve</string>
   <string name="quick_settings_pulse_disabled">Vizualizáló ki</string>
   <string name="quick_settings_pulse_label">Navigációs sáv vizualizáló</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Lebegő mód</string>
+  <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximalizálás</string>
   <string name="app_float_item_title">Lebegő nézet</string>
   <string name="app_stop_item_title">Alkalmazás kilövése</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_floating_windows_on">Lebegő mód engedélyezve</string>
-  <string name="quick_settings_floating_windows_off">Lebegő mód letiltva</string>
+  <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
+  <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
   <!-- Floating Windows tile -->
-  <string name="quick_settings_slim_floats_on">Slim lebegő mód engedélyezve</string>
-  <string name="quick_settings_slim_floats_off">Slim lebegő mód letiltva</string>
+  <string name="quick_settings_slim_floats_on">Slim Float Mode Enabled</string>
+  <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">Vizualizáló.</string>
-  <string name="pulse_toast_message">Vizualizáló csempe nem fog működni, ha a Pulse engedélyezve van</string>
+  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
+  <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
   <string name="recents_custom_android_n">ÖSSZES TÖRLÉSE</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">%s indítása az előzmények bezárása után</string>
-  <string name="toast_recents_cancel_queued_app">Alkalmazás indításának megszakítása</string>
+  <string name="toast_recents_queue_app">Launch %s after closing recents</string>
+  <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
   <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_halo">Halo értesítések létrehozása.</string>
+  <string name="accessibility_halo">Create notification halo.</string>
   <!-- HALO -->
-  <string name="halo_dismiss">Értesítés elutasítása</string>
-  <string name="halo_hide">Elrejtés</string>
-  <string name="halo_clear_all">Minden értesítés elutasítása</string>
-  <string name="halo_silence">Elrejtés és néma ébresztésig</string>
-  <string name="halo_tutorial1">Ez a HALO</string>
-  <string name="halo_tutorial2">Mozgatás: kettős érintés és húzás</string>
-  <string name="halo_tutorial3">Feladatok tallózása: Vízszintes húzás</string>
-  <string name="halo_tutorial4">Halo automatikusan letiltja a Lebegő értesítéseket</string>
-  <string name="halo_tutorial5">Halo letiltása a piros kör húzásával</string>
-  <string name="halo_tutorial6">Tiltsa le, ha bármilyen apk-t telepíteni szeretne</string>
+  <string name="halo_dismiss">Dismiss notification</string>
+  <string name="halo_hide">Hide</string>
+  <string name="halo_clear_all">Dismiss all notifications</string>
+  <string name="halo_silence">Hide &amp; silence until woken</string>
+  <string name="halo_tutorial1">This is HALO</string>
+  <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
+  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+  <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
+  <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
+  <string name="halo_tutorial6">Disable if you want to install any apk</string>
   <!-- Halo Tile -->
   <string name="quick_settings_halo_on">Halo</string>
-  <string name="quick_settings_halo_off">Halo kikapcsolva</string>
+  <string name="quick_settings_halo_off">Halo disabled</string>
   <!-- Zen icon in statusbar -->
-  <string name="show_zen_icon_title">Zen ikon</string>
+  <string name="show_zen_icon_title">Zen icon</string>
 </resources>

@@ -20,9 +20,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Ignorer</string>
-  <string name="battery_saver_notification_action_text_short">Sluk</string>
-  <string name="gestures_message">Tegn håndbevægelsen her</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maksimer</string>
   <string name="app_float_item_title">Float view</string>
@@ -55,7 +55,7 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">Lysstyrke</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
   <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">Screenshot</string>
   <!-- Expanded desktop tile -->
@@ -81,11 +81,11 @@
   <string name="quick_settings_reboot_label">Genstart</string>
   <string name="quick_settings_reboot_recovery_label">Gendannelse tilsstand</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">Vis 4G i stedet for LTE</string>
-  <string name="show_fourg_summary">Erstat LTE statusbar indikator med 4G</string>
-  <string name="statusbar_tuner_category_title">Skjul elementer fra statusbar</string>
+  <string name="show_fourg_title">Show 4G instead of LTE</string>
+  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">Konfigurationer</string>
+  <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -99,13 +99,13 @@
   <string name="lte_on">LTE TIL </string>
   <string name="lte_off">LTE FRA</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">Temaer</string>
-  <string name="quick_settings_themes_icon_packs">Anvend ikon pack</string>
-  <string name="quick_settings_themes_app_theme_with_label">Anvend tema til <xliff:g id="application">%1$s </xliff:g></string>
-  <string name="quick_settings_themes_app_theme">Anvend tema til app</string>
-  <string name="quick_settings_themes_system_theme">Anvend tema</string>
-  <string name="quick_settings_themes_default_theme">Standard</string>
-  <string name="quick_settings_themes_match_system">Match system tema</string>
+  <string name="quick_settings_themes">Themes</string>
+  <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
+  <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
+  <string name="quick_settings_themes_app_theme">Apply theme to app</string>
+  <string name="quick_settings_themes_system_theme">Apply theme</string>
+  <string name="quick_settings_themes_default_theme">Default</string>
+  <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">Navigation Bar</string>
   <string name="quick_settings_smartbar_off">SmartBar fra</string>
@@ -113,9 +113,9 @@
   <string name="quick_settings_fling">Fling gesture</string>
   <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">Hardware knapper</string>
-  <string name="quick_settings_hwkeys_on">Hardware knapper til</string>
-  <string name="quick_settings_hwkeys_off">Hardware knapper fra</string>
+  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
+  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
+  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
   <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
@@ -129,71 +129,71 @@
   <!-- Pie tile -->
   <string name="quick_settings_pie">Tærte</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">Tænd/sluk-menu</string>
+  <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">Genstart SystemUI</string>
+  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Gestus overalt</string>
   <string name="quick_settings_gesture_anywhere_on">Bevægelser på</string>
   <string name="quick_settings_gesture_anywhere_off">Bevægelser fra</string>
   <!-- Tuner UI -->
-  <string name="status_bar_tuner_title">Statuslinje tuner</string>
-  <string name="status_bar_tuner">Statuslinje ikoner</string>
-  <string name="status_bar_tuner_summary">Aktivere eller deaktivere statuslinje systemikoner</string>
+  <string name="status_bar_tuner_title">Status bar tuner</string>
+  <string name="status_bar_tuner">Status bar icons</string>
+  <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
   <!-- Off/On/Toggle -->
-  <string name="off">Fra</string>
-  <string name="on">Til</string>
-  <string name="toggle">Skift</string>
+  <string name="off">Off</string>
+  <string name="on">On</string>
+  <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">Annuller</string>
+  <string name="cancel">Cancel</string>
   <string name="dlg_ok">Ok</string>
-  <string name="yes">Ja</string>
-  <string name="no">Nej</string>
-  <string name="qs_kill_app">Luk app</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+  <string name="qs_kill_app">Kill App</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">Lommelygte</string>
+  <string name="navbar_torch">Torch</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">Lommelygte</string>
+  <string name="accessibility_torch">Torch</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">Kamera</string>
+  <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">Kamera</string>
+  <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">Skærmbillede</string>
+  <string name="navbar_screenshot">ScreenShot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">Skærmbillede</string>
+  <string name="accessibility_screenshot">ScreenShot</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_expand">Fordybende tilstand</string>
+  <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_expand">Fordybende tilstand</string>
+  <string name="accessibility_expand">Immersive Mode</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_config">Konfigurationer</string>
+  <string name="navbar_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_config">Konfigurationer</string>
+  <string name="accessibility_config">Configurations</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_pie">Tærte</string>
+  <string name="accessibility_pie">PIE</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_pie">Tærte</string>
+  <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">Skærm optagelse</string>
+  <string name="accessibility_screenrecord">ScreenRecord</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">Skærm optagelse</string>
+  <string name="navbar_screenrecord">ScreenRecord</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">Afslut opgave</string>
+  <string name="accessibility_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">Afslut opgave</string>
+  <string name="navbar_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_app_picker">Applikations vælger</string>
+  <string name="navbar_app_picker">Application picker</string>
   <!-- Content description of the Application picker button for accessibility
     (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_app_picker">Applikations vælger</string>
+  <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">Lyd</string>
   <string name="quick_settings_sound_ring">Ring</string>
   <string name="quick_settings_sound_vibrate">Vibration</string>
-  <string name="quick_settings_sound_silent">Lydløs</string>
+  <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
-  <string name="status_bar_headset">Headset med ledning</string>
+  <string name="status_bar_headset">Wired headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
@@ -201,17 +201,17 @@
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">Heads op meddelelser er aktiveret</string>
-  <string name="heads_up_disabled">Heads op meddelelser er deaktiveret</string>
+  <string name="heads_up_enabled">Heads up notifications are enabled</string>
+  <string name="heads_up_disabled">Heads up notifications are disabled</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message">Heads-up snoozing i <xliff:g id="number">%d </xliff:g> minutter.</string>
+  <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Puls aktiveret</string>
   <string name="quick_settings_pulse_disabled">Ingen Visualiseringer</string>
   <string name="quick_settings_pulse_label">NavigationBar Visualizer</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
-  <string name="recent_float_mode_title">Flyd tilstand</string>
+  <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maksimer</string>
   <string name="app_float_item_title">Float view</string>
@@ -237,9 +237,9 @@
   <string name="halo_hide">Hide</string>
   <string name="halo_clear_all">Dismiss all notifications</string>
   <string name="halo_silence">Hide &amp; silence until woken</string>
-  <string name="halo_tutorial1">Dette er HALO</string>
+  <string name="halo_tutorial1">This is HALO</string>
   <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-  <string name="halo_tutorial3">Gennemse opgaver: horisontale træk</string>
+  <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
   <string name="halo_tutorial4">Halo disables HeadsUp automatically</string>
   <string name="halo_tutorial5">Disable Halo by dragging to red circle</string>
   <string name="halo_tutorial6">Disable if you want to install any apk</string>

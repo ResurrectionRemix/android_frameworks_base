@@ -20,13 +20,13 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">إلغاء</string>
-  <string name="battery_saver_notification_action_text_short">إغلاق</string>
-  <string name="gestures_message">رسم إيماءة هنا</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">تكبير الشاشة</string>
+  <string name="app_float_item_title">عرض نظام عشري</string>
+  <string name="app_stop_item_title">إنهاء التطبيق</string>
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">يتم تسجيل الشاشة</string>
   <!-- Screenrecord notification title -->
@@ -55,31 +55,31 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">الاضاءة</string>
-  <string name="quick_settings_screen_off_label">إيقاف الشاشة</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">تصوير الشاشة</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">سطح المكتب الموسع</string>
   <string name="quick_settings_expanded_desktop">موسع</string>
   <string name="quick_settings_expanded_desktop_off">متوسط</string>
-  <string name="quick_settings_expanded_desktop_detail_title">وضع سطح المكتب الموسع</string>
-  <string name="quick_settings_expanded_hide_status">إخفاء شريط الحالة</string>
-  <string name="quick_settings_expanded_hide_navigation">إخفاء شريط التنقل</string>
-  <string name="quick_settings_expanded_hide_both">إخفاء الكل</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">توسيع سطح المكتب معطلة</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+  <string name="quick_settings_expanded_hide_both">Hide both</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">لوحة تحكم الصوت.</string>
+  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">إيقاف الشاشة.</string>
+  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">تصوير الشاشة.</string>
+  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">موسيقى</string>
   <string name="quick_settings_music_play">لعب</string>
   <string name="quick_settings_music_pause">إيقاف مؤقت</string>
   <!-- Reboot/Recovery QS Tile -->
   <string name="quick_settings_reboot_label">إعادة التشغيل</string>
-  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="quick_settings_reboot_recovery_label">الاسترجاع</string>
   <!-- 4G LTE switch -->
   <string name="show_fourg_title">Show 4G instead of LTE</string>
   <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
@@ -87,17 +87,17 @@
   <!-- Configurations Tile -->
   <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
+  <string name="accessibility_quick_settings_heads_up_off">ايقاف الاشعارات الرأسية.</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
+  <string name="accessibility_quick_settings_heads_up_on">تشغيل الاشعارات الرأسية.</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">تم ايقاف الاشعارات الرأسية.</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
-  <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">تم تشغيل الاشعارات الرأسية.</string>
+  <string name="quick_settings_heads_up_label">الاشعارات الرأسية</string>
   <string name="qs_lte_label">LTE</string>
-  <string name="lte_on">LTE ON </string>
-  <string name="lte_off">LTE OFF</string>
+  <string name="lte_on">تفعيل LTE </string>
+  <string name="lte_off">ايقاف LTE</string>
   <!-- Themes QS Tile -->
   <string name="quick_settings_themes">Themes</string>
   <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
@@ -107,9 +107,9 @@
   <string name="quick_settings_themes_default_theme">Default</string>
   <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
-  <string name="quick_settings_navigation_bar">Navigation bar</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_navigation_bar">شريط التنقل</string>
+  <string name="quick_settings_smartbar_off">اغلاق الشريط الذكي</string>
+  <string name="quick_settings_smartbar">الشريط الذكي</string>
   <string name="quick_settings_fling">Fling gesture</string>
   <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
@@ -117,25 +117,25 @@
   <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
   <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+  <string name="quick_settings_appcirclebar_title">دائرة شريط التطبيقات</string>
+  <string name="quick_settings_appcirclebar_on">تفعيل دائرة شرط التطبيقات</string>
+  <string name="quick_settings_appcirclebar_off">اغلاق دائرة شريط التطبيقات</string>
   <!-- Kernel Adiutor Tile -->
-  <string name="quick_settings_kernel_title">Kernel Adiutor</string>
-  <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+  <string name="quick_settings_kernel_title">تعديل الكيرنال</string>
+  <string name="quick_settings_kernel_adiutor">تعديل الكيرنال</string>
   <!-- Quick settings -->
-  <string name="quick_settings_screenrecord">Screenrecord</string>
-  <string name="quick_settings_screenrecord_on">Recording ...</string>
+  <string name="quick_settings_screenrecord">تسجيل الشاشة</string>
+  <string name="quick_settings_screenrecord_on">تسجيل ...</string>
   <!-- Pie tile -->
-  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_pie">الدائرة</string>
   <!-- Power Menu -->
   <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
   <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
   <!-- Gesture Anywehre -->
-  <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
-  <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
-  <string name="quick_settings_gesture_anywhere_off">Gestures Off</string>
+  <string name="quick_settings_gesture_anywhere_label">الايماء في اي مكان</string>
+  <string name="quick_settings_gesture_anywhere_on">تفعيل الايماء</string>
+  <string name="quick_settings_gesture_anywhere_off">اغلاق الايماء</string>
   <!-- Tuner UI -->
   <string name="status_bar_tuner_title">Status bar tuner</string>
   <string name="status_bar_tuner">Status bar icons</string>
@@ -188,9 +188,9 @@
     (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_app_picker">Application picker</string>
   <!-- Sound QS Tile -->
-  <string name="quick_settings_sound_label">Sound</string>
-  <string name="quick_settings_sound_ring">Ring</string>
-  <string name="quick_settings_sound_vibrate">Vibrate</string>
+  <string name="quick_settings_sound_label">الصوت</string>
+  <string name="quick_settings_sound_ring">رنان</string>
+  <string name="quick_settings_sound_vibrate">هزاز</string>
   <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
   <string name="status_bar_headset">Wired headset</string>
@@ -206,16 +206,16 @@
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Enabled</string>
-  <string name="quick_settings_pulse_disabled">No Visualizer</string>
-  <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
+  <string name="quick_settings_pulse_enabled">تفصل النبض</string>
+  <string name="quick_settings_pulse_disabled">لا خيال</string>
+  <string name="quick_settings_pulse_label">خيال شريط التنقل</string>
   <!-- PA Pie controls -->
   <!-- Title shown in recents popup for showing app launch in floating mode -->
   <string name="recent_float_mode_title">Float Mode</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float view</string>
-  <string name="app_stop_item_title">Kill app</string>
+  <string name="app_float_maximize_item_title">تكبير الشاشة</string>
+  <string name="app_float_item_title">عرض نظام عشري</string>
+  <string name="app_stop_item_title">إنهاء التطبيق</string>
   <!-- Floating Windows tile -->
   <string name="quick_settings_floating_windows_on">Float Mode Enabled</string>
   <string name="quick_settings_floating_windows_off">Float Mode Disabled</string>
@@ -226,7 +226,7 @@
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
-  <string name="recents_custom_android_n">CLEAR ALL</string>
+  <string name="recents_custom_android_n">مسح الكل</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Launch %s after closing recents</string>
   <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>

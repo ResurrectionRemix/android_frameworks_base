@@ -20,8 +20,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">無視</string>
-  <string name="battery_saver_notification_action_text_short">オフにする</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
+  <string name="battery_saver_notification_action_text_short">Turn off</string>
   <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">最大化</string>
@@ -55,24 +55,24 @@
     <string name="quick_settings_onthego_back">Rear Camera</string>
     <string name="quick_settings_onthego_front">Front Camera</string>-->
   <!-- Quick settings -->
-  <string name="quick_settings_brightness_label">画面の明るさ</string>
-  <string name="quick_settings_screen_off_label">画面を消灯</string>
+  <string name="quick_settings_brightness_label">Brightness</string>
+  <string name="quick_settings_screen_off_label">Screen off</string>
   <string name="quick_settings_screenshot_label">スクリーンショット</string>
   <!-- Expanded desktop tile -->
   <string name="quick_settings_expanded_desktop_label">拡張デスクトップ</string>
   <string name="quick_settings_expanded_desktop">展開中</string>
   <string name="quick_settings_expanded_desktop_off">標準</string>
-  <string name="quick_settings_expanded_desktop_detail_title">拡張デスクトップ</string>
-  <string name="quick_settings_expanded_hide_status">ステータスバーを非表示</string>
-  <string name="quick_settings_expanded_hide_navigation">ナビゲーションバーを非表示</string>
-  <string name="quick_settings_expanded_hide_both">両方を非表示</string>
-  <string name="accessibility_quick_settings_expanded_desktop_off">拡張デスクトップはオフになっています</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
+  <string name="quick_settings_expanded_hide_status">Hide status bar</string>
+  <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
+  <string name="quick_settings_expanded_hide_both">Hide both</string>
+  <string name="accessibility_quick_settings_expanded_desktop_off">Expanded desktop disabled</string>
   <!-- Content description of the brightness tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_brightness">音量パネル</string>
+  <string name="accessibility_quick_settings_brightness">Volume panel.</string>
   <!-- Content description of the screen off tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screen_off">画面を消灯</string>
+  <string name="accessibility_quick_settings_screen_off">Screen off.</string>
   <!-- Content description of the screenshot tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_screenshot">スクリーンショット</string>
+  <string name="accessibility_quick_settings_screenshot">Screenshot.</string>
   <!-- Music QS Tile -->
   <string name="quick_settings_music_label">ミュージック</string>
   <string name="quick_settings_music_play">再生</string>
@@ -81,41 +81,41 @@
   <string name="quick_settings_reboot_label">再起動</string>
   <string name="quick_settings_reboot_recovery_label">リカバリ</string>
   <!-- 4G LTE switch -->
-  <string name="show_fourg_title">LTE表示の代わりに4G表示を使用する</string>
-  <string name="show_fourg_summary">ステータスバーの表示をLTEから4Gに置き換える</string>
-  <string name="statusbar_tuner_category_title">ステータスバーに表示しない</string>
+  <string name="show_fourg_title">Show 4G instead of LTE</string>
+  <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
+  <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
   <!-- Configurations Tile -->
-  <string name="quick_settings_rrtools">高度な設定</string>
+  <string name="quick_settings_rrtools">Configurations</string>
   <!-- Content description of the heads up tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_off">ヘッドアップ オフ</string>
   <!-- Content description of the heads up tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_heads_up_on">ヘッドアップ オン</string>
   <!-- Announcement made when heads up changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">ヘッドアップ通知は無効になりました。</string>
   <!-- Announcement made when heads up changes to on (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">ヘッドアップ通知が有効になりました。</string>
   <string name="quick_settings_heads_up_label">ヘッドアップ</string>
   <string name="qs_lte_label">LTE</string>
   <string name="lte_on">LTE オン </string>
   <string name="lte_off">LTE オフ</string>
   <!-- Themes QS Tile -->
-  <string name="quick_settings_themes">テーマ</string>
+  <string name="quick_settings_themes">Themes</string>
   <string name="quick_settings_themes_icon_packs">Apply icon pack</string>
   <string name="quick_settings_themes_app_theme_with_label">Apply theme to <xliff:g id="application">%1$s</xliff:g></string>
   <string name="quick_settings_themes_app_theme">Apply theme to app</string>
-  <string name="quick_settings_themes_system_theme">テーマを適用する</string>
-  <string name="quick_settings_themes_default_theme">デフォルト</string>
+  <string name="quick_settings_themes_system_theme">Apply theme</string>
+  <string name="quick_settings_themes_default_theme">Default</string>
   <string name="quick_settings_themes_match_system">Match system theme</string>
   <!-- Navigation bar Tile -->
   <string name="quick_settings_navigation_bar">ナビゲーションバー</string>
   <string name="quick_settings_smartbar_off">ナビバー オフ</string>
   <string name="quick_settings_smartbar">ナビバー</string>
-  <string name="quick_settings_fling">Flingジェスチャー</string>
-  <string name="quick_settings_fling_off">Flingジェスチャー オフ</string>
+  <string name="quick_settings_fling">Fling gesture</string>
+  <string name="quick_settings_fling_off">Fling gesture off</string>
   <!-- Hw Keys tile -->
-  <string name="quick_settings_hwkeys_title">ハードウェアキー</string>
-  <string name="quick_settings_hwkeys_on">ハードウェアキー 有効</string>
-  <string name="quick_settings_hwkeys_off">ハードウェアキー 無効</string>
+  <string name="quick_settings_hwkeys_title">Hardware Keys</string>
+  <string name="quick_settings_hwkeys_on">Hardware Keys On</string>
+  <string name="quick_settings_hwkeys_off">Hardware Keys Off</string>
   <!-- App Circle Bar tile -->
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
   <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
@@ -129,9 +129,9 @@
   <!-- Pie tile -->
   <string name="quick_settings_pie">Pie</string>
   <!-- Power Menu -->
-  <string name="quick_settings_power_menu_label">電源メニュー</string>
+  <string name="quick_settings_power_menu_label">Power Menu</string>
   <!-- Restart UI -->
-  <string name="quick_settings_systemui_restart_label">システムUIの再起動</string>
+  <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
   <!-- Gesture Anywehre -->
   <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
   <string name="quick_settings_gesture_anywhere_on">Gestures On</string>
@@ -141,27 +141,27 @@
   <string name="status_bar_tuner">Status bar icons</string>
   <string name="status_bar_tuner_summary">Enable or disable status bar system icons</string>
   <!-- Off/On/Toggle -->
-  <string name="off">オフ</string>
-  <string name="on">オン</string>
+  <string name="off">Off</string>
+  <string name="on">On</string>
   <string name="toggle">Toggle</string>
   <!-- Dialog Cancel/OK -->
-  <string name="cancel">キャンセル</string>
-  <string name="dlg_ok">はい</string>
+  <string name="cancel">Cancel</string>
+  <string name="dlg_ok">Ok</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
-  <string name="qs_kill_app">アプリを終了</string>
+  <string name="qs_kill_app">Kill App</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_torch">ライト</string>
+  <string name="navbar_torch">Torch</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_torch">ライト</string>
+  <string name="accessibility_torch">Torch</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_camera">カメラ</string>
+  <string name="navbar_camera">Camera</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_camera">カメラ</string>
+  <string name="accessibility_camera">Camera</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenshot">スクリーンショット</string>
+  <string name="navbar_screenshot">ScreenShot</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenshot">スクリーンショット</string>
+  <string name="accessibility_screenshot">ScreenShot</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_expand">Immersive Mode</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -175,13 +175,13 @@
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_pie">Pie</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_screenrecord">画面の録画</string>
+  <string name="accessibility_screenrecord">ScreenRecord</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_screenrecord">画面の録画</string>
+  <string name="navbar_screenrecord">ScreenRecord</string>
   <!-- Content description of the power button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_killtask">タスクを終了</string>
+  <string name="accessibility_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
-  <string name="navbar_killtask">タスクを終了</string>
+  <string name="navbar_killtask">Kill Task</string>
   <!-- Dialog title for navigation bar button selection -->
   <string name="navbar_app_picker">Application picker</string>
   <!-- Content description of the Application picker button for accessibility
@@ -191,18 +191,18 @@
   <string name="quick_settings_sound_label">サウンド</string>
   <string name="quick_settings_sound_ring">着信</string>
   <string name="quick_settings_sound_vibrate">マナーモード</string>
-  <string name="quick_settings_sound_silent">サイレント</string>
+  <string name="quick_settings_sound_silent">Silent</string>
   <!-- headset icon switch -->
   <string name="status_bar_headset">Wired headset</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- vpn icon switch -->
-  <string name="status_bar_volume">バイブレーション</string>
+  <string name="status_bar_volume">Vibration</string>
   <!-- Tuner -->
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
-  <string name="heads_up_enabled">ヘッドアップ通知は有効です</string>
-  <string name="heads_up_disabled">ヘッドアップ通知は無効です</string>
+  <string name="heads_up_enabled">Heads up notifications are enabled</string>
+  <string name="heads_up_disabled">Heads up notifications are disabled</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->
@@ -224,7 +224,7 @@
   <string name="quick_settings_slim_floats_off">Slim Float Mode Disabled</string>
   <string name="quick_settings_visualizer_label">AudioFX</string>
   <!-- Content description of the visualizer tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_visualizer">ビジュアライザー</string>
+  <string name="accessibility_quick_settings_visualizer">Visualizer.</string>
   <string name="pulse_toast_message">Visualizer Tile will not work with pulse enabled</string>
   <string name="recents_custom_android_n">CLEAR ALL</string>
   <!-- Slim recents app sidebar queue app toast -->

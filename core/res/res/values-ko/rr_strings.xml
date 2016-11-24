@@ -43,11 +43,11 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">손전등</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">상단에 맞춤</string>
-  <string name="floating_window_snap_bottom">하단에 맞춤</string>
-  <string name="floating_window_snap_left">왼쪽에 맞춤</string>
-  <string name="floating_window_snap_right">오른쪽에 맞춤</string>
-  <string name="floating_window_minimize">최소화</string>
+  <string name="floating_window_snap_top">Snap top</string>
+  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB 비활성화</string>
   <string name="adb_active_custom_tile_not_connected">비활성화</string>

@@ -43,11 +43,11 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Ліхтарик</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Приліпити зверху</string>
-  <string name="floating_window_snap_bottom">Приліпити знизу</string>
-  <string name="floating_window_snap_left">Пристосувати до лівого краю</string>
-  <string name="floating_window_snap_right">Приліпити зправа</string>
-  <string name="floating_window_minimize">Згорнути</string>
+  <string name="floating_window_snap_top">Snap top</string>
+  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB неактивний</string>
   <string name="adb_active_custom_tile_not_connected">неактивний</string>

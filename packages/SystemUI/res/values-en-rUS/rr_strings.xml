@@ -20,9 +20,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Battery Saver Dimss -->
-  <string name="battery_saver_dismiss_title">Go back</string>
+  <string name="battery_saver_dismiss_title">Dismiss</string>
   <string name="battery_saver_notification_action_text_short">Turn off</string>
-  <string name="gestures_message">Draw your gesture here</string>
+  <string name="gestures_message">Draw gesture here</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
   <string name="app_float_item_title">Float view</string>
@@ -62,7 +62,7 @@
   <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
   <string name="quick_settings_expanded_desktop">Expanded</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
-  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop style</string>
+  <string name="quick_settings_expanded_desktop_detail_title">Expanded desktop mode</string>
   <string name="quick_settings_expanded_hide_status">Hide status bar</string>
   <string name="quick_settings_expanded_hide_navigation">Hide navigation bar</string>
   <string name="quick_settings_expanded_hide_both">Hide both</string>
@@ -202,7 +202,7 @@
   <string name="systemui_tuner_qs_title">UI Tuner</string>
   <!-- Heads up toast -->
   <string name="heads_up_enabled">Heads up notifications are enabled</string>
-  <string name="heads_up_disabled">Heads up notifications are enabled</string>
+  <string name="heads_up_disabled">Heads up notifications are disabled</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Pulse Tile -->

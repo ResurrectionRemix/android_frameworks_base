@@ -43,11 +43,11 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">El Feneri</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Üste yapış</string>
-  <string name="floating_window_snap_bottom">Alta yapış</string>
-  <string name="floating_window_snap_left">Sola yapış</string>
-  <string name="floating_window_snap_right">Sağa yapış</string>
-  <string name="floating_window_minimize">Küçült</string>
+  <string name="floating_window_snap_top">Snap top</string>
+  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB etkin değil</string>
   <string name="adb_active_custom_tile_not_connected">etkin değil</string>

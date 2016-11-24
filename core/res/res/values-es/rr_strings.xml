@@ -43,14 +43,14 @@
   <!-- Powermenu Torch -->
   <string name="global_action_torch">Linterna</string>
   <!-- Floating Window -->
-  <string name="floating_window_snap_top">Anclar arriba</string>
-  <string name="floating_window_snap_bottom">Anclar abajo</string>
-  <string name="floating_window_snap_left">Anclar a la izquierda</string>
-  <string name="floating_window_snap_right">Anclar a la derecha</string>
-  <string name="floating_window_minimize">Minimizar</string>
+  <string name="floating_window_snap_top">Snap top</string>
+  <string name="floating_window_snap_bottom">Snap bottom</string>
+  <string name="floating_window_snap_left">Snap left</string>
+  <string name="floating_window_snap_right">Snap right</string>
+  <string name="floating_window_minimize">Minimize</string>
   <!-- ADB enabled, but not connected notification & custom tile title -->
   <string name="adb_not_connected_notification_title">ADB inactivo</string>
   <string name="adb_active_custom_tile_not_connected">inactivo</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">La imagen de su proveedor no coincide con la del sistema. Por favor haga flash de la imagen original <xliff:g id="string">%s</xliff:g> de su dispositivo</string>
+  <string name="system_error_vendorprint">Su imagen del proveedor no coincide con el sistema. Por favor flashee la imagen <xliff:g id="string">%s</xliff:g> de su dispositivo</string>
 </resources>
