@@ -8274,7 +8274,16 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         */
          public static final String STATUS_BAR_CHARGE_COLOR = "status_bar_charge_color";
 
+
         /**
+          * Whether to force percentage text out of the battery icon when charging
+          *
+          * @hide
+        */
+         public static final String FORCE_CHARGE_BATTERY_TEXT = "force_charge_battery_text";
+
+        /**
+
          * Whether the camera double twist gesture to flip between front and back mode should be
          * enabled.
          * @hide
