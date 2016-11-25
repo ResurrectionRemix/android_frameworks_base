@@ -99,6 +99,7 @@ public class KeyguardStatusView extends GridLayout implements
     private int mCityColor;
     private int mWindColor;
     private int mIconColor;
+    private int alarmColor;
 
 	private WeatherController mWeatherController;
 
@@ -246,6 +247,7 @@ public class KeyguardStatusView extends GridLayout implements
             mAlarmStatusView.setContentDescription(
                     getResources().getString(R.string.keyguard_accessibility_next_alarm, alarm));
             mAlarmStatusView.setVisibility(View.VISIBLE);
+            mAlarmStatusView.setTextColor(alarmColor);
         } else {
             mAlarmStatusView.setVisibility(View.GONE);
         }
@@ -738,8 +740,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         int ownerInfoColor = Settings.System.getInt(resolver,
                 Settings.System.LOCKSCREEN_OWNER_INFO_COLOR, 0xFFFFFFFF);
-        int alarmColor = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_ALARM_COLOR, 0xFFFFFFFF);
 
 
         if (hideMode == 0) {
@@ -847,10 +847,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         if (mOwnerInfo != null) {
             mOwnerInfo.setTextColor(ownerInfoColor);
-        }
-
-        if (mAlarmStatusView != null) {
-            mAlarmStatusView.setTextColor(alarmColor);
         }
 
         if (mIconNameValue != iconNameValue) {
@@ -993,6 +989,8 @@ public class KeyguardStatusView extends GridLayout implements
                      Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.LOCKSCREEN_ALARM_COLOR), false, this, UserHandle.USER_ALL);
 
              update();
          }
@@ -1043,6 +1041,9 @@ public class KeyguardStatusView extends GridLayout implements
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR))) {
                  updateSettings(false);
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR))) {                
+                 refresh();
              }
              update();
          }
@@ -1072,6 +1073,8 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR, 0xFFFFFFFF);
            mIconColor = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, -2);
+           alarmColor = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_ALARM_COLOR, 0xFFFFFFFF);
 
            mLockClockFontSize = Settings.System.getIntForUser(resolver,
              Settings.System.LOCKCLOCK_FONT_SIZE,
