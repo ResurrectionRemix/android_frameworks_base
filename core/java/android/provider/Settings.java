@@ -8268,9 +8268,15 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
                 "camera_double_tap_power_gesture_disabled";
 
         /**
+          * battery icon color when charging
+          *
+          * @hide
+        */
+         public static final String STATUS_BAR_CHARGE_COLOR = "status_bar_charge_color";
+
+        /**
          * Whether the camera double twist gesture to flip between front and back mode should be
          * enabled.
-         *
          * @hide
          */
         public static final String CAMERA_DOUBLE_TWIST_TO_FLIP_ENABLED =
