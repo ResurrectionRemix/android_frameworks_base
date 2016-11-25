@@ -796,8 +796,6 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
             mLastCameraIntent = cameraIntent;
             if (mCameraPreview != null) {
                 mCameraPreview.setVisibility(View.GONE);
-                mPreviewContainer.addView(mCameraPreview);
-                mCameraPreview.setVisibility(View.INVISIBLE);
 	            updateCameraIconColor();
                 updatePhoneIconColor();
                 updateLockIconColor();
