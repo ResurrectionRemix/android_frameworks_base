@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Icon;
@@ -47,6 +46,7 @@ import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.statusbar.policy.NetworkTraffic;
 import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
+import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
@@ -124,6 +124,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private boolean mTransitionDeferring;
     private long mTransitionDeferringStartTime;
     private long mTransitionDeferringDuration;
+    private int mCustomLogoPos;
 
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
 
@@ -389,11 +390,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         animateHide(mWeatherLeft,animate);
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 &&
-           (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.CUSTOM_LOGO_POSITION,  0,
-                UserHandle.USER_CURRENT) == 0)) {
-        animateHide(mCLogoLeft, animate);
+                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
+                if(mCustomLogoPos == 0) {
+                animateHide(mCLogoLeft, animate);
+                }
         }
     }
 
@@ -421,11 +421,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         animateShow(mWeatherLeft,animate);
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1 &&
-           (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.CUSTOM_LOGO_POSITION,  0,
-                UserHandle.USER_CURRENT) == 0)) {
-        animateShow(mCLogoLeft, animate);
+                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
+                if(mCustomLogoPos == 0) {
+                animateShow(mCLogoLeft, animate);
+                }
         }
     }
 
@@ -673,8 +672,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 	    // we cant set imagetintlist on the last one. It is non colorable. Hence use a condition.
                 if (mCustomLogo == 43) {
 		        mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
-         	    mCLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
-         	    mCLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
+         	    mCLogoLeft.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
+         	    mCLogoRight.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
                 } else {
          	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
          	    mCLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
@@ -807,12 +806,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         return mNotificationIconAreaController.getNotificationIconsCount();
     }
 
-    class SettingsObserver extends ContentObserver {
+    class SettingsObserver extends UserContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
     }
-
-    void observe() {
+    
+    @Override
+    protected void observe() {
          ContentResolver resolver = mContext.getContentResolver();
          resolver.registerContentObserver(Settings.System
                  .getUriFor(Settings.System.HIDE_CARRIER_MAX_SWITCH),
@@ -820,7 +820,19 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
          resolver.registerContentObserver(Settings.System
                  .getUriFor(Settings.System.HIDE_CARRIER_MAX_NOTIFICATION),
                  false, this, UserHandle.USER_CURRENT);
+         resolver.registerContentObserver(Settings.System
+                 .getUriFor(Settings.System.CUSTOM_LOGO_POSITION),
+                 false, this, UserHandle.USER_CURRENT);
+         update();
     }
+
+        @Override
+        protected void unobserve() {
+            super.unobserve();
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
 
     @Override
     public void onChange(boolean selfChange, Uri uri) {
@@ -832,6 +844,14 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             Settings.System.HIDE_CARRIER_MAX_NOTIFICATION))) {
             carrierLabelVisibility();
             }
+        update();
+        }
+
+    @Override
+    protected void update() {
+    mCustomLogoPos = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.CUSTOM_LOGO_POSITION, 0,
+                    UserHandle.USER_CURRENT);
         }
     }
     private void updateBatteryLevelText() {

@@ -758,20 +758,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     checkBarModes();
                     updateClearAll();
                     updateEmptyShadeView();
-          }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_CUSTOM_LOGO))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_STYLE))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_LOGO_POSITION))) {
-            		mCustomlogo = Settings.System.getIntForUser(resolver,
-            		Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
-            		mCustomlogoColor = Settings.System.getIntForUser(resolver,
-            		Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-                    mCustomLogoPos = Settings.System.getIntForUser(
-                    resolver, Settings.System.CUSTOM_LOGO_POSITION, 0,
-                    UserHandle.USER_CURRENT);
-                    showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
            }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NAVBAR_TINT_SWITCH))) {
                     mNavigationController.updateNavbarOverlay(mContext.getResources());
@@ -4560,12 +4546,22 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 		}
     }
 
- public void showmCustomlogo(boolean show,int color ,int pos) { 
+ public void showmCustomlogo(boolean show,int color ,int pos) {
+        if (mStatusBarView == null) return;
         if (!show) {
             mCLogo.setVisibility(View.GONE);
             mCLogoleft.setVisibility(View.GONE);
             mCLogoright.setVisibility(View.GONE);
             return;
+        }
+        if (color != 0xFFFFFFFF) {
+            mCLogo.setColorFilter(color, Mode.MULTIPLY);
+            mCLogoleft.setColorFilter(color, Mode.MULTIPLY);
+            mCLogoright.setColorFilter(color, Mode.MULTIPLY);
+        } else {
+            mCLogo.clearColorFilter();
+            mCLogoleft.clearColorFilter();
+            mCLogoright.clearColorFilter();
         }
         Drawable d = null;
         int style = mCustomlogoStyle;
@@ -4658,30 +4654,18 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 		} else if ( style == 43) {
         d = mContext.getResources().getDrawable(R.drawable.orioles_logo);
 		}
-	    mCLogo.setImageDrawable(null);
-	    mCLogoright.setImageDrawable(null);
-	    mCLogoleft.setImageDrawable(null);
-	    mCLogo.setImageDrawable(d);
-	    mCLogoright.setImageDrawable(d);
-	    mCLogoleft.setImageDrawable(d);
-		if (color != 0xFFFFFFFF) {
-		mCLogo.setColorFilter(color, Mode.MULTIPLY);
-		mCLogoleft.setColorFilter(color, Mode.MULTIPLY);
-		mCLogoright.setColorFilter(color, Mode.MULTIPLY);
-		} else {
-		mCLogo.clearColorFilter();
-		mCLogoleft.clearColorFilter();
-		mCLogoright.clearColorFilter();
-		}
         if (pos == 0) {
+            mCLogoleft.setImageDrawable(d);
             mCLogoright.setVisibility(View.GONE);
             mCLogoleft.setVisibility(View.VISIBLE);
             mCLogo.setVisibility(View.GONE);
         } else if (pos == 1) {
+            mCLogo.setImageDrawable(d);
             mCLogo.setVisibility(View.VISIBLE);
             mCLogoleft.setVisibility(View.GONE);
             mCLogoright.setVisibility(View.GONE);
         } else if (pos == 2) {
+            mCLogoright.setImageDrawable(d);
             mCLogoright.setVisibility(View.VISIBLE);
             mCLogo.setVisibility(View.GONE);
             mCLogoleft.setVisibility(View.GONE);
