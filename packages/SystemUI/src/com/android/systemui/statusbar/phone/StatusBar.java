@@ -6766,8 +6766,17 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_QUICKBAR_SCROLL_ENABLED))) {
                 if (mQuickStatusBarHeader != null) {
                     mQuickStatusBarHeader.updateSettings();
+                }
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_TILE_TITLE_VISIBILITY)))
+                updateQsPanelResources();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_PORTRAIT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_LANDSCAPE)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_PORTRAIT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_LANDSCAPE))) {
+                if (mQuickStatusBarHeader != null) {
+                    mQuickStatusBarHeader.updateSettings();
+                }
                 updateQsPanelResources();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_FOOTER_WARNINGS))) {
