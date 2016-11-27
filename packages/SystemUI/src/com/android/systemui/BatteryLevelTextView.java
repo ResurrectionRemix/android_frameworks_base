@@ -19,6 +19,7 @@ package com.android.systemui;
 import android.content.Context;
 import android.icu.text.NumberFormat;
 import android.util.AttributeSet;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 

@@ -28,6 +28,8 @@ import android.media.session.MediaSessionLegacyHelper;
 import android.os.Handler;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
@@ -37,7 +39,6 @@ import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.QSTileView;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
-/** Quick settings tile: Music **/
 public class MusicTile extends QSTile<QSTile.BooleanState> {
 
     private final String TAG = "MusicTile";
@@ -108,12 +109,17 @@ public class MusicTile extends QSTile<QSTile.BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         if (mActive) {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_media_pause);
-            state.label = mMetadata.trackTitle != null
+            state.label = mMetadata.trackTitle != null && MusicTileTitle()
                 ? mMetadata.trackTitle : mContext.getString(R.string.quick_settings_music_pause);
         } else {
             state.icon = ResourceIcon.get(R.drawable.ic_qs_media_play);
             state.label = mContext.getString(R.string.quick_settings_music_play);
         }
+    }
+
+    private boolean MusicTileTitle() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+               Settings.System.MUSIC_TILE_TITLE, 0, UserHandle.USER_CURRENT) == 1;
     }
 
     private void playbackStateUpdate(int state) {
@@ -213,18 +219,6 @@ public class MusicTile extends QSTile<QSTile.BooleanState> {
             playbackStateUpdate(state);
         }
 
-//        @Override
-//        public void onClientFolderInfoBrowsedPlayer(String stringUri) { }
-
-//        @Override
-//        public void onClientUpdateNowPlayingEntries(long[] playList) { }
-
-//        @Override
-//        public void onClientNowPlayingContentChange() { }
-
-//        @Override
-//        public void onClientPlayItemResponse(boolean success) { }
-
         @Override
         public void onClientMetadataUpdate(RemoteController.MetadataEditor data) {
             mMetadata.trackTitle = data.getString(MediaMetadataRetriever.METADATA_KEY_TITLE,
@@ -249,5 +243,4 @@ public class MusicTile extends QSTile<QSTile.BooleanState> {
             trackTitle = null;
         }
     }
-
 }

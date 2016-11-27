@@ -37,7 +37,6 @@ public class BatteryMeterView extends ImageView implements
 
     private static final String STATUS_BAR_BATTERY_STYLE =
             "cmsystem:" + CMSettings.System.STATUS_BAR_BATTERY_STYLE;
-            Settings.Secure.STATUS_BAR_BATTERY_STYLE;
     private static final String STATUS_BAR_CHARGE_COLOR =
             Settings.Secure.STATUS_BAR_CHARGE_COLOR;
 
