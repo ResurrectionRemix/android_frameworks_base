@@ -4108,11 +4108,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // Disable back key if navbar hw keys is set to off
-            if (scanCode != 0 && !hasHwKeysEnabled()) {
-                Log.i(TAG, "Ignoring Back Key: we have hw keys disabled");
-                return 0;
-            }
             if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.KILL_APP_LONGPRESS_BACK, 0, UserHandle.USER_CURRENT) == 1) {
                 if (down && repeatCount == 0) {
@@ -6666,10 +6661,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
              }
              if (scanCode != 0 && keyCode == KeyEvent.KEYCODE_MENU) {
                  Log.i(TAG, "Ignoring Menu Key: we have hw keys disabled");
-                 return 0;
-             }
-             if (scanCode != 0 && keyCode == KeyEvent.KEYCODE_BACK) {
-                 Log.i(TAG, "Ignoring Back Key: we have hw keys disabled");
                  return 0;
              }
              if (scanCode != 0 && keyCode == KeyEvent.KEYCODE_SEARCH) {
