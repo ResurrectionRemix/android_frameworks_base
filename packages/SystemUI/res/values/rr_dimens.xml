@@ -58,4 +58,7 @@
     <dimen name="pie_tab_title_height">24dp</dimen>
     <dimen name="pie_panel_padding">20dp</dimen>
 
+    <!-- Qs visibility -->
+    <dimen name="qs_tile_height_wo_label">48dp</dimen>
+
 </resources>

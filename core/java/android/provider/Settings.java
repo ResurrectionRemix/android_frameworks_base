@@ -4798,6 +4798,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String TRANSPARENT_VOLUME_DIALOG = "transparent_volume_dialog";
 
         /**
+         * Whether to display qs tile titles in the qs panel
+         * @hide
+         */
+        public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
+
+        /**
          * Volume dialog stroke
          * 0 = disabled
          * 1 = use accent color (default)
