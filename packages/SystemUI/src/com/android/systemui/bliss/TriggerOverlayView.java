@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.rr;
+package com.android.systemui.bliss;
 
 import android.app.KeyguardManager;
 import android.content.Context;
