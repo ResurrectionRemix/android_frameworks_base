@@ -26,5 +26,4 @@
 
     <!-- The min animation duration for animating the fab out -->
     <integer name="recents_animate_fab_exit_duration">125</integer>
-
 </resources>
