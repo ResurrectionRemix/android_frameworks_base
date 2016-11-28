@@ -26,13 +26,6 @@
     <color name="gesture_overlay_background_fill_color">#80000000</color>
     <color name="gesture_color">@*android:color/accent_material_dark</color>
 
-    <!-- app sidebar trigger region color -->
-    <color name="trigger_region_color">#8015a0e5</color>
-    <!-- app sidebar item text color -->
-    <color name="sidebar_item_text_color">#ffffffff</color>
-    <!-- app sidebar item text shadow color -->
-    <color name="sidebar_item_text_shadow_color">#ff000000</color>
-
     <!-- Volume panel border coler -->
     <color name="volume_panel_border_color">#ff2962ff</color><!-- blue A700 -->
 

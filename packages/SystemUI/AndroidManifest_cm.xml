@@ -40,7 +40,7 @@
             android:targetActivity=".tuner.TunerActivity"
             android:icon="@drawable/tuner"
             android:theme="@style/TunerSettings"
-            android:label="@string/nav_bar"
+            android:label="@string/rr_sys_tuner"
             android:process=":tuner"
             android:exported="true">
             <intent-filter>
