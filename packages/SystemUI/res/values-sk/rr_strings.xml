@@ -138,8 +138,8 @@
   <!-- Path data for landscape battery -->
   <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Pozerané oznámenia sú odložené po dobu 1 minúty.</string>
-  <string name="heads_up_snooze_message"><XLIFF: g id = "string">% s </ XLIFF: g> - Pozerané oznámenia sú odložené na <XLIFF: g id = "číslo">% d </ XLIFF: g> minút.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Pozerané oznámenia sú odložené po dobu 1 minúty.</string>
+  <string name="heads_up_snooze_message"><xliff:g id = "string">%s</xliff:g> - Pozerané oznámenia sú odložené na<xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Snímka obrazovky neprijatá</string>
   <string name="screenshot_abort_text">Operácia bola prerušená</string>
