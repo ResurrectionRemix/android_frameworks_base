@@ -4136,7 +4136,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
             // Disable back key if navbar hw keys is set to off
-            if (scanCode != 0 && !hasHwKeysEnabled()) {
+            if (scanCode != 0 && !hasHwKeysEnabled() && !mContext.getResources().getBoolean(com.android.internal.R.bool.config_hwKeysBackAlwaysOn)) {
                 Log.i(TAG, "Ignoring Back Key: we have hw keys disabled");
                 return 0;
             }
@@ -6695,7 +6695,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                  Log.i(TAG, "Ignoring Menu Key: we have hw keys disabled");
                  return 0;
              }
-             if (scanCode != 0 && keyCode == KeyEvent.KEYCODE_BACK) {
+             if (scanCode != 0 && keyCode == KeyEvent.KEYCODE_BACK && !mContext.getResources().getBoolean(com.android.internal.R.bool.config_hwKeysBackAlwaysOn)) {
                  Log.i(TAG, "Ignoring Back Key: we have hw keys disabled");
                  return 0;
              }
