@@ -36,7 +36,7 @@
 
     <string name="gestures_message">Draw your gesture here</string>
 
-    <string name="rr_sys_tuner">SystemUI tuner</string>
+    <string name="rr_sys_tuner">System UI tuner</string>
 
     <!-- Strings for lockscreen shortcut hints -->
     <string name="left_shortcut_hint">Swipe right for %1$s</string>
