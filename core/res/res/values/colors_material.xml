@@ -27,7 +27,7 @@
     <color name="primary_material_dark">@color/material_pixel_blue_dark</color>
     <color name="primary_material_light">@color/material_grey_100</color>
     <color name="primary_material_settings">@color/material_pixel_blue_dark</color>
-    <color name="primary_dark_material_dark">@color/black</color>
+    <color name="primary_dark_material_dark">@color/material_pixel_primary_dark_material_dark</color>
     <color name="primary_dark_material_light">@color/material_grey_600</color>
     <color name="primary_dark_material_light_light_status_bar">@color/material_grey_300</color>
     <color name="primary_dark_material_settings">@color/material_blue_grey_950</color>
@@ -92,11 +92,7 @@
     <color name="material_blue_grey_700">#ff455a64</color>
     <color name="material_blue_grey_800">#ff37474f</color>
     <color name="material_blue_grey_900">#ff263238</color>
-    <color name="material_blue_grey_950">#ff21272b</color>
-
-    <color name="material_pixel_blue_light">#ff3e4147</color>
-    <color name="material_pixel_blue_dark">#ff2a2c31</color>
-    <color name="material_pixel_blue_bright">#ff4285f4</color>
+    <color name="material_blue_grey_950">#242424</color>
 
     <!-- Time picker defaults when no theme is set -->
     <eat-comment />

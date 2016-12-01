@@ -15,7 +15,7 @@
 
     <TextView
         android:textSize="15sp"
-        android:textColor="#424242"
+        android:textColor="@*android:color/secondary_text_default_material_light"
         android:gravity="center"
         android:layout_below="@id/phone_button"
         android:layout_alignStart="@id/phone_button"
