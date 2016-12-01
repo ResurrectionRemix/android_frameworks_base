@@ -149,7 +149,7 @@ public class BatteryMeterView extends ImageView implements
     }
 
     private void updateBoltColor() {
-        final int style = Settings.Secure.getInt(getContext().getContentResolver(), STATUS_BAR_BATTERY_STYLE, 0);
+        final int style = CMSettings.System.getInt(getContext().getContentResolver(), CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0);
         if (style == BatteryMeterDrawable.BATTERY_STYLE_TEXT || style == BatteryMeterDrawable.BATTERY_STYLE_HIDDEN) {
             return;
         } else {

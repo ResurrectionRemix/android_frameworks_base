@@ -337,7 +337,7 @@ public class ViewConfiguration {
             } else {
                 OVERFLING_DISTANCE = overFlingDistance;
             }
-        }		
+        }
         mContext = context;
         final Resources res = context.getResources();
         final DisplayMetrics metrics = res.getDisplayMetrics();

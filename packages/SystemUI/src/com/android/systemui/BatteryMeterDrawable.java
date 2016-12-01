@@ -262,6 +262,9 @@ public class BatteryMeterDrawable extends Drawable implements
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(FORCE_CHARGE_BATTERY_TEXT),
                 false, mSettingObserver);
+        mContext.getContentResolver().registerContentObserver(
+                CMSettings.System.getUriFor(CMSettings.System.STATUS_BAR_BATTERY_STYLE),
+                false, mSettingObserver);
         updateShowPercent();
         updateChargeColor();
         updateForceChargeBatteryText();

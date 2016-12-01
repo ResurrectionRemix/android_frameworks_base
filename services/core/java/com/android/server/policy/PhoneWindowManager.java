@@ -684,7 +684,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mForcingShowNavBar;
     int mForcingShowNavBarLayer;
 
-    boolean mDevForceNavbar = false;
 
     // User defined bar visibility, regardless of factory configuration
     boolean mNavbarVisible = false;
@@ -2583,6 +2582,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mWakeGestureEnabledSetting = wakeGestureEnabledSetting;
                 updateWakeGestureListenerLp();
             }
+
             boolean doShowNavbar = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.NAVIGATION_BAR_VISIBLE,
                     DUActionUtils.hasNavbarByDefault(mContext) ? 1 : 0,

@@ -98,8 +98,8 @@ public class BatteryLevelTextView extends TextView implements
             case STATUS_BAR_BATTERY_STYLE:
                 final int value = newValue == null ?
                         BatteryMeterDrawable.BATTERY_STYLE_PORTRAIT : Integer.parseInt(newValue);
-                mForceBatteryText = Settings.Secure.getInt(getContext().getContentResolver(),
-                        STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
+                mForceBatteryText = CMSettings.System.getInt(getContext().getContentResolver(),
+                        CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
                 mForceChargeBatteryText = Settings.Secure.getInt(getContext().getContentResolver(),
                         FORCE_CHARGE_BATTERY_TEXT, 1) == 1 ? true : false;
                 switch (value) {
