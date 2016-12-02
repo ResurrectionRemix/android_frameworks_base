@@ -2056,5 +2056,7 @@
      can't verify user consent. [CHAR LIMIT=NONE] -->
     <string name="touch_filtered_warning">Because an app is obscuring a permission request, Settings
         can’t verify your response.</string>
+    <!-- Gesture Anywhere -->
+    <string name="gestures_message">Draw your gesture here</string>
 
 </resources>
