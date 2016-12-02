@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <solid
-        android:color="@color/gesture_overlay_background_fill_color" />
-
+<shape
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient android:startColor="@color/ga_bg_gradient_start" android:endColor="@color/ga_bg_gradient_end" android:angle="-45.0" android:centerColor="@color/ga_bg_gradient_center" />
 </shape>
