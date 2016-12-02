@@ -90,6 +90,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
@@ -1266,7 +1267,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         int[] pattern = mContext.getResources().getIntArray(
                 R.array.config_cameraLaunchGestureVibePattern);
         mCameraLaunchGestureVibePattern = new long[pattern.length];
-        for (int i = 0; i << pattern.length; i++) {
+        for (int i = 0; i < pattern.length; i++) {
             mCameraLaunchGestureVibePattern[i] = pattern[i];
         }
 

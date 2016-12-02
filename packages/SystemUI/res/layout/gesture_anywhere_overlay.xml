@@ -1,10 +1,10 @@
 <!-- ChaosLab: GestureAnywhere - BEGIN -->
 <com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="20dp"
-    android:layout_height="40dp"
-    android:layout_gravity="left|center_vertical"
-    android:background="#00000000" >
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="20dp"
+        android:layout_height="40dp"
+        android:layout_gravity="left|center_vertical"
+        android:background="#00000000" >
         
     <FrameLayout
         android:id="@+id/content"
@@ -12,24 +12,48 @@
         android:layout_height="match_parent"
         android:background="@drawable/gesture_anywhere_overlay_background"
         android:visibility="gone" >
-        <android.gesture.GestureOverlayView
-            android:id="@+id/gesture_overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gestureColor="@color/gesture_color"
-            android:gestureStrokeType="single"
-            android:gestureStrokeWidth="16.0"
-            android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/cancel_gesturing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
-            android:padding="10dp"
-            android:clickable="true"
-            android:src="@drawable/btn_ga_cancel_gesturing" />
+    <android.gesture.GestureOverlayView
+        android:id="@+id/gesture_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gestureColor="@color/ga_gesture_color"
+        android:gestureStrokeType="single"
+        android:gestureStrokeWidth="16.0"
+        android:visibility="gone" />       
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:padding="70dp"
+        android:id="@+id/ga_arrow"
+        android:tint="@color/ga_info_icon_color"
+        android:src="@drawable/ga_pointer"/>
+
+    <TextView
+        android:id="@+id/gesture_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:padding="24dp"
+        android:textSize="15sp"
+        android:textColor="@color/ga_info_text_color"
+        android:letterSpacing="0.14"
+        android:text="@string/gestures_message"
+        android:fontFamily="sans-serif-condensed"
+        android:textAllCaps="false"
+        android:textStyle="normal"/>
+
+    <include 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="21dp"
+        android:layout_marginTop="21dp"
+        layout="@layout/btn_ga_cancel_gesturing"/>
     </FrameLayout>
 
 </com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView>
 <!-- ChaosLab: GestureAnywhere - END -->
+
