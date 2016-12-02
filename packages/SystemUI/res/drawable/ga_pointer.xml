@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 Resurrection Remix Project 
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="768"
+    android:viewportHeight="768">
+
+    <path
+        android:fillColor="#000000"
+        android:pathData="M165,259.5 C148.5,252,136.5,235.5,136.5,216 L136.5,210 L160.5,40.5
+C163.5,16.5,183,0,207,0 L424.5,0 C438,0,448.5,4.5,457.5,13.5 L616.5,172.5
+L591,198 C585,204,576,208.5,565.5,208.5 C562.5,208.5,561,207,558,207
+L448.5,184.5 L448.5,528 C448.5,555,427.5,576,400.5,576 S352.5,555,352.5,528
+L352.5,336 L327,336 C321,336,316.5,334.5,310.5,333 Z M480,408
+C519,433.5,544.5,478.5,544.5,528 C544.5,607.5,480,672,400.5,672
+S256.5,607.5,256.5,528 C256.5,478.5,280.5,433.5,319.5,408 L319.5,528
+C319.5,571.5,357,607.5,400.5,607.5 S480,571.5,480,528 L480,408 Z" />
+</vector>

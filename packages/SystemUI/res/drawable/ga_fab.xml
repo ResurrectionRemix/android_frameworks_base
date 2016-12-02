@@ -13,15 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_window_focused="false" android:state_enabled="true"
-        android:drawable="@drawable/btn_ga_cancel_gesturing_normal" />
-    <item android:state_pressed="true"
-        android:drawable="@drawable/btn_ga_cancel_gesturing_pressed" />
-    <item android:state_enabled="true"
-        android:drawable="@drawable/btn_ga_cancel_gesturing_normal" />
-    <item
-         android:drawable="@drawable/btn_ga_cancel_gesturing_normal" />
-</selector>
-
+<shape  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="oval"
+        android:tint="@color/ga_fab_bg_color">
+</shape>
