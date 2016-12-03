@@ -31,16 +31,22 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Screenshot deleted</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">%1$s के लिए यहाँ से दाहिने स्वाइप करें</string>
   <!-- App circle sidebar -->
   <!-- On The Go -->
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">ध्वनि</string>
   <!-- Volume QS Tile -->
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_music_play">चलायें</string>
   <!-- PA Pie controls -->
+  <string name="pie_hour_format_12">घंटे:मिनट</string>
   <!-- Kill app toast -->
   <!-- Path data for portrait battery -->
   <!-- Path data for landscape battery -->
   <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">स्क्रीनशॉट नहीं लिया लिया</string>
+  <string name="screenshot_abort_text">करवाई निलंबित</string>
 </resources>

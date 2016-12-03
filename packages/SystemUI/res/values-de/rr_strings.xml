@@ -29,9 +29,16 @@
   <string name="screenrecord_notif_error">Bildschirmvideo konnte nicht aufgenommen werden</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">Screenshot gelöscht</string>
+  <string name="delete_screenshot_toast">Bildschirmfoto gelöscht</string>
   <string name="gestures_message">Geste hier zeichnen</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Nach Rechts wischen für %1$s</string>
+  <string name="right_shortcut_hint">Nach Links wischen für %1$s</string>
+  <string name="lockscreen_message">Tippe auf ein Symbol links oder rechts, um eine Sperrbildschirm-Verknüpfung neu zuzuweisen.</string>
+  <string name="lockscreen_default_target">Standard</string>
+  <string name="select_application">App auswählen</string>
+  <string name="lockscreen_choose_action_title">Aktion auswählen</string>
+  <string name="lockscreen_none_target">Kein</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximieren</string>
   <string name="app_float_item_title">Fenster Ansicht</string>
@@ -43,7 +50,7 @@
   <string name="onthego_notif_options">Optionen</string>
   <string name="onthego_notif_error">On-The-Go Modus kann nicht gestartet werden</string>
   <string name="onthego_notif_restart">On-The-Go Modus neu starten</string>
-  <string name="onthego_notif_camera_changed">Kamera Modus geändert</string>
+  <string name="onthego_notif_camera_changed">Kameramodus geändert</string>
   <string name="onthego_transparency">Transparenz</string>
   <string name="onthego_front_camera">Verwende Frontkamera</string>
   <string name="onthego_service_toggle">Dienst automatisch neu starten</string>
@@ -75,15 +82,15 @@
   <string name="accessibility_quick_settings_usb_tether_on">USB-Tethering an</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">USB Tethering ausgeschaltet</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">USB Tethering angeschaltet</string>
-  <string name="quick_settings_usb_tether_label">Tethering</string>
+  <string name="quick_settings_usb_tether_label">USB Tethering</string>
   <string name="quick_settings_music_label">Musik</string>
-  <string name="quick_settings_music_play">Play</string>
+  <string name="quick_settings_music_play">Wiedergabe</string>
   <string name="quick_settings_music_pause">Pause</string>
   <string name="quick_settings_ime_tile_label">Eingabemethode</string>
   <string name="rr_qs_tile">Einstellungen</string>
   <string name="quick_settings_caffeine_label">Koffein</string>
   <string name="accessibility_quick_settings_caffeine_off">Koffein aus</string>
-  <string name="accessibility_quick_settings_caffeine_on">Caffeine an</string>
+  <string name="accessibility_quick_settings_caffeine_on">Koffein an</string>
   <string name="qs_app_picker_title">App-Picker</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE an </string>

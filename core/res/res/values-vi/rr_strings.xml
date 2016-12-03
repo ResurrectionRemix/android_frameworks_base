@@ -28,7 +28,7 @@
   <string name="animation_slide_left_no_fade">Trượt sang trái (Không mờ dần)</string>
   <string name="animation_slide_up">Trượt vào phía dưới</string>
   <string name="animation_slide_down">Trượt vào phía trên</string>
-  <string name="animation_default">Mặt định</string>
+  <string name="animation_default">Mặc định</string>
   <string name="animation_translucent">Trong suốt</string>
   <string name="animation_grow_shrink">Lớn dần (Trên cùng)</string>
   <string name="animation_grow_shrink_center">Lớn dần (Trung tâm)</string>

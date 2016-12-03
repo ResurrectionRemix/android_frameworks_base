@@ -15,5 +15,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="weather_info_not_available">Hava şəraiti haqqında məlumat əlçatan deyil</string>
   <!-- Weather string format in keyguard -->
+  <string name="keyguard_status_view_weather_format">temp vəziyyəti</string>
 </resources>
