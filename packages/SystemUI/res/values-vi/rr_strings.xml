@@ -32,10 +32,17 @@
   <string name="delete_screenshot_toast">Đã xoá ảnh chụp màn hình</string>
   <string name="gestures_message">Vẽ các cử chỉ của bạn ở đây</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Vuốt qua phải để mở %1$s</string>
+  <string name="right_shortcut_hint">Vuốt qua trái để mở %1$s</string>
+  <string name="lockscreen_message">Chạm vào biểu tượng bên trái hoặc phải để gán một phím tắt màn hình khóa.</string>
+  <string name="lockscreen_default_target">Mặc định</string>
+  <string name="select_application">Chọn ứng dụng</string>
+  <string name="lockscreen_choose_action_title">Chọn hành động</string>
+  <string name="lockscreen_none_target">Không gì cả</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Phóng to</string>
   <string name="app_float_item_title">Kiểu xem nổi</string>
-  <string name="app_stop_item_title">Tắt hẳn ứng dụng</string>
+  <string name="app_stop_item_title">Tắt ứng dụng</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">Đã kích hoạt On-The-Go</string>
   <string name="onthego_notif_title">On-The-Go đang hoạt động</string>
@@ -43,7 +50,7 @@
   <string name="onthego_notif_options">Tùy chọn</string>
   <string name="onthego_notif_error">Không thể khởi động On-The-Go</string>
   <string name="onthego_notif_restart">Khởi động lại On-The-Go</string>
-  <string name="onthego_notif_camera_changed">Đã thay đổi chế độ Camera</string>
+  <string name="onthego_notif_camera_changed">Chế độ máy ảnh đã thay đổi</string>
   <string name="onthego_transparency">Trong suốt</string>
   <string name="onthego_front_camera">Sử dụng camera trước</string>
   <string name="onthego_service_toggle">Tự động khởi động lại dịch vụ</string>
@@ -51,7 +58,7 @@
   <string name="quick_settings_sound_label">Âm thanh</string>
   <string name="quick_settings_sound_ring">Chuông</string>
   <string name="quick_settings_sound_vibrate">Rung</string>
-  <string name="quick_settings_sound_dnd">Đừng làm phiền</string>
+  <string name="quick_settings_sound_dnd">Không làm phiền</string>
   <!-- Volume QS Tile -->
   <string name="accessibility_quick_settings_volume_panel">Âm lượng</string>
   <string name="quick_settings_volume_panel_label">Âm lượng</string>
@@ -70,13 +77,13 @@
   <string name="quick_settings_expanded_desktop">Mở rộng</string>
   <string name="quick_settings_expanded_desktop_off">Bình Thường</string>
   <string name="quick_settings_reboot_label">Khởi động lại</string>
-  <string name="quick_settings_reboot_recovery_label">Chế độ phục hồi</string>
+  <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">Tắt chia sẻ kết nối USB</string>
   <string name="accessibility_quick_settings_usb_tether_on">Mở chia sẻ kết nối USB</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Chế độ chia sẻ kết nối USB đã tắt</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">Chế độ chia sẻ kết nối USB đã bật</string>
   <string name="quick_settings_usb_tether_label">Chia sẻ kết nối qua USB</string>
-  <string name="quick_settings_music_label">Âm nhạc</string>
+  <string name="quick_settings_music_label">Nhạc</string>
   <string name="quick_settings_music_play">Phát</string>
   <string name="quick_settings_music_pause">Tạm ngưng</string>
   <string name="quick_settings_ime_tile_label">Phương thức nhập</string>
@@ -84,6 +91,7 @@
   <string name="quick_settings_caffeine_label">Caffeine</string>
   <string name="accessibility_quick_settings_caffeine_off">Caffeine tắt</string>
   <string name="accessibility_quick_settings_caffeine_on">Caffeine bật</string>
+  <string name="qs_app_picker_title">Trình chọn ứng dụng</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">BẬT LTE </string>
   <string name="lte_off">TẮT LTE</string>
@@ -96,6 +104,7 @@
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_smartbar_off">Tắt SmartBar</string>
   <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Tắt Fling</string>
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
   <string name="quick_settings_appcirclebar_on">Bật AppCircleBar</string>
   <string name="quick_settings_appcirclebar_off">Tắt AppCircleBar</string>
@@ -106,9 +115,18 @@
   <string name="quick_settings_appsidebar_on">Bật AppSideBar</string>
   <string name="quick_settings_appsidebar_off">Tắt AppSideBar</string>
   <string name="quick_settings_pulse_enabled">Đã bật Pulse</string>
-  <string name="quick_settings_pulse_disabled">Không có Visualizer</string>
+  <string name="quick_settings_pulse_disabled">Không có Trình trực quan nào</string>
   <string name="quick_settings_pulse_label">Visualizer trên thanh điều hướng</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_ambient_display_label">Hiển thị tương tác</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Hiển thị tương tác bật.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Hiển thị tương tác đã tắt.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Hiển thị tương tác đã bật.</string>
+  <string name="quick_settings_heads_up_label">Thông báo nổi</string>
+  <string name="accessibility_quick_settings_heads_up_off">Tắt thông báo nổi phía trên màn hình.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Bật thông báo nổi phía trên màn hình.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Thông báo nổi phía trên màn hình đã tắt.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Thông báo nổi phía trên màn hình đã bật.</string>
   <!-- PA Pie controls -->
   <string name="pie_hour_format_12">giờ:phút</string>
@@ -120,6 +138,8 @@
   <!-- Path data for landscape battery -->
   <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong 1 phút.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong <xliff:g id="number">%d</xliff:g> phút.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Ảnh màn hình không được chụp</string>
   <string name="screenshot_abort_text">Thao tác bị hủy bỏ</string>

@@ -32,7 +32,6 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Screenshot eliminato</string>
   <string name="gestures_message">Inserisci il tuo gesto qui</string>
-  <string name="rr_sys_tuner">Sintonizzatote Ui Sistema</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Scorri a destra per %1$s</string>
   <string name="right_shortcut_hint">Scorri a sinistra per %1$s</string>
@@ -40,10 +39,10 @@
   <string name="lockscreen_default_target">Predefinito</string>
   <string name="select_application">Seleziona un\'applicazione</string>
   <string name="lockscreen_choose_action_title">Scegli un\'azione</string>
-  <string name="lockscreen_none_target">Niente</string>
+  <string name="lockscreen_none_target">Nessuno</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Ingrandisci</string>
-  <string name="app_float_item_title">Visione fluttuante</string>
+  <string name="app_float_item_title">Vista fluttuante</string>
   <string name="app_stop_item_title">Termina applicazione</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go attivato</string>
@@ -71,16 +70,16 @@
   <string name="quick_settings_network_adb_enabled_label">Attivo</string>
   <string name="quick_settings_network_adb_disabled_label">Non attivo</string>
   <string name="quick_settings_sync_label">Sincronizzazione</string>
-  <string name="accessibility_quick_settings_sync_off">Sincronizzazione non attiva</string>
-  <string name="accessibility_quick_settings_sync_on">Sincronizzazione attiva</string>
+  <string name="accessibility_quick_settings_sync_off">Sincronizzazione off</string>
+  <string name="accessibility_quick_settings_sync_on">Sincronizzazione on</string>
   <string name="accessibility_quick_settings_sync_changed_off">Sincronizzazione disattivata</string>
   <string name="accessibility_quick_settings_sync_changed_on">Sincronizzazione attivata</string>
   <string name="quick_settings_expanded_desktop_label">Desktop esteso</string>
   <string name="quick_settings_expanded_desktop">Espandi</string>
   <string name="quick_settings_expanded_desktop_off">Normale</string>
-  <string name="quick_settings_reboot_label">Riavvia</string>
+  <string name="quick_settings_reboot_label">Riavvio</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
-  <string name="accessibility_quick_settings_usb_tether_off">Tethering USB spento</string>
+  <string name="accessibility_quick_settings_usb_tether_off">Tethering USB off</string>
   <string name="accessibility_quick_settings_usb_tether_on">Tethering USB acceso</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Tethering USB disattivato</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">Tethering USB attivato</string>
@@ -104,9 +103,9 @@
   <string name="quick_settings_screenrecord_on">Registrazione...</string>
   <string name="quick_settings_navigation_bar">Barra di navigazione</string>
   <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar spenta</string>
+  <string name="quick_settings_smartbar_off">SmartBar off</string>
   <string name="quick_settings_fling">Fling</string>
-  <string name="quick_settings_fling_off">Fling spento</string>
+  <string name="quick_settings_fling_off">Fling off</string>
   <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
   <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
   <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
@@ -115,7 +114,7 @@
   <string name="quick_settings_gesture_anywhere_off">Gesture Off</string>
   <string name="quick_settings_appsidebar_title">AppSideBar</string>
   <string name="quick_settings_appsidebar_on">AppSideBar accesa</string>
-  <string name="quick_settings_appsidebar_off">AppSideBar spenta</string>
+  <string name="quick_settings_appsidebar_off">AppSideBar Off</string>
   <string name="quick_settings_pulse_enabled">Pulse attivato</string>
   <string name="quick_settings_pulse_disabled">Non visualizzare</string>
   <string name="quick_settings_pulse_label">Visualizza barra di navigazione</string>
@@ -126,14 +125,14 @@
   <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display disattivato.</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display attivato.</string>
   <string name="quick_settings_heads_up_label">Notifiche a comparsa</string>
-  <string name="accessibility_quick_settings_heads_up_off">Notifiche a comparsa non attive.</string>
+  <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
   <string name="accessibility_quick_settings_heads_up_on">Notifiche a comparsa attive.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Notifiche a comparsa disattivate.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up disattivate.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notifiche a comparsa attivate.</string>
   <!-- PA Pie controls -->
   <string name="pie_hour_format_12">oo:mm</string>
   <string name="pie_hour_format_24">OO:mm</string>
-  <string name="pie_am_pm">a</string>
+  <string name="pie_am_pm">un</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Applicazione terminata</string>
   <!-- Path data for portrait battery -->

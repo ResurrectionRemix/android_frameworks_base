@@ -17,12 +17,23 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
+  <string name="screenrecord_notif_ticker">Ekran qeyd olunanda</string>
   <!-- Screenrecord notification title -->
+  <string name="screenrecord_notif_title">Ekran qeyd olunur</string>
   <!-- Screenrecord notification action: Stop -->
+  <string name="screenrecord_notif_stop">Dayandır</string>
   <!-- Screenrecord notification action: show/hide pointer -->
+  <string name="screenrecord_notif_pointer_on">İşarələri göstər</string>
+  <string name="screenrecord_notif_pointer_off">İşarələri gizlət</string>
   <!-- Screen record notification error title -->
+  <string name="screenrecord_notif_error">Ekran qeyd oluna bilmir</string>
+  <string name="status_bar_weather_format">temp vəziyyəti</string>
   <!-- Screenshot Delete Toast -->
+  <string name="delete_screenshot_toast">Ekran şəkli silindi.</string>
+  <string name="gestures_message">Nümunənizi bura çəkin</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Üçün sağa sürüşdür</string>
+  <string name="right_shortcut_hint">Üçün sola sürüşdür</string>
   <!-- App circle sidebar -->
   <!-- On The Go -->
   <!-- Sound QS Tile -->

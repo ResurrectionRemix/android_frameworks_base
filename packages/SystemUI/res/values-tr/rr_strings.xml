@@ -32,6 +32,13 @@
   <string name="delete_screenshot_toast">Ekran görüntüsü silindi</string>
   <string name="gestures_message">Deseninizi buraya çizin</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">%1$s için sağa kaydırın</string>
+  <string name="right_shortcut_hint">%1$s için sola kaydırın</string>
+  <string name="lockscreen_message">Bir kilit ekranı kısayolu oluşturmak için sol veya sağdaki bir simgeye dokunun.</string>
+  <string name="lockscreen_default_target">Varsayılan</string>
+  <string name="select_application">Uygulama seçin</string>
+  <string name="lockscreen_choose_action_title">Eylem seçin</string>
+  <string name="lockscreen_none_target">Hiçbiri</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maksimuma çıkar</string>
   <string name="app_float_item_title">Yüzer görünüm</string>

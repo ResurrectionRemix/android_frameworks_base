@@ -29,11 +29,25 @@
   <string name="screenrecord_notif_error">لا يمكن تسجيل الشاشة</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g>-<xliff:g id="condition">%2$s </xliff:g></string>
   <!-- Screenshot Delete Toast -->
+  <string name="delete_screenshot_toast">تم حذف لقطة الشاشة</string>
+  <string name="gestures_message">أرسم الحركة هنا</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">إسحب لليمين لـ %1$s</string>
+  <string name="right_shortcut_hint">إسحب لليسار لـ %1$s</string>
+  <string name="lockscreen_message">انقر فوق الأيقونة على اليسار أو اليمين لإعادة تعيين اختصار قفل شاشة.</string>
+  <string name="lockscreen_default_target">الإفتراضي</string>
+  <string name="select_application">حدد التطبيق</string>
+  <string name="lockscreen_choose_action_title">اختر الإجراء</string>
+  <string name="lockscreen_none_target">لاشيء</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">تكبير الشاشة</string>
+  <string name="app_float_item_title">عرض عائم</string>
   <string name="app_stop_item_title">إنهاء التطبيق</string>
   <!-- On The Go -->
+  <string name="onthego_notif_stop">إيقاف</string>
+  <string name="onthego_notif_options">خيارات</string>
+  <string name="onthego_notif_camera_changed">تم تغيير وضع الكاميرا</string>
+  <string name="onthego_transparency">الشفافية</string>
   <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
   <string name="onthego_service_toggle">تلقائياً إعادة تشغيل الخدمة</string>
   <!-- Sound QS Tile -->
@@ -47,6 +61,15 @@
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">تصوير الشاشة</string>
   <string name="quick_settings_region_screenshot_label">صورة جزئية للشاشة</string>
+  <string name="quick_settings_adb_network">شبكة ADB</string>
+  <string name="quick_settings_network_adb_enabled_label">مفعل</string>
+  <string name="quick_settings_network_adb_disabled_label">معطل</string>
+  <string name="quick_settings_sync_label">المزامنة</string>
+  <string name="accessibility_quick_settings_sync_off">إيقاف المزامنة</string>
+  <string name="accessibility_quick_settings_sync_on">تفعيل المزامنة</string>
+  <string name="accessibility_quick_settings_sync_changed_off">تم إيقاف المزامنة</string>
+  <string name="accessibility_quick_settings_sync_changed_on">تم تشغيل المزامنة</string>
+  <string name="quick_settings_expanded_desktop_label">سطح المكتب الموسع</string>
   <string name="quick_settings_expanded_desktop">توسيع</string>
   <string name="quick_settings_expanded_desktop_off">عادي</string>
   <string name="quick_settings_reboot_label">إعادة التشغيل</string>
@@ -55,6 +78,23 @@
   <string name="accessibility_quick_settings_usb_tether_on">الربط على USB</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">الربط USB إيقاف تشغيل</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">الربط USB إيقاف تشغيل</string>
+  <string name="quick_settings_usb_tether_label">الربط بUSB</string>
+  <string name="quick_settings_music_label">الموسيقى</string>
+  <string name="quick_settings_music_play">تشغيل</string>
+  <string name="quick_settings_music_pause">إيقاف مؤقت</string>
+  <string name="quick_settings_ime_tile_label">أسلوب الإدخال</string>
+  <string name="rr_qs_tile">الإعدادات</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">تفعيل LTE </string>
+  <string name="lte_off">ايقاف LTE</string>
+  <string name="quick_settings_nfc">تقنية الاتصال قريب المدى (NFC)</string>
+  <string name="quick_settings_nfc_label">تقنية الاتصال قريب المدى (NFC)</string>
+  <string name="quick_settings_nfc_off">NFC مغلق</string>
+  <string name="quick_settings_screenrecord">تسجيل الشاشة</string>
+  <string name="quick_settings_screenrecord_on">جار التسجيل...</string>
+  <string name="quick_settings_navigation_bar">شريط التنقل</string>
+  <string name="quick_settings_smartbar">الشريط الذكي</string>
+  <string name="quick_settings_smartbar_off">اغلاق الشريط الذكي</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Path data for portrait battery -->

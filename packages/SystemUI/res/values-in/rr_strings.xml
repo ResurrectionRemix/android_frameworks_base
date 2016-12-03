@@ -32,6 +32,13 @@
   <string name="delete_screenshot_toast">Tangkapan layar dihapus</string>
   <string name="gestures_message">Gambar gerakan di sini</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Usap ke kanan untuk %1$s</string>
+  <string name="right_shortcut_hint">Usap ke kiri untuk %1$s</string>
+  <string name="lockscreen_message">Tap ikon di sebelah kiri atau kanan untuk menetapkan kembali pintasan layar kunci.</string>
+  <string name="lockscreen_default_target">Default</string>
+  <string name="select_application">Pilih aplikasi</string>
+  <string name="lockscreen_choose_action_title">Pilih aksi</string>
+  <string name="lockscreen_none_target">Kosong</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Perbesar</string>
   <string name="app_float_item_title">Tampilan Mengambang</string>
@@ -114,6 +121,11 @@
   <string name="quick_settings_ambient_display_label">Ambient Display</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ambient display nonaktif.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Ambient display aktif.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Tampilan ambient dinonaktifkan.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Tampilan ambient diaktifkan.</string>
+  <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="accessibility_quick_settings_heads_up_off">Heads up mati.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Heads up hidup.</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up dimatikan.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up dihidupkan.</string>
   <!-- PA Pie controls -->

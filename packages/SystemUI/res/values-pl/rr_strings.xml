@@ -31,7 +31,6 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Zrzut ekranu usunięty</string>
   <string name="gestures_message">Narysuj swój gest tutaj</string>
-  <string name="rr_sys_tuner">Kalibrator interfejsu systemu</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Przesuń w prawo, aby %1$s</string>
   <string name="right_shortcut_hint">Przesuń w lewo, aby %1$s</string>
@@ -67,7 +66,7 @@
   <string name="quick_settings_screenshot_label">Zrzut ekranu</string>
   <string name="quick_settings_region_screenshot_label">Częściowy zrzut ekranu</string>
   <string name="quick_settings_adb_network">Sieci ADB</string>
-  <string name="quick_settings_network_adb_enabled_label">Włączona</string>
+  <string name="quick_settings_network_adb_enabled_label">Włączono</string>
   <string name="quick_settings_network_adb_disabled_label">Nieaktywny</string>
   <string name="quick_settings_sync_label">Synchr.</string>
   <string name="accessibility_quick_settings_sync_off">Synchr. wył</string>
@@ -104,6 +103,8 @@
   <string name="quick_settings_navigation_bar">Pasek nawigacji</string>
   <string name="quick_settings_smartbar">SmartBar</string>
   <string name="quick_settings_smartbar_off">SmartBar wył</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Fling off</string>
   <string name="quick_settings_appcirclebar_title">Okrągły pasek aplikacji</string>
   <string name="quick_settings_appcirclebar_on">Okrągły pasek aplikacji włączony</string>
   <string name="quick_settings_appcirclebar_off">Okrągły pasek aplikacji wyłączony</string>

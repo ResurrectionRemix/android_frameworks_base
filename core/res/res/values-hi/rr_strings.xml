@@ -16,7 +16,7 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">सामान्य</string>
+  <string name="default_string">डिफ़ॉल्ट</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">अपने विक्रेता छवि प्रणाली से मेल नहीं खाता। कृपया अपने डिवाइस के लिए <xliff:g id="string">%s</xliff:g> विक्रेता छवि फ़्लैश करे</string>
   <string name="global_action_screenrecord">स्क्रीन रिकॉर्ड</string>
@@ -26,6 +26,8 @@
   <string name="animation_slide_left">बाएं में स्लाइड</string>
   <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
   <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
+  <string name="animation_slide_up">तल से स्लाइड</string>
+  <string name="animation_slide_down">शीर्ष से स्लाइड</string>
   <string name="animation_default">सामान्य</string>
   <string name="animation_translucent">पारभासी</string>
   <string name="action_null">रिक्त</string>

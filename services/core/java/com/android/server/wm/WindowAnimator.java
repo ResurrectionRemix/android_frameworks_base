@@ -578,7 +578,7 @@ public class WindowAnimator {
             // If this window is animating, make a note that we have
             // an animating window and take care of a request to run
             // a detached wallpaper animation.
-            if (winAnimator.mAnimating) {
+            if (winAnimator.mAnimating && !winAnimator.isDummyAnimation()) {
                 if (winAnimator.mAnimation != null) {
                     if ((flags & FLAG_SHOW_WALLPAPER) != 0
                             && winAnimator.mAnimation.getDetachWallpaper()) {

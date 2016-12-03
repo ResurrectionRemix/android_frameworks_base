@@ -17,21 +17,28 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">正在录制屏幕</string>
+  <string name="screenrecord_notif_ticker">录屏完成</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">录制屏幕</string>
+  <string name="screenrecord_notif_title">正在录屏</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">停止</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">显示触摸操作</string>
+  <string name="screenrecord_notif_pointer_on">显示指针位置</string>
   <string name="screenrecord_notif_pointer_off">隐藏触摸操作</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">无法录制屏幕</string>
+  <string name="screenrecord_notif_error">无法录屏</string>
   <string name="status_bar_weather_format"><xliff:g id="温度">%1$s</xliff:g> - <xliff:g id="天气">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">屏幕截图已删除</string>
   <string name="gestures_message">请在此画出您的手势</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">向右滑动以 %1$s</string>
+  <string name="right_shortcut_hint">向左滑动以%1$s</string>
+  <string name="lockscreen_message">轻触左边或右边的图标来重新分配锁屏快捷方式。</string>
+  <string name="lockscreen_default_target">默认</string>
+  <string name="select_application">选择应用</string>
+  <string name="lockscreen_choose_action_title">选择操作</string>
+  <string name="lockscreen_none_target">无</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">最大化</string>
   <string name="app_float_item_title">悬浮视图</string>
@@ -56,7 +63,7 @@
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
   <!-- Quick Settings tiles -->
-  <string name="quick_settings_screenshot_label">屏幕截图</string>
+  <string name="quick_settings_screenshot_label">截屏</string>
   <string name="quick_settings_region_screenshot_label">部分截图</string>
   <string name="quick_settings_adb_network">ADB 网络</string>
   <string name="quick_settings_network_adb_enabled_label">启用</string>
@@ -69,7 +76,7 @@
   <string name="quick_settings_expanded_desktop_label">扩展桌面</string>
   <string name="quick_settings_expanded_desktop">扩展</string>
   <string name="quick_settings_expanded_desktop_off">正常</string>
-  <string name="quick_settings_reboot_label">重新启动</string>
+  <string name="quick_settings_reboot_label">重启</string>
   <string name="quick_settings_reboot_recovery_label">恢复模式</string>
   <string name="accessibility_quick_settings_usb_tether_off">USB 网络共享关闭</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB 网络共享开启</string>

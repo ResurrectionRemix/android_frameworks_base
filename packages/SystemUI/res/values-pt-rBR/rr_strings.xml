@@ -32,6 +32,13 @@
   <string name="delete_screenshot_toast">A captura de tela foi apagada</string>
   <string name="gestures_message">Desenhe seu gesto aqui</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Deslizar para a direita para %1$s</string>
+  <string name="right_shortcut_hint">Deslizar para a esquerda para %1$s</string>
+  <string name="lockscreen_message">Toque num ícone da esquerda ou da direita para reatribuir um atalho na tela de bloqueio.</string>
+  <string name="lockscreen_default_target">Padrão</string>
+  <string name="select_application">Selecione Aplicação</string>
+  <string name="lockscreen_choose_action_title">Escolha a ação</string>
+  <string name="lockscreen_none_target">Nada</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximizar</string>
   <string name="app_float_item_title">Ver em modo flutuante</string>

@@ -24,15 +24,30 @@
   <!-- Screenshot Delete Toast -->
   <!-- Strings for lockscreen shortcut hints -->
   <!-- App circle sidebar -->
+  <string name="app_float_maximize_item_title">Maximera</string>
   <!-- On The Go -->
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">Ljud</string>
+  <string name="quick_settings_sound_vibrate">Vibrera</string>
   <!-- Volume QS Tile -->
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_network_adb_enabled_label">Aktiverad</string>
+  <string name="quick_settings_music_label">Musik</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE På </string>
+  <string name="lte_off">LTE Av</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC Av</string>
+  <string name="quick_settings_gesture_anywhere_off">Gester Av</string>
   <!-- PA Pie controls -->
+  <string name="pie_hour_format_12">hh:mm</string>
+  <string name="pie_hour_format_24">HH:mm</string>
   <!-- Kill app toast -->
   <!-- Path data for portrait battery -->
   <!-- Path data for landscape battery -->
   <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
+  <string name="recents_custom_android_n">RENSA ALLA</string>
 </resources>
