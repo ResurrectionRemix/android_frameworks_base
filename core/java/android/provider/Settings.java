@@ -10571,6 +10571,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String SHOW_PROCESSES = "show_processes";
 
         /**
+         * Control whether the process CPU info meter should be shown.
+         * @hide
+         */
+        public static final String SHOW_CPU = "show_cpu";
+
+        /**
          * If 1 low power mode is enabled.
          * @hide
          */
