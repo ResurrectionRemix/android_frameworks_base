@@ -166,18 +166,18 @@
     <color name="user_icon_default_white">#ffffffff</color><!-- white -->
 
     <!-- Multi-sim sim colors -->
-    <color name="Teal_700">@color/material_pixel_blue_light</color>
-    <color name="Teal_800">@color/material_pixel_blue_dark</color>
-    <color name="Blue_700">@color/material_pixel_blue_light</color>
-    <color name="Blue_800">@color/material_pixel_blue_dark</color>
-    <color name="Indigo_700">@color/material_pixel_blue_light</color>
-    <color name="Indigo_800">@color/material_pixel_blue_dark</color>
-    <color name="Purple_700">@color/material_pixel_blue_light</color>
-    <color name="Purple_800">@color/material_pixel_blue_dark</color>
-    <color name="Pink_700">@color/material_pixel_blue_light</color>
-    <color name="Pink_800">@color/material_pixel_blue_dark</color>
-    <color name="Red_700">@color/material_pixel_blue_light</color>
-    <color name="Red_800">@color/material_pixel_blue_dark</color>
+    <color name="Teal_700">#ff00796b</color>
+    <color name="Teal_800">#ff00695c</color>
+    <color name="Blue_700">#ff3367d6</color>
+    <color name="Blue_800">#ff2a56c6</color>
+    <color name="Indigo_700">#ff303f9f</color>
+    <color name="Indigo_800">#ff283593</color>
+    <color name="Purple_700">#ff7b1fa2</color>
+    <color name="Purple_800">#ff6a1b9a</color>
+    <color name="Pink_700">#ffc2185b</color>
+    <color name="Pink_800">#ffad1457</color>
+    <color name="Red_700">#ffc53929</color>
+    <color name="Red_800">#ffb93221</color>
 
     <color name="chooser_service_row_background_color">#fff5f5f5</color>
 
