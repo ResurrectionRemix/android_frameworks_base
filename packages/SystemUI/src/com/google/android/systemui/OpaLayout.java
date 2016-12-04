@@ -344,12 +344,12 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
     private ArraySet<Animator> getLineAnimatorSet() {
         final ArraySet<Animator> set = new ArraySet<Animator>();
         if (this.mIsLandscape) {
-            set.add(this.getDeltaAnimatorY(this.mRed, this.mFastOutSlowInInterpolator, this.getPxVal(R.dimen.opa_line_y_translation), OpaLayout.LINE_ANIMATION_DURATION_Y));
-            set.add(this.getDeltaAnimatorX(this.mRed, this.mFastOutSlowInInterpolator, this.getPxVal(R.dimen.opa_line_x_trans_ry), OpaLayout.LINE_ANIMATION_DURATION_X));
-            set.add(this.getDeltaAnimatorY(this.mBlue, this.mFastOutSlowInInterpolator, this.getPxVal(R.dimen.opa_line_y_translation), OpaLayout.LINE_ANIMATION_DURATION_Y));
-            set.add(this.getDeltaAnimatorY(this.mYellow, this.mFastOutSlowInInterpolator, -this.getPxVal(R.dimen.opa_line_y_translation), OpaLayout.LINE_ANIMATION_DURATION_Y));
-            set.add(this.getDeltaAnimatorX(this.mYellow, this.mFastOutSlowInInterpolator, -this.getPxVal(R.dimen.opa_line_x_trans_ry), OpaLayout.LINE_ANIMATION_DURATION_X));
-            set.add(this.getDeltaAnimatorY(this.mGreen, this.mFastOutSlowInInterpolator, -this.getPxVal(R.dimen.opa_line_y_translation), OpaLayout.LINE_ANIMATION_DURATION_Y));
+            set.add(this.getDeltaAnimatorY(this.mRed, this.mFastOutSlowInInterpolator, this.getPxVal(R.dimen.opa_line_x_trans_ry), OpaLayout.LINE_ANIMATION_DURATION_Y));
+            set.add(this.getDeltaAnimatorX(this.mRed, this.mFastOutSlowInInterpolator, this.getPxVal(R.dimen.opa_line_y_translation), OpaLayout.LINE_ANIMATION_DURATION_X));
+            set.add(this.getDeltaAnimatorY(this.mBlue, this.mFastOutSlowInInterpolator, this.getPxVal(R.dimen.opa_line_x_trans_bg), OpaLayout.LINE_ANIMATION_DURATION_Y));
+            set.add(this.getDeltaAnimatorY(this.mYellow, this.mFastOutSlowInInterpolator, -this.getPxVal(R.dimen.opa_line_x_trans_ry), OpaLayout.LINE_ANIMATION_DURATION_Y));
+            set.add(this.getDeltaAnimatorX(this.mYellow, this.mFastOutSlowInInterpolator, -this.getPxVal(R.dimen.opa_line_y_translation), OpaLayout.LINE_ANIMATION_DURATION_X));
+            set.add(this.getDeltaAnimatorY(this.mGreen, this.mFastOutSlowInInterpolator, -this.getPxVal(R.dimen.opa_line_x_trans_bg), OpaLayout.LINE_ANIMATION_DURATION_Y));
         }
         else {
             set.add(this.getDeltaAnimatorX(this.mRed, this.mFastOutSlowInInterpolator, -this.getPxVal(R.dimen.opa_line_x_trans_ry), OpaLayout.LINE_ANIMATION_DURATION_Y));
