@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android.systemui.statusbar.phone.StatusBarIconController;
-import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.tuner.TunerService;
 
@@ -68,6 +67,10 @@ public class BatteryMeterView extends ImageView implements
         mSlotBattery = context.getString(
                 com.android.internal.R.string.status_bar_battery);
         setImageDrawable(mDrawable);
+
+        // The BatteryMeterDrawable wants to use the clear xfermode,
+        // so use a separate layer to not make it clear the background with it.
+        setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         mContext = context;
         mFrameColor = frameColor;

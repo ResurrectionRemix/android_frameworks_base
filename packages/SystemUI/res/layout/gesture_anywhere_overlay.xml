@@ -49,8 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
-        android:layout_marginRight="21dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="18dp"
         layout="@layout/btn_ga_cancel_gesturing"/>
     </FrameLayout>
 
