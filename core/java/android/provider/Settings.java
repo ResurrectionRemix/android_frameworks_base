@@ -4472,12 +4472,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String LOCK_SCREEN_CUSTOM_NOTIF = "lock_screen_custom_notif";
 
         /**
-         * Enable HW keys
-         * @hide
-         */
-        public static final String ENABLE_HW_KEYS = "enable_hw_keys";
-
-        /**
          * custom lockscreen max notification config
          * @hide
          */
@@ -8036,6 +8030,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String DOZE_ENABLED = "doze_enabled";
+
+        /**
+        /**
+         * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
 
         /**
          * The current night mode that has been selected by the user.  Owned
