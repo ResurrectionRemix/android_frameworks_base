@@ -17,20 +17,21 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">录屏完成</string>
+  <string name="screenrecord_notif_ticker">正在录屏</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">正在录屏</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">停止</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">显示指针位置</string>
+  <string name="screenrecord_notif_pointer_on">显示触摸操作</string>
   <string name="screenrecord_notif_pointer_off">隐藏触摸操作</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">无法录屏</string>
+  <string name="screenrecord_notif_error">无法录制屏幕</string>
   <string name="status_bar_weather_format"><xliff:g id="温度">%1$s</xliff:g> - <xliff:g id="天气">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">屏幕截图已删除</string>
   <string name="gestures_message">请在此画出您的手势</string>
+  <string name="rr_sys_tuner">系统界面调谐器</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">向右滑动以 %1$s</string>
   <string name="right_shortcut_hint">向左滑动以%1$s</string>
@@ -129,19 +130,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭。</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启。</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">应用已终止</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g>-查看通知打盹 1 分钟。</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">没有截图</string>
   <string name="screenshot_abort_text">操作中止</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">全部清除</string>
 </resources>

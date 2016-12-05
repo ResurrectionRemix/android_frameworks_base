@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Captura de pantalla borrada</string>
   <string name="gestures_message">Dibuja aquí tu gesto</string>
+  <string name="rr_sys_tuner">Configuraciones IU del sistema</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Deslice a la derecha para %1$s</string>
   <string name="right_shortcut_hint">Desliza a la izquierda para %1$s</string>
@@ -129,19 +130,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Notificaciones emergentes desactivadas.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notificaciones emergentes activadas.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Mató a la aplicación</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Las notificaciones flotantes estaran pospuestas por 1 minuto.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Las notificaciones flotantes estaran pospuestas <xliff:g id="number">%d </xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">No tomo la captura de pantalla</string>
   <string name="screenshot_abort_text">Operación abortada</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">LIMPIAR TODO</string>
 </resources>

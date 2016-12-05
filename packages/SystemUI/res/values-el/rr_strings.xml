@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Το στιγμιότυπο οθόνης διαγράφηκε</string>
   <string name="gestures_message">Σχεδιάστε χειρονομία εδώ</string>
+  <string name="rr_sys_tuner">System UI tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Σύρετε προς τα δεξιά για %1$s</string>
   <string name="right_shortcut_hint">Σύρετε προς τα αριστερά για %1$s</string>
@@ -129,19 +130,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Αναδυόμενες ειδοποιήσεις ανενεργές.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Αναδυόμενες ειδοποιήσεις ενεργές.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">ωω:λλ</string>
-  <string name="pie_hour_format_24">ΩΩ:λλ</string>
-  <string name="pie_am_pm">π</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Η εφαρμογή τερματίστηκε</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Ή peeking ειδοποίηση αναβάλλεται για 1 λεπτό.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Ή peeking ειδοποιήσεις αναβάλλονται για <xliff:g id="number">%d</xliff:g> λεπτά.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Δεν λήφθηκε στιγμιότυπο οθόνης</string>
   <string name="screenshot_abort_text">Η λειτουργία ματαιώθηκε</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">ΑΠΑΛΟΙΦΉ ΌΛΩΝ</string>
 </resources>

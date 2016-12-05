@@ -129,19 +129,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">已關閉浮動通知</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">浮動通知已開啟</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">已終止應用程式</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g>-查看通知打盹 1 分鐘。</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g>-查看通知打盹 <xliff:g id="number">%d </xliff:g> 分鐘。</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">沒有截圖</string>
   <string name="screenshot_abort_text">操作中止</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">全部清除</string>
 </resources>

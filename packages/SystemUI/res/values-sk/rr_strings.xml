@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Snímok obrazovky bol vymazaný</string>
   <string name="gestures_message">Nakreslite vaše gesto tu</string>
+  <string name="rr_sys_tuner">Nástroj na ladenie používateľského rozhrania systému</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Potiahnite doprava pre %1$s</string>
   <string name="right_shortcut_hint">Potiahnite doľava pre %1$s</string>
@@ -102,7 +103,7 @@
   <string name="quick_settings_screenrecord_on">Nahrávanie ...</string>
   <string name="quick_settings_navigation_bar">Navigačná lišta</string>
   <string name="quick_settings_smartbar">Inteligentná lišta</string>
-  <string name="quick_settings_smartbar_off">Inteligentnú lišta vypnutá</string>
+  <string name="quick_settings_smartbar_off">Inteligentná lišta vypnutá</string>
   <string name="quick_settings_fling">Prudký pohyb</string>
   <string name="quick_settings_fling_off">Prudký pohyb vypnutý</string>
   <string name="quick_settings_appcirclebar_title">Kruh s aplikáciami</string>
@@ -112,15 +113,15 @@
   <string name="quick_settings_gesture_anywhere_on">Gestá zapnuté</string>
   <string name="quick_settings_gesture_anywhere_off">Gestá vypnuté</string>
   <string name="quick_settings_appsidebar_title">Bočný panel s aplikáciami</string>
-  <string name="quick_settings_appsidebar_on">Zapnúť bočný panel s aplikáciami</string>
-  <string name="quick_settings_appsidebar_off">Vypnúť bočný panel s aplikáciami</string>
+  <string name="quick_settings_appsidebar_on">Bočný panel s aplikáciami zapnutý</string>
+  <string name="quick_settings_appsidebar_off">Bočný panel s aplikáciami vypnutý</string>
   <string name="quick_settings_pulse_enabled">Pulz povolený</string>
   <string name="quick_settings_pulse_disabled">Žiadna vizualizácia</string>
   <string name="quick_settings_pulse_label">Vizualizácia navigačnej lišty</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambientné zobrazenie</string>
-  <string name="accessibility_quick_settings_ambient_display_off">Vypnúť ambientné zobrazenie.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Zapnúť ambientné zobrazenie.</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Ambientné zobrazenie vypnuté.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Ambientné zobrazenie zapnuté.</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Ambientné zobrazenie vypnuté.</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Ambientné zobrazenie zapnuté.</string>
   <string name="quick_settings_heads_up_label">Plávajúce oznámenia</string>
@@ -129,19 +130,29 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Plávajúce oznámenia vypnuté.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Plávajúce oznámenia zapnuté.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:MM</string>
-  <string name="pie_am_pm">AM/PM</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikácia bola ukončená</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Pozerané oznámenia sú odložené po dobu 1 minúty.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Pozerané oznámenia sú odložené na <xliff:g id="number">%d</xliff:g> minút.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Snímka obrazovky neprijatá</string>
   <string name="screenshot_abort_text">Operácia bola prerušená</string>
+  <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Odstránené</string>
+  <string name="action_delete_fault">Odstránenie bolo neúspešné</string>
+  <string name="action_save_success">Uložené</string>
+  <string name="action_save_fault">Ukladanie nebolo úspešné</string>
+  <string name="pref_action_color_title">Farba akčných tlačidiel</string>
+  <string name="pref_action_color_summary">Vyberte si obľúbenú farbu pre akčné tlačidlá</string>
+  <string name="pref_category_main">Hlavné nastavenia</string>
+  <string name="pref_category_user">Používateľské nastavenia</string>
+  <string name="pref_crop_behavior_summary">Použiť orezaný obrázok, aj keď ten pôvodný nebol orezaný pomocu akcie orezať</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Odstránené</string>
+  <string name="action_delete_fault">Odstránenie bolo neúspešné</string>
+  <string name="action_save_success">Uložené</string>
+  <string name="action_save_fault">Ukladanie nebolo úspešné</string>
+  <string name="action_edit">Upraviť</string>
   <string name="recents_custom_android_n">VYMAZAŤ VŠETKO</string>
 </resources>

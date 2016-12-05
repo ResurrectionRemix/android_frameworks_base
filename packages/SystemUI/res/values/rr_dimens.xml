@@ -61,4 +61,14 @@
     <!-- Qs visibility -->
     <dimen name="qs_tile_height_wo_label">48dp</dimen>
 
+    <!-- Screenshot Crop and Share -->
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="text_size_m">24sp</dimen>
+    <dimen name="text_size_s">17sp</dimen>
+    <dimen name="button_height">40dp</dimen>
+
+    <dimen name="crop_buttons">48dp</dimen>
+    <dimen name="crop_buttons_inlet">32dp</dimen>
+
 </resources>

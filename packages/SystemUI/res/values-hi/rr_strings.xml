@@ -40,13 +40,10 @@
   <!-- Quick Settings tiles -->
   <string name="quick_settings_music_play">चलायें</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">घंटे:मिनट</string>
   <!-- Kill app toast -->
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">स्क्रीनशॉट नहीं लिया लिया</string>
   <string name="screenshot_abort_text">करवाई निलंबित</string>
+  <!-- Screenshot Crop & Share -->
 </resources>
