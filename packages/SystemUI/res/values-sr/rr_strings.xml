@@ -69,17 +69,12 @@
   <string name="accessibility_quick_settings_ambient_display_on">Амбијентални приказ укључен.</string>
   <string name="quick_settings_heads_up_label">Искачућа обавештења</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">а</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Апликација је затворена</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Снимак екрана није снимљен</string>
   <string name="screenshot_abort_text">Операција обустављена</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">ОЧИСТИ СВЕ</string>
 </resources>

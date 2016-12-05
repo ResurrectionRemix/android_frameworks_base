@@ -80,10 +80,8 @@
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">アプリを強制終了しました</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message">ヘッドアップ通知は <xliff:g id="number">%d</xliff:g>分間 一時停止します。</string>
   <!-- Screenshot action -->
+  <!-- Screenshot Crop & Share -->
 </resources>

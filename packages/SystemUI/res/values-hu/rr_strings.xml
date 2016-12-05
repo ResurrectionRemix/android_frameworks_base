@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Képernyőmentés törölve</string>
   <string name="gestures_message">Rajzolja meg gesztusát itt</string>
+  <string name="rr_sys_tuner">Kezelőfelület-hangoló</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Csúsztasson jobbra ezért: %1$s</string>
   <string name="right_shortcut_hint">Csúsztasson balra ezért: %1$s</string>
@@ -129,19 +130,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Lebegő értesítések kikapcsolva.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Lebegő értesítések bekapcsolva.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">óó:pp</string>
-  <string name="pie_hour_format_24">ÓÓ:PP</string>
-  <string name="pie_am_pm">a</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Alkalmazás kilőve</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Lebegő értesítés 1 percig szundizik.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Lebegő értesítés <xliff:g id="number">%d</xliff:g> percig szundizik.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Képernyőmentés nem történt</string>
   <string name="screenshot_abort_text">Művelet megszakítva</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">ÖSSZES TÖRLÉSE</string>
 </resources>

@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Bildschirmfoto gelöscht</string>
   <string name="gestures_message">Geste hier zeichnen</string>
+  <string name="rr_sys_tuner">System UI-Tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Nach Rechts wischen für %1$s</string>
   <string name="right_shortcut_hint">Nach Links wischen für %1$s</string>
@@ -129,19 +130,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up ausgeschaltet.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up eingeschaltet.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">AM/PM</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Anwendung beendet</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind 1 Minute lang deaktiviert.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind für <xliff:g id="number">%d </xliff:g> Minuten deaktiviert.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Kein Screenshot aufgenommen</string>
   <string name="screenshot_abort_text">Vorgang abgebrochen</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">ALLE LÖSCHEN</string>
 </resources>

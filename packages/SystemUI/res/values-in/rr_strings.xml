@@ -129,19 +129,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up dimatikan.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up dihidupkan.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">App Dimatikan</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tertidur selama 1 menit.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - mengintip pemberitahuan tertidur selama <xliff:g id="number">%d </xliff:g> menit.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Tidak ada gambar yang diambil</string>
   <string name="screenshot_abort_text">Operasi dibatalkan</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">HAPUS SEMUA</string>
 </resources>

@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Snímek obrazovky byl smazán</string>
   <string name="gestures_message">Zde nakreslete své gesto</string>
+  <string name="rr_sys_tuner">Nástroj na ladění uživatelského rozhraní systému</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Přejeďte doprava pro %1$s</string>
   <string name="right_shortcut_hint">Přejeďte doleva pro %1$s</string>
@@ -129,19 +130,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Plovoucí upozornění vypnuto.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Plovoucí upozornění zapnuto.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH: mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikace ukončena</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Plovoucí oznámení bylo odloženo po dobu 1 minuty.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Plovoucí oznámení jsou odložena po dobu <xliff:g id="number">%d </xliff:g> minut.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Žádný snímek obrazovky</string>
   <string name="screenshot_abort_text">Operace přerušena</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">VYMAZAT VŠE</string>
 </resources>

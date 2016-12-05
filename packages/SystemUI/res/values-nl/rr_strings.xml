@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Schermafbeelding verwijderd</string>
   <string name="gestures_message">Teken uw gebaar hier</string>
+  <string name="rr_sys_tuner">Systeem UI tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Veeg rechts voor %1$s</string>
   <string name="right_shortcut_hint">Veeg links voor %1$s</string>
@@ -129,19 +130,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up uitgeschakeld.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up ingeschakeld.</string>
   <!-- PA Pie controls -->
-  <string name="pie_hour_format_12">hh:mm</string>
-  <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
   <!-- Kill app toast -->
   <string name="app_killed_message">App Gestopt</string>
-  <!-- Path data for portrait battery -->
-  <!-- Path data for landscape battery -->
-  <!-- Path data for circle battery -->
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Peeking notificaties 1 minuut gedempt.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Peeking notificaties zijn gedempt voor <xliff:g id="number">%d </xliff:g> minuten.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Geen schermafdruk gemaakt</string>
   <string name="screenshot_abort_text">Bewerking afgebroken</string>
+  <!-- Screenshot Crop & Share -->
   <string name="recents_custom_android_n">ALLES WISSEN</string>
 </resources>
