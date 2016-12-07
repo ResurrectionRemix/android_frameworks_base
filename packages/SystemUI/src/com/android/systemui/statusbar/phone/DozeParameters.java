@@ -25,6 +25,7 @@ import android.util.Log;
 import android.util.MathUtils;
 import android.util.SparseBooleanArray;
 
+import com.android.internal.hardware.AmbientDisplayConfiguration;
 import com.android.systemui.R;
 
 import java.io.PrintWriter;
@@ -33,9 +34,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DozeParameters {
-    private static final String TAG = "DozeParameters";
-    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
-
     private static final int MAX_DURATION = 60 * 1000;
 
     private final Context mContext;
@@ -57,10 +55,8 @@ public class DozeParameters {
         pw.print("    getPulseOutDuration(): "); pw.println(getPulseOutDuration());
         pw.print("    getPulseOnSigMotion(): "); pw.println(getPulseOnSigMotion());
         pw.print("    getVibrateOnSigMotion(): "); pw.println(getVibrateOnSigMotion());
-        pw.print("    getPulseOnPickup(): "); pw.println(getPulseOnPickup());
         pw.print("    getVibrateOnPickup(): "); pw.println(getVibrateOnPickup());
         pw.print("    getProxCheckBeforePulse(): "); pw.println(getProxCheckBeforePulse());
-        pw.print("    getPulseOnNotifications(): "); pw.println(getPulseOnNotifications());
         pw.print("    getPickupVibrationThreshold(): "); pw.println(getPickupVibrationThreshold());
         pw.print("    getPickupSubtypePerformsProxCheck(): ");pw.println(
                 dumpPickupSubtypePerformsProxCheck());
@@ -93,13 +89,13 @@ public class DozeParameters {
         return getPulseInDuration(pickup) + getPulseVisibleDuration() + getPulseOutDuration();
     }
 
-    public int getPulseInDuration(boolean pickup) {
+    public int getPulseInDuration(boolean pickupOrDoubleTap) {
         if (getOverwriteValue()) {
             return Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.DOZE_PULSE_DURATION_IN, 500,
                     UserHandle.USER_CURRENT);
         }
-        return pickup
+        return pickupOrDoubleTap
                 ? getInt("doze.pulse.duration.in.pickup", R.integer.doze_pulse_duration_in_pickup)
                 : getInt("doze.pulse.duration.in", R.integer.doze_pulse_duration_in);
     }
