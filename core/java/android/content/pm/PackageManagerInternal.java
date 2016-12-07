@@ -162,6 +162,14 @@ public abstract class PackageManagerInternal {
     public abstract boolean isPackageDataProtected(int userId, String packageName);
 
     /**
+     * Gets whether the package was ever launched.
+     * @param packageName The package name.
+     * @param userId The user for which to check.
+     * @return Whether was launched.
+     */
+    public abstract boolean wasPackageEverLaunched(String packageName, int userId);
+
+    /**
      * Get all overlay packages for a user.
      * @param userId The user for which to get the overlays.
      * @return A list of overlay packages. An empty list is returned if the
@@ -184,10 +192,4 @@ public abstract class PackageManagerInternal {
      *                     which to load the paths, or null if no overlays should be used.
      */
     public abstract void setResourceDirs(int userId, String packageName, String[] resourceDirs);
-     * Gets whether the package was ever launched.
-     * @param packageName The package name.
-     * @param userId The user for which to check.
-     * @return Whether was launched.
-     */
-    public abstract boolean wasPackageEverLaunched(String packageName, int userId);
 }
