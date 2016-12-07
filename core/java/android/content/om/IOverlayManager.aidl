@@ -89,15 +89,6 @@ interface IOverlayManager {
      */
     boolean setEnabled(in String packageName, in boolean enable, in int userId,
                        in boolean shouldWait);
-     * @return true if the system successfully registered the request, false
-     *         otherwise.
-     */
-    boolean setEnabled(in String packageName, in boolean enable, in int userId);
-     * @return true if the system successfully registered the request, false
-     *         otherwise.
-     */
-    boolean setEnabled(in String packageName, in boolean enable, in int userId,
-                       in boolean shouldWait);
 
     /**
      * Change the priority of the given overlay to be just higher than the
