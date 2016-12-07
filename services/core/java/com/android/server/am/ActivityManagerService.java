@@ -9266,6 +9266,14 @@ public final class ActivityManagerService extends ActivityManagerNative
         return list;
     }
 
+    @Override
+    public boolean isPackageInForeground(String packageName) {
+        synchronized (this) {
+            ActivityRecord activity = mStackSupervisor.topRunningActivityLocked();
+            return activity != null && activity.packageName.equals(packageName);
+        }
+    }
+
     /**
      * Creates a new RecentTaskInfo from a TaskRecord.
      */
@@ -9784,7 +9792,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         for (int i = 0; i < procsToKill.size(); i++) {
             ProcessRecord pr = procsToKill.get(i);
             if (pr.setSchedGroup == ProcessList.SCHED_GROUP_BACKGROUND
-                    && pr.curReceivers.size() == 0) {
+                    && pr.curReceivers.isEmpty()) {
                 pr.kill("remove task", true);
             } else {
                 // We delay killing processes that are not in the background or running a receiver.
@@ -11701,8 +11709,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         final ProcessRecord r = new ProcessRecord(stats, info, proc, uid);
         if (!mBooted && !mBooting
                 && userId == UserHandle.USER_SYSTEM
-                && (info.flags & PERSISTENT_MASK) == PERSISTENT_MASK
-                && r.processName.equals(info.processName)) {
+                && (info.flags & PERSISTENT_MASK) == PERSISTENT_MASK) {
             r.persistent = true;
             r.maxAdj = ProcessList.PERSISTENT_PROC_ADJ;
         }
@@ -19429,29 +19436,28 @@ public final class ActivityManagerService extends ActivityManagerNative
     // LIFETIME MANAGEMENT
     // =========================================================
 
-    // Returns which broadcast queue the app is the current [or imminent] receiver
-    // on, or 'null' if the app is not an active broadcast recipient.
-    private ArraySet<BroadcastQueue> isReceivingBroadcast(ProcessRecord app) {
-        final ArraySet<BroadcastQueue> queues = new ArraySet<BroadcastQueue>();
-        if (app.curReceivers.size() > 0) {
+    // Returns whether the app is receiving broadcast.
+    // If receiving, fetch all broadcast queues which the app is
+    // the current [or imminent] receiver on.
+    private boolean isReceivingBroadcastLocked(ProcessRecord app,
+            ArraySet<BroadcastQueue> receivingQueues) {
+        if (!app.curReceivers.isEmpty()) {
             for (BroadcastRecord r : app.curReceivers) {
-                queues.add(r.queue);
+                receivingQueues.add(r.queue);
             }
-            return queues;
+            return true;
         }
 
         // It's not the current receiver, but it might be starting up to become one
-        synchronized (this) {
-            for (BroadcastQueue queue : mBroadcastQueues) {
-                BroadcastRecord r = queue.mPendingBroadcast;
-                if (r != null && r.curApp == app) {
-                    // found it; report which queue it's in
-                    queues.add(queue);
-                }
+        for (BroadcastQueue queue : mBroadcastQueues) {
+            final BroadcastRecord r = queue.mPendingBroadcast;
+            if (r != null && r.curApp == app) {
+                // found it; report which queue it's in
+                receivingQueues.add(queue);
             }
         }
 
-        return queues;
+        return !receivingQueues.isEmpty();
     }
 
     Association startAssociationLocked(int sourceUid, String sourceProcess, int sourceState,
@@ -19618,7 +19624,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         int schedGroup;
         int procState;
         boolean foregroundActivities = false;
-        ArraySet<BroadcastQueue> queues;
+        final ArraySet<BroadcastQueue> queues = new ArraySet<BroadcastQueue>();
         if (app == TOP_APP) {
             // The last app on the list is the foreground app.
             adj = ProcessList.FOREGROUND_APP_ADJ;
@@ -19636,7 +19642,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             schedGroup = ProcessList.SCHED_GROUP_DEFAULT;
             app.adjType = "instrumentation";
             procState = ActivityManager.PROCESS_STATE_FOREGROUND_SERVICE;
-        } else if ((queues = isReceivingBroadcast(app)).size() > 0) {
+        } else if (isReceivingBroadcastLocked(app, queues)) {
             // An app that is currently receiving a broadcast also
             // counts as being in the foreground for OOM killer purposes.
             // It's placed in a sched group based on the nature of the
@@ -20673,7 +20679,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             if (DEBUG_SWITCH || DEBUG_OOM_ADJ) Slog.v(TAG_OOM_ADJ,
                     "Setting sched group of " + app.processName
                     + " to " + app.curSchedGroup);
-            if (app.waitingToKill != null && app.curReceivers.size() == 0
+            if (app.waitingToKill != null && app.curReceivers.isEmpty()
                     && app.setSchedGroup == ProcessList.SCHED_GROUP_BACKGROUND) {
                 app.kill(app.waitingToKill, true);
                 success = false;
@@ -21652,7 +21658,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             for (i=mRemovedProcesses.size()-1; i>=0; i--) {
                 final ProcessRecord app = mRemovedProcesses.get(i);
                 if (app.activities.size() == 0
-                        && app.curReceivers.size() == 0 && app.services.size() == 0) {
+                        && app.curReceivers.isEmpty() && app.services.size() == 0) {
                     Slog.i(
                         TAG, "Exiting empty application process "
                         + app.toShortString() + " ("
