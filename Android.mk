@@ -200,6 +200,7 @@ LOCAL_SRC_FILES += \
 	core/java/android/net/ICaptivePortal.aidl \
 	core/java/android/net/IConnectivityManager.aidl \
 	core/java/android/net/IConnectivityMetricsLogger.aidl \
+	core/java/android/net/IIpConnectivityMetrics.aidl \
 	core/java/android/net/IEthernetManager.aidl \
 	core/java/android/net/IEthernetServiceListener.aidl \
 	core/java/android/net/INetworkManagementEventObserver.aidl \
@@ -866,6 +867,7 @@ framework_docs_LOCAL_DROIDDOC_OPTIONS := \
     -since $(SRC_API_DIR)/22.txt 22 \
     -since $(SRC_API_DIR)/23.txt 23 \
     -since $(SRC_API_DIR)/24.txt 24 \
+    -since $(SRC_API_DIR)/25.txt 25 \
 		-werror -hide 111 -hide 113 \
 		-overview $(LOCAL_PATH)/core/java/overview.html
 
@@ -933,6 +935,7 @@ LOCAL_DROIDDOC_STUB_OUT_DIR := $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES
 
 LOCAL_DROIDDOC_OPTIONS:=\
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-referenceonly \
 		-api $(INTERNAL_PLATFORM_API_FILE) \
 		-removedApi $(INTERNAL_PLATFORM_REMOVED_API_FILE) \
 		-nodocs
@@ -966,6 +969,7 @@ LOCAL_DROIDDOC_STUB_OUT_DIR := $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES
 
 LOCAL_DROIDDOC_OPTIONS:=\
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-referenceonly \
 		-showAnnotation android.annotation.SystemApi \
 		-api $(INTERNAL_PLATFORM_SYSTEM_API_FILE) \
 		-removedApi $(INTERNAL_PLATFORM_SYSTEM_REMOVED_API_FILE) \
@@ -1000,6 +1004,7 @@ LOCAL_DROIDDOC_STUB_OUT_DIR := $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES
 
 LOCAL_DROIDDOC_OPTIONS:=\
                $(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+               -referenceonly \
                -stubs $(TARGET_OUT_COMMON_INTERMEDIATES)/JAVA_LIBRARIES/android_test_stubs_current_intermediates/src \
                -showAnnotation android.annotation.TestApi \
                -api $(INTERNAL_PLATFORM_TEST_API_FILE) \
@@ -1033,6 +1038,7 @@ LOCAL_MODULE := doc-comment-check
 
 LOCAL_DROIDDOC_OPTIONS:=\
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-referenceonly \
 		-parsecomments
 
 LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
@@ -1071,7 +1077,7 @@ LOCAL_DROIDDOC_OPTIONS:=\
 		-sdkvalues $(OUT_DOCS) \
 		-hdf android.whichdoc offline
 
-LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk-dev
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
@@ -1108,7 +1114,7 @@ LOCAL_DROIDDOC_OPTIONS:=\
 		-hdf android.whichdoc offline \
 		-referenceonly
 
-LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk-dev
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
@@ -1118,7 +1124,14 @@ $(static_doc_index_redirect): \
 	$(hide) mkdir -p $(dir $@)
 	$(hide) $(ACP) $< $@
 
+static_doc_properties := $(out_dir)/source.properties
+$(static_doc_properties): \
+	$(LOCAL_PATH)/docs/source.properties | $(ACP)
+	$(hide) mkdir -p $(dir $@)
+	$(hide) $(ACP) $< $@
+
 $(full_target): $(static_doc_index_redirect)
+$(full_target): $(static_doc_properties)
 $(full_target): $(framework_built)
 
 
@@ -1146,7 +1159,7 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-hdf android.hasSamples true \
 		-samplesdir $(samples_dir)
 
-LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk-dev
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
@@ -1170,6 +1183,7 @@ LOCAL_MODULE := online-system-api-sdk
 
 LOCAL_DROIDDOC_OPTIONS:= \
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-referenceonly \
 		-showAnnotation android.annotation.SystemApi \
 		-title "Android SDK - Including system APIs." \
 		-toroot / \
@@ -1213,7 +1227,7 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-hdf android.hasSamples true \
 		-samplesdir $(samples_dir)
 
-LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk-dev
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
@@ -1241,7 +1255,32 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-devsite \
 		-ignoreJdLinks
 
-LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk-dev
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
+
+include $(BUILD_DROIDDOC)
+
+# ==== generates full navtree for resolving @links in ds postprocessing ====
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:=$(framework_docs_LOCAL_SRC_FILES)
+LOCAL_INTERMEDIATE_SOURCES:=$(framework_docs_LOCAL_INTERMEDIATE_SOURCES)
+LOCAL_STATIC_JAVA_LIBRARIES:=$(framework_docs_LOCAL_STATIC_JAVA_LIBRARIES)
+LOCAL_JAVA_LIBRARIES:=$(framework_docs_LOCAL_JAVA_LIBRARIES)
+LOCAL_MODULE_CLASS:=$(framework_docs_LOCAL_MODULE_CLASS)
+LOCAL_DROIDDOC_SOURCE_PATH:=$(framework_docs_LOCAL_DROIDDOC_SOURCE_PATH)
+LOCAL_ADDITIONAL_JAVA_DIR:=$(framework_docs_LOCAL_ADDITIONAL_JAVA_DIR)
+LOCAL_ADDITIONAL_DEPENDENCIES:=$(framework_docs_LOCAL_ADDITIONAL_DEPENDENCIES)
+
+LOCAL_MODULE := ds-ref-navtree
+
+LOCAL_DROIDDOC_OPTIONS:= \
+		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-hdf android.whichdoc online \
+		-toroot / \
+		-atLinksNavtree \
+		-navtreeonly
+
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
@@ -1266,11 +1305,10 @@ LOCAL_DROIDDOC_OPTIONS:= \
 		-toroot / \
 		-hdf android.whichdoc online \
 		$(sample_groups) \
-		-useUpdatedTemplates \
 		-hdf android.hasSamples true \
 		-samplesdir $(samples_dir)
 
-LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk-dev
+LOCAL_DROIDDOC_CUSTOM_TEMPLATE_DIR:=build/tools/droiddoc/templates-sdk
 
 include $(BUILD_DROIDDOC)
 
@@ -1289,6 +1327,7 @@ LOCAL_ADDITIONAL_DEPENDENCIES:=$(framework_docs_LOCAL_ADDITIONAL_DEPENDENCIES)
 LOCAL_MODULE := hidden
 LOCAL_DROIDDOC_OPTIONS:=\
 		$(framework_docs_LOCAL_DROIDDOC_OPTIONS) \
+		-referenceonly \
 		-title "Android SDK - Including hidden APIs."
 #		-hidden
 
