@@ -69,7 +69,7 @@ public class PenSizeArrayAdapter extends ArrayAdapter<String> {
         final Bitmap bmp = Bitmap.createBitmap(contentWidth, contentWidth, Bitmap.Config.ARGB_8888);
         canvas.setBitmap(bmp);
         final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.RED);
         paint.setStrokeWidth(penSize);
         canvas.drawLine(0, contentWidth / 2, contentWidth, contentWidth / 2, paint);
 
