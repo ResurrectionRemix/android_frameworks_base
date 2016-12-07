@@ -29,9 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Implementation of 'cmd overlay' commands.
@@ -53,7 +50,6 @@ final class OverlayManagerShellCommand extends ShellCommand {
             final PrintWriter out = getOutPrintWriter();
             out.println("The overlay manager has already been initialized.");
             return -1;
-            return handleDefaultCommands(cmd);
         }
         final PrintWriter err = getErrPrintWriter();
         try {
@@ -98,10 +94,6 @@ final class OverlayManagerShellCommand extends ShellCommand {
         out.println("    Disable overlay package PACKAGE or subsequent counts of PACKAGE.");
         out.println("  disable-all [--user USER_ID]");
         out.println("    Disable all overlay packages.");
-        out.println("  enable [--user USER_ID] PACKAGE");
-        out.println("    Enable overlay package PACKAGE.");
-        out.println("  disable [--user USER_ID] PACKAGE");
-        out.println("    Disable overlay package PACKAGE.");
         out.println("  set-priority [--user USER_ID] PACKAGE PARENT|lowest|highest");
         out.println("    Change the priority of the overlay PACKAGE to be just higher than");
         out.println("    the priority of PACKAGE_PARENT If PARENT is the special keyword");
@@ -245,8 +237,6 @@ final class OverlayManagerShellCommand extends ShellCommand {
             System.err.println("Error: A fatal exception has occurred.");
         }
         return 0;
-        final String packageName = getNextArgRequired();
-        return mInterface.setEnabled(packageName, enable, userId) ? 0 : 1;
     }
 
     private int runSetPriority() throws RemoteException {
