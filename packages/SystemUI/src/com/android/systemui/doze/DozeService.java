@@ -314,16 +314,11 @@ public class DozeService extends DreamService {
 
     private void listenForPulseSignals(boolean listen) {
         if (DEBUG) Log.d(mTag, "listenForPulseSignals: " + listen);
-        if (mDozeParameters.getPulseOnPickup()) {
-            mPickupSensor.setListening(listen);
-        }
         for (TriggerSensor s : mSensors) {
             s.setListening(listen);
         }
         listenForBroadcasts(listen);
-        if (mDozeParameters.getPulseOnNotifications()) {
-            listenForNotifications(listen);
-        }
+        listenForNotifications(listen);
     }
 
     private void reregisterAllSensors() {
