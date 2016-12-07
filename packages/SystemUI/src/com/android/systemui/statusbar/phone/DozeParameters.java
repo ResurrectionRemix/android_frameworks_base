@@ -126,16 +126,6 @@ public class DozeParameters {
         return SystemProperties.getBoolean("doze.vibrate.sigmotion", false);
     }
 
-    public boolean getPulseOnPickup() {
-        if (getOverwriteValue()) {
-            final int values = Settings.System.getIntForUser(mContext.getContentResolver(),
-                   Settings.System.DOZE_PULSE_ON_PICKUP, 1,
-                    UserHandle.USER_CURRENT);
-            return values != 0;
-        }
-        return getBoolean("doze.pulse.pickup", R.bool.doze_pulse_on_pick_up);
-    }
-
     public boolean getVibrateOnPickup() {
         return SystemProperties.getBoolean("doze.vibrate.pickup", false);
     }
