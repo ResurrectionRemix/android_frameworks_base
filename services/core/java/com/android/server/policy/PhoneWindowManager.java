@@ -3750,7 +3750,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // dispatch
         // if keyguard is showing and secure, don't intercept and let aosp keycode
         // implementation handle event
-        if (mKeyHandler != null && !keyguardOn && !virtualKey) {
+        if (mKeyHandler != null && !keyguardOn && !virtualKey && !mContext.getResources().getBoolean(com.android.internal.R.bool.config_hwKeysBackAlwaysOn)) {
             boolean handled = mKeyHandler.handleKeyEvent(win, keyCode, repeatCount, down, canceled,
                     longPress, keyguardOn);
             if (handled)
@@ -4079,11 +4079,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // Disable back key if navbar hw keys is set to off
-            if (scanCode != 0 && isHwKeysDisabled() && !mContext.getResources().getBoolean(com.android.internal.R.bool.config_hwKeysBackAlwaysOn)) {
-                Log.i(TAG, "Ignoring Back Key: we have hw keys disabled");
-                return 0;
-            }
             if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.KILL_APP_LONGPRESS_BACK, 0, UserHandle.USER_CURRENT) == 1) {
                 if (down && repeatCount == 0) {
@@ -6667,13 +6662,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                             (interactive ?
                                                 isKeyguardShowingAndNotOccluded() :
                                                 mKeyguardDelegate.isShowing()));
-         // Disable all hw keys actions but let home key wake on if it's enabled
-         if (isHwKeysDisabled()) {
-             if (scanCode != 0 && keyCode == KeyEvent.KEYCODE_BACK && !mContext.getResources().getBoolean(com.android.internal.R.bool.config_hwKeysBackAlwaysOn)) {
-                 Log.i(TAG, "Ignoring Back Key: we have hw keys disabled");
-                 return 0;
-             }
-         }
 
         if (DEBUG_INPUT) {
             Log.d(TAG, "interceptKeyTq keycode=" + keyCode
