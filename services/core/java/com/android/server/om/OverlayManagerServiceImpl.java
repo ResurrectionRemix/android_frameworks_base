@@ -325,7 +325,6 @@ final class OverlayManagerServiceImpl {
 
     boolean onSetEnabled(@NonNull final String packageName, final boolean enable,
             final int userId, final boolean shouldWait) {
-            final int userId) {
         if (DEBUG) {
             Slog.d(TAG, String.format("onSetEnabled packageName=%s enable=%s userId=%d",
                         packageName, enable, userId));
@@ -342,7 +341,6 @@ final class OverlayManagerServiceImpl {
                 mPackageManager.getPackageInfo(oi.targetPackageName, userId);
             mSettings.setEnabled(packageName, userId, enable);
             updateState(targetPackage, overlayPackage, userId, shouldWait);
-            updateState(targetPackage, overlayPackage, userId);
             return true;
         } catch (OverlayManagerSettings.BadKeyException e) {
             return false;
@@ -404,7 +402,6 @@ final class OverlayManagerServiceImpl {
                             OverlayInfo.stateToString(newState)));
             }
             mSettings.setState(overlayPackage.packageName, userId, newState, shouldWait);
-            mSettings.setState(overlayPackage.packageName, userId, newState);
         }
     }
 
@@ -450,22 +447,6 @@ final class OverlayManagerServiceImpl {
         }
 
         return stateCheck ? STATE_APPROVED_ENABLED : STATE_APPROVED_DISABLED;
-        final boolean enableIfApproved = mSettings.getEnabled(overlayPackage.packageName, userId);
-
-        if (mPackageManager.signaturesMatching(targetPackage.packageName,
-                    overlayPackage.packageName, userId)) {
-            return enableIfApproved ? STATE_APPROVED_ENABLED : STATE_APPROVED_DISABLED;
-        }
-
-        if ((overlayPackage.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-            return enableIfApproved ? STATE_APPROVED_ENABLED : STATE_APPROVED_DISABLED;
-        }
-
-        if (!mIdmapManager.isDangerous(overlayPackage, userId)) {
-            return enableIfApproved ? STATE_APPROVED_ENABLED : STATE_APPROVED_DISABLED;
-        }
-
-        return STATE_NOT_APPROVED_DANGEROUS_OVERLAY;
     }
 
     private void removeIdmapIfPossible(@NonNull final OverlayInfo oi) {
