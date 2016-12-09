@@ -83,12 +83,7 @@
     <color name="crop_draw_color_7">#FF9800</color>
     <color name="crop_draw_color_8">#FFEB3B</color>
 
-    <color name="ripple_material_light">#40000000</color>
-    <color name="ripple_material_dark">#40ffffff</color>
-	
-	  <!-- Volume panel border coler -->
-    <color name="volume_panel_border_color">#ff2962ff</color><!-- blue A700 -->
-
+    <color name="ripple_material_dark">#40ffffff</color>	
     <color name="system_primary_color">@*android:color/material_pixel_blue_dark</color>
     <color name="system_secondary_color">@*android:color/material_pixel_blue_light</color>
     <color name="system_accent_color">@*android:color/material_pixel_blue_bright</color>
@@ -111,8 +106,4 @@
 
     <!-- QS edit page toolbar text color -->
     <color name="qs_edit_toolbar_text_color">#FFFFFF</color>
-
-    <!-- QS edit button text color -->
-    <color name="qs_edit_button_text_color">#64FFFFFF</color>
-
 </resources>
