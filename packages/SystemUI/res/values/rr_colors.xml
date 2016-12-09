@@ -106,4 +106,7 @@
 
     <!-- QS edit page toolbar text color -->
     <color name="qs_edit_toolbar_text_color">#FFFFFF</color>
+	
+    <!-- QS edit button text color -->		
+    <color name="qs_edit_button_text_color">#64FFFFFF</color>
 </resources>
