@@ -569,6 +569,8 @@ public class BatteryMeterDrawable extends Drawable implements
 
         final float widthDiv2 = mWidth / 2f;
         // text size is width / 2 - 2dp for wiggle room
+
+        if ((Settings.System.getInt(mContext.getContentResolver(), Settings.System.BATTERY_LARGE_TEXT, 0) == 1)) {
         final float textSize;
         switch(mStyle) {
             case BATTERY_STYLE_CIRCLE:
@@ -580,9 +582,14 @@ public class BatteryMeterDrawable extends Drawable implements
             default:
                 textSize = widthDiv2;
                 break;
-        }
+                }
         mTextAndBoltPaint.setTextSize(textSize);
         mWarningTextPaint.setTextSize(textSize);
+        } else {
+        final float textSize = widthDiv2 - mContext.getResources().getDisplayMetrics().density * 2;
+        mTextAndBoltPaint.setTextSize(textSize);
+        mWarningTextPaint.setTextSize(textSize);
+        }        
 
         Rect iconBounds = new Rect(0, 0, mWidth, mHeight);
         mBatteryDrawable.setBounds(iconBounds);

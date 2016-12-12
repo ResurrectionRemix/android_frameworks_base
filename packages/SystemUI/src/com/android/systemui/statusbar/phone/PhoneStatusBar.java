@@ -691,6 +691,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.QS_ROWS_LANDSCAPE),
                   false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.BATTERY_LARGE_TEXT),
+                  false, this, UserHandle.USER_ALL);
 		    update();
         }
 
@@ -754,6 +757,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     initTickerView();
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_SU_INDICATOR))) {
+                    UpdateSomeViews();
+           } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BATTERY_LARGE_TEXT))) {
                     UpdateSomeViews();
            }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CLEAR_RECENTS_STYLE))

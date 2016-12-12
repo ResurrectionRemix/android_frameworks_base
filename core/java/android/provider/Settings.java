@@ -4224,6 +4224,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String DOUBLE_TAP_SLEEP_ANYWHERE = "double_tap_sleep_anywhere";
 
         /**
+         * Whether tdisplay large text for statusbar battery percentage
+         * @hide
+         */
+        public static final String BATTERY_LARGE_TEXT = "battery_large_text";
+
+        /**
          * Whether to show the battery bar
          * @hide
          */
