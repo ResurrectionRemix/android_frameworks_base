@@ -893,6 +893,24 @@ MtpResponseCode MyMtpDatabase::getObjectPropertyList(MtpObjectHandle handle,
             int type = dataTypes[i];
             packet.putUInt16(type);
 
+            if (type == MTP_TYPE_STR) {
+                jstring value = (jstring)env->GetObjectArrayElement(stringValuesArray, i);
+                const char *valueStr = (value ? env->GetStringUTFChars(value, NULL) : NULL);
+                if (valueStr) {
+                    packet.putString(valueStr);
+                    env->ReleaseStringUTFChars(value, valueStr);
+                } else {
+                    packet.putEmptyString();
+                }
+                env->DeleteLocalRef(value);
+                continue;
+            }
+
+            if (!longValues) {
+                ALOGE("bad longValuesArray value in MyMtpDatabase::getObjectPropertyList");
+                continue;
+            }
+
             switch (type) {
                 case MTP_TYPE_INT8:
                     packet.putInt8(longValues[i]);
@@ -924,18 +942,6 @@ MtpResponseCode MyMtpDatabase::getObjectPropertyList(MtpObjectHandle handle,
                 case MTP_TYPE_UINT128:
                     packet.putUInt128(longValues[i]);
                     break;
-                case MTP_TYPE_STR: {
-                    jstring value = (jstring)env->GetObjectArrayElement(stringValuesArray, i);
-                    const char *valueStr = (value ? env->GetStringUTFChars(value, NULL) : NULL);
-                    if (valueStr) {
-                        packet.putString(valueStr);
-                        env->ReleaseStringUTFChars(value, valueStr);
-                    } else {
-                        packet.putEmptyString();
-                    }
-                    env->DeleteLocalRef(value);
-                    break;
-                }
                 default:
                     ALOGE("bad or unsupported data type in MyMtpDatabase::getObjectPropertyList");
                     break;
