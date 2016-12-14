@@ -694,7 +694,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.BATTERY_LARGE_TEXT),
                   false, this, UserHandle.USER_ALL);
-		    update();
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.NAV_BAR_DYNAMIC),
+                  false, this, UserHandle.USER_ALL);
+		  update();
         }
 
         @Override
@@ -775,6 +778,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mNavigationController.updateNavbarOverlay(mContext.getResources());
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NAVBAR_BUTTON_COLOR))) {
+                    mNavigationController.updateNavbarOverlay(mContext.getResources());
+           } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NAV_BAR_DYNAMIC))) {
                     mNavigationController.updateNavbarOverlay(mContext.getResources());
            }
            update();

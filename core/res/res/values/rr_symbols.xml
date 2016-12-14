@@ -161,4 +161,7 @@
   <!-- Quick settings tiles columns and rows config -->
   <java-symbol type="integer" name="config_qs_num_rows_landscape_default"/>
 
+  <!-- Dyanamic Navbar -->
+  <java-symbol type="color" name="input_method_navigation_guard_dyanamic" />
+
 </resources>
