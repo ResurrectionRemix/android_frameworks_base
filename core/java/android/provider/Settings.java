@@ -4531,6 +4531,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String STATUS_BAR_WEATHER_COLOR = "status_bar_weather_color";
 
         /*
+         * Dyanamic Navbar Switch
+         * @hide
+         */
+        public static final String NAV_BAR_DYNAMIC = "nav_bar_dynamic";
+
+        /*
          * Whether to show the weather info on the lock screen
          * @hide
          */
