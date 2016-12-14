@@ -2056,6 +2056,16 @@
              Corresponds to {@link android.view.Window#setNavigationBarColor(int)}. -->
         <attr name="navigationBarColor" format="color" />
 
+        <!-- The dynamic color for the navigation bar. If the color is not opaque, consider setting
+             {@link android.view.View#SYSTEM_UI_FLAG_LAYOUT_STABLE} and
+             {@link android.view.View#SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION}.
+             For this to take effect, the window must be drawing the system bar backgrounds with
+             {@link android.R.attr#windowDrawsSystemBarBackgrounds} and the navigation bar must not
+             have been requested to be translucent with
+             {@link android.R.attr#windowTranslucentNavigation}.
+             Corresponds to {@link android.view.Window#setNavigationBarColor(int)}. -->
+        <attr name="navigationBarColordynamic" format="color" />
+
         <!-- Shows a thin line of the specified color between the navigation bar and the app
              content.
              <p>For this to take effect, the window must be drawing the system bar backgrounds with

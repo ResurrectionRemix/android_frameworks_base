@@ -2170,6 +2170,7 @@
     <public type="attr" name="windowDrawsSystemBarBackgrounds" id="0x01010450" />
     <public type="attr" name="statusBarColor" id="0x01010451" />
     <public type="attr" name="navigationBarColor" id="0x01010452" />
+    <public type="attr" name="navigationBarColordynamic" id="0x01011452" />
     <public type="attr" name="contentInsetStart" id="0x01010453" />
     <public type="attr" name="contentInsetEnd" id="0x01010454" />
     <public type="attr" name="contentInsetLeft" id="0x01010455" />

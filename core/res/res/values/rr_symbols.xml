@@ -178,4 +178,7 @@
   <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
 
+  <!-- Dynamic Navbar -->
+  <java-symbol type="color" name="input_method_navigation_guard_dynamic" />
+
 </resources>

@@ -5246,23 +5246,29 @@ public final class Settings {
         /**
         * @hide
         */
-       public static final String STATUS_BAR_FILE_HEADER_IMAGE = "status_bar_file_header_image";
+        public static final String STATUS_BAR_FILE_HEADER_IMAGE = "status_bar_file_header_image";
 
-       /**
+        /**
         * Wheter to play notification sound and vibration if screen is ON
         * 0 - never
         * 1 - always
         * 2 - if media playing
         * @hide
         */
-       public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
+        public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
-       /**
+        /**
         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
         *
         * @hide
         */
-       public static final String ANBI_ENABLED = "anbi_enabled";
+        public static final String ANBI_ENABLED = "anbi_enabled";
+
+        /**
+        * Dynamic Navbar Switch
+        * @hide
+        */
+        public static final String NAVBAR_DYNAMIC = "navbar_dynamic";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

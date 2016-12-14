@@ -2432,9 +2432,17 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             mStatusBarColor = a.getColor(R.styleable.Window_statusBarColor, 0xFF000000);
         }
         if (!mForcedNavigationBarColor) {
-            mNavigationBarColor = a.getColor(R.styleable.Window_navigationBarColor, 0xFF000000);
-            mNavigationBarDividerColor = a.getColor(R.styleable.Window_navigationBarDividerColor,
-                    0x00000000);
+            boolean isDynamic = Settings.System.getInt(getContext().getContentResolver(),
+                    Settings.System.NAVBAR_DYNAMIC, 0) == 1;
+            if (!isDynamic) {
+                mNavigationBarColor = a.getColor(R.styleable.Window_navigationBarColor, 0xFF000000);
+                mNavigationBarDividerColor = a.getColor(R.styleable.Window_navigationBarDividerColor,
+                        0x00000000);
+            } else {
+                mNavigationBarColor = a.getColor(R.styleable.Window_navigationBarColordynamic, 0x00000000);
+                mNavigationBarDividerColor = a.getColor(R.styleable.Window_navigationBarColordynamic,
+                        0x00000000);
+            }
         }
 
         WindowManager.LayoutParams params = getAttributes();
