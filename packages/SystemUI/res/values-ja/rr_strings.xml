@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2010 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Heads up -->
+    <string name="heads_up_snooze_message">Heads up is snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+    <string name="heads_up_snooze_button_title">Snooze heads up</string>
+    <string name="notification_inspect_heads_up_title_enabled">Enable heads up for this application</string>
+    <string name="notification_inspect_heads_up_title_disabled">Disable heads up for this application</string>
+    <string name="gestures_message">Draw gestures here</string>
+
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">Maximize</string>
+    <string name="app_float_item_title">Float view</string>
+    <string name="app_stop_item_title">Kill app</string>
+    <!-- Quick settings -->
+    <string name="quick_settings_battery_saver">バッテリーセーバー</string>
+    <string name="quick_settings_screen_off">画面の消灯</string>
+    <string name="quick_settings_battery_saver_off">バッテリーセーバー オフ</string>
+    <string name="quick_settings_screenshot">スクリーンショット</string>
+    <string name="quick_settings_sync">同期</string>
+    <string name="quick_settings_sync_off">同期オフ</string>
+    <string name="quick_settings_brightness">画面の明るさ</string>
+    <string name="quick_settings_music_play">Play</string>
+    <string name="quick_settings_music_pause">Pause</string>
+    <string name="quick_settings_systemui_restart_label">システムUIの再起動</string>
+
+    <!-- NavBar tile -->
+    <string name="quick_settings_navbar_on">ナビバー オン</string>
+    <string name="quick_settings_navbar_off">ナビバー オフ</string>
+    
+    <!-- App Circle Bar tile -->
+    <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
+    <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+    
+    <string name="quick_settings_doze">Doze enabled</string>
+    <string name="quick_settings_doze_off">Doze disabled</string>
+
+    <!-- Kernel Adiutor Tile -->
+    <string name="quick_settings_kernel_adiutor">Kernel Adiutor</string>
+
+    <!-- Power Button for Navbar -->
+    <string name="navbar_power_button">電源ボタン</string>
+    <!-- Greeting -->
+    <string name="welcome_label">Hello world!</string> 
+    <!-- Battery status in pie controls -->
+    <string name="pie_battery_status_charging">Charging (<xliff:g id="percent">%d</xliff:g>%%)</string>
+    <string name="pie_battery_status_full">Charged</string>
+    <string name="pie_battery_status_discharging"><xliff:g id="percent">%d</xliff:g>%% remaining</string>
+
+    <!-- Phone status in pie controls -->
+    <string name="pie_phone_status_no_service">サービスなし</string>
+    <string name="pie_phone_status_airplane_mode">機内モード</string>
+    <string name="pie_phone_status_emergency_only">緊急通報のみ</string> 
+    <!-- Off/On/Toggle -->
+    <string name="off">オフ</string>
+    <string name="on">音</string>
+    <string name="toggle">トグル</string>
+
+    <!-- Dialog Cancel/OK -->
+    <string name="cancel">キャンセル</string>
+    <string name="dlg_ok">OK</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+
+    <!-- Slim Shortcut Actions -->
+    <string name="shortcut_picker">Slim ショートカット</string>
+    <string name="shortcut_rotation">画面の回転</string>
+    <string name="shortcut_torch">ライト</string>
+    <string name="shortcut_chamber">Chamber of Secrets</string>
+    <string name="shortcut_reboot">再起動</string>
+    <string name="shortcut_recovery">リカバリー</string>
+    <string name="shortcut_screensleep">画面の消灯</string>
+    <string name="shortcut_volume">音量パネル</string>
+    <string name="shortcut_restart_ui">システムUIの再起動</string>
+    <string name="shortcut_powermenu">Power menu</string>
+    <string name="shortcut_toggle_title">Action to perform</string>
+    <string name="chamber_disabled">Chamber of secrets is closed</string>
+    <string name="chamber_title">Input Settings string</string>
+    <string name="chamber_message">Input a Settings string that is either an on and off (checkbox) function or possibly a list-preference. For example, doze_enabled or similar. Settings can be found in the Settings.java file. WARNING: This process is dangerous!</string>
+    <string name="chamber_invalid">This is an invalid input. Be careful.</string>
+    <string name="chamber_invalid_setting">Try toggling the setting manually to ensure the settings database for this action exists.</string>
+    <string name="chamber_checkbox">Checkbox</string>
+    <string name="chamber_chk_message">Is this setting a checkbox setting?</string>
+    <string name="chamber_int">Input values</string>
+    <string name="chamber_int_message">Input the values you\'d like the setting to toggle between. Separate each value with a comma. Color settings accept hex-values such as #FF00aacc or basic color values like red, green, and yellow.</string>
+    <string name="chamber_name_title">Shortcut name</string>
+    <string name="chamber_name_message">Give the shortcut a name to display with the icon.</string>
+    <string name="chamber_name_toast">Using default name</string>
+
+    <!-- Power menu -->
+    <string name="quick_settings_power_menu_label">電源メニュー</string>
+
+    <!-- Kill app toast -->
+    <string name="app_killed_message">アプリは強制終了されました</string>
+
+    <!-- Title shown in recents popup for showing app launch in floating mode -->
+    <string name="recent_float_mode_title">Floating mode</string>
+
+    <!-- Themes Tile -->
+    <string name="quick_settings_themes">テーマ</string>
+
+    <!-- App sidebar -->
+    <string name="default_folder_text">Folder</string>
+    <string name="title_activity_sidebar_configuration">Appbar content setup</string>
+    <string name="action_save">Save</string>
+    <string name="toast_items_saved">Appbar items have been saved.</string>
+    <string name="content_setup_instructions">Add items to the Appbar by long pressing any item on the right and drag it over to the Appbar.\n\nCombine items into folders by droping an item onto any existing item in the Appbar.\n\nTo remove an item simply drag it out of the \@appbar.</string>
+    <string name="content_setup_dismiss">Continue</string>
+    <string name="toast_not_installed">App is not installed</string>   
+
+    <!-- Slim Action floats tile -->
+    <string name="quick_settings_slim_floats_on">Slim Floats Enabled</string>
+    <string name="quick_settings_slim_floats_off">Slim Floats Disabled</string>
+
+    
+    <!-- Pie tile -->
+    <string name="quick_settings_pie">Pie</string>
+
+    <!-- Configurations Tile -->
+    <string name="quick_settings_rrtools">高度な設定</string>
+
+
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go activated</string>
+    <string name="onthego_notif_title">On-The-Go が有効です</string>
+    <string name="onthego_notif_stop">停止</string>
+    <string name="onthego_notif_options">オプション</string>
+    <string name="onthego_notif_error">On-The-Go を開始できませんでした</string>
+    <string name="onthego_notif_restart">Restart On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Camera mode changed</string>
+    <string name="onthego_transparency">透過度</string>
+    <string name="onthego_front_camera">フロントカメラを使用</string>
+    <string name="onthego_service_toggle">Automatically restart service</string>
+    <!-- To do: Add QS OnTheGo
+    <string name="quick_settings_onthego_back">Rear Camera</string>
+    <string name="quick_settings_onthego_front">Front Camera</string>-->
+    <!-- Screenrecord Notification Ticker -->
+
+    <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Recording screen</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stop</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Show pointer</string>
+    <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Unable to record screen</string>
+
+
+    <!-- Quick settings -->
+    <string name="quick_settings_screenrecord">Screenrecord</string>
+    <string name="quick_settings_screenrecord_on">Recording ...</string>
+
+    <!-- Torch detail tile -->
+    <string name="disable_torch_screen_off_title">Disable torch on screen off</string>
+
+    <!-- Expanded desktop detail tile -->
+    <string name="quick_settings_expanded_desktop">拡張中</string>
+    <string name="quick_settings_expanded_desktop_off">標準</string>
+    <string name="quick_settings_expanded_desktop_detail_title">拡張デスクトップ</string>
+    <string name="quick_settings_expanded_hide_status">ステータスバーを非表示</string>
+    <string name="quick_settings_expanded_hide_navigation">ナビゲーションバーを非表示</string>
+    <string name="quick_settings_expanded_hide_both">両方を非表示</string>
+    <string name="accessibility_quick_settings_expanded_desktop_off">拡張デスクトップはオフになっています</string>
+
+    <!-- Heads up -->
+    <string name="heads_up_snooze_message">Heads up is disabled for <xliff:g id="number">%d</xliff:g> minutes.</string>
+    <string name="heads_up_snooze_button_title">Snooze heads up</string>
+
+    <!-- PitchBlack -->
+    <string name="quick_settings_trds_label">PitchBlack</string>
+
+</resources>
