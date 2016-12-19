@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2007-2008 The Android Open Source Project
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -37,8 +37,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.os.ResultReceiver;
+import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.InputType;
 import android.text.Layout;
@@ -75,6 +78,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.internal.statusbar.IStatusBarService;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
@@ -85,7 +90,7 @@ import java.lang.annotation.RetentionPolicy;
  * which final implementations can derive from and customize.  See the
  * base class {@link AbstractInputMethodService} and the {@link InputMethod}
  * interface for more information on the basics of writing input methods.
- * 
+ *
  * <p>In addition to the normal Service lifecycle methods, this class
  * introduces some new specific callbacks that most subclasses will want
  * to make use of:</p>
@@ -101,7 +106,7 @@ import java.lang.annotation.RetentionPolicy;
  * <li> {@link #onStartInputView(EditorInfo, boolean)} to deal with input
  * starting within the input area of the IME.
  * </ul>
- * 
+ *
  * <p>An input method has significant discretion in how it goes about its
  * work: the {@link android.inputmethodservice.InputMethodService} provides
  * a basic framework for standard UI elements (input view, candidates view,
@@ -110,13 +115,13 @@ import java.lang.annotation.RetentionPolicy;
  * an input area with a keyboard, another could allow the user to draw text,
  * while a third could have no input area (and thus not be visible to the
  * user) but instead listen to audio and perform text to speech conversion.</p>
- * 
+ *
  * <p>In the implementation provided here, all of these elements are placed
  * together in a single window managed by the InputMethodService.  It will
  * execute callbacks as it needs information about them, and provides APIs for
  * programmatic control over them.  They layout of these elements is explicitly
  * defined:</p>
- * 
+ *
  * <ul>
  * <li>The soft input view, if available, is placed at the bottom of the
  * screen.
@@ -127,11 +132,11 @@ import java.lang.annotation.RetentionPolicy;
  * the application and its top part will contain the extract text of what is
  * currently being edited by the application.
  * </ul>
- * 
- * 
+ *
+ *
  * <a name="SoftInputView"></a>
  * <h3>Soft Input View</h3>
- * 
+ *
  * <p>Central to most input methods is the soft input view.  This is where most
  * user interaction occurs: pressing on soft keys, drawing characters, or
  * however else your input method wants to generate text.  Most implementations
@@ -140,7 +145,7 @@ import java.lang.annotation.RetentionPolicy;
  * as long as the input view is visible, you will see user interaction in
  * that view and can call back on the InputMethodService to interact with the
  * application as appropriate.</p>
- * 
+ *
  * <p>There are some situations where you want to decide whether or not your
  * soft input view should be shown to the user.  This is done by implementing
  * the {@link #onEvaluateInputViewShown()} to return true or false based on
@@ -150,17 +155,17 @@ import java.lang.annotation.RetentionPolicy;
  * implementation always shows the input view unless there is a hard
  * keyboard available, which is the appropriate behavior for most input
  * methods.</p>
- * 
- * 
+ *
+ *
  * <a name="CandidatesView"></a>
  * <h3>Candidates View</h3>
- * 
+ *
  * <p>Often while the user is generating raw text, an input method wants to
  * provide them with a list of possible interpretations of that text that can
  * be selected for use.  This is accomplished with the candidates view, and
  * like the soft input view you implement {@link #onCreateCandidatesView()}
  * to instantiate your own view implementing your candidates UI.</p>
- * 
+ *
  * <p>Management of the candidates view is a little different than the input
  * view, because the candidates view tends to be more transient, being shown
  * only when there are possible candidates for the current text being entered
@@ -170,11 +175,11 @@ import java.lang.annotation.RetentionPolicy;
  * UI in the same way as the soft input view: it will never cause application
  * windows to resize, only cause them to be panned if needed for the user to
  * see the current focus.</p>
- * 
- * 
+ *
+ *
  * <a name="FullscreenMode"></a>
  * <h3>Fullscreen Mode</h3>
- * 
+ *
  * <p>Sometimes your input method UI is too large to integrate with the
  * application UI, so you just want to take over the screen.  This is
  * accomplished by switching to full-screen mode, causing the input method
@@ -183,7 +188,7 @@ import java.lang.annotation.RetentionPolicy;
  * there is a standard implementation for the extract editor that you should
  * not need to change.  The editor is placed at the top of the IME, above the
  * input and candidates views.</p>
- * 
+ *
  * <p>Similar to the input view, you control whether the IME is running in
  * fullscreen mode by implementing {@link #onEvaluateFullscreenMode()}
  * to return true or false based on
@@ -193,24 +198,24 @@ import java.lang.annotation.RetentionPolicy;
  * implementation selects fullscreen mode when the screen is in a landscape
  * orientation, which is appropriate behavior for most input methods that have
  * a significant input area.</p>
- * 
+ *
  * <p>When in fullscreen mode, you have some special requirements because the
  * user can not see the application UI.  In particular, you should implement
  * {@link #onDisplayCompletions(CompletionInfo[])} to show completions
  * generated by your application, typically in your candidates view like you
  * would normally show candidates.
- * 
- * 
+ *
+ *
  * <a name="GeneratingText"></a>
  * <h3>Generating Text</h3>
- * 
+ *
  * <p>The key part of an IME is of course generating text for the application.
  * This is done through calls to the
  * {@link android.view.inputmethod.InputConnection} interface to the
  * application, which can be retrieved from {@link #getCurrentInputConnection()}.
  * This interface allows you to generate raw key events or, if the target
  * supports it, directly edit in strings of candidates and committed text.</p>
- * 
+ *
  * <p>Information about what the target is expected and supports can be found
  * through the {@link android.view.inputmethod.EditorInfo} class, which is
  * retrieved with {@link #getCurrentInputEditorInfo()} method.  The most
@@ -221,13 +226,13 @@ import java.lang.annotation.RetentionPolicy;
  * raw key events to it.  An input method will also want to look at other
  * values here, to for example detect password mode, auto complete text views,
  * phone number entry, etc.</p>
- * 
+ *
  * <p>When the user switches between input targets, you will receive calls to
  * {@link #onFinishInput()} and {@link #onStartInput(EditorInfo, boolean)}.
  * You can use these to reset and initialize your input state for the current
  * target.  For example, you will often want to clear any input state, and
  * update a soft keyboard to be appropriate for the new inputType.</p>
- * 
+ *
  * @attr ref android.R.styleable#InputMethodService_imeFullscreenBackground
  * @attr ref android.R.styleable#InputMethodService_imeExtractEnterAnimation
  * @attr ref android.R.styleable#InputMethodService_imeExtractExitAnimation
@@ -264,10 +269,10 @@ public class InputMethodService extends AbstractInputMethodService {
     public static final int IME_VISIBLE = 0x2;
 
     InputMethodManager mImm;
-    
+
     int mTheme = 0;
     boolean mHardwareAccelerated = false;
-    
+
     LayoutInflater mInflater;
     TypedArray mThemeAttrs;
     View mRootView;
@@ -282,9 +287,9 @@ public class InputMethodService extends AbstractInputMethodService {
     FrameLayout mExtractFrame;
     FrameLayout mCandidatesFrame;
     FrameLayout mInputFrame;
-    
+
     IBinder mToken;
-    
+
     InputBinding mInputBinding;
     InputConnection mInputConnection;
     boolean mInputStarted;
@@ -292,7 +297,7 @@ public class InputMethodService extends AbstractInputMethodService {
     boolean mCandidatesViewStarted;
     InputConnection mStartedInputConnection;
     EditorInfo mInputEditorInfo;
-    
+
     int mShowInputFlags;
     boolean mShowInputRequested;
     boolean mLastShowInputRequested;
@@ -308,10 +313,10 @@ public class InputMethodService extends AbstractInputMethodService {
     View mExtractAction;
     ExtractedText mExtractedText;
     int mExtractedToken;
-    
+
     View mInputView;
     boolean mIsInputViewShown;
-    
+
     int mStatusIcon;
     int mBackDisposition;
 
@@ -322,6 +327,13 @@ public class InputMethodService extends AbstractInputMethodService {
      * by calling 1) {@code mWindow.show()} or 2) {@link #clearInsetOfPreviousIme()}.
      */
     boolean mShouldClearInsetOfPreviousIme;
+
+    Handler mHandler;
+
+    boolean mForcedAutoRotate;
+
+    private IStatusBarService mStatusBarService;
+    private Object mServiceAquireLock = new Object();
 
     final Insets mTmpInsets = new Insets();
     final int[] mTmpLocation = new int[2];
@@ -366,7 +378,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     };
-    
+
     /**
      * Concrete implementation of
      * {@link AbstractInputMethodService.AbstractInputMethodImpl} that provides
@@ -382,7 +394,7 @@ public class InputMethodService extends AbstractInputMethodService {
                 mWindow.setToken(token);
             }
         }
-        
+
         /**
          * Handle a new input binding, calling
          * {@link InputMethodService#onBindInput InputMethodService.onBindInput()}
@@ -406,6 +418,7 @@ public class InputMethodService extends AbstractInputMethodService {
             if (DEBUG) Log.v(TAG, "unbindInput(): binding=" + mInputBinding
                     + " ic=" + mInputConnection);
             onUnbindInput();
+            mInputStarted = false;
             mInputBinding = null;
             mInputConnection = null;
         }
@@ -499,7 +512,7 @@ public class InputMethodService extends AbstractInputMethodService {
             mCurCompletions = completions;
             onDisplayCompletions(completions);
         }
-        
+
         /**
          * Call {@link InputMethodService#onUpdateExtractedText
          * InputMethodService.onUpdateExtractedText()}.
@@ -510,7 +523,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
             onUpdateExtractedText(token, text);
         }
-        
+
         /**
          * Call {@link InputMethodService#onUpdateSelection
          * InputMethodService.onUpdateSelection()}.
@@ -543,7 +556,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
             InputMethodService.this.onUpdateCursor(newCursor);
         }
-        
+
         /**
          * Call {@link InputMethodService#onAppPrivateCommand
          * InputMethodService.onAppPrivateCommand()}.
@@ -554,9 +567,9 @@ public class InputMethodService extends AbstractInputMethodService {
             }
             InputMethodService.this.onAppPrivateCommand(action, data);
         }
-        
+
         /**
-         * 
+         *
          */
         public void toggleSoftInput(int showFlags, int hideFlags) {
             InputMethodService.this.onToggleSoftInput(showFlags, hideFlags);
@@ -573,7 +586,7 @@ public class InputMethodService extends AbstractInputMethodService {
             InputMethodService.this.onUpdateCursorAnchorInfo(info);
         }
     }
-    
+
     /**
      * Information about where interesting parts of the input method UI appear.
      */
@@ -587,7 +600,7 @@ public class InputMethodService extends AbstractInputMethodService {
          * of the input method window.
          */
         public int contentTopInsets;
-        
+
         /**
          * This is the top part of the UI that is visibly covering the
          * application behind it.  This provides finer-grained control over
@@ -614,14 +627,14 @@ public class InputMethodService extends AbstractInputMethodService {
          */
         public static final int TOUCHABLE_INSETS_FRAME
                 = ViewTreeObserver.InternalInsetsInfo.TOUCHABLE_INSETS_FRAME;
-        
+
         /**
          * Option for {@link #touchableInsets}: the area inside of
          * the content insets can be touched.
          */
         public static final int TOUCHABLE_INSETS_CONTENT
                 = ViewTreeObserver.InternalInsetsInfo.TOUCHABLE_INSETS_CONTENT;
-        
+
         /**
          * Option for {@link #touchableInsets}: the area inside of
          * the visible insets can be touched.
@@ -848,16 +861,18 @@ public class InputMethodService extends AbstractInputMethodService {
         mExtractAccessories = null;
         mExtractAction = null;
         mFullscreenApplied = false;
-        
+
         mCandidatesFrame = (FrameLayout)mRootView.findViewById(android.R.id.candidatesArea);
         mInputFrame = (FrameLayout)mRootView.findViewById(android.R.id.inputArea);
         mInputView = null;
         mIsInputViewShown = false;
-        
+
         mExtractFrame.setVisibility(View.GONE);
         mCandidatesVisibility = getCandidatesHiddenVisibility();
         mCandidatesFrame.setVisibility(mCandidatesVisibility);
         mInputFrame.setVisibility(View.GONE);
+
+        mHandler = new Handler();
     }
 
     @Override public void onDestroy() {
@@ -885,11 +900,11 @@ public class InputMethodService extends AbstractInputMethodService {
      * regenerating the input method UI as a result of the configuration
      * change, so you can rely on your {@link #onCreateInputView} and
      * other methods being called as appropriate due to a configuration change.
-     * 
+     *
      * <p>When a configuration change does happen,
      * {@link #onInitializeInterface()} is guaranteed to be called the next
      * time prior to any of the other input or UI creation callbacks.  The
-     * following will be called immediately depending if appropriate for current 
+     * following will be called immediately depending if appropriate for current
      * state: {@link #onStartInput} if input is active, and
      * {@link #onCreateInputView} and {@link #onStartInputView} and related
      * appropriate functions if the UI is displayed.
@@ -946,7 +961,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public AbstractInputMethodImpl onCreateInputMethodInterface() {
         return new InputMethodImpl();
     }
-    
+
     /**
      * Implement to return our standard {@link InputMethodSessionImpl}.  Subclasses
      * can override to provide their own customized version.
@@ -955,15 +970,15 @@ public class InputMethodService extends AbstractInputMethodService {
     public AbstractInputMethodSessionImpl onCreateInputMethodSessionInterface() {
         return new InputMethodSessionImpl();
     }
-    
+
     public LayoutInflater getLayoutInflater() {
         return mInflater;
     }
-    
+
     public Dialog getWindow() {
         return mWindow;
     }
-    
+
     public void setBackDisposition(int disposition) {
         mBackDisposition = disposition;
     }
@@ -980,11 +995,11 @@ public class InputMethodService extends AbstractInputMethodService {
      * can stretch as much as needed horizontally.  The function returns to
      * you the maximum amount of space available horizontally, which you can
      * use if needed for UI placement.
-     * 
+     *
      * <p>In many cases this is not needed, you can just rely on the normal
      * view layout mechanisms to position your views within the full horizontal
      * space given to the input method.
-     * 
+     *
      * <p>Note that this value can change dynamically, in particular when the
      * screen orientation changes.
      */
@@ -992,7 +1007,7 @@ public class InputMethodService extends AbstractInputMethodService {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getWidth();
     }
-    
+
     /**
      * Return the currently active InputBinding for the input method, or
      * null if there is none.
@@ -1000,7 +1015,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public InputBinding getCurrentInputBinding() {
         return mInputBinding;
     }
-    
+
     /**
      * Retrieve the currently active InputConnection that is bound to
      * the input method, or null if there is none.
@@ -1012,15 +1027,15 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         return mInputConnection;
     }
-    
+
     public boolean getCurrentInputStarted() {
         return mInputStarted;
     }
-    
+
     public EditorInfo getCurrentInputEditorInfo() {
         return mInputEditorInfo;
     }
-    
+
     /**
      * Re-evaluate whether the input method should be running in fullscreen
      * mode, and update its UI if this has changed since the last time it
@@ -1030,7 +1045,15 @@ public class InputMethodService extends AbstractInputMethodService {
      * is currently running in fullscreen mode.
      */
     public void updateFullscreenMode() {
-        boolean isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
+        boolean fullScreenOverride = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.DISABLE_FULLSCREEN_KEYBOARD, 0,
+                UserHandle.USER_CURRENT_OR_SELF) != 0;
+        boolean isFullscreen;
+        if (fullScreenOverride) {
+            isFullscreen = false;
+        } else {
+            isFullscreen = mShowInputRequested && onEvaluateFullscreenMode();
+        }
         boolean changed = mLastShowInputRequested != mShowInputRequested;
         if (mIsFullscreen != isFullscreen || !mFullscreenApplied) {
             changed = true;
@@ -1064,22 +1087,22 @@ public class InputMethodService extends AbstractInputMethodService {
             }
             updateExtractFrameVisibility();
         }
-        
+
         if (changed) {
             onConfigureWindow(mWindow.getWindow(), isFullscreen, !mShowInputRequested);
             mLastShowInputRequested = mShowInputRequested;
         }
     }
-    
+
     /**
      * Update the given window's parameters for the given mode.  This is called
      * when the window is first displayed and each time the fullscreen or
      * candidates only mode changes.
-     * 
+     *
      * <p>The default implementation makes the layout for the window
      * MATCH_PARENT x MATCH_PARENT when in fullscreen mode, and
      * MATCH_PARENT x WRAP_CONTENT when in non-fullscreen mode.
-     * 
+     *
      * @param win The input method's window.
      * @param isFullscreen If true, the window is running in fullscreen mode
      * and intended to cover the entire application display.
@@ -1097,7 +1120,7 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         mWindow.getWindow().setLayout(MATCH_PARENT, newHeight);
     }
-    
+
     /**
      * Return whether the input method is <em>currently</em> running in
      * fullscreen mode.  This is the mode that was last determined and
@@ -1106,7 +1129,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public boolean isFullscreenMode() {
         return mIsFullscreen;
     }
-    
+
     /**
      * Override this to control when the input method should run in
      * fullscreen mode.  The default implementation runs in fullsceen only
@@ -1142,7 +1165,7 @@ public class InputMethodService extends AbstractInputMethodService {
             updateExtractFrameVisibility();
         }
     }
-    
+
     /**
      * Return whether the fullscreen extract view is shown.  This will only
      * return true if {@link #isFullscreenMode()} returns true, and in that
@@ -1156,7 +1179,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public boolean isExtractViewShown() {
         return mIsFullscreen && !mExtractViewHidden;
     }
-    
+
     void updateExtractFrameVisibility() {
         final int vis;
         if (isFullscreenMode()) {
@@ -1180,18 +1203,18 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         mFullscreenArea.setVisibility(vis);
     }
-    
+
     /**
      * Compute the interesting insets into your UI.  The default implementation
      * uses the top of the candidates frame for the visible insets, and the
      * top of the input frame for the content insets.  The default touchable
      * insets are {@link Insets#TOUCHABLE_INSETS_VISIBLE}.
-     * 
+     *
      * <p>Note that this method is not called when
      * {@link #isExtractViewShown} returns true, since
      * in that case the application is left as-is behind the input method and
      * not impacted by anything in its UI.
-     * 
+     *
      * @param outInsets Fill in with the current UI insets.
      */
     public void onComputeInsets(Insets outInsets) {
@@ -1216,7 +1239,7 @@ public class InputMethodService extends AbstractInputMethodService {
         outInsets.touchableInsets = Insets.TOUCHABLE_INSETS_VISIBLE;
         outInsets.touchableRegion.setEmpty();
     }
-    
+
     /**
      * Re-evaluate whether the soft input area should currently be shown, and
      * update its UI if this has changed since the last time it
@@ -1239,14 +1262,14 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     }
-    
+
     /**
      * Returns true if we have been asked to show our input view.
      */
     public boolean isShowInputRequested() {
         return mShowInputRequested;
     }
-    
+
     /**
      * Return whether the soft input view is <em>currently</em> shown to the
      * user.  This is the state that was last determined and
@@ -1298,7 +1321,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     }
-    
+
     void updateCandidatesVisibility(boolean shown) {
         int vis = shown ? View.VISIBLE : getCandidatesHiddenVisibility();
         if (mCandidatesVisibility != vis) {
@@ -1306,7 +1329,7 @@ public class InputMethodService extends AbstractInputMethodService {
             mCandidatesVisibility = vis;
         }
     }
-    
+
     /**
      * Returns the visibility mode (either {@link View#INVISIBLE View.INVISIBLE}
      * or {@link View#GONE View.GONE}) of the candidates view when it is not
@@ -1320,28 +1343,28 @@ public class InputMethodService extends AbstractInputMethodService {
     public int getCandidatesHiddenVisibility() {
         return isExtractViewShown() ? View.GONE : View.INVISIBLE;
     }
-    
+
     public void showStatusIcon(@DrawableRes int iconResId) {
         mStatusIcon = iconResId;
         mImm.showStatusIcon(mToken, getPackageName(), iconResId);
     }
-    
+
     public void hideStatusIcon() {
         mStatusIcon = 0;
         mImm.hideStatusIcon(mToken);
     }
-    
+
     /**
      * Force switch to a new input method, as identified by <var>id</var>.  This
      * input method will be destroyed, and the requested one started on the
      * current input field.
-     * 
+     *
      * @param id Unique identifier of the new input method ot start.
      */
     public void switchInputMethod(String id) {
         mImm.setInputMethod(mToken, id);
     }
-    
+
     public void setExtractView(View view) {
         mExtractFrame.removeAllViews();
         mExtractFrame.addView(view, new FrameLayout.LayoutParams(
@@ -1365,7 +1388,7 @@ public class InputMethodService extends AbstractInputMethodService {
             mExtractAction = null;
         }
     }
-    
+
     /**
      * Replaces the current candidates view with a new one.  You only need to
      * call this when dynamically changing the view; normally, you should
@@ -1378,7 +1401,7 @@ public class InputMethodService extends AbstractInputMethodService {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
     }
-    
+
     /**
      * Replaces the current input view with a new one.  You only need to
      * call this when dynamically changing the view; normally, you should
@@ -1392,23 +1415,23 @@ public class InputMethodService extends AbstractInputMethodService {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         mInputView = view;
     }
-    
+
     /**
      * Called by the framework to create the layout for showing extacted text.
      * Only called when in fullscreen mode.  The returned view hierarchy must
-     * have an {@link ExtractEditText} whose ID is 
+     * have an {@link ExtractEditText} whose ID is
      * {@link android.R.id#inputExtractEditText}.
      */
     public View onCreateExtractTextView() {
         return mInflater.inflate(
                 com.android.internal.R.layout.input_method_extract_view, null);
     }
-    
+
     /**
      * Create and return the view hierarchy used to show candidates.  This will
      * be called once, when the candidates are first displayed.  You can return
      * null to have no candidates view; the default implementation returns null.
-     * 
+     *
      * <p>To control when the candidates view is displayed, use
      * {@link #setCandidatesViewShown(boolean)}.
      * To change the candidates view after the first one is created by this
@@ -1417,13 +1440,13 @@ public class InputMethodService extends AbstractInputMethodService {
     public View onCreateCandidatesView() {
         return null;
     }
-    
+
     /**
      * Create and return the view hierarchy used for the input area (such as
      * a soft keyboard).  This will be called once, when the input area is
      * first displayed.  You can return null to have no input area; the default
      * implementation returns null.
-     * 
+     *
      * <p>To control when the input view is displayed, implement
      * {@link #onEvaluateInputViewShown()}.
      * To change the input view after the first one is created by this
@@ -1432,14 +1455,14 @@ public class InputMethodService extends AbstractInputMethodService {
     public View onCreateInputView() {
         return null;
     }
-    
+
     /**
      * Called when the input view is being shown and input has started on
      * a new editor.  This will always be called after {@link #onStartInput},
      * allowing you to do your general setup there and just view-specific
      * setup here.  You are guaranteed that {@link #onCreateInputView()} will
      * have been called some time before this function is called.
-     * 
+     *
      * @param info Description of the type of text being edited.
      * @param restarting Set to true if we are restarting input on the
      * same text field as before.
@@ -1447,17 +1470,17 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onStartInputView(EditorInfo info, boolean restarting) {
         // Intentionally empty
     }
-    
+
     /**
      * Called when the input view is being hidden from the user.  This will
      * be called either prior to hiding the window, or prior to switching to
      * another target for editing.
-     * 
+     *
      * <p>The default
      * implementation uses the InputConnection to clear any active composing
      * text; you can override this (not calling the base class implementation)
      * to perform whatever behavior you would like.
-     * 
+     *
      * @param finishingInput If true, {@link #onFinishInput} will be
      * called immediately after.
      */
@@ -1469,7 +1492,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     }
-    
+
     /**
      * Called when only the candidates view has been shown for showing
      * processing as the user enters text through a hard keyboard.
@@ -1477,14 +1500,14 @@ public class InputMethodService extends AbstractInputMethodService {
      * allowing you to do your general setup there and just view-specific
      * setup here.  You are guaranteed that {@link #onCreateCandidatesView()}
      * will have been called some time before this function is called.
-     * 
+     *
      * <p>Note that this will <em>not</em> be called when the input method
      * is running in full editing mode, and thus receiving
      * {@link #onStartInputView} to initiate that operation.  This is only
      * for the case when candidates are being shown while the input method
      * editor is hidden but wants to show its candidates UI as text is
      * entered through some other mechanism.
-     * 
+     *
      * @param info Description of the type of text being edited.
      * @param restarting Set to true if we are restarting input on the
      * same text field as before.
@@ -1492,17 +1515,17 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onStartCandidatesView(EditorInfo info, boolean restarting) {
         // Intentionally empty
     }
-    
+
     /**
      * Called when the candidates view is being hidden from the user.  This will
      * be called either prior to hiding the window, or prior to switching to
      * another target for editing.
-     * 
+     *
      * <p>The default
      * implementation uses the InputConnection to clear any active composing
      * text; you can override this (not calling the base class implementation)
      * to perform whatever behavior you would like.
-     * 
+     *
      * @param finishingInput If true, {@link #onFinishInput} will be
      * called immediately after.
      */
@@ -1514,7 +1537,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     }
-    
+
     /**
      * The system has decided that it may be time to show your input method.
      * This is called due to a corresponding call to your
@@ -1523,7 +1546,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * {@link #onEvaluateInputViewShown()}, {@link #onEvaluateFullscreenMode()},
      * and the current configuration to decide whether the input view should
      * be shown at this point.
-     * 
+     *
      * @param flags Provides additional information about the show request,
      * as per {@link InputMethod#showSoftInput InputMethod.showSoftInput()}.
      * @param configChange This is true if we are re-showing due to a
@@ -1590,7 +1613,7 @@ public class InputMethodService extends AbstractInputMethodService {
             Log.w(TAG, "Re-entrance in to showWindow");
             return;
         }
-        
+
         try {
             mWindowWasVisible = mWindowVisible;
             mInShowWindow = true;
@@ -1611,6 +1634,28 @@ public class InputMethodService extends AbstractInputMethodService {
             mWindowWasVisible = true;
             mInShowWindow = false;
         }
+
+        IStatusBarService statusbar = getStatusBarService();
+        int mKeyboardRotationTimeout = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.KEYBOARD_ROTATION_TIMEOUT, 0, UserHandle.USER_CURRENT_OR_SELF);
+        if (mKeyboardRotationTimeout > 0) {
+            mHandler.removeCallbacks(restoreAutoRotation);
+            if (!mForcedAutoRotate) {
+                boolean isAutoRotate = (Settings.System.getIntForUser(getContentResolver(),
+                    Settings.System.ACCELEROMETER_ROTATION, 0,
+                    UserHandle.USER_CURRENT_OR_SELF) == 1);
+                if (!isAutoRotate) {
+                    try {
+                        if (statusbar != null) {
+                            statusbar.setAutoRotate(true);
+                            mForcedAutoRotate = true;
+                        }
+                    } catch (RemoteException e) {
+                        mStatusBarService = null;
+                    }
+                }
+            }
+        }
     }
 
     void showWindowInner(boolean showInput) {
@@ -1627,7 +1672,7 @@ public class InputMethodService extends AbstractInputMethodService {
         initialize();
         updateFullscreenMode();
         updateInputViewShown();
-        
+
         if (!mWindowAdded || !mWindowCreated) {
             mWindowAdded = true;
             mWindowCreated = true;
@@ -1650,7 +1695,7 @@ public class InputMethodService extends AbstractInputMethodService {
             mCandidatesViewStarted = true;
             onStartCandidatesView(mInputEditorInfo, false);
         }
-        
+
         if (doShowInput) {
             startExtractingText(false);
         }
@@ -1694,8 +1739,30 @@ public class InputMethodService extends AbstractInputMethodService {
             onWindowHidden();
             mWindowWasVisible = false;
         }
+        int mKeyboardRotationTimeout = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.KEYBOARD_ROTATION_TIMEOUT, 0, UserHandle.USER_CURRENT_OR_SELF);
+        if (mKeyboardRotationTimeout > 0) {
+            mHandler.removeCallbacks(restoreAutoRotation);
+            if (mForcedAutoRotate) {
+                mHandler.postDelayed(restoreAutoRotation, mKeyboardRotationTimeout);
+            }
+        }
         updateFullscreenMode();
     }
+
+    final Runnable restoreAutoRotation = new Runnable() {
+        @Override public void run() {
+            try {
+                IStatusBarService statusbar = getStatusBarService();
+                if (statusbar != null) {
+                    statusbar.setAutoRotate(false);
+                }
+                mForcedAutoRotate = false;
+            } catch (RemoteException e) {
+                mStatusBarService = null;
+            }
+        }
+    };
 
     /**
      * Called when the input method window has been shown to the user, after
@@ -1705,7 +1772,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onWindowShown() {
         // Intentionally empty
     }
-    
+
     /**
      * Called when the input method window has been hidden from the user,
      * after previously being visible.
@@ -1737,7 +1804,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onBindInput() {
         // Intentionally empty
     }
-    
+
     /**
      * Called when the previous bound client is no longer associated
      * with the input method.  After returning {@link #getCurrentInputBinding}
@@ -1747,12 +1814,12 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onUnbindInput() {
         // Intentionally empty
     }
-    
+
     /**
      * Called to inform the input method that text input has started in an
      * editor.  You should use this callback to initialize the state of your
      * input to match the state of the editor given to it.
-     * 
+     *
      * @param attribute The attributes of the editor that input is starting
      * in.
      * @param restarting Set to true if input is restarting in the same
@@ -1763,7 +1830,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public void onStartInput(EditorInfo attribute, boolean restarting) {
         // Intentionally empty
     }
-    
+
     void doFinishInput() {
         if (mInputViewStarted) {
             if (DEBUG) Log.v(TAG, "CALL: onFinishInputView");
@@ -1806,14 +1873,14 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     }
-    
+
     /**
      * Called to inform the input method that text input has finished in
      * the last editor.  At this point there may be a call to
      * {@link #onStartInput(EditorInfo, boolean)} to perform input in a
      * new editor, or the input method may be left idle.  This method is
      * <em>not</em> called when input restarts in the same editor.
-     * 
+     *
      * <p>The default
      * implementation uses the InputConnection to clear any active composing
      * text; you can override this (not calling the base class implementation)
@@ -1825,20 +1892,20 @@ public class InputMethodService extends AbstractInputMethodService {
             ic.finishComposingText();
         }
     }
-    
+
     /**
      * Called when the application has reported auto-completion candidates that
      * it would like to have the input method displayed.  Typically these are
      * only used when an input method is running in full-screen mode, since
      * otherwise the user can see and interact with the pop-up window of
      * completions shown by the application.
-     * 
+     *
      * <p>The default implementation here does nothing.
      */
     public void onDisplayCompletions(CompletionInfo[] completions) {
         // Intentionally empty
     }
-    
+
     /**
      * Called when the application has reported new extracted text to be shown
      * due to changes in its current text state.  The default implementation
@@ -1856,7 +1923,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     }
-    
+
     /**
      * Called when the application has reported a new selection region of
      * the text.  This is called whether or not the input method has requested
@@ -1867,7 +1934,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * methods such as setComposingText, commitText or
      * deleteSurroundingText. If the cursor moves as a result, this method
      * will be called again, which may result in an infinite loop.
-     * 
+     *
      * <p>The default implementation takes care of updating the cursor in
      * the extract text, if it is being shown.
      */
@@ -1934,7 +2001,7 @@ public class InputMethodService extends AbstractInputMethodService {
     public void requestHideSelf(int flags) {
         mImm.hideSoftInputFromInputMethod(mToken, flags);
     }
-    
+
     /**
      * Show the input method. This is a call back to the
      * IMF to handle showing the input method.
@@ -1945,7 +2012,7 @@ public class InputMethodService extends AbstractInputMethodService {
     private void requestShowSelf(int flags) {
         mImm.showSoftInputFromInputMethod(mToken, flags);
     }
-    
+
     private boolean handleBack(boolean doIt) {
         if (mShowInputRequested) {
             // If the soft input area is shown, back closes it and we
@@ -1981,10 +2048,10 @@ public class InputMethodService extends AbstractInputMethodService {
 
     /**
      * Override this to intercept key down events before they are processed by the
-     * application.  If you return true, the application will not 
+     * application.  If you return true, the application will not
      * process the event itself.  If you return false, the normal application processing
      * will occur as if the IME had not seen the event at all.
-     * 
+     *
      * <p>The default implementation intercepts {@link KeyEvent#KEYCODE_BACK
      * KeyEvent.KEYCODE_BACK} if the IME is currently shown, to
      * possibly hide it when the key goes up (if not canceled or long pressed).  In
@@ -2042,7 +2109,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * application.  If you return true, the application will not itself
      * process the event.  If you return false, the normal application processing
      * will occur as if the IME had not seen the event at all.
-     * 
+     *
      * <p>The default implementation always returns false, except when
      * in fullscreen mode, where it will consume DPAD movement
      * events to move the cursor in the extracted text view, not allowing
@@ -2057,7 +2124,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * application.  If you return true, the application will not itself
      * process the event.  If you return false, the normal application processing
      * will occur as if the IME had not seen the event at all.
-     * 
+     *
      * <p>The default implementation intercepts {@link KeyEvent#KEYCODE_BACK
      * KeyEvent.KEYCODE_BACK} to hide the current IME UI if it is shown.  In
      * addition, in fullscreen mode only, it will consume DPAD movement
@@ -2114,7 +2181,7 @@ public class InputMethodService extends AbstractInputMethodService {
 
     public void onAppPrivateCommand(String action, Bundle data) {
     }
-    
+
     /**
      * Handle a request by the system to toggle the soft input area.
      */
@@ -2126,10 +2193,10 @@ public class InputMethodService extends AbstractInputMethodService {
             requestShowSelf(showFlags);
         }
     }
-    
+
     static final int MOVEMENT_DOWN = -1;
     static final int MOVEMENT_UP = -2;
-    
+
     void reportExtractedMovement(int keyCode, int count) {
         int dx = 0, dy = 0;
         switch (keyCode) {
@@ -2199,7 +2266,7 @@ public class InputMethodService extends AbstractInputMethodService {
 
         return false;
     }
-    
+
     /**
      * Send the given key event code (as defined by {@link KeyEvent}) to the
      * current input connection is a key down + key up event pair.  The sent
@@ -2230,18 +2297,18 @@ public class InputMethodService extends AbstractInputMethodService {
                 KeyEvent.ACTION_UP, keyEventCode, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
                 KeyEvent.FLAG_SOFT_KEYBOARD|KeyEvent.FLAG_KEEP_TOUCH_MODE));
     }
-    
+
     /**
      * Ask the input target to execute its default action via
      * {@link InputConnection#performEditorAction
      * InputConnection.performEditorAction()}.
-     * 
+     *
      * @param fromEnterKey If true, this will be executed as if the user had
      * pressed an enter key on the keyboard, that is it will <em>not</em>
      * be done if the editor has set {@link EditorInfo#IME_FLAG_NO_ENTER_ACTION
      * EditorInfo.IME_FLAG_NO_ENTER_ACTION}.  If false, the action will be
      * sent regardless of how the editor has set that flag.
-     * 
+     *
      * @return Returns a boolean indicating whether an action has been sent.
      * If false, either the editor did not specify a default action or it
      * does not want an action from the enter key.  If true, the action was
@@ -2263,10 +2330,10 @@ public class InputMethodService extends AbstractInputMethodService {
             }
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Send the given UTF-16 character to the current input connection.  Most
      * characters will be delivered simply by calling
@@ -2278,7 +2345,7 @@ public class InputMethodService extends AbstractInputMethodService {
      * fully complying IME will decide of the right action for each event and
      * will likely never call this method except maybe to handle events coming
      * from an actual hardware keyboard.
-     * 
+     *
      * @param charCode The UTF-16 character code to send.
      */
     public void sendKeyChar(char charCode) {
@@ -2301,7 +2368,7 @@ public class InputMethodService extends AbstractInputMethodService {
                 break;
         }
     }
-    
+
     /**
      * This is called when the user has moved the cursor in the extracted
      * text view, when running in fullsreen mode.  The default implementation
@@ -2388,7 +2455,7 @@ public class InputMethodService extends AbstractInputMethodService {
             setCandidatesViewShown(false);
         }
     }
-    
+
     /**
      * This is called when the user has selected a context menu item from the
      * extracted text view, when running in fullscreen mode.  The default
@@ -2404,16 +2471,26 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         return true;
     }
-    
+
+    IStatusBarService getStatusBarService() {
+        synchronized (mServiceAquireLock) {
+            if (mStatusBarService == null) {
+                mStatusBarService = IStatusBarService.Stub.asInterface(
+                        ServiceManager.getService("statusbar"));
+            }
+            return mStatusBarService;
+        }
+    }
+
     /**
      * Return text that can be used as a button label for the given
      * {@link EditorInfo#imeOptions EditorInfo.imeOptions}.  Returns null
      * if there is no action requested.  Note that there is no guarantee that
      * the returned text will be relatively short, so you probably do not
      * want to use it as text on a soft keyboard key label.
-     * 
+     *
      * @param imeOptions The value from @link EditorInfo#imeOptions EditorInfo.imeOptions}.
-     * 
+     *
      * @return Returns a label to use, or null if there is no action.
      */
     public CharSequence getTextForImeAction(int imeOptions) {
@@ -2481,10 +2558,10 @@ public class InputMethodService extends AbstractInputMethodService {
             setExtractViewShown(false);
             return;
         }
-        
+
         setExtractViewShown(true);
     }
-    
+
     /**
      * Called when the fullscreen-mode extracting editor info has changed,
      * to update the state of its UI such as the action buttons shown.
@@ -2492,11 +2569,11 @@ public class InputMethodService extends AbstractInputMethodService {
      * full screen extract UI.  If replacing it, you will need to re-implement
      * this to put the appropriate action button in your own UI and handle it,
      * and perform any other changes.
-     * 
+     *
      * <p>The standard implementation turns on or off its accessory area
      * depending on whether there is an action button, and hides or shows
      * the entire extract area depending on whether it makes sense for the
-     * current editor.  In particular, a {@link InputType#TYPE_NULL} or 
+     * current editor.  In particular, a {@link InputType#TYPE_NULL} or
      * {@link InputType#TYPE_TEXT_VARIATION_FILTER} input type will turn off the
      * extract area since there is no text to be shown.
      */
@@ -2504,7 +2581,7 @@ public class InputMethodService extends AbstractInputMethodService {
         if (!isExtractViewShown()) {
             return;
         }
-        
+
         if (mExtractAccessories == null) {
             return;
         }
@@ -2539,7 +2616,7 @@ public class InputMethodService extends AbstractInputMethodService {
             }
         }
     }
-    
+
     /**
      * This is called when, while currently displayed in extract mode, the
      * current input target changes.  The default implementation will
@@ -2551,7 +2628,7 @@ public class InputMethodService extends AbstractInputMethodService {
             requestHideSelf(InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
-    
+
     void startExtractingText(boolean inputChanged) {
         final ExtractEditText eet = mExtractEditText;
         if (eet != null && getCurrentInputStarted()
@@ -2570,7 +2647,7 @@ public class InputMethodService extends AbstractInputMethodService {
                         + mExtractedText + ", input connection = " + ic);
             }
             final EditorInfo ei = getCurrentInputEditorInfo();
-            
+
             try {
                 eet.startInternalChanges();
                 onUpdateExtractingVisibility(ei);
@@ -2594,7 +2671,7 @@ public class InputMethodService extends AbstractInputMethodService {
             } finally {
                 eet.finishInternalChanges();
             }
-            
+
             if (inputChanged) {
                 onExtractingInputChanged(ei);
             }
@@ -2676,14 +2753,14 @@ public class InputMethodService extends AbstractInputMethodService {
         p.println("  mInputStarted=" + mInputStarted
                 + " mInputViewStarted=" + mInputViewStarted
                 + " mCandidatesViewStarted=" + mCandidatesViewStarted);
-        
+
         if (mInputEditorInfo != null) {
             p.println("  mInputEditorInfo:");
             mInputEditorInfo.dump(p, "    ");
         } else {
             p.println("  mInputEditorInfo: null");
         }
-        
+
         p.println("  mShowInputRequested=" + mShowInputRequested
                 + " mLastShowInputRequested=" + mLastShowInputRequested
                 + " mShowInputFlags=0x" + Integer.toHexString(mShowInputFlags));
@@ -2691,7 +2768,7 @@ public class InputMethodService extends AbstractInputMethodService {
                 + " mFullscreenApplied=" + mFullscreenApplied
                 + " mIsFullscreen=" + mIsFullscreen
                 + " mExtractViewHidden=" + mExtractViewHidden);
-        
+
         if (mExtractedText != null) {
             p.println("  mExtractedText:");
             p.println("    text=" + mExtractedText.text.length() + " chars"
