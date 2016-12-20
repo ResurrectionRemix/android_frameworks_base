@@ -165,5 +165,7 @@
     <color name="pie_shader_start">#FF4d4d4d</color>
     <color name="pie_shader_end">#FF212121</color>
 
+    <!-- Pixel theme -->
+    <color name="pixel_primary_color">#242424</color>
 
 </resources>

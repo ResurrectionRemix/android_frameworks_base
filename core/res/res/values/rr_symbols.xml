@@ -217,4 +217,40 @@
   <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
 
   <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+
+  <!-- Dark mode -->
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Red" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Blue" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Orange" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Green" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Yellow" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Purple" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Pink" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Cyan" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Dark_Grey" />
+
+  <!-- Grey mode -->
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Red" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Blue" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Orange" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Green" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Yellow" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Purple" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Pink" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Cyan" />
+  <java-symbol type="style" name="Theme_DeviceDefault_Grey_Grey" />
+
+  <!-- White mode -->
+  <java-symbol type="style" name="Theme_DeviceDefault_White" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Red" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Blue" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Orange" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Green" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Yellow" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Purple" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Pink" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Cyan" />
+  <java-symbol type="style" name="Theme_DeviceDefault_White_Grey" />
 </resources>

@@ -26,5 +26,18 @@
     <color name="immersive_cling_button_text_color">@android:color/white</color>
     <color name="notification_text_default_color">@android:color/notification_default_color</color>
     <color name="sender_text_color">@android:color/black</color>
+
+    <!-- Color Engine -->
+    <color name="dark_primary_color">@color/black</color>
+    <color name="grey_primary_color">#ff303030</color>
+    <color name="blue_accent_color">#4285F4</color>
+    <color name="red_accent_color">#f90028</color>
+    <color name="orange_accent_color">#ff3d00</color>
+    <color name="green_accent_color">#76c124</color>
+    <color name="yellow_accent_color">#ffc90f</color>
+    <color name="purple_accent_color">#6f24d6</color>
+    <color name="pink_accent_color">#ff1b70</color>
+    <color name="cyan_accent_color">#24b7d6</color>
+    <color name="grey_accent_color">#ff5d5d5d</color>
     
 </resources>
