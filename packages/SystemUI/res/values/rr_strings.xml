@@ -234,4 +234,8 @@
     <string name="dlg_ok">@android:string/ok</string>
     <string name="dlg_cancel">@android:string/cancel</string>
     <string name="kill">Kill App</string>
+    
+   <!-- Recents free RAM -->
+   <string name="recents_free_ram">Free RAM: %1$d MB</string>
+
 </resources>
