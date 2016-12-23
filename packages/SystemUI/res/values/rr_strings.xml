@@ -178,4 +178,5 @@
 
     <string name="recents_custom_android_n">CLEAR ALL</string>
 
+    <string name="recents_free_ram">Free RAM: %1$d MB</string>
 </resources>
