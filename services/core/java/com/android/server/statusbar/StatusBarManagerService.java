@@ -966,6 +966,15 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
                 this, in, out, err, args, resultReceiver);
     }
 
+    @Override
+    public void setAutoRotate(boolean enabled) {
+        if (mBar != null) {
+            try {
+                mBar.setAutoRotate(enabled);
+            } catch (RemoteException ex) {}
+        }
+    }
+
     // ================================================================================
     // Can be called from any thread
     // ================================================================================

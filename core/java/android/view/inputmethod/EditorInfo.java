@@ -413,6 +413,19 @@ public class EditorInfo implements InputType, Parcelable {
     }
 
     /**
+     * @hide
+     */
+    public final void formalTextInput(boolean forceLong) {
+        if (forceLong) {
+            switch (inputType&(TYPE_MASK_CLASS|TYPE_MASK_VARIATION)) {
+                case TYPE_CLASS_TEXT|TYPE_TEXT_VARIATION_SHORT_MESSAGE:
+                    inputType = TYPE_CLASS_TEXT|TYPE_TEXT_VARIATION_LONG_MESSAGE
+                            | (inputType&TYPE_MASK_FLAGS);
+            }
+        }
+    }
+
+    /**
      * Write debug output of this object.
      */
     public void dump(Printer pw, String prefix) {
