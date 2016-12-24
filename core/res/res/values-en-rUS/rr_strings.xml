@@ -18,8 +18,30 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Default</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+  <string name="global_action_screenrecord">ScreenRecord</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Fade</string>
+  <string name="animation_slide_right">Slide in Right</string>
+  <string name="animation_slide_left">Slide in Left</string>
+  <string name="animation_slide_right_no_fade">Slide in Right (No fade)</string>
+  <string name="animation_slide_left_no_fade">Slide in Left (No fade)</string>
+  <string name="animation_slide_up">Slide in Bottom</string>
+  <string name="animation_slide_down">Slide in Top</string>
+  <string name="animation_default">Default</string>
+  <string name="animation_translucent">Translucent</string>
+  <string name="animation_grow_shrink">Grow in (Top)</string>
+  <string name="animation_grow_shrink_center">Grow in (Center)</string>
+  <string name="animation_grow_shrink_bottom">Grow in (Bottom)</string>
+  <string name="animation_grow_shrink_left">Grow in (Left)</string>
+  <string name="animation_grow_shrink_right">Grow in (Right)</string>
+  <string name="action_null">Blank</string>
+  <string name="global_action_torch">Flashlight</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">Restart SystemUI</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">On-The-Go Mode</string>
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">ADB Inactive</string>
+  <string name="adb_active_custom_tile_not_connected">Inactive</string>
 </resources>

@@ -35,10 +35,10 @@
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Проведите вправо для %1$s</string>
   <string name="right_shortcut_hint">Проведите влево для %1$s</string>
-  <string name="lockscreen_message">Нажмите значок слева или справа для изменения ярлыка экрана блокировки.</string>
+  <string name="lockscreen_message">Нажмите на значок слева или справа для изменения ярлыков на экране блокировки.</string>
   <string name="lockscreen_default_target">По умолчанию</string>
-  <string name="select_application">Выбор приложения</string>
-  <string name="lockscreen_choose_action_title">Выбор действия</string>
+  <string name="select_application">Выберите приложение</string>
+  <string name="lockscreen_choose_action_title">Выберите действие</string>
   <string name="lockscreen_none_target">Пусто</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Развернуть</string>
@@ -65,10 +65,10 @@
   <string name="quick_settings_volume_panel_label">Громкость</string>
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">Скриншот</string>
-  <string name="quick_settings_region_screenshot_label">Скриншот определённой области экрана</string>
+  <string name="quick_settings_region_screenshot_label">Скриншот выбранной области экрана</string>
   <string name="quick_settings_adb_network">ADB по сети</string>
   <string name="quick_settings_network_adb_enabled_label">Включено</string>
-  <string name="quick_settings_network_adb_disabled_label">Отключено</string>
+  <string name="quick_settings_network_adb_disabled_label">Выключено</string>
   <string name="quick_settings_sync_label">Синхронизация</string>
   <string name="accessibility_quick_settings_sync_off">Синхронизация выключена</string>
   <string name="accessibility_quick_settings_sync_on">Синхронизация включена</string>
@@ -83,14 +83,14 @@
   <string name="accessibility_quick_settings_usb_tether_on">USB-модем вкл.</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">USB-модем выключен</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">USB-модем включен</string>
-  <string name="quick_settings_usb_tether_label">USB-модем</string>
+  <string name="quick_settings_usb_tether_label">USB модем</string>
   <string name="quick_settings_music_label">Музыка</string>
   <string name="quick_settings_music_play">Воспр.</string>
   <string name="quick_settings_music_pause">Пауза</string>
   <string name="quick_settings_ime_tile_label">Способ ввода</string>
   <string name="rr_qs_tile">Расширенные настройки</string>
   <string name="quick_settings_caffeine_label">Запрет сна</string>
-  <string name="accessibility_quick_settings_caffeine_off">Запрет сна выкл</string>
+  <string name="accessibility_quick_settings_caffeine_off">Запрет сна выкл.</string>
   <string name="accessibility_quick_settings_caffeine_on">Запрет сна вкл.</string>
   <string name="qs_app_picker_title">Выбор приложения</string>
   <string name="quick_settings_lte_label">LTE</string>
@@ -103,22 +103,22 @@
   <string name="quick_settings_screenrecord_on">Идет запись ...</string>
   <string name="quick_settings_navigation_bar">Панель навигации</string>
   <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar выкл</string>
+  <string name="quick_settings_smartbar_off">SmartBar выкл.</string>
   <string name="quick_settings_fling">Fling</string>
-  <string name="quick_settings_fling_off">Fling выкл</string>
-  <string name="quick_settings_appcirclebar_title">Круг приложений</string>
-  <string name="quick_settings_appcirclebar_on">Круг приложений включён</string>
-  <string name="quick_settings_appcirclebar_off">Круг приложений выключен</string>
+  <string name="quick_settings_fling_off">Fling выкл.</string>
+  <string name="quick_settings_appcirclebar_title">Круговая панель приложений</string>
+  <string name="quick_settings_appcirclebar_on">Круговая панель приложений вкл.</string>
+  <string name="quick_settings_appcirclebar_off">Круговая панель приложений выкл.</string>
   <string name="quick_settings_gesture_anywhere_label">Жест везде</string>
   <string name="quick_settings_gesture_anywhere_on">Жесты включены</string>
   <string name="quick_settings_gesture_anywhere_off">Жесты выключены</string>
-  <string name="quick_settings_appsidebar_title">Боковое меню приложений</string>
-  <string name="quick_settings_appsidebar_on">Боковое меню приложений включено</string>
-  <string name="quick_settings_appsidebar_off">Боковое меню приложений выключено</string>
+  <string name="quick_settings_appsidebar_title">Боковая панель приложений</string>
+  <string name="quick_settings_appsidebar_on">Боковая панель приложений вкл.</string>
+  <string name="quick_settings_appsidebar_off">Боковая панель приложений выкл.</string>
   <string name="quick_settings_pulse_enabled">Pulse включён</string>
   <string name="quick_settings_pulse_disabled">Pulse выключен</string>
   <string name="quick_settings_pulse_label">Визуализация панели навигации</string>
-  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_pie">PIE</string>
   <string name="quick_settings_ambient_display_label">Ambient display</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ambient display выключен.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Ambient display включен.</string>
@@ -133,8 +133,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Приложение закрыто</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Сон выглядывающих уведомлений на минуту.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Сон выглядывающих уведомлений на <xliff:g id="number">%d</xliff:g> минут.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Убирать уведомления через одну минуту. </string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Показывать уведомления в течении <xliff:g id="number">%d</xliff:g> минут.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Скриншот не был создан</string>
   <string name="screenshot_abort_text">Операция прервана</string>

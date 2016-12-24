@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Nenhuma captura de ecrã</string>
   <string name="screenshot_abort_text">Operação cancelada</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Eliminado</string>
+  <string name="action_delete_fault">A eliminação não teve sucesso</string>
+  <string name="action_save_success">Guardado</string>
+  <string name="action_save_fault">Não foi guardado</string>
+  <string name="pref_action_color_title">Cor dos botões de ação</string>
+  <string name="pref_action_color_summary">Escolha sua cor favorita para os botões de ação</string>
+  <string name="pref_category_main">Configurações principais</string>
+  <string name="pref_category_user">Configurações de utilizador</string>
+  <string name="pref_crop_behavior_title">Comportamento de corte</string>
+  <string name="pref_crop_behavior_summary">Usar a imagem recortada, mesmo que a original não tenha sido cortada com a ferramenta de corte</string>
+  <string name="action_ok">Ok</string>
+  <string name="action_delete_success">Eliminado</string>
+  <string name="action_delete_fault">A eliminação não teve sucesso</string>
+  <string name="action_save_success">Guardado</string>
+  <string name="action_save_fault">Não foi guardado</string>
+  <string name="action_edit">Editar</string>
   <string name="recents_custom_android_n">Limpar tudo</string>
 </resources>

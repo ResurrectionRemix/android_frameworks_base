@@ -85,7 +85,7 @@
   <string name="accessibility_quick_settings_usb_tether_changed_on">USB 网络共享已开启</string>
   <string name="quick_settings_usb_tether_label">USB 网络共享</string>
   <string name="quick_settings_music_label">音乐</string>
-  <string name="quick_settings_music_play">运行</string>
+  <string name="quick_settings_music_play">播放</string>
   <string name="quick_settings_music_pause">暂停</string>
   <string name="quick_settings_ime_tile_label">输入法</string>
   <string name="rr_qs_tile">配置</string>
@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">没有截图</string>
   <string name="screenshot_abort_text">操作中止</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">已删除</string>
+  <string name="action_delete_fault">删除失败</string>
+  <string name="action_save_success">已保存</string>
+  <string name="action_save_fault">保存失败</string>
+  <string name="pref_action_color_title">虚拟健颜色</string>
+  <string name="pref_action_color_summary">选择你最喜欢的虚拟健颜色</string>
+  <string name="pref_category_main">主要设置</string>
+  <string name="pref_category_user">用户设置</string>
+  <string name="pref_crop_behavior_title">裁剪</string>
+  <string name="pref_crop_behavior_summary">使用经裁剪的图像，即使原图像没有被裁剪动作所裁剪</string>
+  <string name="action_ok">确定</string>
+  <string name="action_delete_success">已删除</string>
+  <string name="action_delete_fault">删除失败</string>
+  <string name="action_save_success">已保存</string>
+  <string name="action_save_fault">保存失败</string>
+  <string name="action_edit">编辑</string>
   <string name="recents_custom_android_n">全部清除</string>
 </resources>

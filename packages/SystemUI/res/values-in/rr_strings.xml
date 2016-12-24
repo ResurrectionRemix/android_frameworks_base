@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Tangkapan layar dihapus</string>
   <string name="gestures_message">Gambar gerakan di sini</string>
+  <string name="rr_sys_tuner">SystemUI tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Usap ke kanan untuk %1$s</string>
   <string name="right_shortcut_hint">Usap ke kiri untuk %1$s</string>
@@ -138,5 +139,17 @@
   <string name="screenshot_abort_title">Tidak ada gambar yang diambil</string>
   <string name="screenshot_abort_text">Operasi dibatalkan</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Dihapus</string>
+  <string name="action_delete_fault">Gagal menghapus</string>
+  <string name="action_save_success">Disimpan</string>
+  <string name="action_save_fault">Gagal menyimpan</string>
+  <string name="pref_category_main">Pengaturan Utama</string>
+  <string name="pref_category_user">Pengaturan pengguna</string>
+  <string name="action_ok">Oke</string>
+  <string name="action_delete_success">Dihapus</string>
+  <string name="action_delete_fault">Gagal menghapus</string>
+  <string name="action_save_success">Disimpan</string>
+  <string name="action_save_fault">Gagal menyimpan</string>
+  <string name="action_edit">Ubah</string>
   <string name="recents_custom_android_n">HAPUS SEMUA</string>
 </resources>

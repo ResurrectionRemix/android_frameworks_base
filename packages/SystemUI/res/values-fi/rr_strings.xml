@@ -19,6 +19,7 @@
   <!-- Screenrecord Notification Ticker -->
   <!-- Screenrecord notification title -->
   <!-- Screenrecord notification action: Stop -->
+  <string name="screenrecord_notif_stop">Pysäytä</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <!-- Screen record notification error title -->
   <!-- Screenshot Delete Toast -->

@@ -16,7 +16,7 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">İlkin</string>
+  <string name="default_string">Susmaya görə</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">Vendor təsviri sisteminiz ilə uyğun gəlmir. Xahiş edirik cihazınız üçün <xliff:g id="string">%s</xliff:g> vendor təsvirini flaşlayın</string>
   <string name="global_action_screenrecord">Ekran qeydi</string>

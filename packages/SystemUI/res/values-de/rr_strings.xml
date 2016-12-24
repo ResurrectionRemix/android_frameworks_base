@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Kein Screenshot aufgenommen</string>
   <string name="screenshot_abort_text">Vorgang abgebrochen</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Gelöscht</string>
+  <string name="action_delete_fault">Löschen war nicht erfolgreich</string>
+  <string name="action_save_success">Gespeichert</string>
+  <string name="action_save_fault">Speichern war nicht erfolgreich</string>
+  <string name="pref_action_color_title">Farbe der Aktionstasten</string>
+  <string name="pref_action_color_summary">Wählen Sie Ihre Lieblingsfarbe für die Aktions-Tasten</string>
+  <string name="pref_category_main">Haupteinstellungen</string>
+  <string name="pref_category_user">Benutzereinstellungen</string>
+  <string name="pref_crop_behavior_title">Crop-Verhalten</string>
+  <string name="pref_crop_behavior_summary">Das zugeschnittene Bild verwenden, auch wenn das ursprüngliche nicht beschnitten wurde</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Gelöscht</string>
+  <string name="action_delete_fault">Löschen war nicht erfolgreich</string>
+  <string name="action_save_success">Gespeichert</string>
+  <string name="action_save_fault">Speichern war nicht erfolgreich</string>
+  <string name="action_edit">Bearbeiten</string>
   <string name="recents_custom_android_n">ALLE LÖSCHEN</string>
 </resources>

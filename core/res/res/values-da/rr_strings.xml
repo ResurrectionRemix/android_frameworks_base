@@ -16,6 +16,7 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="default_string">Standard</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <!-- AOKP custom system animations -->
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->

@@ -27,8 +27,13 @@
   <string name="animation_slide_left_no_fade">Клизање улево (без изблеђивања)</string>
   <string name="animation_slide_up">Клизање на доле</string>
   <string name="animation_slide_down">Клизање на горе</string>
-  <string name="animation_default">Подразумевана</string>
+  <string name="animation_default">Подразумевано</string>
   <string name="animation_translucent">Прозирност</string>
+  <string name="animation_grow_shrink">Раст (ка горе)</string>
+  <string name="animation_grow_shrink_center">Расте (ка центру)</string>
+  <string name="animation_grow_shrink_bottom">Раст (ка доле)</string>
+  <string name="animation_grow_shrink_left">Раст (улево)</string>
+  <string name="animation_grow_shrink_right">Раст (удесно)</string>
   <string name="action_null">Празно</string>
   <string name="global_action_torch">Лампа</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->

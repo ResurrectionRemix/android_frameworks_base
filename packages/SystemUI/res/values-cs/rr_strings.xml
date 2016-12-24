@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Žádný snímek obrazovky</string>
   <string name="screenshot_abort_text">Operace přerušena</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Odstraněno</string>
+  <string name="action_delete_fault">Odstranění bylo neúspěšné</string>
+  <string name="action_save_success">Uloženo</string>
+  <string name="action_save_fault">Uložení bylo neúspěšné</string>
+  <string name="pref_action_color_title">Barva akčních tlačítek</string>
+  <string name="pref_action_color_summary">Vyberte si svou oblíbenou barvu pro akční tlačítka</string>
+  <string name="pref_category_main">Hlavní nastavení</string>
+  <string name="pref_category_user">Uživatelská nastavení</string>
+  <string name="pref_crop_behavior_title">Chování oříznutí</string>
+  <string name="pref_crop_behavior_summary">Použít oříznutý obrázek, i když ten původní nebyl oříznut způsobem akce oříznutí</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Odstraněno</string>
+  <string name="action_delete_fault">Odstranění bylo neúspěšné</string>
+  <string name="action_save_success">Uloženo</string>
+  <string name="action_save_fault">Uložení bylo neúspěšné</string>
+  <string name="action_edit">Upravit</string>
   <string name="recents_custom_android_n">VYMAZAT VŠE</string>
 </resources>

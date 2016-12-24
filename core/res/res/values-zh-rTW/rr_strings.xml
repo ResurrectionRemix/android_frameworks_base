@@ -18,12 +18,30 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">預設</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">你選擇的刷機包與系統不相符。請刷入名字為<xliff:g id="string">%s</xliff:g>的刷機包。</string>
-  <string name="global_action_screenrecord">录制屏幕</string>
+  <string name="system_error_vendorprint">您的供應者映像檔與系統不相符。 請刷入您的裝置 <xliff:g id="string">%s</xliff:g> 專用的供應者映像檔。</string>
+  <string name="global_action_screenrecord">螢幕錄製</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">淡出</string>
+  <string name="animation_slide_right">從右滑入</string>
+  <string name="animation_slide_left">從左滑入</string>
+  <string name="animation_slide_right_no_fade">從右滑入(無淡出)</string>
+  <string name="animation_slide_left_no_fade">從左滑入(無淡出)</string>
+  <string name="animation_slide_up">從下滑入</string>
+  <string name="animation_slide_down">從上滑入</string>
+  <string name="animation_default">預設</string>
+  <string name="animation_translucent">半透明</string>
+  <string name="animation_grow_shrink">縮放 (頂端)</string>
+  <string name="animation_grow_shrink_center">縮放 (中央)</string>
+  <string name="animation_grow_shrink_bottom">縮放 (底部)</string>
+  <string name="animation_grow_shrink_left">縮放 (左測)</string>
+  <string name="animation_grow_shrink_right">縮放 (右側)</string>
+  <string name="action_null">空白</string>
+  <string name="global_action_torch">手電筒</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">重新啟動「系統 UI」</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">On-The-Go 模式</string>
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">停用 ADB</string>
   <string name="adb_active_custom_tile_not_connected">未啟用</string>
 </resources>

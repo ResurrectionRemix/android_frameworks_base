@@ -31,15 +31,127 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Snimka zaslona je obrisana</string>
   <string name="gestures_message">Ovdje nacrtajte gestu</string>
+  <string name="rr_sys_tuner">Ugađanje korisničkog sučelja</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Kliznite udesno za %1$s</string>
+  <string name="right_shortcut_hint">Kliznite ulijevo za %1$s</string>
+  <string name="lockscreen_message">Dodirnite ikonu na lijevoj ili desnoj strani za dodjelu prečaca za zaključanom zaslonu.</string>
+  <string name="lockscreen_default_target">Zadano</string>
+  <string name="select_application">Odaberite aplikaciju</string>
+  <string name="lockscreen_choose_action_title">Odaberite radnju</string>
+  <string name="lockscreen_none_target">Ništa</string>
   <!-- App circle sidebar -->
+  <string name="app_float_maximize_item_title">Povećaj</string>
+  <string name="app_float_item_title">Plutajući prikaz</string>
+  <string name="app_stop_item_title">Zatvori aplikaciju</string>
   <!-- On The Go -->
+  <string name="onthego_notif_ticker">Način rada u pokretu je aktiviran</string>
+  <string name="onthego_notif_title">Način rada u pokretu je aktivan</string>
+  <string name="onthego_notif_stop">Zaustavi</string>
+  <string name="onthego_notif_options">Mogućnosti</string>
+  <string name="onthego_notif_error">Nije moguće pokrenuti način rada u pokretu</string>
+  <string name="onthego_notif_restart">Ponovno pokreni</string>
+  <string name="onthego_notif_camera_changed">Način kamere je promijenjen</string>
+  <string name="onthego_transparency">Prozirnost</string>
+  <string name="onthego_front_camera">Upotrijebi prednju kameru</string>
+  <string name="onthego_service_toggle">Auto. ponovno pokreni uslugu</string>
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">Zvuk</string>
+  <string name="quick_settings_sound_ring">Zvono</string>
+  <string name="quick_settings_sound_vibrate">Vibracija</string>
+  <string name="quick_settings_sound_dnd">Ne ometaj</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">Glasnoća</string>
+  <string name="quick_settings_volume_panel_label">Glasnoća</string>
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_screenshot_label">Snimka zaslona</string>
+  <string name="quick_settings_region_screenshot_label">Djelomična snimka zaslona</string>
+  <string name="quick_settings_adb_network">ADB mreža</string>
+  <string name="quick_settings_network_adb_enabled_label">Omogućeno</string>
+  <string name="quick_settings_network_adb_disabled_label">Onemogućeno</string>
+  <string name="quick_settings_sync_label">Sinkronizacija</string>
+  <string name="accessibility_quick_settings_sync_off">Sinkronizacija isključena</string>
+  <string name="accessibility_quick_settings_sync_on">Sinkronizacija uključena</string>
+  <string name="accessibility_quick_settings_sync_changed_off">Sinkronizacija je isključena</string>
+  <string name="accessibility_quick_settings_sync_changed_on">Sinkronizacija je uključena</string>
+  <string name="quick_settings_expanded_desktop_label">Proširena radna površina</string>
+  <string name="quick_settings_expanded_desktop">Prošireno</string>
+  <string name="quick_settings_expanded_desktop_off">Normalno</string>
+  <string name="quick_settings_reboot_label">Ponovno pokreni</string>
+  <string name="quick_settings_reboot_recovery_label">Oporavak</string>
+  <string name="accessibility_quick_settings_usb_tether_off">Dijeljenje veze preko USB-a isključeno</string>
+  <string name="accessibility_quick_settings_usb_tether_on">Dijeljenje veze preko USB-a uključeno</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">Dijeljenje veze preko USB-a je isključeno</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">Dijeljenje veze preko USB-a je uključeno</string>
+  <string name="quick_settings_usb_tether_label">Dijeljenje veze preko USB-a</string>
+  <string name="quick_settings_music_label">Glazba</string>
+  <string name="quick_settings_music_play">Reproduciraj</string>
+  <string name="quick_settings_music_pause">Pauziraj</string>
+  <string name="quick_settings_ime_tile_label">Način unosa</string>
+  <string name="rr_qs_tile">Podešavanja</string>
+  <string name="quick_settings_caffeine_label">Kofein</string>
+  <string name="accessibility_quick_settings_caffeine_off">Kofein isključen</string>
+  <string name="accessibility_quick_settings_caffeine_on">Kofein isključen</string>
+  <string name="qs_app_picker_title">Odabir aplikacije</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE uključen </string>
+  <string name="lte_off">LTE isključen</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC isključen</string>
+  <string name="quick_settings_screenrecord">Snimanje zaslona</string>
+  <string name="quick_settings_screenrecord_on">Snimanje...</string>
+  <string name="quick_settings_navigation_bar">Navigacijska traka</string>
+  <string name="quick_settings_smartbar">Pametna traka</string>
+  <string name="quick_settings_smartbar_off">Pametna traka isključena</string>
+  <string name="quick_settings_appcirclebar_title">Okrugla traka aplikacija</string>
+  <string name="quick_settings_appcirclebar_on">Okrugla traka aplikacija uklj.</string>
+  <string name="quick_settings_appcirclebar_off">Okrugla traka aplikacija isklj.</string>
+  <string name="quick_settings_gesture_anywhere_label">Gesta bilo gdje</string>
+  <string name="quick_settings_gesture_anywhere_on">Geste uključene</string>
+  <string name="quick_settings_gesture_anywhere_off">Geste isključene</string>
+  <string name="quick_settings_appsidebar_title">Bočna traka aplikacija</string>
+  <string name="quick_settings_appsidebar_on">Bočna traka aplikacija uklj.</string>
+  <string name="quick_settings_appsidebar_off">Bočna traka aplikacija isklj.</string>
+  <string name="quick_settings_pulse_enabled">Puls omogućen</string>
+  <string name="quick_settings_pulse_disabled">Nema vizualizatora</string>
+  <string name="quick_settings_pulse_label">Vizualizator navigacijske trake</string>
+  <string name="quick_settings_pie">Pita</string>
+  <string name="quick_settings_ambient_display_label">Ambijentalni zaslon</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Ambijentalni zaslon isključen.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Ambijentalni zaslon uključen.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambijentalni je zaslon isključen.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambijentalni je zaslon uključen.</string>
+  <string name="quick_settings_heads_up_label">Plutajuće obavijesti</string>
+  <string name="accessibility_quick_settings_heads_up_off">Plutajuće obavijesti isklj.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Plutajuće obavijesti uklj.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Plutajuće su obavijesti isključene.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Plutajuće su obavijesti uključene.</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
+  <string name="app_killed_message">Aplikacija je zatvorena</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - obavijesti koje vire odgođene su na 1 minutu.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - obavijesti koje vire odgođene su na <xliff:g id="number">%d</xliff:g> min.</string>
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">Zaslon nije snimljen</string>
+  <string name="screenshot_abort_text">Radnja je prekinuta</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Izbrisano</string>
+  <string name="action_delete_fault">Brisanje nije uspjelo</string>
+  <string name="action_save_success">Spremljeno</string>
+  <string name="action_save_fault">Spremanje nije uspjelo</string>
+  <string name="pref_action_color_title">Boja gumba radnji</string>
+  <string name="pref_action_color_summary">Odaberite omiljenu boju za gumbe radnji.</string>
+  <string name="pref_category_main">Glavne postavke</string>
+  <string name="pref_category_user">Korisničke postavke</string>
+  <string name="pref_crop_behavior_title">Ponašanje obrezivanja</string>
+  <string name="pref_crop_behavior_summary">Koristite se obrezanom slikom čak iako ona izvorna nije zapravo obrezana radnjom obrezivanja.</string>
+  <string name="action_ok">U redu</string>
+  <string name="action_delete_success">Izbrisano</string>
+  <string name="action_delete_fault">Brisanje nije uspjelo</string>
+  <string name="action_save_success">Spremljeno</string>
+  <string name="action_save_fault">Spremanje nije uspjelo</string>
+  <string name="action_edit">Uredi</string>
+  <string name="recents_custom_android_n">IZBRIŠI SVE</string>
 </resources>

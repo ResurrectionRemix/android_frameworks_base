@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Ảnh màn hình không được chụp</string>
   <string name="screenshot_abort_text">Thao tác bị hủy bỏ</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Đã xóa</string>
+  <string name="action_delete_fault">Xóa không thành công</string>
+  <string name="action_save_success">Đã lưu</string>
+  <string name="action_save_fault">Lưu không thành công</string>
+  <string name="pref_action_color_title">Màu nút hành động</string>
+  <string name="pref_action_color_summary">Chọn màu yêu thích cho các nút hành động</string>
+  <string name="pref_category_main">Cài đặt chính</string>
+  <string name="pref_category_user">Cài đặt người dùng</string>
+  <string name="pref_crop_behavior_title">Hành vi cắt xén</string>
+  <string name="pref_crop_behavior_summary">Sử dụng các hình ảnh được cắt xén ngay cả khi bản gốc không thực sự được cắt xén bằng hành động cắt xén</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Đã xóa</string>
+  <string name="action_delete_fault">Xóa không thành công</string>
+  <string name="action_save_success">Đã lưu</string>
+  <string name="action_save_fault">Lưu không thành công</string>
+  <string name="action_edit">Chỉnh sửa</string>
   <string name="recents_custom_android_n">XÓA TẤT CẢ</string>
 </resources>

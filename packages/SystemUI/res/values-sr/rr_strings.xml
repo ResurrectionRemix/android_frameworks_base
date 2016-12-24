@@ -27,17 +27,30 @@
   <string name="screenrecord_notif_pointer_off">Сакриј показивач</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Снимање екрана није могуће</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Снимак екрана је обрисан</string>
   <string name="gestures_message">Нацртајте образац овде</string>
+  <string name="rr_sys_tuner">Тјунер корисничког интерфејса</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Превуци десно за %1$s</string>
+  <string name="right_shortcut_hint">Превуци десно за %1$s</string>
+  <string name="lockscreen_message">Притисните леву или десну икону да би сте подесили пречицу закључаног екрана.</string>
+  <string name="lockscreen_default_target">Подразумевано</string>
+  <string name="select_application">Изаберите апликацију</string>
+  <string name="lockscreen_choose_action_title">Одаберите радњу</string>
+  <string name="lockscreen_none_target">Ниједно</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Увећај</string>
   <string name="app_float_item_title">Плутајући приказ</string>
   <string name="app_stop_item_title">Затвори апликацију</string>
   <!-- On The Go -->
+  <string name="onthego_notif_ticker">Активиран у покрету</string>
+  <string name="onthego_notif_title">У-покрету је активан</string>
   <string name="onthego_notif_stop">Заустави</string>
   <string name="onthego_notif_options">Опције</string>
+  <string name="onthego_notif_error">Не може се покренути У-покрету</string>
+  <string name="onthego_notif_restart">Поново покрени У-покрету</string>
   <string name="onthego_notif_camera_changed">Режим камере је промењен</string>
   <string name="onthego_transparency">Прозирност</string>
   <string name="onthego_front_camera">Користи предњу камеру</string>
@@ -65,6 +78,32 @@
   <string name="quick_settings_expanded_desktop">Проширен</string>
   <string name="quick_settings_expanded_desktop_off">Нормална</string>
   <string name="quick_settings_reboot_label">Поново покрени систем</string>
+  <string name="quick_settings_reboot_recovery_label">Опоравак</string>
+  <string name="accessibility_quick_settings_usb_tether_off">УСБ тетеринг</string>
+  <string name="accessibility_quick_settings_usb_tether_on">УСБ тетеринг укључен</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">УСБ тетеринг искључен</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">УСБ тетеринг укључен</string>
+  <string name="quick_settings_usb_tether_label">USB дељење конекције</string>
+  <string name="quick_settings_music_label">Музика</string>
+  <string name="quick_settings_music_play">Пусти</string>
+  <string name="quick_settings_music_pause">Заустави</string>
+  <string name="quick_settings_ime_tile_label">Метод уноса</string>
+  <string name="rr_qs_tile">Подешавања</string>
+  <string name="quick_settings_caffeine_label">Кофеин</string>
+  <string name="accessibility_quick_settings_caffeine_off">Кофеин искључен</string>
+  <string name="accessibility_quick_settings_caffeine_on">Кпфеин укључен</string>
+  <string name="qs_app_picker_title">Бирач аплилација</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE укључен </string>
+  <string name="lte_off">LTE искључен</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC искључен</string>
+  <string name="quick_settings_screenrecord">Снимање екрана</string>
+  <string name="quick_settings_screenrecord_on">Снимам ...</string>
+  <string name="quick_settings_navigation_bar">Навигациона трака</string>
+  <string name="quick_settings_smartbar">Паметна трака</string>
+  <string name="quick_settings_smartbar_off">Паметна трака иск</string>
   <string name="accessibility_quick_settings_ambient_display_off">Амбијентални приказ искључен.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Амбијентални приказ укључен.</string>
   <string name="quick_settings_heads_up_label">Искачућа обавештења</string>

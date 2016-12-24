@@ -21,22 +21,27 @@
   <string name="system_error_vendorprint">अपने विक्रेता छवि प्रणाली से मेल नहीं खाता। कृपया अपने डिवाइस के लिए <xliff:g id="string">%s</xliff:g> विक्रेता छवि फ़्लैश करे</string>
   <string name="global_action_screenrecord">स्क्रीन रिकॉर्ड</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">धुंधला करें</string>
+  <string name="animation_fade">फीका</string>
   <string name="animation_slide_right">दायें में स्लाइड</string>
   <string name="animation_slide_left">बाएं में स्लाइड</string>
-  <string name="animation_slide_right_no_fade">Slide in right (No fade)</string>
-  <string name="animation_slide_left_no_fade">Slide in left (No fade)</string>
+  <string name="animation_slide_right_no_fade">दायें से स्लाइड (फीके के बिना)</string>
+  <string name="animation_slide_left_no_fade">बाएं से स्लाइड (फीके के बिना)</string>
   <string name="animation_slide_up">तल से स्लाइड</string>
   <string name="animation_slide_down">शीर्ष से स्लाइड</string>
-  <string name="animation_default">सामान्य</string>
+  <string name="animation_default">डिफ़ाल्ट</string>
   <string name="animation_translucent">पारभासी</string>
+  <string name="animation_grow_shrink">(शीर्ष) में हो जाना</string>
+  <string name="animation_grow_shrink_center">(केन्द्र में) हो जाना</string>
+  <string name="animation_grow_shrink_bottom">(तल) में हो जाना</string>
+  <string name="animation_grow_shrink_left">(बाईं ओर) में हो जाना</string>
+  <string name="animation_grow_shrink_right">(दायें ओर) हो जाना</string>
   <string name="action_null">रिक्त</string>
   <string name="global_action_torch">टॉर्च</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">SystemUI पुनरारंभ करें</string>
   <!-- On-The-Go -->
-  <string name="global_action_onthego">ऑन-द-गो मोड</string>
+  <string name="global_action_onthego">On-The-Go मोड</string>
   <!-- ADB enabled, but not connected notification title -->
-  <string name="adb_not_connected_notification_title">एडीबी निष्क्रिय</string>
+  <string name="adb_not_connected_notification_title">ADB निष्क्रिय</string>
   <string name="adb_active_custom_tile_not_connected">निष्क्रिय</string>
 </resources>
