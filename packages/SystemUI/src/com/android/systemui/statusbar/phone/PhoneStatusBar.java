@@ -214,6 +214,7 @@ import com.android.systemui.statusbar.policy.HotspotControllerImpl;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.LocationControllerImpl;
+import com.android.systemui.statusbar.policy.GpsControllerImpl;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkControllerImpl;
 import com.android.systemui.statusbar.policy.NextAlarmController;
@@ -390,6 +391,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     SecurityControllerImpl mSecurityController;
     protected BatteryController mBatteryController;
     LocationControllerImpl mLocationController;
+    GpsControllerImpl mGpsController;
     NetworkControllerImpl mNetworkController;
     HotspotControllerImpl mHotspotController;
     RotationLockControllerImpl mRotationLockController;
@@ -1475,6 +1477,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // Other icons
         mLocationController = new LocationControllerImpl(mContext,
                 mHandlerThread.getLooper()); // will post a notification
+        mGpsController = new GpsControllerImpl(mContext,
+                mHandlerThread.getLooper());
         mBatteryController = createBatteryController();
         mBatteryController.addStateChangedCallback(new BatteryStateChangeCallback() {
             @Override
@@ -1557,7 +1561,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 R.id.qs_auto_reinflate_container);
         if (container != null) {
             final QSTileHost qsh = SystemUIFactory.getInstance().createQSTileHost(mContext, this,
-                    mBluetoothController, mLocationController, mRotationLockController,
+                    mBluetoothController, mLocationController, mGpsController, mRotationLockController,
                     mNetworkController, mZenModeController, mHotspotController,
                     mCastController, mFlashlightController,
                     mUserSwitcherController, mUserInfoController, mKeyguardMonitor,

@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.ExpandedDesktopTile;
+import com.android.systemui.qs.tiles.GpsTile;
 import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.NfcTile;
@@ -83,6 +84,7 @@ import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BluetoothController;
 import com.android.systemui.statusbar.policy.CastController;
+import com.android.systemui.statusbar.policy.GpsController;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.HotspotController;
@@ -120,6 +122,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
     protected final ArrayList<String> mTileSpecs = new ArrayList<>();
     private final BluetoothController mBluetooth;
     private final LocationController mLocation;
+    private final GpsController mGps;
     private final RotationLockController mRotation;
     private final NetworkController mNetwork;
     private final ZenModeController mZen;
@@ -144,7 +147,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 
     public QSTileHost(Context context, PhoneStatusBar statusBar,
             BluetoothController bluetooth, LocationController location,
-            RotationLockController rotation, NetworkController network,
+            GpsController gps, RotationLockController rotation, NetworkController network,
             ZenModeController zen, HotspotController hotspot,
             CastController cast, FlashlightController flashlight,
             UserSwitcherController userSwitcher, UserInfoController userInfo,
@@ -155,6 +158,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         mStatusBar = statusBar;
         mBluetooth = bluetooth;
         mLocation = location;
+        mGps = gps;
         mRotation = rotation;
         mNetwork = network;
         mZen = zen;
@@ -283,6 +287,9 @@ public class QSTileHost implements QSTile.Host, Tunable {
     public LocationController getLocationController() {
         return mLocation;
     }
+
+    @Override
+    public GpsController getGpsController() { return mGps; }
 
     @Override
     public RotationLockController getRotationLockController() {
@@ -468,6 +475,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("rotation")) return new RotationLockTile(this);
         else if (tileSpec.equals("flashlight")) return new FlashlightTile(this);
         else if (tileSpec.equals("location")) return new LocationTile(this);
+        else if (tileSpec.equals("gps")) return new GpsTile(this);
         else if (tileSpec.equals("cast")) return new CastTile(this);
         else if (tileSpec.equals("hotspot")) return new HotspotTile(this);
         else if (tileSpec.equals("user")) return new UserTile(this);
