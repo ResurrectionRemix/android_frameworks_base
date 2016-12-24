@@ -70,11 +70,11 @@ public class BatteryMeterDrawable extends Drawable implements
 
     // Values for the different battery styles
     public static final int BATTERY_STYLE_PORTRAIT  = 0;
-	public static final int BATTERY_STYLE_SOLID     = 2;
-    public static final int BATTERY_STYLE_CIRCLE    = 4;
-    public static final int BATTERY_STYLE_HIDDEN    = 5;
-    public static final int BATTERY_STYLE_LANDSCAPE = 6;
-    public static final int BATTERY_STYLE_TEXT      = 7;
+    public static final int BATTERY_STYLE_SOLID     = 7;
+    public static final int BATTERY_STYLE_CIRCLE    = 2;
+    public static final int BATTERY_STYLE_HIDDEN    = 4;
+    public static final int BATTERY_STYLE_LANDSCAPE = 5;
+    public static final int BATTERY_STYLE_TEXT      = 6;
 
     private final int[] mColors;
     private final int mIntrinsicWidth;
@@ -381,10 +381,14 @@ public class BatteryMeterDrawable extends Drawable implements
         mIconTint = mCurrentFillColor;
         if (darkIntensity == 0f) {
             updateChargeColor();
+            if (mBoltDrawable !=null) {
             mBoltDrawable.setTint(0xff000000 | mChargeColor);
+            }
         } else {
             mChargeColor = mCurrentFillColor;
+            if (mBoltDrawable !=null) {
             mBoltDrawable.setTint(0xff000000 | mCurrentFillColor);
+            }
         }
         // Make bolt fully opaque for increased visibility
         mFrameDrawable.setTint(mCurrentBackgroundColor);
