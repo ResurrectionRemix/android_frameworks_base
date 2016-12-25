@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Aucune capture d\'écran</string>
   <string name="screenshot_abort_text">Opération abandonnée</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Supprimé</string>
+  <string name="action_delete_fault">Échec de la suppression</string>
+  <string name="action_save_success">Enregistré</string>
+  <string name="action_save_fault">Échec de l\'enregistrement</string>
+  <string name="pref_action_color_title">Couleurs des boutons d\'actions</string>
+  <string name="pref_action_color_summary">Choisissez la couleur des boutons d\'actions</string>
+  <string name="pref_category_main">Général</string>
+  <string name="pref_category_user">Utilisateur</string>
+  <string name="pref_crop_behavior_title">Rogner</string>
+  <string name="pref_crop_behavior_summary">Utiliser l\'image recadrée, même si l\'image originale n\'a pas été recadrée par l\'action de recadrage</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Supprimé</string>
+  <string name="action_delete_fault">Échec de la suppression</string>
+  <string name="action_save_success">Enregistré</string>
+  <string name="action_save_fault">Échec de l\'enregistrement</string>
+  <string name="action_edit">Modifier</string>
   <string name="recents_custom_android_n">TOUT EFFACER</string>
 </resources>

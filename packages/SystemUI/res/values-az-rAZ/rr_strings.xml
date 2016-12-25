@@ -17,7 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Ekran qeyd olunanda</string>
+  <string name="screenrecord_notif_ticker">Ekran qeyd olunarkən</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Ekran qeyd olunur</string>
   <!-- Screenrecord notification action: Stop -->
@@ -26,22 +26,134 @@
   <string name="screenrecord_notif_pointer_on">İşarələri göstər</string>
   <string name="screenrecord_notif_pointer_off">İşarələri gizlət</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Ekran qeyd oluna bilmir</string>
-  <string name="status_bar_weather_format">temp vəziyyəti</string>
+  <string name="screenrecord_notif_error">Ekran görüntüsü qeyd oluna bilmir</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Ekran şəkli silindi.</string>
   <string name="gestures_message">Nümunənizi bura çəkin</string>
+  <string name="rr_sys_tuner">Sistem İnterfeysi nizamlayıcı</string>
   <!-- Strings for lockscreen shortcut hints -->
-  <string name="left_shortcut_hint">Üçün sağa sürüşdür</string>
-  <string name="right_shortcut_hint">Üçün sola sürüşdür</string>
+  <string name="left_shortcut_hint">%1$s üçün sağa sürüşdür</string>
+  <string name="right_shortcut_hint">%1$s üçün sola sürüşdür</string>
+  <string name="lockscreen_message">Bir qıfıl ekranı kısayolu yaratmaq üçün sol və ya sağ bir təsvirə toxunun.</string>
+  <string name="lockscreen_default_target">Susmaya görə</string>
+  <string name="select_application">Tətbiq seçin</string>
+  <string name="lockscreen_choose_action_title">Əməliyyat seçin</string>
+  <string name="lockscreen_none_target">Heç biri</string>
   <!-- App circle sidebar -->
+  <string name="app_float_maximize_item_title">Maksimuma çıxar</string>
+  <string name="app_float_item_title">Üzən Mənzərə</string>
+  <string name="app_stop_item_title">Tətbiqi sonlandır</string>
   <!-- On The Go -->
+  <string name="onthego_notif_ticker">On-The-Go aktivləşdirildi</string>
+  <string name="onthego_notif_title">On-The-Go aktif</string>
+  <string name="onthego_notif_stop">Dayandır</string>
+  <string name="onthego_notif_options">Seçimlər</string>
+  <string name="onthego_notif_error">On-The-Go açılmır</string>
+  <string name="onthego_notif_restart">On-The-Go \' yu yenidən başlat</string>
+  <string name="onthego_notif_camera_changed">Kamera rejimi dəyişdirildi</string>
+  <string name="onthego_transparency">Şəffaflıq</string>
+  <string name="onthego_front_camera">Ön kameranı istifadə et</string>
+  <string name="onthego_service_toggle">Avtomatik olaraq xidməti yenidən başladın</string>
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">Səs</string>
+  <string name="quick_settings_sound_ring">Zəng səsi</string>
+  <string name="quick_settings_sound_vibrate">Vibrasiya</string>
+  <string name="quick_settings_sound_dnd">Narahat etməyin</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">Səs</string>
+  <string name="quick_settings_volume_panel_label">Səs</string>
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_screenshot_label">Ekran görüntüsü</string>
+  <string name="quick_settings_region_screenshot_label">Qismən ekran görüntüsü</string>
+  <string name="quick_settings_adb_network">ADB şəbəkə</string>
+  <string name="quick_settings_network_adb_enabled_label">Aktivləşdirildi</string>
+  <string name="quick_settings_network_adb_disabled_label">Aktiv deyil</string>
+  <string name="quick_settings_sync_label">Sinxronlaşdırma</string>
+  <string name="accessibility_quick_settings_sync_off">Sinxronlaşdırma qapalı</string>
+  <string name="accessibility_quick_settings_sync_on">Sinxronlaşdırma açıq</string>
+  <string name="accessibility_quick_settings_sync_changed_off">Sinxronlaşdırma söndürüldü</string>
+  <string name="accessibility_quick_settings_sync_changed_on">Sinxronlaşdırma açıldı</string>
+  <string name="quick_settings_expanded_desktop_label">Genişləndirilmiş masaüstü</string>
+  <string name="quick_settings_expanded_desktop">Genişləndirilmiş</string>
+  <string name="quick_settings_expanded_desktop_off">Normal</string>
+  <string name="quick_settings_reboot_label">Yenidən başlat</string>
+  <string name="quick_settings_reboot_recovery_label">Xilasetmə rejimi (Recovery)</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USB modem qapalı</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB modem açıq</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USB modem söndürüldü</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USB modem açıldı</string>
+  <string name="quick_settings_usb_tether_label">USB modem</string>
+  <string name="quick_settings_music_label">Musiqi</string>
+  <string name="quick_settings_music_play">Səsləndir</string>
+  <string name="quick_settings_music_pause">Dayandır</string>
+  <string name="quick_settings_ime_tile_label">Giriş üsulu</string>
+  <string name="rr_qs_tile">Konfiqurasiya</string>
+  <string name="quick_settings_caffeine_label">Kofein</string>
+  <string name="accessibility_quick_settings_caffeine_off">Kofein bağlı</string>
+  <string name="accessibility_quick_settings_caffeine_on">Kofein açıq</string>
+  <string name="qs_app_picker_title">Tətbiq Seçici</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE AÇIQ </string>
+  <string name="lte_off">LTE BAĞLI</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC bağlı</string>
+  <string name="quick_settings_screenrecord">Ekran Qeydi</string>
+  <string name="quick_settings_screenrecord_on">Qeydedilir ...</string>
+  <string name="quick_settings_navigation_bar">Naviqasiya paneli</string>
+  <string name="quick_settings_smartbar">AğıllıPanel</string>
+  <string name="quick_settings_smartbar_off">AğıllıPanel qapalı</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Fling qapalı</string>
+  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
+  <string name="quick_settings_appcirclebar_on">AppCircleBar Açıq</string>
+  <string name="quick_settings_appcirclebar_off">AppCircleBar Qapalı</string>
+  <string name="quick_settings_gesture_anywhere_label">Her Yerde Hərəkət</string>
+  <string name="quick_settings_gesture_anywhere_on">Hərəkətlər Açıq</string>
+  <string name="quick_settings_gesture_anywhere_off">Hərəkətlər Qapalı</string>
+  <string name="quick_settings_appsidebar_title">Tətbiq Kənar Çubuğu Açıq</string>
+  <string name="quick_settings_appsidebar_on">Tətbiq Kənar Çubuğu Açıq</string>
+  <string name="quick_settings_appsidebar_off">Tətbiq Kənar Çubuğu Qapalı</string>
+  <string name="quick_settings_pulse_enabled">Pulse Aktiv</string>
+  <string name="quick_settings_pulse_disabled">Görsəlləşdirmə Yox</string>
+  <string name="quick_settings_pulse_label">Naviqasiya Çubuğu Vizuallaşdırma</string>
+  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_ambient_display_label">Mühit ekranı</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Mühit ekranı qapalı.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Mühit ekranı açıq.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Mühit ekranı bağlanıldı.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Mühit ekranı açıldı.</string>
+  <string name="quick_settings_heads_up_label">Bildirim pəncərələri</string>
+  <string name="accessibility_quick_settings_heads_up_off">Bildirim pəncərələri qapalı.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Bildirim pəncərələri açıq.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pəncərələri bağlanıldı.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pəncərələri açıldı.</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
+  <string name="app_killed_message">Tətbiq Sonlandırıldı</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Gözdən keçirmə bildirimi 1 dəqiqə qədər təxirə salınır.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Gözdən keçirmə bildirimi <xliff:g id="number">%d</xliff:g> dəqiqə qədər təxirə salınır.</string>
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">Ekran görüntüsü alınmadı</string>
+  <string name="screenshot_abort_text">Əməliyyat ləğv edildi</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Silindi</string>
+  <string name="action_delete_fault">Silmə əməliyyatı uğursuz</string>
+  <string name="action_save_success">Yadda saxlanıldı</string>
+  <string name="action_save_fault">Yadda saxlama əməliyyatı uğursuz</string>
+  <string name="pref_action_color_title">Fəaliyyət düymələri rəngi</string>
+  <string name="pref_action_color_summary">Fəaliyyət düymələri üçün ən sevdiyiniz rəngi seçin</string>
+  <string name="pref_category_main">Əsas Parametrlər</string>
+  <string name="pref_category_user">İstifadəçi Parametrləri</string>
+  <string name="pref_crop_behavior_title">Qırpma hərəkəti</string>
+  <string name="pref_crop_behavior_summary">Qırpma prosesi ilə orijinalı həqiqətən qırpılmamış olsa belə qırpılmış görüntünü istifadə edin</string>
+  <string name="action_ok">TAMAM</string>
+  <string name="action_delete_success">Silindi</string>
+  <string name="action_delete_fault">Silmə əməliyyatı uğursuz</string>
+  <string name="action_save_success">Yadda saxlanıldı</string>
+  <string name="action_save_fault">Yadda saxlama əməliyyatı uğursuz</string>
+  <string name="action_edit">Düzəltmə</string>
+  <string name="recents_custom_android_n">HAMISINI TƏMİZLƏ</string>
 </resources>

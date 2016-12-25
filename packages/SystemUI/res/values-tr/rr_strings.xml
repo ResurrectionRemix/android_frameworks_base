@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Ekran görüntüsü alınamadı</string>
   <string name="screenshot_abort_text">İşlem iptal edildi</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Silindi</string>
+  <string name="action_delete_fault">Silme işlemi başarısız</string>
+  <string name="action_save_success">Kaydedildi</string>
+  <string name="action_save_fault">Kaydetme işlemi başarısız</string>
+  <string name="pref_action_color_title">Eylem tuşları rengi</string>
+  <string name="pref_action_color_summary">Eylen tuşları için en sevdiğiniz rengi seçin</string>
+  <string name="pref_category_main">Ana Ayarlar</string>
+  <string name="pref_category_user">Kullanıcı Ayarları</string>
+  <string name="pref_crop_behavior_title">Kırpma davranışı</string>
+  <string name="pref_crop_behavior_summary">Kırpma işlemi ile orijinali gerçekten kırpılmamış olsa bile kırpılmış görüntüyü kullanın</string>
+  <string name="action_ok">TAMAM</string>
+  <string name="action_delete_success">Silindi</string>
+  <string name="action_delete_fault">Silme işlemi başarısız</string>
+  <string name="action_save_success">Kaydedildi</string>
+  <string name="action_save_fault">Kaydetme işlemi başarısız</string>
+  <string name="action_edit">Düzenle</string>
   <string name="recents_custom_android_n">TÜMÜNÜ TEMİZLE</string>
 </resources>

@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Το στιγμιότυπο οθόνης διαγράφηκε</string>
   <string name="gestures_message">Σχεδιάστε χειρονομία εδώ</string>
-  <string name="rr_sys_tuner">System UI tuner</string>
+  <string name="rr_sys_tuner">Ρυθμίσεις για System UI</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Σύρετε προς τα δεξιά για %1$s</string>
   <string name="right_shortcut_hint">Σύρετε προς τα αριστερά για %1$s</string>
@@ -42,7 +42,7 @@
   <string name="lockscreen_none_target">Καμιά</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Μεγιστοποίηση</string>
-  <string name="app_float_item_title">Float view</string>
+  <string name="app_float_item_title">Επικάλυψη οθόνης</string>
   <string name="app_stop_item_title">Τερματισμός εφαρμογής</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">Η λειτουργία On the go έχει ενεργοποιηθεί</string>
@@ -61,8 +61,8 @@
   <string name="quick_settings_sound_vibrate">Δόνηση</string>
   <string name="quick_settings_sound_dnd">Μην ενοχλείτε</string>
   <!-- Volume QS Tile -->
-  <string name="accessibility_quick_settings_volume_panel">Ενταση</string>
-  <string name="quick_settings_volume_panel_label">Ενταση</string>
+  <string name="accessibility_quick_settings_volume_panel">Ένταση</string>
+  <string name="quick_settings_volume_panel_label">Ένταση</string>
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">Στιγμιότυπο οθόνης</string>
   <string name="quick_settings_region_screenshot_label">Μερικό στιγμιότυπο οθόνης</string>
@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Δεν λήφθηκε στιγμιότυπο οθόνης</string>
   <string name="screenshot_abort_text">Η λειτουργία ματαιώθηκε</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Διαγράφηκαν</string>
+  <string name="action_delete_fault">Η διαγραφή απέτυχε</string>
+  <string name="action_save_success">Αποθήκευση επιτυχής</string>
+  <string name="action_save_fault">Η αποθήκευση απέτυχε</string>
+  <string name="pref_action_color_title">Χρώμα κουμπιών δράσης</string>
+  <string name="pref_action_color_summary">Επέλεξε το αγαπημένο σου χρώμα για τα κουμπιά δράσης</string>
+  <string name="pref_category_main">Βασικές Ρυθμίσεις</string>
+  <string name="pref_category_user">Ρυθμίσεις χρήστη</string>
+  <string name="pref_crop_behavior_title">Συμπεριφορά αποκοπής</string>
+  <string name="pref_crop_behavior_summary">Χρήση της περικομμένης εικόνας, ακόμη και αν η αρχική δεν έχει περικοπεί με την ενέργεια περικοπής εικόνας</string>
+  <string name="action_ok">Αποδοχή</string>
+  <string name="action_delete_success">Διαγράφηκαν</string>
+  <string name="action_delete_fault">Η διαγραφή απέτυχε</string>
+  <string name="action_save_success">Αποθήκευση επιτυχής</string>
+  <string name="action_save_fault">Η αποθήκευση απέτυχε</string>
+  <string name="action_edit">Επεξεργασία</string>
   <string name="recents_custom_android_n">ΑΠΑΛΟΙΦΉ ΌΛΩΝ</string>
 </resources>

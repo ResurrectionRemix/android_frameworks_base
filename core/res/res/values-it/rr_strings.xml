@@ -30,11 +30,11 @@
   <string name="animation_slide_down">Scorri verso l\'alto</string>
   <string name="animation_default">Predefinita</string>
   <string name="animation_translucent">Trasparenza</string>
-  <string name="animation_grow_shrink">Espandi (dall\'alto)</string>
-  <string name="animation_grow_shrink_center">Espandi (dal centro)</string>
-  <string name="animation_grow_shrink_bottom">Espandi (dal basso)</string>
-  <string name="animation_grow_shrink_left">Espandi (da sinistra)</string>
-  <string name="animation_grow_shrink_right">Espandi (da destra)</string>
+  <string name="animation_grow_shrink">Espandi (Dall\'alto)</string>
+  <string name="animation_grow_shrink_center">Espandi (Dal centro)</string>
+  <string name="animation_grow_shrink_bottom">Espandi (Dal basso)</string>
+  <string name="animation_grow_shrink_left">Espandi (Da sinistra)</string>
+  <string name="animation_grow_shrink_right">Espandi (Da destra)</string>
   <string name="action_null">Vuoto</string>
   <string name="global_action_torch">Torcia</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->

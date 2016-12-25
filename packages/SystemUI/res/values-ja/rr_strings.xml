@@ -27,12 +27,22 @@
   <string name="screenrecord_notif_pointer_off">タップを非表示</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">画面の録画に失敗しました</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g><xliff:g id="condition">%2$s </xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">スクリーンショットを削除しました</string>
   <string name="gestures_message">Draw gesture here</string>
+  <string name="rr_sys_tuner">システムUI調整ツール</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">右にスワイプして%1$s</string>
+  <string name="right_shortcut_hint">左にスワイプして%1$s</string>
+  <string name="lockscreen_message">左右のアイコンをタップしてロック画面のショートカットを再割り当てします。</string>
+  <string name="lockscreen_default_target">既定 （デフォルト）</string>
+  <string name="select_application">アプリケーションを選択</string>
+  <string name="lockscreen_choose_action_title">アクションを選択</string>
+  <string name="lockscreen_none_target">なし</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">最大化</string>
+  <string name="app_float_item_title">フロートビュー</string>
   <string name="app_stop_item_title">アプリを強制終了</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go が有効化されました</string>
@@ -49,20 +59,46 @@
   <string name="quick_settings_sound_label">サウンド</string>
   <string name="quick_settings_sound_ring">着信</string>
   <string name="quick_settings_sound_vibrate">マナーモード</string>
+  <string name="quick_settings_sound_dnd">通知不要アプリ</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">音量</string>
+  <string name="quick_settings_volume_panel_label">音量</string>
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">スクリーンショット</string>
+  <string name="quick_settings_region_screenshot_label">範囲選択してスクリーンショット</string>
+  <string name="quick_settings_adb_network">ADB network</string>
+  <string name="quick_settings_network_adb_enabled_label">有効</string>
+  <string name="quick_settings_network_adb_disabled_label">無効</string>
   <string name="quick_settings_sync_label">同期</string>
+  <string name="accessibility_quick_settings_sync_off">同期OFF</string>
+  <string name="accessibility_quick_settings_sync_on">同期ON</string>
+  <string name="accessibility_quick_settings_sync_changed_off">同期をオフにします</string>
+  <string name="accessibility_quick_settings_sync_changed_on">同期をオンにします</string>
   <string name="quick_settings_expanded_desktop_label">拡張デスクトップ</string>
   <string name="quick_settings_expanded_desktop">展開中</string>
   <string name="quick_settings_expanded_desktop_off">標準</string>
   <string name="quick_settings_reboot_label">再起動</string>
   <string name="quick_settings_reboot_recovery_label">リカバリ</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USBテザリングOFF</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USBテザリングON</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USBテザリングをOFFにしました</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USBテザリングをONにしました</string>
+  <string name="quick_settings_usb_tether_label">USBテザリング</string>
   <string name="quick_settings_music_label">ミュージック</string>
   <string name="quick_settings_music_play">再生</string>
   <string name="quick_settings_music_pause">一時停止</string>
+  <string name="quick_settings_ime_tile_label">入力方式</string>
+  <string name="rr_qs_tile">高度な設定</string>
+  <string name="quick_settings_caffeine_label">カフェイン</string>
+  <string name="accessibility_quick_settings_caffeine_off">カフェインをOFF</string>
+  <string name="accessibility_quick_settings_caffeine_on">カフェインをON</string>
+  <string name="qs_app_picker_title">App Picker</string>
+  <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE オン </string>
   <string name="lte_off">LTE オフ</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC オフ</string>
   <string name="quick_settings_screenrecord">画面の録画</string>
   <string name="quick_settings_screenrecord_on">録画中...</string>
   <string name="quick_settings_navigation_bar">ナビゲーションバー</string>
@@ -70,8 +106,24 @@
   <string name="quick_settings_smartbar_off">ナビバー オフ</string>
   <string name="quick_settings_fling">Flingジェスチャー</string>
   <string name="quick_settings_fling_off">Flingジェスチャー オフ</string>
+  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
+  <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
+  <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
+  <string name="quick_settings_gesture_anywhere_label">常にジェスチャー可能</string>
+  <string name="quick_settings_gesture_anywhere_on">ジェスチャーをオン</string>
+  <string name="quick_settings_gesture_anywhere_off">ジェスチャーをオフ</string>
+  <string name="quick_settings_appsidebar_title">AppSideBar</string>
+  <string name="quick_settings_appsidebar_on">AppSideBar On</string>
+  <string name="quick_settings_appsidebar_off">AppSideBar Off</string>
   <string name="quick_settings_pulse_enabled">Pulse 有効</string>
   <string name="quick_settings_pulse_disabled">ビジュアライザー なし</string>
+  <string name="quick_settings_pulse_label">ナビゲーションバーのビジュアライザー</string>
+  <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_ambient_display_label">常に画面表示ディスプレイ</string>
+  <string name="accessibility_quick_settings_ambient_display_off">常に画面表示ディスプレイはオフです</string>
+  <string name="accessibility_quick_settings_ambient_display_on">常に画面表示ディスプレイはオンです</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">常に画面表示ディスプレイをオフにしました</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">常に画面表示ディスプレイをオンにしました</string>
   <string name="quick_settings_heads_up_label">ヘッドアップ</string>
   <string name="accessibility_quick_settings_heads_up_off">ヘッドアップ オフ</string>
   <string name="accessibility_quick_settings_heads_up_on">ヘッドアップ オン</string>
@@ -81,7 +133,27 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">アプリを強制終了しました</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute">ヘッドアップ通知は１分間 一時停止します。</string>
   <string name="heads_up_snooze_message">ヘッドアップ通知は <xliff:g id="number">%d</xliff:g>分間 一時停止します。</string>
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">スクリーンショットを撮影しない</string>
+  <string name="screenshot_abort_text">操作は中断されました</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">削除しました</string>
+  <string name="action_delete_fault">削除に失敗しました</string>
+  <string name="action_save_success">保存しました</string>
+  <string name="action_save_fault">保存に失敗しました</string>
+  <string name="pref_action_color_title">アクション ボタンの色</string>
+  <string name="pref_action_color_summary">アクションボタンにあなたの好きな色を適用します。</string>
+  <string name="pref_category_main">メイン設定</string>
+  <string name="pref_category_user">ユーザー設定</string>
+  <string name="pref_crop_behavior_title">トリミング</string>
+  <string name="pref_crop_behavior_summary">元の画像がトリミングされていないものであっても、トリミングされた画像を使用します</string>
+  <string name="action_ok">はい</string>
+  <string name="action_delete_success">削除しました</string>
+  <string name="action_delete_fault">削除に失敗しました</string>
+  <string name="action_save_success">保存しました</string>
+  <string name="action_save_fault">保存に失敗しました</string>
+  <string name="action_edit">編集</string>
+  <string name="recents_custom_android_n">全てクリア</string>
 </resources>

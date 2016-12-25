@@ -21,12 +21,27 @@
   <string name="system_error_vendorprint">Vaša slika dobavljača ne odgovara sustavu. Molimo vas da instalirate sliku dobavljača <xliff:g id="string">%s</xliff:g> na svoj uređaj</string>
   <string name="global_action_screenrecord">Snimanje zaslona</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Blijeđenje</string>
+  <string name="animation_slide_right">Klizanje udesno</string>
+  <string name="animation_slide_left">Klizanje ulijevo</string>
+  <string name="animation_slide_right_no_fade">Klizanje udesno (bez blijeđenja)</string>
+  <string name="animation_slide_left_no_fade">Klizanje ulijevo (bez blijeđenja)</string>
+  <string name="animation_slide_up">Klizanje prema dolje</string>
+  <string name="animation_slide_down">Klizanje prema gore</string>
   <string name="animation_default">Zadano</string>
+  <string name="animation_translucent">Prozirno</string>
+  <string name="animation_grow_shrink">Širenje u rastu (gore)</string>
+  <string name="animation_grow_shrink_center">Širenje u rastu (sredina)</string>
+  <string name="animation_grow_shrink_bottom">Širenje u rastu (dno)</string>
+  <string name="animation_grow_shrink_left">Širenje u rastu (lijevo)</string>
+  <string name="animation_grow_shrink_right">Širenje u rastu (desno)</string>
   <string name="action_null">Prazno</string>
   <string name="global_action_torch">Svjetiljka</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">Ponovno pokreni sučelje sustava</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">Način rada u pokretu</string>
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB je neaktivan</string>
+  <string name="adb_active_custom_tile_not_connected">neaktivan</string>
 </resources>

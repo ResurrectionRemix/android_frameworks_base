@@ -15,5 +15,6 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="weather_info_not_available">Vejr informationer ikke er tilgængelige</string>
   <!-- Weather string format in keyguard -->
 </resources>

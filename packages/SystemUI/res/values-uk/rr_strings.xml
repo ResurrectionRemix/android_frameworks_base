@@ -39,7 +39,7 @@
   <string name="lockscreen_default_target">Стандартна</string>
   <string name="select_application">Виберіть додаток</string>
   <string name="lockscreen_choose_action_title">Виберіть дію</string>
-  <string name="lockscreen_none_target">Жодного</string>
+  <string name="lockscreen_none_target">Відсутній</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Розгорнути</string>
   <string name="app_float_item_title">Плаваючий вигляд</string>
@@ -50,7 +50,7 @@
   <string name="onthego_notif_stop">Зупинити</string>
   <string name="onthego_notif_options">Опції</string>
   <string name="onthego_notif_error">Не вдається запустити On-The-Go</string>
-  <string name="onthego_notif_restart">Перезавантажити режим \"На ходу\"</string>
+  <string name="onthego_notif_restart">Перезавантажити режим «В русі»</string>
   <string name="onthego_notif_camera_changed">Режим камери змінено</string>
   <string name="onthego_transparency">Прозорість</string>
   <string name="onthego_front_camera">Використовувати передню камеру</string>
@@ -65,7 +65,7 @@
   <string name="quick_settings_volume_panel_label">Гучність</string>
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">Знімок екрану</string>
-  <string name="quick_settings_region_screenshot_label">Частковий знімок екрану</string>
+  <string name="quick_settings_region_screenshot_label">Частковий скріншот</string>
   <string name="quick_settings_adb_network">ADB через мережу</string>
   <string name="quick_settings_network_adb_enabled_label">Увімкнено</string>
   <string name="quick_settings_network_adb_disabled_label">Вимкнено</string>
@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Знімок екрану не було створено</string>
   <string name="screenshot_abort_text">Операцію перервано</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Видалено</string>
+  <string name="action_delete_fault">Не вдалося видалити</string>
+  <string name="action_save_success">Збережено</string>
+  <string name="action_save_fault">Не вдалося зберегти</string>
+  <string name="pref_action_color_title">Колір кнопки</string>
+  <string name="pref_action_color_summary">Обери свій улюблений колір для кнопки</string>
+  <string name="pref_category_main">Основні налаштування</string>
+  <string name="pref_category_user">Налаштування користувача</string>
+  <string name="pref_crop_behavior_title">Поведінка обтинання</string>
+  <string name="pref_crop_behavior_summary">Використовувати обрізане зображення, навіть якщо оригінальний не був обрізаний</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Видалено</string>
+  <string name="action_delete_fault">Не вдалося видалити</string>
+  <string name="action_save_success">Збережено</string>
+  <string name="action_save_fault">Не вдалося зберегти</string>
+  <string name="action_edit">Редагувати</string>
   <string name="recents_custom_android_n">Очистити всі</string>
 </resources>

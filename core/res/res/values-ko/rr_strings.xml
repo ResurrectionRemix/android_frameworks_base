@@ -20,7 +20,14 @@
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="global_action_screenrecord">화면녹화</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">페이드</string>
+  <string name="animation_default">기본값</string>
+  <string name="animation_translucent">반투명</string>
+  <string name="action_null">비어있음</string>
+  <string name="global_action_torch">손전등</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">시스템UI 재시작</string>
   <!-- On-The-Go -->
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">ADB 비활성화</string>
 </resources>

@@ -16,9 +16,14 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="default_string">Oletus</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="global_action_screenrecord">Ruudun tallennus</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Häivytys</string>
+  <string name="global_action_torch">Taskulamppu</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">Uudelleenkäynnistä SystemUI</string>
   <!-- On-The-Go -->
   <!-- ADB enabled, but not connected notification title -->
 </resources>

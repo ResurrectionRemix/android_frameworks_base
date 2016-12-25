@@ -23,10 +23,10 @@
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Stop</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Toon aanwijzer</string>
-  <string name="screenrecord_notif_pointer_off">Verberg aanwijzer</string>
+  <string name="screenrecord_notif_pointer_on">Toon de aanwijzer</string>
+  <string name="screenrecord_notif_pointer_off">Verberg de aanwijzer</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Kan scherm niet opnemen</string>
+  <string name="screenrecord_notif_error">Kan het scherm niet opnemen</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="toestand">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Schermafbeelding verwijderd</string>
@@ -139,5 +139,21 @@
   <string name="screenshot_abort_title">Geen schermafdruk gemaakt</string>
   <string name="screenshot_abort_text">Bewerking afgebroken</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Verwijderd</string>
+  <string name="action_delete_fault">Het verwijderen is mislukt</string>
+  <string name="action_save_success">Opgeslagen</string>
+  <string name="action_save_fault">Het opslaan is mislukt</string>
+  <string name="pref_action_color_title">Kleur van de knoppen</string>
+  <string name="pref_action_color_summary">Kies je favoriete kleur voor de knoppen</string>
+  <string name="pref_category_main">Hoofdinstellingen</string>
+  <string name="pref_category_user">Gebruikersinstellingen</string>
+  <string name="pref_crop_behavior_title">Resultaat van het bijsnijden</string>
+  <string name="pref_crop_behavior_summary">Gebruik het bijgesneden beeld, zelfs als het originele beeld niet bijgesneden is met de bijsnij-actie</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Verwijderd</string>
+  <string name="action_delete_fault">Het verwijderen is mislukt</string>
+  <string name="action_save_success">Opgeslagen</string>
+  <string name="action_save_fault">Het opslaan is mislukt</string>
+  <string name="action_edit">Wijzigen</string>
   <string name="recents_custom_android_n">ALLES WISSEN</string>
 </resources>

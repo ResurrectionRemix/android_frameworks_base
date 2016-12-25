@@ -53,4 +53,6 @@
     <style name="ScreenshotEditorStyle" parent="@android:style/Theme.Material" >
     </style>
 
+    <style name="BatteryMeterViewDrawable.Solid"/>
+
 </resources>

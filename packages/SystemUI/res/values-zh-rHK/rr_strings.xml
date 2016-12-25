@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">螢幕擷取畫面已刪除</string>
   <string name="gestures_message">請在此畫出手勢</string>
+  <string name="rr_sys_tuner">系統使用者介面調整精靈</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">向右滑動 %1$s</string>
   <string name="right_shortcut_hint">向左滑動 %1$s</string>
@@ -138,5 +139,21 @@
   <string name="screenshot_abort_title">沒有截圖</string>
   <string name="screenshot_abort_text">操作中止</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">已刪除</string>
+  <string name="action_delete_fault">刪除失敗</string>
+  <string name="action_save_success">已儲存</string>
+  <string name="action_save_fault">儲存失敗</string>
+  <string name="pref_action_color_title">動作按鈕顏色</string>
+  <string name="pref_action_color_summary">選擇您喜愛的動作按鈕顏色</string>
+  <string name="pref_category_main">主要設定</string>
+  <string name="pref_category_user">使用者設定</string>
+  <string name="pref_crop_behavior_title">裁剪行為</string>
+  <string name="pref_crop_behavior_summary">使用裁剪的圖像，即使原來的圖像沒有實際裁剪</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">已刪除</string>
+  <string name="action_delete_fault">刪除失敗</string>
+  <string name="action_save_success">已儲存</string>
+  <string name="action_save_fault">儲存失敗</string>
+  <string name="action_edit">編輯</string>
   <string name="recents_custom_android_n">全部清除</string>
 </resources>

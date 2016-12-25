@@ -31,10 +31,26 @@
   <string name="delete_screenshot_toast">צילום המסך נמחק</string>
   <!-- Strings for lockscreen shortcut hints -->
   <!-- App circle sidebar -->
+  <string name="app_stop_item_title">עצור יישום</string>
   <!-- On The Go -->
+  <string name="onthego_notif_stop">הפסק</string>
+  <string name="onthego_notif_options">אפשרויות</string>
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">סאונד</string>
+  <string name="quick_settings_sound_ring">צלצול</string>
+  <string name="quick_settings_sound_vibrate">רטט</string>
+  <string name="quick_settings_sound_dnd">נא לא להפריע</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">ווליום</string>
+  <string name="quick_settings_volume_panel_label">ווליום</string>
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_screenshot_label">צילום מסך</string>
+  <string name="quick_settings_region_screenshot_label">צילום מסך חלקית</string>
+  <string name="quick_settings_network_adb_enabled_label">אפשר</string>
+  <string name="quick_settings_network_adb_disabled_label">בטל</string>
+  <string name="quick_settings_sync_label">סנכרן</string>
+  <string name="accessibility_quick_settings_sync_off">סינכרון כבוי</string>
+  <string name="accessibility_quick_settings_sync_on">סינכרון פעיל</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->

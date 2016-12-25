@@ -147,6 +147,7 @@
   <string name="pref_action_color_summary">Vyberte si obľúbenú farbu pre akčné tlačidlá</string>
   <string name="pref_category_main">Hlavné nastavenia</string>
   <string name="pref_category_user">Používateľské nastavenia</string>
+  <string name="pref_crop_behavior_title">Správanie orezania</string>
   <string name="pref_crop_behavior_summary">Použiť orezaný obrázok, aj keď ten pôvodný nebol orezaný pomocu akcie orezať</string>
   <string name="action_ok">OK</string>
   <string name="action_delete_success">Odstránené</string>

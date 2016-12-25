@@ -18,27 +18,51 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
   <!-- Screenrecord notification title -->
+  <string name="screenrecord_notif_title">화면 녹화 중...</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">정지</string>
   <!-- Screenrecord notification action: show/hide pointer -->
+  <string name="screenrecord_notif_pointer_on">포인터 표시</string>
+  <string name="screenrecord_notif_pointer_off">포인터 숨기기</string>
   <!-- Screen record notification error title -->
+  <string name="screenrecord_notif_error">화면을 녹화할 수 없습니다.</string>
   <!-- Screenshot Delete Toast -->
+  <string name="delete_screenshot_toast">스크린샷이 삭제되었습니다</string>
+  <string name="rr_sys_tuner">시스템 UI 튜너</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="select_application">애플리케이션 선택</string>
+  <string name="lockscreen_choose_action_title">작업 선택</string>
+  <string name="lockscreen_none_target">없음</string>
   <!-- App circle sidebar -->
   <string name="app_stop_item_title">앱종료</string>
   <!-- On The Go -->
+  <string name="onthego_notif_options">옵션</string>
+  <string name="onthego_transparency">투명도</string>
+  <string name="onthego_front_camera">전면 카메라 사용</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">소리</string>
   <string name="quick_settings_sound_ring">벨소리</string>
   <string name="quick_settings_sound_vibrate">진동</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">음량</string>
+  <string name="quick_settings_volume_panel_label">음량</string>
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_screenshot_label">스크린샷</string>
   <string name="quick_settings_adb_network">ADB 네트워크</string>
   <string name="quick_settings_network_adb_enabled_label">활성화</string>
   <string name="quick_settings_network_adb_disabled_label">비활성화</string>
   <string name="quick_settings_sync_label">동기화</string>
   <string name="accessibility_quick_settings_sync_off">동기화 끔</string>
   <string name="accessibility_quick_settings_sync_on">동기화 꼄</string>
+  <string name="quick_settings_reboot_label">재시작</string>
+  <string name="quick_settings_reboot_recovery_label">리커버리 모드</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USB 테더링 끄기</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB 테더링 켜기</string>
+  <string name="quick_settings_usb_tether_label">USB 테더링</string>
+  <string name="quick_settings_music_label">음악</string>
+  <string name="quick_settings_music_play">재생</string>
+  <string name="quick_settings_music_pause">일시정지</string>
+  <string name="quick_settings_ime_tile_label">입력 방법</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->

@@ -133,11 +133,27 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Alkalmazás kilőve</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Lebegő értesítés 1 percig szundizik.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Lebegő értesítés <xliff:g id="number">%d</xliff:g> percig szundizik.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> lebegő értesítései 1 percig szundiznak</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> lebegő értesítései <xliff:g id="number">%d</xliff:g> percig szundiznak</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Képernyőmentés nem történt</string>
   <string name="screenshot_abort_text">Művelet megszakítva</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Törölve</string>
+  <string name="action_delete_fault">Sikertelen törlés</string>
+  <string name="action_save_success">Mentve</string>
+  <string name="action_save_fault">Sikertelen mentés</string>
+  <string name="pref_action_color_title">Akciógombok színe</string>
+  <string name="pref_action_color_summary">Válassza ki a kedvenc színét az akciógombokhoz</string>
+  <string name="pref_category_main">Fő beállítások</string>
+  <string name="pref_category_user">Felhasználói beállítások</string>
+  <string name="pref_crop_behavior_title">Vágási viselkedés</string>
+  <string name="pref_crop_behavior_summary">A körülvágott kép használata, még akkor is, ha az eredeti nem került körbevágásra a vágás művelettel</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Törölve</string>
+  <string name="action_delete_fault">Sikertelen törlés</string>
+  <string name="action_save_success">Mentve</string>
+  <string name="action_save_fault">Sikertelen mentés</string>
+  <string name="action_edit">Szerkesztés</string>
   <string name="recents_custom_android_n">ÖSSZES TÖRLÉSE</string>
 </resources>

@@ -22,23 +22,23 @@
   <string name="global_action_screenrecord">Запись экрана</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Затухание</string>
-  <string name="animation_slide_right">Сдвинуть вправо</string>
-  <string name="animation_slide_left">Сдвинуть влево</string>
-  <string name="animation_slide_right_no_fade">Сдвинуть вправо (без затухания)</string>
-  <string name="animation_slide_left_no_fade">Сдвинуть влево (без затухания)</string>
+  <string name="animation_slide_right">Сдвиг вправо</string>
+  <string name="animation_slide_left">Сдвиг влево</string>
+  <string name="animation_slide_right_no_fade">Сдвиг вправо (без затухания)</string>
+  <string name="animation_slide_left_no_fade">Сдвиг влево (без затухания)</string>
   <string name="animation_slide_up">Сдвиг вниз</string>
   <string name="animation_slide_down">Сдвиг вверх</string>
   <string name="animation_default">По умолчанию</string>
   <string name="animation_translucent">Полупрозрачный</string>
   <string name="animation_grow_shrink">Увеличение (вверх)</string>
   <string name="animation_grow_shrink_center">Увеличение (по центру)</string>
-  <string name="animation_grow_shrink_bottom">Увеличение (снизу)</string>
-  <string name="animation_grow_shrink_left">Увеличение (слева)</string>
-  <string name="animation_grow_shrink_right">Увеличение (справа)</string>
+  <string name="animation_grow_shrink_bottom">Увеличение (вниз)</string>
+  <string name="animation_grow_shrink_left">Увеличение (влево)</string>
+  <string name="animation_grow_shrink_right">Увеличение (вправо)</string>
   <string name="action_null">Пусто</string>
   <string name="global_action_torch">Фонарик</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Перезапустить SystemUI</string>
+  <string name="reboot_systemui">Перезапустить системный интерфейс</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">Режим «На ходу»</string>
   <!-- ADB enabled, but not connected notification title -->
