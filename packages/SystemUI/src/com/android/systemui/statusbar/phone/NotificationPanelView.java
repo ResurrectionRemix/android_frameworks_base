@@ -2730,9 +2730,6 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SMART_PULLDOWN), false, this, UserHandle.USER_ALL);
- 			resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TRANSPARENT_SHADE),
-                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_STROKE),
                     false, this, UserHandle.USER_ALL);
@@ -2802,8 +2799,6 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE, 0, UserHandle.USER_CURRENT) == 1;
             mQsSmartPullDown = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
-            mQSShadeAlpha = Settings.System.getInt(
-                    resolver, Settings.System.QS_TRANSPARENT_SHADE, 255);
             mQSStroke = Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.QS_STROKE, 0);
             mCustomStrokeColor = Settings.System.getInt(mContext.getContentResolver(),
