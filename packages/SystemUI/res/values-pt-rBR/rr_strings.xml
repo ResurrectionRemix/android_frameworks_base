@@ -156,4 +156,6 @@
   <string name="action_save_fault">Operação não teve sucesso.</string>
   <string name="action_edit">Editar</string>
   <string name="recents_custom_android_n">LIMPAR TUDO</string>
+  <string name="recents_free_ram">RAM Livre: %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>

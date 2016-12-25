@@ -156,4 +156,6 @@
   <string name="action_save_fault">Échec de l\'enregistrement</string>
   <string name="action_edit">Modifier</string>
   <string name="recents_custom_android_n">TOUT EFFACER</string>
+  <string name="recents_free_ram">RAM libre : %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>

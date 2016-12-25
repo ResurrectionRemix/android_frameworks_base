@@ -156,4 +156,6 @@
   <string name="action_save_fault">保存失败</string>
   <string name="action_edit">编辑</string>
   <string name="recents_custom_android_n">全部清除</string>
+  <string name="recents_free_ram">可用运存: %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>

@@ -156,4 +156,5 @@
   <string name="action_save_fault">Save Unsuccessful</string>
   <string name="action_edit">Edit</string>
   <string name="recents_custom_android_n">Clear ALL</string>
+  <!-- Path data for Solid battery -->
 </resources>

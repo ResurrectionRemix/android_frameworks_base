@@ -150,4 +150,5 @@
   <string name="action_delete_fault">हटाने का कार्य विफल रहा</string>
   <string name="action_edit">संपादित करें</string>
   <string name="recents_custom_android_n">क्लियर करें</string>
+  <!-- Path data for Solid battery -->
 </resources>

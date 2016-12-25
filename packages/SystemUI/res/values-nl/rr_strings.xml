@@ -156,4 +156,5 @@
   <string name="action_save_fault">Het opslaan is mislukt</string>
   <string name="action_edit">Wijzigen</string>
   <string name="recents_custom_android_n">ALLES WISSEN</string>
+  <!-- Path data for Solid battery -->
 </resources>
