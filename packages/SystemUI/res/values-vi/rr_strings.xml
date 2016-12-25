@@ -156,4 +156,5 @@
   <string name="action_save_fault">Lưu không thành công</string>
   <string name="action_edit">Chỉnh sửa</string>
   <string name="recents_custom_android_n">XÓA TẤT CẢ</string>
+  <!-- Path data for Solid battery -->
 </resources>

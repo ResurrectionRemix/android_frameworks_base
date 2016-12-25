@@ -156,4 +156,6 @@
   <string name="action_save_fault">Ukladanie nebolo úspešné</string>
   <string name="action_edit">Upraviť</string>
   <string name="recents_custom_android_n">VYMAZAŤ VŠETKO</string>
+  <string name="recents_free_ram">Voľná pamäť RAM: %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>

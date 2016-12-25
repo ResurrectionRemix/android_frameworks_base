@@ -26,6 +26,7 @@
   <string name="screenrecord_notif_pointer_off">포인터 숨기기</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">화면을 녹화할 수 없습니다.</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">스크린샷이 삭제되었습니다</string>
   <string name="rr_sys_tuner">시스템 UI 튜너</string>
@@ -43,6 +44,7 @@
   <string name="quick_settings_sound_label">소리</string>
   <string name="quick_settings_sound_ring">벨소리</string>
   <string name="quick_settings_sound_vibrate">진동</string>
+  <string name="quick_settings_sound_dnd">방해 금지</string>
   <!-- Volume QS Tile -->
   <string name="accessibility_quick_settings_volume_panel">음량</string>
   <string name="quick_settings_volume_panel_label">음량</string>
@@ -54,8 +56,8 @@
   <string name="quick_settings_sync_label">동기화</string>
   <string name="accessibility_quick_settings_sync_off">동기화 끔</string>
   <string name="accessibility_quick_settings_sync_on">동기화 꼄</string>
-  <string name="quick_settings_reboot_label">재시작</string>
-  <string name="quick_settings_reboot_recovery_label">리커버리 모드</string>
+  <string name="quick_settings_reboot_label">다시 시작</string>
+  <string name="quick_settings_reboot_recovery_label">복구 모드</string>
   <string name="accessibility_quick_settings_usb_tether_off">USB 테더링 끄기</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB 테더링 켜기</string>
   <string name="quick_settings_usb_tether_label">USB 테더링</string>
@@ -63,9 +65,24 @@
   <string name="quick_settings_music_play">재생</string>
   <string name="quick_settings_music_pause">일시정지</string>
   <string name="quick_settings_ime_tile_label">입력 방법</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_screenrecord">화면 녹화</string>
+  <string name="quick_settings_screenrecord_on">녹화 중...</string>
+  <string name="quick_settings_navigation_bar">내비게이션 바</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">삭제됨</string>
+  <string name="action_save_success">저장됨</string>
+  <string name="action_ok">확인</string>
+  <string name="action_delete_success">삭제됨</string>
+  <string name="action_save_success">저장됨</string>
+  <string name="action_edit">편집</string>
+  <string name="recents_custom_android_n">모두 지우기</string>
+  <string name="recents_free_ram">가용 RAM: %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>

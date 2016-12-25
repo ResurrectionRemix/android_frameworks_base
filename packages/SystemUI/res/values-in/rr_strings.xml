@@ -143,8 +143,11 @@
   <string name="action_delete_fault">Gagal menghapus</string>
   <string name="action_save_success">Disimpan</string>
   <string name="action_save_fault">Gagal menyimpan</string>
+  <string name="pref_action_color_title">warna tombol aksi</string>
+  <string name="pref_action_color_summary">pilih warna favorit unutuk tombol tindakan</string>
   <string name="pref_category_main">Pengaturan Utama</string>
   <string name="pref_category_user">Pengaturan pengguna</string>
+  <string name="pref_crop_behavior_summary">Menggunakan foto yang dipotong, bahkan jika yang asli belum benar-benar dipotong dengan crop behavior</string>
   <string name="action_ok">Oke</string>
   <string name="action_delete_success">Dihapus</string>
   <string name="action_delete_fault">Gagal menghapus</string>
@@ -152,4 +155,6 @@
   <string name="action_save_fault">Gagal menyimpan</string>
   <string name="action_edit">Ubah</string>
   <string name="recents_custom_android_n">HAPUS SEMUA</string>
+  <string name="recents_free_ram">RAM Kosong: %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>

@@ -151,4 +151,5 @@
   <string name="action_save_fault">فشل الحفظ</string>
   <string name="action_edit">تحرير</string>
   <string name="recents_custom_android_n">حذف الكل</string>
+  <!-- Path data for Solid battery -->
 </resources>

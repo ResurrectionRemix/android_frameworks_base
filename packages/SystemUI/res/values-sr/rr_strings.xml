@@ -19,7 +19,7 @@
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Екран се снима</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Екран се снима</string>
+  <string name="screenrecord_notif_title">Снимам екран</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Заустави</string>
   <!-- Screenrecord notification action: show/hide pointer -->
@@ -31,11 +31,11 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Снимак екрана је обрисан</string>
   <string name="gestures_message">Нацртајте образац овде</string>
-  <string name="rr_sys_tuner">Тјунер корисничког интерфејса</string>
+  <string name="rr_sys_tuner">Тјунер корисничког сучеља</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Превуци десно за %1$s</string>
   <string name="right_shortcut_hint">Превуци десно за %1$s</string>
-  <string name="lockscreen_message">Притисните леву или десну икону да би сте подесили пречицу закључаног екрана.</string>
+  <string name="lockscreen_message">Тапните леву или десну икону да поново доделите пречицу закључаног екрана.</string>
   <string name="lockscreen_default_target">Подразумевано</string>
   <string name="select_application">Изаберите апликацију</string>
   <string name="lockscreen_choose_action_title">Одаберите радњу</string>
@@ -95,18 +95,25 @@
   <string name="qs_app_picker_title">Бирач аплилација</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE укључен </string>
-  <string name="lte_off">LTE искључен</string>
-  <string name="quick_settings_nfc">NFC</string>
-  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="lte_off">ЛТЕ искључен</string>
+  <string name="quick_settings_nfc">НФЦ</string>
+  <string name="quick_settings_nfc_label">НФЦ</string>
   <string name="quick_settings_nfc_off">NFC искључен</string>
   <string name="quick_settings_screenrecord">Снимање екрана</string>
-  <string name="quick_settings_screenrecord_on">Снимам ...</string>
+  <string name="quick_settings_screenrecord_on">Снимам...</string>
   <string name="quick_settings_navigation_bar">Навигациона трака</string>
   <string name="quick_settings_smartbar">Паметна трака</string>
   <string name="quick_settings_smartbar_off">Паметна трака иск</string>
+  <string name="quick_settings_ambient_display_label">Амбијентални приказ</string>
   <string name="accessibility_quick_settings_ambient_display_off">Амбијентални приказ искључен.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Амбијентални приказ укључен.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Амбијентални приказ искључен.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Амбијентални приказ укључен.</string>
   <string name="quick_settings_heads_up_label">Искачућа обавештења</string>
+  <string name="accessibility_quick_settings_heads_up_off">Искачућа обавештења иск.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Искачућа обавештења укљ.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Искачућа обавештења искључена.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Искачућа обавештења укључена.</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Апликација је затворена</string>
@@ -115,5 +122,20 @@
   <string name="screenshot_abort_title">Снимак екрана није снимљен</string>
   <string name="screenshot_abort_text">Операција обустављена</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Обрисано</string>
+  <string name="action_delete_fault">Брисање није успело</string>
+  <string name="action_save_success">Сачувано</string>
+  <string name="action_save_fault">Чување није успело</string>
+  <string name="pref_category_main">Главне поставке</string>
+  <string name="pref_category_user">Корисничке поставке</string>
+  <string name="pref_crop_behavior_title">Понашање опсецања</string>
+  <string name="action_ok">У реду</string>
+  <string name="action_delete_success">Обрисано</string>
+  <string name="action_delete_fault">Брисање није успело</string>
+  <string name="action_save_success">Сачувано</string>
+  <string name="action_save_fault">Чување није успело</string>
+  <string name="action_edit">Уреди</string>
   <string name="recents_custom_android_n">ОЧИСТИ СВЕ</string>
+  <string name="recents_free_ram">Слободни РАМ: %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>

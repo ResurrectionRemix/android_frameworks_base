@@ -16,18 +16,32 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">기본 값</string>
+  <string name="default_string">기본값</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="global_action_screenrecord">화면녹화</string>
+  <string name="system_error_vendorprint">제조사 이미지가 시스템과 일치하지 않습니다. 해당 기기에 맞는 <xliff:g id="string">%s</xliff:g> 제조사 이미지를 플래싱해 주십시오.</string>
+  <string name="global_action_screenrecord">화면 녹화</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">페이드</string>
+  <string name="animation_slide_right">오른쪽으로 슬라이드</string>
+  <string name="animation_slide_left">왼쪽으로 슬라이드</string>
+  <string name="animation_slide_right_no_fade">오른쪽으로 슬라이드 (페이드 없음)</string>
+  <string name="animation_slide_left_no_fade">왼쪽으로 슬라이드 (페이드 없음)</string>
+  <string name="animation_slide_up">아래쪽으로 슬라이드</string>
+  <string name="animation_slide_down">위쪽으로 슬라이드</string>
   <string name="animation_default">기본값</string>
   <string name="animation_translucent">반투명</string>
-  <string name="action_null">비어있음</string>
+  <string name="animation_grow_shrink">커지기 (위쪽에서)</string>
+  <string name="animation_grow_shrink_center">커지기 (가운데에서)</string>
+  <string name="animation_grow_shrink_bottom">커지기 (아래쪽에서)</string>
+  <string name="animation_grow_shrink_left">커지기 (왼쪽에서)</string>
+  <string name="animation_grow_shrink_right">커지기 (오른쪽에서)</string>
+  <string name="action_null">비어 있음</string>
   <string name="global_action_torch">손전등</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">시스템UI 재시작</string>
+  <string name="reboot_systemui">시스템 UI 다시 시작</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">On-The-Go 모드</string>
   <!-- ADB enabled, but not connected notification title -->
-  <string name="adb_not_connected_notification_title">ADB 비활성화</string>
+  <string name="adb_not_connected_notification_title">ADB 비활성화됨</string>
+  <string name="adb_active_custom_tile_not_connected">비활성화됨</string>
 </resources>
