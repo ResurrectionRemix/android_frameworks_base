@@ -156,5 +156,6 @@
   <string name="action_save_fault">Η αποθήκευση απέτυχε</string>
   <string name="action_edit">Επεξεργασία</string>
   <string name="recents_custom_android_n">ΑΠΑΛΟΙΦΉ ΌΛΩΝ</string>
+  <string name="recents_free_ram">Ελεύθερη μνήμη RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>

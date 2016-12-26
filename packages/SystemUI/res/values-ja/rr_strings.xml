@@ -156,5 +156,6 @@
   <string name="action_save_fault">保存に失敗しました</string>
   <string name="action_edit">編集</string>
   <string name="recents_custom_android_n">全てクリア</string>
+  <string name="recents_free_ram">空きメモリ: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>

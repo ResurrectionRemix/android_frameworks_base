@@ -156,6 +156,6 @@
   <string name="action_save_fault">Kaydetme işlemi başarısız</string>
   <string name="action_edit">Düzenle</string>
   <string name="recents_custom_android_n">TÜMÜNÜ TEMİZLE</string>
-  <string name="recents_free_ram">Ücretsiz RAM: %1$d MB</string>
+  <string name="recents_free_ram">Boş RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>

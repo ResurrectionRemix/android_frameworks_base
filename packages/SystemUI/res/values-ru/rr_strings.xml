@@ -156,6 +156,6 @@
   <string name="action_save_fault">Сохранение не удалось</string>
   <string name="action_edit">Редактировать</string>
   <string name="recents_custom_android_n">ОЧИСТИТЬ ВСЁ</string>
-  <string name="recents_free_ram">Свободная ОЗУ: %1$d Мб</string>
+  <string name="recents_free_ram">Свободно ОЗУ: %1$d Мб</string>
   <!-- Path data for Solid battery -->
 </resources>
