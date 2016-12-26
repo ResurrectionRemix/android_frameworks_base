@@ -29,12 +29,24 @@
   <string name="screenrecord_notif_error">לא ניתן להקליט מסך</string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">צילום המסך נמחק</string>
+  <string name="gestures_message">צייר את המחווה שלך כאן</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">החלק ימינה בשביל %1$s</string>
+  <string name="right_shortcut_hint">החלק שמאלה בשביל %1$s</string>
+  <string name="lockscreen_message">הקש על סמל בצד שמאל או ימין כדי להקצות מחדש קיצור דרך של מסך הנעילה.</string>
+  <string name="lockscreen_default_target">ברירת מחדל</string>
+  <string name="select_application">בחר יישום</string>
+  <string name="lockscreen_choose_action_title">בחר פעולה</string>
+  <string name="lockscreen_none_target">-ללא-</string>
   <!-- App circle sidebar -->
+  <string name="app_float_item_title">תצוגה צפה</string>
   <string name="app_stop_item_title">עצור יישום</string>
   <!-- On The Go -->
   <string name="onthego_notif_stop">הפסק</string>
   <string name="onthego_notif_options">אפשרויות</string>
+  <string name="onthego_notif_camera_changed">מצב מצלמה שונה</string>
+  <string name="onthego_transparency">שקיפות</string>
+  <string name="onthego_front_camera">השתמש במצלמה קדמית</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">סאונד</string>
   <string name="quick_settings_sound_ring">צלצול</string>
@@ -46,15 +58,51 @@
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">צילום מסך</string>
   <string name="quick_settings_region_screenshot_label">צילום מסך חלקית</string>
+  <string name="quick_settings_adb_network">ADB רשת</string>
   <string name="quick_settings_network_adb_enabled_label">אפשר</string>
   <string name="quick_settings_network_adb_disabled_label">בטל</string>
   <string name="quick_settings_sync_label">סנכרן</string>
   <string name="accessibility_quick_settings_sync_off">סינכרון כבוי</string>
   <string name="accessibility_quick_settings_sync_on">סינכרון פעיל</string>
+  <string name="accessibility_quick_settings_sync_changed_off">סינכרון כבוי</string>
+  <string name="accessibility_quick_settings_sync_changed_on">סינכרון מופעל</string>
+  <string name="quick_settings_expanded_desktop_label">שולחן עבודה מורחב</string>
+  <string name="quick_settings_expanded_desktop_off">רגיל</string>
+  <string name="quick_settings_music_label">מוזיקה</string>
+  <string name="quick_settings_music_play">הפעל</string>
+  <string name="quick_settings_music_pause">השהה</string>
+  <string name="quick_settings_ime_tile_label">שיטת קלט</string>
+  <string name="rr_qs_tile">הגדרות</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE מופעל </string>
+  <string name="lte_off">LTE מופסק</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC כבוי</string>
+  <string name="quick_settings_screenrecord">הקלטת מסך</string>
+  <string name="quick_settings_screenrecord_on">מקליט...</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">לא נלקחה תמונת מסך</string>
+  <string name="screenshot_abort_text">הפעולה בוטלה</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">נמחק</string>
+  <string name="action_delete_fault">המחיקה לא בוצעה</string>
+  <string name="action_save_success">נשמר</string>
+  <string name="action_save_fault">השמירה לא בוצעה</string>
+  <string name="pref_action_color_title">צבע לחצני פעולה</string>
+  <string name="pref_action_color_summary">בחר את הצבע האהוב עליך עבור לחצני פעולה</string>
+  <string name="pref_category_main">הגדרות ראשיות</string>
+  <string name="pref_category_user">הגדרות משתמש</string>
+  <string name="action_ok">אישור</string>
+  <string name="action_delete_success">נמחק</string>
+  <string name="action_delete_fault">המחיקה לא בוצעה</string>
+  <string name="action_save_success">נשמר</string>
+  <string name="action_save_fault">השמירה לא בוצעה</string>
+  <string name="action_edit">ערוך</string>
+  <string name="recents_custom_android_n">נקה הכל</string>
+  <string name="recents_free_ram">זיכרון RAM פנוי: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>
