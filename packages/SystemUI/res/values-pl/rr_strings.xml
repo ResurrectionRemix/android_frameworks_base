@@ -156,5 +156,6 @@
   <string name="action_save_fault">Zapisywanie nie powiodło się</string>
   <string name="action_edit">Edytuj</string>
   <string name="recents_custom_android_n">WYCZYŚĆ WSZYSTKO</string>
+  <string name="recents_free_ram">Wolna pamięć RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>

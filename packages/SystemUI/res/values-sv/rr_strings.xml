@@ -19,11 +19,22 @@
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Skärmen spelas in</string>
   <!-- Screenrecord notification title -->
+  <string name="screenrecord_notif_title">Spelar in skärmen</string>
   <!-- Screenrecord notification action: Stop -->
+  <string name="screenrecord_notif_stop">Stoppa</string>
   <!-- Screenrecord notification action: show/hide pointer -->
+  <string name="screenrecord_notif_pointer_on">Visa pekaren</string>
+  <string name="screenrecord_notif_pointer_off">Dölj pekaren</string>
   <!-- Screen record notification error title -->
+  <string name="screenrecord_notif_error">Det går inte att spela in skärmen</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
+  <string name="delete_screenshot_toast">Skärmdump raderad</string>
+  <string name="gestures_message">Rita gester här</string>
+  <string name="rr_sys_tuner">Inställningar för systemgränssnitt</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Svep åt höger för %1$s</string>
+  <string name="right_shortcut_hint">Svep åt vänster för %1$s</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximera</string>
   <!-- On The Go -->

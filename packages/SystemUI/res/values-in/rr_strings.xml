@@ -147,6 +147,7 @@
   <string name="pref_action_color_summary">pilih warna favorit unutuk tombol tindakan</string>
   <string name="pref_category_main">Pengaturan Utama</string>
   <string name="pref_category_user">Pengaturan pengguna</string>
+  <string name="pref_crop_behavior_title">Perilaku pemotongan</string>
   <string name="pref_crop_behavior_summary">Menggunakan foto yang dipotong, bahkan jika yang asli belum benar-benar dipotong dengan crop behavior</string>
   <string name="action_ok">Oke</string>
   <string name="action_delete_success">Dihapus</string>

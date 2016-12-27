@@ -22,6 +22,10 @@
   <string name="global_action_screenrecord">הקלטת מסך</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">דעיכה</string>
+  <string name="animation_slide_right">החלקה מימין</string>
+  <string name="animation_slide_left">החלקה משמאל</string>
+  <string name="animation_slide_right_no_fade">החלקה מימין (ללא עמעום)</string>
+  <string name="animation_slide_left_no_fade">החלקה משמאל (ללא עמעום)</string>
   <string name="animation_default">ברירת מחדל</string>
   <string name="action_null">ריק</string>
   <string name="global_action_torch">פנס</string>
