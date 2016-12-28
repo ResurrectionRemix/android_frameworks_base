@@ -156,5 +156,6 @@
   <string name="action_save_fault">Não foi guardado</string>
   <string name="action_edit">Editar</string>
   <string name="recents_custom_android_n">Limpar tudo</string>
+  <string name="recents_free_ram">RAM livre: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>
