@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Pôvodné</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Váš dodávateľ image sa nezhoduje so systémom. Prosím flash image <xliff:g id="string">%s</xliff:g> pre vaše zariadeni</string>
+  <string name="system_error_vendorprint">Váš dodávateľ image sa nezhoduje so systémom. Prosím flash image <xliff:g id="string">%s</xliff:g> pre vaše zariadenie.</string>
   <string name="global_action_screenrecord">Nahrávanie obrazovky</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Miznutie</string>
