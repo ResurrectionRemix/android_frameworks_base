@@ -34,6 +34,7 @@ import android.util.Slog;
  */
 public abstract class AuthenticationClient extends ClientMonitor {
     private long mOpId;
+    private boolean mIsCancelled = false;
 
     public abstract boolean handleFailedAttempt();
     public abstract void resetFailedAttempts();
@@ -129,6 +130,11 @@ public abstract class AuthenticationClient extends ClientMonitor {
 
     @Override
     public int stop(boolean initiatedByClient) {
+        if(mIsCancelled) {
+            Slog.e(TAG, "daemon.cancelAuthentication() is called, so return.");
+            return 0;
+        }
+        mIsCancelled = true;
         IFingerprintDaemon daemon = getFingerprintDaemon();
         if (daemon == null) {
             Slog.w(TAG, "stopAuthentication: no fingeprintd!");
