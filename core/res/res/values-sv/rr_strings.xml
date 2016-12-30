@@ -20,6 +20,7 @@
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="global_action_screenrecord">Skärminspelning</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Tona</string>
   <string name="animation_default">Standard</string>
   <string name="global_action_torch">Ficklampa</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
