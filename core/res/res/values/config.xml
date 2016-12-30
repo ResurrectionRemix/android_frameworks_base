@@ -2865,6 +2865,11 @@
     <integer name="animationboost_timeout_param">0</integer>
     <integer-array name="animationboost_param_value"/>
 
+    <!-- Whether cpu boost is enabled for pre-fling. -->
+    <bool name="config_enableCpuBoostForPreFling">false</bool>
+    <integer name="preflingboost_timeout_param">0</integer>
+    <integer-array name="preflingboost_param_value"/>
+
     <!-- Whether cpu boost is enabled for overscroller fling. -->
     <bool name="config_enableCpuBoostForOverScrollerFling">false</bool>
     <integer name="flingboost_timeout_param">0</integer>
