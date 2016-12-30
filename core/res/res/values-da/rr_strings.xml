@@ -18,8 +18,18 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Standard</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="global_action_screenrecord">Skærmoptagelse</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Animationsfade</string>
+  <string name="animation_default">Standard</string>
+  <string name="animation_translucent">Semitransparent</string>
+  <string name="action_null">Tom</string>
+  <string name="global_action_torch">Lommelygte</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">Genstart SystemUI</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">On-The-Go tilstand</string>
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">ADB inaktiv</string>
+  <string name="adb_active_custom_tile_not_connected">inaktiv</string>
 </resources>

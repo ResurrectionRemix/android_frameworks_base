@@ -31,8 +31,8 @@
   <string name="animation_default">Predefinita</string>
   <string name="animation_translucent">Trasparenza</string>
   <string name="animation_grow_shrink">Espandi (Dall\'alto)</string>
-  <string name="animation_grow_shrink_center">Espandi (Dal centro)</string>
-  <string name="animation_grow_shrink_bottom">Espandi (Dal basso)</string>
+  <string name="animation_grow_shrink_center">Espandi (Verso il centro)</string>
+  <string name="animation_grow_shrink_bottom">Espandi (Verso il basso)</string>
   <string name="animation_grow_shrink_left">Espandi (Da sinistra)</string>
   <string name="animation_grow_shrink_right">Espandi (Da destra)</string>
   <string name="action_null">Vuoto</string>

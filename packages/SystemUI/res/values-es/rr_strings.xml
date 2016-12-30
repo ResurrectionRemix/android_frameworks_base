@@ -66,7 +66,7 @@
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">Captura de pantalla</string>
   <string name="quick_settings_region_screenshot_label">Captura de pantalla parcial</string>
-  <string name="quick_settings_adb_network">ADB en Red</string>
+  <string name="quick_settings_adb_network">ADB sobre RED</string>
   <string name="quick_settings_network_adb_enabled_label">Habilitado</string>
   <string name="quick_settings_network_adb_disabled_label">Deshabilitado</string>
   <string name="quick_settings_sync_label">Sincronizar</string>
@@ -90,8 +90,8 @@
   <string name="quick_settings_ime_tile_label">Método de introducción de texto</string>
   <string name="rr_qs_tile">Configuraciones</string>
   <string name="quick_settings_caffeine_label">Cafeína</string>
-  <string name="accessibility_quick_settings_caffeine_off">Caffeine deshabilitado</string>
-  <string name="accessibility_quick_settings_caffeine_on">Caffeine habilitado</string>
+  <string name="accessibility_quick_settings_caffeine_off">Cafeína deshabilitado</string>
+  <string name="accessibility_quick_settings_caffeine_on">Cafeína habilitado</string>
   <string name="qs_app_picker_title">Selector de aplicación</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE Activado </string>
@@ -124,7 +124,7 @@
   <string name="accessibility_quick_settings_ambient_display_on">Pantalla ambiente activada.</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Pantalla ambiente se ha desactivado.</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Pantalla ambiente se ha activado.</string>
-  <string name="quick_settings_heads_up_label">Notificacion flotante</string>
+  <string name="quick_settings_heads_up_label">Notificación flotante</string>
   <string name="accessibility_quick_settings_heads_up_off">Notificaciones emergentes desactivadas.</string>
   <string name="accessibility_quick_settings_heads_up_on">Notificaciones emergentes activadas.</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Notificaciones emergentes desactivadas.</string>
@@ -140,9 +140,9 @@
   <string name="screenshot_abort_text">Operación abortada</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">Eliminado</string>
-  <string name="action_delete_fault">La accion de borrado no ha tenido éxito</string>
+  <string name="action_delete_fault">La acción de borrado no ha tenido éxito</string>
   <string name="action_save_success">Guardado</string>
-  <string name="action_save_fault">La accion de guardado no ha tenido éxito</string>
+  <string name="action_save_fault">La acción de guardado no ha tenido éxito</string>
   <string name="pref_action_color_title">Color de botones de acción</string>
   <string name="pref_action_color_summary">Elige tu color favorito para los botones de acción</string>
   <string name="pref_category_main">Ajustes principales</string>
@@ -151,10 +151,11 @@
   <string name="pref_crop_behavior_summary">Usar la imagen recortada aunque la imagen actual no haya sido recortada con la opcion</string>
   <string name="action_ok">Aceptar</string>
   <string name="action_delete_success">Eliminado</string>
-  <string name="action_delete_fault">La accion de borrado no ha tenido éxito</string>
+  <string name="action_delete_fault">La acción de borrado no ha tenido éxito</string>
   <string name="action_save_success">Guardado</string>
-  <string name="action_save_fault">La accion de guardado no ha tenido éxito</string>
+  <string name="action_save_fault">La acción de guardado no ha tenido éxito</string>
   <string name="action_edit">Editar</string>
   <string name="recents_custom_android_n">LIMPIAR TODO</string>
+  <string name="recents_free_ram">Memoria RAM libre: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>

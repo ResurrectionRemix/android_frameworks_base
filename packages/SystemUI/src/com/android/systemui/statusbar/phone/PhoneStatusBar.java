@@ -6092,8 +6092,10 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     public void onScreenTurningOn() {
         mScreenTurningOn = true;
+        mDeviceInteractive = true;
         mFalsingManager.onScreenTurningOn();
         mNotificationPanel.onScreenTurningOn();
+        updateVisibleToUser();
         if (mLaunchCameraOnScreenTurningOn) {
             mNotificationPanel.launchCamera(false, mLastCameraLaunchSource);
             mLaunchCameraOnScreenTurningOn = false;
@@ -6106,6 +6108,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     public void onScreenTurnedOn() {
         mScreenTurningOn = false;
+        mDeviceInteractive = true;
+        updateVisibleToUser();
         mDozeScrimController.onScreenTurnedOn();
         mVisualizerView.setVisible(true);
     }

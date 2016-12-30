@@ -27,10 +27,16 @@
   <string name="screenrecord_notif_pointer_off">Skjul markøren</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Kan ikke optage skærmindhold</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Screenshot slettet</string>
   <string name="gestures_message">Tegne din gestus her</string>
+  <string name="rr_sys_tuner">System UI tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Stryg til højre for %1$s</string>
+  <string name="right_shortcut_hint">Stryk til venstre for %1$s</string>
+  <string name="select_application">Vælg applikation</string>
+  <string name="lockscreen_choose_action_title">Vælg handling</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maksimer</string>
   <string name="app_stop_item_title">Luk app ned</string>
@@ -57,6 +63,12 @@
   <string name="quick_settings_screenshot_label">Skærmbillede</string>
   <string name="quick_settings_region_screenshot_label">Delvis screenshot</string>
   <string name="quick_settings_adb_network">ADB netværk</string>
+  <string name="quick_settings_network_adb_enabled_label">Aktiveret</string>
+  <string name="quick_settings_network_adb_disabled_label">Deaktiveret</string>
+  <string name="quick_settings_sync_label">Sync</string>
+  <string name="accessibility_quick_settings_sync_off">Sync fra</string>
+  <string name="accessibility_quick_settings_sync_on">Sync til</string>
+  <string name="quick_settings_reboot_label">Genstart</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->
