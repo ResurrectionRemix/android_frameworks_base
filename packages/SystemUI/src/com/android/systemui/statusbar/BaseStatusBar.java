@@ -1557,6 +1557,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         Log.d(TAG, "StatusBar API screenPinningStateChanged = " + enabled);
     }
 
+    @Override
+    public void restartUI() {
+        Log.d(TAG, "StatusBar API restartUI! Commiting suicide! Goodbye cruel world!");
+        Process.killProcess(Process.myPid());
+    }
+
     protected H createHandler() {
          return new H();
     }

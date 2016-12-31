@@ -461,6 +461,17 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
         }
     }
 
+    public void restartUI() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RESTART_UI,
+                "StatusBarManagerService");
+        if (mBar != null) {
+            try {
+                mBar.restartUI();
+            } catch (RemoteException ex) {
+            }
+        }
+    }
+
     public void addTile(ComponentName component) {
         enforceStatusBarOrShell();
 

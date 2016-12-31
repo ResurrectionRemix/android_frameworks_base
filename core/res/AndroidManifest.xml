@@ -3179,6 +3179,12 @@
         android:description="@string/permdesc_modifyOverlays"
         android:protectionLevel="normal" />
 
+    <!-- Allows an application to restart the SystemUI process.-->
+    <permission android:name="android.permission.RESTART_UI"
+        android:label="@string/permlab_restartUI"
+        android:description="@string/permdesc_restartUI"
+        android:protectionLevel="signature" />
+
     <application android:process="system"
                  android:persistent="true"
                  android:hasCode="false"

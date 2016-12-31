@@ -82,6 +82,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_TOGGLE_SCREENSHOT             = 36 << MSG_SHIFT;
     private static final int MSG_HANDLE_SYSNAV_KEY             = 37 << MSG_SHIFT;
     private static final int MSG_SET_AUTOROTATE_STATUS         = 38 << MSG_SHIFT;
+    private static final int MSG_RESTART_UI                    = 39 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -143,6 +144,7 @@ public class CommandQueue extends IStatusBar.Stub {
         public void toggleOrientationListener(boolean enable);
         void handleSystemNavigationKey(int arg1);
         void setAutoRotate(boolean enabled);
+        void restartUI();
     }
 
     public CommandQueue(Callbacks callbacks) {
@@ -154,6 +156,13 @@ public class CommandQueue extends IStatusBar.Stub {
             mHandler.removeMessages(MSG_SCREEN_PINNING_STATE_CHANGED);
             mHandler.obtainMessage(MSG_SCREEN_PINNING_STATE_CHANGED,
                     enabled ? 1 : 0, 0, null).sendToTarget();
+        }
+    }
+
+    public void restartUI() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_RESTART_UI);
+            mHandler.sendEmptyMessage(MSG_RESTART_UI);
         }
     }
 
@@ -581,6 +590,9 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_SET_AUTOROTATE_STATUS:
                     mCallbacks.setAutoRotate(msg.arg1 != 0);
+                    break;
+                case MSG_RESTART_UI:
+                    mCallbacks.restartUI();
                     break;
             }
         }

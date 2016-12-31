@@ -80,4 +80,6 @@ interface IStatusBarService
     void screenPinningStateChanged(boolean enabled);
     void handleSystemNavigationKey(in int key);
     void setAutoRotate(boolean enabled);
+    // SystemUI Restart API for masquerade
+    void restartUI();
 }
