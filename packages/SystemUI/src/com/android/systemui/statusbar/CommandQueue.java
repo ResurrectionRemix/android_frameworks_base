@@ -120,6 +120,7 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
     private static final int MSG_HIDE_IN_DISPLAY_FINGERPRINT_VIEW = 49 << MSG_SHIFT;
     private static final int MSG_SET_BLOCKED_GESTURAL_NAVIGATION = 50 << MSG_SHIFT;
     private static final int MSG_TOGGLE_CAMERA_FLASH           = 90 << MSG_SHIFT;
+    private static final int MSG_RESTART_UI                    = 91 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -284,6 +285,7 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         default void showInDisplayFingerprintView() { }
         default void hideInDisplayFingerprintView() { }
         default void setBlockedGesturalNavigation(boolean blocked) {}
+	    default void restartUI() { }
 
         /**
          * @see IStatusBar#onDisplayReady(int)
@@ -863,6 +865,12 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         synchronized (mLock) {
             mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH);
             mHandler.sendEmptyMessage(MSG_TOGGLE_CAMERA_FLASH);
+    }
+
+    public void restartUI() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_RESTART_UI);
+            mHandler.obtainMessage(MSG_RESTART_UI).sendToTarget();
         }
     }
 
@@ -1129,6 +1137,11 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                 case MSG_RECENTS_ANIMATION_STATE_CHANGED:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).onRecentsAnimationStateChanged(msg.arg1 > 0);
+		    }
+		    break;
+                case MSG_RESTART_UI:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).restartUI();
                     }
                     break;
                 case MSG_SHOW_IN_DISPLAY_FINGERPRINT_VIEW:

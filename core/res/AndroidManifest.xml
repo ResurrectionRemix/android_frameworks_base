@@ -4617,13 +4617,25 @@
     <permission android:name="android.permission.MONITOR_INPUT"
                 android:protectionLevel="signature" />
 
-    <!-- LineageOS additions -->
+    <!-- AICP additions -->
 
     <!-- Allows an application to override the power key action
          @hide <p>Not for use by third-party applications.
     -->
     <permission android:name="android.permission.PREVENT_POWER_KEY"
                 android:protectionLevel="signature|privileged" />
+
+    <!-- @SystemApi Allows an application to manage ADB Root
+         @hide <p>Not for use by third-party applications.
+    -->
+    <permission android:name="android.permission.ADBROOT"
+                android:protectionLevel="signature|privileged" />
+
+    <!-- Allows an application to restart the SystemUI process.-->
+    <permission android:name="android.permission.RESTART_UI"
+        android:label="@string/permlab_restartUI"
+        android:description="@string/permdesc_restartUI"
+        android:protectionLevel="signature" />
 
     <application android:process="system"
                  android:persistent="true"
