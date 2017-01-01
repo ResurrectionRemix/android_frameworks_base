@@ -44,6 +44,7 @@ import com.android.systemui.statusbar.policy.HotspotController;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.Listenable;
 import com.android.systemui.statusbar.policy.LocationController;
+import com.android.systemui.statusbar.policy.GpsController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.RotationLockController;
 import com.android.systemui.statusbar.policy.UserInfoController;
@@ -438,6 +439,7 @@ public abstract class QSTile<TState extends State> {
         void removeCallback(Callback callback);
         BluetoothController getBluetoothController();
         LocationController getLocationController();
+        GpsController getGpsController();
         RotationLockController getRotationLockController();
         NetworkController getNetworkController();
         ZenModeController getZenModeController();

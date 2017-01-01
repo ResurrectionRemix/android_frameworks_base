@@ -140,6 +140,11 @@
     <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
     <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
     <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+    <string name="quick_settings_gps_label">GPS</string>
+    <string name="accessibility_quick_settings_gps_off">GPS off.</string>
+    <string name="accessibility_quick_settings_gps_on">GPS on.</string>
+    <string name="accessibility_quick_settings_gps_changed_off">GPS turned off.</string>
+    <string name="accessibility_quick_settings_gps_changed_on">GPS turned on.</string>
 
         <!-- PA Pie controls -->
     <string name="pie_date_format" translatable="false">ccc, dd MMM yyyy</string>

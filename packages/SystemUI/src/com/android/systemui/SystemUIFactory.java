@@ -43,6 +43,7 @@ import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.HotspotController;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.LocationController;
+import com.android.systemui.statusbar.policy.GpsController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.RotationLockController;
@@ -104,14 +105,14 @@ public class SystemUIFactory {
 
     public QSTileHost createQSTileHost(Context context, PhoneStatusBar statusBar,
             BluetoothController bluetooth, LocationController location,
-            RotationLockController rotation, NetworkController network,
+            GpsController gps,  RotationLockController rotation, NetworkController network,
             ZenModeController zen, HotspotController hotspot,
             CastController cast, FlashlightController flashlight,
             UserSwitcherController userSwitcher, UserInfoController userInfo,
             KeyguardMonitor keyguard, SecurityController security,
             BatteryController battery, StatusBarIconController iconController,
             NextAlarmController nextAlarmController) {
-        return new QSTileHost(context, statusBar, bluetooth, location, rotation, network, zen,
+        return new QSTileHost(context, statusBar, bluetooth, location, gps, rotation, network, zen,
                 hotspot, cast, flashlight, userSwitcher, userInfo, keyguard, security, battery,
                 iconController, nextAlarmController);
     }
