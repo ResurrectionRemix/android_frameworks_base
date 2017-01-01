@@ -33,7 +33,10 @@ import android.net.Uri;
 import android.opengl.Matrix;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.IPowerManager;
+import android.os.ServiceManager;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.util.MathUtils;
 import android.util.Slog;
@@ -89,10 +92,19 @@ public final class ColorDisplayService extends SystemService
     private ContentObserver mUserSetupObserver;
     private boolean mBootCompleted;
 
+    private IPowerManager mPm;
     private ColorDisplayController mController;
     private ValueAnimator mColorMatrixAnimator;
     private Boolean mIsActivated;
     private AutoMode mAutoMode;
+
+    //Night Mode custom brightness
+    private boolean mIsAdaptiveBrightness;
+    private float mNightCustomAdaptiveBrightness;
+    private float mPreviousUserAdaptiveBrightness;
+    private int mNightModeBrightnessLevel;
+    private int mNightCustomManualBrightness;
+    private int mPreviousUserManualBrightness;
 
     public ColorDisplayService(Context context) {
         super(context);
@@ -106,6 +118,10 @@ public final class ColorDisplayService extends SystemService
 
     @Override
     public void onBootPhase(int phase) {
+        if (phase >= PHASE_SYSTEM_SERVICES_READY) {
+            mPm = IPowerManager.Stub.asInterface(ServiceManager.getService("power"));
+        }
+
         if (phase >= PHASE_BOOT_COMPLETED) {
             mBootCompleted = true;
 
@@ -234,6 +250,7 @@ public final class ColorDisplayService extends SystemService
         if (mIsActivated == null || mIsActivated != activated) {
             Slog.i(TAG, activated ? "Turning on night display" : "Turning off night display");
 
+            boolean isReboot = mIsActivated == null;
             mIsActivated = activated;
 
             if (mAutoMode != null) {
@@ -241,6 +258,9 @@ public final class ColorDisplayService extends SystemService
             }
 
             applyTint(false);
+            if (!isReboot) {
+                setBrightness(mIsActivated);
+            }
         }
     }
 
@@ -261,6 +281,74 @@ public final class ColorDisplayService extends SystemService
 
         if (mAutoMode != null) {
             mAutoMode.onStart();
+        }
+    }
+
+    private void setBrightness(boolean activated) {
+        if (activated) {
+            updateBrightnessModeValues();
+        }
+        if (mNightModeBrightnessLevel == 0 || mPm == null) {
+            return;
+        }
+        final ContentResolver cr = getContext().getContentResolver();
+
+        if (mIsAdaptiveBrightness) {
+            if (activated) {
+                Settings.System.putFloatForUser(cr,
+                        Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, mNightCustomAdaptiveBrightness,
+                        mCurrentUser);
+            } else {
+                Settings.System.putFloatForUser(cr,
+                        Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, mPreviousUserAdaptiveBrightness,
+                        mCurrentUser);
+                }
+        } else {
+            if (activated) {
+                Settings.System.putIntForUser(cr,
+                        Settings.System.SCREEN_BRIGHTNESS, mNightCustomManualBrightness,
+                        mCurrentUser);
+            } else {
+                Settings.System.putIntForUser(cr,
+                        Settings.System.SCREEN_BRIGHTNESS, mPreviousUserManualBrightness,
+                        mCurrentUser);
+            }
+        }
+    }
+
+    public void updateBrightnessModeValues() {
+        final ContentResolver cr = getContext().getContentResolver();
+        //store current brightness user values to be able to restore them lately
+        mPreviousUserAdaptiveBrightness = Settings.System.getFloatForUser(cr,
+                Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, 0,
+                mCurrentUser);
+        mPreviousUserManualBrightness = Settings.System.getIntForUser(cr,
+                Settings.System.SCREEN_BRIGHTNESS, 0,
+                mCurrentUser);
+        //check the current brightness mode and the wanted brightness level on night mode to set
+        int currentBrightnessMode = Settings.System.getIntForUser(cr,
+                Settings.System.SCREEN_BRIGHTNESS_MODE,
+                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
+                mCurrentUser);
+        mIsAdaptiveBrightness = currentBrightnessMode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
+        mNightModeBrightnessLevel = Settings.Secure.getIntForUser(cr,
+                Settings.Secure.NIGHT_BRIGHTNESS_VALUE, 2,
+                mCurrentUser);
+        switch (mNightModeBrightnessLevel) {
+            case 1: //lower
+                mNightCustomAdaptiveBrightness = -1f;
+                mNightCustomManualBrightness = 0;
+                break;
+            case 2: //low
+                mNightCustomAdaptiveBrightness = -0.33f;
+                mNightCustomManualBrightness = 40;
+                break;
+            case 3: //medium
+                mNightCustomAdaptiveBrightness = 0f;
+                mNightCustomManualBrightness = 100;
+                break;
+            default: //disabled
+                break;
         }
     }
 
