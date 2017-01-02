@@ -4087,6 +4087,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
 
+          /**
+          * Whether to show the battery info on the lockscreen while charging
+          * @hide
+          */
+         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+
         /**
          * Network traffic indicator, goes from least to greatest significant bitwise
          * 0 = Display up-stream traffic if set
@@ -7110,6 +7116,14 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS =
                 "lock_screen_allow_private_notifications";
+
+
+        /**
+         * Separate password for encryption and the lockscreen.
+          * @hide
+         */
+        public static final String LOCK_SEPARATE_ENCRYPTION_PASSWORD =
+                "lock_separate_encryption_password";
 
         /**
          * When set by a user, allows notification remote input atop a securely locked screen
