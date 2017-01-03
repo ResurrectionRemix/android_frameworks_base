@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The Resurrection Remix Project
+ * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,42 +16,31 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.ComponentName;
-import android.database.ContentObserver;
-import android.os.Handler;
+import android.content.Intent;
 import android.os.UserHandle;
 import android.provider.Settings;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
-import android.widget.ListView;
+import android.provider.Settings.Secure;
 
-import com.android.systemui.R;
-import com.android.systemui.qs.QSTile;
-import com.android.systemui.qs.QSTileView;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
+import com.android.systemui.qs.SecureSetting;
+import com.android.systemui.qs.QSTile;
+import com.android.systemui.R;
 
 public class PulseTile extends QSTile<QSTile.BooleanState> {
-    private boolean mListening;
-    private PulseObserver mObserver;
 
- private static final Intent PULSE_SETTINGS = new Intent().setComponent(new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$PulseSettingsActivity"));
+    private final SecureSetting mSetting;
 
-    public PulseTile (Host host) {
+    public PulseTile(Host host) {
         super(host);
-        mObserver = new PulseObserver(mHandler);
+
+        mSetting = new SecureSetting(mContext, mHandler, Secure.FLING_PULSE_ENABLED) {
+            @Override
+            protected void handleValueChanged(int value, boolean observedChange) {
+                handleRefreshState(value);
+            }
+        };
     }
 
     @Override
@@ -60,19 +49,19 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
     }
 
     @Override
-    public int getMetricsCategory() {
-        return MetricsEvent.QUICK_SETTINGS;
-    }
-
-    @Override
-    protected void handleClick() {
-        toggleState();
+    public void handleClick() {
+        setEnabled(!mState.value);
         refreshState();
     }
 
-     @Override
-    protected void handleSecondaryClick() {
-	mHost.startActivityDismissingKeyguard(PULSE_SETTINGS);
+    @Override
+    public Intent getLongClickIntent() {
+	if (isPulseEnabled()) {
+	Settings.Secure.putInt(mContext.getContentResolver(),
+               Settings.Secure.FLING_PULSE_LAVALAMP_ENABLED, !isLavaLampEnabled() ? 1 : 0);
+        }
+        return new Intent().setComponent(new ComponentName(
+            "com.android.settings", "com.android.settings.Settings$PulseSettingsActivity"));
     }
 
     @Override
@@ -80,36 +69,10 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
         return mContext.getString(R.string.quick_settings_pulse_label);
     }
 
-    @Override
-    public Intent getLongClickIntent() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void handleLongClick() {
-	if (isPulseEnabled()) {
-	Settings.Secure.putInt(mContext.getContentResolver(),
-                        Settings.Secure.FLING_PULSE_LAVALAMP_ENABLED, !isLavampenEbled() ? 1 : 0);
-    }                
-        mHost.startActivityDismissingKeyguard(PULSE_SETTINGS);
-    }
-
-    protected void toggleState() {
-         Settings.Secure.putInt(mContext.getContentResolver(),
-                        Settings.Secure.FLING_PULSE_ENABLED, !isPulseEnabled() ? 1 : 0);
-    }
-
-    @Override
-    protected void handleUpdateState(BooleanState state, Object arg) {
-        state.visible = true;
-	    if (isPulseEnabled()) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_pulse);
-            state.label = mContext.getString(R.string.quick_settings_pulse_enabled);
-        } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_pulse_off);
-            state.label = mContext.getString(R.string.quick_settings_pulse_disabled);
-        }
+    private void setEnabled(boolean enabled) {
+        Settings.Secure.putInt(mContext.getContentResolver(),
+                Settings.Secure.FLING_PULSE_ENABLED,
+                enabled ? 1 : 0);
     }
 
     private boolean isPulseEnabled() {
@@ -117,46 +80,48 @@ public class PulseTile extends QSTile<QSTile.BooleanState> {
                 Settings.Secure.FLING_PULSE_ENABLED, 0,
                 UserHandle.USER_CURRENT) == 1;
     }
-    
-    private boolean isLavampenEbled() {
+
+    private boolean isLavaLampEnabled() {
         return Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.FLING_PULSE_LAVALAMP_ENABLED, 0,
                 UserHandle.USER_CURRENT) == 1;
     }
 
     @Override
-    public void setListening(boolean listening) {
-        if (mListening == listening) return;
-            mListening = listening;
-        if (listening) {
-            mObserver.startObserving();
+    protected void handleUpdateState(BooleanState state, Object arg) {
+        final int value = arg instanceof Integer ? (Integer)arg : mSetting.getValue();
+        final boolean pulse = value != 0;
+        state.value = pulse;
+        state.label = mContext.getString(R.string.quick_settings_pulse_label);
+        if (pulse) {
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_pulse);
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_pulse_on);
         } else {
-            mObserver.endObserving();
+            state.icon = ResourceIcon.get(R.drawable.ic_qs_pulse_off);
+            state.contentDescription =  mContext.getString(
+                    R.string.accessibility_quick_settings_pulse_off);
         }
     }
 
-    private class PulseObserver extends ContentObserver {
-        public PulseObserver(Handler handler) {
-            super(handler);
+    @Override
+    protected String composeChangeAnnouncement() {
+        if (mState.value) {
+            return mContext.getString(
+                    R.string.accessibility_quick_settings_pulse_changed_on);
+        } else {
+            return mContext.getString(
+                    R.string.accessibility_quick_settings_pulse_changed_off);
         }
+    }
 
-        @Override
-        public void onChange(boolean selfChange) {
-            refreshState();
-        }
+    @Override
+    public int getMetricsCategory() {
+        return MetricsEvent.QUICK_SETTINGS;
+    }
 
-        public void startObserving() {
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.FLING_PULSE_ENABLED),
-                    false, this, UserHandle.USER_ALL);
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.FLING_PULSE_LAVALAMP_ENABLED),
-                    false, this, UserHandle.USER_ALL);
-        }
-
-        public void endObserving() {
-            mContext.getContentResolver().unregisterContentObserver(this);
-        }
+    @Override
+    public void setListening(boolean listening) {
+        // Do nothing
     }
 }
- 
