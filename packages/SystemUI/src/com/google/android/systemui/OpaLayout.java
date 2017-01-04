@@ -10,7 +10,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.os.UserManager;
+import android.provider.Settings;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -613,12 +615,15 @@ public class OpaLayout extends FrameLayout implements ButtonInterface, Tunable {
     }
 
     public void setOpaEnabled(boolean enabled) {
-        final boolean b2 = enabled || UserManager.isDeviceInDemoMode(getContext());
-        if (!b2) {
+        boolean quickStepEnabled = shouldShowSwipeUpUI();
+        final boolean opaToggle = Settings.System.getIntForUser(this.getContext().getContentResolver(),
+            Settings.System.PIXEL_NAV_ANIMATION, 1, UserHandle.USER_CURRENT) == 1;
+        final boolean b2 = (enabled || UserManager.isDeviceInDemoMode(getContext())) && opaToggle;
+        mOpaEnabled = b2;
+        if (quickStepEnabled || !b2) {
             hideAllOpa();
-            mOpaEnabled = false;
-        }else{
-            mOpaEnabled = true;
+        } else {
+            showAllOpa();
         }
     }
 
