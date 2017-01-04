@@ -73,7 +73,7 @@
   <string name="accessibility_quick_settings_sync_off">Synchronisation aus</string>
   <string name="accessibility_quick_settings_sync_on">Synchronisation an</string>
   <string name="accessibility_quick_settings_sync_changed_off">Synchronisation ausgeschaltet</string>
-  <string name="accessibility_quick_settings_sync_changed_on">Sync eingeschaltet</string>
+  <string name="accessibility_quick_settings_sync_changed_on">Synchronisation eingeschaltet</string>
   <string name="quick_settings_expanded_desktop_label">Erweiterter Desktop</string>
   <string name="quick_settings_expanded_desktop">Erweitert</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
@@ -115,6 +115,7 @@
   <string name="quick_settings_appsidebar_title">AppSideBar</string>
   <string name="quick_settings_appsidebar_on">AppSideBar an</string>
   <string name="quick_settings_appsidebar_off">AppSideBar aus</string>
+  <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse aktiviert</string>
   <string name="quick_settings_pulse_disabled">Kein Visualizer</string>
   <string name="quick_settings_pulse_label">Navigationsleisten Visualizer</string>
@@ -129,6 +130,7 @@
   <string name="accessibility_quick_settings_heads_up_on">Heads-up an.</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up ausgeschaltet.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up eingeschaltet.</string>
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Anwendung beendet</string>

@@ -51,6 +51,8 @@
   <!-- Quick Settings tiles -->
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC av</string>
+  <!-- Pulse Tile -->
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->

@@ -17,21 +17,97 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
+  <string name="screenrecord_notif_ticker">Se realizează captura de ecran</string>
   <!-- Screenrecord notification title -->
+  <string name="screenrecord_notif_title">Se înregistrează ecranul</string>
   <!-- Screenrecord notification action: Stop -->
+  <string name="screenrecord_notif_stop">Oprire</string>
   <!-- Screenrecord notification action: show/hide pointer -->
+  <string name="screenrecord_notif_pointer_on">Arată indicatorul</string>
+  <string name="screenrecord_notif_pointer_off">Ascunde indicatorul</string>
   <!-- Screen record notification error title -->
+  <string name="screenrecord_notif_error">Captură de ecran eșuată</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
+  <string name="delete_screenshot_toast">Captură de ecran ștearsă</string>
+  <string name="gestures_message">Desenează semnul aici</string>
+  <string name="rr_sys_tuner">System UI tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">Trageţi spre dreapta pentru %1$s</string>
+  <string name="right_shortcut_hint">Trageţi spre stânga pentru %1$s</string>
+  <string name="lockscreen_message">Apăsaţi o pictogramă din stânga sau dreapta pentru a realoca o comandă rapidă pe ecranul de blocare.</string>
+  <string name="lockscreen_default_target">Implicit</string>
+  <string name="select_application">Selectaţi aplicaţia</string>
+  <string name="lockscreen_choose_action_title">Alege acțiunea</string>
+  <string name="lockscreen_none_target">Nimic</string>
   <!-- App circle sidebar -->
+  <string name="app_float_maximize_item_title">Maximizează</string>
+  <string name="app_float_item_title">Vizualizare float</string>
+  <string name="app_stop_item_title">Închide forțat aplicația</string>
   <!-- On The Go -->
+  <string name="onthego_notif_ticker">On-The-Go activat</string>
+  <string name="onthego_notif_title">On-The-Go este activ</string>
+  <string name="onthego_notif_stop">Oprire</string>
+  <string name="onthego_notif_options">Opțiuni</string>
+  <string name="onthego_notif_error">Pornirea On-The-Go nereușită</string>
+  <string name="onthego_notif_restart">Repornire On-The-Go</string>
+  <string name="onthego_notif_camera_changed">Mod cameră schimbat</string>
+  <string name="onthego_transparency">Transparenţă</string>
+  <string name="onthego_front_camera">Utilizare cameră frontală</string>
+  <string name="onthego_service_toggle">Repornire automată a serviciului</string>
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">Sunet</string>
+  <string name="quick_settings_sound_ring">Sonerie</string>
+  <string name="quick_settings_sound_vibrate">Vibrare</string>
+  <string name="quick_settings_sound_dnd">Nu deranja</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">Volum</string>
+  <string name="quick_settings_volume_panel_label">Volum</string>
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_screenshot_label">Captură ecran</string>
+  <string name="quick_settings_region_screenshot_label">Captură parțială de ecran</string>
+  <string name="quick_settings_adb_network">Rețea ADB</string>
+  <string name="quick_settings_network_adb_enabled_label">Activat</string>
+  <string name="quick_settings_network_adb_disabled_label">Dezactivat</string>
+  <string name="quick_settings_sync_label">Sincronizează</string>
+  <string name="accessibility_quick_settings_sync_off">Sincronizare oprită</string>
+  <string name="accessibility_quick_settings_sync_on">Sincronizare pornită</string>
+  <string name="accessibility_quick_settings_sync_changed_off">Sincronizarea este dezactivată</string>
+  <string name="accessibility_quick_settings_sync_changed_on">Sincronizarea este activată</string>
+  <string name="quick_settings_expanded_desktop_label">Ecran extins</string>
+  <string name="quick_settings_expanded_desktop">Extins</string>
+  <string name="quick_settings_expanded_desktop_off">Normal</string>
+  <string name="quick_settings_reboot_label">Repornire</string>
+  <!-- Pulse Tile -->
+  <string name="accessibility_quick_settings_heads_up_changed_on">Antetul a fost activat.</string>
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
+  <string name="app_killed_message">Aplicație oprită</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Atenționarea este oprită timp de 1 minut.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Atenționările sunt blocate timp de <xliff:g id="number">%d </xliff:g> minute.</string>
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">Nici o captură de ecran realizată</string>
+  <string name="screenshot_abort_text">Operație anulată</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Șters</string>
+  <string name="action_delete_fault">Ştergerea nu a reușit</string>
+  <string name="action_save_success">Salvat</string>
+  <string name="action_save_fault">Salvarea nu a reușit</string>
+  <string name="pref_action_color_title">Culoare butoane</string>
+  <string name="pref_action_color_summary">Alege culoarea ta preferată pentru butoane</string>
+  <string name="pref_category_main">Setări principale</string>
+  <string name="pref_category_user">Setări utilizator</string>
+  <string name="pref_crop_behavior_title">Tipar decupare</string>
+  <string name="pref_crop_behavior_summary">Utilizați imaginea decupată chiar dacă originalul nu a fost decupat</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Șters</string>
+  <string name="action_delete_fault">Ştergerea nu a reușit</string>
+  <string name="action_save_success">Salvat</string>
+  <string name="action_save_fault">Salvarea nu a reușit</string>
+  <string name="action_edit">Editează</string>
+  <string name="recents_custom_android_n">Șterge tot</string>
+  <string name="recents_free_ram">Memorie liberă: %1$d MB</string>
   <!-- Path data for Solid battery -->
 </resources>

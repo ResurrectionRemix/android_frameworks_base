@@ -115,6 +115,7 @@
   <string name="quick_settings_appsidebar_title">AppSideBar</string>
   <string name="quick_settings_appsidebar_on">Zapnout AppSideBar</string>
   <string name="quick_settings_appsidebar_off">Vypnout AppSideBar</string>
+  <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulsování povoleno</string>
   <string name="quick_settings_pulse_disabled">Žádné vizualizace</string>
   <string name="quick_settings_pulse_label">Vizualizace navigační lišty</string>
@@ -129,6 +130,7 @@
   <string name="accessibility_quick_settings_heads_up_on">Plovoucí upozornění zapnuto.</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Plovoucí upozornění vypnuto.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Plovoucí upozornění zapnuto.</string>
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikace ukončena</string>
