@@ -115,6 +115,7 @@
   <string name="quick_settings_appsidebar_title">AppSideBar</string>
   <string name="quick_settings_appsidebar_on">AppSideBar ativado</string>
   <string name="quick_settings_appsidebar_off">AppCircleBar desativado</string>
+  <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse ativado</string>
   <string name="quick_settings_pulse_disabled">Nenhum visualizador</string>
   <string name="quick_settings_pulse_label">Visualizador da Barra de Navegação</string>
@@ -129,6 +130,7 @@
   <string name="accessibility_quick_settings_heads_up_on">Notificações pop-up ativadas.</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">As notificações pop-up foram desativadas.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">As notificações pop-up foram ativadas.</string>
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicação fechada</string>

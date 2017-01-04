@@ -18,8 +18,30 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Implicit</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="system_error_vendorprint">Imaginea dumneavoastră de furnizor nu corespunde sistemului. Vă rugăm faceți flash la imaginea de furnizor <xliff:g id="string">%s </xliff:g> pentru aparatul dvs</string>
+  <string name="global_action_screenrecord">Captura de ecran</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Estompare</string>
+  <string name="animation_slide_right">Glisați la dreapta</string>
+  <string name="animation_slide_left">Glisați la stânga</string>
+  <string name="animation_slide_right_no_fade">Gliseaza la reapta (Fara estompare)</string>
+  <string name="animation_slide_left_no_fade">Gliseaza la stanga (Fara estompare)</string>
+  <string name="animation_slide_up">Gliseaza in jos</string>
+  <string name="animation_slide_down">Gliseaza in sus</string>
+  <string name="animation_default">Implicit</string>
+  <string name="animation_translucent">Translucid</string>
+  <string name="animation_grow_shrink">Mareste (sus)</string>
+  <string name="animation_grow_shrink_center">Mareste (centru)</string>
+  <string name="animation_grow_shrink_bottom">Mareste (jos)</string>
+  <string name="animation_grow_shrink_left">Mareste (stanga)</string>
+  <string name="animation_grow_shrink_right">Mareste (dreapta)</string>
+  <string name="action_null">Gol</string>
+  <string name="global_action_torch">Lanternă</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">Reporniţi SystemUI</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">Mod On-The-Go</string>
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">ADB inactiv</string>
+  <string name="adb_active_custom_tile_not_connected">inactiv</string>
 </resources>

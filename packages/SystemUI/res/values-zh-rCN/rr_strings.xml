@@ -115,6 +115,7 @@
   <string name="quick_settings_appsidebar_title">应用侧边栏</string>
   <string name="quick_settings_appsidebar_on">侧边栏开启</string>
   <string name="quick_settings_appsidebar_off">侧边栏关闭</string>
+  <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">音乐可视化开启</string>
   <string name="quick_settings_pulse_disabled">没有可视化工具</string>
   <string name="quick_settings_pulse_label">导航音乐可视化工具</string>
@@ -129,6 +130,7 @@
   <string name="accessibility_quick_settings_heads_up_on">浮动通知已开启</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭。</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启。</string>
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">应用已终止</string>

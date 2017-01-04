@@ -69,6 +69,8 @@
   <string name="accessibility_quick_settings_sync_off">Sync fra</string>
   <string name="accessibility_quick_settings_sync_on">Sync til</string>
   <string name="quick_settings_reboot_label">Genstart</string>
+  <!-- Pulse Tile -->
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->

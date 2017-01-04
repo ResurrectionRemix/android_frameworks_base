@@ -115,6 +115,7 @@
   <string name="quick_settings_appsidebar_title">AppSideBar</string>
   <string name="quick_settings_appsidebar_on">AppSideBar 開啟</string>
   <string name="quick_settings_appsidebar_off">AppSideBar 關閉</string>
+  <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">已啟用脈衝</string>
   <string name="quick_settings_pulse_disabled">沒有可視化工具</string>
   <string name="quick_settings_pulse_label">導覽列視覺化檢視</string>
@@ -129,6 +130,7 @@
   <string name="accessibility_quick_settings_heads_up_on">開啟浮動通知</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">已關閉浮動通知</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">浮動通知已開啟</string>
+  <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">已終止應用程式</string>
