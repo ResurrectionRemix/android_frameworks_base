@@ -100,6 +100,11 @@ public class SettingsDrawerActivity extends Activity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         if (theme.getBoolean(android.R.styleable.Theme_windowNoTitle, false)) {
             toolbar.setVisibility(View.GONE);
+            if (isDrawerEnabled()) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            mDrawerLayout = null;
+            return;
+            }
         }
         getDashboardCategories();
         setActionBar(toolbar);
@@ -120,9 +125,17 @@ public class SettingsDrawerActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mShowingMenu && item.getItemId() == android.R.id.home) {
-            this.finish();
-            return true;
+        if (isDrawerEnabled()) {
+            if (mShowingMenu && mDrawerLayout != null && item.getItemId() == android.R.id.home
+                && mDrawerAdapter.getCount() != 0) {
+                openDrawer();
+                return true;
+            }
+        } else {
+            if (mShowingMenu && item.getItemId() == android.R.id.home) {
+                this.finish();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -235,6 +248,11 @@ public class SettingsDrawerActivity extends Activity {
         LayoutInflater.from(this).inflate(layoutResID, parent);
     }
 
+    public boolean isDrawerEnabled() {
+        return Settings.System.getInt(getApplicationContext().getContentResolver(),
+            Settings.System.SHOW_SETTINGS_DRAWER, 1) == 1;
+    }
+
     @Override
     public void setContentView(View view) {
         ((ViewGroup) findViewById(R.id.content_frame)).addView(view);
@@ -251,14 +269,28 @@ public class SettingsDrawerActivity extends Activity {
         }
         // TODO: Do this in the background with some loading.
         mDrawerAdapter.updateCategories();
-        // Drawer: YOU SHALL NOT PASS
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        if (isDrawerEnabled()) {
+            if (mDrawerAdapter.getCount() != 0) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+        } else {
+            // Drawer: YOU SHALL NOT PASS
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
     }
 
     public void showMenuIcon() {
         mShowingMenu = true;
         if(getActionBar() != null){
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+            if (isDrawerEnabled()) {
+                getActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+                getActionBar().setHomeActionContentDescription(R.string.content_description_menu_button);
+                getActionBar().setDisplayHomeAsUpEnabled(true);
+            } else {
+                getActionBar().setDisplayHomeAsUpEnabled(true);
+            }
         }
     }
 
