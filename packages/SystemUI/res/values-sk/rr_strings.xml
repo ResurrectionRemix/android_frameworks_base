@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulz povolený</string>
   <string name="quick_settings_pulse_disabled">Žiadna vizualizácia</string>
+  <string name="quick_settings_pulse_label">Pulz</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulz vypnuté</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulz zapnuté</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulz vypnuté</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulz zapnuté</string>
   <string name="quick_settings_pulse_label">Vizualizácia navigačnej lišty</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambientné zobrazenie</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Plávajúce oznámenia vypnuté.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Plávajúce oznámenia zapnuté.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Jazyk</string>
+  <string name="quick_settings_locale_more_locales_toast">Prosím nastavte prepínač umožňujúci viacej jazykov</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikácia bola ukončená</string>

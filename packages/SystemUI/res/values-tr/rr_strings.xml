@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse Etkin</string>
   <string name="quick_settings_pulse_disabled">Görselleştirme yok</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulse kapalı</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulse açık</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulse kapatıldı</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse açıldı</string>
   <string name="quick_settings_pulse_label">Gezinme Çubuğu Görselleştirme</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ortam ekranı</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pencereleri kapatıldı.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pencereleri açıldı.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Dil</string>
+  <string name="quick_settings_locale_more_locales_toast">Geçiş işlevselliğini etkinleştirmek için lütfen birden fazla dil yapılandırın</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Uygulama Sonlandırıldı</string>

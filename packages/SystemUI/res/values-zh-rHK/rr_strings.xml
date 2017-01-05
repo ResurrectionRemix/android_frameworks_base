@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">已啟用脈衝</string>
   <string name="quick_settings_pulse_disabled">沒有可視化工具</string>
+  <string name="quick_settings_pulse_label">呼吸燈</string>
+  <string name="accessibility_quick_settings_pulse_off">呼吸燈關閉</string>
+  <string name="accessibility_quick_settings_pulse_on">呼吸燈開啟</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">呼吸燈已關閉</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">呼吸燈已開啟</string>
   <string name="quick_settings_pulse_label">導覽列視覺化檢視</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">環境顯示</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">已關閉浮動通知</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">浮動通知已開啟</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">語言</string>
+  <string name="quick_settings_locale_more_locales_toast">請配置多種語言以啟用切換功能</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">已終止應用程式</string>

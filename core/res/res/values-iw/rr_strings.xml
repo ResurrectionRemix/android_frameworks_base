@@ -26,7 +26,10 @@
   <string name="animation_slide_left">החלקה משמאל</string>
   <string name="animation_slide_right_no_fade">החלקה מימין (ללא עמעום)</string>
   <string name="animation_slide_left_no_fade">החלקה משמאל (ללא עמעום)</string>
+  <string name="animation_slide_up">החלקה כלפי מטה</string>
+  <string name="animation_slide_down">החלקה כלפי מעלה</string>
   <string name="animation_default">ברירת מחדל</string>
+  <string name="animation_translucent">שקוף למחצה</string>
   <string name="action_null">ריק</string>
   <string name="global_action_torch">פנס</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->

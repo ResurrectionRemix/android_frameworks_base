@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse увімкнено</string>
   <string name="quick_settings_pulse_disabled">Pulse вимкнено</string>
+  <string name="quick_settings_pulse_label">Пульс</string>
+  <string name="accessibility_quick_settings_pulse_off">Пульс вимк</string>
+  <string name="accessibility_quick_settings_pulse_on">Пульс увімк</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Пульс вимкнено</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Пульс увімкнено</string>
   <string name="quick_settings_pulse_label">Візуалізація панелі навігації</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Активний дисплей</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Спливаючі сповіщення вимкнено.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Спливаючі сповіщення увімкнено.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Мова</string>
+  <string name="quick_settings_locale_more_locales_toast">Будь ласка, налаштуйте декілька мои, щоб можна увімкнути або вимкнути</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Додаток закрито</string>

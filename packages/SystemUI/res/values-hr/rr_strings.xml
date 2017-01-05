@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Puls omogućen</string>
   <string name="quick_settings_pulse_disabled">Nema vizualizatora</string>
+  <string name="quick_settings_pulse_label">Puls</string>
+  <string name="accessibility_quick_settings_pulse_off">Puls isključen</string>
+  <string name="accessibility_quick_settings_pulse_on">Puls uključen</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Puls je isključen</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Puls je uključen</string>
   <string name="quick_settings_pulse_label">Vizualizator navigacijske trake</string>
   <string name="quick_settings_pie">Pita</string>
   <string name="quick_settings_ambient_display_label">Ambijentalni zaslon</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Plutajuće su obavijesti isključene.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Plutajuće su obavijesti uključene.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Jezik</string>
+  <string name="quick_settings_locale_more_locales_toast">Podesite više jezika da biste omogućili uključivanje/isključivanje funkcije</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikacija je zatvorena</string>

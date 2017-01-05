@@ -131,6 +131,7 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Wyskakujące powiadomienia wyłączone.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Wyskakujące powiadomienia włączone.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Język</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikacja została zabita</string>

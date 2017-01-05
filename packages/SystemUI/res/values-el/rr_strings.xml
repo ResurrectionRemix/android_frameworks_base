@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Παλμός ενεργός</string>
   <string name="quick_settings_pulse_disabled">Χωρίς οπτικοποίηση</string>
+  <string name="quick_settings_pulse_label">Παλμός</string>
+  <string name="accessibility_quick_settings_pulse_off">Παλμός ανενεργός</string>
+  <string name="accessibility_quick_settings_pulse_on">Παλμός ενεργός</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Ο παλμός απενεργοποιήθηκε</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Ο παλμός ενεργοποιήθηκε</string>
   <string name="quick_settings_pulse_label">Οπτικοποιητής γραμμής πλοήγησης</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Οθόνη ambient</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Αναδυόμενες ειδοποιήσεις ανενεργές.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Αναδυόμενες ειδοποιήσεις ενεργές.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Γλώσσα</string>
+  <string name="quick_settings_locale_more_locales_toast">Παρακαλούμε ρυθμίστε πολλαπλές γλώσσες για να ενεργοποιήσετε τη λειτουργία εναλλαγής</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Η εφαρμογή τερματίστηκε</string>
