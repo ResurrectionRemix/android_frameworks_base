@@ -118,7 +118,12 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Đã bật Pulse</string>
   <string name="quick_settings_pulse_disabled">Không có Trình trực quan nào</string>
-  <string name="quick_settings_pulse_label">Visualizer trên thanh điều hướng</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Tắt Pulse</string>
+  <string name="accessibility_quick_settings_pulse_on">Bật Pulse</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulse đã tắt</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse đã bật</string>
+  <string name="quick_settings_pulse_label">Trình trực quan thanh điều hướng</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Hiển thị tương tác</string>
   <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Thông báo nổi phía trên màn hình đã tắt.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Thông báo nổi phía trên màn hình đã bật.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Ngôn ngữ</string>
+  <string name="quick_settings_locale_more_locales_toast">Vui lòng thiết lập nhiều ngôn ngữ để kích hoạt chức năng chuyển đổi</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Ứng dụng đã tắt</string>
