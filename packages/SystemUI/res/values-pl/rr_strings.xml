@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulsacja włączona</string>
   <string name="quick_settings_pulse_disabled">Brak wizualizacji</string>
+  <string name="quick_settings_pulse_label">Impuls</string>
+  <string name="accessibility_quick_settings_pulse_off">Impuls off</string>
+  <string name="accessibility_quick_settings_pulse_on">Impuls off</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Impuls wyłączony</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Impuls włczony</string>
   <string name="quick_settings_pulse_label">Wizualizacja na pasku nawigacji</string>
   <string name="quick_settings_pie">Kołowy pasek nawigacji</string>
   <string name="quick_settings_ambient_display_label">Ambient display</string>
@@ -132,6 +137,7 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Wyskakujące powiadomienia włączone.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Język</string>
+  <string name="quick_settings_locale_more_locales_toast">Proszę skonfigurować wiele języków, aby włączyć funkcję przełączania</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikacja została zabita</string>
