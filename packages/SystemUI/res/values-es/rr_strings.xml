@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse activado</string>
   <string name="quick_settings_pulse_disabled">Sin visualizador</string>
+  <string name="quick_settings_pulse_label">Pulso</string>
+  <string name="accessibility_quick_settings_pulse_off">Desactivar Pulso</string>
+  <string name="accessibility_quick_settings_pulse_on">Activar Pulso</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulso apagado</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulso encendido</string>
   <string name="quick_settings_pulse_label">Visualizador de la barra de navegación</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Pantalla ambiente</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Notificaciones emergentes desactivadas.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notificaciones emergentes activadas.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Idioma</string>
+  <string name="quick_settings_locale_more_locales_toast">Por favor, configure varios idiomas para habilitar la funcionalidad de alternar</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Mató a la aplicación</string>
