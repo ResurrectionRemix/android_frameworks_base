@@ -88,6 +88,9 @@
   <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
 
+    <!-- Emergency button in power menu -->
+    <java-symbol type="bool" name="config_showEmergencyButtonInPowerMenu" />
+
   <!-- Gaming mode -->
   <java-symbol type="drawable" name="ic_gaming_notif" />
   <java-symbol type="string" name="notification_channel_gaming" />

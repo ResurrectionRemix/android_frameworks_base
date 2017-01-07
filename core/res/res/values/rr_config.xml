@@ -23,6 +23,9 @@
         <item>com.android.wallpaper.livepicker</item>
     </string-array>
 
+    <!-- Whether to show emergency button in power menu -->
+    <bool name="config_showEmergencyButtonInPowerMenu">false</bool>
+
     <!-- True if the notification's should dynamically tint the app icon and text -->
     <bool name="config_allowNotificationIconTextTinting">true</bool>
     <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
