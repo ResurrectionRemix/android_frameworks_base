@@ -129,8 +129,15 @@
   <string name="accessibility_quick_settings_ambient_display_off">Afișaj ambiental inactiv.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Afișaj ambiental activ.</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Afișaj ambiental dezactivat.</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Afișaj ambiental activat.</string>
+  <string name="quick_settings_heads_up_label">Atenționări</string>
+  <string name="accessibility_quick_settings_heads_up_off">Atenționări dezactivate.</string>
+  <string name="accessibility_quick_settings_heads_up_on">Atenționări activate.</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Atenționările au fost oprite.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Antetul a fost activat.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Limba</string>
+  <string name="quick_settings_locale_more_locales_toast">Vă rugăm să configuraţi mai multe limbi pentru a activa funcția de comutare</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicație oprită</string>
