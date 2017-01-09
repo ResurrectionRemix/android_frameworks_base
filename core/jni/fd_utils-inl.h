@@ -274,24 +274,6 @@ class FileDescriptorInfo {
       return true;
     }
 
-    static const std::string kResourceCachePrefix = "/data/resource-cache/";
-    static const std::string kIdmapSuffix = "idmap";
-    if (StartsWith(path, kFrameworksPrefix) && EndsWith(path, kJarSuffix)) {
-        return true;
-    }
-
-    static const std::string kSystemVendorOverlayPrefix = "/system/vendor/overlay/";
-    static const std::string kApkSuffix = ".apk";
-    if (path.compare(0, kSystemVendorOverlayPrefix.size(), kSystemVendorOverlayPrefix) == 0 &&
-        path.compare(path.size() - kApkSuffix.size(), kApkSuffix.size(), kApkSuffix) == 0) {
-        return true;
-    }
-
-    static const std::string kVendorOverlayPrefix = "/vendor/overlay/";
-    if (path.compare(0, kVendorOverlayPrefix.size(), kVendorOverlayPrefix) == 0 &&
-        path.compare(path.size() - kApkSuffix.size(), kApkSuffix.size(), kApkSuffix) == 0) {
-        return true;
-    }
     // Whitelist files needed for Runtime Resource Overlay, like these:
     // /system/vendor/overlay/framework-res.apk
     // /system/vendor/overlay-subdir/pg/framework-res.apk
