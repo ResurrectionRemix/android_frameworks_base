@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse Aktiv</string>
   <string name="quick_settings_pulse_disabled">Görsəlləşdirmə Yox</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulse qapalı</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulse açıq</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulse bağlanıldı</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse açıldı</string>
   <string name="quick_settings_pulse_label">Naviqasiya Çubuğu Vizuallaşdırma</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Mühit ekranı</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pəncərələri bağlanıldı.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pəncərələri açıldı.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Dil</string>
+  <string name="quick_settings_locale_more_locales_toast">Keçid funksionallığını aktivləşdirmək üçün xahiş edirik birdən çox dil quraşdırın</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Tətbiq Sonlandırıldı</string>

@@ -30,6 +30,11 @@
   <string name="animation_slide_down">החלקה כלפי מעלה</string>
   <string name="animation_default">ברירת מחדל</string>
   <string name="animation_translucent">שקוף למחצה</string>
+  <string name="animation_grow_shrink">גדילה (מלמעלה)</string>
+  <string name="animation_grow_shrink_center">גדילה (מהאמצע)</string>
+  <string name="animation_grow_shrink_bottom">גדילה (מלמטה)</string>
+  <string name="animation_grow_shrink_left">גדילה (משמאל)</string>
+  <string name="animation_grow_shrink_right">גדילה (מימין)</string>
   <string name="action_null">ריק</string>
   <string name="global_action_torch">פנס</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->

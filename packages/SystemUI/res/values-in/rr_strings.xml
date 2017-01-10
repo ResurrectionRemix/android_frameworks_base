@@ -118,7 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse dihidupkan</string>
   <string name="quick_settings_pulse_disabled">Tidak ada Visualizer</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulse nonaktif</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse aktif</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulse telah di non aktifkan</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse telah di aktifkan</string>
   <string name="quick_settings_pulse_label">Navigationbar Visualizer</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambient Display</string>
@@ -133,6 +137,7 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up dihidupkan.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Bahasa</string>
+  <string name="quick_settings_locale_more_locales_toast">Harap tentukan bahasa yang berbeda untuk menghidupkan fungsionalitas toggle</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App Dimatikan</string>
