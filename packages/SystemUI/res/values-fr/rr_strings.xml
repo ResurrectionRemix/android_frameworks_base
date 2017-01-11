@@ -118,6 +118,11 @@
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Impulsion activée</string>
   <string name="quick_settings_pulse_disabled">Aucun aperçu</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulse desactivé</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulse activé</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulse éteint</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse allumé</string>
   <string name="quick_settings_pulse_label">Aperçu de la barre de navigation</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Adaptation de la luminosité</string>
@@ -131,6 +136,8 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Notifications flottantes désactivées.</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes activées.</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Langue</string>
+  <string name="quick_settings_locale_more_locales_toast">Veuillez configurer plusieurs langues pour utiliser cette fonctionnalité</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Application tuée</string>

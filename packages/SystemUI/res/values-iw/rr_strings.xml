@@ -45,6 +45,8 @@
   <!-- On The Go -->
   <string name="onthego_notif_stop">הפסק</string>
   <string name="onthego_notif_options">אפשרויות</string>
+  <string name="onthego_notif_error">לא ניתן להפעיל On-The-Go</string>
+  <string name="onthego_notif_restart">הפעל מחדש On-The-Go</string>
   <string name="onthego_notif_camera_changed">מצב מצלמה שונה</string>
   <string name="onthego_transparency">שקיפות</string>
   <string name="onthego_front_camera">השתמש במצלמה קדמית</string>
@@ -69,6 +71,7 @@
   <string name="accessibility_quick_settings_sync_changed_on">סינכרון מופעל</string>
   <string name="quick_settings_expanded_desktop_label">שולחן עבודה מורחב</string>
   <string name="quick_settings_expanded_desktop_off">רגיל</string>
+  <string name="quick_settings_reboot_label">הפעלה מחדש</string>
   <string name="quick_settings_music_label">מוזיקה</string>
   <string name="quick_settings_music_play">הפעל</string>
   <string name="quick_settings_music_pause">השהה</string>
@@ -82,6 +85,9 @@
   <string name="quick_settings_nfc_off">NFC כבוי</string>
   <string name="quick_settings_screenrecord">הקלטת מסך</string>
   <string name="quick_settings_screenrecord_on">מקליט...</string>
+  <string name="quick_settings_smartbar">SmartBar</string>
+  <string name="quick_settings_gesture_anywhere_on">מחוות הפעלה</string>
+  <string name="quick_settings_gesture_anywhere_off">מחוות הפסקה</string>
   <!-- Pulse Tile -->
   <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
