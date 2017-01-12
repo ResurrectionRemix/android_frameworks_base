@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Snímok obrazovky bol vymazaný</string>
   <string name="gestures_message">Nakreslite vaše gesto tu</string>
-  <string name="rr_sys_tuner">Nástroj na ladenie používateľského rozhrania systému</string>
+  <string name="rr_sys_tuner">Ladenie rozhrania systému</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Potiahnite doprava pre %1$s</string>
   <string name="right_shortcut_hint">Potiahnite doľava pre %1$s</string>

@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">צילום המסך נמחק</string>
   <string name="gestures_message">צייר את המחווה שלך כאן</string>
+  <string name="rr_sys_tuner">כיול ממשק משתמש</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">החלק ימינה בשביל %1$s</string>
   <string name="right_shortcut_hint">החלק שמאלה בשביל %1$s</string>
@@ -40,9 +41,12 @@
   <string name="lockscreen_choose_action_title">בחר פעולה</string>
   <string name="lockscreen_none_target">-ללא-</string>
   <!-- App circle sidebar -->
+  <string name="app_float_maximize_item_title">הגדל</string>
   <string name="app_float_item_title">תצוגה צפה</string>
   <string name="app_stop_item_title">עצור יישום</string>
   <!-- On The Go -->
+  <string name="onthego_notif_ticker">על-הדרך הופעל</string>
+  <string name="onthego_notif_title">על-הדרך מופעל כעת</string>
   <string name="onthego_notif_stop">הפסק</string>
   <string name="onthego_notif_options">אפשרויות</string>
   <string name="onthego_notif_error">לא ניתן להפעיל On-The-Go</string>
@@ -50,6 +54,7 @@
   <string name="onthego_notif_camera_changed">מצב מצלמה שונה</string>
   <string name="onthego_transparency">שקיפות</string>
   <string name="onthego_front_camera">השתמש במצלמה קדמית</string>
+  <string name="onthego_service_toggle">הפעלת שירות אוטומטית</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">סאונד</string>
   <string name="quick_settings_sound_ring">צלצול</string>
@@ -70,8 +75,14 @@
   <string name="accessibility_quick_settings_sync_changed_off">סינכרון כבוי</string>
   <string name="accessibility_quick_settings_sync_changed_on">סינכרון מופעל</string>
   <string name="quick_settings_expanded_desktop_label">שולחן עבודה מורחב</string>
+  <string name="quick_settings_expanded_desktop">מורחב</string>
   <string name="quick_settings_expanded_desktop_off">רגיל</string>
   <string name="quick_settings_reboot_label">הפעלה מחדש</string>
+  <string name="quick_settings_reboot_recovery_label">שחזור</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USB קשירת מבוטלת</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB קשירת מופעלת</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USB קשירת כבוי</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USB קשירת כבוי</string>
   <string name="quick_settings_music_label">מוזיקה</string>
   <string name="quick_settings_music_play">הפעל</string>
   <string name="quick_settings_music_pause">השהה</string>
