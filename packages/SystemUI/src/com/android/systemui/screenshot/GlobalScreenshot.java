@@ -42,6 +42,8 @@ import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.media.MediaActionSound;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -463,7 +465,7 @@ class GlobalScreenshot {
 
     private AsyncTask<Void, Void, Void> mSaveInBgTask;
 
-    private MediaActionSound mCameraSound;
+    private Ringtone  mScreenshotSound;
 
     private final int mSfHwRotation;
 
@@ -539,6 +541,10 @@ class GlobalScreenshot {
 
         // Load hardware rotation from prop
         mSfHwRotation = android.os.SystemProperties.getInt("ro.sf.hwrotation",0) / 90;
+
+        // Setup the Screenshot sound
+        mScreenshotSound= RingtoneManager.getRingtone(mContext,
+                    Uri.parse("file://" + "/system/media/audio/ui/camera_click.ogg"));
     }
 
     /**
@@ -745,6 +751,11 @@ class GlobalScreenshot {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.SCREENSHOT_SOUND, 0) == 1) {
                     mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                }
+                if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREENSHOT_SOUND, 1) == 1) {
+                    if (mScreenshotSound != null) {
+                        mScreenshotSound.play();
+                    }
                 }
 
                 mScreenshotView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
