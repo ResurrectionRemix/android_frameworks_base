@@ -18,7 +18,6 @@ package android.media;
 
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.SystemProperties;
 import android.util.Log;
 
 /**
@@ -99,7 +98,6 @@ public class MediaActionSound {
     private static final int STATE_LOADING                = 1;
     private static final int STATE_LOADING_PLAY_REQUESTED = 2;
     private static final int STATE_LOADED                 = 3;
-    private static final String PROP_CAMERA_SOUND = "persist.sys.camera-sound";
 
     private class SoundState {
         public final int name;
@@ -223,9 +221,7 @@ public class MediaActionSound {
                 sound.state = STATE_LOADING_PLAY_REQUESTED;
                 break;
             case STATE_LOADED:
-                if (SystemProperties.getBoolean(PROP_CAMERA_SOUND, true)) {
-                    mSoundPool.play(sound.id, 1.0f, 1.0f, 0, 0, 1.0f);
-                }
+                mSoundPool.play(sound.id, 1.0f, 1.0f, 0, 0, 1.0f);
                 break;
             default:
                 Log.e(TAG, "play() called in wrong state: " + sound.state + " for sound: "+ soundName);

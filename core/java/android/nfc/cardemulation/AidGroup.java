@@ -1,7 +1,4 @@
 /*
- * Copyright (c) 2015, The Linux Foundation. All rights reserved.
- * Not a Contribution.
- *
  * Copyright (C) 2015 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,7 +37,7 @@ import android.util.Log;
  *
  * @hide
  */
-public class AidGroup implements Parcelable {
+public final class AidGroup implements Parcelable {
     /**
      * The maximum number of AIDs that can be present in any one group.
      */
@@ -48,9 +45,9 @@ public class AidGroup implements Parcelable {
 
     static final String TAG = "AidGroup";
 
-    protected List<String> aids;
-    protected String category;
-    protected String description;
+    final List<String> aids;
+    final String category;
+    final String description;
 
     /**
      * Creates a new AidGroup object.

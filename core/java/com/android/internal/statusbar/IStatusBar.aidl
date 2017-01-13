@@ -67,10 +67,6 @@ oneway interface IStatusBar
 
     void dismissKeyboardShortcutsMenu();
     void toggleKeyboardShortcutsMenu(int deviceId);
-    void toggleLastApp();
-    void toggleKillApp();
-    void toggleScreenshot();
-    void toggleOrientationListener(boolean enable);
 
     /**
      * Notifies the status bar that an app transition is pending to delay applying some flags with
@@ -100,7 +96,6 @@ oneway interface IStatusBar
 
     void showAssistDisclosure();
     void startAssist(in Bundle args);
-    void screenPinningStateChanged(boolean enabled);
 
     /**
      * Notifies the status bar that a camera launch gesture has been detected.
@@ -118,6 +113,4 @@ oneway interface IStatusBar
     void remQsTile(in ComponentName tile);
     void clickQsTile(in ComponentName tile);
     void handleSystemNavigationKey(in int key);
-
-    void setAutoRotate(boolean enabled);
 }

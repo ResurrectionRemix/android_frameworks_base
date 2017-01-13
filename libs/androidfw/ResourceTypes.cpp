@@ -59,10 +59,9 @@ namespace android {
 #endif
 
 #define IDMAP_MAGIC             0x504D4449
-#define IDMAP_CURRENT_VERSION   0x00000001
+#define IDMAP_CURRENT_VERSION   0x00000002
 
 #define APP_PACKAGE_ID      0x7f
-#define CMSDK_PACKAGE_ID    0x3f
 #define SYS_PACKAGE_ID      0x01
 
 static const bool kDebugStringPoolNoisy = false;
@@ -740,7 +739,7 @@ const char16_t* ResStringPool::stringAt(size_t idx, size_t* u16len) const
                         ALOGW("CREATING STRING CACHE OF %zu bytes",
                                 static_cast<size_t>(mHeader->stringCount*sizeof(char16_t**)));
 #endif
-                        mCache = (char16_t**)calloc(mHeader->stringCount, sizeof(char16_t*));
+                        mCache = (char16_t**)calloc(mHeader->stringCount, sizeof(char16_t**));
                         if (mCache == NULL) {
                             ALOGW("No memory trying to allocate decode cache table of %d bytes\n",
                                     (int)(mHeader->stringCount*sizeof(char16_t**)));
@@ -4353,12 +4352,10 @@ ssize_t ResTable::getBagLocked(uint32_t resID, const bag_entry** outBag,
             if (set->numAttrs >= set->availAttrs) {
                 // Need to alloc more memory...
                 const size_t newAvail = set->availAttrs+N;
-                void *oldSet = set;
                 set = (bag_set*)realloc(set,
                                         sizeof(bag_set)
                                         + sizeof(bag_entry)*newAvail);
                 if (set == NULL) {
-                    free(oldSet);
                     return NO_MEMORY;
                 }
                 set->availAttrs = newAvail;
@@ -4405,7 +4402,7 @@ ssize_t ResTable::getBagLocked(uint32_t resID, const bag_entry** outBag,
         pos++;
         const size_t size = dtohs(map->value.size);
         curOff += size + sizeof(*map)-sizeof(map->value);
-    }
+    };
 
     if (curEntry > set->numAttrs) {
         set->numAttrs = curEntry;
@@ -5192,8 +5189,7 @@ bool ResTable::stringToValue(Res_value* outValue, String16* outString,
                 }
 
                 uint32_t packageId = Res_GETPACKAGE(rid) + 1;
-                if (packageId != APP_PACKAGE_ID && packageId != SYS_PACKAGE_ID &&
-                        packageId != CMSDK_PACKAGE_ID) {
+                if (packageId != APP_PACKAGE_ID && packageId != SYS_PACKAGE_ID) {
                     outValue->dataType = Res_value::TYPE_DYNAMIC_REFERENCE;
                 }
                 outValue->data = rid;
@@ -5214,8 +5210,7 @@ bool ResTable::stringToValue(Res_value* outValue, String16* outString,
                         outValue->data = rid;
                         outValue->dataType = Res_value::TYPE_DYNAMIC_REFERENCE;
                         return true;
-                    } else if (packageId == APP_PACKAGE_ID || packageId == SYS_PACKAGE_ID ||
-                            packageId == CMSDK_PACKAGE_ID) {
+                    } else if (packageId == APP_PACKAGE_ID || packageId == SYS_PACKAGE_ID) {
                         // We accept packageId's generated as 0x01 in order to support
                         // building the android system resources
                         outValue->data = rid;
@@ -5361,8 +5356,7 @@ bool ResTable::stringToValue(Res_value* outValue, String16* outString,
             }
 
             uint32_t packageId = Res_GETPACKAGE(rid) + 1;
-            if (packageId != APP_PACKAGE_ID && packageId != SYS_PACKAGE_ID &&
-                    packageId != CMSDK_PACKAGE_ID) {
+            if (packageId != APP_PACKAGE_ID && packageId != SYS_PACKAGE_ID) {
                 outValue->dataType = Res_value::TYPE_DYNAMIC_ATTRIBUTE;
             }
             outValue->data = rid;
@@ -5377,8 +5371,7 @@ bool ResTable::stringToValue(Res_value* outValue, String16* outString,
                     outValue->data = rid;
                     outValue->dataType = Res_value::TYPE_DYNAMIC_ATTRIBUTE;
                     return true;
-                } else if (packageId == APP_PACKAGE_ID || packageId == SYS_PACKAGE_ID ||
-                        packageId == CMSDK_PACKAGE_ID) {
+                } else if (packageId == APP_PACKAGE_ID || packageId == SYS_PACKAGE_ID) {
                     // We accept packageId's generated as 0x01 in order to support
                     // building the android system resources
                     outValue->data = rid;
@@ -6010,7 +6003,7 @@ status_t ResTable::getEntry(
         }
 
         if (static_cast<size_t>(realEntryIndex) >= typeSpec->entryCount) {
-            ALOGV("For resource 0x%08x, entry index(%d) is beyond type entryCount(%d)",
+            ALOGW("For resource 0x%08x, entry index(%d) is beyond type entryCount(%d)",
                     Res_MAKEID(packageGroup->id - 1, typeIndex, entryIndex),
                     entryIndex, static_cast<int>(typeSpec->entryCount));
             // We should normally abort here, but some legacy apps declare
@@ -6303,7 +6296,7 @@ status_t ResTable::parsePackage(const ResTable_package* const pkg,
                 if (!typeList.isEmpty()) {
                     const Type* existingType = typeList[0];
                     if (existingType->entryCount != newEntryCount && idmapIndex < 0) {
-                        ALOGV("ResTable_typeSpec entry count inconsistent: given %d, previously %d",
+                        ALOGW("ResTable_typeSpec entry count inconsistent: given %d, previously %d",
                                 (int) newEntryCount, (int) existingType->entryCount);
                         // We should normally abort here, but some legacy apps declare
                         // resources in the 'android' package (old bug in AAPT).
@@ -6435,7 +6428,6 @@ DynamicRefTable::DynamicRefTable(uint8_t packageId, bool appAsLib)
     // Reserved package ids
     mLookupTable[APP_PACKAGE_ID] = APP_PACKAGE_ID;
     mLookupTable[SYS_PACKAGE_ID] = SYS_PACKAGE_ID;
-    mLookupTable[CMSDK_PACKAGE_ID] = CMSDK_PACKAGE_ID;
 }
 
 status_t DynamicRefTable::load(const ResTable_lib_header* const header)
@@ -6601,6 +6593,7 @@ status_t ResTable::createIdmap(const ResTable& overlay,
         return UNKNOWN_ERROR;
     }
 
+    bool isDangerous = false;
     KeyedVector<uint8_t, IdmapTypeMap> map;
 
     // overlaid packages are assumed to contain only one package group
@@ -6675,6 +6668,13 @@ status_t ResTable::createIdmap(const ResTable& overlay,
                 }
             }
             typeMap.entryMap.add(Res_GETENTRY(overlayResID));
+
+            Entry entry;
+            if (getEntry(pg, typeIndex, entryIndex, NULL, &entry)) {
+                return UNKNOWN_ERROR;
+            }
+            isDangerous = isDangerous ||
+                ((dtohs(entry.entry->flags) & ResTable_entry::FLAG_OVERLAY) == 0);
         }
 
         if (!typeMap.entryMap.isEmpty()) {
@@ -6697,6 +6697,7 @@ status_t ResTable::createIdmap(const ResTable& overlay,
     uint32_t* data = (uint32_t*)*outData;
     *data++ = htodl(IDMAP_MAGIC);
     *data++ = htodl(IDMAP_CURRENT_VERSION);
+    *data++ = htodl(isDangerous ? 1 : 0);
     *data++ = htodl(targetCrc);
     *data++ = htodl(overlayCrc);
     const char* paths[] = { targetPath, overlayPath };
@@ -6737,7 +6738,7 @@ status_t ResTable::createIdmap(const ResTable& overlay,
 }
 
 bool ResTable::getIdmapInfo(const void* idmap, size_t sizeBytes,
-                            uint32_t* pVersion,
+                            uint32_t* pVersion, uint32_t* pDangerous,
                             uint32_t* pTargetCrc, uint32_t* pOverlayCrc,
                             String8* pTargetPath, String8* pOverlayPath)
 {
@@ -6748,20 +6749,24 @@ bool ResTable::getIdmapInfo(const void* idmap, size_t sizeBytes,
     if (pVersion) {
         *pVersion = dtohl(map[1]);
     }
+    if (pDangerous) {
+        *pDangerous = dtohl(map[2]);
+    }
     if (pTargetCrc) {
-        *pTargetCrc = dtohl(map[2]);
+        *pTargetCrc = dtohl(map[3]);
     }
     if (pOverlayCrc) {
-        *pOverlayCrc = dtohl(map[3]);
+        *pOverlayCrc = dtohl(map[4]);
     }
     if (pTargetPath) {
-        pTargetPath->setTo(reinterpret_cast<const char*>(map + 4));
+        pTargetPath->setTo(reinterpret_cast<const char*>(map + 5));
     }
     if (pOverlayPath) {
-        pOverlayPath->setTo(reinterpret_cast<const char*>(map + 4 + 256 / sizeof(uint32_t)));
+        pOverlayPath->setTo(reinterpret_cast<const char*>(map + 5 + 256 / sizeof(uint32_t)));
     }
     return true;
 }
+
 
 #define CHAR16_TO_CSTR(c16, len) (String8(String16(c16,len)).string())
 
@@ -7084,6 +7089,9 @@ void ResTable::print(bool inclValues) const
 
                     if ((dtohs(ent->flags)&ResTable_entry::FLAG_PUBLIC) != 0) {
                         printf(" (PUBLIC)");
+                    }
+                    if ((dtohs(ent->flags)&ResTable_entry::FLAG_OVERLAY) != 0) {
+                        printf(" (OVERLAY)");
                     }
                     printf("\n");
 

@@ -56,8 +56,6 @@ interface INotificationManager
     void setImportance(String pkg, int uid, int importance);
     int getImportance(String pkg, int uid);
     int getPackageImportance(String pkg);
-    void setNotificationSoundTimeout(String pkg, int uid, long timeout);
-    long getNotificationSoundTimeout(String pkg, int uid);
 
     // TODO: Remove this when callers have been migrated to the equivalent
     // INotificationListener method.
@@ -87,7 +85,7 @@ interface INotificationManager
     void applyAdjustmentsFromRankerService(in INotificationListener token, in List<Adjustment> adjustments);
 
     ComponentName getEffectsSuppressor();
-    boolean[] matchesCallFilter(in Bundle extras);
+    boolean matchesCallFilter(in Bundle extras);
     boolean isSystemConditionProviderEnabled(String path);
 
     int getZenMode();
@@ -112,6 +110,4 @@ interface INotificationManager
     void applyRestore(in byte[] payload, int user);
 
     ParceledListSlice getAppActiveNotifications(String callingPkg, int userId);
-
-    boolean doLightsSupport(int capability);
 }

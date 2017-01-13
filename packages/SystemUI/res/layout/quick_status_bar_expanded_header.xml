@@ -97,7 +97,7 @@
             android:clipToPadding="false"
             android:clickable="true"
             android:focusable="true"
-            android:background="@drawable/ripple_drawable"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/accessibility_quick_settings_expand"
             android:padding="12dp" />
 
@@ -124,12 +124,6 @@
         layout="@layout/status_bar_alarm_group"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
-
-    <include
-        android:id="@+id/date_time_alarm_center_group"
-        layout="@layout/status_bar_alarm_center_group"
-        android:layout_alignParentTop="true"
-        android:visibility="gone" />
 
     <com.android.systemui.qs.QuickQSPanel
         android:id="@+id/quick_qs_panel"

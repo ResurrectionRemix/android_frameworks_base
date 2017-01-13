@@ -29,25 +29,17 @@
     <bool name="def_auto_time">true</bool>
     <bool name="def_auto_time_zone">true</bool>
     <bool name="def_accelerometer_rotation">true</bool>
-    <!-- Bitmask of allowed display rotation angles:
-           ROTATION_0_MODE: 1
-           ROTATION_90_MODE: 2
-           ROTATION_180_MODE: 4
-           ROTATION_270_MODE: 8
-         Default to 0, 90, 270. -->
-    <integer name="def_accelerometer_rotation_angles">11</integer>
     <!-- Default screen brightness, from 0 to 255.  102 is 40%. -->
     <integer name="def_screen_brightness">102</integer>
     <bool name="def_screen_brightness_automatic_mode">false</bool>
     <fraction name="def_window_animation_scale">100%</fraction>
     <fraction name="def_window_transition_scale">100%</fraction>
     <bool name="def_haptic_feedback">true</bool>
-    <bool name="def_dozeEnabledByDefault">false</bool>
 
     <bool name="def_bluetooth_on">true</bool>
     <bool name="def_wifi_display_on">false</bool>
-    <bool name="def_install_non_market_apps">true</bool>
-    <bool name="def_package_verifier_enable">false</bool>
+    <bool name="def_install_non_market_apps">false</bool>
+    <bool name="def_package_verifier_enable">true</bool>
     <!-- Comma-separated list of location providers.
          Network location is off by default because it requires
          user opt-in via Setup Wizard or Settings.
@@ -57,13 +49,11 @@
     <bool name="def_netstats_enabled">true</bool>
     <bool name="def_usb_mass_storage_enabled">true</bool>
     <bool name="def_wifi_on">false</bool>
-    <bool name="def_show_password_on">true</bool>
-    <bool name="config_show_password_on">false</bool>
     <!-- 0 == never, 1 == only when plugged in, 2 == always -->
     <integer name="def_wifi_sleep_policy">2</integer>
     <bool name="def_networks_available_notification_on">true</bool>
 
-    <bool name="def_backup_enabled">true</bool>
+    <bool name="def_backup_enabled">false</bool>
     <string name="def_backup_transport" translatable="false">android/com.android.internal.backup.LocalTransport</string>
 
     <!-- Default value for whether or not to pulse the notification LED when there is a
@@ -226,85 +216,4 @@
 
     <!-- Default setting for ability to add users from the lock screen -->
     <bool name="def_add_users_from_lockscreen">false</bool>
-
-    <!-- custom system sound or not -->
-    <bool name="def_custom_sys_volume">false</bool>
-
-    <!-- Ringtone Volume,its value is from 0 to 7,default value is 5 -->
-    <integer name="def_ringtone_volume" translatable="false">5</integer>
-
-    <!-- Music Volume,its value is from 0 to 15,default value is 11 -->
-    <integer name="def_music_volume" translatable="false">11</integer>
-
-    <!-- Voice Call Volume,its value is from 0 to 5,default value is 4 -->
-    <integer name="def_voice_call_volume" translatable="false">4</integer>
-
-    <!-- Alarm Volume,its value is from 0 to 7,default value is 6 -->
-    <integer name="def_alarm_volume" translatable="false">6</integer>
-
-    <!-- Notification Volume,its value is from 0 to 7,default value is 5 -->
-    <integer name="def_notification_volume" translatable="false">5</integer>
-
-    <!-- Ringtone headset Volume,its value is from 0 to 7,default value is 5 -->
-    <integer name="def_ringtone_headset_volume" translatable="false">5</integer>
-
-    <!-- Music headset Volume,its value is from 0 to 15,default value is 11 -->
-    <integer name="def_music_headset_volume" translatable="false">11</integer>
-
-    <!-- Voice Call headset Volume,its value is from 0 to 5,default value is 4 -->
-    <integer name="def_voice_call_headset_volume" translatable="false">4</integer>
-
-    <!-- Alarm headset Volume,its value is from 0 to 7,default value is 6 -->
-    <integer name="def_alarm_headset_volume" translatable="false">6</integer>
-
-    <!-- Notification headset Volume,its value is from 0 to 7,default value is 5 -->
-    <integer name="def_notification_headset_volume" translatable="false">5</integer>
-
-    <!-- Ringtone speaker Volume,its value is from 0 to 7,default value is 5 -->
-    <integer name="def_ringtone_speaker_volume" translatable="false">5</integer>
-
-    <!-- Music speaker Volume,its value is from 0 to 15,default value is 11 -->
-    <integer name="def_music_speaker_volume" translatable="false">11</integer>
-
-    <!-- Voice Call speaker Volume,its value is from 0 to 5,default value is 4 -->
-    <integer name="def_voice_call_speaker_volume" translatable="false">4</integer>
-
-    <!-- Alarm speaker Volume,its value is from 0 to 7,default value is 6 -->
-    <integer name="def_alarm_speaker_volume" translatable="false">6</integer>
-
-    <!-- Notification speaker Volume,its value is from 0 to 7,default value is 5 -->
-    <integer name="def_notification_speaker_volume" translatable="false">5</integer>
-
-    <!-- Voice Call earpiece Volume,its value is from 0 to 5,default value is 4 -->
-    <integer name="def_voice_call_earpiece_volume" translatable="false">4</integer>
-
-    <!-- Date format,yyyy-MM-dd: 2013/07/30; MM-dd-yyyy:07/30/2013; dd-MM-yyyy:30/07/2013 -->
-    <string name="def_date_format" translatable="false"></string>
-
-    <!-- Time format,default value is 24 : 24 format,other value is 12 format -->
-    <string name="def_time_format" translatable="false"></string>
-
-    <!-- enable accessibility or not,1:enable;0:disable -->
-    <integer name="def_enable_accessibility">0</integer>
-
-    <!-- for enable accessibility services,split by ":" ,
-         example "com.google.android.marvin.talkback/
-         com.google.android.marvin.talkback.TalkBackService" -->
-    <string name="def_enable_accessibility_services" translatable="false"></string>
-    <!-- Default Input Method, its value is from inputmethod's package name and main class name
-        such as "com.android.inputmethod.pinyin/.PinyinIME"
-    -->
-    <string name="def_input_method" translatable="false"></string>
-    <!--
-        Default Enable InputMethods, its value is from inputmethod's package name and main class
-        name such as "com.android.inputmethod.pinyin/.PinyinIME" ;This is a string
-        containing the IDs of all enabled input methods, each ID separated by ':'.
-    -->
-    <string name="def_enable_input_methods" translatable="false"></string>
-
-    <!-- Defaults for Settings.System.DEV_FORCE_SHOW_NAVBAR. -->
-    <integer name="def_force_disable_navkeys">0</integer>
-
-    <!-- Default for Settings.Global.CAPTIVE_PORTAL_DETECTION_ENABLED -->
-    <integer name="def_captive_portal_detection_enabled" translatable="false">1</integer>
 </resources>

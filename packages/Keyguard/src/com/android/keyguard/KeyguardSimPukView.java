@@ -50,13 +50,11 @@ public class KeyguardSimPukView extends KeyguardPinBasedInputView {
 
     private ProgressDialog mSimUnlockProgressDialog = null;
     private CheckSimPuk mCheckSimPukThread;
-    private boolean mShowDefaultMessage = true;
-    private int mRemainingAttempts = -1;
     private String mPukText;
     private String mPinText;
     private StateMachine mStateMachine = new StateMachine();
     private AlertDialog mRemainingAttemptsDialog;
-    private int mSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+    private int mSubId;
     private ImageView mSimImageView;
 
     KeyguardUpdateMonitorCallback mUpdateMonitorCallback = new KeyguardUpdateMonitorCallback() {
@@ -118,21 +116,27 @@ public class KeyguardSimPukView extends KeyguardPinBasedInputView {
             mPinText="";
             mPukText="";
             state = ENTER_PUK;
-            handleSubInfoChangeIfNeeded();
-            if (mShowDefaultMessage) {
-                showDefaultMessage();
+            KeyguardUpdateMonitor monitor = KeyguardUpdateMonitor.getInstance(mContext);
+            mSubId = monitor.getNextSubIdForState(IccCardConstants.State.PUK_REQUIRED);
+            if (SubscriptionManager.isValidSubscriptionId(mSubId)) {
+                int count = TelephonyManager.getDefault().getSimCount();
+                Resources rez = getResources();
+                final String msg;
+                int color = Color.WHITE;
+                if (count < 2) {
+                    msg = rez.getString(R.string.kg_puk_enter_puk_hint);
+                } else {
+                    SubscriptionInfo info = monitor.getSubscriptionInfoForSubId(mSubId);
+                    CharSequence displayName = info != null ? info.getDisplayName() : "";
+                    msg = rez.getString(R.string.kg_puk_enter_puk_hint_multi, displayName);
+                    if (info != null) {
+                        color = info.getIconTint();
+                    }
+                }
+                mSecurityMessageDisplay.setMessage(msg, true);
+                mSimImageView.setImageTintList(ColorStateList.valueOf(color));
             }
             mPasswordEntry.requestFocus();
-        }
-    }
-
-    private void handleSubInfoChangeIfNeeded() {
-        KeyguardUpdateMonitor monitor = KeyguardUpdateMonitor.getInstance(mContext);
-        int subId = monitor.getNextSubIdForState(IccCardConstants.State.PUK_REQUIRED);
-        if (subId != mSubId && SubscriptionManager.isValidSubscriptionId(subId)) {
-            mSubId = subId;
-            mShowDefaultMessage = true;
-            mRemainingAttempts = -1;
         }
     }
 
@@ -142,20 +146,17 @@ public class KeyguardSimPukView extends KeyguardPinBasedInputView {
         return 0;
     }
 
-    private String getPukPasswordErrorMessage(int attemptsRemaining, boolean isDefault) {
+    private String getPukPasswordErrorMessage(int attemptsRemaining) {
         String displayMessage;
 
         if (attemptsRemaining == 0) {
             displayMessage = getContext().getString(R.string.kg_password_wrong_puk_code_dead);
         } else if (attemptsRemaining > 0) {
-            int msgId = isDefault ? R.plurals.kg_password_default_puk_message :
-                    R.plurals.kg_password_wrong_puk_code;
             displayMessage = getContext().getResources()
-                    .getQuantityString(msgId, attemptsRemaining, attemptsRemaining);
+                    .getQuantityString(R.plurals.kg_password_wrong_puk_code, attemptsRemaining,
+                            attemptsRemaining);
         } else {
-            int msgId = isDefault ? R.string.kg_puk_enter_puk_hint :
-                    R.string.kg_password_puk_failed;
-            displayMessage = getContext().getString(msgId);
+            displayMessage = getContext().getString(R.string.kg_password_puk_failed);
         }
         if (DEBUG) Log.d(LOG_TAG, "getPukPasswordErrorMessage:"
                 + " attemptsRemaining=" + attemptsRemaining + " displayMessage=" + displayMessage);
@@ -188,15 +189,11 @@ public class KeyguardSimPukView extends KeyguardPinBasedInputView {
             ((EmergencyCarrierArea) mEcaView).setCarrierTextVisible(true);
         }
         mSimImageView = (ImageView) findViewById(R.id.keyguard_sim);
-        mPasswordEntry.setQuickUnlockListener(null);
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mShowDefaultMessage) {
-            showDefaultMessage();
-        }
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mUpdateMonitorCallback);
     }
 
@@ -279,7 +276,7 @@ public class KeyguardSimPukView extends KeyguardPinBasedInputView {
     }
 
     private Dialog getPukRemainingAttemptsDialog(int remaining) {
-        String msg = getPukPasswordErrorMessage(remaining, false);
+        String msg = getPukPasswordErrorMessage(remaining);
         if (mRemainingAttemptsDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setMessage(msg);
@@ -335,25 +332,16 @@ public class KeyguardSimPukView extends KeyguardPinBasedInputView {
                             if (result == PhoneConstants.PIN_RESULT_SUCCESS) {
                                 KeyguardUpdateMonitor.getInstance(getContext())
                                         .reportSimUnlocked(mSubId);
-                                mRemainingAttempts = -1;
-                                mShowDefaultMessage = true;
-                                if (mCallback != null) {
-                                    mCallback.dismiss(true);
-                                }
+                                mCallback.dismiss(true);
                             } else {
-                                mShowDefaultMessage = false;
                                 if (result == PhoneConstants.PIN_PASSWORD_INCORRECT) {
-                                    // show message
-                                    mSecurityMessageDisplay.setMessage(getPukPasswordErrorMessage(
-                                            attemptsRemaining, false), true);
                                     if (attemptsRemaining <= 2) {
                                         // this is getting critical - show dialog
                                         getPukRemainingAttemptsDialog(attemptsRemaining).show();
                                     } else {
                                         // show message
                                         mSecurityMessageDisplay.setMessage(
-                                                getPukPasswordErrorMessage(
-                                                attemptsRemaining, false), true);
+                                                getPukPasswordErrorMessage(attemptsRemaining), true);
                                     }
                                 } else {
                                     mSecurityMessageDisplay.setMessage(getContext().getString(
@@ -386,44 +374,6 @@ public class KeyguardSimPukView extends KeyguardPinBasedInputView {
     @Override
     public boolean startDisappearAnimation(Runnable finishRunnable) {
         return false;
-    }
-
-    private void showDefaultMessage() {
-        if (mRemainingAttempts >= 0) {
-            mSecurityMessageDisplay.setMessage(getPukPasswordErrorMessage(
-                    mRemainingAttempts, true), true);
-            return;
-        }
-
-        int count = TelephonyManager.getDefault().getSimCount();
-        Resources rez = getResources();
-        final String msg;
-        int color = Color.WHITE;
-        if (count < 2) {
-            msg = rez.getString(R.string.kg_puk_enter_puk_hint);
-        } else {
-            SubscriptionInfo info = KeyguardUpdateMonitor.getInstance(mContext).
-                    getSubscriptionInfoForSubId(mSubId);
-            CharSequence displayName = info != null ? info.getDisplayName() : "";
-            msg = rez.getString(R.string.kg_puk_enter_puk_hint_multi, displayName);
-            if (info != null) {
-                color = info.getIconTint();
-            }
-        }
-        mSecurityMessageDisplay.setMessage(msg, true);
-        mSimImageView.setImageTintList(ColorStateList.valueOf(color));
-
-        new CheckSimPuk("", "", mSubId) {
-            void onSimLockChangedResponse(final int result, final int attemptsRemaining) {
-                Log.d(LOG_TAG, "onSimCheckResponse " + " dummy One result" + result +
-                        " attemptsRemaining=" + attemptsRemaining);
-                if (attemptsRemaining >= 0) {
-                    mRemainingAttempts = attemptsRemaining;
-                    mSecurityMessageDisplay.setMessage(
-                            getPukPasswordErrorMessage(attemptsRemaining, true), true);
-                }
-            }
-        }.start();
     }
 }
 

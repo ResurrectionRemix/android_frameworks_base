@@ -102,7 +102,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.PowerManagerInternal;
 import android.os.Process;
 import android.os.RemoteException;
@@ -360,28 +359,6 @@ class ActivityStarter {
             } catch (RemoteException e) {
                 Slog.w(TAG, "Failure checking voice capabilities", e);
                 err = ActivityManager.START_NOT_VOICE_COMPATIBLE;
-            }
-        }
-
-        if (err == ActivityManager.START_SUCCESS && intent.getComponent() != null) {
-            try {
-                boolean isProtected = AppGlobals.getPackageManager().isComponentProtected(
-                        callingPackage, callingUid, intent.getComponent(), userId) &&
-                        (launchFlags & Intent.FLAG_GRANT_READ_URI_PERMISSION) == 0;
-
-                if (isProtected) {
-                    Message msg = mService.mHandler.obtainMessage(
-                            ActivityManagerService.POST_COMPONENT_PROTECTED_MSG);
-                    // Store launch flags, userid
-                    intent.setFlags(launchFlags);
-                    intent.putExtra("com.android.settings.PROTECTED_APPS_USER_ID", userId);
-                    msg.obj = intent;
-                    mService.mHandler.sendMessage(msg);
-                    err = ActivityManager.START_NOT_CURRENT_USER_ACTIVITY;
-                }
-            } catch (RemoteException e) {
-                Slog.w(TAG, "Failure checking protected apps status", e);
-                err = ActivityManager.START_NOT_CURRENT_USER_ACTIVITY;
             }
         }
 
@@ -791,29 +768,6 @@ class ActivityStarter {
                 // Cannot start a child activity if the parent is not resumed.
                 return ActivityManager.START_CANCELED;
             }
-
-            try {
-                //TODO: This needs to be a flushed out API in the future.
-                boolean isProtected = intent.getComponent() != null
-                        && AppGlobals.getPackageManager()
-                        .isComponentProtected(callingPackage, callingUid,
-                                intent.getComponent(), userId) &&
-                        (intent.getFlags()&Intent.FLAG_GRANT_READ_URI_PERMISSION) == 0;
-
-                if (isProtected) {
-                    Message msg = mService.mHandler.obtainMessage(
-                            ActivityManagerService.POST_COMPONENT_PROTECTED_MSG);
-                    //Store start flags, userid
-                    intent.setFlags(startFlags);
-                    intent.putExtra("com.android.settings.PROTECTED_APPS_USER_ID", userId);
-                    msg.obj = intent;
-                    mService.mHandler.sendMessage(msg);
-                    return ActivityManager.START_NOT_CURRENT_USER_ACTIVITY;
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
             final int realCallingPid = Binder.getCallingPid();
             final int realCallingUid = Binder.getCallingUid();
             int callingPid;
@@ -1660,9 +1614,9 @@ class ActivityStarter {
                 == (FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK)) {
             // The caller has requested to completely replace any existing task with its new
             // activity. Well that should not be too hard...
-            intentActivity.task.performClearTaskLocked();
-            intentActivity.task.setIntent(mStartActivity);
             mReuseTask = intentActivity.task;
+            mReuseTask.performClearTaskLocked();
+            mReuseTask.setIntent(mStartActivity);
             // When we clear the task - focus will be adjusted, which will bring another task
             // to top before we launch the activity we need. This will temporary swap their
             // mTaskToReturnTo values and we don't want to overwrite them accidentally.
@@ -2125,19 +2079,5 @@ class ActivityStarter {
                 mPendingActivityLaunches.remove(palNdx);
             }
         }
-    }
-
-    boolean clearPendingActivityLaunchesLocked(String packageName) {
-        boolean didSomething = false;
-
-        for (int palNdx = mPendingActivityLaunches.size() - 1; palNdx >= 0; --palNdx) {
-            PendingActivityLaunch pal = mPendingActivityLaunches.get(palNdx);
-            ActivityRecord r = pal.r;
-            if (r != null && r.packageName.equals(packageName)) {
-                mPendingActivityLaunches.remove(palNdx);
-                didSomething = true;
-            }
-        }
-        return didSomething;
     }
 }

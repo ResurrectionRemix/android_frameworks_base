@@ -636,11 +636,8 @@ public abstract class BackupAgent extends ContextWrapper {
         // Pull out the domain and set it aside to use when making the tarball.
         String domainPath = FullBackup.getBackupScheme(this).tokenToDirectoryPath(domain);
         if (domainPath == null) {
-            if (startingPath == null) {
-                return;
-            } else {
-                domainPath = startingPath;
-            }
+            // Should never happen.
+            return;
         }
 
         File rootFile = new File(startingPath);

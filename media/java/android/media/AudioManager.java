@@ -69,6 +69,7 @@ public class AudioManager {
     private final boolean mUseFixedVolume;
     private static String TAG = "AudioManager";
     private static final AudioPortEventHandler sAudioPortEventHandler = new AudioPortEventHandler();
+
     /**
      * Broadcast intent, a hint for applications that audio is about to become
      * 'noisy' due to a change in audio outputs. For example, this intent may
@@ -138,18 +139,6 @@ public class AudioManager {
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String VOLUME_CHANGED_ACTION = "android.media.VOLUME_CHANGED_ACTION";
-
-    /**
-     * @hide Broadcast intent when the number of volume steps changes
-     * Includes the stream and the new max volume index
-     * Notes:
-     *  - for internal platform use only, do not make public,
-     *
-     * @see #EXTRA_VOLUME_STREAM_TYPE
-     * @see #EXTRA_VOLUME_STEPS_MAX_INDEX
-     */
-    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
-    public static final String VOLUME_STEPS_CHANGED_ACTION = "android.media.VOLUME_STEPS_CHANGED_ACTION";
 
     /**
      * @hide Broadcast intent when the devices for a particular stream type changes.
@@ -322,32 +311,6 @@ public class AudioManager {
      * {@link android.content.Intent#getIntArrayExtra(String)} to retrieve the encoding values.
      */
     public static final String EXTRA_ENCODINGS = "android.media.extra.ENCODINGS";
-
-    /**
-     * @hide Broadcast intent when RemoteControlClient list is updated.
-     */
-    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
-    public static final String RCC_CHANGED_ACTION =
-                "org.codeaurora.bluetooth.RCC_CHANGED_ACTION";
-
-    /**
-     * @hide Used for sharing the calling package name
-     */
-    public static final String EXTRA_CALLING_PACKAGE_NAME =
-            "org.codeaurora.bluetooth.EXTRA_CALLING_PACKAGE_NAME";
-
-    /**
-     * @hide Used for sharing the focus changed value
-     */
-    public static final String EXTRA_FOCUS_CHANGED_VALUE =
-            "org.codeaurora.bluetooth.EXTRA_FOCUS_CHANGED_VALUE";
-
-    /**
-     * @hide Used for sharing the availability changed value
-     */
-    public static final String EXTRA_AVAILABLITY_CHANGED_VALUE =
-            "org.codeaurora.bluetooth.EXTRA_AVAILABLITY_CHANGED_VALUE";
-
 
     /** The audio stream for phone calls */
     public static final int STREAM_VOICE_CALL = AudioSystem.STREAM_VOICE_CALL;
@@ -985,40 +948,6 @@ public class AudioManager {
             return service.getStreamMinVolume(streamType);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
-        }
-    }
-
-    /**
-     * Sets the maximum volume index for a particular stream.
-     *
-     * @param streamType The stream type whose maximum volume index is set.
-     * @param maxVol The maximum volume to set range 7 - 45.
-     * @return The maximum valid volume index for the stream.
-     * @see #setStreamVolume(int)
-     */
-    public void setStreamMaxVolume(int streamType, int maxVol) {
-        IAudioService service = getService();
-        try {
-//            if (mUseMasterVolume) {
-//                // service.setMasterMaxVolume(maxVol);
-//            } else {
-                double previousMax = new Integer(getStreamMaxVolume(streamType)).doubleValue();
-                double previousVolume = new Integer(getStreamVolume(streamType)).doubleValue();
-                double newMax = new Integer(maxVol).doubleValue();
-                double newVolume = Math.floor((newMax / previousMax) * previousVolume);
-
-                service.setStreamMaxVolume(streamType, maxVol);
-
-                Log.i(TAG, "Volume steps for stream " + String.valueOf(streamType) + " set to " +
-                        String.valueOf(maxVol));
-
-                setStreamVolume(streamType, new Double(newVolume).intValue(), 0);
-
-                Log.i(TAG, "Volume adjusted from " + String.valueOf(previousVolume) + " to " +
-                        String.valueOf(newVolume));
-//            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Dead object in setStreamMaxVolume", e);
         }
     }
 
@@ -2575,7 +2504,6 @@ public class AudioManager {
 
     //====================================================================
     // Remote Control
-
     /**
      * Register a component to be the sole receiver of MEDIA_BUTTON intents.
      * @param eventReceiver identifier of a {@link android.content.BroadcastReceiver}
@@ -2594,7 +2522,6 @@ public class AudioManager {
                     "receiver and context package names don't match");
             return;
         }
-
         // construct a PendingIntent for the media button and register it
         Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
         //     the associated intent will be handled by the component being registered
@@ -2603,7 +2530,6 @@ public class AudioManager {
                 0/*requestCode, ignored*/, mediaButtonIntent, 0/*flags*/);
         registerMediaButtonIntent(pi, eventReceiver);
     }
-
 
     /**
      * Register a component to be the sole receiver of MEDIA_BUTTON intents.  This is like
@@ -2734,13 +2660,6 @@ public class AudioManager {
             return false;
         }
         rctlr.startListeningToSessions();
-        IAudioService service = getService();
-        try {
-            service.updateRemoteControllerOnExistingMediaPlayers();
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error in calling Audio service interface" +
-                "updateRemoteControllerOnExistingMediaPlayers() due to " + e);
-        }
         return true;
     }
 
@@ -2760,24 +2679,6 @@ public class AudioManager {
             return;
         }
         rctlr.stopListeningToSessions();
-    }
-
-    /**
-     * @hide
-     */
-    public void updateMediaPlayerList(String packageName, boolean toAdd) {
-        IAudioService service = getService();
-        try {
-            if (toAdd) {
-                Log.d(TAG, "updateMediaPlayerList: Add RCC " + packageName + " to List");
-                service.addMediaPlayerAndUpdateRemoteController(packageName);
-            } else {
-                Log.d(TAG, "updateMediaPlayerList: Remove RCC " + packageName + " from List");
-                service.removeMediaPlayerAndUpdateRemoteController(packageName);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Exception while executing updateMediaPlayerList: " + e);
-        }
     }
 
 
@@ -2832,6 +2733,7 @@ public class AudioManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
 
     //====================================================================
     // Recording configuration

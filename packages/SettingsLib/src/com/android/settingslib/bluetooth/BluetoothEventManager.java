@@ -120,12 +120,6 @@ public final class BluetoothEventManager {
         registerProfileIntentReceiver();
     }
 
-    public void setDefaultReceiverHandler() {
-        mContext.unregisterReceiver(mBroadcastReceiver);
-        mContext.registerReceiver(mBroadcastReceiver, mAdapterIntentFilter, null, mReceiverHandler);
-        registerProfileIntentReceiver();
-    }
-
     /** Register to start receiving callbacks for Bluetooth events. */
     public void registerCallback(BluetoothCallback callback) {
         synchronized (mCallbacks) {
@@ -202,8 +196,6 @@ public final class BluetoothEventManager {
                 cachedDevice = mDeviceManager.addDevice(mLocalAdapter, mProfileManager, device);
                 Log.d(TAG, "DeviceFoundHandler created new CachedBluetoothDevice: "
                         + cachedDevice);
-                // callback to UI to create Preference for new device
-                dispatchDeviceAdded(cachedDevice);
             }
             cachedDevice.setRssi(rssi);
             cachedDevice.setBtClass(btClass);

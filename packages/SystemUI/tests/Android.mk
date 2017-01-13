@@ -52,11 +52,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-appcompat \
     android-support-v14-preference \
     android-support-v17-leanback \
-    android-support-v7-palette \
-    android-support-v4 \
-    SystemUI-proto-tags \
-    org.cyanogenmod.platform.internal \
-    uicommon
+    SystemUI-proto-tags
 
 # sign this with platform cert, so this test is allowed to inject key events into
 # UI it doesn't own. This is necessary to allow screenshots to be taken

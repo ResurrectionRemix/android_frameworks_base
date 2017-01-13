@@ -182,7 +182,7 @@ public class NotificationManager
 
     /** @hide */
     @IntDef({VISIBILITY_NO_OVERRIDE, IMPORTANCE_UNSPECIFIED, IMPORTANCE_NONE,
-            IMPORTANCE_MIN, IMPORTANCE_VERY_LOW, IMPORTANCE_LOW, IMPORTANCE_DEFAULT, IMPORTANCE_HIGH,
+            IMPORTANCE_MIN, IMPORTANCE_LOW, IMPORTANCE_DEFAULT, IMPORTANCE_HIGH,
             IMPORTANCE_MAX})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Importance {}
@@ -207,13 +207,6 @@ public class NotificationManager
      * Min notification importance: only shows in the shade, below the fold.
      */
     public static final int IMPORTANCE_MIN = 1;
-
-    /**
-     * Very low notification importance: shows on the status bar, but never
-     * on the lock screen and is not intrusive.
-     */
-    /** @hide */
-    public static final int IMPORTANCE_VERY_LOW = 6;
 
     /**
      * Low notification importance: shows everywhere, but is not intrusive.
@@ -399,7 +392,7 @@ public class NotificationManager
     /**
      * @hide
      */
-    public boolean[] matchesCallFilter(Bundle extras) {
+    public boolean matchesCallFilter(Bundle extras) {
         INotificationManager service = getService();
         try {
             return service.matchesCallFilter(extras);
@@ -1023,35 +1016,6 @@ public class NotificationManager
             case INTERRUPTION_FILTER_ALARMS: return Global.ZEN_MODE_ALARMS;
             case INTERRUPTION_FILTER_NONE:  return Global.ZEN_MODE_NO_INTERRUPTIONS;
             default: return defValue;
-        }
-    }
-
-    /** @hide */
-    public static final int LIGHTS_RGB_NOTIFICATION_LED = 1;
-    /** @hide */
-    public static final int LIGHTS_RGB_BATTERY_LED = 2;
-    /** @hide */
-    public static final int LIGHTS_MULTIPLE_NOTIFICATION_LED = 4;
-    /** @hide */
-    public static final int LIGHTS_PULSATING_LED = 8;
-    /** @hide */
-    public static final int LIGHTS_SEGMENTED_BATTERY_LED = 16;
-    /** @hide */
-    public static final int LIGHTS_ADJUSTABLE_NOTIFICATION_LED_BRIGHTNESS = 32;
-
-    /** @hide */
-    public boolean doLightsSupport(final int capability) {
-        final INotificationManager service = getService();
-        if (service == null) {
-            // If the service isn't up yet, assume everything is possible
-            return true;
-        }
-
-        try {
-            return service.doLightsSupport(capability);
-        } catch (RemoteException e) {
-            // If the service isn't up yet, assume everything is possible
-            return true;
         }
     }
 }

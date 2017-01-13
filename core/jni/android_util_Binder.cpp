@@ -144,7 +144,7 @@ static volatile int32_t gNumDeathRefs = 0;
 static void incRefsCreated(JNIEnv* env)
 {
     int old = android_atomic_inc(&gNumRefsCreated);
-    if (old == 2000) {
+    if (old == 200) {
         android_atomic_and(0, &gNumRefsCreated);
         env->CallStaticVoidMethod(gBinderInternalOffsets.mClass,
                 gBinderInternalOffsets.mForceGc);

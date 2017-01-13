@@ -172,13 +172,15 @@ void OpenGLRenderer::discardFramebuffer(float left, float top, float right, floa
 }
 
 void OpenGLRenderer::clear(float left, float top, float right, float bottom, bool opaque) {
-    mRenderState.scissor().setEnabled(true);
-    mRenderState.scissor().set(left, getViewportHeight() - bottom, right - left, bottom - top);
-    glClear(GL_COLOR_BUFFER_BIT);
-    if (opaque) {
-        mRenderState.scissor().reset();
+    if (!opaque) {
+        mRenderState.scissor().setEnabled(true);
+        mRenderState.scissor().set(left, getViewportHeight() - bottom, right - left, bottom - top);
+        glClear(GL_COLOR_BUFFER_BIT);
+        mDirty = true;
+        return;
     }
-    mDirty = true;
+
+    mRenderState.scissor().reset();
 }
 
 bool OpenGLRenderer::finish() {

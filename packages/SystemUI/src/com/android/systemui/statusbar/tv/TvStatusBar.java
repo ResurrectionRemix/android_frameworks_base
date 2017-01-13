@@ -99,23 +99,11 @@ public class TvStatusBar extends BaseStatusBar {
     }
 
     @Override
-    protected void haltTicker() {
-    }
-
-    @Override // CommandQueue
-    public void setAutoRotate(boolean enabled) {
-    }
-
-    @Override
     protected void setAreThereNotifications() {
     }
 
     @Override
     protected void updateNotifications() {
-    }
-
-    @Override
-    protected void tick(StatusBarNotification n, boolean firstTime) {
     }
 
     @Override

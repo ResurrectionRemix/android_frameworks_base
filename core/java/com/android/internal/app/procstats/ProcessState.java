@@ -273,13 +273,12 @@ public final class ProcessState {
         mDead = true;
     }
 
-    private boolean ensureNotDead() {
+    private void ensureNotDead() {
         if (!mDead) {
-            return true;
+            return;
         }
         Slog.w(TAG, "ProcessState dead: name=" + mName
                 + " pkg=" + mPackage + " uid=" + mUid + " common.name=" + mCommonProcess.mName);
-        return false;
     }
 
     public void writeToParcel(Parcel out, long now) {
@@ -323,9 +322,7 @@ public final class ProcessState {
     }
 
     public void makeActive() {
-        if(!ensureNotDead()) {
-            return;
-        }
+        ensureNotDead();
         mActive = true;
     }
 
@@ -382,7 +379,7 @@ public final class ProcessState {
 
     public void setState(int state, long now) {
         ensureNotDead();
-        if (!mDead && (mCurState != state)) {
+        if (mCurState != state) {
             //Slog.i(TAG, "Setting state in " + mName + "/" + mPackage + ": " + state);
             commitStateTime(now);
             mCurState = state;
@@ -468,9 +465,7 @@ public final class ProcessState {
 
     public void addPss(long pss, long uss, boolean always,
             ArrayMap<String, ProcessStateHolder> pkgList) {
-        if(!ensureNotDead()) {
-            return;
-        }
+        ensureNotDead();
         if (!always) {
             if (mLastPssState == mCurState && SystemClock.uptimeMillis()
                     < (mLastPssTime+(30*1000))) {
@@ -498,9 +493,7 @@ public final class ProcessState {
     }
 
     public void reportExcessiveWake(ArrayMap<String, ProcessStateHolder> pkgList) {
-        if(!ensureNotDead()) {
-            return;
-        }
+        ensureNotDead();
         mCommonProcess.mNumExcessiveWake++;
         if (!mCommonProcess.mMultiPackage) {
             return;
@@ -512,9 +505,7 @@ public final class ProcessState {
     }
 
     public void reportExcessiveCpu(ArrayMap<String, ProcessStateHolder> pkgList) {
-        if(!ensureNotDead()) {
-            return;
-        }
+        ensureNotDead();
         mCommonProcess.mNumExcessiveCpu++;
         if (!mCommonProcess.mMultiPackage) {
             return;
@@ -545,9 +536,7 @@ public final class ProcessState {
     }
 
     public void reportCachedKill(ArrayMap<String, ProcessStateHolder> pkgList, long pss) {
-        if(!ensureNotDead()) {
-            return;
-        }
+        ensureNotDead();
         mCommonProcess.addCachedKill(1, pss, pss, pss);
         if (!mCommonProcess.mMultiPackage) {
             return;

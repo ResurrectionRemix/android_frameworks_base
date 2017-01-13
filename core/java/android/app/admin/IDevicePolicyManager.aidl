@@ -311,5 +311,4 @@ interface IDevicePolicyManager {
 
     void setBackupServiceEnabled(in ComponentName admin, boolean enabled);
     boolean isBackupServiceEnabled(in ComponentName admin);
-    boolean requireSecureKeyguard(int userHandle);
 }

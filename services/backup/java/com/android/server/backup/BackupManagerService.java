@@ -2399,26 +2399,20 @@ public class BackupManagerService {
                         } catch (InterruptedException e) {
                             // just bail
                             Slog.w(TAG, "Interrupted: " + e);
-                            mConnecting = false;
-                            mConnectedAgent = null;
+                            mActivityManager.clearPendingBackup();
+                            return null;
                         }
                     }
 
                     // if we timed out with no connect, abort and move on
                     if (mConnecting == true) {
                         Slog.w(TAG, "Timeout waiting for agent " + app);
-                        mConnectedAgent = null;
+                        mActivityManager.clearPendingBackup();
+                        return null;
                     }
                     if (DEBUG) Slog.i(TAG, "got agent " + mConnectedAgent);
                     agent = mConnectedAgent;
                 }
-            } catch (RemoteException e) {
-                // can't happen - ActivityManager is local
-            }
-        }
-        if (agent == null) {
-            try {
-                mActivityManager.clearPendingBackup();
             } catch (RemoteException e) {
                 // can't happen - ActivityManager is local
             }

@@ -25,9 +25,6 @@
         android:layout_height="match_parent">
     </com.android.systemui.recents.views.RecentsView>
 
-
-    <include layout="@layout/recents_membar" />
-
     <!-- Incompatible task overlay -->
     <ViewStub android:id="@+id/incompatible_app_overlay_stub"
         android:inflatedId="@+id/incompatible_app_overlay"
@@ -35,8 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="128dp"
         android:layout_gravity="center_horizontal|top" />
-
-    <include layout="@layout/recents_time_layout" />
 
     <!-- Nav Bar Scrim View -->
     <ImageView
@@ -46,6 +41,4 @@
         android:layout_gravity="center_horizontal|bottom"
         android:scaleType="fitXY"
         android:src="@drawable/recents_lower_gradient" />
-
-	<include layout="@layout/floating_action_button"/>
 </FrameLayout>

@@ -22,8 +22,6 @@ import android.service.notification.NotificationListenerService;
 import android.util.Log;
 import android.util.Slog;
 
-import static android.service.notification.NotificationListenerService.Ranking.importanceToLevel;
-
 /**
  * This {@link com.android.server.notification.NotificationSignalExtractor} notices noisy
  * notifications and marks them to get a temporary ranking bump.
@@ -46,8 +44,7 @@ public class NotificationIntrusivenessExtractor implements NotificationSignalExt
             return null;
         }
 
-        if (importanceToLevel(record.getImportance())
-            >= importanceToLevel(NotificationListenerService.Ranking.IMPORTANCE_DEFAULT)) {
+        if (record.getImportance() >= NotificationListenerService.Ranking.IMPORTANCE_DEFAULT) {
             final Notification notification = record.getNotification();
             if ((notification.defaults & Notification.DEFAULT_VIBRATE) != 0 ||
                     notification.vibrate != null ||

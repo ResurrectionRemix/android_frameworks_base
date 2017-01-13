@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Modification copyright (C) 2014 - AOSB Project - Credit zst123 "XuiMod"
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,21 +20,15 @@ import android.annotation.IntDef;
 import android.annotation.StringRes;
 import android.app.INotificationManager;
 import android.app.ITransientNotification;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -46,8 +39,6 @@ import android.view.accessibility.AccessibilityManager;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import com.android.internal.util.rr.RandomColorHelper;
 
 /**
  * A toast is a view containing a quick little message for the user.  The toast class
@@ -96,7 +87,6 @@ public class Toast {
     public static final int LENGTH_LONG = 1;
 
     final Context mContext;
-    static Context tContext;
     final TN mTN;
     int mDuration;
     View mNextView;
@@ -110,14 +100,13 @@ public class Toast {
      */
     public Toast(Context context) {
         mContext = context;
-        tContext = context;
         mTN = new TN();
         mTN.mY = context.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.toast_y_offset);
         mTN.mGravity = context.getResources().getInteger(
                 com.android.internal.R.integer.config_toastDefaultGravity);
     }
-
+    
     /**
      * Show the view for the specified duration.
      */
@@ -152,7 +141,7 @@ public class Toast {
             // Empty
         }
     }
-
+    
     /**
      * Set the view to show.
      * @see #getView
@@ -187,7 +176,7 @@ public class Toast {
     public int getDuration() {
         return mDuration;
     }
-
+    
     /**
      * Set the margins of the view.
      *
@@ -243,7 +232,7 @@ public class Toast {
     public int getXOffset() {
         return mTN.mX;
     }
-
+    
     /**
      * Return the Y offset in pixels to apply to the gravity's location.
      */
@@ -272,14 +261,12 @@ public class Toast {
     public static Toast makeText(Context context, CharSequence text, @Duration int duration) {
         Toast result = new Toast(context);
 
-        final ColorStateList textColor = RandomColorHelper.getToastTextColorList(tContext);
         LayoutInflater inflate = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);
         TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);
         tv.setText(text);
-        tv.setTextColor(textColor);
-
+        
         result.mNextView = v;
         result.mDuration = duration;
 
@@ -309,7 +296,7 @@ public class Toast {
     public void setText(@StringRes int resId) {
         setText(mContext.getText(resId));
     }
-
+    
     /**
      * Update the text in a Toast that was previously created using one of the makeText() methods.
      * @param s The new text for the Toast.
@@ -372,7 +359,7 @@ public class Toast {
         WindowManager mWM;
 
         static final long SHORT_DURATION_TIMEOUT = 5000;
-        static final long LONG_DURATION_TIMEOUT = 10000;
+        static final long LONG_DURATION_TIMEOUT = 1000;
 
         TN() {
             // XXX This should be changed to use a Dialog, with a Theme.Toast
@@ -419,29 +406,11 @@ public class Toast {
                 if (context == null) {
                     context = mView.getContext();
                 }
-
-                ImageView appIcon = (ImageView) mView.findViewById(android.R.id.icon);
-                final ColorStateList iconColor = RandomColorHelper.getToastIconColorList(tContext);
-                if ((Settings.System.getInt(context.getContentResolver(), Settings.System.TOAST_ICON, 1) == 1)) {
-                    if (appIcon != null) {
-                        PackageManager pm = context.getPackageManager();
-                        Drawable icon = null;
-                        try {
-                            icon = pm.getApplicationIcon(packageName);
-                        } catch (PackageManager.NameNotFoundException e) {
-                            // nothing to do
-                        }
-                        appIcon.setImageDrawable(icon);
-                        appIcon.setImageTintList(iconColor);
-                        appIcon.setImageTintMode(Mode.MULTIPLY);
-                    }
-                }
                 mWM = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
                 // We can resolve the Gravity here by using the Locale for getting
                 // the layout direction
                 final Configuration config = mView.getContext().getResources().getConfiguration();
                 final int gravity = Gravity.getAbsoluteGravity(mGravity, config.getLayoutDirection());
-
                 mParams.gravity = gravity;
                 if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.FILL_HORIZONTAL) {
                     mParams.horizontalWeight = 1.0f;

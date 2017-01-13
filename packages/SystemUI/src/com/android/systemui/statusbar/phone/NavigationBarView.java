@@ -46,7 +46,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import com.android.systemui.R;
 import com.android.systemui.RecentsComponent;
-import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.statusbar.policy.DeadZone;
 
@@ -68,8 +67,6 @@ public class NavigationBarView extends LinearLayout {
 
     boolean mVertical;
     boolean mScreenOn;
-    boolean mLeftInLandscape;
-
     private int mCurrentRotation = -1;
 
     boolean mShowMenu;
@@ -535,11 +532,6 @@ public class NavigationBarView extends LinearLayout {
         updateCurrentView();
     }
 
-    public void setLeftInLandscape(boolean leftInLandscape) {
-        mLeftInLandscape = leftInLandscape;
-        mDeadZone.setStartFromRight(leftInLandscape);
-    }
-
     public boolean needsReorient(int rotation) {
         return mCurrentRotation != rotation;
     }
@@ -573,7 +565,6 @@ public class NavigationBarView extends LinearLayout {
         getImeSwitchButton().setOnClickListener(mImeSwitcherClickListener);
 
         mDeadZone = (DeadZone) mCurrentView.findViewById(R.id.deadzone);
-        mDeadZone.setStartFromRight(mLeftInLandscape);
 
         // force the low profile & disabled states into compliance
         mBarTransitions.init();

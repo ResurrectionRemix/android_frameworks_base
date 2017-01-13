@@ -21,7 +21,6 @@ import static android.service.notification.NotificationListenerService.Ranking.I
 import static android.service.notification.NotificationListenerService.Ranking.IMPORTANCE_HIGH;
 import static android.service.notification.NotificationListenerService.Ranking.IMPORTANCE_LOW;
 import static android.service.notification.NotificationListenerService.Ranking.IMPORTANCE_MAX;
-import static android.service.notification.NotificationListenerService.Ranking.importanceToLevel;
 
 import android.app.Notification;
 import android.content.Context;
@@ -149,13 +148,12 @@ public final class NotificationRecord {
                 || n.vibrate != null;
         stats.isNoisy = isNoisy;
 
-        int importanceLevel = importanceToLevel(importance);
-        if (!isNoisy && importanceLevel > importanceToLevel(IMPORTANCE_LOW)) {
+        if (!isNoisy && importance > IMPORTANCE_LOW) {
             importance = IMPORTANCE_LOW;
         }
 
         if (isNoisy) {
-            if (importanceLevel < importanceToLevel(IMPORTANCE_DEFAULT)) {
+            if (importance < IMPORTANCE_DEFAULT) {
                 importance = IMPORTANCE_DEFAULT;
             }
         }
@@ -320,7 +318,7 @@ public final class NotificationRecord {
 
     public void setContactAffinity(float contactAffinity) {
         mContactAffinity = contactAffinity;
-        if (importanceToLevel(mImportance) < importanceToLevel(IMPORTANCE_DEFAULT) &&
+        if (mImportance < IMPORTANCE_DEFAULT &&
                 mContactAffinity > ValidateNotificationPeople.VALID_CONTACT) {
             setImportance(IMPORTANCE_DEFAULT, getPeopleExplanation());
         }

@@ -30,7 +30,6 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import libcore.io.IoUtils;
 import libcore.io.Streams;
 
 /**

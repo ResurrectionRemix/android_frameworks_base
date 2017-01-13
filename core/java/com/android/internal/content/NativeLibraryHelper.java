@@ -62,8 +62,6 @@ public class NativeLibraryHelper {
     // that the cpuAbiOverride must be clear.
     public static final String CLEAR_ABI_OVERRIDE = "-";
 
-    private static final Object mRestoreconSync = new Object();
-
     /**
      * A handle to an opened package, consisting of one or more APKs. Used as
      * input to the various NativeLibraryHelper methods. Allows us to scan and
@@ -277,12 +275,8 @@ public class NativeLibraryHelper {
                 throw new IOException("Cannot chmod native library directory "
                         + path.getPath(), e);
             }
-        } else {
-            synchronized (mRestoreconSync) {
-                if (!SELinux.restorecon(path)) {
-                    throw new IOException("Cannot set SELinux context for " + path.getPath());
-                }
-            }
+        } else if (!SELinux.restorecon(path)) {
+            throw new IOException("Cannot set SELinux context for " + path.getPath());
         }
     }
 

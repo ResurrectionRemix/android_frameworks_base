@@ -106,8 +106,6 @@ public abstract class ConnectionService extends Service {
     private static final int MSG_PULL_EXTERNAL_CALL = 22;
     private static final int MSG_SEND_CALL_EVENT = 23;
     private static final int MSG_ON_EXTRAS_CHANGED = 24;
-    //Proprietary values starts after this.
-    private static final int MSG_ADD_PARTICIPANT_WITH_CONFERENCE = 30;
 
     private static Connection sNullConnection;
 
@@ -231,14 +229,6 @@ public abstract class ConnectionService extends Service {
         @Override
         public void splitFromConference(String callId) {
             mHandler.obtainMessage(MSG_SPLIT_FROM_CONFERENCE, callId).sendToTarget();
-        }
-
-        @Override
-        public void addParticipantWithConference(String callId, String participant) {
-            SomeArgs args = SomeArgs.obtain();
-            args.arg1 = callId;
-            args.arg2 = participant;
-            mHandler.obtainMessage(MSG_ADD_PARTICIPANT_WITH_CONFERENCE, args).sendToTarget();
         }
 
         @Override
@@ -400,17 +390,6 @@ public abstract class ConnectionService extends Service {
                 case MSG_SPLIT_FROM_CONFERENCE:
                     splitFromConference((String) msg.obj);
                     break;
-                case MSG_ADD_PARTICIPANT_WITH_CONFERENCE: {
-                    SomeArgs args = (SomeArgs) msg.obj;
-                    try {
-                        String callId = (String) args.arg1;
-                        String participant = (String) args.arg2;
-                        addParticipantWithConference(callId, participant);
-                    } finally {
-                        args.recycle();
-                    }
-                    break;
-                }
                 case MSG_MERGE_CONFERENCE:
                     mergeConference((String) msg.obj);
                     break;
@@ -520,7 +499,7 @@ public abstract class ConnectionService extends Service {
                 Conference conference,
                 int connectionProperties) {
             String id = mIdByConference.get(conference);
-            Log.d(this, "call properties: conference: %s",
+            Log.d(this, "call capabilities: conference: %s",
                     Connection.propertiesToString(connectionProperties));
             mAdapter.setConnectionProperties(id, connectionProperties);
         }
@@ -964,17 +943,6 @@ public abstract class ConnectionService extends Service {
         }
     }
 
-    private void addParticipantWithConference(String callId, String participant) {
-        Log.d(this, "ConnectionService addParticipantWithConference(%s, %s)", participant, callId);
-        Conference conference = findConferenceForAction(callId, "addParticipantWithConference");
-        Connection connection = findConnectionForAction(callId, "addParticipantWithConnection");
-        if (connection != getNullConnection()) {
-            onAddParticipant(connection, participant);
-        } else if (conference != getNullConference()) {
-            conference.onAddParticipant(participant);
-        }
-    }
-
     private void mergeConference(String callId) {
         Log.d(this, "mergeConference(%s)", callId);
         Conference conference = findConferenceForAction(callId, "mergeConference");
@@ -1326,19 +1294,6 @@ public abstract class ConnectionService extends Service {
      * @param connection2 A connection to merge into a conference call.
      */
     public void onConference(Connection connection1, Connection connection2) {}
-
-    /**
-     * Add participant with connection. Invoked when user has made a request to add
-     * participant with specified connection. In response, the participant should add with
-     * the connection.
-     *
-     * @param connection A connection where participant need to add.
-     * @param participant Address of participant which will be added.
-     * @return
-     *
-     * @hide
-     */
-    public void onAddParticipant(Connection connection, String participant) {}
 
     /**
      * Indicates that a remote conference has been created for existing {@link RemoteConnection}s.

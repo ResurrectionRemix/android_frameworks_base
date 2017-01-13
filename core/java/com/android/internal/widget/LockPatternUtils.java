@@ -97,11 +97,6 @@ public class LockPatternUtils {
      */
     public static final int MIN_LOCK_PASSWORD_SIZE = 4;
 
-    /*
-     * The default size of the pattern lockscreen. Ex: 3x3
-     */
-    public static final byte PATTERN_SIZE_DEFAULT = 3;
-
     /**
      * The minimum number of dots the user must include in a wrong pattern
      * attempt for it to be counted against the counts that affect
@@ -320,9 +315,10 @@ public class LockPatternUtils {
      */
     public byte[] verifyPattern(List<LockPatternView.Cell> pattern, long challenge, int userId)
             throws RequestThrottledException {
+        throwIfCalledOnMainThread();
         try {
             VerifyCredentialResponse response =
-                getLockSettings().verifyPattern(patternToString(pattern, userId), challenge, userId);
+                getLockSettings().verifyPattern(patternToString(pattern), challenge, userId);
             if (response == null) {
                 // Shouldn't happen
                 return null;
@@ -345,11 +341,11 @@ public class LockPatternUtils {
      * always returns true.
      * @param pattern The pattern to check.
      * @return Whether the pattern matches the stored one.
-     
+     */
     public boolean checkPattern(List<LockPatternView.Cell> pattern, int userId)
             throws RequestThrottledException {
-        return checkPattern(pattern, userId, null /* progressCallback );
-    } */
+        return checkPattern(pattern, userId, null /* progressCallback */);
+    }
 
     /**
      * Check to see if a pattern matches the saved pattern.  If no pattern exists,
@@ -360,9 +356,10 @@ public class LockPatternUtils {
     public boolean checkPattern(List<LockPatternView.Cell> pattern, int userId,
             @Nullable CheckCredentialProgressCallback progressCallback)
             throws RequestThrottledException {
+        throwIfCalledOnMainThread();
         try {
             VerifyCredentialResponse response =
-                    getLockSettings().checkPattern(patternToString(pattern, userId), userId,
+                    getLockSettings().checkPattern(patternToString(pattern), userId,
                             wrapCallback(progressCallback));
 
             if (response.getResponseCode() == VerifyCredentialResponse.RESPONSE_OK) {
@@ -388,6 +385,7 @@ public class LockPatternUtils {
      */
     public byte[] verifyPassword(String password, long challenge, int userId)
             throws RequestThrottledException {
+        throwIfCalledOnMainThread();
         try {
             VerifyCredentialResponse response =
                     getLockSettings().verifyPassword(password, challenge, userId);
@@ -416,6 +414,7 @@ public class LockPatternUtils {
      */
     public byte[] verifyTiedProfileChallenge(String password, boolean isPattern, long challenge,
             int userId) throws RequestThrottledException {
+        throwIfCalledOnMainThread();
         try {
             VerifyCredentialResponse response =
                     getLockSettings().verifyTiedProfileChallenge(password, isPattern, challenge,
@@ -452,6 +451,7 @@ public class LockPatternUtils {
     public boolean checkPassword(String password, int userId,
             @Nullable CheckCredentialProgressCallback progressCallback)
             throws RequestThrottledException {
+        throwIfCalledOnMainThread();
         try {
             VerifyCredentialResponse response =
                     getLockSettings().checkPassword(password, userId, wrapCallback(progressCallback));
@@ -587,7 +587,7 @@ public class LockPatternUtils {
             // well, we tried...
         }
 
-        if (userHandle == UserHandle.USER_SYSTEM && !isSeparateEncryptionPasswordEnabled()) {
+        if (userHandle == UserHandle.USER_SYSTEM) {
             // Set the encryption password to default.
             updateEncryptionPassword(StorageManager.CRYPT_TYPE_DEFAULT, null);
             setCredentialRequiredToDecrypt(false);
@@ -642,17 +642,16 @@ public class LockPatternUtils {
                         + MIN_LOCK_PATTERN_SIZE + " dots long.");
             }
 
-            getLockSettings().setLockPattern(patternToString(pattern, userId), savedPattern, userId);
+            getLockSettings().setLockPattern(patternToString(pattern), savedPattern, userId);
             DevicePolicyManager dpm = getDevicePolicyManager();
 
             // Update the device encryption password.
             if (userId == UserHandle.USER_SYSTEM
-                    && LockPatternUtils.isDeviceEncryptionEnabled()
-                    && !isSeparateEncryptionPasswordEnabled()) {
+                    && LockPatternUtils.isDeviceEncryptionEnabled()) {
                 if (!shouldEncryptWithCredentials(true)) {
                     clearEncryptionPassword();
                 } else {
-                    String stringPattern = patternToString(pattern, userId);
+                    String stringPattern = patternToString(pattern);
                     updateEncryptionPassword(StorageManager.CRYPT_TYPE_PATTERN, stringPattern);
                 }
             }
@@ -665,17 +664,6 @@ public class LockPatternUtils {
             onAfterChangingPassword(userId);
         } catch (RemoteException re) {
             Log.e(TAG, "Couldn't save lock pattern " + re);
-        }
-    }
-
-    /**
-     * clears stored password.
-     */
-    public void sanitizePassword() {
-        try {
-            getLockSettings().sanitizePassword();
-        } catch (RemoteException re) {
-            Log.e(TAG, "Couldn't sanitize password" + re);
         }
     }
 
@@ -881,8 +869,7 @@ public class LockPatternUtils {
 
             // Update the device encryption password.
             if (userHandle == UserHandle.USER_SYSTEM
-                    && LockPatternUtils.isDeviceEncryptionEnabled()
-                    && !isSeparateEncryptionPasswordEnabled()) {
+                    && LockPatternUtils.isDeviceEncryptionEnabled()) {
                 if (!shouldEncryptWithCredentials(true)) {
                     clearEncryptionPassword();
                 } else {
@@ -1055,18 +1042,17 @@ public class LockPatternUtils {
      * @param string The pattern serialized with {@link #patternToString}
      * @return The pattern.
      */
-    public static List<LockPatternView.Cell> stringToPattern(String string, byte gridSize) {
+    public static List<LockPatternView.Cell> stringToPattern(String string) {
         if (string == null) {
             return null;
         }
-        List<LockPatternView.Cell> result = Lists.newArrayList();
 
-        LockPatternView.Cell.updateSize(gridSize);
+        List<LockPatternView.Cell> result = Lists.newArrayList();
 
         final byte[] bytes = string.getBytes();
         for (int i = 0; i < bytes.length; i++) {
             byte b = (byte) (bytes[i] - '1');
-            result.add(LockPatternView.Cell.of(b / gridSize, b % gridSize, gridSize));
+            result.add(LockPatternView.Cell.of(b / 3, b % 3));
         }
         return result;
     }
@@ -1076,26 +1062,16 @@ public class LockPatternUtils {
      * @param pattern The pattern.
      * @return The pattern in string form.
      */
-    public String patternToString(List<LockPatternView.Cell> pattern, int userId) {
-        return patternToString(pattern, getLockPatternSize(userId));
-    }
-
-    /**
-     * Serialize a pattern.
-     * @param pattern The pattern.
-     * @return The pattern in string form.
-     */
-    public static String patternToString(List<LockPatternView.Cell> pattern, byte gridSize) {
+    public static String patternToString(List<LockPatternView.Cell> pattern) {
         if (pattern == null) {
             return "";
         }
         final int patternSize = pattern.size();
-        LockPatternView.Cell.updateSize(gridSize);
 
         byte[] res = new byte[patternSize];
         for (int i = 0; i < patternSize; i++) {
             LockPatternView.Cell cell = pattern.get(i);
-            res[i] = (byte) (cell.getRow() * gridSize + cell.getColumn() + '1');
+            res[i] = (byte) (cell.getRow() * 3 + cell.getColumn() + '1');
         }
         return new String(res);
     }
@@ -1105,6 +1081,7 @@ public class LockPatternUtils {
             return "";
         }
         final int patternSize = pattern.length();
+
         byte[] res = new byte[patternSize];
         final byte[] bytes = pattern.getBytes();
         for (int i = 0; i < patternSize; i++) {
@@ -1120,7 +1097,7 @@ public class LockPatternUtils {
      * @param pattern the gesture pattern.
      * @return the hash of the pattern in a byte array.
      */
-    public static byte[] patternToHash(List<LockPatternView.Cell> pattern, byte gridSize) {
+    public static byte[] patternToHash(List<LockPatternView.Cell> pattern) {
         if (pattern == null) {
             return null;
         }
@@ -1129,7 +1106,7 @@ public class LockPatternUtils {
         byte[] res = new byte[patternSize];
         for (int i = 0; i < patternSize; i++) {
             LockPatternView.Cell cell = pattern.get(i);
-            res[i] = (byte) (cell.getRow() * gridSize + cell.getColumn());
+            res[i] = (byte) (cell.getRow() * 3 + cell.getColumn());
         }
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -1288,112 +1265,12 @@ public class LockPatternUtils {
         }
     }
 
-    private void updateEncryptionPasswordFromPassword(String password) {
-        if (!TextUtils.isEmpty(password)) {
-            int computedQuality = computePasswordQuality(password);
-            boolean numeric = computedQuality
-                == DevicePolicyManager.PASSWORD_QUALITY_NUMERIC;
-            boolean numericComplex = computedQuality
-                == DevicePolicyManager.PASSWORD_QUALITY_NUMERIC_COMPLEX;
-            int type = numeric || numericComplex ? StorageManager.CRYPT_TYPE_PIN
-                : StorageManager.CRYPT_TYPE_PASSWORD;
-            updateEncryptionPassword(type, password);
-        } else {
-            clearEncryptionPassword();
-        }
-    }
-
-    /**
-     * Set the encryption password separately from the lockscreen password.
-     *
-     * @param password The password to save
-     */
-    public void setSeparateEncryptionPassword(String password) {
-        updateEncryptionPasswordFromPassword(password);
-        setSeparateEncryptionPasswordEnabled(true);
-    }
-
-    /**
-     * Replace the separate encryption password by tying it to the lockscreen
-     * password. No change will occur if the provided lockscreen password is
-     * incorrect.
-     *
-     * @param password The current lockscreen password
-     * @return Whether the lockscreen password was correct.
-     */
-    public void replaceSeparateEncryptionPassword(String password) {
-        updateEncryptionPasswordFromPassword(password);
-        setSeparateEncryptionPasswordEnabled(false);
-    }
-
-    /**
-     * Replace the separate encryption password by tying it to the lockscreen
-     * pattern. No change will occur if the provided lockscreen password is
-     * incorrect.
-     *
-     * @param pattern The current lockscreen pattern
-     * @return Whether the lockscreen pattern was correct.
-     */
-    public void replaceSeparateEncryptionPasswordWithPattern(List<LockPatternView.Cell> pattern,
-            byte gridSize) {
-        String stringPattern = patternToString(pattern, gridSize);
-        updateEncryptionPassword(StorageManager.CRYPT_TYPE_PATTERN, stringPattern);
-        setSeparateEncryptionPasswordEnabled(false);
-    }
-
-    /**
-     * @return Whether the encryption password is separate from the lockscreen password.
-     */
-    public boolean isSeparateEncryptionPasswordEnabled() {
-        return getBoolean(Settings.Secure.LOCK_SEPARATE_ENCRYPTION_PASSWORD,
-                false, UserHandle.USER_SYSTEM);
-    }
-
-    private void setSeparateEncryptionPasswordEnabled(boolean enabled) {
-        setBoolean(Settings.Secure.LOCK_SEPARATE_ENCRYPTION_PASSWORD,
-                enabled, UserHandle.USER_SYSTEM);
-    }
-
     /**
      * @return Whether tactile feedback for the pattern is enabled.
      */
     public boolean isTactileFeedbackEnabled() {
         return Settings.System.getIntForUser(mContentResolver,
                 Settings.System.HAPTIC_FEEDBACK_ENABLED, 1, UserHandle.USER_CURRENT) != 0;
-    }
-
-    /**
-     * @return the pattern lockscreen size
-     */
-    public byte getLockPatternSize(int userId) {
-        long size = getLong(Settings.Secure.LOCK_PATTERN_SIZE, -1, userId);
-        if (size > 0 && size < 128) {
-            return (byte) size;
-        }
-        return LockPatternUtils.PATTERN_SIZE_DEFAULT;
-    }
-
-    /**
-     * Set the pattern lockscreen size
-     */
-    public void setLockPatternSize(long size, int userId) {
-        setLong(Settings.Secure.LOCK_PATTERN_SIZE, size, userId);
-    }
-
-    public void setVisibleDotsEnabled(boolean enabled, int userId) {
-        setBoolean(Settings.Secure.LOCK_DOTS_VISIBLE, enabled, userId);
-    }
-
-    public boolean isVisibleDotsEnabled(int userId) {
-        return getBoolean(Settings.Secure.LOCK_DOTS_VISIBLE, true, userId);
-    }
-
-    public void setShowErrorPath(boolean enabled, int userId) {
-        setBoolean(Settings.Secure.LOCK_SHOW_ERROR_PATH, enabled, userId);
-    }
-
-    public boolean isShowErrorPath(int userId) {
-        return getBoolean(Settings.Secure.LOCK_SHOW_ERROR_PATH, true, userId);
     }
 
     /**
@@ -1433,7 +1310,7 @@ public class LockPatternUtils {
         return deadline;
     }
 
-    protected boolean getBoolean(String secureSettingKey, boolean defaultValue, int userId) {
+    private boolean getBoolean(String secureSettingKey, boolean defaultValue, int userId) {
         try {
             return getLockSettings().getBoolean(secureSettingKey, defaultValue, userId);
         } catch (RemoteException re) {
@@ -1441,7 +1318,7 @@ public class LockPatternUtils {
         }
     }
 
-    protected void setBoolean(String secureSettingKey, boolean enabled, int userId) {
+    private void setBoolean(String secureSettingKey, boolean enabled, int userId) {
         try {
             getLockSettings().setBoolean(secureSettingKey, enabled, userId);
         } catch (RemoteException re) {
@@ -1450,7 +1327,7 @@ public class LockPatternUtils {
         }
     }
 
-    protected long getLong(String secureSettingKey, long defaultValue, int userHandle) {
+    private long getLong(String secureSettingKey, long defaultValue, int userHandle) {
         try {
             return getLockSettings().getLong(secureSettingKey, defaultValue, userHandle);
         } catch (RemoteException re) {
@@ -1458,7 +1335,7 @@ public class LockPatternUtils {
         }
     }
 
-    protected void setLong(String secureSettingKey, long value, int userHandle) {
+    private void setLong(String secureSettingKey, long value, int userHandle) {
         try {
             getLockSettings().setLong(secureSettingKey, value, userHandle);
         } catch (RemoteException re) {
@@ -1467,7 +1344,7 @@ public class LockPatternUtils {
         }
     }
 
-    protected String getString(String secureSettingKey, int userHandle) {
+    private String getString(String secureSettingKey, int userHandle) {
         try {
             return getLockSettings().getString(secureSettingKey, null, userHandle);
         } catch (RemoteException re) {
@@ -1475,7 +1352,7 @@ public class LockPatternUtils {
         }
     }
 
-    protected void setString(String secureSettingKey, String value, int userHandle) {
+    private void setString(String secureSettingKey, String value, int userHandle) {
         try {
             getLockSettings().setString(secureSettingKey, value, userHandle);
         } catch (RemoteException re) {
@@ -1576,6 +1453,12 @@ public class LockPatternUtils {
 
     private boolean shouldEncryptWithCredentials(boolean defaultValue) {
         return isCredentialRequiredToDecrypt(defaultValue) && !isDoNotAskCredentialsOnBootSet();
+    }
+
+    private void throwIfCalledOnMainThread() {
+        if (Looper.getMainLooper().isCurrentThread()) {
+            throw new IllegalStateException("should not be called from the main thread.");
+        }
     }
 
     public void registerStrongAuthTracker(final StrongAuthTracker strongAuthTracker) {

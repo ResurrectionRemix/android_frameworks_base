@@ -47,11 +47,8 @@ import static com.android.server.NetworkManagementService.NetdResponseCode.TtyLi
 import static com.android.server.NetworkManagementSocketTagger.PROP_QTAGUID_ENABLED;
 import android.annotation.NonNull;
 import android.app.ActivityManagerNative;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
@@ -93,12 +90,10 @@ import android.util.SparseIntArray;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.net.NetworkStatsFactory;
-import com.android.internal.R;
 import com.android.internal.util.HexDump;
 import com.android.internal.util.Preconditions;
 import com.android.server.NativeDaemonConnector.Command;
 import com.android.server.NativeDaemonConnector.SensitiveArg;
-import com.android.server.NetPluginDelegate;
 import com.android.server.net.LockdownVpnTracker;
 import com.google.android.collect.Maps;
 
@@ -180,7 +175,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         public static final int InterfaceDnsServerInfo    = 615;
         public static final int RouteChange               = 616;
         public static final int StrictCleartext           = 617;
-        public static final int InterfaceMessage          = 618;
     }
 
     /* Defaults for resolver parameters. */
@@ -354,13 +348,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         } else {
             prepareNativeDaemon();
         }
-        //Registering the receiver for Zerobalance blocking/unblocking
-        if (mContext.getResources().getBoolean(R.bool.config_zero_balance_operator)) {
-            final IntentFilter restrictFilter = new IntentFilter();
-            restrictFilter.addAction("org.codeaurora.restrictData");
-            mContext.registerReceiver(mZeroBalanceReceiver, restrictFilter);
-        }
-        if (DBG) Slog.d(TAG, "ZeroBalance registering receiver");
     }
 
     private IBatteryStats getBatteryStats() {
@@ -436,21 +423,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         } finally {
             mObservers.finishBroadcast();
         }
-    }
-
-    /**
-     * Notify our observers of a change in the data activity state of the interface
-     */
-    private void notifyInterfaceMessage(String message) {
-        final int length = mObservers.beginBroadcast();
-        for (int i = 0; i < length; i++) {
-            try {
-                mObservers.getBroadcastItem(i). interfaceMessageRecevied(message);
-            } catch (RemoteException e) {
-            } catch (RuntimeException e) {
-            }
-        }
-        mObservers.finishBroadcast();
     }
 
     /**
@@ -864,22 +836,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                     }
                     throw new IllegalStateException(errorMessage);
                     // break;
-             case NetdResponseCode.InterfaceMessage:
-                    /*
-                     * An message arrived in network interface.
-                     * Format: "NNN IfaceMessage <3>AP-STA-CONNECTED 00:08:22:64:9d:84
-                     */
-                    if (cooked.length < 3 || !cooked[2].equals("IfaceMessage")) {
-                        throw new IllegalStateException(errorMessage);
-                    }
-                    Slog.d(TAG, "onEvent: "+ raw);
-                    if(cooked[5] != null) {
-                        notifyInterfaceMessage(cooked[4] + " " + cooked[5]);
-                    } else {
-                        notifyInterfaceMessage(cooked[4]);
-                    }
-                    return true;
-                // break;
             case NetdResponseCode.InterfaceClassActivity:
                     /*
                      * An network interface class state changed (active/idle)
@@ -1466,7 +1422,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         } catch (SocketException e) {
             throw new IllegalStateException(e);
         }
-        NetPluginDelegate.natStarted(internalInterface,externalInterface);
     }
 
     @Override
@@ -1477,7 +1432,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         } catch (SocketException e) {
             throw new IllegalStateException(e);
         }
-        NetPluginDelegate.natStopped(internalInterface,externalInterface);
     }
 
     @Override
@@ -1547,28 +1501,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             if (wifiConfig == null) {
                 args = new Object[] {"set", wlanIface};
             } else {
-                String ssid_mode = "broadcast";
-                if (mContext.getResources().getBoolean(
-                        com.android.internal.R.bool
-                        .config_regional_hotspot_show_broadcast_ssid_checkbox)
-                        && wifiConfig.hiddenSSID) {
-                    ssid_mode = "hidden";
-                }
-                if (mContext.getResources().getBoolean(
-                        com.android.internal.R.bool
-                        .config_regional_hotspot_show_maximum_connection_enable)) {
-                    int clientNum = Settings.System.getInt(mContext.getContentResolver(),
-                            "WIFI_HOTSPOT_MAX_CLIENT_NUM", 8);
-                    if (DBG) Slog.d(TAG, "clientNum: " + clientNum);
-                    args = new Object[] {"set", wlanIface, wifiConfig.SSID,
-                            ssid_mode, Integer.toString(wifiConfig.apChannel),
-                            getSecurityType(wifiConfig),
-                            new SensitiveArg(wifiConfig.preSharedKey), clientNum};
-                } else {
-                    args = new Object[] {"set", wlanIface, wifiConfig.SSID,
-                            ssid_mode, Integer.toString(wifiConfig.apChannel),
-                            getSecurityType(wifiConfig), new SensitiveArg(wifiConfig.preSharedKey)};
-                }
+                args = new Object[] {"set", wlanIface, wifiConfig.SSID,
+                        "broadcast", Integer.toString(wifiConfig.apChannel),
+                        getSecurityType(wifiConfig), new SensitiveArg(wifiConfig.preSharedKey)};
             }
             executeOrLogWithMessage(SOFT_AP_COMMAND, args, NetdResponseCode.SoftapStatusResult,
                     SOFT_AP_COMMAND_SUCCESS, logMsg);
@@ -1577,16 +1512,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             args = new Object[] {"startap"};
             executeOrLogWithMessage(SOFT_AP_COMMAND, args, NetdResponseCode.SoftapStatusResult,
                     SOFT_AP_COMMAND_SUCCESS, logMsg);
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
-        }
-    }
-
-    @Override
-    public void startWigigAccessPoint() {
-        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
-        try {
-            mConnector.execute("softap", "qccmd", "set", "enable_wigig_softap=1");
         } catch (NativeDaemonConnectorException e) {
             throw e.rethrowAsParcelableException();
         }
@@ -1633,16 +1558,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             executeOrLogWithMessage(SOFT_AP_COMMAND, args, NetdResponseCode.SoftapStatusResult,
                     SOFT_AP_COMMAND_SUCCESS, logMsg);
             wifiFirmwareReload(wlanIface, "STA");
-        } catch (NativeDaemonConnectorException e) {
-            throw e.rethrowAsParcelableException();
-        }
-    }
-
-    @Override
-    public void stopWigigAccessPoint() {
-        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
-        try {
-            mConnector.execute("softap", "qccmd", "set", "enable_wigig_softap=0");
         } catch (NativeDaemonConnectorException e) {
             throw e.rethrowAsParcelableException();
         }
@@ -2860,31 +2775,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void removeInterfaceFromLocalNetwork(String iface) {
         modifyInterfaceInNetwork("remove", "local", iface);
     }
-
-    private BroadcastReceiver mZeroBalanceReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            boolean isBlockAllData = false;
-            if(intent != null
-                    && intent.getAction().equals("org.codeaurora.restrictData")) {
-                isBlockAllData = intent.getBooleanExtra("Restrict",false);
-                Log.wtf("ZeroBalance", "Intent value to block unblock data"+isBlockAllData);
-            }
-            mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
-
-            // silently discard when control disabled
-            // TODO: eventually migrate to be always enabled
-            if (!mBandwidthControlEnabled) return;
-            try {
-                Log.wtf("ZeroBalance", "before calling connector Intent"
-                        +"value to block unblock data"+isBlockAllData);
-                mConnector.execute("bandwidth",
-                        isBlockAllData ? "blockAllData" : "unblockAllData");
-            } catch (NativeDaemonConnectorException e) {
-                throw e.rethrowAsParcelableException();
-            }
-        }
-    };
 
     @Override
     public int removeRoutesFromLocalNetwork(List<RouteInfo> routes) {

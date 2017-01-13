@@ -14,13 +14,7 @@
 
 package com.android.systemui.qs;
 
-import android.content.ContentResolver;
-import android.database.ContentObserver;
 import android.graphics.Path;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
@@ -72,8 +66,6 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
     private int mNumQuickTiles;
     private float mLastPosition;
     private QSTileHost mHost;
-    private Handler mHandler = new Handler();
-    private SettingsObserver mSettingsObserver;
 
     public QSAnimator(QSContainer container, QuickQSPanel quickPanel, QSPanel panel) {
         mQsContainer = container;
@@ -88,7 +80,6 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
         } else {
             Log.w(TAG, "QS Not using page layout");
         }
-        mSettingsObserver = new SettingsObserver(mHandler);
     }
 
     public void onRtlChanged() {
@@ -113,7 +104,6 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
     public void onViewAttachedToWindow(View v) {
         TunerService.get(mQsContainer.getContext()).addTunable(this, ALLOW_FANCY_ANIMATION,
                 MOVE_FULL_ROWS, QuickQSPanel.NUM_QUICK_TILES);
-        mSettingsObserver.observe();
     }
 
     @Override
@@ -122,7 +112,6 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             mHost.removeCallback(this);
         }
         TunerService.get(mQsContainer.getContext()).removeTunable(this);
-        mSettingsObserver.unobserve();
     }
 
     @Override
@@ -180,30 +169,29 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             if (count < mNumQuickTiles && mAllowFancy) {
                 // Quick tiles.
                 QSTileBaseView quickTileView = mQuickQsPanel.getTileView(tile);
-                if (quickTileView != null) {
-                    lastX = loc1[0];
-                    getRelativePosition(loc1, quickTileView.getIcon(), mQsContainer);
-                    getRelativePosition(loc2, tileIcon, mQsContainer);
-                    final int xDiff = loc2[0] - loc1[0];
-                    final int yDiff = loc2[1] - loc1[1];
-                    lastXDiff = loc1[0] - lastX;
-                    // Move the quick tile right from its location to the new one.
-                    translationXBuilder.addFloat(quickTileView, "translationX", 0, xDiff);
-                    translationYBuilder.addFloat(quickTileView, "translationY", 0, yDiff);
 
-                    // Counteract the parent translation on the tile. So we have a static base to
-                    // animate the label position off from.
-                    firstPageBuilder.addFloat(tileView, "translationY", mQsPanel.getHeight(), 0);
+                lastX = loc1[0];
+                getRelativePosition(loc1, quickTileView.getIcon(), mQsContainer);
+                getRelativePosition(loc2, tileIcon, mQsContainer);
+                final int xDiff = loc2[0] - loc1[0];
+                final int yDiff = loc2[1] - loc1[1];
+                lastXDiff = loc1[0] - lastX;
+                // Move the quick tile right from its location to the new one.
+                translationXBuilder.addFloat(quickTileView, "translationX", 0, xDiff);
+                translationYBuilder.addFloat(quickTileView, "translationY", 0, yDiff);
 
-                    // Move the real tile's label from the quick tile position to its final
-                    // location.
-                    translationXBuilder.addFloat(label, "translationX", -xDiff, 0);
-                    translationYBuilder.addFloat(label, "translationY", -yDiff, 0);
+                // Counteract the parent translation on the tile. So we have a static base to
+                // animate the label position off from.
+                firstPageBuilder.addFloat(tileView, "translationY", mQsPanel.getHeight(), 0);
 
-                    mTopFiveQs.add(tileIcon);
-                    mAllViews.add(tileIcon);
-                    mAllViews.add(quickTileView);
-                }
+                // Move the real tile's label from the quick tile position to its final
+                // location.
+                translationXBuilder.addFloat(label, "translationX", -xDiff, 0);
+                translationYBuilder.addFloat(label, "translationY", -yDiff, 0);
+
+                mTopFiveQs.add(tileIcon);
+                mAllViews.add(tileIcon);
+                mAllViews.add(quickTileView);
             } else if (mFullRows && isIconInAnimatedRow(count)) {
                 // TODO: Refactor some of this, it shares a lot with the above block.
                 // Move the last tile position over by the last difference between quick tiles.
@@ -382,40 +370,4 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             setPosition(mLastPosition);
         }
     };
-
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mQsContainer.getContext().getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_FANCY_ANIMATION), false, this, UserHandle.USER_ALL);
-            update();
-        }
-
-        void unobserve() {
-            ContentResolver resolver = mQsContainer.getContext().getContentResolver();
-            resolver.unregisterContentObserver(this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_FANCY_ANIMATION))) {
-                if (!mAllowFancy) {
-                    clearAnimationState();
-                }
-            }
-            updateAnimators();
-            update();
-        }
-
-        public void update() {
-            ContentResolver resolver = mQsContainer.getContext().getContentResolver();
-            mAllowFancy = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_FANCY_ANIMATION, 1, UserHandle.USER_CURRENT) == 1;
-        }
-    }
 }

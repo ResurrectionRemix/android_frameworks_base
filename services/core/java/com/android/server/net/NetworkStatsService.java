@@ -74,7 +74,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.database.ContentObserver;
 import android.net.DataUsageRequest;
 import android.net.IConnectivityManager;
 import android.net.INetworkManagementEventObserver;
@@ -123,7 +122,6 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.EventLogTags;
-import com.android.server.NetPluginDelegate;
 import com.android.server.connectivity.Tethering;
 
 import java.io.File;
@@ -250,7 +248,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     /** Must be set in factory by calling #setHandler. */
     private Handler mHandler;
     private Handler.Callback mHandlerCallback;
-    private Handler mStatsHandler = null;
 
     private boolean mSystemReady;
     private long mPersistThreshold = 2 * MB_IN_BYTES;
@@ -283,11 +280,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         handlerThread.start();
         Handler handler = new Handler(handlerThread.getLooper(), callback);
         service.setHandler(handler, callback);
-
-        HandlerThread mStatsThread = new HandlerThread("StatsObserver");
-        mStatsThread.start();
-        Handler mStatsHandler = new Handler(mStatsThread.getLooper());
-
         return service;
     }
 
@@ -306,10 +298,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mStatsObservers = checkNotNull(statsObservers, "missing NetworkStatsObservers");
         mSystemDir = checkNotNull(systemDir, "missing systemDir");
         mBaseDir = checkNotNull(baseDir, "missing baseDir");
-
-        ContentResolver contentResolver = context.getContentResolver();
-        contentResolver.registerContentObserver(Settings.Global.getUriFor(
-               NETSTATS_GLOBAL_ALERT_BYTES), false, mGlobalAlertBytesObserver);
     }
 
     @VisibleForTesting
@@ -472,18 +460,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             // ignored; service lives in system_server
         }
     }
-
-    private final ContentObserver mGlobalAlertBytesObserver =
-        new ContentObserver(mStatsHandler) {
-        public void onChange(boolean selfChange) {
-            long GlobalAlertBytes = mSettings.getGlobalAlertBytes(mPersistThreshold);
-            if (GlobalAlertBytes > 0) {
-                mGlobalAlertBytes = GlobalAlertBytes;
-            } else {
-                mGlobalAlertBytes = mPersistThreshold;
-            }
-        };
-    };
 
     @Override
     public INetworkStatsSession openSession() {
@@ -988,11 +964,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         final ArraySet<String> mobileIfaces = new ArraySet<>();
         for (NetworkState state : states) {
-            if (state.networkInfo.isConnected() && (state.networkCapabilities == null
-                        || !state.networkCapabilities.hasTransport(
-                                    NetworkCapabilities.TRANSPORT_CELLULAR)
-                        || state.networkCapabilities.hasCapability(
-                                    NetworkCapabilities.NET_CAPABILITY_INTERNET))) {
+            if (state.networkInfo.isConnected()) {
                 final boolean isMobile = isNetworkTypeMobile(state.networkInfo.getType());
                 final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, state);
 
@@ -1061,7 +1033,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final NetworkStats xtSnapshot = getNetworkStatsXtAndVt();
         final NetworkStats devSnapshot = mNetworkManager.getNetworkStatsSummaryDev();
 
-        NetPluginDelegate.getTetherStats(uidSnapshot, xtSnapshot, devSnapshot);
 
         // For xt/dev, we pass a null VPN array because usage is aggregated by UID, so VPN traffic
         // can't be reattributed to responsible apps.

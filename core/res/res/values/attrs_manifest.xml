@@ -1357,9 +1357,6 @@
         <attr name="description" />
         <attr name="protectionLevel" />
         <attr name="permissionFlags" />
-        <!--  @hide Allows permissions to be granted to specific application signatures,
-              which are defined in /system/etc/permissions/someapp.xml. -->
-        <attr name="allowViaWhitelist" format="boolean" />
     </declare-styleable>
 
     <!-- The <code>permission-group</code> tag declares a logical grouping of
@@ -1665,7 +1662,6 @@
          {@link #AndroidManifest manifest} tag. -->
     <declare-styleable name="AndroidManifestProtectedBroadcast" parent="AndroidManifest">
         <attr name="name" />
-        <attr name="permission" />
     </declare-styleable>
 
     <!-- Private tag to declare the original package name that this package is

@@ -143,8 +143,6 @@ import com.android.server.LocalServices;
 import com.android.server.UiThread;
 import com.android.server.Watchdog;
 import com.android.server.input.InputManagerService;
-import com.android.server.lights.Light;
-import com.android.server.lights.LightsManager;
 import com.android.server.policy.PhoneWindowManager;
 import com.android.server.power.ShutdownThread;
 
@@ -359,8 +357,6 @@ public class WindowManagerService extends IWindowManager.Stub
     private static final int ANIMATION_DURATION_SCALE = 2;
 
     final private KeyguardDisableHandler mKeyguardDisableHandler;
-
-    private final int mSfHwRotation;
 
     final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -674,14 +670,9 @@ public class WindowManagerService extends IWindowManager.Stub
         private final Uri mAnimationDurationScaleUri =
                 Settings.Global.getUriFor(Settings.Global.ANIMATOR_DURATION_SCALE);
 
-        private final Uri mDisableAnimationsUri =
-                Settings.System.getUriFor(Settings.System.DISABLE_TRANSITION_ANIMATIONS);
-
         public SettingsObserver() {
             super(new Handler());
             ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(mDisableAnimationsUri, false, this,
-                    UserHandle.USER_ALL);
             resolver.registerContentObserver(mDisplayInversionEnabledUri, false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(mWindowAnimationScaleUri, false, this,
@@ -700,8 +691,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
             if (mDisplayInversionEnabledUri.equals(uri)) {
                 updateCircularDisplayMaskIfNeeded();
-            } else if (mDisableAnimationsUri.equals(uri))  {
-                updateAnimationsDisabledSetting(getAnimationsDisabledByUser());
             } else {
                 @UpdateAnimationScaleMode
                 final int mode;
@@ -963,23 +952,6 @@ public class WindowManagerService extends IWindowManager.Stub
         }, 0);
     }
 
-    private void updateAnimationsDisabledSetting(boolean enabled) {
-        synchronized (mWindowMap) {
-            if (mAnimationsDisabled != enabled) {
-                mAnimationsDisabled = enabled;
-                dispatchNewAnimatorScaleLocked(null);
-            }
-        }
-    }
-
-    private boolean getAnimationsDisabledByUser() {
-        return Settings.System.getIntForUser(
-                mContext.getContentResolver(),
-                Settings.System.DISABLE_TRANSITION_ANIMATIONS,
-                0,
-                mCurrentUserId) == 1;
-    }
-
     private WindowManagerService(Context context, InputManagerService inputManager,
             boolean haveInputMethods, boolean showBootMsgs, boolean onlyCore) {
         mContext = context;
@@ -1024,10 +996,15 @@ public class WindowManagerService extends IWindowManager.Stub
                 new PowerManagerInternal.LowPowerModeListener() {
             @Override
             public void onLowPowerModeChanged(boolean enabled) {
-                updateAnimationsDisabledSetting(enabled);
+                synchronized (mWindowMap) {
+                    if (mAnimationsDisabled != enabled && !mAllowAnimationsInLowPowerMode) {
+                        mAnimationsDisabled = enabled;
+                        dispatchNewAnimatorScaleLocked(null);
+                    }
+                }
             }
         });
-        mAnimationsDisabled = getAnimationsDisabledByUser() || mPowerManagerInternal.getLowPowerModeEnabled();
+        mAnimationsDisabled = mPowerManagerInternal.getLowPowerModeEnabled();
         mScreenFrozenLock = mPowerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK, "SCREEN_FROZEN");
         mScreenFrozenLock.setReferenceCounted(false);
@@ -1087,9 +1064,6 @@ public class WindowManagerService extends IWindowManager.Stub
         } finally {
             SurfaceControl.closeTransaction();
         }
-
-        // Load hardware rotation from prop
-        mSfHwRotation = android.os.SystemProperties.getInt("ro.sf.hwrotation",0) / 90;
 
         showEmulatorDisplayOverlayIfNeeded();
     }
@@ -5795,11 +5769,6 @@ public class WindowManagerService extends IWindowManager.Stub
         mPointerEventDispatcher.unregisterInputEventListener(listener);
     }
 
-    @Override
-    public void addSystemUIVisibilityFlag(int flags) {
-        mLastStatusBarVisibility |= flags;
-    }
-
     // Called by window manager policy. Not exposed externally.
     @Override
     public int getLidState() {
@@ -6116,17 +6085,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
         mPolicy.enableScreenAfterBoot();
 
-        // clear any intrusive lighting which may still be on from the
-        // crypto landing ui
-        LightsManager lm = LocalServices.getService(LightsManager.class);
-        Light batteryLight = lm.getLight(LightsManager.LIGHT_ID_BATTERY);
-        Light notifLight = lm.getLight(LightsManager.LIGHT_ID_NOTIFICATIONS);
-        if (batteryLight != null) {
-            batteryLight.turnOff();
-        }
-        if (notifLight != null) {
-            notifLight.turnOff();
-        }
         // Make sure the last requested orientation has been applied.
         updateRotationUnchecked(false, false);
     }
@@ -6644,8 +6602,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
             // The screenshot API does not apply the current screen rotation.
             int rot = getDefaultDisplayContentLocked().getDisplay().getRotation();
-            // Allow for abnormal hardware orientation
-            rot = (rot + mSfHwRotation) % 4;
 
             if (rot == Surface.ROTATION_90 || rot == Surface.ROTATION_270) {
                 rot = (rot == Surface.ROTATION_90) ? Surface.ROTATION_270 : Surface.ROTATION_90;
@@ -10460,18 +10416,8 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     @Override
-    public boolean needsNavigationBar() {
-        return mPolicy.needsNavigationBar();
-    }
-
-    @Override
     public boolean hasNavigationBar() {
         return mPolicy.hasNavigationBar();
-    }
-
-    @Override
-    public boolean hasPermanentMenuKey() {
-        return mPolicy.hasPermanentMenuKey();
     }
 
     @Override

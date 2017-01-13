@@ -42,12 +42,6 @@
 
 #include <memory>
 
-#if HAVE_QC_TIME_SERVICES
-extern "C" {
-#include <private/time_genoff.h>
-}
-#endif
-
 namespace android {
 
 static const size_t N_ANDROID_TIMERFDS = ANDROID_ALARM_TYPE_COUNT + 1;
@@ -57,7 +51,6 @@ static const clockid_t android_alarm_to_clockid[N_ANDROID_TIMERFDS] = {
     CLOCK_BOOTTIME_ALARM,
     CLOCK_BOOTTIME,
     CLOCK_MONOTONIC,
-    CLOCK_POWEROFF_ALARM,
     CLOCK_REALTIME,
 };
 /* to match the legacy alarm driver implementation, we need an extra
@@ -70,7 +63,6 @@ public:
     virtual ~AlarmImpl();
 
     virtual int set(int type, struct timespec *ts) = 0;
-    virtual int clear(int type, struct timespec *ts) = 0;
     virtual int setTime(struct timeval *tv) = 0;
     virtual int waitForAlarm() = 0;
 
@@ -85,7 +77,6 @@ public:
     AlarmImplAlarmDriver(int fd) : AlarmImpl(&fd, 1) { }
 
     int set(int type, struct timespec *ts);
-    int clear(int type, struct timespec *ts);
     int setTime(struct timeval *tv);
     int waitForAlarm();
 };
@@ -98,7 +89,6 @@ public:
     ~AlarmImplTimerFd();
 
     int set(int type, struct timespec *ts);
-    int clear(int type, struct timespec *ts);
     int setTime(struct timeval *tv);
     int waitForAlarm();
 
@@ -126,30 +116,6 @@ int AlarmImplAlarmDriver::set(int type, struct timespec *ts)
     return ioctl(fds[0], ANDROID_ALARM_SET(type), ts);
 }
 
-int AlarmImplAlarmDriver::clear(int type, struct timespec *ts)
-{
-    return ioctl(fds[0], ANDROID_ALARM_CLEAR(type), ts);
-}
-
-#if HAVE_QC_TIME_SERVICES
-static int setTimeServicesTime(time_bases_type base, long int secs)
-{
-    int rc = 0;
-    time_genoff_info_type time_set;
-    uint64_t value = secs;
-    time_set.base = base;
-    time_set.unit = TIME_SECS;
-    time_set.operation = T_SET;
-    time_set.ts_val = &value;
-    rc = time_genoff_operation(&time_set);
-    if (rc) {
-        ALOGE("Error setting generic offset: %d. Still setting system time\n", rc);
-        rc = -1;
-    }
-    return rc;
-}
-#endif
-
 int AlarmImplAlarmDriver::setTime(struct timeval *tv)
 {
     struct timespec ts;
@@ -158,10 +124,6 @@ int AlarmImplAlarmDriver::setTime(struct timeval *tv)
     ts.tv_sec = tv->tv_sec;
     ts.tv_nsec = tv->tv_usec * 1000;
     res = ioctl(fds[0], ANDROID_ALARM_SET_RTC, &ts);
-#if HAVE_QC_TIME_SERVICES
-    setTimeServicesTime(ATS_USER, (tv->tv_sec));
-#endif
-
     if (res < 0)
         ALOGV("ANDROID_ALARM_SET_RTC ioctl failed: %s\n", strerror(errno));
     return res;
@@ -192,23 +154,6 @@ int AlarmImplTimerFd::set(int type, struct timespec *ts)
     }
     /* timerfd interprets 0 = disarm, so replace with a practically
        equivalent deadline of 1 ns */
-
-    struct itimerspec spec;
-    memset(&spec, 0, sizeof(spec));
-    memcpy(&spec.it_value, ts, sizeof(spec.it_value));
-
-    return timerfd_settime(fds[type], TFD_TIMER_ABSTIME, &spec, NULL);
-}
-
-int AlarmImplTimerFd::clear(int type, struct timespec *ts)
-{
-    if (type > ANDROID_ALARM_TYPE_COUNT) {
-        errno = EINVAL;
-        return -1;
-    }
-
-    ts->tv_sec = 0;
-    ts->tv_nsec = 0;
 
     struct itimerspec spec;
     memset(&spec, 0, sizeof(spec));
@@ -424,10 +369,6 @@ static jlong init_timerfd()
 
     for (size_t i = 0; i < N_ANDROID_TIMERFDS; i++) {
         fds[i] = timerfd_create(android_alarm_to_clockid[i], 0);
-        if ((fds[i] < 0) && (android_alarm_to_clockid[i] == CLOCK_POWEROFF_ALARM)) {
-            ALOGV("timerfd does not support CLOCK_POWEROFF_ALARM, using CLOCK_REALTIME_ALARM instead");
-            fds[i] = timerfd_create(CLOCK_REALTIME_ALARM, 0);
-        }
         if (fds[i] < 0) {
             ALOGV("timerfd_create(%u) failed: %s",  android_alarm_to_clockid[i],
                     strerror(errno));
@@ -502,24 +443,6 @@ static void android_server_AlarmManagerService_set(JNIEnv*, jobject, jlong nativ
     }
 }
 
-static void android_server_AlarmManagerService_clear(JNIEnv*, jobject, jlong nativeData, jint type, jlong seconds,
-        jlong nanoseconds)
-{
-    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
-    struct timespec ts;
-    ts.tv_sec = seconds;
-    ts.tv_nsec = nanoseconds;
-
-    int result = impl->clear(type, &ts);
-    if (result < 0)
-    {
-        ALOGE("Unable to clear alarm  %lld.%09lld: %s\n",
-              static_cast<long long>(seconds),
-              static_cast<long long>(nanoseconds), strerror(errno));
-    }
-}
-
-
 static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv*, jobject, jlong nativeData)
 {
     AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
@@ -544,7 +467,6 @@ static const JNINativeMethod sMethods[] = {
     {"init", "()J", (void*)android_server_AlarmManagerService_init},
     {"close", "(J)V", (void*)android_server_AlarmManagerService_close},
     {"set", "(JIJJ)V", (void*)android_server_AlarmManagerService_set},
-    {"clear", "(JIJJ)V", (void*)android_server_AlarmManagerService_clear},
     {"waitForAlarm", "(J)I", (void*)android_server_AlarmManagerService_waitForAlarm},
     {"setKernelTime", "(JJ)I", (void*)android_server_AlarmManagerService_setKernelTime},
     {"setKernelTimezone", "(JI)I", (void*)android_server_AlarmManagerService_setKernelTimezone},
