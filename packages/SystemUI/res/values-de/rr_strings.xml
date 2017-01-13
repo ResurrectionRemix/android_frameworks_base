@@ -17,7 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Bildschirmvideo wird aufgenommen</string>
+  <string name="screenrecord_notif_ticker">Bildschirm wird aufgenommen</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Bildschirmaufzeichnung</string>
   <!-- Screenrecord notification action: Stop -->
@@ -29,7 +29,7 @@
   <string name="screenrecord_notif_error">Bildschirmvideo konnte nicht aufgenommen werden</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">Bildschirmfoto gelöscht</string>
+  <string name="delete_screenshot_toast">Screenshot gelöscht</string>
   <string name="gestures_message">Geste hier zeichnen</string>
   <string name="rr_sys_tuner">System UI-Tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
