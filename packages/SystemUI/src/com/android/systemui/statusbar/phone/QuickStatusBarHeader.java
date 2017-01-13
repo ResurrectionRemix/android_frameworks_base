@@ -190,14 +190,6 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
 
         updateResources();
-
-        post(new Runnable() {
-            public void run() {
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mBackgroundImage.getLayoutParams();
-                params.height = getExpandedHeight();
-                mBackgroundImage.setLayoutParams(params);
-            }
-        });
     }
     
     @Override
@@ -228,6 +220,14 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
         mQsPanelOffsetNormal = getResources().getDimensionPixelSize(R.dimen.qs_panel_top_offset_normal);
         mQsPanelOffsetHeader = getResources().getDimensionPixelSize(R.dimen.qs_panel_top_offset_header);
+
+        post(new Runnable() {
+            public void run() {
+                setHeaderImageHeight();
+                // the dimens could have been changed
+                setQsPanelOffset();
+            }
+        });
     }
 
     protected void updateSettingsAnimator() {
@@ -555,12 +555,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             // to have more space for the header image
             post(new Runnable() {
                 public void run() {
-                    final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
-                            Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
-                            UserHandle.USER_CURRENT) != 0;
-                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mQsPanel.getLayoutParams();
-                    params.setMargins(0, customHeader ? mQsPanelOffsetHeader : mQsPanelOffsetNormal, 0, 0);
-                    mQsPanel.setLayoutParams(params);
+                    setQsPanelOffset();
                 }
             });
         }
@@ -664,4 +659,19 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
        return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.ENABLE_TASK_MANAGER, 0) == 1;
    }
+
+    private void setQsPanelOffset() {
+        final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
+                UserHandle.USER_CURRENT) != 0;
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mQsPanel.getLayoutParams();
+        params.setMargins(0, customHeader ? mQsPanelOffsetHeader : mQsPanelOffsetNormal, 0, 0);
+        mQsPanel.setLayoutParams(params);
+    }
+
+    private void setHeaderImageHeight() {
+        LinearLayout.LayoutParams p = (LinearLayout.LayoutParams) mBackgroundImage.getLayoutParams();
+        p.height = getExpandedHeight();
+        mBackgroundImage.setLayoutParams(p);
+    }
 }
