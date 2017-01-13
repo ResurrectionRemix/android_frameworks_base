@@ -29,7 +29,7 @@
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
+        android:background="@color/navbar_tuner_background_color"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -39,7 +39,7 @@
             android:text="@string/preview"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:textColor="?android:attr/colorAccent"
+            android:textColor="@color/navbar_tuner_text_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <FrameLayout
