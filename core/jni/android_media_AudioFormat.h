@@ -20,26 +20,19 @@
 #include <system/audio.h>
 
 // keep these values in sync with AudioFormat.java
-#define ENCODING_PCM_16BIT  2
-#define ENCODING_PCM_8BIT   3
-#define ENCODING_PCM_FLOAT  4
-#define ENCODING_AC3        5
-#define ENCODING_E_AC3      6
-#define ENCODING_DTS        7
-#define ENCODING_DTS_HD     8
-#define ENCODING_MP3        9
-#define ENCODING_AAC_LC     10
-#define ENCODING_AAC_HE_V1  11
-#define ENCODING_AAC_HE_V2  12
-#define ENCODING_IEC61937   13
+#define ENCODING_PCM_16BIT      2
+#define ENCODING_PCM_8BIT       3
+#define ENCODING_PCM_FLOAT      4
+#define ENCODING_AC3            5
+#define ENCODING_E_AC3          6
+#define ENCODING_DTS            7
+#define ENCODING_DTS_HD         8
+#define ENCODING_MP3            9
+#define ENCODING_AAC_LC         10
+#define ENCODING_AAC_HE_V1      11
+#define ENCODING_AAC_HE_V2      12
+#define ENCODING_IEC61937       13
 #define ENCODING_DOLBY_TRUEHD   14
-
-#define ENCODING_AMR_NB     100
-#define ENCODING_AMR_WB     101
-#define ENCODING_EVRC       102
-#define ENCODING_EVRC_B     103
-#define ENCODING_EVRC_WB    104
-#define ENCODING_EVRC_NW    105
 
 #define ENCODING_INVALID    0
 #define ENCODING_DEFAULT    1
@@ -78,18 +71,6 @@ static inline audio_format_t audioFormatToNative(int audioFormat)
         return AUDIO_FORMAT_DOLBY_TRUEHD;
     case ENCODING_IEC61937:
         return AUDIO_FORMAT_IEC61937;
-    case ENCODING_AMR_NB:
-        return AUDIO_FORMAT_AMR_NB;
-    case ENCODING_AMR_WB:
-        return AUDIO_FORMAT_AMR_WB;
-    case ENCODING_EVRC:
-        return AUDIO_FORMAT_EVRC;
-    case ENCODING_EVRC_B:
-        return AUDIO_FORMAT_EVRCB;
-    case ENCODING_EVRC_WB:
-        return AUDIO_FORMAT_EVRCWB;
-    case ENCODING_EVRC_NW:
-        return AUDIO_FORMAT_EVRCNW;
     case ENCODING_DEFAULT:
         return AUDIO_FORMAT_DEFAULT;
     default:
@@ -131,18 +112,6 @@ static inline int audioFormatFromNative(audio_format_t nativeFormat)
         return ENCODING_AAC_HE_V2;
     case AUDIO_FORMAT_IEC61937:
         return ENCODING_IEC61937;
-    case AUDIO_FORMAT_AMR_NB:
-        return ENCODING_AMR_NB;
-    case AUDIO_FORMAT_AMR_WB:
-        return ENCODING_AMR_WB;
-    case AUDIO_FORMAT_EVRC:
-        return ENCODING_EVRC;
-    case AUDIO_FORMAT_EVRCB:
-        return ENCODING_EVRC_B;
-    case AUDIO_FORMAT_EVRCWB:
-        return ENCODING_EVRC_WB;
-    case AUDIO_FORMAT_EVRCNW:
-        return ENCODING_EVRC_NW;
     case AUDIO_FORMAT_DOLBY_TRUEHD:
         return ENCODING_DOLBY_TRUEHD;
     case AUDIO_FORMAT_DEFAULT:

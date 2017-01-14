@@ -120,8 +120,6 @@ public class RuntimeInit {
         /* set default handler; this applies to all threads in the VM */
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtHandler());
 
-        Build.adjustBuildTypeIfNeeded();
-
         /*
          * Install a TimezoneGetter subclass for ZoneInfo.db
          */

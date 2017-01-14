@@ -79,7 +79,6 @@ import android.net.metrics.DefaultNetworkEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.util.AvoidBadWifiTracker;
-import android.net.wifi.WifiDevice;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -103,7 +102,6 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
-import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -150,7 +148,6 @@ import com.android.server.net.LockdownVpnTracker;
 
 import com.google.android.collect.Lists;
 
-import cyanogenmod.providers.CMSettings;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -174,7 +171,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Random;
 
 /**
  * @hide
@@ -250,8 +246,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkPolicyManager mPolicyManager;
 
     private String mCurrentTcpBufferSizes;
-    private int mCurrentTcpDelayedAckSegments;
-    private int mCurrentTcpUserCfg;
 
     private static final int ENABLED  = 1;
     private static final int DISABLED = 0;
@@ -726,23 +720,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mTrackerHandler = new NetworkStateTrackerHandler(mHandlerThread.getLooper());
 
         // setup our unique device name
-        // either to (in order): DEVICE_HOSTNAME
-        //                       current net.hostname
-        //                       android-ANDROID_ID
-        //                       android-r-RANDOM_NUMBER
-        String hostname = CMSettings.Secure.getString(context.getContentResolver(),
-                CMSettings.Secure.DEVICE_HOSTNAME);
-        if (TextUtils.isEmpty(SystemProperties.get("net.hostname"))
-                || !TextUtils.isEmpty(hostname)) {
+        if (TextUtils.isEmpty(SystemProperties.get("net.hostname"))) {
             String id = Settings.Secure.getString(context.getContentResolver(),
                     Settings.Secure.ANDROID_ID);
-            if (!TextUtils.isEmpty(hostname)) {
-                SystemProperties.set("net.hostname", hostname);
-            } else if (!TextUtils.isEmpty(id)) {
+            if (id != null && id.length() > 0) {
                 String name = new String("android-").concat(id);
                 SystemProperties.set("net.hostname", name);
-            } else {
-                SystemProperties.set("net.hostname", "android-r-" + new Random().nextInt());
             }
         }
 
@@ -1903,34 +1886,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateTcpDelayedAck(NetworkAgentInfo nai) {
-        if (isDefaultNetwork(nai) == false) {
-            return;
-        }
-
-        int segments = nai.linkProperties.getTcpDelayedAckSegments();
-        int usercfg = nai.linkProperties.getTcpUserCfg();
-
-        if (segments != mCurrentTcpDelayedAckSegments) {
-            try {
-                FileUtils.stringToFile("/sys/kernel/ipv4/tcp_delack_seg",
-                        String.valueOf(segments));
-                mCurrentTcpDelayedAckSegments = segments;
-            } catch (IOException e) {
-                // optional
-            }
-        }
-
-        if (usercfg != mCurrentTcpUserCfg) {
-            try {
-                FileUtils.stringToFile("/sys/kernel/ipv4/tcp_use_usercfg",
-                        String.valueOf(usercfg));
-                mCurrentTcpUserCfg = usercfg;
-            } catch (IOException e) {
-                // optional
-            }
-        }
-    }
     private void flushVmDnsCache() {
         /*
          * Tell the VMs to toss their DNS caches
@@ -3028,14 +2983,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
             }
-        }
-    }
-
-    public List<WifiDevice> getTetherConnectedSta() {
-        if (isTetheringSupported()) {
-            return mTethering.getTetherConnectedSta();
-        } else {
-             return null;
         }
     }
 
@@ -4512,7 +4459,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 //            updateMtu(lp, null);
 //        }
         updateTcpBufferSizes(networkAgent);
-        updateTcpDelayedAck(networkAgent);
 
         updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId);
@@ -4869,7 +4815,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         notifyLockdownVpn(newNetwork);
         handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
         updateTcpBufferSizes(newNetwork);
-        updateTcpDelayedAck(newNetwork);
         setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
     }
 

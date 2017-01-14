@@ -81,6 +81,4 @@ oneway interface IConnectionService {
     void sendCallEvent(String callId, String event, in Bundle extras);
 
     void onExtrasChanged(String callId, in Bundle extras);
-
-    void addParticipantWithConference(String callId, String recipients);
 }

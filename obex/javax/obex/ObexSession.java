@@ -50,7 +50,7 @@ import android.util.Log;
 public class ObexSession {
 
     private static final String TAG = "ObexSession";
-    private static final boolean V = Log.isLoggable(ObexHelper.LOG_TAG, Log.VERBOSE);
+    private static final boolean V = ObexHelper.VDBG;
 
     protected Authenticator mAuthenticator;
 

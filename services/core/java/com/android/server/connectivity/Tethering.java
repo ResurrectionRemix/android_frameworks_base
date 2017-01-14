@@ -43,12 +43,9 @@ import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
-import android.net.wifi.WifiDevice;
 import android.net.wifi.WifiManager;
-import android.net.wifi.WifiConfiguration;
 import android.os.Binder;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
@@ -64,7 +61,6 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
-import com.android.internal.util.IState;
 
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.TelephonyIntents;
@@ -74,14 +70,10 @@ import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.server.IoThread;
-import com.android.server.NetPluginDelegate;
 import com.android.server.connectivity.tethering.IControlsTethering;
 import com.android.server.connectivity.tethering.IPv6TetheringCoordinator;
 import com.android.server.connectivity.tethering.TetherInterfaceStateMachine;
 import com.android.server.net.BaseNetworkObserver;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -93,18 +85,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-
-
-import static android.net.wifi.WifiManager.WIFI_AP_STATE_CHANGED_ACTION;
-import static android.net.wifi.WifiManager.WIFI_AP_STATE_DISABLED;
-import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 
 
 /**
@@ -196,23 +176,8 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
     private boolean mUsbTetherRequested; // true if USB tethering should be started
                                          // when RNDIS is enabled
 
-
     // True iff WiFi tethering should be started when soft AP is ready.
     private boolean mWifiTetherRequested;
-
-    // Once STA established connection to hostapd, it will be added
-    // to mL2ConnectedDeviceMap. Then after deviceinfo update from dnsmasq,
-    // it will be added to
-    private HashMap<String, WifiDevice> mL2ConnectedDeviceMap = new HashMap<String, WifiDevice>();
-    private HashMap<String, WifiDevice> mConnectedDeviceMap = new HashMap<String, WifiDevice>();
-    private static final String dhcpLocation = "/data/misc/dhcp/dnsmasq.leases";
-
-    // Device name polling interval(ms) and max times
-    private static final int DNSMASQ_POLLING_INTERVAL = 1000;
-    private static final int DNSMASQ_POLLING_MAX_TIMES = 10;
-
-    private long mWiFiApInactivityTimeout;
-    private final Handler mHandler;
 
     public Tethering(Context context, INetworkManagementService nmService,
             INetworkStatsService statsService, INetworkPolicyManager policyManager) {
@@ -230,8 +195,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         mTetherMasterSM = new TetherMasterSM("TetherMaster", mLooper);
         mTetherMasterSM.start();
 
-        mHandler = new Handler(mLooper);
-
         mUpstreamNetworkMonitor = new UpstreamNetworkMonitor();
 
         mStateReceiver = new StateReceiver();
@@ -240,7 +203,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-        filter.addAction(WIFI_AP_STATE_CHANGED_ACTION);
         mContext.registerReceiver(mStateReceiver, filter);
 
         filter = new IntentFilter();
@@ -273,16 +235,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
     void updateConfiguration() {
         String[] tetherableUsbRegexs = mContext.getResources().getStringArray(
                 com.android.internal.R.array.config_tether_usb_regexs);
-        String[] tetherableWifiRegexs;
+        String[] tetherableWifiRegexs = mContext.getResources().getStringArray(
+                com.android.internal.R.array.config_tether_wifi_regexs);
         String[] tetherableBluetoothRegexs = mContext.getResources().getStringArray(
                 com.android.internal.R.array.config_tether_bluetooth_regexs);
-
-        if (SystemProperties.getInt("persist.fst.rate.upgrade.en", 0) == 1) {
-            tetherableWifiRegexs = new String[] {"bond0"};
-        } else {
-            tetherableWifiRegexs = mContext.getResources().getStringArray(
-                com.android.internal.R.array.config_tether_wifi_regexs);
-        }
 
         int ifaceTypes[] = mContext.getResources().getIntArray(
                 com.android.internal.R.array.config_tether_upstream_types);
@@ -318,27 +274,17 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 if (tetherState == null) {
                     trackNewTetherableInterface(iface, interfaceType);
                 }
-                else if (isWifi(iface)) {
-                    // check if the user has specified an inactivity timeout for wifi AP and
-                    // if so schedule the timeout
-                    final WifiManager wm =
-                            (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-                    final WifiConfiguration apConfig = wm.getWifiApConfiguration();
-                    mWiFiApInactivityTimeout =
-                            apConfig != null ? apConfig.wifiApInactivityTimeout : 0;
-                    if (mWiFiApInactivityTimeout > 0 && mL2ConnectedDeviceMap.size() == 0) {
-                        scheduleInactivityTimeout();
-                    }
-                }
             } else {
                 if (interfaceType == ConnectivityManager.TETHERING_BLUETOOTH) {
                     tetherState.mStateMachine.sendMessage(
                             TetherInterfaceStateMachine.CMD_INTERFACE_DOWN);
                     mTetherStates.remove(iface);
-                    if(isWifi(iface)) {
-                        cancelInactivityTimeout();
-                    }
-                    mConnectedDeviceMap.remove(iface);
+                } else {
+                    // Ignore usb0 down after enabling RNDIS.
+                    // We will handle disconnect in interfaceRemoved.
+                    // Similarly, ignore interface down for WiFi.  We monitor WiFi AP status
+                    // through the WifiManager.WIFI_AP_STATE_CHANGED_ACTION intent.
+                    if (VDBG) Log.d(TAG, "ignore interface down for " + iface);
                 }
             }
         }
@@ -759,11 +705,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
             } else {
                 /* We now have a status bar icon for WifiTethering, so drop the notification */
                 clearTetheredNotification();
-                if (mContext.getResources().getBoolean(
-                        com.android.internal.R.bool
-                        .config_regional_hotspot_show_notification_when_turn_on)) {
-                    showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_wifi);
-                }
             }
         } else if (bluetoothTethered) {
             showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_bluetooth);
@@ -781,12 +722,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
         if (mLastNotificationId != 0) {
             if (mLastNotificationId == icon) {
-                if (!mContext.getResources().getBoolean(
-                        com.android.internal.R.bool.config_softap_extention)
-                        || icon != com.android.internal.R.drawable.stat_sys_tether_wifi) {
-                    // if softap extension feature is on, allow to update icon else return.
-                    return;
-                }
+                return;
             }
             notificationManager.cancelAsUser(null, mLastNotificationId,
                     UserHandle.ALL);
@@ -898,15 +834,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 }
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 updateConfiguration();
-            } else if(action.equals(WIFI_AP_STATE_CHANGED_ACTION)){
-                int wifiApState = intent.getIntExtra("wifi_state", WIFI_AP_STATE_DISABLED);
-                if (DBG) Log.d(TAG, "WIFI_AP_STATE_CHANGED: wifiApState="  + wifiApState);
-                if(wifiApState == WIFI_AP_STATE_ENABLED ||
-                        wifiApState == WIFI_AP_STATE_DISABLED) {
-                    mConnectedDeviceMap.clear();
-                    mL2ConnectedDeviceMap.clear();
-
-                }
             }
         }
     }
@@ -1007,10 +934,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         if (tm != null) {
             secureSetting = tm.getTetherApnRequired();
         }
-        // Allow override of TETHER_DUN_REQUIRED via prop
-        int prop = SystemProperties.getInt("persist.sys.dun.override", -1);
-        secureSetting = ((prop < 3) && (prop >= 0)) ? prop : secureSetting;
-
         synchronized (mPublicSync) {
             // 2 = not set, 0 = DUN not required, 1 = DUN required
             if (secureSetting != 2) {
@@ -1060,197 +983,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
         return list.toArray(new String[list.size()]);
     }
-
-    public List<WifiDevice> getTetherConnectedSta() {
-        Iterator it;
-        List<WifiDevice> TetherConnectedStaList = new ArrayList<WifiDevice>();
-
-        if (mContext.getResources().getBoolean(com.android.internal.R.bool.config_softap_extention)) {
-            it = mConnectedDeviceMap.keySet().iterator();
-            while(it.hasNext()) {
-                String key = (String)it.next();
-                WifiDevice device = mConnectedDeviceMap.get(key);
-                if (VDBG) {
-                    Log.d(TAG, "getTetherConnectedSta: addr=" + key + " name=" + device.deviceName);
-                }
-                TetherConnectedStaList.add(device);
-            }
-        }
-
-        return TetherConnectedStaList;
-    }
-
-    private void sendTetherConnectStateChangedBroadcast() {
-        if (!getConnectivityManager().isTetheringSupported()) return;
-
-        Intent broadcast = new Intent(ConnectivityManager.TETHER_CONNECT_STATE_CHANGED);
-        broadcast.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING |
-                Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
-
-        mContext.sendStickyBroadcastAsUser(broadcast, UserHandle.ALL);
-    }
-
-    private boolean readDeviceInfoFromDnsmasq(WifiDevice device) {
-        boolean result = false;
-        FileInputStream fstream = null;
-        String line;
-
-        try {
-            fstream = new FileInputStream(dhcpLocation);
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-            while ((null != (line = br.readLine())) && (line.length() != 0)) {
-                String[] fields = line.split(" ");
-
-                // 949295 00:0a:f5:6a:bf:70 192.168.43.32 android-93de88df9ec61bac *
-                if (fields.length > 3) {
-                    String addr = fields[1];
-                    String name = fields[3];
-
-                    if (addr.equals(device.deviceAddress)) {
-                        device.deviceName = name;
-                        result = true;
-                        break;
-                    }
-                }
-            }
-        } catch (IOException ex) {
-            Log.e(TAG, "readDeviceNameFromDnsmasq: " + ex);
-        } finally {
-            if (fstream != null) {
-                try {
-                    fstream.close();
-                } catch (IOException ex) {}
-            }
-        }
-
-        return result;
-    }
-
-    /*
-    * DnsmasqThread is used to read the Device info from dnsmasq.
-    */
-    private static class DnsmasqThread extends Thread {
-        private final Tethering mTethering;
-        private int mInterval;
-        private int mMaxTimes;
-        private WifiDevice mDevice;
-
-        public DnsmasqThread(Tethering tethering, WifiDevice device,
-                             int interval, int maxTimes) {
-            super("Tethering");
-            mTethering = tethering;
-            mInterval = interval;
-            mMaxTimes = maxTimes;
-            mDevice = device;
-        }
-
-        public void run() {
-            boolean result = false;
-
-            try {
-                while (mMaxTimes > 0) {
-                    result = mTethering.readDeviceInfoFromDnsmasq(mDevice);
-                    if (result) {
-                        if (DBG) Log.d(TAG, "Successfully poll device info for " + mDevice.deviceAddress);
-                        break;
-                    }
-
-                    mMaxTimes --;
-                    Thread.sleep(mInterval);
-                }
-            } catch (Exception ex) {
-                result = false;
-                Log.e(TAG, "Pulling " + mDevice.deviceAddress +  "error" + ex);
-            }
-
-            if (!result) {
-                if (DBG) Log.d(TAG, "Pulling timeout, suppose STA uses static ip " + mDevice.deviceAddress);
-            }
-
-            // When STA uses static ip, device info will be unavaiable from dnsmasq,
-            // thus no matter the result is success or failure, we will broadcast the event.
-            // But if the device is not in L2 connected state, it means the hostapd connection is
-            // disconnected before dnsmasq get device info, so in this case, don't broadcast
-            // connection event.
-            WifiDevice other = mTethering.mL2ConnectedDeviceMap.get(mDevice.deviceAddress);
-            if (other != null && other.deviceState == WifiDevice.CONNECTED) {
-                mTethering.mConnectedDeviceMap.put(mDevice.deviceAddress, mDevice);
-                mTethering.sendTetherConnectStateChangedBroadcast();
-            } else {
-                if (DBG) Log.d(TAG, "Device " + mDevice.deviceAddress + "already disconnected, ignoring");
-            }
-        }
-    }
-
-    public void interfaceMessageRecevied(String message) {
-        // if softap extension feature not enabled, do nothing
-        if (!mContext.getResources().getBoolean(com.android.internal.R.bool.config_softap_extention)) {
-            return;
-        }
-
-        if (DBG) Log.d(TAG, "interfaceMessageRecevied: message=" + message);
-
-        try {
-            WifiDevice device = new WifiDevice(message);
-
-            if (device.deviceState == WifiDevice.CONNECTED) {
-                mL2ConnectedDeviceMap.put(device.deviceAddress, device);
-
-                // When hostapd reported STA-connection event, it is possible that device
-                // info can't fetched from dnsmasq, then we start a thread to poll the
-                // device info, the thread will exit after device info avaiable.
-                // For static ip case, dnsmasq don't hold the device info, thus thread
-                // will exit after a timeout.
-                if (readDeviceInfoFromDnsmasq(device)) {
-                    mConnectedDeviceMap.put(device.deviceAddress, device);
-                    sendTetherConnectStateChangedBroadcast();
-                } else {
-                    if (DBG) Log.d(TAG, "Starting poll device info for " + device.deviceAddress);
-                    new DnsmasqThread(this, device,
-                            DNSMASQ_POLLING_INTERVAL, DNSMASQ_POLLING_MAX_TIMES).start();
-                }
-                cancelInactivityTimeout();
-            } else if (device.deviceState == WifiDevice.DISCONNECTED) {
-                mL2ConnectedDeviceMap.remove(device.deviceAddress);
-                mConnectedDeviceMap.remove(device.deviceAddress);
-                sendTetherConnectStateChangedBroadcast();
-
-                //schedule inactivity timeout if non-zero and no more devices are connected
-                if (mWiFiApInactivityTimeout > 0 && mL2ConnectedDeviceMap.size() == 0) {
-                    scheduleInactivityTimeout();
-                }
-
-            }
-        } catch (IllegalArgumentException ex) {
-            Log.e(TAG, "WifiDevice IllegalArgument: " + ex);
-        }
-    }
-
-    private final Runnable mDisableWifiApRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (VDBG) Log.d(TAG, "Turning off hotpost due to inactivity");
-            final WifiManager wifiManager =
-                    (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-            wifiManager.setWifiApEnabled(null, false);
-        }
-    };
-
-    private void scheduleInactivityTimeout() {
-        if (mWiFiApInactivityTimeout > 0) {
-            if (VDBG) Log.d(TAG, "scheduleInactivityTimeout: " + mWiFiApInactivityTimeout);
-            mHandler.removeCallbacks(mDisableWifiApRunnable);
-            mHandler.postDelayed(mDisableWifiApRunnable, mWiFiApInactivityTimeout);
-        }
-    }
-
-    private void cancelInactivityTimeout() {
-        if (VDBG) Log.d(TAG, "cancelInactivityTimeout");
-        mHandler.removeCallbacks(mDisableWifiApRunnable);
-    }
-
 
     public String[] getTetherableIfaces() {
         ArrayList<String> list = new ArrayList<String>();
@@ -1707,8 +1439,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
                 Network network = null;
                 if (upType != ConnectivityManager.TYPE_NONE) {
-                    network = getConnectivityManager().getNetworkForType(upType);
-                    NetPluginDelegate.setUpstream(network);
                     LinkProperties linkProperties = cm.getLinkProperties(upType);
                     if (linkProperties != null) {
                         // Find the interface with the default IPv4 route. It may be the

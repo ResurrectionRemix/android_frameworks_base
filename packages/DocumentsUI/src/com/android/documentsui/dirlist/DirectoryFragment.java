@@ -846,9 +846,7 @@ public class DirectoryFragment extends Fragment
     private void deleteDocuments(final Selection selected) {
         Metrics.logUserAction(getContext(), Metrics.USER_ACTION_DELETE);
 
-        if (selected.isEmpty()) {
-            return;
-        }
+        assert(!selected.isEmpty());
 
         final DocumentInfo srcParent = getDisplayState().stack.peek();
 

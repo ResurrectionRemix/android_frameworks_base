@@ -22,11 +22,9 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Environment;
 import android.os.Process;
 import android.os.storage.StorageManager;
-import android.os.SystemProperties;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Slog;
@@ -126,9 +124,6 @@ public class SystemConfig {
     // These are the permitted backup transport service components
     final ArraySet<ComponentName> mBackupTransportWhitelist = new ArraySet<>();
 
-	final ArrayMap<Signature, ArraySet<String>> mSignatureAllowances
-            = new ArrayMap<Signature, ArraySet<String>>();
-
     // These are the packages of carrier-associated apps which should be disabled until used until
     // a SIM is inserted which grants carrier privileges to that carrier app.
     final ArrayMap<String, List<String>> mDisabledUntilUsedPreinstalledCarrierAssociatedApps =
@@ -195,10 +190,6 @@ public class SystemConfig {
         return mBackupTransportWhitelist;
     }
 
-    public ArrayMap<Signature, ArraySet<String>> getSignatureAllowances() {
-        return mSignatureAllowances;
-    }
-
     public ArrayMap<String, List<String>> getDisabledUntilUsedPreinstalledCarrierAssociatedApps() {
         return mDisabledUntilUsedPreinstalledCarrierAssociatedApps;
     }
@@ -221,11 +212,6 @@ public class SystemConfig {
                 Environment.getOemDirectory(), "etc", "sysconfig"), ALLOW_FEATURES);
         readPermissions(Environment.buildPath(
                 Environment.getOemDirectory(), "etc", "permissions"), ALLOW_FEATURES);
-        //Remove vulkan specific features
-        if (SystemProperties.getBoolean("persist.graphics.vulkan.disable", false)) {
-            removeFeature(PackageManager.FEATURE_VULKAN_HARDWARE_LEVEL);
-            removeFeature(PackageManager.FEATURE_VULKAN_HARDWARE_VERSION);
-        }
     }
 
     void readPermissions(File libraryDir, int permissionFlag) {
@@ -322,44 +308,6 @@ public class SystemConfig {
 
                     XmlUtils.skipCurrentTag(parser);
                     continue;
-
-                } else if ("allow-permission".equals(name)) {
-                    String perm = parser.getAttributeValue(null, "name");
-                    if (perm == null) {
-                        Slog.w(TAG,
-                                "<allow-permission> without name at "
-                                        + parser.getPositionDescription());
-                        XmlUtils.skipCurrentTag(parser);
-                        continue;
-                    }
-                    String signature = parser.getAttributeValue(null, "signature");
-                    if (signature == null) {
-                        Slog.w(TAG,
-                                "<allow-permission> without signature at "
-                                        + parser.getPositionDescription());
-                        XmlUtils.skipCurrentTag(parser);
-                        continue;
-                    }
-                    Signature sig = null;
-                    try {
-                        sig = new Signature(signature);
-                    } catch (IllegalArgumentException e) {
-                        // sig will be null so we will log it below
-                    }
-                    if (sig != null) {
-                        ArraySet<String> perms = mSignatureAllowances.get(sig);
-                        if (perms == null) {
-                            perms = new ArraySet<String>();
-                            mSignatureAllowances.put(sig, perms);
-                        }
-                        perms.add(perm);
-                    } else {
-                        Slog.w(TAG,
-                                "<allow-permission> with bad signature at "
-                                        + parser.getPositionDescription());
-                    }
-                    XmlUtils.skipCurrentTag(parser);
-
                 } else if ("permission".equals(name) && allowPermissions) {
                     String perm = parser.getAttributeValue(null, "name");
                     if (perm == null) {

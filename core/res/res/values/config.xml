@@ -53,7 +53,6 @@
         <item><xliff:g id="id">@string/status_bar_alarm_clock</xliff:g></item>
         <item><xliff:g id="id">@string/status_bar_secure</xliff:g></item>
         <item><xliff:g id="id">@string/status_bar_clock</xliff:g></item>
-        <item><xliff:g id="id">@string/status_bar_su</xliff:g></item>
     </string-array>
 
     <string translatable="false" name="status_bar_rotate">rotate</string>
@@ -82,7 +81,6 @@
     <string translatable="false" name="status_bar_alarm_clock">alarm_clock</string>
     <string translatable="false" name="status_bar_secure">secure</string>
     <string translatable="false" name="status_bar_clock">clock</string>
-    <string translatable="false" name="status_bar_su">su</string>
 
     <!-- Flag indicating whether the surface flinger has limited
          alpha compositing functionality in hardware.  If set, the window
@@ -419,7 +417,7 @@
     <bool translatable="false" name="config_wifi_dual_band_support">false</bool>
 
     <!-- Boolean indicating whether Hotspot 2.0/Passpoint and ANQP queries is enabled -->
-    <bool translatable="false" name="config_wifi_hotspot2_enabled">true</bool>
+    <bool translatable="false" name="config_wifi_hotspot2_enabled">false</bool>
 
     <!-- Device type information conforming to Annex B format in WiFi Direct specification.
          The default represents a dual-mode smartphone -->
@@ -430,7 +428,6 @@
          scan and wake the host when a configured SSID is detected by the dongle. This chipset
          capability can provide power savings when wifi needs to be always kept on. -->
     <bool translatable="false" name="config_wifi_background_scan_support">false</bool>
-    <bool translatable="false" name="wifi_autocon">true</bool>
 
     <!-- Boolean indicating we re-try re-associating once upon disconnection and RSSI is high failure  -->
     <bool translatable="true" name="config_wifi_enable_disconnection_debounce">true</bool>
@@ -441,9 +438,6 @@
 
     <!-- Boolean indicating whether or not wifi firmware debugging is enabled -->
     <bool translatable="false" name="config_wifi_enable_wifi_firmware_debugging">true</bool>
-
-    <!-- IpReachability monitor enable/Disable -->
-    <bool translatable="false" name="config_wifi_ipreachability_monitor">false</bool>
 
     <!-- Integer size limit, in KB, for a single WifiLogger ringbuffer, in default logging mode -->
     <integer translatable="false" name="config_wifi_logger_ring_buffer_default_size_limit_kb">32</integer>
@@ -528,9 +522,6 @@
 
     <!-- Integer indicating RSSI boost given to current network -->
     <integer translatable="false" name="config_wifi_framework_current_network_boost">16</integer>
-
-    <!-- Integer indicating the number of selective channel scan when Wifi turn on -->
-    <integer translatable="false" name="config_max_initial_scans_on_selective_channels">2</integer>
 
     <!-- Integer indicating how to handle beacons with uninitialized RSSI value of 0 -->
     <integer translatable="false" name="config_wifi_framework_scan_result_rssi_level_patchup_value">-85</integer>
@@ -716,10 +707,6 @@
          we rely on gravity to determine the effective orientation. -->
     <bool name="config_deskDockEnablesAccelerometer">true</bool>
 
-    <!-- Control whether a desk dock event should override the default bluetooth
-         audio routing, FORCE_BT_DESK_DOCK, with an analog dock, FORCE_ANALOG_DOCK. -->
-    <bool name="config_forceAnalogDeskDock">false</bool>
-
     <!-- Car dock behavior -->
 
     <!-- The number of degrees to rotate the display when the device is in a car dock.
@@ -744,10 +731,6 @@
           enabled. But in environments like real car, default home app may be enough, and in that
           case, this can be disabled (set to false). -->
     <bool name="config_enableCarDockHomeLaunch">true</bool>
-
-    <!-- Control whether a car dock event should override the default bluetooth
-         audio routing, FORCE_BT_CAR_DOCK, with an analog dock, FORCE_ANALOG_DOCK. -->
-    <bool name="config_forceAnalogCarDock">false</bool>
 
     <!-- HDMI behavior -->
 
@@ -983,9 +966,6 @@
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">false</bool>
 
-    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
-    <bool name="config_intrusiveBatteryLed">false</bool>
-
     <!-- Default value for LED off time when the battery is low on charge in miliseconds -->
     <integer name="config_notificationsBatteryLedOff">2875</integer>
 
@@ -1024,83 +1004,20 @@
 
     <!-- Control the behavior when the user long presses the home button.
             0 - Nothing
-            1 - Menu key
-            2 - Recent apps view in SystemUI
-            3 - Launch assist intent
-            4 - Voice Search
-            5 - In-app Search
+            1 - Recent apps view in SystemUI
+            2 - Launch assist intent
          This needs to match the constants in
          policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
-    <integer name="config_longPressOnHomeBehavior">2</integer>
+    <integer name="config_longPressOnHomeBehavior">0</integer>
 
     <!-- Control the behavior when the user double-taps the home button.
             0 - Nothing
-            1 - Menu key
-            2 - Recent apps view in SystemUI
-            3 - Launch assist intent
-            4 - Voice Search
-            5 - In-app Search
+            1 - Recent apps view in SystemUI
          This needs to match the constants in
          policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
     <integer name="config_doubleTapOnHomeBehavior">0</integer>
-
-    <!-- Control the behavior when the user long presses the menu button.
-            0 - Nothing
-            1 - Menu key
-            2 - Recent apps view in SystemUI
-            3 - Launch assist intent
-            4 - Voice Search
-            5 - In-app Search
-         This needs to match the constants in
-         policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
-    -->
-    <integer name="config_longPressOnMenuBehavior">3</integer>
-
-    <!-- Control the behavior when the user long presses the app switch button.
-            0 - Nothing
-            1 - Menu key
-            2 - Recent apps view in SystemUI
-            3 - Launch assist intent
-            4 - Voice Search
-            5 - In-app Search
-         This needs to match the constants in
-         services/core/java/com/android/server/policy/policy/impl/PhoneWindowManager.java
-    -->
-    <integer name="config_longPressOnAppSwitchBehavior">0</integer>
-
-    <!-- Hardware keys present on the device, stored as a bit field.
-         This integer should equal the sum of the corresponding value for each
-         of the following keys present:
-             1 - Home
-             2 - Back
-             4 - Menu
-             8 - Assistant (search)
-            16 - App switch
-            32 - Camera
-            64 - Volume rocker
-         For example, a device with Home, Back and Menu keys would set this
-         config to 7. -->
-    <integer name="config_deviceHardwareKeys">79</integer>
-
-    <!-- Hardware keys present on the device with the ability to wake, stored as a bit field.
-         This integer should equal the sum of the corresponding value for each
-         of the following keys present:
-             1 - Home
-             2 - Back
-             4 - Menu
-             8 - Assistant (search)
-            16 - App switch
-            32 - Camera
-            64 - Volume rocker
-         For example, a device with Home, Back and Menu keys would set this
-         config to 7. -->
-    <integer name="config_deviceHardwareWakeKeys">79</integer>
-
-    <!-- Indicates that the device has Single-stage Camera key
-         (without "Focus" state) instead of Dual-stage. -->
-    <bool name="config_singleStageCameraKey">false</bool>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->
@@ -1127,7 +1044,6 @@
          when adapting to brighter or darker environments.  This parameter controls how quickly
          brightness changes occur in response to an observed change in light level that exceeds the
          hysteresis threshold. -->
-    <integer name="config_autoBrightnessBrighteningLightFastDebounce">500</integer>
     <integer name="config_autoBrightnessBrighteningLightDebounce">4000</integer>
     <integer name="config_autoBrightnessDarkeningLightDebounce">8000</integer>
 
@@ -1218,10 +1134,6 @@
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
     </integer-array>
-
-    <integer name="config_buttonBrightnessSettingDefault">255</integer>
-    <integer name="config_keyboardBrightnessSettingDefault">0</integer>
-    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
 
     <!-- Amount of time it takes for the light sensor to warm up in milliseconds.
          For this time after the screen turns on, the Power Manager
@@ -1371,9 +1283,6 @@
         <item>network,false,false,false,false,true,true,true,1,2</item>
         -->
     </string-array>
-
-    <!-- Component name of the combo network location provider. -->
-    <string name="config_comboNetworkLocationProvider" translatable="false">@null</string>
 
     <!-- Boolean indicating if current platform supports bluetooth SCO for off call
     use cases -->
@@ -1919,9 +1828,6 @@
     <!-- Configure wifi tcp buffersizes in the form:
          rmem_min,rmem_def,rmem_max,wmem_min,wmem_def,wmem_max -->
     <string name="config_wifi_tcp_buffers" translatable="false">524288,1048576,2097152,262144,524288,1048576</string>
-    <!-- Configuration to send sms on 1x when UE is attached to eHRPD and there is an active
-         1xRTT voice call, irrespective of IMS registration state  -->
-    <bool name="config_send_sms1x_on_voice_call">true</bool>
 
     <!-- Whether WiFi display is supported by this device.
          There are many prerequisites for this feature to work correctly.
@@ -2010,16 +1916,6 @@
         <item>100</item>
         <item>150</item>
         <item>100</item>
-    </integer-array>
-
-    <!-- Vibrator pattern to be used as for notifications while alerts
-         are disabled (e.g. during phone calls) if enabled by the user.
-     -->
-    <integer-array name="config_notificationNoAlertsVibePattern">
-        <item>0</item>
-        <item>50</item>
-        <item>100</item>
-        <item>50</item>
     </integer-array>
 
     <!-- Flag indicating if the speed up audio on mt call code should be executed -->
@@ -2188,34 +2084,18 @@
          on the current state of the device.
          Each item must be one of the following strings:
          "power" = Power off
-         "reboot" = Reboot
-         "screenshot" = Take screenshot
-         "screenrecord" = Take screen recording
-         "profile" = Change phone's profile
-         "airplane" = Airplane mode toggle
-         "users" = list of users
          "settings" = An action to launch settings
-         "lockdown" = lock the phone down
+         "airplane" = Airplane mode toggle
          "bugreport" = Take bug report, if available
-         "torch" = Toggle torch
          "silent" = silent mode
          "users" = list of users
          "restart" = restart device
          -->
     <string-array translatable="false" name="config_globalActionsList">
         <item>power</item>
-        <item>reboot</item>
-        <item>screenshot</item>
-        <item>screenrecord</item>
-        <item>airplane</item>
-        <item>torch</item>
-        <item>users</item>
-        <item>settings</item>
-        <item>lockdown</item>
+        <item>restart</item>
         <item>bugreport</item>
-        <item>voiceassist</item>
-        <item>assist</item>
-        <item>silent</item>
+        <item>users</item>
     </string-array>
 
     <!-- Number of milliseconds to hold a wake lock to ensure that drawing is fully
@@ -2304,12 +2184,6 @@
 
     <bool name="config_networkSamplingWakesDevice">true</bool>
 
-    <!-- Path to the library that contains a device specific key handler -->
-    <string name="config_deviceKeyHandlerLib" translatable="false"></string>
-
-    <!-- Name of that key handler class -->
-    <string name="config_deviceKeyHandlerClass" translatable="false"></string>
-
     <string-array translatable="false" name="config_cdma_home_system" />
 
     <!--From SmsMessage-->
@@ -2330,9 +2204,6 @@
     </string-array>
 
     <bool name="config_auto_attach_data_on_creation">true</bool>
-
-    <!-- True if the gesture service should be started at system start -->
-    <bool name="config_enableGestureService">false</bool>
 
     <!-- Values for GPS configuration -->
     <string-array translatable="false" name="config_gpsParameters">
@@ -2645,89 +2516,6 @@
     <string-array translatable="false" name="config_defaultPinnerServiceFiles">
     </string-array>
 
-    <!-- Configuartion to support SIM contact batch operation.-->
-    <bool name="config_sim_phonebook_batch_operation">true</bool>
-
-    <!-- Zero Balance redirect URL config -->
-    <string name="operator_config_url" translatable="false"></string>
-    <!-- Zero Balance ping URL config -->
-    <string name="operator_ping_url" translatable="false"></string>
-    <!-- Zero Balance feature enable config -->
-    <bool name="config_zero_balance_operator">false</bool>
-     <!-- Keypress Optimization -->
-    <bool name="config_enableKeypressOptimization">false</bool>
-    <integer-array name="keypress_param_value"/>
-
-    <bool name="config_enableDataSwitch">false</bool>
-    <!-- Whether to use TMO MCC MNC roaming setting -->
-    <bool name="config_regional_mcc_mnc_roaming_setting">false</bool>
-
-    <!-- Whether to use TMO LTE singnal strength threshold -->
-    <bool name="config_regional_lte_singnal_threshold">false</bool>
-    <!-- Whether to use TMO UMTS singnal strength threshold -->
-    <bool name="config_regional_umts_singnal_threshold">false</bool>
-
-    <integer-array name="umts_signal_strength_threshold">
-        <item>-140</item>
-        <item>-113</item>
-        <item>-103</item>
-        <item>-97</item>
-        <item>-89</item>
-        <item>-44</item>
-    </integer-array>
-    <integer-array name="lte_signal_strength_threshold">
-        <item>-140</item>
-        <item>-120</item>
-        <item>-115</item>
-        <item>-110</item>
-        <item>-100</item>
-        <item>-44</item>
-    </integer-array>
-
-    <!-- Enables the feature that can show/hide the operator name in statusbar.
-        When true, the user can select to show/hide operator name through a
-        checkbox in Settings. When false, there is no option to show operator
-        name (no checkbox in Settings). -->
-    <bool name="config_showOperatorNameInStatusBar">false</bool>
-    <bool name="config_regional_hotspot_show_maximum_connection_enable">false</bool>
-    <bool name="config_regional_hotspot_show_broadcast_ssid_checkbox">false</bool>
-    <bool name="config_regional_hotspot_show_notification_when_turn_on">false</bool>
-    <bool name="config_passpoint_setting_on">false</bool>
-
-    <!-- Timeout in MS for how long you have to long-press the back key to
-         kill the foreground app. -->
-    <integer name="config_backKillTimeout">2000</integer>
-
-    <!-- Setting to false will disable CM's IME switcher implementation for tablets -->
-    <bool name="config_show_cmIMESwitcher">true</bool>
-
-    <!-- The list of components which should be automatically disabled. -->
-    <string-array name="config_disabledComponents" translatable="false">
-    </string-array>
-
-    <!-- The list of components which should be forced to be enabled. -->
-    <string-array name="config_forceEnabledComponents" translatable="false">
-    </string-array>
-
-    <!-- Whether to persist the notification for when a usb drive device is plugged in -->
-    <bool name="config_persistUsbDriveNotification">false</bool>
-
-    <!-- Older rotation sensors are not setting event.timestamp correctly. Setting to
-         true will use SystemClock.elapsedRealtimeNanos() to set timestamp. -->
-    <bool name="config_useSystemClockforRotationSensor">false</bool>
-
-    <!-- Emergency Number to be invoked when Power key is pressed.
-         Default value is set to 112 as this FR is mainly intended
-         for Indian market-->
-    <string name="power_key_emergency_number">112</string>
-    <!-- Number of power key hits to invoke emergency call -->
-    <integer name="power_key_hits_emergency">3</integer>
-
-    <!-- Allow the gesture to tap the power button N times to start
-         the Emergency Call while the device is non-interactive. -->
-    <bool name="config_emergencyCallOnPowerkeyTapGestureEnabled">false</bool>
-    <bool name="config_volte_preferred">false</bool>
-
     <!-- True if camera app should be pinned via Pinner Service -->
     <bool name="config_pinnerCameraApp">false</bool>
 
@@ -2735,7 +2523,7 @@
     <string name="config_demoModeLauncherComponent">com.android.retaildemo/.DemoPlayer</string>
 
     <!-- Flag indicating whether round icons should be parsed from the application manifest. -->
-    <bool name="config_useRoundIcon">true</bool>
+    <bool name="config_useRoundIcon">false</bool>
 
     <!-- Flag indicating whether the assist disclosure can be disabled using
          ASSIST_DISCLOSURE_ENABLED. -->
@@ -2773,7 +2561,6 @@
         <!-- Verizon requires any SMS that starts with //VZWVVM to be treated as a VVM SMS-->
         <item>310004,310010,310012,310013,310590,310890,310910,311110,311270,311271,311272,311273,311274,311275,311276,311277,311278,311279,311280,311281,311282,311283,311284,311285,311286,311287,311288,311289,311390,311480,311481,311482,311483,311484,311485,311486,311487,311488,311489;^//VZWVVM.*</item>
     </string-array>
-
     <!-- This config is holding calling number conversion map - expected to convert to emergency
          number. Formats for this config as below:
          <item>[dialstring1],[dialstring2],[dialstring3]:[replacement]</item>
@@ -2785,7 +2572,4 @@
 
     <!-- An array of packages for which notifications cannot be blocked. -->
     <string-array translatable="false" name="config_nonBlockableNotificationPackages" />
-
-    <!-- Boolean to enable stk functionality on Samsung phones -->
-    <bool name="config_samsung_stk">false</bool>
 </resources>

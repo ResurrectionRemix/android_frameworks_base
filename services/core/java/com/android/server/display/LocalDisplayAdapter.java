@@ -59,7 +59,6 @@ final class LocalDisplayAdapter extends DisplayAdapter {
     private static final int[] BUILT_IN_DISPLAY_IDS_TO_SCAN = new int[] {
             SurfaceControl.BUILT_IN_DISPLAY_ID_MAIN,
             SurfaceControl.BUILT_IN_DISPLAY_ID_HDMI,
-            SurfaceControl.BUILT_IN_DISPLAY_ID_TERTIARY,
     };
 
     private final SparseArray<LocalDisplayDevice> mDevices =
@@ -284,10 +283,6 @@ final class LocalDisplayAdapter extends DisplayAdapter {
 
         private boolean updateColorModesLocked(int[] colorModes,
                 int activeColorMode) {
-            if (colorModes == null) {
-                return false;
-            }
-
             List<Integer> pendingColorModes = new ArrayList<>();
 
             // Build an updated list of all existing color modes.

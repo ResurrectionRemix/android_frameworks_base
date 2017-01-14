@@ -19,7 +19,6 @@ package com.android.systemui.qs;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.provider.Settings;
 import android.util.MathUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -94,22 +93,10 @@ public class QSTileView extends QSTileBaseView {
     @Override
     protected void handleStateChanged(QSTile.State state) {
         super.handleStateChanged(state);
-        textVisibility();
         if (!Objects.equal(mLabel.getText(), state.label)) {
             mLabel.setText(state.label);
         }
         mLabel.setEnabled(!state.disabledByPolicy);
         mPadLock.setVisibility(state.disabledByPolicy ? View.VISIBLE : View.GONE);
-    }
-
-    public void textVisibility() {
-        if (Settings.System.getInt(mContext.getContentResolver(),
-             Settings.System.QS_TILE_TITLE_VISIBILITY, 1) == 1) {
-           mLabel.setVisibility(View.VISIBLE);
-           requestLayout();
-        } else {
-           mLabel.setVisibility(View.GONE);
-           requestLayout();
-        }
     }
 }

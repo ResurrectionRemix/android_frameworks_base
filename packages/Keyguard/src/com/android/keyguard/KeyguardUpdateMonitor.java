@@ -24,7 +24,6 @@ import static android.os.BatteryManager.EXTRA_HEALTH;
 import static android.os.BatteryManager.EXTRA_LEVEL;
 import static android.os.BatteryManager.EXTRA_MAX_CHARGING_CURRENT;
 import static android.os.BatteryManager.EXTRA_MAX_CHARGING_VOLTAGE;
-import static android.os.BatteryManager.EXTRA_TEMPERATURE;
 import static android.os.BatteryManager.EXTRA_PLUGGED;
 import static android.os.BatteryManager.EXTRA_STATUS;
 
@@ -44,8 +43,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.hardware.fingerprint.Fingerprint;
 import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.FingerprintManager.AuthenticationCallback;
 import android.hardware.fingerprint.FingerprintManager.AuthenticationResult;
@@ -661,7 +658,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 final int maxChargingMicroAmp = intent.getIntExtra(EXTRA_MAX_CHARGING_CURRENT, -1);
                 int maxChargingMicroVolt = intent.getIntExtra(EXTRA_MAX_CHARGING_VOLTAGE, -1);
                 final int maxChargingMicroWatt;
-                final int temperature = intent.getIntExtra(EXTRA_TEMPERATURE, -1);;
 
                 if (maxChargingMicroVolt <= 0) {
                     maxChargingMicroVolt = DEFAULT_CHARGING_VOLTAGE_MICRO_VOLT;
@@ -676,8 +672,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 }
                 final Message msg = mHandler.obtainMessage(
                         MSG_BATTERY_UPDATE, new BatteryStatus(status, level, plugged, health,
-                                maxChargingMicroAmp, maxChargingMicroVolt, maxChargingMicroWatt,
-                                temperature));
+                                maxChargingMicroWatt));
                 mHandler.sendMessage(msg);
             } else if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(action)) {
                 SimData args = SimData.fromIntent(intent);
@@ -842,8 +837,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 }
             } else if (IccCardConstants.INTENT_VALUE_LOCKED_NETWORK.equals(stateExtra)) {
                 state = IccCardConstants.State.NETWORK_LOCKED;
-            } else if (IccCardConstants.INTENT_VALUE_ICC_CARD_IO_ERROR.equals(stateExtra)) {
-                state = IccCardConstants.State.CARD_IO_ERROR;
             } else if (IccCardConstants.INTENT_VALUE_ICC_LOADED.equals(stateExtra)
                         || IccCardConstants.INTENT_VALUE_ICC_IMSI.equals(stateExtra)) {
                 // This is required because telephony doesn't return to "READY" after
@@ -861,10 +854,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         }
     }
 
-    public BatteryStatus getBatteryStatus() {
-        return mBatteryStatus;
-    }
-
     public static class BatteryStatus {
         public static final int CHARGING_UNKNOWN = -1;
         public static final int CHARGING_SLOWLY = 0;
@@ -875,21 +864,14 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         public final int level;
         public final int plugged;
         public final int health;
-        public final int maxChargingCurrent;
-        public final int maxChargingVoltage;
         public final int maxChargingWattage;
-        public final int temperature;
         public BatteryStatus(int status, int level, int plugged, int health,
-                int maxChargingCurrent, int maxChargingVoltage, int maxChargingWattage,
-                int temperature) {
+                int maxChargingWattage) {
             this.status = status;
             this.level = level;
             this.plugged = plugged;
             this.health = health;
-            this.maxChargingCurrent = maxChargingCurrent;
-            this.maxChargingVoltage = maxChargingVoltage;
             this.maxChargingWattage = maxChargingWattage;
-            this.temperature = temperature;
         }
 
         /**
@@ -1074,7 +1056,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         }
 
         // Take a guess at initial SIM state, battery status and PLMN until we get an update
-        mBatteryStatus = new BatteryStatus(BATTERY_STATUS_UNKNOWN, 100, 0, 0, 0, 0 ,0, 0);
+        mBatteryStatus = new BatteryStatus(BATTERY_STATUS_UNKNOWN, 100, 0, 0, 0);
 
         // Watch for interesting updates
         final IntentFilter filter = new IntentFilter();
@@ -1155,16 +1137,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
     }
 
     private boolean shouldListenForFingerprint() {
-        if (!mSwitchingUser && !mFingerprintAlreadyAuthenticated
-                && !isFingerprintDisabled(getCurrentUser())) {
-            if (mContext.getResources().getBoolean(
-                    com.android.keyguard.R.bool.config_fingerprintWakeAndUnlock)) {
-                return mKeyguardIsVisible || !mDeviceInteractive || mBouncer || mGoingToSleep;
-            } else {
-                return mDeviceInteractive && (mKeyguardIsVisible || mBouncer);
-            }
-        }
-        return false;
+        return (mKeyguardIsVisible || !mDeviceInteractive || mBouncer || mGoingToSleep)
+                && !mSwitchingUser && !mFingerprintAlreadyAuthenticated
+                && !isFingerprintDisabled(getCurrentUser());
     }
 
     private void startListeningForFingerprint() {
@@ -1475,7 +1450,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
             KeyguardUpdateMonitorCallback cb = mCallbacks.get(j).get();
             if (cb != null) {
                 cb.onRefreshCarrierInfo();
-                cb.onServiceStateChanged(subId, serviceState);
             }
         }
     }
@@ -1714,36 +1688,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         } else {
             return State.UNKNOWN;
         }
-    }
-
-    public boolean isOOS()
-    {
-        boolean ret = true;
-        int phoneCount = TelephonyManager.getDefault().getPhoneCount();
-
-        for (int phoneId = 0; phoneId < phoneCount; phoneId++) {
-            int[] subId = SubscriptionManager.getSubId(phoneId);
-            if (subId != null && subId.length >= 1) {
-                if (DEBUG) Log.d(TAG, "slot id:" + phoneId + " subId:" + subId[0]);
-                ServiceState state = mServiceStates.get(subId[0]);
-                if (state != null) {
-                    if (state.isEmergencyOnly())
-                        ret = false;
-                    if ((state.getVoiceRegState() != ServiceState.STATE_OUT_OF_SERVICE)
-                            && (state.getVoiceRegState() != ServiceState.STATE_POWER_OFF))
-                        ret = false;
-                    if (DEBUG) {
-                        Log.d(TAG, "is emergency: " + state.isEmergencyOnly());
-                        Log.d(TAG, "voice state: " + state.getVoiceRegState());
-                    }
-                } else {
-                    if (DEBUG) Log.d(TAG, "state is NULL");
-                }
-            }
-        }
-
-        if (DEBUG) Log.d(TAG, "is Emergency supported: " + ret);
-        return ret;
     }
 
     /**

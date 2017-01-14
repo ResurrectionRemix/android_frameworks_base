@@ -58,8 +58,15 @@ public class SettingsButton extends AlphaOptimizedImageButton {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                postDelayed(mLongPressCallback, LONG_PRESS_LENGTH);
+                break;
             case MotionEvent.ACTION_UP:
-                cancelLongClick();
+                if (mUpToSpeed) {
+                    startExitAnimation();
+                } else {
+                    cancelLongClick();
+                }
                 break;
             case MotionEvent.ACTION_CANCEL:
                 cancelLongClick();

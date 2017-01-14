@@ -92,7 +92,6 @@ import android.app.ActivityManager.RunningTaskInfo;
 import android.app.ActivityManager.StackId;
 import android.app.ActivityOptions;
 import android.app.AppGlobals;
-import android.app.AppOpsManager;
 import android.app.IActivityController;
 import android.app.ResultInfo;
 import android.content.ComponentName;
@@ -117,7 +116,6 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.service.voice.IVoiceInteractionSession;
-import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.EventLog;
 import android.util.Log;
@@ -132,8 +130,6 @@ import com.android.server.am.ActivityManagerService.ItemMatcher;
 import com.android.server.am.ActivityStackSupervisor.ActivityContainer;
 import com.android.server.wm.TaskGroup;
 import com.android.server.wm.WindowManagerService;
-
-import cyanogenmod.providers.CMSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -357,9 +353,6 @@ final class ActivityStack {
             mReason = reason;
         }
     }
-
-    private static final String PROTECTED_APPS_TARGET_VALIDATION_COMPONENT =
-            "com.android.settings/com.android.settings.applications.ProtectedAppsActivity";
 
     final Handler mHandler;
 
@@ -1453,9 +1446,6 @@ final class ActivityStack {
             // When resuming an activity, require it to call requestVisibleBehind() again.
             setVisibleBehindActivity(null);
         }
-
-        updatePrivacyGuardNotificationLocked(next);
-        updateProtectedAppNotificationLocked(next);
     }
 
     private void setVisible(ActivityRecord r, boolean visible) {
@@ -2255,11 +2245,6 @@ final class ActivityStack {
             return false;
         }
 
-        // Some activities may want to alter the system power management
-        if (mStackSupervisor.mService.mPerf != null) {
-            mStackSupervisor.mService.mPerf.activityResumed(next.intent);
-        }
-
         // The activity may be waiting for stop, but that is no longer
         // appropriate for it.
         mStackSupervisor.mStoppingActivities.remove(next);
@@ -2384,11 +2369,6 @@ final class ActivityStack {
                     mWindowManager.prepareAppTransition(prev.task == next.task
                             ? TRANSIT_ACTIVITY_CLOSE
                             : TRANSIT_TASK_CLOSE, false);
-                    if (prev.task != next.task) {
-                        if (mStackSupervisor.mService.mPerf != null) {
-                            mStackSupervisor.mService.mPerf.cpuBoost(2000 * 1000);
-                        }
-                    }
                 }
                 mWindowManager.setAppVisibility(prev.appToken, false);
             } else {
@@ -2403,11 +2383,6 @@ final class ActivityStack {
                             : next.mLaunchTaskBehind
                                     ? TRANSIT_TASK_OPEN_BEHIND
                                     : TRANSIT_TASK_OPEN, false);
-                    if (prev.task != next.task) {
-                        if (mStackSupervisor.mService.mPerf != null) {
-                            mStackSupervisor.mService.mPerf.cpuBoost(2000 * 1000);
-                        }
-                    }
                 }
             }
         } else {
@@ -2696,42 +2671,6 @@ final class ActivityStack {
         }
         mTaskHistory.add(taskNdx, task);
         updateTaskMovement(task, true);
-    }
-
-    private final void updateProtectedAppNotificationLocked(ActivityRecord next) {
-        ComponentName componentName = ComponentName.unflattenFromString(next.shortComponentName);
-        if (TextUtils.equals(componentName.flattenToString(),
-                PROTECTED_APPS_TARGET_VALIDATION_COMPONENT)) {
-            Message msg = mService.mHandler.obtainMessage(
-                    ActivityManagerService.CANCEL_PROTECTED_APP_NOTIFICATION, next);
-            msg.sendToTarget();
-        }
-    }
-
-    private final void updatePrivacyGuardNotificationLocked(ActivityRecord next) {
-
-        String privacyGuardPackageName = mStackSupervisor.mPrivacyGuardPackageName;
-        if (privacyGuardPackageName != null && privacyGuardPackageName.equals(next.packageName)) {
-            return;
-        }
-
-        boolean privacy = mService.mAppOpsService.getPrivacyGuardSettingForPackage(
-                next.app.uid, next.packageName);
-        boolean privacyNotification = (CMSettings.Secure.getInt(
-                mService.mContext.getContentResolver(),
-                CMSettings.Secure.PRIVACY_GUARD_NOTIFICATION, 1) == 1);
-
-        if (privacyGuardPackageName != null && !privacy) {
-            Message msg = mService.mHandler.obtainMessage(
-                    ActivityManagerService.CANCEL_PRIVACY_NOTIFICATION_MSG, next.userId);
-            msg.sendToTarget();
-            mStackSupervisor.mPrivacyGuardPackageName = null;
-        } else if (privacy && privacyNotification) {
-            Message msg = mService.mHandler.obtainMessage(
-                    ActivityManagerService.POST_PRIVACY_NOTIFICATION_MSG, next);
-            msg.sendToTarget();
-            mStackSupervisor.mPrivacyGuardPackageName = next.packageName;
-        }
     }
 
     final void startActivityLocked(ActivityRecord r, boolean newTask, boolean keepCurTransition,
@@ -3258,8 +3197,7 @@ final class ActivityStack {
     }
 
     private void adjustFocusedActivityLocked(ActivityRecord r, String reason) {
-        if (!mStackSupervisor.isFocusedStack(this) || (mService.mFocusedActivity != r
-                && mService.mFocusedActivity != null)) {
+        if (!mStackSupervisor.isFocusedStack(this) || mService.mFocusedActivity != r) {
             return;
         }
 
@@ -4254,7 +4192,7 @@ final class ActivityStack {
                         hasVisibleActivities = true;
                     }
                     final boolean remove;
-                    if ((!r.haveState && !r.stateNotNeeded) || r.finishing || app.removed) {
+                    if ((!r.haveState && !r.stateNotNeeded) || r.finishing) {
                         // Don't currently have state for the activity, or
                         // it is finishing -- always remove it.
                         remove = true;
@@ -5003,8 +4941,7 @@ final class ActivityStack {
             if (focusedStack && topTask) {
                 // Give the latest time to ensure foreground task can be sorted
                 // at the first, because lastActiveTime of creating task is 0.
-                // Only do this if the clock didn't run backwards, though.
-                ci.lastActiveTime = Math.max(ci.lastActiveTime, System.currentTimeMillis());
+                ci.lastActiveTime = System.currentTimeMillis();
                 topTask = false;
             }
 

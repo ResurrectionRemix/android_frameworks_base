@@ -1,8 +1,6 @@
 /*
  * Copyright (C) 2009-2016 The Android Open Source Project
  * Copyright (C) 2015 Samsung LSI
- * Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
- * Not a Contribution.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +23,6 @@ import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
-import android.app.ActivityThread;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -104,7 +101,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public final class BluetoothAdapter {
     private static final String TAG = "BluetoothAdapter";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
     private static final boolean VDBG = false;
 
     /**
@@ -551,7 +548,6 @@ public final class BluetoothAdapter {
      * @throws IllegalArgumentException if address is invalid
      */
     public BluetoothDevice getRemoteDevice(String address) {
-        android.util.SeempLog.record(62);
         return new BluetoothDevice(address);
     }
 
@@ -567,7 +563,6 @@ public final class BluetoothAdapter {
      * @throws IllegalArgumentException if address is invalid
      */
     public BluetoothDevice getRemoteDevice(byte[] address) {
-        android.util.SeempLog.record(62);
         if (address == null || address.length != 6) {
             throw new IllegalArgumentException("Bluetooth address must have 6 bytes");
         }
@@ -777,7 +772,7 @@ public final class BluetoothAdapter {
                 return true;
             }
             if (DBG) Log.d(TAG, "enableBLE(): Calling enable");
-            return mManagerService.enable(ActivityThread.currentPackageName());
+            return mManagerService.enable();
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
@@ -801,7 +796,6 @@ public final class BluetoothAdapter {
     public int getState() {
         int state = BluetoothAdapter.STATE_OFF;
 
-        android.util.SeempLog.record(63);
         try {
             mServiceLock.readLock().lock();
             if (mService != null) {
@@ -900,13 +894,12 @@ public final class BluetoothAdapter {
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean enable() {
-        android.util.SeempLog.record(56);
         if (isEnabled() == true) {
             if (DBG) Log.d(TAG, "enable(): BT is already enabled..!");
             return true;
         }
         try {
-            return mManagerService.enable(ActivityThread.currentPackageName());
+            return mManagerService.enable();
         } catch (RemoteException e) {Log.e(TAG, "", e);}
         return false;
     }
@@ -937,7 +930,6 @@ public final class BluetoothAdapter {
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean disable() {
-        android.util.SeempLog.record(57);
         try {
             return mManagerService.disable(true);
         } catch (RemoteException e) {Log.e(TAG, "", e);}
@@ -955,7 +947,6 @@ public final class BluetoothAdapter {
      * @hide
      */
     public boolean disable(boolean persist) {
-        android.util.SeempLog.record(57);
 
         try {
             return mManagerService.disable(persist);
@@ -1227,7 +1218,6 @@ public final class BluetoothAdapter {
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean startDiscovery() {
-        android.util.SeempLog.record(58);
         if (getState() != STATE_ON) return false;
         try {
             mServiceLock.readLock().lock();
@@ -1486,7 +1476,6 @@ public final class BluetoothAdapter {
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public Set<BluetoothDevice> getBondedDevices() {
-        android.util.SeempLog.record(61);
         if (getState() != STATE_ON) {
             return toDeviceSet(new BluetoothDevice[0]);
         }
@@ -1545,7 +1534,6 @@ public final class BluetoothAdapter {
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public int getProfileConnectionState(int profile) {
-        android.util.SeempLog.record(64);
         if (getState() != STATE_ON) return BluetoothProfile.STATE_DISCONNECTED;
         try {
             mServiceLock.readLock().lock();
@@ -1669,7 +1657,6 @@ public final class BluetoothAdapter {
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public BluetoothServerSocket listenUsingInsecureRfcommWithServiceRecord(String name, UUID uuid)
             throws IOException {
-        android.util.SeempLog.record(59);
         return createNewRfcommSocketAndRecord(name, uuid, false, false);
     }
 
@@ -1842,35 +1829,6 @@ public final class BluetoothAdapter {
         return listenUsingL2capOn(port, false, false);
     }
 
-
-    /**
-     * Construct an insecure L2CAP server socket.
-     * Call #accept to retrieve connections to this socket.
-     * <p>To auto assign a port without creating a SDP record use
-     * {@link SOCKET_CHANNEL_AUTO_STATIC_NO_SDP} as port number.
-     * @param port    the PSM to listen on
-     * @return An L2CAP BluetoothServerSocket
-     * @throws IOException On error, for example Bluetooth not available, or
-     *                     insufficient permissions.
-     * @hide
-     */
-    public BluetoothServerSocket listenUsingInsecureL2capOn(int port) throws IOException {
-        BluetoothServerSocket socket = new BluetoothServerSocket(
-                BluetoothSocket.TYPE_L2CAP, false, false, port, false, false);
-        int errno = socket.mSocket.bindListen();
-        if(port == SOCKET_CHANNEL_AUTO_STATIC_NO_SDP) {
-            socket.setChannel(socket.mSocket.getPort());
-        }
-        if (errno != 0) {
-            //TODO(BT): Throw the same exception error code
-            // that the previous code was using.
-            //socket.mSocket.throwErrnoNative(errno);
-            throw new IOException("Error: " + errno);
-        }
-        return socket;
-
-    }
-
     /**
      * Read the local Out of Band Pairing Data
      * <p>Requires {@link android.Manifest.permission#BLUETOOTH}
@@ -1949,9 +1907,6 @@ public final class BluetoothAdapter {
         } else if (profile == BluetoothProfile.PAN) {
             BluetoothPan pan = new BluetoothPan(context, listener);
             return true;
-        } else if (profile == BluetoothProfile.DUN) {
-            BluetoothDun dun = new BluetoothDun(context, listener);
-            return true;
         } else if (profile == BluetoothProfile.HEALTH) {
             BluetoothHealth health = new BluetoothHealth(context, listener);
             return true;
@@ -2010,10 +1965,6 @@ public final class BluetoothAdapter {
             case BluetoothProfile.PAN:
                 BluetoothPan pan = (BluetoothPan)proxy;
                 pan.close();
-                break;
-            case BluetoothProfile.DUN:
-                BluetoothDun dun = (BluetoothDun)proxy;
-                dun.close();
                 break;
             case BluetoothProfile.HEALTH:
                 BluetoothHealth health = (BluetoothHealth)proxy;
@@ -2084,8 +2035,6 @@ public final class BluetoothAdapter {
                 }
 
                 synchronized (mProxyServiceStateCallbacks) {
-                    Log.d(TAG, "onBluetoothServiceDown: Sending callbacks to " +
-                                    mProxyServiceStateCallbacks.size() + " clients");
                     for (IBluetoothManagerCallback cb : mProxyServiceStateCallbacks ){
                         try {
                             if (cb != null) {
@@ -2093,10 +2042,11 @@ public final class BluetoothAdapter {
                             } else {
                                 Log.d(TAG, "onBluetoothServiceDown: cb is null!!!");
                             }
-                        } catch (Exception e)  { Log.e(TAG,"",e);}
+                        } catch (Exception e) {
+                            Log.e(TAG,"",e);
+                        }
                     }
                 }
-                Log.d(TAG, "onBluetoothServiceDown: Finished sending callbacks to registered clients");
             }
 
             public void onBrEdrDown() {

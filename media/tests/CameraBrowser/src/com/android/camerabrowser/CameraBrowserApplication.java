@@ -18,7 +18,7 @@ package com.android.camerabrowser;
 
 import android.app.Application;
 
-public class CameraBrowserApplication extends Application { 
+public class CameraBrowserApplication extends Application {
 
     private MtpClient mClient;
 
@@ -35,10 +35,5 @@ public class CameraBrowserApplication extends Application {
 
     public MtpClient getMtpClient() {
         return mClient;
-    }
-
-    public static boolean isChineseLanguage() {
-       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
-               Locale.CHINESE.getLanguage());
     }
 }

@@ -307,11 +307,7 @@ class FocusManager implements View.OnFocusChangeListener {
                             }
                         }
                     });
-            try {
-                mView.smoothScrollToPosition(pos);
-            } catch(IllegalArgumentException e) {
-                Log.w(TAG, "Invalid target position :" + pos, e);
-            }
+            mView.smoothScrollToPosition(pos);
         }
     }
 

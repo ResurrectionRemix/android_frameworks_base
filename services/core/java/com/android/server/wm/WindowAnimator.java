@@ -53,7 +53,6 @@ import android.util.TimeUtils;
 import android.view.Choreographer;
 import android.view.Display;
 import android.view.SurfaceControl;
-import android.view.WindowManager;
 import android.view.WindowManagerPolicy;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -257,8 +256,6 @@ public class WindowAnimator {
         allowWhenLocked |= (win.mIsImWindow || imeTarget == win) && showImeOverKeyguard;
         // Show SHOW_WHEN_LOCKED windows that turn on the screen
         allowWhenLocked |= (win.mAttrs.flags & FLAG_SHOW_WHEN_LOCKED) != 0 && win.mTurnOnScreen;
-        // Show windows that use TYPE_STATUS_BAR_SUB_PANEL when locked
-        allowWhenLocked |= win.mAttrs.type == WindowManager.LayoutParams.TYPE_KEYGUARD_PANEL;
 
         if (appShowWhenLocked != null) {
             allowWhenLocked |= appShowWhenLocked == win.mAppToken
@@ -603,7 +600,7 @@ public class WindowAnimator {
             // If this window is animating, make a note that we have
             // an animating window and take care of a request to run
             // a detached wallpaper animation.
-            if (winAnimator.mAnimating && !winAnimator.isDummyAnimation()) {
+            if (winAnimator.mAnimating) {
                 if (winAnimator.mAnimation != null) {
                     if ((flags & FLAG_SHOW_WALLPAPER) != 0
                             && winAnimator.mAnimation.getDetachWallpaper()) {

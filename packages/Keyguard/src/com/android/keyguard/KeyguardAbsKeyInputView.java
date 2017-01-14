@@ -41,7 +41,6 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     protected View mEcaView;
     protected boolean mEnableHaptics;
     private boolean mDismissing;
-    private int mMaxCountdownTimes = 0;
 
     // To avoid accidental lockout due to events while the device in in the pocket, ignore
     // any passwords with length less than or equal to this length.
@@ -94,9 +93,6 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
         mLockPatternUtils = new LockPatternUtils(mContext);
         mSecurityMessageDisplay = KeyguardMessageArea.findSecurityMessageDisplay(this);
         mEcaView = findViewById(R.id.keyguard_selector_fade_container);
-
-        mMaxCountdownTimes = mContext.getResources()
-                .getInteger(R.integer.config_max_unlock_countdown_times);
 
         EmergencyButton button = (EmergencyButton) findViewById(R.id.emergency_call_button);
         if (button != null) {
@@ -164,7 +160,6 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
             boolean isValidPassword) {
         boolean dismissKeyguard = KeyguardUpdateMonitor.getCurrentUser() == userId;
         if (matched) {
-            mLockPatternUtils.sanitizePassword();
             mCallback.reportUnlockAttempt(userId, true, 0);
             if (dismissKeyguard) {
                 mDismissing = true;
@@ -173,15 +168,14 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
         } else {
             if (isValidPassword) {
                 mCallback.reportUnlockAttempt(userId, false, timeoutMs);
-                if  (!(mMaxCountdownTimes > 0) && timeoutMs > 0) {
+                if (timeoutMs > 0) {
                     long deadline = mLockPatternUtils.setLockoutAttemptDeadline(
                             userId, timeoutMs);
                     handleAttemptLockout(deadline);
                 }
             }
             if (timeoutMs == 0) {
-                String msg = getMessageWithCount(getWrongPasswordStringId());
-                mSecurityMessageDisplay.setMessage(msg, true);
+                mSecurityMessageDisplay.setMessage(getWrongPasswordStringId(), true);
             }
         }
         resetPasswordText(true /* animate */, !matched /* announce deletion if no match */);
@@ -211,18 +205,6 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
                 resetState();
             }
         }.start();
-    }
-
-    protected String getMessageWithCount(int msgId) {
-        String msg = getContext().getString(msgId);
-        int remaining = mMaxCountdownTimes
-            - KeyguardUpdateMonitor.getInstance(mContext).getFailedUnlockAttempts(
-            KeyguardUpdateMonitor.getCurrentUser());
-        if (mMaxCountdownTimes > 0 && remaining > 0) {
-            msg += " - " + getContext().getResources().getString(
-                    R.string.kg_remaining_attempts, remaining);
-        }
-        return msg;
     }
 
     protected void onUserInput() {

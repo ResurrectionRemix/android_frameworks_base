@@ -47,8 +47,6 @@ public class NotificationsQuickSettingsContainer extends FrameLayout
     private int mBottomPadding;
     private int mStackScrollerMargin;
 
-    private boolean mIsCustomizerShowing;
-
     public NotificationsQuickSettingsContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -159,16 +157,12 @@ public class NotificationsQuickSettingsContainer extends FrameLayout
             setPadding(0, 0, 0, mBottomPadding);
             setBottomMargin(mStackScroller, mStackScrollerMargin);
         }
-        mIsCustomizerShowing = isShowing;
+
     }
 
     private void setBottomMargin(View v, int bottomMargin) {
         LayoutParams params = (LayoutParams) v.getLayoutParams();
         params.bottomMargin = bottomMargin;
         v.setLayoutParams(params);
-    }
-
-    boolean isCustomizerShowingOrAnimating() {
-        return mIsCustomizerShowing || mCustomizerAnimating;
     }
 }

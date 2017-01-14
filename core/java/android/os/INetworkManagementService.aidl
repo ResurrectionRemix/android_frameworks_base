@@ -234,19 +234,9 @@ interface INetworkManagementService
     void startAccessPoint(in WifiConfiguration wifiConfig, String iface);
 
     /**
-     * Start Wigig Access Point
-     */
-    void startWigigAccessPoint();
-
-    /**
      * Stop Wifi Access Point
      */
     void stopAccessPoint(String iface);
-
-    /**
-     * Stop Wigig Access Point
-     */
-    void stopWigigAccessPoint();
 
     /**
      * Set Access Point config

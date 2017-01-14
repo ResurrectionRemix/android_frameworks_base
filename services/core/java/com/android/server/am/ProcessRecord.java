@@ -143,7 +143,7 @@ final class ProcessRecord {
     Bundle instrumentationArguments;// as given to us
     ComponentName instrumentationResultClass;// copy of instrumentationClass
     boolean usingWrapper;       // Set to true when process was launched with a wrapper attached
-    final ArraySet<BroadcastRecord> curReceivers = new ArraySet<BroadcastRecord>();// receiver currently running in the app
+    BroadcastRecord curReceiver;// receiver currently running in the app
     long lastWakeTime;          // How long proc held wake lock at last check
     long lastCpuTime;           // How long proc has run CPU at last check
     long curCpuTime;            // How long proc has run CPU most recently
@@ -427,11 +427,8 @@ final class ProcessRecord {
                 pw.print(prefix); pw.print("  - "); pw.println(conProviders.get(i).toShortString());
             }
         }
-        if (curReceivers.size() > 0) {
-            pw.print(prefix); pw.println("Current Receivers:");
-            for (int i=0; i<curReceivers.size(); i++) {
-                pw.print(prefix); pw.print(" -"); pw.println(curReceivers.valueAt(i));
-            }
+        if (curReceiver != null) {
+            pw.print(prefix); pw.print("curReceiver="); pw.println(curReceiver);
         }
         if (receivers.size() > 0) {
             pw.print(prefix); pw.println("Receivers:");
@@ -469,18 +466,6 @@ final class ProcessRecord {
     }
 
     public void makeActive(IApplicationThread _thread, ProcessStatsService tracker) {
-        String seempStr = "app_uid=" + uid
-                            + ",app_pid=" + pid + ",oom_adj=" + curAdj
-                            + ",setAdj=" + setAdj + ",hasShownUi=" + (hasShownUi ? 1 : 0)
-                            + ",cached=" + (cached ? 1 : 0)
-                            + ",fA=" + (foregroundActivities ? 1 : 0)
-                            + ",fS=" + (foregroundServices ? 1 : 0)
-                            + ",systemNoUi=" + (systemNoUi ? 1 : 0)
-                            + ",curSchedGroup=" + curSchedGroup
-                            + ",curProcState=" + curProcState + ",setProcState=" + setProcState
-                            + ",killed=" + (killed ? 1 : 0) + ",killedByAm=" + (killedByAm ? 1 : 0)
-                            + ",debugging=" + (debugging ? 1 : 0);
-        android.util.SeempLog.record_str(386, seempStr);
         if (thread == null) {
             final ProcessState origBase = baseProcessTracker;
             if (origBase != null) {
@@ -507,18 +492,6 @@ final class ProcessRecord {
     }
 
     public void makeInactive(ProcessStatsService tracker) {
-        String seempStr = "app_uid=" + uid
-                            + ",app_pid=" + pid + ",oom_adj=" + curAdj
-                            + ",setAdj=" + setAdj + ",hasShownUi=" + (hasShownUi ? 1 : 0)
-                            + ",cached=" + (cached ? 1 : 0)
-                            + ",fA=" + (foregroundActivities ? 1 : 0)
-                            + ",fS=" + (foregroundServices ? 1 : 0)
-                            + ",systemNoUi=" + (systemNoUi ? 1 : 0)
-                            + ",curSchedGroup=" + curSchedGroup
-                            + ",curProcState=" + curProcState + ",setProcState=" + setProcState
-                            + ",killed=" + (killed ? 1 : 0) + ",killedByAm=" + (killedByAm ? 1 : 0)
-                            + ",debugging=" + (debugging ? 1 : 0);
-        android.util.SeempLog.record_str(387, seempStr);
         thread = null;
         final ProcessState origBase = baseProcessTracker;
         if (origBase != null) {

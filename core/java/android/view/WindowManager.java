@@ -240,7 +240,6 @@ public interface WindowManager extends ViewManager {
          * @see #TYPE_SYSTEM_ERROR
          * @see #TYPE_INPUT_METHOD
          * @see #TYPE_INPUT_METHOD_DIALOG
-         * @see #TYPE_KEYGUARD_PANEL
          */
         @ViewDebug.ExportedProperty(mapping = {
             @ViewDebug.IntToString(from = TYPE_BASE_APPLICATION, to = "TYPE_BASE_APPLICATION"),
@@ -284,8 +283,7 @@ public interface WindowManager extends ViewManager {
             @ViewDebug.IntToString(from = TYPE_VOICE_INTERACTION_STARTING, to = "TYPE_VOICE_INTERACTION_STARTING"),
             @ViewDebug.IntToString(from = TYPE_DOCK_DIVIDER, to = "TYPE_DOCK_DIVIDER"),
             @ViewDebug.IntToString(from = TYPE_QS_DIALOG, to = "TYPE_QS_DIALOG"),
-            @ViewDebug.IntToString(from = TYPE_SCREENSHOT, to = "TYPE_SCREENSHOT"),
-            @ViewDebug.IntToString(from = TYPE_KEYGUARD_PANEL, to = "TYPE_KEYGUARD_PANEL"),
+            @ViewDebug.IntToString(from = TYPE_SCREENSHOT, to = "TYPE_SCREENSHOT")
         })
         public int type;
 
@@ -651,13 +649,6 @@ public interface WindowManager extends ViewManager {
          * @hide
          */
         public static final int TYPE_SCREENSHOT = FIRST_SYSTEM_WINDOW + 36;
-
-        /**
-         * Window type: Windows that are layered within the keyguard
-         * This type is LAST_SYSTEM_WINDOW-1 to avoid future conflicts with AOSP
-         * @hide
-         */
-        public static final int TYPE_KEYGUARD_PANEL = FIRST_SYSTEM_WINDOW+998;
 
         /**
          * End of types of system windows.
@@ -1223,23 +1214,6 @@ public interface WindowManager extends ViewManager {
         public static final int PRIVATE_FLAG_FORCE_STATUS_BAR_VISIBLE_TRANSPARENT = 0x00001000;
 
         /**
-         * {@hide}
-         */
-        public static final int PRIVATE_FLAG_STATUS_HIDE_FORCED = 0x00800000;
-
-        /**
-         * {@hide}
-         */
-        public static final int PRIVATE_FLAG_NAV_HIDE_FORCED = 0x01000000;
-
-        /**
-         * The window had not set FULLSCREEN flag so don't handle it as fullscreen in layoutWindowLw
-         *
-         * {@hide}
-         */
-        public static final int PRIVATE_FLAG_WAS_NOT_FULLSCREEN = 0x02000000;
-
-        /**
          * Flag indicating that the x, y, width, and height members should be
          * ignored (and thus their previous value preserved). For example
          * because they are being managed externally through repositionChild.
@@ -1287,12 +1261,6 @@ public interface WindowManager extends ViewManager {
          * @hide
          */
         public static final int PRIVATE_FLAG_SUSTAINED_PERFORMANCE_MODE = 0x00040000;
-
-        /**
-         * Window flag: Overrides default power key behavior
-         * @hide
-         */
-        public static final int PRIVATE_FLAG_PREVENT_POWER_KEY = 0x20000000;
 
         /**
          * Control flags that are private to the platform.

@@ -833,7 +833,6 @@ static void dump_image(int w, int h, png_bytepp rows, int color_type)
         bpp = 4;
     } else {
         printf("Unknown color type %d.\n", color_type);
-        return;
     }
 
     for (j = 0; j < h; j++) {
@@ -1460,7 +1459,7 @@ status_t preProcessImageToCache(const Bundle* bundle, const String8& source, con
     png_structp read_ptr = NULL;
     png_infop read_info = NULL;
 
-    FILE*volatile fp;
+    FILE* fp;
 
     image_info imageInfo;
 

@@ -1438,7 +1438,7 @@ public class MediaScanner implements AutoCloseable {
             prescan(path, true);
 
             File file = new File(path);
-            if (!file.exists() || !file.canRead()) {
+            if (!file.exists()) {
                 return null;
             }
 
@@ -1447,7 +1447,7 @@ public class MediaScanner implements AutoCloseable {
 
             // always scan the file, so we can return the content://media Uri for existing files
             return mClient.doScanFile(path, mimeType, lastModifiedSeconds, file.length(),
-                    file.isDirectory(), true, MediaScanner.isNoMediaPath(path));
+                    false, true, MediaScanner.isNoMediaPath(path));
         } catch (RemoteException e) {
             Log.e(TAG, "RemoteException in MediaScanner.scanFile()", e);
             return null;

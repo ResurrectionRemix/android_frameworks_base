@@ -19,7 +19,6 @@ package com.android.systemui.statusbar.phone;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -28,7 +27,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 import android.view.animation.Interpolator;
@@ -63,7 +61,7 @@ public abstract class PanelView extends FrameLayout {
     private float mInitialOffsetOnTouch;
     private boolean mCollapsedAndHeadsUpOnDown;
     private float mExpandedFraction = 0;
-    protected static float mExpandedHeight = 0;
+    protected float mExpandedHeight = 0;
     private boolean mPanelClosedOnDown;
     private boolean mHasLayoutedSinceDown;
     private float mUpdateFlingVelocity;
@@ -89,20 +87,6 @@ public abstract class PanelView extends FrameLayout {
     private VelocityTrackerInterface mVelocityTracker;
     private FlingAnimationUtils mFlingAnimationUtils;
     private FalsingManager mFalsingManager;
-
-    private boolean mUpdateExpandOnLayout;
-    private View.OnLayoutChangeListener mLayoutChangeListener = new OnLayoutChangeListener() {
-        @Override
-        public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                int oldLeft, int oldTop, int oldRight, int oldBottom) {
-            // update expand height
-            if (mHeightAnimator != null && mExpanding && mUpdateExpandOnLayout) {
-                final int maxPanelHeight = getMaxPanelHeight();
-                final PropertyValuesHolder[] values = mHeightAnimator.getValues();
-                values[0].setFloatValues(maxPanelHeight);
-            }
-        }
-    };
 
     /**
      * Whether an instant expand request is currently pending and we are just waiting for layout.
@@ -651,7 +635,7 @@ public abstract class PanelView extends FrameLayout {
         flingToHeight(vel, expand, target, collapseSpeedUpFactor, expandBecauseOfFalsing);
     }
 
-    protected void flingToHeight(float vel, final boolean expand, float target,
+    protected void flingToHeight(float vel, boolean expand, float target,
             float collapseSpeedUpFactor, boolean expandBecauseOfFalsing) {
         // Hack to make the expand transition look nice when clear all button is visible - we make
         // the animation only to the last notification, and then jump to the maximum panel height so
@@ -672,7 +656,6 @@ public abstract class PanelView extends FrameLayout {
             if (expandBecauseOfFalsing) {
                 vel = 0;
             }
-            mUpdateExpandOnLayout = isFullyCollapsed();
             mFlingAnimationUtils.apply(animator, mExpandedHeight, target, vel, getHeight());
             if (vel == 0) {
                 animator.setDuration(350);
@@ -692,18 +675,12 @@ public abstract class PanelView extends FrameLayout {
             private boolean mCancelled;
 
             @Override
-            public void onAnimationStart(Animator animation) {
-                if (expand) PanelView.this.addOnLayoutChangeListener(mLayoutChangeListener);
-            }
-
-            @Override
             public void onAnimationCancel(Animator animation) {
                 mCancelled = true;
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (expand) PanelView.this.removeOnLayoutChangeListener(mLayoutChangeListener);
                 if (clearAllExpandHack && !mCancelled) {
                     setExpandedHeightInternal(getMaxPanelHeight());
                 }
@@ -761,7 +738,7 @@ public abstract class PanelView extends FrameLayout {
         }
     }
 
-    public synchronized void setExpandedHeightInternal(float h) {
+    public void setExpandedHeightInternal(float h) {
         float fhWithoutOverExpansion = getMaxPanelHeight() - getOverExpansionAmount();
         if (mHeightAnimator == null) {
             float overExpansionPixels = Math.max(0, h - fhWithoutOverExpansion);
@@ -822,7 +799,7 @@ public abstract class PanelView extends FrameLayout {
         return mExpandedHeight >= getMaxPanelHeight();
     }
 
-    public static boolean isFullyCollapsed() {
+    public boolean isFullyCollapsed() {
         return mExpandedHeight <= 0;
     }
 

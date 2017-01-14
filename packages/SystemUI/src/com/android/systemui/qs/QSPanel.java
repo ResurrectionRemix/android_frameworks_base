@@ -16,29 +16,13 @@
 
 package com.android.systemui.qs;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Message;
-import android.os.UserHandle;
-import android.os.Vibrator;
-import android.provider.Settings;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,8 +44,6 @@ import com.android.systemui.tuner.TunerService.Tunable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import cyanogenmod.providers.CMSettings;
-
 /** View that represents the quick settings tile panel. **/
 public class QSPanel extends LinearLayout implements Tunable, Callback {
 
@@ -70,8 +52,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
     protected final Context mContext;
     protected final ArrayList<TileRecord> mRecords = new ArrayList<TileRecord>();
     protected final View mBrightnessView;
-
-    protected final ImageView mBrightnessIcon;
     private final H mHandler = new H();
 
     private int mPanelPaddingBottom;
@@ -93,8 +73,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
 
     private BrightnessMirrorController mBrightnessMirrorController;
 
-    protected Vibrator mVibrator;
-
     public QSPanel(Context context) {
         this(context, null);
     }
@@ -109,18 +87,15 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
                 R.layout.quick_settings_brightness_dialog, this, false);
         addView(mBrightnessView);
 
-        mBrightnessIcon = (ImageView) mBrightnessView.findViewById(R.id.brightness_icon);
-
         setupTileLayout();
 
         mFooter = new QSFooter(this, context);
         addView(mFooter.getView());
-        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 
         updateResources();
 
         mBrightnessController = new BrightnessController(getContext(),
-                mBrightnessIcon,
+                (ImageView) findViewById(R.id.brightness_icon),
                 (ToggleSlider) findViewById(R.id.brightness_slider));
 
     }
@@ -142,18 +117,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
         TunerService.get(mContext).addTunable(this, QS_SHOW_BRIGHTNESS);
         if (mHost != null) {
             setTiles(mHost.getTiles());
-        }
-    }
-
-    public boolean isVibrationEnabled() {
-        return (Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
-    }
-
-    public void vibrateTile(int duration) {
-        if (!isVibrationEnabled()) { return; }
-        if (mVibrator != null) {
-            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
         }
     }
 
@@ -192,14 +155,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
             }
         }
         return mHost.createTile(subPanel);
-    }
-
-    private void setBrightnessIcon() {
-        boolean brightnessIconEnabled = Settings.System.getIntForUser(
-            mContext.getContentResolver(), Settings.System.QS_SHOW_BRIGHTNESS_ICON,
-                0, UserHandle.USER_CURRENT) == 1;
-        mBrightnessIcon.setVisibility(brightnessIconEnabled ? View.VISIBLE : View.GONE);
-        updateResources();
     }
 
     public void setBrightnessMirror(BrightnessMirrorController c) {
@@ -262,7 +217,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
     }
 
     public void onCollapse() {
-        if (mCustomizePanel != null && mCustomizePanel.isShown()) {
+        if (mCustomizePanel != null && mCustomizePanel.isCustomizing()) {
             mCustomizePanel.hide(mCustomizePanel.getWidth() / 2, mCustomizePanel.getHeight() / 2);
         }
     }
@@ -298,7 +253,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
                 mBrightnessController.unregisterCallbacks();
             }
         }
-        setBrightnessIcon();
     }
 
     public void refreshAllTiles() {
@@ -355,57 +309,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
         return mExpanded;
     }
 
-    private void setAnimationTile(TileRecord r) {
-        ObjectAnimator animTile = null;
-        int animStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_STYLE, 0, UserHandle.USER_CURRENT);
-        int animDuration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_DURATION, 2000, UserHandle.USER_CURRENT);
-        int interpolatorType = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_INTERPOLATOR, 0, UserHandle.USER_CURRENT);
-        if (animStyle == 0) {
-            //No animation
-        }
-        if (animStyle == 1) {
-            animTile = ObjectAnimator.ofFloat(r.tileView, "rotationY", 0f, 360f);
-        }
-        if (animStyle == 2) {
-            animTile = ObjectAnimator.ofFloat(r.tileView, "rotation", 0f, 360f);
-        }
-        if (animTile != null) {
-            switch (interpolatorType) {
-                    case 0:
-                        animTile.setInterpolator(new LinearInterpolator());
-                        break;
-                    case 1:
-                        animTile.setInterpolator(new AccelerateInterpolator());
-                        break;
-                    case 2:
-                        animTile.setInterpolator(new DecelerateInterpolator());
-                        break;
-                    case 3:
-                        animTile.setInterpolator(new AccelerateDecelerateInterpolator());
-                        break;
-                    case 4:
-                        animTile.setInterpolator(new BounceInterpolator());
-                        break;
-                    case 5:
-                        animTile.setInterpolator(new OvershootInterpolator());
-                        break;
-                    case 6:
-                        animTile.setInterpolator(new AnticipateInterpolator());
-                        break;
-                    case 7:
-                        animTile.setInterpolator(new AnticipateOvershootInterpolator());
-                        break;
-                    default:
-                        break;
-            }
-            animTile.setDuration(animDuration);
-            animTile.start();
-        }
-    }
-
     protected void addTile(final QSTile<?> tile, boolean collapsedView) {
         final TileRecord r = new TileRecord();
         r.tile = tile;
@@ -451,16 +354,12 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
             @Override
             public void onClick(View v) {
                 onTileClick(r.tile);
-                setAnimationTile(r);
-                vibrateTile(45);
             }
         };
         final View.OnLongClickListener longClick = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 r.tile.longClick();
-                setAnimationTile(r);
-                vibrateTile(45);
                 return true;
             }
         };
@@ -497,7 +396,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
     }
 
     public void closeDetail() {
-        if (mCustomizePanel != null && mCustomizePanel.isShown()) {
+        if (mCustomizePanel != null && mCustomizePanel.isCustomizing()) {
             // Treat this as a detail panel for now, to make things easy.
             mCustomizePanel.hide(mCustomizePanel.getWidth() / 2, mCustomizePanel.getHeight() / 2);
             return;
@@ -647,17 +546,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
         void removeTile(TileRecord tile);
         int getOffsetTop(TileRecord tile);
         boolean updateResources();
-        void updateSettings();
 
         void setListening(boolean listening);
-    }
-
-    public void updateSettings() {
-        if (mTileLayout != null) {
-            mTileLayout.updateSettings();
-        }
-        if (mCustomizePanel != null) {
-            mCustomizePanel.updateSettings();
-        }
     }
 }

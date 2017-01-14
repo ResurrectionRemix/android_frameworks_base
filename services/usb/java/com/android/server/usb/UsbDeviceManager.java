@@ -52,7 +52,6 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.SomeArgs;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.FgThread;
-import cyanogenmod.providers.CMSettings;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -329,7 +328,7 @@ public class UsbDeviceManager {
         private boolean mCurrentFunctionsApplied;
         private UsbAccessory mCurrentAccessory;
         private int mUsbNotificationId;
-        private int mAdbNotificationId;
+        private boolean mAdbNotificationShown;
         private int mCurrentUser = UserHandle.USER_NULL;
 
         public UsbHandler(Looper looper) {
@@ -346,14 +345,7 @@ public class UsbDeviceManager {
                 mAdbEnabled = UsbManager.containsFunction(getDefaultFunctions(),
                         UsbManager.USB_FUNCTION_ADB);
                 setEnabledFunctions(null, false);
-                if (mContext.getResources().getBoolean(
-                        com.android.internal.R.bool.config_usb_data_unlock)) {
-                    boolean mtpEnable = UsbManager.containsFunction(getDefaultFunctions(),
-                            UsbManager.USB_FUNCTION_MTP);
-                    boolean ptpEnable = UsbManager.containsFunction(getDefaultFunctions(),
-                            UsbManager.USB_FUNCTION_PTP);
-                    if (mtpEnable || ptpEnable) mUsbDataUnlocked = true;
-                }
+
                 String state = FileUtils.readTextFile(new File(STATE_PATH), 0, null).trim();
                 updateState(state);
 
@@ -361,23 +353,6 @@ public class UsbDeviceManager {
                 mContentResolver.registerContentObserver(
                         Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
                                 false, new AdbSettingsObserver());
-
-                ContentObserver adbNotificationObserver = new ContentObserver(null) {
-                    @Override
-                    public void onChange(boolean selfChange) {
-                        updateAdbNotification();
-                    }
-                };
-
-                mContentResolver.registerContentObserver(
-                        CMSettings.Secure.getUriFor(CMSettings.Secure.ADB_NOTIFY),
-                                false, adbNotificationObserver);
-                mContentResolver.registerContentObserver(
-                        Settings.Global.getUriFor(Settings.Global.ADB_ALWAYS_NOTIFY),
-                        false, adbNotificationObserver);
-                mContentResolver.registerContentObserver(
-                        CMSettings.Secure.getUriFor(CMSettings.Secure.ADB_PORT),
-                                false, adbNotificationObserver);
 
                 // Watch for USB configuration changes
                 mUEventObserver.startObserving(USB_STATE_MATCH);
@@ -589,13 +564,7 @@ public class UsbDeviceManager {
 
             if (mConfigured && enteringAccessoryMode) {
                 // successfully entered accessory mode
-                if (mCurrentAccessory != null) {
-                    Slog.w(TAG, "USB accessory re-attached, detach was not announced!");
-                    if (mBootCompleted) {
-                        getCurrentSettings().accessoryDetached(mCurrentAccessory);
-                    }
-                    mCurrentAccessory = null;
-                }
+
                 if (mAccessoryStrings != null) {
                     mCurrentAccessory = new UsbAccessory(mAccessoryStrings);
                     Slog.d(TAG, "entering USB accessory mode: " + mCurrentAccessory);
@@ -900,39 +869,15 @@ public class UsbDeviceManager {
 
         private void updateAdbNotification() {
             if (mNotificationManager == null) return;
-            final int id;
-            boolean usbAdbActive = mAdbEnabled && mConnected;
-            boolean netAdbActive = mAdbEnabled &&
-                    CMSettings.Secure.getInt(mContentResolver, CMSettings.Secure.ADB_PORT, -1) > 0;
-            boolean hideNotification = "0".equals(SystemProperties.get("persist.adb.notify"))
-                    || CMSettings.Secure.getInt(mContext.getContentResolver(),
-                            CMSettings.Secure.ADB_NOTIFY, 1) == 0;
-            boolean alwaysNotify = Settings.Global.getInt(mContext.getContentResolver(),
-                    Settings.Global.ADB_ALWAYS_NOTIFY, 0) != 0;
+            final int id = com.android.internal.R.string.adb_active_notification_title;
+            if (mAdbEnabled && mConnected) {
+                if ("0".equals(SystemProperties.get("persist.adb.notify"))) return;
 
-            if (hideNotification) {
-                id = 0;
-            } else if (usbAdbActive && netAdbActive) {
-                id = com.android.internal.R.string.adb_both_active_notification_title;
-            } else if (usbAdbActive) {
-                id = com.android.internal.R.string.adb_active_notification_title;
-            } else if (netAdbActive) {
-                id = com.android.internal.R.string.adb_net_active_notification_title;
-            } else if (mAdbEnabled && alwaysNotify) {
-                id = com.android.internal.R.string.adb_not_connected_notification_title;
-            } else {
-                id = 0;
-            }
-
-            if (id != mAdbNotificationId) {
-                if (mAdbNotificationId != 0) {
-                    mNotificationManager.cancelAsUser(null, mAdbNotificationId, UserHandle.ALL);
-                }
-                if (id != 0) {
+                if (!mAdbNotificationShown) {
                     Resources r = mContext.getResources();
                     CharSequence title = r.getText(id);
                     CharSequence message = r.getText(
-                            com.android.internal.R.string.adb_active_generic_notification_message);
+                            com.android.internal.R.string.adb_active_notification_message);
 
                     Intent intent = Intent.makeRestartActivityTask(
                             new ComponentName("com.android.settings",
@@ -946,7 +891,7 @@ public class UsbDeviceManager {
                             .setOngoing(true)
                             .setTicker(title)
                             .setDefaults(0)  // please be quiet
-                            .setPriority(Notification.PRIORITY_LOW)
+                            .setPriority(Notification.PRIORITY_DEFAULT)
                             .setColor(mContext.getColor(
                                     com.android.internal.R.color.system_notification_accent_color))
                             .setContentTitle(title)
@@ -954,11 +899,13 @@ public class UsbDeviceManager {
                             .setContentIntent(pi)
                             .setVisibility(Notification.VISIBILITY_PUBLIC)
                             .build();
-
+                    mAdbNotificationShown = true;
                     mNotificationManager.notifyAsUser(null, id, notification,
                             UserHandle.ALL);
                 }
-                mAdbNotificationId = id;
+            } else if (mAdbNotificationShown) {
+                mAdbNotificationShown = false;
+                mNotificationManager.cancelAsUser(null, id, UserHandle.ALL);
             }
         }
 

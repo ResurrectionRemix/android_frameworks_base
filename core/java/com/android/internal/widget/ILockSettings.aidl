@@ -38,7 +38,6 @@ interface ILockSettings {
             in ICheckCredentialProgressCallback progressCallback);
     VerifyCredentialResponse verifyPassword(in String password, long challenge, int userId);
     VerifyCredentialResponse verifyTiedProfileChallenge(String password, boolean isPattern, long challenge, int userId);
-    byte getLockPatternSize(int userId);
     boolean checkVoldPassword(int userId);
     boolean havePattern(int userId);
     boolean havePassword(int userId);
@@ -50,6 +49,4 @@ interface ILockSettings {
     void systemReady();
     void userPresent(int userId);
     int getStrongAuthForUser(int userId);
-    void sanitizePassword();
-    String getPassword();
 }

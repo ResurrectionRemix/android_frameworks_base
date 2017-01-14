@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
- * Copyright (C) 2013 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +18,9 @@
 package com.android.server.power;
 
 import android.app.ActivityManagerNative;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.IActivityManager;
-import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.IBluetoothManager;
@@ -49,30 +46,19 @@ import android.os.Vibrator;
 import android.os.SystemVibrator;
 import android.os.storage.IMountService;
 import android.os.storage.IMountShutdownObserver;
-import android.provider.Settings;
 import android.system.ErrnoException;
 import android.system.Os;
-import android.widget.ListView;
 
 import com.android.internal.telephony.ITelephony;
 import com.android.server.pm.PackageManagerService;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.WindowManager;
-
-import cyanogenmod.providers.CMSettings;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-	
-import com.android.internal.R;
-
-import com.android.internal.util.rr.Helpers;
-
-import java.lang.reflect.Method;
 
 public final class ShutdownThread extends Thread {
     // constants
@@ -90,9 +76,6 @@ public final class ShutdownThread extends Thread {
     private static final int RADIO_STOP_PERCENT = 18;
     private static final int MOUNT_SERVICE_STOP_PERCENT = 20;
 
-    private static final String SOFT_REBOOT = "soft_reboot";
-    private static final String SYSTEMUI_REBOOT = "systemui_reboot";
-
     // length of vibration before shutting down
     private static final int SHUTDOWN_VIBRATE_MS = 500;
 
@@ -100,11 +83,7 @@ public final class ShutdownThread extends Thread {
     private static Object sIsStartedGuard = new Object();
     private static boolean sIsStarted = false;
 
-    // recovery command
-    private static File RECOVERY_COMMAND_FILE = new File("/cache/recovery/command");
-
     private static boolean mReboot;
-    private static boolean mRebootWipe = false;
     private static boolean mRebootSafeMode;
     private static boolean mRebootHasProgressBar;
     private static String mReason;
@@ -157,16 +136,6 @@ public final class ShutdownThread extends Thread {
         shutdownInner(context, confirm);
     }
 
-    private static boolean isAdvancedRebootPossible(final Context context) {
-        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        boolean keyguardLocked = km.inKeyguardRestrictedInputMode() && km.isKeyguardSecure();
-        boolean advancedRebootEnabled = CMSettings.Secure.getInt(context.getContentResolver(),
-                CMSettings.Secure.ADVANCED_REBOOT, 1) == 1;
-        boolean isPrimaryUser = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-
-        return advancedRebootEnabled && !keyguardLocked && isPrimaryUser;
-    }
-
     static void shutdownInner(final Context context, boolean confirm) {
         // ensure that only one thread is trying to power down.
         // any additional calls are just returned
@@ -177,189 +146,40 @@ public final class ShutdownThread extends Thread {
             }
         }
 
-        boolean showRebootOption = false;
-
-        String[] actionsArray;
-        String actions = CMSettings.Secure.getStringForUser(context.getContentResolver(),
-                CMSettings.Secure.POWER_MENU_ACTIONS, UserHandle.USER_CURRENT);
-        if (actions == null) {
-            actionsArray = context.getResources().getStringArray(
-                    com.android.internal.R.array.config_globalActionsList);
-        } else {
-            actionsArray = actions.split("\\|");
-        }
-
-        for (int i = 0; i < actionsArray.length; i++) {
-            if (actionsArray[i].equals("restart")) {
-                showRebootOption = true;
-                break;
-            }
-        }
         final int longPressBehavior = context.getResources().getInteger(
                         com.android.internal.R.integer.config_longPressOnPowerBehavior);
-        int resourceId = mRebootSafeMode
+        final int resourceId = mRebootSafeMode
                 ? com.android.internal.R.string.reboot_safemode_confirm
                 : (longPressBehavior == 2
                         ? com.android.internal.R.string.shutdown_confirm_question
                         : com.android.internal.R.string.shutdown_confirm);
-        if (showRebootOption && !mRebootSafeMode) {
-            resourceId = com.android.internal.R.string.reboot_confirm;
-        }
 
         Log.d(TAG, "Notifying thread to start shutdown longPressBehavior=" + longPressBehavior);
 
         if (confirm) {
             final CloseDialogReceiver closer = new CloseDialogReceiver(context);
-            final boolean advancedReboot = isAdvancedRebootPossible(context);
-
             if (sConfirmDialog != null) {
                 sConfirmDialog.dismiss();
-                sConfirmDialog = null;
             }
-            AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(context)
+            sConfirmDialog = new AlertDialog.Builder(context)
                     .setTitle(mRebootSafeMode
                             ? com.android.internal.R.string.reboot_safemode_title
-                            : showRebootOption
-                                    ? com.android.internal.R.string.reboot_title
-                                    : com.android.internal.R.string.power_off);
-
-            if (!advancedReboot) {
-                confirmDialogBuilder.setMessage(resourceId);
-            } else {
-                confirmDialogBuilder
-                      .setSingleChoiceItems(com.android.internal.R.array.shutdown_reboot_options,
-                              0, null);
-            }
-
-            confirmDialogBuilder.setPositiveButton(com.android.internal.R.string.yes,
-                    new DialogInterface.OnClickListener() {
-                        @Override
+                            : com.android.internal.R.string.power_off)
+                    .setMessage(resourceId)
+                    .setPositiveButton(com.android.internal.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            if (advancedReboot) {
-                                boolean softReboot = false;
-                                ListView reasonsList = ((AlertDialog)dialog).getListView();
-                                int selected = reasonsList.getCheckedItemPosition();
-                                if (selected != ListView.INVALID_POSITION) {
-                                    String actions[] = context.getResources().getStringArray(
-                                            com.android.internal.R.array.shutdown_reboot_actions);
-                                    if (actions[selected].equals(SYSTEMUI_REBOOT)) {
-                                        mReason = actions[selected];
-                                        doSystemUIReboot();
-                                        return;
-                                    } else if (selected >= 0 && selected < actions.length) {
-                                        mReason = actions[selected];
-                                        if (actions[selected].equals(SOFT_REBOOT)) {
-                                            doSoftReboot();
-                                            return;
-                                        }
-                                    }
-                                }
-
-                                mReboot = true;
-                            }
                             beginShutdownSequence(context);
-                      }
-                  });
-
-            confirmDialogBuilder.setNegativeButton(com.android.internal.R.string.no, null);
-            sConfirmDialog = confirmDialogBuilder.create();
-
+                        }
+                    })
+                    .setNegativeButton(com.android.internal.R.string.no, null)
+                    .create();
             closer.dialog = sConfirmDialog;
             sConfirmDialog.setOnDismissListener(closer);
-            WindowManager.LayoutParams attrs = sConfirmDialog.getWindow().getAttributes();
-         
-            boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-            int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
-
-            if (powermenuAnimations == 0) {
-            // default AOSP action
-            }
-            if (powermenuAnimations == 1) {
-                attrs.windowAnimations = R.style.PowerMenuBottomAnimation;
-                attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 2) {
-                attrs.windowAnimations = R.style.PowerMenuTopAnimation;
-                attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 3) {
-                attrs.windowAnimations = R.style.PowerMenuRotateAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 4) {
-                attrs.windowAnimations = R.style.PowerMenuXylonAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 5) {
-                attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 6) {
-                attrs.windowAnimations = R.style.PowerMenuTnAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 7) {
-                attrs.windowAnimations = R.style.PowerMenuflyAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 8) {
-                attrs.windowAnimations = R.style.PowerMenuCardAnimation;
-                attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 9) {
-                attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-                attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-            }
-            if (powermenuAnimations == 10) {
-                attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-                attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-            }
-
-            attrs.alpha = setRebootDialogAlpha(context);
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-            sConfirmDialog.getWindow().setDimAmount(setRebootDialogDim(context));
             sConfirmDialog.show();
         } else {
             beginShutdownSequence(context);
         }
-    }
-
-    private static int getPowermenuAnimations(Context context) {
-        return Settings.System.getInt(context.getContentResolver(),
-                Settings.System.POWER_MENU_ANIMATIONS, 0);
-	}
-
-    private static float setRebootDialogAlpha(Context context) {
-        int mRebootDialogAlpha = Settings.System.getInt(
-                context.getContentResolver(),
-                Settings.System.TRANSPARENT_POWER_MENU, 100);
-        double dAlpha = mRebootDialogAlpha / 100.0;
-        float alpha = (float) dAlpha;
-        return alpha;
-    }
-
-    private static float setRebootDialogDim(Context context) {
-        int mRebootDialogDim = Settings.System.getInt(context.getContentResolver(),
-                Settings.System.TRANSPARENT_POWER_DIALOG_DIM, 50);
-        double dDim = mRebootDialogDim / 100.0;
-        float dim = (float) dDim;
-        return dim;
-    }
-
-    private static void doSoftReboot() {
-        try {
-            final IActivityManager am =
-                  ActivityManagerNative.asInterface(ServiceManager.checkService("activity"));
-            if (am != null) {
-                am.restart();
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "failure trying to perform soft reboot", e);
-        }
-    }
-
-    private static void doSystemUIReboot() {
-        Helpers.restartSystemUI();
     }
 
     private static class CloseDialogReceiver extends BroadcastReceiver
@@ -454,13 +274,6 @@ public final class ShutdownThread extends Thread {
         //   Condition: Otherwise
         //   UI: spinning circle only (no progress bar)
         if (PowerManager.REBOOT_RECOVERY_UPDATE.equals(mReason)) {
-            if (RECOVERY_COMMAND_FILE.exists()) {
-                try {
-                    mRebootWipe = new String(FileUtils.readTextFile(
-                            RECOVERY_COMMAND_FILE, 0, null)).contains("wipe");
-                    } catch (IOException e) {
-                }
-            }
             // We need the progress bar if uncrypt will be invoked during the
             // reboot, which might be time-consuming.
             mRebootHasProgressBar = RecoverySystem.UNCRYPT_PACKAGE_FILE.exists()
@@ -479,82 +292,21 @@ public final class ShutdownThread extends Thread {
                 pd.setMessage(context.getText(
                             com.android.internal.R.string.reboot_to_update_reboot));
             }
-        } else if (PowerManager.REBOOT_RECOVERY.equals(mReason) && mRebootWipe) {
+        } else if (PowerManager.REBOOT_RECOVERY.equals(mReason)) {
             // Factory reset path. Set the dialog message accordingly.
             pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
             pd.setMessage(context.getText(
                         com.android.internal.R.string.reboot_to_reset_message));
             pd.setIndeterminate(true);
         } else {
-            if (mReboot) {
-                pd.setTitle(context.getText(com.android.internal.R.string.reboot_title));
-                pd.setMessage(context.getText(com.android.internal.R.string.reboot_progress));
-            } else {
-                pd.setTitle(context.getText(com.android.internal.R.string.power_off));
-                pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
-            }
-
+            pd.setTitle(context.getText(com.android.internal.R.string.power_off));
+            pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
             pd.setIndeterminate(true);
         }
         pd.setCancelable(false);
         pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 
-		WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
-
-        boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int powermenuAnimations = isPrimary ? getPowermenuAnimations(context) : 0;
-
-        if (powermenuAnimations == 0) {
-        // default AOSP action
-        }
-        if (powermenuAnimations == 1) {
-            attrs.windowAnimations = R.style.PowerMenuBottomAnimation;
-            attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 2) {
-            attrs.windowAnimations = R.style.PowerMenuTopAnimation;
-            attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 3) {
-            attrs.windowAnimations = R.style.PowerMenuRotateAnimation;
-            attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 4) {
-            attrs.windowAnimations = R.style.PowerMenuXylonAnimation;
-            attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 5) {
-            attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-            attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 6) {
-            attrs.windowAnimations = R.style.PowerMenuTnAnimation;
-            attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 7) {
-            attrs.windowAnimations = R.style.PowerMenuflyAnimation;
-            attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 8) {
-            attrs.windowAnimations = R.style.PowerMenuCardAnimation;
-            attrs.gravity = Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 9) {
-            attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-            attrs.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
-        }
-        if (powermenuAnimations == 10) {
-            attrs.windowAnimations = R.style.PowerMenuTranslucentAnimation;
-            attrs.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-        }
-            pd.setCancelable(false);
-            pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-
-            attrs.alpha = setRebootDialogAlpha(context);
-            pd.getWindow().setDimAmount(setRebootDialogDim(context));
-
-            pd.show();
-
+        pd.show();
 
         sInstance.mProgressDialog = pd;
         sInstance.mContext = context;
@@ -742,21 +494,6 @@ public final class ShutdownThread extends Thread {
             uncrypt();
         }
 
-
-        // If it is alarm boot and encryption status, power off alarm status will
-        // be set to handled when device go to shutdown or reboot.
-        boolean isAlarmBoot = SystemProperties.getBoolean("ro.alarm_boot", false);
-        String cryptState = SystemProperties.get("vold.decrypt");
-
-        if (isAlarmBoot &&
-                ("trigger_restart_min_framework".equals(cryptState) ||
-                "1".equals(cryptState))) {
-            AlarmManager.writePowerOffAlarmFile(AlarmManager.POWER_OFF_ALARM_HANDLE_FILE,
-                    AlarmManager.POWER_OFF_ALARM_HANDLED);
-        }
-
-        AlarmManager.writePowerOffAlarmFile(AlarmManager.POWER_OFF_ALARM_TIMEZONE_FILE,
-                SystemProperties.get("persist.sys.timezone"));
         rebootOrShutdown(mContext, mReboot, mReason);
     }
 
@@ -896,33 +633,6 @@ public final class ShutdownThread extends Thread {
     }
 
     /**
-     * OEM shutdown handler. This function will load the oem-services jar file
-     * and call into the rebootOrShutdown method defined there if present
-     */
-    private static void deviceRebootOrShutdown(boolean reboot, String reason)
-    {
-            Class<?> cl;
-            String deviceShutdownClassName = "com.qti.server.power.ShutdownOem";
-            String deviceShutdownMethodName = "rebootOrShutdown";
-            try {
-                    cl = Class.forName(deviceShutdownClassName);
-                    Method m;
-                    try {
-                        m = cl.getMethod(deviceShutdownMethodName, new Class[] {boolean.class, String.class});
-                        m.invoke(cl.newInstance(), reboot, reason);
-                    } catch (NoSuchMethodException ex) {
-                        Log.e(TAG, "Unable to find method " + deviceShutdownMethodName + " in class " + deviceShutdownClassName);
-                    } catch (Exception ex) {
-                        Log.e(TAG, "Unknown exception while trying to invoke " + deviceShutdownMethodName);
-                    }
-            } catch (ClassNotFoundException e) {
-                Log.e(TAG, "Unable to find class " + deviceShutdownClassName);
-            } catch (Exception e) {
-                Log.e(TAG, "Unknown exception while loading class " + deviceShutdownClassName);
-            }
-    }
-
-    /**
      * Do not call this directly. Use {@link #reboot(Context, String, boolean)}
      * or {@link #shutdown(Context, boolean)} instead.
      *
@@ -931,8 +641,6 @@ public final class ShutdownThread extends Thread {
      * @param reason reason for reboot/shutdown
      */
     public static void rebootOrShutdown(final Context context, boolean reboot, String reason) {
-        // Call oem shutdown handler
-        deviceRebootOrShutdown(reboot, reason);
         if (reboot) {
             Log.i(TAG, "Rebooting, reason: " + reason);
             PowerManagerService.lowLevelReboot(reason);

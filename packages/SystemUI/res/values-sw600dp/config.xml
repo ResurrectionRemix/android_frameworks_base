@@ -39,10 +39,4 @@
     <!-- Animation duration when using long press on recents to dock -->
     <integer name="long_press_dock_anim_duration">290</integer>
 
-     <!-- Enable Pie relocation to either stick to a physical side or default to the right side -->
-    <bool name="config_relocatePieOnRotation">false</bool>
-
-    <!-- Enable force pie centered -->
-    <bool name="config_forcePieCentered">false</bool>
-
 </resources>

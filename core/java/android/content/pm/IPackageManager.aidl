@@ -573,15 +573,4 @@ interface IPackageManager {
     boolean isPackageDeviceAdminOnAnyUser(String packageName);
 
     List<String> getPreviousCodePaths(in String packageName);
-
-    /** Protected Apps */
-    void setComponentProtectedSetting(in ComponentName componentName,
-    in boolean newState, int userId);
-
-    /** Protected Apps */
-    boolean isComponentProtected(in String callingPackage, in int callingUid,
-    in ComponentName componentName, int userId);
-
-    /** protected broadcast ext */
-    boolean isProtectedBroadcastAllowed(in String actionName, in int callingUid);
 }

@@ -769,13 +769,6 @@ public final class MediaCodecInfo {
             return mDefaultFormat;
         }
 
-        /* Return the capabilities info, so the app can query custom settings
-         * like for VT. */
-        /** @hide */
-        public MediaFormat getCapabilitiesInfoFormat() {
-            return mCapabilitiesInfo;
-        }
-
         /**
          * Returns the mime type for which this codec-capability object was created.
          */

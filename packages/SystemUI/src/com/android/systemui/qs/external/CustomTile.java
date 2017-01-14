@@ -221,9 +221,7 @@ public class CustomTile extends QSTile<QSTile.State> implements TileChangeListen
 
     @Override
     public State newTileState() {
-        State state = new State();
-        state.autoMirrorDrawable = false;
-        return state;
+        return new State();
     }
 
     @Override

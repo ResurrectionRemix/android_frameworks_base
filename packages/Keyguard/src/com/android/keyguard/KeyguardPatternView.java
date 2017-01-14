@@ -89,7 +89,6 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
     private Rect mTempRect = new Rect();
     private KeyguardMessageArea mSecurityMessageDisplay;
     private View mEcaView;
-    private int mMaxCountdownTimes;
     private ViewGroup mContainer;
     private int mDisappearYTranslation;
 
@@ -135,23 +134,12 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mMaxCountdownTimes = mContext.getResources()
-                .getInteger(R.integer.config_max_unlock_countdown_times);
         mLockPatternUtils = mLockPatternUtils == null
                 ? new LockPatternUtils(mContext) : mLockPatternUtils;
 
         mLockPatternView = (LockPatternView) findViewById(R.id.lockPatternView);
         mLockPatternView.setSaveEnabled(false);
         mLockPatternView.setOnPatternListener(new UnlockPatternListener());
-        mLockPatternView.setLockPatternUtils(mLockPatternUtils);
-        mLockPatternView.setLockPatternSize(mLockPatternUtils.getLockPatternSize(KeyguardUpdateMonitor.getCurrentUser()));
-
-        mLockPatternView.setVisibleDots(mLockPatternUtils.isVisibleDotsEnabled(
-                KeyguardUpdateMonitor.getCurrentUser()));
-        mLockPatternView.setShowErrorPath(mLockPatternUtils.isShowErrorPath(
-                KeyguardUpdateMonitor.getCurrentUser()));
-
-        setFocusableInTouchMode(true);
 
         // vibrate mode will be the same for the life of this screen
         mLockPatternView.setTactileFeedbackEnabled(mLockPatternUtils.isTactileFeedbackEnabled());
@@ -209,7 +197,7 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
     }
 
     private void displayDefaultSecurityMessage() {
-        mSecurityMessageDisplay.setMessage(getMessageWithCount(R.string.kg_pattern_instructions), false);
+        mSecurityMessageDisplay.setMessage(R.string.kg_pattern_instructions, false);
     }
 
     @Override
@@ -285,7 +273,6 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
                 boolean isValidPattern) {
             boolean dismissKeyguard = KeyguardUpdateMonitor.getCurrentUser() == userId;
             if (matched) {
-                mLockPatternUtils.sanitizePassword();
                 mCallback.reportUnlockAttempt(userId, true, 0);
                 if (dismissKeyguard) {
                     mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
@@ -295,31 +282,18 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
                 mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
                 if (isValidPattern) {
                     mCallback.reportUnlockAttempt(userId, false, timeoutMs);
-                    if (!(mMaxCountdownTimes > 0) && timeoutMs > 0) {
+                    if (timeoutMs > 0) {
                         long deadline = mLockPatternUtils.setLockoutAttemptDeadline(
                                 userId, timeoutMs);
                         handleAttemptLockout(deadline);
                     }
                 }
                 if (timeoutMs == 0) {
-                    mSecurityMessageDisplay.
-                        setMessage(getMessageWithCount(R.string.kg_wrong_pattern),true);
+                    mSecurityMessageDisplay.setMessage(R.string.kg_wrong_pattern, true);
                     mLockPatternView.postDelayed(mCancelPatternRunnable, PATTERN_CLEAR_TIMEOUT_MS);
                 }
             }
         }
-    }
-
-    private String getMessageWithCount(int msgId) {
-        String msg = getContext().getString(msgId);
-        int remaining = mMaxCountdownTimes
-            - KeyguardUpdateMonitor.getInstance(mContext).getFailedUnlockAttempts(
-            KeyguardUpdateMonitor.getCurrentUser());
-        if (mMaxCountdownTimes > 0 && remaining > 0) {
-            msg += " - " + getContext().getResources().getString(
-                    R.string.kg_remaining_attempts, remaining);
-        }
-        return msg;
     }
 
     private void handleAttemptLockout(long elapsedRealtimeDeadline) {

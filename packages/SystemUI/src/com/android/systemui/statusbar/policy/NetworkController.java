@@ -27,7 +27,6 @@ import java.util.List;
 public interface NetworkController {
 
     boolean hasMobileDataFeature();
-    boolean isAdvancedDataTileEnabled();
     void addSignalCallback(SignalCallback cb);
     void removeSignalCallback(SignalCallback cb);
     void setWifiEnabled(boolean enabled);

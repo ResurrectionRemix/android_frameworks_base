@@ -19,8 +19,8 @@ package com.android.server.pm;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-import static android.content.pm.PackageManager.COMPONENT_VISIBLE_STATUS;
 
+import android.annotation.NonNull;
 import android.content.pm.IntentFilterVerificationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageUserState;
@@ -379,8 +379,7 @@ abstract class PackageSettingBase extends SettingBase {
             boolean notLaunched, boolean hidden, boolean suspended,
             String lastDisableAppCaller, ArraySet<String> enabledComponents,
             ArraySet<String> disabledComponents, boolean blockUninstall, int domainVerifState,
-            int linkGeneration,
-            ArraySet<String> protectedComponents, ArraySet<String> visibleComponents) {
+            int linkGeneration, String[] resourceDirs) {
         PackageUserState state = modifyUserState(userId);
         state.ceDataInode = ceDataInode;
         state.enabled = enabled;
@@ -395,8 +394,7 @@ abstract class PackageSettingBase extends SettingBase {
         state.blockUninstall = blockUninstall;
         state.domainVerificationStatus = domainVerifState;
         state.appLinkGeneration = linkGeneration;
-        state.protectedComponents = protectedComponents;
-        state.visibleComponents = visibleComponents;
+        state.resourceDirs = resourceDirs;
     }
 
     ArraySet<String> getEnabledComponents(int userId) {
@@ -436,23 +434,16 @@ abstract class PackageSettingBase extends SettingBase {
         return state;
     }
 
-    PackageUserState modifyUserStateComponents(int userId) {
-        PackageUserState state = modifyUserState(userId);
-        if (state.protectedComponents == null) {
-           state.protectedComponents = new ArraySet<String>(1);
-        }
-        if (state.visibleComponents == null) {
-            state.visibleComponents = new ArraySet<String>(1);
-        }
-        return state;
-    }
-
     void addDisabledComponent(String componentClassName, int userId) {
         modifyUserStateComponents(userId, true, false).disabledComponents.add(componentClassName);
     }
 
     void addEnabledComponent(String componentClassName, int userId) {
         modifyUserStateComponents(userId, false, true).enabledComponents.add(componentClassName);
+    }
+
+    void setResourceDirs(@NonNull final String[] resourceDirs, final int userId) {
+        modifyUserState(userId).resourceDirs = resourceDirs;
     }
 
     boolean enableComponentLPw(String componentClassName, int userId) {
@@ -490,27 +481,6 @@ abstract class PackageSettingBase extends SettingBase {
         } else {
             return COMPONENT_ENABLED_STATE_DEFAULT;
         }
-    }
-
-    boolean protectComponentLPw(String componentClassName, boolean protect, int userId) {
-        PackageUserState state = modifyUserStateComponents(userId);
-        boolean changed = false;
-        if (protect == COMPONENT_VISIBLE_STATUS) {
-            changed = state.protectedComponents != null
-                    ? state.protectedComponents.remove(componentClassName) : false;
-            changed |= state.visibleComponents.add(componentClassName);
-        } else {
-            changed = state.visibleComponents != null
-                    ? state.visibleComponents.remove(componentClassName) : false;
-            changed |= state.protectedComponents.add(componentClassName);
-        }
-
-        return changed;
-    }
-
-    ArraySet<String> getProtectedComponents(int userId) {
-        PackageUserState state = modifyUserStateComponents(userId);
-        return state.protectedComponents;
     }
 
     void removeUser(int userId) {

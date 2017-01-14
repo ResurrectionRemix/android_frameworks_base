@@ -42,9 +42,4 @@ public abstract class DreamManagerInternal {
      * Called by the power manager to determine whether a dream is running.
      */
     public abstract boolean isDreaming();
-
-    /**
-     * Called by the power manager to determine whether the dream has gone to doze mode.
-     */
-    public abstract boolean isDozing();
 }

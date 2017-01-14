@@ -692,12 +692,6 @@ public class CarrierConfigManager {
             "broadcast_emergency_call_state_changes_bool";
 
     /**
-     * Flag specifying whether CDMA call waiting and call forwarding are enabled
-     * @hide
-     */
-    public static final String KEY_CDMA_CW_CF_ENABLED_BOOL = "cdma_cw_cf_enabled_bool";
-
-    /**
      * Cell broadcast additional channels enbled by the carrier
      * @hide
      */
@@ -806,21 +800,6 @@ public class CarrierConfigManager {
     public static final String KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL =
             "allow_non_emergency_calls_in_ecm_bool";
 
-
-    /**
-     * If carriers require differentiate un-provisioned status: cold sim or out of credit sim
-     * a package name and activity name can be provided to launch a supported carrier application
-     * that check the sim provisioning status
-     * The first element is the package name and the second element is the activity name
-     * of the provisioning app
-     * example:
-     * <item>com.google.android.carrierPackageName</item>
-     * <item>com.google.android.carrierPackageName.CarrierActivityName</item>
-     * @hide
-     */
-     public static final String KEY_SIM_PROVISIONING_STATUS_DETECTION_CARRIER_APP_STRING_ARRAY =
-"sim_state_detection_carrier_app_string_array";
-
     /**
      * Flag indicating whether to allow carrier video calls to emergency numbers.
      * When {@code true}, video calls to emergency numbers will be allowed.  When {@code false},
@@ -867,25 +846,6 @@ public class CarrierConfigManager {
     public static final int CDMA_ROAMING_MODE_AFFILIATED = 1;
     /** @hide */
     public static final int CDMA_ROAMING_MODE_ANY = 2;
-
-     /**
-     * Key that determines if ACTIVATE_REJECT_GGSN is to be treated as a permanent error.
-     * @hide
-     */
-    public static final String KEY_REJECT_GGSN_PERM_FAILURE = "reject_ggsn_perm_failure";
-
-    /**
-     * Key that determines if PROTOCOL_ERRORS is  treated as permanent error.
-     * @hide
-     */
-    public static final String KEY_PROTOCOL_ERRORS_PERM_FAILURE = "protocol_errors_perm_failure";
-
-    /**
-     * Key that determines if anonymous users to be mapped to presentation restricted
-     * @hide
-     */
-    public static final String KEY_MAP_ANONYMOUS_TO_RESTRICTED_BOOL =
-            "carrier_map_anonymous_to_restricted";
 
     /**
      * Report IMEI as device id even if it's a CDMA/LTE phone.
@@ -1072,7 +1032,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_IGNORE_SIM_NETWORK_LOCKED_EVENTS_BOOL, false);
         sDefaults.putBoolean(KEY_OPERATOR_SELECTION_EXPAND_BOOL, true);
         sDefaults.putBoolean(KEY_PREFER_2G_BOOL, true);
-        sDefaults.putBoolean(KEY_SHOW_APN_SETTING_CDMA_BOOL, true);
+        sDefaults.putBoolean(KEY_SHOW_APN_SETTING_CDMA_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_CDMA_CHOICES_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_ONSCREEN_DIAL_BUTTON_BOOL, true);
         sDefaults.putBoolean(KEY_SIM_NETWORK_UNLOCK_ALLOW_DISMISS_BOOL, true);
@@ -1118,7 +1078,6 @@ public class CarrierConfigManager {
                 new String[]{"default", "mms", "dun", "supl"});
         sDefaults.putStringArray(KEY_CARRIER_METERED_ROAMING_APN_TYPES_STRINGS,
                 new String[]{"default", "mms", "dun", "supl"});
-        sDefaults.putBoolean(KEY_CDMA_CW_CF_ENABLED_BOOL, false);
 
         sDefaults.putStringArray(KEY_GSM_ROAMING_NETWORKS_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_GSM_NONROAMING_NETWORKS_STRING_ARRAY, null);
@@ -1142,8 +1101,6 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CONFIG_WIFI_DISABLE_IN_ECBM, false);
         sDefaults.putBoolean(KEY_CARRIER_NAME_OVERRIDE_BOOL, false);
         sDefaults.putString(KEY_CARRIER_NAME_STRING, "");
-        sDefaults.putBoolean(KEY_REJECT_GGSN_PERM_FAILURE,true);
-        sDefaults.putBoolean(KEY_PROTOCOL_ERRORS_PERM_FAILURE,true);
 
         // MMS defaults
         sDefaults.putBoolean(KEY_MMS_ALIAS_ENABLED_BOOL, false);
@@ -1182,8 +1139,6 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_USE_RCS_PRESENCE_BOOL, false);
         sDefaults.putBoolean(KEY_FORCE_IMEI_BOOL, false);
         sDefaults.putInt(KEY_CDMA_ROAMING_MODE_INT, CDMA_ROAMING_MODE_RADIO_DEFAULT);
-
-        sDefaults.putBoolean(KEY_MAP_ANONYMOUS_TO_RESTRICTED_BOOL, true);
 
         // Carrier Signalling Receivers
         sDefaults.putStringArray(KEY_SIGNAL_REDIRECTION_RECEIVER_STRING_ARRAY, null);

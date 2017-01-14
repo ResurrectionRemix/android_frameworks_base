@@ -105,7 +105,6 @@ public class UserRestrictionsUtils {
             UserManager.DISALLOW_SET_WALLPAPER,
             UserManager.DISALLOW_OEM_UNLOCK,
             UserManager.DISALLLOW_UNMUTE_DEVICE,
-            UserManager.DISALLOW_SU
     });
 
     /**
@@ -131,8 +130,7 @@ public class UserRestrictionsUtils {
             UserManager.DISALLOW_FUN,
             UserManager.DISALLOW_SAFE_BOOT,
             UserManager.DISALLOW_CREATE_WINDOWS,
-            UserManager.DISALLOW_DATA_ROAMING,
-            UserManager.DISALLOW_SU
+            UserManager.DISALLOW_DATA_ROAMING
     );
 
     /**

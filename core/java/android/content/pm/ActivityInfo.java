@@ -624,6 +624,11 @@ public class ActivityInfo extends ComponentInfo
      */
     public static final int CONFIG_LAYOUT_DIRECTION = 0x2000;
     /**
+     * Bit in {@link #configChanges} that indicates a font change occurred
+     * @hide
+     */
+    public static final int CONFIG_THEME_FONT = 0x200000;
+    /**
      * Bit in {@link #configChanges} that indicates that the activity
      * can itself handle changes to the font scaling factor.  Set from the
      * {@link android.R.attr#configChanges} attribute.  This is
@@ -693,10 +698,10 @@ public class ActivityInfo extends ComponentInfo
      * framework call here to get the real value.
      */
     public int getRealConfigChanged() {
-        // If an app doesn't handle screen size changes or layout changes, just ignore it, don't kill them!
-        return configChanges | ActivityInfo.CONFIG_SCREEN_LAYOUT | ActivityInfo.CONFIG_SCREEN_SIZE
-                    | (applicationInfo.targetSdkVersion < android.os.Build.VERSION_CODES.HONEYCOMB_MR2 ?
-                        ActivityInfo.CONFIG_SMALLEST_SCREEN_SIZE : 0);
+        return applicationInfo.targetSdkVersion < android.os.Build.VERSION_CODES.HONEYCOMB_MR2
+                ? (configChanges | ActivityInfo.CONFIG_SCREEN_SIZE
+                        | ActivityInfo.CONFIG_SMALLEST_SCREEN_SIZE)
+                : configChanges;
     }
 
     /**

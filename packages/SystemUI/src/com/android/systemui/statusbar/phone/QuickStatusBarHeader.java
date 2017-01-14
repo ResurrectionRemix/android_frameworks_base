@@ -18,23 +18,15 @@ package com.android.systemui.statusbar.phone;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
-import android.net.Uri;
 import android.os.UserManager;
-import android.os.UserHandle;
-import android.provider.Settings;
-import android.provider.AlarmClock;
-import android.provider.CalendarContract;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,7 +37,6 @@ import com.android.internal.logging.MetricsProto;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
-import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QSPanel.Callback;
 import com.android.systemui.qs.QuickQSPanel;
@@ -56,11 +47,10 @@ import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.NextAlarmController.NextAlarmChangeCallback;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
-import com.android.systemui.statusbar.policy.WeatherController;
 import com.android.systemui.tuner.TunerService;
 
 public class QuickStatusBarHeader extends BaseStatusBarHeader implements
-        NextAlarmChangeCallback, OnClickListener, OnLongClickListener, OnUserInfoChangedListener {
+        NextAlarmChangeCallback, OnClickListener, OnUserInfoChangedListener {
 
     private static final String TAG = "QuickStatusBarHeader";
 
@@ -79,12 +69,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private boolean mExpanded;
     private boolean mAlarmShowing;
 
-    private View mClock;
-    private View mDate;
-
     private ViewGroup mDateTimeGroup;
     private ViewGroup mDateTimeAlarmGroup;
-    private ViewGroup mDateTimeAlarmCenterGroup;
     private TextView mEmergencyOnly;
 
     protected ExpandableIndicator mExpandIndicator;
@@ -106,12 +92,6 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private boolean mShowFullAlarm;
     private float mDateTimeTranslation;
 
-    private boolean hasSettingsIcon;
-    private boolean hasEdit;
-    private boolean hasExpandIndicator;
-    private boolean hasMultiUserSwitch;
-    private boolean mDateTimeGroupCenter;
-
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -128,19 +108,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
         mDateTimeAlarmGroup = (ViewGroup) findViewById(R.id.date_time_alarm_group);
         mDateTimeAlarmGroup.findViewById(R.id.empty_time_view).setVisibility(View.GONE);
-        mDateTimeAlarmCenterGroup = (ViewGroup) findViewById(R.id.date_time_alarm_center_group);
-        mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
         mDateTimeGroup = (ViewGroup) findViewById(R.id.date_time_group);
         mDateTimeGroup.setPivotX(0);
         mDateTimeGroup.setPivotY(0);
-
         mDateTimeTranslation = getResources().getDimension(R.dimen.qs_date_time_translation);
         mShowFullAlarm = getResources().getBoolean(R.bool.quick_settings_show_full_alarm);
-
-        mClock = (View) findViewById(R.id.clock);
-        mClock.setOnClickListener(this);
-        mDate = (View) findViewById(R.id.date);
-        mDate.setOnClickListener(this);
 
         mExpandIndicator = (ExpandableIndicator) findViewById(R.id.expand_indicator);
 
@@ -149,10 +121,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
-        mSettingsButton.setOnLongClickListener(this);
 
         mAlarmStatusCollapsed = findViewById(R.id.alarm_status_collapsed);
-        mAlarmStatusCollapsed.setOnClickListener(this);
         mAlarmStatus = (TextView) findViewById(R.id.alarm_status);
         mAlarmStatus.setOnClickListener(this);
 
@@ -163,10 +133,10 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
         ((RippleDrawable) mExpandIndicator.getBackground()).setForceSoftware(true);
-        
+
         updateResources();
     }
-    
+
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -212,17 +182,6 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             });
         } else {
             mDateTimeGroup.setPivotX(isRtl ? mDateTimeGroup.getWidth() : 0);
-        }
-    }
-
-    private void updateDateTimeCenter() {
-        mDateTimeGroupCenter = isDateTimeGroupCenter();
-        if (mDateTimeGroupCenter && !(hasSettingsIcon && hasEdit && hasMultiUserSwitch && hasExpandIndicator)) {
-            mDateTimeAlarmGroup.setVisibility(View.GONE);
-            mDateTimeAlarmCenterGroup.setVisibility(View.VISIBLE);
-        } else {
-            mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
-            mDateTimeAlarmGroup.setVisibility(View.VISIBLE);
         }
     }
 
@@ -299,8 +258,6 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public void updateEverything() {
         post(() -> {
             updateVisibilities();
-            mDate.setClickable(mExpanded || mShowFullAlarm);
-            mAlarmStatus.setClickable(mExpanded && mShowFullAlarm);
             setClickable(false);
         });
     }
@@ -310,24 +267,17 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         updateDateTimePosition();
         mEmergencyOnly.setVisibility(mExpanded && mShowEmergencyCallsOnly
                 ? View.VISIBLE : View.INVISIBLE);
-        mSettingsContainer.findViewById(R.id.tuner_icon).setVisibility(View.INVISIBLE);
+        mSettingsContainer.findViewById(R.id.tuner_icon).setVisibility(
+                TunerService.isTunerEnabled(mContext) ? View.VISIBLE : View.INVISIBLE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
-        hasMultiUserSwitch = !isMultiUserSwitchDisabled();
-        mMultiUserSwitch.setVisibility(mExpanded && hasMultiUserSwitch && !isDemo
-                ? View.VISIBLE : View.GONE);
-        mMultiUserAvatar.setVisibility(hasMultiUserSwitch ? View.VISIBLE : View.GONE);
-        hasEdit = !isEditDisabled();
-        mEdit.setVisibility(hasEdit && !isDemo && mExpanded ? View.VISIBLE : View.GONE);
-        hasSettingsIcon = !isSettingsIconDisabled();
-        mSettingsButton.setVisibility(hasSettingsIcon ? View.VISIBLE : View.GONE);
-        hasExpandIndicator = !isExpandIndicatorDisabled();
-        mExpandIndicator.setVisibility(hasExpandIndicator ? View.VISIBLE : View.GONE);
+        mMultiUserSwitch.setVisibility(mExpanded && mMultiUserSwitch.hasMultipleUsers() && !isDemo
+                ? View.VISIBLE : View.INVISIBLE);
+        mEdit.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
     }
 
     private void updateDateTimePosition() {
         mDateTimeAlarmGroup.setTranslationY(mShowEmergencyCallsOnly
                 ? mExpansionAmount * mDateTimeTranslation : 0);
-        updateDateTimeCenter();
     }
 
     private void updateListeners() {
@@ -391,53 +341,15 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             } else {
                 startSettingsActivity();
             }
-        } else if (v == mAlarmStatus || v == mAlarmStatusCollapsed) {
-            startClockActivity(mNextAlarm);
-         } else if (v == mClock) {
-            startClockActivity(null);
-        } else if (v == mDate) {
-            startDateActivity();
-        }
-    }
-
-    private void startClockActivity(AlarmManager.AlarmClockInfo alarm) {
-        Intent intent = null;
-        if (alarm != null) {
-            PendingIntent showIntent = alarm.getShowIntent();
+        } else if (v == mAlarmStatus && mNextAlarm != null) {
+            PendingIntent showIntent = mNextAlarm.getShowIntent();
             mActivityStarter.startPendingIntentDismissingKeyguard(showIntent);
         }
-        if (intent == null) {
-            intent = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
-        }
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
-    }
-
-    private void startDateActivity() {
-        Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
-        builder.appendPath("time");
-        ContentUris.appendId(builder, System.currentTimeMillis());
-        Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        if (v == mSettingsButton) {
-            startRRActivity();
-        }
-        return false;
     }
 
     private void startSettingsActivity() {
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
                 true /* dismissShade */);
-    }
-
-    private void startRRActivity() {
-        Intent duIntent = new Intent(Intent.ACTION_MAIN);
-        duIntent.setClassName("com.android.settings",
-            "com.android.settings.Settings$MainSettingsLayoutActivity");
-        mActivityStarter.startActivity(duIntent, true /* dismissShade */);
     }
 
     @Override
@@ -470,48 +382,9 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             }
         }
     }
-    
+
     @Override
     public void onUserInfoChanged(String name, Drawable picture) {
         mMultiUserAvatar.setImageDrawable(picture);
-    }
-
-    @Override
-    public void setWeatherController(WeatherController weatherController) {
-        // not used
-    }
-
-    public void updateSettings() {
-        if (mQsPanel != null) {
-            mQsPanel.updateSettings();
-        }
-        if (mHeaderQsPanel != null) {
-            mHeaderQsPanel.updateSettings();
-        }
-    }
-
-    public boolean isSettingsIconDisabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_SETTINGS_ICON_TOGGLE, 0) == 1;
-    }
-
-    public boolean isEditDisabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_EDIT_TOGGLE, 0) == 1;
-    }
-
-    public boolean isExpandIndicatorDisabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_EXPAND_INDICATOR_TOGGLE, 0) == 1;
-    }
-
-    public boolean isMultiUserSwitchDisabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_MULTIUSER_SWITCH_TOGGLE, 0) == 1;
-    }
-
-    public boolean isDateTimeGroupCenter() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_DATE_TIME_CENTER, 1) == 1;
     }
 }

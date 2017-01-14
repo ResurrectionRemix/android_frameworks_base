@@ -255,20 +255,8 @@ public final class Call {
          */
         public static final int CAPABILITY_CAN_PULL_CALL = 0x00800000;
 
-        /**
-         * Call has voice privacy capability.
-         * @hide
-         */
-        public static final int CAPABILITY_VOICE_PRIVACY = 0x01000000;
-
-        /**
-         * Add participant in an active or conference call option
-         * @hide
-         */
-        public static final int CAPABILITY_ADD_PARTICIPANT = 0x02000000;
-
         //******************************************************************************************
-        // Next CAPABILITY value: 0x04000000
+        // Next CAPABILITY value: 0x01000000
         //******************************************************************************************
 
         /**
@@ -320,42 +308,12 @@ public final class Call {
         public static final int PROPERTY_IS_EXTERNAL_CALL = 0x00000040;
 
         /**
-         * Whether the call was forwarded from another party (GSM only)
-         * @hide
-         */
-        public static final int PROPERTY_WAS_FORWARDED = 0x00000080;
-
-        /**
-         * Whether the call is held remotely
-         * @hide
-         */
-        public static final int PROPERTY_HELD_REMOTELY = 0x00000100;
-
-        /**
-         * Whether the dialing state is waiting for the busy remote side
-         * @hide
-         */
-        public static final int PROPERTY_DIALING_IS_WAITING = 0x00000200;
-
-        /**
-         * Whether an additional call came in and was forwarded while the call was active
-         * @hide
-         */
-        public static final int PROPERTY_ADDITIONAL_CALL_FORWARDED = 0x00000400;
-
-        /**
-         * Whether incoming calls are barred at the remote side
-         * @hide
-         */
-        public static final int PROPERTY_REMOTE_INCOMING_CALLS_BARRED = 0x00000800;
-
-        /**
          * Indicates that the call has CDMA Enhanced Voice Privacy enabled.
          */
         public static final int PROPERTY_HAS_CDMA_VOICE_PRIVACY = 0x00000080;
 
         //******************************************************************************************
-        // Next PROPERTY value: 0x00001000
+        // Next PROPERTY value: 0x00000100
         //******************************************************************************************
 
         private final String mTelecomCallId;
@@ -367,7 +325,6 @@ public final class Call {
         private final int mCallCapabilities;
         private final int mCallProperties;
         private final DisconnectCause mDisconnectCause;
-        private final long mCreateTimeMillis;
         private final long mConnectTimeMillis;
         private final GatewayInfo mGatewayInfo;
         private final int mVideoState;
@@ -459,12 +416,6 @@ public final class Call {
             if (can(capabilities, CAPABILITY_CAN_PULL_CALL)) {
                 builder.append(" CAPABILITY_CAN_PULL_CALL");
             }
-            if (can(capabilities, CAPABILITY_VOICE_PRIVACY)) {
-                builder.append(" CAPABILITY_VOICE_PRIVACY");
-            }
-            if (can(capabilities, CAPABILITY_ADD_PARTICIPANT)) {
-                builder.append(" CAPABILITY_ADD_PARTICIPANT");
-            }
             builder.append("]");
             return builder.toString();
         }
@@ -517,22 +468,7 @@ public final class Call {
             if (hasProperty(properties, PROPERTY_IS_EXTERNAL_CALL)) {
                 builder.append(" PROPERTY_IS_EXTERNAL_CALL");
             }
-            if (hasProperty(properties, PROPERTY_WAS_FORWARDED)) {
-                builder.append(" PROPERTY_WAS_FORWARDED");
-            }
-            if (hasProperty(properties, PROPERTY_HELD_REMOTELY)) {
-                builder.append(" PROPERTY_HELD_REMOTELY");
-            }
-            if (hasProperty(properties, PROPERTY_DIALING_IS_WAITING)) {
-                builder.append(" PROPERTY_DIALING_IS_WAITING");
-            }
-            if (hasProperty(properties, PROPERTY_ADDITIONAL_CALL_FORWARDED)) {
-                builder.append(" PROPERTY_ADDITIONAL_CALL_FORWARDED");
-            }
-            if (hasProperty(properties, PROPERTY_REMOTE_INCOMING_CALLS_BARRED)) {
-                builder.append(" PROPERTY_REMOTE_INCOMING_CALLS_BARRED");
-            }
-            if (hasProperty(properties, PROPERTY_HAS_CDMA_VOICE_PRIVACY)) {
+            if(hasProperty(properties, PROPERTY_HAS_CDMA_VOICE_PRIVACY)) {
                 builder.append(" PROPERTY_HAS_CDMA_VOICE_PRIVACY");
             }
             builder.append("]");
@@ -617,14 +553,6 @@ public final class Call {
         }
 
         /**
-         * @return the time the Call object was created
-         * @hide
-         */
-        public long getCreateTimeMillis() {
-            return mCreateTimeMillis;
-        }
-
-        /**
          * @return Information about any calling gateway the {@code Call} may be using.
          */
         public GatewayInfo getGatewayInfo() {
@@ -674,7 +602,6 @@ public final class Call {
                         Objects.equals(mCallCapabilities, d.mCallCapabilities) &&
                         Objects.equals(mCallProperties, d.mCallProperties) &&
                         Objects.equals(mDisconnectCause, d.mDisconnectCause) &&
-                        Objects.equals(mCreateTimeMillis, d.mCreateTimeMillis) &&
                         Objects.equals(mConnectTimeMillis, d.mConnectTimeMillis) &&
                         Objects.equals(mGatewayInfo, d.mGatewayInfo) &&
                         Objects.equals(mVideoState, d.mVideoState) &&
@@ -696,7 +623,6 @@ public final class Call {
                     Objects.hashCode(mCallCapabilities) +
                     Objects.hashCode(mCallProperties) +
                     Objects.hashCode(mDisconnectCause) +
-                    Objects.hashCode(mCreateTimeMillis) +
                     Objects.hashCode(mConnectTimeMillis) +
                     Objects.hashCode(mGatewayInfo) +
                     Objects.hashCode(mVideoState) +
@@ -716,7 +642,6 @@ public final class Call {
                 int capabilities,
                 int properties,
                 DisconnectCause disconnectCause,
-                long createTimeMillis,
                 long connectTimeMillis,
                 GatewayInfo gatewayInfo,
                 int videoState,
@@ -732,7 +657,6 @@ public final class Call {
             mCallCapabilities = capabilities;
             mCallProperties = properties;
             mDisconnectCause = disconnectCause;
-            mCreateTimeMillis = createTimeMillis;
             mConnectTimeMillis = connectTimeMillis;
             mGatewayInfo = gatewayInfo;
             mVideoState = videoState;
@@ -754,7 +678,6 @@ public final class Call {
                     parcelableCall.getProperties(),
                     parcelableCall.getDisconnectCause(),
                     parcelableCall.getConnectTimeMillis(),
-                    parcelableCall.getCreateTimeMillis(),
                     parcelableCall.getGatewayInfo(),
                     parcelableCall.getVideoState(),
                     parcelableCall.getStatusHints(),

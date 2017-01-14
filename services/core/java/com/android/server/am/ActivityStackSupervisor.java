@@ -357,11 +357,6 @@ public final class ActivityStackSupervisor implements DisplayListener {
     boolean mSleepTimeout = false;
 
     /**
-     * Is the privacy guard currently enabled? Shared between ActivityStacks
-     */
-    String mPrivacyGuardPackageName = null;
-
-    /**
      * We don't want to allow the device to go to sleep while in the process
      * of launching an activity.  This is primarily to allow alarm intent
      * receivers to launch an activity and get that to run before the device
@@ -1879,8 +1874,6 @@ public final class ActivityStackSupervisor implements DisplayListener {
 
     void findTaskToMoveToFrontLocked(TaskRecord task, int flags, ActivityOptions options,
             String reason, boolean forceNonResizeable) {
-        ActivityRecord top = task.stack.topRunningActivityLocked();
-        /* App is launching from recent apps and it's a new process */
         if ((flags & ActivityManager.MOVE_TASK_NO_USER_ACTION) == 0) {
             mUserLeaving = true;
         }
@@ -2717,14 +2710,11 @@ public final class ActivityStackSupervisor implements DisplayListener {
                 // If the match we found was based on root affinity we keep on looking to see if
                 // there is a better match in another stack. We eventually return the match based
                 // on root affinity if we don't find a better match.
-                if (mTmpFindTaskResult.r != null) {
-                    if (!mTmpFindTaskResult.matchedByRootAffinity) {
-                        return mTmpFindTaskResult.r;
-                    }
+                if (mTmpFindTaskResult.r != null && !mTmpFindTaskResult.matchedByRootAffinity) {
+                    return mTmpFindTaskResult.r;
                 }
             }
         }
-
         if (DEBUG_TASKS && mTmpFindTaskResult.r == null) Slog.d(TAG_TASKS, "No task found");
         return mTmpFindTaskResult.r;
     }
@@ -3961,7 +3951,6 @@ public final class ActivityStackSupervisor implements DisplayListener {
                             }
                             getStatusBarService().disable(flags, mToken,
                                     mService.mContext.getPackageName());
-                            getStatusBarService().screenPinningStateChanged(true);
                         }
                         mWindowManager.disableKeyguard(mToken, LOCK_TASK_TAG);
                         if (getDevicePolicyManager() != null) {
@@ -3978,7 +3967,6 @@ public final class ActivityStackSupervisor implements DisplayListener {
                         if (getStatusBarService() != null) {
                             getStatusBarService().disable(StatusBarManager.DISABLE_NONE, mToken,
                                     mService.mContext.getPackageName());
-                            getStatusBarService().screenPinningStateChanged(false);
                         }
                         mWindowManager.reenableKeyguard(mToken);
                         if (getDevicePolicyManager() != null) {

@@ -21,22 +21,16 @@ import android.app.ActivityManagerNative;
 import android.app.AlarmManager;
 import android.app.AlarmManager.AlarmClockInfo;
 import android.app.SynchronousUserSwitchObserver;
-import android.bluetooth.BluetoothAssignedNumbers;
-import android.bluetooth.BluetoothHeadset;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.UserInfo;
-import android.database.ContentObserver;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.telecom.TelecomManager;
 import android.util.Log;
@@ -54,9 +48,6 @@ import com.android.systemui.statusbar.policy.DataSaverController;
 import com.android.systemui.statusbar.policy.HotspotController;
 import com.android.systemui.statusbar.policy.RotationLockController;
 import com.android.systemui.statusbar.policy.UserInfoController;
-import com.android.systemui.statusbar.policy.SuController;
-
-import cyanogenmod.providers.CMSettings;
 
 /**
  * This class contains all of the policy about which icons are installed in the status
@@ -78,7 +69,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final String mSlotRotate;
     private final String mSlotHeadset;
     private final String mSlotDataSaver;
-    private final String mSlotSu;
 
     private final Context mContext;
     private final Handler mHandler = new Handler();
@@ -91,8 +81,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final RotationLockController mRotationLockController;
     private final DataSaverController mDataSaver;
     private StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
-    private final SuController mSuController;
-    private boolean mSuIndicatorVisible;
 
     // Assume it's all good unless we hear otherwise.  We don't always seem
     // to get broadcasts that it *is* there.
@@ -101,7 +89,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private boolean mZenVisible;
     private boolean mVolumeVisible;
     private boolean mCurrentUserSetup;
-    private Float mBluetoothBatteryLevel = null;
 
     private int mZen;
 
@@ -111,49 +98,10 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
 
     private BluetoothController mBluetooth;
 
-    private boolean mShowBluetoothBattery;
-
- 
-    private BTSettingsObserver mBTSettingsObserver;
- 
-    protected class BTSettingsObserver extends ContentObserver {
-         BTSettingsObserver(Handler handler) {
-             super(handler);
-         }
- 
-         void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                   Settings.System.BLUETOOTH_SHOW_BATTERY),
-                   false, this, UserHandle.USER_ALL);
-            updateSettings();
-         }
- 
-         @Override
-         public void onChange(boolean selfChange, Uri uri) {
-             super.onChange(selfChange, uri);
-             if (uri.equals(Settings.System.getUriFor(
-                     Settings.System.BLUETOOTH_SHOW_BATTERY))) {
-                     mShowBluetoothBattery = Settings.System.getIntForUser(
-                             mContext.getContentResolver(),
-                             Settings.System.BLUETOOTH_SHOW_BATTERY,
-                             0, UserHandle.USER_CURRENT) == 1;
-                     updateBluetooth();
-             }
-             updateSettings();
-         }
- 
-         public void updateSettings() {
-             ContentResolver resolver = mContext.getContentResolver();
-             boolean mShowBluetoothBattery = Settings.System.getIntForUser(resolver,
-                     Settings.System.BLUETOOTH_SHOW_BATTERY, 0, UserHandle.USER_CURRENT) == 1;
-         }
-    }
-
     public PhoneStatusBarPolicy(Context context, StatusBarIconController iconController,
             CastController cast, HotspotController hotspot, UserInfoController userInfoController,
             BluetoothController bluetooth, RotationLockController rotationLockController,
-            DataSaverController dataSaver, SuController su) {
+            DataSaverController dataSaver) {
         mContext = context;
         mIconController = iconController;
         mCast = cast;
@@ -165,7 +113,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
         mRotationLockController = rotationLockController;
         mDataSaver = dataSaver;
-        mSuController = su;
 
         mSlotCast = context.getString(com.android.internal.R.string.status_bar_cast);
         mSlotHotspot = context.getString(com.android.internal.R.string.status_bar_hotspot);
@@ -179,7 +126,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mSlotRotate = context.getString(com.android.internal.R.string.status_bar_rotate);
         mSlotHeadset = context.getString(com.android.internal.R.string.status_bar_headset);
         mSlotDataSaver = context.getString(com.android.internal.R.string.status_bar_data_saver);
-        mSlotSu = context.getString(com.android.internal.R.string.status_bar_su);
+
         mRotationLockController.addRotationLockControllerCallback(this);
 
         // listen for broadcasts
@@ -193,11 +140,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
-
-        filter.addAction(BluetoothHeadset.ACTION_VENDOR_SPECIFIC_HEADSET_EVENT);
-        filter.addCategory(BluetoothHeadset.VENDOR_SPECIFIC_HEADSET_EVENT_COMPANY_ID_CATEGORY
-            + "." + Integer.toString(BluetoothAssignedNumbers.APPLE));
-
         mContext.registerReceiver(mIntentReceiver, filter, null, mHandler);
 
         // listen for user / profile change.
@@ -210,12 +152,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         // TTY status
         mIconController.setIcon(mSlotTty,  R.drawable.stat_sys_tty_mode, null);
         mIconController.setIconVisibility(mSlotTty, false);
-
-        // Bluetooth battery level monitor
-        if (mBTSettingsObserver == null) {
-            mBTSettingsObserver = new BTSettingsObserver(new Handler());
-        }
-        mBTSettingsObserver.observe();
 
         // bluetooth status
         updateBluetooth();
@@ -244,16 +180,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mIconController.setIconVisibility(mSlotHotspot, mHotspot.isHotspotEnabled());
         mHotspot.addCallback(mHotspotCallback);
 
-        // su
-        mIconController.setIcon(mSlotSu, R.drawable.stat_sys_su, null);
-        mIconController.setIconVisibility(mSlotSu, false);
-        mSuController.addCallback(mSuCallback);
-        mSettingsObserver.onChange(true);
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.SHOW_SU_INDICATOR),
-                false, mSettingsObserver);
-                updateSu();
-
         // managed profile
         mIconController.setIcon(mSlotManagedProfile, R.drawable.stat_sys_managed_profile_status,
                 mContext.getString(R.string.accessibility_managed_profile));
@@ -265,21 +191,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mIconController.setIconVisibility(mSlotDataSaver, false);
         mDataSaver.addListener(this);
     }
- 
-
-    private ContentObserver mSettingsObserver = new ContentObserver(null) {
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            mSuIndicatorVisible = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.SHOW_SU_INDICATOR, 1) == 1;
-            updateSu();
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            onChange(selfChange, null);
-        }
-    };
 
     public void setStatusBarKeyguardViewManager(
             StatusBarKeyguardViewManager statusBarKeyguardViewManager) {
@@ -338,17 +249,8 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
 
         if (DndTile.isVisible(mContext) || DndTile.isCombinedIcon(mContext)) {
             zenVisible = mZen != Global.ZEN_MODE_OFF;
-            switch (mZen) {
-                case Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS:
-                    zenIconId = R.drawable.stat_sys_dnd_priority;
-                    break;
-                case Global.ZEN_MODE_NO_INTERRUPTIONS:
-                    zenIconId = R.drawable.stat_sys_dnd_total_silence;
-                    break;
-                default:
-                    zenIconId = R.drawable.stat_sys_dnd;
-                    break;
-            }
+            zenIconId = mZen == Global.ZEN_MODE_NO_INTERRUPTIONS
+                    ? R.drawable.stat_sys_dnd_total_silence : R.drawable.stat_sys_dnd;
             zenDescription = mContext.getString(R.string.quick_settings_dnd_label);
         } else if (mZen == Global.ZEN_MODE_NO_INTERRUPTIONS) {
             zenVisible = true;
@@ -400,27 +302,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         updateBluetooth();
     }
 
-    private void updateBluetoothBattery(Intent intent) {
-        if (intent.hasExtra(BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_CMD)) {
-            String command = intent.getStringExtra(BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_CMD);
-            if ("+IPHONEACCEV".equals(command)) {
-                Object[] args = (Object[]) intent.getSerializableExtra(BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_ARGS);
-                if (args.length >= 3 && args[0] instanceof Integer && ((Integer)args[0])*2+1<=args.length) {
-                    for (int i=0;i<((Integer)args[0]);i++) {
-                        if (!(args[i*2+1] instanceof Integer) || !(args[i*2+2] instanceof Integer)) {
-                            continue;
-                        }
-                        if (args[i*2+1].equals(1)) {
-                            mBluetoothBatteryLevel = (((Integer)args[i*2+2])+1)/10.0f;
-                            updateBluetooth();
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private final void updateBluetooth() {
         int iconId = R.drawable.stat_sys_data_bluetooth;
         String contentDescription =
@@ -429,24 +310,8 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         if (mBluetooth != null) {
             bluetoothEnabled = mBluetooth.isBluetoothEnabled();
             if (mBluetooth.isBluetoothConnected()) {
-                if (mBluetoothBatteryLevel == null || !mShowBluetoothBattery) {
-                    iconId = R.drawable.stat_sys_data_bluetooth_connected;
-                } else if (mBluetoothBatteryLevel != null && mShowBluetoothBattery) {
-                    if (mBluetoothBatteryLevel<=0.15f) {
-                        iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_1;
-                    } else if (mBluetoothBatteryLevel<=0.375f) {
-                        iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_2;
-                    } else if (mBluetoothBatteryLevel<=0.625f) {
-                        iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_3;
-                    } else if (mBluetoothBatteryLevel<=0.85f) {
-                        iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_4;
-                    } else {
-                        iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_5;
-                    }
-                }
+                iconId = R.drawable.stat_sys_data_bluetooth_connected;
                 contentDescription = mContext.getString(R.string.accessibility_bluetooth_connected);
-            } else {
-                mBluetoothBatteryLevel = null;
             }
         }
 
@@ -587,15 +452,9 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final HotspotController.Callback mHotspotCallback = new HotspotController.Callback() {
         @Override
         public void onHotspotChanged(boolean enabled) {
-            mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_hotspot,
-                    mContext.getString(R.string.accessibility_status_bar_hotspot));
             mIconController.setIconVisibility(mSlotHotspot, enabled);
         }
     };
-
-    private void updateSu() {
-        mIconController.setIconVisibility(mSlotSu, mSuController.hasActiveSessions() && mSuIndicatorVisible);
-    }
 
     private final CastController.Callback mCastCallback = new CastController.Callback() {
         @Override
@@ -677,8 +536,6 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
                 updateManagedProfile();
             } else if (action.equals(AudioManager.ACTION_HEADSET_PLUG)) {
                 updateHeadsetPlug(intent);
-            } else if (action.equals(BluetoothHeadset.ACTION_VENDOR_SPECIFIC_HEADSET_EVENT)) {
-                updateBluetoothBattery(intent);
             }
         }
     };
@@ -690,12 +547,4 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
             mIconController.setIconVisibility(mSlotCast, false);
         }
     };
-
-    private final SuController.Callback mSuCallback = new SuController.Callback() {
-        @Override
-        public void onSuSessionsChanged() {
-            updateSu();
-        }
-    };
-
 }

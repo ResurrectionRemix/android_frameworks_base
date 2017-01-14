@@ -19,19 +19,15 @@ package com.android.systemui.statusbar.phone;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.ContentResolver;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Icon;
-import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.os.UserHandle;
-import android.net.Uri;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.TypedValue;
@@ -41,12 +37,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.android.internal.statusbar.StatusBarIcon;
-import com.android.systemui.statusbar.policy.NetworkTraffic;
-import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
-import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
@@ -85,23 +77,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private BatteryMeterView mBatteryMeterView;
     private BatteryMeterView mBatteryMeterViewKeyguard;
-    private ClockController mClockController;
-    private View mCenterClockLayout;
-
-	private ImageView mRRLogo;
-	private ImageView mRRLogoRight;
-	private ImageView mRRLogoLeft;
-	private NetworkTraffic mNetworkTraffic;
-    private TextView mCarrierLabel;
-    private int mCarrierLabelMode;
-
-    private int mCustomLogo;
-    private ImageView mCLogo;
-    private ImageView mCLogoLeft;
-    private ImageView mCLogoRight;
-
-	private TextView mWeather;
-	private TextView mWeatherLeft;
+    private TextView mClock;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -124,11 +100,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private boolean mTransitionDeferring;
     private long mTransitionDeferringStartTime;
     private long mTransitionDeferringDuration;
-    private int mCustomLogoPos;
 
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
-
-    private BatteryLevelTextView mBatteryLevelView;
 
     private final Runnable mTransitionDeferringDoneRunnable = new Runnable() {
         @Override
@@ -162,27 +135,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mBatteryMeterViewKeyguard = (BatteryMeterView) keyguardStatusBar.findViewById(R.id.battery);
         scaleBatteryMeterViews(context);
 
+        mClock = (TextView) statusBar.findViewById(R.id.clock);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
-        mRRLogo = (ImageView) statusBar.findViewById(R.id.rr_logo);
-        mRRLogoRight = (ImageView) statusBar.findViewById(R.id.rr_logo_right);
-		mRRLogoLeft = (ImageView) statusBar.findViewById(R.id.rr_logo_left);
-		mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
-		mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
-		mWeatherLeft = (TextView) statusBar.findViewById(R.id.left_weather_temp);
-        mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
-        mCLogo = (ImageView) statusBar.findViewById(R.id.custom_center);
-        mCLogoLeft = (ImageView) statusBar.findViewById(R.id.custom_left);
-        mCLogoRight = (ImageView) statusBar.findViewById(R.id.custom_right);
         mHandler = new Handler();
-        mClockController = new ClockController(statusBar, mNotificationIconAreaController, mHandler);
-        mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
-        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
-        settingsObserver.observe();
-        carrierLabelVisibility();
         loadDimens();
-
-        mBatteryLevelView = (BatteryLevelTextView) statusBar.findViewById(R.id.battery_level);
 
         TunerService.get(mContext).addTunable(this, ICON_BLACKLIST);
     }
@@ -204,15 +161,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         int batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height);
         int batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width);
         int marginBottom = res.getDimensionPixelSize(R.dimen.battery_margin_bottom);
-        // Set the start margin of the battery view instead of
-        // the end padding of the signal cluster to prevent
-        // excess padding when the battery view is hidden
-        int marginStart = res.getDimensionPixelSize(R.dimen.signal_cluster_battery_padding);
 
         LinearLayout.LayoutParams scaledLayoutParams = new LinearLayout.LayoutParams(
                 (int) (batteryWidth * iconScaleFactor), (int) (batteryHeight * iconScaleFactor));
-
-        scaledLayoutParams.setMarginsRelative(marginStart, 0, 0, marginBottom);
+        scaledLayoutParams.setMarginsRelative(0, 0, 0, marginBottom);
 
         mBatteryMeterView.setLayoutParams(scaledLayoutParams);
         mBatteryMeterViewKeyguard.setLayoutParams(scaledLayoutParams);
@@ -225,10 +177,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         }
         mIconBlacklist.clear();
         mIconBlacklist.addAll(getIconBlacklist(newValue));
-
-        boolean showClock = !mIconBlacklist.remove("clock");
-        mClockController.setVisibility(showClock);
-
         ArrayList<StatusBarIconView> views = new ArrayList<StatusBarIconView>();
         // Get all the current views.
         for (int i = 0; i < mStatusIcons.getChildCount(); i++) {
@@ -248,7 +196,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 com.android.internal.R.dimen.status_bar_icon_size);
         mIconHPadding = mContext.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_padding);
-        mClockController.updateFontSize();
     }
 
     private void addSystemIcon(int index, StatusBarIcon icon) {
@@ -363,83 +310,26 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     public void updateNotificationIcons(NotificationData notificationData) {
         mNotificationIconAreaController.updateNotificationIcons(notificationData);
-        carrierLabelVisibility();
     }
 
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
-        animateHide(mCenterClockLayout, animate);
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1  &&
-           (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_STYLE,  0,
-                UserHandle.USER_CURRENT) == 2)) {
-            animateHide(mRRLogoLeft, animate);
-        }
-        if ((Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
-                UserHandle.USER_CURRENT) == 2) ||
-			(Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
-                UserHandle.USER_CURRENT) == 3)) {
-        animateHide(mCarrierLabel,animate);
-        }
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                UserHandle.USER_CURRENT) == 1) {
-        animateHide(mWeatherLeft,animate);
-        }
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
-                if(mCustomLogoPos == 0) {
-                animateHide(mCLogoLeft, animate);
-                }
-        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
-        animateShow(mCenterClockLayout, animate);
-        if ((Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
-                UserHandle.USER_CURRENT) == 2) ||
-			(Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
-                UserHandle.USER_CURRENT) == 3)) {
-        animateShow(mCarrierLabel,animate);
-        }
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO, 0) == 1  &&
-           (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_STYLE,  0,
-                UserHandle.USER_CURRENT) == 2)){
-            animateShow(mRRLogoLeft, animate);
-        }
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                UserHandle.USER_CURRENT) == 1) {
-        animateShow(mWeatherLeft,animate);
-        }
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
-                if(mCustomLogoPos == 0) {
-                animateShow(mCLogoLeft, animate);
-                }
-        }
     }
 
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate);
-        animateHide(mCenterClockLayout, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
-        animateShow(mCenterClockLayout, animate);
     }
 
     public void setClockVisibility(boolean visible) {
-        mClockController.setVisibility(visible);
+        mClock.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public void dump(PrintWriter pw) {
@@ -636,51 +526,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
         mBatteryMeterView.setDarkIntensity(
                 isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);
-        mClockController.setTextColor(mTintArea, mIconTint);
-		if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF,
-                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
-       	mRRLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
-		mRRLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
-        mRRLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
-		}
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF,
-                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
-        mWeather.setTextColor(mIconTint);
-        mWeatherLeft.setTextColor(mIconTint);
-		}
-		if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.NETWORK_TRAFFIC_COLOR, 0xFFFFFFFF,
-                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
- 		mNetworkTraffic.setDarkIntensity(mDarkIntensity);
-		}
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CARRIER_COLOR,
-                mContext.getResources().getColor(R.color.status_bar_clock_color),
-                UserHandle.USER_CURRENT) == mContext.getResources().
-                getColor(R.color.status_bar_clock_color)) {
-        mCarrierLabel.setTextColor(mIconTint);
-        }
-        mCustomLogo = Settings.System.getIntForUser(mContext.getContentResolver(),
-               Settings.System.CUSTOM_LOGO_STYLE, 0,
-               UserHandle.USER_CURRENT);
-	    int mCustomlogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-		       Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, 
-               UserHandle.USER_CURRENT);
-        if (mCustomlogoColor == 0xFFFFFFFF) { 
-	    // we cant set imagetintlist on the last one. It is non colorable. Hence use a condition.
-                if (mCustomLogo == 43) {
-		        mCLogo.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
-         	    mCLogoLeft.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
-         	    mCLogoRight.setColorFilter(mCustomlogoColor, Mode.MULTIPLY);
-                } else {
-         	    mCLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
-         	    mCLogoLeft.setImageTintList(ColorStateList.valueOf(mIconTint));
-         	    mCLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
-                }	
-        }
-        mBatteryLevelView.setTextColor(getTint(mTintArea, mBatteryLevelView, mIconTint));
+        mClock.setTextColor(getTint(mTintArea, mClock, mIconTint));
     }
 
     public void appTransitionPending() {
@@ -733,7 +579,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         loadDimens();
         mNotificationIconAreaController.onDensityOrFontScaleChanged(mContext);
         updateClock();
-        updateBatteryLevelText();
         for (int i = 0; i < mStatusIcons.getChildCount(); i++) {
             View child = mStatusIcons.getChildAt(i);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -751,110 +596,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     }
 
     private void updateClock() {
-        mClockController.updateFontSize();
-        mClockController.setPaddingRelative(
+        FontSizeUtils.updateFontSize(mClock, R.dimen.status_bar_clock_size);
+        mClock.setPaddingRelative(
                 mContext.getResources().getDimensionPixelSize(
                         R.dimen.status_bar_clock_starting_padding),
                 0,
                 mContext.getResources().getDimensionPixelSize(
                         R.dimen.status_bar_clock_end_padding),
                 0);
-    }
-
-
-    public void carrierLabelVisibility() {
-        final ContentResolver resolver = mContext.getContentResolver();
-
-        mCarrierLabelMode = Settings.System.getIntForUser(resolver,
-                Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
-
-        boolean mUserDisabledStatusbarCarrier = false;
-
-        if (mCarrierLabelMode == 0 || mCarrierLabelMode == 1) {
-            mUserDisabledStatusbarCarrier = true;
-        }
-
-        boolean hideCarrier = Settings.System.getInt(resolver,
-                Settings.System.HIDE_CARRIER_MAX_SWITCH, 0) == 1;
-
-        int maxAllowedIcons = Settings.System.getInt(resolver,
-                Settings.System.HIDE_CARRIER_MAX_NOTIFICATION, 1);
-
-        boolean forceHideByNumberOfIcons = false;
-        int currentVisibleNotificationIcons = 0;
-
-        if (mNotificationIconAreaController != null) {
-            currentVisibleNotificationIcons = mNotificationIconAreaController.getNotificationIconsCount();
-        }
-
-        if (mCarrierLabelMode == 2 || mCarrierLabelMode == 3) {
-            if (hideCarrier && currentVisibleNotificationIcons >= maxAllowedIcons) {
-               forceHideByNumberOfIcons = true;
-            }
-        }
-
-        if (mCarrierLabel != null) {
-            if (!forceHideByNumberOfIcons && !mUserDisabledStatusbarCarrier ) {
-               mCarrierLabel.setVisibility(View.VISIBLE);
-            } else {
-               mCarrierLabel.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    public int getCurrentVisibleNotificationIcons() {
-        return mNotificationIconAreaController.getNotificationIconsCount();
-    }
-
-    class SettingsObserver extends UserContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-    }
-    
-    @Override
-    protected void observe() {
-         ContentResolver resolver = mContext.getContentResolver();
-         resolver.registerContentObserver(Settings.System
-                 .getUriFor(Settings.System.HIDE_CARRIER_MAX_SWITCH),
-                 false, this, UserHandle.USER_CURRENT);
-         resolver.registerContentObserver(Settings.System
-                 .getUriFor(Settings.System.HIDE_CARRIER_MAX_NOTIFICATION),
-                 false, this, UserHandle.USER_CURRENT);
-         resolver.registerContentObserver(Settings.System
-                 .getUriFor(Settings.System.CUSTOM_LOGO_POSITION),
-                 false, this, UserHandle.USER_CURRENT);
-         update();
-    }
-
-        @Override
-        protected void unobserve() {
-            super.unobserve();
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.unregisterContentObserver(this);
-        }
-
-
-    @Override
-    public void onChange(boolean selfChange, Uri uri) {
-        super.onChange(selfChange, uri);
-
-        if (uri.equals(Settings.System.getUriFor(
-            Settings.System.HIDE_CARRIER_MAX_SWITCH))
-            || uri.equals(Settings.System.getUriFor(
-            Settings.System.HIDE_CARRIER_MAX_NOTIFICATION))) {
-            carrierLabelVisibility();
-            }
-        update();
-        }
-
-    @Override
-    protected void update() {
-    mCustomLogoPos = Settings.System.getIntForUser(
-                    mContext.getContentResolver(), Settings.System.CUSTOM_LOGO_POSITION, 0,
-                    UserHandle.USER_CURRENT);
-        }
-    }
-    private void updateBatteryLevelText() {
-        FontSizeUtils.updateFontSize(mBatteryLevelView, R.dimen.battery_level_text_size);
     }
 }

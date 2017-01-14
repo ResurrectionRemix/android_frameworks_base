@@ -24,7 +24,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.ActivityManager;
-import android.content.Context;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -162,8 +161,6 @@ public class PackageParser {
     private static final String TAG_PACKAGE = "package";
     private static final String TAG_RESTRICT_UPDATE = "restrict-update";
 
-    private Context mContext;
-
     // These are the tags supported by child packages
     private static final Set<String> CHILD_PACKAGE_TAGS = new ArraySet<>();
     static {
@@ -257,7 +254,6 @@ public class PackageParser {
     private String[] mSeparateProcesses;
     private boolean mOnlyCoreApps;
     private DisplayMetrics mMetrics;
-    private boolean mOnlyPowerOffAlarmApps;
 
     private static final int SDK_VERSION = Build.VERSION.SDK_INT;
     private static final String[] SDK_CODENAMES = Build.VERSION.ACTIVE_CODENAMES;
@@ -435,11 +431,6 @@ public class PackageParser {
         mMetrics.setToDefaults();
     }
 
-    public PackageParser(Context context) {
-        this();
-        mContext = context;
-    }
-
     public void setSeparateProcesses(String[] procs) {
         mSeparateProcesses = procs;
     }
@@ -455,10 +446,6 @@ public class PackageParser {
 
     public void setDisplayMetrics(DisplayMetrics metrics) {
         mMetrics = metrics;
-    }
-
-    public void setOnlyPowerOffAlarmApps(boolean onlyPowerOffAlarmApps) {
-        mOnlyPowerOffAlarmApps = onlyPowerOffAlarmApps;
     }
 
     public static final boolean isApkFile(File file) {
@@ -668,10 +655,9 @@ public class PackageParser {
     public final static int PARSE_IS_SYSTEM_DIR = 1<<6;
     public final static int PARSE_IS_PRIVILEGED = 1<<7;
     public final static int PARSE_COLLECT_CERTIFICATES = 1<<8;
-    public final static int PARSE_TRUSTED_OVERLAY = 1<<9;
-    public final static int PARSE_ENFORCE_CODE = 1<<10;
-    public final static int PARSE_IS_EPHEMERAL = 1<<11;
-    public final static int PARSE_FORCE_SDK = 1<<12;
+    public final static int PARSE_ENFORCE_CODE = 1<<9;
+    public final static int PARSE_IS_EPHEMERAL = 1<<10;
+    public final static int PARSE_FORCE_SDK = 1<<11;
 
     private static final Comparator<String> sSplitNameComparator = new SplitNameComparator();
 
@@ -815,27 +801,6 @@ public class PackageParser {
         }
     }
 
-
-    /*
-     * Check if the package belongs to power off alarm packages
-     */
-    private boolean isPowerOffAlarmPackage(String packageName) {
-        if (mContext != null) {
-            String[] packageArray =
-                    mContext.getResources().getStringArray(R.array.power_off_alarm_apps);
-            if(packageArray.length ==0) {
-                Slog.w(TAG, "power off alarm app array is empty " + packageName);
-                return false;
-            } else {
-                List<String> tempList = Arrays.asList(packageArray);
-                if (tempList.contains(packageName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     /**
      * Parse all APKs contained in the given directory, treating them as a
      * single package. This also performs sanity checking, such as requiring
@@ -847,15 +812,8 @@ public class PackageParser {
      */
     private Package parseClusterPackage(File packageDir, int flags) throws PackageParserException {
         final PackageLite lite = parseClusterPackageLite(packageDir, 0);
-        // When mOnlyPowerOffAlarmApps is true, only parse power off alarm packages
-        if (mOnlyPowerOffAlarmApps) {
-            if (!isPowerOffAlarmPackage(lite.packageName)) {
-                throw new PackageParserException(INSTALL_PARSE_FAILED_MANIFEST_MALFORMED,
-                        "Not a powerOffAlarmApp: " + packageDir);
-            }
-        }
 
-        if (!mOnlyPowerOffAlarmApps && mOnlyCoreApps && !lite.coreApp) {
+        if (mOnlyCoreApps && !lite.coreApp) {
             throw new PackageParserException(INSTALL_PARSE_FAILED_MANIFEST_MALFORMED,
                     "Not a coreApp: " + packageDir);
         }
@@ -913,15 +871,7 @@ public class PackageParser {
     @Deprecated
     public Package parseMonolithicPackage(File apkFile, int flags) throws PackageParserException {
         final PackageLite lite = parseMonolithicPackageLite(apkFile, flags);
-        // When mOnlyPowerOffAlarmApps is true, only parse power off alarm packages
-        if (mOnlyPowerOffAlarmApps) {
-            if (!isPowerOffAlarmPackage(lite.packageName)) {
-                throw new PackageParserException(INSTALL_PARSE_FAILED_MANIFEST_MALFORMED,
-                   "Not a powerOffAlarmApp: " + apkFile);
-            }
-        }
-
-        if (!mOnlyPowerOffAlarmApps && mOnlyCoreApps) {
+        if (mOnlyCoreApps) {
             if (!lite.coreApp) {
                 throw new PackageParserException(INSTALL_PARSE_FAILED_MANIFEST_MALFORMED,
                         "Not a coreApp: " + apkFile);
@@ -1806,9 +1756,6 @@ public class PackageParser {
                         com.android.internal.R.styleable.AndroidManifestResourceOverlay);
                 pkg.mOverlayTarget = sa.getString(
                         com.android.internal.R.styleable.AndroidManifestResourceOverlay_targetPackage);
-                pkg.mOverlayPriority = sa.getInt(
-                        com.android.internal.R.styleable.AndroidManifestResourceOverlay_priority,
-                        -1);
                 sa.recycle();
 
                 if (pkg.mOverlayTarget == null) {
@@ -1816,14 +1763,7 @@ public class PackageParser {
                     mParseError = PackageManager.INSTALL_PARSE_FAILED_MANIFEST_MALFORMED;
                     return null;
                 }
-                if (pkg.mOverlayPriority < 0 || pkg.mOverlayPriority > 9999) {
-                    outError[0] = "<overlay> priority must be between 0 and 9999";
-                    mParseError =
-                        PackageManager.INSTALL_PARSE_FAILED_MANIFEST_MALFORMED;
-                    return null;
-                }
                 XmlUtils.skipCurrentTag(parser);
-
             } else if (tagName.equals(TAG_KEY_SETS)) {
                 if (!parseKeySets(pkg, res, parser, outError)) {
                     return null;
@@ -2066,18 +2006,14 @@ public class PackageParser {
                 String name = sa.getNonResourceString(
                         com.android.internal.R.styleable.AndroidManifestProtectedBroadcast_name);
 
-                String permission = sa.getNonResourceString(
-                        com.android.internal.R.styleable.AndroidManifestProtectedBroadcast_permission);
-
                 sa.recycle();
 
                 if (name != null && (flags&PARSE_IS_SYSTEM) != 0) {
                     if (pkg.protectedBroadcasts == null) {
-                        pkg.protectedBroadcasts = new ArrayMap<>();
+                        pkg.protectedBroadcasts = new ArrayList<String>();
                     }
-                    if (!pkg.protectedBroadcasts.containsKey(name)) {
-                        pkg.protectedBroadcasts.put(name.intern(),
-                                permission != null ? permission.intern() : null);
+                    if (!pkg.protectedBroadcasts.contains(name)) {
+                        pkg.protectedBroadcasts.add(name.intern());
                     }
                 }
 
@@ -2633,10 +2569,6 @@ public class PackageParser {
 
         perm.info.flags = sa.getInt(
                 com.android.internal.R.styleable.AndroidManifestPermission_permissionFlags, 0);
-
-        perm.info.allowViaWhitelist = sa.getBoolean(
-                com.android.internal.R.styleable.AndroidManifestPermission_allowViaWhitelist,
-                false);
 
         sa.recycle();
 
@@ -4835,10 +4767,7 @@ public class PackageParser {
 
         public final ArrayList<String> requestedPermissions = new ArrayList<String>();
 
-        /**
-         * Maps from package -> permission, null for system (default behavior)
-         */
-        public ArrayMap<String,String> protectedBroadcasts;
+        public ArrayList<String> protectedBroadcasts;
 
         public Package parentPackage;
         public ArrayList<Package> childPackages;
@@ -4913,8 +4842,6 @@ public class PackageParser {
         public String mRequiredAccountType;
 
         public String mOverlayTarget;
-        public int mOverlayPriority;
-        public boolean mTrustedOverlay;
 
         /**
          * Data used to feed the KeySetManagerService
@@ -5411,12 +5338,6 @@ public class PackageParser {
                 && p.usesLibraryFiles != null) {
             return true;
         }
-        if (state.protectedComponents != null) {
-            boolean protect = state.protectedComponents.size() > 0;
-            if (p.applicationInfo.protect != protect) {
-                return true;
-            }
-        }
         return false;
     }
 
@@ -5455,9 +5376,7 @@ public class PackageParser {
             ai.enabled = false;
         }
         ai.enabledSetting = state.enabled;
-        if (state.protectedComponents != null) {
-            ai.protect = state.protectedComponents.size() > 0;
-        }
+        ai.resourceDirs = state.resourceDirs;
     }
 
     public static ApplicationInfo generateApplicationInfo(Package p, int flags,

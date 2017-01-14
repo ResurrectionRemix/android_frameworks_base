@@ -138,15 +138,7 @@ public class MenuPopupWindow extends ListPopupWindow implements MenuItemHoverLis
                 setNextSelectedPositionInt(INVALID_POSITION);
 
                 // Close only the top-level menu.
-                final ListAdapter adapter = getAdapter();
-                final MenuAdapter menuAdapter;
-                if (adapter instanceof HeaderViewListAdapter) {
-                    final HeaderViewListAdapter headerAdapter = (HeaderViewListAdapter) adapter;
-                    menuAdapter = (MenuAdapter) headerAdapter.getWrappedAdapter();
-                } else {
-                    menuAdapter = (MenuAdapter) adapter;
-                }
-                menuAdapter.getAdapterMenu().close(false /* closeAllMenus */);
+                ((MenuAdapter) getAdapter()).getAdapterMenu().close(false /* closeAllMenus */);
                 return true;
             }
             return super.onKeyDown(keyCode, event);

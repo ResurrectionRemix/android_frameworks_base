@@ -700,12 +700,6 @@ public class AudioRecord implements AudioRouting
         case AudioFormat.ENCODING_PCM_FLOAT:
         case AudioFormat.ENCODING_PCM_16BIT:
         case AudioFormat.ENCODING_PCM_8BIT:
-        case AudioFormat.ENCODING_AMRNB:
-        case AudioFormat.ENCODING_AMRWB:
-        case AudioFormat.ENCODING_EVRC:
-        case AudioFormat.ENCODING_EVRCB:
-        case AudioFormat.ENCODING_EVRCWB:
-        case AudioFormat.ENCODING_EVRCNW:
             mAudioFormat = audioFormat;
             break;
         default:
@@ -942,9 +936,6 @@ public class AudioRecord implements AudioRouting
         case (AudioFormat.CHANNEL_IN_FRONT | AudioFormat.CHANNEL_IN_BACK):
             channelCount = 2;
             break;
-        case AudioFormat.CHANNEL_IN_5POINT1:
-            channelCount = 6;
-            break;
         case AudioFormat.CHANNEL_INVALID:
         default:
             loge("getMinBufferSize(): Invalid channel configuration.");
@@ -981,7 +972,6 @@ public class AudioRecord implements AudioRouting
      */
     public void startRecording()
     throws IllegalStateException {
-        android.util.SeempLog.record(70);
         if (mState != STATE_INITIALIZED) {
             throw new IllegalStateException("startRecording() called on an "
                     + "uninitialized AudioRecord.");
@@ -994,11 +984,6 @@ public class AudioRecord implements AudioRouting
                 mRecordingState = RECORDSTATE_RECORDING;
             }
         }
-
-        if (getRecordingState() == RECORDSTATE_RECORDING &&
-                getAudioSource() == MediaRecorder.AudioSource.HOTWORD) {
-            handleHotwordInput(true);
-        }
     }
 
     /**
@@ -1010,7 +995,6 @@ public class AudioRecord implements AudioRouting
      */
     public void startRecording(MediaSyncEvent syncEvent)
     throws IllegalStateException {
-        android.util.SeempLog.record(70);
         if (mState != STATE_INITIALIZED) {
             throw new IllegalStateException("startRecording() called on an "
                     + "uninitialized AudioRecord.");
@@ -1041,10 +1025,6 @@ public class AudioRecord implements AudioRouting
             native_stop();
             mRecordingState = RECORDSTATE_STOPPED;
         }
-
-        if (getAudioSource() == MediaRecorder.AudioSource.HOTWORD) {
-            handleHotwordInput(false);
-        }
     }
 
     private final IBinder mICallBack = new Binder();
@@ -1058,23 +1038,6 @@ public class AudioRecord implements AudioRouting
             ias.forceRemoteSubmixFullVolume(starting, mICallBack);
         } catch (RemoteException e) {
             Log.e(TAG, "Error talking to AudioService when handling full submix volume", e);
-        }
-    }
-
-    private void handleHotwordInput(boolean listening) {
-        final IBinder b = ServiceManager.getService(android.content.Context.AUDIO_SERVICE);
-        final IAudioService ias = IAudioService.Stub.asInterface(b);
-        try {
-            // If the caller tries to start recording with the HOTWORD input
-            // before AUDIO_SERVICE has started, IAudioService may not be available.
-            if (ias != null) {
-                ias.handleHotwordInput(listening);
-            } else {
-                Log.e(TAG, "Error talking to AudioService when handling hotword input, "
-                        + "AudioService unavailable");
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error talking to AudioService when handling hotword input.", e);
         }
     }
 

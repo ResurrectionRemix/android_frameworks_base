@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +40,6 @@ import static android.service.notification.NotificationListenerService.TRIM_FULL
 import static android.service.notification.NotificationListenerService.TRIM_LIGHT;
 import static android.service.notification.NotificationListenerService.Ranking.IMPORTANCE_DEFAULT;
 import static android.service.notification.NotificationListenerService.Ranking.IMPORTANCE_NONE;
-import static android.service.notification.NotificationListenerService.Ranking.importanceToLevel;
 
 import static org.xmlpull.v1.XmlPullParser.END_DOCUMENT;
 
@@ -56,7 +54,6 @@ import android.app.AutomaticZenRule;
 import android.app.IActivityManager;
 import android.app.INotificationManager;
 import android.app.ITransientNotification;
-import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.NotificationManager.Policy;
@@ -80,7 +77,6 @@ import android.content.pm.ParceledListSlice;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.AudioManagerInternal;
@@ -120,11 +116,9 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.AtomicFile;
-import java.util.HashMap;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
-import android.util.TimeUtils;
 import android.util.Xml;
 import android.view.WindowManager;
 import android.view.WindowManagerInternal;
@@ -149,11 +143,6 @@ import com.android.server.statusbar.StatusBarManagerInternal;
 import com.android.server.vr.VrManagerInternal;
 import com.android.server.notification.ManagedServices.UserProfiles;
 
-import cyanogenmod.providers.CMSettings;
-
-import cyanogenmod.util.ColorUtils;
-
-import cyanogenmod.providers.CMSettings;
 import libcore.io.IoUtils;
 
 import org.json.JSONException;
@@ -238,9 +227,6 @@ public class NotificationManagerService extends SystemService {
     private static final long MIN_PACKAGE_OVERRATE_LOG_INTERVAL = 5000; // milliseconds
     private String mRankerServicePackageName;
 
-    /** notification light maximum brightness value to use. */
-    private static final int LIGHT_BRIGHTNESS_MAXIMUM = 255;
-
     private IActivityManager mAm;
     AudioManager mAudioManager;
     AudioManagerInternal mAudioManagerInternal;
@@ -262,17 +248,6 @@ public class NotificationManagerService extends SystemService {
     private int mDefaultNotificationLedOff;
     private long[] mDefaultVibrationPattern;
 
-    private boolean mAdjustableNotificationLedBrightness;
-    private int mNotificationLedBrightnessLevel = LIGHT_BRIGHTNESS_MAXIMUM;
-
-    private boolean mMultipleNotificationLeds;
-    private boolean mMultipleLedsEnabledSetting = false;
-
-    private boolean mAutoGenerateNotificationColor = true;
-
-    private boolean mScreenOnEnabled = false;
-    private boolean mScreenOnDefault = false;
-
     private long[] mFallbackVibrationPattern;
     private boolean mUseAttentionLight;
     boolean mSystemReady;
@@ -292,13 +267,6 @@ public class NotificationManagerService extends SystemService {
     private boolean mScreenOn = true;
     private boolean mInCall = false;
     private boolean mNotificationPulseEnabled;
-    private ArrayMap<String, NotificationLedValues> mNotificationPulseCustomLedValues;
-    private Map<String, String> mPackageNameMappings;
-    private final ArrayMap<String, Integer> mGeneratedPackageLedColors =
-        new ArrayMap<String, Integer>();
-
-    // for checking lockscreen status
-    private KeyguardManager mKeyguardManager;
 
     // used as a mutex for access to all active notifications & listeners
     final ArrayList<NotificationRecord> mNotificationList =
@@ -308,14 +276,10 @@ public class NotificationManagerService extends SystemService {
     final ArrayMap<Integer, ArrayMap<String, String>> mAutobundledSummaries = new ArrayMap<>();
     final ArrayList<ToastRecord> mToastQueue = new ArrayList<ToastRecord>();
     final ArrayMap<String, NotificationRecord> mSummaryByGroupKey = new ArrayMap<>();
-    final ArrayMap<String, Long> mLastSoundTimestamps = new ArrayMap<>();
     final PolicyAccess mPolicyAccess = new PolicyAccess();
 
     // The last key in this list owns the hardware.
     ArrayList<String> mLights = new ArrayList<>();
-
-    private HashMap<String, Long> mAnnoyingNotifications = new HashMap<String, Long>();
-    private long mAnnoyingNotificationThreshold = -1;
 
     private AppOpsManager mAppOps;
     private UsageStatsManagerInternal mAppUsageStats;
@@ -337,8 +301,6 @@ public class NotificationManagerService extends SystemService {
     private NotificationRankers mRankerServices;
     private ConditionProviders mConditionProviders;
     private NotificationUsageStats mUsageStats;
-
-    private boolean mMultiColorNotificationLed;
 
     private static final int MY_UID = Process.myUid();
     private static final int MY_PID = Process.myPid();
@@ -523,12 +485,6 @@ public class NotificationManagerService extends SystemService {
         }
     }
 
-    class NotificationLedValues {
-        public int color;
-        public int onMS;
-        public int offMS;
-    }
-
     private final NotificationDelegate mNotificationDelegate = new NotificationDelegate() {
 
         @Override
@@ -647,9 +603,8 @@ public class NotificationManagerService extends SystemService {
                         "Bad notification posted from package " + pkg
                         + ": " + message);
             } catch (RemoteException e) {
-            } finally {
-                Binder.restoreCallingIdentity(ident);
             }
+            Binder.restoreCallingIdentity(ident);
         }
 
         @Override
@@ -716,12 +671,9 @@ public class NotificationManagerService extends SystemService {
     }
 
     private void clearLightsLocked() {
-        // lights
-		// clear only if lockscreen is not active
-		if (mKeyguardManager != null && !mKeyguardManager.isKeyguardLocked()) {
-			mLights.clear();
-			updateLightsLocked();
-		}
+        // light
+        mLights.clear();
+        updateLightsLocked();
     }
 
     private final BroadcastReceiver mPackageIntentReceiver = new BroadcastReceiver() {
@@ -838,13 +790,9 @@ public class NotificationManagerService extends SystemService {
                 }
             } else if (action.equals(Intent.ACTION_USER_PRESENT)) {
                 // turn off LED when user passes through lock screen
-                // if lights with screen on is disabled.
-                if (!mScreenOnEnabled) {
-                    mNotificationLight.turnOff();
-
-                    if (mStatusBar != null) {
-                        mStatusBar.notificationLightOff();
-                    }
+                mNotificationLight.turnOff();
+                if (mStatusBar != null) {
+                    mStatusBar.notificationLightOff();
                 }
             } else if (action.equals(Intent.ACTION_USER_SWITCHED)) {
                 final int user = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, UserHandle.USER_NULL);
@@ -871,64 +819,25 @@ public class NotificationManagerService extends SystemService {
         }
     };
 
-    private final class LEDSettingsObserver extends ContentObserver {
+    private final class SettingsObserver extends ContentObserver {
         private final Uri NOTIFICATION_LIGHT_PULSE_URI
                 = Settings.System.getUriFor(Settings.System.NOTIFICATION_LIGHT_PULSE);
         private final Uri NOTIFICATION_SOUND_URI
                 = Settings.System.getUriFor(Settings.System.NOTIFICATION_SOUND);
         private final Uri NOTIFICATION_RATE_LIMIT_URI
                 = Settings.Global.getUriFor(Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE);
-        private final Uri ENABLED_NOTIFICATION_LISTENERS_URI
-                = Settings.Secure.getUriFor(Settings.Secure.ENABLED_NOTIFICATION_LISTENERS);
-        private final Uri MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI
-                = Settings.System.getUriFor(Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);
 
-        LEDSettingsObserver(Handler handler) {
+        SettingsObserver(Handler handler) {
             super(handler);
         }
 
         void observe() {
             ContentResolver resolver = getContext().getContentResolver();
-            resolver.registerContentObserver(
-                    NOTIFICATION_LIGHT_PULSE_URI, false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(
-                    ENABLED_NOTIFICATION_LISTENERS_URI, false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_VALUES),
+            resolver.registerContentObserver(NOTIFICATION_LIGHT_PULSE_URI,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(NOTIFICATION_SOUND_URI,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(NOTIFICATION_RATE_LIMIT_URI,
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NOTIFICATION_LIGHT_SCREEN_ON),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO), false,
-                    this, UserHandle.USER_ALL);
-            if (mAdjustableNotificationLedBrightness) {
-                resolver.registerContentObserver(CMSettings.System.getUriFor(
-                        CMSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL),
-                        false, this, UserHandle.USER_ALL);
-            }
-            if (mMultipleNotificationLeds) {
-                resolver.registerContentObserver(CMSettings.System.getUriFor(
-                        CMSettings.System.NOTIFICATION_LIGHT_MULTIPLE_LEDS_ENABLE),
-                        false, this, UserHandle.USER_ALL);
-            }
-            resolver.registerContentObserver(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI,
                     false, this, UserHandle.USER_ALL);
             update(null);
         }
@@ -939,75 +848,18 @@ public class NotificationManagerService extends SystemService {
 
         public void update(Uri uri) {
             ContentResolver resolver = getContext().getContentResolver();
-
-            // LED enabled
-            mNotificationPulseEnabled = Settings.System.getIntForUser(resolver,
-                    Settings.System.NOTIFICATION_LIGHT_PULSE, 0, UserHandle.USER_CURRENT) != 0;
-
-            // Automatically pick a color for LED if not set
-            mAutoGenerateNotificationColor = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.NOTIFICATION_LIGHT_COLOR_AUTO,
-                    1, UserHandle.USER_CURRENT) != 0;
-
-            // LED default color
-            mDefaultNotificationColor = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR,
-                    mDefaultNotificationColor, UserHandle.USER_CURRENT);
-
-            // LED default on MS
-            mDefaultNotificationLedOn = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON,
-                    mDefaultNotificationLedOn, UserHandle.USER_CURRENT);
-
-            // LED default off MS
-            mDefaultNotificationLedOff = CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF,
-                    mDefaultNotificationLedOff, UserHandle.USER_CURRENT);
-
-            // LED generated notification colors
-            mGeneratedPackageLedColors.clear();
-
-            // LED custom notification colors
-            mNotificationPulseCustomLedValues.clear();
-            if (CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE, 0,
-                    UserHandle.USER_CURRENT) != 0) {
-                parseNotificationPulseCustomValuesString(CMSettings.System.getStringForUser(resolver,
-                        CMSettings.System.NOTIFICATION_LIGHT_PULSE_CUSTOM_VALUES,
-                        UserHandle.USER_CURRENT));
+            if (uri == null || NOTIFICATION_LIGHT_PULSE_URI.equals(uri)) {
+                boolean pulseEnabled = Settings.System.getInt(resolver,
+                            Settings.System.NOTIFICATION_LIGHT_PULSE, 0) != 0;
+                if (mNotificationPulseEnabled != pulseEnabled) {
+                    mNotificationPulseEnabled = pulseEnabled;
+                    updateNotificationPulse();
+                }
             }
             if (uri == null || NOTIFICATION_RATE_LIMIT_URI.equals(uri)) {
                 mMaxPackageEnqueueRate = Settings.Global.getFloat(resolver,
                             Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE, mMaxPackageEnqueueRate);
             }
-
-            // Notification LED brightness
-            if (mAdjustableNotificationLedBrightness) {
-                mNotificationLedBrightnessLevel = CMSettings.System.getIntForUser(resolver,
-                        CMSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL,
-                        LIGHT_BRIGHTNESS_MAXIMUM, UserHandle.USER_CURRENT);
-            }
-
-            // Multiple LEDs enabled
-            if (mMultipleNotificationLeds) {
-                mMultipleLedsEnabledSetting = (CMSettings.System.getIntForUser(resolver,
-                        CMSettings.System.NOTIFICATION_LIGHT_MULTIPLE_LEDS_ENABLE,
-                        mMultipleNotificationLeds ? 1 : 0, UserHandle.USER_CURRENT) != 0);
-            }
-
-            // Notification lights with screen on
-            mScreenOnEnabled = (CMSettings.System.getIntForUser(resolver,
-                    CMSettings.System.NOTIFICATION_LIGHT_SCREEN_ON,
-                    mScreenOnDefault ? 1 : 0, UserHandle.USER_CURRENT) != 0);
-
-            if (uri == null || MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI.equals(uri)) {
-                mAnnoyingNotificationThreshold = Settings.System.getLongForUser(resolver,
-                       Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD, 0,
-                       UserHandle.USER_CURRENT_OR_SELF);
-            }
-
-            updateNotificationPulse();
-
             if (uri == null || NOTIFICATION_SOUND_URI.equals(uri)) {
                 mSystemNotificationSound = Settings.System.getString(resolver,
                         Settings.System.NOTIFICATION_SOUND);
@@ -1015,7 +867,7 @@ public class NotificationManagerService extends SystemService {
         }
     }
 
-    private LEDSettingsObserver mSettingsObserver;
+    private SettingsObserver mSettingsObserver;
     private ZenModeHelper mZenModeHelper;
 
     private final Runnable mBuzzBeepBlinked = new Runnable() {
@@ -1081,8 +933,6 @@ public class NotificationManagerService extends SystemService {
         mAppOps = (AppOpsManager) getContext().getSystemService(Context.APP_OPS_SERVICE);
         mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         mAppUsageStats = LocalServices.getService(UsageStatsManagerInternal.class);
-        mKeyguardManager =
-                (KeyguardManager) getContext().getSystemService(Context.KEYGUARD_SERVICE);
 
         // This is the package that contains the AOSP framework update.
         mRankerServicePackageName = getContext().getPackageManager()
@@ -1156,19 +1006,6 @@ public class NotificationManagerService extends SystemService {
         mDefaultNotificationLedOff = resources.getInteger(
                 R.integer.config_defaultNotificationLedOff);
 
-        mMultiColorNotificationLed = doLightsSupport(
-                NotificationManager.LIGHTS_RGB_NOTIFICATION_LED);
-
-        mNotificationPulseCustomLedValues = new ArrayMap<String, NotificationLedValues>();
-
-        mPackageNameMappings = new ArrayMap<String, String>();
-        final String[] defaultMapping = resources.getStringArray(
-                com.android.internal.R.array.notification_light_package_mapping);
-        for (String mapping : defaultMapping) {
-            String[] map = mapping.split("\\|");
-            mPackageNameMappings.put(map[0], map[1]);
-        }
-
         mDefaultVibrationPattern = getLongArray(resources,
                 R.array.config_defaultNotificationVibePattern,
                 VIBRATE_PATTERN_MAXLEN,
@@ -1178,11 +1015,6 @@ public class NotificationManagerService extends SystemService {
                 R.array.config_notificationFallbackVibePattern,
                 VIBRATE_PATTERN_MAXLEN,
                 DEFAULT_VIBRATE_PATTERN);
-
-        mAdjustableNotificationLedBrightness = doLightsSupport(
-                NotificationManager.LIGHTS_ADJUSTABLE_NOTIFICATION_LED_BRIGHTNESS);
-        mMultipleNotificationLeds = doLightsSupport(
-                NotificationManager.LIGHTS_MULTIPLE_NOTIFICATION_LED);
 
         mUseAttentionLight = resources.getBoolean(R.bool.config_useAttentionLight);
 
@@ -1195,8 +1027,6 @@ public class NotificationManagerService extends SystemService {
             mDisableNotificationEffects = true;
         }
         mZenModeHelper.initZenMode();
-        mZenModeHelper.readAllowLightsFromSettings();
-        mZenModeHelper.readVibrationModeFromSettings();
         mInterruptionFilter = mZenModeHelper.getZenModeListenerInterruptionFilter();
 
         mUserProfiles.updateCache(getContext());
@@ -1235,8 +1065,7 @@ public class NotificationManagerService extends SystemService {
         getContext().registerReceiverAsUser(mPackageIntentReceiver, UserHandle.ALL, sdFilter, null,
                 null);
 
-        mSettingsObserver = new LEDSettingsObserver(mHandler);
-        mSettingsObserver.observe();
+        mSettingsObserver = new SettingsObserver(mHandler);
 
         mArchive = new Archive(resources.getInteger(
                 R.integer.config_notificationServiceArchiveSize));
@@ -1437,13 +1266,6 @@ public class NotificationManagerService extends SystemService {
         if (interruptionFilter == mInterruptionFilter) return;
         mInterruptionFilter = interruptionFilter;
         scheduleInterruptionFilterChanged(interruptionFilter);
-    }
-
-    /** @hide */
-    private boolean doLightsSupport(final int capability) {
-        final int capabilities = getContext().getResources().getInteger(
-                org.cyanogenmod.platform.internal.R.integer.config_deviceLightCapabilities);
-        return (capabilities & capability) != 0;
     }
 
     private final IBinder mService = new INotificationManager.Stub() {
@@ -1662,19 +1484,6 @@ public class NotificationManagerService extends SystemService {
         public int getImportance(String pkg, int uid) {
             enforceSystemOrSystemUI("Caller not system or systemui");
             return mRankingHelper.getImportance(pkg, uid);
-        }
-
-        @Override
-        public void setNotificationSoundTimeout(String pkg, int uid, long timeout) {
-            checkCallerIsSystem();
-            mRankingHelper.setNotificationSoundTimeout(pkg, uid, timeout);
-            savePolicyFile();
-        }
-
-        @Override
-        public long getNotificationSoundTimeout(String pkg, int uid) {
-            checkCallerIsSystem();
-            return mRankingHelper.getNotificationSoundTimeout(pkg, uid);
         }
 
         /**
@@ -2247,7 +2056,7 @@ public class NotificationManagerService extends SystemService {
         }
 
         @Override
-        public boolean[] matchesCallFilter(Bundle extras) {
+        public boolean matchesCallFilter(Bundle extras) {
             enforceSystemOrSystemUI("INotificationManager.matchesCallFilter");
             return mZenModeHelper.matchesCallFilter(
                     Binder.getCallingUserHandle(),
@@ -2399,12 +2208,6 @@ public class NotificationManagerService extends SystemService {
             } finally {
                 Binder.restoreCallingIdentity(identity);
             }
-        }
-
-        public boolean doLightsSupport(final int capability) {
-            final int capabilities = getContext().getResources().getInteger(
-                    org.cyanogenmod.platform.internal.R.integer.config_deviceLightCapabilities);
-            return (capabilities & capability) != 0;
         }
     };
 
@@ -2675,14 +2478,6 @@ public class NotificationManagerService extends SystemService {
                     pw.println("!!!!!!LEAK: Record not found in mNotificationsByKey.");
                     r.dump(pw, "      ", getContext(), filter.redact);
                 }
-            }
-
-            long now = SystemClock.elapsedRealtime();
-            pw.println("\n  Last notification sound timestamps:");
-            for (Map.Entry<String, Long> entry: mLastSoundTimestamps.entrySet()) {
-                pw.print("    " + entry.getKey() + " -> ");
-                TimeUtils.formatDuration(entry.getValue(), now, pw);
-                pw.println(" ago");
             }
         }
     }
@@ -2995,26 +2790,6 @@ public class NotificationManagerService extends SystemService {
         }
     }
 
-    private boolean notificationIsAnnoying(String pkg) {
-        if (pkg == null
-                || mAnnoyingNotificationThreshold <= 0
-                || "android".equals(pkg)) {
-            return false;
-        }
-
-        long currentTime = System.currentTimeMillis();
-        if (mAnnoyingNotifications.containsKey(pkg)
-                && (currentTime - mAnnoyingNotifications.get(pkg)
-                < mAnnoyingNotificationThreshold)) {
-            // less than threshold; it's an annoying notification!!
-            return true;
-        } else {
-            // not in map or time to re-add
-            mAnnoyingNotifications.put(pkg, currentTime);
-            return false;
-        }
-    }
-
     @VisibleForTesting
     void buzzBeepBlinkLocked(NotificationRecord record) {
         boolean buzz = false;
@@ -3023,15 +2798,13 @@ public class NotificationManagerService extends SystemService {
 
         final Notification notification = record.sbn.getNotification();
         final String key = record.getKey();
-        final String pkg = record.sbn.getPackageName();
 
         // Should this notification make noise, vibe, or use the LED?
-        final boolean aboveThreshold = importanceToLevel(record.getImportance())
-          >= importanceToLevel(IMPORTANCE_DEFAULT);
+        final boolean aboveThreshold = record.getImportance() >= IMPORTANCE_DEFAULT;
         final boolean canInterrupt = aboveThreshold && !record.isIntercepted();
         if (DBG || record.isIntercepted())
             Slog.v(TAG,
-                    "pkg=" + pkg + " canInterrupt=" + canInterrupt +
+                    "pkg=" + record.sbn.getPackageName() + " canInterrupt=" + canInterrupt +
                             " intercept=" + record.isIntercepted()
             );
 
@@ -3056,22 +2829,13 @@ public class NotificationManagerService extends SystemService {
         // These are set inside the conditional if the notification is allowed to make noise.
         boolean hasValidVibrate = false;
         boolean hasValidSound = false;
-
-        boolean readyForBeepOrBuzz = disableEffects == null
+        if (disableEffects == null
                 && (record.getUserId() == UserHandle.USER_ALL ||
                     record.getUserId() == currentUser ||
                     mUserProfiles.isCurrentProfile(record.getUserId()))
-                && !isInSoundTimeoutPeriod(record)
+                && canInterrupt
                 && mSystemReady
-                && !notificationIsAnnoying(pkg)
-                && mAudioManager != null;
-
-        boolean canBeep = readyForBeepOrBuzz && canInterrupt;
-        boolean canBuzz = readyForBeepOrBuzz &&
-                (canInterrupt ||
-                        (aboveThreshold && mZenModeHelper.allowVibrationForNotifications()));
-
-        if (canBeep || canBuzz) {
+                && mAudioManager != null) {
             if (DBG) Slog.v(TAG, "Interrupting!");
 
             // should we use the default notification sound? (indicated either by
@@ -3117,7 +2881,7 @@ public class NotificationManagerService extends SystemService {
 
                 sendAccessibilityEvent(notification, record.sbn.getPackageName());
 
-                if (canBeep && hasValidSound) {
+                if (hasValidSound) {
                     boolean looping =
                             (notification.flags & Notification.FLAG_INSISTENT) != 0;
                     AudioAttributes audioAttributes = audioAttributesForNotification(notification);
@@ -3145,8 +2909,8 @@ public class NotificationManagerService extends SystemService {
                     }
                 }
 
-                if (canBuzz && hasValidVibrate &&
-                        mAudioManager.getRingerModeInternal() != AudioManager.RINGER_MODE_SILENT) {
+                if (hasValidVibrate && !(mAudioManager.getRingerModeInternal()
+                        == AudioManager.RINGER_MODE_SILENT)) {
                     mVibrateNotificationKey = key;
 
                     if (useDefaultVibrate || convertSoundToVibration) {
@@ -3188,10 +2952,7 @@ public class NotificationManagerService extends SystemService {
         // light
         // release the light
         boolean wasShowLights = mLights.remove(key);
-        final boolean canInterruptWithLight = canInterrupt ||
-                isLedNotificationForcedOn(record) ||
-                (!canInterrupt && mZenModeHelper.getAllowLights());
-        if ((notification.flags & Notification.FLAG_SHOW_LIGHTS) != 0 && canInterruptWithLight
+        if ((notification.flags & Notification.FLAG_SHOW_LIGHTS) != 0 && aboveThreshold
                 && ((record.getSuppressedVisualEffects()
                 & NotificationListenerService.SUPPRESSED_EFFECT_SCREEN_OFF) == 0)) {
             mLights.add(key);
@@ -3203,11 +2964,6 @@ public class NotificationManagerService extends SystemService {
         } else if (wasShowLights) {
             updateLightsLocked();
         }
-
-        if (buzz || beep) {
-            mLastSoundTimestamps.put(generateLastSoundTimeoutKey(record),
-                    SystemClock.elapsedRealtime());
-        }
         if (buzz || beep || blink) {
             if (((record.getSuppressedVisualEffects()
                     & NotificationListenerService.SUPPRESSED_EFFECT_SCREEN_OFF) != 0)) {
@@ -3218,24 +2974,6 @@ public class NotificationManagerService extends SystemService {
                 mHandler.post(mBuzzBeepBlinked);
             }
         }
-    }
-
-    private boolean isInSoundTimeoutPeriod(NotificationRecord record) {
-        long timeoutMillis = mRankingHelper.getNotificationSoundTimeout(
-                record.sbn.getPackageName(), record.sbn.getUid());
-        if (timeoutMillis == 0) {
-            return false;
-        }
-
-        Long value = mLastSoundTimestamps.get(generateLastSoundTimeoutKey(record));
-        if (value == null) {
-            return false;
-        }
-        return SystemClock.elapsedRealtime() - value < timeoutMillis;
-    }
-
-    private String generateLastSoundTimeoutKey(NotificationRecord record) {
-        return record.sbn.getPackageName() + "|" + record.sbn.getUid();
     }
 
     private static AudioAttributes audioAttributesForNotification(Notification n) {
@@ -3850,16 +3588,6 @@ public class NotificationManagerService extends SystemService {
         }
     }
 
-    private boolean isLedNotificationForcedOn(NotificationRecord r) {
-        if (r != null) {
-            final Notification n = r.sbn.getNotification();
-            if (n.extras != null) {
-                return n.extras.getBoolean(Notification.EXTRA_FORCE_SHOW_LIGHTS, false);
-            }
-        }
-        return false;
-    }
-
     // lock on mNotificationList
     void updateLightsLocked()
     {
@@ -3875,48 +3603,21 @@ public class NotificationManagerService extends SystemService {
         }
 
         // Don't flash while we are in a call or screen is on
-        // (unless Notification has EXTRA_FORCE_SHOW_LGHTS)
-        final boolean enableLed;
-        if (ledNotification == null) {
-            enableLed = false;
-        } else if (isLedNotificationForcedOn(ledNotification)) {
-            enableLed = true;
-        } else if (!mScreenOnEnabled && (mInCall || mScreenOn)) {
-            enableLed = false;
-        } else {
-            enableLed = true;
-        }
-
-        if (!enableLed) {
+        if (ledNotification == null || mInCall || mScreenOn) {
             mNotificationLight.turnOff();
             if (mStatusBar != null) {
                 mStatusBar.notificationLightOff();
             }
         } else {
             final Notification ledno = ledNotification.sbn.getNotification();
-            final NotificationLedValues ledValues = getLedValuesForNotification(ledNotification);
-            int ledARGB;
-            int ledOnMS;
-            int ledOffMS;
-
-            if (ledValues != null) {
-                ledARGB = ledValues.color != 0 ? ledValues.color : mDefaultNotificationColor;
-                ledOnMS = ledValues.onMS >= 0 ? ledValues.onMS : mDefaultNotificationLedOn;
-                ledOffMS = ledValues.offMS >= 0 ? ledValues.offMS : mDefaultNotificationLedOff;
-            } else if ((ledno.defaults & Notification.DEFAULT_LIGHTS) != 0) {
-                ledARGB = generateLedColorForNotification(ledNotification);
+            int ledARGB = ledno.ledARGB;
+            int ledOnMS = ledno.ledOnMS;
+            int ledOffMS = ledno.ledOffMS;
+            if ((ledno.defaults & Notification.DEFAULT_LIGHTS) != 0) {
+                ledARGB = mDefaultNotificationColor;
                 ledOnMS = mDefaultNotificationLedOn;
                 ledOffMS = mDefaultNotificationLedOff;
-            } else {
-                ledARGB = ledno.ledARGB;
-                ledOnMS = ledno.ledOnMS;
-                ledOffMS = ledno.ledOffMS;
             }
-
-            // update the LEDs modes variables
-            mNotificationLight.setModes(mNotificationLedBrightnessLevel,
-                    mMultipleLedsEnabledSetting);
-
             if (mNotificationPulseEnabled) {
                 // pulse repeatedly
                 mNotificationLight.setFlashing(ledARGB, Light.LIGHT_FLASH_TIMED,
@@ -3927,80 +3628,6 @@ public class NotificationManagerService extends SystemService {
                 mStatusBar.notificationLightPulse(ledARGB, ledOnMS, ledOffMS);
             }
         }
-    }
-
-    private void parseNotificationPulseCustomValuesString(String customLedValuesString) {
-        if (TextUtils.isEmpty(customLedValuesString)) {
-            return;
-        }
-
-        for (String packageValuesString : customLedValuesString.split("\\|")) {
-            String[] packageValues = packageValuesString.split("=");
-            if (packageValues.length != 2) {
-                Log.e(TAG, "Error parsing custom led values for unknown package");
-                continue;
-            }
-            String packageName = packageValues[0];
-            String[] values = packageValues[1].split(";");
-            if (values.length != 3) {
-                Log.e(TAG, "Error parsing custom led values '"
-                        + packageValues[1] + "' for " + packageName);
-                continue;
-            }
-            NotificationLedValues ledValues = new NotificationLedValues();
-            try {
-                ledValues.color = Integer.parseInt(values[0]);
-                ledValues.onMS = Integer.parseInt(values[1]);
-                ledValues.offMS = Integer.parseInt(values[2]);
-            } catch (NumberFormatException e) {
-                Log.e(TAG, "Error parsing custom led values '"
-                        + packageValues[1] + "' for " + packageName);
-                continue;
-            }
-            mNotificationPulseCustomLedValues.put(packageName, ledValues);
-        }
-    }
-
-    private NotificationLedValues getLedValuesForNotification(NotificationRecord ledNotification) {
-        final String packageName = ledNotification.sbn.getPackageName();
-        return mNotificationPulseCustomLedValues.get(mapPackage(packageName));
-    }
-
-    private int generateLedColorForNotification(NotificationRecord ledNotification) {
-        if (!mAutoGenerateNotificationColor) {
-            return mDefaultNotificationColor;
-        }
-        if (!mMultiColorNotificationLed) {
-            return mDefaultNotificationColor;
-        }
-        final String packageName = ledNotification.sbn.getPackageName();
-        final String mapping = mapPackage(packageName);
-        int color = mDefaultNotificationColor;
-
-        if (mGeneratedPackageLedColors.containsKey(mapping)) {
-            return mGeneratedPackageLedColors.get(mapping);
-        }
-
-        PackageManager pm = getContext().getPackageManager();
-        Drawable icon;
-        try {
-            icon = pm.getApplicationIcon(mapping);
-        } catch (NameNotFoundException e) {
-            Slog.e(TAG, e.getMessage(), e);
-            return color;
-        }
-
-        color = ColorUtils.generateAlertColorFromDrawable(icon);
-        mGeneratedPackageLedColors.put(mapping, color);
-
-        return color;
-    }
-
-    private String mapPackage(String pkg) {
-        if (!mPackageNameMappings.containsKey(pkg)) {
-            return pkg;
-        }
-        return mPackageNameMappings.get(pkg);
     }
 
     // lock on mNotificationList

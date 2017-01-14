@@ -66,18 +66,5 @@ interface IStatusBarService
     void addTile(in ComponentName tile);
     void remTile(in ComponentName tile);
     void clickTile(in ComponentName tile);
-
-    // Start DU methods
-    void toggleRecentApps();
-    void toggleSplitScreen();
-    void preloadRecentApps();
-    void cancelPreloadRecentApps();
-    void toggleLastApp();
-    void toggleKillApp();
-    void toggleScreenshot();
-    void toggleOrientationListener(boolean enable);
-    void startAssist(in Bundle args);
-    void screenPinningStateChanged(boolean enabled);
     void handleSystemNavigationKey(in int key);
-    void setAutoRotate(boolean enabled);
 }

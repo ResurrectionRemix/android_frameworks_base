@@ -103,7 +103,6 @@ import com.android.internal.widget.LockPatternUtils;
 import com.android.server.NativeDaemonConnector.Command;
 import com.android.server.NativeDaemonConnector.SensitiveArg;
 import com.android.server.pm.PackageManagerService;
-import com.android.internal.widget.ILockSettings;
 
 import libcore.io.IoUtils;
 import libcore.util.EmptyArray;
@@ -1196,10 +1195,8 @@ class MountService extends IMountService.Stub
                 final long destroy = Long.parseLong(cooked[6]);
 
                 final DropBoxManager dropBox = mContext.getSystemService(DropBoxManager.class);
-                if (dropBox != null) {
-                    dropBox.addText(TAG_STORAGE_BENCHMARK, scrubPath(path)
-                            + " " + ident + " " + create + " " + run + " " + destroy);
-                }
+                dropBox.addText(TAG_STORAGE_BENCHMARK, scrubPath(path)
+                        + " " + ident + " " + create + " " + run + " " + destroy);
 
                 final VolumeRecord rec = findRecordForPath(path);
                 if (rec != null) {
@@ -1216,10 +1213,8 @@ class MountService extends IMountService.Stub
                 final long time = Long.parseLong(cooked[3]);
 
                 final DropBoxManager dropBox = mContext.getSystemService(DropBoxManager.class);
-                if (dropBox != null) {
-                    dropBox.addText(TAG_STORAGE_TRIM, scrubPath(path)
-                            + " " + bytes + " " + time);
-                }
+                dropBox.addText(TAG_STORAGE_TRIM, scrubPath(path)
+                        + " " + bytes + " " + time);
 
                 final VolumeRecord rec = findRecordForPath(path);
                 if (rec != null) {
@@ -1264,10 +1259,7 @@ class MountService extends IMountService.Stub
     }
 
     private void onVolumeCreatedLocked(VolumeInfo vol) {
-        // power off alarm need the access to external storage for audio files.
-        // So in power off alarm mode, primary storage need to be mounted.
-        boolean isAlarmBoot = SystemProperties.getBoolean("ro.alarm_boot", false);
-        if (mPms.isOnlyCoreApps() && !isAlarmBoot) {
+        if (mPms.isOnlyCoreApps()) {
             Slog.d(TAG, "System booted in core-only mode; ignoring volume " + vol.getId());
             return;
         }
@@ -1875,8 +1867,6 @@ class MountService extends IMountService.Stub
         Preconditions.checkNotNull(fsUuid);
         synchronized (mLock) {
             final VolumeRecord rec = mRecords.get(fsUuid);
-            if (rec == null)
-                return;
             rec.nickname = nickname;
             mCallbacks.notifyVolumeRecordChanged(rec);
             writeSettingsLocked();
@@ -1891,8 +1881,6 @@ class MountService extends IMountService.Stub
         Preconditions.checkNotNull(fsUuid);
         synchronized (mLock) {
             final VolumeRecord rec = mRecords.get(fsUuid);
-            if (rec == null)
-                return;
             rec.userFlags = (rec.userFlags & ~mask) | (flags & mask);
             mCallbacks.notifyVolumeRecordChanged(rec);
             writeSettingsLocked();
@@ -2580,12 +2568,6 @@ class MountService extends IMountService.Stub
                 // to let the UI to clear itself
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
-                        // unmount the internal emulated volume first
-                        try {
-                            mConnector.execute("volume", "unmount", "emulated");
-                        } catch (NativeDaemonConnectorException e) {
-                            Slog.e(TAG, "unable to shut down internal volume", e);
-                        }
                         try {
                             mCryptConnector.execute("cryptfs", "restart");
                         } catch (NativeDaemonConnectorException e) {
@@ -2602,7 +2584,7 @@ class MountService extends IMountService.Stub
         }
     }
 
-    private int encryptStorageExtended(int type, String password, boolean wipe) {
+    public int encryptStorage(int type, String password) {
         if (TextUtils.isEmpty(password) && type != StorageManager.CRYPT_TYPE_DEFAULT) {
             throw new IllegalArgumentException("password cannot be empty");
         }
@@ -2618,10 +2600,10 @@ class MountService extends IMountService.Stub
 
         try {
             if (type == StorageManager.CRYPT_TYPE_DEFAULT) {
-                mCryptConnector.execute("cryptfs", "enablecrypto", wipe ? "wipe" : "inplace",
+                mCryptConnector.execute("cryptfs", "enablecrypto", "inplace",
                                 CRYPTO_TYPES[type]);
             } else {
-                mCryptConnector.execute("cryptfs", "enablecrypto", wipe ? "wipe" : "inplace",
+                mCryptConnector.execute("cryptfs", "enablecrypto", "inplace",
                                 CRYPTO_TYPES[type], new SensitiveArg(password));
             }
         } catch (NativeDaemonConnectorException e) {
@@ -2630,22 +2612,6 @@ class MountService extends IMountService.Stub
         }
 
         return 0;
-    }
-
-    /** Encrypt Storage given a password.
-     *  @param type The password type.
-     *  @param password The password to be used in encryption.
-     */
-    public int encryptStorage(int type, String password) {
-        return encryptStorageExtended(type, password, false);
-    }
-
-    /** Encrypt Storage given a password after wiping it.
-     *  @param type The password type.
-     *  @param password The password to be used in encryption.
-     */
-    public int encryptWipeStorage(int type, String password) {
-        return encryptStorageExtended(type, password, true);
     }
 
     /** Set the password for encrypting the master key.
@@ -2662,24 +2628,9 @@ class MountService extends IMountService.Stub
             Slog.i(TAG, "changing encryption password...");
         }
 
-        ILockSettings lockSettings = ILockSettings.Stub.asInterface(
-                    ServiceManager.getService("lock_settings"));
-        String currentPassword="default_password";
-        try {
-            currentPassword = lockSettings.getPassword();
-        } catch (RemoteException e) {
-            Slog.e(TAG, "Couldn't get password" + e);
-        }
-
         try {
             NativeDaemonEvent event = mCryptConnector.execute("cryptfs", "changepw", CRYPTO_TYPES[type],
-                        new SensitiveArg(currentPassword), new SensitiveArg(password));
-            try {
-                lockSettings.sanitizePassword();
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Couldn't sanitize password" + e);
-            }
-
+                        new SensitiveArg(password));
             return Integer.parseInt(event.getMessage());
         } catch (NativeDaemonConnectorException e) {
             // Encryption failed

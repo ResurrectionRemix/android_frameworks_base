@@ -42,13 +42,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /** This class calls its monitor every minute. Killing this process if they don't return **/
 public class Watchdog extends Thread {
@@ -94,7 +87,6 @@ public class Watchdog extends Thread {
     int mPhonePid;
     IActivityController mController;
     boolean mAllowRestart = true;
-    SimpleDateFormat mTraceDateFormat = new SimpleDateFormat("dd_MMM_HH_mm_ss.SSS");
 
     /**
      * Used for checking status of handle threads and scheduling monitor callbacks.
@@ -353,35 +345,6 @@ public class Watchdog extends Thread {
         return builder.toString();
     }
 
-    private int getSystemNotRespondingAction(IActivityController controller, String subject) {
-        int action = -1;
-        FutureTask<Integer> task = new FutureTask<>(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                int res = -1;
-                try {
-                    res = controller.systemNotResponding(subject);
-                } catch (RemoteException e) {
-                }
-                return res;
-            }
-        });
-        try {
-            new Thread(task).start();
-            action = task.get(5000, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            Log.e(TAG, "getSystemNotRespondingAction", e);
-        } catch (ExecutionException e) {
-            Log.e(TAG, "getSystemNotRespondingAction", e);
-        } catch (TimeoutException e) {
-            if (!task.isDone()) {
-                task.cancel(true);
-            }
-            Log.e(TAG, "getSystemNotRespondingAction", e);
-        }
-        return action;
-    }
-
     @Override
     public void run() {
         boolean waitedHalf = false;
@@ -472,22 +435,9 @@ public class Watchdog extends Thread {
                 dumpKernelStackTraces();
             }
 
-            String tracesPath = SystemProperties.get("dalvik.vm.stack-trace-file", null);
-            String traceFileNameAmendment = "_SystemServer_WDT" + mTraceDateFormat.format(new Date());
-
-            if (tracesPath != null && tracesPath.length() != 0) {
-                File traceRenameFile = new File(tracesPath);
-                String newTracesPath;
-                int lpos = tracesPath.lastIndexOf (".");
-                if (-1 != lpos)
-                    newTracesPath = tracesPath.substring (0, lpos) + traceFileNameAmendment + tracesPath.substring (lpos);
-                else
-                    newTracesPath = tracesPath + traceFileNameAmendment;
-                traceRenameFile.renameTo(new File(newTracesPath));
-                tracesPath = newTracesPath;
-            }
-
-            final File newFd = new File(tracesPath);
+            // Trigger the kernel to dump all blocked threads, and backtraces on all CPUs to the kernel log
+            doSysRq('w');
+            doSysRq('l');
 
             // Try to add the error to the dropbox, but assuming that the ActivityManager
             // itself may be deadlocked.  (which has happened, causing this statement to
@@ -496,7 +446,7 @@ public class Watchdog extends Thread {
                     public void run() {
                         mActivity.addErrorToDropBox(
                                 "watchdog", null, "system_server", null, null,
-                                subject, null, newFd, null);
+                                subject, null, stack, null);
                     }
                 };
             dropboxThread.start();
@@ -504,39 +454,22 @@ public class Watchdog extends Thread {
                 dropboxThread.join(2000);  // wait up to 2 seconds for it to return.
             } catch (InterruptedException ignored) {}
 
-
-            // At times, when user space watchdog traces don't give an indication on
-            // which component held a lock, because of which other threads are blocked,
-            // (thereby causing Watchdog), crash the device to analyze RAM dumps
-            boolean crashOnWatchdog = SystemProperties
-                                        .getBoolean("persist.sys.crashOnWatchdog", false);
-            if (crashOnWatchdog) {
-                // Trigger the kernel to dump all blocked threads, and backtraces
-                // on all CPUs to the kernel log
-                Slog.e(TAG, "Triggering SysRq for system_server watchdog");
-                doSysRq('w');
-                doSysRq('l');
-
-                // wait until the above blocked threads be dumped into kernel log
-                SystemClock.sleep(3000);
-
-                // now try to crash the target
-                doSysRq('c');
-            }
-
             IActivityController controller;
             synchronized (this) {
                 controller = mController;
             }
             if (controller != null) {
                 Slog.i(TAG, "Reporting stuck state to activity controller");
-                Binder.setDumpDisabled("Service dumps disabled due to hung system process.");
-                // 1 = keep waiting, -1 = kill system
-                int res = getSystemNotRespondingAction(controller, subject);
-                if (res >= 0) {
-                    Slog.i(TAG, "Activity controller requested to coninue to wait");
-                    waitedHalf = false;
-                    continue;
+                try {
+                    Binder.setDumpDisabled("Service dumps disabled due to hung system process.");
+                    // 1 = keep waiting, -1 = kill system
+                    int res = controller.systemNotResponding(subject);
+                    if (res >= 0) {
+                        Slog.i(TAG, "Activity controller requested to coninue to wait");
+                        waitedHalf = false;
+                        continue;
+                    }
+                } catch (RemoteException e) {
                 }
             }
 

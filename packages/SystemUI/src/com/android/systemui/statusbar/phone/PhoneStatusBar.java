@@ -22,7 +22,6 @@ import static android.app.StatusBarManager.NAVIGATION_HINT_IME_SHOWN;
 import static android.app.StatusBarManager.WINDOW_STATE_HIDDEN;
 import static android.app.StatusBarManager.WINDOW_STATE_SHOWING;
 import static android.app.StatusBarManager.windowStateToString;
-import static com.android.systemui.settings.BrightnessController.BRIGHTNESS_ADJ_RESOLUTION;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_LIGHTS_OUT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_LIGHTS_OUT_TRANSPARENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_OPAQUE;
@@ -33,22 +32,17 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.TimeInterpolator;
-import android.annotation.ChaosLab;
-import android.annotation.ChaosLab.Classification;
 import android.annotation.NonNull;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
 import android.app.IActivityManager;
 import android.app.Notification;
-import android.hardware.display.DisplayManager;
 import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -61,19 +55,16 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
 import android.media.AudioAttributes;
 import android.media.MediaMetadata;
@@ -87,7 +78,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.IPowerManager;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.Process;
@@ -100,29 +90,21 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.Vibrator;
 import android.provider.Settings;
-import com.android.systemui.recents.RecentsActivity;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.StatusBarNotification;
-import android.text.style.RelativeSizeSpan;
 import android.telecom.TelecomManager;
 import android.util.ArraySet;
 import android.util.DisplayMetrics;
-import android.graphics.Typeface;
 import android.util.EventLog;
 import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.Display;
 import android.view.IRotationWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.ThreadedRenderer;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
@@ -132,30 +114,19 @@ import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.text.SpannableString;
-import android.text.TextUtils;
+
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.statusbar.StatusBarIcon;
-import com.android.internal.util.rr.WeatherController;
-import com.android.internal.util.rr.WeatherControllerImpl;
-import com.android.internal.util.rr.WeatherController.WeatherInfo;
-import com.android.internal.utils.du.ActionHandler;
-import com.android.internal.utils.du.DUPackageMonitor;
-import com.android.internal.utils.du.DUSystemReceiver;
 import com.android.keyguard.KeyguardHostView.OnDismissAction;
-import com.android.keyguard.KeyguardStatusView;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.keyguard.ViewMediatorCallback;
 import com.android.systemui.AutoReinflateContainer;
 import com.android.systemui.AutoReinflateContainer.InflateListener;
-import com.android.systemui.BatteryLevelTextView;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.DemoMode;
 import com.android.systemui.EventLogConstants;
@@ -166,20 +137,15 @@ import com.android.systemui.R;
 import com.android.systemui.SystemUIFactory;
 import com.android.systemui.classifier.FalsingLog;
 import com.android.systemui.classifier.FalsingManager;
-import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
 import com.android.systemui.keyguard.KeyguardViewMediator;
-import com.android.systemui.navigation.NavigationController;
-import com.android.systemui.navigation.Navigator;
 import com.android.systemui.qs.QSContainer;
 import com.android.systemui.qs.QSPanel;
 import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.recents.events.EventBus;
 import com.android.systemui.recents.events.activity.AppTransitionFinishedEvent;
 import com.android.systemui.recents.events.activity.UndockingTaskEvent;
-import com.android.systemui.recents.RecentsActivity;
-import com.android.systemui.settings.BrightnessController;
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.stackdivider.WindowManagerProxy;
 import com.android.systemui.statusbar.ActivatableNotificationView;
@@ -193,7 +159,6 @@ import com.android.systemui.statusbar.ExpandableNotificationRow;
 import com.android.systemui.statusbar.GestureRecorder;
 import com.android.systemui.statusbar.KeyboardShortcuts;
 import com.android.systemui.statusbar.KeyguardIndicationController;
-import com.android.systemui.statusbar.MediaExpandableNotificationRow;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.NotificationOverflowContainer;
@@ -201,14 +166,13 @@ import com.android.systemui.statusbar.RemoteInputController;
 import com.android.systemui.statusbar.ScrimView;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarState;
-import com.android.systemui.statusbar.VisualizerView;
-import com.android.systemui.statusbar.phone.ClockController;
 import com.android.systemui.statusbar.phone.UnlockMethodCache.OnUnlockMethodChangedListener;
 import com.android.systemui.statusbar.policy.AccessibilityController;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback;
 import com.android.systemui.statusbar.policy.BatteryControllerImpl;
 import com.android.systemui.statusbar.policy.BluetoothControllerImpl;
+import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.CastControllerImpl;
 import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.FlashlightController;
@@ -223,7 +187,6 @@ import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.PreviewInflater;
 import com.android.systemui.statusbar.policy.RotationLockControllerImpl;
 import com.android.systemui.statusbar.policy.SecurityControllerImpl;
-import com.android.systemui.statusbar.policy.SuControllerImpl;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.policy.ZenModeController;
@@ -231,7 +194,6 @@ import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout
         .OnChildLocationsChangedListener;
 import com.android.systemui.statusbar.stack.StackStateAnimator;
-import com.android.systemui.statusbar.NotificationBackgroundView;
 import com.android.systemui.statusbar.stack.StackViewState;
 import com.android.systemui.volume.VolumeComponent;
 
@@ -245,14 +207,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cyanogenmod.providers.CMSettings;
-import cyanogenmod.weather.util.WeatherUtils;
-
-import static android.service.notification.NotificationListenerService.Ranking.importanceToLevel;
-
 public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         DragDownHelper.DragDownCallback, ActivityStarter, OnUnlockMethodChangedListener,
-        HeadsUpManager.OnHeadsUpChangedListener , WeatherController.Callback{
+        HeadsUpManager.OnHeadsUpChangedListener {
     static final String TAG = "PhoneStatusBar";
     public static final boolean DEBUG = BaseStatusBar.DEBUG;
     public static final boolean SPEW = false;
@@ -298,10 +255,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
             .build();
 
-    private static final float BRIGHTNESS_CONTROL_PADDING = 0.15f;
-    private static final int BRIGHTNESS_CONTROL_LONG_PRESS_TIMEOUT = 750; // ms
-    private static final int BRIGHTNESS_CONTROL_LINGER_THRESHOLD = 20;
-
     public static final int FADE_KEYGUARD_START_DELAY = 100;
     public static final int FADE_KEYGUARD_DURATION = 300;
     public static final int FADE_KEYGUARD_DURATION_PULSING = 96;
@@ -320,33 +273,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      * This affects the status bar UI. */
     private static final boolean FREEFORM_WINDOW_MANAGEMENT;
 
-    // Weather temperature
-    public static final int FONT_NORMAL = 0;
-    public static final int FONT_ITALIC = 1;
-    public static final int FONT_BOLD = 2;
-    public static final int FONT_BOLD_ITALIC = 3;
-    public static final int FONT_LIGHT = 4;
-    public static final int FONT_LIGHT_ITALIC = 5;
-    public static final int FONT_THIN = 6;
-    public static final int FONT_THIN_ITALIC = 7;
-    public static final int FONT_CONDENSED = 8;
-    public static final int FONT_CONDENSED_ITALIC = 9;
-    public static final int FONT_CONDENSED_LIGHT = 10;
-    public static final int FONT_CONDENSED_LIGHT_ITALIC = 11;
-    public static final int FONT_CONDENSED_BOLD = 12;
-    public static final int FONT_CONDENSED_BOLD_ITALIC = 13;
-    public static final int FONT_MEDIUM = 14;
-    public static final int FONT_MEDIUM_ITALIC = 15;
-    public static final int FONT_BLACK = 16;
-    public static final int FONT_BLACK_ITALIC = 17;
-    public static final int FONT_DANCINGSCRIPT = 18;
-    public static final int FONT_DANCINGSCRIPT_BOLD = 19;
-    public static final int FONT_COMINGSOON = 20;
-    public static final int FONT_NOTOSERIF = 21;
-    public static final int FONT_NOTOSERIF_ITALIC = 22;
-    public static final int FONT_NOTOSERIF_BOLD = 23;
-    public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
-
     /**
      * How long to wait before auto-dismissing a notification that was kept for remote input, and
      * has now sent a remote input. We auto-dismiss, because the app may not see a reason to cancel
@@ -362,13 +288,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      * libhwui.
      */
     private static final float SRC_MIN_ALPHA = 0.002f;
-
-    private static final String SCREEN_BRIGHTNESS_MODE =
-            "system:" + Settings.System.SCREEN_BRIGHTNESS_MODE;
-    private static final String STATUS_BAR_BRIGHTNESS_CONTROL =
-            "cmsystem:" + CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL;
-    private static final String NAVBAR_LEFT_IN_LANDSCAPE =
-            "cmsystem:" + CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE;
 
     static {
         boolean onlyCoreApps;
@@ -406,12 +325,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     protected UserSwitcherController mUserSwitcherController;
     NextAlarmController mNextAlarmController;
     protected KeyguardMonitor mKeyguardMonitor;
+    BrightnessMirrorController mBrightnessMirrorController;
     AccessibilityController mAccessibilityController;
     FingerprintUnlockController mFingerprintUnlockController;
     LightStatusBarController mLightStatusBarController;
     protected LockscreenWallpaper mLockscreenWallpaper;
-    WeatherControllerImpl mWeatherController;
-    SuControllerImpl mSuController;
 
     int mNaturalBarHeight = -1;
 
@@ -428,40 +346,23 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private PointF mWakeUpTouchLocation;
     private boolean mScreenTurningOn;
 
-    // Weather temperature
-    private TextView mWeatherTempView;
-    private TextView mWeatherTempLeft;
-    private int mWeatherTempState;
-    private int mWeatherTempStyle;
-    private int mWeatherTempColor;
-    private int mWeatherTempSize;
-    private int mWeatherTempFontStyle = FONT_NORMAL;
-
     int mPixelFormat;
     Object mQueueLock = new Object();
 
     protected StatusBarIconController mIconController;
-
-    // viewgroup containing the normal contents of the statusbar
-    LinearLayout mStatusBarContents;
-    View mCenterClock;
 
     // expanded notifications
     protected NotificationPanelView mNotificationPanel; // the sliding/resizing panel within the notification window
     View mExpandedContents;
     TextView mNotificationPanelDebugText;
 
-    // DT2L camera vibration config
-    private int mDt2lCameraVibrateConfig;
-
-    private int mQsLayoutColumns;
-
     // settings
     private QSPanel mQSPanel;
+
     // top bar
     BaseStatusBarHeader mHeader;
     protected KeyguardStatusBarView mKeyguardStatusBar;
-    KeyguardStatusView mKeyguardStatusView;
+    View mKeyguardStatusView;
     KeyguardBottomAreaView mKeyguardBottomArea;
     boolean mLeaveOpenOnKeyguardHide;
     KeyguardIndicationController mKeyguardIndicationController;
@@ -472,21 +373,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mKeyguardFadingAway;
     private long mKeyguardFadingAwayDelay;
     private long mKeyguardFadingAwayDuration;
-    
-    //Blur stuff
-    private int mBlurScale;
-    private int mBlurRadius;
-    private boolean mTranslucentQuickSettings;
-    private boolean mBlurredStatusBarExpandedEnabled;
-    private boolean mTranslucentNotifications;
-    private int mQSTranslucencyPercentage;
-    private int mNotTranslucencyPercentage;
-    private boolean mBlurredRecents;
-    private int mRadiusRecents;
-    private int mScaleRecents;
-    private int mBlurDarkColorFilter;
-    private int mBlurMixedColorFilter;
-    private int mBlurLightColorFilter;
 
     // RemoteInputView to be activated after unlock
     private View mPendingRemoteInputView;
@@ -498,59 +384,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     boolean mExpandedVisible;
 
-    // RR logo
-    private boolean mRRlogo;
-    private ImageView rrLogo;
-    private ImageView rrLogoright;
-    private ImageView rrLogoleft;
-	private int  mRRLogoColor;
-	private int mRRlogoStyle;
-
-	private boolean mShow4G;
-	private boolean mShow3G;
-
-    // Custom Logos
-    private boolean mCustomlogo;
-    private ImageView mCLogo;
-    private ImageView mCLogoright;
-    private ImageView mCLogoleft;
-    private int mCustomLogoPos;
-    private int mCustomlogoColor;	
-    private int mCustomlogoStyle;
-
-    private int mMaxKeyguardNotifConfig;
-    private boolean mCustomMaxKeyguard;
-
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
-
-    private int mStatusBarHeaderHeight;
 
     // the tracker view
     int mTrackingPosition; // the position of the top of the tracking view.
-
-    // ticker
-    private boolean mTickerEnabled;
-    private Ticker mTicker;
-    private View mTickerView;
-    private boolean mTicking;
 
     // Tracking finger for opening/closing.
     boolean mTracking;
 
     int[] mAbsPos = new int[2];
     ArrayList<Runnable> mPostCollapseRunnables = new ArrayList<>();
-
-    private boolean mAutomaticBrightness;
-    private boolean mBrightnessControl;
-    private boolean mBrightnessChanged;
-    private float mScreenWidth;
-    private int mMinBrightness;
-    private boolean mJustPeeked;
-    int mLinger;
-    int mInitialTouchX;
-    int mInitialTouchY;
-
-    private int mBatterySaverWarningColor;
 
     // for disabling the status bar
     int mDisabled1 = 0;
@@ -575,516 +418,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private int mNavigationIconHints = 0;
     private HandlerThread mHandlerThread;
-    private NavigationController mNavigationController;
-    private DUPackageMonitor mPackageMonitor;
-
-    private View.OnTouchListener mUserAutoHideListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            checkUserAutohide(v, event);
-            return false;
-        }
-    };
-
-    private Navigator.OnVerticalChangedListener mVerticalChangedListener = new Navigator.OnVerticalChangedListener() {
-        @Override
-        public void onVerticalChanged(boolean isVertical) {
-            if (mAssistManager != null) {
-                mAssistManager.onConfigurationChanged();
-            }
-            mNotificationPanel.setQsScrimEnabled(!isVertical);
-        }
-    };
-
-    private DUSystemReceiver mDUReceiver = new DUSystemReceiver() {
-        @Override
-        protected void onSecureReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (TextUtils.equals(ActionHandler.INTENT_TOGGLE_FLASHLIGHT, action)) {
-                if (mFlashlightController.isAvailable()) {
-                    mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
-                }
-            }
-        }
-    };
-
-    Runnable mLongPressBrightnessChange = new Runnable() {
-        @Override
-        public void run() {
-            mStatusBarView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-            adjustBrightness(mInitialTouchX);
-            mLinger = BRIGHTNESS_CONTROL_LINGER_THRESHOLD + 1;
-        }
-    };
-
-    class SettingsObserver extends UserContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        protected void observe() {
-            super.observe();
-
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                  CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL), false, this,
-                  UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.SCREEN_BRIGHTNESS_MODE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(CMSettings.System.getUriFor(
-                  CMSettings.System.NAVBAR_LEFT_IN_LANDSCAPE), false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_RR_LOGO),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.SHOW_FOURG),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.SHOW_THREEG),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_WEATHER_SIZE),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_WEATHER_FONT_STYLE),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_WEATHER_COLOR),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.BATTERY_SAVER_MODE_COLOR),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_RR_LOGO_COLOR),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_RR_LOGO_STYLE),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.DT2L_CAMERA_VIBRATE_CONFIG),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_SHOW_TICKER),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.SHOW_SU_INDICATOR),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.CLEAR_RECENTS_STYLE), 
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.CLEAR_RECENTS_STYLE_ENABLE), 
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.SHOW_CUSTOM_LOGO),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.CUSTOM_LOGO_COLOR),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.CUSTOM_LOGO_STYLE),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.CUSTOM_LOGO_POSITION),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.NAVBAR_TINT_SWITCH),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.NAVBAR_BUTTON_COLOR),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.QS_LAYOUT_COLUMNS),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.QS_ROWS_PORTRAIT),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.QS_ROWS_LANDSCAPE),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.BATTERY_LARGE_TEXT),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.NAV_BAR_DYNAMIC),
-                  false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.BLUR_SCALE_PREFERENCE_KEY), 
-                  false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.BLUR_RADIUS_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.TRANSLUCENT_NOTIFICATIONS_PRECENTAGE_PREFERENCE_KEY), 
-                 false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.TRANSLUCENT_NOTIFICATIONS_PRECENTAGE_PREFERENCE_KEY), 
-                 false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY), 
-                 false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.RECENT_APPS_SCALE_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.RECENT_APPS_RADIUS_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.RECENT_APPS_RADIUS_PREFERENCE_KEY),
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.BLUR_DARK_COLOR_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.BLUR_LIGHT_COLOR_PREFERENCE_KEY), 
-                 false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                 Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY), 
-                 false, this);
-            update();
-        }
-        
-        @Override
-        protected void unobserve() {
-            super.unobserve();
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.unregisterContentObserver(this);
-        }
-
-	@Override
-	public void onChange(boolean selfChange, Uri uri) {
-        ContentResolver resolver = mContext.getContentResolver();
-		if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_FOURG))) {
-                    mShow4G = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.SHOW_FOURG,
-                            0, UserHandle.USER_CURRENT) == 1;
-                    mNetworkController.onConfigurationChanged();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_THREEG))) {
-                    mShow3G = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.SHOW_THREEG,
-                            0, UserHandle.USER_CURRENT) == 1;
-                        	mNetworkController.onConfigurationChanged();
-            } else if (uri.equals(Settings.System.getUriFor(
-            		Settings.System.STATUS_BAR_WEATHER_SIZE))
-            		|| uri.equals(Settings.System.getUriFor(
-            		Settings.System.STATUS_BAR_WEATHER_FONT_STYLE))
-            		|| uri.equals(Settings.System.getUriFor(
-            		Settings.System.STATUS_BAR_WEATHER_COLOR))            		
-            		|| uri.equals(Settings.System.getUriFor(
-            		Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE))){
-            		updateTempView();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP))) {
-            		updateTempView();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_SAVER_MODE_COLOR))) {
-                    mBatterySaverWarningColor = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.BATTERY_SAVER_MODE_COLOR, 1,
-                            UserHandle.USER_CURRENT);
-                    if (mBatterySaverWarningColor != 0) {
-                        mBatterySaverWarningColor = mContext.getResources()
-                                .getColor(com.android.internal.R.color.battery_saver_mode_color);
-                    }
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_ROWS_PORTRAIT))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_ROWS_LANDSCAPE))) {
-                    updateResources();
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_SHOW_TICKER))) {
-                mTickerEnabled = Settings.System.getIntForUser(
-                        mContext.getContentResolver(),
-                        Settings.System.STATUS_BAR_SHOW_TICKER,
-                        0, UserHandle.USER_CURRENT) == 1;
-                    initTickerView();
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_SU_INDICATOR))) {
-                    UpdateSomeViews();
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.BATTERY_LARGE_TEXT))) {
-                    UpdateSomeViews();
-           }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.CLEAR_RECENTS_STYLE))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) {
-                    updateRowStates();
-                    updateSpeedbump();
-                    checkBarModes();
-                    updateClearAll();
-                    updateEmptyShadeView();
-           }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.NAVBAR_TINT_SWITCH))) {
-                    mNavigationController.updateNavbarOverlay(mContext.getResources());
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.NAVBAR_BUTTON_COLOR))) {
-                    mNavigationController.updateNavbarOverlay(mContext.getResources());
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.NAV_BAR_DYNAMIC))) {
-                    mNavigationController.updateNavbarOverlay(mContext.getResources());
-           } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY))) {
-                    mBlurredRecents = Settings.System.getIntForUser(
-                                        mContext.getContentResolver(),
-                                        Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY,
-                                        0, UserHandle.USER_CURRENT) == 1;
-                    RecentsActivity.startBlurTask();
-                    updatePreferences(mContext);
-            }
-           update();
-        }
-
-        @Override
-        public void update() {
-            ContentResolver resolver = mContext.getContentResolver();
-            int mode = Settings.System.getIntForUser(mContext.getContentResolver(),
-                            Settings.System.SCREEN_BRIGHTNESS_MODE,
-                            Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
-                            UserHandle.USER_CURRENT);
-            mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
-            mBrightnessControl = CMSettings.System.getIntForUser(
-                    resolver, CMSettings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
-                    UserHandle.USER_CURRENT) == 1;
-            rrLogo = (ImageView) mStatusBarView.findViewById(R.id.rr_logo);
-            rrLogoright = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_right);
-            rrLogoleft = (ImageView) mStatusBarView.findViewById(R.id.rr_logo_left);
-            mRRlogo = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_RR_LOGO, 0, mCurrentUserId) == 1;
-       		mRRLogoColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-            mRRlogoStyle = Settings.System.getIntForUser(
-                    resolver, Settings.System.STATUS_BAR_RR_LOGO_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-            showRRLogo(mRRlogo,mRRLogoColor,mRRlogoStyle);
-
-            mWeatherTempState = Settings.System.getIntForUser(
-                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
-                    UserHandle.USER_CURRENT);
-
-            mWeatherTempSize = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_WEATHER_SIZE, 14, mCurrentUserId);
-
-            mWeatherTempFontStyle = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_WEATHER_FONT_STYLE, FONT_NORMAL, mCurrentUserId);
-
-        	mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
-
-            mWeatherTempStyle = Settings.System.getIntForUser(mContext.getContentResolver(), 
-                               Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-
-            updateTempView();
-            
-            boolean mShow4G = Settings.System.getIntForUser(resolver,
-                    Settings.System.SHOW_FOURG, 0, UserHandle.USER_CURRENT) == 1;
-	  
-	    	boolean mShow3G = Settings.System.getIntForUser(resolver,
-            		Settings.System.SHOW_THREEG, 0, UserHandle.USER_CURRENT) == 1;
-
-
-            mMaxKeyguardNotifConfig = Settings.System.getIntForUser(resolver,
-                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 5, mCurrentUserId);
-
-            mCustomlogoStyle = Settings.System.getIntForUser(
-            resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
-            UserHandle.USER_CURRENT);
-            mCustomlogo = Settings.System.getIntForUser(resolver,
-            Settings.System.SHOW_CUSTOM_LOGO, 0, mCurrentUserId) == 1;
-            mCustomlogoColor = Settings.System.getIntForUser(resolver,
-            Settings.System.CUSTOM_LOGO_COLOR, 0xFFFFFFFF, mCurrentUserId);
-            mCustomLogoPos = Settings.System.getIntForUser(
-                    resolver, Settings.System.CUSTOM_LOGO_POSITION, 0,
-                    UserHandle.USER_CURRENT);
-            mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_center);
-            mCLogoright = (ImageView) mStatusBarView.findViewById(R.id.custom_right);
-            mCLogoleft = (ImageView) mStatusBarView.findViewById(R.id.custom_left);
-
-	        showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
-
-
-            mDt2lCameraVibrateConfig = Settings.System.getIntForUser(resolver,
-                    Settings.System.DT2L_CAMERA_VIBRATE_CONFIG, 1, mCurrentUserId);
-
-            mQsLayoutColumns = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
-
-            if (mHeader != null) {
-                mHeader.updateSettings();
-            }
-            
-            mBlurScale = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.BLUR_SCALE_PREFERENCE_KEY, 10);
-            mBlurRadius = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.BLUR_RADIUS_PREFERENCE_KEY, 5);
-            mTranslucentQuickSettings =  Settings.System.getIntForUser(resolver,
-                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
-            mBlurredStatusBarExpandedEnabled = Settings.System.getIntForUser(resolver,
-                    Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
-            mTranslucentNotifications = Settings.System.getIntForUser(resolver,
-                    Settings.System.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
-            mQSTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY, 60);
-            mNotTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.TRANSLUCENT_NOTIFICATIONS_PRECENTAGE_PREFERENCE_KEY, 70);
-            mBlurredRecents = Settings.System.getIntForUser(resolver,
-                    Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
-            mScaleRecents = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.RECENT_APPS_SCALE_PREFERENCE_KEY, 6);
-            mRadiusRecents = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.RECENT_APPS_RADIUS_PREFERENCE_KEY, 3);
-                    
-            mBlurDarkColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
-                    Settings.System.BLUR_DARK_COLOR_PREFERENCE_KEY, Color.LTGRAY);
-            mBlurMixedColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
-                    Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY, Color.GRAY);
-            mBlurLightColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
-                    Settings.System.BLUR_LIGHT_COLOR_PREFERENCE_KEY, Color.DKGRAY);
-                    
-            RecentsActivity.updateBlurColors(mBlurDarkColorFilter,mBlurMixedColorFilter,mBlurLightColorFilter);
-            RecentsActivity.updateRadiusScale(mScaleRecents,mRadiusRecents);
-        }
-    }
-
-  private void updateWeatherTextState(String temp, int size, int font ,int color) {
-        if (mWeatherTempState == 0 || TextUtils.isEmpty(temp)) {
-            mWeatherTempView.setVisibility(View.GONE);
-            return;
-        }
-        if (temp == null) {
-        	mWeatherTempView.setText(null);
-        }
-        if (mWeatherTempState == 1) {
-            SpannableString span = new SpannableString(temp);
-            span.setSpan(new RelativeSizeSpan(0.7f), temp.length() - 1, temp.length(), 0);
-            mWeatherTempView.setText(span);
-        } else if (mWeatherTempState == 2) {
-            mWeatherTempView.setText(temp.substring(0, temp.length() - 1));
-        }
-        mWeatherTempView.setTextColor(color);
-        mWeatherTempView.setTextSize(size);
-        switch (font) {
-            case FONT_NORMAL:
-            default:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-                break;
-            case FONT_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
-                break;
-            case FONT_BOLD:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
-                break;
-            case FONT_BOLD_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
-                break;
-            case FONT_LIGHT:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-                break;
-            case FONT_LIGHT_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
-                break;
-            case FONT_THIN:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-                break;
-            case FONT_THIN_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
-                break;
-            case FONT_CONDENSED:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-                break;
-            case FONT_CONDENSED_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
-                break;
-            case FONT_CONDENSED_LIGHT:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
-                break;
-            case FONT_CONDENSED_LIGHT_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
-                break;
-            case FONT_CONDENSED_BOLD:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
-                break;
-            case FONT_CONDENSED_BOLD_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
-                break;
-            case FONT_MEDIUM:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-                break;
-            case FONT_MEDIUM_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
-                break;
-            case FONT_BLACK:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
-                break;
-            case FONT_BLACK_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
-                break;
-            case FONT_DANCINGSCRIPT:
-                mWeatherTempView.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
-                break;
-            case FONT_DANCINGSCRIPT_BOLD:
-                mWeatherTempView.setTypeface(Typeface.create("cursive", Typeface.BOLD));
-                break;
-            case FONT_COMINGSOON:
-                mWeatherTempView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
-                break;
-            case FONT_NOTOSERIF:
-                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.NORMAL));
-                break;
-            case FONT_NOTOSERIF_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.ITALIC));
-                break;
-            case FONT_NOTOSERIF_BOLD:
-                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.BOLD));
-                break;
-            case FONT_NOTOSERIF_BOLD_ITALIC:
-                mWeatherTempView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
-                break;
-        }
-        mWeatherTempView.setVisibility(View.VISIBLE);
-    }
-
-    private void updateTempView() {
-        if (mWeatherTempView != null) {
-            mWeatherTempView.setVisibility(View.GONE);
-            if (mWeatherTempStyle == 0) {
-                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
-            } else {
-                mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
-            }
-	    		updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
-                    mWeatherTempSize, mWeatherTempFontStyle,mWeatherTempColor);
-        }
-    }
-
-
-
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
@@ -1169,10 +502,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private PorterDuffXfermode mSrcXferMode = new PorterDuffXfermode(PorterDuff.Mode.SRC);
     private PorterDuffXfermode mSrcOverXferMode = new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER);
 
-    private VisualizerView mVisualizerView;
-    private boolean mScreenOn;
-    private boolean mKeyguardShowingMedia;
-
     private MediaSessionManager mMediaSessionManager;
     private MediaController mMediaController;
     private String mMediaNotificationKey;
@@ -1188,7 +517,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     clearCurrentMediaNotification();
                     updateMediaMetaData(true, true);
                 }
-                mVisualizerView.setPlaying(state.getState() == PlaybackState.STATE_PLAYING);
             }
         }
 
@@ -1212,11 +540,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private int mDisabledUnmodified1;
     private int mDisabledUnmodified2;
 
-
     /** Keys of notifications currently visible to the user. */
     private final ArraySet<NotificationVisibility> mCurrentlyVisibleNotifications =
             new ArraySet<>();
-	private long mLastVisibilityReportUptimeMs;
+    private long mLastVisibilityReportUptimeMs;
 
     private final ShadeUpdates mShadeUpdates = new ShadeUpdates();
 
@@ -1356,14 +683,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mScrimSrcModeEnabled = mContext.getResources().getBoolean(
                 R.bool.config_status_bar_scrim_behind_use_src);
 
-        // let's move it here and get it fired up nice and early and far away from statusbar recreation
-        if (mNavigationController == null) {
-            mNavigationController = new NavigationController(mContext, mContext.getResources(), this);
-        }
-        mPackageMonitor = new DUPackageMonitor();
-        mPackageMonitor.register(mContext, mHandler);
-        mPackageMonitor.addListener(mNavigationController);
-
         super.start(); // calls createAndAddWindows()
 
         mMediaSessionManager
@@ -1373,14 +692,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         addNavigationBar();
 
-        SettingsObserver observer = new SettingsObserver(mHandler);
-        observer.observe();
-
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController, mCastController,
                 mHotspotController, mUserInfoController, mBluetoothController,
-                mRotationLockController, mNetworkController.getDataSaverController(),
-                mSuController);
+                mRotationLockController, mNetworkController.getDataSaverController());
         mIconPolicy.setCurrentUserSetup(mUserSetup);
         mSettingsObserver.onChange(false); // set up
 
@@ -1418,13 +733,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // ================================================================================
     // Constructing the view
     // ================================================================================
-    @ChaosLab(name="GestureAnywhere", classification=Classification.CHANGE_CODE)
     protected PhoneStatusBarView makeStatusBarView() {
         final Context context = mContext;
-
-        mScreenWidth = (float) context.getResources().getDisplayMetrics().widthPixels;
-        mMinBrightness = context.getResources().getInteger(
-                com.android.internal.R.integer.config_screenBrightnessDim);
 
         updateDisplaySize(); // populates mDisplayMetrics
         updateResources();
@@ -1474,7 +784,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mNotificationPanelDebugText.setVisibility(View.VISIBLE);
         }
 
-
         try {
             boolean showNav = mWindowManagerService.hasNavigationBar();
             if (DEBUG) Log.v(TAG, "hasNavigationBar=" + showNav);
@@ -1485,14 +794,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             // no window manager? good luck with that
         }
 
-        addGestureAnywhereView();
-        addAppCircleSidebar();
-
         mAssistManager = SystemUIFactory.getInstance().createAssistManager(this, context);
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
-        mStatusBarContents = (LinearLayout)mStatusBarView.findViewById(R.id.status_bar_contents);
 
         mStackScroller = (NotificationStackScrollLayout) mStatusBarWindow.findViewById(
                 R.id.notification_stack_scroller);
@@ -1517,7 +822,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         ScrimView scrimBehind = (ScrimView) mStatusBarWindow.findViewById(R.id.scrim_behind);
         ScrimView scrimInFront = (ScrimView) mStatusBarWindow.findViewById(R.id.scrim_in_front);
-
         View headsUpScrim = mStatusBarWindow.findViewById(R.id.heads_up_scrim);
         mScrimController = SystemUIFactory.getInstance().createScrimController(
                 scrimBehind, scrimInFront, headsUpScrim, mLockscreenWallpaper);
@@ -1537,10 +841,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mStackScroller.setScrimController(mScrimController);
         mStatusBarView.setScrimController(mScrimController);
         mDozeScrimController = new DozeScrimController(mScrimController, context);
-        mVisualizerView = (VisualizerView) mStatusBarWindow.findViewById(R.id.visualizerview);
 
         mKeyguardStatusBar = (KeyguardStatusBarView) mStatusBarWindow.findViewById(R.id.keyguard_header);
-        mKeyguardStatusView = (KeyguardStatusView) mStatusBarWindow.findViewById(R.id.keyguard_status_view);
+        mKeyguardStatusView = mStatusBarWindow.findViewById(R.id.keyguard_status_view);
         mKeyguardBottomArea =
                 (KeyguardBottomAreaView) mStatusBarWindow.findViewById(R.id.keyguard_bottom_area);
         mKeyguardBottomArea.setActivityStarter(this);
@@ -1550,23 +853,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         R.id.keyguard_indication_text),
                 mKeyguardBottomArea.getLockIcon());
         mKeyguardBottomArea.setKeyguardIndicationController(mKeyguardIndicationController);
-        mBatterySaverWarningColor = Settings.System.getIntForUser(
-                mContext.getContentResolver(),
-                Settings.System.BATTERY_SAVER_MODE_COLOR, 1,
-                UserHandle.USER_CURRENT);
-        if (mBatterySaverWarningColor != 0) {
-            mBatterySaverWarningColor = mContext.getResources()
-                   .getColor(com.android.internal.R.color.battery_saver_mode_color);
-         }
-
-        if (ENABLE_LOCKSCREEN_WALLPAPER) {
-            mLockscreenWallpaper = new LockscreenWallpaper(mContext, this, mHandler);
-        }
-
-        mCenterClock = (View) mStatusBarWindow.findViewById(R.id.center_clock);
-        mTickerEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_SHOW_TICKER, 0, UserHandle.USER_CURRENT) == 1;
-        initTickerView();
 
         // set the initial view visibility
         setAreThereNotifications();
@@ -1608,7 +894,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mZenModeController = mVolumeComponent.getZenController();
         }
         mCastController = new CastControllerImpl(mContext);
-        mSuController = new SuControllerImpl(mContext);
 
         initSignalCluster(mStatusBarView);
         initSignalCluster(mKeyguardStatusBar);
@@ -1629,33 +914,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (UserManager.get(mContext).isUserSwitcherEnabled()) {
             createUserSwitcher();
         }
-        mWeatherTempFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_WEATHER_FONT_STYLE, FONT_NORMAL, mCurrentUserId);
-        mWeatherTempSize = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_WEATHER_SIZE, 14, mCurrentUserId);
-        mWeatherTempState = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
-                UserHandle.USER_CURRENT);
-        mWeatherTempColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_WEATHER_COLOR, 0xFFFFFFFF, mCurrentUserId);
-        mWeatherTempStyle = Settings.System.getIntForUser(
-                    mContext.getContentResolver(), Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                    UserHandle.USER_CURRENT);
-        if (mWeatherTempStyle == 0) {
-            mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.weather_temp);
-        } else {
-            mWeatherTempView = (TextView) mStatusBarView.findViewById(R.id.left_weather_temp);
-        }
-        mWeatherController = new WeatherControllerImpl(mContext);
-		updateTempView();
-		mWeatherController.addCallback(new WeatherController.Callback() {
-            @Override
-            public void onWeatherChanged(WeatherInfo temp) {
-                updateWeatherTextState(temp.temp, mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
-            }
-        });
-        updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
-mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         // Set up the quick settings tile panel
         AutoReinflateContainer container = (AutoReinflateContainer) mStatusBarWindow.findViewById(
@@ -1668,6 +926,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     mUserSwitcherController, mUserInfoController, mKeyguardMonitor,
                     mSecurityController, mBatteryController, mIconController,
                     mNextAlarmController);
+            mBrightnessMirrorController = new BrightnessMirrorController(mStatusBarWindow);
             container.addInflateListener(new InflateListener() {
                 @Override
                 public void onInflated(View v) {
@@ -1675,6 +934,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                             R.id.quick_settings_container);
                     qsContainer.setHost(qsh);
                     mQSPanel = qsContainer.getQsPanel();
+                    mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
                     mHeader = qsContainer.getHeader();
                     initSignalCluster(mHeader);
@@ -1690,8 +950,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         ((BatteryMeterView) mStatusBarView.findViewById(R.id.battery)).setBatteryController(
                 mBatteryController);
-        ((BatteryLevelTextView) mStatusBarView.findViewById(R.id.battery_level))
-                .setBatteryController(mBatteryController);
         mKeyguardStatusBar.setBatteryController(mBatteryController);
 
         mReportRejectedTouch = mStatusBarWindow.findViewById(R.id.report_rejected_touch);
@@ -1723,6 +981,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             });
         }
 
+
         PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mBroadcastReceiver.onReceive(mContext,
                 new Intent(pm.isScreenOn() ? Intent.ACTION_SCREEN_ON : Intent.ACTION_SCREEN_OFF));
@@ -1735,7 +994,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         filter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
-        filter.addAction(cyanogenmod.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
         context.registerReceiverAsUser(mBroadcastReceiver, UserHandle.ALL, filter, null, null);
 
         IntentFilter demoFilter = new IntentFilter();
@@ -1746,11 +1004,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         context.registerReceiverAsUser(mDemoReceiver, UserHandle.ALL, demoFilter,
                 android.Manifest.permission.DUMP, null);
 
-        // flashlight action target for toggle
-        IntentFilter flashlightFilter = new IntentFilter();
-        flashlightFilter.addAction(ActionHandler.INTENT_TOGGLE_FLASHLIGHT);
-        context.registerReceiver(mDUReceiver, flashlightFilter);
-
         // listen for USER_SETUP_COMPLETE setting (per-user)
         resetUserSetupObserver();
 
@@ -1760,54 +1013,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
-         try {
-            BroadcastReceiver receiver = new BroadcastReceiver() {
-
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    if (NotificationPanelView.mKeyguardShowing) {
-                        return;
-                    }
-                    String action = intent.getAction();
-
-               if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
-                        if (NotificationPanelView.mKeyguardShowing) {
-                            return;
-                        }
-                        RecentsActivity.onConfigurationChanged();
-
-                        if (mExpandedVisible && NotificationPanelView.mBlurredStatusBarExpandedEnabled && (!NotificationPanelView.mKeyguardShowing)) {
-                            makeExpandedInvisible();
-                        }
-                    }
-                }
-            };
-
-            IntentFilter intent = new IntentFilter();
-            intent.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-            this.mContext.registerReceiver(receiver, intent);
-
-            RecentsActivity.init(this.mContext);
-
-            updatePreferences(this.mContext);
-        } catch (Exception e){
-            Log.d("mango918", String.valueOf(e));
-        }
-        
         return mStatusBarView;
     }
-
-    @Override
-    public void onWeatherChanged(WeatherController.WeatherInfo info) {
-        SettingsObserver observer = new SettingsObserver(mHandler);
-        if (info.temp == null || info.condition == null) {
-            mWeatherTempView.setText(null);
-            observer.update();
-        } else {
-            mWeatherTempView.setText(info.temp);
-            observer.update();
-        }
-      }
 
     private void initEmergencyCryptkeeperText() {
         View emergencyViewStub = mStatusBarWindow.findViewById(R.id.emergency_cryptkeeper_text);
@@ -1825,11 +1032,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             ViewGroup parent = (ViewGroup) emergencyViewStub.getParent();
             parent.removeView(emergencyViewStub);
         }
-    }
-
-    public static void updatePreferences(Context context) {
-        RecentsActivity.updatePreferences(context);
-        BaseStatusBar.updatePreferences();
     }
 
     protected BatteryController createBatteryController() {
@@ -1850,6 +1052,9 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         super.onDensityOrFontScaleChanged();
         mScrimController.onDensityOrFontScaleChanged();
         mStatusBarView.onDensityOrFontScaleChanged();
+        if (mBrightnessMirrorController != null) {
+            mBrightnessMirrorController.onDensityOrFontScaleChanged();
+        }
         inflateSignalClusters();
         mIconController.onDensityOrFontScaleChanged();
         inflateDismissView();
@@ -1932,25 +1137,30 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     }
 
     protected void createNavigationBarView(Context context) {
-        mNavigationController.recreateNavigationBar(context);
-        mNavigationController.getBar().setDisabledFlags(mDisabled1);
+        inflateNavigationBarView(context);
+        mNavigationBarView.setDisabledFlags(mDisabled1);
+        mNavigationBarView.setComponents(mRecents, getComponent(Divider.class));
+        mNavigationBarView.setOnVerticalChangedListener(
+                new NavigationBarView.OnVerticalChangedListener() {
+            @Override
+            public void onVerticalChanged(boolean isVertical) {
+                if (mAssistManager != null) {
+                    mAssistManager.onConfigurationChanged();
+                }
+                mNotificationPanel.setQsScrimEnabled(!isVertical);
+            }
+        });
+        mNavigationBarView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                checkUserAutohide(v, event);
+                return false;
+            }});
     }
 
     protected void inflateNavigationBarView(Context context) {
-    }
-
-    public void forceAddNavigationBar(boolean makeGone) {
-        // If we have no Navbar view and we should have one, create it
-        if (mNavigationController.getBar() != null) {
-            return;
-        }
-        createNavigationBarView(mContext);
-        if (makeGone) {
-            mNavigationController.getBar().getBaseView().setVisibility(View.GONE);
-        }
-        mNavigationController.getBar().notifyInflateFromUser();
-        mNavigationController.getBar().setNavigationIconHints(mNavigationIconHints);
-        addNavigationBar();
+        mNavigationBarView = (NavigationBarView) View.inflate(
+                context, R.layout.navigation_bar, null);
     }
 
     protected void initSignalCluster(View containerView) {
@@ -2095,21 +1305,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         return mStatusBarWindow;
     }
 
-    private void initTickerView() {
-        if (mTickerEnabled && (mTicker == null || mTickerView == null)) {
-            final ViewStub tickerStub = (ViewStub) mStatusBarView.findViewById(R.id.ticker_stub);
-            if (tickerStub != null) {
-                mTickerView = tickerStub.inflate();
-                mTicker = new MyTicker(mContext, mStatusBarView);
-
-                TickerView tickerView = (TickerView) mStatusBarView.findViewById(R.id.tickerText);
-                tickerView.mTicker = mTicker;
-            } else {
-                mTickerEnabled = false;
-            }
-        }
-    }
-
     public int getStatusBarHeight() {
         if (mNaturalBarHeight < 0) {
             final Resources res = mContext.getResources();
@@ -2177,8 +1372,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             MetricsLogger.action(mContext, MetricsEvent.ACTION_ASSIST_LONG_PRESS);
             mAssistManager.startAssist(new Bundle() /* args */);
             awakenDreams();
-            if (mNavigationController.getBar() != null) {
-                mNavigationController.getBar().abortCurrentGesture();
+            if (mNavigationBarView != null) {
+                mNavigationBarView.abortCurrentGesture();
             }
             return true;
         }
@@ -2228,33 +1423,67 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     }
 
     private void prepareNavigationBarView() {
-        mNavigationController.getBar().reorient();
-        mNavigationController.getBar().setListeners(mUserAutoHideListener, mLongPressBackListener);
-        mNavigationController.getBar().setOnVerticalChangedListener(mVerticalChangedListener);
+        mNavigationBarView.reorient();
+
+        ButtonDispatcher recentsButton = mNavigationBarView.getRecentsButton();
+        recentsButton.setOnClickListener(mRecentsClickListener);
+        recentsButton.setOnTouchListener(mRecentsPreloadOnTouchListener);
+        recentsButton.setLongClickable(true);
+        recentsButton.setOnLongClickListener(mRecentsLongClickListener);
+
+        ButtonDispatcher backButton = mNavigationBarView.getBackButton();
+        backButton.setLongClickable(true);
+        backButton.setOnLongClickListener(mLongPressBackListener);
+
+        ButtonDispatcher homeButton = mNavigationBarView.getHomeButton();
+        homeButton.setOnTouchListener(mHomeActionListener);
+        homeButton.setOnLongClickListener(mLongPressHomeListener);
+
         mAssistManager.onConfigurationChanged();
     }
 
     // For small-screen devices (read: phones) that lack hardware navigation buttons
     protected void addNavigationBar() {
-        if (DEBUG) Log.v(TAG, "addNavigationBar: about to add " + mNavigationController.getBar());
-        if (mNavigationController.getBar() == null) return;
+        if (DEBUG) Log.v(TAG, "addNavigationBar: about to add " + mNavigationBarView);
+        if (mNavigationBarView == null) return;
+
+        try {
+            WindowManagerGlobal.getWindowManagerService()
+                    .watchRotation(new IRotationWatcher.Stub() {
+                @Override
+                public void onRotationChanged(int rotation) throws RemoteException {
+                    // We need this to be scheduled as early as possible to beat the redrawing of
+                    // window in response to the orientation change.
+                    Message msg = Message.obtain(mHandler, () -> {
+                        if (mNavigationBarView != null
+                                && mNavigationBarView.needsReorient(rotation)) {
+                            repositionNavigationBar();
+                        }
+                    });
+                    msg.setAsynchronous(true);
+                    mHandler.sendMessageAtFrontOfQueue(msg);
+                }
+            });
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
 
         prepareNavigationBarView();
 
-        mWindowManager.addView(mNavigationController.getBar().getBaseView(), getNavigationBarLayoutParams());
+        mWindowManager.addView(mNavigationBarView, getNavigationBarLayoutParams());
     }
 
     protected void repositionNavigationBar() {
-        if (mNavigationController.getBar() == null || !mNavigationController.getBar().getBaseView().isAttachedToWindow()) return;
+        if (mNavigationBarView == null || !mNavigationBarView.isAttachedToWindow()) return;
 
         prepareNavigationBarView();
 
-        mWindowManager.updateViewLayout(mNavigationController.getBar().getBaseView(), getNavigationBarLayoutParams());
+        mWindowManager.updateViewLayout(mNavigationBarView, mNavigationBarView.getLayoutParams());
     }
 
     private void notifyNavigationBarScreenOn(boolean screenOn) {
-        if (mNavigationController.getBar() == null) return;
-        mNavigationController.getBar().notifyScreenOn(screenOn);
+        if (mNavigationBarView == null) return;
+        mNavigationBarView.notifyScreenOn(screenOn);
     }
 
     private WindowManager.LayoutParams getNavigationBarLayoutParams() {
@@ -2267,21 +1496,16 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                     | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                     | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH
-                    | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    | WindowManager.LayoutParams.FLAG_SLIPPERY,
                 PixelFormat.TRANSLUCENT);
         // this will allow the navbar to run in an overlay on devices that support this
-/*        if (ActivityManager.isHighEndGfx()) {
+        if (ActivityManager.isHighEndGfx()) {
             lp.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
-        }*/ //*Keep for possible future use.
+        }
 
         lp.setTitle("NavigationBar");
         lp.windowAnimations = 0;
         return lp;
-    }
-
-    @Override
-    public void screenPinningStateChanged(boolean enabled) {
-        mNavigationController.screenPinningStateChanged(enabled);
     }
 
     @Override
@@ -2320,8 +1544,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 if (DEBUG) {
                     Log.d(TAG, "No Fullscreen intent: suppressed by DND: " + notification.getKey());
                 }
-            } else if (importanceToLevel(mNotificationData.getImportance(notification.getKey()))
-                       < importanceToLevel(NotificationListenerService.Ranking.IMPORTANCE_MAX)) {
+            } else if (mNotificationData.getImportance(notification.getKey())
+                    < NotificationListenerService.Ranking.IMPORTANCE_MAX) {
                 if (DEBUG) {
                     Log.d(TAG, "No Fullscreen intent: not important enough: "
                             + notification.getKey());
@@ -2343,8 +1567,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 } catch (PendingIntent.CanceledException e) {
                 }
             }
-        } else {
-            tick(notification, true);
         }
         addNotificationViews(shadeEntry, ranking);
         // Recalculate the position of the sliding windows and the titles.
@@ -2442,10 +1664,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         if (SPEW) Log.d(TAG, "removeNotification key=" + key + " old=" + old);
 
         if (old != null) {
-            // Cancel the ticker if it's still running
-            if (mTickerEnabled) {
-                mTicker.removeEntry(old);
-            }
             if (CLOSE_PANEL_WHEN_EMPTIED && !hasActiveNotifications()
                     && !mNotificationPanel.isTracking() && !mNotificationPanel.isQsExpanded()) {
                 if (mState == StatusBarState.SHADE) {
@@ -2508,8 +1726,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     @Override
     protected void refreshLayout(int layoutDirection) {
-        if (mNavigationController.getBar() != null) {
-            mNavigationController.getBar().getBaseView().setLayoutDirection(layoutDirection);
+        if (mNavigationBarView != null) {
+            mNavigationBarView.setLayoutDirection(layoutDirection);
         }
     }
 
@@ -2782,18 +2000,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         updateNotifications();
     }
 
- protected boolean hasActiveVisibleNotifications() {
-        return mNotificationData.hasActiveVisibleNotifications();
-    }
-
-    protected boolean hasActiveOngoingNotifications() {
-        return mNotificationData.hasActiveOngoingNotifications();
-    }
-
-    protected boolean hasActiveClearableNotifications() {
-        return mNotificationData.hasActiveClearableNotifications();
-    }
-
     @Override
     protected void setAreThereNotifications() {
 
@@ -2903,12 +2109,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     Log.v(TAG, "DEBUG_MEDIA: insert listener, receive metadata: "
                             + mMediaMetadata);
                 }
-                if (mediaNotification != null
-                        && mediaNotification.row != null
-                        && mediaNotification.row instanceof MediaExpandableNotificationRow) {
-                    ((MediaExpandableNotificationRow) mediaNotification.row)
-                            .setMediaController(controller);
-                }
 
                 if (mediaNotification != null) {
                     mMediaNotificationKey = mediaNotification.notification.getKey();
@@ -3009,8 +2209,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         }
 
         Drawable artworkDrawable = null;
-        if (mMediaMetadata != null && (Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.LOCKSCREEN_MEDIA_METADATA, 1, UserHandle.USER_CURRENT) == 1)) {
+        if (mMediaMetadata != null) {
             Bitmap artworkBitmap = null;
             artworkBitmap = mMediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
@@ -3021,8 +2220,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), artworkBitmap);
             }
         }
-        mKeyguardShowingMedia = artworkDrawable != null;
-
         boolean allowWhenShade = false;
         if (ENABLE_LOCKSCREEN_WALLPAPER && artworkDrawable == null) {
             Bitmap lockWallpaper = mLockscreenWallpaper.getBitmap();
@@ -3039,22 +2236,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         boolean hideBecauseOccluded = mStatusBarKeyguardViewManager != null
                 && mStatusBarKeyguardViewManager.isOccluded();
 
-        final boolean keyguardVisible = (mState != StatusBarState.SHADE);
         final boolean hasArtwork = artworkDrawable != null;
-
-        if (!mKeyguardFadingAway && keyguardVisible && hasArtwork && mScreenOn) {
-            // if there's album art, ensure visualizer is visible
-            mVisualizerView.setPlaying(mMediaController != null
-                    && mMediaController.getPlaybackState() != null
-                    && mMediaController.getPlaybackState().getState()
-                            == PlaybackState.STATE_PLAYING);
-        }
-
-        if (keyguardVisible && mKeyguardShowingMedia &&
-                (artworkDrawable instanceof BitmapDrawable)) {
-            // always use current backdrop to color eq
-            mVisualizerView.setBitmap(((BitmapDrawable)artworkDrawable).getBitmap());
-        }
 
         if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
                 && (mState != StatusBarState.SHADE || allowWhenShade)
@@ -3260,7 +2442,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                         | StatusBarManager.DISABLE_BACK
                         | StatusBarManager.DISABLE_SEARCH)) != 0) {
             // the nav bar will take care of these
-            if (mNavigationController.getBar() != null) mNavigationController.getBar().setDisabledFlags(state1);
+            if (mNavigationBarView != null) mNavigationBarView.setDisabledFlags(state1);
 
             if ((state1 & StatusBarManager.DISABLE_RECENT) != 0) {
                 // close recents if it's visible
@@ -3271,9 +2453,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         if ((diff1 & StatusBarManager.DISABLE_NOTIFICATION_ICONS) != 0) {
             if ((state1 & StatusBarManager.DISABLE_NOTIFICATION_ICONS) != 0) {
-                if (mTicking) {
-                    haltTicker();
-                }
                 mIconController.hideNotificationIconArea(animate);
             } else {
                 mIconController.showNotificationIconArea(animate);
@@ -3350,11 +2529,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     @Override  // NotificationData.Environment
     public String getCurrentMediaNotificationKey() {
         return mMediaNotificationKey;
-    }
-
-    @Override
-    protected MediaController getCurrentMediaController() {
-        return mMediaController;
     }
 
     public boolean isScrimSrcModeEnabled() {
@@ -3585,22 +2759,18 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     }
 
     void makeExpandedVisible(boolean force) {
-        NotificationPanelView.startBlurTask();
         if (SPEW) Log.d(TAG, "Make expanded visible: expanded visible=" + mExpandedVisible);
         if (!force && (mExpandedVisible || !panelsEnabled())) {
             return;
         }
 
         mExpandedVisible = true;
-        if (mNavigationController.getBar() != null)
-            mNavigationController.getBar().setSlippery(true);
 
         // Expand the window to encompass the full screen in anticipation of the drag.
         // This is only possible to do atomically because the status bar is at the top of the screen!
         mStatusBarWindowManager.setPanelVisible(true);
-        if(!force){
-            visibilityChanged(true);
-        }
+
+        visibilityChanged(true);
         mWaitingForKeyguardExit = false;
         recomputeDisableFlags(!force /* animate */);
         setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
@@ -3731,8 +2901,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mNotificationPanel.closeQs();
 
         mExpandedVisible = false;
-        if (mNavigationController.getBar() != null)
-            mNavigationController.getBar().setSlippery(false);
+
         visibilityChanged(false);
 
         // Shrink the window to the size of the status bar only
@@ -3751,99 +2920,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         // the bouncer appear animation.
         if (!mStatusBarKeyguardViewManager.isShowing()) {
             WindowManagerGlobal.getInstance().trimMemory(ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN);
-        }
-        NotificationPanelView.recycle();
-    }
-
-    private void adjustBrightness(int x) {
-        mBrightnessChanged = true;
-        float raw = ((float) x) / mScreenWidth;
-
-        // Add a padding to the brightness control on both sides to
-        // make it easier to reach min/max brightness
-        float padded = Math.min(1.0f - BRIGHTNESS_CONTROL_PADDING,
-                Math.max(BRIGHTNESS_CONTROL_PADDING, raw));
-        float value = (padded - BRIGHTNESS_CONTROL_PADDING) /
-                (1 - (2.0f * BRIGHTNESS_CONTROL_PADDING));
-        try {
-            IPowerManager power = IPowerManager.Stub.asInterface(
-                    ServiceManager.getService("power"));
-            if (power != null) {
-                if (mAutomaticBrightness) {
-                    float adj = (2 * value) - 1;
-                    adj = Math.max(adj, -1);
-                    adj = Math.min(adj, 1);
-                    final float val = adj;
-                    power.setTemporaryScreenAutoBrightnessAdjustmentSettingOverride(val);
-                    AsyncTask.execute(new Runnable() {
-                        public void run() {
-                            Settings.System.putFloatForUser(mContext.getContentResolver(),
-                                    Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ, val,
-                                    UserHandle.USER_CURRENT);
-                        }
-                    });
-                } else {
-                    int newBrightness = mMinBrightness + (int) Math.round(value *
-                            (android.os.PowerManager.BRIGHTNESS_ON - mMinBrightness));
-                    newBrightness = Math.min(newBrightness, android.os.PowerManager.BRIGHTNESS_ON);
-                    newBrightness = Math.max(newBrightness, mMinBrightness);
-                    final int val = newBrightness;
-                    power.setTemporaryScreenBrightnessSettingOverride(val);
-                    AsyncTask.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            Settings.System.putIntForUser(mContext.getContentResolver(),
-                                    Settings.System.SCREEN_BRIGHTNESS, val,
-                                    UserHandle.USER_CURRENT);
-                        }
-                    });
-                }
-
-
-            }
-        } catch (RemoteException e) {
-            Log.w(TAG, "Setting Brightness failed: " + e);
-        }
-    }
-
-    private void brightnessControl(MotionEvent event) {
-        final int action = event.getAction();
-        final int x = (int) event.getRawX();
-        final int y = (int) event.getRawY();
-        if (action == MotionEvent.ACTION_DOWN) {
-            if (y < mStatusBarHeaderHeight) {
-                mLinger = 0;
-                mInitialTouchX = x;
-                mInitialTouchY = y;
-                mJustPeeked = true;
-                mHandler.removeCallbacks(mLongPressBrightnessChange);
-                mHandler.postDelayed(mLongPressBrightnessChange,
-                        BRIGHTNESS_CONTROL_LONG_PRESS_TIMEOUT);
-            }
-        } else if (action == MotionEvent.ACTION_MOVE) {
-            if (y < mStatusBarHeaderHeight && mJustPeeked) {
-                if (mLinger > BRIGHTNESS_CONTROL_LINGER_THRESHOLD) {
-                    adjustBrightness(x);
-                } else {
-                    final int xDiff = Math.abs(x - mInitialTouchX);
-                    final int yDiff = Math.abs(y - mInitialTouchY);
-                    final int touchSlop = ViewConfiguration.get(mContext).getScaledTouchSlop();
-                    if (xDiff > yDiff) {
-                        mLinger++;
-                    }
-                    if (xDiff > touchSlop || yDiff > touchSlop) {
-                        mHandler.removeCallbacks(mLongPressBrightnessChange);
-                    }
-                }
-            } else {
-                if (y > mStatusBarHeaderHeight) {
-                    mJustPeeked = false;
-                }
-                mHandler.removeCallbacks(mLongPressBrightnessChange);
-            }
-        } else if (action == MotionEvent.ACTION_UP
-                || action == MotionEvent.ACTION_CANCEL) {
-            mHandler.removeCallbacks(mLongPressBrightnessChange);
         }
     }
 
@@ -3873,27 +2949,14 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             mGestureRec.add(event);
         }
 
-        if (mBrightnessControl) {
-            brightnessControl(event);
-            if ((mDisabled1 & StatusBarManager.DISABLE_EXPAND) != 0) {
-                return true;
-            }
-        }
-
-        final boolean upOrCancel =
-                event.getAction() == MotionEvent.ACTION_UP ||
-                        event.getAction() == MotionEvent.ACTION_CANCEL;
         if (mStatusBarWindowState == WINDOW_STATE_SHOWING) {
+            final boolean upOrCancel =
+                    event.getAction() == MotionEvent.ACTION_UP ||
+                    event.getAction() == MotionEvent.ACTION_CANCEL;
             if (upOrCancel && !mExpandedVisible) {
                 setInteracting(StatusBarManager.WINDOW_STATUS_BAR, false);
             } else {
                 setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
-            }
-        }
-        if (mBrightnessChanged && upOrCancel) {
-            mBrightnessChanged = false;
-            if (mJustPeeked && mExpandedVisible) {
-                mNotificationPanel.fling(10, false);
             }
         }
         return false;
@@ -3908,11 +2971,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         mNavigationIconHints = hints;
 
-        if (mNavigationController.getBar() != null) {
-            mNavigationController.getBar().setNavigationIconHints(hints);
-        }
-        if (mPieController != null) {
-            mPieController.setNavigationIconHints(hints);
+        if (mNavigationBarView != null) {
+            mNavigationBarView.setNavigationIconHints(hints);
         }
         checkBarModes();
     }
@@ -3930,7 +2990,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                         1.0f /* speedUpFactor */);
             }
         }
-        if (mNavigationController.getBar() != null
+        if (mNavigationBarView != null
                 && window == StatusBarManager.WINDOW_NAVIGATION_BAR
                 && mNavigationBarWindowState != state) {
             mNavigationBarWindowState = state;
@@ -3976,14 +3036,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
             // update low profile
             if ((diff & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) {
-                final boolean lightsOut = (vis & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0;
-                if (lightsOut) {
-                    animateCollapsePanels();
-                    if (mTicking) {
-                        haltTicker();
-                    }
-                }
-
                 setAreThereNotifications();
             }
 
@@ -3999,8 +3051,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     View.STATUS_BAR_TRANSPARENT);
 
             // update navigation bar mode
-            final int nbMode = mNavigationController.getBar() == null ? -1 : computeBarMode(
-                    oldVal, newVal, mNavigationController.getBar().getBarTransitions(),
+            final int nbMode = mNavigationBarView == null ? -1 : computeBarMode(
+                    oldVal, newVal, mNavigationBarView.getBarTransitions(),
                     View.NAVIGATION_BAR_TRANSIENT, View.NAVIGATION_BAR_TRANSLUCENT,
                     View.NAVIGATION_BAR_TRANSPARENT);
             sbModeChanged = sbMode != -1;
@@ -4038,13 +3090,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 mask, fullscreenStackBounds, dockedStackBounds, sbModeChanged, mStatusBarMode);
     }
 
-    @Override  // CommandQueue
-    public void setAutoRotate(boolean enabled) {
-        Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.ACCELEROMETER_ROTATION,
-                enabled ? 1 : 0);
-    }
-
     private int computeBarMode(int oldVis, int newVis, BarTransitions transitions,
             int transientFlag, int translucentFlag, int transparentFlag) {
         final int oldMode = barMode(oldVis, transientFlag, translucentFlag, transparentFlag);
@@ -4069,9 +3114,9 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         if (mDemoMode) return;
         checkBarMode(mStatusBarMode, mStatusBarWindowState, mStatusBarView.getBarTransitions(),
                 mNoAnimationOnNextBarModeChange);
-        if (mNavigationController.getBar() != null) {
+        if (mNavigationBarView != null) {
             checkBarMode(mNavigationBarMode,
-                    mNavigationBarWindowState, mNavigationController.getBar().getBarTransitions(),
+                    mNavigationBarWindowState, mNavigationBarView.getBarTransitions(),
                     mNoAnimationOnNextBarModeChange);
         }
         mNoAnimationOnNextBarModeChange = false;
@@ -4085,16 +3130,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         if (powerSave && getBarState() == StatusBarState.SHADE) {
             mode = MODE_WARNING;
         }
-        if (mode == MODE_WARNING) {
-            transitions.setWarningColor(mBatterySaverWarningColor);
-        }
         transitions.transitionTo(mode, anim);
     }
 
     private void finishBarAnimations() {
         mStatusBarView.getBarTransitions().finishAnimations();
-        if (mNavigationController.getBar() != null) {
-            mNavigationController.getBar().getBarTransitions().finishAnimations();
+        if (mNavigationBarView != null) {
+            mNavigationBarView.getBarTransitions().finishAnimations();
         }
     }
 
@@ -4194,14 +3236,11 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     @Override
     public void topAppWindowChanged(boolean showMenu) {
-        if (mPieController != null && mPieController.getControlPanel() != null)
-            mPieController.getControlPanel().setMenu(showMenu);
-
         if (SPEW) {
             Log.d(TAG, (showMenu?"showing":"hiding") + " the MENU button");
         }
-        if (mNavigationController.getBar() != null) {
-            mNavigationController.getBar().setMenuVisibility(showMenu);
+        if (mNavigationBarView != null) {
+            mNavigationBarView.setMenuVisibility(showMenu);
         }
 
         // See above re: lights-out policy for legacy apps.
@@ -4227,104 +3266,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         setNavigationIconHints(flags);
     }
 
-    @Override
-    protected void tick(StatusBarNotification n, boolean firstTime) {
-        if (!mTickerEnabled) return;
-
-        // no ticking in lights-out mode
-        if (!areLightsOn()) return;
-
-        // no ticking in Setup
-        if (!isDeviceProvisioned()) return;
-
-        // not for you
-        if (!isNotificationForCurrentProfiles(n)) return;
-
-        // Show the ticker if one is requested. Also don't do this
-        // until status bar window is attached to the window manager,
-        // because...  well, what's the point otherwise?  And trying to
-        // run a ticker without being attached will crash!
-        if (n.getNotification().tickerText != null && mStatusBarWindow != null
-                && mStatusBarWindow.getWindowToken() != null) {
-            if (0 == (mDisabled1 & (StatusBarManager.DISABLE_NOTIFICATION_ICONS
-                    | StatusBarManager.DISABLE_NOTIFICATION_TICKER))) {
-                mTicker.addEntry(n);
-            }
-        }
-    }
-
-    private class MyTicker extends Ticker {
-        MyTicker(Context context, View sb) {
-            super(context, sb);
-            if (!mTickerEnabled) {
-                Log.w(TAG, "MyTicker instantiated with mTickerEnabled=false", new Throwable());
-            }
-        }
-
-        @Override
-        public void tickerStarting() {
-            if (!mTickerEnabled) return;
-            mTicking = true;
-            mStatusBarContents.setVisibility(View.GONE);
-            mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out,
-                    null));
-            if (ClockController.mActiveClock == ClockController.mCenterClock) {
-                mCenterClock.setVisibility(View.GONE);
-                mCenterClock.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, null));
-            }
-            mTickerView.setVisibility(View.VISIBLE);
-            mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
-        }
-
-        @Override
-        public void tickerDone() {
-            if (!mTickerEnabled) return;
-            mStatusBarContents.setVisibility(View.VISIBLE);
-            mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_down_in,
-                    null));
-            mTickerView.setVisibility(View.GONE);
-            mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_down_out,
-                        mTickingDoneListener));
-            if (ClockController.mActiveClock == ClockController.mCenterClock) {
-                mCenterClock.setVisibility(View.VISIBLE);
-                mCenterClock.startAnimation(loadAnim(com.android.internal.R.anim.push_down_in, null));
-            }
-        }
-
-        public void tickerHalting() {
-            if (!mTickerEnabled) return;
-            if (mStatusBarContents.getVisibility() != View.VISIBLE) {
-                mStatusBarContents.setVisibility(View.VISIBLE);
-                mStatusBarContents
-                        .startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-                if (ClockController.mActiveClock == ClockController.mCenterClock) {
-                    mCenterClock.setVisibility(View.VISIBLE);
-                    mCenterClock.startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-                }
-            }
-            mTickerView.setVisibility(View.GONE);
-            // we do not animate the ticker away at this point, just get rid of it (b/6992707)
-        }
-    }
-
-    Animation.AnimationListener mTickingDoneListener = new Animation.AnimationListener() {
-        public void onAnimationEnd(Animation animation) {
-            mTicking = false;
-        }
-        public void onAnimationRepeat(Animation animation) {
-        }
-        public void onAnimationStart(Animation animation) {
-        }
-    };
-
-    private Animation loadAnim(int id, Animation.AnimationListener listener) {
-        Animation anim = AnimationUtils.loadAnimation(mContext, id);
-        if (listener != null) {
-            anim.setAnimationListener(listener);
-        }
-        return anim;
-    }
-
     public static String viewInfo(View v) {
         return "[(" + v.getLeft() + "," + v.getTop() + ")(" + v.getRight() + "," + v.getBottom()
                 + ") " + v.getWidth() + "x" + v.getHeight() + "]";
@@ -4336,11 +3277,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             pw.println("Current Status Bar state:");
             pw.println("  mExpandedVisible=" + mExpandedVisible
                     + ", mTrackingPosition=" + mTrackingPosition);
-            pw.println("  mTickerEnabled=" + mTickerEnabled);
-            if (mTickerEnabled) {
-                pw.println("  mTicking=" + mTicking);
-                pw.println("  mTickerView: " + viewInfo(mTickerView));
-            }
             pw.println("  mTracking=" + mTracking);
             pw.println("  mDisplayMetrics=" + mDisplayMetrics);
             pw.println("  mStackScroller: " + viewInfo(mStackScroller));
@@ -4360,19 +3296,19 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         pw.print("  mUseHeadsUp=");
         pw.println(mUseHeadsUp);
         dumpBarTransitions(pw, "mStatusBarView", mStatusBarView.getBarTransitions());
-        if (mNavigationController.getBar() != null) {
+        if (mNavigationBarView != null) {
             pw.print("  mNavigationBarWindowState=");
             pw.println(windowStateToString(mNavigationBarWindowState));
             pw.print("  mNavigationBarMode=");
             pw.println(BarTransitions.modeToString(mNavigationBarMode));
-            dumpBarTransitions(pw, "mNavigationBarView", mNavigationController.getBar().getBarTransitions());
+            dumpBarTransitions(pw, "mNavigationBarView", mNavigationBarView.getBarTransitions());
         }
 
         pw.print("  mNavigationBarView=");
-        if (mNavigationController.getBar() == null) {
+        if (mNavigationBarView == null) {
             pw.println("null");
         } else {
-            mNavigationController.getBar().dump(fd, pw, args);
+            mNavigationBarView.dump(fd, pw, args);
         }
 
         pw.print("  mMediaSessionManager=");
@@ -4628,29 +3564,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 }
             }
             else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                mScreenOn = false;
                 notifyNavigationBarScreenOn(false);
                 notifyHeadsUpScreenOff();
                 finishBarAnimations();
                 resetUserExpandedStates();
-                // detach PA Pie when screen is turned off
-                if (mPieController != null) mPieController.detachPie();
             }
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                mScreenOn = true;
                 notifyNavigationBarScreenOn(true);
-                NotificationPanelView.recycle();
-            } else if (cyanogenmod.content.Intent.ACTION_SCREEN_CAMERA_GESTURE.equals(action)) {
-                boolean userSetupComplete = Settings.Secure.getInt(mContext.getContentResolver(),
-                        Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
-                if (!userSetupComplete) {
-                    if (DEBUG) Log.d(TAG, String.format(
-                            "userSetupComplete = %s, ignoring camera launch gesture.",
-                            userSetupComplete));
-                    return;
-                }
-
-                onCameraLaunchGestureDetected(StatusBarManager.CAMERA_LAUNCH_SOURCE_SCREEN_GESTURE);
             }
         }
     };
@@ -4679,164 +3599,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             }
         }
     };
-
-    public void showRRLogo(boolean show ,int color,int style) {
-        if (mStatusBarView == null) return;
- 	 	if (!show) {
-            rrLogo.setVisibility(View.GONE);
-            rrLogoright.setVisibility(View.GONE);
-            rrLogoleft.setVisibility(View.GONE);
-            return;
-		}
-		if (color != 0xFFFFFFFF) {
-            rrLogo.setColorFilter(color, Mode.SRC_IN);
-            rrLogoright.setColorFilter(color, Mode.SRC_IN);
-            rrLogoleft.setColorFilter(color, Mode.SRC_IN);
-		} else {
-             rrLogo.clearColorFilter();
-             rrLogoright.clearColorFilter();
-             rrLogoleft.clearColorFilter();
-        }
- 		if (style == 0) {
-            rrLogoright.setVisibility(View.GONE);
-            rrLogoleft.setVisibility(View.GONE);
-            rrLogo.setVisibility(View.VISIBLE);
-        } else if (style == 1) {
-            rrLogo.setVisibility(View.GONE);
-            rrLogoleft.setVisibility(View.GONE);
-            rrLogoright.setVisibility(View.VISIBLE);
-        } else if (style == 2) {
-            rrLogoright.setVisibility(View.GONE);
-            rrLogo.setVisibility(View.GONE);
-            rrLogoleft.setVisibility(View.VISIBLE);
-		}
-    }
-
- public void showmCustomlogo(boolean show,int color ,int pos) {
-        if (mStatusBarView == null) return;
-        if (!show) {
-            mCLogo.setVisibility(View.GONE);
-            mCLogoleft.setVisibility(View.GONE);
-            mCLogoright.setVisibility(View.GONE);
-            return;
-        }
-        if (color != 0xFFFFFFFF) {
-            mCLogo.setColorFilter(color, Mode.MULTIPLY);
-            mCLogoleft.setColorFilter(color, Mode.MULTIPLY);
-            mCLogoright.setColorFilter(color, Mode.MULTIPLY);
-        } else {
-            mCLogo.clearColorFilter();
-            mCLogoleft.clearColorFilter();
-            mCLogoright.clearColorFilter();
-        }
-        Drawable d = null;
-        int style = mCustomlogoStyle;
-		if ( style == 0) {
-        d = mContext.getResources().getDrawable(R.drawable.custom);
-		} else if ( style == 1) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_1);
-		} else if ( style == 2) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_2);
-		} else if ( style == 3) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_3);
-		} else if ( style == 4) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_4);
-		} else if ( style == 5) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_5);
-		} else if ( style == 6) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_6);
-		} else if ( style == 7) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_7);
-		} else if ( style == 8) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_8);
-		} else if ( style == 9) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_9);
-		} else if ( style == 10) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_10);
-		}  else if ( style == 11) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_11);
-		} else if ( style == 12) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_12);
-		} else if ( style == 13) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_13);
-		} else if ( style == 14) {
-        d = mContext.getResources().getDrawable(R.drawable.custom_14);
-		} else if ( style  == 15) {
-        d = mContext.getResources().getDrawable(R.drawable.weather_off);
-		} else if ( style  == 16) {
-        d = mContext.getResources().getDrawable(R.drawable.blender);
-		} else if ( style  == 17) {
-        d = mContext.getResources().getDrawable(R.drawable.cake_variant);
-		} else if ( style  == 18) {
-        d = mContext.getResources().getDrawable(R.drawable.guitar_electric);
-		} else if ( style  == 19) {
-        d = mContext.getResources().getDrawable(R.drawable.tag_faces);
-		} else if ( style  == 20) {
-        d = mContext.getResources().getDrawable(R.drawable.run);
-		} else if ( style  == 21) {
-        d = mContext.getResources().getDrawable(R.drawable.radioactive);
-		} else if ( style  == 22) {
-        d = mContext.getResources().getDrawable(R.drawable.professional_hexagon);
-		} else if ( style  == 23) {
-        d = mContext.getResources().getDrawable(R.drawable.pokeball);
-		} else if ( style  == 24) {
-        d = mContext.getResources().getDrawable(R.drawable.package_variant);
-		} else if ( style  == 25) {
-        d = mContext.getResources().getDrawable(R.drawable.package_variant_closed);
-		} else if ( style  == 26) {
-        d = mContext.getResources().getDrawable(R.drawable.weather_fog);
-		} else if ( style  == 27) {
-        d = mContext.getResources().getDrawable(R.drawable.cat);
-		} else if ( style == 28) {
-        d = mContext.getResources().getDrawable(R.drawable.android1);
-		} else if ( style == 29) {
-        d = mContext.getResources().getDrawable(R.drawable.bike);
-		} else if ( style == 30) {
-        d = mContext.getResources().getDrawable(R.drawable.candycane);
-		} else if ( style == 31) {
-        d = mContext.getResources().getDrawable(R.drawable.shit);
-		} else if ( style == 32) {
-        d = mContext.getResources().getDrawable(R.drawable.chart_bubble);
-		} else if ( style == 33) {
-        d = mContext.getResources().getDrawable(R.drawable.google1);
-		} else if ( style == 34) {
-        d = mContext.getResources().getDrawable(R.drawable.fish);
-		} else if ( style == 35) {
-        d = mContext.getResources().getDrawable(R.drawable.gender_male);
-		} else if ( style == 36) {
-        d = mContext.getResources().getDrawable(R.drawable.gender_female);
-		} else if ( style == 37) {
-        d = mContext.getResources().getDrawable(R.drawable.pb_logo);
-		} else if ( style == 38) {
-        d = mContext.getResources().getDrawable(R.drawable.rr_original_logo_1);
-		} else if ( style == 39) {
-        d = mContext.getResources().getDrawable(R.drawable.rr_logo_half);
-		} else if ( style == 40) {
-        d = mContext.getResources().getDrawable(R.drawable.rr_noring);
-		} else if ( style == 41) {
-        d = mContext.getResources().getDrawable(R.drawable.spider1);
-		} else if ( style == 42) {
-        d = mContext.getResources().getDrawable(R.drawable.spider2);
-		} else if ( style == 43) {
-        d = mContext.getResources().getDrawable(R.drawable.orioles_logo);
-		}
-        if (pos == 0) {
-            mCLogoleft.setImageDrawable(d);
-            mCLogoright.setVisibility(View.GONE);
-            mCLogoleft.setVisibility(View.VISIBLE);
-            mCLogo.setVisibility(View.GONE);
-        } else if (pos == 1) {
-            mCLogo.setImageDrawable(d);
-            mCLogo.setVisibility(View.VISIBLE);
-            mCLogoleft.setVisibility(View.GONE);
-            mCLogoright.setVisibility(View.GONE);
-        } else if (pos == 2) {
-            mCLogoright.setImageDrawable(d);
-            mCLogoright.setVisibility(View.VISIBLE);
-            mCLogo.setVisibility(View.GONE);
-            mCLogoleft.setVisibility(View.GONE);
-        }
-   }
 
     public void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();
@@ -4879,9 +3641,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             Log.v(TAG, "configuration changed: " + mContext.getResources().getConfiguration());
         }
 
-        if (!mNavigationController.onConfigurationChanged(newConfig)) {
-            repositionNavigationBar();
-        }
+        repositionNavigationBar();
         updateRowStates();
         mScreenPinningRequest.onConfigurationChanged();
         mNetworkController.onConfigurationChanged();
@@ -4937,6 +3697,9 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         if (mNotificationPanel != null) {
             mNotificationPanel.updateResources();
         }
+        if (mBrightnessMirrorController != null) {
+            mBrightnessMirrorController.updateResources();
+        }
     }
 
     protected void loadDimens() {
@@ -4950,8 +3713,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         }
         mMaxAllowedKeyguardNotifications = res.getInteger(
                 R.integer.keyguard_max_notification_count);
-
-        mStatusBarHeaderHeight = res.getDimensionPixelSize(R.dimen.status_bar_header_height);
 
         if (DEBUG) Log.v(TAG, "defineSlots");
     }
@@ -5095,13 +3856,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     };
 
     @Override
-    protected void haltTicker() {
-        if (mTickerEnabled) {
-            mTicker.halt();
-        }
-    }
-
-    @Override
     public boolean shouldDisableNavbarGestures() {
         return !isDeviceProvisioned() || (mDisabled1 & StatusBarManager.DISABLE_SEARCH) != 0;
     }
@@ -5179,13 +3933,10 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             mWindowManager.removeViewImmediate(mStatusBarWindow);
             mStatusBarWindow = null;
         }
-        if (mNavigationController.getBar() != null) {
-            mWindowManager.removeViewImmediate(mNavigationController.getBar().getBaseView());
-            mNavigationController.destroy();
+        if (mNavigationBarView != null) {
+            mWindowManager.removeViewImmediate(mNavigationBarView);
+            mNavigationBarView = null;
         }
-        mPackageMonitor.removeListener(mNavigationController);
-        mPackageMonitor.unregister();
-
         if (mHandlerThread != null) {
             mHandlerThread.quitSafely();
             mHandlerThread = null;
@@ -5265,8 +4016,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 if (mStatusBarView != null) {
                     mStatusBarView.getBarTransitions().transitionTo(barMode, animate);
                 }
-                if (mNavigationController.getBar() != null) {
-                    mNavigationController.getBar().getBarTransitions().transitionTo(barMode, animate);
+                if (mNavigationBarView != null) {
+                    mNavigationBarView.getBarTransitions().transitionTo(barMode, animate);
                 }
             }
         }
@@ -5323,9 +4074,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             mDraggedDownRow = null;
         }
         mPendingRemoteInputView = null;
-        if (mNavigationController.getBar() != null) {
-            mNavigationController.getBar().setKeyguardShowing(true);
-        }
         mAssistManager.onLockscreenShown();
     }
 
@@ -5469,12 +4217,12 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
             // Disable layout transitions in navbar for this transition because the load is just
             // too heavy for the CPU and GPU on any device.
-            if (mNavigationController.getBar() != null) {
-                mNavigationController.getBar().setLayoutTransitionsEnabled(false);
-                mNavigationController.getBar().getBaseView().postDelayed(new Runnable() {
+            if (mNavigationBarView != null) {
+                mNavigationBarView.setLayoutTransitionsEnabled(false);
+                mNavigationBarView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mNavigationController.getBar().setLayoutTransitionsEnabled(true);
+                        mNavigationBarView.setLayoutTransitionsEnabled(true);
                     }
                 }, delay + StackStateAnimator.ANIMATION_DURATION_GO_TO_FULL_SHADE);
             }
@@ -5497,10 +4245,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mNotificationPanel.onAffordanceLaunchEnded();
         mNotificationPanel.animate().cancel();
         mNotificationPanel.setAlpha(1f);
-
-        if (mNavigationController.getBar() != null) {
-            mNavigationController.getBar().setKeyguardShowing(false);
-        }
         Trace.endSection();
         return staying;
     }
@@ -5624,8 +4368,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mDozeScrimController.setDozing(mDozing &&
                 mFingerprintUnlockController.getMode()
                         != FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING, animate);
-        mKeyguardStatusView.setDozing(mDozing);
-        mVisualizerView.setDozing(mDozing);
         Trace.endSection();
     }
 
@@ -5727,6 +4469,10 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mStackScroller.setActivatedChild(view);
     }
 
+    public ButtonDispatcher getHomeButton() {
+        return mNavigationBarView.getHomeButton();
+    }
+
     /**
      * @param state The {@link StatusBarState} to set.
      */
@@ -5744,7 +4490,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             maybeEscalateHeadsUp();
         }
         mState = state;
-        mVisualizerView.setStatusBarState(state);
         mGroupManager.setStatusBarState(state);
         mFalsingManager.setStatusBarState(state);
         mStatusBarWindowManager.setStatusBarState(state);
@@ -5778,19 +4523,19 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mKeyguardIndicationController.hideTransientIndicationDelayed(HINT_RESET_DELAY_MS);
     }
 
+    public void onCameraHintStarted() {
+        mFalsingManager.onCameraHintStarted();
+        mKeyguardIndicationController.showTransientIndication(R.string.camera_hint);
+    }
+
     public void onVoiceAssistHintStarted() {
         mFalsingManager.onLeftAffordanceHintStarted();
         mKeyguardIndicationController.showTransientIndication(R.string.voice_hint);
     }
 
-    public void onCameraHintStarted(String hint) {
-        mFalsingManager.onCameraHintStarted();
-        mKeyguardIndicationController.showTransientIndication(hint);
-    }
-
-    public void onLeftHintStarted(String hint) {
+    public void onPhoneHintStarted() {
         mFalsingManager.onLeftAffordanceHintStarted();
-        mKeyguardIndicationController.showTransientIndication(hint);
+        mKeyguardIndicationController.showTransientIndication(R.string.phone_hint);
     }
 
     public void onTrackingStopped(boolean expand) {
@@ -5803,28 +4548,21 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     @Override
     protected int getMaxKeyguardNotifications(boolean recompute) {
-        mCustomMaxKeyguard = Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.LOCK_SCREEN_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
-        if (mCustomMaxKeyguard) {
-            return mMaxKeyguardNotifConfig;
-        } else {
-           if (recompute) {
-               mMaxKeyguardNotifications = Math.max(1,
-                       mNotificationPanel.computeMaxKeyguardNotifications(
-                               mMaxAllowedKeyguardNotifications));
-               return mMaxKeyguardNotifications;
-           } else {
-               return mMaxKeyguardNotifications;
-           }
+        if (recompute) {
+            mMaxKeyguardNotifications = Math.max(1,
+                    mNotificationPanel.computeMaxKeyguardNotifications(
+                            mMaxAllowedKeyguardNotifications));
+            return mMaxKeyguardNotifications;
         }
+        return mMaxKeyguardNotifications;
     }
 
     public int getMaxKeyguardNotifications() {
         return getMaxKeyguardNotifications(false /* recompute */);
     }
 
-    public Navigator getNavigationBarView() {
-        return mNavigationController.getBar();
+    public NavigationBarView getNavigationBarView() {
+        return mNavigationBarView;
     }
 
     // ---------------------- DragDownHelper.OnDragDownListener ------------------------------------
@@ -6072,19 +4810,10 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         updateVisibleToUser();
     }
 
-    public void UpdateSomeViews() {
-        onDensityOrFontScaleChanged();
-        updateNotifications();
-        updateRowStates();
-        updateSpeedbump();
-    }
-
     public void onScreenTurningOn() {
         mScreenTurningOn = true;
-        mDeviceInteractive = true;
         mFalsingManager.onScreenTurningOn();
         mNotificationPanel.onScreenTurningOn();
-        updateVisibleToUser();
         if (mLaunchCameraOnScreenTurningOn) {
             mNotificationPanel.launchCamera(false, mLastCameraLaunchSource);
             mLaunchCameraOnScreenTurningOn = false;
@@ -6092,15 +4821,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     }
 
     private void vibrateForCameraGesture() {
-        mVibrator.vibrate(new long[] { 0, mDt2lCameraVibrateConfig }, -1 /* repeat */);
+        // Make sure to pass -1 for repeat so VibratorService doesn't stop us when going to sleep.
+        mVibrator.vibrate(new long[]{0, 400}, -1 /* repeat */);
     }
 
     public void onScreenTurnedOn() {
         mScreenTurningOn = false;
-        mDeviceInteractive = true;
-        updateVisibleToUser();
         mDozeScrimController.onScreenTurnedOn();
-        mVisualizerView.setVisible(true);
     }
 
     /**
@@ -6111,6 +4838,9 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             IActivityManager activityManager = ActivityManagerNative.getDefault();
             if (activityManager.isInLockTaskMode()) {
                 activityManager.stopSystemLockTaskMode();
+
+                // When exiting refresh disabled flags.
+                mNavigationBarView.setDisabledFlags(mDisabled1, true);
                 return true;
             }
         } catch (RemoteException e) {
@@ -6199,9 +4929,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             pm.wakeUp(SystemClock.uptimeMillis(), "com.android.systemui:CAMERA_GESTURE");
             mStatusBarKeyguardViewManager.notifyDeviceWakeUpRequested();
         }
-        if (source != StatusBarManager.CAMERA_LAUNCH_SOURCE_SCREEN_GESTURE) {
-            vibrateForCameraGesture();
-        }
+        vibrateForCameraGesture();
         if (!mStatusBarKeyguardViewManager.isShowing()) {
             startActivity(KeyguardBottomAreaView.INSECURE_CAMERA_INTENT,
                     true /* dismissShade */);
@@ -6241,10 +4969,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                         == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING;
         updateDozingState();
         Trace.endSection();
-    }
-
-    public VisualizerView getVisualizer() {
-        return mVisualizerView;
     }
 
     private final class ShadeUpdates {

@@ -36,8 +36,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 
-import static android.service.notification.NotificationListenerService.Ranking.importanceToLevel;
-
 /**
  * The list of currently displaying notifications.
  */
@@ -207,14 +205,14 @@ public class NotificationData {
 
             // IMPORTANCE_MIN media streams are allowed to drift to the bottom
             final boolean aMedia = a.key.equals(mediaNotification)
-                    && importanceToLevel(aImportance) > importanceToLevel(Ranking.IMPORTANCE_MIN);
+                    && aImportance > Ranking.IMPORTANCE_MIN;
             final boolean bMedia = b.key.equals(mediaNotification)
-                    && importanceToLevel(bImportance) > importanceToLevel(Ranking.IMPORTANCE_MIN);
+                    && bImportance > Ranking.IMPORTANCE_MIN;
 
-            boolean aSystemMax = importanceToLevel(aImportance) >= importanceToLevel(Ranking.IMPORTANCE_MAX)
-                    && isSystemNotification(na);
-            boolean bSystemMax = importanceToLevel(bImportance) >= importanceToLevel(Ranking.IMPORTANCE_MAX)
-                    && isSystemNotification(nb);
+            boolean aSystemMax = aImportance >= Ranking.IMPORTANCE_MAX &&
+                    isSystemNotification(na);
+            boolean bSystemMax = bImportance >= Ranking.IMPORTANCE_MAX &&
+                    isSystemNotification(nb);
 
             boolean isHeadsUp = a.row.isHeadsUp();
             if (isHeadsUp != b.row.isHeadsUp()) {
@@ -392,32 +390,6 @@ public class NotificationData {
         if (!BaseStatusBar.ENABLE_CHILD_NOTIFICATIONS
                 && mGroupManager.isChildInGroupWithSummary(sbn)) {
             return true;
-        }
-        return false;
-    }
-
-    /**
-     * Return whether there are any visible notifications (i.e. without an error).
-     */
-    public boolean hasActiveVisibleNotifications() {
-        for (Entry e : mSortedAndFiltered) {
-            if (e.getContentView() != null) { // the view successfully inflated
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Return whether there are any ongoing notifications (that aren't errors).
-     */
-    public boolean hasActiveOngoingNotifications() {
-        for (Entry e : mSortedAndFiltered) {
-            if (e.getContentView() != null) { // the view successfully inflated
-                if (e.notification.isOngoing()) {
-                    return true;
-                }
-            }
         }
         return false;
     }
