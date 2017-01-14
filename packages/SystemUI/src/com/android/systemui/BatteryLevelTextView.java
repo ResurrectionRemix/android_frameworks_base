@@ -98,7 +98,7 @@ public class BatteryLevelTextView extends TextView implements
             case STATUS_BAR_SHOW_BATTERY_PERCENT:
                 mRequestedVisibility = newValue != null && Integer.parseInt(newValue) == 2;
                 mForceBatteryText = CMSettings.System.getInt(getContext().getContentResolver(),
-                        CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
+                        CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 5 ? true : false;
                 mForceChargeBatteryText = Settings.Secure.getInt(getContext().getContentResolver(),
                         FORCE_CHARGE_BATTERY_TEXT, 1) == 1 ? true : false;
                 setVisibility((mBatteryCharging && mForceChargeBatteryText) || mRequestedVisibility || mForceBatteryText ? View.VISIBLE : View.GONE);
@@ -107,7 +107,7 @@ public class BatteryLevelTextView extends TextView implements
                 final int value = newValue == null ?
                         BatteryMeterDrawable.BATTERY_STYLE_PORTRAIT : Integer.parseInt(newValue);
                 mForceBatteryText = CMSettings.System.getInt(getContext().getContentResolver(),
-                        CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
+                        CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 5 ? true : false;
                 mForceChargeBatteryText = Settings.Secure.getInt(getContext().getContentResolver(),
                         FORCE_CHARGE_BATTERY_TEXT, 1) == 1 ? true : false;
                 switch (value) {
