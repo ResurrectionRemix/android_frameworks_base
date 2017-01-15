@@ -40,7 +40,7 @@ public class ViewConfiguration {
     /**
      * Duration of the fade when scrollbars fade away in milliseconds
      */
-    private static final int SCROLL_BAR_FADE_DURATION = 250;
+    private static final int SCROLL_BAR_FADE_DURATION = 280;
 
     /**
      * Default delay before the scrollbars fade in milliseconds
@@ -56,7 +56,7 @@ public class ViewConfiguration {
      * Defines the duration in milliseconds of the pressed state in child
      * components.
      */
-    private static final int PRESSED_STATE_DURATION = 64;
+    private static final int PRESSED_STATE_DURATION = 56;
 
     /**
      * Defines the default duration in milliseconds before a press turns into
@@ -99,7 +99,7 @@ public class ViewConfiguration {
      * is a tap or a scroll. If the user does not move within this interval, it is
      * considered to be a tap.
      */
-    private static final int TAP_TIMEOUT = 100;
+    private static final int TAP_TIMEOUT = 96;
 
     /**
      * Defines the duration in milliseconds we will wait to see if a touch event
@@ -199,7 +199,7 @@ public class ViewConfiguration {
     /**
      * Minimum velocity to initiate a fling, as measured in dips per second
      */
-    private static final int MINIMUM_FLING_VELOCITY = 50;
+    private static final int MINIMUM_FLING_VELOCITY = 60;
 
     /**
      * Maximum velocity to initiate a fling, as measured in dips per second
@@ -219,7 +219,7 @@ public class ViewConfiguration {
      * should be at least equal to the size of the screen in ARGB888 format.
      */
     @Deprecated
-    private static final int MAXIMUM_DRAWING_CACHE_SIZE = 480 * 800 * 4; // ARGB8888
+    private static final int MAXIMUM_DRAWING_CACHE_SIZE = 480 * 854 * 4; // ARGB8888
 
     /**
      * The coefficient of friction applied to flings/scrolls.
