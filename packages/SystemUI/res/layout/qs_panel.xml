@@ -38,22 +38,7 @@
     <include android:id="@+id/qs_customize" layout="@layout/qs_customize_panel"
         android:visibility="gone" />
 
+    <include layout="@layout/tm_layout" />
 
-<LinearLayout
-        android:id="@+id/task_manager_panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/qs_detail_background"
-        android:orientation="vertical"
-        android:visibility="gone" >
-        <include
-            layout="@layout/memory_usage_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <LinearLayout
-            android:id="@+id/task_manager_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </LinearLayout>
 </com.android.systemui.qs.QSContainer>
+

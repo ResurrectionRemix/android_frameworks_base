@@ -150,6 +150,10 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
                 Settings.Secure.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
     }
 
+    public void setenabled() {
+      mCustomizePanel.setenabled();
+    }
+
     public void vibrateTile(int duration) {
         if (!isVibrationEnabled()) { return; }
         if (mVibrator != null) {

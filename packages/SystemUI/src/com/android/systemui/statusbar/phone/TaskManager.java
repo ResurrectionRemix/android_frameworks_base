@@ -112,7 +112,6 @@ public class TaskManager {
     }
 
     public void refreshTaskManagerView () {
-        if (DEBUG) Log.e(TAG, "refreshTaskManagerView");
         loadRunningTasks();
         refreshMemoryUsagePanel();
         inflateTaskListView();
@@ -208,7 +207,7 @@ public class TaskManager {
                 mHandler.sendMessage(msg);
             }
         });
-        ImageView killButton = (ImageView) itemView.findViewById(R.id.kill_task);
+        TextView killButton = (TextView) itemView.findViewById(R.id.kill_task);
         killButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {

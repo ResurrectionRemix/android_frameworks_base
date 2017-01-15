@@ -200,5 +200,6 @@
     <string name="tasklist_killall">Kill All</string>
     <string name="tasklist_memory_usage"><b>"Free / Total Memory : </b><xliff:g id="number">%s</xliff:g> / <xliff:g id="name">%s</xliff:g>"</string>
     <string name="message_keep_one_launcher">Should keep at least one home activity!</string>
+    <string name="tm_clear_task">CLEAR</string>
 
 </resources>

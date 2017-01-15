@@ -79,6 +79,19 @@
             android:contentDescription="@string/accessibility_quick_settings_edit"
             android:padding="14dp" />
 
+        <com.android.systemui.statusbar.phone.TaskManagerButton
+            android:id="@+id/task_manager_button"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_toStartOf="@android:id/edit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clipToPadding="false"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_tasklist_switch_normal"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:visibility="gone"/>
+
         <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
             android:id="@+id/settings_button_container"
             android:layout_width="48dp"
@@ -104,15 +117,6 @@
 
         </com.android.systemui.statusbar.AlphaOptimizedFrameLayout>
 
-    <ImageButton android:id="@+id/task_manager_button"
-        style="@android:style/Widget.Material.Button.Borderless"
-        android:layout_toStartOf="@id/settings_button"
-        android:layout_width="48dp"
-        android:layout_height="@dimen/status_bar_header_height"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/ripple_drawable"
-        android:src="@drawable/ic_tasklist_switch_normal"
-        android:visibility="gone"/>
 
         <com.android.systemui.statusbar.phone.ExpandableIndicator
             android:id="@+id/expand_indicator"

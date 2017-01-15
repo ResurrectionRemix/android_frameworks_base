@@ -44,6 +44,12 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="TextAppearance.StatusBar.TaskManager" parent="@*android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:textSize">13dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <!-- Screenshot Crop & Share -->
     <style name="CropDialogAnimations">
         <item name="android:windowEnterAnimation">@anim/crop_in</item>
