@@ -88,10 +88,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private ClockController mClockController;
     private View mCenterClockLayout;
 
-	private ImageView mRRLogo;
-	private ImageView mRRLogoRight;
-	private ImageView mRRLogoLeft;
-	private NetworkTraffic mNetworkTraffic;
+    private ImageView mRRLogo;
+    private ImageView mRRLogoRight;
+    private ImageView mRRLogoLeft;
+    private NetworkTraffic mNetworkTraffic;
     private TextView mCarrierLabel;
     private int mCarrierLabelMode;
 
@@ -100,8 +100,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private ImageView mCLogoLeft;
     private ImageView mCLogoRight;
 
-	private TextView mWeather;
-	private TextView mWeatherLeft;
+    private TextView mWeather;
+    private TextView mWeatherLeft;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -166,10 +166,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
         mRRLogo = (ImageView) statusBar.findViewById(R.id.rr_logo);
         mRRLogoRight = (ImageView) statusBar.findViewById(R.id.rr_logo_right);
-		mRRLogoLeft = (ImageView) statusBar.findViewById(R.id.rr_logo_left);
-		mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
-		mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
-		mWeatherLeft = (TextView) statusBar.findViewById(R.id.left_weather_temp);
+        mRRLogoLeft = (ImageView) statusBar.findViewById(R.id.rr_logo_left);
+        mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
+        mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
+        mWeatherLeft = (TextView) statusBar.findViewById(R.id.left_weather_temp);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mCLogo = (ImageView) statusBar.findViewById(R.id.custom_center);
         mCLogoLeft = (ImageView) statusBar.findViewById(R.id.custom_left);
@@ -392,7 +392,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
                 if(mCustomLogoPos == 0) {
-                animateHide(mCLogoLeft, animate);
+                    animateHide(mCLogoLeft, animate);
                 }
         }
     }
@@ -423,7 +423,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
                 if(mCustomLogoPos == 0) {
-                animateShow(mCLogoLeft, animate);
+                    animateShow(mCLogoLeft, animate);
                 }
         }
     }
@@ -650,11 +650,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mWeather.setTextColor(mIconTint);
         mWeatherLeft.setTextColor(mIconTint);
 		}
-		if (Settings.System.getIntForUser(mContext.getContentResolver(),
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.NETWORK_TRAFFIC_COLOR, 0xFFFFFFFF,
                 UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
- 		mNetworkTraffic.setDarkIntensity(mDarkIntensity);
-		}
+        mNetworkTraffic.setDarkIntensity(mDarkIntensity);
+        }
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CARRIER_COLOR,
                 mContext.getResources().getColor(R.color.status_bar_clock_color),
