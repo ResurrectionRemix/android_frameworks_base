@@ -85,10 +85,11 @@
             android:scaleType="fitCenter"
             android:gravity="right"
             android:layout_toRightOf="@id/task_name"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true" 
+            android:visibility="gone"/>
 
-        <!--ImageView
-            android:id="@+id/kill_task"
+        <ImageView
+            android:id="@+id/kill_task_1"
             android:layout_width="@dimen/task_manager_item_height"
             android:layout_height="@dimen/task_manager_item_height"
             android:paddingRight="4dip"
@@ -97,6 +98,33 @@
             android:src="@drawable/btn_task_close_normal"
             android:scaleType="fitCenter"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true" /-->
+            android:layout_alignParentRight="true"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/kill_task_2"
+            android:layout_width="@dimen/task_manager_item_height"
+            android:layout_height="@dimen/task_manager_item_height"
+            android:paddingRight="4dip"
+            android:focusable="true"
+            android:state_pressed="true"
+            android:src="@drawable/tm_delete"
+            android:scaleType="fitCenter"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/kill_task_3"
+            android:layout_width="@dimen/task_manager_item_height"
+            android:layout_height="@dimen/task_manager_item_height"
+            android:paddingRight="4dip"
+            android:focusable="true"
+            android:state_pressed="true"
+            android:src="@drawable/tm_delete_classic"
+            android:scaleType="fitCenter"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

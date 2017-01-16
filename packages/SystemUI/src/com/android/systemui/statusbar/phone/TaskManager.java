@@ -45,6 +45,8 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -207,6 +209,42 @@ public class TaskManager {
                 mHandler.sendMessage(msg);
             }
         });
+        ImageView killButton1 = (ImageView) itemView.findViewById(R.id.kill_task_1);
+        killButton1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Message msg = Message.obtain();
+                msg.what = MSG_KILL_ONE;
+                Bundle bundle = new Bundle();
+                bundle.putString("packagename", packageName);
+                msg.setData(bundle);
+                mHandler.sendMessage(msg);
+            }
+        });
+        ImageView killButton2 = (ImageView) itemView.findViewById(R.id.kill_task_2);
+        killButton2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Message msg = Message.obtain();
+                msg.what = MSG_KILL_ONE;
+                Bundle bundle = new Bundle();
+                bundle.putString("packagename", packageName);
+                msg.setData(bundle);
+                mHandler.sendMessage(msg);
+            }
+        });
+        ImageView killButton3 = (ImageView) itemView.findViewById(R.id.kill_task_3);
+        killButton3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Message msg = Message.obtain();
+                msg.what = MSG_KILL_ONE;
+                Bundle bundle = new Bundle();
+                bundle.putString("packagename", packageName);
+                msg.setData(bundle);
+                mHandler.sendMessage(msg);
+            }
+        });
         TextView killButton = (TextView) itemView.findViewById(R.id.kill_task);
         killButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -219,6 +257,7 @@ public class TaskManager {
                 mHandler.sendMessage(msg);
             }
         });
+        updatevisibilities(killButton1,killButton2,killButton3,killButton);
 
         childs.put(packageName, itemView);
         mTaskManagerList.addView(itemView);
@@ -565,6 +604,35 @@ public class TaskManager {
             }
         }, FLOAT_VIEW_DISPLAY_TIME);
      }
+
+    public void updatevisibilities(ImageView i1, ImageView i2 ,ImageView i3 ,TextView t3) {
+    int which = Settings.System.getIntForUser(mContext.getContentResolver(), 
+                Settings.System.TASK_MANAGER_KILL_BUTTON, 0,
+                UserHandle.USER_CURRENT);
+                if(which == 0) {
+                i1.setVisibility(View.VISIBLE);
+                i2.setVisibility(View.GONE);
+                i3.setVisibility(View.GONE);
+                t3.setVisibility(View.GONE);
+                } else if (which == 1) {
+                i1.setVisibility(View.GONE);
+                i2.setVisibility(View.VISIBLE);
+                i3.setVisibility(View.GONE);
+                t3.setVisibility(View.GONE);
+                } else if (which == 2) {
+                i1.setVisibility(View.GONE);
+                i2.setVisibility(View.GONE);
+                i3.setVisibility(View.GONE);
+                t3.setVisibility(View.VISIBLE);
+                }  else if (which == 3) {
+                i1.setVisibility(View.GONE);
+                i2.setVisibility(View.GONE);
+                i3.setVisibility(View.VISIBLE);
+                t3.setVisibility(View.GONE);
+                }
+
+   }
+    
 
     private class TaskManagerHandler extends Handler {
         public void handleMessage(Message msg) {
