@@ -142,5 +142,6 @@
         <attr name="cropEnabled" format="boolean"/>
         <attr name="initialFrameScale" format="float"/>
     </declare-styleable>
-</resources>
 
+
+</resources>
