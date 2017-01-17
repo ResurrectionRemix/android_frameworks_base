@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
-** Copyright 2015 The RR Project
+/* Copyright (C) 2014 The Android Open Source Project
+** Copyright (c) 2017, The Resurrection Remix Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -30,9 +30,11 @@
         android:layout_height="20dip"
         android:fontFamily="sans-serif-condensed"
         android:textSize="12sp"
+        android:letterSpacing="0.12"
+        android:layout_marginTop="3dp"
         android:layout_gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/memory_usage_text_text"/>
+        android:textColor="@color/memory_usage_text"/>
 
     <ProgressBar
         android:id="@+id/memory_usage_Bar"
@@ -45,6 +47,8 @@
     <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="13dp"
             android:layout_gravity="center" >
      <ImageButton
         android:layout_width="54dp"
@@ -61,7 +65,7 @@
             android:clickable="true"
             android:background="@drawable/floating_action_button_tm"
             android:tint="@color/floating_action_button_icon_color"
-            android:src="@drawable/ic_dismiss_all9"/>
+            android:src="@drawable/ic_close"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -2980,11 +2980,11 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1;
             mTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY, 60);
-	    mShowTaskManager = Settings.System.getIntForUser(resolver,
+            mShowTaskManager = Settings.System.getIntForUser(resolver,
                     Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
-	    isLeftButton = Settings.System.getIntForUser(resolver,
+            isLeftButton = Settings.System.getIntForUser(resolver,
                     Settings.System.TASK_MANAGER_LEFT_BUTTON, 1, UserHandle.USER_CURRENT) == 1;
-	    isRightButton = Settings.System.getIntForUser(resolver,
+            isRightButton = Settings.System.getIntForUser(resolver,
                     Settings.System.TASK_MANAGER_RIGHT_BUTTON, 1, UserHandle.USER_CURRENT) == 1;
             updatebuttons();
 

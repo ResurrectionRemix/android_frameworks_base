@@ -38,7 +38,8 @@
     <include android:id="@+id/qs_customize" layout="@layout/qs_customize_panel"
         android:visibility="gone" />
 
-    <include layout="@layout/tm_layout" />
+    <include layout="@layout/tm_layout" 
+        android:layout_marginTop="51dp"/>
 
 </com.android.systemui.qs.QSContainer>
 

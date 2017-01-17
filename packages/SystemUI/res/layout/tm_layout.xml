@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2014 The Android Open Source Project
+     Copyright (c) 2017, The Resurrection Remix Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -17,9 +18,10 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/task_manager_panel"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="105dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:orientation="vertical"
         android:background="@drawable/qs_detail_background"
         android:visibility="gone" >
@@ -36,7 +38,7 @@
             android:layout_gravity="left"
             android:layout_weight="1"
             android:clickable="true"
-            android:tint="@color/system_accent_color"
+            android:tint="@color/tm_button_color"
             android:background="@drawable/floating_action_button_tm"
             android:src="@drawable/tm_services_icon"/>
     <ImageButton
@@ -46,17 +48,28 @@
             android:layout_gravity="right"
             android:layout_weight="1"
             android:clickable="true"
-            android:tint="@color/system_accent_color"
+            android:tint="@color/tm_button_color"
             android:background="@drawable/floating_action_button_tm"
             android:src="@drawable/tm_clear_all_icon"/>
        </LinearLayout>
+
         <include
             layout="@layout/memory_usage_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/task_manager_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="3dp"
             android:orientation="vertical" />
+
+ </ScrollView>
 </LinearLayout>

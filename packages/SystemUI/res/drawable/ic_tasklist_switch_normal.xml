@@ -1,8 +1,7 @@
-<!-- drawable/plus-circle-multiple-outline.xml -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-	android:height="24dp" 
-	android:width="24dp" 
-	android:viewportWidth="24" 
-	android:viewportHeight="24">
-	<path android:fillColor="#FFFFFFFF" 
-android:pathData="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.08 20.21,11.08 20.42,11.3L21.7,12.58C21.92,12.79 21.92,13.14 21.7,13.35M12,18.94L18.07,12.88L20.12,14.93L14.06,21H12V18.94M4,2H18A2,2 0 0,1 20,4V8.17L16.17,12H12V16.17L10.17,18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4,2M4,6V10H10V6H4M12,6V10H18V6H12M4,12V16H10V12H4Z"/></vector>
+    android:height="22dp"
+    android:width="22dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path android:fillColor="#ffffffff" android:pathData="M21,11H13V3A8,8 0 0,1 21,11M19,13C19,15.78 17.58,18.23 15.43,19.67L11.58,13H19M11,21C8.22,21 5.77,19.58 4.33,17.43L10.82,13.68L14.56,20.17C13.5,20.7 12.28,21 11,21M3,13A8,8 0 0,1 11,5V12.42L3.83,16.56C3.3,15.5 3,14.28 3,13Z" />
+</vector>

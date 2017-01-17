@@ -88,14 +88,11 @@
 
     <!-- Task Manager -->
     <color name="memory_usage_item_background">#00000000</color>
-    <color name="task_manager_title_text">#ffffffff</color>
-    <color name="memory_usage_text_text">#ffffffff</color>
-    <color name="qs_panel_background">#0000</color>
-    <color name="task_item_view_background">#00000000</color>
+    <color name="memory_usage_text">#ffffffff</color>
     <color name="task_item_background">#0000</color>
     <color name="task_item_text">#ffffffff</color>
-    <color name="task_manager_bg_color">#ff424242</color>
-    <color name="tm_title_color">#ffffffff</color>
-    <color name="kill_task_text_color">#ffffffff</color>
+    <color name="task_manager_bg_color">?android:attr/colorPrimary</color>
+    <color name="tm_button_color">#b3ffffff</color>
+    <color name="tm_close_button_color">#b3ffffff</color>
 
 </resources>
