@@ -320,7 +320,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // handle them with our customized input policy. Enable
     // when navigation bar is fully supporting this and we have
     // screen pinning unlock within long pressing back button.
-    static final boolean ENABLE_CUSTOM_INPUT_POLICY = false;
+    static final boolean ENABLE_CUSTOM_INPUT_POLICY = true;
 
     // must match: config_longPressOnHomeBehavior in config.xml
     static final int LONG_PRESS_HOME_NOTHING = 0;
