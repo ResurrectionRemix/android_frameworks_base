@@ -3849,6 +3849,18 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
 
         /**
+         * Enable blocking wakelock
+         * @hide
+         */
+        public static final String WAKELOCK_BLOCKING_ENABLED = "wakelock_blocking_enabled";
+
+        /**
+         * List of wakelock blocks selected
+         * @hide
+         */
+        public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
+
+        /**
           * Volume keys control cursor in text fields (default is 0)
           * 0 - Disabled
           * 1 - Volume up/down moves cursor left/right
@@ -5557,6 +5569,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String STATUS_BAR_CUSTOM_HEADER_IMAGE = "status_bar_custom_header_image";
 
         /**
+         *  Enable smartbar double tap to sleep gesture
+         * @hide
+         */
+        public static final String SMARTBAR_DOUBLETAP_SLEEP = "smartbar_doubletap_sleep";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6795,6 +6813,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * <p>0 = do not allow use of the package installer
          */
         public static final String INSTALL_NON_MARKET_APPS = "install_non_market_apps";
+
+        /**
+         * One Handed mode toggle
+         * @hide
+         */
+        public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
 
         /**
          * Comma-separated list of location providers that activities may access. Do not rely on
@@ -10649,6 +10673,8 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @see com.android.server.AlarmManagerService.Constants
          */
         public static final String ALARM_MANAGER_CONSTANTS = "alarm_manager_constants";
+
+        public static final String SINGLE_HAND_MODE = "single_hand_mode";
 
         /**
          * Job scheduler specific settings.

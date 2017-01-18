@@ -77,4 +77,7 @@
     <!-- The task item height in task list. -->
     <dimen name="task_manager_item_height">40dip</dimen>
 
+    <dimen name="navbar_single_hand_mode_horizontal_threshhold">90dp</dimen>
+    <dimen name="navbar_single_hand_mode_vertical_threshhold">48dp</dimen>
+
 </resources>
