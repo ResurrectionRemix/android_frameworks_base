@@ -277,6 +277,10 @@ public class RecentsView extends FrameLayout {
             boolean showing = mFloatingButton.getVisibility() == View.VISIBLE;
             if (showing) mFloatingButton.setVisibility(View.GONE);
             }
+            if(mStackActionButton !=null) {
+            boolean showing = mStackActionButton.getVisibility() == View.VISIBLE;
+            if(showing) mStackActionButton.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
