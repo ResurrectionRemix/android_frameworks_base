@@ -1120,7 +1120,6 @@
   <java-symbol type="string" name="demo_restarting_message" />
   <java-symbol type="string" name="conference_call" />
 
-
   <java-symbol type="plurals" name="bugreport_countdown" />
   <java-symbol type="plurals" name="duration_hours" />
   <java-symbol type="plurals" name="duration_minutes" />
@@ -2731,6 +2730,8 @@
   <java-symbol type="string" name="adb_net_active_notification_title" />
   <java-symbol type="string" name="adb_both_active_notification_title" />
   <java-symbol type="string" name="adb_active_generic_notification_message" />
+
+  <java-symbol type="bool" name="config_useDefaultBatchingForAccel" />
 
   <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
 

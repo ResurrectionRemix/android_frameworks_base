@@ -61,6 +61,7 @@ public class QSContainer extends FrameLayout {
     private QSCustomizer mQSCustomizer;
     private NotificationPanelView mPanelView;
     private boolean mListening;
+    boolean mTaskmanagerShowing;
 
     public QSContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -94,6 +95,10 @@ public class QSContainer extends FrameLayout {
 
     public void setPanelView(NotificationPanelView panelView) {
         mPanelView = panelView;
+    }
+
+    public boolean isTaskManagerShowing() {
+        return mPanelView.enabletaskmanager();
     }
 
     @Override

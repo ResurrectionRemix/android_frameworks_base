@@ -3849,6 +3849,18 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
 
         /**
+         * Enable blocking wakelock
+         * @hide
+         */
+        public static final String WAKELOCK_BLOCKING_ENABLED = "wakelock_blocking_enabled";
+
+        /**
+         * List of wakelock blocks selected
+         * @hide
+         */
+        public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
+
+        /**
           * Volume keys control cursor in text fields (default is 0)
           * 0 - Disabled
           * 1 - Volume up/down moves cursor left/right
@@ -4724,6 +4736,30 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS = "lock_screen_weather_number_of_notifications";
 
         /**
+         * Enable built in CAF task manager
+         * @hide
+         */
+        public static final String ENABLE_TASK_MANAGER = "enable_task_manager";
+
+        /**
+         * Select style of kill button for tasks
+         * @hide
+         */
+        public static final String TASK_MANAGER_KILL_BUTTON = "task_manager_kill_button";
+
+        /**
+         * Enable built left services button in task manager
+         * @hide
+         */
+        public static final String TASK_MANAGER_LEFT_BUTTON = "task_manager_left_button";
+
+        /**
+         * Enable built right clear notifications button in task manager
+         * @hide
+         */
+        public static final String TASK_MANAGER_RIGHT_BUTTON = "task_manager_right_button";
+
+        /**
          * Number of notifications visible on the lockscreen including the overflow container
          * @hide
          */
@@ -5342,9 +5378,9 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String RR_SETTINGS_TABS_EFFECT = "rr_settings_tabs_effect";
 
-         /**
-         * Change the color of the lockscreen bottom camera shortcut
+        /**
          *
+         * Change the color of the lockscreen bottom camera shortcut
          * @hide
          */
         public static final String LOCKSCREEN_CAMERA_ICON_COLOR = "lockscreen_camera_icon_color";
@@ -5500,6 +5536,43 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String QS_DATE_TIME_CENTER = "qs_date_time_center";
+
+        /**
+         * Whether to use the custom status bar header or not
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
+
+        /**
+         * Whether to apply a shadow on top of the header image
+         * value is the alpha value of the shadow image is 0 -> no shadow -> 255 black
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER_SHADOW = "status_bar_custom_header_shadow";
+
+        /**
+         * header image package to use for daylight header - package name - null if default
+         * @hide
+         */
+        public static final String STATUS_BAR_DAYLIGHT_HEADER_PACK = "status_bar_daylight_header_pack";
+
+        /**
+         * Current active provider
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER_PROVIDER = "status_bar_custom_header_provider";
+
+        /**
+         * Manual override picture to use
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER_IMAGE = "status_bar_custom_header_image";
+
+        /**
+         *  Enable smartbar double tap to sleep gesture
+         * @hide
+         */
+        public static final String SMARTBAR_DOUBLETAP_SLEEP = "smartbar_doubletap_sleep";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -6740,6 +6813,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * <p>0 = do not allow use of the package installer
          */
         public static final String INSTALL_NON_MARKET_APPS = "install_non_market_apps";
+
+        /**
+         * One Handed mode toggle
+         * @hide
+         */
+        public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
 
         /**
          * Comma-separated list of location providers that activities may access. Do not rely on
@@ -10594,6 +10673,8 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @see com.android.server.AlarmManagerService.Constants
          */
         public static final String ALARM_MANAGER_CONSTANTS = "alarm_manager_constants";
+
+        public static final String SINGLE_HAND_MODE = "single_hand_mode";
 
         /**
          * Job scheduler specific settings.
