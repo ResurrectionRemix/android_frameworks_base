@@ -47,6 +47,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"
+        android:shadowColor="#77000000"
+        android:shadowDx="0"
+        android:shadowDy="3"
+        android:shadowRadius="15"
         android:background="@color/task_item_background" >
 
         <ImageView
@@ -78,8 +82,8 @@
 
         <TextView
             android:id="@+id/kill_task"
-            android:layout_width="@dimen/task_manager_item_height"
-            android:layout_height="@dimen/task_manager_item_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.StatusBar.TaskManager"
             android:state_pressed="true"
             android:focusable="true"
@@ -92,6 +96,7 @@
             android:scaleType="fitCenter"
             android:gravity="right"
             android:layout_marginRight="10dp"
+            android:paddingBottom="5dp"
             android:layout_toRightOf="@id/task_name"
             android:layout_alignParentRight="true" 
             android:visibility="gone"/>
@@ -101,6 +106,7 @@
             android:layout_width="@dimen/task_manager_item_height"
             android:layout_height="@dimen/task_manager_item_height"
             android:paddingRight="4dip"
+            android:paddingTop="9dp"
             android:focusable="true"
             android:state_pressed="true"
             android:src="@drawable/btn_task_close_normal"
@@ -114,6 +120,7 @@
             android:layout_width="@dimen/task_manager_item_height"
             android:layout_height="@dimen/task_manager_item_height"
             android:paddingRight="4dip"
+            android:paddingTop="5dp"
             android:focusable="true"
             android:state_pressed="true"
             android:src="@drawable/tm_delete"
@@ -127,6 +134,7 @@
             android:layout_width="@dimen/task_manager_item_height"
             android:layout_height="@dimen/task_manager_item_height"
             android:paddingRight="4dip"
+            android:paddingTop="9dp"
             android:focusable="true"
             android:state_pressed="true"
             android:src="@drawable/tm_delete_classic"
