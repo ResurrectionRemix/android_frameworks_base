@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:orientation="vertical"
-        android:background="@drawable/qs_detail_background"
+        android:background="@drawable/qs_tm_detail_background"
         android:visibility="gone" >
 
     <LinearLayout
