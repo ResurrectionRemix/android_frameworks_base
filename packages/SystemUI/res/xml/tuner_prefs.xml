@@ -27,9 +27,14 @@
         android:title="@string/show_brightness"
         sysui:defValue="true" />
 
-     <com.android.systemui.tuner.StatusBarSwitch
-        android:key="volte"
-        android:title="@string/status_bar_volte" />
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="volte"
+            android:title="@string/status_bar_volte" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="data_saver"
+            android:title="@string/status_bar_datasaver" />
+
 
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="rotate"
@@ -54,6 +59,10 @@
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="hotspot"
             android:title="@string/quick_settings_hotspot_label" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="vpn"
+            android:title="@string/status_bar_vpn" />
 
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="bluetooth"
