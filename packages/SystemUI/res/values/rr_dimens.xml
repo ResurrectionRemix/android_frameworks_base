@@ -23,10 +23,15 @@
     <dimen name="floating_action_button_margin_side">32dp</dimen>
     <dimen name="floating_action_button_margin_bottom">46dp</dimen>
 
+    <!-- Clear-All recents FAB -->
+    <integer name="recents_animate_fab_enter_duration">225</integer>
+    <integer name="recents_animate_fab_enter_delay">275</integer>
+    <integer name="recents_animate_fab_exit_duration">125</integer>
+
     <!-- Network traffic monitor single-line text size -->
     <dimen name="net_traffic_single_text_size">12dp</dimen>
 
-	<dimen name="net_traffic_multi_text_size">8dp</dimen>
+    <dimen name="net_traffic_multi_text_size">8dp</dimen>
 
     <!-- App circle sidebar -->
     <dimen name="app_sidebar_trigger_width">12dip</dimen>

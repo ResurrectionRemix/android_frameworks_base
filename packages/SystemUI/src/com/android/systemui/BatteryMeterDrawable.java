@@ -56,7 +56,7 @@ import org.cyanogenmod.graphics.drawable.StopMotionVectorDrawable;
 public class BatteryMeterDrawable extends Drawable implements
         BatteryController.BatteryStateChangeCallback {
 
-    private static final float ASPECT_RATIO = 9.5f / 14.5f;
+    private static final float ASPECT_RATIO = 9.5f / 14.3f;
     public static final String TAG = BatteryMeterDrawable.class.getSimpleName();
     public static final String SHOW_PERCENT_SETTING = "status_bar_show_battery_percent";
     private static final String STATUS_BAR_CHARGE_COLOR =

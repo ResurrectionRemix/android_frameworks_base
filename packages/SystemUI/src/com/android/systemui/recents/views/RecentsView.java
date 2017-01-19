@@ -19,6 +19,7 @@ package com.android.systemui.recents.views;
 import static android.app.ActivityManager.StackId.INVALID_STACK_ID;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.ActivityOptions.OnAnimationStartedListener;
 import android.content.Context;
@@ -149,6 +150,7 @@ public class RecentsView extends FrameLayout {
     TextView mMemText;
     ProgressBar mMemBar;
 
+    private boolean showClearAllRecents;
     private ActivityManager mAm;
     private int mTotalMem;
     public int mClearStyle;
@@ -172,9 +174,9 @@ public class RecentsView extends FrameLayout {
     TextClock mClock;
     TextView mDate;
 
-	View mFloatingButton;
-	ImageButton mClearRecents;
-	private int clearRecentsLocation;
+    View mFloatingButton;
+    ImageButton mClearRecents;
+    private int clearRecentsLocation;
 
     public RecentsView(Context context) {
         this(context, null);
@@ -266,14 +268,19 @@ public class RecentsView extends FrameLayout {
         // Update the top level view's visibilities
         if (stack.getTaskCount() > 0) {
             hideEmptyView();
-			if (mFloatingButton != null) {
-			mFloatingButton.setVisibility(View.VISIBLE);
-			}
+            if (mFloatingButton != null) {
+		mFloatingButton.setVisibility(View.VISIBLE);
+              }
         } else {
             showEmptyView(R.string.recents_empty_message);
-			if (mFloatingButton != null) {
-			mFloatingButton.setVisibility(View.GONE);
-			}
+            if (mFloatingButton != null) {
+            boolean showing = mFloatingButton.getVisibility() == View.VISIBLE;
+            if (showing) mFloatingButton.setVisibility(View.GONE);
+            }
+            if(mStackActionButton !=null) {
+            boolean showing = mStackActionButton.getVisibility() == View.VISIBLE;
+            if(showing) mStackActionButton.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -380,6 +387,30 @@ public class RecentsView extends FrameLayout {
             mStackActionButton.bringToFront();
         }
         setOnClickListener(null);
+    }
+
+    public void startFABanimation() {
+        RecentsConfiguration config = Recents.getConfiguration();
+        // Animate the action button in
+        mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
+        mFloatingButton.animate().alpha(1f)
+                .setStartDelay(config.fabEnterAnimDelay)
+                .setDuration(config.fabEnterAnimDuration)
+                .setInterpolator(Interpolators.ALPHA_IN)
+                .withLayer()
+                .start();
+    }
+
+    public void endFABanimation() {
+        RecentsConfiguration config = Recents.getConfiguration();
+        // Animate the action button away
+        mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
+        mFloatingButton.animate().alpha(0f)
+                .setStartDelay(0)
+                .setDuration(config.fabExitAnimDuration)
+                .setInterpolator(Interpolators.ALPHA_OUT)
+                .withLayer()
+                .start();
     }
 
     @Override
@@ -705,9 +736,6 @@ public class RecentsView extends FrameLayout {
             mTaskStackView.measure(widthMeasureSpec, heightMeasureSpec);
         showMemDisplay();
         }
-		LayoutInflater inflater = LayoutInflater.from(mContext);
-        float cornerRadius = mContext.getResources().getDimensionPixelSize(
-                    R.dimen.recents_task_view_rounded_corners_radius);
 
         updateTimeVisibility();
 
@@ -726,20 +754,18 @@ public class RecentsView extends FrameLayout {
         }
 
         setMeasuredDimension(width, height);
-        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
 
-      if (mFloatingButton != null && showClearAllRecents) {
-        clearRecentsLocation = Settings.System.getIntForUser(
+     if (mFloatingButton != null && showClearAllRecents) {
+            clearRecentsLocation = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.RECENTS_CLEAR_ALL_LOCATION,
-           		3, UserHandle.USER_CURRENT);
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
+                3, UserHandle.USER_CURRENT);
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
                     mFloatingButton.getLayoutParams();
-        boolean isLandscape = mContext.getResources().getConfiguration().orientation
+            boolean isLandscape = mContext.getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
-           if (mMemBar == null || isLandscape) {
+            if (isLandscape) {
                 params.topMargin = mContext.getResources().
-                    getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height);
+                      getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height);
             } else {
                 params.topMargin = 2*(mContext.getResources().
                     getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
@@ -770,7 +796,9 @@ public class RecentsView extends FrameLayout {
         } else {
             mFloatingButton.setVisibility(View.GONE);
         }
-
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        float cornerRadius = mContext.getResources().getDimensionPixelSize(
+                    R.dimen.recents_task_view_rounded_corners_radius);
     }
 
     private boolean showMemDisplay() {
@@ -1106,34 +1134,41 @@ public class RecentsView extends FrameLayout {
      * Shows the stack action button.
      */
     private void showStackActionButton(final int duration, final boolean translate) {
-        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
-        if (showClearAllRecents) {
+        if (!RecentsDebugFlags.Static.EnableStackActionButton) {
             return;
         }
-        final ReferenceCountedTrigger postAnimationTrigger = new ReferenceCountedTrigger();
-            mStackActionButton.setVisibility(View.VISIBLE);
-            mStackActionButton.setAlpha(0f);
-            if (translate) {
-                mStackActionButton.setTranslationY(-mStackActionButton.getMeasuredHeight() * 0.25f);
-            } else {
-                mStackActionButton.setTranslationY(0f);
-            }
-            postAnimationTrigger.addLastDecrementRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    if (translate) {
-                        mStackActionButton.animate()
-                            .translationY(0f);
-                    }
-                    mStackActionButton.animate()
-                            .alpha(1f)
-                            .setDuration(duration)
-                            .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
-                            .start();
+        if (!showClearAllRecents) {
+            final ReferenceCountedTrigger postAnimationTrigger = new ReferenceCountedTrigger();
+            if (mStackActionButton.getVisibility() == View.INVISIBLE) {
+                mStackActionButton.setVisibility(View.VISIBLE);
+                mStackActionButton.setAlpha(0f);
+                if (translate) {
+                    mStackActionButton.setTranslationY(-mStackActionButton.getMeasuredHeight() * 0.25f);
+                } else {
+                    mStackActionButton.setTranslationY(0f);
                 }
-            });
-        postAnimationTrigger.flushLastDecrementRunnables();
+                postAnimationTrigger.addLastDecrementRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (translate) {
+                            mStackActionButton.animate()
+                                .translationY(0f);
+                        }
+                        mStackActionButton.animate()
+                                .alpha(1f)
+                                .setDuration(duration)
+                                .setInterpolator(Interpolators.FAST_OUT_SLOW_IN)
+                                .start();
+                    }
+                });
+            }
+            postAnimationTrigger.flushLastDecrementRunnables();
+        } else {
+          if(mStackActionButton !=null) {
+          boolean showing = mStackActionButton.getVisibility() == View.VISIBLE;
+          if(showing) mStackActionButton.setVisibility(View.INVISIBLE);
+          }
+        }
     }
 
     /**
@@ -1297,6 +1332,8 @@ public class RecentsView extends FrameLayout {
                      Settings.System.RECENTS_DATE_COLOR), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.SHOW_CLEAR_ALL_RECENTS), false, this, UserHandle.USER_ALL);
 
              update();
          }
@@ -1375,6 +1412,8 @@ public class RecentsView extends FrameLayout {
         mAnimStyle =  Settings.System.getIntForUser(
                     resolver, Settings.System.FAB_ANIMATION_STYLE, 0,
                     UserHandle.USER_CURRENT);
+        showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) == 1;
         mDefaultcolor = res.getColor(R.color.recents_membar_text_color);
         updateeverything();
          }

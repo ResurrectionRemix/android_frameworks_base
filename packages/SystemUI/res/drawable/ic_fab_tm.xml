@@ -5,4 +5,4 @@
     android:height="54dp"
     android:viewportWidth="158.0"
     android:viewportHeight="158.0"
-    android:tint="@color/fab_color"/>
+    android:tint="@color/tm_floating_action_button_bg_color"/>
