@@ -236,7 +236,7 @@ public class KeyguardIndicationController {
             }
             if (mTemperature > 0) {
                 batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
-                        mTemperature / 10 + "°c";
+                        mTemperature / 10 + "°C";
             }
             if (batteryInfo != "") {
                 batteryInfo = "\n" + batteryInfo;
