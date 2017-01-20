@@ -99,42 +99,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC aus</string>
-  <string name="quick_settings_screenrecord">Bildschirmvideo</string>
   <string name="quick_settings_screenrecord_on">Aufnahme ...</string>
   <string name="quick_settings_navigation_bar">Navigationsleiste</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar aus</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling aus</string>
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar an</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar aus</string>
-  <string name="quick_settings_gesture_anywhere_label">Systemweite Gesten</string>
   <string name="quick_settings_gesture_anywhere_on">Gesten an</string>
   <string name="quick_settings_gesture_anywhere_off">Gesten aus</string>
-  <string name="quick_settings_appsidebar_title">AppSideBar</string>
-  <string name="quick_settings_appsidebar_on">AppSideBar an</string>
-  <string name="quick_settings_appsidebar_off">AppSideBar aus</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse aktiviert</string>
-  <string name="quick_settings_pulse_disabled">Kein Visualizer</string>
   <string name="quick_settings_pulse_label">Puls</string>
   <string name="accessibility_quick_settings_pulse_off">Impuls aus</string>
   <string name="accessibility_quick_settings_pulse_on">Impuls an</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Impuls ausgeschaltet</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Impuls eingeschalten</string>
-  <string name="quick_settings_pulse_label">Navigationsleisten Visualizer</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Inaktivitätsdisplay</string>
   <string name="accessibility_quick_settings_ambient_display_off">Inaktivitätsbildschirm aus.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Inaktivitätsbildschirm an.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Inaktivitätsbildschirm wurde ausgeschaltet.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Inaktivitätsbildschirm wurde aktiviert.</string>
   <string name="quick_settings_heads_up_label">Heads-Up</string>
-  <string name="accessibility_quick_settings_heads_up_off">Heads-up aus.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Heads-up an.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up ausgeschaltet.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up eingeschaltet.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Sprache</string>
   <string name="quick_settings_locale_more_locales_toast">Bitte richten Sie mehrere Sprachen ein, um die Umschaltfunktion zu aktivieren</string>
@@ -142,8 +122,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Anwendung beendet</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind 1 Minute lang deaktiviert.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Heads-Up Benachrichtigungen sind für <xliff:g id="number">%d </xliff:g> Minuten deaktiviert.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Kein Screenshot aufgenommen</string>
   <string name="screenshot_abort_text">Vorgang abgebrochen</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">ALLE LÖSCHEN</string>
   <string name="recents_free_ram">Freier RAM-Speicher: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

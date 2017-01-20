@@ -99,34 +99,16 @@
   <string name="quick_settings_nfc">تقنية الاتصال قريب المدى (NFC)</string>
   <string name="quick_settings_nfc_label">تقنية الاتصال قريب المدى (NFC)</string>
   <string name="quick_settings_nfc_off">NFC مغلق</string>
-  <string name="quick_settings_screenrecord">تسجيل الشاشة</string>
   <string name="quick_settings_screenrecord_on">جار التسجيل...</string>
   <string name="quick_settings_navigation_bar">شريط التنقل</string>
-  <string name="quick_settings_smartbar">الشريط الذكي</string>
-  <string name="quick_settings_smartbar_off">اغلاق الشريط الذكي</string>
   <string name="quick_settings_fling">اندفاع</string>
   <string name="quick_settings_fling_off">الاندفاع معطل</string>
-  <string name="quick_settings_appcirclebar_title">دائرة شريط التطبيقات</string>
-  <string name="quick_settings_appcirclebar_on">تفعيل دائرة شريط التطبيقات</string>
-  <string name="quick_settings_appcirclebar_off">إيقاف دائرة شريط التطبيقات</string>
-  <string name="quick_settings_gesture_anywhere_label">الإيماء في أي مكان</string>
   <string name="quick_settings_gesture_anywhere_on">تفعيل الإيماءات</string>
   <string name="quick_settings_gesture_anywhere_off">ايقاف الإيماءات</string>
-  <string name="quick_settings_appsidebar_title">شريط التطبيقات الجانبي</string>
-  <string name="quick_settings_appsidebar_on">تفعيل شريط التطبيقات الجانبي</string>
-  <string name="quick_settings_appsidebar_off">ايقاف شريط التطبيقات الجانبي</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">تفصل النبض</string>
   <string name="quick_settings_ambient_display_label">عرض المحيط</string>
   <string name="accessibility_quick_settings_ambient_display_off">إيقاف عرض المحيط.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">تفعيل عرض المحيط.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">تم إيقاف عرض المحيط.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">تم تشغيل عرض المحيط.</string>
   <string name="quick_settings_heads_up_label">الإشعارات العلوية</string>
-  <string name="accessibility_quick_settings_heads_up_off">إيقاف الإشعارات العلوية</string>
-  <string name="accessibility_quick_settings_heads_up_on">تفعيل الإشعارات العلوية</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">تم إيقاف الإشعارات العلوية</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">تم تفعيل الإشعارات العلوية</string>
   <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
@@ -154,4 +136,5 @@
   <string name="action_edit">تحرير</string>
   <string name="recents_custom_android_n">حذف الكل</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

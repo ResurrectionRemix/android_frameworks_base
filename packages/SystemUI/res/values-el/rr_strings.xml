@@ -99,42 +99,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC ανενεργό</string>
-  <string name="quick_settings_screenrecord">Βιντεοσκόπηση Οθόνης</string>
   <string name="quick_settings_screenrecord_on">Εγγραφή ...</string>
   <string name="quick_settings_navigation_bar">Γραμμή πλοήγησης</string>
-  <string name="quick_settings_smartbar">Έξυπνη Μπάρα</string>
-  <string name="quick_settings_smartbar_off">Έξυπνη Μπάρα ανενεργό</string>
   <string name="quick_settings_fling">Ρίψιμο</string>
   <string name="quick_settings_fling_off">Ρίψιμο ανενεργό</string>
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar ενεργή</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar ανενεργή</string>
-  <string name="quick_settings_gesture_anywhere_label">Χειρονομία οπουδήποτε</string>
   <string name="quick_settings_gesture_anywhere_on">Χειρονομίες ενεργές</string>
   <string name="quick_settings_gesture_anywhere_off">Χειρονομίες ανενεργές</string>
-  <string name="quick_settings_appsidebar_title">AppSideBar</string>
-  <string name="quick_settings_appsidebar_on">AppSideBar ενεργή</string>
-  <string name="quick_settings_appsidebar_off">AppSideBar ανενεργή</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Παλμός ενεργός</string>
-  <string name="quick_settings_pulse_disabled">Χωρίς οπτικοποίηση</string>
   <string name="quick_settings_pulse_label">Παλμός</string>
   <string name="accessibility_quick_settings_pulse_off">Παλμός ανενεργός</string>
   <string name="accessibility_quick_settings_pulse_on">Παλμός ενεργός</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Ο παλμός απενεργοποιήθηκε</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Ο παλμός ενεργοποιήθηκε</string>
-  <string name="quick_settings_pulse_label">Οπτικοποιητής γραμμής πλοήγησης</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Οθόνη ambient</string>
   <string name="accessibility_quick_settings_ambient_display_off">Οθόνη ambient ανενεργή.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Ambient display ενεργοπημένο.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Οθόνη ambient απενεργοποιημένη.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Οθόνη ambient ενεργοποιημένη.</string>
   <string name="quick_settings_heads_up_label">Αναδυόμενες ειδοποιήσεις</string>
-  <string name="accessibility_quick_settings_heads_up_off">Αναδυόμενες ειδοποιήσεις ανενεργές.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Αναδυόμενες ειδοποιήσεις ενεργές.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Αναδυόμενες ειδοποιήσεις ανενεργές.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Αναδυόμενες ειδοποιήσεις ενεργές.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Γλώσσα</string>
   <string name="quick_settings_locale_more_locales_toast">Παρακαλούμε ρυθμίστε πολλαπλές γλώσσες για να ενεργοποιήσετε τη λειτουργία εναλλαγής</string>
@@ -142,8 +122,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Η εφαρμογή τερματίστηκε</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Ή peeking ειδοποίηση αναβάλλεται για 1 λεπτό.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Ή peeking ειδοποιήσεις αναβάλλονται για <xliff:g id="number">%d</xliff:g> λεπτά.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Δεν λήφθηκε στιγμιότυπο οθόνης</string>
   <string name="screenshot_abort_text">Η λειτουργία ματαιώθηκε</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">ΑΠΑΛΟΙΦΉ ΌΛΩΝ</string>
   <string name="recents_free_ram">Ελεύθερη μνήμη RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

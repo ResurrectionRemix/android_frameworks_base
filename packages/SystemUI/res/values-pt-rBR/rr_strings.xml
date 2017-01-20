@@ -93,57 +93,35 @@
   <string name="accessibility_quick_settings_caffeine_off">Cafeína desligada</string>
   <string name="accessibility_quick_settings_caffeine_on">Cafeína ligada</string>
   <string name="qs_app_picker_title">Selecionador de App</string>
-  <string name="quick_settings_lte_label">LTE</string>
+  <string name="quick_settings_lte_label">4G</string>
   <string name="lte_on">LTE Ligado </string>
   <string name="lte_off">LTE desligado</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC desligado</string>
-  <string name="quick_settings_screenrecord">Gravar tela</string>
   <string name="quick_settings_screenrecord_on">Gravando ...</string>
   <string name="quick_settings_navigation_bar">Barra de Navegação</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar desligada</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling desligado</string>
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar ligado</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar desligado</string>
-  <string name="quick_settings_gesture_anywhere_label">Gestos em Qualquer Lugar</string>
   <string name="quick_settings_gesture_anywhere_on">Gestos Ativados</string>
   <string name="quick_settings_gesture_anywhere_off">Gestos Desativados</string>
-  <string name="quick_settings_appsidebar_title">AppSideBar</string>
-  <string name="quick_settings_appsidebar_on">AppSideBar ligado</string>
-  <string name="quick_settings_appsidebar_off">AppSideBar desligado</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Habilitado</string>
-  <string name="quick_settings_pulse_disabled">Nenhum Visualizador</string>
   <string name="quick_settings_pulse_label">Pulso</string>
   <string name="accessibility_quick_settings_pulse_off">Pulso Desligado </string>
   <string name="accessibility_quick_settings_pulse_on">Pulso Ligado</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulso Esta Desligado</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulso Esta Ligado</string>
-  <string name="quick_settings_pulse_label">Visualizador da Barra de Navegação</string>
   <string name="quick_settings_pie">Controle Pie</string>
   <string name="quick_settings_ambient_display_label">Tela ambiente</string>
   <string name="accessibility_quick_settings_ambient_display_off">Tela Ambiente desligada.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Tela Ambiente ligada.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Tela Ambiente foi desligada.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Tela Ambiente foi ligado.</string>
   <string name="quick_settings_heads_up_label">Notificações pop-up</string>
-  <string name="accessibility_quick_settings_heads_up_off">Notificações pop-up desativadas.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Notificações pop-up ativadas.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Notificações pop-up desativadas.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">As notificações pop-up foram ativadas.</string>
   <!-- Language\Locale Tile -->
-  <string name="quick_settings_locale_label">Linguagem</string>
+  <string name="quick_settings_locale_label">Idioma</string>
   <string name="quick_settings_locale_more_locales_toast">Por favor, configure vários idiomas para habilitar a funcionalidade de ativar/desativar</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicativo encerrado</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - As notificações estão cochilando durante 1 minuto.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - As notificações estão cochilando por <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nenhuma captura de tela tirada</string>
   <string name="screenshot_abort_text">Operação abortada</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">LIMPAR TUDO</string>
   <string name="recents_free_ram">RAM Livre: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

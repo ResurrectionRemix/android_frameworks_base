@@ -99,42 +99,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC wył.</string>
-  <string name="quick_settings_screenrecord">Nagrywanie ekranu</string>
   <string name="quick_settings_screenrecord_on">Nagrywanie...</string>
   <string name="quick_settings_navigation_bar">Pasek nawigacji</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar wył</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling off</string>
-  <string name="quick_settings_appcirclebar_title">Okrągły pasek aplikacji</string>
-  <string name="quick_settings_appcirclebar_on">Okrągły pasek aplikacji włączony</string>
-  <string name="quick_settings_appcirclebar_off">Okrągły pasek aplikacji wyłączony</string>
-  <string name="quick_settings_gesture_anywhere_label">Sterowanie gestami</string>
   <string name="quick_settings_gesture_anywhere_on">Gesty włączone</string>
   <string name="quick_settings_gesture_anywhere_off">Gesty wyłączne</string>
-  <string name="quick_settings_appsidebar_title">Boczny pasek aplikacji</string>
-  <string name="quick_settings_appsidebar_on">Boczny pasek aplikacji włączony</string>
-  <string name="quick_settings_appsidebar_off">Boczny pasek aplikacji wyłączony</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulsacja włączona</string>
-  <string name="quick_settings_pulse_disabled">Brak wizualizacji</string>
   <string name="quick_settings_pulse_label">Impuls</string>
   <string name="accessibility_quick_settings_pulse_off">Wizualizacja wyłączona</string>
   <string name="accessibility_quick_settings_pulse_on">Wizualizacja włączona</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Impuls wyłączony</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Impuls włczony</string>
-  <string name="quick_settings_pulse_label">Wizualizacja na pasku nawigacji</string>
   <string name="quick_settings_pie">Kołowy pasek nawigacji</string>
   <string name="quick_settings_ambient_display_label">Ambient display</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ambient display wył.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Ambient display wł.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display wyłączony.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display włączony.</string>
   <string name="quick_settings_heads_up_label">Wyskakujące powiadomienia</string>
-  <string name="accessibility_quick_settings_heads_up_off">Wyskakujące powiadomienia wył.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Wyskakujące powiadomienia wł.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Wyskakujące powiadomienia wyłączone.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Wyskakujące powiadomienia włączone.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Język</string>
   <string name="quick_settings_locale_more_locales_toast">Proszę skonfigurować wiele języków, aby włączyć funkcję przełączania</string>
@@ -142,8 +122,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikacja została zabita</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - wgląd do powiadomienia są drzemkę na 1 minutę.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Wyskakujące powiadomienia są uśpione na <xliff:g id="number">%d </xliff:g> minut.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nie wykonano zrzutu ekranu</string>
   <string name="screenshot_abort_text">Operacja przerwana</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">WYCZYŚĆ WSZYSTKO</string>
   <string name="recents_free_ram">Wolna pamięć RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

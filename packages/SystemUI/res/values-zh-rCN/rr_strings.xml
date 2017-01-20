@@ -99,42 +99,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC 关闭</string>
-  <string name="quick_settings_screenrecord">屏幕录像</string>
   <string name="quick_settings_screenrecord_on">正在录制...</string>
   <string name="quick_settings_navigation_bar">导航栏</string>
-  <string name="quick_settings_smartbar">智能通知栏</string>
-  <string name="quick_settings_smartbar_off">智能通知栏关闭</string>
   <string name="quick_settings_fling">扫描</string>
   <string name="quick_settings_fling_off">Fling off</string>
-  <string name="quick_settings_appcirclebar_title">应用程序环形栏</string>
-  <string name="quick_settings_appcirclebar_on">应用程序环形栏开启</string>
-  <string name="quick_settings_appcirclebar_off">应用程序环形栏关闭</string>
-  <string name="quick_settings_gesture_anywhere_label">自由手势</string>
   <string name="quick_settings_gesture_anywhere_on">手势开启</string>
   <string name="quick_settings_gesture_anywhere_off">手势关闭</string>
-  <string name="quick_settings_appsidebar_title">应用侧边栏</string>
-  <string name="quick_settings_appsidebar_on">侧边栏开启</string>
-  <string name="quick_settings_appsidebar_off">侧边栏关闭</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">音乐可视化开启</string>
-  <string name="quick_settings_pulse_disabled">没有可视化工具</string>
   <string name="quick_settings_pulse_label">脉冲信号</string>
   <string name="accessibility_quick_settings_pulse_off">脉冲关</string>
   <string name="accessibility_quick_settings_pulse_on">脉冲开</string>
   <string name="accessibility_quick_settings_pulse_changed_off">脉冲已关闭</string>
   <string name="accessibility_quick_settings_pulse_changed_on">脉冲已开启</string>
-  <string name="quick_settings_pulse_label">导航音乐可视化工具</string>
   <string name="quick_settings_pie">Pie侧边工具</string>
   <string name="quick_settings_ambient_display_label">主动显示</string>
   <string name="accessibility_quick_settings_ambient_display_off">主动显示已关闭。</string>
-  <string name="accessibility_quick_settings_ambient_display_on">主动显示已开启。</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">主动显示已关闭。</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">主动显示已开启。</string>
   <string name="quick_settings_heads_up_label">浮动通知</string>
-  <string name="accessibility_quick_settings_heads_up_off">浮动通知已关闭。</string>
-  <string name="accessibility_quick_settings_heads_up_on">浮动通知已开启</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭。</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启。</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">语言</string>
   <string name="quick_settings_locale_more_locales_toast">请配置多种语言以使用切换功能</string>
@@ -142,8 +122,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">应用已终止</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g>-查看通知打盹 1 分钟。</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">没有截图</string>
   <string name="screenshot_abort_text">操作中止</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">全部清除</string>
   <string name="recents_free_ram">可用运存: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

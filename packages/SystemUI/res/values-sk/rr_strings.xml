@@ -19,14 +19,14 @@
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Obrazovka sa nahráva</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Nahrávam obrazovku</string>
+  <string name="screenrecord_notif_title">Nahrávanie obrazovky</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Ukončiť</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Zobraziť ukazovateľ</string>
   <string name="screenrecord_notif_pointer_off">Skryť ukazovateľ</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Nepodarilo sa nahrať obrazovku</string>
+  <string name="screenrecord_notif_error">Nahrávánie obrazovky nie je možné</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Snímok obrazovky bol vymazaný</string>
@@ -35,8 +35,8 @@
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Potiahnite doprava pre %1$s</string>
   <string name="right_shortcut_hint">Potiahnite doľava pre %1$s</string>
-  <string name="lockscreen_message">Kliknite na ikonu vľavo alebo vpravo a priraďte zástupcu uzamknutia obrazovky.</string>
-  <string name="lockscreen_default_target">Pôvodné</string>
+  <string name="lockscreen_message">Kliknutím na ikonu vľavo alebo vpravo vyberte zástupcu na obrazovke uzamknutia.</string>
+  <string name="lockscreen_default_target">Predvolené</string>
   <string name="select_application">Vyberte aplikáciu</string>
   <string name="lockscreen_choose_action_title">Vyberte akciu</string>
   <string name="lockscreen_none_target">Žiadne</string>
@@ -67,11 +67,11 @@
   <string name="quick_settings_screenshot_label">Snímka obrazovky</string>
   <string name="quick_settings_region_screenshot_label">Čiastočná snímka obrazovky</string>
   <string name="quick_settings_adb_network">ADB sieť</string>
-  <string name="quick_settings_network_adb_enabled_label">Povolené</string>
-  <string name="quick_settings_network_adb_disabled_label">Zakázané</string>
+  <string name="quick_settings_network_adb_enabled_label">Zapnuté</string>
+  <string name="quick_settings_network_adb_disabled_label">Vypnuté</string>
   <string name="quick_settings_sync_label">Synchronizovať</string>
-  <string name="accessibility_quick_settings_sync_off">Synchronizácia vypnutá</string>
-  <string name="accessibility_quick_settings_sync_on">Synchronizácia zapnutá</string>
+  <string name="accessibility_quick_settings_sync_off">Synch. vypnutá</string>
+  <string name="accessibility_quick_settings_sync_on">Synch. zapnutá</string>
   <string name="accessibility_quick_settings_sync_changed_off">Synchronizácia vypnutá</string>
   <string name="accessibility_quick_settings_sync_changed_on">Synchronizácia zapnutá</string>
   <string name="quick_settings_expanded_desktop_label">Rozšírená plocha</string>
@@ -79,19 +79,19 @@
   <string name="quick_settings_expanded_desktop_off">Normálne</string>
   <string name="quick_settings_reboot_label">Reštart</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
-  <string name="accessibility_quick_settings_usb_tether_off">Zdieľané dátové pripojenie prostredníctvom portu USB vypnuté</string>
-  <string name="accessibility_quick_settings_usb_tether_on">Zdieľané dátové pripojenie prostredníctvom portu USB zapnuté</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_off">Zdieľané dátové pripojenie prostredníctvom portu USB vypnuté</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_on">Zdieľané dátové pripojenie prostredníctvom portu USB zapnuté</string>
-  <string name="quick_settings_usb_tether_label">Zdieľané dátové pripojenie prostredníctvom portu USB</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USB zdieľané pripojenie vypnúť</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB zdieľané pripojenie zapnúť</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USB zdieľané pripojenie vypnuté</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USB zdieľané pripojenie zapnuté</string>
+  <string name="quick_settings_usb_tether_label">Zdieľané pripojenie cez USB</string>
   <string name="quick_settings_music_label">Hudba</string>
   <string name="quick_settings_music_play">Hrať</string>
   <string name="quick_settings_music_pause">Pozastaviť</string>
   <string name="quick_settings_ime_tile_label">Metóda vstupu</string>
   <string name="rr_qs_tile">Konfigurácia</string>
   <string name="quick_settings_caffeine_label">Čas na kávu</string>
-  <string name="accessibility_quick_settings_caffeine_off">Čas na kávu vypnuté</string>
-  <string name="accessibility_quick_settings_caffeine_on">Čas na kávu zapnuté</string>
+  <string name="accessibility_quick_settings_caffeine_off">Čas na kávu vypnúť</string>
+  <string name="accessibility_quick_settings_caffeine_on">Čas na kávu zapnúť</string>
   <string name="qs_app_picker_title">Výber aplikácie</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE zapnuté </string>
@@ -99,42 +99,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC vypnuté</string>
-  <string name="quick_settings_screenrecord">Nahrávanie obrazovky</string>
   <string name="quick_settings_screenrecord_on">Nahrávanie ...</string>
   <string name="quick_settings_navigation_bar">Navigačná lišta</string>
-  <string name="quick_settings_smartbar">Inteligentná lišta</string>
-  <string name="quick_settings_smartbar_off">Inteligentná lišta vypnutá</string>
   <string name="quick_settings_fling">Prudký pohyb</string>
   <string name="quick_settings_fling_off">Prudký pohyb vypnutý</string>
-  <string name="quick_settings_appcirclebar_title">Kruh s aplikáciami</string>
-  <string name="quick_settings_appcirclebar_on">Kruh s aplikáciami zapnutý</string>
-  <string name="quick_settings_appcirclebar_off">Kruh s aplikáciami vypnutý</string>
-  <string name="quick_settings_gesture_anywhere_label">Gesto kdekoľvek</string>
-  <string name="quick_settings_gesture_anywhere_on">Gestá zapnuté</string>
-  <string name="quick_settings_gesture_anywhere_off">Gestá vypnuté</string>
-  <string name="quick_settings_appsidebar_title">Bočný panel s aplikáciami</string>
-  <string name="quick_settings_appsidebar_on">Bočný panel s aplikáciami zapnutý</string>
-  <string name="quick_settings_appsidebar_off">Bočný panel s aplikáciami vypnutý</string>
+  <string name="quick_settings_gesture_anywhere_on">Zapnúť gestá</string>
+  <string name="quick_settings_gesture_anywhere_off">Vypnúť gestá</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulz povolený</string>
-  <string name="quick_settings_pulse_disabled">Žiadna vizualizácia</string>
-  <string name="quick_settings_pulse_label">Pulz</string>
-  <string name="accessibility_quick_settings_pulse_off">Pulz vypnuté</string>
-  <string name="accessibility_quick_settings_pulse_on">Pulz zapnuté</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">Pulz vypnuté</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">Pulz zapnuté</string>
-  <string name="quick_settings_pulse_label">Vizualizácia navigačnej lišty</string>
+  <string name="quick_settings_pulse_label">Pulzovať</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulzovanie vypnuté</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulzovanie zapnuté</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulzovanie vypnuté</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulzovanie zapnuté</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambientné zobrazenie</string>
-  <string name="accessibility_quick_settings_ambient_display_off">Ambientné zobrazenie vypnuté.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Ambientné zobrazenie zapnuté.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambientné zobrazenie vypnuté.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambientné zobrazenie zapnuté.</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Vypnúť ambientné zobrazenie.</string>
   <string name="quick_settings_heads_up_label">Plávajúce oznámenia</string>
-  <string name="accessibility_quick_settings_heads_up_off">Plávajúce oznámenia vypnuté.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Plávajúce oznámenia zapnuté.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Plávajúce oznámenia vypnuté.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Plávajúce oznámenia zapnuté.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Jazyk</string>
   <string name="quick_settings_locale_more_locales_toast">Prosím nastavte prepínač umožňujúci viacej jazykov</string>
@@ -142,10 +122,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikácia bola ukončená</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Pozerané oznámenia sú odložené po dobu 1 minúty.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Pozerané oznámenia sú odložené na <xliff:g id="number">%d</xliff:g> minút.</string>
   <!-- Screenshot action -->
-  <string name="screenshot_abort_title">Snímka obrazovky neprijatá</string>
+  <string name="screenshot_abort_title">Žiadna snímka obrazovky</string>
   <string name="screenshot_abort_text">Operácia bola prerušená</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">Odstránené</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">VYMAZAŤ VŠETKO</string>
   <string name="recents_free_ram">Voľná pamäť RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

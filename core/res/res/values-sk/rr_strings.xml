@@ -16,27 +16,27 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">Pôvodné</string>
+  <string name="default_string">Predvolené</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">Váš dodávateľ image sa nezhoduje so systémom. Prosím flash image <xliff:g id="string">%s</xliff:g> pre vaše zariadenie.</string>
-  <string name="global_action_screenrecord">Nahrávanie obrazovky</string>
+  <string name="global_action_screenrecord">Videozáznam obrazovky</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Miznutie</string>
   <string name="animation_slide_right">Posunúť vpravo</string>
   <string name="animation_slide_left">Posunúť vľavo</string>
-  <string name="animation_slide_right_no_fade">Posunúť vpravo (Bez miznutia)</string>
-  <string name="animation_slide_left_no_fade">Posunúť vľavo(Bez miznutia)</string>
+  <string name="animation_slide_right_no_fade">Posunúť vpravo (bez miznutia)</string>
+  <string name="animation_slide_left_no_fade">Posunúť vľavo(bez miznutia)</string>
   <string name="animation_slide_up">Posunúť dole</string>
-  <string name="animation_slide_down">Posunúť zhora</string>
-  <string name="animation_default">Pôvodné</string>
-  <string name="animation_translucent">Priesvitný</string>
-  <string name="animation_grow_shrink">Zväčšenie (Zvrchu)</string>
-  <string name="animation_grow_shrink_center">Zväčšenie (Zo stredu)</string>
-  <string name="animation_grow_shrink_bottom">Zväčšenie (Zospodu)</string>
-  <string name="animation_grow_shrink_left">Zväčšenie (Zľava)</string>
-  <string name="animation_grow_shrink_right">Zväčšenie (Sprava)</string>
+  <string name="animation_slide_down">Posunúť nahor</string>
+  <string name="animation_default">Predvolené</string>
+  <string name="animation_translucent">Priehľadnosť</string>
+  <string name="animation_grow_shrink">Zväčšenie (zvrchu)</string>
+  <string name="animation_grow_shrink_center">Zväčšenie (stred)</string>
+  <string name="animation_grow_shrink_bottom">Zväčšenie (zospodu)</string>
+  <string name="animation_grow_shrink_left">Zväčšenie (zľava)</string>
+  <string name="animation_grow_shrink_right">Zväčšenie (sprava)</string>
   <string name="action_null">Prázdne</string>
-  <string name="global_action_torch">Svietidlo</string>
+  <string name="global_action_torch">Baterka</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">Reštartovať grafické rozhranie (SystemUI)</string>
   <!-- On-The-Go -->

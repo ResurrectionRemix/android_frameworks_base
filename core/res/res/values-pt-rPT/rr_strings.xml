@@ -18,10 +18,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Predefinida</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">A tua imagem de fornecedor não coincide com o sistema. Por favor flasha a imagem do fornecedor de <xliff:g id="string"> %s </xliff:g> para o teu dispositivo</string>
+  <string name="system_error_vendorprint">A sua imagem de fornecedor não coincide com o sistema. Por favor, \"flasha\" a imagem do fornecedor de <xliff:g id="string">%s</xliff:g> para o seu dispositivo</string>
   <string name="global_action_screenrecord">Gravação de Ecrã</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Desvanescer</string>
+  <string name="animation_fade">Desvanecer</string>
   <string name="animation_slide_right">Deslizar para a direita</string>
   <string name="animation_slide_left">Deslizar para a esquerda</string>
   <string name="animation_slide_right_no_fade">Deslizar para a direita (Sem desvanecimento)</string>
@@ -32,16 +32,16 @@
   <string name="animation_translucent">Translúcida</string>
   <string name="animation_grow_shrink">Crescer (Topo)</string>
   <string name="animation_grow_shrink_center">Crescer (Centro)</string>
-  <string name="animation_grow_shrink_bottom">Crescer (Inferior)</string>
+  <string name="animation_grow_shrink_bottom">Crescer (Baixo)</string>
   <string name="animation_grow_shrink_left">Crescer (Esquerda)</string>
   <string name="animation_grow_shrink_right">Crescer (Direita)</string>
   <string name="action_null">Em branco</string>
   <string name="global_action_torch">Lanterna</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Reiniciar SystemUI</string>
+  <string name="reboot_systemui">Reiniciar a interface do sistema</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">Modo On-The-Go</string>
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB inativo</string>
-  <string name="adb_active_custom_tile_not_connected">inactivo</string>
+  <string name="adb_active_custom_tile_not_connected">inativo</string>
 </resources>

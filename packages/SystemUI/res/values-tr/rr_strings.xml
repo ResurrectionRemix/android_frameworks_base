@@ -99,42 +99,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC kapalı</string>
-  <string name="quick_settings_screenrecord">Ekran Kaydı</string>
   <string name="quick_settings_screenrecord_on">Kaydediliyor ...</string>
   <string name="quick_settings_navigation_bar">Gezinme çubuğu</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar kapalı</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling kapalı</string>
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar Açık</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Kapalı</string>
-  <string name="quick_settings_gesture_anywhere_label">Her Yerde Hareket</string>
   <string name="quick_settings_gesture_anywhere_on">Hareketler Açık</string>
   <string name="quick_settings_gesture_anywhere_off">Hareketler Kapalı</string>
-  <string name="quick_settings_appsidebar_title">Uygulama Kenar Çubuğu Açık</string>
-  <string name="quick_settings_appsidebar_on">Uygulama Kenar Çubuğu Açık</string>
-  <string name="quick_settings_appsidebar_off">Uygulama Kenar Çubuğu Kapalı</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Etkin</string>
-  <string name="quick_settings_pulse_disabled">Görselleştirme yok</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse kapalı</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse açık</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse kapatıldı</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse açıldı</string>
-  <string name="quick_settings_pulse_label">Gezinme Çubuğu Görselleştirme</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ortam ekranı</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ortam ekranı kapalı.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Ortam ekranı açık.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Ortam ekranı kapatıldı.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Ortam ekranı açıldı.</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
-  <string name="accessibility_quick_settings_heads_up_off">Bildirim pencereleri kapalı.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Bildirim pencereleri açık.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pencereleri kapatıldı.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pencereleri açıldı.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Dil</string>
   <string name="quick_settings_locale_more_locales_toast">Geçiş işlevselliğini etkinleştirmek için lütfen birden fazla dil yapılandırın</string>
@@ -142,8 +122,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Uygulama Sonlandırıldı</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Gözatma bildirimi 1 dakika kadar erteleniyor.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Gözatma bildirimi <xliff:g id="number">%d</xliff:g> dakika kadar erteleniyor.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Ekran görüntüsü alınamadı</string>
   <string name="screenshot_abort_text">İşlem iptal edildi</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">TÜMÜNÜ TEMİZLE</string>
   <string name="recents_free_ram">Boş RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>
