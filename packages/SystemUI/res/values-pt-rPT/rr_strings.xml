@@ -19,18 +19,18 @@
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">O ecrã está a ser gravado</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">A gravar ecrã</string>
+  <string name="screenrecord_notif_title">A gravar o ecrã</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Parar</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Mostrar o ponteiro</string>
   <string name="screenrecord_notif_pointer_off">Ocultar o ponteiro</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Não é possível gravar ecrã</string>
-  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+  <string name="screenrecord_notif_error">Não é possível gravar o ecrã</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Captura de ecrã eliminada</string>
-  <string name="gestures_message">Desenhe o seu gesto aqui</string>
+  <string name="gestures_message">Desenhe aqui o seu gesto</string>
   <string name="rr_sys_tuner">Sintonizador da interface do sistema</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Deslizar para a direita para %1$s</string>
@@ -38,18 +38,18 @@
   <string name="lockscreen_message">Toque num ícone à esquerda ou à direita para atribuir um atalho no ecrã de bloqueio.</string>
   <string name="lockscreen_default_target">Predefinido</string>
   <string name="select_application">Selecione aplicação</string>
-  <string name="lockscreen_choose_action_title">Escolha a acção</string>
+  <string name="lockscreen_choose_action_title">Escolha a ação</string>
   <string name="lockscreen_none_target">Nenhuma</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximizar</string>
   <string name="app_float_item_title">Vista flutuante</string>
   <string name="app_stop_item_title">Fechar aplicação</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go activado</string>
-  <string name="onthego_notif_title">On-The-Go está activo</string>
+  <string name="onthego_notif_ticker">On-The-Go ativado</string>
+  <string name="onthego_notif_title">On-The-Go está ativo</string>
   <string name="onthego_notif_stop">Parar</string>
   <string name="onthego_notif_options">Opções</string>
-  <string name="onthego_notif_error">Impossível iniciar On-The-Go</string>
+  <string name="onthego_notif_error">Impossível iniciar o On-The-Go</string>
   <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
   <string name="onthego_notif_camera_changed">Modo de câmara alterado</string>
   <string name="onthego_transparency">Transparência</string>
@@ -64,11 +64,11 @@
   <string name="accessibility_quick_settings_volume_panel">Volume</string>
   <string name="quick_settings_volume_panel_label">Volume</string>
   <!-- Quick Settings tiles -->
-  <string name="quick_settings_screenshot_label">Captura de Ecrâ</string>
-  <string name="quick_settings_region_screenshot_label">Captura de Ecrâ parcial</string>
+  <string name="quick_settings_screenshot_label">Captura de ecrã</string>
+  <string name="quick_settings_region_screenshot_label">Captura parcial de ecrã</string>
   <string name="quick_settings_adb_network">Rede ADB</string>
-  <string name="quick_settings_network_adb_enabled_label">Ativado</string>
-  <string name="quick_settings_network_adb_disabled_label">Desativado</string>
+  <string name="quick_settings_network_adb_enabled_label">Ativada</string>
+  <string name="quick_settings_network_adb_disabled_label">Desativada</string>
   <string name="quick_settings_sync_label">Sincronizar</string>
   <string name="accessibility_quick_settings_sync_off">Sincronização desativada</string>
   <string name="accessibility_quick_settings_sync_on">Sincronização ativada</string>
@@ -94,47 +94,27 @@
   <string name="accessibility_quick_settings_caffeine_on">Cafeína ligada</string>
   <string name="qs_app_picker_title">Seletor de aplicações</string>
   <string name="quick_settings_lte_label">LTE</string>
-  <string name="lte_on">LTE Ligado </string>
+  <string name="lte_on">LTE ligado </string>
   <string name="lte_off">LTE desligado</string>
-  <string name="quick_settings_nfc">Nfc</string>
-  <string name="quick_settings_nfc_label">Nfc</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC desligado</string>
-  <string name="quick_settings_screenrecord">Gravação de Ecrã</string>
-  <string name="quick_settings_screenrecord_on">A gravar ...</string>
+  <string name="quick_settings_screenrecord_on">A gravar...</string>
   <string name="quick_settings_navigation_bar">Barra de navegação</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar desligada</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling desligado</string>
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar Ativado</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Desativado</string>
-  <string name="quick_settings_gesture_anywhere_label">Gestos em qualquer lugar</string>
   <string name="quick_settings_gesture_anywhere_on">Gestos ativados</string>
   <string name="quick_settings_gesture_anywhere_off">Gestos desativados</string>
-  <string name="quick_settings_appsidebar_title">AppSideBar</string>
-  <string name="quick_settings_appsidebar_on">AppSideBar ativado</string>
-  <string name="quick_settings_appsidebar_off">AppCircleBar desativado</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse ativado</string>
-  <string name="quick_settings_pulse_disabled">Nenhum visualizador</string>
-  <string name="quick_settings_pulse_label">Pulse</string>
-  <string name="accessibility_quick_settings_pulse_off">Pulse desligado</string>
-  <string name="accessibility_quick_settings_pulse_on">Pulse ligado</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">Pulse foi desligado</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">Pulse foi ligado</string>
-  <string name="quick_settings_pulse_label">Visualizador da Barra de Navegação</string>
+  <string name="quick_settings_pulse_label">Mostrar notificações</string>
+  <string name="accessibility_quick_settings_pulse_off">Mostrar notificações desligado</string>
+  <string name="accessibility_quick_settings_pulse_on">Mostrar notificações ligado</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Mostrar notificações foi desligado</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Mostrar notificações foi ligado</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Visualização de ambiente</string>
   <string name="accessibility_quick_settings_ambient_display_off">Visualização de ambiente desativada.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Visualização de ambiente ativada.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">A visualização de ambiente foi desativada.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">A visualização de ambiente foi ativada.</string>
   <string name="quick_settings_heads_up_label">Notificações pop-up</string>
-  <string name="accessibility_quick_settings_heads_up_off">Notificações pop-up desativadas.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Notificações pop-up ativadas.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">As notificações pop-up foram desativadas.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">As notificações pop-up foram ativadas.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Idioma</string>
   <string name="quick_settings_locale_more_locales_toast">Configure vários idiomas para ativar a funcionalidade de troca</string>
@@ -142,8 +122,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicação fechada</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - as notificações flutuantes vão tocar durante 1 minuto.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - as notificações flutuantes vão tocar durante <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nenhuma captura de ecrã</string>
   <string name="screenshot_abort_text">Operação cancelada</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">Limpar tudo</string>
   <string name="recents_free_ram">RAM livre: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

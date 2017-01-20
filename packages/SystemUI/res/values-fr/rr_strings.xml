@@ -43,7 +43,7 @@
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximiser</string>
   <string name="app_float_item_title">Vue détachée</string>
-  <string name="app_stop_item_title">Tuer l\'application</string>
+  <string name="app_stop_item_title">Fermer l\'application</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">On-The-Go activé</string>
   <string name="onthego_notif_title">On-The-Go est actif</string>
@@ -89,7 +89,7 @@
   <string name="quick_settings_music_pause">Pause</string>
   <string name="quick_settings_ime_tile_label">Mode de saisie</string>
   <string name="rr_qs_tile">Paramètres</string>
-  <string name="quick_settings_caffeine_label">Caffeine</string>
+  <string name="quick_settings_caffeine_label">Caféine</string>
   <string name="accessibility_quick_settings_caffeine_off">Caféine désactivée</string>
   <string name="accessibility_quick_settings_caffeine_on">Caféine activée</string>
   <string name="qs_app_picker_title">Selecteur d\'Apps</string>
@@ -99,51 +99,29 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC désactivé</string>
-  <string name="quick_settings_screenrecord">Capture vidéo</string>
   <string name="quick_settings_screenrecord_on">Enregistrement ...</string>
   <string name="quick_settings_navigation_bar">Barre de navigation</string>
-  <string name="quick_settings_smartbar">Barre intelligente</string>
-  <string name="quick_settings_smartbar_off">Barre intelligente désactivée</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling désactivé</string>
-  <string name="quick_settings_appcirclebar_title">Barre ronde d\'application</string>
-  <string name="quick_settings_appcirclebar_on">Barre ronde d\'application activée</string>
-  <string name="quick_settings_appcirclebar_off">Barre ronde d\'application désactivée</string>
-  <string name="quick_settings_gesture_anywhere_label">Geste n\'importe où</string>
   <string name="quick_settings_gesture_anywhere_on">Gestes activés</string>
   <string name="quick_settings_gesture_anywhere_off">Gestes désactivés</string>
-  <string name="quick_settings_appsidebar_title">Barre d\'outils de l\'application</string>
-  <string name="quick_settings_appsidebar_on">Barre d\'outils de l\'application activée</string>
-  <string name="quick_settings_appsidebar_off">Barre d\'outils de l\'application désactivée</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Impulsion activée</string>
-  <string name="quick_settings_pulse_disabled">Aucun aperçu</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse desactivé</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse activé</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse éteint</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse allumé</string>
-  <string name="quick_settings_pulse_label">Aperçu de la barre de navigation</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Adaptation de la luminosité</string>
   <string name="accessibility_quick_settings_ambient_display_off">Adaptation de la luminosité désactivée.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Adaptation de la luminosité activée.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Adaptation de la luminosité désactivée.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Adaptation de la luminosité activée.</string>
   <string name="quick_settings_heads_up_label">Notifications flottantes</string>
-  <string name="accessibility_quick_settings_heads_up_off">Notifications flottantes désactivées.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Notifications flottantes activées.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Notifications flottantes désactivées.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes activées.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Langue</string>
   <string name="quick_settings_locale_more_locales_toast">Veuillez configurer plusieurs langues pour utiliser cette fonctionnalité</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
-  <string name="app_killed_message">Application tuée</string>
+  <string name="app_killed_message">Application fermé</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notification furtive pendant 1 minute.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Notification furtive pendant <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Aucune capture d\'écran</string>
   <string name="screenshot_abort_text">Opération abandonnée</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">TOUT EFFACER</string>
   <string name="recents_free_ram">RAM libre : %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

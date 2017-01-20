@@ -3228,6 +3228,10 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 }
             }
         }
+
+        if (mStatusBarWindowManager != null) {
+            mStatusBarWindowManager.setShowingMedia(hasArtwork);
+        }
         Trace.endSection();
     }
 
@@ -4580,7 +4584,9 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mStatusBarWindowManager = new StatusBarWindowManager(mContext);
         mRemoteInputController = new RemoteInputController(mStatusBarWindowManager,
                 mHeadsUpManager);
+        mStatusBarWindowManager.setShowingMedia(mKeyguardShowingMedia);
         mStatusBarWindowManager.add(mStatusBarWindow, getStatusBarHeight());
+        mKeyguardMonitor.addCallback(mStatusBarWindowManager);
     }
 
     // called by makeStatusbar and also by PhoneStatusBarView
@@ -4968,6 +4974,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         updateRowStates();
         mScreenPinningRequest.onConfigurationChanged();
         mNetworkController.onConfigurationChanged();
+        mStatusBarWindowManager.onConfigurationChanged();
     }
 
     @Override

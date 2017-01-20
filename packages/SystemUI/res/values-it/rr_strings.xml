@@ -100,42 +100,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC off</string>
-  <string name="quick_settings_screenrecord">Registra schermo</string>
   <string name="quick_settings_screenrecord_on">Registrazione...</string>
   <string name="quick_settings_navigation_bar">Barra di navigazione</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar off</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling off</string>
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar On</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Off</string>
-  <string name="quick_settings_gesture_anywhere_label">Gesture Ovunque</string>
   <string name="quick_settings_gesture_anywhere_on">Gesture On</string>
   <string name="quick_settings_gesture_anywhere_off">Gesture Off</string>
-  <string name="quick_settings_appsidebar_title">AppSideBar</string>
-  <string name="quick_settings_appsidebar_on">AppSideBar accesa</string>
-  <string name="quick_settings_appsidebar_off">AppSideBar Off</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse Attivato</string>
-  <string name="quick_settings_pulse_disabled">Non visualizzare</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse off</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse on</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse disattivato</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse attivato</string>
-  <string name="quick_settings_pulse_label">Visualizza barra di navigazione</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Display ambient</string>
   <string name="accessibility_quick_settings_ambient_display_off">Display ambient off.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Display ambient on.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display disattivato.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display attivato.</string>
   <string name="quick_settings_heads_up_label">Notifiche a comparsa</string>
-  <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Notifiche a comparsa attive.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up disattivate.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Notifiche a comparsa attivate.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Lingua</string>
   <string name="quick_settings_locale_more_locales_toast">Configura più lingue per abilitare la funzionalità attiva o disattiva</string>
@@ -143,8 +123,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Applicazione terminata</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - notifica Peeking notifica posticipata per 1 minuto.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - le notifiche Peeking sono posticipate per 1 minuto.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nessuna schermata catturata</string>
   <string name="screenshot_abort_text">Operazione Interrotta</string>
@@ -168,4 +146,5 @@
   <string name="recents_custom_android_n">Cancella tutto</string>
   <string name="recents_free_ram">RAM libera: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>

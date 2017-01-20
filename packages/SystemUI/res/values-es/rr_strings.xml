@@ -99,42 +99,22 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC desactivado</string>
-  <string name="quick_settings_screenrecord">Grabación de pantalla</string>
   <string name="quick_settings_screenrecord_on">Grabando ...</string>
   <string name="quick_settings_navigation_bar">Barra de Navegación</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar desactivada</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Apagar fling</string>
-  <string name="quick_settings_appcirclebar_title">AppCircleBar</string>
-  <string name="quick_settings_appcirclebar_on">AppCircleBar Activada</string>
-  <string name="quick_settings_appcirclebar_off">AppCircleBar Desactivada</string>
-  <string name="quick_settings_gesture_anywhere_label">Gesto en cualquier lugar</string>
   <string name="quick_settings_gesture_anywhere_on">Gestos Activados</string>
   <string name="quick_settings_gesture_anywhere_off">Gestos desactivados</string>
-  <string name="quick_settings_appsidebar_title">AppSideBar</string>
-  <string name="quick_settings_appsidebar_on">AppSideBar activado</string>
-  <string name="quick_settings_appsidebar_off">AppSideBar desactivado</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse activado</string>
-  <string name="quick_settings_pulse_disabled">Sin visualizador</string>
   <string name="quick_settings_pulse_label">Pulso</string>
   <string name="accessibility_quick_settings_pulse_off">Desactivar Pulso</string>
   <string name="accessibility_quick_settings_pulse_on">Activar Pulso</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulso apagado</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulso encendido</string>
-  <string name="quick_settings_pulse_label">Visualizador de la barra de navegación</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Pantalla ambiente</string>
   <string name="accessibility_quick_settings_ambient_display_off">Pantalla ambiente desactivada.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Pantalla ambiente activada.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Pantalla ambiente se ha desactivado.</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Pantalla ambiente se ha activado.</string>
   <string name="quick_settings_heads_up_label">Notificación flotante</string>
-  <string name="accessibility_quick_settings_heads_up_off">Notificaciones emergentes desactivadas.</string>
-  <string name="accessibility_quick_settings_heads_up_on">Notificaciones emergentes activadas.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Notificaciones emergentes desactivadas.</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Notificaciones emergentes activadas.</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Idioma</string>
   <string name="quick_settings_locale_more_locales_toast">Por favor, configure varios idiomas para habilitar la funcionalidad de alternar</string>
@@ -142,8 +122,6 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Mató a la aplicación</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Las notificaciones flotantes estaran pospuestas por 1 minuto.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Las notificaciones flotantes estaran pospuestas <xliff:g id="number">%d </xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">No tomo la captura de pantalla</string>
   <string name="screenshot_abort_text">Operación abortada</string>
@@ -167,4 +145,5 @@
   <string name="recents_custom_android_n">LIMPIAR TODO</string>
   <string name="recents_free_ram">Memoria RAM libre: %1$d MB</string>
   <!-- Path data for Solid battery -->
+  <!-- Task Manager -->
 </resources>
