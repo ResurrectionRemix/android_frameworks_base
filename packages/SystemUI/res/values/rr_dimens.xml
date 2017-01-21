@@ -99,4 +99,8 @@
     <!-- QS scroller -->
     <dimen name="qs_scroller_margin">12dp</dimen>
 
+    <!-- QS scroller -->
+    <dimen name="qs_scroller_margin">12dp</dimen>
+    <dimen name="qs_scroller_min_tile_gap">4dp</dimen>
+
 </resources>
