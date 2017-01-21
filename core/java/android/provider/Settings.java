@@ -5587,6 +5587,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String DISABLE_SUGGESTIONS = "disable_dashboard_suggestions";
 
         /**
+         * Whether to show dashboard summaries in a single line or not
+         * @hide
+         */
+        public static final String DASHBOARD_SUMMARY_DOUBLE_LINES = "dashboard_summary_double_lines";
+
+        /**
          * Remove tile summaries in settings
          * @hide
          */
