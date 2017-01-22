@@ -115,6 +115,7 @@
   <string name="quick_settings_ambient_display_label">Afișaj ambiental</string>
   <string name="accessibility_quick_settings_ambient_display_off">Afișaj ambiental inactiv.</string>
   <string name="quick_settings_heads_up_label">Atenționări</string>
+  <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Limba</string>
   <string name="quick_settings_locale_more_locales_toast">Vă rugăm să configuraţi mai multe limbi pentru a activa funcția de comutare</string>

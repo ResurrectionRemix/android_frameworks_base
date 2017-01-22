@@ -99,22 +99,43 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC ki</string>
+  <string name="quick_settings_screenrecord">Képernyőfelvétel</string>
   <string name="quick_settings_screenrecord_on">Felvétel \u2026</string>
   <string name="quick_settings_navigation_bar">Navigációs sáv</string>
+  <string name="quick_settings_smartbar">Smart bar</string>
+  <string name="quick_settings_smartbar_off">Smart bar ki</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling ki</string>
+  <string name="quick_settings_appcirclebar_title">Kerek alkalmazássáv</string>
+  <string name="quick_settings_appcirclebar_on">Kerek alkalmazássáv Be</string>
+  <string name="quick_settings_appcirclebar_off">Kerek alkalmazássáv Ki</string>
+  <string name="quick_settings_gesture_anywhere_label">Gesztus bárhol</string>
   <string name="quick_settings_gesture_anywhere_on">Gesztusok be</string>
   <string name="quick_settings_gesture_anywhere_off">Gesztusok ki</string>
+  <string name="quick_settings_appsidebar_title">Alkalmazás oldalsáv</string>
+  <string name="quick_settings_appsidebar_on">Alkalmazás oldalsáv Be</string>
+  <string name="quick_settings_appsidebar_off">Alkalmazás oldalsáv Ki</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">Pulse engedélyezve</string>
+  <string name="quick_settings_pulse_disabled">Vizualizáló ki</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse ki</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse be</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse kikapcsolva</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse bekapcsolva</string>
+  <string name="quick_settings_pulse_label">Navigációs sáv vizualizáló</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Környezeti kijelző</string>
   <string name="accessibility_quick_settings_ambient_display_off">Környezeti kijelző ki.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Környezeti kijelző be</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Környezeti kijelző kikapcsolva</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Környezeti kijelző bekapcsolva</string>
   <string name="quick_settings_heads_up_label">Lebegő értesítések</string>
+  <string name="accessibility_quick_settings_heads_up_off">Lebegő értesítések ki</string>
+  <string name="accessibility_quick_settings_heads_up_on">Lebegő értesítések be</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Lebegő értesítések kikapcsolva</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Lebegő értesítések bekapcsolva</string>
+  <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Nyelv</string>
   <string name="quick_settings_locale_more_locales_toast">Kérjük, állítson be több nyelvet a váltás engedélyezéséhez</string>
@@ -122,6 +143,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Alkalmazás kilőve</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Lebegő értesítései 1 percig szundiznak.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Lebegő értesítései <xliff:g id="number">%d</xliff:g> percig szundiznak.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Képernyőmentés nem történt</string>
   <string name="screenshot_abort_text">Művelet megszakítva</string>
@@ -146,4 +169,10 @@
   <string name="recents_free_ram">Szabad RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">Feladatkezelő</string>
+  <string name="message_switch_fail">Erre a feladatra nem lehet váltani, mert nincs felülete.</string>
+  <string name="tasklist_killall">Összes kilövése</string>
+  <string name="tasklist_memory_usage">"Szabad • Összes memória : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
+  <string name="message_keep_one_launcher">Legalább egy kezdő tevékenységet meg kell tartania!</string>
+  <string name="tm_clear_task">TÖRÖL</string>
 </resources>

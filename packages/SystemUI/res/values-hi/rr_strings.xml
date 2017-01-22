@@ -115,6 +115,7 @@
   <string name="quick_settings_ambient_display_label">एम्बिएंट डिस्प्ले</string>
   <string name="accessibility_quick_settings_ambient_display_off">एम्बिएंट डिस्प्ले बंद</string>
   <string name="quick_settings_heads_up_label">संकेत</string>
+  <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">भाषा</string>
   <string name="quick_settings_locale_more_locales_toast">कृपया टॉगल कार्यक्षमता सक्षम करने के लिए एक से अधिक भाषाओं को कॉन्फ़िगर करें</string>

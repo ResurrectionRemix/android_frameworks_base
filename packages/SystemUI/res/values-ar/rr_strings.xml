@@ -109,6 +109,7 @@
   <string name="quick_settings_ambient_display_label">عرض المحيط</string>
   <string name="accessibility_quick_settings_ambient_display_off">إيقاف عرض المحيط.</string>
   <string name="quick_settings_heads_up_label">الإشعارات العلوية</string>
+  <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->

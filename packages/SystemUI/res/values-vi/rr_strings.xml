@@ -115,6 +115,7 @@
   <string name="quick_settings_ambient_display_label">Hiển thị tương tác</string>
   <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
   <string name="quick_settings_heads_up_label">Thông báo nổi</string>
+  <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Ngôn ngữ</string>
   <string name="quick_settings_locale_more_locales_toast">Vui lòng thiết lập nhiều ngôn ngữ để kích hoạt chức năng chuyển đổi</string>
