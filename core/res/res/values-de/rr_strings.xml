@@ -23,7 +23,7 @@
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Überblenden</string>
   <string name="animation_slide_right">Nach rechts hineingleiten</string>
-  <string name="animation_slide_left">Nach links hineingleiten</string>
+  <string name="animation_slide_left">Von links einblenden</string>
   <string name="animation_slide_right_no_fade">Von rechts einblenden (ohne Verblassen)</string>
   <string name="animation_slide_left_no_fade">Von links einblenden (ohne Verblassen)</string>
   <string name="animation_slide_up">Von unten hineingleiten</string>
@@ -44,4 +44,6 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB inaktiv</string>
   <string name="adb_active_custom_tile_not_connected">inaktiv</string>
+  <string name="singlehandmode_click_hint_message">Berühren Sie den Bildschirm außerhalb, um die Mini-Bildschirmansicht zu beenden</string>
+  <string name="singlehandmode_slide_hint_message">Bewegen Sie den Finger über die Navigationsleiste, um zwischen der Standard- und der Mini-Ansicht zu wechseln</string>
 </resources>

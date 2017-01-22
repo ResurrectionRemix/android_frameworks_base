@@ -40,6 +40,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -49,6 +50,7 @@ import com.android.internal.util.Preconditions;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
@@ -930,24 +932,38 @@ public class StorageManager {
     }
 
     /** {@hide} */
-    public long getPrimaryStorageSize() {
+    public static Pair<String, Long> getPrimaryStoragePathAndSize() {
         for (String path : INTERNAL_STORAGE_SIZE_PATHS) {
             final long numberBlocks = readLong(path);
             if (numberBlocks > 0) {
-                return numberBlocks * INTERNAL_STORAGE_SECTOR_SIZE;
+                return new Pair<>(path, Long.valueOf(numberBlocks * INTERNAL_STORAGE_SECTOR_SIZE));
             }
         }
-        return 0;
+        return null;
     }
 
-    private long readLong(String path) {
+
+    /** {@hide} */
+    public long getPrimaryStorageSize() {
+        final Pair<String, Long> pair = getPrimaryStoragePathAndSize();
+        return pair == null ? 0 : pair.second.longValue();
+    }
+
+    private static long readLong(String path) {
         try (final FileInputStream fis = new FileInputStream(path);
                 final BufferedReader reader = new BufferedReader(new InputStreamReader(fis));) {
             return Long.parseLong(reader.readLine());
-        } catch (Exception e) {
-            Slog.w(TAG, "Could not read " + path, e);
+        } catch (FileNotFoundException e) {
+            // This is expected since we are trying to parse multiple paths.
+            Slog.i(TAG, "readLong(): Path doesn't exist: " + path + ": " + e);
             return 0;
-        }
+        } catch (NumberFormatException e) {
+            Slog.e(TAG, "readLong(): Could not parse " + path + ": " + e);
+            return 0;
+        } catch (Exception e) {
+            Slog.e(TAG, "readLong(): Unknown exception while opening " + path + ": " + e);
+            return 0;
+       }
     }
 
     /** @removed */

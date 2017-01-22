@@ -99,22 +99,43 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC Mati</string>
+  <string name="quick_settings_screenrecord">Perekam layar</string>
   <string name="quick_settings_screenrecord_on">Merekam...</string>
   <string name="quick_settings_navigation_bar">Bar Navigasi</string>
+  <string name="quick_settings_smartbar">Smart bar</string>
+  <string name="quick_settings_smartbar_off">Smart bar mati</string>
   <string name="quick_settings_fling">Melemparkan</string>
   <string name="quick_settings_fling_off">Melemparkan Mati</string>
+  <string name="quick_settings_appcirclebar_title">Circle bar</string>
+  <string name="quick_settings_appcirclebar_on">Circle bar hidup</string>
+  <string name="quick_settings_appcirclebar_off">Circle bar mati</string>
+  <string name="quick_settings_gesture_anywhere_label">Usap layar dimana saja</string>
   <string name="quick_settings_gesture_anywhere_on">Gestures Hidup</string>
   <string name="quick_settings_gesture_anywhere_off">Gestures Mati</string>
+  <string name="quick_settings_appsidebar_title">App side bar</string>
+  <string name="quick_settings_appsidebar_on">App side bar hidup</string>
+  <string name="quick_settings_appsidebar_off">App side bar mati</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">Pulse diaktifkan</string>
+  <string name="quick_settings_pulse_disabled">Tidak ada Visualizer</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse nonaktif</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse aktif</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse telah di non aktifkan</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse telah di aktifkan</string>
+  <string name="quick_settings_pulse_label">Visualizer bar navigasi</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambient Display</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ambient display nonaktif.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Ambient display aktif</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display dinonaktifkan</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display diaktifkan</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="accessibility_quick_settings_heads_up_off">Heads up mati</string>
+  <string name="accessibility_quick_settings_heads_up_on">Heads up hidup</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Heads up dinonaktifkan</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up diaktifkan</string>
+  <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Bahasa</string>
   <string name="quick_settings_locale_more_locales_toast">Harap tentukan bahasa yang berbeda untuk menghidupkan fungsionalitas toggle</string>
@@ -122,6 +143,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">App Dimatikan</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Pemberitahuan mengintip tertidur selama 1 menit.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Pemberitahuan mengintip tertidur selama <xliff:g id="number">%d </xliff:g> menit.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Tidak ada gambar yang diambil</string>
   <string name="screenshot_abort_text">Operasi dibatalkan</string>
@@ -146,4 +169,10 @@
   <string name="recents_free_ram">RAM Kosong: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">Manajer tugas</string>
+  <string name="message_switch_fail">Tidak bisa beralih ke tugas ini, karena tidak memiliki antarmuka.</string>
+  <string name="tasklist_killall">Matikan Semua</string>
+  <string name="tasklist_memory_usage">"Bebas • Total memori: [<xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>]"</string>
+  <string name="message_keep_one_launcher">Harus menyimpan setidaknya satu kegiatan beranda!</string>
+  <string name="tm_clear_task">BERSIHKAN</string>
 </resources>
