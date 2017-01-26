@@ -26,8 +26,9 @@
 
     <!-- Substratum Exposed Colors -->
     <color name="resolver_list_bg">@color/white</color>
-    <color name="immersive_cling_bg_color">@color/accent_device_default_light</color>
-    <color name="immersive_cling_text_color">@color/primary_text_default_material_light</color>
+    <color name="app_permission_icon_tint">@android:color/black</color>
+    <color name="immersive_cling_bg_color">#d04285f4</color> <!-- Should be translucent Color otherwise causes hot reboots while immersive messages shown-->
+    <color name="immersive_cling_text_color">@android:color/white</color>
     <color name="immersive_cling_button_text_color">@android:color/white</color>
     <color name="app_permission_icon_tint">@android:color/black</color>
     <color name="notification_text_default_color">@android:color/notification_default_color</color>
