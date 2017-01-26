@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2017 SlimRoms Project
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="24dp"
+        android:height="24dp"
+        android:viewportWidth="24.000002"
+        android:viewportHeight="24.0">
+    <path
+        android:pathData="M3.782,20.988C3.594,20.964 3.417,20.874 3.281,20.733 3.133,20.58 3.063,20.426 3.041,20.204 3.034,20.139 3.032,18.914 3.034,16.644 3.037,13.425 3.039,13.18 3.055,13.116 3.136,12.792 3.371,12.552 3.692,12.467L3.777,12.444 12.002,12.444 20.227,12.444 20.312,12.467C20.469,12.509 20.59,12.577 20.705,12.688 20.824,12.803 20.901,12.938 20.944,13.106L20.967,13.194 20.967,16.719 20.967,20.244 20.944,20.332C20.901,20.5 20.824,20.635 20.705,20.75 20.592,20.859 20.473,20.927 20.317,20.972L20.237,20.994 12.042,20.996C7.534,20.996 3.818,20.993 3.782,20.988ZM18.752,16.719 L18.752,14.689 12.002,14.689 5.252,14.689 5.252,16.719 5.252,18.749 12.002,18.749 18.752,18.749 18.752,16.719ZM3.788,11.549C3.503,11.515 3.24,11.322 3.116,11.056 3.097,11.015 3.072,10.943 3.059,10.897L3.037,10.814 3.034,7.354C3.032,5.087 3.034,3.86 3.041,3.794 3.054,3.669 3.073,3.594 3.116,3.502 3.163,3.402 3.218,3.325 3.298,3.248 3.413,3.137 3.535,3.069 3.692,3.027L3.777,3.004 12.002,3.004 20.227,3.004 20.312,3.027C20.451,3.063 20.589,3.139 20.689,3.233 20.823,3.36 20.899,3.49 20.944,3.666L20.967,3.754 20.967,7.279 20.967,10.804 20.944,10.892C20.903,11.054 20.837,11.172 20.722,11.293 20.614,11.406 20.479,11.486 20.317,11.532L20.237,11.554 12.047,11.556C7.542,11.556 3.826,11.553 3.788,11.549ZM18.752,7.279 L18.752,5.249 12.002,5.249 5.252,5.249 5.252,7.279 5.252,9.309 12.002,9.309 18.752,9.309 18.752,7.279Z"
+        android:fillColor="#FFFFFF"/>
+</vector>

@@ -49,4 +49,16 @@
         <item name="windowEnterAnimation">@anim/honami_toast_enter</item>
         <item name="windowExitAnimation">@anim/honami_toast_exit</item>
     </style>
+
+
+    <!-- Slim recent app screen animation -->
+    <style name="Animation.RecentScreen">
+        <item name="android:windowEnterAnimation">@anim/recent_screen_enter</item>
+        <item name="android:windowExitAnimation">@anim/recent_screen_exit</item>
+    </style>
+
+    <style name="Animation.RecentScreen.Left">
+        <item name="android:windowEnterAnimation">@anim/recent_screen_enter_left</item>
+        <item name="android:windowExitAnimation">@anim/recent_screen_exit_left</item>
+    </style>
 </resources>
