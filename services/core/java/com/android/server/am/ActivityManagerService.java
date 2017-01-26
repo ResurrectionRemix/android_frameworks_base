@@ -1719,7 +1719,8 @@ public final class ActivityManagerService extends ActivityManagerNative
                     d.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
                     d.setCancelable(false);
                     d.setTitle(mContext.getText(R.string.android_system_label));
-                    d.setMessage(mContext.getString(R.string.system_error_vendorprint, vendorid));
+                    d.setMessage(mContext.getString(R.string.lineage_system_error_manufacturer,
+                            SystemProperties.get("ro.build.fingerprint").split("/")[3]));
                     d.setButton(DialogInterface.BUTTON_POSITIVE, mContext.getText(R.string.ok),
                             obtainMessage(DISMISS_DIALOG_UI_MSG, d));
                     d.show();
