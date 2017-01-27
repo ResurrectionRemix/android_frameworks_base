@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Notificaciones emergentes desactivadas</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notificaciones emergentes activadas</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Reporte de localización: modo de ahorro de energía.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Reporte de localización: modo de solo sensores.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Reporte de localización: modo de alta precisión.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Reporte de localización cambiado a modo de ahorro de energía.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Reporte de localización cambiado a modo de solo sensores.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Reporte de localización cambiado a modo de alta precisión.</string>
+  <string name="quick_settings_location_detail_title">Modo de ubicación</string>
+  <string name="quick_settings_location_battery_saving_label">Ahorro de batería</string>
+  <string name="quick_settings_location_gps_only_label">Sólo dispositivo</string>
+  <string name="quick_settings_location_high_accuracy_label">Alta precisión</string>
+  <string name="quick_settings_location_off_label">Ubicación desactivada</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Idioma</string>
   <string name="quick_settings_locale_more_locales_toast">Por favor, configure varios idiomas para habilitar la funcionalidad de alternar</string>

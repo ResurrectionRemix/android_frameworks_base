@@ -16,16 +16,16 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">Подразумевана</string>
+  <string name="default_string">Подразумевано</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Ваш одраз добављача не одговара системском. Флешујте <xliff:g id="string">%s</xliff:g> одраз добављача за ваш уређај</string>
+  <string name="system_error_vendorprint">Ваш имиџ система добављача не одговара систему. Флешујте <xliff:g id="string">%s</xliff:g> имиџ добављача за ваш уређај</string>
   <string name="global_action_screenrecord">Снимање екрана</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Избледи</string>
-  <string name="animation_slide_right">Клизање удесно</string>
-  <string name="animation_slide_left">Клизање улево</string>
-  <string name="animation_slide_right_no_fade">Клизање удесно (без изблеђивања)</string>
-  <string name="animation_slide_left_no_fade">Клизање улево (без изблеђивања)</string>
+  <string name="animation_slide_right">Помери десно</string>
+  <string name="animation_slide_left">Помери лево</string>
+  <string name="animation_slide_right_no_fade">Помери десно (без изблеђивања)</string>
+  <string name="animation_slide_left_no_fade">Помери лево (без изблеђивања)</string>
   <string name="animation_slide_up">Клизање на доле</string>
   <string name="animation_slide_down">Клизање на горе</string>
   <string name="animation_default">Подразумевано</string>
@@ -38,10 +38,12 @@
   <string name="action_null">Празно</string>
   <string name="global_action_torch">Лампа</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Рестартуј системско сучеље</string>
+  <string name="reboot_systemui">Рестартуј Системски Интерфејс</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">Режим у-покрету</string>
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">АДБ неактиван</string>
   <string name="adb_active_custom_tile_not_connected">неактиван</string>
+  <string name="singlehandmode_click_hint_message">Додирните изван екрана да бисте затворили мини екран</string>
+  <string name="singlehandmode_slide_hint_message">Помери прстом преко навигационе траке да бисте одабрали стандардан или мини приказ</string>
 </resources>

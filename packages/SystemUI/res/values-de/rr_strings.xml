@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads Up-Benachrichtigungen ausgeschaltet</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads Up-Benachrichtigungen eingeschaltet</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Standortdienste: Energiesparmodus.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Standortdienste: Nur Gerät.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Standortdienste: Hohe Genauigkeit.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Die Standortbestimmung wurde auf Energiesparmodus geändert.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Die Standortbestimmung wurde auf \"Nur Gerät\" geändert.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Die Standortbestimmung wurde auf \"Hohe Genauigkeit\" geändert.</string>
+  <string name="quick_settings_location_detail_title">Standortmodus</string>
+  <string name="quick_settings_location_battery_saving_label">Energiesparmodus</string>
+  <string name="quick_settings_location_gps_only_label">Nur Gerät</string>
+  <string name="quick_settings_location_high_accuracy_label">Hohe Genauigkeit</string>
+  <string name="quick_settings_location_off_label">Standortbestimmung aus</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Sprache</string>
   <string name="quick_settings_locale_more_locales_toast">Bitte richten Sie mehrere Sprachen ein, um die Umschaltfunktion zu aktivieren</string>

@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Plutajuće su obavijesti isključene</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Plutajuće su obavijesti uključene</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Izvještavanje o lokaciji: način štednje baterije.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Izvještavanje o lokaciji: način samo sa senzorima.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Izvještavanje o lokaciji: način visoke preciznosti.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Izvještavanje o lokaciji promijenjeno je na način štednje baterije.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Izvještavanje o lokaciji promijenjeno je na način samo sa senzorima.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Izvještavanje o lokaciji promijenjeno je na način visoke preciznosti.</string>
+  <string name="quick_settings_location_detail_title">Način rada lokacije</string>
+  <string name="quick_settings_location_battery_saving_label">Štednja baterije</string>
+  <string name="quick_settings_location_gps_only_label">Samo uređaj</string>
+  <string name="quick_settings_location_high_accuracy_label">Visoka preciznost</string>
+  <string name="quick_settings_location_off_label">Lokacija isključena</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Jezik</string>
   <string name="quick_settings_locale_more_locales_toast">Podesite više jezika da biste omogućili uključivanje/isključivanje funkcije</string>

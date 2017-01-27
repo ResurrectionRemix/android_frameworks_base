@@ -125,6 +125,10 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up avstängd</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up aktiverad</string>
   <!-- Location Tile -->
+  <string name="quick_settings_location_detail_title">Platsläge</string>
+  <string name="quick_settings_location_battery_saving_label">Batterisparläge</string>
+  <string name="quick_settings_location_high_accuracy_label">Hög noggrannhet</string>
+  <string name="quick_settings_location_off_label">Plats av</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Språk</string>
   <!-- PA Pie controls -->
@@ -139,6 +143,8 @@
   <string name="action_delete_fault">Borttagning misslyckades</string>
   <string name="action_save_success">Sparat</string>
   <string name="action_save_fault">Sparandet misslyckades</string>
+  <string name="pref_action_color_title">Åtgärdknapps färg</string>
+  <string name="pref_action_color_summary">Välj din favorit färg för åtgärdsknapparna</string>
   <string name="pref_category_main">Huvudinställningar</string>
   <string name="pref_category_user">Användarinställningar</string>
   <string name="pref_crop_behavior_title">Beskärningsbeteende</string>

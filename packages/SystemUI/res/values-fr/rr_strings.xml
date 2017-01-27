@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Notifications flottantes désactivées</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes activées</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Mode de localisation: économie de batterie.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Mode de localisation: appareil uniquement.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Mode de localisation: haute précision.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Mode de localisation défini sur économie de batterie.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Mode de localisation défini sur appareil uniquement.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Mode de localisation défini sur haute précision.</string>
+  <string name="quick_settings_location_detail_title">Modes de localisation</string>
+  <string name="quick_settings_location_battery_saving_label">Économie de batterie</string>
+  <string name="quick_settings_location_gps_only_label">Appareil uniquement</string>
+  <string name="quick_settings_location_high_accuracy_label">Haute précision</string>
+  <string name="quick_settings_location_off_label">Localisation désactivée</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Langue</string>
   <string name="quick_settings_locale_more_locales_toast">Veuillez configurer plusieurs langues pour utiliser cette fonctionnalité</string>

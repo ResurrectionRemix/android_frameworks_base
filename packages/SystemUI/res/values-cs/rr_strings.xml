@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Plovoucí upozornění vypnuto</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Plovoucí upozornění zapnuto</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Hlášení polohy: úspora baterie.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Hlášení polohy: pouze GPS.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Hlášení polohy: vysoká přesnost.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Hlášení polohy změněno na režim šetřící baterii.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Hlášení polohy změněno na režim pouze GPS.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Hlášení polohy změněno na režim vysoké přesnosti.</string>
+  <string name="quick_settings_location_detail_title">Režim určování polohy</string>
+  <string name="quick_settings_location_battery_saving_label">Úspora baterie</string>
+  <string name="quick_settings_location_gps_only_label">Pouze zařízení</string>
+  <string name="quick_settings_location_high_accuracy_label">Vysoká přesnost</string>
+  <string name="quick_settings_location_off_label">Poloha vypnuta</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Jazyk</string>
   <string name="quick_settings_locale_more_locales_toast">Prosím nastavte přepínač umožňující více jazyků</string>

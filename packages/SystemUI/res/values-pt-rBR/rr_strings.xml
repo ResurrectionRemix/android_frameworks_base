@@ -27,7 +27,7 @@
   <string name="screenrecord_notif_pointer_off">Ocultar ponteiro</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Não é possível gravar tela</string>
-  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">A captura de tela foi apagada</string>
   <string name="gestures_message">Desenhe seu gesto aqui</string>
@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">As notificações pop-up foram desativadas</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">As notificações pop-up foram ativadas</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: economia de bateria.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Modo de localização: somente no dispositivo.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Modo de localização: alta precisão.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Modo de localização alterado para economia de bateria.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Modo de localização alterado para somente no dispositivo.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Modo de localização alterado para alta precisão.</string>
+  <string name="quick_settings_location_detail_title">Modos de localização</string>
+  <string name="quick_settings_location_battery_saving_label">Economia de bateria</string>
+  <string name="quick_settings_location_gps_only_label">Somente no dispositivo</string>
+  <string name="quick_settings_location_high_accuracy_label">Alta precisão</string>
+  <string name="quick_settings_location_off_label">Localização desativada</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Idioma</string>
   <string name="quick_settings_locale_more_locales_toast">Por favor, configure vários idiomas para habilitar a funcionalidade de ativar/desativar</string>
@@ -143,7 +154,7 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicativo encerrado</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • Peeking notification are snoozing for 1 minute.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • As notificações estão cochilando durante 1 minuto.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • As notificações estão cochilando por <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nenhuma captura de tela tirada</string>

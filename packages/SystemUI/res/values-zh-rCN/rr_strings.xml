@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">位置报告：节电模式。</string>
+  <string name="accessibility_quick_settings_location_gps_only">位置报告：仅传感器模式。</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">位置报告：高准确度模式。</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">位置报告更改为省电模式。</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">位置信息切换为仅设备</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">位置报告更改为高精确度模式。</string>
+  <string name="quick_settings_location_detail_title">位置信息模式</string>
+  <string name="quick_settings_location_battery_saving_label">省电</string>
+  <string name="quick_settings_location_gps_only_label">仅限设备</string>
+  <string name="quick_settings_location_high_accuracy_label">高精确度</string>
+  <string name="quick_settings_location_off_label">关闭定位服务</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">语言</string>
   <string name="quick_settings_locale_more_locales_toast">请配置多种语言以使用切换功能</string>

@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Lebegő értesítések kikapcsolva</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Lebegő értesítések bekapcsolva</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Helymeghatározás: energiatakarékos mód.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Helymeghatározás: csak GPS.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Helymeghatározás: nagy pontosságú.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Helymeghatározás energiatakarékos módra váltva.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Helymeghatározás csak GPS módra váltva.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Helymeghatározás nagy pontosságú módra váltva.</string>
+  <string name="quick_settings_location_detail_title">Helymeghatározási mód</string>
+  <string name="quick_settings_location_battery_saving_label">Energiatakarékos</string>
+  <string name="quick_settings_location_gps_only_label">Csak GPS</string>
+  <string name="quick_settings_location_high_accuracy_label">Nagy pontosság</string>
+  <string name="quick_settings_location_off_label">Hely ki</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Nyelv</string>
   <string name="quick_settings_locale_more_locales_toast">Kérjük, állítson be több nyelvet a váltás engedélyezéséhez</string>
@@ -174,5 +185,5 @@
   <string name="tasklist_killall">Összes kilövése</string>
   <string name="tasklist_memory_usage">"Szabad • Összes memória : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Legalább egy kezdő tevékenységet meg kell tartania!</string>
-  <string name="tm_clear_task">TÖRÖL</string>
+  <string name="tm_clear_task">TÖRLÉS</string>
 </resources>

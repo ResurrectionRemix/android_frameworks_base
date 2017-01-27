@@ -44,4 +44,5 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB 비활성화됨</string>
   <string name="adb_active_custom_tile_not_connected">비활성화됨</string>
+  <string name="singlehandmode_click_hint_message">화면 바깥 쪽을 터치하여 미니 화면보기를 종료합니다</string>
 </resources>
