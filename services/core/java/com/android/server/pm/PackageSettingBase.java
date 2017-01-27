@@ -380,7 +380,7 @@ abstract class PackageSettingBase extends SettingBase {
             boolean notLaunched, boolean hidden, boolean suspended,
             String lastDisableAppCaller, ArraySet<String> enabledComponents,
             ArraySet<String> disabledComponents, boolean blockUninstall, int domainVerifState,
-            int linkGeneration, String[] resourceDirs) {
+            int linkGeneration, String[] resourceDirs,
             ArraySet<String> protectedComponents, ArraySet<String> visibleComponents) {
         PackageUserState state = modifyUserState(userId);
         state.ceDataInode = ceDataInode;
