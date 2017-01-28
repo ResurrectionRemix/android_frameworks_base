@@ -1,0 +1,21 @@
+<string name="screenshot_delete_action">Törlés</string>
+    <string name="screenshot_delete_confirmation">Képernyőmentés törölve.</string>
+    <string name="advanced_dev_option_wipe_app">Alkalmazások adatok törlése</string>
+    <string name="advanced_dev_option_force_stop">Kényszerített leállítás</string>
+    <string name="advanced_dev_option_uninstall">Eltávolítás</string>
+    <string name="accessibility_quick_settings_data_off">Mobil adat ki.</string>
+    <string name="accessibility_quick_settings_data_on">Mobil adat be.</string>
+    <string name="accessibility_quick_settings_roaming_off">Roaming ki.</string>
+    <string name="accessibility_quick_settings_roaming_on">Roaming be.</string>
+    <string name="accessibility_su_active">Rendszergazda munkamenet aktív</string>
+    <string name="quick_settings_mobile_data_label">Mobil adat</string>
+    <string name="quick_settings_apn_switch_label">APN kapcsoló</string>
+    <string name="quick_settings_dds_sub">Kártya %d adat</string>
+    <string name="quick_settings_data_off">Adat ki</string>
+    <string name="tasklist_memory_usage" formatted="false">Szabad/Teljes Memória: [%s] / [%s]</string>
+    <string name="quick_settings_tiles">alapértelmezett</string>
+    <string name="heads_up_snooze_message">Felugró tiltva %d percre.</string>
+    <string name="heads_up_snooze_button_title">Szundi Felugró</string>
+    <string name="notification_inspect_heads_up_title_enabled">Engedélyezze a Felugrót erre az alkalmazásra</string>
+    <string name="notification_inspect_heads_up_title_disabled">Tiltja a Felugrót erre az alkalmazásra</string>
+    <string name="gestures_message">Rejzoljon egy gesztust itt</string>
