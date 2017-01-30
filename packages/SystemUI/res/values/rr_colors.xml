@@ -44,7 +44,7 @@
     <color name="lockscreen_bottom_shorcut_phone_background">@*android:color/accent_material_dark</color>
 
     <color name="system_primary_color">@*android:color/primary_material_settings</color>
-    <color name="system_secondary_color">@*android:color/secondary_material_settings</color>
+    <color name="system_secondary_color">@*android:color/secondary_device_default_settings</color>
     <color name="system_accent_color">@*android:color/accent_material_dark</color>
 
     <!-- Custom Navbar Color -->
@@ -86,15 +86,33 @@
     <color name="ripple_material_light">#40000000</color>
     <color name="ripple_material_dark">#40ffffff</color>
 
-    <!-- Task Manager -->
+	<!-- Task Manager -->
     <color name="tm_floating_action_button_icon_color">#ffffff</color>
     <color name="tm_floating_action_button_bg_color">@*android:color/accent_material_dark</color>
-    <color name="memory_usage_item_background">@*android:color/secondary_material_settings</color>
+    <color name="memory_usage_item_background">@*android:color/secondary_device_default_settings</color>
     <color name="memory_usage_text">#ffffffff</color>
-    <color name="task_item_background">#773A3A3A</color>
+    <color name="task_item_background">@*android:color/secondary_device_default_settings</color>
     <color name="task_item_text">#b3ffffff</color>
-    <color name="task_manager_bg_color">?android:attr/colorPrimary</color>
+    <color name="task_manager_bg_color">@*android:color/primary_material_settings</color>
     <color name="tm_button_color">#b3ffffff</color>
     <color name="tm_close_button_color">#b3ffffff</color>
+
+    <!-- Substratum Exposed Colors -->
+    <!-- Navigation button ripple color -->
+    <color name="navbutton_ripple_color">#FFFFFFFF</color>
+    <!-- QS edit page background color -->
+    <color name="qs_edit_item_decoration_bg">@*android:color/secondary_device_default_settings</color>
+    <!-- QS alarm status text color -->
+    <color name="qs_alarm_status_text_color">#64ffffff</color>
+    <!-- QS edit page toolbar text color -->
+    <color name="qs_edit_toolbar_text_color">#FFFFFF</color>
+    <!-- QS battery % text color -->
+    <color name="qs_battery_text_color">@*android:color/accent_device_default_light</color>
+    <!-- QS battery graph text color -->
+    <color name="qs_battery_graph_text_color">#66FFFFFF</color>
+    <!-- QS battery accent color -->
+    <color name="qs_battery_accent">@*android:color/accent_device_default_light</color>
+    <!-- External QS tile tint color -->
+    <color name="external_qs_tile_tint_color">@android:color/white</color>
 
 </resources>
