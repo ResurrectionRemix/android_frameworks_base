@@ -271,7 +271,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             mSuIndicatorVisible = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.SHOW_SU_INDICATOR, 1) == 1;
+                    Settings.System.SHOW_SU_INDICATOR, 0) == 1;
             updateSu();
         }
 

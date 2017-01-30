@@ -40,10 +40,13 @@
 
     <!-- Quick settings tiles columns and rows config -->
     <integer name="config_qs_num_rows_landscape_default">2</integer>
-    
+
     <!-- Default value for led color when battery is really fully charged -->
     <integer name="config_notificationsBatteryReallyFullARGB">0xFF00FF00</integer>
 
     <bool name="single_hand_mode">true</bool>
+
+    <!-- True if the notifications should dynamically tint the app icon and app title -->
+    <bool name="config_allowNotificationIconTextTinting">true</bool>
 
 </resources>

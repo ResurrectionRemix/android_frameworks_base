@@ -16,11 +16,21 @@
 
 <!-- Colors specific to pixel theme. -->
 <resources>
-    
+
     <!-- RR Pixel theme main colors -->
     <color name="material_pixel_primary_dark_material_dark">#242424</color><!--Pixel Statusbar Color-->
-    <color name="material_pixel_blue_dark">#2D2D2D</color><!-- Pixel Primary Color-->
-    <color name="material_pixel_blue_light">#3A3A3A</color><!-- Pixel Secondary Color-->
-    <color name="material_pixel_blue_bright">#4285F4</color><!-- Pixel Accent Color-->
+    <color name="material_pixel_blue_dark">#ff2d2d2d</color><!-- Pixel Primary Color-->
+    <color name="material_pixel_blue_light">#ff3a3a3a</color><!-- Pixel Secondary Color-->
+    <color name="material_pixel_blue_bright">#ff4285f4</color><!-- Pixel Accent Color-->
 
+
+    <!-- Substratum Exposed Colors -->
+    <color name="resolver_list_bg">@color/white</color>
+    <color name="app_permission_icon_tint">@android:color/black</color>
+    <color name="immersive_cling_bg_color">#d04285f4</color> <!-- Should be translucent Color otherwise causes hot reboots while immersive messages shown-->
+    <color name="immersive_cling_text_color">@android:color/white</color>
+    <color name="immersive_cling_button_text_color">@android:color/white</color>
+    <color name="notification_text_default_color">@android:color/notification_default_color</color>
+    <color name="sender_text_color">@android:color/black</color>
+    
 </resources>
