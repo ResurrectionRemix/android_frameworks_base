@@ -63,7 +63,7 @@ public class BatteryLevelTextView extends TextView implements
         mBatteryCharging = charging;
         if (changed) {
             mForceBatteryText = CMSettings.System.getInt(getContext().getContentResolver(),
-                    CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 6 ? true : false;
+                    CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0) == 5 ? true : false;
             mForceChargeBatteryText = Settings.Secure.getInt(getContext().getContentResolver(),
                     FORCE_CHARGE_BATTERY_TEXT, 1) == 1 ? true : false;
             setVisibility((mBatteryCharging && mForceChargeBatteryText) || mRequestedVisibility || mForceBatteryText ? View.VISIBLE : View.GONE);
