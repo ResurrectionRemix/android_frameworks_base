@@ -52,6 +52,13 @@ class UsageStatsDatabase {
     // same as UsageStatsBackupHelper.KEY_USAGE_STATS
     static final String KEY_USAGE_STATS = "usage_stats";
 
+    static final int QUERY_FLAG_FETCH_PACKAGES = 1 << 0;
+    static final int QUERY_FLAG_FETCH_CONFIGURATIONS = 1 << 1;
+    static final int QUERY_FLAG_FETCH_EVENTS = 1 << 2;
+    static final int QUERY_FLAG_FETCH_EVERYTHING =
+            QUERY_FLAG_FETCH_PACKAGES |
+            QUERY_FLAG_FETCH_CONFIGURATIONS |
+            QUERY_FLAG_FETCH_EVENTS;
 
     private static final String TAG = "UsageStatsDatabase";
     private static final boolean DEBUG = UsageStatsService.DEBUG;
@@ -154,7 +161,7 @@ class UsageStatsDatabase {
             try {
                 IntervalStats stats = new IntervalStats();
                 for (int i = start; i < fileCount - 1; i++) {
-                    UsageStatsXml.read(files.valueAt(i), stats);
+                    UsageStatsXml.read(files.valueAt(i), stats, QUERY_FLAG_FETCH_EVERYTHING);
                     if (!checkinAction.checkin(stats)) {
                         return false;
                     }
@@ -357,7 +364,7 @@ class UsageStatsDatabase {
             try {
                 final AtomicFile f = mSortedStatFiles[intervalType].valueAt(fileCount - 1);
                 IntervalStats stats = new IntervalStats();
-                UsageStatsXml.read(f, stats);
+                UsageStatsXml.read(f, stats, QUERY_FLAG_FETCH_EVERYTHING);
                 return stats;
             } catch (IOException e) {
                 Slog.e(TAG, "Failed to read usage stats file", e);
@@ -390,7 +397,7 @@ class UsageStatsDatabase {
      * Find all {@link IntervalStats} for the given range and interval type.
      */
     public <T> List<T> queryUsageStats(int intervalType, long beginTime, long endTime,
-            StatCombiner<T> combiner) {
+            int flags, StatCombiner<T> combiner) {
         synchronized (mLock) {
             if (intervalType < 0 || intervalType >= mIntervalDirs.length) {
                 throw new IllegalArgumentException("Bad interval type " + intervalType);
@@ -443,7 +450,7 @@ class UsageStatsDatabase {
                 }
 
                 try {
-                    UsageStatsXml.read(f, stats);
+                    UsageStatsXml.read(f, stats, flags);
                     if (beginTime < stats.endTime) {
                         combiner.combine(stats, false, results);
                     }
@@ -562,7 +569,7 @@ class UsageStatsDatabase {
                     try {
                         final AtomicFile af = new AtomicFile(f);
                         final IntervalStats stats = new IntervalStats();
-                        UsageStatsXml.read(af, stats);
+                        UsageStatsXml.read(af, stats, QUERY_FLAG_FETCH_EVERYTHING);
                         final int pkgCount = stats.packageStats.size();
                         for (int i = 0; i < pkgCount; i++) {
                             UsageStats pkgStats = stats.packageStats.valueAt(i);
@@ -730,7 +737,7 @@ class UsageStatsDatabase {
             throws IOException {
         IntervalStats stats = new IntervalStats();
         try {
-            UsageStatsXml.read(statsFile, stats);
+            UsageStatsXml.read(statsFile, stats, QUERY_FLAG_FETCH_EVERYTHING);
         } catch (IOException e) {
             Slog.e(TAG, "Failed to read usage stats file", e);
             out.writeInt(0);
@@ -775,7 +782,7 @@ class UsageStatsDatabase {
         IntervalStats stats = new IntervalStats();
         try {
             stats.beginTime = in.readLong();
-            UsageStatsXml.read(in, stats);
+            UsageStatsXml.read(in, stats, QUERY_FLAG_FETCH_EVERYTHING);
         } catch (IOException ioe) {
             Slog.d(TAG, "DeSerializing IntervalStats Failed", ioe);
             stats = null;
