@@ -2393,10 +2393,10 @@ public class PackageManagerService extends IPackageManager.Stub {
                     scanDirLI(new File(RegionalizationSystemDir, "app"),
                             PackageParser.PARSE_IS_SYSTEM | PackageParser.PARSE_IS_SYSTEM_DIR,
                             scanFlags, 0);
-                    // Collect overlay in <Package>/system/vendor
+                    /* Collect overlay in <Package>/system/vendor
                     scanDirLI(new File(RegionalizationSystemDir, "vendor/overlay"),
                             PackageParser.PARSE_IS_SYSTEM | PackageParser.PARSE_IS_SYSTEM_DIR,
-                            scanFlags | SCAN_TRUSTED_OVERLAY, 0);
+                            scanFlags | SCAN_TRUSTED_OVERLAY, 0);*/
                 }
             }
 
