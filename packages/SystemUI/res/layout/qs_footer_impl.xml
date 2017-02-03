@@ -75,6 +75,18 @@
             android:src="@drawable/ic_mode_edit"
             android:tint="?android:attr/colorForeground"/>
 
+        <com.android.keyguard.AlphaOptimizedImageButton
+            android:id="@+id/running_services_button"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="46dp"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/ripple_drawable"
+            android:src="@drawable/ic_settings_memory"
+            android:tint="?android:attr/colorForeground"
+            android:contentDescription="@string/accessibility_quick_settings_running_services" />
+
         <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
             android:id="@+id/settings_button_container"
             android:layout_width="@dimen/qs_panel_footer_height"
