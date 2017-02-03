@@ -81,6 +81,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private SettingsButton mSettingsButton;
     protected View mSettingsContainer;
     private PageIndicator mPageIndicator;
+    private View mRunningServicesButton;
 
     private boolean mQsDisabled;
     private QSPanel mQsPanel;
@@ -152,6 +153,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
 
+        mRunningServicesButton = findViewById(R.id.running_services_button);
+        mRunningServicesButton.setOnClickListener(this);
+
         mMultiUserSwitch = findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
 
@@ -166,6 +170,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
+        ((RippleDrawable) mRunningServicesButton.getBackground()).setForceSoftware(true);
 
         updateResources();
 
@@ -359,6 +364,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsButton.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mAutoBrightnessIcon.setVisibility(mShowAutoBrightnessButton
                 || !mExpanded ? View.INVISIBLE : View.VISIBLE);
+        mRunningServicesButton.setVisibility(!isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE);
     }
 
     private boolean showUserSwitcher() {
@@ -415,9 +421,37 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                  mAutoBrightOn = true;
             }
             setAutoBrightnessIcon(mAutoBrightOn);
+        } else if (v == mRunningServicesButton) {
+            MetricsLogger.action(mContext,
+                    mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
+                            : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
+            startRunningServicesActivity();
         }
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        if (v == mSettingsButton) {
+            startXtensionsActivity();
+        }
+        return false;
+    }
+
+    private void startRunningServicesActivity() {
+        Intent intent = new Intent();
+        intent.setClassName("com.android.settings",
+                "com.android.settings.Settings$DevRunningServicesActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
+    private void startXtensionsActivity() {
+        Intent nIntent = new Intent(Intent.ACTION_MAIN);
+        nIntent.setClassName("com.android.settings",
+            "com.android.settings.Settings$XtensionsSettingsActivity");
+        mActivityStarter.startActivity(nIntent, true /* dismissShade */);
+    }
+
+>>>>>>> 10b2d305431... Allow to quickly open Running Services from QS panel [1/2]
     private void startSettingsActivity() {
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
                 true /* dismissShade */);
