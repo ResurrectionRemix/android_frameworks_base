@@ -177,7 +177,7 @@
   <string name="action_save_fault">Speichern war nicht erfolgreich</string>
   <string name="action_edit">Bearbeiten</string>
   <string name="recents_custom_android_n">ALLE LÖSCHEN</string>
-  <string name="recents_free_ram">Freier RAM-Speicher: %1$d MB</string>
+  <string name="recents_free_ram">Freier Arbeitsspeicher: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">Taskmanager</string>

@@ -136,16 +136,16 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Всплывающие уведомления откл</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Всплывающие уведомления вкл</string>
   <!-- Location Tile -->
-  <string name="accessibility_quick_settings_location_battery_saving">Определение местоположения: режим экономии энергии.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Определение местоположения: только по спутникам GPS.</string>
-  <string name="accessibility_quick_settings_location_high_accuracy">Определение местоположения: режим высокой точности.</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">Служба отправки местоположения переключена в режим экономии батареи.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Служба отправки местоположения переключена в режим только по спутникам GPS.</string>
-  <string name="accessibility_quick_settings_location_changed_high_accuracy">Служба отправки местоположения переключена в режим высокой точности.</string>
+  <string name="accessibility_quick_settings_location_battery_saving">Определение местоположения: по координатам сети.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Определение местоположения: по спутникам GPS.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Определение местоположения: по всем источникам.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Служба отправки местоположения переключена в режим по координатам сети.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Служба отправки местоположения переключена в режим по спутникам GPS.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Служба отправки местоположения переключена в режим по всем источникам.</string>
   <string name="quick_settings_location_detail_title">Режим местоположения</string>
-  <string name="quick_settings_location_battery_saving_label">Режим экономии энергии</string>
-  <string name="quick_settings_location_gps_only_label">Только по спутникам GPS</string>
-  <string name="quick_settings_location_high_accuracy_label">Высокая точность</string>
+  <string name="quick_settings_location_battery_saving_label">По координатам сети</string>
+  <string name="quick_settings_location_gps_only_label">По спутникам GPS</string>
+  <string name="quick_settings_location_high_accuracy_label">По всем источникам</string>
   <string name="quick_settings_location_off_label">Местоположение выкл</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Язык</string>

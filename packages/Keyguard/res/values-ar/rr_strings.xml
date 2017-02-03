@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="weather_info_not_available">سلام عليكم </string>
+  <string name="weather_info_not_available">معلومات الطقس غير متوفرة</string>
   <!-- Weather string format in keyguard -->
   <string name="keyguard_status_view_weather_format">Get Paranoid - Paranoid Android</string>
 </resources>
