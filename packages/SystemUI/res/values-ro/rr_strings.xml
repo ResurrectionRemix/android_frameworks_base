@@ -17,7 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Se realizează captura de ecran</string>
+  <string name="screenrecord_notif_ticker">Ecranul se inregistreaza</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Se înregistrează ecranul</string>
   <!-- Screenrecord notification action: Stop -->
@@ -155,6 +155,7 @@
   <string name="app_killed_message">Aplicație oprită</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Atenționarea este oprită pentru 1 minut.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> - Atenționările sunt blocate timp de <xliff:g id="number">%d </xliff:g> minute.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nici o captură de ecran realizată</string>
   <string name="screenshot_abort_text">Operație anulată</string>
@@ -183,4 +184,6 @@
   <string name="message_switch_fail">Nu poț comuta la această activitate, deoarece nu are nici o interfaţă.</string>
   <string name="tasklist_killall">Oprește toate</string>
   <string name="tasklist_memory_usage">"Elibirează • Memorie totală : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
+  <string name="message_keep_one_launcher">Trebuie să păstraţi cel putin o activitate!</string>
+  <string name="tm_clear_task">Curăţat</string>
 </resources>
