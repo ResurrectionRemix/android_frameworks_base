@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">預設</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">您的供應商image與系統不相容。請為您的設備刷 <xliff:g id="string">%s </xliff:g> 的供應商image</string>
+  <string name="system_error_vendorprint">供應商圖片與系統不相容。請為你的設備刷供應商 <xliff:g id="string">%s </xliff:g> 的圖片</string>
   <string name="global_action_screenrecord">錄製螢幕</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">淡化效果</string>

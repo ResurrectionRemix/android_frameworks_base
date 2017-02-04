@@ -84,6 +84,10 @@
     <protected-broadcast android:name="android.intent.action.USER_INITIALIZE" />
     <protected-broadcast android:name="android.intent.action.INTENT_FILTER_NEEDS_VERIFICATION" />
     <protected-broadcast android:name="android.intent.action.SU_SESSION_CHANGED" />
+    <protected-broadcast android:name="android.intent.action.OVERLAY_ADDED" />
+    <protected-broadcast android:name="android.intent.action.OVERLAY_CHANGED" />
+    <protected-broadcast android:name="android.intent.action.OVERLAY_REMOVED" />
+    <protected-broadcast android:name="android.intent.action.OVERLAY_PRIORITY_CHANGED" />
 
     <protected-broadcast android:name="android.os.action.POWER_SAVE_MODE_CHANGED" />
     <protected-broadcast android:name="android.os.action.POWER_SAVE_MODE_CHANGING" />
@@ -510,7 +514,7 @@
 
     <protected-broadcast android:name="com.android.server.retaildemo.ACTION_RESET_DEMO" />
 
-    <protected-broadcast android:name="cyanogenmod.intent.action.ACTION_LID_STATE_CHANGED" />
+    <protected-broadcast android:name="cyanogenmod.intent.action.LID_STATE_CHANGED" />
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
@@ -3155,6 +3159,12 @@
          @hide  <p>Not for use by third-party applications.</p> -->
     <permission android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
                 android:protectionLevel="signature|privileged" />
+
+    <!-- Allows an application to make calls to OverlayManagerService.-->
+    <permission android:name="android.permission.MODIFY_OVERLAYS"
+        android:label="@string/permlab_modifyOverlays"
+        android:description="@string/permdesc_modifyOverlays"
+        android:protectionLevel="normal" />
 
     <application android:process="system"
                  android:persistent="true"

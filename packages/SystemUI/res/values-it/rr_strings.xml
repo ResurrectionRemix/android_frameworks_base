@@ -137,6 +137,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up disattivate</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up attivate</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Geolocalizzazione: modalità risparmio batteria.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Geolocalizzazione: modalità solo dispositivo.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Geolocalizzazione: modalità alta precisione.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Geolocalizzazione modificata in modalità risparmio batteria.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Geolocalizzazione modificata in modalità solo dispositivo.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Geolocalizzazione modificata in modalità alta precisione.</string>
+  <string name="quick_settings_location_detail_title">Modalità geolocalizzazione</string>
+  <string name="quick_settings_location_battery_saving_label">Risparmio batteria</string>
+  <string name="quick_settings_location_gps_only_label">Solo dispositivo (GPS)</string>
+  <string name="quick_settings_location_high_accuracy_label">Alta precisione</string>
+  <string name="quick_settings_location_off_label">Geolocalizzazione disattivata</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Lingua</string>
   <string name="quick_settings_locale_more_locales_toast">Configura più lingue per abilitare la funzionalità attiva o disattiva</string>

@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Wyskakujące powiadomienia wyłączone</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Wyskakujące powiadomienia włączone</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Usługa lokalizacji: tryb oszczędzania baterii.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Usługa lokalizacji: tylko urządzenie.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Raportowanie lokalizacji: wysoka dokładność.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Lokalizacja zmieniona na tryb oszczędzania baterii.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Lokalizacja zmieniona na tylko urządzenie.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Lokalizacja zmieniona na wysoką dokładność.</string>
+  <string name="quick_settings_location_detail_title">Tryb lokalizacji</string>
+  <string name="quick_settings_location_battery_saving_label">Oszczędzanie baterii</string>
+  <string name="quick_settings_location_gps_only_label">Tylko urządzenie</string>
+  <string name="quick_settings_location_high_accuracy_label">Wysoka dokładność</string>
+  <string name="quick_settings_location_off_label">Lokalizacja wyłączona</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Język</string>
   <string name="quick_settings_locale_more_locales_toast">Proszę skonfigurować wiele języków, aby włączyć funkcję przełączania</string>

@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up dinonaktifkan</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads up diaktifkan</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Laporan Lokasi: mode hemat baterai.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Laporan Lokasi: hanya mode sensor.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Laporan Lokasi: mode akurasi tinggi.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Laporan lokasi berubah ke mode hemat baterai.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Laporan lokasi berubah ke mode hanya sensor.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Laporan lokasi berubah ke mode akurasi tinggi.</string>
+  <string name="quick_settings_location_detail_title">Mode lokasi</string>
+  <string name="quick_settings_location_battery_saving_label">Hemat baterai</string>
+  <string name="quick_settings_location_gps_only_label">Hanya perangkat</string>
+  <string name="quick_settings_location_high_accuracy_label">Akurasi tinggi</string>
+  <string name="quick_settings_location_off_label">Lokasi nonaktif</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Bahasa</string>
   <string name="quick_settings_locale_more_locales_toast">Harap tentukan bahasa yang berbeda untuk menghidupkan fungsionalitas toggle</string>

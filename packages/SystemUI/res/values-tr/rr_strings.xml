@@ -136,6 +136,17 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pencereleri kapatıldı</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pencereleri açıldı</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Konum bildirimi: pil tasarruf modu.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Konum bildirimi: sadece sensörler modu.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Konum bildirmi: yüksek doğruluk modu.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Konum bildirimi pil tasarruf moduna geçti.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Konum bildirimi sadece sensörler moduna geçti.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Konum bildirimi yüksek hassasiyet moduna geçti.</string>
+  <string name="quick_settings_location_detail_title">Konum modu</string>
+  <string name="quick_settings_location_battery_saving_label">Pil tasarrufu</string>
+  <string name="quick_settings_location_gps_only_label">Yalnızca cihaz</string>
+  <string name="quick_settings_location_high_accuracy_label">Yüksek doğruluk</string>
+  <string name="quick_settings_location_off_label">Konum kapalı</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Dil</string>
   <string name="quick_settings_locale_more_locales_toast">Geçiş işlevselliğini etkinleştirmek için lütfen birden fazla dil yapılandırın</string>

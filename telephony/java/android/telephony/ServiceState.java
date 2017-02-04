@@ -21,8 +21,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Rlog;
 
-import com.android.internal.telephony.PhoneConstants;
-
 /**
  * Contains phone state and service related information.
  *
@@ -1178,11 +1176,12 @@ public class ServiceState implements Parcelable {
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_HSDPA
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_HSUPA
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_HSPA
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_LTE
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_HSPAP
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_GSM
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_TD_SCDMA
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_IWLAN
-                || (isLte(radioTechnology) && !isLteOnCdma(radioTechnology));
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_LTE_CA;
 
     }
 
@@ -1194,20 +1193,13 @@ public class ServiceState implements Parcelable {
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_EVDO_0
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_EVDO_A
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_EVDO_B
-                || radioTechnology == RIL_RADIO_TECHNOLOGY_EHRPD
-                || isLteOnCdma(radioTechnology);
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_EHRPD;
     }
 
     /** @hide */
     public static boolean isLte(int radioTechnology) {
         return radioTechnology == RIL_RADIO_TECHNOLOGY_LTE ||
                 radioTechnology == RIL_RADIO_TECHNOLOGY_LTE_CA;
-    }
-
-    /** @hide */
-    private static boolean isLteOnCdma(int radioTechnology) {
-        return isLte(radioTechnology)
-            && TelephonyManager.getLteOnCdmaModeStatic() == PhoneConstants.LTE_ON_CDMA_TRUE;
     }
 
     /** @hide */

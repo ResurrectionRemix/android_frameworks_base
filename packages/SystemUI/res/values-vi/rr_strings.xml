@@ -99,23 +99,54 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">Tắt NFC</string>
+  <string name="quick_settings_screenrecord">Quay màn hình</string>
   <string name="quick_settings_screenrecord_on">Đang ghi ...</string>
   <string name="quick_settings_navigation_bar">Thanh điều hướng</string>
+  <string name="quick_settings_smartbar">Smart bar</string>
+  <string name="quick_settings_smartbar_off">Tắt Smart bar</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Tắt Fling</string>
+  <string name="quick_settings_appcirclebar_title">Thanh vòng tròn ứng dụng</string>
+  <string name="quick_settings_appcirclebar_on">Bật thanh vòng tròn ứng dụng</string>
+  <string name="quick_settings_appcirclebar_off">Tắt thanh vòng tròn ứng dụng</string>
+  <string name="quick_settings_gesture_anywhere_label">Cử chỉ bất cứ đâu</string>
   <string name="quick_settings_gesture_anywhere_on">Bật cử chỉ</string>
   <string name="quick_settings_gesture_anywhere_off">Tắt cử chỉ</string>
+  <string name="quick_settings_appsidebar_title">Thanh bên ứng dụng</string>
+  <string name="quick_settings_appsidebar_on">Bật thanh bên ứng dụng</string>
+  <string name="quick_settings_appsidebar_off">Tắt thanh bên ứng dụng</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">Pulse đã bật</string>
+  <string name="quick_settings_pulse_disabled">Không có trình trực quan</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Tắt Pulse</string>
   <string name="accessibility_quick_settings_pulse_on">Bật Pulse</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse đã tắt</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse đã bật</string>
+  <string name="quick_settings_pulse_label">Trình trực quan thanh điều hướng</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Hiển thị tương tác</string>
   <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Bật hiển thị tương tác</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Hiển thị tương tác đã tắt</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Hiển thị tương tác đã bật</string>
   <string name="quick_settings_heads_up_label">Thông báo nổi</string>
+  <string name="accessibility_quick_settings_heads_up_off">Tắt thông báo nổi</string>
+  <string name="accessibility_quick_settings_heads_up_on">Bật thông báo nổi</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Thông báo nổi đã tắt</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Thông báo nổi đã bật</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Báo cáo vị trí: chế độ tiết kiệm pin.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Báo cáo vị trí: chế độ chỉ các cảm biến.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Báo cáo vị trí: chế độ chính xác cao.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Báo cáo vị trí đã thay đổi thành chế độ tiết kiệm pin.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Báo cáo vị trí đã thay đổi thành chế độ chỉ cảm biến.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Báo cáo vị trí đã thay đổi thành chế độ chính xác cao.</string>
+  <string name="quick_settings_location_detail_title">Chế độ vị trí</string>
+  <string name="quick_settings_location_battery_saving_label">Tiết kiệm pin</string>
+  <string name="quick_settings_location_gps_only_label">Chỉ thiết bị</string>
+  <string name="quick_settings_location_high_accuracy_label">Chính xác cao</string>
+  <string name="quick_settings_location_off_label">Tắt vị trí</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Ngôn ngữ</string>
   <string name="quick_settings_locale_more_locales_toast">Vui lòng thiết lập nhiều ngôn ngữ để kích hoạt chức năng chuyển đổi</string>
@@ -123,6 +154,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Ứng dụng đã tắt</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong 1 phút.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Thông báo nổi sẽ báo lại trong <xliff:g id="number">%d</xliff:g> phút.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Ảnh màn hình không được chụp</string>
   <string name="screenshot_abort_text">Thao tác bị hủy bỏ</string>
@@ -147,4 +180,10 @@
   <string name="recents_free_ram">RAM trống: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">Trình quản lý tác vụ</string>
+  <string name="message_switch_fail">Không thể chuyển sang tác vụ này, bởi vì nó không có giao diện.</string>
+  <string name="tasklist_killall">Đóng tất cả</string>
+  <string name="tasklist_memory_usage">"Trống • Tổng bộ nhớ : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
+  <string name="message_keep_one_launcher">Nên giữ ít nhất một hoạt động trang chủ!</string>
+  <string name="tm_clear_task">XÓA</string>
 </resources>

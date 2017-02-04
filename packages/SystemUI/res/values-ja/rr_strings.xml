@@ -103,22 +103,50 @@
   <string name="quick_settings_screenrecord_on">録画中...</string>
   <string name="quick_settings_navigation_bar">ナビゲーションバー</string>
   <string name="quick_settings_smartbar">スマートバー</string>
+  <string name="quick_settings_smartbar_off">スマートバー オフ</string>
   <string name="quick_settings_fling">Flingジェスチャー</string>
   <string name="quick_settings_fling_off">Flingジェスチャー オフ</string>
+  <string name="quick_settings_appcirclebar_title">アプリサークルランチャー</string>
+  <string name="quick_settings_appcirclebar_on">アプリサークルランチャー　オン</string>
+  <string name="quick_settings_appcirclebar_off">アプリサークルランチャー　オフ</string>
+  <string name="quick_settings_gesture_anywhere_label">どこでもジェスチャー</string>
   <string name="quick_settings_gesture_anywhere_on">ジェスチャーをオン</string>
   <string name="quick_settings_gesture_anywhere_off">ジェスチャーをオフ</string>
+  <string name="quick_settings_appsidebar_title">アプリサイドバー</string>
+  <string name="quick_settings_appsidebar_on">アプリサイドバー　オン</string>
+  <string name="quick_settings_appsidebar_off">アプリサイドバー　オフ</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse 有効</string>
+  <string name="quick_settings_pulse_disabled">ビジュアライザー なし</string>
   <string name="quick_settings_pulse_label">パルス</string>
   <string name="accessibility_quick_settings_pulse_off">パルス　オフ</string>
   <string name="accessibility_quick_settings_pulse_on">パルス　オン</string>
   <string name="accessibility_quick_settings_pulse_changed_off">パルスをオフにした</string>
   <string name="accessibility_quick_settings_pulse_changed_on">パルスをオンにした</string>
+  <string name="quick_settings_pulse_label">ナビゲーションバーのビジュアライザー</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">常に画面表示ディスプレイ</string>
   <string name="accessibility_quick_settings_ambient_display_off">常に画面表示ディスプレイはオフです</string>
+  <string name="accessibility_quick_settings_ambient_display_on">常に画面表示ディスプレイはオン</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">常に画面表示ディスプレイをオフにしました</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">常に画面表示ディスプレイをオンにしました</string>
   <string name="quick_settings_heads_up_label">ヘッドアップ</string>
+  <string name="accessibility_quick_settings_heads_up_off">ヘッドアップ オフ</string>
+  <string name="accessibility_quick_settings_heads_up_on">ヘッドアップ オン</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">ヘッドアップ通知は無効になりました</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">ヘッドアップ通知が有効になりました</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">位置情報レポート: バッテリー節約モードです</string>
+  <string name="accessibility_quick_settings_location_gps_only">位置情報レポート: センサーのみ</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">位置情報レポート: 高精度モードです。</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">位置情報モードをバッテリーセーバーモードにしました。</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">位置情報モードをセンサーのみのモードにしました。</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">位置情報モードを高精度モードにしました。</string>
+  <string name="quick_settings_location_detail_title">位置情報モード</string>
+  <string name="quick_settings_location_battery_saving_label">バッテリーセーバー</string>
+  <string name="quick_settings_location_gps_only_label">端末のみ</string>
+  <string name="quick_settings_location_high_accuracy_label">高精度</string>
+  <string name="quick_settings_location_off_label">位置情報OFF</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">言語</string>
   <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするので複数の言語を設定してください。</string>
@@ -126,6 +154,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">アプリを強制終了しました</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • ヘッドアップ通知は１分間 一時停止します。</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g>• ヘッドアップ通知は <xliff:g id="number">%d</xliff:g>分間 一時停止します。</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">スクリーンショットを撮影しない</string>
   <string name="screenshot_abort_text">操作は中断されました</string>
@@ -150,4 +180,10 @@
   <string name="recents_free_ram">空きメモリ: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">タスクマネージャー</string>
+  <string name="message_switch_fail">インターフェイスがないため、このタスクに切り替えることができませんでした。</string>
+  <string name="tasklist_killall">全て終了</string>
+  <string name="tasklist_memory_usage">"空きメモリ/合計メモリ: [<xliff:g id="number">%s</xliff:g>] / [<xliff:g id="name">%s</xliff:g>]"</string>
+  <string name="message_keep_one_launcher">少なくとも1つのホームアプリを起動しておいて下さい！</string>
+  <string name="tm_clear_task">消去</string>
 </resources>

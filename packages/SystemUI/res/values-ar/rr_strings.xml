@@ -99,18 +99,37 @@
   <string name="quick_settings_nfc">تقنية الاتصال قريب المدى (NFC)</string>
   <string name="quick_settings_nfc_label">تقنية الاتصال قريب المدى (NFC)</string>
   <string name="quick_settings_nfc_off">NFC مغلق</string>
+  <string name="quick_settings_screenrecord">تسجيل فيديو للشاشة</string>
   <string name="quick_settings_screenrecord_on">جار التسجيل...</string>
   <string name="quick_settings_navigation_bar">شريط التنقل</string>
+  <string name="quick_settings_smartbar">شريط الذكي</string>
+  <string name="quick_settings_smartbar_off">اغلاق الشريط الذكي</string>
   <string name="quick_settings_fling">اندفاع</string>
   <string name="quick_settings_fling_off">الاندفاع معطل</string>
+  <string name="quick_settings_appcirclebar_title">تطبيق شريط الدائرة</string>
+  <string name="quick_settings_appcirclebar_on">تفعيل تطبيق شريط الدائرة</string>
+  <string name="quick_settings_appcirclebar_off">تعطيل تطبيق شريط الدائرة</string>
+  <string name="quick_settings_gesture_anywhere_label">الإيماء في أي مكان</string>
   <string name="quick_settings_gesture_anywhere_on">تفعيل الإيماءات</string>
   <string name="quick_settings_gesture_anywhere_off">ايقاف الإيماءات</string>
+  <string name="quick_settings_appsidebar_title">تطبيق الشريط الجانبي</string>
+  <string name="quick_settings_appsidebar_on">تفعيل تطبيق الشريط الجانبي</string>
+  <string name="quick_settings_appsidebar_off">تعطيل تطبيق الشريط الجانبي</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">تمكين النبض</string>
+  <string name="quick_settings_pulse_label">نبض</string>
+  <string name="accessibility_quick_settings_pulse_off">تعطيل النبض</string>
+  <string name="accessibility_quick_settings_pulse_on">تفعيل النبض</string>
+  <string name="quick_settings_pie">فطيرة</string>
   <string name="quick_settings_ambient_display_label">عرض المحيط</string>
   <string name="accessibility_quick_settings_ambient_display_off">إيقاف عرض المحيط.</string>
   <string name="quick_settings_heads_up_label">الإشعارات العلوية</string>
   <!-- Location Tile -->
+  <string name="quick_settings_location_detail_title">وضع الموقع</string>
+  <string name="quick_settings_location_battery_saving_label">توفير الطاقة</string>
+  <string name="quick_settings_location_gps_only_label">الجهاز فقط</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">اللغة</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">تم إيقاف التطبيق</string>
@@ -138,4 +157,6 @@
   <string name="recents_custom_android_n">حذف الكل</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">إدارة المهام</string>
+  <string name="tasklist_killall">إغلاق الكل</string>
 </resources>
