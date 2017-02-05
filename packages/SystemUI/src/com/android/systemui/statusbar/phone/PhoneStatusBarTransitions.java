@@ -32,7 +32,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
 
-    private View mLeftSide, mStatusIcons, mSignalCluster, mBattery, mClock,mNetworkTraffic, mRRLogo,mRRLogoRight,mRRLogoLeft,mClogo,mClogoLeft,mClogoRight,mWeatherLeft,mWeatherRight, mMinitBattery;OSP
+    private View mLeftSide, mStatusIcons, mSignalCluster, mBattery, mClock,mNetworkTraffic, mRRLogo,mRRLogoRight,mRRLogoLeft,mClogo,mClogoLeft,mClogoRight,mWeatherLeft,mWeatherRight, mMinitBattery;
 
     private Animator mCurrentAnimation;
 
