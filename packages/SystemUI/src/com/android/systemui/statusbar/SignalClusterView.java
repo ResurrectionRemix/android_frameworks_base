@@ -25,6 +25,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -65,6 +66,7 @@ public class SignalClusterView
     private static final String SLOT_WIFI = "wifi";
     private static final String SLOT_ETHERNET = "ethernet";
     private static final String SLOT_VOLTE = "volte";
+    private static final String SLOT_VPN = "vpn";
 
     NetworkControllerImpl mNC;
     SecurityController mSC;
@@ -114,6 +116,7 @@ public class SignalClusterView
     private boolean mBlockWifi;
     private boolean mBlockEthernet;
     private boolean mBlockVolte;
+    private boolean mBlockVpn;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -144,26 +147,32 @@ public class SignalClusterView
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (!StatusBarIconController.ICON_BLACKLIST.equals(key)) {
-            return;
-        }
-        ArraySet<String> blockList = StatusBarIconController.getIconBlacklist(newValue);
-        boolean blockAirplane = blockList.contains(SLOT_AIRPLANE);
-        boolean blockMobile = blockList.contains(SLOT_MOBILE);
-        boolean blockWifi = blockList.contains(SLOT_WIFI);
-        boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
-        boolean blockVolte = blockList.contains(SLOT_VOLTE);
+        switch (key) {
+            case StatusBarIconController.ICON_BLACKLIST:
+                 ArraySet<String> blockList = StatusBarIconController.getIconBlacklist(newValue);
+                 boolean blockAirplane = blockList.contains(SLOT_AIRPLANE);
+                 boolean blockMobile = blockList.contains(SLOT_MOBILE);
+                 boolean blockWifi = blockList.contains(SLOT_WIFI);
+                 boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
+                 boolean blockVolte = blockList.contains(SLOT_VOLTE);
+                 boolean blockVpn = blockList.contains(SLOT_VPN);
 
-        if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
-                || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
-            mBlockAirplane = blockAirplane;
-            mBlockMobile = blockMobile;
-            mBlockEthernet = blockEthernet;
-            mBlockWifi = blockWifi;
-            mBlockVolte = blockVolte;
-            // Re-register to get new callbacks.
-            mNC.removeSignalCallback(this);
-            mNC.addSignalCallback(this);
+                 if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
+                         || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
+                     mBlockAirplane = blockAirplane;
+                     mBlockMobile = blockMobile;
+                     mBlockEthernet = blockEthernet;
+                     mBlockWifi = blockWifi;
+                     mBlockVolte = blockVolte;
+                     mBlockVpn = blockVpn;
+                     // Re-register to get new callbacks.
+                     mNC.removeSignalCallback(this);
+                     mNC.addSignalCallback(this);
+                     apply();
+                 }
+                break;
+            default:
+                break;
         }
     }
 
@@ -204,6 +213,12 @@ public class SignalClusterView
         maybeScaleVpnAndNoSimsIcons();
     }
 
+    public boolean IsDataAcitivyArrowsActive() {
+       return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DATA_ACTIVITY_ARROWS, 0,
+                UserHandle.USER_CURRENT) == 1;
+     }
+
     /**
      * Extracts the icon off of the VPN and no sims views and maybe scale them by
      * {@link #mIconScaleFactor}. Note that the other icons are not scaled here because they are
@@ -233,7 +248,8 @@ public class SignalClusterView
         int endPadding = mMobileSignalGroup.getChildCount() > 0 ? mMobileSignalGroupEndPadding : 0;
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
 
-        TunerService.get(mContext).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+        TunerService.get(mContext).addTunable(this,
+                StatusBarIconController.ICON_BLACKLIST);
 
         apply();
         applyIconTint();
@@ -476,8 +492,8 @@ public class SignalClusterView
     private void apply() {
         if (mWifiGroup == null) return;
 
-        mVpn.setVisibility(mVpnVisible ? View.VISIBLE : View.GONE);
-        if (mVpnVisible) {
+        mVpn.setVisibility(mVpnVisible && !mBlockVpn ? View.VISIBLE : View.GONE);
+        if (mVpnVisible && !mBlockVpn) {
             if (mLastVpnIconId != mVpnIconId) {
                 setIconForView(mVpn, mVpnIconId);
                 mLastVpnIconId = mVpnIconId;
@@ -527,7 +543,11 @@ public class SignalClusterView
                     (mWifiVisible ? "VISIBLE" : "GONE"),
                     mWifiStrengthId));
 
-        mWifiActivity.setVisibility(mWifiActivityId != 0 ? View.VISIBLE : View.GONE);
+        if (IsDataAcitivyArrowsActive()) {
+            mWifiActivity.setVisibility(mWifiActivityId != 0 ? View.VISIBLE : View.GONE);
+        } else {
+            mWifiActivity.setVisibility(View.GONE);
+        }
 
         boolean anyMobileVisible = false;
         int firstMobileTypeId = 0;
@@ -703,7 +723,12 @@ public class SignalClusterView
 
             mMobileType.setVisibility(mMobileTypeId != 0 ? View.VISIBLE : View.GONE);
             mMobileRoaming.setVisibility(mRoaming ? View.VISIBLE : View.GONE);
-            mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);
+
+            if (IsDataAcitivyArrowsActive()) {
+                mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);
+            } else {
+                mMobileActivity.setVisibility(View.GONE);
+            }
 
             return mMobileVisible;
         }
