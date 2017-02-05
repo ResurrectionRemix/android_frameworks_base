@@ -120,6 +120,8 @@
   <string name="quick_settings_pulse_label">نبض</string>
   <string name="accessibility_quick_settings_pulse_off">تعطيل النبض</string>
   <string name="accessibility_quick_settings_pulse_on">تفعيل النبض</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">إيقاف تشغيل</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">تشغيل</string>
   <string name="quick_settings_pie">فطيرة</string>
   <string name="quick_settings_ambient_display_label">عرض المحيط</string>
   <string name="accessibility_quick_settings_ambient_display_off">إيقاف عرض المحيط.</string>

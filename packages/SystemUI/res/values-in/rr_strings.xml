@@ -35,10 +35,10 @@
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Usap ke kanan untuk %1$s</string>
   <string name="right_shortcut_hint">Usap ke kiri untuk %1$s</string>
-  <string name="lockscreen_message">Tap ikon di sebelah kiri atau kanan untuk menetapkan kembali pintasan layar kunci.</string>
-  <string name="lockscreen_default_target">Default</string>
+  <string name="lockscreen_message">Ketuk ikon di sebelah kiri atau kanan untuk mengatur pintasan kunci layar.</string>
+  <string name="lockscreen_default_target">Standar</string>
   <string name="select_application">Pilih aplikasi</string>
-  <string name="lockscreen_choose_action_title">Pilih aksi</string>
+  <string name="lockscreen_choose_action_title">Pilih tindakan</string>
   <string name="lockscreen_none_target">Kosong</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Perbesar</string>
@@ -64,12 +64,12 @@
   <string name="accessibility_quick_settings_volume_panel">Volume</string>
   <string name="quick_settings_volume_panel_label">Volume</string>
   <!-- Quick Settings tiles -->
-  <string name="quick_settings_screenshot_label">Tangkap Layar</string>
-  <string name="quick_settings_region_screenshot_label">Parsial screenshot</string>
+  <string name="quick_settings_screenshot_label">Tangkapan Layar</string>
+  <string name="quick_settings_region_screenshot_label">Tangkapan layar sebagian</string>
   <string name="quick_settings_adb_network">Jaringan ADB</string>
   <string name="quick_settings_network_adb_enabled_label">Aktif</string>
   <string name="quick_settings_network_adb_disabled_label">Tidak aktif</string>
-  <string name="quick_settings_sync_label">Sinkronisasikan</string>
+  <string name="quick_settings_sync_label">Sinkronisasi</string>
   <string name="accessibility_quick_settings_sync_off">Sinkronisasi mati</string>
   <string name="accessibility_quick_settings_sync_on">Sinkronisasi aktif</string>
   <string name="accessibility_quick_settings_sync_changed_off">Sinkronisasi dinonaktifkan</string>
@@ -78,7 +78,7 @@
   <string name="quick_settings_expanded_desktop">Diperluas</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
   <string name="quick_settings_reboot_label">Mulai ulang</string>
-  <string name="quick_settings_reboot_recovery_label">Pemulihan</string>
+  <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">Penambatan USB mati</string>
   <string name="accessibility_quick_settings_usb_tether_on">Penambatan USB mati</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Penambatan USB dimatikan</string>
@@ -104,8 +104,8 @@
   <string name="quick_settings_navigation_bar">Bar Navigasi</string>
   <string name="quick_settings_smartbar">Smart bar</string>
   <string name="quick_settings_smartbar_off">Smart bar mati</string>
-  <string name="quick_settings_fling">Melemparkan</string>
-  <string name="quick_settings_fling_off">Melemparkan Mati</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Fling mati</string>
   <string name="quick_settings_appcirclebar_title">Circle bar</string>
   <string name="quick_settings_appcirclebar_on">Circle bar hidup</string>
   <string name="quick_settings_appcirclebar_off">Circle bar mati</string>
@@ -152,7 +152,7 @@
   <string name="quick_settings_locale_more_locales_toast">Harap tentukan bahasa yang berbeda untuk menghidupkan fungsionalitas toggle</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
-  <string name="app_killed_message">App Dimatikan</string>
+  <string name="app_killed_message">Aplikasi dimatikan</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Pemberitahuan mengintip tertidur selama 1 menit.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Pemberitahuan mengintip tertidur selama <xliff:g id="number">%d </xliff:g> menit.</string>
@@ -164,8 +164,8 @@
   <string name="action_delete_fault">Gagal menghapus</string>
   <string name="action_save_success">Disimpan</string>
   <string name="action_save_fault">Gagal menyimpan</string>
-  <string name="pref_action_color_title">warna tombol aksi</string>
-  <string name="pref_action_color_summary">pilih warna favorit unutuk tombol tindakan</string>
+  <string name="pref_action_color_title">Warna tombol tindakan</string>
+  <string name="pref_action_color_summary">Pilih warna favorit untuk tombol tindakan</string>
   <string name="pref_category_main">Pengaturan Utama</string>
   <string name="pref_category_user">Pengaturan pengguna</string>
   <string name="pref_crop_behavior_title">Perilaku pemotongan</string>
