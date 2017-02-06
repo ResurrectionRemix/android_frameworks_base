@@ -17,6 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
+  <string name="screenrecord_notif_ticker">화면이 녹화되고 있습니다.</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">화면 녹화 중...</string>
   <!-- Screenrecord notification action: Stop -->
@@ -28,18 +29,32 @@
   <string name="screenrecord_notif_error">화면을 녹화할 수 없습니다.</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">스크린샷이 삭제되었습니다</string>
+  <string name="delete_screenshot_toast">스크린샷이 삭제됨</string>
+  <string name="gestures_message">여기에 제스처를 그리세요</string>
   <string name="rr_sys_tuner">시스템 UI 튜너</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">오른쪽으로 밀어서 %1$s</string>
+  <string name="right_shortcut_hint">왼쪽으로 밀어서 %1$s</string>
+  <string name="lockscreen_message">잠금 화면 바로 가기를 재설정하려면 왼쪽 또는 오른쪽 아이콘을 탭하십시오.</string>
+  <string name="lockscreen_default_target">기본 값</string>
   <string name="select_application">애플리케이션 선택</string>
-  <string name="lockscreen_choose_action_title">작업 선택</string>
+  <string name="lockscreen_choose_action_title">활동 선택</string>
   <string name="lockscreen_none_target">없음</string>
   <!-- App circle sidebar -->
-  <string name="app_stop_item_title">앱종료</string>
+  <string name="app_float_maximize_item_title">최대화</string>
+  <string name="app_float_item_title">플로팅 뷰</string>
+  <string name="app_stop_item_title">앱 종료</string>
   <!-- On The Go -->
+  <string name="onthego_notif_ticker">On-The-Go 모드 활성화됨</string>
+  <string name="onthego_notif_title">On-The-Go 모드가 활성화 되었습니다</string>
+  <string name="onthego_notif_stop">중지</string>
   <string name="onthego_notif_options">옵션</string>
+  <string name="onthego_notif_error">On-The-Go 모드를 시작할 수 없습니다.</string>
+  <string name="onthego_notif_restart">On-The-Go 모드 다시 시작</string>
+  <string name="onthego_notif_camera_changed">카메라 모드 변경됨</string>
   <string name="onthego_transparency">투명도</string>
   <string name="onthego_front_camera">전면 카메라 사용</string>
+  <string name="onthego_service_toggle">자동으로 서비스 다시 시작</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">소리</string>
   <string name="quick_settings_sound_ring">벨소리</string>
@@ -50,31 +65,94 @@
   <string name="quick_settings_volume_panel_label">음량</string>
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">스크린샷</string>
+  <string name="quick_settings_region_screenshot_label">부분 스크린샷</string>
   <string name="quick_settings_adb_network">ADB 네트워크</string>
-  <string name="quick_settings_network_adb_enabled_label">활성화</string>
-  <string name="quick_settings_network_adb_disabled_label">비활성화</string>
+  <string name="quick_settings_network_adb_enabled_label">활성화됨</string>
+  <string name="quick_settings_network_adb_disabled_label">비활성화됨</string>
   <string name="quick_settings_sync_label">동기화</string>
-  <string name="accessibility_quick_settings_sync_off">동기화 끔</string>
-  <string name="accessibility_quick_settings_sync_on">동기화 꼄</string>
+  <string name="accessibility_quick_settings_sync_off">동기화 꺼짐</string>
+  <string name="accessibility_quick_settings_sync_on">동기화 켜짐</string>
+  <string name="accessibility_quick_settings_sync_changed_off">동기화 꺼짐</string>
+  <string name="accessibility_quick_settings_sync_changed_on">동기화 켜짐</string>
+  <string name="quick_settings_expanded_desktop_label">확장 데스크탑</string>
+  <string name="quick_settings_expanded_desktop">확장됨</string>
+  <string name="quick_settings_expanded_desktop_off">일반 모드</string>
   <string name="quick_settings_reboot_label">다시 시작</string>
   <string name="quick_settings_reboot_recovery_label">복구 모드</string>
-  <string name="accessibility_quick_settings_usb_tether_off">USB 테더링 끄기</string>
-  <string name="accessibility_quick_settings_usb_tether_on">USB 테더링 켜기</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USB 테더링 꺼짐</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB 테더링 켜짐</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USB 테더링 꺼짐</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USB 테더링 켜짐</string>
   <string name="quick_settings_usb_tether_label">USB 테더링</string>
   <string name="quick_settings_music_label">음악</string>
   <string name="quick_settings_music_play">재생</string>
-  <string name="quick_settings_music_pause">일시정지</string>
+  <string name="quick_settings_music_pause">일시 정지</string>
   <string name="quick_settings_ime_tile_label">입력 방법</string>
+  <string name="rr_qs_tile">환경설정</string>
+  <string name="quick_settings_caffeine_label">카페인</string>
+  <string name="accessibility_quick_settings_caffeine_off">카페인 꺼짐</string>
+  <string name="accessibility_quick_settings_caffeine_on">카페인 켜짐</string>
+  <string name="qs_app_picker_title">앱 선택</string>
   <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE 켜짐</string>
+  <string name="lte_off">LTE 꺼짐</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC 꺼짐</string>
+  <string name="quick_settings_screenrecord">화면 녹화</string>
   <string name="quick_settings_screenrecord_on">녹화 중...</string>
   <string name="quick_settings_navigation_bar">내비게이션 바</string>
+  <string name="quick_settings_smartbar">스마트 바</string>
+  <string name="quick_settings_smartbar_off">스마트바 꺼짐</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Fling 꺼짐</string>
+  <string name="quick_settings_appcirclebar_title">앱 서클 바</string>
+  <string name="quick_settings_appcirclebar_on">앱 서클 바 켜짐</string>
+  <string name="quick_settings_appcirclebar_off">앱 서클 바 꺼짐</string>
+  <string name="quick_settings_gesture_anywhere_label">Gesture Anywhere</string>
+  <string name="quick_settings_gesture_anywhere_on">제스처 켜짐</string>
+  <string name="quick_settings_gesture_anywhere_off">제스처 꺼짐</string>
+  <string name="quick_settings_appsidebar_title">앱 사이드 바</string>
+  <string name="quick_settings_appsidebar_on">앱 사이드 바 켜짐</string>
+  <string name="quick_settings_appsidebar_off">앱 사이드 바 꺼짐</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">펄스 활성화됨</string>
+  <string name="quick_settings_pulse_disabled">시각화 사용 안함</string>
+  <string name="quick_settings_pulse_label">펄스</string>
+  <string name="accessibility_quick_settings_pulse_off">펄스 꺼짐</string>
+  <string name="accessibility_quick_settings_pulse_on">펄스 켜짐</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">펄스 꺼짐</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">펄스 켜짐</string>
+  <string name="quick_settings_pulse_label">내비게이션 바 시각화</string>
+  <string name="quick_settings_pie">Pie 컨트롤</string>
+  <string name="quick_settings_ambient_display_label">절전 모드 자동 해제</string>
+  <string name="accessibility_quick_settings_ambient_display_off">절전 모드 자동 해제 꺼짐</string>
+  <string name="accessibility_quick_settings_ambient_display_on">절전 모드 자동 해제 켜짐</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">절전 모드 자동 해제 꺼짐</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">절전 모드 자동 해제 켜짐</string>
+  <string name="quick_settings_heads_up_label">헤드업 알림</string>
+  <string name="accessibility_quick_settings_heads_up_off">헤드 업 알림 꺼짐</string>
+  <string name="accessibility_quick_settings_heads_up_on">헤드 업 알림 켜짐</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">헤드 업 알림 꺼짐</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">헤드 업 알림 켜짐</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">위치 모드: 배터리 절약 모드</string>
+  <string name="accessibility_quick_settings_location_gps_only">위치 모드: 기기 전용 모드</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">위치 모드: 높은 정확도 모드</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">위치 설정이 배터리 절약 모드로 변경되었습니다.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">위치 설정이 기기 전용 모드로 변경되었습니다.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">위치 설정이 높은 정확도 모드로 변경되었습니다.</string>
+  <string name="quick_settings_location_detail_title">위치 모드</string>
+  <string name="quick_settings_location_battery_saving_label">배터리 절약</string>
+  <string name="quick_settings_location_gps_only_label">기기 전용</string>
+  <string name="quick_settings_location_high_accuracy_label">높은 정확도</string>
+  <string name="quick_settings_location_off_label">위치 정보 사용 안함</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">언어</string>
+  <string name="quick_settings_locale_more_locales_toast">토글 기능을 활성화 하려면 다중 언어를 설정하시기 바랍니다</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
+  <string name="app_killed_message">애플리케이션 종료됨</string>
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
   <!-- Screenshot Crop & Share -->
@@ -85,7 +163,7 @@
   <string name="action_save_success">저장됨</string>
   <string name="action_edit">편집</string>
   <string name="recents_custom_android_n">모두 지우기</string>
-  <string name="recents_free_ram">가용 RAM: %1$d MB</string>
+  <string name="recents_free_ram">사용가능한 RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
 </resources>

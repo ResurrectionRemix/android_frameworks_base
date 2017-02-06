@@ -182,7 +182,7 @@
   <!-- Task Manager -->
   <string name="task_manager_title">Manajer tugas</string>
   <string name="message_switch_fail">Tidak bisa beralih ke tugas ini, karena tidak memiliki antarmuka.</string>
-  <string name="tasklist_killall">Matikan Semua</string>
+  <string name="tasklist_killall">Tutup Semua</string>
   <string name="tasklist_memory_usage">"Bebas • Total memori: [<xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>]"</string>
   <string name="message_keep_one_launcher">Harus menyimpan setidaknya satu kegiatan beranda!</string>
   <string name="tm_clear_task">BERSIHKAN</string>

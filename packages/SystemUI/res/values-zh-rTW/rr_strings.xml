@@ -65,7 +65,7 @@
   <string name="quick_settings_volume_panel_label">音量</string>
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">擷取螢幕畫面</string>
-  <string name="quick_settings_region_screenshot_label">部分截圖</string>
+  <string name="quick_settings_region_screenshot_label">區域截圖</string>
   <string name="quick_settings_adb_network">網路 ADB</string>
   <string name="quick_settings_network_adb_enabled_label">已啟用</string>
   <string name="quick_settings_network_adb_disabled_label">已停用</string>
@@ -85,7 +85,7 @@
   <string name="accessibility_quick_settings_usb_tether_changed_on">USB 網路共用已開啟</string>
   <string name="quick_settings_usb_tether_label">USB 網路共用</string>
   <string name="quick_settings_music_label">音樂</string>
-  <string name="quick_settings_music_play">開始</string>
+  <string name="quick_settings_music_play">播放</string>
   <string name="quick_settings_music_pause">暫停</string>
   <string name="quick_settings_ime_tile_label">輸入法</string>
   <string name="rr_qs_tile">配置</string>
@@ -104,8 +104,8 @@
   <string name="quick_settings_navigation_bar">導航列</string>
   <string name="quick_settings_smartbar">智慧列</string>
   <string name="quick_settings_smartbar_off">智慧列關閉</string>
-  <string name="quick_settings_fling">掃動手勢</string>
-  <string name="quick_settings_fling_off">掃動手勢 關閉</string>
+  <string name="quick_settings_fling">滑動手勢</string>
+  <string name="quick_settings_fling_off">滑動手勢 關閉</string>
   <string name="quick_settings_appcirclebar_title">環形應用程式列</string>
   <string name="quick_settings_appcirclebar_on">環形應用程式列開啟</string>
   <string name="quick_settings_appcirclebar_off">環形應用程式列關閉</string>

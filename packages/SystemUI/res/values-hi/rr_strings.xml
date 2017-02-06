@@ -99,23 +99,48 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC बंद</string>
+  <string name="quick_settings_screenrecord">स्क्रीन रिकॉर्ड</string>
   <string name="quick_settings_screenrecord_on">रिकॉर्डिंग चालू...</string>
   <string name="quick_settings_navigation_bar">नेविगेशन पट्टी</string>
+  <string name="quick_settings_smartbar">स्मार्ट पट्टी</string>
+  <string name="quick_settings_smartbar_off">स्मार्ट पट्टी बंद</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling बंद</string>
+  <string name="quick_settings_gesture_anywhere_label">कहीं भी इशारा</string>
   <string name="quick_settings_gesture_anywhere_on">इशारे चालू</string>
   <string name="quick_settings_gesture_anywhere_off">इशारे बंद</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">पल्स सक्षम</string>
+  <string name="quick_settings_pulse_disabled">विजुअलाइज़र बंद</string>
   <string name="quick_settings_pulse_label">पल्स</string>
   <string name="accessibility_quick_settings_pulse_off">पल्स बंद है</string>
   <string name="accessibility_quick_settings_pulse_on">पल्स चालू है</string>
   <string name="accessibility_quick_settings_pulse_changed_off">पल्स बंद कर दिया</string>
   <string name="accessibility_quick_settings_pulse_changed_on">पल्स चालू कर दिया</string>
+  <string name="quick_settings_pulse_label">नेविगेशनबार विजुअलाइज़र</string>
   <string name="quick_settings_pie">पाई</string>
   <string name="quick_settings_ambient_display_label">एम्बिएंट डिस्प्ले</string>
   <string name="accessibility_quick_settings_ambient_display_off">एम्बिएंट डिस्प्ले बंद</string>
+  <string name="accessibility_quick_settings_ambient_display_on">एम्बिएंट डिस्प्ले चालु</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">एम्बिएंट डिस्प्ले बंद कर दिया</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">एम्बिएंट डिस्प्ले चालु कर दिया</string>
   <string name="quick_settings_heads_up_label">संकेत</string>
+  <string name="accessibility_quick_settings_heads_up_off">संकेत बंद।</string>
+  <string name="accessibility_quick_settings_heads_up_on">संकेत चालु।</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">संकेत बंद कर दिया।</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">संकेत चालु कर दिया।</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">स्थान रिपोर्टिंग: बैटरी बचत मोड।</string>
+  <string name="accessibility_quick_settings_location_gps_only">स्थान रिपोर्टिंग: सेंसर मोड।</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">स्थान रिपोर्टिंग: उच्च सटीकता मोड।</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">स्थान रिपोर्टिंग बदलाव: बैटरी बचत मोड।</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">स्थान रिपोर्टिंग बदलाव:: सेंसर मोड।</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">स्थान रिपोर्टिंग बदलाव:: उच्च सटीकता मोड।</string>
+  <string name="quick_settings_location_detail_title">स्थान मोड</string>
+  <string name="quick_settings_location_battery_saving_label">बैटरी बचत</string>
+  <string name="quick_settings_location_gps_only_label">केवल डिवाइस</string>
+  <string name="quick_settings_location_high_accuracy_label">उच्च सटीकता</string>
+  <string name="quick_settings_location_off_label">स्थान बंद</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">भाषा</string>
   <string name="quick_settings_locale_more_locales_toast">कृपया टॉगल कार्यक्षमता सक्षम करने के लिए एक से अधिक भाषाओं को कॉन्फ़िगर करें</string>
@@ -147,4 +172,6 @@
   <string name="recents_free_ram">नि: शुल्क राम: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">कार्य प्रबंधक</string>
+  <string name="message_keep_one_launcher">कम से कम एक घर गतिविधि रखना चाहिए!</string>
 </resources>

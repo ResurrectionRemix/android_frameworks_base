@@ -38,12 +38,12 @@
   <string name="action_null">空白</string>
   <string name="global_action_torch">手電筒</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">重新啟動使用者介面</string>
+  <string name="reboot_systemui">重新啟動系統使用者介面</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">On-The-Go 模式</string>
   <!-- ADB enabled, but not connected notification title -->
-  <string name="adb_not_connected_notification_title">停用 ADB</string>
+  <string name="adb_not_connected_notification_title">ADB未啟用</string>
   <string name="adb_active_custom_tile_not_connected">未啟用</string>
-  <string name="singlehandmode_click_hint_message">觸控螢幕外部可退出迷你螢幕檢視</string>
-  <string name="singlehandmode_slide_hint_message">在導覽列上滑動手指，在標準和迷你螢幕檢視之間切換</string>
+  <string name="singlehandmode_click_hint_message">觸控外部即可退出單手模式</string>
+  <string name="singlehandmode_slide_hint_message">在導覽列上滑動手指以切換標準或單手模式</string>
 </resources>
