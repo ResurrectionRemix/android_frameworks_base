@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Mặc định</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Vendor image không phù hợp với phiên bản hệ thống.Xin vui lòng flash <xliff:g id="string">%s</xliff:g> vendor image phù hợp</string>
+  <string name="system_error_vendorprint">Vendor image không phù hợp với phiên bản hệ thống. Xin vui lòng flash <xliff:g id="string">%s</xliff:g> vendor image phù hợp</string>
   <string name="global_action_screenrecord">Quay màn hình</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Mờ dần</string>

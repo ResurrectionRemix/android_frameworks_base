@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Đã xoá ảnh chụp màn hình</string>
   <string name="gestures_message">Vẽ các cử chỉ của bạn ở đây</string>
-  <string name="rr_sys_tuner">Bộ điều hướng giao diện người dùng hệ thống</string>
+  <string name="rr_sys_tuner">Bộ điều chỉnh giao diện người dùng hệ thống</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Vuốt qua phải để mở %1$s</string>
   <string name="right_shortcut_hint">Vuốt qua trái để mở %1$s</string>

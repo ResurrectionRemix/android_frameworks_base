@@ -154,16 +154,34 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">애플리케이션 종료됨</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • 꺼내기 알람을 1분간 중지 시킵니다.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • 꺼내기를 알람을 <xliff:g id="number">%d </xliff:g> 분간 중지 시킵니다.</string>
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">저장된 스크린샷이 없음</string>
+  <string name="screenshot_abort_text">작업이 중단됨</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">삭제됨</string>
+  <string name="action_delete_fault">삭제에 실패하였습니다</string>
   <string name="action_save_success">저장됨</string>
+  <string name="action_save_fault">저장에 실패하였습니다</string>
+  <string name="pref_action_color_title">동작 버튼 색</string>
+  <string name="pref_action_color_summary">동작 버턴의 색상을 선택하시오</string>
+  <string name="pref_category_main">기본 설정</string>
+  <string name="pref_category_user">사용자 설정</string>
   <string name="action_ok">확인</string>
   <string name="action_delete_success">삭제됨</string>
+  <string name="action_delete_fault">삭제에 실패하였습니다</string>
   <string name="action_save_success">저장됨</string>
+  <string name="action_save_fault">저장에 실패하였습니다</string>
   <string name="action_edit">편집</string>
   <string name="recents_custom_android_n">모두 지우기</string>
   <string name="recents_free_ram">사용가능한 RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">작업관리자</string>
+  <string name="message_switch_fail">인터페이스가 없기 때문에 이 작업을 전환할 수 없습니다.</string>
+  <string name="tasklist_killall">모두 종료</string>
+  <string name="tasklist_memory_usage">"• 총 메모리: <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
+  <string name="message_keep_one_launcher">최소한 하나의 작업은 유지해야 합니다!</string>
+  <string name="tm_clear_task">지우기</string>
 </resources>
