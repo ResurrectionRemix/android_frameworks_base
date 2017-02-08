@@ -29,9 +29,9 @@
   <string name="screenrecord_notif_error">無法錄影螢幕</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g><xliff:g id="condition">%2$s </xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">螢幕擷取畫面已刪除</string>
+  <string name="delete_screenshot_toast">已刪除螢幕截圖</string>
   <string name="gestures_message">請在此畫出手勢</string>
-  <string name="rr_sys_tuner">系統使用者介面調整精靈</string>
+  <string name="rr_sys_tuner">系統介面調整精靈</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">向右滑動 %1$s</string>
   <string name="right_shortcut_hint">向左滑動 %1$s</string>
@@ -57,14 +57,14 @@
   <string name="onthego_service_toggle">自動重新啟動服務</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">音效</string>
-  <string name="quick_settings_sound_ring">響鈴</string>
+  <string name="quick_settings_sound_ring">鈴聲</string>
   <string name="quick_settings_sound_vibrate">振動</string>
   <string name="quick_settings_sound_dnd">請勿打擾</string>
   <!-- Volume QS Tile -->
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
   <!-- Quick Settings tiles -->
-  <string name="quick_settings_screenshot_label">擷取螢幕畫面</string>
+  <string name="quick_settings_screenshot_label">螢幕截圖</string>
   <string name="quick_settings_region_screenshot_label">部分截圖</string>
   <string name="quick_settings_adb_network">ADB 網路</string>
   <string name="quick_settings_network_adb_enabled_label">已啟用</string>
@@ -72,69 +72,69 @@
   <string name="quick_settings_sync_label">同步</string>
   <string name="accessibility_quick_settings_sync_off">同步關閉</string>
   <string name="accessibility_quick_settings_sync_on">同步開啟</string>
-  <string name="accessibility_quick_settings_sync_changed_off">同步已關閉</string>
-  <string name="accessibility_quick_settings_sync_changed_on">同步已開啟</string>
+  <string name="accessibility_quick_settings_sync_changed_off">已關閉同步</string>
+  <string name="accessibility_quick_settings_sync_changed_on">已開啟同步</string>
   <string name="quick_settings_expanded_desktop_label">擴展桌面</string>
   <string name="quick_settings_expanded_desktop">已擴展</string>
   <string name="quick_settings_expanded_desktop_off">正常</string>
   <string name="quick_settings_reboot_label">重新啟動</string>
   <string name="quick_settings_reboot_recovery_label">恢復模式</string>
-  <string name="accessibility_quick_settings_usb_tether_off">USB tethering 關閉</string>
-  <string name="accessibility_quick_settings_usb_tether_on">USB tethering 開啟</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_off">USB tethering 已關閉</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering 已開啟</string>
-  <string name="quick_settings_usb_tether_label">USB tethering</string>
+  <string name="accessibility_quick_settings_usb_tether_off">關閉USB網路共享</string>
+  <string name="accessibility_quick_settings_usb_tether_on">開啟USB網路共享</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">已關閉USB網路共享</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">已開啟USB網路共享</string>
+  <string name="quick_settings_usb_tether_label">USB網絡共享</string>
   <string name="quick_settings_music_label">音樂</string>
-  <string name="quick_settings_music_play">Play</string>
+  <string name="quick_settings_music_play">播放</string>
   <string name="quick_settings_music_pause">暫停</string>
   <string name="quick_settings_ime_tile_label">輸入法</string>
   <string name="rr_qs_tile">配置</string>
-  <string name="quick_settings_caffeine_label">Caffeine</string>
+  <string name="quick_settings_caffeine_label">暫停休眠</string>
   <string name="accessibility_quick_settings_caffeine_off">Caffeine 關閉</string>
-  <string name="accessibility_quick_settings_caffeine_on">Caffeine 開啟</string>
+  <string name="accessibility_quick_settings_caffeine_on">開啟暫停休眠</string>
   <string name="qs_app_picker_title">應用程式選擇器</string>
   <string name="quick_settings_lte_label">LTE</string>
-  <string name="lte_on">LTE 開啟 </string>
-  <string name="lte_off">LTE 關閉</string>
+  <string name="lte_on">開啟LTE</string>
+  <string name="lte_off">關閉LTE</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
-  <string name="quick_settings_nfc_off">NFC 關閉</string>
-  <string name="quick_settings_screenrecord">螢幕錄製</string>
+  <string name="quick_settings_nfc_off">關閉NFC</string>
+  <string name="quick_settings_screenrecord">螢幕錄影</string>
   <string name="quick_settings_screenrecord_on">錄影中...</string>
   <string name="quick_settings_navigation_bar">導覽列</string>
   <string name="quick_settings_smartbar">智慧列</string>
   <string name="quick_settings_smartbar_off">智慧列關閉</string>
-  <string name="quick_settings_fling">Fling</string>
-  <string name="quick_settings_fling_off">Fling 關閉</string>
+  <string name="quick_settings_fling">滑動手勢</string>
+  <string name="quick_settings_fling_off">關閉滑動手勢</string>
   <string name="quick_settings_appcirclebar_title">環形應用程式欄</string>
-  <string name="quick_settings_appcirclebar_on">環形應用程式列開啟</string>
-  <string name="quick_settings_appcirclebar_off">環形應用程式列關閉</string>
+  <string name="quick_settings_appcirclebar_on">開啟環形應用程式列</string>
+  <string name="quick_settings_appcirclebar_off">關閉環形應用程式列</string>
   <string name="quick_settings_gesture_anywhere_label">全域手勢</string>
   <string name="quick_settings_gesture_anywhere_on">開啟手勢</string>
   <string name="quick_settings_gesture_anywhere_off">關閉手勢</string>
   <string name="quick_settings_appsidebar_title">應用側邊欄</string>
-  <string name="quick_settings_appsidebar_on">應用程式側邊列開啟</string>
-  <string name="quick_settings_appsidebar_off">應用程式側邊列關閉</string>
+  <string name="quick_settings_appsidebar_on">開啟應用程式側邊列</string>
+  <string name="quick_settings_appsidebar_off">關閉應用程式側邊列</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">呼吸燈已啟用</string>
+  <string name="quick_settings_pulse_enabled">已啟用呼吸燈</string>
   <string name="quick_settings_pulse_disabled">沒有視覺化</string>
   <string name="quick_settings_pulse_label">呼吸燈</string>
-  <string name="accessibility_quick_settings_pulse_off">呼吸燈關閉</string>
-  <string name="accessibility_quick_settings_pulse_on">呼吸燈開啟</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">呼吸燈已關閉</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">呼吸燈已開啟</string>
+  <string name="accessibility_quick_settings_pulse_off">關閉呼吸燈</string>
+  <string name="accessibility_quick_settings_pulse_on">開啟呼吸燈</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">已關閉呼吸燈</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">已開啟呼吸燈</string>
   <string name="quick_settings_pulse_label">導覽列視覺化</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">環境顯示</string>
-  <string name="accessibility_quick_settings_ambient_display_off">環境顯示關閉</string>
-  <string name="accessibility_quick_settings_ambient_display_on">環境顯示開啟</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">環境顯示已關閉</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">環境顯示已開啟</string>
+  <string name="accessibility_quick_settings_ambient_display_off">關閉環境顯示</string>
+  <string name="accessibility_quick_settings_ambient_display_on">開啟環境顯示</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">已關閉環境顯示</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">已開啟環境顯示</string>
   <string name="quick_settings_heads_up_label">浮動通知</string>
-  <string name="accessibility_quick_settings_heads_up_off">浮動通知關閉</string>
-  <string name="accessibility_quick_settings_heads_up_on">浮動通知開啟</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">浮動通知已關閉</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">浮動通知已開啟</string>
+  <string name="accessibility_quick_settings_heads_up_off">關閉浮動通知</string>
+  <string name="accessibility_quick_settings_heads_up_on">開啟浮動通知</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">已關閉浮動通知</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">已開啟浮動通知</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">位置回報：省電模式。</string>
   <string name="accessibility_quick_settings_location_gps_only">位置回報：僅限感測裝置模式。</string>
@@ -149,7 +149,7 @@
   <string name="quick_settings_location_off_label">關閉定位服務</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">語言</string>
-  <string name="quick_settings_locale_more_locales_toast">請配置多種語言以啟用切換功能</string>
+  <string name="quick_settings_locale_more_locales_toast">請配置多於一種語言以啟用切換功能</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">已終止應用程式</string>
@@ -165,7 +165,7 @@
   <string name="action_save_success">已儲存</string>
   <string name="action_save_fault">儲存失敗</string>
   <string name="pref_action_color_title">動作按鈕顏色</string>
-  <string name="pref_action_color_summary">選擇您喜愛的動作按鈕顏色</string>
+  <string name="pref_action_color_summary">選擇你喜愛的顏色為動作按鈕</string>
   <string name="pref_category_main">主要設定</string>
   <string name="pref_category_user">使用者設定</string>
   <string name="pref_crop_behavior_title">裁剪行為</string>

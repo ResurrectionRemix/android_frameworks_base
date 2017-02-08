@@ -16,9 +16,34 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="default_string">Per defecte</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="system_error_vendorprint">La seva imatge de proveidor no coincideix amb la del sistema. Per favor flashee <xliff:g id="string">%s</xliff:g> del seu dispositiu</string>
+  <string name="global_action_screenrecord">Gravació de pantalla</string>
   <!-- AOKP custom system animations -->
+  <string name="animation_fade">Esfumar-se</string>
+  <string name="animation_slide_right">Lliscar des de la dreta</string>
+  <string name="animation_slide_left">Lliscar des de l\'esquerra</string>
+  <string name="animation_slide_right_no_fade">Lliscar des de la dreta (Sense esvaïment)</string>
+  <string name="animation_slide_left_no_fade">Lliscament des de l\'esquerra (sense esvaïment)</string>
+  <string name="animation_slide_up">Lliscament cap a sota</string>
+  <string name="animation_slide_down">Lliscament cap a dalt</string>
+  <string name="animation_default">Per defecte</string>
+  <string name="animation_translucent">Translúcid</string>
+  <string name="animation_grow_shrink">Expandeix (superior)</string>
+  <string name="animation_grow_shrink_center">Expandeix (centre)</string>
+  <string name="animation_grow_shrink_bottom">Expandeix (inferior)</string>
+  <string name="animation_grow_shrink_left">Expandeix (esquerra)</string>
+  <string name="animation_grow_shrink_right">Expandeix (dreta)</string>
+  <string name="action_null">En blanc</string>
+  <string name="global_action_torch">Llanterna</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
+  <string name="reboot_systemui">Reinicia la SystemUI</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">Mode On-The-Go</string>
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">ADB inactiu</string>
+  <string name="adb_active_custom_tile_not_connected">inactiu</string>
+  <string name="singlehandmode_click_hint_message">Tocar fora de la pantalla per sortir de la vista de pantalla mini</string>
+  <string name="singlehandmode_slide_hint_message">Lliscar el seu dit a través de la barra de navegació per canviar entre les vistes de pantalla estàndard i mini</string>
 </resources>
