@@ -26,6 +26,7 @@ import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.cards.internal.CardHeader;
@@ -104,6 +105,8 @@ public class RecentHeader extends CardHeader {
         if (holder == null) {
             holder = new ViewHolder();
             holder.textView = (TextView) view.findViewById(R.id.card_header_inner_simple_title);
+            holder.expandButton = (ImageButton) ((View)view.getParent().getParent())
+                    .findViewById(R.id.card_header_button_expand);
             // Take scale factor into account if it is different then default or it has changed.
             if (mScaleFactor != RecentController.DEFAULT_SCALE_FACTOR || mScaleFactorChanged) {
                 mScaleFactorChanged = false;
@@ -128,10 +131,12 @@ public class RecentHeader extends CardHeader {
                 Settings.System.RECENT_CARD_TEXT_COLOR,
                 0x00ffffff, UserHandle.USER_CURRENT);
         holder.textView.setText(mLabel);
-        if (textColor != 0x00ffffff) {
-            holder.textView.setTextColor(textColor);
-        } else {
-            holder.textView.setTextColor(getDefaultTextColor());
+        if (textColor == 0x00ffffff) {
+            textColor = getDefaultTextColor();
+        }
+        holder.textView.setTextColor(textColor);
+        if (holder.expandButton != null) {
+            holder.expandButton.setColorFilter(textColor);
         }
     }
 
@@ -152,6 +157,7 @@ public class RecentHeader extends CardHeader {
 
     static class ViewHolder {
         TextView textView;
+        ImageButton expandButton;
     }
 
 }
