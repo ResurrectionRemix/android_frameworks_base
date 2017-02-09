@@ -23,15 +23,15 @@
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Stoppen</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Toon de aanwijzer</string>
-  <string name="screenrecord_notif_pointer_off">Verberg de aanwijzer</string>
+  <string name="screenrecord_notif_pointer_on">Toon aanwijzer</string>
+  <string name="screenrecord_notif_pointer_off">Verberg aanwijzer</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Kan het scherm niet opnemen</string>
-  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="toestand">%2$s</xliff:g></string>
+  <string name="screenrecord_notif_error">Kan scherm niet opnemen</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Schermafbeelding verwijderd</string>
   <string name="gestures_message">Teken uw gebaar hier</string>
-  <string name="rr_sys_tuner">Systeem UI tuner</string>
+  <string name="rr_sys_tuner">Systeem UI regelaar</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Veeg rechts voor %1$s</string>
   <string name="right_shortcut_hint">Veeg links voor %1$s</string>
@@ -81,41 +81,72 @@
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">USB tethering uit</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB tethering aan</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_off">USB tethering is uitgeschakeld</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering is ingeschakeld</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USB tethering uitgeschakeld</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering ingeschakeld</string>
   <string name="quick_settings_usb_tether_label">USB tethering</string>
   <string name="quick_settings_music_label">Muziek</string>
   <string name="quick_settings_music_play">Afspelen</string>
-  <string name="quick_settings_music_pause">Onderbreken</string>
+  <string name="quick_settings_music_pause">Pauze</string>
   <string name="quick_settings_ime_tile_label">Invoermethode</string>
-  <string name="rr_qs_tile">Instellingen</string>
+  <string name="rr_qs_tile">Configuraties</string>
   <string name="quick_settings_caffeine_label">Cafeïne</string>
-  <string name="accessibility_quick_settings_caffeine_off">Caffeïne uit</string>
-  <string name="accessibility_quick_settings_caffeine_on">Caffeïne aan</string>
-  <string name="qs_app_picker_title">App Picker</string>
+  <string name="accessibility_quick_settings_caffeine_off">Cafeïne uit</string>
+  <string name="accessibility_quick_settings_caffeine_on">Cafeïne aan</string>
+  <string name="qs_app_picker_title">App Kiezer</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE AAN </string>
   <string name="lte_off">LTE UIT</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC uit</string>
+  <string name="quick_settings_screenrecord">Schermopname</string>
   <string name="quick_settings_screenrecord_on">Opnemen ...</string>
   <string name="quick_settings_navigation_bar">Navigatiebalk</string>
+  <string name="quick_settings_smartbar">Slimme balk</string>
+  <string name="quick_settings_smartbar_off">Slimme balk uit</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling uit</string>
+  <string name="quick_settings_appcirclebar_title">Appcirkel balk</string>
+  <string name="quick_settings_appcirclebar_on">Appcirkel balk aan</string>
+  <string name="quick_settings_appcirclebar_off">Appcirkel balk uit</string>
+  <string name="quick_settings_gesture_anywhere_label">Overal gebaren</string>
   <string name="quick_settings_gesture_anywhere_on">Gebaren aan</string>
   <string name="quick_settings_gesture_anywhere_off">Gebaren uit</string>
+  <string name="quick_settings_appsidebar_title">App zijbalk</string>
+  <string name="quick_settings_appsidebar_on">App zijbar aan</string>
+  <string name="quick_settings_appsidebar_off">App zijbar uit</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">Pulse ingeschakeld</string>
+  <string name="quick_settings_pulse_disabled">Geen visualizer</string>
   <string name="quick_settings_pulse_label">Impuls</string>
   <string name="accessibility_quick_settings_pulse_off">Impuls uit</string>
   <string name="accessibility_quick_settings_pulse_on">Impuls aan</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Impuls uitgeschakeld</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Impuls ingeschakeld</string>
+  <string name="quick_settings_pulse_label">Navigatiebalk visualizer</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Actieve display</string>
   <string name="accessibility_quick_settings_ambient_display_off">Omgevingsweergave uit.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Omgevingsweergave aan</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Omgevingsweergave uitgeschakeld</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Omgevingsweergave ingeschakeld</string>
   <string name="quick_settings_heads_up_label">Heads-up</string>
+  <string name="accessibility_quick_settings_heads_up_off">Heads-up uit</string>
+  <string name="accessibility_quick_settings_heads_up_on">Heads-up aan</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up uitgeschakeld</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up ingeschakeld</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Locatiebepaling: batterij besparingsmodus.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Locatiebepaling: alleen apparaat modus.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Locatiebepaling: hoge nauwkeurigheidsmodus.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Locatiebepaling gewijzigd naar batterijbesparingsmodus.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Locatiebepaling gewijzigd naar alleen apparaat modus.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Locatiebepaling gewijzigd naar hoge nauwkeurigheidsmodus.</string>
+  <string name="quick_settings_location_detail_title">Locatie modus</string>
+  <string name="quick_settings_location_battery_saving_label">Batterijbesparing</string>
+  <string name="quick_settings_location_gps_only_label">Alleen apparaat</string>
+  <string name="quick_settings_location_high_accuracy_label">Hoge nauwkeurigheid</string>
+  <string name="quick_settings_location_off_label">Locatie uit</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Taal</string>
   <string name="quick_settings_locale_more_locales_toast">Configureer alstublieft meerdere talen te configureren om functionaliteit te kunnen bieden</string>
@@ -123,6 +154,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">App Gestopt</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Gluurnotificaties 1 minuut gedempt.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Gluurnotificaties <xliff:g id="number">%d</xliff:g> minuten gedempt.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Geen schermafdruk gemaakt</string>
   <string name="screenshot_abort_text">Bewerking afgebroken</string>
@@ -147,4 +180,10 @@
   <string name="recents_free_ram">Vrij RAM-geheugen: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">Taakbeheer</string>
+  <string name="message_switch_fail">Kan niet schakelen naar deze taak omdat het geen omgeving heeft.</string>
+  <string name="tasklist_killall">Alles Sluiten</string>
+  <string name="tasklist_memory_usage">"Totaal geheugen vrij: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
+  <string name="message_keep_one_launcher">Moet ten minste één launcher behouden!</string>
+  <string name="tm_clear_task">WISSEN</string>
 </resources>

@@ -76,7 +76,7 @@
   <string name="accessibility_quick_settings_sync_changed_on">Synchronizace zapnuta</string>
   <string name="quick_settings_expanded_desktop_label">Rozšířená plocha</string>
   <string name="quick_settings_expanded_desktop">Rozšířená</string>
-  <string name="quick_settings_expanded_desktop_off">Normalní</string>
+  <string name="quick_settings_expanded_desktop_off">Normální</string>
   <string name="quick_settings_reboot_label">Restartovat</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">USB sdílené připojení vypnout</string>

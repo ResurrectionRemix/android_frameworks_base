@@ -125,11 +125,26 @@
   <string name="quick_settings_pie">فطيرة</string>
   <string name="quick_settings_ambient_display_label">عرض المحيط</string>
   <string name="accessibility_quick_settings_ambient_display_off">إيقاف عرض المحيط.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">تفعيل اضاءة الاشعارات</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">تم ايقاف اضاءة الاشعارات</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">تم تفعيل اضاءة الاشعارات</string>
   <string name="quick_settings_heads_up_label">الإشعارات العلوية</string>
+  <string name="accessibility_quick_settings_heads_up_off">إيقاف الإشعارات العلوية</string>
+  <string name="accessibility_quick_settings_heads_up_on">تفعيل الإشعارات العلوية</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">تم إيقاف الإشعارات العلوية</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">تم تفعيل الإشعارات العلوية</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">تحديد الموقع: تم التحوّل الى وضع توفير الطاقة.</string>
+  <string name="accessibility_quick_settings_location_gps_only">تحديد الموقع تحوّل الى وضع المستشعرات فقط.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">تحديد الموقع: وضع الدقة العالية.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">تحديد الموقع: تم التحوّل الى وضع توفير الطاقة.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">تحديد الموقع: تم التحوّل الى وضع توفير الطاقة.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">تحديد الموقع: تم التحوّل الى وضع الدقة العالية.</string>
   <string name="quick_settings_location_detail_title">وضع الموقع</string>
   <string name="quick_settings_location_battery_saving_label">توفير الطاقة</string>
   <string name="quick_settings_location_gps_only_label">الجهاز فقط</string>
+  <string name="quick_settings_location_high_accuracy_label">دقة عالية</string>
+  <string name="quick_settings_location_off_label">إيقاف خاصية الموقع</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">اللغة</string>
   <!-- PA Pie controls -->
@@ -157,8 +172,11 @@
   <string name="action_save_fault">فشل الحفظ</string>
   <string name="action_edit">تحرير</string>
   <string name="recents_custom_android_n">حذف الكل</string>
+  <string name="recents_free_ram">ذاكرة الوصول العشوائي الحرة: %1$d ميغابايت</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">إدارة المهام</string>
+  <string name="message_switch_fail">لا يمكن التبديل إلى هذه المهمة، لأنه لا توجد واجهة.</string>
   <string name="tasklist_killall">إغلاق الكل</string>
+  <string name="tasklist_memory_usage">"• إجمالي الذاكرة الحرة: <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
 </resources>
