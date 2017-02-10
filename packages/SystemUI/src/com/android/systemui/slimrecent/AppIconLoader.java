@@ -26,7 +26,6 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.AsyncTask;
@@ -139,7 +138,7 @@ public class AppIconLoader {
             return null;
         }
 
-        if (source instanceof VectorDrawable) {
+        if (!(source instanceof BitmapDrawable)) {
             return source;
         }
 
