@@ -106,9 +106,14 @@
   <string name="quick_settings_smartbar_off">स्मार्ट पट्टी बंद</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling बंद</string>
+  <string name="quick_settings_appcirclebar_title">App वृत्त पट्टी</string>
+  <string name="quick_settings_appcirclebar_on">AppCircleBar चालू</string>
+  <string name="quick_settings_appcirclebar_off">AppCircleBar बंद</string>
   <string name="quick_settings_gesture_anywhere_label">कहीं भी इशारा</string>
   <string name="quick_settings_gesture_anywhere_on">इशारे चालू</string>
   <string name="quick_settings_gesture_anywhere_off">इशारे बंद</string>
+  <string name="quick_settings_appsidebar_title">App पार्श्व पट्टी</string>
+  <string name="quick_settings_appsidebar_on">App पार्श्व पट्टी चालू</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">पल्स सक्षम</string>
   <string name="quick_settings_pulse_disabled">विजुअलाइज़र बंद</string>
@@ -173,5 +178,6 @@
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">कार्य प्रबंधक</string>
+  <string name="tasklist_killall">सभी ऐप्स को नष्ट करे</string>
   <string name="message_keep_one_launcher">कम से कम एक घर गतिविधि रखना चाहिए!</string>
 </resources>
