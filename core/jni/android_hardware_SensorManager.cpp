@@ -171,10 +171,10 @@ translateNativeSensorToJavaSensor(JNIEnv *env, jobject sensor, const Sensor& nat
     }
 
     if (sensor != NULL) {
-        jstring name = env->NewStringUTF(nativeSensor.getName().string());
-        jstring vendor = env->NewStringUTF(nativeSensor.getVendor().string());
+        jstring name = getInternedString(env, &nativeSensor.getName());
+        jstring vendor = getInternedString(env, &nativeSensor.getVendor());
         jstring requiredPermission =
-                env->NewStringUTF(nativeSensor.getRequiredPermission().string());
+                getInternedString(env, &nativeSensor.getRequiredPermission());
 
         env->SetObjectField(sensor, sensorOffsets.name,      name);
         env->SetObjectField(sensor, sensorOffsets.vendor,    vendor);
