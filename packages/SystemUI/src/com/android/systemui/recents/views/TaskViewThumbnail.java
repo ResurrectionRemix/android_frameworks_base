@@ -171,12 +171,17 @@ public class TaskViewThumbnail extends View {
             int w = bm.getWidth();
             Bitmap cropped = null;
 
-            if (currentHandsMode() == 1) {
-                cropped = Bitmap.createBitmap(bm, 0, (int)(h * (1-INITIAL_SCALE)),
-                        (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
-            } else if (currentHandsMode() == 2) {
-                cropped = Bitmap.createBitmap(bm, (int)(w * (1-INITIAL_SCALE)), (int)(h * (1-INITIAL_SCALE)),
-                        (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
+            int mode = currentHandsMode();
+            try {
+                if (mode == 1) {
+                    cropped = Bitmap.createBitmap(bm, 0, (int)(h * (1-INITIAL_SCALE)),
+                            (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
+                } else if (mode == 2) {
+                    cropped = Bitmap.createBitmap(bm, (int)(w * (1-INITIAL_SCALE)), (int)(h * (1-INITIAL_SCALE)),
+                            (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
+                }
+            } catch (Exception e) {
+                cropped = bm;
             }
 
             mBitmapShader = new BitmapShader(currentHandsMode() != 0 ? cropped: bm,
