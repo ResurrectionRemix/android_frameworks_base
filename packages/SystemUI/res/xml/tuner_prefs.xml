@@ -27,6 +27,10 @@
         android:title="@string/show_brightness"
         sysui:defValue="true" />
 
+     <com.android.systemui.tuner.StatusBarSwitch
+        android:key="volte"
+        android:title="@string/status_bar_volte" />
+
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="rotate"
             android:title="@string/status_bar_settings_auto_rotation" />
