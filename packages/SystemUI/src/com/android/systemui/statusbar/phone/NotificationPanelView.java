@@ -395,10 +395,11 @@ public class NotificationPanelView extends PanelView implements
             mBlurredView.addView(mInnerBlurredView, lp);
             mNotificationPanelView.addView(mBlurredView, 0, lp);
             mNotificationPanelView.requestLayout();
-            setQSStroke();
+
             mBlurredView.setTag("ready_to_blur");
 
             mBlurredView.setVisibility(View.INVISIBLE);
+            setQSStroke();
 
             handleQuickSettingsBackround();
     }
@@ -2995,8 +2996,8 @@ public class NotificationPanelView extends PanelView implements
             mBlurLightColorFilter = Settings.System.getInt(mContext.getContentResolver(), 
                     Settings.System.BLUR_LIGHT_COLOR_PREFERENCE_KEY, Color.DKGRAY);
             mTranslucencyPercentage = 255 - ((mTranslucencyPercentage * 255) / 100);
-            handleQuickSettingsBackround();
             setQSStroke();
+            handleQuickSettingsBackround();
         }
     }
 
