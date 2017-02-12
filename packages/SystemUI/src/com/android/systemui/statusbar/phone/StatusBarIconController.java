@@ -126,6 +126,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private long mTransitionDeferringDuration;
     private int mCustomLogoPos;
 
+    private int mWeatherTempState;
+    private int mWeatherTempStyle;
+
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
 
     private BatteryLevelTextView mBatteryLevelView;
@@ -384,9 +387,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == 3)) {
         animateHide(mCarrierLabel,animate);
         }
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                UserHandle.USER_CURRENT) == 1) {
+        if (mWeatherTempState != 0 && mWeatherTempStyle == 1) {
         animateHide(mWeatherLeft,animate);
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
@@ -415,9 +416,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == 2)){
             animateShow(mRRLogoLeft, animate);
         }
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                UserHandle.USER_CURRENT) == 1) {
+        if (mWeatherTempState != 0 && mWeatherTempStyle == 1) {
         animateShow(mWeatherLeft,animate);
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
@@ -823,6 +822,12 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
          resolver.registerContentObserver(Settings.System
                  .getUriFor(Settings.System.CUSTOM_LOGO_POSITION),
                  false, this, UserHandle.USER_CURRENT);
+         resolver.registerContentObserver(Settings.System
+                 .getUriFor(Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+                 false, this, UserHandle.USER_CURRENT);
+         resolver.registerContentObserver(Settings.System
+                 .getUriFor(Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
+                 false, this, UserHandle.USER_CURRENT);
          update();
     }
 
@@ -851,6 +856,12 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     protected void update() {
     mCustomLogoPos = Settings.System.getIntForUser(
                     mContext.getContentResolver(), Settings.System.CUSTOM_LOGO_POSITION, 0,
+                    UserHandle.USER_CURRENT);
+     mWeatherTempState = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                    UserHandle.USER_CURRENT);
+     mWeatherTempStyle = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                     UserHandle.USER_CURRENT);
         }
     }
