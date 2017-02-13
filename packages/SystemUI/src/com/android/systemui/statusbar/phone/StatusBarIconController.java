@@ -384,16 +384,21 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == 3)) {
         animateHide(mCarrierLabel,animate);
         }
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                UserHandle.USER_CURRENT) == 1) {
-        animateHide(mWeatherLeft,animate);
-        }
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
                 if(mCustomLogoPos == 0) {
                     animateHide(mCLogoLeft, animate);
                 }
+        }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                UserHandle.USER_CURRENT) == 0) {
+        return;
+        }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
+                UserHandle.USER_CURRENT) == 1) {
+        animateHide(mWeatherLeft,animate);
         }
     }
 
@@ -415,16 +420,21 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 UserHandle.USER_CURRENT) == 2)){
             animateShow(mRRLogoLeft, animate);
         }
-        if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
-                UserHandle.USER_CURRENT) == 1) {
-        animateShow(mWeatherLeft,animate);
-        }
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_CUSTOM_LOGO, 0) == 1) {
                 if(mCustomLogoPos == 0) {
                     animateShow(mCLogoLeft, animate);
                 }
+        }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                UserHandle.USER_CURRENT) == 0) {
+        return;
+        }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
+                UserHandle.USER_CURRENT) == 1) {
+        animateShow(mWeatherLeft,animate);
         }
     }
 
