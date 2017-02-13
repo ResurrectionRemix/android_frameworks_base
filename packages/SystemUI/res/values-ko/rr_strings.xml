@@ -168,6 +168,7 @@
   <string name="pref_action_color_summary">동작 버턴의 색상을 선택하시오</string>
   <string name="pref_category_main">기본 설정</string>
   <string name="pref_category_user">사용자 설정</string>
+  <string name="pref_crop_behavior_summary">자르기로 원본 이미지가 수정되지 않은 잘려진 이미지 사용</string>
   <string name="action_ok">확인</string>
   <string name="action_delete_success">삭제됨</string>
   <string name="action_delete_fault">삭제에 실패하였습니다</string>

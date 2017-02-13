@@ -41,7 +41,7 @@
   <string name="lockscreen_choose_action_title">Choisir l\'action</string>
   <string name="lockscreen_none_target">Aucun(e)</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maximiser</string>
+  <string name="app_float_maximize_item_title">Agrandir</string>
   <string name="app_float_item_title">Vue détachée</string>
   <string name="app_stop_item_title">Fermer l\'application</string>
   <!-- On The Go -->
@@ -83,13 +83,13 @@
   <string name="accessibility_quick_settings_usb_tether_on">Partage de connexion USB activé</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Partage de connexion USB désactivé</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">Partage de connexion USB activé</string>
-  <string name="quick_settings_usb_tether_label">Connexion USB</string>
+  <string name="quick_settings_usb_tether_label">Partage de connexion USB</string>
   <string name="quick_settings_music_label">Musique</string>
   <string name="quick_settings_music_play">Lecture</string>
   <string name="quick_settings_music_pause">Pause</string>
   <string name="quick_settings_ime_tile_label">Mode de saisie</string>
   <string name="rr_qs_tile">Paramètres</string>
-  <string name="quick_settings_caffeine_label">Caféine</string>
+  <string name="quick_settings_caffeine_label">Caffeine</string>
   <string name="accessibility_quick_settings_caffeine_off">Caféine désactivée</string>
   <string name="accessibility_quick_settings_caffeine_on">Caféine activée</string>
   <string name="qs_app_picker_title">Selecteur d\'Apps</string>
@@ -107,7 +107,7 @@
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling désactivé</string>
   <string name="quick_settings_appcirclebar_title">Barre d\'applications circulaire</string>
-  <string name="quick_settings_appcirclebar_on">Barre d\'applications circulaire  : on</string>
+  <string name="quick_settings_appcirclebar_on">Barre d\'applications circulaire activée</string>
   <string name="quick_settings_appcirclebar_off">Barre d\'applications circulaire désactivée</string>
   <string name="quick_settings_gesture_anywhere_label">Mouvements n\'importe où</string>
   <string name="quick_settings_gesture_anywhere_on">Gestes activés</string>
@@ -127,21 +127,21 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Adaptation de la luminosité</string>
   <string name="accessibility_quick_settings_ambient_display_off">Adaptation de la luminosité désactivée.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Adaptation de la luminosité activée</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Adaptation de la luminosité désactivée</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Adaptation de la luminosité activée</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Luminosité adaptative actif</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Luminosité adaptative désactivée</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Luminosité adaptative activée</string>
   <string name="quick_settings_heads_up_label">Notifications flottantes</string>
   <string name="accessibility_quick_settings_heads_up_off">Notifications flottantes désactivées</string>
   <string name="accessibility_quick_settings_heads_up_on">Notifications flottantes activées</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Notifications flottantes désactivées</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes activées</string>
   <!-- Location Tile -->
-  <string name="accessibility_quick_settings_location_battery_saving">Mode de localisation: économie de batterie.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Mode de localisation: appareil uniquement.</string>
-  <string name="accessibility_quick_settings_location_high_accuracy">Mode de localisation: haute précision.</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">Mode de localisation défini sur économie de batterie.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Mode de localisation défini sur appareil uniquement.</string>
-  <string name="accessibility_quick_settings_location_changed_high_accuracy">Mode de localisation défini sur haute précision.</string>
+  <string name="accessibility_quick_settings_location_battery_saving">Localisation : mode économie de batterie.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Localisation : mode appareil uniquement.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Localisation : mode haute précision.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Localisation définie sur \"Économie de batterie\".</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Localisation définie sur \"Appareil uniquement\".</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Localisation définie sur \"Haute précision\".</string>
   <string name="quick_settings_location_detail_title">Modes de localisation</string>
   <string name="quick_settings_location_battery_saving_label">Économie de batterie</string>
   <string name="quick_settings_location_gps_only_label">Appareil uniquement</string>
@@ -164,7 +164,7 @@
   <string name="action_delete_fault">Échec de la suppression</string>
   <string name="action_save_success">Enregistré</string>
   <string name="action_save_fault">Échec de l\'enregistrement</string>
-  <string name="pref_action_color_title">Couleurs des boutons d\'actions</string>
+  <string name="pref_action_color_title">Couleur des boutons d\'action</string>
   <string name="pref_action_color_summary">Choisissez la couleur des boutons d\'actions</string>
   <string name="pref_category_main">Général</string>
   <string name="pref_category_user">Utilisateur</string>
