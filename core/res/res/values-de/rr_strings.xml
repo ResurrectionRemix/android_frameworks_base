@@ -44,6 +44,6 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB inaktiv</string>
   <string name="adb_active_custom_tile_not_connected">inaktiv</string>
-  <string name="singlehandmode_click_hint_message">Berühren Sie den Bildschirm außerhalb, um die Mini-Bildschirmansicht zu beenden</string>
+  <string name="singlehandmode_click_hint_message">Tippen Sie außerhalb des Bildschirms, um die Mini-Bildschirmansicht zu beenden</string>
   <string name="singlehandmode_slide_hint_message">Bewegen Sie den Finger über die Navigationsleiste, um zwischen der Standard- und der Mini-Ansicht zu wechseln</string>
 </resources>
