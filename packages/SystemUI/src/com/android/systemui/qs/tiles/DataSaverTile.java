@@ -15,7 +15,6 @@
 package com.android.systemui.qs.tiles;
 
 import android.content.DialogInterface;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.widget.Switch;
 
@@ -53,8 +52,7 @@ public class DataSaverTile extends QSTile<QSTile.BooleanState> implements
 
     @Override
     public Intent getLongClickIntent() {
-        return new Intent().setComponent(new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$DataSaverSettingsActivity"));
+        return CellularTile.CELLULAR_SETTINGS;
     }
 
     @Override
