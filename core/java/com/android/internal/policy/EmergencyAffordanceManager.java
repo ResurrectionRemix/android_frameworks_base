@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.UserHandle;
 import android.provider.Settings;
 
 /**
@@ -73,7 +72,7 @@ public class EmergencyAffordanceManager {
         Intent intent = new Intent(Intent.ACTION_CALL_EMERGENCY);
         intent.setData(getPhoneUri(context));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivityAsUser(intent, UserHandle.CURRENT);
+        context.startActivity(intent);
     }
 
     /**

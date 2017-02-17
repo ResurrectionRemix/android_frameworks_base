@@ -21,10 +21,6 @@
   <string name="app_killed_message">ആപ്ലിക്കേഷനെ നശിപ്പിച്ചു</string>
   <!-- label for item that screenshots in phone options dialog -->
   <string name="global_action_screenshot">സ്ക്രീൻഷോട്ട്</string>
-  <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgrouplab_security">സുരക്ഷ</string>
-  <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgroupdesc_security">ഉപകരണ സുരക്ഷാ വിവരങ്ങളുമായി ബന്ധപ്പെട്ട അനുമതികൾ.</string>
   <!-- label for item that restarts the phone in phone options dialog -->
   <!-- label for current user in phone options dialog -->
   <string name="global_action_current_user">നിലവിൽ</string>

@@ -21,10 +21,6 @@
   <string name="app_killed_message">Uyg. sonlandırıldı</string>
   <!-- label for item that screenshots in phone options dialog -->
   <string name="global_action_screenshot">Ekran görüntüsü</string>
-  <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgrouplab_security">Güvenlik</string>
-  <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgroupdesc_security">Cihaz güvenlik bilgisi ile ilgili izinler.</string>
   <!-- label for item that restarts the phone in phone options dialog -->
   <string name="global_action_reboot">Yeniden Başlat</string>
   <!-- label for current user in phone options dialog -->

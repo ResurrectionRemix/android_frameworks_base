@@ -203,7 +203,6 @@ public class CallLog {
          * device other than the current one.
          */
         public static final int ANSWERED_EXTERNALLY_TYPE = 7;
-
         /** Call log type for outgoing IMS calls. */
         private static final int OUTGOING_IMS_TYPE = 9;
         /** Call log type for missed IMS calls. */

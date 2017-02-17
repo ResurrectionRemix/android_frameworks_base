@@ -346,7 +346,7 @@ private:
         static String8 getPathName(const char* path);
 
         bool isUpToDate();
-        
+
     private:
         void closeZip(int idx);
 

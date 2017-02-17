@@ -21,10 +21,6 @@
   <string name="app_killed_message">Aplicación finalizada</string>
   <!-- label for item that screenshots in phone options dialog -->
   <string name="global_action_screenshot">Captura de pantalla</string>
-  <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgrouplab_security">Seguridad</string>
-  <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgroupdesc_security">Permisos relacionados con la información de seguridad del dispositivo.</string>
   <!-- label for item that restarts the phone in phone options dialog -->
   <string name="global_action_reboot">Reiniciar</string>
   <!-- label for current user in phone options dialog -->
@@ -55,7 +51,7 @@
   <!-- ADB over USB and network notification -->
   <string name="adb_both_active_notification_title">ADB sobre USB y red activado</string>
   <!-- ADB notification message-->
-  <string name="adb_active_generic_notification_message">Toca para desactivar la depuración.</string>
+  <string name="adb_active_generic_notification_message">Pulsa para desactivar la depuración.</string>
   <!-- Privacy Guard -->
   <string name="permlab_changePrivacyGuardState">activar o desactivar Privacy Guard</string>
   <string name="permdesc_changePrivacyGuardState">Permite que la aplicación modifique si otra aplicación se ejecuta con Privacy Guard. Cuando una aplicación se ejecuta con Privacy Guard, no tendrá acceso a datos personales como contactos, registros de llamadas o mensajes.</string>

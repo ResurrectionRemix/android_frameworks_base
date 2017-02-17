@@ -96,6 +96,7 @@ import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Parcelable;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -980,6 +981,10 @@ public class NotificationManagerService extends SystemService {
                 mMaxPackageEnqueueRate = Settings.Global.getFloat(resolver,
                             Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE, mMaxPackageEnqueueRate);
             }
+            if (uri == null || NOTIFICATION_SOUND_URI.equals(uri)) {
+                mSystemNotificationSound = Settings.System.getString(resolver,
+                        Settings.System.NOTIFICATION_SOUND);
+            }
 
             // Notification LED brightness
             if (mAdjustableNotificationLedBrightness) {
@@ -1007,11 +1012,6 @@ public class NotificationManagerService extends SystemService {
             }
 
             updateNotificationPulse();
-
-            if (uri == null || NOTIFICATION_SOUND_URI.equals(uri)) {
-                mSystemNotificationSound = Settings.System.getString(resolver,
-                        Settings.System.NOTIFICATION_SOUND);
-            }
         }
     }
 

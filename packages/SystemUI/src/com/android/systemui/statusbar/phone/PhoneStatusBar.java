@@ -418,9 +418,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     FingerprintUnlockController mFingerprintUnlockController;
     LightStatusBarController mLightStatusBarController;
     protected LockscreenWallpaper mLockscreenWallpaper;
-    WeatherControllerImpl mWeatherController;
     SuControllerImpl mSuController;
     MinitBatteryController mMinitBatteryController;
+    WeatherControllerImpl mWeatherController;
 
     int mNaturalBarHeight = -1;
 

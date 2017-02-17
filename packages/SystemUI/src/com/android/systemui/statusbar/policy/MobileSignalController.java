@@ -17,6 +17,7 @@ package com.android.systemui.statusbar.policy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.NetworkCapabilities;
 import android.os.Looper;
 import android.os.SystemProperties;

@@ -3322,12 +3322,12 @@ public final class PowerManagerService extends SystemService
                 case MSG_SCREEN_BRIGHTNESS_BOOST_TIMEOUT:
                     handleScreenBrightnessBoostTimeout();
                     break;
+                case MSG_CHECK_FOR_LONG_WAKELOCKS:
+                    checkForLongWakeLocks();
+                    break;
                 case MSG_WAKE_UP:
                     cleanupProximity();
                     ((Runnable) msg.obj).run();
-                    break;
-                case MSG_CHECK_FOR_LONG_WAKELOCKS:
-                    checkForLongWakeLocks();
                     break;
             }
         }

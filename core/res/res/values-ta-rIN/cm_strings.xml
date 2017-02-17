@@ -21,10 +21,6 @@
   <string name="app_killed_message">பயன்பாடு கொல்லப்பட்டது</string>
   <!-- label for item that screenshots in phone options dialog -->
   <string name="global_action_screenshot">திரைப்பிடிப்பு</string>
-  <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgrouplab_security">பாதுகாப்பு</string>
-  <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permgroupdesc_security">சாதன பாதுகாப்பு தகவல் தொடர்பான அனுமதிகள்.</string>
   <!-- label for item that restarts the phone in phone options dialog -->
   <!-- label for current user in phone options dialog -->
   <string name="global_action_current_user">நடப்பு</string>

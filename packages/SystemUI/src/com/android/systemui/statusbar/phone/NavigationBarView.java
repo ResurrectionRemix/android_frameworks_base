@@ -69,7 +69,6 @@ public class NavigationBarView extends LinearLayout {
     boolean mVertical;
     boolean mScreenOn;
     boolean mLeftInLandscape;
-
     private int mCurrentRotation = -1;
 
     boolean mShowMenu;
