@@ -20,7 +20,7 @@
 <resources>
 
     <!-- Size of the generic status lines keyguard's status view  -->
-    <dimen name="kg_status_line_font_size">14sp</dimen>
+    <dimen name="kg_status_line_font_size">11sp</dimen>
 
     <!-- Width of the sliding KeyguardSecurityContainer (includes 2x keyguard_security_view_margin) -->
     <dimen name="keyguard_security_width">320dp</dimen>

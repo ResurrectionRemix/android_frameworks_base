@@ -47,7 +47,7 @@ public class QuickQSPanel extends QSPanel {
 
     public static final String NUM_QUICK_TILES = Secure.QQS_COUNT;
     public static int NUM_QUICK_TILES_DEFAULT = 6;
-    public static int FANCY_ANIMATION_TILES = 12;
+    public static int FANCY_ANIMATION_TILES = 6;
     public static final int NUM_QUICK_TILES_ALL = 999;
 
     private int mMaxTiles = NUM_QUICK_TILES_DEFAULT;

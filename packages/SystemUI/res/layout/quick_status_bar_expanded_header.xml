@@ -185,6 +185,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:importantForAccessibility="yes"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="15dp"
                 android:focusable="true"
                 android:clipChildren="false"
                 android:clipToPadding="false"
