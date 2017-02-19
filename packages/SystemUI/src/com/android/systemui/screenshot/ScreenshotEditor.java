@@ -179,35 +179,8 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
            initButtons();
         mainHandler.post(new Runnable() {
             public void run() {
-
                 screenshot = BitmapFactory.decodeFile(screenshotPath);
-              /*  countDownTimer = new CountDownTimer(10000, 500) {
-                    long millis = 0;
-
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        millis = millisUntilFinished;
-                        if (screenshot == null)
-                            screenshot = BitmapFactory.decodeFile(screenshotPath);
-                        else {
-                            this.cancel();
-                            onFinish();
-                        }
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        if (screenshot != null) {
-                            cropView.setImageBitmap(screenshot);
-                            if (!isShowing)
-                                wm.addView(mainLayout, getParams());
-                            else
-                                wm.updateViewLayout(mainLayout, getParams());
-                            isShowing = true;
-                        }
-                    }
-                }.start();*/
-		cropView.setImageBitmap(screenshot);
+                cropView.setImageBitmap(screenshot);
                 if (!isShowing)
                     wm.addView(mainLayout, getParams());
                 else
@@ -241,12 +214,6 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
 
     private void initButtons() {
         mainLayout.setSystemUiVisibility(getUiOptions());
-        mainLayout.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                mainLayout.setSystemUiVisibility(getUiOptions());
-            }
-        });
         cropView = (CropImageView) mainLayout.findViewById(R.id.image);
         cropView.setFrameColor(getResources().getColor(R.color.crop_frame));
         cropView.setHandleColor(getResources().getColor(R.color.crop_handle));
@@ -536,10 +503,6 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
     }
 
     private WindowManager.LayoutParams getParams() {
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -549,24 +512,6 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
 
         params.dimAmount = 0.7f;
         params.windowAnimations = R.style.CropDialogAnimations;
-        params.flags += WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        return params;
-    }
-
-    private WindowManager.LayoutParams getFabParams() {
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_DIM_BEHIND,
-                PixelFormat.TRANSLUCENT);
-        params.dimAmount = 0.2f;
-        params.windowAnimations = R.style.CropDialogAnimations;
-        params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
         return params;
     }
 
@@ -604,19 +549,17 @@ public class ScreenshotEditor extends Service implements View.OnClickListener {
         removeView();
     }
 
-
-
     @TargetApi(Build.VERSION_CODES.M)
     public static boolean canWeDrawOurOverlay(Context mContext) {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(mContext);
     }
 
     private int getUiOptions() {
-            return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        return View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
     }
 
     private BitmapDrawable createPenSizeImage(int penSize){
