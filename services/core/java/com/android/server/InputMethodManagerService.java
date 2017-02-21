@@ -525,7 +525,7 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                     CMSettings.System.STATUS_BAR_IME_SWITCHER),
                     false, new ContentObserver(mHandler) {
                         public void onChange(boolean selfChange) {
-                            updateFromSettingsLocked(true);
+                            updateInputMethodsFromSettingsLocked(true);
                         }
                     }, userId);
             if (mCMHardware.isSupported(CMHardwareManager.FEATURE_HIGH_TOUCH_SENSITIVITY)) {
@@ -1876,18 +1876,11 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                 mImeSwitcherNotification.setContentTitle(title)
                         .setContentText(summary)
                         .setContentIntent(mImeSwitchPendingIntent);
-                try {
-                    if ((mNotificationManager != null)
-                            && !mIWindowManager.hasNavigationBar()) {
-                        if (DEBUG) {
-                            Slog.d(TAG, "--- show notification: label =  " + summary);
-                        }
-                        mNotificationManager.notifyAsUser(null,
-                                com.android.internal.R.string.select_input_method,
-                                mImeSwitcherNotification.build(), UserHandle.ALL);
-                        mNotificationShown = true;
-                    }
-                } catch (RemoteException e) {
+                if (mNotificationManager != null) {
+                    mNotificationManager.notifyAsUser(null,
+                            com.android.internal.R.string.select_input_method,
+                            mImeSwitcherNotification.build(), UserHandle.ALL);
+                    mNotificationShown = true;
                 }
             } else {
                 if (mNotificationShown && mNotificationManager != null) {

@@ -362,7 +362,7 @@ public class NavigationBarView extends LinearLayout {
         }
 
         final boolean showImeButton = ((hints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) != 0);
-        getImeSwitchButton().setVisibility(showImeButton ? View.VISIBLE : View.INVISIBLE);
+        getImeSwitchButton().setVisibility(showImeButton ? View.INVISIBLE : View.INVISIBLE);
         getImeSwitchButton().setImageDrawable(mImeIcon);
 
         // Update menu button in case the IME state has changed.
