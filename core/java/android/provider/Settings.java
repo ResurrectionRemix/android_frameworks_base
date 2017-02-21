@@ -5672,11 +5672,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
 
         /**
-         * @hide
-         */
-        public static final String QS_QUICKBAR_SCROLL_ENABLED = "qs_quickbar_scroll_enabled";
-
-        /**
          * Unlock keystore with fingerprint after reboot
          * @hide
          */

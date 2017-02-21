@@ -53,5 +53,4 @@ public abstract class BaseStatusBarHeader extends RelativeLayout implements
     public abstract void updateVisibilities();
     public abstract void killvisibilities();
     public abstract void starttmactivity();
-    public abstract void onClosingFinished();
 }

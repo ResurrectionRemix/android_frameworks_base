@@ -159,40 +159,20 @@
         android:layout_alignParentTop="true"
         android:visibility="gone" />
 
-
-    <com.android.systemui.qs.HorizontalClippingLinearLayout
+    <com.android.systemui.qs.QuickQSPanel
+        android:id="@+id/quick_qs_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_alignParentEnd="true"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_alignParentStart="true" >
-
-        <HorizontalScrollView
-            android:id="@+id/quick_qs_panel_scroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingStart="@dimen/qs_scroller_margin"
-            android:paddingEnd="@dimen/qs_scroller_margin"
-            android:overScrollMode="never" >
-
-            <com.android.systemui.qs.QuickQSPanel
-                android:id="@+id/quick_qs_panel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="yes"
-                android:focusable="true"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:accessibilityTraversalAfter="@+id/date_time_group"
-                android:accessibilityTraversalBefore="@id/expand_indicator" />
-
-        </HorizontalScrollView>
-    </com.android.systemui.qs.HorizontalClippingLinearLayout>
+        android:importantForAccessibility="yes"
+        android:focusable="true"
+        android:accessibilityTraversalAfter="@+id/date_time_group"
+        android:accessibilityTraversalBefore="@id/expand_indicator" />
 
     <com.android.systemui.statusbar.AlphaOptimizedImageView
         android:id="@+id/qs_detail_header_progress"
