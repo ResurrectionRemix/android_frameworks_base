@@ -22,17 +22,17 @@
   <string name="global_action_screenrecord">화면 녹화</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">페이드</string>
-  <string name="animation_slide_right">오른쪽으로 슬라이드</string>
-  <string name="animation_slide_left">왼쪽으로 슬라이드</string>
-  <string name="animation_slide_right_no_fade">오른쪽으로 슬라이드 (페이드 없음)</string>
-  <string name="animation_slide_left_no_fade">왼쪽으로 슬라이드 (페이드 없음)</string>
-  <string name="animation_slide_up">아래쪽으로 슬라이드</string>
-  <string name="animation_slide_down">위쪽으로 슬라이드</string>
+  <string name="animation_slide_right">오른쪽에서 슬라이드</string>
+  <string name="animation_slide_left">왼쪽에서 슬라이드</string>
+  <string name="animation_slide_right_no_fade">오른쪽에서 슬라이드 (페이드 없음)</string>
+  <string name="animation_slide_left_no_fade">왼쪽에서 슬라이드 (페이드 없음)</string>
+  <string name="animation_slide_up">아래쪽에서 슬라이드</string>
+  <string name="animation_slide_down">위쪽에서 슬라이드</string>
   <string name="animation_default">기본값</string>
   <string name="animation_translucent">반투명</string>
-  <string name="animation_grow_shrink">커지기 (위쪽에서)</string>
-  <string name="animation_grow_shrink_center">커지기 (가운데에서)</string>
-  <string name="animation_grow_shrink_bottom">커지기 (아래쪽에서)</string>
+  <string name="animation_grow_shrink">커지기 (상단에서)</string>
+  <string name="animation_grow_shrink_center">커지기 (중앙에서)</string>
+  <string name="animation_grow_shrink_bottom">커지기 (하단에서)</string>
   <string name="animation_grow_shrink_left">커지기 (왼쪽에서)</string>
   <string name="animation_grow_shrink_right">커지기 (오른쪽에서)</string>
   <string name="action_null">비어 있음</string>
@@ -45,5 +45,5 @@
   <string name="adb_not_connected_notification_title">ADB 비활성화됨</string>
   <string name="adb_active_custom_tile_not_connected">비활성화됨</string>
   <string name="singlehandmode_click_hint_message">화면 바깥 쪽을 터치하여 미니 화면보기를 종료합니다</string>
-  <string name="singlehandmode_slide_hint_message">Navigation bar에 손가락을 슬라이드를 하면 표준및 미니 스크린 뷰어로 전환 됩니다</string>
+  <string name="singlehandmode_slide_hint_message">내비게이션 바 위로 손가락을 슬라이드를 하면 표준 및 미니 스크린 뷰어로 전환 됩니다</string>
 </resources>

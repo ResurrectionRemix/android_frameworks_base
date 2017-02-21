@@ -21,7 +21,7 @@
   <string name="system_error_vendorprint">Dein Anbieter-Image stimmt nicht mit deinem System überein. Bitte flashe das <xliff:g id="string">%s</xliff:g> Anbieter-Image für dein Gerät</string>
   <string name="global_action_screenrecord">Bildschirmaufnahme</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Überblenden</string>
+  <string name="animation_fade">Ausblenden</string>
   <string name="animation_slide_right">Von rechts einblenden</string>
   <string name="animation_slide_left">Von links einblenden</string>
   <string name="animation_slide_right_no_fade">Von rechts einblenden (ohne Verblassen)</string>

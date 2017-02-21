@@ -107,7 +107,7 @@
   <string name="quick_settings_smartbar_off">Smart bar off</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling off</string>
-  <string name="quick_settings_appcirclebar_title">Barra app in cerchio</string>
+  <string name="quick_settings_appcirclebar_title">App circle bar</string>
   <string name="quick_settings_appcirclebar_on">App circle bar On</string>
   <string name="quick_settings_appcirclebar_off">App circle bar Off</string>
   <string name="quick_settings_gesture_anywhere_label">Gesto ovunque</string>
@@ -131,7 +131,7 @@
   <string name="accessibility_quick_settings_ambient_display_on">Display ambient on</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Display ambient disattivato</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Display ambient attivato</string>
-  <string name="quick_settings_heads_up_label">Notifiche a comparsa</string>
+  <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="accessibility_quick_settings_heads_up_off">Heads up off</string>
   <string name="accessibility_quick_settings_heads_up_on">Heads up on</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up disattivate</string>

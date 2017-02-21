@@ -17,7 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">正在录屏</string>
+  <string name="screenrecord_notif_ticker">正在录制屏幕</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">正在录屏</string>
   <!-- Screenrecord notification action: Stop -->

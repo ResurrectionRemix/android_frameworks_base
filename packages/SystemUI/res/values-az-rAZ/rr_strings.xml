@@ -99,23 +99,54 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC bağlı</string>
+  <string name="quick_settings_screenrecord">Ekran çəkilişi</string>
   <string name="quick_settings_screenrecord_on">Qeydedilir ...</string>
   <string name="quick_settings_navigation_bar">Naviqasiya paneli</string>
+  <string name="quick_settings_smartbar">Ağıllı panel</string>
+  <string name="quick_settings_smartbar_off">Ağıllı panel bağlı</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling qapalı</string>
+  <string name="quick_settings_appcirclebar_title">Tətbiqetmə dairə paneli</string>
+  <string name="quick_settings_appcirclebar_on">Tətbiqetmə dairə paneli Açıq</string>
+  <string name="quick_settings_appcirclebar_off">Tətbiqetmə dairə paneli Bağlı</string>
+  <string name="quick_settings_gesture_anywhere_label">Hər Yerdə Hərəkət</string>
   <string name="quick_settings_gesture_anywhere_on">Hərəkətlər Açıq</string>
   <string name="quick_settings_gesture_anywhere_off">Hərəkətlər Qapalı</string>
+  <string name="quick_settings_appsidebar_title">Tətbiqetmə kənar paneli</string>
+  <string name="quick_settings_appsidebar_on">Tətbiqetmə kənar paneli Açıq</string>
+  <string name="quick_settings_appsidebar_off">Tətbiqetmə kənar paneli Bağlı</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">Pulse aktiv</string>
+  <string name="quick_settings_pulse_disabled">Görsəlləşdirmə Yox</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse qapalı</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse açıq</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse bağlanıldı</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse açıldı</string>
+  <string name="quick_settings_pulse_label">Naviqasiya Çubuğu Vizuallaşdırma</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Mühit ekranı</string>
   <string name="accessibility_quick_settings_ambient_display_off">Mühit ekranı qapalı.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Mühit ekranı açıq</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Mühit ekranı bağlanıldı</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Mühit ekranı açıldı</string>
   <string name="quick_settings_heads_up_label">Bildirim pəncərələri</string>
+  <string name="accessibility_quick_settings_heads_up_off">Bildiriş pəncərələri bağlı</string>
+  <string name="accessibility_quick_settings_heads_up_on">Bildiriş pəncərələri açıq</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Bildiriş pəncərələri bağlanıldı</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Bildiriş pəncərələri açıldı</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Məkan bildirişi: batareya qənaət rejimi.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Məkan bildirişi: sadəcə sensorlar rejimi.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Məkan bildirişi: yüksək dəqiqlik rejimi.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Məkan bildirişi batareya qənaət rejiminə keçdi.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Məkan bildirişi sadəcə sensorlar rejimine keçdi.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Məkan bildirişi yüksək dəqiqlik rejiminə keçdi.</string>
+  <string name="quick_settings_location_detail_title">Məkan rejimi</string>
+  <string name="quick_settings_location_battery_saving_label">Batareya qənaəti</string>
+  <string name="quick_settings_location_gps_only_label">Sadəcə cihaz</string>
+  <string name="quick_settings_location_high_accuracy_label">Yüksək dəqiqlik</string>
+  <string name="quick_settings_location_off_label">Məkan qapalı</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Dil</string>
   <string name="quick_settings_locale_more_locales_toast">Keçid funksionallığını aktivləşdirmək üçün xahiş edirik birdən çox dil quraşdırın</string>
@@ -123,6 +154,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Tətbiq Sonlandırıldı</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Gözdən keçirmə bildirimi 1 dəqiqə qədər təxirə salınır.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Gözdən keçirmə bildirimi <xliff:g id="number">%d</xliff:g> dəqiqə qədər təxirə salınır.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Ekran görüntüsü alınmadı</string>
   <string name="screenshot_abort_text">Əməliyyat ləğv edildi</string>
@@ -147,4 +180,10 @@
   <string name="recents_free_ram">Boş ram</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">Tapşırıq Meneceri</string>
+  <string name="message_switch_fail">İnterfeys olmadığı üçün bu vəzifəyə keçilə bilmir</string>
+  <string name="tasklist_killall">Hamısını bitir</string>
+  <string name="tasklist_memory_usage">"Boş • Ümumi Yaddaş : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
+  <string name="message_keep_one_launcher">Ən az bir başladıcı olmalıdır!</string>
+  <string name="tm_clear_task">TƏMİZLƏMƏK</string>
 </resources>

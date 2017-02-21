@@ -92,6 +92,7 @@
   <string name="quick_settings_caffeine_label">Koffein</string>
   <string name="accessibility_quick_settings_caffeine_off">Koffein av</string>
   <string name="accessibility_quick_settings_caffeine_on">Koffein på</string>
+  <string name="qs_app_picker_title">Appväljare</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE På </string>
   <string name="lte_off">LTE Av</string>
@@ -101,6 +102,10 @@
   <string name="quick_settings_screenrecord">SKärminspelning</string>
   <string name="quick_settings_screenrecord_on">Spelar in...</string>
   <string name="quick_settings_navigation_bar">Navigeringsfält</string>
+  <string name="quick_settings_smartbar">Smart stapel</string>
+  <string name="quick_settings_smartbar_off">Smart stapel av</string>
+  <string name="quick_settings_fling">Svepning</string>
+  <string name="quick_settings_fling_off">Svepning av</string>
   <string name="quick_settings_appcirclebar_title">Stapel för appsnurra</string>
   <string name="quick_settings_appcirclebar_on">Stapel för appsnurra - På</string>
   <string name="quick_settings_appcirclebar_off">Stapel för appsnurra - Av</string>
@@ -118,23 +123,39 @@
   <string name="accessibility_quick_settings_pulse_on">Pulsering på</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulsering avstängd</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulsering aktiverad</string>
+  <string name="quick_settings_pulse_label">Navigationsfältet Visualizer</string>
   <string name="quick_settings_pie">Paj</string>
+  <string name="quick_settings_ambient_display_label">Omgivande Display</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Omgivande skärm av.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Omgivande Display på</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Omgivande skärm avstängd</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Omgivande Display påslagen</string>
   <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="accessibility_quick_settings_heads_up_off">Heads up - av</string>
   <string name="accessibility_quick_settings_heads_up_on">Heads up - på</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up avstängd</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up aktiverad</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Platsrapportering: batterisparläge.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Platsrapportering: endast sensorer</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Platsrapportering: hög precision.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Platsrapportering ändras till batterisparläge.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Platsrapportering ändras till endast sensorer.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Platsrapportering ändrats till hög noggrannhet.</string>
   <string name="quick_settings_location_detail_title">Platsläge</string>
   <string name="quick_settings_location_battery_saving_label">Batterisparläge</string>
+  <string name="quick_settings_location_gps_only_label">Endast enhet</string>
   <string name="quick_settings_location_high_accuracy_label">Hög noggrannhet</string>
   <string name="quick_settings_location_off_label">Plats av</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Språk</string>
+  <string name="quick_settings_locale_more_locales_toast">Konfigurera flera språk om du vill växla mellan funktioner</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App tvångsavslutad</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Pikande avisering snoozar i 1 minut.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Pikande avisering snoozar i <xliff:g id="number">%d</xliff:g> minuter.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Ingen skärmdump tagen</string>
   <string name="screenshot_abort_text">Åtgärden avbröts</string>
