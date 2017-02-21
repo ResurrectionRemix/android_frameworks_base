@@ -47,13 +47,11 @@ public class QuickQSPanel extends QSPanel {
 
     public static final String NUM_QUICK_TILES = Secure.QQS_COUNT;
     public static int NUM_QUICK_TILES_DEFAULT = 6;
-    public static int FANCY_ANIMATION_TILES = 12;
     public static final int NUM_QUICK_TILES_ALL = 999;
 
     private int mMaxTiles = NUM_QUICK_TILES_DEFAULT;
     private QSPanel mFullPanel;
     private View mHeader;
-    private boolean mIsScrolling;
 
     public QuickQSPanel(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -140,7 +138,7 @@ public class QuickQSPanel extends QSPanel {
         ArrayList<QSTile<?>> quickTiles = new ArrayList<>();
         for (QSTile<?> tile : tiles) {
             quickTiles.add(tile);
-            if (!mIsScrolling && quickTiles.size() == mMaxTiles) {
+            if (quickTiles.size() == mMaxTiles) {
                 break;
             }
         }
@@ -166,24 +164,21 @@ public class QuickQSPanel extends QSPanel {
     }
 
     public int getNumVisibleQuickTiles() {
-        return FANCY_ANIMATION_TILES;
+        return NUM_QUICK_TILES_DEFAULT;
     }
 
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setMaxTiles(((HeaderTileLayout) mTileLayout).calcNumTiles());
         ((HeaderTileLayout) mTileLayout).updateTileGaps();
     }
 
     @Override
     public void updateSettings() {
         super.updateSettings();
-        mIsScrolling = (Settings.System.getIntForUser(mContext.getContentResolver(),
+        setMaxTiles(Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_QUICKBAR_SCROLL_ENABLED, 0, UserHandle.USER_CURRENT) == 0 ?
-                NUM_QUICK_TILES_DEFAULT : NUM_QUICK_TILES_ALL) == NUM_QUICK_TILES_ALL;
-        setMaxTiles(((HeaderTileLayout) mTileLayout).calcNumTiles());
-        ((HeaderTileLayout) mTileLayout).updateTileGaps();
+                NUM_QUICK_TILES_DEFAULT : NUM_QUICK_TILES_ALL);
     }
 
     private static class HeaderTileLayout extends LinearLayout implements QSTileLayout {
@@ -193,7 +188,6 @@ public class QuickQSPanel extends QSPanel {
         private int mTileSize;
         private int mScreenWidth;
         private int mStartMargin;
-        private int mMinTileGap;
 
         public HeaderTileLayout(Context context) {
             super(context);
@@ -204,7 +198,6 @@ public class QuickQSPanel extends QSPanel {
             mTileSize = mContext.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
             mStartMargin = mContext.getResources().getDimensionPixelSize(R.dimen.qs_scroller_margin);
             mScreenWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-            mMinTileGap = mContext.getResources().getDimensionPixelSize(R.dimen.qs_scroller_min_tile_gap);
         }
 
         @Override
@@ -297,24 +290,14 @@ public class QuickQSPanel extends QSPanel {
         public void updateSettings() {
         }
 
-        public int calcNumTiles() {
-            int panelWidth = mContext.getResources().getDimensionPixelSize(R.dimen.notification_panel_width);
-            if (panelWidth == -1) {
-                panelWidth = mScreenWidth;
-            }
-            panelWidth -= 2 * mStartMargin;
-            int maxNumTiles = panelWidth / (mTileSize + 2 * mMinTileGap);
-            return maxNumTiles;
-        }
-
+        @Override
         public void updateTileGaps() {
             int panelWidth = mContext.getResources().getDimensionPixelSize(R.dimen.notification_panel_width);
             if (panelWidth == -1) {
                 panelWidth = mScreenWidth;
             }
             panelWidth -= 2 * mStartMargin;
-            int maxNumTiles = panelWidth / (mTileSize + 2 * mMinTileGap);
-            int tileGap = (panelWidth - mTileSize * maxNumTiles) / (maxNumTiles - 1);
+            int tileGap = (panelWidth - mTileSize * NUM_QUICK_TILES_DEFAULT) / (NUM_QUICK_TILES_DEFAULT - 1);
             final int N = getChildCount();
             for (int i = 0; i < N; i++) {
                 if (getChildAt(i) instanceof Space) {
