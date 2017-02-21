@@ -76,10 +76,7 @@
     <dimen name="crop_buttons">48dp</dimen>
     <dimen name="crop_buttons_inlet">32dp</dimen>
 
-    <dimen name="qs_panel_top_offset_normal">90dp</dimen>
-    <dimen name="qs_panel_bottom_offset_normal">50dp</dimen>
-    <dimen name="qs_panel_bottom_padding">8dp</dimen>
-
+    <dimen name="qs_panel_top_offset_normal">80dp</dimen>
     <dimen name="qs_panel_top_offset_header">110dp</dimen>
 
     <!-- The task item height in task list. -->
@@ -104,6 +101,6 @@
 
     <!-- QS scroller -->
     <dimen name="qs_scroller_margin">12dp</dimen>
-    <dimen name="qs_scroller_min_tile_gap">14dp</dimen>
+    <dimen name="qs_scroller_min_tile_gap">4dp</dimen>
 
 </resources>
