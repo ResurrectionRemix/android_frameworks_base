@@ -7236,6 +7236,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String PULSE_SOLID_UNITS_COUNT = "pulse_solid_units_count";
 
         /**
+         * Pulse Solid units opacity
+         * @hide
+         */
+        public static final String PULSE_SOLID_UNITS_OPACITY = "pulse_solid_units_opacity";
+
+        /**
          * A flag containing settings used for biometric weak
          * @hide
          */
