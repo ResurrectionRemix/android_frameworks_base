@@ -4943,6 +4943,15 @@ public final class Settings {
         private static final Validator STATUS_BAR_LOGO_STYLE_VALIDATOR =
               ANY_STRING_VALIDATOR;
 
+        /**
+         * @hide
+         */
+        public static final String LOCK_HIDE_STATUS_BAR = "lockscreen_hide_status_bar";
+
+        /** @hide */
+        private static final Validator LOCK_HIDE_STATUS_BAR_VALIDATOR =
+               BOOLEAN_VALIDATOR;
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5056,7 +5065,9 @@ public final class Settings {
             STATUS_BAR_LOGO_COLOR,
             STATUS_BAR_LOGO_COLOR_ACCENT,
             STATUS_BAR_LOGO_POSITION,
-            STATUS_BAR_LOGO_STYLE,
+            STATUS_BAR_LOGO_STYLE,N,
+            OMNI_DOZE_ON_CHARGE,
+            LOCK_HIDE_STATUS_BAR,
             // AICP Settings end
         };
 
@@ -5209,6 +5220,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_COLOR_ACCENT);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_POSITION);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO_STYLE);
+            PRIVATE_SETTINGS.add(LOCK_HIDE_STATUS_BAR);
             // AICP Settings end
         }
 
@@ -5335,6 +5347,7 @@ public final class Settings {
             VALIDATORS.put(STATUS_BAR_LOGO_COLOR_ACCENT, STATUS_BAR_LOGO_COLOR_ACCENT_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO_POSITION, STATUS_BAR_LOGO_POSITION_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_LOGO_STYLE, STATUS_BAR_LOGO_STYLE_VALIDATOR);
+            VALIDATORS.put(LOCK_HIDE_STATUS_BAR,LOCK_HIDE_STATUS_BAR_VALIDATOR);
             // AICP Settings end
         }
 

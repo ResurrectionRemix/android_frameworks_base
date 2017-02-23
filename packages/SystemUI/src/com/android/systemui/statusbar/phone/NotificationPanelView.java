@@ -1651,6 +1651,9 @@ public class NotificationPanelView extends PanelView implements
         } else {
             mKeyguardStatusBar.setAlpha(1f);
             mKeyguardStatusBar.setVisibility(keyguardShowing ? View.VISIBLE : View.INVISIBLE);
+            if (keyguardShowing) {
+                mKeyguardStatusBar.toggleContents(true);
+            }
             if (keyguardShowing && oldState != mBarState) {
                 if (mQs != null) {
                     mQs.hideImmediately();
