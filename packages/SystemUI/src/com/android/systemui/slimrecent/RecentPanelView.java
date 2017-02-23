@@ -406,6 +406,7 @@ public class RecentPanelView {
                 Log.e(TAG, "Error launching activity " + intent, e);
             }
         }
+        mController.onLaunchApplication();
         exit();
     }
 

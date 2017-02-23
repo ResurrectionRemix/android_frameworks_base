@@ -96,4 +96,9 @@
     <dimen name="recent_text_size">20dp</dimen>
     <dimen name="recent_thumbnail_bottom_padding">3dp</dimen>
 
+    <!-- Slim recent app sidebar -->
+    <dimen name="recent_app_sidebar_item_size">60dp</dimen>
+    <dimen name="recent_app_sidebar_item_padding">2dp</dimen>
+    <dimen name="recent_app_sidebar_item_title_text_size">11sp</dimen>
+
 </resources>
