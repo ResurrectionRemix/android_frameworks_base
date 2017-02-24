@@ -1640,7 +1640,6 @@ void AssetManager::mergeInfoLocked(SortedVector<AssetDir::FileInfo>* pMergedInfo
     int i, j;
     for (i = pContents->size() -1; i >= 0; i--) {
         bool add = true;
-
         for (j = pMergedInfo->size() -1; j >= 0; j--) {
             /* case-sensitive comparisons, to behave like UNIX fs */
             if (strcmp(pContents->itemAt(i).mFileName,
@@ -1651,7 +1650,6 @@ void AssetManager::mergeInfoLocked(SortedVector<AssetDir::FileInfo>* pMergedInfo
                 break;
             }
         }
-
         if (add)
             pMergedInfo->add(pContents->itemAt(i));
     }
