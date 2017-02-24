@@ -797,7 +797,7 @@ public class RecentPanelView {
                         } else {
                             // Skip the first task for our list but save it for later use.
                            mFirstTask = item;
-                           mCounter--;
+                           newSize--;
                         }
                     } else {
                         // FirstExpandedItems value forces to show always the app screenshot
@@ -836,7 +836,6 @@ public class RecentPanelView {
                         firstItems++;
                     }
                 }
-                mCounter++;
             }
 
             // Add now the non favorite tasks to the final task list.
@@ -860,7 +859,7 @@ public class RecentPanelView {
         private void addCard(TaskDescription task, int oldSize, boolean topTask) {
             RecentCard card = null;
 
-            // We may have allready constructed and inflated card.
+            // We may have already constructed and inflated card.
             // Let us reuse them and just update the content.
             if (mCounter < oldSize) {
                 card = (RecentCard) mCards.get(mCounter);
@@ -869,6 +868,7 @@ public class RecentPanelView {
                     card.updateCardContent(task, mScaleFactor);
                     card = assignListeners(card, task);
                 }
+                mCounter++;
             }
 
             // No old card was present to update....so add a new one.
