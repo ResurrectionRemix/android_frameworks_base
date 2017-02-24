@@ -17207,6 +17207,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
         app.crashing = false;
         app.notResponding = false;
+        app.renderThreadTid = 0;
 
         app.resetPackageList(mProcessStats);
         app.unlinkDeathRecipient();
