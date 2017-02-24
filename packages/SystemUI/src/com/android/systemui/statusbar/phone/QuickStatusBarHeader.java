@@ -502,7 +502,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public void starttmactivity() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.android.settings",
-            "com.android.settings.Settings$RunningServicesActivity");
+            "com.android.settings.Settings$DevRunningServicesActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
