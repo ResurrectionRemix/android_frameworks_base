@@ -644,9 +644,11 @@ public class RecentPanelView {
      */
     private void tasksLoaded() {
         if (mOnTasksLoadedListener != null) {
-            setTasksLoaded(true);
             mIsLoading = false;
-            mOnTasksLoadedListener.onTasksLoaded();
+            if (!isCancelledByUser()) {
+                setTasksLoaded(true);
+                mOnTasksLoadedListener.onTasksLoaded();
+            }
         }
     }
 
