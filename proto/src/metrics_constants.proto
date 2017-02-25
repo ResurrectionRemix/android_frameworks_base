@@ -4006,6 +4006,9 @@ message MetricsEvent {
     // OS: O
     FIELD_NOTIFICATION_GROUP_SUMMARY = 947;
 
+    OMNI_QS_WEATHER = 1001;
+    OMNI_QS_WEATHER_DETAILS = 1002;
+
     // ---- End O Constants, all O constants go above this line ----
 
     // OPEN: Settings > System > Languages & input > Advanced > Lift to open camera

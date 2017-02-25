@@ -220,6 +220,9 @@
     <!-- screenrecord -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
+    <!-- OmniJaws -->
+    <uses-permission android:name="org.omnirom.omnijaws.READ_WEATHER" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"

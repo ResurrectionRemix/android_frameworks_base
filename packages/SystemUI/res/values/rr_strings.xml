@@ -100,4 +100,18 @@
     <string name="screenrecord_notif_pointer_off">Hide pointer</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Unable to record screen</string>
+    <string name="notification_channel_screenrecord">Screenrecords</string>
+
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
+
+    <string name="omnijaws_service_error">Error</string>
+    <string name="omnijaws_service_unkown">No weather data</string>
+    <string name="omnijaws_service_error_long">Error loading weather data</string>
+    <string name="omnijaws_service_disabled">Service is disabled</string>
+    <string name="omnijaws_detail_header">Weather</string>
+    <string name="omnijaws_label_default">Weather</string>
+    <string name="omnijaws_current_text">Now</string>
+    <string name="omnijaws_package_not_available">OmniJaws not available</string>
+    <string name="omnijaws_service_last_update">Last update:</string>
 </resources>
