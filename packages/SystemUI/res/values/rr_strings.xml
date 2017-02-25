@@ -217,4 +217,7 @@
     <string name="toast_recents_queue_app">Launch %s after closing recents</string>
     <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
 
+    <!-- Sim recents on keyguard -->
+    <string name="slim_recent_keyguard">Unlock your device to view recents</string>
+
 </resources>

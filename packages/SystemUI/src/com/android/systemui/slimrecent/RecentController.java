@@ -19,6 +19,7 @@ package com.android.systemui.slimrecent;
 
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
+import android.app.KeyguardManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -57,6 +58,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.cards.recyclerview.view.CardRecyclerView;
 
@@ -103,9 +105,12 @@ public class RecentController implements RecentPanelView.OnExitListener,
     // The different views we need.
     private ViewGroup mParentView;
     private ViewGroup mRecentContainer;
+    private View mKeyguardView;
     private LinearLayout mRecentContent;
     private LinearLayout mRecentWarningContent;
     private ImageView mEmptyRecentView;
+    private ImageView mKeyguardImage;
+    private TextView mKeyguardText;
 
     private int mLayoutDirection;
     private int mMainGravity;
@@ -186,6 +191,13 @@ public class RecentController implements RecentPanelView.OnExitListener,
         mEmptyRecentView =
                 (ImageView) mRecentContainer.findViewById(R.id.empty_recent);
 
+        mKeyguardView = View.inflate(context, R.layout.slim_recent_keyguard, null);
+
+        mKeyguardImage =
+                (ImageView) mKeyguardView.findViewById(R.id.keyguard_recent_img);
+
+        mKeyguardText = (TextView) mKeyguardView.findViewById(R.id.keyguard_recent_text);
+
         // Prepare gesture detector.
         final ScaleGestureDetector recentListGestureDetector =
                 new ScaleGestureDetector(mContext,
@@ -208,6 +220,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
         // Add finally the views and listen for outside touches.
         mParentView.setFocusableInTouchMode(true);
         mParentView.addView(mRecentContainer);
+        mParentView.addView(mKeyguardView);
         mParentView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -281,10 +294,24 @@ public class RecentController implements RecentPanelView.OnExitListener,
 
         // Set correct backgrounds based on calculated main gravity.
         mRecentWarningContent.setBackgroundColor(Color.RED);
+
+        int tintColor = getEmptyRecentColor();
+        int backgroundColor = mPanelColor;
+        if (backgroundColor == 0x00ffffff) {
+            backgroundColor = mContext.getResources().getColor(R.color.recent_background);
+        }
+
         VectorDrawable vd = (VectorDrawable)
                 mContext.getResources().getDrawable(R.drawable.ic_empty_recent);
         vd.setTint(getEmptyRecentColor());
         mEmptyRecentView.setImageDrawable(vd);
+
+        VectorDrawable vd1 = (VectorDrawable)
+                mContext.getResources().getDrawable(R.drawable.ic_recent_keyguard);
+        vd1.setTint(tintColor);
+        mKeyguardImage.setImageDrawable(vd1);
+        mKeyguardText.setTextColor(tintColor);
+
         int padding = mContext.getResources().getDimensionPixelSize(R.dimen.slim_recents_elevation);
         if (mMainGravity == Gravity.LEFT) {
             mRecentContainer.setPadding(0, 0, padding, 0);
@@ -302,12 +329,11 @@ public class RecentController implements RecentPanelView.OnExitListener,
         // Set custom background color (or reset to default, as the case may be
         if (mRecentContent != null) {
             mRecentContent.setElevation(50);
-            if (mPanelColor != 0x00ffffff) {
-                mRecentContent.setBackgroundColor(mPanelColor);
-            } else {
-                mRecentContent.setBackgroundColor(
-                        mContext.getResources().getColor(R.color.recent_background));
-            }
+            mRecentContent.setBackgroundColor(backgroundColor);
+        }
+
+        if (mKeyguardView != null) {
+            mKeyguardView.setBackgroundColor(backgroundColor);
         }
     }
 
@@ -534,6 +560,16 @@ public class RecentController implements RecentPanelView.OnExitListener,
         CacheController.getInstance(mContext).setRecentScreenShowing(true);
         mWindowManager.addView(mParentView, generateLayoutParameter());
         mRecentPanelView.scrollToFirst();
+
+        KeyguardManager km =
+                (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+        if (km.inKeyguardRestrictedInputMode()) {
+            mRecentContainer.setVisibility(View.GONE);
+            mKeyguardView.setVisibility(View.VISIBLE);
+        } else {
+            mRecentContainer.setVisibility(View.VISIBLE);
+            mKeyguardView.setVisibility(View.GONE);
+        }
         addSidebarView();
     }
 
@@ -633,6 +669,10 @@ public class RecentController implements RecentPanelView.OnExitListener,
                     resolver, Settings.System.RECENT_PANEL_GRAVITY, Gravity.RIGHT,
                     UserHandle.USER_CURRENT);
 
+            // Update colors in RecentPanelView
+            mPanelColor = Settings.System.getIntForUser(resolver,
+                    Settings.System.RECENT_PANEL_BG_COLOR, 0x00ffffff, UserHandle.USER_CURRENT);
+
             // Set main gravity and background images.
             setGravityAndImageResources();
 
@@ -661,17 +701,14 @@ public class RecentController implements RecentPanelView.OnExitListener,
                     UserHandle.USER_CURRENT) == 1);
             }
 
-            // Update colors in RecentPanelView
-            mPanelColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.RECENT_PANEL_BG_COLOR, 0x00ffffff, UserHandle.USER_CURRENT);
-
             mRecentContent.setElevation(50);
-            if (mPanelColor != 0x00ffffff) {
-                mRecentContent.setBackgroundColor(mPanelColor);
-            } else {
-                mRecentContent.setBackgroundColor(
-                        mContext.getResources().getColor(R.color.recent_background));
+
+            int backgroundColor = mPanelColor;
+            if (backgroundColor == 0x00ffffff) {
+                backgroundColor = mContext.getResources().getColor(R.color.recent_background);
             }
+            mRecentContent.setBackgroundColor(backgroundColor);
+            mKeyguardView.setBackgroundColor(backgroundColor);
 
             // App sidebar settings
             if (Settings.System.getIntForUser(resolver, Settings.System.USE_RECENT_APP_SIDEBAR, 1,
