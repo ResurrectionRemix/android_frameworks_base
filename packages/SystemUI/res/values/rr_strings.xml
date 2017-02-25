@@ -227,4 +227,11 @@
     <string name="dlg_cancel">Cancel</string>
     <string name="kill">Kill App</string>
 
+    <!-- OmniJAWS -->
+    <string name="omnijaws_service_error">Error</string>
+    <string name="omnijaws_service_unkown">No weather data</string>
+    <string name="omnijaws_detail_header">Weather</string>
+    <string name="omnijaws_label_default">Weather</string>
+    <string name="omnijaws_current_text">Now</string>
+
 </resources>
