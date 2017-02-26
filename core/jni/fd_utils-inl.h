@@ -285,6 +285,7 @@ class FileDescriptorInfo {
       if (path.compare(0, kDataAppPrefix.size(), kDataAppPrefix) == 0) {
         return true;
       }
+     }
 
     // Whitelist files needed for Runtime Resource Overlay, like these:
     // /system/vendor/overlay/framework-res.apk
