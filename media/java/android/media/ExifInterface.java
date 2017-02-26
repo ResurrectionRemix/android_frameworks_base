@@ -1335,8 +1335,9 @@ public class ExifInterface {
         for (int i = 0; i < EXIF_TAGS.length; ++i) {
             mAttributes[i] = new HashMap();
         }
+        InputStream in = null;
         try {
-            InputStream in = new FileInputStream(mFilename);
+            in = new FileInputStream(mFilename);
             getJpegAttributes(in);
             mIsSupportedFile = true;
         } catch (IOException e) {
@@ -1349,6 +1350,7 @@ public class ExifInterface {
             if (DEBUG) {
                 printAttributes();
             }
+            IoUtils.closeQuietly(in);
         }
     }
 
@@ -1372,8 +1374,7 @@ public class ExifInterface {
      */
     public void saveAttributes() throws IOException {
         if (!mIsSupportedFile) {
-            throw new UnsupportedOperationException(
-                    "ExifInterface only supports saving attributes on JPEG formats.");
+            throw new IOException("ExifInterface only supports saving attributes on JPEG formats.");
         }
         // Keep the thumbnail in memory
         mThumbnailBytes = getThumbnail();
