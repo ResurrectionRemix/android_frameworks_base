@@ -23,8 +23,8 @@
     <dimen name="floating_action_button_height">54dp</dimen>
     <dimen name="floating_action_button_width">54dp</dimen>
     <dimen name="floating_action_button_translation_z">12dp</dimen>
-    <dimen name="floating_action_button_margin_side">32dp</dimen>
-    <dimen name="floating_action_button_margin_bottom">46dp</dimen>
+    <dimen name="floating_action_button_margin_side">54dp</dimen>
+    <dimen name="floating_action_button_margin_bottom">54dp</dimen>
 
     <!-- Network traffic monitor -->
     <dimen name="net_traffic_multi_text_size">8dp</dimen>
