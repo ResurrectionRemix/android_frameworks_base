@@ -125,6 +125,7 @@
 
     <!-- Slim recent -->
     <color name="recent_background">#80000000</color>
+    <color name="recent_warning_background">#ff3367d6</color>
 
     <!-- Card Color -->
     <color name="card_background">#ffffffff</color>
