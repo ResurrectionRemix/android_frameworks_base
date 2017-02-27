@@ -88,6 +88,10 @@
         <item name="android:maxLines">2</item>
     </style>
 
+    <style name="SlimRecentsCardOptionsButton">
+        <item name="android:padding">2dp</item>
+    </style>
+
     <style name="card.card_header_app_icon">
         <item name="android:layout_width">@dimen/recent_app_icon_size</item>
         <item name="android:layout_height">@dimen/recent_app_icon_size</item>
