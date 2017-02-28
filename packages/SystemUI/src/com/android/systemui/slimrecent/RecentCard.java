@@ -72,6 +72,8 @@ public class RecentCard extends Card {
 
     private int mCardColor;
 
+    private RecentController mSlimRecents;
+
     private TaskDescription mTaskDescription;
 
     private int defaultCardBg = mContext.getResources().getColor(
@@ -251,9 +253,12 @@ public class RecentCard extends Card {
                     ActivityOptions options = ActivityOptions.makeBasic();
                     options.setDockCreateMode(0);
                     options.setLaunchStackId(ActivityManager.StackId.DOCKED_STACK_ID);
+                    mSlimRecents = new RecentController(mContext, getContext().getResources()
+                            .getConfiguration().getLayoutDirection());
                     try {
                         ActivityManagerNative.getDefault()
                                 .startActivityFromRecents(mPersistentTaskId, options.toBundle());
+                        mSlimRecents.openLastApptoBottom();
                     } catch (RemoteException e) {}
                     return; 
                 }

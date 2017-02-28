@@ -1635,7 +1635,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_SHOW_TICKER, 0, UserHandle.USER_CURRENT) == 1;
         initTickerView();
 
-
         // set the initial view visibility
         setAreThereNotifications();
 
@@ -2240,7 +2239,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         @Override
         public boolean onLongClick(View v) {
-            if (mRecents == null || !ActivityManager.supportsMultiWindow()
+            if (!ActivityManager.supportsMultiWindow()
                     || !getComponent(Divider.class).getView().getSnapAlgorithm()
                             .isSplitScreenFeasible()) {
                 return false;
@@ -2254,20 +2253,29 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     @Override
     protected void toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
-        if (mRecents == null) {
-            return;
-        }
-        int dockSide = WindowManagerProxy.getInstance().getDockSide();
-        if (dockSide == WindowManager.DOCKED_INVALID) {
-            mRecents.dockTopTask(NavigationBarGestureHelper.DRAG_MODE_NONE,
-                    ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT, null, metricsDockAction);
-        } else {
-            EventBus.getDefault().send(new UndockingTaskEvent());
-            if (metricsUndockAction != -1) {
-                MetricsLogger.action(mContext, metricsUndockAction);
-            }
-        }
-    }
+         if (mSlimRecents != null) {
+             int dockSide = WindowManagerProxy.getInstance().getDockSide();
+             if (dockSide == WindowManager.DOCKED_INVALID) {
+                 mSlimRecents.startMultiWin();
+             } else {
+                 EventBus.getDefault().send(new UndockingTaskEvent());
+                 if (metricsUndockAction != -1) {
+                     MetricsLogger.action(mContext, metricsUndockAction);
+                 }
+             }
+         } else if (mRecents != null) {
+             int dockSide = WindowManagerProxy.getInstance().getDockSide();
+             if (dockSide == WindowManager.DOCKED_INVALID) {
+                 mRecents.dockTopTask(NavigationBarGestureHelper.DRAG_MODE_NONE,
+                         ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT, null, metricsDockAction);
+             } else {
+                 EventBus.getDefault().send(new UndockingTaskEvent());
+                 if (metricsUndockAction != -1) {
+                     MetricsLogger.action(mContext, metricsUndockAction);
+                 }
+             }
+         }
+     }
 
     private final View.OnLongClickListener mLongPressHomeListener
             = new View.OnLongClickListener() {

@@ -125,6 +125,7 @@ import com.android.systemui.assist.AssistManager;
 import com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView;
 import com.android.systemui.navigation.Navigator;
 import com.android.systemui.recents.Recents;
+import com.android.systemui.slimrecent.RecentController;
 import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.NotificationGuts.OnGutsClosedListener;
 import com.android.systemui.statusbar.appcirclesidebar.AppCircleSidebar;
@@ -228,6 +229,8 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected AccessibilityManager mAccessibilityManager;
 
     protected boolean mDeviceInteractive;
+
+    protected RecentController mSlimRecents;
 
     protected boolean mVisible;
     protected ArraySet<Entry> mHeadsUpEntriesToRemoveOnSwitch = new ArraySet<>();
@@ -369,7 +372,39 @@ public abstract class BaseStatusBar extends SystemUI implements
 
             updateLockscreenNotificationSetting();
         }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.USE_SLIM_RECENTS))) {
+                        updateRecents();
+            }
+        }
+
     };
+
+    protected void rebuildRecentsScreen() {
+        if (mSlimRecents != null) {
+            mSlimRecents.rebuildRecentsScreen();
+        }
+    }
+
+    protected void updateRecents() {
+        boolean slimRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.USE_SLIM_RECENTS, 0, UserHandle.USER_CURRENT) == 1;
+
+        if (slimRecents) {
+            mSlimRecents = new RecentController(mContext, mLayoutDirection);
+            //mSlimRecents.setCallback(this);
+            mRecents = null;
+            rebuildRecentsScreen();
+        } else {
+            mRecents = getComponent(Recents.class);
+            mSlimRecents = null;
+        }
+    }
 
     private final ContentObserver mLockscreenSettingsObserver = new ContentObserver(mHandler) {
         @Override
@@ -799,7 +834,9 @@ public abstract class BaseStatusBar extends SystemUI implements
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
 
-        mRecents = getComponent(Recents.class);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.USE_SLIM_RECENTS), false,
+                        mSettingsObserver, UserHandle.USER_ALL);
 
         final Configuration currentConfig = mContext.getResources().getConfiguration();
         mLocale = currentConfig.locale;
@@ -810,6 +847,8 @@ public abstract class BaseStatusBar extends SystemUI implements
         mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
         mKeyguardManager = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
         mLockPatternUtils = new LockPatternUtils(mContext);
+
+        updateRecents();
 
         // Connect in to the status bar manager service
         mCommandQueue = new CommandQueue(this);
@@ -1567,6 +1606,8 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected abstract View getStatusBarView();
 
+    /*this is not needed with DUI navbar because it's not set anymore in PhoneStatusBar and it preloads recents
+    if the button has Recent action (SmartButtonView) with the ActionHandler. But i'm keeping it if anyone using stock navbar*/
     protected View.OnTouchListener mRecentsPreloadOnTouchListener = new View.OnTouchListener() {
         // additional optimization when we have software system buttons - start loading the recent
         // tasks on touch down
@@ -1622,6 +1663,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         if (isOmniSwitchEnabled()) {
             Intent showIntent = new Intent(OmniSwitchConstants.ACTION_HIDE_OVERLAY);
             mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            if (!mScreenPinningEnabled) {
+                Intent showIntent = new Intent(screwdUtils.ACTION_HIDE_OVERLAY);
+                mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            }
+        } else if (mSlimRecents != null) {
+            mSlimRecents.hideRecents(triggeredFromHomeKey);
         } else if (mRecents != null) {
             mRecents.hideRecents(triggeredFromAltTab, triggeredFromHomeKey);
         }
@@ -1631,6 +1678,13 @@ public abstract class BaseStatusBar extends SystemUI implements
         if (isOmniSwitchEnabled()) {
             Intent showIntent = new Intent(OmniSwitchConstants.ACTION_TOGGLE_OVERLAY);
             mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            if (!mScreenPinningEnabled) {
+                Intent showIntent = new Intent(screwdUtils.ACTION_TOGGLE_OVERLAY);
+                mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            }
+        } else if (mSlimRecents != null) {
+            sendCloseSystemWindows(SYSTEM_DIALOG_REASON_RECENT_APPS);
+            mSlimRecents.toggleRecents(mDisplay, mLayoutDirection, getStatusBarView());
         } else if (mRecents != null) {
             mRecents.toggleRecents(mDisplay);
         }
@@ -1641,6 +1695,8 @@ public abstract class BaseStatusBar extends SystemUI implements
             if (mRecents != null) {
                 mRecents.showNextAffiliatedTask();
             }
+        } else if (mSlimRecents != null) {
+            mSlimRecents.preloadRecentTasksList();
         } else if (mRecents != null) {
             mRecents.preloadRecents();
         }
@@ -1659,6 +1715,8 @@ public abstract class BaseStatusBar extends SystemUI implements
             if (mRecents != null) {
                 mRecents.showNextAffiliatedTask();
             }
+        } else if (mSlimRecents != null) {
+            mSlimRecents.cancelPreloadingRecentTasksList();
         } else if (mRecents != null) {
             mRecents.cancelPreloadingRecents();
         }
