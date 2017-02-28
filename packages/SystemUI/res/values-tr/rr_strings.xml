@@ -31,11 +31,11 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Ekran görüntüsü silindi</string>
   <string name="gestures_message">Deseninizi buraya çizin</string>
-  <string name="rr_sys_tuner">Sistem Arayüzü ayarlayıcı</string>
+  <string name="rr_sys_tuner">Sistem arayüzü ayarlayıcı</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">%1$s için sağa kaydırın</string>
   <string name="right_shortcut_hint">%1$s için sola kaydırın</string>
-  <string name="lockscreen_message">Bir kilit ekranı kısayolu oluşturmak için sol veya sağdaki bir simgeye dokunun.</string>
+  <string name="lockscreen_message">Kilit ekranı kısayolunu oluşturmak için sol veya sağdaki simgeye dokunun.</string>
   <string name="lockscreen_default_target">Varsayılan</string>
   <string name="select_application">Uygulama seçin</string>
   <string name="lockscreen_choose_action_title">Eylem seçin</string>
@@ -45,12 +45,12 @@
   <string name="app_float_item_title">Yüzer görünüm</string>
   <string name="app_stop_item_title">Uygulamayı sonlandır</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go etkinleştirildi</string>
-  <string name="onthego_notif_title">On-The-Go aktif</string>
+  <string name="onthego_notif_ticker">Yürüme modu etkinleştirildi</string>
+  <string name="onthego_notif_title">Yürüme modu aktif</string>
   <string name="onthego_notif_stop">Durdur</string>
   <string name="onthego_notif_options">Seçenekler</string>
-  <string name="onthego_notif_error">On-The-Go başlatılamıyor</string>
-  <string name="onthego_notif_restart">On-The-Go \'yu yeniden başlat</string>
+  <string name="onthego_notif_error">Yürüme modu başlatılamıyor</string>
+  <string name="onthego_notif_restart">Yürüme modunu yeniden başlat</string>
   <string name="onthego_notif_camera_changed">Kamera modu değiştirildi</string>
   <string name="onthego_transparency">Saydamlık</string>
   <string name="onthego_front_camera">Ön kamerayı kullan</string>
@@ -101,7 +101,7 @@
   <string name="quick_settings_nfc_off">NFC kapalı</string>
   <string name="quick_settings_screenrecord">Ekran kaydı</string>
   <string name="quick_settings_screenrecord_on">Kaydediliyor ...</string>
-  <string name="quick_settings_navigation_bar">Gezinti çubuğu</string>
+  <string name="quick_settings_navigation_bar">Gezinme çubuğu</string>
   <string name="quick_settings_smartbar">Smart bar</string>
   <string name="quick_settings_smartbar_off">Smart bar kapalı</string>
   <string name="quick_settings_fling">Fling</string>
@@ -109,7 +109,7 @@
   <string name="quick_settings_appcirclebar_title">Uygulama daire çubuğu</string>
   <string name="quick_settings_appcirclebar_on">Uygulama daire çubuğu Açık</string>
   <string name="quick_settings_appcirclebar_off">Uygulama daire çubuğu Kapalı</string>
-  <string name="quick_settings_gesture_anywhere_label">Her Yerde Hareket</string>
+  <string name="quick_settings_gesture_anywhere_label">Her yerde hareket</string>
   <string name="quick_settings_gesture_anywhere_on">Hareketler Açık</string>
   <string name="quick_settings_gesture_anywhere_off">Hareketler Kapalı</string>
   <string name="quick_settings_appsidebar_title">Uygulama kenar çubuğu</string>
@@ -123,7 +123,7 @@
   <string name="accessibility_quick_settings_pulse_on">Pulse açık</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse kapatıldı</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse açıldı</string>
-  <string name="quick_settings_pulse_label">Gezinti çubuğu görselleştirme</string>
+  <string name="quick_settings_pulse_label">Gezinme çubuğu görselleştirme</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ortam ekranı</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ortam ekranı kapalı.</string>

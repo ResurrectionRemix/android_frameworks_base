@@ -64,8 +64,8 @@
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
   <!-- Quick Settings tiles -->
-  <string name="quick_settings_screenshot_label">截屏</string>
-  <string name="quick_settings_region_screenshot_label">部分截图</string>
+  <string name="quick_settings_screenshot_label">屏幕截图</string>
+  <string name="quick_settings_region_screenshot_label">局部截图</string>
   <string name="quick_settings_adb_network">ADB 网络</string>
   <string name="quick_settings_network_adb_enabled_label">启用</string>
   <string name="quick_settings_network_adb_disabled_label">禁用</string>
