@@ -73,7 +73,7 @@ import java.util.List;
 public class RecentPanelView {
 
     private static final String TAG = "RecentPanelView";
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     public static final String TASK_PACKAGE_IDENTIFIER = "#ident:";
 
