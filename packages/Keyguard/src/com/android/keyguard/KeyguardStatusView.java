@@ -320,24 +320,32 @@ public class KeyguardStatusView extends GridLayout implements
         return false;
     }
 
-	@Override
+    @Override
     public void onWeatherChanged(WeatherController.WeatherInfo info) {
         if (info.temp == null || info.condition == null) {
-            mWeatherCity.setText(null);
+            if (mWeatherCity != null)
+                mWeatherCity.setText(null);
             mWeatherConditionDrawable = null;
-            mWeatherCurrentTemp.setText(null);
-            mWeatherConditionText.setText(null);
-            mWeatherView.setVisibility(View.GONE);
+            if (mWeatherCurrentTemp != null)
+                mWeatherCurrentTemp.setText(null);
+            if (mWeatherConditionText != null)
+                mWeatherConditionText.setText(null);
+            if (mWeatherView != null)
+                mWeatherView.setVisibility(View.GONE);
             updateSettings(true);
         } else {
-            mWeatherCity.setText(info.city);
+            if (mWeatherCity != null)
+                mWeatherCity.setText(info.city);
             mWeatherConditionDrawable = info.conditionDrawable;
-            mWeatherCurrentTemp.setText(info.temp);
-            mWeatherConditionText.setText(info.condition);
-            mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
+            if (mWeatherCurrentTemp != null)
+                mWeatherCurrentTemp.setText(info.temp);
+            if (mWeatherConditionText != null)
+                mWeatherConditionText.setText(info.condition);
+            if (mWeatherView != null)
+                mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
             updateSettings(false);
         }
-     }   
+    }
 
     private void refreshBatteryInfo() {
         final Resources res = getContext().getResources();
@@ -711,32 +719,30 @@ public class KeyguardStatusView extends GridLayout implements
         mDateView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_25));
         }
-	}
+    }
 
- private void  updateSettings(boolean forcehide) {
+    private void updateSettings(boolean forcehide) {
         final ContentResolver resolver = getContext().getContentResolver();
         final Resources res = getContext().getResources();
         View weatherPanel = findViewById(R.id.weather_panel);
         TextView noWeatherInfo = (TextView) findViewById(R.id.no_weather_info_text);
         AlarmManager.AlarmClockInfo nextAlarm =
-                mAlarmManager.getNextAlarmClock(UserHandle.USER_CURRENT); 
+            mAlarmManager.getNextAlarmClock(UserHandle.USER_CURRENT);
         boolean showLocation = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_SHOW_WEATHER_LOCATION, 1) == 1;
+            Settings.System.LOCK_SCREEN_SHOW_WEATHER_LOCATION, 1) == 1;
         int iconNameValue = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);
+            Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);
 
         int maxAllowedNotifications = 6;
         int currentVisibleNotifications = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_VISIBLE_NOTIFICATIONS, 0);
+            Settings.System.LOCK_SCREEN_VISIBLE_NOTIFICATIONS, 0);
         int hideMode = Settings.System.getInt(resolver,
-                    Settings.System.LOCK_SCREEN_WEATHER_HIDE_PANEL, 0);
+            Settings.System.LOCK_SCREEN_WEATHER_HIDE_PANEL, 0);
         int numberOfNotificationsToHide = Settings.System.getInt(resolver,
-                       Settings.System.LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS, 4);
+            Settings.System.LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS, 4);
 
-
-	
         int primaryTextColor =
-                res.getColor(R.color.keyguard_default_primary_text_color);
+            res.getColor(R.color.keyguard_default_primary_text_color);
         // primaryTextColor with a transparency of 70%
         int secondaryTextColor = (179 << 24) | (primaryTextColor & 0x00ffffff);
         // primaryTextColor with a transparency of 50%
@@ -744,10 +750,8 @@ public class KeyguardStatusView extends GridLayout implements
         boolean forceHideByNumberOfNotifications = false;
         mWIconColor = res.getColor(R.color.keyguard_default_icon_color);
 
-
         int ownerInfoColor = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_OWNER_INFO_COLOR, 0xFFFFFFFF);
-
+            Settings.System.LOCKSCREEN_OWNER_INFO_COLOR, 0xFFFFFFFF);
 
         if (hideMode == 0) {
             if (currentVisibleNotifications > maxAllowedNotifications) {
@@ -759,23 +763,32 @@ public class KeyguardStatusView extends GridLayout implements
             }
         }
         if (mWeatherView != null) {
-        mWeatherView.setVisibility(
+            mWeatherView.setVisibility(
                 (mShowWeather && !forceHideByNumberOfNotifications) ? View.VISIBLE : View.GONE);
         }
-      if (forcehide) {
-            noWeatherInfo.setVisibility(View.VISIBLE);
-            weatherPanel.setVisibility(View.GONE);
-            mWeatherConditionText.setVisibility(View.GONE);
+        if (forcehide) {
+            if (noWeatherInfo != null)
+                noWeatherInfo.setVisibility(View.VISIBLE);
+            if (weatherPanel != null)
+                weatherPanel.setVisibility(View.GONE);
+            if (mWeatherConditionText != null)
+                mWeatherConditionText.setVisibility(View.GONE);
         } else {
-            noWeatherInfo.setVisibility(View.GONE);
-            weatherPanel.setVisibility(View.VISIBLE);
-            mWeatherConditionText.setVisibility(View.VISIBLE);
-            mWeatherCity.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
+            if (noWeatherInfo != null)
+                noWeatherInfo.setVisibility(View.GONE);
+            if (weatherPanel != null)
+                weatherPanel.setVisibility(View.VISIBLE);
+            if (mWeatherConditionText != null)
+                mWeatherConditionText.setVisibility(View.VISIBLE);
+            if (mWeatherCity != null)
+                mWeatherCity.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
         }
-	    mWeatherCurrentTemp.setTextColor(mTempColor);
-	    mWeatherConditionText.setTextColor(mConditionColor);
-	    mWeatherCity.setTextColor(mCityColor);
-
+        if (mWeatherCurrentTemp != null)
+            mWeatherCurrentTemp.setTextColor(mTempColor);
+        if (mWeatherConditionText != null)
+            mWeatherConditionText.setTextColor(mConditionColor);
+        if (mWeatherCity != null)
+            mWeatherCity.setTextColor(mCityColor);
         if (dateFont == 0) {
             mDateView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         }
@@ -861,15 +874,18 @@ public class KeyguardStatusView extends GridLayout implements
             mWeatherController.updateWeather();
         }
 
-        mWeatherConditionImage.setImageDrawable(null);
+        if (mWeatherConditionImage != null)
+            mWeatherConditionImage.setImageDrawable(null);
         Drawable weatherIcon = mWeatherConditionDrawable;
-         if (mIconColor == -2) {
-            mWeatherConditionImage.setImageDrawable(weatherIcon);
+        if (mIconColor == -2) {
+            if (mWeatherConditionImage != null)
+                mWeatherConditionImage.setImageDrawable(weatherIcon);
         } else {
-	        Bitmap coloredWeatherIcon =	ImageHelper.getColoredBitmap(weatherIcon, mIconColor);	
-            mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
+            Bitmap coloredWeatherIcon = ImageHelper.getColoredBitmap(weatherIcon, mIconColor);
+            if (mWeatherConditionImage != null)
+                mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
         }
-	}
+    }
 
     public void setDozing(boolean dozing) {
         if (dozing && showBattery()) {
