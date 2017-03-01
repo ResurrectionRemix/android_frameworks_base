@@ -37,7 +37,11 @@ import android.graphics.drawable.VectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 
+import android.util.Log;
+
 public class ImageHelper {
+
+private static final String TAG = "ImageHelper";
 
   public static Bitmap getColoredBitmap(Drawable d, int color) {
         if (d == null) {
@@ -62,6 +66,10 @@ public class ImageHelper {
         }
         if (d instanceof VectorDrawable) {
             d.setTint(color);
+            return d;
+        }
+        if (!(d instanceof BitmapDrawable)) {
+            Log.e(TAG, "Tinting not implemented for type " + d.getClass().getSimpleName());
             return d;
         }
         Bitmap colorBitmap = ((BitmapDrawable) d).getBitmap();
@@ -112,9 +120,9 @@ public class ImageHelper {
         if (image == null || context == null) {
             return null;
         }
-        if (image instanceof VectorDrawable) {
-            return image;
-        } else {
+        if (!(image instanceof BitmapDrawable)) {
+             return image;
+         } else {
             int newSize = Converter.dpToPx(context, size);
             Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
             Bitmap scaledBitmap = Bitmap.createBitmap(newSize, newSize, Config.ARGB_8888);
