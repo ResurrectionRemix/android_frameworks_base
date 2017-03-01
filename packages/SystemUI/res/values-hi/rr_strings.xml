@@ -114,6 +114,7 @@
   <string name="quick_settings_gesture_anywhere_off">इशारे बंद</string>
   <string name="quick_settings_appsidebar_title">App पार्श्व पट्टी</string>
   <string name="quick_settings_appsidebar_on">App पार्श्व पट्टी चालू</string>
+  <string name="quick_settings_appsidebar_off">App पार्श्व पट्टी चालू</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">पल्स सक्षम</string>
   <string name="quick_settings_pulse_disabled">विजुअलाइज़र बंद</string>
@@ -182,4 +183,8 @@
   <string name="tasklist_killall">सभी ऐप्स को नष्ट करे</string>
   <string name="message_keep_one_launcher">कम से कम एक घर गतिविधि रखना चाहिए!</string>
   <string name="tm_clear_task">साफ़</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

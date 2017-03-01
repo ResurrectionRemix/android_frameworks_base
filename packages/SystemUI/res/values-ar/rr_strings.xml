@@ -179,4 +179,8 @@
   <string name="message_switch_fail">لا يمكن التبديل إلى هذه المهمة، لأنه لا توجد واجهة.</string>
   <string name="tasklist_killall">إغلاق الكل</string>
   <string name="tasklist_memory_usage">"• إجمالي الذاكرة الحرة: <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"Вільно • Загалом : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Повинен бути як мінімум один домашній екран!</string>
   <string name="tm_clear_task">Очистити</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

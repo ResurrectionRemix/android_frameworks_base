@@ -46,4 +46,6 @@
   <string name="adb_active_custom_tile_not_connected">tidak aktif</string>
   <string name="singlehandmode_click_hint_message">Sentuh bagian luar layar untuk keluar dari tampilan layar mini</string>
   <string name="singlehandmode_slide_hint_message">Geser jari Anda di bar navigasi untuk beralih antara tampilan layar standar dan mini</string>
+  <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

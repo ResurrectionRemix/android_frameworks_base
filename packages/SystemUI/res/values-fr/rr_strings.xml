@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"• Mémoire totale libre : <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
   <string name="message_keep_one_launcher">Vous devez garder au moins un lanceur d\'application!</string>
   <string name="tm_clear_task">Effacer</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

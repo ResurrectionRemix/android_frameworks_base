@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"可用 • 全部 記憶體：<xliff:g id="number">%s</xliff:g>/<xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">必須保留至少一個主畫面！</string>
   <string name="tm_clear_task">清楚</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

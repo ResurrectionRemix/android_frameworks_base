@@ -187,4 +187,8 @@
   <string name="tasklist_memory_usage">"Libera • Memoria totale : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Bisognerebbe tenere almeno una home in memoria!</string>
   <string name="tm_clear_task">CANCELLA</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

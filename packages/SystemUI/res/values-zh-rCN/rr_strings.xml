@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"可用内存 • 总内存︰ <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
   <string name="message_keep_one_launcher">至少保留一个桌面活动！</string>
   <string name="tm_clear_task">清除</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

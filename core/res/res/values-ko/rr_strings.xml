@@ -46,4 +46,6 @@
   <string name="adb_active_custom_tile_not_connected">비활성화됨</string>
   <string name="singlehandmode_click_hint_message">화면 바깥 쪽을 터치하여 미니 화면보기를 종료합니다</string>
   <string name="singlehandmode_slide_hint_message">내비게이션 바 위로 손가락을 슬라이드를 하면 표준 및 미니 스크린 뷰어로 전환 됩니다</string>
+  <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

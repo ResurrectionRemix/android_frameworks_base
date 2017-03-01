@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"空きメモリ/合計メモリ: [<xliff:g id="number">%s</xliff:g>] / [<xliff:g id="name">%s</xliff:g>]"</string>
   <string name="message_keep_one_launcher">少なくとも1つのホームアプリを起動しておいて下さい！</string>
   <string name="tm_clear_task">消去</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

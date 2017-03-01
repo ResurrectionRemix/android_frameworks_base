@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"Ledigt/Totalt Minne: <xliff:g id="number">%s </xliff:g> / <xliff:g id="name"> %s </xliff:g>"</string>
   <string name="message_keep_one_launcher">Bör behålla minst en hem aktivitet!</string>
   <string name="tm_clear_task">RENSA</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

@@ -46,4 +46,6 @@
   <string name="adb_active_custom_tile_not_connected">inactief</string>
   <string name="singlehandmode_click_hint_message">Tik buiten het venster om minischerm zicht af te sluiten</string>
   <string name="singlehandmode_slide_hint_message">Swipe met je vinger over de navigatiebalk om te wisselen tussen standaard en minischerm zicht</string>
+  <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

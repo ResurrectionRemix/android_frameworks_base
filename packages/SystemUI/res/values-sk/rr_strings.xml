@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"Voľná • Celková pamäť: [<xliff:g id="number">%s</xliff:g>] • [<xliff:g id="name">%s</xliff:g>]"</string>
   <string name="message_keep_one_launcher">Mali by ste mať aspoň jednu aktivitu!</string>
   <string name="tm_clear_task">VYMAZAŤ</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

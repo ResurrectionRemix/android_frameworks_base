@@ -186,4 +186,8 @@
   <string name="tasklist_memory_usage">"Livre • Memória Total: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Deve manter pelo menos uma atividade!</string>
   <string name="tm_clear_task">LIMPAR</string>
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>

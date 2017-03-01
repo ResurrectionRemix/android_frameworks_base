@@ -147,4 +147,8 @@
   <string name="recents_free_ram">Ελεύθερη μνήμη RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <!-- Slim recents app sidebar queue app toast -->
+  <!-- Sim recents on keyguard -->
+  <!-- Kill button in notification guts -->
+  <!-- OmniJAWS -->
 </resources>
