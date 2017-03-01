@@ -407,6 +407,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
                 }
                 mLastToggleTime = SystemClock.elapsedRealtime();
             } else {
+                openLastApptoBottom();
                 hideRecents(false);
             }
         }
