@@ -270,12 +270,18 @@ public class RecentExpandedCard extends CardExpand {
             if (mode == 1) {
                 cropped = Bitmap.createBitmap(source, 0, (int)(h * (1-INITIAL_SCALE)),
                         (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
+                source.recycle();
+                source = null;
             } else if (mode == 2) {
                 cropped = Bitmap.createBitmap(source, (int)(w * (1-INITIAL_SCALE)), (int)(h * (1-INITIAL_SCALE)),
                         (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
+                source.recycle();
+                source = null;
             }
         } catch (Exception e) {
             cropped = source;
+            source.recycle();
+            source = null;
         }
 
         final int sourceWidth = mode != 0 ? cropped.getWidth() : w;
