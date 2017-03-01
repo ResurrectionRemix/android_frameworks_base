@@ -169,8 +169,28 @@ public class RecentPanelView {
             @Override
             public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, 
                     ViewHolder target) {
+
+                int pos = viewHolder.getAdapterPosition();
+                RecentCard card = (RecentCard) mCards.get(pos);
+                int taskid = card.getPersistentTaskId();
+
+                ActivityOptions options = ActivityOptions.makeBasic();
+                options.setDockCreateMode(0);
+                options.setLaunchStackId(ActivityManager.StackId.DOCKED_STACK_ID);
+                try {
+                    ActivityManagerNative.getDefault()
+                            .startActivityFromRecents(taskid, options.toBundle());
+                    mController.openLastApptoBottom();
+                    card.hideCurrentOptions();
+                } catch (RemoteException e) {}
+
                 return true;
             }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return true;
+        }
 
             @Override
             public void onSwiped(ViewHolder viewHolder, int direction) {
@@ -185,7 +205,7 @@ public class RecentPanelView {
             public int getMovementFlags(RecyclerView recyclerView,
                     RecyclerView.ViewHolder viewHolder) {
                 // Set movement flags based on the layout manager
-                final int dragFlags = 0;
+                final int dragFlags = ItemTouchHelper.UP| ItemTouchHelper.DOWN;
                 final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
                 return makeMovementFlags(dragFlags, swipeFlags);
             }
