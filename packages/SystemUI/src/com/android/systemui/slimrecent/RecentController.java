@@ -20,6 +20,7 @@ package com.android.systemui.slimrecent;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.ActivityManager.MemoryInfo;
+import android.app.ActivityOptions;
 import android.app.KeyguardManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -407,7 +408,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
                 }
                 mLastToggleTime = SystemClock.elapsedRealtime();
             } else {
-                openLastApptoBottom();
+                openLastAppPanelToggle();
                 hideRecents(false);
             }
         }
@@ -1034,6 +1035,20 @@ public class RecentController implements RecentPanelView.OnExitListener,
 
         if (lastTask != null) {
             am.moveTaskToFront(lastTask.id, ActivityManager.MOVE_TASK_NO_USER_ACTION);
+        }
+    }
+
+    public void openLastAppPanelToggle() {
+        final ActivityOptions animations = ActivityOptions.makeCustomAnimation(mContext,
+                mMainGravity == Gravity.LEFT ? com.android.internal.R.anim.recent_screen_enter_left :
+                com.android.internal.R.anim.recent_screen_enter,
+                com.android.internal.R.anim.recent_screen_fade_out);
+        final ActivityManager am =
+                (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.RunningTaskInfo lastTask = getLastTask(am);
+
+        if (lastTask != null) {
+            am.moveTaskToFront(lastTask.id, ActivityManager.MOVE_TASK_NO_USER_ACTION, animations.toBundle());
         }
     }
 
