@@ -260,9 +260,26 @@ public class RecentExpandedCard extends CardExpand {
         final int thumbnailHeight =
                 (int) (res.getDimensionPixelSize(
                         R.dimen.recent_thumbnail_height) * scaleFactor);
+        final float INITIAL_SCALE = 0.75f;
+        int h = source.getHeight();
+        int w = source.getWidth();
+        Bitmap cropped = null;
 
-        final int sourceWidth = source.getWidth();
-        final int sourceHeight = source.getHeight();
+        int mode = currentHandsMode(context);
+        try {
+            if (mode == 1) {
+                cropped = Bitmap.createBitmap(source, 0, (int)(h * (1-INITIAL_SCALE)),
+                        (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
+            } else if (mode == 2) {
+                cropped = Bitmap.createBitmap(source, (int)(w * (1-INITIAL_SCALE)), (int)(h * (1-INITIAL_SCALE)),
+                        (int)(w * INITIAL_SCALE), (int)(h * INITIAL_SCALE));
+            }
+        } catch (Exception e) {
+            cropped = source;
+        }
+
+        final int sourceWidth = mode != 0 ? cropped.getWidth() : w;
+        final int sourceHeight = mode != 0 ? cropped.getHeight() : h;
 
         // Compute the scaling factors to fit the new height and width, respectively.
         // To cover the final image, the final scaling will be the bigger
@@ -289,9 +306,23 @@ public class RecentExpandedCard extends CardExpand {
         // scaled bitmap onto it.
         final Bitmap dest = Bitmap.createBitmap(thumbnailWidth, thumbnailHeight, Config.ARGB_8888);
         final Canvas canvas = new Canvas(dest);
-        canvas.drawBitmap(source, null, targetRect, paint);
+        canvas.drawBitmap(mode != 0 ? cropped : source, null, targetRect, paint);
 
         return dest;
+    }
+
+    private static int currentHandsMode(Context context) {
+        int mode;
+        String str = Settings.Global.getString(context.getContentResolver(),
+                Settings.Global.SINGLE_HAND_MODE);
+        if (str != null && str.contains("left")) {
+            mode = 1;
+        } else if (str != null && str.contains("right")) {
+            mode = 2;
+        } else {
+            mode = 0;
+        }
+        return mode;
     }
 
     // AsyncTask loader for the task bitmap.
