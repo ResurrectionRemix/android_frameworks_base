@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">至少保留一个桌面活动！</string>
   <string name="tm_clear_task">清除</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">在关闭最近使用后启动 %s</string>
+  <string name="toast_recents_cancel_queued_app">已取消应用启动</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">解锁您的设备以查看最近使用</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">强行停止？</string>
+  <string name="force_stop_dlg_text">强行停止某个应用可能导致其出现异常。</string>
+  <string name="dlg_ok">确定</string>
+  <string name="dlg_cancel">取消</string>
+  <string name="kill">终止应用</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">错误</string>
+  <string name="omnijaws_service_unkown">没有天气数据</string>
+  <string name="omnijaws_detail_header">天气</string>
+  <string name="omnijaws_label_default">天气</string>
+  <string name="omnijaws_current_text">当前</string>
 </resources>

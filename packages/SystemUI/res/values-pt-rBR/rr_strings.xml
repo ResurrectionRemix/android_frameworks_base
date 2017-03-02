@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Deve manter pelo menos uma atividade!</string>
   <string name="tm_clear_task">LIMPAR</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Abrir %s após fechar os recentes</string>
+  <string name="toast_recents_cancel_queued_app">Cancelar execução do app</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Desbloqueie o dispositivo para ver as aplicações recentes</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Forçar parada?</string>
+  <string name="force_stop_dlg_text">Se você forçar a interrupção de um app, ele pode apresentar mau funcionamento.</string>
+  <string name="dlg_ok">Ok</string>
+  <string name="dlg_cancel">Cancelar</string>
+  <string name="kill">Fechar aplicativo</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Erro</string>
+  <string name="omnijaws_service_unkown">Sem informações meteorológicas</string>
+  <string name="omnijaws_detail_header">Previsão do Tempo</string>
+  <string name="omnijaws_label_default">Previsão do Tempo</string>
+  <string name="omnijaws_current_text">Agora</string>
 </resources>

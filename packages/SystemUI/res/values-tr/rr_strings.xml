@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">En azından bir başlatıcı olmalı!</string>
   <string name="tm_clear_task">TEMİZLE</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Son kullanılanları kapattıktan sonra %s uygulamasını başlat</string>
+  <string name="toast_recents_cancel_queued_app">Uygulama başlatma iptal edildi</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Son kullanılanları görüntülemek için cihazınızın kilidini açın</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Durdurmaya zorla?</string>
+  <string name="force_stop_dlg_text">Uygulamayı zorla durdurursanız, hatalı davranabilir.</string>
+  <string name="dlg_ok">TAMAM</string>
+  <string name="dlg_cancel">İptal</string>
+  <string name="kill">Uygulamayı Sonlandır</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Hata</string>
+  <string name="omnijaws_service_unkown">Hava durumu verisi yok</string>
+  <string name="omnijaws_detail_header">Hava durumu</string>
+  <string name="omnijaws_label_default">Hava durumu</string>
+  <string name="omnijaws_current_text">Şimdi</string>
 </resources>

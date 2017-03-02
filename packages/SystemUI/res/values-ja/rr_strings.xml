@@ -189,5 +189,11 @@
   <!-- Slim recents app sidebar queue app toast -->
   <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
+  <string name="dlg_ok">はい</string>
+  <string name="dlg_cancel">キャンセル</string>
+  <string name="kill">アプリを終了</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">エラー</string>
+  <string name="omnijaws_detail_header">天気</string>
+  <string name="omnijaws_label_default">天気</string>
 </resources>

@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Должен быть как минимум один домашний экран!</string>
   <string name="tm_clear_task">Очистить</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Запустить %s после закрытия недавних приложений</string>
+  <string name="toast_recents_cancel_queued_app">Запуск приложения отменен</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Разблокируйте устройство для просмотра недавних приложений</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Остановить принудительно?</string>
+  <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>
+  <string name="dlg_ok">ОК</string>
+  <string name="dlg_cancel">Отмена</string>
+  <string name="kill">Закрыть приложение</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Ошибка</string>
+  <string name="omnijaws_service_unkown">Нет данных о погоде</string>
+  <string name="omnijaws_detail_header">Погода</string>
+  <string name="omnijaws_label_default">Погода</string>
+  <string name="omnijaws_current_text">Сейчас</string>
 </resources>

@@ -47,5 +47,7 @@
   <string name="singlehandmode_click_hint_message">Pred odchod z mini zobrazenia kliknite mimo obrazovku</string>
   <string name="singlehandmode_slide_hint_message">Posunutím prsta po navigačnom paneli možno prepínať medzi štandardným a mini zobrazením</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">obnoviť štatistiky batérie</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Umožňuje aplikácii obnoviť aktuálne nízkoúrovňové údaje o využití batérie.</string>
 </resources>

@@ -47,5 +47,7 @@
   <string name="singlehandmode_click_hint_message">スクリーンの外側をタップしてミニスクリーン表示を終了する</string>
   <string name="singlehandmode_slide_hint_message">ナビゲーションバーの上を横にスライドしてミニスクリーン表示を切り替える</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">電池統計情報のリセット</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">現在の低レベルなバッテリー消費量のデータをリセットすることをアプリに許可します。</string>
 </resources>

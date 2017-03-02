@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Ein Launcher sollte aktiv bleiben!</string>
   <string name="tm_clear_task">Bereinigen</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Starte %s nach dem Schließen des Anwendungsverlaufs</string>
+  <string name="toast_recents_cancel_queued_app">App-Start abgebrochen</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Entsperren um den Anwendungsverlauf anzuzeigen</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Beenden erzwingen?</string>
+  <string name="force_stop_dlg_text">Das Beenden der App zu erzwingen kann zu unerwünschtem Verhalten führen.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Abbrechen</string>
+  <string name="kill">App beenden</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Fehler</string>
+  <string name="omnijaws_service_unkown">Keine Wetterdaten</string>
+  <string name="omnijaws_detail_header">Wetter</string>
+  <string name="omnijaws_label_default">Wetter</string>
+  <string name="omnijaws_current_text">Jetzt</string>
 </resources>

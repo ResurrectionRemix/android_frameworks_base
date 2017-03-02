@@ -47,5 +47,7 @@
   <string name="singlehandmode_click_hint_message">Toucher en dehors de l’écran pour quitter le mode mini écran</string>
   <string name="singlehandmode_slide_hint_message">Faire glisser votre doigt sur la barre de navigation pour basculer entre les affichages d’écran standard et mini</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">réinitialiser les statistiques de batterie</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Permet à une application de réinitialiser les données actuelles d\'utilisation de la batterie à faible niveau.</string>
 </resources>

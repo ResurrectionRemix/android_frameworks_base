@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Harus menyimpan setidaknya satu kegiatan beranda!</string>
   <string name="tm_clear_task">BERSIHKAN</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Jalankan %s setelah keluar dari recents</string>
+  <string name="toast_recents_cancel_queued_app">Menjalankan aplikasi dibatalkan</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Buka kunci perangkat Anda untuk melihat Recent</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Paksa berhenti?</string>
+  <string name="force_stop_dlg_text">Jika Anda memaksa berhenti aplikasi, itu mungkin berperilaku buruk.</string>
+  <string name="dlg_ok">Oke</string>
+  <string name="dlg_cancel">Batal</string>
+  <string name="kill">Tutup aplikasi</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Kesalahan</string>
+  <string name="omnijaws_service_unkown">Tidak ada data cuaca</string>
+  <string name="omnijaws_detail_header">Cuaca</string>
+  <string name="omnijaws_label_default">Cuaca</string>
+  <string name="omnijaws_current_text">Sekarang</string>
 </resources>

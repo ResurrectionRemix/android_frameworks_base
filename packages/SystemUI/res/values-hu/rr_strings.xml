@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Legalább egy kezdő tevékenységet meg kell tartania!</string>
   <string name="tm_clear_task">TÖRLÉS</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">%s indítása az előzmények bezárása után</string>
+  <string name="toast_recents_cancel_queued_app">Alkalmazás indításának megszakítása</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Oldja fel eszközét az előzmények megtekintéséhez</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Kényszeríti a leállítást?</string>
+  <string name="force_stop_dlg_text">Ha egy alkalmazást leállásra kényszerít, instabilan viselkedhet.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Mégse</string>
+  <string name="kill">Alkalmazás leállítása</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Hiba</string>
+  <string name="omnijaws_service_unkown">Nincsenek időjárási adatok</string>
+  <string name="omnijaws_detail_header">Időjárás</string>
+  <string name="omnijaws_label_default">Időjárás</string>
+  <string name="omnijaws_current_text">Most</string>
 </resources>

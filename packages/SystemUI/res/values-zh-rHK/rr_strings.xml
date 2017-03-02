@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">必須保留至少一個主畫面！</string>
   <string name="tm_clear_task">清除</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">在關閉總覽後啟動 %s</string>
+  <string name="toast_recents_cancel_queued_app">取消應用程式啟動</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">解鎖您的裝置以檢視總覽</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">強制停止嗎？</string>
+  <string name="force_stop_dlg_text">如果您強制停止應用程式，應用程式可能無法正常運作。</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">取消</string>
+  <string name="kill">關閉應用程式</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">錯誤</string>
+  <string name="omnijaws_service_unkown">沒有天氣資料</string>
+  <string name="omnijaws_detail_header">天氣</string>
+  <string name="omnijaws_label_default">天氣</string>
+  <string name="omnijaws_current_text">現在</string>
 </resources>

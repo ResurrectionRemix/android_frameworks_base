@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Trebate zadržati barem jednu početnu aktivnost!</string>
   <string name="tm_clear_task">IZBRIŠI</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Pokretanje aplikacije %s nakon zatvaranja nedavnih aplikacija</string>
+  <string name="toast_recents_cancel_queued_app">Pokretanje aplikacije je otkazano</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Otključajte uređaj da biste vidjeli popis nedavnih aplikacija</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Prisilno zaustaviti?</string>
+  <string name="force_stop_dlg_text">Prisilno zaustavljanje aplikacije može rezultirati čudnim ponašanjem aplikacije.</string>
+  <string name="dlg_ok">U redu</string>
+  <string name="dlg_cancel">Odustani</string>
+  <string name="kill">Zatvori aplikaciju</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Greška</string>
+  <string name="omnijaws_service_unkown">Nema podataka o vremenu</string>
+  <string name="omnijaws_detail_header">Vrijeme</string>
+  <string name="omnijaws_label_default">Vrijeme</string>
+  <string name="omnijaws_current_text">Sada</string>
 </resources>

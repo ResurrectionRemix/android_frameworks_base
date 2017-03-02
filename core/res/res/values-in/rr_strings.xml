@@ -47,5 +47,7 @@
   <string name="singlehandmode_click_hint_message">Sentuh bagian luar layar untuk keluar dari tampilan layar mini</string>
   <string name="singlehandmode_slide_hint_message">Geser jari Anda di bar navigasi untuk beralih antara tampilan layar standar dan mini</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">atur ulang statistik baterai</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Mengizinkan aplikasi untuk mengatur ulang data penggunaan baterai tingkat-rendah saat ini.</string>
 </resources>

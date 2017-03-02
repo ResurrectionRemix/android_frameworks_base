@@ -190,5 +190,14 @@
   <!-- Slim recents app sidebar queue app toast -->
   <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Forzare la chiusura?</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Annulla</string>
+  <string name="kill">Termina app</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Errore</string>
+  <string name="omnijaws_service_unkown">Nessuna informazione meteo</string>
+  <string name="omnijaws_detail_header">Meteo</string>
+  <string name="omnijaws_label_default">Meteo</string>
+  <string name="omnijaws_current_text">Adesso</string>
 </resources>

@@ -47,5 +47,7 @@
   <string name="singlehandmode_click_hint_message">Dodirnite izvan zaslona za izlazak iz mini pregleda zaslona.</string>
   <string name="singlehandmode_slide_hint_message">Prijeđite prstom preko navigacijske trake za prebacivanje između standardnog i mini pregleda zaslona.</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">poništiti statistike baterije</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Dopušta aplikaciji poništavanje trenutnih podataka o korištenju niske razine baterije.</string>
 </resources>

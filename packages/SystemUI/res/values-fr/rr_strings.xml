@@ -187,7 +187,11 @@
   <string name="message_keep_one_launcher">Vous devez garder au moins un lanceur d\'application!</string>
   <string name="tm_clear_task">Effacer</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Lancer %s après la fermeture des applications récentes</string>
+  <string name="toast_recents_cancel_queued_app">Lancement de l\'application annulé</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Déverrouillez votre appareil pour afficher les applications récentes</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Forcer l\'arrêt ?</string>
   <!-- OmniJAWS -->
 </resources>

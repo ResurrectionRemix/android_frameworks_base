@@ -47,5 +47,7 @@
   <string name="singlehandmode_click_hint_message">觸控外部即可退出單手模式</string>
   <string name="singlehandmode_slide_hint_message">在導覽列上滑動手指以切換標準或單手模式</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">重設電池統計資料</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">允許應用程式重設目前的電池使用資料。</string>
 </resources>

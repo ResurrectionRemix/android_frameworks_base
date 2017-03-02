@@ -170,7 +170,7 @@
   <string name="pref_category_user">Definições do utilizador</string>
   <string name="pref_crop_behavior_title">Comportamento de corte</string>
   <string name="pref_crop_behavior_summary">Usar a imagem recortada, mesmo que a original não tenha sido cortada com a ferramenta de corte</string>
-  <string name="action_ok">Ok</string>
+  <string name="action_ok">OK</string>
   <string name="action_delete_success">Eliminado</string>
   <string name="action_delete_fault">A eliminação não teve sucesso</string>
   <string name="action_save_success">Guardado</string>
@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Deve manter pelo menos uma atividade!</string>
   <string name="tm_clear_task">LIMPAR</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Iniciar %s após fechar as aplicações recentes</string>
+  <string name="toast_recents_cancel_queued_app">Iniciação de aplicação cancelada</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Desbloqueie o dispositivo para ver as aplicações recentes</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Forçar paragem?</string>
+  <string name="force_stop_dlg_text">Se forçar a paragem de uma aplicação, ela pode ficar a funcionar incorretamente.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Cancelar</string>
+  <string name="kill">Terminar aplicação</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Erro</string>
+  <string name="omnijaws_service_unkown">Sem informações meteorológicas</string>
+  <string name="omnijaws_detail_header">Meteorologia</string>
+  <string name="omnijaws_label_default">Meteorologia</string>
+  <string name="omnijaws_current_text">Agora</string>
 </resources>

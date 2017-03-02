@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">¡Debe mantener al menos una actividad de inicio!</string>
   <string name="tm_clear_task">LIMPIAR</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Lanzar %s tras el cierre de recientes</string>
+  <string name="toast_recents_cancel_queued_app">Lanzamiento de la app cancelado</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Desbloquear el dispositivo para ver recientes</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">¿Deseas forzar la detención?</string>
+  <string name="force_stop_dlg_text">Si fuerzas la detención de una aplicación, es posible que funcione incorrectamente.</string>
+  <string name="dlg_ok">Aceptar</string>
+  <string name="dlg_cancel">Cancelar</string>
+  <string name="kill">Matar Aplicación</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Error</string>
+  <string name="omnijaws_service_unkown">No hay datos de tiempo</string>
+  <string name="omnijaws_detail_header">El Tiempo</string>
+  <string name="omnijaws_label_default">El Tiempo</string>
+  <string name="omnijaws_current_text">Ahora</string>
 </resources>

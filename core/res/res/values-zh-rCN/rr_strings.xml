@@ -47,5 +47,7 @@
   <string name="singlehandmode_click_hint_message">点击窗口外部退出窗口模式</string>
   <string name="singlehandmode_slide_hint_message">滑动导航栏切换标准模式及窗口模式</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">重置电池统计信息</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">允许应用程序重置当前的底层电池使用数据。</string>
 </resources>
