@@ -345,9 +345,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mUidRecorder = buildRecorder(PREFIX_UID, mSettings.getUidConfig(), false);
         mUidTagRecorder = buildRecorder(PREFIX_UID_TAG, mSettings.getUidTagConfig(), true);
 
-        updatePersistThresholds();
-
         synchronized (mStatsLock) {
+            updatePersistThresholds();
             // upgrade any legacy stats, migrating them to rotated files
             maybeUpgradeLegacyStatsLocked();
 
