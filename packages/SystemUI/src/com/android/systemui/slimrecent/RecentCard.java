@@ -42,6 +42,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.android.cards.internal.Card;
 import com.android.cards.internal.CardHeader;
@@ -49,6 +51,7 @@ import com.android.cards.view.CardView;
 
 import com.android.systemui.R;
 import com.android.systemui.SystemUIApplication;
+import com.android.systemui.stackdivider.WindowManagerProxy;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 /**
@@ -250,6 +253,14 @@ public class RecentCard extends Card {
                     intent = getStoreIntent();
                 }
                 if (id == R.id.multiwindow) {
+                    //if a multiwin session is already active, ask the user to close it
+                    int dockSide = WindowManagerProxy.getInstance().getDockSide();
+                    if (dockSide != WindowManager.DOCKED_INVALID) {
+                        Toast mWarningToast = Toast.makeText(mContext, R.string.recents_multiwin_warning, Toast.LENGTH_LONG);
+                        mWarningToast.show();
+                        return;
+                    }
+
                     ActivityOptions options = ActivityOptions.makeBasic();
                     options.setDockCreateMode(0);
                     options.setLaunchStackId(ActivityManager.StackId.DOCKED_STACK_ID);

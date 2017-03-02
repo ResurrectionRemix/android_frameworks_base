@@ -1038,6 +1038,13 @@ public class RecentController implements RecentPanelView.OnExitListener,
         }
     }
 
+    public void openOnDraggedApptoOtherSide(int taskid) {
+        final ActivityManager am =
+                (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+
+        am.moveTaskToFront(taskid, ActivityManager.MOVE_TASK_NO_USER_ACTION);
+    }
+
     public void openLastAppPanelToggle() {
         final ActivityOptions animations = ActivityOptions.makeCustomAnimation(mContext,
                 mMainGravity == Gravity.LEFT ? com.android.internal.R.anim.recent_screen_enter_left :

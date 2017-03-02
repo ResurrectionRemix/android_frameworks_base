@@ -219,6 +219,7 @@
 
     <!-- Sim recents on keyguard -->
     <string name="slim_recent_keyguard">Unlock your device to view recents</string>
+    <string name="recents_multiwin_warning">A multiwindow session is already active.\nJust tap an app if you want to dock it now.</string>
 
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Force stop?</string>
