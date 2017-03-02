@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:layout_width="52dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_info" />
+            android:src="@drawable/ic_recent_app_info" />
 
         <ImageView
             style="@style/SlimRecentsCardOptionsButton"
