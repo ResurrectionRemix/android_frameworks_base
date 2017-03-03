@@ -1032,6 +1032,7 @@ public class ExifInterface {
     }
 
     private final String mFilename;
+    private boolean mIsRaw;
     private final HashMap[] mAttributes = new HashMap[EXIF_TAGS.length];
     private ByteOrder mExifByteOrder = ByteOrder.BIG_ENDIAN;
     private boolean mHasThumbnail;
@@ -1344,7 +1345,9 @@ public class ExifInterface {
             // Ignore exceptions in order to keep the compatibility with the old versions of
             // ExifInterface.
             mIsSupportedFile = false;
-            Log.w(TAG, "Invalid image.", e);
+            Log.w(TAG, "Invalid image: ExifInterface got an unsupported image format file"
+                    + "(ExifInterface supports JPEG and some RAW image formats only) "
+                    + "or a corrupted JPEG file to ExifInterface.", e);
         } finally {
             addDefaultValuesForCompatibility();
             if (DEBUG) {
@@ -1373,9 +1376,11 @@ public class ExifInterface {
      * and make a single call rather than multiple calls for each attribute.
      */
     public void saveAttributes() throws IOException {
-        if (!mIsSupportedFile) {
-            throw new IOException("ExifInterface only supports saving attributes on JPEG formats.");
+        if (!mIsSupportedFile || mIsRaw) {
+            throw new UnsupportedOperationException(
+                    "ExifInterface only supports saving attributes on JPEG formats.");
         }
+
         // Keep the thumbnail in memory
         mThumbnailBytes = getThumbnail();
 
