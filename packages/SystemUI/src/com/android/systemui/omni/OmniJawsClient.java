@@ -197,7 +197,7 @@ public class OmniJawsClient {
     public Intent getSettingsIntent() {
         if (mEnabled) {
             Intent settings = new Intent(Intent.ACTION_MAIN)
-                    .setClassName("com.android.settings", "com.android.settings.Settings$OmniJawsSettingsActivity");
+                    .setClassName("org.omnirom.omnijaws", "org.omnirom.omnijaws.SettingsActivity");
             return settings;
         }
         return null;
