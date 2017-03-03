@@ -103,7 +103,7 @@ public class FingerprintService extends SystemService implements IBinder.DeathRe
             new ArrayList<>();
     private final AppOpsManager mAppOps;
     private static final long FAIL_LOCKOUT_TIMEOUT_MS = 30*1000;
-    private static final int MAX_FAILED_ATTEMPTS = 5;
+    private static final int MAX_FAILED_ATTEMPTS = 10;
     private static final long CANCEL_TIMEOUT_LIMIT = 3000; // max wait for onCancel() from HAL,in ms
     private final String mKeyguardPackage;
     private int mCurrentUserId = UserHandle.USER_CURRENT;
