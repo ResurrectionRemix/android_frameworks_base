@@ -71,6 +71,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.cards.recyclerview.view.CardRecyclerView;
 
@@ -1029,20 +1030,51 @@ public class RecentController implements RecentPanelView.OnExitListener,
    }
 
     public void openLastApptoBottom() {
+
+        int taskid = 0;
+        boolean doWeHaveAtask = true;
+
         final ActivityManager am =
                 (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.RunningTaskInfo lastTask = getLastTask(am);
-
-        if (lastTask != null) {
-            am.moveTaskToFront(lastTask.id, ActivityManager.MOVE_TASK_NO_USER_ACTION);
+        if (lastTask != null) {//user already ran another app in this session, we can dock it to the other side
+            taskid = lastTask.id;
+        } else {//no last app for this session, let's search in the previous session recent apps
+            List<ActivityManager.RecentTaskInfo> recentTasks =
+                    am.getRecentTasksForUser(ActivityManager.getMaxRecentTasksStatic(),
+                    ActivityManager.RECENT_IGNORE_HOME_STACK_TASKS
+                            | ActivityManager.RECENT_INGORE_DOCKED_STACK_TOP_TASK
+                            | ActivityManager.RECENT_INGORE_PINNED_STACK_TASKS
+                            | ActivityManager.RECENT_IGNORE_UNAVAILABLE
+                            | ActivityManager.RECENT_INCLUDE_PROFILES,
+                            UserHandle.CURRENT.getIdentifier());
+            if (recentTasks != null && recentTasks.size() > 1) {
+                ActivityManager.RecentTaskInfo recentInfo = recentTasks.get(1);
+                taskid = recentInfo.persistentId;
+            } else  {//user cleared all apps, we don't have any taskid to choose
+                doWeHaveAtask = false;
+            }
+        }
+        if (doWeHaveAtask) {
+            try {
+                ActivityOptions options = ActivityOptions.makeBasic();
+                ActivityManagerNative.getDefault()
+                .startActivityFromRecents(taskid, options.toBundle());
+            } catch (RemoteException e) {}
+        } else {
+            Toast noLastapp = Toast.makeText(mContext, R.string.recents_multiwin_nolastapp, Toast.LENGTH_LONG);
+            noLastapp.show();
         }
     }
 
     public void openOnDraggedApptoOtherSide(int taskid) {
         final ActivityManager am =
                 (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-
-        am.moveTaskToFront(taskid, ActivityManager.MOVE_TASK_NO_USER_ACTION);
+        try {
+            ActivityOptions options = ActivityOptions.makeBasic();
+            ActivityManagerNative.getDefault()
+                    .startActivityFromRecents(taskid, options.toBundle());
+        } catch (RemoteException e) {}
     }
 
     public void openLastAppPanelToggle() {
@@ -1050,12 +1082,26 @@ public class RecentController implements RecentPanelView.OnExitListener,
                 mMainGravity == Gravity.LEFT ? com.android.internal.R.anim.recent_screen_enter_left :
                 com.android.internal.R.anim.recent_screen_enter,
                 com.android.internal.R.anim.recent_screen_fade_out);
+
         final ActivityManager am =
                 (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.RunningTaskInfo lastTask = getLastTask(am);
 
         if (lastTask != null) {
             am.moveTaskToFront(lastTask.id, ActivityManager.MOVE_TASK_NO_USER_ACTION, animations.toBundle());
+        } else {
+            List<ActivityManager.RecentTaskInfo> recentTasks =
+                    am.getRecentTasksForUser(ActivityManager.getMaxRecentTasksStatic(),
+                    ActivityManager.RECENT_IGNORE_HOME_STACK_TASKS
+                            | ActivityManager.RECENT_INGORE_DOCKED_STACK_TOP_TASK
+                            | ActivityManager.RECENT_INGORE_PINNED_STACK_TASKS
+                            | ActivityManager.RECENT_IGNORE_UNAVAILABLE
+                            | ActivityManager.RECENT_INCLUDE_PROFILES,
+                            UserHandle.CURRENT.getIdentifier());
+            if (recentTasks != null && recentTasks.size() > 2) {
+                ActivityManager.RecentTaskInfo recentInfo = recentTasks.get(1);
+                am.moveTaskToFront(recentInfo.persistentId, ActivityManager.MOVE_TASK_NO_USER_ACTION, animations.toBundle());
+            }
         }
     }
 
