@@ -209,4 +209,9 @@
   <java-symbol type="integer" name="config_LTE_antenna_bar_quantity_metric" />
   <java-symbol type="integer" name="config_LTE_RSRP_threshold_type" />
 
+  <!-- Keypress Boost -->
+  <java-symbol type="bool" name="config_enableKeypressBoost" />
+  <java-symbol type="array" name="keypressboost_strong_param_value" />
+  <java-symbol type="array" name="keypressboost_weak_param_value" /> 
+
 </resources>
