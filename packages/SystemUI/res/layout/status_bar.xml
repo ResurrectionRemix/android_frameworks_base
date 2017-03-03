@@ -200,6 +200,7 @@
         android:layout="@layout/status_bar_ticker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         />
 
     <ViewStub
