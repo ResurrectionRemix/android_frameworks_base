@@ -187,7 +187,20 @@
   <string name="message_keep_one_launcher">Nên giữ ít nhất một hoạt động trang chủ!</string>
   <string name="tm_clear_task">XÓA</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Mở %s sau khi đóng các mục gần đây</string>
+  <string name="toast_recents_cancel_queued_app">Đã hủy mở ứng dụng</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Mở khóa điện thoại của bạn để xem danh sách gần đây</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Buộc dừng?</string>
+  <string name="force_stop_dlg_text">Nếu bạn buộc dừng một ứng dụng, ứng dụng đó có thể hoạt động sai.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Hủy</string>
+  <string name="kill">Tắt ứng dụng</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Lỗi</string>
+  <string name="omnijaws_service_unkown">Không có dữ liệu thời tiết</string>
+  <string name="omnijaws_detail_header">Thời tiết</string>
+  <string name="omnijaws_label_default">Thời tiết</string>
+  <string name="omnijaws_current_text">Hiện tại</string>
 </resources>

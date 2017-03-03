@@ -47,7 +47,7 @@
   <string name="singlehandmode_click_hint_message">Koppintson a képernyőn kívülre a mini képernyőnézetből való kilépéshez</string>
   <string name="singlehandmode_slide_hint_message">Húzza végig ujját a navigációs sávon a normál és a mini képernyőnézetek közötti váltáshoz</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_resetBatteryStats">akkumulátor használati statisztika törlése</string>
+  <string name="permlab_resetBatteryStats">akkumulátorhasználati statisztika törlése</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Lehetővé teszi az alkalmazás számára, hogy törölhesse az akkumulátor használati adatokat.</string>
 </resources>
