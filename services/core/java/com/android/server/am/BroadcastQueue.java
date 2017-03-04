@@ -1335,12 +1335,7 @@ public final class BroadcastQueue {
                     // from a client, so throwing an exception out from here
                     // will crash the entire system instead of just whoever
                     // sent the broadcast.
-                    logBroadcastReceiverDiscardLocked(r);
-                    finishReceiverLocked(r, r.resultCode, r.resultData,
-                            r.resultExtras, r.resultAbort, false);
-                    scheduleBroadcastsLocked();
-                    // We need to reset the state if we failed to start the receiver.
-                    r.state = BroadcastRecord.IDLE;
+                    resetBroadcastStateAndContinueDelivery(r);
                     return;
                 }
 
@@ -1352,6 +1347,11 @@ public final class BroadcastQueue {
             if (DEBUG_BROADCAST)  Slog.v(TAG_BROADCAST,
                     "Need to start app ["
                     + mQueueName + "] " + targetProcess + " for broadcast " + r);
+            // skip send broadcast to the receiver whoes user has not started.
+            if (!isUserOfReceiverStarted(info)) {
+                resetBroadcastStateAndContinueDelivery(r);
+                return;
+            }
             if ((r.curApp=mService.startProcessLocked(targetProcess,
                     info.activityInfo.applicationInfo, true,
                     r.intent.getFlags() | Intent.FLAG_FROM_BACKGROUND,
@@ -1364,17 +1364,33 @@ public final class BroadcastQueue {
                         + info.activityInfo.applicationInfo.packageName + "/"
                         + info.activityInfo.applicationInfo.uid + " for broadcast "
                         + r.intent + ": process is bad");
-                logBroadcastReceiverDiscardLocked(r);
-                finishReceiverLocked(r, r.resultCode, r.resultData,
-                        r.resultExtras, r.resultAbort, false);
-                scheduleBroadcastsLocked();
-                r.state = BroadcastRecord.IDLE;
+                resetBroadcastStateAndContinueDelivery(r);
                 return;
             }
 
             mPendingBroadcast = r;
             mPendingBroadcastRecvIndex = recIdx;
         }
+    }
+
+    private final void resetBroadcastStateAndContinueDelivery(BroadcastRecord r) {
+        logBroadcastReceiverDiscardLocked(r);
+        finishReceiverLocked(r, r.resultCode, r.resultData,
+                r.resultExtras, r.resultAbort, false);
+        scheduleBroadcastsLocked();
+        // We need to reset the state if we failed to start or skip the receiver
+        r.state = BroadcastRecord.IDLE;
+    }
+
+    private final boolean isUserOfReceiverStarted(ResolveInfo info) {
+        // the process has not start yet, do not concern the isolated uid
+        final int userId = UserHandle.getUserId(info.activityInfo.applicationInfo.uid);
+        if (mService.mUserController.hasStartedUserState(userId)) {
+            return true;
+        }
+        Slog.w(TAG, "The user[" + userId + "] of receiver:"
+                + info + " is not started, skip it !");
+        return false;
     }
 
     final void setBroadcastTimeoutLocked(long timeoutTime) {
