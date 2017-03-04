@@ -190,6 +190,7 @@
   <string name="toast_recents_queue_app">Spustiť %s po zatvorení nedávnych</string>
   <string name="toast_recents_cancel_queued_app">Zrušiť spúšťanie aplikácií</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Odomknúť zariadenie pre zobrazenie nedávných aplikácií</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Vynútiť zastavenie?</string>
   <string name="force_stop_dlg_text">Ak vynútite zastavenie aplikácie, môže sa správať zvláštne.</string>

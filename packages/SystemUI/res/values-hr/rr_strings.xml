@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">Vrijeme</string>
   <string name="omnijaws_label_default">Vrijeme</string>
   <string name="omnijaws_current_text">Sada</string>
+  <string name="omnijaws_package_not_available">OmniJaws nije dostupan</string>
 </resources>

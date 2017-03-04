@@ -193,5 +193,15 @@
   <string name="slim_recent_keyguard">Déverrouillez votre appareil pour afficher les applications récentes</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Forcer l\'arrêt ?</string>
+  <string name="force_stop_dlg_text">Forcer l\'arrêt d\'une application peut provoquer son dysfonctionnement.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Annuler</string>
+  <string name="kill">Arrêter l’application</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Erreur</string>
+  <string name="omnijaws_service_unkown">Aucune donnée Météo disponible</string>
+  <string name="omnijaws_detail_header">Météo</string>
+  <string name="omnijaws_label_default">Météo</string>
+  <string name="omnijaws_current_text">Actuellement</string>
+  <string name="omnijaws_package_not_available">OmniJaws non disponible</string>
 </resources>

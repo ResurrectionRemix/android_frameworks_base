@@ -74,8 +74,8 @@
   <string name="accessibility_quick_settings_sync_on">Sincronização ativada</string>
   <string name="accessibility_quick_settings_sync_changed_off">A sincronização foi desativada</string>
   <string name="accessibility_quick_settings_sync_changed_on">A sincronização foi ativada</string>
-  <string name="quick_settings_expanded_desktop_label">Ambiente de trabalho expandido</string>
-  <string name="quick_settings_expanded_desktop">Expandido</string>
+  <string name="quick_settings_expanded_desktop_label">Área de trabalho expandida</string>
+  <string name="quick_settings_expanded_desktop">Expandida</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
   <string name="quick_settings_reboot_label">Reiniciar</string>
   <string name="quick_settings_reboot_recovery_label">Recuperação</string>
@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">Meteorologia</string>
   <string name="omnijaws_label_default">Meteorologia</string>
   <string name="omnijaws_current_text">Agora</string>
+  <string name="omnijaws_package_not_available">OmniJaws não disponível</string>
 </resources>

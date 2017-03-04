@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">Погода</string>
   <string name="omnijaws_label_default">Погода</string>
   <string name="omnijaws_current_text">Сейчас</string>
+  <string name="omnijaws_package_not_available">OmniJaws недоступен</string>
 </resources>

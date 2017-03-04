@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">Wetter</string>
   <string name="omnijaws_label_default">Wetter</string>
   <string name="omnijaws_current_text">Jetzt</string>
+  <string name="omnijaws_package_not_available">OmniJaws nicht verfügbar</string>
 </resources>

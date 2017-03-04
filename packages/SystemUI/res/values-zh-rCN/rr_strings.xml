@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">天气</string>
   <string name="omnijaws_label_default">天气</string>
   <string name="omnijaws_current_text">当前</string>
+  <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
 </resources>

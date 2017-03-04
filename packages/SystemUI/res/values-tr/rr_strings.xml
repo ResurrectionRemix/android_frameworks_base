@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">Hava durumu</string>
   <string name="omnijaws_label_default">Hava durumu</string>
   <string name="omnijaws_current_text">Şimdi</string>
+  <string name="omnijaws_package_not_available">OmniJaws mevcut değil</string>
 </resources>
