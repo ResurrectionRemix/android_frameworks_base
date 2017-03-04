@@ -136,4 +136,6 @@
     <!-- Used by selector -->
     <color name="card_pressed">#7e3c3c3c</color>
 
+    <!-- Fonts used in the MediaQueue -->
+    <color name="notification_media_queue_text">#7c7c7c</color>
 </resources>

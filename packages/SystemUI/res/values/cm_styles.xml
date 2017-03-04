@@ -20,7 +20,7 @@
     <style name="TextAppearance.MediaQueue">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">roboto-regular</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/notification_media_queue_text</item>
     </style>
     <style name="TextAppearance.MediaQueue.Title">
         <item name="android:alpha">.87</item>
