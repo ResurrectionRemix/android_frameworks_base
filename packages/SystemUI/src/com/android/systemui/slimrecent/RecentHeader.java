@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.TypedValue;
@@ -131,6 +132,8 @@ public class RecentHeader extends CardHeader {
                 Settings.System.RECENT_CARD_TEXT_COLOR,
                 0x00ffffff, UserHandle.USER_CURRENT);
         holder.textView.setText(mLabel);
+        Typeface font = Typeface.create("sans-serif-condensed", Typeface.BOLD);
+        holder.textView.setTypeface(font);
         if (textColor == 0x00ffffff) {
             textColor = getDefaultTextColor();
         }
