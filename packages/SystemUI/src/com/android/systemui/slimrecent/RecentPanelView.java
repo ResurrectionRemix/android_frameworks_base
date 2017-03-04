@@ -685,7 +685,7 @@ public class RecentPanelView {
      */
     private class CardLoader extends AsyncTask<Void, Void, Boolean> {
 
-        private int mOrigPri;
+        //private int mOrigPri;
         private int mCounter;
 
         public CardLoader() {
@@ -695,8 +695,8 @@ public class RecentPanelView {
         protected Boolean doInBackground(Void... params) {
             // Save current thread priority and set it during the loading
             // to background priority.
-            mOrigPri = Process.getThreadPriority(Process.myTid());
-            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            //mOrigPri = Process.getThreadPriority(Process.myTid());
+            Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND);
 
             final int oldSize = mCards.size();
             mCounter = 0;
@@ -898,7 +898,7 @@ public class RecentPanelView {
             }
 
             // Restore original thread priority.
-            Process.setThreadPriority(mOrigPri);
+            //Process.setThreadPriority(mOrigPri);
 
             // Set correct view visibilitys
             setVisibility();
