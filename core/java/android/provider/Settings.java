@@ -5671,11 +5671,18 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
 
-	    /**
+        /**
          * show the membar in slim recents
          *  @hide
          */
         public static final String SLIM_RECENTS_MEM_DISPLAY = "slim_recents_mem_display";
+
+        /**
+         * Use the membar in slim recents as clear all button on longclick
+         *  @hide
+         */
+        public static final String SLIM_RECENTS_MEM_DISPLAY_LONG_CLICK_CLEAR =
+                "slim_recents_mem_display_long_click_clear";
 
         /**
          * Unlock keystore with fingerprint after reboot
