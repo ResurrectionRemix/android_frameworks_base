@@ -187,7 +187,21 @@
   <string name="message_keep_one_launcher">Moet ten minste één launcher behouden!</string>
   <string name="tm_clear_task">WISSEN</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Start %s na het sluiten van recenten</string>
+  <string name="toast_recents_cancel_queued_app">Opstarten van app geannuleerd</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Ontgrendel uw apparaat om recente te bekijken</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Gedwongen stoppen?</string>
+  <string name="force_stop_dlg_text">Als je een app gedwongen stopt, kan deze onverwacht gedrag vertonen.</string>
+  <string name="dlg_ok">Ok</string>
+  <string name="dlg_cancel">Annuleer</string>
+  <string name="kill">App Beëindigen</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Foutmelding</string>
+  <string name="omnijaws_service_unkown">Geen weergegevens</string>
+  <string name="omnijaws_detail_header">Weer</string>
+  <string name="omnijaws_label_default">Weer</string>
+  <string name="omnijaws_current_text">Nu</string>
+  <string name="omnijaws_package_not_available">OmniJaws niet beschikbaar</string>
 </resources>

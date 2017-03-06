@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">Cuaca</string>
   <string name="omnijaws_label_default">Cuaca</string>
   <string name="omnijaws_current_text">Sekarang</string>
+  <string name="omnijaws_package_not_available">OmniJaws tidak tersedia</string>
 </resources>

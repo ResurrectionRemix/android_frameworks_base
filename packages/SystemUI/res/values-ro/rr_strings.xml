@@ -187,7 +187,18 @@
   <string name="message_keep_one_launcher">Trebuie să păstraţi cel putin o activitate!</string>
   <string name="tm_clear_task">Curăţat</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Lansare %s după închiderea recente</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Deblocați aparatul pentru a vizualiza recente</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Oprire forțată?</string>
+  <string name="force_stop_dlg_text">Dacă forţaţi oprirea unei aplicații, aceasta se poate comporta necorespunzător.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Renunță</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Eroare</string>
+  <string name="omnijaws_detail_header">Meteo</string>
+  <string name="omnijaws_label_default">Meteo</string>
+  <string name="omnijaws_current_text">Acum</string>
+  <string name="omnijaws_package_not_available">OmniJaws nu este disponibil</string>
 </resources>

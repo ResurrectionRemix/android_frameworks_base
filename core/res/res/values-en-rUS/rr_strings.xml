@@ -44,7 +44,6 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB Inactive</string>
   <string name="adb_active_custom_tile_not_connected">Inactive</string>
-  <string name="singlehandmode_click_hint_message">Touch outside the screen to exit mini screen view</string>
   <string name="singlehandmode_slide_hint_message">Slide your finger across the navigation bar to switch between the standard and mini screen views</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">Reset battery statistics</string>

@@ -44,7 +44,6 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB không hoạt động</string>
   <string name="adb_active_custom_tile_not_connected">không hoạt động</string>
-  <string name="singlehandmode_click_hint_message">Chạm vào bên ngoài màn hình để thoát khỏi chế độ xem màn hình thu nhỏ</string>
   <string name="singlehandmode_slide_hint_message">Trượt ngón tay của bạn trên thanh điều hướng để chuyển đổi giữa các chế độ xem màn hình tiêu chuẩn và thu nhỏ</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">đặt lại thống kê pin</string>

@@ -187,7 +187,22 @@
   <string name="message_keep_one_launcher">Повинен бути як мінімум один домашній екран!</string>
   <string name="tm_clear_task">Очистити</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Запустити %s після закриття нещодавніх</string>
+  <string name="toast_recents_cancel_queued_app">Скасовано запуск додатка</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Розблокуйте пристрій для перегляду нещодавніх додатків</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Примусово зупинити?</string>
+  <string name="force_stop_dlg_text">Якщо Ви примусово закриєте застосунок,
+\nце вплине на його роботу.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Скасувати</string>
+  <string name="kill">Завершити додаток</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Помилка</string>
+  <string name="omnijaws_service_unkown">Немає даних про погоду</string>
+  <string name="omnijaws_detail_header">Погода</string>
+  <string name="omnijaws_label_default">Погода</string>
+  <string name="omnijaws_current_text">Зараз</string>
+  <string name="omnijaws_package_not_available">OmniJaws недоступний</string>
 </resources>

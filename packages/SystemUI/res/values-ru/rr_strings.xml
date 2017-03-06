@@ -187,10 +187,10 @@
   <string name="message_keep_one_launcher">Должен быть как минимум один домашний экран!</string>
   <string name="tm_clear_task">Очистить</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Запустить %s после закрытия недавних приложений</string>
+  <string name="toast_recents_queue_app">Запустить %s после закрытия меню недавних приложений</string>
   <string name="toast_recents_cancel_queued_app">Запуск приложения отменен</string>
   <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Разблокируйте устройство для просмотра недавних приложений</string>
+  <string name="slim_recent_keyguard">Разблокируйте устройство для просмотра меню недавних приложений</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Остановить принудительно?</string>
   <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>

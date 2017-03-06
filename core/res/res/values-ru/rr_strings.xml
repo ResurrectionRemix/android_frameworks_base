@@ -44,10 +44,9 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB неактивно</string>
   <string name="adb_active_custom_tile_not_connected">неактивно</string>
-  <string name="singlehandmode_click_hint_message">Нажмите за пределами экрана, чтобы выйти из просмотра мини-изображения</string>
   <string name="singlehandmode_slide_hint_message">Проведите пальцем по панели навигации для переключения между стандартным и мини экраном</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_resetBatteryStats">cбросить статистику батареи</string>
+  <string name="permlab_resetBatteryStats">Cбросить статистику батареи</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_resetBatteryStats">Позволяет приложению очищать текущие данные об использовании батареи.</string>
+  <string name="permdesc_resetBatteryStats">Приложение сможет очищать данные об использовании батареи устройства.</string>
 </resources>

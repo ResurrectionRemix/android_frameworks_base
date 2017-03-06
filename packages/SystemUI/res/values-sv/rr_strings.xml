@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">Väder</string>
   <string name="omnijaws_label_default">Väder</string>
   <string name="omnijaws_current_text">Nu</string>
+  <string name="omnijaws_package_not_available">OmniJaws är inte tillgänglig.</string>
 </resources>

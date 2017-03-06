@@ -44,8 +44,9 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB неактивний</string>
   <string name="adb_active_custom_tile_not_connected">неактивний</string>
-  <string name="singlehandmode_click_hint_message">Торкніться поза межами екрана, щоб вийти з міністорінкового перегляду</string>
   <string name="singlehandmode_slide_hint_message">Проведіть пальцем по панелі навігації для переключення між стандартним та зменшеним екраном</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">скинути статистику акумулятора</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Дозволити програмі cтирати дані про використання батареї пристрою.</string>
 </resources>

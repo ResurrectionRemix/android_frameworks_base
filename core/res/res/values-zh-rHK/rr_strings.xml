@@ -44,7 +44,6 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB處於非活動狀態</string>
   <string name="adb_active_custom_tile_not_connected">未啟用</string>
-  <string name="singlehandmode_click_hint_message">觸控螢幕外部可退出迷你螢幕檢視</string>
   <string name="singlehandmode_slide_hint_message">在導覽列上滑動手指，在標準和迷你螢幕檢視之間切換</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">重設電池統計資料</string>
