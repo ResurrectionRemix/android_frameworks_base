@@ -560,6 +560,7 @@ public abstract class QSTile<TState extends State> {
         public String minimalAccessibilityClassName;
         public String expandedAccessibilityClassName;
 		public boolean enabled = true;
+        public boolean value;
 
         public boolean copyTo(State other) {
             if (other == null) throw new IllegalArgumentException();
@@ -568,6 +569,7 @@ public abstract class QSTile<TState extends State> {
 					|| !Objects.equals(other.icon, icon)
 					|| !Objects.equals(other.enabled, enabled)
                     || !Objects.equals(other.label, label)
+                    || !Objects.equals(other.value, value)
                     || !Objects.equals(other.contentDescription, contentDescription)
                     || !Objects.equals(other.autoMirrorDrawable, autoMirrorDrawable)
                     || !Objects.equals(other.dualLabelContentDescription,
@@ -584,6 +586,7 @@ public abstract class QSTile<TState extends State> {
 			other.enabled = enabled;
             other.icon = icon;
             other.label = label;
+            other.value = value;
             other.contentDescription = contentDescription;
             other.dualLabelContentDescription = dualLabelContentDescription;
             other.minimalContentDescription = minimalContentDescription;
@@ -610,6 +613,7 @@ public abstract class QSTile<TState extends State> {
             final StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append('[');
 			sb.append("visible=").append(visible);
 			sb.append(",enabled=").append(enabled);
+			sb.append(",value=").append(value);
             sb.append(",icon=").append(icon);
             sb.append(",label=").append(label);
             sb.append(",contentDescription=").append(contentDescription);

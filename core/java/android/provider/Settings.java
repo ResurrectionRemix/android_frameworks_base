@@ -8463,6 +8463,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String QS_BATTERY_EASY_TOGGLE = "qs_battery_easy_toggle";
 
         /**
+         * Enable single click to turn Location services on or off.
+         * @hide
+         */
+        public static final String QS_LOCATION_EASY_TOGGLE = "qs_location_easy_toggle";
+
+        /**
          * Whether the device should doze if configured.
          * @hide
          */
