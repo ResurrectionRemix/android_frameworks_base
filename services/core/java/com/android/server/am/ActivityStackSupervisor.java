@@ -3173,6 +3173,9 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
         applySleepTokensLocked(false /* applyToStacks */);
 
         checkReadyForSleepLocked(true /* allowDelay */);
+        if (mGoingToSleep.isHeld()) {
+            mGoingToSleep.release();
+        }
     }
 
     void prepareForShutdownLocked() {
@@ -3283,9 +3286,6 @@ public class ActivityStackSupervisor extends ConfigurationContainer implements D
 
         removeSleepTimeouts();
 
-        if (mGoingToSleep.isHeld()) {
-            mGoingToSleep.release();
-        }
         if (mService.mShuttingDown) {
             mService.notifyAll();
         }
