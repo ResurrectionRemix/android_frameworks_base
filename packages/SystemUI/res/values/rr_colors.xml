@@ -143,4 +143,8 @@
     <!-- OmniJaws detailed view temperature text -->
     <color name="omni_jaws_detailed_temperature_color">@android:color/white</color>
 
+    <!-- Screenshot action colors -->
+    <color name="screenshot_flash_color">@android:color/white</color>
+    <color name="screenshot_background_color">@android:color/black</color>
+
 </resources>
