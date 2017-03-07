@@ -16,8 +16,11 @@
 
     <!-- Navigation button ripple color -->
     <color name="navbutton_ripple_color">#FFFFFFFF</color>
-
     <!-- Navigation button ripple color for LightNavigationBar -->
     <color name="navbutton_ripple_color_dark">#ff000000</color>
+
+    <!-- Screenshot action colors -->
+    <color name="screenshot_flash_color">@android:color/white</color>
+    <color name="screenshot_background_color">@android:color/black</color>
 
 </resources>
