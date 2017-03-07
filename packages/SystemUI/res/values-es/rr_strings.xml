@@ -203,4 +203,5 @@
   <string name="omnijaws_detail_header">El Tiempo</string>
   <string name="omnijaws_label_default">El Tiempo</string>
   <string name="omnijaws_current_text">Ahora</string>
+  <string name="omnijaws_package_not_available">OmniJaws no disponible</string>
 </resources>
