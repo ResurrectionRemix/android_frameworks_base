@@ -1274,6 +1274,10 @@ public abstract class BaseStatusBar extends SystemUI implements
                 killButton.setVisibility(killButtonEnabled ? View.VISIBLE : View.GONE);
                 killButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        if (mKeyguardManager.inKeyguardRestrictedInputMode()) {
+                            // Don't do anything
+                            return;
+                        }
                         final SystemUIDialog killDialog = new SystemUIDialog(mContext);
                         killDialog.setTitle(mContext.getText(R.string.force_stop_dlg_title));
                         killDialog.setMessage(mContext.getText(R.string.force_stop_dlg_text));
