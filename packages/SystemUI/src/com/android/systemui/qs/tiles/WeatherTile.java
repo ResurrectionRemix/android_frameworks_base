@@ -26,6 +26,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.drawable.BitmapDrawable;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.provider.Settings;
 import android.util.Log;
@@ -63,6 +64,10 @@ public class WeatherTile extends QSTile<QSTile.BooleanState> implements OmniJaws
     private DetailedWeatherView mDetailedView;
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
+
+    private static final String[] ALTERNATIVE_WEATHER_APPS = {
+            "cz.martykan.forecastie",
+    };
 
     public WeatherTile(Host host) {
         super(host);
@@ -147,6 +152,13 @@ public class WeatherTile extends QSTile<QSTile.BooleanState> implements OmniJaws
                     "com.google.android.apps.gsa.velour.DynamicActivityTrampoline"));
             return intent;
         } else {
+            PackageManager pm = mContext.getPackageManager();
+            for (String app: ALTERNATIVE_WEATHER_APPS) {
+                Intent intent = pm.getLaunchIntentForPackage(app);
+                if (intent != null) {
+                    return intent;
+                }
+            }
             return mWeatherClient.getSettingsIntent();
         }
     }
