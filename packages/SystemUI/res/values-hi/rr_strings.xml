@@ -186,5 +186,8 @@
   <!-- Slim recents app sidebar queue app toast -->
   <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
+  <string name="dlg_ok">ओके</string>
+  <string name="dlg_cancel">रद्द करें</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_package_not_available">OmniJaws उपलब्ध नहीं है</string>
 </resources>

@@ -52,7 +52,7 @@
   <string name="onthego_notif_error">Nie można uruchomić trybu \"W ruchu\"</string>
   <string name="onthego_notif_restart">Uruchom ponownie tryb \"W ruchu\"</string>
   <string name="onthego_notif_camera_changed">Zmieniono tryb aparatu</string>
-  <string name="onthego_transparency">Przeźroczystość</string>
+  <string name="onthego_transparency">Przezroczystość</string>
   <string name="onthego_front_camera">Użyj przedniej kamery</string>
   <string name="onthego_service_toggle">Automatycznie restartuj usługę</string>
   <!-- Sound QS Tile -->
@@ -78,7 +78,7 @@
   <string name="quick_settings_expanded_desktop">Rozszerzony</string>
   <string name="quick_settings_expanded_desktop_off">Normalne</string>
   <string name="quick_settings_reboot_label">Uruchom ponownie</string>
-  <string name="quick_settings_reboot_recovery_label">Restart do recovery</string>
+  <string name="quick_settings_reboot_recovery_label">Tryb recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">Tethering USB wyłączony</string>
   <string name="accessibility_quick_settings_usb_tether_on">Tethering USB włączony</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Tethering USB wyłączony</string>
@@ -91,7 +91,7 @@
   <string name="rr_qs_tile">Konfiguracja</string>
   <string name="quick_settings_caffeine_label">Kofeina</string>
   <string name="accessibility_quick_settings_caffeine_off">Kofeina wył.</string>
-  <string name="accessibility_quick_settings_caffeine_on">Kofeina wł</string>
+  <string name="accessibility_quick_settings_caffeine_on">Kofeina wł.</string>
   <string name="qs_app_picker_title">Wybór aplikacji</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE włączone </string>
@@ -104,14 +104,14 @@
   <string name="quick_settings_navigation_bar">Pasek nawigacji</string>
   <string name="quick_settings_smartbar">Inteligentny pasek</string>
   <string name="quick_settings_smartbar_off">Inteligentny pasek wyłączony</string>
-  <string name="quick_settings_fling">Gesty</string>
-  <string name="quick_settings_fling_off">Fling wył</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Fling off</string>
   <string name="quick_settings_appcirclebar_title">Kołowy pasek aplikacji</string>
   <string name="quick_settings_appcirclebar_on">Kołowy pasek aplikacji włączony</string>
   <string name="quick_settings_appcirclebar_off">Kołowy pasek aplikacji wyłączony</string>
   <string name="quick_settings_gesture_anywhere_label">Gest gdziekolwiek</string>
   <string name="quick_settings_gesture_anywhere_on">Gesty włączone</string>
-  <string name="quick_settings_gesture_anywhere_off">Gesty wyłączne</string>
+  <string name="quick_settings_gesture_anywhere_off">Gesty wyłączone</string>
   <string name="quick_settings_appsidebar_title">Boczny pasek aplikacji</string>
   <string name="quick_settings_appsidebar_on">Boczny pasek aplikacji włączony</string>
   <string name="quick_settings_appsidebar_off">Boczny pasek aplikacji wyłączony</string>
@@ -125,7 +125,7 @@
   <string name="accessibility_quick_settings_pulse_changed_on">Impuls włączony</string>
   <string name="quick_settings_pulse_label">Wizualizacja na pasku nawigacji</string>
   <string name="quick_settings_pie">Kołowy pasek nawigacji</string>
-  <string name="quick_settings_ambient_display_label">Ambients display</string>
+  <string name="quick_settings_ambient_display_label">Ambient display</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ambient display wył.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Aktywny ekran włączony</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Ekran dostosowany do otoczenia wyłączony</string>
