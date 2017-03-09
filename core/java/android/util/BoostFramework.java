@@ -65,41 +65,37 @@ public class BoostFramework {
 
 /** @hide */
     public BoostFramework() {
+        synchronized(BoostFramework.class) {
+            if (mIsLoaded == false) {
+                try {
+                    Class perfClass;
+                    PathClassLoader perfClassLoader;
 
-        if (mIsLoaded == false) {
-            try {
-                Class perfClass;
-                PathClassLoader perfClassLoader;
+                    perfClassLoader = new PathClassLoader(PERFORMANCE_JAR,
+                                      ClassLoader.getSystemClassLoader());
+                    perfClass = perfClassLoader.loadClass(PERFORMANCE_CLASS);
+                    mConstructor = perfClass.getConstructor();
 
-	        perfClassLoader = new PathClassLoader(PERFORMANCE_JAR,
-                                  ClassLoader.getSystemClassLoader());
-                perfClass = perfClassLoader.loadClass(PERFORMANCE_CLASS);
-                mConstructor = perfClass.getConstructor();
+                    Class[] argClasses = new Class[] {int.class, int[].class};
+                    mAcquireFunc =  perfClass.getDeclaredMethod("perfLockAcquire", argClasses);
 
-                Class[] argClasses = new Class[] {int.class, int[].class};
-                mAcquireFunc =  perfClass.getDeclaredMethod("perfLockAcquire", argClasses);
-                Log.v(TAG,"mAcquireFunc method = " + mAcquireFunc);
+                    argClasses = new Class[] {};
+                    mReleaseFunc =  perfClass.getDeclaredMethod("perfLockRelease", argClasses);
 
-                argClasses = new Class[] {};
-                mReleaseFunc =  perfClass.getDeclaredMethod("perfLockRelease", argClasses);
-                Log.v(TAG,"mReleaseFunc method = " + mReleaseFunc);
+                    argClasses = new Class[] {MotionEvent.class, DisplayMetrics.class, int.class, int[].class};
+                    mAcquireTouchFunc =  perfClass.getDeclaredMethod("perfLockAcquireTouch", argClasses);
 
-                argClasses = new Class[] {MotionEvent.class, DisplayMetrics.class, int.class, int[].class};
-                mAcquireTouchFunc =  perfClass.getDeclaredMethod("perfLockAcquireTouch", argClasses);
-                Log.v(TAG,"mAcquireTouchFunc method = " + mAcquireTouchFunc);
+                    argClasses = new Class[] {int.class, String.class};
+                    mIOPStart =  perfClass.getDeclaredMethod("perfIOPrefetchStart", argClasses);
 
-                argClasses = new Class[] {int.class, String.class};
-                mIOPStart =  perfClass.getDeclaredMethod("perfIOPrefetchStart", argClasses);
-                Log.v(TAG,"mIOPStart method = " + mIOPStart);
+                    argClasses = new Class[] {};
+                    mIOPStop =  perfClass.getDeclaredMethod("perfIOPrefetchStop", argClasses);
 
-                argClasses = new Class[] {};
-                mIOPStop =  perfClass.getDeclaredMethod("perfIOPrefetchStop", argClasses);
-                Log.v(TAG,"mIOPStop method = " + mIOPStop);
-
-                mIsLoaded = true;
-            }
-            catch(Exception e) {
-                Log.e(TAG,"BoostFramework() : Exception_1 = " + e);
+                    mIsLoaded = true;
+                }
+                catch(Exception e) {
+                    Log.e(TAG,"BoostFramework() : Exception_1 = " + e);
+                }
             }
         }
 
@@ -111,8 +107,6 @@ public class BoostFramework {
         catch(Exception e) {
             Log.e(TAG,"BoostFramework() : Exception_2 = " + e);
         }
-
-        Log.v(TAG,"BoostFramework() : mPerf = " + mPerf);
     }
 
 /** @hide */
