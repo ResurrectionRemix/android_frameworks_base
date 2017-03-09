@@ -67,6 +67,10 @@ static struct {
     bool setDamage = false;
 } EglExtensions;
 
+Frame::Frame()
+        : mWidth(0)
+        , mHeight(0) {}
+
 void Frame::map(const SkRect& in, EGLint* out) const {
     /* The rectangles are specified relative to the bottom-left of the surface
      * and the x and y components of each rectangle specify the bottom-left
