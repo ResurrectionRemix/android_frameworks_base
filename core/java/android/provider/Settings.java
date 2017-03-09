@@ -4566,8 +4566,11 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         /**
          * Status bar weather temperature
          * 0: Hide the temperature
-         * 1: Display the temperature with scale
-         * 2: Display the temperature without scale
+         * 1: Display the temperature with scale and image
+         * 2: Display the temperature without scale and with image
+         * 3: Display the temparature with scale and without image
+         * 4: Display the temperature without scale and without image
+         * 5: Display the temperature image
          * @hide
          */
         public static final String STATUS_BAR_SHOW_WEATHER_TEMP = "status_bar_show_weather_temp";
@@ -4597,6 +4600,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String STATUS_BAR_WEATHER_COLOR = "status_bar_weather_color";
+
 
         /*
          * Dyanamic Navbar Switch
