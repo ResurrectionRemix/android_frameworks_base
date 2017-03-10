@@ -573,12 +573,19 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             return true;
         }
 
+
+        private boolean isConfirmed() {
+            return Settings.System.getInt(mContext.getContentResolver(),
+                   Settings.System.CONFIRM_SHUTDOWN_SWITCH, 1) == 1;
+        }
+
         @Override
         public void onPress() {
             // shutdown by making sure radio and power are handled accordingly.
-            mWindowManagerFuncs.shutdown(true /* confirm */);
+            mWindowManagerFuncs.shutdown(isConfirmed() /* confirm */);
         }
     }
+
 
     private final class RestartAction extends SinglePressAction implements LongPressAction {
         private RestartAction() {

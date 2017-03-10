@@ -4946,6 +4946,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String VOLUME_DIALOG_STROKE_DASH_GAP = "volume_dialog_stroke_dash_gap";
 
         /**
+         * Switch to add confirmation to power Dialog
+         * @hide
+         */
+        public static final String CONFIRM_SHUTDOWN_SWITCH = "confirm_shutdown_switch";
+
+        /**
          * Transparent power menu and dialogs
          * @hide
          */
