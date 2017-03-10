@@ -21,13 +21,49 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         >
-    <TextView
-            android:id="@+id/no_notifications"
+    <RelativeLayout
+            android:id="@+id/empty_shade_view_content_layout"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:paddingTop="28dp"
-            android:gravity="top|center_horizontal"
-            android:textColor="#e6ffffff"
-            android:textSize="16sp"
-            android:text="@string/empty_shade_text"/>
+            android:layout_height="@dimen/empty_shade_view_height"
+            android:paddingStart="@dimen/empty_shade_view_content_padding_start_end"
+            android:paddingEnd="@dimen/empty_shade_view_content_padding_start_end">
+
+        <TextView
+                android:id="@+id/empty_shade_view_carrier_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:paddingTop="@dimen/empty_shade_view_content_padding_top_bottom"
+                android:paddingBottom="@dimen/empty_shade_view_content_padding_top_bottom"
+                android:gravity="top"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+
+        <TextView
+                android:id="@+id/empty_shade_view_wifi_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:paddingTop="@dimen/empty_shade_view_content_padding_top_bottom"
+                android:paddingBottom="@dimen/empty_shade_view_content_padding_top_bottom"
+                android:gravity="top"
+                android:textColor="#ffffff"
+                android:textSize="14sp"/>
+
+        <TextView
+                android:id="@+id/no_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:paddingTop="@dimen/empty_shade_view_content_padding_top_bottom"
+                android:paddingBottom="@dimen/empty_shade_view_content_padding_top_bottom"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:text="@string/empty_shade_text"/>
+    </RelativeLayout>
 </com.android.systemui.statusbar.EmptyShadeView>
