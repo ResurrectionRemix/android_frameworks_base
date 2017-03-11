@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
-** Copyright 2014-2016, SlimRoms Project
+** Copyright 2014-2017, SlimRoms Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@
 
         <include layout="@layout/slim_recents_membar" />
 
-        <com.android.cards.recyclerview.view.CardRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/recent_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,8 +47,7 @@
             android:cacheColorHint="@android:color/transparent"
             android:fitsSystemWindows="true"
             android:clipToPadding="false"
-            android:clipChildren="false"
-            card:list_card_layout_resourceID="@layout/recent_base_card" />
+            android:clipChildren="false" />
 
         <ImageView
             android:id="@+id/empty_recent"

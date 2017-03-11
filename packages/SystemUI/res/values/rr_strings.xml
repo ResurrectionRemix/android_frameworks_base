@@ -231,14 +231,14 @@
     <string name="message_keep_one_launcher">Should keep at least one home activity!</string>
     <string name="tm_clear_task">CLEAR</string>
 
+    <!-- Slim Recents -->
+    <string name="recents_multiwin_warning">A multiwindow session is already active.\nJust tap an app if you want to dock it now.</string>
+    <string name="recents_multiwin_nolastapp">You removed all recents, please choose an app from launcher or drawer.</string>
+    <string name="slim_recent_keyguard">Unlock your device to view recents</string>
+
     <!-- Slim recents app sidebar queue app toast -->
     <string name="toast_recents_queue_app">Launch %s after closing recents</string>
     <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
-
-    <!-- Sim recents on keyguard -->
-    <string name="slim_recent_keyguard">Unlock your device to view recents</string>
-    <string name="recents_multiwin_warning">A multiwindow session is already active.\nJust tap an app if you want to dock it now.</string>
-    <string name="recents_multiwin_nolastapp">You removed all recents, please choose an app from launcher or drawer.</string>
 
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Force stop?</string>
