@@ -501,7 +501,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 if (mShowSilentToggle) {
                     mItems.add(mSilentModeAction);
                 }
-            } else if (mEmergencyAffordanceManager.needsEmergencyAffordance() || GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
+            } else if (mEmergencyAffordanceManager.needsEmergencyAffordance() && GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
                 mItems.add(getEmergencyAction());
             } else if (GLOBAL_ACTION_KEY_USERS.equals(actionKey)) {
                 List<UserInfo> users = ((UserManager) mContext.getSystemService(
