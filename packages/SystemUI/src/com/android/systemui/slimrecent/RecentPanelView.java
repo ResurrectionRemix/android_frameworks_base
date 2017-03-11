@@ -178,6 +178,7 @@ public class RecentPanelView {
             this.expandListener = new ExpandableCardAdapter.ExpandListener() {
                 @Override
                 public void onExpanded(boolean expanded) {
+                    mController.onStartExpandAnimation();
                     final int oldState = task.getExpandedState();
                     int state;
                     if (expanded) {

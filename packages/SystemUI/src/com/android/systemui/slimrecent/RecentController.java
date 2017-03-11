@@ -50,6 +50,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -120,6 +121,8 @@ public class RecentController implements RecentPanelView.OnExitListener,
     private boolean mIsPreloaded;
 
     protected long mLastToggleTime;
+
+    private boolean mExpandAnimation = false;
 
     // The different views we need.
     private ViewGroup mParentView;
@@ -220,6 +223,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
         CacheMoreCardsLayoutManager llm = new CacheMoreCardsLayoutManager(context, mWindowManager);
         llm.setReverseLayout(true);
         cardRecyclerView.setLayoutManager(llm);
+        cardRecyclerView.setItemAnimator(mItemAnimator);
 
         mEmptyRecentView =
                 (ImageView) mRecentContainer.findViewById(R.id.empty_recent);
@@ -1274,6 +1278,23 @@ public class RecentController implements RecentPanelView.OnExitListener,
                 return true;
             }
             return false;
+        }
+    };
+
+    public void onStartExpandAnimation() {
+        mExpandAnimation = true;
+    }
+
+    private DefaultItemAnimator mItemAnimator = new DefaultItemAnimator() {
+        @Override
+        public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
+            // Similar to SimpleItemAnimator.setSupportsChangeAnimations(mExpandAnimation)
+            if (mExpandAnimation) {
+                mExpandAnimation = false;
+                return super.canReuseUpdatedViewHolder(viewHolder);
+            }
+            // Returning true means we don't support change animations here
+            return true;
         }
     };
 }
