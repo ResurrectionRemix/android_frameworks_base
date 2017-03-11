@@ -208,10 +208,9 @@ public class RecentPanelView {
                         int dockSide = WindowManagerProxy.getInstance().getDockSide();
                         if (dockSide != WindowManager.DOCKED_INVALID) {
                             try {
-                            // resize the docked stack to fullscreen to disable current multiwindow mode
+                                //resize the docked stack to fullscreen to disable current multiwindow mode
                                 ActivityManagerNative.getDefault().resizeStack(
-                                                    ActivityManager.StackId.DOCKED_STACK_ID,
-                                                    null, true, true, false, -1);
+                                                    ActivityManager.StackId.DOCKED_STACK_ID, null, true, true, false, -1);
                             } catch (RemoteException e) {}
                             wasDocked = true;
                         }
@@ -223,14 +222,12 @@ public class RecentPanelView {
                             public void run() {
                                 try {
                                     ActivityManagerNative.getDefault()
-                                            .startActivityFromRecents(task.persistentTaskId,
-                                             options.toBundle());
+                                            .startActivityFromRecents(task.persistentTaskId, options.toBundle());
                                     mController.openLastApptoBottom();
                                     clearOptions();
                                 } catch (RemoteException e) {}
                             }
-                        // if we disabled a running multiwindow mode, just wait a little bit before
-                        // docking the new apps
+                        //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
                         }, wasDocked ? 100 : 0);
                         return;
                     }
@@ -429,12 +426,10 @@ public class RecentPanelView {
                     try {
                         //resize the docked stack to fullscreen to disable current multiwindow mode
                         ActivityManagerNative.getDefault().resizeStack(
-                                            ActivityManager.StackId.DOCKED_STACK_ID,
-                                            null, true, true, false, -1);
+                                            ActivityManager.StackId.DOCKED_STACK_ID, null, true, true, false, -1);
                     } catch (RemoteException e) {}
                     wasDocked = true;
                 }
-
                 ActivityOptions options = ActivityOptions.makeBasic();
                 options.setDockCreateMode(0); //0 means dock app to top, 1 to bottom
                 options.setLaunchStackId(ActivityManager.StackId.DOCKED_STACK_ID);
@@ -442,19 +437,16 @@ public class RecentPanelView {
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
                         try {
+                            ActivityManagerNative.getDefault()
+                                    .startActivityFromRecents(taskid, options.toBundle());
                             card = (RecentCard) mCardAdapter.getCard(finalPos);
                             int newTaskid = card.task.persistentTaskId;
-                            ActivityManagerNative.getDefault()
-                                    .startActivityFromRecents((finalPos > initPos) ? taskid
-                                    : newTaskid, options.toBundle());
                             /*after we docked our main app, on the other side of the screen we
                             open the app we dragged the main app over*/
-                            mController.openOnDraggedApptoOtherSide((finalPos > initPos)
-                                    ? newTaskid : taskid);
+                            mController.openOnDraggedApptoOtherSide(newTaskid);
                         } catch (RemoteException e) {}
                     }
-                /*if we disabled a running multiwindow mode, just wait a little bit
-                before docking the new apps*/
+                //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
                 }, wasDocked ? 100 : 0);
             }
 
