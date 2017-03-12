@@ -20,10 +20,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-    android:drawableTop="@drawable/no_recents_rr"
+    android:drawableTop="@drawable/recents_empty"
     android:drawablePadding="25dp"
     android:textSize="16sp"
-    android:textColor="@color/system_accent_color"
+    android:textColor="#ffffffff"
     android:text="@string/recents_empty_message"
     android:fontFamily="sans-serif"
     android:visibility="gone" />
