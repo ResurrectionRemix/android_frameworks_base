@@ -38,6 +38,32 @@ public class ActionHelper {
 
     private static final String SYSTEMUI_METADATA_NAME = "com.android.systemui";
 
+    // get and set the lockcreen shortcut configs from provider and return propper arraylist objects
+    // @ActionConfig
+    public static ArrayList<ActionConfig> getLockscreenShortcutConfig(Context context) {
+        String config = Settings.System.getStringForUser(
+                    context.getContentResolver(),
+                    Settings.System.LOCKSCREEN_SHORTCUTS,
+                    UserHandle.USER_CURRENT);
+        if (config == null) {
+            config = "";
+        }
+
+        return (ConfigSplitHelper.getActionConfigValues(context, config, null, null, true));
+    }
+
+    public static void setLockscreenShortcutConfig(Context context,
+            ArrayList<ActionConfig> actionConfig, boolean reset) {
+        String config;
+        if (reset) {
+            config = "";
+        } else {
+            config = ConfigSplitHelper.setActionConfig(actionConfig, true);
+        }
+        Settings.System.putString(context.getContentResolver(),
+                    Settings.System.LOCKSCREEN_SHORTCUTS, config);
+    }
+
     public static ArrayList<ActionConfig> getRecentAppSidebarConfig(Context context) {
         return (ConfigSplitHelper.getActionConfigValues(context,
                 getRecentAppSidebarProvider(context), null, null, false));

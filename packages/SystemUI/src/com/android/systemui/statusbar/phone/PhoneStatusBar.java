@@ -802,6 +802,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENT_CARD_TEXT_COLOR), false, this,
                     UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.EMPTY_SHADE_VIEW_SHOW_CARRIER_NAME),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.EMPTY_SHADE_VIEW_SHOW_WIFI_NAME),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.EMPTY_SHADE_VIEW_TEXT_COLOR),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
         
@@ -869,6 +878,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.BATTERY_LARGE_TEXT))) {
                     UpdateSomeViews();
+           } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.EMPTY_SHADE_VIEW_SHOW_CARRIER_NAME))) {
+                UpdateEmptyShadeShowCarrierName();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.EMPTY_SHADE_VIEW_SHOW_WIFI_NAME))) {
+                UpdateEmptyShadeShowWifiName();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.EMPTY_SHADE_VIEW_TEXT_COLOR))) {
+                UpdateEmptyShadeTextColor();
            }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.CLEAR_RECENTS_STYLE))
                     || uri.equals(Settings.System.getUriFor(
@@ -948,6 +966,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     UserHandle.USER_CURRENT);
 
             updateTempView();
+
+            UpdateEmptyShadeShowCarrierName();
+            UpdateEmptyShadeShowWifiName();
+            UpdateEmptyShadeTextColor();
             
             boolean mShow4G = Settings.System.getIntForUser(resolver,
                     Settings.System.SHOW_FOURG, 0, UserHandle.USER_CURRENT) == 1;
@@ -1663,6 +1685,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         });
         mNetworkController = new NetworkControllerImpl(mContext, mHandlerThread.getLooper());
         mNetworkController.setUserSetupComplete(mUserSetup);
+        mEmptyShadeView.setNetworkController(mNetworkController);
         mHotspotController = new HotspotControllerImpl(mContext);
         mBluetoothController = new BluetoothControllerImpl(mContext, mHandlerThread.getLooper());
         mSecurityController = new SecurityControllerImpl(mContext);
@@ -2857,7 +2880,32 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         boolean showEmptyShade =
                 mState != StatusBarState.KEYGUARD &&
                         mNotificationData.getActiveNotifications().size() == 0;
+        mEmptyShadeView.setListening(showEmptyShade);
         mNotificationPanel.setShadeEmpty(showEmptyShade);
+    }
+
+    private void UpdateEmptyShadeShowCarrierName() {
+        final boolean show = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.EMPTY_SHADE_VIEW_SHOW_CARRIER_NAME, 0) == 1;
+        if (mEmptyShadeView != null) {
+            mEmptyShadeView.setShowCarrierName(show);
+        }
+    }
+
+    private void UpdateEmptyShadeShowWifiName() {
+        final boolean show = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.EMPTY_SHADE_VIEW_SHOW_WIFI_NAME, 0) == 1;
+        if (mEmptyShadeView != null) {
+            mEmptyShadeView.setShowWifiName(show);
+        }
+    }
+
+    private void UpdateEmptyShadeTextColor() {
+        int color = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.EMPTY_SHADE_VIEW_TEXT_COLOR, 0xffffffff);
+        if (mEmptyShadeView != null) {
+            mEmptyShadeView.updateTextColor(color);
+        }
     }
 
     private void updateSpeedbump() {

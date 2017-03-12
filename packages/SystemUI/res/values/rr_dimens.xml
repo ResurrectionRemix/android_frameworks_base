@@ -102,4 +102,18 @@
     <dimen name="recent_app_sidebar_item_padding">2dp</dimen>
     <dimen name="recent_app_sidebar_item_title_text_size">11sp</dimen>
 
+    <!-- Empty shade view -->
+
+    <!-- Height of the empty shade view -->
+    <dimen name="empty_shade_view_height">64dp</dimen>
+
+    <!-- Start and end padding of the content  -->
+    <dimen name="empty_shade_view_content_padding_start_end">16dp</dimen>
+
+    <!-- Top and bottom padding of the content  -->
+    <dimen name="empty_shade_view_content_padding_top_bottom">8dp</dimen>
+
+    <!-- Top padding of the no notifications text when no other content is visible  -->
+    <dimen name="empty_shade_view_no_notifications_padding_top">8dp</dimen>
+
 </resources>
