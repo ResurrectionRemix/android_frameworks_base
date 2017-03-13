@@ -31,10 +31,10 @@ import com.android.systemui.R;
 import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.omni.OmniJawsClient;
 
-public class StatusBarWeatherImage extends ImageView implements
+public class StatusBarWeatherImageLeft extends ImageView implements
         OmniJawsClient.OmniJawsObserver {
 
-    private String TAG = StatusBarWeatherImage.class.getSimpleName();
+    private String TAG = StatusBarWeatherImageLeft.class.getSimpleName();
 
     private static final boolean DEBUG = false;
 
@@ -49,15 +49,15 @@ public class StatusBarWeatherImage extends ImageView implements
 
     Handler mHandler;
 
-    public StatusBarWeatherImage(Context context) {
+    public StatusBarWeatherImageLeft(Context context) {
         this(context, null);
     }
 
-    public StatusBarWeatherImage(Context context, AttributeSet attrs) {
+    public StatusBarWeatherImageLeft(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public StatusBarWeatherImage(Context context, AttributeSet attrs, int defStyle) {
+    public StatusBarWeatherImageLeft(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
         mHandler = new Handler();
@@ -128,7 +128,7 @@ public class StatusBarWeatherImage extends ImageView implements
                 UserHandle.USER_CURRENT);
         mWeatherImageColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_WEATHER_IMAGE_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
-        if(mWeatherTempStyle == 1) {
+        if(mWeatherTempStyle == 0) {
             setVisibility(View.GONE);
             return;
         }
@@ -170,7 +170,7 @@ public class StatusBarWeatherImage extends ImageView implements
         } catch(Exception e) {
             // Do nothing
         }
-       if(mWeatherTempStyle == 1) {
+       if(mWeatherTempStyle == 0) {
           setVisibility(View.GONE);
        }
     }

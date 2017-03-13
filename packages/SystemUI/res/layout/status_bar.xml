@@ -79,17 +79,22 @@
             android:singleLine="true"
             />
 
-        <TextView
-            android:id="@+id/left_weather_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:singleLine="true"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.StatusBar.WeatherTemp"
-            android:paddingStart="4dip"
-            android:paddingEnd="4dip"
-            android:visibility="gone"
-            />
+            <com.android.systemui.rr.statusbarweather.StatusBarWeatherLeft
+                android:id="@+id/left_weather_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
+                android:gravity="right|center_vertical"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp" />
+
+            <com.android.systemui.rr.statusbarweather.StatusBarWeatherImageLeft
+                android:id="@+id/left_weather_image"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp" />
 
         <!-- The alpha of this area is controlled from both PhoneStatusBarTransitions and
              PhoneStatusBar (DISABLE_NOTIFICATION_ICONS). -->
@@ -117,23 +122,6 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="right|center_vertical"/>
 
-            <com.android.systemui.rr.statusbarweather.StatusBarWeather
-                android:id="@+id/weather_temp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
-                android:gravity="right|center_vertical"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp" />
-
-            <com.android.systemui.rr.statusbarweather.StatusBarWeatherImage
-                android:id="@+id/weather_image"
-                android:layout_width="24dp"
-                android:layout_height="match_parent"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp" />
-
              <ImageView
                 android:id="@+id/rr_logo"
                 android:layout_width="wrap_content"
@@ -156,16 +144,22 @@
                 android:visibility="gone"
              />
 
-            <TextView
+            <com.android.systemui.rr.statusbarweather.StatusBarWeather
                 android:id="@+id/weather_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:singleLine="true"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
                 android:gravity="right|center_vertical"
-                android:textAppearance="@style/TextAppearance.StatusBar.WeatherTemp"
-                android:paddingStart="2dip"
-                android:paddingEnd="4dip"
-                android:visibility="gone" />
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp" />
+
+            <com.android.systemui.rr.statusbarweather.StatusBarWeatherImage
+                android:id="@+id/weather_image"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp" />
 
             <include layout="@layout/system_icons" />
 

@@ -46,6 +46,7 @@ public class StatusBarWeather extends TextView implements
     private OmniJawsClient mWeatherClient;
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
+    private int mWeatherTempStyle;
 
     Handler mHandler;
 
@@ -58,6 +59,9 @@ public class StatusBarWeather extends TextView implements
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -113,6 +117,13 @@ public class StatusBarWeather extends TextView implements
         mStatusBarWeatherEnabled = Settings.System.getIntForUser(
                 resolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
+        mWeatherTempStyle = Settings.System.getIntForUser(mContext.getContentResolver(), 
+                Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
+                UserHandle.USER_CURRENT);
+        if(mWeatherTempStyle == 1) {
+            setVisibility(View.GONE);
+            return;
+        }
         if (mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5) {
             queryAndUpdateWeather();
         } else {
@@ -145,5 +156,8 @@ public class StatusBarWeather extends TextView implements
         } catch(Exception e) {
             // Do nothing
         }
+       if(mWeatherTempStyle == 1) {
+          setVisibility(View.GONE);
+       }
     }
 }

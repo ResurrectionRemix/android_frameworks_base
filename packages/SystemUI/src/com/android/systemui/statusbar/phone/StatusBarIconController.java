@@ -102,6 +102,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private TextView mWeather;
     private TextView mWeatherLeft;
+    private ImageView mWeatherImageView;
+    private ImageView mLeftWeatherImageView;
+    private int mStatusBarWeatherEnabled;
 
     private int mIconSize;
     private int mIconHPadding;
@@ -170,6 +173,8 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
         mWeather = (TextView) statusBar.findViewById(R.id.weather_temp);
         mWeatherLeft = (TextView) statusBar.findViewById(R.id.left_weather_temp);
+        mWeatherImageView = (ImageView) statusBar.findViewById(R.id.weather_image);
+        mLeftWeatherImageView = (ImageView) statusBar.findViewById(R.id.left_weather_image);
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mCLogo = (ImageView) statusBar.findViewById(R.id.custom_center);
         mCLogoLeft = (ImageView) statusBar.findViewById(R.id.custom_left);
@@ -398,7 +403,12 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
                 UserHandle.USER_CURRENT) == 1) {
-        animateHide(mWeatherLeft,animate);
+        animateHide(mLeftWeatherImageView,animate);
+               if (mStatusBarWeatherEnabled == 0 || mStatusBarWeatherEnabled == 5) {
+                   return;
+               } else {
+                  animateHide(mWeatherLeft,animate);
+               }
         }
     }
 
@@ -434,7 +444,12 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
                 UserHandle.USER_CURRENT) == 1) {
-        animateShow(mWeatherLeft,animate);
+        animateShow(mLeftWeatherImageView,animate);
+               if (mStatusBarWeatherEnabled == 0 || mStatusBarWeatherEnabled == 5) {
+                   return;
+               } else {
+                  animateShow(mWeatherLeft,animate);
+               }
         }
     }
 
@@ -690,6 +705,12 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
          	    mCLogoRight.setImageTintList(ColorStateList.valueOf(mIconTint));
                 }	
         }
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_IMAGE_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
+        mWeatherImageView.setImageTintList(ColorStateList.valueOf(mIconTint));
+        mLeftWeatherImageView.setImageTintList(ColorStateList.valueOf(mIconTint));
+        }
         mBatteryLevelView.setTextColor(getTint(mTintArea, mBatteryLevelView, mIconTint));
     }
 
@@ -833,6 +854,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
          resolver.registerContentObserver(Settings.System
                  .getUriFor(Settings.System.CUSTOM_LOGO_POSITION),
                  false, this, UserHandle.USER_CURRENT);
+         resolver.registerContentObserver(Settings.System
+                 .getUriFor(Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+                 false, this, UserHandle.USER_CURRENT);
          update();
     }
 
@@ -862,6 +886,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     mCustomLogoPos = Settings.System.getIntForUser(
                     mContext.getContentResolver(), Settings.System.CUSTOM_LOGO_POSITION, 0,
                     UserHandle.USER_CURRENT);
+    mStatusBarWeatherEnabled = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                UserHandle.USER_CURRENT);
         }
     }
     private void updateBatteryLevelText() {

@@ -4601,6 +4601,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String STATUS_BAR_WEATHER_COLOR = "status_bar_weather_color";
 
+        /**
+         * Statusbar weather color setting
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_IMAGE_COLOR = "status_bar_weather_image_color";
+
 
         /*
          * Dyanamic Navbar Switch
