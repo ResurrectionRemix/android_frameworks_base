@@ -55,8 +55,8 @@
                         <com.android.systemui.slimrecent.RecentImageView
                             android:id="@+id/app_icon"
                             android:padding="@dimen/recent_app_icon_padding"
-                            android:layout_width="@dimen/recent_app_icon_size"
-                            android:layout_height="@dimen/recent_app_icon_size" />
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
                         <com.android.systemui.slimrecent.RecentImageView
                             android:id="@+id/favorite_icon"

@@ -245,7 +245,7 @@ public class RecentPanelView {
 
             clearOptions();
             addOption(new OptionsItem(
-                    mContext.getDrawable(R.drawable.ic_info), OPTION_INFO, listener));
+                    mContext.getDrawable(R.drawable.ic_recent_app_info), OPTION_INFO, listener));
             if (checkAppInstaller(task.packageName, AMAZON_REFERENCE)
                     || checkAppInstaller(task.packageName, PLAYSTORE_REFERENCE)) {
                 addOption(new OptionsItem(

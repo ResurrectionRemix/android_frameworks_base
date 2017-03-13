@@ -74,26 +74,30 @@ public class ExpandableCardAdapter extends RecyclerView.Adapter<ExpandableCardAd
             holder.expandButton.setOnClickListener(card.customClickListener);
         } else {
             holder.expandButton.setImageResource(R.drawable.ic_expand);
-            holder.expandButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ExpandableCard expand = mCards.get(holder.getAdapterPosition());
-                    expand.expanded = !expand.expanded;
-                    if (card.expandListener != null) {
-                        card.expandListener.onExpanded(expand.expanded);
+            if (card.expandVisible) {
+                holder.expandButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ExpandableCard expand = mCards.get(holder.getAdapterPosition());
+                        expand.expanded = !expand.expanded;
+                        if (card.expandListener != null) {
+                            card.expandListener.onExpanded(expand.expanded);
+                        }
+
+                        Fade trans = new Fade();
+                        trans.setDuration(150);
+                        TransitionManager.beginDelayedTransition(
+                                (ViewGroup) holder.itemView.getParent(), trans);
+                        holder.expandButton.animate().rotation(expand.expanded ? -180 : 0);
+                        notifyItemChanged(position);
                     }
-                    Fade trans = new Fade();
-                    trans.setDuration(150);
-                    TransitionManager.beginDelayedTransition(
-                            (ViewGroup) holder.itemView.getParent(), trans);
-                    holder.expandButton.animate().rotation(expand.expanded ? -180 : 0);
-                    notifyItemChanged(position);
-                }
-            });
+                });
+            }
         }
 
-        holder.expandButton.setVisibility(
-                (card.expandVisible || card.customIcon) ? View.VISIBLE : View.GONE);
+        if (!card.expandVisible && !card.customIcon) {
+            holder.expandButton.setImageAlpha(0);
+        }
 
         if (card.cardClickListener != null) {
             holder.itemView.setOnClickListener(card.cardClickListener);
