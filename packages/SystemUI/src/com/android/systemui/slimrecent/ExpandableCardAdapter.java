@@ -121,7 +121,7 @@ public class ExpandableCardAdapter extends RecyclerView.Adapter<ExpandableCardAd
                 int x = holder.upX - temp[0];
                 int y = holder.upY - temp[1];
                 holder.showOptions(x, y);
-                return true;
+                return false;
             }
         });
 
