@@ -145,7 +145,9 @@ public class StatusBarWeatherLeft extends TextView implements
                         } else {
                             setText(mWeatherData.temp + mWeatherData.tempUnits);
                         }
-                        setVisibility(View.VISIBLE);
+                        if (mStatusBarWeatherEnabled != 0 && mStatusBarWeatherEnabled != 5) {
+                            setVisibility(View.VISIBLE);
+                        }
                     }
                 } else {
                     setVisibility(View.GONE);
