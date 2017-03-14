@@ -139,4 +139,8 @@
 
     <!-- Fonts used in the MediaQueue -->
     <color name="notification_media_queue_text">#7c7c7c</color>
+
+    <!-- OmniJaws detailed view temperature text -->
+    <color name="omni_jaws_detailed_temperature_color">@android:color/white</color>
+
 </resources>

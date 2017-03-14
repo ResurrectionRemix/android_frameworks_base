@@ -240,7 +240,7 @@ public class DetailedWeatherView extends LinearLayout {
         final TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
         textPaint.setTypeface(font);
-        textPaint.setColor(Color.WHITE);
+        textPaint.setColor(resources.getColor(R.color.omni_jaws_detailed_temperature_color));
         textPaint.setTextAlign(Paint.Align.LEFT);
         final int textSize= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, resources.getDisplayMetrics());
         textPaint.setTextSize(textSize);
