@@ -204,6 +204,11 @@ public class ISmsImplBase extends ISms.Stub {
     }
 
     @Override
+    public int getSmsCapacityOnIccForSubscriber(int subId) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public int checkSmsShortCodeDestination(
             int subid, String callingApk, String destAddress, String countryIso) {
         throw new UnsupportedOperationException();

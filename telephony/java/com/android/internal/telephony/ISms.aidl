@@ -595,4 +595,12 @@ interface ISms {
      * @param destAddress the destination address to test for possible short code
      */
     int checkSmsShortCodeDestination(int subId, String callingApk, String destAddress, String countryIso);
+
+    /**
+     * Get the capacity count of sms on Icc card.
+     *
+     * @param subId for subId which getSmsCapacityOnIcc is queried.
+     * @return capacity of ICC
+     */
+    int getSmsCapacityOnIccForSubscriber(int subId);
 }
