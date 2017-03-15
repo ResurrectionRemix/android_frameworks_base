@@ -686,14 +686,24 @@ public class RecentController implements RecentPanelView.OnExitListener,
 
         KeyguardManager km =
                 (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+        String restrictionMsg = null;
         if (km.inKeyguardRestrictedInputMode()) {
-            mRecentContainer.setVisibility(View.GONE);
-            mKeyguardView.setVisibility(View.VISIBLE);
-        } else {
+            restrictionMsg = mContext.getString(R.string.slim_recent_keyguard);
+        }
+        try {
+            if (ActivityManagerNative.getDefault().isInLockTaskMode()) {
+                restrictionMsg = mContext.getString(R.string.slim_recent_pinned);
+            }
+        } catch (RemoteException e) {}
+        if (restrictionMsg == null) {
             mRecentContainer.setVisibility(View.VISIBLE);
             mKeyguardView.setVisibility(View.GONE);
+            addSidebarView();
+        } else {
+            mKeyguardText.setText(restrictionMsg);
+            mRecentContainer.setVisibility(View.GONE);
+            mKeyguardView.setVisibility(View.VISIBLE);
         }
-        addSidebarView();
     }
 
     public static void sendCloseSystemWindows(String reason) {
