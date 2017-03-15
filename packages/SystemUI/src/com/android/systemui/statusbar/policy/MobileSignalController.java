@@ -424,6 +424,12 @@ public class MobileSignalController extends SignalController<
         }
     }
 
+    private boolean isRoamingIconAllowed() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.ROAMING_INDICATOR_ICON, 1,
+                UserHandle.USER_CURRENT) != 0;
+    }
+
     private boolean isCarrierNetworkChangeActive() {
         return mCurrentState.carrierNetworkChangeMode;
     }
@@ -525,7 +531,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.dataConnected = mCurrentState.connected
                 && mDataState == TelephonyManager.DATA_CONNECTED;
 
-        mCurrentState.roaming = isRoaming();
+        mCurrentState.roaming = isRoaming() && isRoamingIconAllowed();
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isDataDisabled()) {
