@@ -72,31 +72,28 @@ public class ExpandableCardAdapter extends RecyclerView.Adapter<ExpandableCardAd
         if (card.customIcon) {
             holder.expandButton.setImageDrawable(card.custom);
             holder.expandButton.setOnClickListener(card.customClickListener);
-        } else {
+        } else if (card.expandVisible) {
             holder.expandButton.setImageResource(R.drawable.ic_expand);
-            if (card.expandVisible) {
-                holder.expandButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ExpandableCard expand = mCards.get(holder.getAdapterPosition());
-                        expand.expanded = !expand.expanded;
-                        if (card.expandListener != null) {
-                            card.expandListener.onExpanded(expand.expanded);
-                        }
-
-                        Fade trans = new Fade();
-                        trans.setDuration(150);
-                        TransitionManager.beginDelayedTransition(
-                                (ViewGroup) holder.itemView.getParent(), trans);
-                        holder.expandButton.animate().rotation(expand.expanded ? -180 : 0);
-                        notifyItemChanged(position);
+            holder.expandButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExpandableCard expand = mCards.get(holder.getAdapterPosition());
+                    expand.expanded = !expand.expanded;
+                    if (card.expandListener != null) {
+                        card.expandListener.onExpanded(expand.expanded);
                     }
-                });
-            }
-        }
 
-        if (!card.expandVisible && !card.customIcon) {
-            holder.expandButton.setImageAlpha(0);
+                    Fade trans = new Fade();
+                    trans.setDuration(150);
+                    TransitionManager.beginDelayedTransition(
+                            (ViewGroup) holder.itemView.getParent(), trans);
+                    holder.expandButton.animate().rotation(expand.expanded ? -180 : 0);
+                    notifyItemChanged(position);
+                }
+            });
+        } else {
+            holder.expandButton.setImageResource(0);
+            holder.expandButton.setOnClickListener(null);
         }
 
         if (card.cardClickListener != null) {
