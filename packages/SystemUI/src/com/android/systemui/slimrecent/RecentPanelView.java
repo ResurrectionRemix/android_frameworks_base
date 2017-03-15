@@ -435,26 +435,25 @@ public class RecentPanelView {
                 }
 
                 ActivityOptions options = ActivityOptions.makeBasic();
-                /* Activity Manager let's dock the app to top or bottom dinamically,
-                with the setDockCreateMode DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT is 0,
-                DOCKED_STACK_CREATE_MODE_BOTTOM_OR_RIGHT is 1. Thus if we drag down,
-                dock app to bottom, if we drag up dock app to top*/
-                options.setDockCreateMode(finalPos > initPos ? 0 : 1);
+                options.setDockCreateMode(0); //0 means dock app to top, 1 to bottom
                 options.setLaunchStackId(ActivityManager.StackId.DOCKED_STACK_ID);
                 Handler mHandler = new Handler();
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
                         try {
-                            ActivityManagerNative.getDefault()
-                                    .startActivityFromRecents(taskid, options.toBundle());
                             card = (RecentCard) mCardAdapter.getCard(finalPos);
                             int newTaskid = card.task.persistentTaskId;
+                            ActivityManagerNative.getDefault()
+                                    .startActivityFromRecents((finalPos > initPos) ? taskid
+                                    : newTaskid, options.toBundle());
                             /*after we docked our main app, on the other side of the screen we
                             open the app we dragged the main app over*/
-                            mController.openOnDraggedApptoOtherSide(newTaskid);
+                            mController.openOnDraggedApptoOtherSide((finalPos > initPos)
+                                    ? newTaskid : taskid);
                         } catch (RemoteException e) {}
                     }
-                //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
+                /*if we disabled a running multiwindow mode, just wait a little bit
+                before docking the new apps*/
                 }, wasDocked ? 100 : 0);
             }
 
