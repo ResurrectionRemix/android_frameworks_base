@@ -437,13 +437,13 @@ public class RecentPanelView {
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
                         try {
-                            ActivityManagerNative.getDefault()
-                                    .startActivityFromRecents(taskid, options.toBundle());
                             card = (RecentCard) mCardAdapter.getCard(finalPos);
                             int newTaskid = card.task.persistentTaskId;
+                            ActivityManagerNative.getDefault()
+                                    .startActivityFromRecents((finalPos > initPos) ? taskid : newTaskid, options.toBundle());
                             /*after we docked our main app, on the other side of the screen we
                             open the app we dragged the main app over*/
-                            mController.openOnDraggedApptoOtherSide(newTaskid);
+                            mController.openOnDraggedApptoOtherSide((finalPos > initPos) ? newTaskid : taskid);
                         } catch (RemoteException e) {}
                     }
                 //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
