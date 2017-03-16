@@ -403,7 +403,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
                 UserHandle.USER_CURRENT) == 1) {
-        animateHide(mLeftWeatherImageView,animate);
+                if (mStatusBarWeatherEnabled == 1
+                            || mStatusBarWeatherEnabled == 2
+                            || mStatusBarWeatherEnabled == 5) {
+               animateHide(mLeftWeatherImageView,animate);
+               }
                if (mStatusBarWeatherEnabled == 0 || mStatusBarWeatherEnabled == 5) {
                    return;
                } else {
@@ -444,7 +448,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
                 UserHandle.USER_CURRENT) == 1) {
-        animateShow(mLeftWeatherImageView,animate);
+                if (mStatusBarWeatherEnabled == 1
+                            || mStatusBarWeatherEnabled == 2
+                            || mStatusBarWeatherEnabled == 5) {
+                animateShow(mLeftWeatherImageView,animate);
+                }
                if (mStatusBarWeatherEnabled == 0 || mStatusBarWeatherEnabled == 5) {
                    return;
                } else {
