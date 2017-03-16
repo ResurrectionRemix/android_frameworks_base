@@ -177,7 +177,7 @@
   <string name="action_save_fault">Gagal menyimpan</string>
   <string name="action_edit">Ubah</string>
   <string name="recents_custom_android_n">HAPUS SEMUA</string>
-  <string name="recents_free_ram">RAM Kosong: %1$d MB</string>
+  <string name="recents_free_ram">BEBAS: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">Manajer tugas</string>
@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Menjalankan aplikasi dibatalkan</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Buka kunci perangkat Anda untuk melihat Recent</string>
+  <string name="recents_multiwin_warning">Sesi multi-window sudah aktif.\nTekan saja salah satu aplikasi jika Anda ingin mengaitkannya sekarang.</string>
+  <string name="recents_multiwin_nolastapp">Anda menghapus semua Recent, silakan pilih aplikasi dari launcher atau laci.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Paksa berhenti?</string>
   <string name="force_stop_dlg_text">Jika Anda memaksa berhenti aplikasi, itu mungkin berperilaku buruk.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Cuaca</string>
   <string name="omnijaws_current_text">Sekarang</string>
   <string name="omnijaws_package_not_available">OmniJaws tidak tersedia</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

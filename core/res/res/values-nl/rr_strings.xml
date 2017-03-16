@@ -24,27 +24,27 @@
   <string name="animation_fade">Vervagen</string>
   <string name="animation_slide_right">Rechts inschuiven</string>
   <string name="animation_slide_left">Links inschuiven</string>
-  <string name="animation_slide_right_no_fade">Rechts inschuiven (Zonder vervagen)</string>
-  <string name="animation_slide_left_no_fade">Links inschuiven (Zonder vervagen)</string>
+  <string name="animation_slide_right_no_fade">Rechts inschuiven (zonder vervagen)</string>
+  <string name="animation_slide_left_no_fade">Links inschuiven (zonder vervagen)</string>
   <string name="animation_slide_up">Van onder inschuiven</string>
   <string name="animation_slide_down">Van boven inschuiven</string>
   <string name="animation_default">Standaard</string>
   <string name="animation_translucent">Doorzichtig</string>
   <string name="animation_grow_shrink">Verschijnen (Boven)</string>
-  <string name="animation_grow_shrink_center">Groeien (Centraal)</string>
-  <string name="animation_grow_shrink_bottom">Groeien (Onderaan)</string>
-  <string name="animation_grow_shrink_left">Groeien (Links)</string>
-  <string name="animation_grow_shrink_right">Groeien (Rechts)</string>
+  <string name="animation_grow_shrink_center">Verschijnen (Midden)</string>
+  <string name="animation_grow_shrink_bottom">Verschijnen (Onder)</string>
+  <string name="animation_grow_shrink_left">Verschijnen (Links)</string>
+  <string name="animation_grow_shrink_right">Verschijnen (Rechts)</string>
   <string name="action_null">Leeg</string>
   <string name="global_action_torch">Zaklamp</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">SystemUI Herstarten</string>
+  <string name="reboot_systemui">SystemUI herstarten</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">Onderwegmodus</string>
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB inactief</string>
   <string name="adb_active_custom_tile_not_connected">inactief</string>
-  <string name="singlehandmode_slide_hint_message">Swipe met je vinger over de navigatiebalk om te wisselen tussen standaard en minischerm zicht</string>
+  <string name="singlehandmode_slide_hint_message">Swipe met uw vinger over de navigatiebalk om te wisselen tussen standaard en minischerm zicht</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">accustatistieken resetten</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->

@@ -48,4 +48,5 @@
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">बैटरी सांख्यिकी रिसेट करें</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">वर्तमान निम्न स्तर बैटरी उपयोग डेटा रीसेट करने के लिए एक आवेदन की अनुमति देता है।</string>
 </resources>

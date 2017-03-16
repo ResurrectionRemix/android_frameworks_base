@@ -187,7 +187,25 @@
   <string name="message_keep_one_launcher">Ən az bir başladıcı olmalıdır!</string>
   <string name="tm_clear_task">TƏMİZLƏMƏK</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Son istifadə olunanları bağladıqdan sonra %s başlat</string>
+  <string name="toast_recents_cancel_queued_app">Tətbiq başlatma ləğv edildi</string>
   <!-- Sim recents on keyguard -->
+  <string name="slim_recent_keyguard">Son istifadə olunanları görmək üçün cihazınızın kilidini açın</string>
+  <string name="recents_multiwin_warning">Çoxlu pəncərə sessiyası artıq aktivdir.\nİndi sabitləmək istəyirsinizsə bir tətbiqə toxunun</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Durmaya zorla?</string>
+  <string name="force_stop_dlg_text">Tətbiqetməni zorla dayandırsanız, səhv işləyə bilər</string>
+  <string name="dlg_ok">OLDU</string>
+  <string name="dlg_cancel">Ləğv Etmək</string>
+  <string name="kill">Tətbiqi sona çatdır</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Xəta</string>
+  <string name="omnijaws_service_unkown">Hava vəziyyəti məlumatı yox</string>
+  <string name="omnijaws_detail_header">Hava</string>
+  <string name="omnijaws_label_default">Hava</string>
+  <string name="omnijaws_current_text">İndi</string>
+  <string name="omnijaws_package_not_available">OmniJaws mövcud deyil
+</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

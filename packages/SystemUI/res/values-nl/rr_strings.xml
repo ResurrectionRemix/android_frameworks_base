@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Schermafbeelding verwijderd</string>
   <string name="gestures_message">Teken uw gebaar hier</string>
-  <string name="rr_sys_tuner">Systeem UI regelaar</string>
+  <string name="rr_sys_tuner">Systeem UI afstellen</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Veeg rechts voor %1$s</string>
   <string name="right_shortcut_hint">Veeg links voor %1$s</string>
@@ -45,12 +45,12 @@
   <string name="app_float_item_title">Zwevende weergave</string>
   <string name="app_stop_item_title">App stoppen</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go geactiveerd</string>
-  <string name="onthego_notif_title">On-The-Go is actief</string>
+  <string name="onthego_notif_ticker">Onderwegmodus geactiveerd</string>
+  <string name="onthego_notif_title">Onderwegmodus is actief</string>
   <string name="onthego_notif_stop">Stop</string>
   <string name="onthego_notif_options">Opties</string>
-  <string name="onthego_notif_error">Kan on On-The-Go niet starten</string>
-  <string name="onthego_notif_restart">Herstart On-The-Go</string>
+  <string name="onthego_notif_error">Kan onderwegmodus niet starten</string>
+  <string name="onthego_notif_restart">Herstart onderwegmodus</string>
   <string name="onthego_notif_camera_changed">Cameramodus gewijzigd</string>
   <string name="onthego_transparency">Transparantie</string>
   <string name="onthego_front_camera">Gebruik camera aan de voorzijde</string>
@@ -65,15 +65,15 @@
   <string name="quick_settings_volume_panel_label">Volume</string>
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">Schermafdruk</string>
-  <string name="quick_settings_region_screenshot_label">Gedeeltelijk schermafdruk</string>
+  <string name="quick_settings_region_screenshot_label">Gedeeltelijke schermafdruk</string>
   <string name="quick_settings_adb_network">ADB netwerk</string>
   <string name="quick_settings_network_adb_enabled_label">Ingeschakeld</string>
   <string name="quick_settings_network_adb_disabled_label">Uitgeschakeld</string>
   <string name="quick_settings_sync_label">Sync</string>
   <string name="accessibility_quick_settings_sync_off">Sync uit</string>
   <string name="accessibility_quick_settings_sync_on">Sync aan</string>
-  <string name="accessibility_quick_settings_sync_changed_off">Sync is uitgeschakeld</string>
-  <string name="accessibility_quick_settings_sync_changed_on">Sync is ingeschakeld</string>
+  <string name="accessibility_quick_settings_sync_changed_off">Sync uitgeschakeld</string>
+  <string name="accessibility_quick_settings_sync_changed_on">Sync ingeschakeld</string>
   <string name="quick_settings_expanded_desktop_label">Uitgebreid bureaublad</string>
   <string name="quick_settings_expanded_desktop">Uitgebreid</string>
   <string name="quick_settings_expanded_desktop_off">Normaal</string>
@@ -88,7 +88,7 @@
   <string name="quick_settings_music_play">Afspelen</string>
   <string name="quick_settings_music_pause">Pauze</string>
   <string name="quick_settings_ime_tile_label">Invoermethode</string>
-  <string name="rr_qs_tile">Configuraties</string>
+  <string name="rr_qs_tile">Instellingen</string>
   <string name="quick_settings_caffeine_label">Cafeïne</string>
   <string name="accessibility_quick_settings_caffeine_off">Cafeïne uit</string>
   <string name="accessibility_quick_settings_caffeine_on">Cafeïne aan</string>
@@ -109,20 +109,20 @@
   <string name="quick_settings_appcirclebar_title">Appcirkel balk</string>
   <string name="quick_settings_appcirclebar_on">Appcirkel balk aan</string>
   <string name="quick_settings_appcirclebar_off">Appcirkel balk uit</string>
-  <string name="quick_settings_gesture_anywhere_label">Overal gebaren</string>
+  <string name="quick_settings_gesture_anywhere_label">Gesture anywhere</string>
   <string name="quick_settings_gesture_anywhere_on">Gebaren aan</string>
   <string name="quick_settings_gesture_anywhere_off">Gebaren uit</string>
   <string name="quick_settings_appsidebar_title">App zijbalk</string>
-  <string name="quick_settings_appsidebar_on">App zijbar aan</string>
-  <string name="quick_settings_appsidebar_off">App zijbar uit</string>
+  <string name="quick_settings_appsidebar_on">App zijbalk aan</string>
+  <string name="quick_settings_appsidebar_off">App zijbalk uit</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse ingeschakeld</string>
   <string name="quick_settings_pulse_disabled">Geen visualizer</string>
-  <string name="quick_settings_pulse_label">Impuls</string>
-  <string name="accessibility_quick_settings_pulse_off">Impuls uit</string>
-  <string name="accessibility_quick_settings_pulse_on">Impuls aan</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">Impuls uitgeschakeld</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">Impuls ingeschakeld</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulse uit</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulse aan</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Puls uitgeschakeld</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse ingeschakeld</string>
   <string name="quick_settings_pulse_label">Navigatiebalk visualizer</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Actieve display</string>
@@ -136,72 +136,76 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up uitgeschakeld</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up ingeschakeld</string>
   <!-- Location Tile -->
-  <string name="accessibility_quick_settings_location_battery_saving">Locatiebepaling: batterij besparingsmodus.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Locatiebepaling: alleen apparaat modus.</string>
-  <string name="accessibility_quick_settings_location_high_accuracy">Locatiebepaling: hoge nauwkeurigheidsmodus.</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">Locatiebepaling gewijzigd naar batterijbesparingsmodus.</string>
+  <string name="accessibility_quick_settings_location_battery_saving">Locatiebepaling: accu besparingsmodus.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Locatiebepaling: alleen apparaat.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Locatiebepaling: hoge nauwkeurigheid.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Locatiebepaling gewijzigd naar accubesparingsmodus.</string>
   <string name="accessibility_quick_settings_location_changed_gps_only">Locatiebepaling gewijzigd naar alleen apparaat modus.</string>
   <string name="accessibility_quick_settings_location_changed_high_accuracy">Locatiebepaling gewijzigd naar hoge nauwkeurigheidsmodus.</string>
   <string name="quick_settings_location_detail_title">Locatie modus</string>
-  <string name="quick_settings_location_battery_saving_label">Batterijbesparing</string>
+  <string name="quick_settings_location_battery_saving_label">Accubesparing</string>
   <string name="quick_settings_location_gps_only_label">Alleen apparaat</string>
   <string name="quick_settings_location_high_accuracy_label">Hoge nauwkeurigheid</string>
   <string name="quick_settings_location_off_label">Locatie uit</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Taal</string>
-  <string name="quick_settings_locale_more_locales_toast">Configureer alstublieft meerdere talen te configureren om functionaliteit te kunnen bieden</string>
+  <string name="quick_settings_locale_more_locales_toast">Configureer eerst meerdere talen om te kunnen wisselen</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
-  <string name="app_killed_message">App Gestopt</string>
+  <string name="app_killed_message">App gestopt</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Gluurnotificaties 1 minuut gedempt.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Gluurnotificaties <xliff:g id="number">%d</xliff:g> minuten gedempt.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Korte weergave 1 minuut gedempt.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Korte weergave <xliff:g id="number">%d</xliff:g> minuten gedempt.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Geen schermafdruk gemaakt</string>
   <string name="screenshot_abort_text">Bewerking afgebroken</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">Verwijderd</string>
-  <string name="action_delete_fault">Het verwijderen is mislukt</string>
+  <string name="action_delete_fault">Verwijderen is mislukt</string>
   <string name="action_save_success">Opgeslagen</string>
-  <string name="action_save_fault">Het opslaan is mislukt</string>
+  <string name="action_save_fault">Opslaan is mislukt</string>
   <string name="pref_action_color_title">Kleur van de knoppen</string>
   <string name="pref_action_color_summary">Kies je favoriete kleur voor de knoppen</string>
   <string name="pref_category_main">Hoofdinstellingen</string>
   <string name="pref_category_user">Gebruikersinstellingen</string>
-  <string name="pref_crop_behavior_title">Resultaat van het bijsnijden</string>
+  <string name="pref_crop_behavior_title">Bijsnijdgedrag</string>
   <string name="pref_crop_behavior_summary">Gebruik het bijgesneden beeld, zelfs als het originele beeld niet bijgesneden is met de bijsnij-actie</string>
   <string name="action_ok">OK</string>
   <string name="action_delete_success">Verwijderd</string>
-  <string name="action_delete_fault">Het verwijderen is mislukt</string>
+  <string name="action_delete_fault">Verwijderen is mislukt</string>
   <string name="action_save_success">Opgeslagen</string>
-  <string name="action_save_fault">Het opslaan is mislukt</string>
-  <string name="action_edit">Wijzigen</string>
+  <string name="action_save_fault">Opslaan is mislukt</string>
+  <string name="action_edit">Bewerken</string>
   <string name="recents_custom_android_n">ALLES WISSEN</string>
   <string name="recents_free_ram">Vrij RAM-geheugen: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">Taakbeheer</string>
-  <string name="message_switch_fail">Kan niet schakelen naar deze taak omdat het geen omgeving heeft.</string>
-  <string name="tasklist_killall">Alles Sluiten</string>
+  <string name="message_switch_fail">Kan niet schakelen naar deze taak omdat het geen scherm heeft.</string>
+  <string name="tasklist_killall">Alles sluiten</string>
   <string name="tasklist_memory_usage">"Totaal geheugen vrij: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Moet ten minste één launcher behouden!</string>
   <string name="tm_clear_task">WISSEN</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">Start %s na het sluiten van recenten</string>
+  <string name="toast_recents_queue_app">Start %s na het sluiten van recente apps</string>
   <string name="toast_recents_cancel_queued_app">Opstarten van app geannuleerd</string>
   <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Ontgrendel uw apparaat om recente te bekijken</string>
+  <string name="slim_recent_keyguard">Ontgrendel uw apparaat om recente apps te bekijken</string>
+  <string name="recents_multiwin_warning">Het scherm is reeds gesplitst.\nTik op een app om deze nu te plaatsen.</string>
+  <string name="recents_multiwin_nolastapp">Alle recente apps verwijderd, kies een app via het startscherm of app-overzicht.</string>
   <!-- Kill button in notification guts -->
-  <string name="force_stop_dlg_title">Gedwongen stoppen?</string>
+  <string name="force_stop_dlg_title">Nu stoppen?</string>
   <string name="force_stop_dlg_text">Als je een app gedwongen stopt, kan deze onverwacht gedrag vertonen.</string>
-  <string name="dlg_ok">Ok</string>
-  <string name="dlg_cancel">Annuleer</string>
-  <string name="kill">App Beëindigen</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">Annuleren</string>
+  <string name="kill">App beëindigen</string>
   <!-- OmniJAWS -->
-  <string name="omnijaws_service_error">Foutmelding</string>
+  <string name="omnijaws_service_error">Fout</string>
   <string name="omnijaws_service_unkown">Geen weergegevens</string>
   <string name="omnijaws_detail_header">Weer</string>
   <string name="omnijaws_label_default">Weer</string>
   <string name="omnijaws_current_text">Nu</string>
   <string name="omnijaws_package_not_available">OmniJaws niet beschikbaar</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

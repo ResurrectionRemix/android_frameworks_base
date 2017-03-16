@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Pokretanje aplikacije je otkazano</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Otključajte uređaj da biste vidjeli popis nedavnih aplikacija</string>
+  <string name="recents_multiwin_warning">Sesija načina rada s više prozora već je aktivna.\nSamo dodirnite aplikaciju ako je sada želite spojiti.</string>
+  <string name="recents_multiwin_nolastapp">Uklonili ste sve nedavne aplikacije, odaberite aplikaciju iz pokretača ili izbornika aplikacija.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Prisilno zaustaviti?</string>
   <string name="force_stop_dlg_text">Prisilno zaustavljanje aplikacije može rezultirati čudnim ponašanjem aplikacije.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Vrijeme</string>
   <string name="omnijaws_current_text">Sada</string>
   <string name="omnijaws_package_not_available">OmniJaws nije dostupan</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

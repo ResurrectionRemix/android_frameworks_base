@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Đã hủy mở ứng dụng</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Mở khóa điện thoại của bạn để xem danh sách gần đây</string>
+  <string name="recents_multiwin_warning">Một phiên đa cửa sổ được kích hoạt.\n Chỉ chạm một ứng dụng nếu bạn muốn thu nhỏ nó ngay bây giờ.</string>
+  <string name="recents_multiwin_nolastapp">Bạn đã xóa tất cả các ứng dụng gần đây, vui lòng chọn một ứng dụng từ trình khởi chạy hoặc ngăn kéo ứng dụng.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Buộc dừng?</string>
   <string name="force_stop_dlg_text">Nếu bạn buộc dừng một ứng dụng, ứng dụng đó có thể hoạt động sai.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Thời tiết</string>
   <string name="omnijaws_current_text">Hiện tại</string>
   <string name="omnijaws_package_not_available">OmniJaws không có sẵn</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

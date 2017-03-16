@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Alkalmazás indításának megszakítása</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Oldja fel eszközét az előzmények megtekintéséhez</string>
+  <string name="recents_multiwin_warning">A többablakos munkamenet már aktív.\nCsak érintsen meg egy alkalmazást, ha rögzíteni szeretné azt.</string>
+  <string name="recents_multiwin_nolastapp">Eltávolította az összes előzményt, kérjük, válasszon egy alkalmazást az indítóból vagy a fiókból.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Kényszeríti a leállítást?</string>
   <string name="force_stop_dlg_text">Ha egy alkalmazást leállásra kényszerít, instabilan viselkedhet.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Időjárás</string>
   <string name="omnijaws_current_text">Most</string>
   <string name="omnijaws_package_not_available">OmniJaws nem elérhető</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

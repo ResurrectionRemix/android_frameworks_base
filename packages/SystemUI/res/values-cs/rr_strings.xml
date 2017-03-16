@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Zrušit spouštění aplikací</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Odemknout zařízení k prohlédnutí nedávných aplikací</string>
+  <string name="recents_multiwin_warning">Nacházíte se v režimu více oken.\nKlikněte na aplikaci, kterou chcete ukotvit.</string>
+  <string name="recents_multiwin_nolastapp">Odstranili jste všechny nedávné aplikace, spusťte aplikaci z launcheru nebo seznamu.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Vynutit ukončení?</string>
   <string name="force_stop_dlg_text">Vynucené zastavení může způsobit nepředvídatelné chování aplikace.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Počasí</string>
   <string name="omnijaws_current_text">Nyní</string>
   <string name="omnijaws_package_not_available">OmniJaws není k dispozici</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

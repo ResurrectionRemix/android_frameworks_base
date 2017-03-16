@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Anulowane uruchamianie aplikacji</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Odblokuj urządzenie by zobaczyć ostatnie aplikacje</string>
+  <string name="recents_multiwin_warning">Sesja multi-okien jest już aktywna.\nPoprostu kliknij na aplikację, którą chcesz teraz zadokować.</string>
+  <string name="recents_multiwin_nolastapp">Usunąłeś wszystkie ostatnio otwierane aplikacje, proszę wybrać aplikację z ekranu startowego lub szuflady aplikacji.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Wymusić zatrzymanie?</string>
   <string name="force_stop_dlg_text">Jeśli wymusisz zatrzymanie aplikacji, może ona zadziałać nieprawidłowo.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Pogoda</string>
   <string name="omnijaws_current_text">Teraz</string>
   <string name="omnijaws_package_not_available">OmniJaws nie jest dostępny</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

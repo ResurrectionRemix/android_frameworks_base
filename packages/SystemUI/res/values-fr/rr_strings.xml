@@ -136,7 +136,7 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Notifications flottantes désactivées</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes activées</string>
   <!-- Location Tile -->
-  <string name="accessibility_quick_settings_location_battery_saving">Localisation : mode économie de batterie.</string>
+  <string name="accessibility_quick_settings_location_battery_saving">Localisation : mode économie d\'énergie.</string>
   <string name="accessibility_quick_settings_location_gps_only">Localisation : mode appareil uniquement.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Localisation : mode haute précision.</string>
   <string name="accessibility_quick_settings_location_changed_battery_saving">Localisation définie sur \"Économie de batterie\".</string>
@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Lancement de l\'application annulé</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Déverrouillez votre appareil pour afficher les applications récentes</string>
+  <string name="recents_multiwin_warning">Une session multifenêtres est déjà en cours. \nAppuyez simplement sur une application si vous souhaitez l\'activer maintenant.</string>
+  <string name="recents_multiwin_nolastapp">Vous avez supprimé tous les éléments récents, veuillez choisir une application dans le lanceur ou le tiroir.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Forcer l\'arrêt ?</string>
   <string name="force_stop_dlg_text">Forcer l\'arrêt d\'une application peut provoquer son dysfonctionnement.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Météo</string>
   <string name="omnijaws_current_text">Actuellement</string>
   <string name="omnijaws_package_not_available">OmniJaws non disponible</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

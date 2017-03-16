@@ -88,7 +88,7 @@
   <string name="quick_settings_music_play">Oynat</string>
   <string name="quick_settings_music_pause">Duraklat</string>
   <string name="quick_settings_ime_tile_label">Giriş yöntemi</string>
-  <string name="rr_qs_tile">Kişiselleştirme</string>
+  <string name="rr_qs_tile">Gelişmiş ayarlar</string>
   <string name="quick_settings_caffeine_label">Kafein</string>
   <string name="accessibility_quick_settings_caffeine_off">Kafein kapalı</string>
   <string name="accessibility_quick_settings_caffeine_on">Kafein açık</string>
@@ -130,7 +130,7 @@
   <string name="accessibility_quick_settings_ambient_display_on">Ortam ekranı açık</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Ortam ekranı kapatıldı</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Ortam ekranı açıldı</string>
-  <string name="quick_settings_heads_up_label">Heads up</string>
+  <string name="quick_settings_heads_up_label">Bildirim pencereleri</string>
   <string name="accessibility_quick_settings_heads_up_off">Bildirim pencereleri kapalı</string>
   <string name="accessibility_quick_settings_heads_up_on">Bildirim pencereleri açık</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Bildirim pencereleri kapatıldı</string>
@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Uygulama başlatma iptal edildi</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Son kullanılanları görüntülemek için cihazınızın kilidini açın</string>
+  <string name="recents_multiwin_warning">Çoklu bir pencere oturumu zaten aktif.\nSadece kullanmak istediğiniz uygulamaya dokunmanız yeterli.</string>
+  <string name="recents_multiwin_nolastapp">Son kullanılan uygulamaları temizlediniz, lütfen başlatıcıdan veya uygulama menüsünden uygulama seçin.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Durdurmaya zorla?</string>
   <string name="force_stop_dlg_text">Uygulamayı zorla durdurursanız, hatalı davranabilir.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Hava durumu</string>
   <string name="omnijaws_current_text">Şimdi</string>
   <string name="omnijaws_package_not_available">OmniJaws mevcut değil</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Запуск приложения отменен</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Разблокируйте устройство для просмотра меню недавних приложений</string>
+  <string name="recents_multiwin_warning">Мультиоконная сессия уже активна.\nПросто нажмите на приложение, чтобы прикрепить.</string>
+  <string name="recents_multiwin_nolastapp">Вы убрали все недавние приложения, пожалуйста выберите приложение с рабочего стола или из меню приложений.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Остановить принудительно?</string>
   <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Погода</string>
   <string name="omnijaws_current_text">Сейчас</string>
   <string name="omnijaws_package_not_available">OmniJaws недоступен</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

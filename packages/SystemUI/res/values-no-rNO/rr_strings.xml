@@ -65,4 +65,6 @@
   <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
   <!-- OmniJAWS -->
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="grader">%1$s</xliff:g> <xliff:g id="forhold">%2$s</xliff:g></string>
 </resources>

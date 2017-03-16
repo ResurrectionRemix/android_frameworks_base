@@ -204,4 +204,6 @@
   <string name="omnijaws_label_default">Väder</string>
   <string name="omnijaws_current_text">Nu</string>
   <string name="omnijaws_package_not_available">OmniJaws är inte tillgänglig.</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

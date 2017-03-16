@@ -102,8 +102,8 @@
   <string name="quick_settings_screenrecord">Gravador de ecrã</string>
   <string name="quick_settings_screenrecord_on">A gravar...</string>
   <string name="quick_settings_navigation_bar">Barra de navegação</string>
-  <string name="quick_settings_smartbar">SmartBar</string>
-  <string name="quick_settings_smartbar_off">SmartBar desligada</string>
+  <string name="quick_settings_smartbar">Barra de navegação</string>
+  <string name="quick_settings_smartbar_off">Barra de navegação desligada</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling desligado</string>
   <string name="quick_settings_appcirclebar_title">Barra circular de aplicações</string>
@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Iniciação de aplicação cancelada</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Desbloqueie o dispositivo para ver as aplicações recentes</string>
+  <string name="recents_multiwin_warning">Já está ativada uma sessão multi-janelas.\nToque numa aplicação que deseja ancorá-la agora.</string>
+  <string name="recents_multiwin_nolastapp">Removeu todas as aplicações recentes. Por favor, escolha uma aplicação do lançador ou gaveta de aplicações.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Forçar paragem?</string>
   <string name="force_stop_dlg_text">Se forçar a paragem de uma aplicação, ela pode ficar a funcionar incorretamente.</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">Meteorologia</string>
   <string name="omnijaws_current_text">Agora</string>
   <string name="omnijaws_package_not_available">OmniJaws não disponível</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

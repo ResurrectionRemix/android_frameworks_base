@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">已取消应用启动</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">解锁您的设备以查看最近使用</string>
+  <string name="recents_multiwin_warning">多会话已启用。\n请选择你想停靠的应用</string>
+  <string name="recents_multiwin_nolastapp">您已移除所有最近使用，请从启动器或抽屉选择应用</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">强行停止？</string>
   <string name="force_stop_dlg_text">强行停止某个应用可能导致其出现异常。</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">天气</string>
   <string name="omnijaws_current_text">当前</string>
   <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="温度">%1$s</xliff:g> - <xliff:g id="天气">%2$s</xliff:g></string>
 </resources>

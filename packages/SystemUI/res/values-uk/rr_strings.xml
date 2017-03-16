@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Скасовано запуск додатка</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Розблокуйте пристрій для перегляду нещодавніх додатків</string>
+  <string name="recents_multiwin_warning">Сесія мультивіконності вже активна. \nПросто натисніть на додаток, якщо ви хочете закріпити його зараз.</string>
+  <string name="recents_multiwin_nolastapp">Ви закрили всі нещодавні додатки, будь ласка оберіть додаток з головного екрану чи списку додатків.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Примусово зупинити?</string>
   <string name="force_stop_dlg_text">Якщо Ви примусово закриєте застосунок,
@@ -205,4 +207,6 @@
   <string name="omnijaws_label_default">Погода</string>
   <string name="omnijaws_current_text">Зараз</string>
   <string name="omnijaws_package_not_available">OmniJaws недоступний</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

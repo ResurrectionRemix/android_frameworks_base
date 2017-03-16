@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">取消應用程式啟動</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">解鎖您的裝置以檢視總覽</string>
+  <string name="recents_multiwin_warning">多視窗會話已處於活動狀態。\n如果要立即停駐，請輕觸應用程式。</string>
+  <string name="recents_multiwin_nolastapp">您刪除了所有總覽，請從啟動器或清單中選擇一個應用程式。</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">強制停止嗎？</string>
   <string name="force_stop_dlg_text">如果您強制停止應用程式，應用程式可能無法正常運作。</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">天氣</string>
   <string name="omnijaws_current_text">現在</string>
   <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g><xliff:g id="condition">%2$s </xliff:g></string>
 </resources>

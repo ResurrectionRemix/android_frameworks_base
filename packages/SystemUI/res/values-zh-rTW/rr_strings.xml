@@ -29,7 +29,7 @@
   <string name="screenrecord_notif_error">無法錄製螢幕</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">螢幕擷取畫面已刪除</string>
+  <string name="delete_screenshot_toast">螢幕截圖已刪除</string>
   <string name="gestures_message">請在此畫出手勢</string>
   <string name="rr_sys_tuner">系統使用者介面調整精靈</string>
   <!-- Strings for lockscreen shortcut hints -->
@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">取消應用程式啟動</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">解鎖您的裝置以檢視總覽</string>
+  <string name="recents_multiwin_warning">多視窗會話已處於活動狀態。\n如果要立即停駐，請輕觸應用程式。</string>
+  <string name="recents_multiwin_nolastapp">您刪除了所有總覽，請從啟動器或清單中選擇一個應用程式。</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">強制停止嗎？</string>
   <string name="force_stop_dlg_text">如果您強制停止應用程式，應用程式可能無法正常運作。</string>
@@ -204,4 +206,6 @@
   <string name="omnijaws_label_default">天氣</string>
   <string name="omnijaws_current_text">立刻</string>
   <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
+  <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>
