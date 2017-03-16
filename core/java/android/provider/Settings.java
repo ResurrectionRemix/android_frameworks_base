@@ -7954,6 +7954,14 @@ public final class Settings {
          */
         public static final String QS_AUTO_ADDED_TILES = "qs_auto_tiles";
 
+
+        /**
+         * Disable expanding quick settings on secure lock screens
+         *
+         * @hide
+         */
+        public static final String LOCK_QS_DISABLED = "lockscreen_qs_disabled";
+
         /**
          * This are the settings to be backed up.
          *

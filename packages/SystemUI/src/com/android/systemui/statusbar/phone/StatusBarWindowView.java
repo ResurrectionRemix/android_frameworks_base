@@ -793,8 +793,12 @@ public class StatusBarWindowView extends FrameLayout implements TunerService.Tun
         ContentResolver resolver = mContext.getContentResolver();
         int qsSmartPullDown = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
+        boolean isQsSecureExpandDisabled = Settings.Secure.getIntForUser(
+                resolver, Settings.Secure.LOCK_QS_DISABLED, 0,
+                UserHandle.USER_CURRENT) != 0;
         if (mNotificationPanel != null) {
             mNotificationPanel.setQsSmartPulldown(qsSmartPullDown);
+            mNotificationPanel.setQsSecureExpandDisabled(isQsSecureExpandDisabled);
         }
     }
 
