@@ -153,12 +153,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
-    <include
-        android:id="@+id/date_time_alarm_center_group"
-        layout="@layout/status_bar_alarm_center_group"
-        android:layout_alignParentTop="true"
-        android:visibility="gone" />
-
     <com.android.systemui.qs.QuickQSPanel
         android:id="@+id/quick_qs_panel"
         android:layout_width="match_parent"

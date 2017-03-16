@@ -5555,12 +5555,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String QS_EXPAND_INDICATOR_TOGGLE = "qs_expand_indicator_toggle";
 
         /**
-         * Whether to center or left justify date time group
-         * @hide
-         */
-        public static final String QS_DATE_TIME_CENTER = "qs_date_time_center";
-
-        /**
          * Whether to use the custom status bar header or not
          * @hide
          */
