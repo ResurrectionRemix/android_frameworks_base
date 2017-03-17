@@ -191,6 +191,8 @@
   <string name="toast_recents_cancel_queued_app">Avbröt appstart</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Lås upp enheten för att visa senaste appar</string>
+  <string name="recents_multiwin_warning">En flerfönstersession är redan aktiv. \nTryck bara på en app om du vill docka den nu.</string>
+  <string name="recents_multiwin_nolastapp">Du rensade alla senaste appar, välj en app från applådan.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Tvinga avslut?</string>
   <string name="force_stop_dlg_text">Om du tvingar appen att avslutas kanske den inte fungerar som den ska.</string>
