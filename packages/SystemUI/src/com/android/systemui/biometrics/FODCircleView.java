@@ -345,6 +345,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.FOD_ANIM))) {
                 updateStyle();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.FOD_BRIGHT_ICON))) {
+                updateStyle();
             }
         }
 
