@@ -34,6 +34,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.View;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -60,6 +61,9 @@ public abstract class Ticker {
     private int mTickerTextColor;
     private int mTickerFontSize = 14;
     private Typeface mFontStyle;
+
+    // The ticker color as requested by the statusbar
+    private int mDefaultColor = 0xffffffff;
 
 
     public static boolean isGraphicOrEmoji(char c) {
@@ -219,7 +223,7 @@ public abstract class Ticker {
                         n.getNotification().tickerText));
         final CharSequence text = n.getNotification().tickerText;
         final Segment newSegment = new Segment(n, icon, text);
-        final ColorStateList tickerIconColor = TickerColorHelper.getTickerIconColorList(mContext);
+        final ColorStateList tickerIconColor = TickerColorHelper.getTickerIconColorList(mContext, mDefaultColor);
 
         // If there's already a notification schedule for this package and id, remove it.
         for (int i=0; i<mSegments.size(); i++) {
@@ -246,7 +250,7 @@ public abstract class Ticker {
             updateTickerSize();
             updateTextColor();
             updateTickerFontStyle();
-            mTextSwitcher.setTextColor(mTickerTextColor);
+            setTextSwitcherColor();
             mTextSwitcher.setTextSize(mTickerFontSize);
             mTextSwitcher.setTypeface(mFontStyle);
 
@@ -291,7 +295,7 @@ public abstract class Ticker {
             mTextSwitcher.setCurrentText(text);
             updateTickerSize();
             updateTextColor();
-            mTextSwitcher.setTextColor(mTickerTextColor);
+            setTextSwitcherColor();
             mTextSwitcher.setTextSize(mTickerFontSize);
             mTextSwitcher.setTypeface(mFontStyle);
         }
@@ -302,7 +306,8 @@ public abstract class Ticker {
             while (mSegments.size() > 0) {
                 Segment seg = mSegments.get(0);
 
-                final ColorStateList tickerIconColor = TickerColorHelper.getTickerIconColorList(mContext);
+                final ColorStateList tickerIconColor =
+                        TickerColorHelper.getTickerIconColorList(mContext, mDefaultColor);
                 if (seg.first) {
                     // this makes the icon slide in for the first one for a given
                     // notification even if there are two notifications with the
@@ -317,7 +322,7 @@ public abstract class Ticker {
                 mTextSwitcher.setText(text);
                 updateTickerSize();
                 updateTextColor();
-                mTextSwitcher.setTextColor(mTickerTextColor);
+                setTextSwitcherColor();
                 mTextSwitcher.setTextSize(mTickerFontSize);
                 mTextSwitcher.setTypeface(mFontStyle);
 
@@ -439,5 +444,27 @@ public abstract class Ticker {
         mTickerTextColor = Settings.System.getInt(resolver,
                 Settings.System.STATUS_BAR_TICKER_TEXT_COLOR,
                 0xffb0b0b0);
+    }
+
+    public void setDefaultColor(int color) {
+        mDefaultColor = color;
+
+        // Update text color
+        setTextSwitcherColor();
+        // Update currently displayed icon
+        ImageView currentIcon = (ImageView) mIconSwitcher.getCurrentView();
+        if (currentIcon != null) {
+            final ColorStateList tickerIconColor =
+                    TickerColorHelper.getTickerIconColorList(mContext, mDefaultColor);
+            currentIcon.setImageTintList(tickerIconColor);
+        }
+    }
+
+    private void setTextSwitcherColor() {
+        if (mTickerTextColor == 0xffffffff) {
+            mTextSwitcher.setTextColor(mDefaultColor);
+        } else {
+            mTextSwitcher.setTextColor(mTickerTextColor);
+        }
     }
 }

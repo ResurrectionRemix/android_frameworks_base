@@ -30,13 +30,18 @@ public class TickerColorHelper {
                 Settings.System.STATUS_BAR_TICKER_TEXT_COLOR, WHITE);
     }
 
-    public static ColorStateList getTickerIconColorList(Context context) {
-        return ColorStateList.valueOf(getTickerIconColor(context));
+    public static ColorStateList getTickerIconColorList(Context context, int defaultColor) {
+        return ColorStateList.valueOf(getTickerIconColor(context, defaultColor));
     }
 
-    public static int getTickerIconColor(Context context) {
-        return Settings.System.getInt(context.getContentResolver(),
+    public static int getTickerIconColor(Context context, int defaultColor) {
+        int color = Settings.System.getInt(context.getContentResolver(),
                 Settings.System.STATUS_BAR_TICKER_ICON_COLOR,
                 WHITE);
+        if (color == WHITE) {
+            return defaultColor;
+        } else {
+            return color;
+        }
     }
 }

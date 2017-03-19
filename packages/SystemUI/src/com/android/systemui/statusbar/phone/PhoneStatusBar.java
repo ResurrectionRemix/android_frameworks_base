@@ -1994,6 +1994,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 
+    void setTickerTint(int color) {
+        if (mTicker != null) {
+            mTicker.setDefaultColor(color);
+        }
+    }
+
     public int getStatusBarHeight() {
         if (mNaturalBarHeight < 0) {
             final Resources res = mContext.getResources();
