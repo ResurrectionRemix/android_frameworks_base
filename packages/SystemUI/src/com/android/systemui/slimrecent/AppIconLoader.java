@@ -129,8 +129,7 @@ public class AppIconLoader {
                 int iconId = IconPackHelper.getInstance(context)
                         .getResourceIdForActivityIcon(info.activityInfo);
                 if (iconId != 0) {
-                    return IconPackHelper.getInstance(context).getIconPackResources()
-                            .getDrawable(iconId);
+                    return IconPackHelper.getInstance(context).getIconPackResources().getDrawable(iconId);
                 } else {
                     iconId = info.activityInfo.getIconResource();
                     if (iconId != 0) {
