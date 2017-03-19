@@ -37,6 +37,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -1161,26 +1162,33 @@ public class RecentPanelView {
             card.cardBackgroundColor = getCardBackgroundColor(task);
 
             final ExpandableCard ec = card;
-            AppIconLoader.getInstance(mContext).loadAppIcon(task.resolveInfo,
-                            task.identifier, new AppIconLoader.IconCallback() {
-                        @Override
-                        public void onDrawableLoaded(Drawable drawable) {
-                            ec.appIcon = drawable;
-                            mCardAdapter.notifyItemChanged(index);
-                        }
-                    }, mScaleFactor);
+            final Bitmap appIcon =
+                    CacheController.getInstance(mContext).getBitmapFromMemCache(task.identifier);
+            if (appIcon != null) {
+                ec.appIcon = new BitmapDrawable(mContext.getResources(), appIcon);
+                //mCardAdapter.notifyItemChanged(index);
+            } else {
+                AppIconLoader.getInstance(mContext).loadAppIcon(task.resolveInfo,
+                        task.identifier, new AppIconLoader.IconCallback() {
+                            @Override
+                            public void onDrawableLoaded(Drawable drawable) {
+                                ec.appIcon = drawable;
+                                //mCardAdapter.notifyItemChanged(index);
+                            }
+                }, mScaleFactor);
+            }
             new BitmapDownloaderTask(mContext, mScaleFactor, new DownloaderCallback() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap) {
-                            ec.screenshot = bitmap;
-                            mCardAdapter.notifyItemChanged(index);
-                        }
-                    }).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, task.persistentTaskId);
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap) {
+                    ec.screenshot = bitmap;
+                    //mCardAdapter.notifyItemChanged(index);
+                }
+            }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, task.persistentTaskId);
             card.cardClickListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startApplication(task);
-                    }
+                @Override
+                public void onClick(View v) {
+                    startApplication(task);
+                }
             };
             mCounter++;
             publishProgress(card);
