@@ -326,6 +326,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mDataConnectionApn[i] =  "";
             mCellLocation[i] = new Bundle();
             mCellInfo.add(i, null);
+            mConnectedApns[i] = new ArrayList<String>();
         }
 
         // Note that location can be null for non-phone builds like
@@ -1029,8 +1030,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 }
                 boolean modified = false;
                 if (state == TelephonyManager.DATA_CONNECTED) {
-                    if (!mConnectedApns[phoneId].contains(apnType)
-                            && !apnType.equals(PhoneConstants.APN_TYPE_IMS)) {
+                    if (!mConnectedApns[phoneId].contains(apnType)) {
                         mConnectedApns[phoneId].add(apnType);
                         if (mDataConnectionState[phoneId] != state) {
                             mDataConnectionState[phoneId] = state;
