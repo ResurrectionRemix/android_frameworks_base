@@ -147,4 +147,6 @@
     <color name="screenshot_flash_color">@android:color/white</color>
     <color name="screenshot_background_color">@android:color/black</color>
 
+    <color name="batterymeter_frame_color_darkintensity">@color/dark_mode_icon_color_dual_tone_background</color>
+
 </resources>
