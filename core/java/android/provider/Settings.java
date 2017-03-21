@@ -5829,6 +5829,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String DND_WHEN_CALL = "dnd_when_call";
 
+       /**
+        * Custom icon pack name to use for Slim Recents
+        * @hide
+        */
+        public static final String SLIM_RECENTS_ICON_PACK = "slim_recents_icon_pack";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.

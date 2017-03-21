@@ -119,11 +119,25 @@ public class AppIconLoader {
             resources = null;
         }
         if (resources != null) {
-            int iconId = info.activityInfo.getIconResource();
-            if (iconId != 0) {
-                return getFullResIcon(context, resources, iconId);
+            if (IconPackHelper.getInstance(context).isIconPackLoaded()){
+                int iconId = IconPackHelper.getInstance(context)
+                        .getResourceIdForActivityIcon(info.activityInfo);
+                if (iconId != 0) {
+                    return IconPackHelper.getInstance(context).getIconPackResources()
+                            .getDrawable(iconId);
+                } else {
+                    iconId = info.activityInfo.getIconResource();
+                    if (iconId != 0) {
+                        return getFullResIcon(context, resources, iconId);
+                    }
+                }
+            } else {
+                int iconId = info.activityInfo.getIconResource();
+                if (iconId != 0) {
+                    return getFullResIcon(context, resources, iconId);
+                }
             }
-        }
+        }    
         return getFullResDefaultActivityIcon(context);
     }
 
