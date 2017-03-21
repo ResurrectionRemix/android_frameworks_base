@@ -126,10 +126,10 @@
   <string name="quick_settings_pulse_label">Navigatiebalk visualizer</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Actieve display</string>
-  <string name="accessibility_quick_settings_ambient_display_off">Omgevingsweergave uit.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Omgevingsweergave aan</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Omgevingsweergave uitgeschakeld</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Omgevingsweergave ingeschakeld</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Actieve display uit.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Actieve display aan</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Actieve display uitgeschakeld</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Actieve display ingeschakeld</string>
   <string name="quick_settings_heads_up_label">Heads-up</string>
   <string name="accessibility_quick_settings_heads_up_off">Heads-up uit</string>
   <string name="accessibility_quick_settings_heads_up_on">Heads-up aan</string>
@@ -150,6 +150,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Taal</string>
   <string name="quick_settings_locale_more_locales_toast">Configureer eerst meerdere talen om te kunnen wisselen</string>
+  <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App gestopt</string>
@@ -208,4 +209,5 @@
   <string name="omnijaws_package_not_available">OmniJaws niet beschikbaar</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
+  <!-- volte icon switch -->
 </resources>

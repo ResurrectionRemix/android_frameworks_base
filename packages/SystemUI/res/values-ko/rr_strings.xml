@@ -150,6 +150,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">언어</string>
   <string name="quick_settings_locale_more_locales_toast">토글 기능을 활성화 하려면 다중 언어를 설정하시기 바랍니다</string>
+  <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">애플리케이션 종료됨</string>
@@ -189,7 +190,13 @@
   <!-- Slim recents app sidebar queue app toast -->
   <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
+  <string name="kill">앱 종료</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">오류</string>
+  <string name="omnijaws_service_unkown">날씨 데이터 없음</string>
+  <string name="omnijaws_detail_header">날씨</string>
+  <string name="omnijaws_label_default">날씨</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
+  <!-- volte icon switch -->
 </resources>

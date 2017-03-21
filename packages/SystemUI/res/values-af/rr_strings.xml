@@ -31,6 +31,7 @@
   <!-- Pulse Tile -->
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
+  <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->
@@ -43,4 +44,5 @@
   <!-- Kill button in notification guts -->
   <!-- OmniJAWS -->
   <!-- Weather string format in expanded statusbar header -->
+  <!-- volte icon switch -->
 </resources>

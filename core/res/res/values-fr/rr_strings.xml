@@ -16,7 +16,7 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">Défaut</string>
+  <string name="default_string">Par défaut</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">Le système ne correspond pas à votre appareil. Veuillez flasher <xliff:g id="string">%s</xliff:g> version adaptée à votre appareil</string>
   <string name="global_action_screenrecord">Capture vidéo</string>

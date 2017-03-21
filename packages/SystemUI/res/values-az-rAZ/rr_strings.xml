@@ -150,6 +150,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Dil</string>
   <string name="quick_settings_locale_more_locales_toast">Keçid funksionallığını aktivləşdirmək üçün xahiş edirik birdən çox dil quraşdırın</string>
+  <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Tətbiq Sonlandırıldı</string>
@@ -192,6 +193,7 @@
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Son istifadə olunanları görmək üçün cihazınızın kilidini açın</string>
   <string name="recents_multiwin_warning">Çoxlu pəncərə sessiyası artıq aktivdir.\nİndi sabitləmək istəyirsinizsə bir tətbiqə toxunun</string>
+  <string name="recents_multiwin_nolastapp">Son istifadə olunanları təmizlədiniz, lütfən başladıcıdan və yaxud tətbiq menyusundan tətbiq seçin.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Durmaya zorla?</string>
   <string name="force_stop_dlg_text">Tətbiqetməni zorla dayandırsanız, səhv işləyə bilər</string>
@@ -208,4 +210,5 @@
 </string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+  <!-- volte icon switch -->
 </resources>

@@ -150,6 +150,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Limba</string>
   <string name="quick_settings_locale_more_locales_toast">Vă rugăm să configuraţi mai multe limbi pentru a activa funcția de comutare</string>
+  <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicație oprită</string>
@@ -188,19 +189,25 @@
   <string name="tm_clear_task">Curăţat</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Lansare %s după închiderea recente</string>
+  <string name="toast_recents_cancel_queued_app">Lansare aplicație anulată</string>
   <!-- Sim recents on keyguard -->
   <string name="slim_recent_keyguard">Deblocați aparatul pentru a vizualiza recente</string>
+  <string name="recents_multiwin_warning">O sesiune de ferestre multiple este deja activă.\nApăsați pe o aplicație dacă doriți să o andocați.</string>
+  <string name="recents_multiwin_nolastapp">Ați golit lista de aplicații recente, vă rugăm alegeți o aplicație din launcher sau lista de aplicații.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Oprire forțată?</string>
   <string name="force_stop_dlg_text">Dacă forţaţi oprirea unei aplicații, aceasta se poate comporta necorespunzător.</string>
   <string name="dlg_ok">OK</string>
   <string name="dlg_cancel">Renunță</string>
+  <string name="kill">Oprește aplicațiile</string>
   <!-- OmniJAWS -->
   <string name="omnijaws_service_error">Eroare</string>
+  <string name="omnijaws_service_unkown">Date meteo indisponibile</string>
   <string name="omnijaws_detail_header">Meteo</string>
   <string name="omnijaws_label_default">Meteo</string>
   <string name="omnijaws_current_text">Acum</string>
   <string name="omnijaws_package_not_available">OmniJaws nu este disponibil</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+  <!-- volte icon switch -->
 </resources>

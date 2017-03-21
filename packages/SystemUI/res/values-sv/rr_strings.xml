@@ -99,7 +99,7 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC Av</string>
-  <string name="quick_settings_screenrecord">SKärminspelning</string>
+  <string name="quick_settings_screenrecord">Skärminspelning</string>
   <string name="quick_settings_screenrecord_on">Spelar in...</string>
   <string name="quick_settings_navigation_bar">Navigeringsfält</string>
   <string name="quick_settings_smartbar">Smart stapel</string>
@@ -150,6 +150,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Språk</string>
   <string name="quick_settings_locale_more_locales_toast">Konfigurera flera språk om du vill växla mellan funktioner</string>
+  <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App tvångsavslutad</string>
@@ -208,4 +209,5 @@
   <string name="omnijaws_package_not_available">OmniJaws är inte tillgänglig.</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+  <!-- volte icon switch -->
 </resources>

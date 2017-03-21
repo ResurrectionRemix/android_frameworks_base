@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Implicit</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Imaginea dumneavoastră de furnizor nu corespunde sistemului. Vă rugăm faceți flash la imaginea de furnizor <xliff:g id="string">%s </xliff:g> pentru dispozitivul dvs</string>
+  <string name="system_error_vendorprint">Imaginea dumneavoastră de furnizor nu corespunde sistemului. Vă rugăm faceți flash la imaginea de furnizor <xliff:g id="string">%s </xliff:g> pentru aparatul dvs</string>
   <string name="global_action_screenrecord">Captura de ecran</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Estompare</string>
@@ -48,4 +48,5 @@
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">resetare statistici baterie</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Permite unei aplicații să reseteze datele de utilizare curente la nivelul de bază al bateriei.</string>
 </resources>
