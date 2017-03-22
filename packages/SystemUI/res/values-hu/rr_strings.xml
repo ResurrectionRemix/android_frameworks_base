@@ -147,10 +147,26 @@
   <string name="quick_settings_location_gps_only_label">Csak GPS</string>
   <string name="quick_settings_location_high_accuracy_label">Nagy pontosság</string>
   <string name="quick_settings_location_off_label">Hely ki</string>
+  <string name="quick_settings_location_off_custom_label">Hely</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Nyelv</string>
   <string name="quick_settings_locale_more_locales_toast">Kérjük, állítson be több nyelvet a váltás engedélyezéséhez</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">Iránytű</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">Inicializálás\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">Iránytű ki.</string>
+  <string name="accessibility_quick_settings_compass_on">Iránytű be.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Iránytű kikapcsolva.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Iránytű bekapcsolva.</string>
+  <string name="quick_settings_compass_N">É</string>
+  <string name="quick_settings_compass_NE">ÉK</string>
+  <string name="quick_settings_compass_E">K</string>
+  <string name="quick_settings_compass_SE">DK</string>
+  <string name="quick_settings_compass_S">D</string>
+  <string name="quick_settings_compass_SW">DNy</string>
+  <string name="quick_settings_compass_W">Ny</string>
+  <string name="quick_settings_compass_NW">ÉNy</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Alkalmazás kilőve</string>
@@ -210,4 +226,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
 </resources>

@@ -147,10 +147,26 @@
   <string name="quick_settings_location_gps_only_label">Chỉ thiết bị</string>
   <string name="quick_settings_location_high_accuracy_label">Chính xác cao</string>
   <string name="quick_settings_location_off_label">Tắt vị trí</string>
+  <string name="quick_settings_location_off_custom_label">Vị trí</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Ngôn ngữ</string>
   <string name="quick_settings_locale_more_locales_toast">Vui lòng thiết lập nhiều ngôn ngữ để kích hoạt chức năng chuyển đổi</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">La bàn</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">Đang khởi tạo\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">Tắt la bàn.</string>
+  <string name="accessibility_quick_settings_compass_on">Mở la bàn.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">La bàn đã tắt.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">La bàn đã bật.</string>
+  <string name="quick_settings_compass_N">B</string>
+  <string name="quick_settings_compass_NE">ĐB</string>
+  <string name="quick_settings_compass_E">Đ</string>
+  <string name="quick_settings_compass_SE">ĐN</string>
+  <string name="quick_settings_compass_S">N</string>
+  <string name="quick_settings_compass_SW">TN</string>
+  <string name="quick_settings_compass_W">T</string>
+  <string name="quick_settings_compass_NW">TB</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Ứng dụng đã tắt</string>
@@ -210,4 +226,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
 </resources>

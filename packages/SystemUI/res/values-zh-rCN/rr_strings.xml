@@ -147,10 +147,26 @@
   <string name="quick_settings_location_gps_only_label">仅限设备</string>
   <string name="quick_settings_location_high_accuracy_label">高精确度</string>
   <string name="quick_settings_location_off_label">关闭定位服务</string>
+  <string name="quick_settings_location_off_custom_label">位置</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">语言</string>
   <string name="quick_settings_locale_more_locales_toast">请配置多种语言以使用切换功能</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">罗盘</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">正在初始化\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">罗盘关闭</string>
+  <string name="accessibility_quick_settings_compass_on">罗盘开启</string>
+  <string name="accessibility_quick_settings_compass_changed_off">罗盘已关闭</string>
+  <string name="accessibility_quick_settings_compass_changed_on">罗盘已开启</string>
+  <string name="quick_settings_compass_N">正北</string>
+  <string name="quick_settings_compass_NE">东北</string>
+  <string name="quick_settings_compass_E">正东</string>
+  <string name="quick_settings_compass_SE">东南</string>
+  <string name="quick_settings_compass_S">正南</string>
+  <string name="quick_settings_compass_SW">西南</string>
+  <string name="quick_settings_compass_W">正西</string>
+  <string name="quick_settings_compass_NW">西北</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">应用已终止</string>
@@ -210,4 +226,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="温度">%1$s</xliff:g> - <xliff:g id="天气">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
 </resources>
