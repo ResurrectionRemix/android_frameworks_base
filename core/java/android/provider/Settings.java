@@ -8920,6 +8920,17 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String NIGHT_DISPLAY_CUSTOM_END_TIME = "night_display_custom_end_time";
 
         /**
+         * Display style of the battery tile
+         * 0: Display the battery an icon in portrait mode
+         * 2: Display the battery as a circle
+         * 5: Display the battery an icon in landscape mode
+         * 7: Display the battery as solid circle
+         * default: 0
+         * @hide
+         */
+        public static final String BATTERY_TILE_STYLE = "battery_tile_style";
+
+        /**
          * Whether brightness should automatically adjust based on twilight state.
          * @hide
          */
@@ -9195,7 +9206,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
             CAMERA_DOUBLE_TWIST_TO_FLIP_ENABLED,
             CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
             SYSTEM_NAVIGATION_KEYS_ENABLED,
-            STATUS_BAR_BATTERY_STYLE_TILE,
+            BATTERY_TILE_STYLE,
             DOZE_ENABLED,
             DOZE_PULSE_ON_PICK_UP,
             DOZE_PULSE_ON_DOUBLE_TAP,
