@@ -83,4 +83,8 @@
     <!-- Whether to enable HumanInteractionController by default -->
     <java-symbol type="bool" name="config_HICEnabledDefault" />
 
+    <!-- Tethering -->
+    <java-symbol type="string" name="tethered_notification_no_device_message" />
+    <java-symbol type="string" name="tethered_notification_one_device_message" />
+    <java-symbol type="string" name="tethered_notification_multi_device_message" />
 </resources>
