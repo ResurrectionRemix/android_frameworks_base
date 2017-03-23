@@ -24,8 +24,8 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -56,12 +56,9 @@ public class CacheController {
     /**
      * Memory Cache.
      */
-    protected LruCache<String, Bitmap> mMemoryCache;
+    protected LruCache<String, Drawable> mMemoryCache;
 
     private Context mContext;
-
-    private static String sKeyExcludeRecycle;
-    private static boolean sRecentScreenShowing;
 
     // Array list of all current keys.
     private final ArrayList<String> mKeys = new ArrayList<String>();
@@ -103,7 +100,6 @@ public class CacheController {
                 }
                 for (String key : keysToRemove) {
                     Log.d(TAG, "application icon removed for uri= " + key);
-                    setKeyExcludeRecycle(key);
                     removeBitmapFromMemCache(key);
                 }
                 if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
@@ -187,53 +183,25 @@ public class CacheController {
         // int in its constructor.
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 
-        // Do not allow more then 1/8 from max available memory.
-        if (cacheSize > maxMemory / 8) {
-            cacheSize = maxMemory / 8;
+        // Do not allow more then 1/6 from max available memory.
+        if (cacheSize > maxMemory / 6) {
+            cacheSize = maxMemory / 6;
         }
 
         if (mMemoryCache == null) {
-            mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+            mMemoryCache = new LruCache<String, Drawable>(cacheSize) {
                 @Override
-                protected int sizeOf(String key, Bitmap bitmap) {
-                    return bitmap.getByteCount() / 1024;
+                protected int sizeOf(String key, Drawable bitmap) {
+                    if (bitmap instanceof BitmapDrawable){
+                        return ((BitmapDrawable)bitmap).getBitmap().getByteCount() / 1024;
+                    } else {
+                        return 1;
+                    }
                 }
 
                 @Override
                 protected void entryRemoved(boolean evicted, String key,
-                        Bitmap oldBitmap, Bitmap newBitmap) {
-                    /**
-                     * For normal LRU cache designs this is not a valid approach.
-                     * Well in our case it is another case. The LRU cache control
-                     * was designed in this way that we can be 100% sure if a put(K, V)
-                     * or a remove(V) was called that we do not have any reference to
-                     * this bitmap anymore. So it can be savely recycled.
-                     * Cases are:
-                     * 1. New bitmap was put into the LRU cache. Shortly before the loaders
-                     *    assign the new bitmap to the imageview. So old one has no reference.
-                     * 2. Task entry was removed which removes as well any reference to the bitmap.
-                     *    So we are save here as well.
-                     * 3. The CacheController broadcastreceiver removes the bitmap from
-                     *    the LRU cache. When this happens we recycle only if the recent screen
-                     *    is not shown due that we may have a valid reference. This scenario
-                     *    is realy realy rare. So we are save and can recycle in most of the cases
-                     *    if an app was updated by the user. So we do not need to worry to produce
-                     *    a memory leak here at all.
-                     * 4. The case that the entry was evicted. Here we do not recycle the old
-                     *    image. Well this case should never happen due that our LRU cache is
-                     *    exactly meassured to keep all tasks in memory.
-                     *    Just in case we still check for it.
-                     */
-                    if (!evicted) {
-                        if (key != null && key.equals(getKeyExcludeRecycle())) {
-                            setKeyExcludeRecycle(null);
-                            if (isRecentScreenShowing()) {
-                                return;
-                            }
-                        }
-                        oldBitmap.recycle();
-                        oldBitmap = null;
-                    }
+                        Drawable oldBitmap, Drawable newBitmap) {
                 }
             };
         }
@@ -250,7 +218,7 @@ public class CacheController {
     /**
      * Add the bitmap to the LRU cache.
      */
-    protected void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+    protected void addBitmapToMemoryCache(String key, Drawable bitmap) {
         if (key != null && bitmap != null) {
             if (key.startsWith(RecentPanelView.TASK_PACKAGE_IDENTIFIER)) {
                 mKeys.add(key);
@@ -260,21 +228,9 @@ public class CacheController {
     }
 
     /**
-     * Add the bitmap from Drawable to the LRU cache.
-     */
-    protected void addBitmapDrawableToMemoryCache(String key, BitmapDrawable bitmap) {
-        if (key != null && bitmap != null) {
-            if (key.startsWith(RecentPanelView.TASK_PACKAGE_IDENTIFIER)) {
-                mKeys.add(key);
-            }
-            mMemoryCache.put(key, bitmap.getBitmap());
-        }
-    }
-
-    /**
      * Get the bitmap from the LRU cache.
      */
-    protected Bitmap getBitmapFromMemCache(String key) {
+    protected Drawable getBitmapFromMemCache(String key) {
         if (key == null) {
             return null;
         }
@@ -284,7 +240,7 @@ public class CacheController {
     /**
      * Remove a bitmap from the LRU cache.
      */
-    protected Bitmap removeBitmapFromMemCache(String key) {
+    protected Drawable removeBitmapFromMemCache(String key) {
         if (key == null) {
             return null;
         }
@@ -292,35 +248,6 @@ public class CacheController {
             mKeys.remove(key);
         }
         return mMemoryCache.remove(key);
-    }
-
-    /**
-     * Set key which should be excluded from recycle if recent panel is showing.
-     * Call by BroadCastReceiver.
-     */
-    protected void setKeyExcludeRecycle(String key) {
-        sKeyExcludeRecycle = key;
-    }
-
-    /**
-     * Get key which should be excluded from recycle.
-     */
-    private static String getKeyExcludeRecycle() {
-        return sKeyExcludeRecycle;
-    }
-
-    /**
-     * Set wether recent screen is showing. Call from RecentController.
-     */
-    protected void setRecentScreenShowing(boolean showing) {
-        sRecentScreenShowing = showing;
-    }
-
-    /**
-     * Wether recent screen is showing.
-     */
-    private static boolean isRecentScreenShowing() {
-        return sRecentScreenShowing;
     }
 
     /**

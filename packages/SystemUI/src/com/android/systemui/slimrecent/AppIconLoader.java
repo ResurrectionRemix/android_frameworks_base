@@ -125,24 +125,18 @@ public class AppIconLoader {
             resources = null;
         }
         if (resources != null) {
+            int iconId = 0;
             if (IconPackHelper.getInstance(context).isIconPackLoaded()){
-                int iconId = IconPackHelper.getInstance(context)
-                        .getResourceIdForActivityIcon(info.activityInfo);
+                iconId = IconPackHelper.getInstance(context).getResourceIdForActivityIcon(info.activityInfo);
                 if (iconId != 0) {
                     return IconPackHelper.getInstance(context).getIconPackResources().getDrawable(iconId);
-                } else {
-                    iconId = info.activityInfo.getIconResource();
-                    if (iconId != 0) {
-                        return getFullResIcon(context, resources, iconId);
-                    }
-                }
-            } else {
-                int iconId = info.activityInfo.getIconResource();
-                if (iconId != 0) {
-                    return getFullResIcon(context, resources, iconId);
                 }
             }
-        }    
+            iconId = info.activityInfo.getIconResource();
+            if (iconId != 0) {
+                return getFullResIcon(context, resources, iconId);
+            }
+        }
         return getFullResDefaultActivityIcon(context);
     }
 
@@ -237,7 +231,7 @@ public class AppIconLoader {
             if (bitmap != null && context != null && bitmap instanceof BitmapDrawable) {
                 // Put our bitmap intu LRU cache for later use.
                 CacheController.getInstance(context)
-                        .addBitmapDrawableToMemoryCache(mLRUCacheKey, (BitmapDrawable)bitmap);
+                        .addBitmapToMemoryCache(mLRUCacheKey, (BitmapDrawable)bitmap);
             }
         }
     }
