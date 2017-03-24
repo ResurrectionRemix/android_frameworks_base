@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.slim;
+package com.android.internal.util.rr;
 
 import android.graphics.Color;
 

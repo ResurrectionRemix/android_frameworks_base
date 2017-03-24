@@ -422,93 +422,6 @@ public class RecentController implements RecentPanelView.OnExitListener,
         }
     }
 
-    public void startMultiWindow() {
-        SystemServicesProxy ssp = SystemServicesProxy.getInstance(mContext);
-        ActivityManager.RunningTaskInfo runningTask = ssp.getRunningTask();
-        int createMode = ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT;
-        if (ssp.startTaskInDockedMode(runningTask.id, createMode)) {
-            openLastApptoBottom();
-            if (!isShowing()) {
-                showRecents();
-            }
-        }
-    }
-
-    public void openLastApptoBottom() {
-
-        int taskid = 0;
-        boolean doWeHaveAtask = true;
-
-        final ActivityManager am =
-                (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-        ActivityManager.RunningTaskInfo lastTask = getLastTask(am);
-        if (lastTask != null) {
-            // user already ran another app in this session, we can dock it to the other side
-            taskid = lastTask.id;
-        } else {
-            // no last app for this session, let's search in the previous session recent apps
-            List<ActivityManager.RecentTaskInfo> recentTasks =
-                    am.getRecentTasksForUser(ActivityManager.getMaxRecentTasksStatic(),
-                    ActivityManager.RECENT_IGNORE_HOME_STACK_TASKS
-                            | ActivityManager.RECENT_INGORE_DOCKED_STACK_TOP_TASK
-                            | ActivityManager.RECENT_INGORE_PINNED_STACK_TASKS
-                            | ActivityManager.RECENT_IGNORE_UNAVAILABLE
-                            | ActivityManager.RECENT_INCLUDE_PROFILES,
-                            UserHandle.CURRENT.getIdentifier());
-            if (recentTasks != null && recentTasks.size() > 1) {
-                ActivityManager.RecentTaskInfo recentInfo = recentTasks.get(1);
-                taskid = recentInfo.persistentId;
-            } else  {
-                // user cleared all apps, we don't have any taskid to choose
-                doWeHaveAtask = false;
-            }
-        }
-        if (doWeHaveAtask) {
-            try {
-                ActivityOptions options = ActivityOptions.makeBasic();
-                ActivityManagerNative.getDefault()
-                        .startActivityFromRecents(taskid, options.toBundle());
-            } catch (RemoteException e) {}
-        } else {
-            Toast noLastapp = Toast.makeText(mContext,
-                    R.string.recents_multiwin_nolastapp, Toast.LENGTH_LONG);
-            noLastapp.show();
-        }
-    }
-
-    private ActivityManager.RunningTaskInfo getLastTask(final ActivityManager am) {
-        final String defaultHomePackage = resolveCurrentLauncherPackage();
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(5);
-
-        for (int i = 1; i < tasks.size(); i++) {
-            String packageName = tasks.get(i).topActivity.getPackageName();
-            if (!packageName.equals(defaultHomePackage)
-                    && !packageName.equals(mContext.getPackageName())
-                    && !packageName.equals("com.android.systemui")) {
-                return tasks.get(i);
-            }
-        }
-        return null;
-    }
-
-    public void openOnDraggedApptoOtherSide(int taskid) {
-        final ActivityManager am =
-                (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-        try {
-            ActivityOptions options = ActivityOptions.makeBasic();
-            ActivityManagerNative.getDefault()
-                    .startActivityFromRecents(taskid, options.toBundle());
-        } catch (RemoteException e) {}
-    }
-
-    private String resolveCurrentLauncherPackage() {
-        final Intent launcherIntent = new Intent(Intent.ACTION_MAIN)
-                .addCategory(Intent.CATEGORY_HOME);
-        final PackageManager pm = mContext.getPackageManager();
-        final ResolveInfo launcherInfo = pm.resolveActivity(launcherIntent, 0);
-        return launcherInfo.activityInfo.packageName;
-    }
-
     /**
      * External call. Preload recent tasks.
      */
@@ -1134,7 +1047,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
         return totalMem;
     }
 
-    public void startMultiWin() {
+    public void startMultiWindow() {
         SystemServicesProxy ssp = SystemServicesProxy.getInstance(mContext);
         ActivityManager.RunningTaskInfo runningTask = ssp.getRunningTask();
         int createMode = ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT;
@@ -1144,7 +1057,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
                 showRecents();
             }
         }
-   }
+    }
 
     public void openLastApptoBottom() {
 
