@@ -25,6 +25,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -287,8 +288,9 @@ public class SignalClusterView
         }
         final int slotId = SubscriptionManager.getSlotId(subId);
         final int simState = SubscriptionManager.getSimStateForSlotIdx(slotId);
+        final boolean mIsRequired = isNosimRequired() && simState == TelephonyManager.SIM_STATE_NOT_READY;
         state.mMobileVisible = statusIcon.visible && !mBlockMobile &&
-                simState != TelephonyManager.SIM_STATE_NOT_READY;
+              !mIsRequired;
         state.mMobileStrengthId = statusIcon.icon;
         state.mMobileTypeId = statusType;
         state.mMobileDescription = statusIcon.contentDescription;
@@ -718,4 +720,9 @@ public class SignalClusterView
             setTint(mMobileType, StatusBarIconController.getTint(tintArea, mMobileType, tint));
         }
     }
+
+        public boolean isNosimRequired() {
+            return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.NO_SIM_CLUSTER_SWITCH, 0) == 1;
+        }
 }
