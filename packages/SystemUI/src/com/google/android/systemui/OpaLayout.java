@@ -583,10 +583,11 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         mOpaEnabled = true;
         int visibility;
         if (b2) {
+            // Don't show the OPAs right away, they'll be faded in during first animation
 //            visibility = View.VISIBLE;
-            showAllOpa();
         } else {
 //            visibility = View.INVISIBLE;
+            // hide the OPAs
             hideAllOpa();
         }
 //        mBlue.setVisibility(visibility);
