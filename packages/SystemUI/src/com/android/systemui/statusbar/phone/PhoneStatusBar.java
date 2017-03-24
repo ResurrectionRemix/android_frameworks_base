@@ -767,18 +767,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         ContentResolver resolver = mContext.getContentResolver();
 		if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_FOURG))) {
-                    mShow4G = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.SHOW_FOURG,
-                            0, UserHandle.USER_CURRENT) == 1;
                     mNetworkController.onConfigurationChanged();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_THREEG))) {
-                    mShow3G = Settings.System.getIntForUser(
-                            mContext.getContentResolver(),
-                            Settings.System.SHOW_THREEG,
-                            0, UserHandle.USER_CURRENT) == 1;
-                        	mNetworkController.onConfigurationChanged();
+                    mNetworkController.onConfigurationChanged();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_MODE_COLOR))) {
                     mBatterySaverWarningColor = Settings.System.getIntForUser(
@@ -878,12 +870,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             UpdateEmptyShadeShowCarrierName();
             UpdateEmptyShadeShowWifiName();
             UpdateEmptyShadeTextColor();
-            
-            boolean mShow4G = Settings.System.getIntForUser(resolver,
-                    Settings.System.SHOW_FOURG, 0, UserHandle.USER_CURRENT) == 1;
-	  
-	    	boolean mShow3G = Settings.System.getIntForUser(resolver,
-            		Settings.System.SHOW_THREEG, 0, UserHandle.USER_CURRENT) == 1;
 
 
             mMaxKeyguardNotifConfig = Settings.System.getIntForUser(resolver,
