@@ -5712,6 +5712,18 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String SLIM_RECENTS_MEM_DISPLAY_LONG_CLICK_CLEAR =
                 "slim_recents_mem_display_long_click_clear";
 
+       /**
+         * Slim Recents MemBar Color
+         * @hide
+         */
+        public static final String SLIM_MEM_BAR_COLOR= "slim_mem_bar_color";
+
+       /**
+         * Slim Recents MemBar Text Color
+         * @hide
+         */
+        public static final String SLIM_MEM_TEXT_COLOR= "slim_mem_text_color";
+
         /**
          * Unlock keystore with fingerprint after reboot
          * @hide
