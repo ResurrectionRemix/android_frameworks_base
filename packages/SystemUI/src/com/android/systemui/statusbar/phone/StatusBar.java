@@ -6729,6 +6729,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                  Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY), 
                  false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.NO_SIM_CLUSTER_SWITCH),
+                 false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6786,7 +6789,10 @@ public class StatusBar extends SystemUI implements DemoMode,
                                         0, UserHandle.USER_CURRENT) == 1;
                     RecentsActivity.startBlurTask();
                     updatePreferences(mContext);
-            }
+            }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NO_SIM_CLUSTER_SWITCH))) {
+                    trytoinflateclusters();
+             }
         }
 
         public void update() {
@@ -8955,4 +8961,11 @@ public class StatusBar extends SystemUI implements DemoMode,
             throw e;
         }
     }
+
+   public void trytoinflateclusters() {
+        try {
+             inflateSignalClusters();
+        } catch (Exception e) {
+        }
+   }
 }

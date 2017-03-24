@@ -4415,6 +4415,12 @@ public final class Settings {
 
         /**
          *
+         * Null Signal indicator disabling switch
+         * @hide
+         */
+        public static final String NO_SIM_CLUSTER_SWITCH = "no_sim_cluster_switch";
+
+        /**
          * @hide
          */
         public static final String QUICK_TILE_ADD = "quick_tile_add";

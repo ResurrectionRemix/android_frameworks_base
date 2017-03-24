@@ -322,8 +322,9 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         }
         final int slotId = SubscriptionManager.getSlotId(subId);
         final int simState = SubscriptionManager.getSimStateForSlotIdx(slotId);
+        final boolean mIsRequired = isNosimRequired() && simState == TelephonyManager.SIM_STATE_NOT_READY;
         state.mMobileVisible = statusIcon.visible && !mBlockMobile &&
-                simState != TelephonyManager.SIM_STATE_NOT_READY;
+              !mIsRequired;
         state.mMobileStrengthId = statusIcon.icon;
         state.mMobileTypeId = statusType;
         state.mMobileDescription = statusIcon.contentDescription;
@@ -795,4 +796,9 @@ public class SignalClusterView extends LinearLayout implements NetworkController
                     DarkIconDispatcher.getTint(tintArea, mMobileActivityOut, tint));
         }
     }
+
+        public boolean isNosimRequired() {
+            return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.NO_SIM_CLUSTER_SWITCH, 0) == 1;
+        }
 }
