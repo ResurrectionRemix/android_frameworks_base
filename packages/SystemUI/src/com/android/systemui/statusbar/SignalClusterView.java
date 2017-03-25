@@ -522,10 +522,12 @@ public class SignalClusterView
             mAirplane.setVisibility(View.GONE);
         }
 
-        if (mMobileIms && !mBlockVolte){
-            mMobileImsImageView.setVisibility(View.VISIBLE);
-        } else {
-            mMobileImsImageView.setVisibility(View.GONE);
+        if (mMobileImsImageView != null) {
+            if (mMobileIms && !mBlockVolte){
+                mMobileImsImageView.setVisibility(View.VISIBLE);
+            } else {
+                mMobileImsImageView.setVisibility(View.GONE);
+            }
         }
 
         if (mIsAirplaneMode && mWifiVisible) {
