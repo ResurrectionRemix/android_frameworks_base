@@ -3978,6 +3978,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String NAVBAR_BUTTON_COLOR= "navbar_button_color";
 
+        /**
+         * Navbar Button Custom icon Color Switch
+         * @hide
+         */
+        public static final String NAVBAR_BUTON_CUSTOM_ICON_SWITCH = "navbar_button_custom_icon_switch";
+
  	    /**
          * Position of Custom logo
          * @hide
