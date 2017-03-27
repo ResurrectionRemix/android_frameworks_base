@@ -147,10 +147,26 @@
   <string name="quick_settings_location_gps_only_label">Nur Gerät</string>
   <string name="quick_settings_location_high_accuracy_label">Hohe Genauigkeit</string>
   <string name="quick_settings_location_off_label">Standortbestimmung aus</string>
+  <string name="quick_settings_location_off_custom_label">Standort</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Sprache</string>
   <string name="quick_settings_locale_more_locales_toast">Bitte richten Sie mehrere Sprachen ein, um die Umschaltfunktion zu aktivieren</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">Kompass</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">Initialisierung\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">Kompass aus</string>
+  <string name="accessibility_quick_settings_compass_on">Kompass an</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Kompass ausgeschaltet.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Kompass eingeschaltet.</string>
+  <string name="quick_settings_compass_N">N</string>
+  <string name="quick_settings_compass_NE">NO</string>
+  <string name="quick_settings_compass_E">O</string>
+  <string name="quick_settings_compass_SE">SO</string>
+  <string name="quick_settings_compass_S">S</string>
+  <string name="quick_settings_compass_SW">SW</string>
+  <string name="quick_settings_compass_W">W</string>
+  <string name="quick_settings_compass_NW">NW</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Anwendung beendet</string>
@@ -187,13 +203,13 @@
   <string name="tasklist_memory_usage">"Freier • Gesamtspeicher: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Ein Launcher sollte aktiv bleiben!</string>
   <string name="tm_clear_task">Bereinigen</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Eine Multiwindow Sitzung ist schon aktiv.\nKlicke einfach auf eine App wenn du es jetzt andocken willst</string>
+  <string name="recents_multiwin_nolastapp">Du hast alle zuletzt geöffnete Apps geschlossen, bitte wähle eine App aus dem Launcher.</string>
+  <string name="slim_recent_keyguard">Entsperren um den Anwendungsverlauf anzuzeigen</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Starte %s nach dem Schließen des Anwendungsverlaufs</string>
   <string name="toast_recents_cancel_queued_app">App-Start abgebrochen</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Entsperren um den Anwendungsverlauf anzuzeigen</string>
-  <string name="recents_multiwin_warning">Eine Multiwindow Sitzung ist schon aktiv.\nKlicke einfach auf eine App wenn du es jetzt andocken willst</string>
-  <string name="recents_multiwin_nolastapp">Du hast alle zuletzt geöffnete Apps geschlossen, bitte wähle eine App aus dem Launcher.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Beenden erzwingen?</string>
   <string name="force_stop_dlg_text">Das Beenden der App zu erzwingen kann zu unerwünschtem Verhalten führen.</string>
@@ -210,4 +226,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
 </resources>

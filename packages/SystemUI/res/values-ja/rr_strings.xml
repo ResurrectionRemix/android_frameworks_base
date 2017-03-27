@@ -151,6 +151,7 @@
   <string name="quick_settings_locale_label">言語</string>
   <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするので複数の言語を設定してください。</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">アプリを強制終了しました</string>
@@ -187,9 +188,11 @@
   <string name="tasklist_memory_usage">"空きメモリ/合計メモリ: [<xliff:g id="number">%s</xliff:g>] / [<xliff:g id="name">%s</xliff:g>]"</string>
   <string name="message_keep_one_launcher">少なくとも1つのホームアプリを起動しておいて下さい！</string>
   <string name="tm_clear_task">消去</string>
+  <!-- Slim Recents -->
   <!-- Slim recents app sidebar queue app toast -->
-  <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">強制停止しますか？</string>
+  <string name="force_stop_dlg_text">アプリを強制停止すると、アプリが正常に機能しないことがあります。</string>
   <string name="dlg_ok">はい</string>
   <string name="dlg_cancel">キャンセル</string>
   <string name="kill">アプリを終了</string>
@@ -200,4 +203,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g><xliff:g id="condition">%2$s </xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
 </resources>

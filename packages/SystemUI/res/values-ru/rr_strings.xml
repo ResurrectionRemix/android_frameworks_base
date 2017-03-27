@@ -203,13 +203,13 @@
   <string name="tasklist_memory_usage">"Свободно • Всего : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Должен быть как минимум один домашний экран!</string>
   <string name="tm_clear_task">Очистить</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Мультиоконная сессия уже активна.\nПросто нажмите на приложение, чтобы прикрепить.</string>
+  <string name="recents_multiwin_nolastapp">Вы убрали все недавние приложения, пожалуйста выберите приложение с рабочего стола или из меню приложений.</string>
+  <string name="slim_recent_keyguard">Разблокируйте устройство для просмотра меню недавних приложений</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Запустить %s после закрытия меню недавних приложений</string>
   <string name="toast_recents_cancel_queued_app">Запуск приложения отменен</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Разблокируйте устройство для просмотра меню недавних приложений</string>
-  <string name="recents_multiwin_warning">Мультиоконная сессия уже активна.\nПросто нажмите на приложение, чтобы прикрепить.</string>
-  <string name="recents_multiwin_nolastapp">Вы убрали все недавние приложения, пожалуйста выберите приложение с рабочего стола или из меню приложений.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Остановить принудительно?</string>
   <string name="force_stop_dlg_text">Принудительное закрытие приложения может отразиться на его функциональности.</string>

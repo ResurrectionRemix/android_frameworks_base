@@ -187,13 +187,13 @@
   <string name="tasklist_memory_usage">"Boş • Ümumi Yaddaş : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Ən az bir başladıcı olmalıdır!</string>
   <string name="tm_clear_task">TƏMİZLƏMƏK</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Çoxlu pəncərə sessiyası artıq aktivdir.\nİndi sabitləmək istəyirsinizsə bir tətbiqə toxunun</string>
+  <string name="recents_multiwin_nolastapp">Son istifadə olunanları təmizlədiniz, lütfən başladıcıdan və yaxud tətbiq menyusundan tətbiq seçin.</string>
+  <string name="slim_recent_keyguard">Son istifadə olunanları görmək üçün cihazınızın kilidini açın</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Son istifadə olunanları bağladıqdan sonra %s başlat</string>
   <string name="toast_recents_cancel_queued_app">Tətbiq başlatma ləğv edildi</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Son istifadə olunanları görmək üçün cihazınızın kilidini açın</string>
-  <string name="recents_multiwin_warning">Çoxlu pəncərə sessiyası artıq aktivdir.\nİndi sabitləmək istəyirsinizsə bir tətbiqə toxunun</string>
-  <string name="recents_multiwin_nolastapp">Son istifadə olunanları təmizlədiniz, lütfən başladıcıdan və yaxud tətbiq menyusundan tətbiq seçin.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Durmaya zorla?</string>
   <string name="force_stop_dlg_text">Tətbiqetməni zorla dayandırsanız, səhv işləyə bilər</string>

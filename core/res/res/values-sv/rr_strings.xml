@@ -49,4 +49,6 @@
   <string name="permlab_resetBatteryStats">Nollställ batteristatistik</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Tillåter en app att återställa nuvarande användningsdata för låg batterinivå.</string>
+  <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

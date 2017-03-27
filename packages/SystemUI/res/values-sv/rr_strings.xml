@@ -187,13 +187,13 @@
   <string name="tasklist_memory_usage">"Ledigt/Totalt Minne: <xliff:g id="number">%s </xliff:g> / <xliff:g id="name"> %s </xliff:g>"</string>
   <string name="message_keep_one_launcher">Bör behålla minst en hem aktivitet!</string>
   <string name="tm_clear_task">RENSA</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">En flerfönstersession är redan aktiv. \nTryck bara på en app om du vill docka den nu.</string>
+  <string name="recents_multiwin_nolastapp">Du rensade alla senaste appar, välj en app från applådan.</string>
+  <string name="slim_recent_keyguard">Lås upp enheten för att visa senaste appar</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Starta %s efter stängning av tidigare appar</string>
   <string name="toast_recents_cancel_queued_app">Avbröt appstart</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Lås upp enheten för att visa senaste appar</string>
-  <string name="recents_multiwin_warning">En flerfönstersession är redan aktiv. \nTryck bara på en app om du vill docka den nu.</string>
-  <string name="recents_multiwin_nolastapp">Du rensade alla senaste appar, välj en app från applådan.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Tvinga avslut?</string>
   <string name="force_stop_dlg_text">Om du tvingar appen att avslutas kanske den inte fungerar som den ska.</string>

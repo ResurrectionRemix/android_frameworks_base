@@ -203,13 +203,13 @@
   <string name="tasklist_memory_usage">"Bebas • Total memori: [<xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>]"</string>
   <string name="message_keep_one_launcher">Harus menyimpan setidaknya satu kegiatan beranda!</string>
   <string name="tm_clear_task">BERSIHKAN</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Sesi multi-window sudah aktif.\nTekan saja salah satu aplikasi jika Anda ingin mengaitkannya sekarang.</string>
+  <string name="recents_multiwin_nolastapp">Anda menghapus semua Recent, silakan pilih aplikasi dari launcher atau laci.</string>
+  <string name="slim_recent_keyguard">Buka kunci perangkat Anda untuk melihat Recent</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Jalankan %s setelah keluar dari recents</string>
   <string name="toast_recents_cancel_queued_app">Menjalankan aplikasi dibatalkan</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Buka kunci perangkat Anda untuk melihat Recent</string>
-  <string name="recents_multiwin_warning">Sesi multi-window sudah aktif.\nTekan saja salah satu aplikasi jika Anda ingin mengaitkannya sekarang.</string>
-  <string name="recents_multiwin_nolastapp">Anda menghapus semua Recent, silakan pilih aplikasi dari launcher atau laci.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Paksa berhenti?</string>
   <string name="force_stop_dlg_text">Jika Anda memaksa berhenti aplikasi, itu mungkin berperilaku buruk.</string>

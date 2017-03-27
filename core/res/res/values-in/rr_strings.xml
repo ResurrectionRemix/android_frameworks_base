@@ -49,4 +49,6 @@
   <string name="permlab_resetBatteryStats">atur ulang statistik baterai</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Mengizinkan aplikasi untuk mengatur ulang data penggunaan baterai tingkat-rendah saat ini.</string>
+  <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

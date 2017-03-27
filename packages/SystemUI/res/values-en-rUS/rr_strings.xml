@@ -187,11 +187,11 @@
   <string name="tasklist_memory_usage">"Free • Total memory : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Should keep at least one home activity!</string>
   <string name="tm_clear_task">CLEAR</string>
+  <!-- Slim Recents -->
+  <string name="slim_recent_keyguard">Unlock your device to view recents</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Launch %s after closing recents</string>
   <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Unlock your device to view recents</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Force stop?</string>
   <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
@@ -208,4 +208,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
 </resources>

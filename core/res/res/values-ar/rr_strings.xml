@@ -47,4 +47,6 @@
   <string name="singlehandmode_slide_hint_message">حرك أصبعك عبر شريط التنقل للتبديل بين طرق عرض الشاشة القياسية ومصغرة</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

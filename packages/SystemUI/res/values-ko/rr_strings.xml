@@ -187,8 +187,8 @@
   <string name="tasklist_memory_usage">"• 총 메모리: <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
   <string name="message_keep_one_launcher">최소한 하나의 작업은 유지해야 합니다!</string>
   <string name="tm_clear_task">지우기</string>
+  <!-- Slim Recents -->
   <!-- Slim recents app sidebar queue app toast -->
-  <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
   <string name="kill">앱 종료</string>
   <!-- OmniJAWS -->

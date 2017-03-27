@@ -203,13 +203,13 @@
   <string name="tasklist_memory_usage">"Libre • Memoria total : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">¡Debe mantener al menos una actividad de inicio!</string>
   <string name="tm_clear_task">LIMPIAR</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Una sesión multiventana ya está activa. \nSimplemente toque una aplicación si desea acoplarla ahora.</string>
+  <string name="recents_multiwin_nolastapp">Has eliminado todos, por favor, elige una aplicación del launcher o cajón de apps.</string>
+  <string name="slim_recent_keyguard">Desbloquear el dispositivo para ver recientes</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Lanzar %s tras el cierre de recientes</string>
   <string name="toast_recents_cancel_queued_app">Lanzamiento de la app cancelado</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Desbloquear el dispositivo para ver recientes</string>
-  <string name="recents_multiwin_warning">Una sesión multiventana ya está activa. \nSimplemente toque una aplicación si desea acoplarla ahora.</string>
-  <string name="recents_multiwin_nolastapp">Has eliminado todos, por favor, elige una aplicación del launcher o cajón de apps.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">¿Deseas forzar la detención?</string>
   <string name="force_stop_dlg_text">Si fuerzas la detención de una aplicación, es posible que funcione incorrectamente.</string>

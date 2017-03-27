@@ -49,4 +49,6 @@
   <string name="permlab_resetBatteryStats">reiniciar las estadísticas de la batería</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Permite a una aplicación reiniciar los actuales datos de nivel-bajo del uso de la batería.</string>
+  <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

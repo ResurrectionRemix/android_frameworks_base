@@ -203,13 +203,13 @@
   <string name="tasklist_memory_usage">"可用内存 • 总内存︰ <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
   <string name="message_keep_one_launcher">至少保留一个桌面活动！</string>
   <string name="tm_clear_task">清除</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">多会话已启用。\n请选择你想停靠的应用</string>
+  <string name="recents_multiwin_nolastapp">您已移除所有最近使用，请从启动器或抽屉选择应用</string>
+  <string name="slim_recent_keyguard">解锁您的设备以查看最近使用</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">在关闭最近使用后启动 %s</string>
   <string name="toast_recents_cancel_queued_app">已取消应用启动</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">解锁您的设备以查看最近使用</string>
-  <string name="recents_multiwin_warning">多会话已启用。\n请选择你想停靠的应用</string>
-  <string name="recents_multiwin_nolastapp">您已移除所有最近使用，请从启动器或抽屉选择应用</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">强行停止？</string>
   <string name="force_stop_dlg_text">强行停止某个应用可能导致其出现异常。</string>

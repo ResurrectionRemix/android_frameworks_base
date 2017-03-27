@@ -203,13 +203,13 @@
   <string name="tasklist_memory_usage">"Trống • Tổng bộ nhớ : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Nên giữ ít nhất một hoạt động trang chủ!</string>
   <string name="tm_clear_task">XÓA</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Một phiên đa cửa sổ được kích hoạt.\n Chỉ chạm một ứng dụng nếu bạn muốn thu nhỏ nó ngay bây giờ.</string>
+  <string name="recents_multiwin_nolastapp">Bạn đã xóa tất cả các ứng dụng gần đây, vui lòng chọn một ứng dụng từ trình khởi chạy hoặc ngăn kéo ứng dụng.</string>
+  <string name="slim_recent_keyguard">Mở khóa điện thoại của bạn để xem danh sách gần đây</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Mở %s sau khi đóng các mục gần đây</string>
   <string name="toast_recents_cancel_queued_app">Đã hủy mở ứng dụng</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Mở khóa điện thoại của bạn để xem danh sách gần đây</string>
-  <string name="recents_multiwin_warning">Một phiên đa cửa sổ được kích hoạt.\n Chỉ chạm một ứng dụng nếu bạn muốn thu nhỏ nó ngay bây giờ.</string>
-  <string name="recents_multiwin_nolastapp">Bạn đã xóa tất cả các ứng dụng gần đây, vui lòng chọn một ứng dụng từ trình khởi chạy hoặc ngăn kéo ứng dụng.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Buộc dừng?</string>
   <string name="force_stop_dlg_text">Nếu bạn buộc dừng một ứng dụng, ứng dụng đó có thể hoạt động sai.</string>

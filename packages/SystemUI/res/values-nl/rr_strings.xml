@@ -147,10 +147,26 @@
   <string name="quick_settings_location_gps_only_label">Alleen apparaat</string>
   <string name="quick_settings_location_high_accuracy_label">Hoge nauwkeurigheid</string>
   <string name="quick_settings_location_off_label">Locatie uit</string>
+  <string name="quick_settings_location_off_custom_label">Locatie</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Taal</string>
   <string name="quick_settings_locale_more_locales_toast">Configureer eerst meerdere talen om te kunnen wisselen</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">Kompas</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">Initialiseren\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">Kompas uit.</string>
+  <string name="accessibility_quick_settings_compass_on">Kompas aan.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Kompas uitgeschakeld.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Kompas ingeschakeld.</string>
+  <string name="quick_settings_compass_N">N</string>
+  <string name="quick_settings_compass_NE">NO</string>
+  <string name="quick_settings_compass_E">O</string>
+  <string name="quick_settings_compass_SE">ZO</string>
+  <string name="quick_settings_compass_S">Z</string>
+  <string name="quick_settings_compass_SW">ZW</string>
+  <string name="quick_settings_compass_W">W</string>
+  <string name="quick_settings_compass_NW">NW</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App gestopt</string>
@@ -187,13 +203,13 @@
   <string name="tasklist_memory_usage">"Totaal geheugen vrij: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Moet ten minste één launcher behouden!</string>
   <string name="tm_clear_task">WISSEN</string>
+  <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Het scherm is reeds gesplitst.\nTik op een app om deze nu te plaatsen.</string>
+  <string name="recents_multiwin_nolastapp">Alle recente apps verwijderd, kies een app via het startscherm of app-overzicht.</string>
+  <string name="slim_recent_keyguard">Ontgrendel uw apparaat om recente apps te bekijken</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Start %s na het sluiten van recente apps</string>
   <string name="toast_recents_cancel_queued_app">Opstarten van app geannuleerd</string>
-  <!-- Sim recents on keyguard -->
-  <string name="slim_recent_keyguard">Ontgrendel uw apparaat om recente apps te bekijken</string>
-  <string name="recents_multiwin_warning">Het scherm is reeds gesplitst.\nTik op een app om deze nu te plaatsen.</string>
-  <string name="recents_multiwin_nolastapp">Alle recente apps verwijderd, kies een app via het startscherm of app-overzicht.</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Nu stoppen?</string>
   <string name="force_stop_dlg_text">Als je een app gedwongen stopt, kan deze onverwacht gedrag vertonen.</string>
@@ -210,4 +226,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
 </resources>

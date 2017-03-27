@@ -49,4 +49,6 @@
   <string name="permlab_resetBatteryStats">電池統計情報のリセット</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">現在の低レベルなバッテリー消費量のデータをリセットすることをアプリに許可します。</string>
+  <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

@@ -185,9 +185,9 @@
   <string name="tasklist_memory_usage">"नि: शुल्क • कुल स्मृति:<xliff:g id="number">%s</xliff:g> •<xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">कम से कम एक घर गतिविधि रखना चाहिए!</string>
   <string name="tm_clear_task">साफ़</string>
+  <!-- Slim Recents -->
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_cancel_queued_app">अनुप्रयोग लॉन्च रद्द</string>
-  <!-- Sim recents on keyguard -->
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">बलपूर्वक रोकें?</string>
   <string name="dlg_ok">ओके</string>
