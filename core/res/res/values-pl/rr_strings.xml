@@ -50,5 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Pozwala aplikacji na wyczyszczenie bieżących niskopoziomowych danych użycia baterii.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">uruchom ponownie paski systemowe</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Uruchom ponownie SystemUIService, tak że paski systemowe będą dopasowane do motywu</string>
 </resources>

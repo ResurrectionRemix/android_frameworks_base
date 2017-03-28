@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">多視窗會話已處於活動狀態。\n如果要立即停駐，請輕觸應用程式。</string>
   <string name="recents_multiwin_nolastapp">您刪除了所有總覽，請從啟動器或清單中選擇一個應用程式。</string>
   <string name="slim_recent_keyguard">解鎖您的裝置以檢視總覽</string>
+  <string name="slim_recent_pinned">解鎖畫面以查看總覽</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">在關閉總覽後啟動 %s</string>
   <string name="toast_recents_cancel_queued_app">取消應用程式啟動</string>

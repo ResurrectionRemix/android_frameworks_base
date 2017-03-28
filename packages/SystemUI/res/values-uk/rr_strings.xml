@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Сесія мультивіконності вже активна. \nПросто натисніть на додаток, якщо ви хочете закріпити його зараз.</string>
   <string name="recents_multiwin_nolastapp">Ви закрили всі нещодавні додатки, будь ласка оберіть додаток з головного екрану чи списку додатків.</string>
   <string name="slim_recent_keyguard">Розблокуйте пристрій для перегляду нещодавніх додатків</string>
+  <string name="slim_recent_pinned">Відкріпити екран, щоб переглянути останні</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Запустити %s після закриття нещодавніх</string>
   <string name="toast_recents_cancel_queued_app">Скасовано запуск додатка</string>
