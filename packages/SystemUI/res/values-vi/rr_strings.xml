@@ -30,12 +30,12 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Đã xoá ảnh chụp màn hình</string>
-  <string name="gestures_message">Vẽ các cử chỉ của bạn ở đây</string>
-  <string name="rr_sys_tuner">Bộ điều chỉnh giao diện người dùng hệ thống</string>
+  <string name="gestures_message">Vẽ cử chỉ của bạn ở đây</string>
+  <string name="rr_sys_tuner">Bộ điều chỉnh UI hệ thống</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Vuốt qua phải để mở %1$s</string>
   <string name="right_shortcut_hint">Vuốt qua trái để mở %1$s</string>
-  <string name="lockscreen_message">Chạm vào biểu tượng bên trái hoặc phải để gán một phím tắt màn hình khóa.</string>
+  <string name="lockscreen_message">Chạm vào biểu tượng bên trái hoặc phải để gán lại một phím tắt màn hình khóa.</string>
   <string name="lockscreen_default_target">Mặc định</string>
   <string name="select_application">Chọn ứng dụng</string>
   <string name="lockscreen_choose_action_title">Chọn hành động</string>
@@ -71,14 +71,14 @@
   <string name="quick_settings_network_adb_disabled_label">Đã tắt</string>
   <string name="quick_settings_sync_label">Đồng bộ hóa</string>
   <string name="accessibility_quick_settings_sync_off">Tắt đồng bộ</string>
-  <string name="accessibility_quick_settings_sync_on">Bật động bộ</string>
-  <string name="accessibility_quick_settings_sync_changed_off">Đông bộ đã tắt</string>
+  <string name="accessibility_quick_settings_sync_on">Bật đồng bộ</string>
+  <string name="accessibility_quick_settings_sync_changed_off">Đồng bộ đã tắt</string>
   <string name="accessibility_quick_settings_sync_changed_on">Đồng bộ đã bật</string>
   <string name="quick_settings_expanded_desktop_label">Mở rộng màn hình</string>
-  <string name="quick_settings_expanded_desktop">Mở rộng</string>
+  <string name="quick_settings_expanded_desktop">Đã mở rộng</string>
   <string name="quick_settings_expanded_desktop_off">Bình Thường</string>
   <string name="quick_settings_reboot_label">Khởi động lại</string>
-  <string name="quick_settings_reboot_recovery_label">Recovery</string>
+  <string name="quick_settings_reboot_recovery_label">Phục hồi</string>
   <string name="accessibility_quick_settings_usb_tether_off">Tắt chia sẻ kết nối USB</string>
   <string name="accessibility_quick_settings_usb_tether_on">Mở chia sẻ kết nối USB</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Chế độ chia sẻ kết nối USB đã tắt</string>
@@ -86,9 +86,9 @@
   <string name="quick_settings_usb_tether_label">Chia sẻ kết nối qua USB</string>
   <string name="quick_settings_music_label">Nhạc</string>
   <string name="quick_settings_music_play">Phát</string>
-  <string name="quick_settings_music_pause">Tạm ngưng</string>
+  <string name="quick_settings_music_pause">Tạm dừng</string>
   <string name="quick_settings_ime_tile_label">Phương thức nhập</string>
-  <string name="rr_qs_tile">Tùy chỉnh</string>
+  <string name="rr_qs_tile">Cấu hình</string>
   <string name="quick_settings_caffeine_label">Caffeine</string>
   <string name="accessibility_quick_settings_caffeine_off">Caffeine tắt</string>
   <string name="accessibility_quick_settings_caffeine_on">Caffeine bật</string>
@@ -102,8 +102,8 @@
   <string name="quick_settings_screenrecord">Quay màn hình</string>
   <string name="quick_settings_screenrecord_on">Đang ghi ...</string>
   <string name="quick_settings_navigation_bar">Thanh điều hướng</string>
-  <string name="quick_settings_smartbar">Smart bar</string>
-  <string name="quick_settings_smartbar_off">Tắt Smart bar</string>
+  <string name="quick_settings_smartbar">Thanh thông minh</string>
+  <string name="quick_settings_smartbar_off">Tắt thanh thông minh</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Tắt Fling</string>
   <string name="quick_settings_appcirclebar_title">Thanh vòng tròn ứng dụng</string>
@@ -126,9 +126,9 @@
   <string name="quick_settings_pulse_label">Trình trực quan thanh điều hướng</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Hiển thị tương tác</string>
-  <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Bật hiển thị tương tác</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Hiển thị tương tác đã tắt</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Bật hiển thị tương tác</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Hiển thị tương tác đã tắt</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Hiển thị tương tác đã bật</string>
   <string name="quick_settings_heads_up_label">Thông báo nổi</string>
   <string name="accessibility_quick_settings_heads_up_off">Tắt thông báo nổi</string>
@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Một phiên đa cửa sổ được kích hoạt.\n Chỉ chạm một ứng dụng nếu bạn muốn thu nhỏ nó ngay bây giờ.</string>
   <string name="recents_multiwin_nolastapp">Bạn đã xóa tất cả các ứng dụng gần đây, vui lòng chọn một ứng dụng từ trình khởi chạy hoặc ngăn kéo ứng dụng.</string>
   <string name="slim_recent_keyguard">Mở khóa điện thoại của bạn để xem danh sách gần đây</string>
+  <string name="slim_recent_pinned">Bỏ ghim vào màn hình để xem các mục gần đây</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Mở %s sau khi đóng các mục gần đây</string>
   <string name="toast_recents_cancel_queued_app">Đã hủy mở ứng dụng</string>

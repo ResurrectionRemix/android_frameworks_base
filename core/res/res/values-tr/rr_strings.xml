@@ -50,5 +50,6 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Uygulamanın, mevcut düşük pil kullanımı verilerini sıfırlama izni verir.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">sistem çubuklarını yeniden başlat</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>

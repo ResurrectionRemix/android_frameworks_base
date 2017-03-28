@@ -26,8 +26,8 @@
   <string name="animation_slide_left">Trượt sang trái</string>
   <string name="animation_slide_right_no_fade">Trượt sang phải (Không mờ dần)</string>
   <string name="animation_slide_left_no_fade">Trượt sang trái (Không mờ dần)</string>
-  <string name="animation_slide_up">Trượt vào phía dưới</string>
-  <string name="animation_slide_down">Trượt vào phía trên</string>
+  <string name="animation_slide_up">Trượt xuống dưới</string>
+  <string name="animation_slide_down">Trượt lên trên</string>
   <string name="animation_default">Mặc định</string>
   <string name="animation_translucent">Trong suốt</string>
   <string name="animation_grow_shrink">Lớn dần (Trên cùng)</string>
@@ -48,7 +48,9 @@
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">đặt lại thống kê pin</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_resetBatteryStats">Cho phép một ứng dụng đặt lại dữ liệu sử dụng pin cấp thấp hiện tại.</string>
+  <string name="permdesc_resetBatteryStats">Cho phép một ứng dụng đặt lại dữ liệu sử dụng pin mức thấp hiện tại.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">khởi động lại các thanh hệ thống</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Khởi động lại SystemUIService để các thanh hệ thống có thể nạp các tài nguyên theo chủ đề</string>
 </resources>
