@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Una sesión multiventana ya está activa. \nSimplemente toque una aplicación si desea acoplarla ahora.</string>
   <string name="recents_multiwin_nolastapp">Has eliminado todos, por favor, elige una aplicación del launcher o cajón de apps.</string>
   <string name="slim_recent_keyguard">Desbloquear el dispositivo para ver recientes</string>
+  <string name="slim_recent_pinned">Liberar la pantalla para ver recientes</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Lanzar %s tras el cierre de recientes</string>
   <string name="toast_recents_cancel_queued_app">Lanzamiento de la app cancelado</string>
