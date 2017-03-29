@@ -19,13 +19,13 @@
   <string name="default_string">默认</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">您的初始设备制造商镜像与系统不匹配。请为您的设备刷入 <xliff:g id="string">%s </xliff:g> 初始设备制造商镜像</string>
-  <string name="global_action_screenrecord">屏幕录像</string>
+  <string name="global_action_screenrecord">屏幕录制</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">淡入淡出</string>
+  <string name="animation_fade">渐变</string>
   <string name="animation_slide_right">右侧滑入</string>
   <string name="animation_slide_left">左侧滑入</string>
-  <string name="animation_slide_right_no_fade">右侧滑入（无淡入淡出）</string>
-  <string name="animation_slide_left_no_fade">左侧滑入 (无淡入淡出)</string>
+  <string name="animation_slide_right_no_fade">右侧滑入（无渐变）</string>
+  <string name="animation_slide_left_no_fade">左侧滑入 (无渐变)</string>
   <string name="animation_slide_up">底部滑入</string>
   <string name="animation_slide_down">顶部滑入</string>
   <string name="animation_default">默认</string>
@@ -42,7 +42,7 @@
   <!-- On-The-Go -->
   <string name="global_action_onthego">OTG 模式</string>
   <!-- ADB enabled, but not connected notification title -->
-  <string name="adb_not_connected_notification_title">ADB未启用</string>
+  <string name="adb_not_connected_notification_title">ADB 未启用</string>
   <string name="adb_active_custom_tile_not_connected">未启用</string>
   <string name="singlehandmode_slide_hint_message">滑动导航栏切换标准模式及窗口模式</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
@@ -50,5 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">允许应用程序重置当前的底层电池使用数据。</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">重启系统栏</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">重启系统界面，以便系统栏加载主题资源</string>
 </resources>

@@ -50,7 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Permite que uma aplicação reinicie os dados de utilização atual da bateria.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_restartUI">reiniciar as barras do sistema</string>
+  <string name="permlab_restartUI">reiniciar barras do sistema</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_restartUI">Reiniciar o SystemUIService para que as barras do sistema possam carregar recursos de temas</string>
+  <string name="permdesc_restartUI">Reiniciar SystemUIService para que o sistema carregue os recursos dos temas</string>
 </resources>

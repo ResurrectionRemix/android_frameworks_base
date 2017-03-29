@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Μια συνεδρία πολλαπλών παραθύρων είναι ήδη ενεργή. \nΑπλώς πατήστε μια εφαρμογή εάν θέλετε να τη συνδέσετε τώρα.</string>
   <string name="recents_multiwin_nolastapp">Έχετε καταργήσει όλα τα πρόσφατα, παρακαλούμε επιλέξτε μια εφαρμογή από τον εκκινητή ή το συρτάρι εφαρμογών.</string>
   <string name="slim_recent_keyguard">Ξεκλειδώσετε τη συσκευή σας για να δείτε τη πρόσφατη δραστηριότητα</string>
+  <string name="slim_recent_pinned">Ξεκαρφίτσωμα της οθόνης για προβολή προσφάτων</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Έναρξη %s μετά το κλείσιμο των πρόσφατων</string>
   <string name="toast_recents_cancel_queued_app">Ακυρώθηκε η έναρξη εφαρμογής</string>

@@ -50,5 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Mengizinkan aplikasi untuk mengatur ulang data penggunaan baterai tingkat-rendah saat ini.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">mulai ulang bar sistem</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Mulai ulang SystemUIService sehingga bar sistem dapat memuar resource bertema</string>
 </resources>

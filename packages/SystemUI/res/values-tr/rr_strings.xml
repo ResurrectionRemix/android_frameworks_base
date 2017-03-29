@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Çoklu bir pencere oturumu zaten aktif.\nSadece kullanmak istediğiniz uygulamaya dokunmanız yeterli.</string>
   <string name="recents_multiwin_nolastapp">Son kullanılan uygulamaları temizlediniz, lütfen başlatıcıdan veya uygulama menüsünden uygulama seçin.</string>
   <string name="slim_recent_keyguard">Son kullanılanları görüntülemek için cihazınızın kilidini açın</string>
+  <string name="slim_recent_pinned">Son kullanılanları görmek için ekranı açın</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Son kullanılanları kapattıktan sonra %s uygulamasını başlat</string>
   <string name="toast_recents_cancel_queued_app">Uygulama başlatma iptal edildi</string>

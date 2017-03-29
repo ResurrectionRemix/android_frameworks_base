@@ -207,7 +207,7 @@
   <string name="recents_multiwin_warning">Uma sessão de multi-janelas já está ativa.\nBasta tocar no aplicativo que deseja ancorá-lo agora.</string>
   <string name="recents_multiwin_nolastapp">Todas as aplicações recentes foram removidas. Por favor, escolha um app da launcher ou da gaveta de aplicativos.</string>
   <string name="slim_recent_keyguard">Desbloqueie o dispositivo para ver as aplicações recentes</string>
-  <string name="slim_recent_pinned">Soltar o ecrã para ver as aplicações recentes</string>
+  <string name="slim_recent_pinned">Desafixar a tela para ver os recentes</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Abrir %s após fechar os recentes</string>
   <string name="toast_recents_cancel_queued_app">Cancelar execução do app</string>

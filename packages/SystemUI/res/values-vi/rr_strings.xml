@@ -129,7 +129,7 @@
   <string name="accessibility_quick_settings_ambient_display_off">Hiển thị tương tác tắt.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Bật hiển thị tương tác</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Hiển thị tương tác đã tắt</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Hiển thị tương tác đã bật</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Hiển thịtương tác đã bật</string>
   <string name="quick_settings_heads_up_label">Thông báo nổi</string>
   <string name="accessibility_quick_settings_heads_up_off">Tắt thông báo nổi</string>
   <string name="accessibility_quick_settings_heads_up_on">Bật thông báo nổi</string>
@@ -185,14 +185,14 @@
   <string name="pref_action_color_summary">Chọn màu yêu thích cho các nút hành động</string>
   <string name="pref_category_main">Cài đặt chính</string>
   <string name="pref_category_user">Cài đặt người dùng</string>
-  <string name="pref_crop_behavior_title">Hành vi cắt xén</string>
-  <string name="pref_crop_behavior_summary">Sử dụng các hình ảnh được cắt xén ngay cả khi bản gốc không thực sự được cắt xén bằng hành động cắt xén</string>
-  <string name="action_ok">OK</string>
+  <string name="pref_crop_behavior_title">Trạng thái cắt xén</string>
+  <string name="pref_crop_behavior_summary">Sử dụng các hình ảnh được cắt xén ngay cả khi bản gốc không thực sự được xén bằng hành động cắt xén</string>
+  <string name="action_ok">Đồng ý</string>
   <string name="action_delete_success">Đã xóa</string>
   <string name="action_delete_fault">Xóa không thành công</string>
   <string name="action_save_success">Đã lưu</string>
   <string name="action_save_fault">Lưu không thành công</string>
-  <string name="action_edit">Chỉnh sửa</string>
+  <string name="action_edit">Sửa</string>
   <string name="recents_custom_android_n">XÓA TẤT CẢ</string>
   <string name="recents_free_ram">RAM trống: %1$d MB</string>
   <!-- Path data for Solid battery -->
@@ -214,8 +214,8 @@
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Buộc dừng?</string>
   <string name="force_stop_dlg_text">Nếu bạn buộc dừng một ứng dụng, ứng dụng đó có thể hoạt động sai.</string>
-  <string name="dlg_ok">OK</string>
-  <string name="dlg_cancel">Hủy</string>
+  <string name="dlg_ok">Đồng ý</string>
+  <string name="dlg_cancel">Hủy bỏ</string>
   <string name="kill">Tắt ứng dụng</string>
   <!-- OmniJAWS -->
   <string name="omnijaws_service_error">Lỗi</string>

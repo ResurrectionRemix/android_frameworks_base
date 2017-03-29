@@ -50,5 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Επιτρέπει σε μια εφαρμογή να κάνει επαναφορά των τρέχων χαμηλού επιπέδου δεδομένων χρήσης της μπαταρίας.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">επανεκκινήστε της μπάρες συστήματος</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Επανεκκίνηση της υπηρεσίας Ui Συστήματος, έτσι ώστε οι μπάρες συστήματος να μπορούν να φορτώσουν τους πόρους θέματος</string>
 </resources>

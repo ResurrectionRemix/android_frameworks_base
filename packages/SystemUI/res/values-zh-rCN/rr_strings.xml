@@ -19,7 +19,7 @@
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">正在录制屏幕</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">正在录屏</string>
+  <string name="screenrecord_notif_title">正在录制屏幕</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">停止</string>
   <!-- Screenrecord notification action: show/hide pointer -->
@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">屏幕截图已删除</string>
   <string name="gestures_message">请在此画出您的手势</string>
-  <string name="rr_sys_tuner">系统界面调谐器</string>
+  <string name="rr_sys_tuner">系统界面调节</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">向右滑动以 %1$s</string>
   <string name="right_shortcut_hint">向左滑动以%1$s</string>
@@ -45,12 +45,12 @@
   <string name="app_float_item_title">悬浮视图</string>
   <string name="app_stop_item_title">终止应用</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">OTG已激活</string>
-  <string name="onthego_notif_title">OTG正在运行</string>
+  <string name="onthego_notif_ticker">On-The-Go 已激活</string>
+  <string name="onthego_notif_title">On-The-Go 已激活</string>
   <string name="onthego_notif_stop">停止</string>
   <string name="onthego_notif_options">选项</string>
-  <string name="onthego_notif_error">无法启动OTG</string>
-  <string name="onthego_notif_restart">重新启动OTG</string>
+  <string name="onthego_notif_error">无法启动 On-The-Go</string>
+  <string name="onthego_notif_restart">重新启动 On-The-Go</string>
   <string name="onthego_notif_camera_changed">相机模式已更改</string>
   <string name="onthego_transparency">透明度</string>
   <string name="onthego_front_camera">使用前置摄像头</string>
@@ -59,7 +59,7 @@
   <string name="quick_settings_sound_label">声音</string>
   <string name="quick_settings_sound_ring">响铃</string>
   <string name="quick_settings_sound_vibrate">震动</string>
-  <string name="quick_settings_sound_dnd">勿扰</string>
+  <string name="quick_settings_sound_dnd">请勿打扰</string>
   <!-- Volume QS Tile -->
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
@@ -77,7 +77,7 @@
   <string name="quick_settings_expanded_desktop_label">扩展桌面</string>
   <string name="quick_settings_expanded_desktop">扩展</string>
   <string name="quick_settings_expanded_desktop_off">正常</string>
-  <string name="quick_settings_reboot_label">重启</string>
+  <string name="quick_settings_reboot_label">重新启动</string>
   <string name="quick_settings_reboot_recovery_label">恢复模式</string>
   <string name="accessibility_quick_settings_usb_tether_off">USB 网络共享关闭</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB 网络共享开启</string>
@@ -90,8 +90,8 @@
   <string name="quick_settings_ime_tile_label">输入法</string>
   <string name="rr_qs_tile">配置</string>
   <string name="quick_settings_caffeine_label">Caffeine</string>
-  <string name="accessibility_quick_settings_caffeine_off">Caffeine关闭</string>
-  <string name="accessibility_quick_settings_caffeine_on">Caffeine开启</string>
+  <string name="accessibility_quick_settings_caffeine_off">Caffeine 关闭</string>
+  <string name="accessibility_quick_settings_caffeine_on">Caffeine 开启</string>
   <string name="qs_app_picker_title">应用程序选择器</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE 开启 </string>
@@ -99,13 +99,13 @@
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC 关闭</string>
-  <string name="quick_settings_screenrecord">屏幕录像</string>
+  <string name="quick_settings_screenrecord">屏幕录制</string>
   <string name="quick_settings_screenrecord_on">正在录制...</string>
   <string name="quick_settings_navigation_bar">导航栏</string>
   <string name="quick_settings_smartbar">Smart bar</string>
   <string name="quick_settings_smartbar_off">关闭 Smart bar</string>
-  <string name="quick_settings_fling">扫描</string>
-  <string name="quick_settings_fling_off">Fling off</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Fling 关闭</string>
   <string name="quick_settings_appcirclebar_title">环形应用栏</string>
   <string name="quick_settings_appcirclebar_on">启用环形应用栏</string>
   <string name="quick_settings_appcirclebar_off">禁用环形应用栏</string>
@@ -116,17 +116,17 @@
   <string name="quick_settings_appsidebar_on">启用应用侧边栏</string>
   <string name="quick_settings_appsidebar_off">禁用应用侧边栏</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">音乐可视化开启</string>
+  <string name="quick_settings_pulse_enabled">Pulse 开启</string>
   <string name="quick_settings_pulse_disabled">没有可视化工具</string>
-  <string name="quick_settings_pulse_label">脉冲信号</string>
-  <string name="accessibility_quick_settings_pulse_off">脉冲关</string>
-  <string name="accessibility_quick_settings_pulse_on">脉冲开</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">脉冲已关闭</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">脉冲已开启</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulse 关闭</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulse 开启</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulse 已关闭</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse 已开启</string>
   <string name="quick_settings_pulse_label">导航栏音乐可视化</string>
-  <string name="quick_settings_pie">Pie侧边工具</string>
+  <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">主动显示</string>
-  <string name="accessibility_quick_settings_ambient_display_off">主动显示已关闭。</string>
+  <string name="accessibility_quick_settings_ambient_display_off">主动显示已关闭</string>
   <string name="accessibility_quick_settings_ambient_display_on">主动显示已开启</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">主动显示已关闭</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">主动显示已开启</string>
@@ -136,12 +136,12 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">浮动通知已关闭</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">浮动通知已开启</string>
   <!-- Location Tile -->
-  <string name="accessibility_quick_settings_location_battery_saving">位置报告：节电模式。</string>
-  <string name="accessibility_quick_settings_location_gps_only">位置报告：仅传感器模式。</string>
-  <string name="accessibility_quick_settings_location_high_accuracy">位置报告：高准确度模式。</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">位置报告更改为省电模式。</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">位置信息切换为仅设备</string>
-  <string name="accessibility_quick_settings_location_changed_high_accuracy">位置报告更改为高精确度模式。</string>
+  <string name="accessibility_quick_settings_location_battery_saving">位置报告：低耗电量</string>
+  <string name="accessibility_quick_settings_location_gps_only">位置报告：仅限设备</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">位置报告：高精确度</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">位置报告更改为低耗电量模式</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">位置信息切换为仅设备模式</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">位置报告更改为高精确度模式</string>
   <string name="quick_settings_location_detail_title">位置信息模式</string>
   <string name="quick_settings_location_battery_saving_label">省电</string>
   <string name="quick_settings_location_gps_only_label">仅限设备</string>
@@ -152,20 +152,20 @@
   <string name="quick_settings_locale_label">语言</string>
   <string name="quick_settings_locale_more_locales_toast">请配置多种语言以使用切换功能</string>
   <!-- Compass QS Tile -->
-  <string name="quick_settings_compass_label">罗盘</string>
+  <string name="quick_settings_compass_label">指南针</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">正在初始化\u2026</string>
-  <string name="accessibility_quick_settings_compass_off">罗盘关闭</string>
-  <string name="accessibility_quick_settings_compass_on">罗盘开启</string>
-  <string name="accessibility_quick_settings_compass_changed_off">罗盘已关闭</string>
-  <string name="accessibility_quick_settings_compass_changed_on">罗盘已开启</string>
-  <string name="quick_settings_compass_N">正北</string>
+  <string name="accessibility_quick_settings_compass_off">指南针关闭</string>
+  <string name="accessibility_quick_settings_compass_on">指南针开启</string>
+  <string name="accessibility_quick_settings_compass_changed_off">指南针已关闭</string>
+  <string name="accessibility_quick_settings_compass_changed_on">指南针已开启</string>
+  <string name="quick_settings_compass_N">北</string>
   <string name="quick_settings_compass_NE">东北</string>
-  <string name="quick_settings_compass_E">正东</string>
+  <string name="quick_settings_compass_E">东</string>
   <string name="quick_settings_compass_SE">东南</string>
-  <string name="quick_settings_compass_S">正南</string>
+  <string name="quick_settings_compass_S">南</string>
   <string name="quick_settings_compass_SW">西南</string>
-  <string name="quick_settings_compass_W">正西</string>
+  <string name="quick_settings_compass_W">西</string>
   <string name="quick_settings_compass_NW">西北</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
@@ -174,7 +174,7 @@
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • 禁用浮动通知一分钟。</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • 禁用浮动通知 <xliff:g id="number">%d</xliff:g> 分钟。</string>
   <!-- Screenshot action -->
-  <string name="screenshot_abort_title">没有截图</string>
+  <string name="screenshot_abort_title">没有屏幕截图</string>
   <string name="screenshot_abort_text">操作中止</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">已删除</string>
@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">多会话已启用。\n请选择你想停靠的应用</string>
   <string name="recents_multiwin_nolastapp">您已移除所有最近使用，请从启动器或抽屉选择应用</string>
   <string name="slim_recent_keyguard">解锁您的设备以查看最近使用</string>
+  <string name="slim_recent_pinned">解锁屏幕以查看最近任务</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">在关闭最近使用后启动 %s</string>
   <string name="toast_recents_cancel_queued_app">已取消应用启动</string>

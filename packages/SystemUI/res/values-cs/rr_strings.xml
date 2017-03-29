@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Nacházíte se v režimu více oken.\nKlikněte na aplikaci, kterou chcete ukotvit.</string>
   <string name="recents_multiwin_nolastapp">Odstranili jste všechny nedávné aplikace, spusťte aplikaci z launcheru nebo seznamu.</string>
   <string name="slim_recent_keyguard">Odemknout zařízení k prohlédnutí nedávných aplikací</string>
+  <string name="slim_recent_pinned">Odpojit obrazovku pro zobrazení nedávných aplikací</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Spustit %s po zavření nedávných</string>
   <string name="toast_recents_cancel_queued_app">Zrušit spouštění aplikací</string>

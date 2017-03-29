@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Sesi multi-window sudah aktif.\nTekan saja salah satu aplikasi jika Anda ingin mengaitkannya sekarang.</string>
   <string name="recents_multiwin_nolastapp">Anda menghapus semua Recent, silakan pilih aplikasi dari launcher atau laci.</string>
   <string name="slim_recent_keyguard">Buka kunci perangkat Anda untuk melihat Recent</string>
+  <string name="slim_recent_pinned">Lepas sematan layar untuk melihat recent</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Jalankan %s setelah keluar dari recents</string>
   <string name="toast_recents_cancel_queued_app">Menjalankan aplikasi dibatalkan</string>

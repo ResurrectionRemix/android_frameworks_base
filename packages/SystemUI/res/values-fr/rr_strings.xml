@@ -106,9 +106,9 @@
   <string name="quick_settings_smartbar_off">Smart bar désactivée</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling désactivé</string>
-  <string name="quick_settings_appcirclebar_title">Barre d\'applications circulaire</string>
-  <string name="quick_settings_appcirclebar_on">Barre d\'applications circulaire activée</string>
-  <string name="quick_settings_appcirclebar_off">Barre d\'applications circulaire désactivée</string>
+  <string name="quick_settings_appcirclebar_title">Barre d\'application circulaire</string>
+  <string name="quick_settings_appcirclebar_on">Barre d\'application circulaire activée</string>
+  <string name="quick_settings_appcirclebar_off">Barre d\'application circulaire désactivée</string>
   <string name="quick_settings_gesture_anywhere_label">Mouvements n\'importe où</string>
   <string name="quick_settings_gesture_anywhere_on">Gestes activés</string>
   <string name="quick_settings_gesture_anywhere_off">Gestes désactivés</string>
@@ -206,7 +206,8 @@
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">Une session multifenêtres est déjà en cours. \nAppuyez simplement sur une application si vous souhaitez l\'activer maintenant.</string>
   <string name="recents_multiwin_nolastapp">Vous avez supprimé tous les éléments récents, veuillez choisir une application dans le lanceur ou le tiroir.</string>
-  <string name="slim_recent_keyguard">Déverrouillez votre appareil pour afficher les applications récentes</string>
+  <string name="slim_recent_keyguard">Déverrouiller votre appareil pour afficher les applications récentes</string>
+  <string name="slim_recent_pinned">Déverrouiller l’écran pour afficher les applications récentes</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Lancer %s après la fermeture des applications récentes</string>
   <string name="toast_recents_cancel_queued_app">Lancement de l\'application annulé</string>
