@@ -78,13 +78,13 @@
   <string name="quick_settings_expanded_desktop_label">Desktop esteso</string>
   <string name="quick_settings_expanded_desktop">Esteso</string>
   <string name="quick_settings_expanded_desktop_off">Normale</string>
-  <string name="quick_settings_reboot_label">Riavvio</string>
+  <string name="quick_settings_reboot_label">Riavvia</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
-  <string name="accessibility_quick_settings_usb_tether_off">Tethering USB spento</string>
+  <string name="accessibility_quick_settings_usb_tether_off">Tethering USB off</string>
   <string name="accessibility_quick_settings_usb_tether_on">Tethering USB acceso</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Tethering USB disattivato</string>
   <string name="accessibility_quick_settings_usb_tether_changed_on">Tethering USB attivato</string>
-  <string name="quick_settings_usb_tether_label">Thetering USB</string>
+  <string name="quick_settings_usb_tether_label">Tethering USB</string>
   <string name="quick_settings_music_label">Musica</string>
   <string name="quick_settings_music_play">Riproduci</string>
   <string name="quick_settings_music_pause">Pausa</string>
@@ -113,17 +113,17 @@
   <string name="quick_settings_gesture_anywhere_label">Gesti ovunque</string>
   <string name="quick_settings_gesture_anywhere_on">Gesti On</string>
   <string name="quick_settings_gesture_anywhere_off">Gesti Off</string>
-  <string name="quick_settings_appsidebar_title">Barra laterale app</string>
+  <string name="quick_settings_appsidebar_title">App barra laterale</string>
   <string name="quick_settings_appsidebar_on">App side bar On</string>
   <string name="quick_settings_appsidebar_off">App side bar Off</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Pulse abilitato</string>
+  <string name="quick_settings_pulse_enabled">Lampeggio abilitato</string>
   <string name="quick_settings_pulse_disabled">Nessun visualizzatore</string>
   <string name="quick_settings_pulse_label">Lampeggio</string>
-  <string name="accessibility_quick_settings_pulse_off">Pulse off</string>
-  <string name="accessibility_quick_settings_pulse_on">Pulse on</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">Pulse disattivato</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">Pulse attivato</string>
+  <string name="accessibility_quick_settings_pulse_off">Lampeggio off</string>
+  <string name="accessibility_quick_settings_pulse_on">Lampeggio on</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Lampeggio disattivato</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Lampeggio attivato</string>
   <string name="quick_settings_pulse_label">Visualizzatore barra di navigazione</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambient Display</string>
@@ -135,7 +135,7 @@
   <string name="accessibility_quick_settings_heads_up_off">Notifiche a comparsa non attive</string>
   <string name="accessibility_quick_settings_heads_up_on">Notifiche a comparsa attive</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Notifiche a comparsa disattivate</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads up attivate</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Notifiche a comparsa attivate</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Geolocalizzazione: modalità risparmio batteria.</string>
   <string name="accessibility_quick_settings_location_gps_only">Geolocalizzazione: modalità solo dispositivo.</string>
@@ -151,13 +151,13 @@
   <string name="quick_settings_location_off_custom_label">Posizione</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Lingua</string>
-  <string name="quick_settings_locale_more_locales_toast">Configura più lingue per abilitare la funzionalità attiva o disattiva</string>
+  <string name="quick_settings_locale_more_locales_toast">Configura più lingue per abilitare la funzionalità toggle</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Bussola</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">Inizializzazione\u2026</string>
   <string name="accessibility_quick_settings_compass_off">Bussola spenta.</string>
-  <string name="accessibility_quick_settings_compass_on">Bussola accesa.</string>
+  <string name="accessibility_quick_settings_compass_on">Bussola On.</string>
   <string name="accessibility_quick_settings_compass_changed_off">Bussola disattivata.</string>
   <string name="accessibility_quick_settings_compass_changed_on">Bussola attivata.</string>
   <string name="quick_settings_compass_N">N</string>
@@ -207,8 +207,8 @@
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">Una sessione multiwindow è già attiva.\nScegli l\'applicazione che vuoi ancorare allo schermo.</string>
   <string name="recents_multiwin_nolastapp">Tutte le applicazioni recenti sono state rimosse, apri un\'altra applicazione dal drawer.</string>
-  <string name="slim_recent_keyguard">Sblocca il dispositivo per visualizzare i recenti</string>
-  <string name="slim_recent_pinned">Sbloccare lo schermo per visualizzare i recenti</string>
+  <string name="slim_recent_keyguard">Sblocca il dispositivo per visualizzare le app recenti</string>
+  <string name="slim_recent_pinned">Sbloccare lo schermo per visualizzare le app recenti</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Avvia %s dopo la chiusura dei recenti</string>
   <string name="toast_recents_cancel_queued_app">Avvio delle app annullato</string>

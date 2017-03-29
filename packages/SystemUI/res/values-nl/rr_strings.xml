@@ -207,6 +207,7 @@
   <string name="recents_multiwin_warning">Het scherm is reeds gesplitst.\nTik op een app om deze nu te plaatsen.</string>
   <string name="recents_multiwin_nolastapp">Alle recente apps verwijderd, kies een app via het startscherm of app-overzicht.</string>
   <string name="slim_recent_keyguard">Ontgrendel uw apparaat om recente apps te bekijken</string>
+  <string name="slim_recent_pinned">Scherm losmaken om recente apps te zien</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Start %s na het sluiten van recente apps</string>
   <string name="toast_recents_cancel_queued_app">Opstarten van app geannuleerd</string>

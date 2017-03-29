@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="weather_info_not_available">Niestety, informacje o pogodzie są niedostępne</string>
+  <string name="weather_info_not_available">Informacje o pogodzie są niedostępne</string>
   <!-- Weather string format in keyguard -->
   <string name="keyguard_status_view_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
 </resources>

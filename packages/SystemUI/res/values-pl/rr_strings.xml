@@ -30,7 +30,7 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Zrzut ekranu usunięty</string>
-  <string name="gestures_message">Narysuj swój gest tutaj</string>
+  <string name="gestures_message">Narysuj tutaj swój gest</string>
   <string name="rr_sys_tuner">Kalibrator interfejsu systemu</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Przesuń w prawo, aby %1$s</string>
@@ -66,17 +66,17 @@
   <!-- Quick Settings tiles -->
   <string name="quick_settings_screenshot_label">Zrzut ekranu</string>
   <string name="quick_settings_region_screenshot_label">Częściowy zrzut ekranu</string>
-  <string name="quick_settings_adb_network">Sieci ADB</string>
+  <string name="quick_settings_adb_network">Sieć ADB</string>
   <string name="quick_settings_network_adb_enabled_label">Włączona</string>
-  <string name="quick_settings_network_adb_disabled_label">Nieaktywny</string>
+  <string name="quick_settings_network_adb_disabled_label">Wyłączone</string>
   <string name="quick_settings_sync_label">Synchronizacja</string>
-  <string name="accessibility_quick_settings_sync_off">Synchr. wył</string>
-  <string name="accessibility_quick_settings_sync_on">Synchr. wł</string>
+  <string name="accessibility_quick_settings_sync_off">Synchronizacja wyłączona</string>
+  <string name="accessibility_quick_settings_sync_on">Synchronizacja włączona</string>
   <string name="accessibility_quick_settings_sync_changed_off">Synchronizacja wyłączona</string>
   <string name="accessibility_quick_settings_sync_changed_on">Synchronizacja włączona</string>
   <string name="quick_settings_expanded_desktop_label">Rozszerzony pulpit</string>
   <string name="quick_settings_expanded_desktop">Rozszerzony</string>
-  <string name="quick_settings_expanded_desktop_off">Normalne</string>
+  <string name="quick_settings_expanded_desktop_off">Normalny</string>
   <string name="quick_settings_reboot_label">Uruchom ponownie</string>
   <string name="quick_settings_reboot_recovery_label">Tryb recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">Tethering USB wyłączony</string>
@@ -88,7 +88,7 @@
   <string name="quick_settings_music_play">Odtwórz</string>
   <string name="quick_settings_music_pause">Zatrzymaj</string>
   <string name="quick_settings_ime_tile_label">Metody wprowadzania</string>
-  <string name="rr_qs_tile">Konfiguracja</string>
+  <string name="rr_qs_tile">Konfiguracje</string>
   <string name="quick_settings_caffeine_label">Kofeina</string>
   <string name="accessibility_quick_settings_caffeine_off">Kofeina wył.</string>
   <string name="accessibility_quick_settings_caffeine_on">Kofeina wł.</string>
@@ -98,7 +98,7 @@
   <string name="lte_off">LTE wyłączone</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
-  <string name="quick_settings_nfc_off">NFC wył.</string>
+  <string name="quick_settings_nfc_off">NFC wyłączone</string>
   <string name="quick_settings_screenrecord">Nagrywanie ekranu</string>
   <string name="quick_settings_screenrecord_on">Nagrywanie...</string>
   <string name="quick_settings_navigation_bar">Pasek nawigacji</string>
@@ -119,15 +119,15 @@
   <string name="quick_settings_pulse_enabled">Pulsacja włączona</string>
   <string name="quick_settings_pulse_disabled">Brak wizualizacji</string>
   <string name="quick_settings_pulse_label">Impuls</string>
-  <string name="accessibility_quick_settings_pulse_off">Wizualizacja wyłączona</string>
-  <string name="accessibility_quick_settings_pulse_on">Wizualizacja włączona</string>
+  <string name="accessibility_quick_settings_pulse_off">Impuls wyłączony</string>
+  <string name="accessibility_quick_settings_pulse_on">Impuls włączony</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Impuls wyłączony</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Impuls włączony</string>
   <string name="quick_settings_pulse_label">Wizualizacja na pasku nawigacji</string>
   <string name="quick_settings_pie">Kołowy pasek nawigacji</string>
-  <string name="quick_settings_ambient_display_label">Ambient display</string>
-  <string name="accessibility_quick_settings_ambient_display_off">Ambient display wył.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Aktywny ekran włączony</string>
+  <string name="quick_settings_ambient_display_label">Ekran dostosowany do otoczenia</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Ekran dostosowany do otoczenia wyłączony</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Ekran dostosowany do otoczenia włączony</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Ekran dostosowany do otoczenia wyłączony</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Ekran dostosowany do otoczenia włączony</string>
   <string name="quick_settings_heads_up_label">Wyskakujące powiadomienia</string>
@@ -137,11 +137,11 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Wyskakujące powiadomienia włączone</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Usługa lokalizacji: tryb oszczędzania baterii.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Usługa lokalizacji: tylko urządzenie.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Usługa lokalizacji: tylko czujniki.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Raportowanie lokalizacji: wysoka dokładność.</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">Lokalizacja zmieniona na tryb oszczędzania baterii.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Lokalizacja zmieniona na tylko urządzenie.</string>
-  <string name="accessibility_quick_settings_location_changed_high_accuracy">Lokalizacja zmieniona na wysoką dokładność.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Lokalizowanie zmienione na tryb oszczędzania baterii.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Lokalizowanie zmienione na tryb samych czujników.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Lokalizowanie zmienione na tryb wysokiej dokładności.</string>
   <string name="quick_settings_location_detail_title">Tryb lokalizacji</string>
   <string name="quick_settings_location_battery_saving_label">Oszczędzanie baterii</string>
   <string name="quick_settings_location_gps_only_label">Tylko urządzenie</string>
@@ -155,8 +155,8 @@
   <string name="quick_settings_compass_label">Kompas</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">Inicjowanie\u2026</string>
-  <string name="accessibility_quick_settings_compass_off">Kompas wył.</string>
-  <string name="accessibility_quick_settings_compass_on">Kompas wł.</string>
+  <string name="accessibility_quick_settings_compass_off">Kompas wyłączony</string>
+  <string name="accessibility_quick_settings_compass_on">Kompas włączony.</string>
   <string name="accessibility_quick_settings_compass_changed_off">Kompas wyłączony.</string>
   <string name="accessibility_quick_settings_compass_changed_on">Kompas włączony.</string>
   <string name="quick_settings_compass_N">Pn.</string>
@@ -171,26 +171,26 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikacja została zabita</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> - wgląd do powiadomienia w trybie drzemki przez 1 minutę.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • Wyskakujące powiadomienia są uśpione na <xliff:g id="number">%d </xliff:g> minut.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • Powiadomienia z podglądem w trybie drzemki przez 1 minutę.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • Powiadomienia z podglądem są uśpione na <xliff:g id="number">%d </xliff:g> minut.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nie wykonano zrzutu ekranu</string>
   <string name="screenshot_abort_text">Operacja przerwana</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">Usunięto</string>
   <string name="action_delete_fault">Usuwanie nie powiodło się</string>
-  <string name="action_save_success">Zapisz</string>
+  <string name="action_save_success">Zapisano</string>
   <string name="action_save_fault">Zapisywanie nie powiodło się</string>
   <string name="pref_action_color_title">Kolor przycisków akcji</string>
   <string name="pref_action_color_summary">Wybierz swój ulubiony kolor przycisków akcji</string>
-  <string name="pref_category_main">Główne ustawienia</string>
+  <string name="pref_category_main">Ustawienia główne</string>
   <string name="pref_category_user">Ustawienia użytkownika</string>
   <string name="pref_crop_behavior_title">Zachowanie kadrowania</string>
   <string name="pref_crop_behavior_summary">Użyj kadrowanego obrazu, nawet jeśli oryginalny nie został przycięty akcją kadrowania</string>
   <string name="action_ok">OK</string>
   <string name="action_delete_success">Usunięto</string>
   <string name="action_delete_fault">Usuwanie nie powiodło się</string>
-  <string name="action_save_success">Zapisz</string>
+  <string name="action_save_success">Zapisano</string>
   <string name="action_save_fault">Zapisywanie nie powiodło się</string>
   <string name="action_edit">Edytuj</string>
   <string name="recents_custom_android_n">WYCZYŚĆ WSZYSTKO</string>
@@ -198,8 +198,8 @@
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">Menedżer zadań</string>
-  <string name="message_switch_fail">Nie można przełączyć się do tego zadania, ponieważ nie ma interfejsu.</string>
-  <string name="tasklist_killall">Zamknij wszystkie</string>
+  <string name="message_switch_fail">Nie można przełączyć się do tego zadania, ponieważ posiada interfejsu.</string>
+  <string name="tasklist_killall">Zabij wszystkie</string>
   <string name="tasklist_memory_usage">"Wolna • Całkowita Pamięć: [<xliff:g id="number">%s</xliff:g>] • [<xliff:g id="name">%s</xliff:g>]"</string>
   <string name="message_keep_one_launcher">Należy zachować przynajmniej jedną aktywność domową!</string>
   <string name="tm_clear_task">WYCZYŚĆ</string>
