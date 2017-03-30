@@ -19,6 +19,7 @@ package com.android.systemui.rr.statusbarweather;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -103,11 +104,23 @@ public class StatusBarWeatherImage extends ImageView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_IMAGE_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.OMNIJAWS_WEATHER_ICON_PACK),
+                    false, this, UserHandle.USER_ALL);
             updateSettings();
         }
 
         @Override
-        public void onChange(boolean selfChange) {
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.OMNIJAWS_WEATHER_ICON_PACK))) {
+                int TempStyle = Settings.System.getIntForUser(mContext.getContentResolver(), 
+                     Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE, 0,
+                     UserHandle.USER_CURRENT);
+                     if (TempStyle == 0) {
+                        queryAndUpdateWeather();
+                     }
+            }
             updateSettings();
         }
     }
