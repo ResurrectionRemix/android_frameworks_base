@@ -127,7 +127,7 @@ public final class KeyboardShortcuts {
     private KeyCharacterMap mBackupKeyCharacterMap;
 
     private KeyboardShortcuts(Context context) {
-        this.mContext = new ContextThemeWrapper(context, android.R.style.Theme_DeviceDefault_Light);
+        this.mContext = new ContextThemeWrapper(context, R.style.KeyboardShortcutsDialog);
         this.mPackageManager = AppGlobals.getPackageManager();
         loadResources(context);
     }
