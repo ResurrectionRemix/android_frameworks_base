@@ -98,4 +98,8 @@
         <item name="android:textColor">#ffffff</item>
     </style>
 
+    <!-- Phyisical Keyboard Dialog style -->
+    <style name="KeyboardShortcutsDialog" parent="@*android:style/Theme.DeviceDefault.Light" />
+
+
 </resources>
