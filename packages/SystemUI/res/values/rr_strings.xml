@@ -162,6 +162,10 @@
     <!-- Language\Locale Tile -->
     <string name="quick_settings_locale_label">Language</string>
     <string name="quick_settings_locale_more_locales_toast">Please configure multiple languages to enable toggle functionality</string>
+    <!-- Suspend Actions Tile -->
+    <string name="accessibility_quick_settings_suspend_actions_on">Suspend actions enabled</string>
+    <string name="accessibility_quick_settings_suspend_actions_off">Suspend actions disabled</string>
+    <string name="quick_settings_suspend_actions_label">Suspend actions</string>
 
     <!-- Compass QS Tile -->
     <string name="quick_settings_compass_label">Compass</string>
