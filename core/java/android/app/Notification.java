@@ -2470,10 +2470,13 @@ public class Notification implements Parcelable
             PendingIntent.setOnMarshaledListener(
                     (PendingIntent intent, Parcel out, int outFlags) -> {
                 if (parcel == out) {
-                    if (allPendingIntents == null) {
-                        allPendingIntents = new ArraySet<>();
+                    // make the allPendingIntents add operation thread-safe.
+                    synchronized (Notification.this) {
+                        if (allPendingIntents == null) {
+                            allPendingIntents = new ArraySet<>();
+                        }
+                        allPendingIntents.add(intent);
                     }
-                    allPendingIntents.add(intent);
                 }
             });
         }
