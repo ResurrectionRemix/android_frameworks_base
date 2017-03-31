@@ -803,9 +803,9 @@ public class RecentController implements RecentPanelView.OnExitListener,
             mMemBarLongClickToClear = Settings.System.getInt(resolver,
                     Settings.System.SLIM_RECENTS_MEM_DISPLAY_LONG_CLICK_CLEAR, 0) == 1;
             mMembarcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SLIM_MEM_BAR_COLOR, mContext.getResources().getColor(R.color.system_accent_color));
+                Settings.System.SLIM_MEM_BAR_COLOR, 0x00ffffff);
             mMemtextcolor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SLIM_MEM_TEXT_COLOR, mContext.getResources().getColor(R.color.recents_membar_text_color));
+                Settings.System.SLIM_MEM_TEXT_COLOR, 0x00ffffff);
 
             String currentIconPack = Settings.System.getString(resolver,
                 Settings.System.SLIM_RECENTS_ICON_PACK);
@@ -1048,8 +1048,12 @@ public class RecentController implements RecentPanelView.OnExitListener,
             mMemText.setText(String.format(mContext.getResources().getString(R.string.recents_free_ram),available));
             mMemBar.setMax(max);
             mMemBar.setProgress(available);
-            mMemBar.getProgressDrawable().setColorFilter(mMembarcolor, Mode.MULTIPLY); 
-            mMemText.setTextColor(mMemtextcolor);
+            mMemBar.getProgressDrawable().setColorFilter(mMembarcolor == 0x00ffffff
+                    ? mContext.getResources().getColor(R.color.system_accent_color)
+                    : mMembarcolor, Mode.MULTIPLY);
+            mMemText.setTextColor(mMemtextcolor == 0x00ffffff
+                    ? mContext.getResources().getColor(R.color.recents_membar_text_color)
+                    : mMemtextcolor);
     }
 
     public long getTotalMemory() {
