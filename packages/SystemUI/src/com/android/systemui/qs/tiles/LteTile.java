@@ -18,8 +18,11 @@ package com.android.systemui.qs.tiles;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.telephony.SubscriptionManager;
 import android.content.ComponentName;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.Phone;
@@ -42,8 +45,11 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
     private static final Intent MOBILE_NETWORK_SETTINGS = new Intent(Intent.ACTION_MAIN)
             .setComponent(new ComponentName("com.android.phone",
                     "com.android.phone.MobileNetworkSettings"));
+    private SubscriptionManager mSm;
+
     public LteTile(Host host) {
         super(host);
+        mSm = (SubscriptionManager) mContext.getSystemService(mContext.TELEPHONY_SUBSCRIPTION_SERVICE);
     }
 
     @Override
@@ -76,33 +82,42 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         // Hide the tile if device doesn't support LTE
-        // or it supports Dual Sim Dual Active.
         // TODO: Should be spawning off a tile per sim
-	    if (!QSTileHost.deviceSupportsLte(mContext) || QSTileHost.deviceSupportsDdsSupported(mContext))
-              /*  || QSTileHost.deviceSupportsDdsSupported(mContext)) */{
-			state.visible=false;
-            return;
-        }
+	    if (isSimNotReady() || !DeviceSupportsLTE()) {
+            state.visible=false;
+        } else {
+            switch (getCurrentPreferredNetworkMode()) {
+                 case Phone.NT_MODE_GLOBAL:
+                 case Phone.NT_MODE_LTE_CDMA_AND_EVDO:
+                 case Phone.NT_MODE_LTE_GSM_WCDMA:
+                 case Phone.NT_MODE_LTE_ONLY:
+                 case Phone.NT_MODE_LTE_WCDMA:
+                 case Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
+                 case Phone.NT_MODE_LTE_TDSCDMA_GSM_WCDMA:
+                 case Phone.NT_MODE_LTE_TDSCDMA_WCDMA:
+                      state.visible=true;
+                      state.icon= ResourceIcon.get(R.drawable.ic_qs_lte_on);
+                      state.label = mContext.getString(R.string.lte_on);
+                      break;
+                 default:
+                      state.visible=true;
+                      state.icon = ResourceIcon.get(R.drawable.ic_qs_lte_off);
+                      state.label = mContext.getString(R.string.lte_off);
+                      break;
+               }
+          }
+    }
 
-        switch (getCurrentPreferredNetworkMode()) {
-            case Phone.NT_MODE_GLOBAL:
-            case Phone.NT_MODE_LTE_CDMA_AND_EVDO:
-            case Phone.NT_MODE_LTE_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_ONLY:
-            case Phone.NT_MODE_LTE_WCDMA:
-            case Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_TDSCDMA_GSM_WCDMA:
-            case Phone.NT_MODE_LTE_TDSCDMA_WCDMA:
-				state.visible=true;
-                state.icon= ResourceIcon.get(R.drawable.ic_qs_lte_on);
-				state.label = mContext.getString(R.string.lte_on);
-                break;
-            default:
-				state.visible=true;
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_lte_off);
-				state.label = mContext.getString(R.string.lte_off);
-                break;
-        }
+    public boolean isSimNotReady() {
+         if (mSm.getActiveSubscriptionInfoCount() <= 0) {
+             return true;
+         } else {
+             return false;
+         }
+    }
+
+    public boolean DeviceSupportsLTE() {
+        return mContext.getResources().getBoolean(R.bool.device_supports_lte);
     }
 
     private void toggleLteState() {
@@ -118,8 +133,6 @@ public class LteTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void setListening(boolean listening) {
-
+     // don't listen
     }
 }
-
-
