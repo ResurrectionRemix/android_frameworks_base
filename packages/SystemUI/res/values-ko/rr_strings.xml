@@ -150,6 +150,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">언어</string>
   <string name="quick_settings_locale_more_locales_toast">토글 기능을 활성화 하려면 다중 언어를 설정하시기 바랍니다</string>
+  <!-- Suspend Actions Tile -->
   <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
@@ -199,4 +200,5 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
 </resources>

@@ -52,5 +52,5 @@
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_restartUI">herstart de systeembalken</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_restartUI">Herstart SystemUIService zodat systeembalken themabronnen kunnen laden</string>
+  <string name="permdesc_restartUI">Herstart SystemUIService zodat systeembalken het thema kunnen laden</string>
 </resources>

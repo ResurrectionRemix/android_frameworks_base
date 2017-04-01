@@ -24,29 +24,29 @@
   <string name="screenrecord_notif_stop">Stop</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">Show Pointer</string>
-  <string name="screenrecord_notif_pointer_off">Hide Pointer</string>
+  <string name="screenrecord_notif_pointer_off">Hide pointer</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Unable to record screen</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">Screenshot Deleted</string>
+  <string name="delete_screenshot_toast">Screenshot deleted</string>
   <string name="gestures_message">Draw your gesture here</string>
-  <string name="rr_sys_tuner">SystemUI Tuner</string>
+  <string name="rr_sys_tuner">System UI tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
-  <string name="left_shortcut_hint">Swipe Right for %1$s</string>
-  <string name="right_shortcut_hint">Swipe Left for %1$s</string>
+  <string name="left_shortcut_hint">Swipe right for %1$s</string>
+  <string name="right_shortcut_hint">Swipe left for %1$s</string>
   <string name="lockscreen_message">Tap an icon on the left or right to reassign a lock screen shortcut.</string>
   <string name="lockscreen_default_target">Default</string>
-  <string name="select_application">Select Application</string>
-  <string name="lockscreen_choose_action_title">Choose Action</string>
+  <string name="select_application">Select application</string>
+  <string name="lockscreen_choose_action_title">Choose action</string>
   <string name="lockscreen_none_target">None</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maximize</string>
-  <string name="app_float_item_title">Float View</string>
-  <string name="app_stop_item_title">Kill App</string>
+  <string name="app_float_item_title">Float view</string>
+  <string name="app_stop_item_title">Kill app</string>
   <!-- On The Go -->
-  <string name="onthego_notif_ticker">On-The-Go Activated</string>
-  <string name="onthego_notif_title">On-The-Go is Active</string>
+  <string name="onthego_notif_ticker">On-The-Go activated</string>
+  <string name="onthego_notif_title">On-The-Go is active</string>
   <string name="onthego_notif_stop">Stop</string>
   <string name="onthego_notif_options">Options</string>
   <string name="onthego_notif_error">Unable to Start On-The-Go</string>
@@ -68,7 +68,7 @@
   <string name="quick_settings_region_screenshot_label">Partial Screenshot</string>
   <string name="quick_settings_adb_network">ADB Network</string>
   <string name="quick_settings_network_adb_enabled_label">ADB Network Enabled</string>
-  <string name="quick_settings_network_adb_disabled_label">ADB Network Disabled</string>
+  <string name="quick_settings_network_adb_disabled_label">Disabled</string>
   <string name="quick_settings_sync_label">Sync</string>
   <string name="accessibility_quick_settings_sync_off">Sync Off</string>
   <string name="accessibility_quick_settings_sync_on">Sync On</string>
@@ -90,20 +90,20 @@
   <string name="quick_settings_ime_tile_label">Input Method</string>
   <string name="rr_qs_tile">Configurations</string>
   <string name="quick_settings_caffeine_label">Caffeine</string>
-  <string name="accessibility_quick_settings_caffeine_off">Caffeine OFF</string>
-  <string name="accessibility_quick_settings_caffeine_on">Caffeine ON</string>
+  <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
+  <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
   <string name="qs_app_picker_title">App Picker</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE ON </string>
   <string name="lte_off">LTE OFF</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
-  <string name="quick_settings_nfc_off">NFC OFF</string>
+  <string name="quick_settings_nfc_off">NFC off</string>
   <string name="quick_settings_screenrecord">Screen record</string>
-  <string name="quick_settings_screenrecord_on">Recording ON</string>
-  <string name="quick_settings_navigation_bar">Navigation Bar</string>
-  <string name="quick_settings_smartbar">Smart Bar</string>
-  <string name="quick_settings_smartbar_off">Smart Bar off</string>
+  <string name="quick_settings_screenrecord_on">Recording ...</string>
+  <string name="quick_settings_navigation_bar">Navigation bar</string>
+  <string name="quick_settings_smartbar">Smart bar</string>
+  <string name="quick_settings_smartbar_off">Smart bar off</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling OFF</string>
   <string name="quick_settings_appcirclebar_title">App circle bar</string>
@@ -130,7 +130,7 @@
   <string name="accessibility_quick_settings_ambient_display_on">Ambient Display on</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient Display turned off</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient Display turned on</string>
-  <string name="quick_settings_heads_up_label">Heads Up</string>
+  <string name="quick_settings_heads_up_label">Heads up</string>
   <string name="accessibility_quick_settings_heads_up_off">Heads up off</string>
   <string name="accessibility_quick_settings_heads_up_on">Heads up on</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off</string>
@@ -147,10 +147,27 @@
   <string name="quick_settings_location_gps_only_label">Device only</string>
   <string name="quick_settings_location_high_accuracy_label">High accuracy</string>
   <string name="quick_settings_location_off_label">Location Off</string>
+  <string name="quick_settings_location_off_custom_label">Location</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Language</string>
   <string name="quick_settings_locale_more_locales_toast">Please configure multiple languages to enable toggle functionality</string>
+  <!-- Suspend Actions Tile -->
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">Compass</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">Initializing\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">Compass off.</string>
+  <string name="accessibility_quick_settings_compass_on">Compass on.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Compass turned off.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Compass turned on.</string>
+  <string name="quick_settings_compass_N">N</string>
+  <string name="quick_settings_compass_NE">NE</string>
+  <string name="quick_settings_compass_E">E</string>
+  <string name="quick_settings_compass_SE">SE</string>
+  <string name="quick_settings_compass_S">S</string>
+  <string name="quick_settings_compass_SW">SW</string>
+  <string name="quick_settings_compass_W">W</string>
+  <string name="quick_settings_compass_NW">NW</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App Killed</string>
@@ -188,7 +205,10 @@
   <string name="message_keep_one_launcher">Should keep at least one home activity!</string>
   <string name="tm_clear_task">CLEAR</string>
   <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">A multiwindow session is already active.\nJust tap an app if you want to dock it now.</string>
+  <string name="recents_multiwin_nolastapp">You removed all recents, please choose an app from launcher or drawer.</string>
   <string name="slim_recent_keyguard">Unlock your device to view recents</string>
+  <string name="slim_recent_pinned">Unpin the screen to view recents</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Launch %s after closing recents</string>
   <string name="toast_recents_cancel_queued_app">Cancelled app launch</string>
@@ -209,4 +229,5 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
 </resources>

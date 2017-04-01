@@ -152,6 +152,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Lingua</string>
   <string name="quick_settings_locale_more_locales_toast">Configura più lingue per abilitare la funzionalità toggle</string>
+  <!-- Suspend Actions Tile -->
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Bussola</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -230,4 +231,5 @@
 <xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
 </resources>

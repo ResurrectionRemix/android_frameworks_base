@@ -32,6 +32,7 @@
   <!-- Pulse Tile -->
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
+  <!-- Suspend Actions Tile -->
   <!-- Compass QS Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
@@ -46,4 +47,5 @@
   <!-- OmniJAWS -->
   <!-- Weather string format in expanded statusbar header -->
   <!-- volte icon switch -->
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
 </resources>

@@ -151,6 +151,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Jezik</string>
   <string name="quick_settings_locale_more_locales_toast">Podesite više jezika da biste omogućili uključivanje/isključivanje funkcije</string>
+  <!-- Suspend Actions Tile -->
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompas</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -207,6 +208,7 @@
   <string name="recents_multiwin_warning">Sesija načina rada s više prozora već je aktivna.\nSamo dodirnite aplikaciju ako je sada želite spojiti.</string>
   <string name="recents_multiwin_nolastapp">Uklonili ste sve nedavne aplikacije, odaberite aplikaciju iz pokretača ili izbornika aplikacija.</string>
   <string name="slim_recent_keyguard">Otključajte uređaj da biste vidjeli popis nedavnih aplikacija</string>
+  <string name="slim_recent_pinned">Otkvačite zaslon za prikaz nedavnih aplikacija.</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Pokretanje aplikacije %s nakon zatvaranja nedavnih aplikacija</string>
   <string name="toast_recents_cancel_queued_app">Pokretanje aplikacije je otkazano</string>
@@ -227,4 +229,5 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
 </resources>

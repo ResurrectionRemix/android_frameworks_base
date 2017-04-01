@@ -151,6 +151,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Sprache</string>
   <string name="quick_settings_locale_more_locales_toast">Bitte richten Sie mehrere Sprachen ein, um die Umschaltfunktion zu aktivieren</string>
+  <!-- Suspend Actions Tile -->
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompass</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -207,6 +208,7 @@
   <string name="recents_multiwin_warning">Eine Multiwindow Sitzung ist schon aktiv.\nKlicke einfach auf eine App wenn du es jetzt andocken willst</string>
   <string name="recents_multiwin_nolastapp">Du hast alle zuletzt geöffnete Apps geschlossen, bitte wähle eine App aus dem Launcher.</string>
   <string name="slim_recent_keyguard">Entsperren um den Anwendungsverlauf anzuzeigen</string>
+  <string name="slim_recent_pinned">Löse Sie den Bildschirm, um den Anwendungsverlauf anzuzeigen</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Starte %s nach dem Schließen des Anwendungsverlaufs</string>
   <string name="toast_recents_cancel_queued_app">App-Start abgebrochen</string>
@@ -227,4 +229,5 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
 </resources>

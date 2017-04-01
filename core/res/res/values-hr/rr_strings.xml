@@ -50,5 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Dopušta aplikaciji poništavanje trenutnih podataka o korištenju niske razine baterije.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">ponovno pokretati trake sustava</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Dopustite ponovno pokretanje usluge sučelja sustava tako da trake sustava mogu učitati tematske resurse.</string>
 </resources>

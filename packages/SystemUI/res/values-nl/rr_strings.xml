@@ -130,11 +130,6 @@
   <string name="accessibility_quick_settings_ambient_display_on">Actieve display aan</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Actieve display uitgeschakeld</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Actieve display ingeschakeld</string>
-  <string name="quick_settings_heads_up_label">Heads-up</string>
-  <string name="accessibility_quick_settings_heads_up_off">Heads-up uit</string>
-  <string name="accessibility_quick_settings_heads_up_on">Heads-up aan</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up uitgeschakeld</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up ingeschakeld</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Locatiebepaling: accu besparingsmodus.</string>
   <string name="accessibility_quick_settings_location_gps_only">Locatiebepaling: alleen apparaat.</string>
@@ -151,6 +146,7 @@
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Taal</string>
   <string name="quick_settings_locale_more_locales_toast">Configureer eerst meerdere talen om te kunnen wisselen</string>
+  <!-- Suspend Actions Tile -->
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompas</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -227,5 +223,6 @@
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
-  <string name="status_bar_volte">VOLTE</string>
+  <string name="status_bar_volte">VoLTE</string>
+  <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
 </resources>
