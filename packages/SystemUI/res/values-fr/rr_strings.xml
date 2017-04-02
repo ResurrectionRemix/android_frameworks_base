@@ -127,7 +127,7 @@
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Adaptation de la luminosité</string>
   <string name="accessibility_quick_settings_ambient_display_off">Adaptation de la luminosité désactivée.</string>
-  <string name="accessibility_quick_settings_ambient_display_on">Luminosité adaptative actif</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Luminosité adaptative active</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Luminosité adaptative désactivée</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Luminosité adaptative activée</string>
   <string name="quick_settings_heads_up_label">Notifications flottantes</string>
@@ -152,6 +152,9 @@
   <string name="quick_settings_locale_label">Langue</string>
   <string name="quick_settings_locale_more_locales_toast">Veuillez configurer plusieurs langues pour utiliser cette fonctionnalité</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Suspendre les actions activées</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Suspendre les actions désactivées</string>
+  <string name="quick_settings_suspend_actions_label">Suspendre les actions</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Boussole</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -230,4 +233,6 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Charge rapide en cours… (chargé à 100 %% dans <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g>)</string>
+  <string name="keyguard_plugged_in_dash_charging">Charge rapide</string>
 </resources>
