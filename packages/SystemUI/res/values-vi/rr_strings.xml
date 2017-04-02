@@ -152,6 +152,9 @@
   <string name="quick_settings_locale_label">Ngôn ngữ</string>
   <string name="quick_settings_locale_more_locales_toast">Vui lòng thiết lập nhiều ngôn ngữ để kích hoạt chức năng chuyển đổi</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Đình chỉ hoạt động được kích hoạt</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Đình chỉ hoạt động đã bị tắt</string>
+  <string name="quick_settings_suspend_actions_label">Đình chỉ hoạt động</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">La bàn</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -230,4 +233,6 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Đang sạc nhanh (<xliff:g id="charging_time_left" example="4 giờ và 2 phút">%s</xliff:g> cho đến khi đầy)</string>
+  <string name="keyguard_plugged_in_dash_charging">Sạc nhanh</string>
 </resources>

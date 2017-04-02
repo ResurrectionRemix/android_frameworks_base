@@ -152,6 +152,9 @@
   <string name="quick_settings_locale_label">Язык</string>
   <string name="quick_settings_locale_more_locales_toast">Настройте несколько языков для включения функциональности переключателя</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Действия в режиме ожидания включены</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Действия в режиме ожидания выключены</string>
+  <string name="quick_settings_suspend_actions_label">Действия в режиме ожидания</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Компас</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -230,4 +233,6 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Быстрая зарядка (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> до полной)</string>
+  <string name="keyguard_plugged_in_dash_charging">Быстрая зарядка</string>
 </resources>
