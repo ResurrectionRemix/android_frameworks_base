@@ -6669,6 +6669,13 @@ public final class Settings {
         public static final String PULSE_SOLID_UNITS_OPACITY = "pulse_solid_units_opacity";
 
         /**
+         * Pulse Fading units opacity
+         * @hide
+         */
+        public static final String PULSE_FADING_BLOCKS_OPACITY = "pulse_fading_blocks_opacity";
+
+
+        /**
          * SmartBar buttons opacity on Pulse
          * @hide
          */
