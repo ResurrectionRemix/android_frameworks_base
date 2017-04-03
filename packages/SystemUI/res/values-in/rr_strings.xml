@@ -152,6 +152,9 @@
   <string name="quick_settings_locale_label">Bahasa</string>
   <string name="quick_settings_locale_more_locales_toast">Harap tentukan bahasa yang berbeda untuk menghidupkan fungsionalitas toggle</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Menunda tindakan diaktifkan</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Menunda tindakan dinonaktifkan</string>
+  <string name="quick_settings_suspend_actions_label">Hentikan tindakan</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompas</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -230,4 +233,6 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Pengisian Cepat (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> Sampai Penuh)</string>
+  <string name="keyguard_plugged_in_dash_charging">Pengisian Cepat</string>
 </resources>

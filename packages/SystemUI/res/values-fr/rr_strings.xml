@@ -81,8 +81,8 @@
   <string name="quick_settings_reboot_recovery_label">Récupération</string>
   <string name="accessibility_quick_settings_usb_tether_off">Partage de connexion USB désactivé</string>
   <string name="accessibility_quick_settings_usb_tether_on">Partage de connexion USB activé</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_off">Partage de connexion USB désactivé</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_on">Partage de connexion USB activé</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">Partage de connexion USB a été désactivé</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">Partage de connexion USB a été activé</string>
   <string name="quick_settings_usb_tether_label">Partage de connexion USB</string>
   <string name="quick_settings_music_label">Musique</string>
   <string name="quick_settings_music_play">Lecture</string>
@@ -133,8 +133,8 @@
   <string name="quick_settings_heads_up_label">Notifications flottantes</string>
   <string name="accessibility_quick_settings_heads_up_off">Notifications flottantes désactivées</string>
   <string name="accessibility_quick_settings_heads_up_on">Notifications flottantes activées</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Notifications flottantes désactivées</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes activées</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Notifications flottantes a été désactivées</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Notifications flottantes a été activées</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Localisation : mode économie de batterie</string>
   <string name="accessibility_quick_settings_location_gps_only">Localisation : mode appareil uniquement</string>
@@ -161,8 +161,8 @@
   <string name="quick_settings_compass_init">Initialisation\u2026</string>
   <string name="accessibility_quick_settings_compass_off">Boussole désactivée.</string>
   <string name="accessibility_quick_settings_compass_on">Boussole activée.</string>
-  <string name="accessibility_quick_settings_compass_changed_off">Boussole a été désactivée</string>
-  <string name="accessibility_quick_settings_compass_changed_on">Boussole a été activée</string>
+  <string name="accessibility_quick_settings_compass_changed_off">La boussole a été désactivée</string>
+  <string name="accessibility_quick_settings_compass_changed_on">La boussole a été activée</string>
   <string name="quick_settings_compass_N">N</string>
   <string name="quick_settings_compass_NE">NE</string>
   <string name="quick_settings_compass_E">E</string>
