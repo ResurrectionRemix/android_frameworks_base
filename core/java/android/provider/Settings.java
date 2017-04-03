@@ -7467,6 +7467,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String PULSE_SOLID_UNITS_OPACITY = "pulse_solid_units_opacity";
 
         /**
+         * Pulse Fading units opacity
+         * @hide
+         */
+        public static final String PULSE_FADING_BLOCKS_OPACITY = "pulse_fading_blocks_opacity";
+
+
+        /**
          * SmartBar buttons opacity on Pulse
          * @hide
          */
