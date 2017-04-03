@@ -8623,6 +8623,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String QS_LOCATION_EASY_TOGGLE = "qs_location_easy_toggle";
 
         /**
+         * Enable Volume Up to disable all overlays during boot.
+         * @hide
+         */
+        public static final String VOL_UP_DISABLE_OVERLAYS = "vol_up_disable_overlays";
+
+        /**
          * Whether the device should doze if configured.
          * @hide
          */

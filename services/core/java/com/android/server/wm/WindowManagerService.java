@@ -8230,6 +8230,11 @@ public class WindowManagerService extends IWindowManager.Stub
         return mSafeMode;
     }
 
+    public boolean ShouldDisableAllOverlays() {
+      return Settings.Secure.getInt(mContext.getContentResolver(),
+            Settings.Secure.VOL_UP_DISABLE_OVERLAYS, 0) == 1;
+    }
+
     public boolean detectDisableOverlays() {
         if (!mInputMonitor.waitForInputDevicesReady(
                 INPUT_DEVICES_READY_FOR_SAFE_MODE_DETECTION_TIMEOUT_MILLIS)) {
@@ -8240,7 +8245,11 @@ public class WindowManagerService extends IWindowManager.Stub
 
         int volumeUpState = mInputManager.getKeyCodeState(-1, InputDevice.SOURCE_ANY,
                 KeyEvent.KEYCODE_VOLUME_UP);
-        mDisableOverlays = volumeUpState > 0;
+        if (ShouldDisableAllOverlays()) {
+            mDisableOverlays = volumeUpState > 0;
+        } else {
+            mDisableOverlays = false;
+        }
 
         if (mDisableOverlays) {
             Log.i(TAG_WM, "All enabled theme overlays will now be disabled.");
