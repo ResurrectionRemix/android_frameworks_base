@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Capture d\'écran supprimée</string>
   <string name="gestures_message">Dessinez votre geste ici</string>
-  <string name="rr_sys_tuner">Préférence d\'interface utilisateur</string>
+  <string name="rr_sys_tuner">Option de l\'interface utilisateur du système</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Glisser vers la droite pour %1$s</string>
   <string name="right_shortcut_hint">Glisser vers la gauche pour %1$s</string>
@@ -128,8 +128,8 @@
   <string name="quick_settings_ambient_display_label">Adaptation de la luminosité</string>
   <string name="accessibility_quick_settings_ambient_display_off">Adaptation de la luminosité désactivée.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Luminosité adaptative active</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Luminosité adaptative désactivée</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Luminosité adaptative activée</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Luminosité adaptative a été désactivée</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Luminosité adaptative a été activée</string>
   <string name="quick_settings_heads_up_label">Notifications flottantes</string>
   <string name="accessibility_quick_settings_heads_up_off">Notifications flottantes désactivées</string>
   <string name="accessibility_quick_settings_heads_up_on">Notifications flottantes activées</string>
@@ -198,18 +198,18 @@
   <string name="action_save_fault">Échec de l\'enregistrement</string>
   <string name="action_edit">Modifier</string>
   <string name="recents_custom_android_n">TOUT EFFACER</string>
-  <string name="recents_free_ram">RAM libre : %1$d MB</string>
+  <string name="recents_free_ram">RAM disponible: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">Gestionnaire des tâches</string>
   <string name="message_switch_fail">Impossible de basculer vers cette tâche, car elle ne possède pas d\'interface.</string>
   <string name="tasklist_killall">Tout arrêter</string>
-  <string name="tasklist_memory_usage">"• Mémoire totale libre : <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
+  <string name="tasklist_memory_usage">"Disponible • Mémoire totale : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Vous devez garder au moins un lanceur d\'application!</string>
   <string name="tm_clear_task">EFFACER</string>
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">Une session multifenêtres est déjà en cours. \nAppuyez simplement sur une application si vous souhaitez l\'activer maintenant.</string>
-  <string name="recents_multiwin_nolastapp">Vous avez supprimé la liste des applications récentes, veuillez choisir une application dans le lanceur ou le tiroir.</string>
+  <string name="recents_multiwin_nolastapp">Vous avez supprimé la liste des applications récentes, veuillez choisir une application sur l\'écran d\'accueil ou dans le tiroir d\'application</string>
   <string name="slim_recent_keyguard">Déverrouiller votre appareil pour afficher les applications récentes</string>
   <string name="slim_recent_pinned">Déverrouiller l’écran pour afficher les applications récentes</string>
   <!-- Slim recents app sidebar queue app toast -->
@@ -227,7 +227,7 @@
   <string name="omnijaws_detail_header">Météo</string>
   <string name="omnijaws_label_default">Météo</string>
   <string name="omnijaws_current_text">Actuellement</string>
-  <string name="omnijaws_package_not_available">OmniJaws non disponible</string>
+  <string name="omnijaws_package_not_available">OmniJaws indisponible</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->

@@ -40,7 +40,7 @@
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">重启系统界面</string>
   <!-- On-The-Go -->
-  <string name="global_action_onthego">OTG 模式</string>
+  <string name="global_action_onthego">行走模式</string>
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB 未启用</string>
   <string name="adb_active_custom_tile_not_connected">未启用</string>

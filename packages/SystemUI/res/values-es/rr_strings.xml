@@ -152,6 +152,9 @@
   <string name="quick_settings_locale_label">Idioma</string>
   <string name="quick_settings_locale_more_locales_toast">Por favor, configure varios idiomas para habilitar la funcionalidad de alternar</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Suspender acciones habilitado</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Suspender acciones deshabilitado</string>
+  <string name="quick_settings_suspend_actions_label">Suspender acciones</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Brújula</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -230,4 +233,6 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Carga rápida (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> hasta completar)</string>
+  <string name="keyguard_plugged_in_dash_charging">Carga Rápida</string>
 </resources>
