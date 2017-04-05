@@ -128,8 +128,8 @@
   <string name="quick_settings_ambient_display_label">Adaptation de la luminosité</string>
   <string name="accessibility_quick_settings_ambient_display_off">Adaptation de la luminosité désactivée.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Luminosité adaptative active</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">Luminosité adaptative a été désactivée</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_on">Luminosité adaptative a été activée</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">La luminosité adaptative a été désactivée</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">La luminosité adaptative a été activée</string>
   <string name="quick_settings_heads_up_label">Notifications flottantes</string>
   <string name="accessibility_quick_settings_heads_up_off">Notifications flottantes désactivées</string>
   <string name="accessibility_quick_settings_heads_up_on">Notifications flottantes activées</string>
@@ -139,9 +139,9 @@
   <string name="accessibility_quick_settings_location_battery_saving">Localisation : mode économie de batterie</string>
   <string name="accessibility_quick_settings_location_gps_only">Localisation : mode appareil uniquement</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Localisation : mode haute précision</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">Localisation définie sur \"Économie de batterie\".</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Localisation définie sur « Économie de Batterie »</string>
   <string name="accessibility_quick_settings_location_changed_gps_only">Localisation définie sur appareil uniquement</string>
-  <string name="accessibility_quick_settings_location_changed_high_accuracy">Localisation définie sur \"Haute précision\".</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Localisation définie sur « Haute précision »</string>
   <string name="quick_settings_location_detail_title">Modes de localisation</string>
   <string name="quick_settings_location_battery_saving_label">Économie de batterie</string>
   <string name="quick_settings_location_gps_only_label">Appareil uniquement</string>

@@ -104,9 +104,17 @@
   <string name="quick_settings_navigation_bar">Barra de navegació</string>
   <string name="quick_settings_smartbar">Barra intel·ligent</string>
   <string name="quick_settings_smartbar_off">Barra intel·ligent desactivada</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Apagar fling</string>
+  <string name="quick_settings_appcirclebar_title">Barra d\'aplicacions circular</string>
+  <string name="quick_settings_appcirclebar_on">Barra d\'aplicacions circular encès</string>
+  <string name="quick_settings_appcirclebar_off">Barra d\'aplicacions circular apagat</string>
   <string name="quick_settings_gesture_anywhere_label">Gestos a cualsevol lloc</string>
   <string name="quick_settings_gesture_anywhere_on">Gestos activats</string>
   <string name="quick_settings_gesture_anywhere_off">Gestos desactivats</string>
+  <string name="quick_settings_appsidebar_title">Barra lateral d\'aplicacions</string>
+  <string name="quick_settings_appsidebar_on">Barra lateral d\'aplicacions encés</string>
+  <string name="quick_settings_appsidebar_off">Barra lateral d\'aplicacions apagat</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse activat</string>
   <string name="quick_settings_pulse_disabled">Cap visualitzador</string>
@@ -139,11 +147,30 @@
   <string name="quick_settings_location_gps_only_label">Només el dispositiu</string>
   <string name="quick_settings_location_high_accuracy_label">Alta precisió</string>
   <string name="quick_settings_location_off_label">Ubicació desactivada</string>
+  <string name="quick_settings_location_off_custom_label">Ubicació</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Idioma</string>
   <string name="quick_settings_locale_more_locales_toast">Per favor, configuri diversos idiomes per habilitar la funció d\'alternar entre ells</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Suspendre accions habilitat</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Suspendre accions deshabilitat</string>
+  <string name="quick_settings_suspend_actions_label">Suspendre accions</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">Brúixola</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">Inicialitzant\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">Brúixola deshabilitada.</string>
+  <string name="accessibility_quick_settings_compass_on">Brúixola habilitada.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">La brúixola s\'ha deshabilitat.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">La brúixola s\'ha habilitat.</string>
+  <string name="quick_settings_compass_N">N</string>
+  <string name="quick_settings_compass_NE">NE</string>
+  <string name="quick_settings_compass_E">E</string>
+  <string name="quick_settings_compass_SE">SE</string>
+  <string name="quick_settings_compass_S">S</string>
+  <string name="quick_settings_compass_SW">SO</string>
+  <string name="quick_settings_compass_W">O</string>
+  <string name="quick_settings_compass_NW">NO</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App matada</string>
@@ -181,8 +208,14 @@
   <string name="message_keep_one_launcher">Has de mantenir almenys una activitat a la pantalla d\'inici!</string>
   <string name="tm_clear_task">NETEJAR</string>
   <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Una sessió multifinestra ja es activa.\nSimplement toqui una aplicació si desitja acoblarla ara.</string>
+  <string name="recents_multiwin_nolastapp">Has eliminat tots els recents, si us plau, escull una aplicació del launcher o calaix d\'apps.</string>
+  <string name="slim_recent_keyguard">Desbloqueja el dispositiu per veure recents</string>
+  <string name="slim_recent_pinned">Allibera la pantalla per veure recents</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Obre %s després de tancar els recents</string>
   <!-- Kill button in notification guts -->
+  <string name="dlg_ok">Acceptar</string>
   <!-- OmniJAWS -->
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>

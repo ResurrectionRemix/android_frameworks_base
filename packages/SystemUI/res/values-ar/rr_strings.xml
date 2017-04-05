@@ -145,10 +145,23 @@
   <string name="quick_settings_location_gps_only_label">الجهاز فقط</string>
   <string name="quick_settings_location_high_accuracy_label">دقة عالية</string>
   <string name="quick_settings_location_off_label">إيقاف خاصية الموقع</string>
+  <string name="quick_settings_location_off_custom_label">الموقع</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">اللغة</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">تعليق الإجراءات متاح</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">تعليق الإجراءات معطل</string>
+  <string name="quick_settings_suspend_actions_label">تعليق الإجراءات</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">بوصلة</string>
+  <string name="quick_settings_compass_N">ش</string>
+  <string name="quick_settings_compass_NE">ش ش</string>
+  <string name="quick_settings_compass_E">ش</string>
+  <string name="quick_settings_compass_SE">ش ج</string>
+  <string name="quick_settings_compass_S">ج</string>
+  <string name="quick_settings_compass_SW">ش غ</string>
+  <string name="quick_settings_compass_W">غ</string>
+  <string name="quick_settings_compass_NW">ش غ</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">تم إيقاف التطبيق</string>
@@ -181,10 +194,17 @@
   <string name="message_switch_fail">لا يمكن التبديل إلى هذه المهمة، لأنه لا توجد واجهة.</string>
   <string name="tasklist_killall">إغلاق الكل</string>
   <string name="tasklist_memory_usage">"• إجمالي الذاكرة الحرة: <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
+  <string name="tm_clear_task">واضحة</string>
   <!-- Slim Recents -->
   <!-- Slim recents app sidebar queue app toast -->
   <!-- Kill button in notification guts -->
+  <string name="dlg_cancel">إلغاء</string>
+  <string name="kill">إنهاء تطبيق</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">خطأ</string>
+  <string name="omnijaws_detail_header">الطقس</string>
+  <string name="omnijaws_label_default">الطقس</string>
+  <string name="omnijaws_current_text">الان</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g>-<xliff:g id="condition">%2$s </xliff:g></string>
   <!-- volte icon switch -->
