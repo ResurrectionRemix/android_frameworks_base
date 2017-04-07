@@ -125,8 +125,8 @@
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse allumé</string>
   <string name="quick_settings_pulse_label">Aperçu de la barre de navigation</string>
   <string name="quick_settings_pie">Pie</string>
-  <string name="quick_settings_ambient_display_label">Adaptation de la luminosité</string>
-  <string name="accessibility_quick_settings_ambient_display_off">Adaptation de la luminosité désactivée.</string>
+  <string name="quick_settings_ambient_display_label">Luminosité adaptative</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Luminosité adaptative désactivée</string>
   <string name="accessibility_quick_settings_ambient_display_on">Luminosité adaptative active</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">La luminosité adaptative a été désactivée</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">La luminosité adaptative a été activée</string>
