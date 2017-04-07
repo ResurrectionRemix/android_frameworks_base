@@ -63,7 +63,7 @@
                 android:paddingBottom="@dimen/empty_shade_view_content_padding_top_bottom"
                 android:gravity="center_horizontal"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
+                android:textSize="14sp"
                 android:text="@string/empty_shade_text"/>
     </RelativeLayout>
 </com.android.systemui.statusbar.EmptyShadeView>
