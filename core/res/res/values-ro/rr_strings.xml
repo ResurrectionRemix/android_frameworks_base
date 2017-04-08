@@ -50,5 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Permite unei aplicații să reseteze datele de utilizare curente la nivelul de bază al bateriei.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">repornirea sistemului de bare</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Repornirea SystemUIService pentru a permite a system bars de a încărcarea resursele modificate</string>
 </resources>
