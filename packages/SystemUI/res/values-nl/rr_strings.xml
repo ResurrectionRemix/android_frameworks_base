@@ -30,7 +30,7 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Schermafbeelding verwijderd</string>
-  <string name="gestures_message">Teken uw gebaar hier</string>
+  <string name="gestures_message">Teken je gebaar hier</string>
   <string name="rr_sys_tuner">Systeem UI afstellen</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Veeg rechts voor %1$s</string>
@@ -210,7 +210,7 @@
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">Het scherm is reeds gesplitst.\nTik op een app om deze nu te plaatsen.</string>
   <string name="recents_multiwin_nolastapp">Alle recente apps verwijderd, kies een app via het startscherm of app-overzicht.</string>
-  <string name="slim_recent_keyguard">Ontgrendel uw apparaat om recente apps te bekijken</string>
+  <string name="slim_recent_keyguard">Ontgrendel je apparaat om recente apps te bekijken</string>
   <string name="slim_recent_pinned">Scherm losmaken om recente apps te zien</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Start %s na het sluiten van recente apps</string>
