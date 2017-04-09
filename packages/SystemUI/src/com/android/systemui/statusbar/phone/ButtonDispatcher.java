@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Dispatches common view calls to multiple views.  This is used to handle
  * multiples of the same nav bar icon appearing.
  */
-public class ButtonDispatcher {
+public class ButtonDispatcher implements Drawable.Callback {
 
     private final ArrayList<View> mViews = new ArrayList<>();
 
@@ -40,6 +40,7 @@ public class ButtonDispatcher {
     private int mImageResource = -1;
     private Drawable mImageDrawable;
     private View mCurrentView;
+    private boolean mVertical;
 
     public ButtonDispatcher(int id) {
         mId = id;
@@ -47,13 +48,6 @@ public class ButtonDispatcher {
 
     void clear() {
         mViews.clear();
-    }
-
-    void addView(View view, boolean landscape) {
-        addView(view);
-        if (view instanceof ButtonInterface) {
-            ((ButtonInterface) view).setLandscape(landscape);
-        }
     }
 
     void addView(View view) {
@@ -74,6 +68,10 @@ public class ButtonDispatcher {
             ((ButtonInterface) view).setImageResource(mImageResource);
         } else if (mImageDrawable != null) {
             ((ButtonInterface) view).setImageDrawable(mImageDrawable);
+        }
+
+        if (view instanceof  ButtonInterface) {
+            ((ButtonInterface) view).setVertical(mVertical);
         }
     }
 
@@ -186,6 +184,47 @@ public class ButtonDispatcher {
         }
     }
 
+    private void updateDrawable() {
+        mImageDrawable.setCallback(this);
+        // one of our buttons will always be visible
+        mImageDrawable.setVisible(true, false);
+    }
+
+    @Override
+    public void invalidateDrawable(Drawable who) {
+        final int N = mViews.size();
+        for (int i = 0; i < N; i++) {
+            mViews.get(i).invalidateDrawable(who);
+        }
+    }
+
+    @Override
+    public void scheduleDrawable(Drawable who, Runnable what, long when) {
+        final int N = mViews.size();
+        for (int i = 0; i < N; i++) {
+            mViews.get(i).scheduleDrawable(who, what, when);
+        }
+    }
+
+    @Override
+    public void unscheduleDrawable(Drawable who, Runnable what) {
+        final int N = mViews.size();
+        for (int i = 0; i < N; i++) {
+            mViews.get(i).unscheduleDrawable(who, what);
+        }
+    }
+
+    public void setVertical(boolean vertical) {
+        mVertical = vertical;
+        final int N = mViews.size();
+        for (int i = 0; i < N; i++) {
+            final View view = mViews.get(i);
+            if (view instanceof ButtonInterface) {
+                ((ButtonInterface) view).setVertical(vertical);
+            }
+        }
+    }
+
     /**
      * Interface for button actions.
      */
@@ -196,7 +235,7 @@ public class ButtonDispatcher {
 
         void abortCurrentGesture();
 
-        void setLandscape(boolean landscape);
+        void setVertical(boolean vertical);
 
         void setCarMode(boolean carMode);
     }

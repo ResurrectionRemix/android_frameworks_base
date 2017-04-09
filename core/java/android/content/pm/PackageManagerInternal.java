@@ -192,4 +192,16 @@ public abstract class PackageManagerInternal {
      *                     which to load the paths, or null if no overlays should be used.
      */
     public abstract void setResourceDirs(int userId, String packageName, String[] resourceDirs);
+    /**
+     * Retrieve the official name associated with a user id.  This name is
+     * guaranteed to never change, though it is possible for the underlying
+     * user id to be changed.  That is, if you are storing information about
+     * user ids in persistent storage, you should use the string returned
+     * by this function instead of the raw user-id.
+     *
+     * @param uid The user id for which you would like to retrieve a name.
+     * @return Returns a unique name for the given user id, or null if the
+     * user id is not currently assigned.
+     */
+    public abstract String getNameForUid(int uid);
 }

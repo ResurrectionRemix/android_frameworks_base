@@ -98,6 +98,7 @@ import static android.view.Window.DECOR_CAPTION_SHADE_LIGHT;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR;
+import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
 import static android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
@@ -971,7 +972,7 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         mFrameOffsets.set(insets.getSystemWindowInsets());
         insets = updateColorViews(insets, true /* animate */);
         insets = updateStatusGuard(insets);
-        updateNavigationGuard(insets);
+        insets = updateNavigationGuard(insets);
         if (getForeground() != null) {
             drawableChanged();
         }
@@ -1338,11 +1339,13 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         return insets;
     }
 
-    private void updateNavigationGuard(WindowInsets insets) {
+    private WindowInsets updateNavigationGuard(WindowInsets insets) {
         boolean isDyanamic = Settings.System.getInt(mContext.getContentResolver(),
             		Settings.System.NAV_BAR_DYNAMIC, 0) == 1;
-        // IMEs lay out below the nav bar, but the content view must not (for back compat)
-        if (mWindow.getAttributes().type == WindowManager.LayoutParams.TYPE_INPUT_METHOD) {
+        // IME windows lay out below the nav bar, but the content view must not (for back compat)
+        // Only make this adjustment if the window is not requesting layout in overscan
+        if (mWindow.getAttributes().type == WindowManager.LayoutParams.TYPE_INPUT_METHOD
+                && (mWindow.getAttributes().flags & FLAG_LAYOUT_IN_OVERSCAN) == 0) {
             // prevent the content view from including the nav bar height
             if (mWindow.mContentParent != null) {
                 if (mWindow.mContentParent.getLayoutParams() instanceof MarginLayoutParams) {
@@ -1372,7 +1375,10 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
                 mNavigationGuard.setLayoutParams(lp);
             }
             updateNavigationGuardColor();
+            insets = insets.consumeSystemWindowInsets(
+                    false, false, false, true /* bottom */);
         }
+        return insets;
     }
 
     void updateNavigationGuardColor() {
