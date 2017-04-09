@@ -56,7 +56,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
     private int mAnimationState;
     private final ArraySet<Animator> mCurrentAnimators;
 
-    private boolean mIsLandscape;
+    private boolean mVertical;
     private boolean mIsPressed;
     private boolean mLongClicked;
     private boolean mOpaEnabled;
@@ -259,7 +259,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
     private ArraySet<Animator> getCollapseAnimatorSet() {
         final ArraySet<Animator> set = new ArraySet<Animator>();
         Animator animator;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator = getDeltaAnimatorY(mRed, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_ry), OpaLayout.COLLAPSE_ANIMATION_DURATION_RY);
         } else {
             animator = getDeltaAnimatorX(mRed, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_ry), OpaLayout.COLLAPSE_ANIMATION_DURATION_RY);
@@ -268,7 +268,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorX(mRed, 1.0f, OpaLayout.DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         set.add(getScaleAnimatorY(mRed, 1.0f, OpaLayout.DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         Animator animator2;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator2 = getDeltaAnimatorY(mBlue, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_bg), OpaLayout.COLLAPSE_ANIMATION_DURATION_BG);
         } else {
             animator2 = getDeltaAnimatorX(mBlue, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_bg), OpaLayout.COLLAPSE_ANIMATION_DURATION_BG);
@@ -277,7 +277,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorX(mBlue, 1.0f, OpaLayout.DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         set.add(getScaleAnimatorY(mBlue, 1.0f, OpaLayout.DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         Animator animator3;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator3 = getDeltaAnimatorY(mYellow, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_ry), OpaLayout.COLLAPSE_ANIMATION_DURATION_RY);
         } else {
             animator3 = getDeltaAnimatorX(mYellow, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_ry), OpaLayout.COLLAPSE_ANIMATION_DURATION_RY);
@@ -286,7 +286,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorX(mYellow, 1.0f, OpaLayout.DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         set.add(getScaleAnimatorY(mYellow, 1.0f, OpaLayout.DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         Animator animator4;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator4 = getDeltaAnimatorY(mGreen, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_bg), OpaLayout.COLLAPSE_ANIMATION_DURATION_BG);
         } else {
             animator4 = getDeltaAnimatorX(mGreen, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_bg), OpaLayout.COLLAPSE_ANIMATION_DURATION_BG);
@@ -348,7 +348,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
 
     private ArraySet<Animator> getLineAnimatorSet() {
         final ArraySet<Animator> set = new ArraySet<Animator>();
-        if (mIsLandscape) {
+        if (mVertical) {
             set.add(getDeltaAnimatorY(mRed, mFastOutSlowInInterpolator, getPxVal(R.dimen.opa_line_x_trans_ry), OpaLayout.LINE_ANIMATION_DURATION_Y));
             set.add(getDeltaAnimatorX(mRed, mFastOutSlowInInterpolator, getPxVal(R.dimen.opa_line_y_translation), OpaLayout.LINE_ANIMATION_DURATION_X));
             set.add(getDeltaAnimatorY(mBlue, mFastOutSlowInInterpolator, getPxVal(R.dimen.opa_line_x_trans_bg), OpaLayout.LINE_ANIMATION_DURATION_Y));
@@ -556,8 +556,8 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
     }
 
     public void setVertical(boolean vertical) {
-        mIsLandscape = mIsLandscape;
-        if (mIsLandscape) {
+        mVertical = vertical;
+        if (mVertical) {
             mTop = mGreen;
             mBottom = mBlue;
             mRight = mYellow;
