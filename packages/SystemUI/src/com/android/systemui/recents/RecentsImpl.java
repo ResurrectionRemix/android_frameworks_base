@@ -308,7 +308,7 @@ public class RecentsImpl implements ActivityOptions.OnAnimationFinishedListener 
                     // Has the user tapped quickly?
                     boolean isQuickTap = ViewConfiguration.getDoubleTapMinTime() < elapsedTime &&
                             elapsedTime < ViewConfiguration.getDoubleTapTimeout();
-                    if (Recents.getConfiguration().isGridEnabled) {
+                    if (Recents.getConfiguration().isGridEnabled()) {
                         if (isQuickTap) {
                             EventBus.getDefault().post(new LaunchNextTaskRequestEvent());
                         } else {

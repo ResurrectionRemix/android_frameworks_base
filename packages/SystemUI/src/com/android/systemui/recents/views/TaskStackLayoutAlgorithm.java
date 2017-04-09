@@ -217,7 +217,7 @@ public class TaskStackLayoutAlgorithm {
      * @return True if we should use the grid layout.
      */
     boolean useGridLayout() {
-        return Recents.getConfiguration().isGridEnabled;
+        return Recents.getConfiguration().isGridEnabled();
     }
 
     // A report of the visibility state of the stack
@@ -1148,7 +1148,7 @@ public class TaskStackLayoutAlgorithm {
         Resources res = ctx.getResources();
         boolean isLandscape = Utilities.getAppConfiguration(ctx).orientation ==
                 Configuration.ORIENTATION_LANDSCAPE;
-        if (config.isGridEnabled) {
+        if (config.isGridEnabled()) {
             return res.getDimensionPixelSize(gridLayoutResId);
         } else if (config.isXLargeScreen) {
             return res.getDimensionPixelSize(isLandscape

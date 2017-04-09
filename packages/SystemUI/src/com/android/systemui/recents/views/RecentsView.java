@@ -199,7 +199,7 @@ public class RecentsView extends FrameLayout {
         mDividerSize = ssp.getDockedDividerSize(context);
         mTouchHandler = new RecentsViewTouchHandler(this);
         mFlingAnimationUtils = new FlingAnimationUtils(context, 0.3f);
-        mScrimAlpha = Recents.getConfiguration().isGridEnabled
+        mScrimAlpha = Recents.getConfiguration().isGridEnabled()
                 ? GRID_LAYOUT_SCRIM_ALPHA : DEFAULT_SCRIM_ALPHA;
         mBackgroundScrim = new ColorDrawable(
                 Color.argb((int) (mScrimAlpha * 255), 0, 0, 0)).mutate();

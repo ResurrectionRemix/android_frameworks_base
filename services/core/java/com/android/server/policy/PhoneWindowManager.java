@@ -1166,7 +1166,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.KEYGUARD_TOGGLE_TORCH), false, this,
                     UserHandle.USER_ALL);
-	    resolver.registerContentObserver(Settings.System.getUriFor(
+	        resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LONG_PRESS_KILL_DELAY), false, this,
 					UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
@@ -1189,6 +1189,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
 	        resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.THREE_FINGER_GESTURE), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_RECENTS), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2778,8 +2781,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mTorchEnabled = (Settings.System.getIntForUser(resolver,
                     Settings.System.KEYGUARD_TOGGLE_TORCH, 0, UserHandle.USER_CURRENT) == 1);
 
-            mOmniSwitchRecents = (Settings.System.getIntForUser(resolver,
-                    Settings.System.NAVIGATION_BAR_RECENTS, 0, UserHandle.USER_CURRENT) == 1);
+            mOmniSwitchRecents = Settings.System.getIntForUser(resolver,
+                    Settings.System.NAVIGATION_BAR_RECENTS, 0,
+                    UserHandle.USER_CURRENT) == 1;
 
         }
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {

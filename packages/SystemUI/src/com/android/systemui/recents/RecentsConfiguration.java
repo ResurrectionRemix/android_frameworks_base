@@ -18,9 +18,13 @@ package com.android.systemui.recents;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Rect;
 
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
+
 import com.android.systemui.R;
 import com.android.systemui.recents.misc.SystemServicesProxy;
 
@@ -58,6 +62,7 @@ public class RecentsConfiguration {
     /** Misc **/
     public boolean fakeShadows;
     public int svelteLevel;
+    private Context mContext;
 
     public int fabEnterAnimDuration;
     public int fabEnterAnimDelay;
@@ -65,13 +70,14 @@ public class RecentsConfiguration {
 
     // Whether this product supports Grid-based Recents. If this is field is set to true, then
     // Recents will layout task views in a grid mode when there's enough space in the screen.
-    public boolean isGridEnabled;
+    private boolean isGridEnabled;
 
     public RecentsConfiguration(Context context) {
         // Load only resources that can not change after the first load either through developer
         // settings or via multi window
         SystemServicesProxy ssp = Recents.getSystemServices();
         Context appContext = context.getApplicationContext();
+        mContext = appContext;
         Resources res = appContext.getResources();
         fakeShadows = res.getBoolean(R.bool.config_recents_fake_shadows);
         svelteLevel = res.getInteger(R.integer.recents_svelte_level);
@@ -96,5 +102,10 @@ public class RecentsConfiguration {
      */
     public RecentsActivityLaunchState getLaunchState() {
         return mLaunchState;
+    }
+
+    public boolean isGridEnabled() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.NAVIGATION_BAR_RECENTS, isGridEnabled ? 2 : 0, UserHandle.USER_CURRENT) == 2;
     }
 }

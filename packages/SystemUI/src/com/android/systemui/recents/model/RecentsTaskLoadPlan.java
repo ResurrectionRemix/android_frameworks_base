@@ -158,7 +158,7 @@ public class RecentsTaskLoadPlan {
             // number of tasks constraints. Freeform tasks are also always shown.
             boolean isFreeformTask = SystemServicesProxy.isFreeformStack(t.stackId);
             boolean isStackTask;
-            if (Recents.getConfiguration().isGridEnabled) {
+            if (Recents.getConfiguration().isGridEnabled()) {
                 // When grid layout is enabled, we only show the first
                 // TaskGridLayoutAlgorithm.MAX_LAYOUT_TASK_COUNT} tasks.
                 isStackTask = t.lastActiveTime >= lastStackActiveTime &&
