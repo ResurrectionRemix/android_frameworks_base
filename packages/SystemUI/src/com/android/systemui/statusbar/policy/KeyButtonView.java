@@ -283,7 +283,7 @@ public class KeyButtonView extends ImageView implements ButtonDispatcher.ButtonI
     }
 
     @Override
-    public void setLandscape(boolean landscape) {
+    public void setVertical(boolean vertical) {
         //no op
     }
 
