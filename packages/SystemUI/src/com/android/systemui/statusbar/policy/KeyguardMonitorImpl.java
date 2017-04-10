@@ -59,7 +59,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
     }
 
     @Override
-    public void addCallback(Callback callback) {
+    public synchronized void addCallback(Callback callback) {
         mCallbacks.add(callback);
         if (mCallbacks.size() != 0 && !mListening) {
             mListening = true;
@@ -71,7 +71,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
     }
 
     @Override
-    public void removeCallback(Callback callback) {
+    public synchronized void removeCallback(Callback callback) {
         if (mCallbacks.remove(callback) && mCallbacks.size() == 0 && mListening) {
             mListening = false;
             mKeyguardUpdateMonitor.removeCallback(this);
@@ -121,7 +121,7 @@ public class KeyguardMonitorImpl extends KeyguardUpdateMonitorCallback
         mCanSkipBouncer = mKeyguardUpdateMonitor.getUserCanSkipBouncer(mCurrentUser);
     }
 
-    private void notifyKeyguardChanged() {
+    private synchronized void notifyKeyguardChanged() {
         // Copy the list to allow removal during callback.
         new ArrayList<Callback>(mCallbacks).forEach(Callback::onKeyguardShowingChanged);
     }
