@@ -48,6 +48,8 @@
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">배터리 통계 다시 설정</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">앱이 현재의 로우-레벨 배터리 사용 정보를 초기화할 수 있도록 허락합니다.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">시스템 바 다시 시작</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 </resources>
