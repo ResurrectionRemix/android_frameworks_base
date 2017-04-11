@@ -5947,6 +5947,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String DND_WHEN_CALL = "dnd_when_call";
 
+        /**
+         * Whether to show the heads up for dialer when heads up are disabled
+         * @hide
+         */
+        public static final String ALWAYS_HEADSUP_DIALER = "always_headsup_dialer";
+
        /**
         * Custom icon pack name to use for Slim Recents
         * @hide

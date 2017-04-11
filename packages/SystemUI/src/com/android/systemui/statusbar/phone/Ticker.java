@@ -191,13 +191,13 @@ public abstract class Ticker {
         animationIn.setInterpolator(interpolatorOut);
         animationOut.setDuration(350);
 
-        mIconSwitcher = (ImageSwitcher) tickerLayout.findViewById(R.id.tickerIcon);
+        mIconSwitcher = (ImageSwitcher) sb.findViewById(R.id.tickerIcon);
         mIconSwitcher.setInAnimation(animationIn);
         mIconSwitcher.setOutAnimation(animationOut);
         mIconSwitcher.setScaleX(mIconScale);
         mIconSwitcher.setScaleY(mIconScale);
 
-        mTextSwitcher = (TextSwitcher) tickerLayout.findViewById(R.id.tickerText);
+        mTextSwitcher = (TextSwitcher) sb.findViewById(R.id.tickerText);
         mTextSwitcher.setInAnimation(animationIn);
         mTextSwitcher.setOutAnimation(animationOut);
 
