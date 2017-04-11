@@ -2965,7 +2965,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         boolean isNotificationFromDialer = sbn.getPackageName().toLowerCase().contains("dialer");
 
         boolean alwaysHeadsUpForThis = !isDialerForegroundApp && isNotificationFromDialer;
-        if (!mUseHeadsUp || isDeviceInVrMode()) {
+        if ((!mUseHeadsUp && !alwaysHeadsUpForThis) || isDeviceInVrMode()) {
             return false;
         }
 
