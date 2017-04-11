@@ -2919,6 +2919,22 @@ public abstract class BaseStatusBar extends SystemUI implements
         if (mNotificationData.shouldFilterOut(sbn)) {
             if (DEBUG) Log.d(TAG, "No peeking: filtered notification: " + sbn.getKey());
             return false;
+	}
+
+        final ActivityManager am = (ActivityManager)
+            mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.RunningTaskInfo foregroundApp = null;
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (tasks != null && !tasks.isEmpty()) {
+            foregroundApp = tasks.get(0);
+        }
+        boolean isDialerForegroundApp = foregroundApp != null &&
+                foregroundApp.baseActivity.getPackageName().toLowerCase().contains("dialer");
+        boolean isNotificationFromDialer = sbn.getPackageName().toLowerCase().contains("dialer");
+
+        boolean alwaysHeadsUpForThis = !isDialerForegroundApp && isNotificationFromDialer;
+        if ((!mUseHeadsUp && !alwaysHeadsUpForThis) || isDeviceInVrMode()) {
+            return false;
         }
 
         boolean inUse = mPowerManager.isScreenOn()
