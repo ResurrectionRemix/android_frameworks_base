@@ -151,4 +151,7 @@
 
     <color name="batterymeter_frame_color_darkintensity">@color/dark_mode_icon_color_dual_tone_background</color>
 
+    <!-- Separate QS text label tint from icon tint -->
+    <color name="qs_tile_label_tint_unavailable">@color/qs_tile_tint_unavailable</color>
+
 </resources>
