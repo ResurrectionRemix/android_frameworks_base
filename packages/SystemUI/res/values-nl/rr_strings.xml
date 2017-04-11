@@ -175,8 +175,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">App gestopt</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Korte weergave 1 minuut gedempt.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Korte weergave <xliff:g id="number">%d</xliff:g> minuten gedempt.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Weergave 1 minuut gedempt.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Weergave <xliff:g id="number">%d</xliff:g> minuten gedempt.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Geen schermafdruk gemaakt</string>
   <string name="screenshot_abort_text">Bewerking afgebroken</string>
