@@ -255,7 +255,9 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected boolean mUseHeadsUp = false;
     protected boolean mHeadsUpTicker = false;
+    protected boolean mHeadsUpUserEnabled = false;
     protected boolean mDisableNotificationAlerts = false;
+    private boolean mIsAlwaysHeadsupDialer;
 
     protected DevicePolicyManager mDevicePolicyManager;
     protected IDreamManager mDreamManager;
@@ -375,6 +377,9 @@ public abstract class BaseStatusBar extends SystemUI implements
             final int mode = Settings.Global.getInt(mContext.getContentResolver(),
                     Settings.Global.ZEN_MODE, Settings.Global.ZEN_MODE_OFF);
             setZenMode(mode);
+
+            mIsAlwaysHeadsupDialer = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.ALWAYS_HEADSUP_DIALER, 0, UserHandle.USER_CURRENT) == 1;
 
             updateLockscreenNotificationSetting();
         }
@@ -799,11 +804,14 @@ public abstract class BaseStatusBar extends SystemUI implements
                     mSettingsObserver,
                     UserHandle.USER_ALL);
         }
-
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS),
                 true,
                 mLockscreenSettingsObserver,
+                UserHandle.USER_ALL);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.ALWAYS_HEADSUP_DIALER), false,
+                mSettingsObserver,
                 UserHandle.USER_ALL);
 
         mBarService = IStatusBarService.Stub.asInterface(
@@ -2944,15 +2952,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     protected boolean shouldPeek(Entry entry, StatusBarNotification sbn) {
-        if (!mUseHeadsUp || isDeviceInVrMode()) {
-            return false;
-        }
-
-        if (mNotificationData.shouldFilterOut(sbn)) {
-            if (DEBUG) Log.d(TAG, "No peeking: filtered notification: " + sbn.getKey());
-            return false;
-	}
-
         final ActivityManager am = (ActivityManager)
             mContext.getSystemService(Context.ACTIVITY_SERVICE);
         ActivityManager.RunningTaskInfo foregroundApp = null;
@@ -2964,8 +2963,8 @@ public abstract class BaseStatusBar extends SystemUI implements
                 foregroundApp.baseActivity.getPackageName().toLowerCase().contains("dialer");
         boolean isNotificationFromDialer = sbn.getPackageName().toLowerCase().contains("dialer");
 
-        boolean alwaysHeadsUpForThis = !isDialerForegroundApp && isNotificationFromDialer;
-        if ((!mUseHeadsUp && !alwaysHeadsUpForThis) || isDeviceInVrMode()) {
+        boolean alwaysHeadsUpForThis = !isDialerForegroundApp && isNotificationFromDialer && mIsAlwaysHeadsupDialer;
+        if (!mUseHeadsUp || isDeviceInVrMode() || (!mHeadsUpUserEnabled && !alwaysHeadsUpForThis)) {
             return false;
         }
 
