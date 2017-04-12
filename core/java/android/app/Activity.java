@@ -3322,25 +3322,29 @@ public class Activity extends ContextThemeWrapper
         }
 
        Context context = getApplicationContext();
-       if (mPerf == null){
-           mPerf = new BoostFramework();
-       }
-       boolean override = mPerf.boostOverride(context, ev, getResources().getDisplayMetrics());
 
-       if (mDragBoostPossible == 1 && override != true) {
-            if (mPerf == null){
-                mPerf = new BoostFramework();
-            }
-            if(mPerfLockDuration == -1){
-                mPerfLockDuration = getResources().getInteger(
-                    com.android.internal.R.integer.ascrollboost_timeout);
-                mAsParamVal = getResources().getIntArray(
-                    com.android.internal.R.array.ascrollboost_param_value);
-            }
-            mPerf.perfLockAcquireTouch(ev,
-                getResources().getDisplayMetrics(),
-                mPerfLockDuration, mAsParamVal);
-        }
+       if (mDragBoostPossible == 1) {
+           final boolean override = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_debugBoost);
+           if (mPerf == null) {
+               mPerf = new BoostFramework();
+           }
+           if (!override) {
+                if (mPerfLockDuration == -1) {
+                    mPerfLockDuration = getResources().getInteger(
+                        com.android.internal.R.integer.ascrollboost_timeout);
+                    mAsParamVal = getResources().getIntArray(
+                        com.android.internal.R.array.ascrollboost_param_value);
+                }
+                if (mPerfLockDuration != 0 && mAsParamVal.length != 0) {
+                    mPerf.perfLockAcquireTouch(ev,
+                         getResources().getDisplayMetrics(),
+                         mPerfLockDuration, mAsParamVal);
+                }
+           } else {
+                mPerf.enableDebugBoost(context, ev, getResources().getDisplayMetrics());
+           }
+       }
 
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             onUserInteraction();
