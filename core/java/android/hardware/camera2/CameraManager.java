@@ -21,7 +21,9 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemService;
+import android.app.ActivityThread;
 import android.content.Context;
+import android.hardware.Camera;
 import android.hardware.CameraInfo;
 import android.hardware.CameraStatus;
 import android.hardware.ICameraService;
@@ -38,6 +40,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.os.SystemProperties;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.Size;
@@ -1064,6 +1068,26 @@ public final class CameraManager {
                     throw new IllegalArgumentException("cameraId was null");
                 }
 
+                /* Force to expose only two cameras
+                 * if the package name does not falls in this bucket
+                 */
+                boolean exposeAuxCamera = false;
+                String packageName = ActivityThread.currentOpPackageName();
+                String packageList = SystemProperties.get("vendor.camera.aux.packagelist");
+                if (packageList.length() > 0) {
+                    TextUtils.StringSplitter splitter = new TextUtils.SimpleStringSplitter(',');
+                    splitter.setString(packageList);
+                    for (String str : splitter) {
+                        if (packageName.equals(str)) {
+                            exposeAuxCamera = true;
+                            break;
+                        }
+                    }
+                }
+                if (exposeAuxCamera == false && (Integer.parseInt(cameraId) >= 2)) {
+                    throw new IllegalArgumentException("invalid cameraId");
+                }
+
                 ICameraService cameraService = getCameraService();
                 if (cameraService == null) {
                     throw new CameraAccessException(CameraAccessException.CAMERA_DISCONNECTED,
@@ -1287,6 +1311,31 @@ public final class CameraManager {
                 Log.v(TAG,
                         String.format("Camera id %s has torch status changed to 0x%x", id, status));
             }
+
+            /* Force to ignore the aux or composite camera torch status update
+             * if the package name does not falls in this bucket
+             */
+            boolean exposeMonoCamera = false;
+            String packageName = ActivityThread.currentOpPackageName();
+            String packageList = SystemProperties.get("vendor.camera.aux.packagelist");
+            if (packageList.length() > 0) {
+                TextUtils.StringSplitter splitter = new TextUtils.SimpleStringSplitter(',');
+                splitter.setString(packageList);
+                for (String str : splitter) {
+                    if (packageName.equals(str)) {
+                        exposeMonoCamera = true;
+                        break;
+                    }
+                }
+            }
+
+            if (exposeMonoCamera == false) {
+                if (Integer.parseInt(id) >= 2) {
+                    Log.w(TAG, "ignore the torch status update of camera: " + id);
+                    return;
+                }
+            }
+
 
             if (!validTorchStatus(status)) {
                 Log.e(TAG, String.format("Ignoring invalid device %s torch status 0x%x", id,
