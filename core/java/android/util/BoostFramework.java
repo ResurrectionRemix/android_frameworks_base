@@ -58,7 +58,6 @@ public class BoostFramework {
     private static int mParamVal[];
     private static String mBoostActivityList[];
     private static long mStartTime;
-    private static final int mDebugBoost = getDebugBoostProperty();
 
 /** @hide */
     private Object mPerf = null;
@@ -142,13 +141,6 @@ public class BoostFramework {
         }).start();
     }
 
-/** @hide Reads system property
-     * @return 1 if property is set
-     */
-    public static int getDebugBoostProperty() {
-       return SystemProperties.getInt("persist.debugboost.enable", 0);
-    }
-
 /** @hide Acquires debug boost perflock
      * @param ev Touch Screen event
      */
@@ -187,19 +179,6 @@ public class BoostFramework {
           mStartTime = System.nanoTime();
           Log.i(TAG, "dBoost: activity = " + currentActivity + " " + "elapsed = " + elapsedMillis);
        }
-    }
-
-/** @hide sets debug boost if property is set
-    */
-    public boolean boostOverride(Context context, MotionEvent ev, DisplayMetrics metrics) {
-       /* Enable debug boost if property is set and
-        * current actiivity is present in list
-        */
-       if (mDebugBoost == 1) {
-          enableDebugBoost(context, ev, metrics);
-          return true;
-       }
-       return false;
     }
 
 /** @hide */
