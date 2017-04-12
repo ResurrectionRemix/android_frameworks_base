@@ -353,6 +353,14 @@ public abstract class Conference extends Conferenceable {
     public void onConnectionAdded(Connection connection) {}
 
     /**
+     * Invoked when the conference adds a participant to the conference call.
+     *
+     * @param participant The participant to be added with conference call.
+     * @hide
+     */
+    public void onAddParticipant(String participant) {}
+
+    /**
      * Sets state to be on hold.
      */
     public final void setOnHold() {
