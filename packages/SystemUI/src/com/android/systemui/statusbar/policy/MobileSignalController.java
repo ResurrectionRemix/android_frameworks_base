@@ -77,9 +77,13 @@ public class MobileSignalController extends SignalController<
     private Config mConfig;
 
     private boolean mRoamingIconAllowed;
+    private boolean mDataDisabledIcon;
 
     private static final String ROAMING_INDICATOR_ICON =
             "system:" + Settings.System.ROAMING_INDICATOR_ICON;
+
+    private static final String DATA_DISABLED_ICON =
+            "system:" + Settings.System.DATA_DISABLED_ICON;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -113,7 +117,7 @@ public class MobileSignalController extends SignalController<
         updateDataSim();
 
         TunerService.get(mContext).addTunable(this,
-                ROAMING_INDICATOR_ICON);
+                ROAMING_INDICATOR_ICON,DATA_DISABLED_ICON);
     }
 
     @Override
@@ -124,6 +128,10 @@ public class MobileSignalController extends SignalController<
                         newValue == null || Integer.parseInt(newValue) != 0;
                      updateTelephony();
                 break;
+            case DATA_DISABLED_ICON:
+                     mDataDisabledIcon =
+                        newValue == null || Integer.parseInt(newValue) != 0;
+                     updateTelephony();
             default:
                 break;
         }
@@ -478,7 +486,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.roaming = isRoaming() && mRoamingIconAllowed;
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
-        } else if (isDataDisabled()) {
+        } else if (isDataDisabled() && mDataDisabledIcon) {
             mCurrentState.iconGroup = TelephonyIcons.DATA_DISABLED;
         }
         if (isEmergencyOnly() != mCurrentState.isEmergency) {
