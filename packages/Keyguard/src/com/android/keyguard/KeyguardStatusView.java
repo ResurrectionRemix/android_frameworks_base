@@ -334,39 +334,29 @@ public class KeyguardStatusView extends GridLayout implements
                     mWeatherClient.queryWeather();
                     mWeatherData = mWeatherClient.getWeatherInfo();
                     Bitmap coloredWeatherIcon = ImageHelper.getColoredBitmap(
-                        mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode), mIconColor);
-                    if (mWeatherCity != null)
-                        mWeatherCity.setText(mWeatherData.city);
-                    if (mWeatherConditionImage != null) {
-                        if (mIconColor == 0xFFFFFFFF) {
-                            mWeatherConditionImage.setImageDrawable(
-                            mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode));
-                        } else {
-                            mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
-                        }
+                    mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode), mIconColor);
+                    mWeatherCity.setText(mWeatherData.city);
+                    if (mIconColor == 0xFFFFFFFF) {
+                        mWeatherConditionImage.setImageDrawable(
+                        mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode));
+                    } else {
+                        mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
                     }
-                    if (mWeatherCurrentTemp != null)
-                        mWeatherCurrentTemp.setText(mWeatherData.temp + mWeatherData.tempUnits);
-                    if (mWeatherConditionText != null)
-                        mWeatherConditionText.setText(mWeatherData.condition);
-                    if (mWeatherView != null)
-                        mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
+                    mWeatherCurrentTemp.setText(mWeatherData.temp + mWeatherData.tempUnits);
+                    mWeatherConditionText.setText(mWeatherData.condition);
+                    mWeatherView.setVisibility(mShowWeather ? View.VISIBLE : View.GONE);
                     updateSettings(false);
                 } else {
-                    if (mWeatherCity != null)
-                        mWeatherCity.setText(null);
-                    if (mWeatherConditionImage != null)
-                        mWeatherConditionImage.setImageDrawable(mContext.getResources().getDrawable(
-                                        R.drawable.keyguard_weather_default_off));
-                    if (mWeatherCurrentTemp != null)
-                        mWeatherCurrentTemp.setText(null);
-                    if (mWeatherConditionText != null)
-                        mWeatherConditionText.setText(null);
+                    mWeatherCity.setText(null);
+                    mWeatherConditionImage.setImageDrawable(mContext
+                        .getResources().getDrawable(R.drawable.keyguard_weather_default_off));
+                    mWeatherCurrentTemp.setText(null);
+                    mWeatherConditionText.setText(null);
                     updateSettings(true);
-                    } 
+                } 
           } catch(Exception e) {
             // Do nothing
-      }
+       }
     }
 
     private void refreshBatteryInfo() {
