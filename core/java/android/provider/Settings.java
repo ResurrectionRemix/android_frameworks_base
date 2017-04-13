@@ -4769,6 +4769,12 @@ public final class Settings {
         public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
 
         /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
          * Whether to display app circle sidebar
          * @hide
          */
