@@ -4405,6 +4405,12 @@ public final class Settings {
         public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
 
         /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
