@@ -4883,6 +4883,12 @@ public final class Settings {
         /** @hide */
         private static final Validator SHOW_LTE_FOURGEE_VALIDATOR = BOOLEAN_VALIDATOR;
 
+        /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
         /***************************
          * AICP System Settings end
          ***************************/
