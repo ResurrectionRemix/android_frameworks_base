@@ -122,4 +122,12 @@ interface IImsUt {
      */
     int updateCallBarringForServiceClass(int cbType, int action, in String[] barrList,
             int serviceClass);
+
+    /**
+     * Retrieves the configuration of the call forward for specified service class.
+     * Returns an integer value to indicate the requestId of the UT request.
+     * -1 is returned if the "condition" is invalid for the queryCallForward,
+     * otherwise, integer greater than -1 will be returned.
+     */
+    int queryCFForServiceClass(int condition, String number, int serviceClass);
 }

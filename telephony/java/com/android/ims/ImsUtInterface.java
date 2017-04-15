@@ -124,6 +124,12 @@ public interface ImsUtInterface {
     public void queryCallForward(int condition, String number, Message result);
 
     /**
+     * Retrieves the configuration of the call forward for the specified service class.
+     * The return value of ((AsyncResult)result.obj) is an array of {@link ImsCallForwardInfo}.
+     */
+    public void queryCallForward(int condition, String number,
+            int serviceClass, Message result);
+    /**
      * Retrieves the configuration of the call waiting.
      * The return value of ((AsyncResult)result.obj) is an array of {@link ImsSsInfo}.
      */
