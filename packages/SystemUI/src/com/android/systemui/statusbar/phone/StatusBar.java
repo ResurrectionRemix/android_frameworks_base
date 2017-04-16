@@ -1830,9 +1830,10 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     Log.v(TAG, "DEBUG_MEDIA: Fading out album artwork");
                 }
                 boolean cannotAnimateDoze = mDozing && !ScrimState.AOD.getAnimateChange();
-                if (mFingerprintUnlockController.getMode()
-                        == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
-                        || hideBecauseOccluded || cannotAnimateDoze) {
+                int fpMode = mFingerprintUnlockController.getMode();
+                if (fpMode == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK_PULSING ||
+                        fpMode == FingerprintUnlockController.MODE_WAKE_AND_UNLOCK ||
+                        hideBecauseOccluded || cannotAnimateDoze) {
 
                     // We are unlocking directly - no animation!
                     mBackdrop.setVisibility(View.GONE);
