@@ -20,6 +20,18 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="TextAppearance.StatusBar.Expanded.WeatherTemp">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/status_bar_temperature_text_color</item>
+    </style>
+	
+    <style name="TextAppearance.StatusBar.Expanded.WeatherLocation">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/status_bar_temperature_location_text_color</item>
+    </style>
+
     <style name="ListTheme" parent="@*android:style/Theme.Holo">
         <item name="android:windowBackground">@*android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>

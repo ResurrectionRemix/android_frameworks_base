@@ -122,4 +122,7 @@
     <!-- Top padding of the no notifications text when no other content is visible  -->
     <dimen name="empty_shade_view_no_notifications_padding_top">8dp</dimen>
 
+    <!-- Padding end for weather text -->
+    <dimen name="status_bar_weather_padding_end">16dp</dimen>
+
 </resources>
