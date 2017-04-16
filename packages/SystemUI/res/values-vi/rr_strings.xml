@@ -156,16 +156,28 @@
   <string name="accessibility_quick_settings_suspend_actions_off">Đình chỉ hoạt động đã bị tắt</string>
   <string name="quick_settings_suspend_actions_label">Đình chỉ hoạt động</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Chế độ pin</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Chế độ pin: chế độ tiết kiệm điện năng.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Chế độ pin: chế độ cân bằng.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Chế độ pin: chế độ hiệu suất.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Chế độ pin: chế độ hiệu năng.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Chế độ pin: chế độ nhanh.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Chế độ pin đã thay đổi thành chế độ tiết kiệm điện năng.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Chế độ pin đã thay đổi thành chế độ tiết kiệm cân bằng.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Chế độ pin đã thay đổi thành chế độ hiệu suất.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Chế độ pin đã thay đổi thành chế độ hiệu năng.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Chế độ pin đã thay đổi thành chế độ nhanh.</string>
+  <string name="quick_settings_performance_profile_detail_title">Pin yếu</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">La bàn</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>

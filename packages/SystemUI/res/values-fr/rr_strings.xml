@@ -244,6 +244,6 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Charge rapide en cours… (chargé à 100 %% dans <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g>)</string>
+  <string name="keyguard_indication_dash_charging_time">Charge rapide\nCharge complète dans <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g></string>
   <string name="keyguard_plugged_in_dash_charging">Charge rapide</string>
 </resources>

@@ -23,20 +23,20 @@
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Hentikan</string>
   <!-- Screenrecord notification action: show/hide pointer -->
-  <string name="screenrecord_notif_pointer_on">Tampilkan penanda</string>
+  <string name="screenrecord_notif_pointer_on">Tampilkan pointer</string>
   <string name="screenrecord_notif_pointer_off">Sembunyikan penanda</string>
   <!-- Screen record notification error title -->
   <string name="screenrecord_notif_error">Tidak dapat merekam layar</string>
-  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+  <string name="status_bar_weather_format"><xliff:g id="suhu">%1$s</xliff:g> - <xliff:g id="kondisi">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Tangkapan layar dihapus</string>
   <string name="gestures_message">Gambar gerakan di sini</string>
-  <string name="rr_sys_tuner">SystemUI tuner</string>
+  <string name="rr_sys_tuner">Penyetel sistem UI</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Usap ke kanan untuk %1$s</string>
   <string name="right_shortcut_hint">Usap ke kiri untuk %1$s</string>
   <string name="lockscreen_message">Ketuk ikon di sebelah kiri atau kanan untuk mengatur pintasan kunci layar.</string>
-  <string name="lockscreen_default_target">Standar</string>
+  <string name="lockscreen_default_target">Bawaan</string>
   <string name="select_application">Pilih aplikasi</string>
   <string name="lockscreen_choose_action_title">Pilih tindakan</string>
   <string name="lockscreen_none_target">Kosong</string>
@@ -156,16 +156,28 @@
   <string name="accessibility_quick_settings_suspend_actions_off">Menunda tindakan dinonaktifkan</string>
   <string name="quick_settings_suspend_actions_label">Hentikan tindakan</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Modus baterai</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Modus baterai: modus hemat daya.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Modus baterai: modus seimbang.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Modus baterai: modus performa.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Modus baterai: modus efisiensi.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Modus baterai: modus cepat.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Modus baterai diubah menjadi modus hemat daya.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Modus baterai diubah menjadi modus seimbang.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Modus baterai diubah menjadi modus performa.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Modus baterai diubah menjadi modus efisien.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Modus baterai diubah menjadi modus cepat.</string>
+  <string name="quick_settings_performance_profile_detail_title">Modus baterai</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompas</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -240,7 +252,7 @@
   <string name="omnijaws_current_text">Sekarang</string>
   <string name="omnijaws_package_not_available">OmniJaws tidak tersedia</string>
   <!-- Weather string format in expanded statusbar header -->
-  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
+  <string name="status_bar_weather_format"><xliff:g id="suhu">%1$s</xliff:g> - <xliff:g id="kondisi">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->

@@ -16,9 +16,9 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">Standar</string>
+  <string name="default_string">Bawaan</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Vendor gambar Anda tidak cocok dengan sistem. Harap flash <xliff:g id="string">%s </xliff:g> vendor gambar untuk perangkat Anda</string>
+  <string name="system_error_vendorprint">Vendor gambar Anda tidak cocok dengan sistem. Harap flash vendor gambar <xliff:g id="string">%s</xliff:g> untuk perangkat Anda</string>
   <string name="global_action_screenrecord">Rekam Layar</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Memudar</string>
@@ -28,7 +28,7 @@
   <string name="animation_slide_left_no_fade">Geser ke kiri (tanpa memudar)</string>
   <string name="animation_slide_up">Geser dari bawah</string>
   <string name="animation_slide_down">Geser dari atas</string>
-  <string name="animation_default">Standar</string>
+  <string name="animation_default">Bawaan</string>
   <string name="animation_translucent">Transparan</string>
   <string name="animation_grow_shrink">Mennjadi di (atas)</string>
   <string name="animation_grow_shrink_center">Membersil (Tengah)</string>
