@@ -127,6 +127,12 @@ public class LocationTile extends QSTile<QSTile.State> {
     }
 
     @Override
+    protected void handleSecondaryClick() {
+        // just toggle here
+        mController.setLocationEnabled(!mController.isLocationEnabled());
+    }
+
+    @Override
     public Intent getLongClickIntent() {
     return null;
     }
