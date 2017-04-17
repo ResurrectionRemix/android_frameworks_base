@@ -24,6 +24,8 @@ import com.android.systemui.R;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
+import cyanogenmod.providers.CMSettings;
+
 /** Quick settings tile: HWKeys Actions **/
 public class HWKeysTile extends QSTile<QSTile.BooleanState> {
 
@@ -70,9 +72,18 @@ public class HWKeysTile extends QSTile<QSTile.BooleanState> {
     }
 
     private void setEnabled(boolean enabled) {
+        int defaultBrightness = mContext.getResources().getInteger(
+                    com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
         Settings.Secure.putInt(mContext.getContentResolver(),
                 Settings.Secure.HARDWARE_KEYS_DISABLE,
                 enabled ? 0 : 1);
+        if (isHWKeysEnabled()) {
+             CMSettings.Secure.putInt(mContext.getContentResolver(),  CMSettings.Secure.BUTTON_BRIGHTNESS , defaultBrightness);
+             CMSettings.Secure.putInt(mContext.getContentResolver(),  CMSettings.Secure.KEYBOARD_BRIGHTNESS , defaultBrightness);
+        } else {
+             CMSettings.Secure.putInt(mContext.getContentResolver(),  CMSettings.Secure.BUTTON_BRIGHTNESS , 0);
+             CMSettings.Secure.putInt(mContext.getContentResolver(),  CMSettings.Secure.KEYBOARD_BRIGHTNESS , 0);          
+        }
     }
 
    private boolean isHWKeysEnabled() {
