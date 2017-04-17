@@ -156,16 +156,28 @@
   <string name="accessibility_quick_settings_suspend_actions_off">Απενεργοποιήθηκαν οι ενέργειες αναστολής</string>
   <string name="quick_settings_suspend_actions_label">Ενέργειες αναστολής</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Λειτουργία μπαταρίας</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Λειτουργία μπαταρίας: λειτουργία εξοικονόμησης ενέργειας.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Λειτουργία μπαταρίας: ισορροπημένη λειτουργία.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Λειτουργία μπαταρίας: λειτουργία απόδοσης.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Λειτουργία μπαταρίας: λειτουργία αποδοτικότητας.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Λειτουργία μπαταρίας: γρήγορη λειτουργία.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Η λειτουργία μπαταρίας άλλαξε σε λειτουργία εξοικονόμησης ενέργειας.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Η λειτουργία μπαταρίας άλλαξε σε ισορροπημένη λειτουργία.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Η λειτουργία μπαταρίας άλλαξε σε λειτουργία απόδοσης.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Η λειτουργία μπαταρίας άλλαξε σε λειτουργία αποδοτικότητας.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Η λειτουργία μπαταρίας άλλαξε σε γρήγορη λειτουργία.</string>
+  <string name="quick_settings_performance_profile_detail_title">Λειτουργία μπαταρίας</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Πυξίδα</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>

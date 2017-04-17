@@ -78,7 +78,7 @@
   <string name="quick_settings_expanded_desktop">Étendu</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
   <string name="quick_settings_reboot_label">Redémarrer</string>
-  <string name="quick_settings_reboot_recovery_label">Récupération</string>
+  <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">Partage de connexion USB désactivé</string>
   <string name="accessibility_quick_settings_usb_tether_on">Partage de connexion USB activé</string>
   <string name="accessibility_quick_settings_usb_tether_changed_off">Partage de connexion USB a été désactivé</string>
@@ -147,7 +147,7 @@
   <string name="quick_settings_location_gps_only_label">Appareil uniquement</string>
   <string name="quick_settings_location_high_accuracy_label">Haute précision</string>
   <string name="quick_settings_location_off_label">Localisation désactivée</string>
-  <string name="quick_settings_location_off_custom_label">Emplacement</string>
+  <string name="quick_settings_location_off_custom_label">Localisation GPS</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Langue</string>
   <string name="quick_settings_locale_more_locales_toast">Veuillez configurer plusieurs langues pour utiliser cette fonctionnalité</string>

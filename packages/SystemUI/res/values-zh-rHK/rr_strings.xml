@@ -164,7 +164,7 @@
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_perf">電池模式：高效能模式。</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_bias_power">電池模式：效率模式。</string>
+  <string name="accessibility_quick_settings_perf_profile_bias_power">電池模式：高效率模式。</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bias_perf">電池模式：快速模式。</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -174,7 +174,7 @@
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_perf">電池模式已變更為高效能模式。</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">電池模式已變更為效率模式。</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">電池模式已變更為高效率模式。</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">電池模式已變更為快速模式。</string>
   <string name="quick_settings_performance_profile_detail_title">電池模式</string>
