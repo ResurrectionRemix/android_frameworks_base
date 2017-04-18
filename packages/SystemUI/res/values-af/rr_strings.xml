@@ -44,6 +44,8 @@
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Compass QS Tile -->
+  <!-- HW Keys Tile -->
+  <!-- Live display tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->
@@ -58,4 +60,6 @@
   <!-- Weather string format in expanded statusbar header -->
   <!-- volte icon switch -->
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <!-- vpn icon switch -->
+  <!-- data saver icon switch -->
 </resources>

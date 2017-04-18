@@ -173,6 +173,8 @@
   <string name="accessibility_quick_settings_compass_on">Busolă activă</string>
   <string name="accessibility_quick_settings_compass_changed_off">Busola oprită</string>
   <string name="accessibility_quick_settings_compass_changed_on">Busola activtă</string>
+  <!-- HW Keys Tile -->
+  <!-- Live display tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicație oprită</string>
@@ -235,4 +237,6 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">Voce prin LTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <!-- vpn icon switch -->
+  <!-- data saver icon switch -->
 </resources>

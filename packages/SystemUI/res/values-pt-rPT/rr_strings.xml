@@ -162,7 +162,7 @@
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bal">Modo de bateria: equilibrado.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_perf">Modo de bateria: performance.</string>
+  <string name="accessibility_quick_settings_perf_profile_perf">Modo de bateria: desempenho.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bias_power">Modo de bateria: eficiência.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -172,7 +172,7 @@
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_bal">Modo de bateria alterado para o modo equilibrado.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_perf">Modo de bateria alterado para o modo de performance.</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Modo de bateria alterado para o modo de desempenho.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Modo de bateria alterado para o modo de eficiência.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -194,6 +194,8 @@
   <string name="quick_settings_compass_SW">SO</string>
   <string name="quick_settings_compass_W">O</string>
   <string name="quick_settings_compass_NW">NO</string>
+  <!-- HW Keys Tile -->
+  <!-- Live display tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicação fechada</string>
@@ -258,4 +260,6 @@
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <string name="keyguard_indication_dash_charging_time">Carregamento Dash (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> até à carga máxima)</string>
   <string name="keyguard_plugged_in_dash_charging">Carregamento Dash</string>
+  <!-- vpn icon switch -->
+  <!-- data saver icon switch -->
 </resources>

@@ -182,6 +182,8 @@
   <string name="quick_settings_compass_SW">SO</string>
   <string name="quick_settings_compass_W">O</string>
   <string name="quick_settings_compass_NW">NO</string>
+  <!-- HW Keys Tile -->
+  <!-- Live display tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App matada</string>
@@ -232,4 +234,6 @@
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <!-- vpn icon switch -->
+  <!-- data saver icon switch -->
 </resources>
