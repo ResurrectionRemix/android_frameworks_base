@@ -41,6 +41,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.android.internal.logging.MetricsLogger;
@@ -121,7 +122,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
 
         mBrightnessController = new BrightnessController(getContext(),
                 mBrightnessIcon,
-                (ToggleSlider) findViewById(R.id.brightness_slider));
+                (ToggleSlider) findViewById(R.id.brightness_slider),
+                (CheckBox) findViewById(R.id.brightness_auto));
 
     }
 
@@ -130,6 +132,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback {
                 R.layout.qs_paged_tile_layout, this, false);
         mTileLayout.setListening(mListening);
         addView((View) mTileLayout);
+        if (getResources().getBoolean(R.bool.config_show_auto_brightness)) {
+            ((CheckBox) findViewById(R.id.brightness_auto)).setVisibility(View.VISIBLE);
+        }
     }
 
     public boolean isShowingCustomize() {
