@@ -180,12 +180,11 @@ public class OmniJawsClient {
         }
     }
 
-    public void updateWeather(boolean force) {
+    public void updateWeather() {
         if (isOmniJawsServiceInstalled()) {
             Intent updateIntent = new Intent(Intent.ACTION_MAIN)
                     .setClassName(SERVICE_PACKAGE, SERVICE_PACKAGE + ".WeatherService");
             updateIntent.setAction(SERVICE_PACKAGE + ".ACTION_UPDATE");
-            updateIntent.putExtra("force", force);
             mContext.startService(updateIntent);
         }
     }

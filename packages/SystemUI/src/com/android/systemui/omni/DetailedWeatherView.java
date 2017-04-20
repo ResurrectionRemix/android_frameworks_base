@@ -266,11 +266,7 @@ public class DetailedWeatherView extends LinearLayout {
     }
 
     private void forceRefreshWeatherSettings() {
-        mWeatherClient.updateWeather(true);
-    }
-
-    private void refreshWeatherSettings() {
-        mWeatherClient.updateWeather(false);
+        mWeatherClient.updateWeather();
     }
 
     public static int getCurrentHourColor() {
