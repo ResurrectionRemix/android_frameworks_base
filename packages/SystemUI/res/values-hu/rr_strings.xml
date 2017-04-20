@@ -195,7 +195,9 @@
   <string name="quick_settings_compass_W">Ny</string>
   <string name="quick_settings_compass_NW">ÉNy</string>
   <!-- HW Keys Tile -->
-  <!-- Live display tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Hardveres gombok bekapcsolása</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Hardveres gombok kikapcsolása</string>
+  <string name="quick_settings_hwkeys_label">Hardveres gombok</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Alkalmazás kilőve</string>
@@ -261,5 +263,7 @@
   <string name="keyguard_indication_dash_charging_time">Dash töltés (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> a teljes töltöttségig)</string>
   <string name="keyguard_plugged_in_dash_charging">Dash töltés</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Adatforgalom-csökkentő</string>
 </resources>

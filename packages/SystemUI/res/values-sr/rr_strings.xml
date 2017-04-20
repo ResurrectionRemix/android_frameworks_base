@@ -139,7 +139,6 @@
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Compass QS Tile -->
   <!-- HW Keys Tile -->
-  <!-- Live display tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Апликација је затворена</string>

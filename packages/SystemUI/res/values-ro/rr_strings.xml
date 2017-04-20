@@ -174,7 +174,6 @@
   <string name="accessibility_quick_settings_compass_changed_off">Busola oprită</string>
   <string name="accessibility_quick_settings_compass_changed_on">Busola activtă</string>
   <!-- HW Keys Tile -->
-  <!-- Live display tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicație oprită</string>

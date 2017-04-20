@@ -195,7 +195,9 @@
   <string name="quick_settings_compass_W">西</string>
   <string name="quick_settings_compass_NW">西北</string>
   <!-- HW Keys Tile -->
-  <!-- Live display tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">開啟實體按鍵</string>
+  <string name="accessibility_quick_settings_hwkeys_off">關閉實體按鍵</string>
+  <string name="quick_settings_hwkeys_label">實體按鍵</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">已終止應用程式</string>
@@ -261,5 +263,7 @@
   <string name="keyguard_indication_dash_charging_time">快速充電 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> 後充滿)</string>
   <string name="keyguard_plugged_in_dash_charging">快速充電</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">數據節省模式</string>
 </resources>

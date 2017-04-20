@@ -195,7 +195,9 @@
   <string name="quick_settings_compass_W">Z</string>
   <string name="quick_settings_compass_NW">SZ</string>
   <!-- HW Keys Tile -->
-  <!-- Live display tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Hardverske tipke uključene</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Hardverske tipke isključene</string>
+  <string name="quick_settings_hwkeys_label">Hardverske tipke</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikacija je zatvorena</string>
@@ -261,5 +263,7 @@
   <string name="keyguard_indication_dash_charging_time">Dash punjenje (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> do napunjenosti)</string>
   <string name="keyguard_plugged_in_dash_charging">Dash punjenje</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Ušteda podataka</string>
 </resources>
