@@ -156,16 +156,28 @@
   <string name="accessibility_quick_settings_suspend_actions_off">Призупинення дій вимкнено</string>
   <string name="quick_settings_suspend_actions_label">Призупинення дій</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Режим продуктивності</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Режим продуктивності: економія енергії.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Режим продуктивності: збалансований.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Режим продуктивності: продуктивність.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Режим продуктивності: ефективність.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Режим продуктивності: швидкий.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Режим продуктивності змінено на економічний.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Режим продуктивності змінено на збалансований.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Режим продуктивності змінено на продуктивний.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Режим продуктивності змінено на ефективний.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Режим продуктивності змінено на швидкий.</string>
+  <string name="quick_settings_performance_profile_detail_title">Режим продуктивності</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Компас</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -183,6 +195,9 @@
   <string name="quick_settings_compass_W">Зх</string>
   <string name="quick_settings_compass_NW">ПнЗх</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Апаратні клавіші увімкнено</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Апаратні клавіші вимкнено</string>
+  <string name="quick_settings_hwkeys_label">Апаратні клавіші</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Додаток закрито</string>
@@ -249,5 +264,7 @@
   <string name="keyguard_indication_dash_charging_time">Заряджання (<xliff:g id="charging_time_left" example="4 години і 2 хвилини">%s</xliff:g> до повного зарядження)</string>
   <string name="keyguard_plugged_in_dash_charging">Заряджання</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Заощадження трафіку</string>
 </resources>

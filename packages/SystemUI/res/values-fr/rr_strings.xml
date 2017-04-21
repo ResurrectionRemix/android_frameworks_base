@@ -250,5 +250,7 @@
   <string name="keyguard_indication_dash_charging_time">Charge rapide\nCharge complète dans <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g></string>
   <string name="keyguard_plugged_in_dash_charging">Charge rapide</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Économiseur de données</string>
 </resources>
