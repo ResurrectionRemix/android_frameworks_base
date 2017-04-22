@@ -79,6 +79,7 @@ public class DetailedWeatherView extends LinearLayout {
     private View mCurrentView;
     private TextView mCurrentText;
     private ImageView mRefresh;
+    private View mConditionLine;
 
     /** The background colors of the app, it changes thru out the day to mimic the sky. **/
     public static final String[] BACKGROUND_SPECTRUM = { "#212121", "#27232e", "#2d253a",
@@ -109,6 +110,7 @@ public class DetailedWeatherView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        mConditionLine = findViewById(R.id.condition_line);
         mWeatherCity  = (TextView) findViewById(R.id.current_weather_city);
         mWeatherTimestamp  = (TextView) findViewById(R.id.current_weather_timestamp);
         mWeatherData  = (TextView) findViewById(R.id.current_weather_data);
@@ -151,10 +153,19 @@ public class DetailedWeatherView extends LinearLayout {
 
     public void updateWeatherData(OmniJawsClient.WeatherInfo weatherData) {
         if (weatherData == null) {
+            mConditionLine.setVisibility(View.GONE);
+            mWeatherCity.setVisibility(View.GONE);
+            mWeatherTimestamp.setVisibility(View.GONE);
+            mWeatherData.setVisibility(View.GONE);
             mNoWeatherNotice.setVisibility(View.VISIBLE);
+            mNoWeatherNotice.setText(getResources().getString(R.string.omnijaws_service_unkown));
             return;
         }
         mNoWeatherNotice.setVisibility(View.GONE);
+        mConditionLine.setVisibility(View.VISIBLE);
+        mWeatherCity.setVisibility(View.VISIBLE);
+        mWeatherTimestamp.setVisibility(View.VISIBLE);
+        mWeatherData.setVisibility(View.VISIBLE);
 
         mWeatherCity.setText(weatherData.city);
         Long timeStamp = weatherData.timeStamp;
@@ -272,5 +283,14 @@ public class DetailedWeatherView extends LinearLayout {
     public static int getCurrentHourColor() {
         final int hourOfDay = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return Color.parseColor(BACKGROUND_SPECTRUM[hourOfDay]);
+    }
+
+    public void weatherError() {
+        mConditionLine.setVisibility(View.GONE);
+        mWeatherCity.setVisibility(View.GONE);
+        mWeatherTimestamp.setVisibility(View.GONE);
+        mWeatherData.setVisibility(View.GONE);
+        mNoWeatherNotice.setVisibility(View.VISIBLE);
+        mNoWeatherNotice.setText(getResources().getString(R.string.omnijaws_service_error_long));
     }
 }

@@ -184,6 +184,13 @@ public class StatusBarWeather extends TextView implements
         }
     }
 
+    @Override
+    public void weatherError() {
+        if (mWeatherData != null) {
+            setVisibility(View.GONE);
+        }
+    }
+
     private void queryAndUpdateWeather() {
         try {
             if (DEBUG) Log.d(TAG, "queryAndUpdateWeather " + mEnabled);
