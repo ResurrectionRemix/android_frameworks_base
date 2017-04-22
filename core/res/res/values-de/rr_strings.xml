@@ -22,7 +22,7 @@
   <string name="global_action_screenrecord">Bildschirmaufnahme</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Ausblenden</string>
-  <string name="animation_slide_right">Nach rechts hineingleiten</string>
+  <string name="animation_slide_right">Von rechts einblenden</string>
   <string name="animation_slide_left">Von links einblenden</string>
   <string name="animation_slide_right_no_fade">Von rechts einblenden (ohne Verblassen)</string>
   <string name="animation_slide_left_no_fade">Von links einblenden (ohne Verblassen)</string>

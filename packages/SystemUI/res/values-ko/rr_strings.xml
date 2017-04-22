@@ -152,6 +152,9 @@
   <string name="quick_settings_locale_label">언어</string>
   <string name="quick_settings_locale_more_locales_toast">토글 기능을 활성화 하려면 다중 언어를 설정하시기 바랍니다</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">활동 일시 중지 활성화됨</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">활동 일시 중지 비활성화됨</string>
+  <string name="quick_settings_suspend_actions_label">활동 일시 중지</string>
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">배터리 모드</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -177,6 +180,7 @@
   <string name="quick_settings_performance_profile_detail_title">배터리 모드</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">나침반</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0<xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">초기화중\u2026</string>
   <string name="accessibility_quick_settings_compass_off">나침반 끄기</string>
   <string name="accessibility_quick_settings_compass_on">나침반 켜기</string>
@@ -191,6 +195,9 @@
   <string name="quick_settings_compass_W">W</string>
   <string name="quick_settings_compass_NW">NW</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">하드웨어 키 사용</string>
+  <string name="accessibility_quick_settings_hwkeys_off">하드웨어 키 사용 안함</string>
+  <string name="quick_settings_hwkeys_label">하드웨어 키</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">애플리케이션 종료됨</string>
@@ -231,7 +238,9 @@
   <string name="recents_multiwin_warning">멀티윈도우 세션은 이미 활성화되었습니다.\n지금 도킹하려면 탭하세요</string>
   <string name="recents_multiwin_nolastapp">최근 기록들을 모두 제거했습니다, 런쳐나 서랍에서 앱을 선택해주세요.</string>
   <string name="slim_recent_keyguard">최근 기록을 보려면 기기를 잠금 해제하세요</string>
+  <string name="slim_recent_pinned">최근 실행 목록을 보려면 화면 고정을 해제하세요</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">최근 실행 목록을 지운 후 %s 실행</string>
   <string name="toast_recents_cancel_queued_app">앱 실행 취소</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">강제로 중지하시겠어요?</string>
@@ -254,5 +263,7 @@
   <string name="keyguard_indication_dash_charging_time">고속 충전중 (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> 후 충전 완료)</string>
   <string name="keyguard_plugged_in_dash_charging">고속 충전중</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">데이터 절약 모드</string>
 </resources>

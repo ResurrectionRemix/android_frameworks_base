@@ -22,7 +22,7 @@
   <string name="global_action_screenrecord">स्क्रीन रिकॉर्ड</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">फीका</string>
-  <string name="animation_slide_right">दायें में स्लाइड</string>
+  <string name="animation_slide_right">दायें से स्लाइड</string>
   <string name="animation_slide_left">बाएं में स्लाइड</string>
   <string name="animation_slide_right_no_fade">दायें से स्लाइड (फीके के बिना)</string>
   <string name="animation_slide_left_no_fade">बाएं से स्लाइड (फीके के बिना)</string>
@@ -42,7 +42,7 @@
   <!-- On-The-Go -->
   <string name="global_action_onthego">On-The-Go मोड</string>
   <!-- ADB enabled, but not connected notification title -->
-  <string name="adb_not_connected_notification_title">ADB निष्क्रिय</string>
+  <string name="adb_not_connected_notification_title">एडीबी निष्क्रिय</string>
   <string name="adb_active_custom_tile_not_connected">निष्क्रिय</string>
   <string name="singlehandmode_slide_hint_message">नेविगेशन पट्टी भर में अपनी उंगली स्लाइड मानक और मिनी स्क्रीन दृश्यों के बीच स्विच करने के लिए</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->

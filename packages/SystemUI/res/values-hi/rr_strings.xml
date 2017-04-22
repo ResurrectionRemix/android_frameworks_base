@@ -37,7 +37,7 @@
   <string name="right_shortcut_hint">%1$s के लिए बाएं ओर स्वाइप करें</string>
   <string name="lockscreen_message">लॉक स्क्रीन शॉर्टकट को पुन: असाइन करने के लिए दाएँ या बाएँ पर चिह्न को टैप करें।</string>
   <string name="lockscreen_default_target">सामान्य</string>
-  <string name="select_application">एप्लिकेशन का चयन करें</string>
+  <string name="select_application">एप्लिकेशन चयन करें</string>
   <string name="lockscreen_choose_action_title">क्रिया चुनें</string>
   <string name="lockscreen_none_target">कोई नहीं</string>
   <!-- App circle sidebar -->
@@ -67,11 +67,11 @@
   <string name="quick_settings_screenshot_label">स्क्रीनशॉट</string>
   <string name="quick_settings_region_screenshot_label">आंशिक स्क्रीनशॉट</string>
   <string name="quick_settings_adb_network">ADB नेटवर्क</string>
-  <string name="quick_settings_network_adb_enabled_label">सक्षम कर दिया गया</string>
-  <string name="quick_settings_network_adb_disabled_label">अक्षम कर दिया गया</string>
+  <string name="quick_settings_network_adb_enabled_label">सक्षम</string>
+  <string name="quick_settings_network_adb_disabled_label">अक्षम</string>
   <string name="quick_settings_sync_label">सिंक</string>
   <string name="accessibility_quick_settings_sync_off">सिंक बंद</string>
-  <string name="accessibility_quick_settings_sync_on">Sync चालु</string>
+  <string name="accessibility_quick_settings_sync_on">सिंक चालु</string>
   <string name="accessibility_quick_settings_sync_changed_off">सिंक्रनाइज़ेशन बंद कर दिया।</string>
   <string name="accessibility_quick_settings_sync_changed_on">Sync चालु कर दिया</string>
   <string name="quick_settings_expanded_desktop_label">विस्तारित डेस्कटॉप</string>
@@ -131,10 +131,10 @@
   <string name="accessibility_quick_settings_ambient_display_changed_off">एम्बिएंट डिस्प्ले बंद कर दिया</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">एम्बिएंट डिस्प्ले चालु कर दिया</string>
   <string name="quick_settings_heads_up_label">संकेत</string>
-  <string name="accessibility_quick_settings_heads_up_off">संकेत बंद।</string>
-  <string name="accessibility_quick_settings_heads_up_on">संकेत चालु।</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">संकेत बंद कर दिया।</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">संकेत चालु कर दिया।</string>
+  <string name="accessibility_quick_settings_heads_up_off">संकेत बंद</string>
+  <string name="accessibility_quick_settings_heads_up_on">संकेत चालु</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">संकेत बंद कर दिया</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">संकेत चालु कर दिया</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">स्थान रिपोर्टिंग: बैटरी बचत मोड।</string>
   <string name="accessibility_quick_settings_location_gps_only">स्थान रिपोर्टिंग: सेंसर मोड।</string>

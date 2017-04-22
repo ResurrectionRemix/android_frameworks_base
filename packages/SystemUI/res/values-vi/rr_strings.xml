@@ -195,6 +195,9 @@
   <string name="quick_settings_compass_W">T</string>
   <string name="quick_settings_compass_NW">TB</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Phím cứng bật</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Phím cứng tắt</string>
+  <string name="quick_settings_hwkeys_label">Phím cứng</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Ứng dụng đã tắt</string>
@@ -260,5 +263,7 @@
   <string name="keyguard_indication_dash_charging_time">Đang sạc nhanh (<xliff:g id="charging_time_left" example="4 giờ và 2 phút">%s</xliff:g> cho đến khi đầy)</string>
   <string name="keyguard_plugged_in_dash_charging">Sạc nhanh</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Trình tiết kiệm dữ liệu</string>
 </resources>
