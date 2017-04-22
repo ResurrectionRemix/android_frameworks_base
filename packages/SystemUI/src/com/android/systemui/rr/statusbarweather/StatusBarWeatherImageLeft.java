@@ -155,7 +155,7 @@ public class StatusBarWeatherImageLeft extends ImageView implements
     }
 
     @Override
-    public void weatherError() {
+    public void weatherError(int errorReason) {
         if (mWeatherData != null) {
             setVisibility(View.GONE);
         }

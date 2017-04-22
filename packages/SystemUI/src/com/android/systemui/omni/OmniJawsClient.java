@@ -52,6 +52,8 @@ public class OmniJawsClient {
 
     private static final String ICON_PACKAGE_DEFAULT = "org.omnirom.omnijaws";
     private static final String ICON_PREFIX_DEFAULT = "weather";
+    private static final String EXTRA_ERROR = "error";
+    public static final int EXTRA_ERROR_DISABLED = 2;
 
     public static final String[] WEATHER_PROJECTION = new String[]{
             "city",
@@ -116,7 +118,7 @@ public class OmniJawsClient {
 
     public static interface OmniJawsObserver {
         public void weatherUpdated();
-        public void weatherError();
+        public void weatherError(int errorReason);
     }
 
     private class WeatherUpdateReceiver extends BroadcastReceiver {
@@ -128,7 +130,8 @@ public class OmniJawsClient {
                     observer.weatherUpdated();
                 }
                 if (action.equals(WEATHER_ERROR)) {
-                    observer.weatherError();
+                    int errorReason = intent.getIntExtra(EXTRA_ERROR, 0);
+                    observer.weatherError(errorReason);
                 }
             }
         }
