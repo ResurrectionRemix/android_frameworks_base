@@ -17,39 +17,190 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
+  <string name="screenrecord_notif_ticker">หน้าจอกำลังถูกบันทึก</string>
   <!-- Screenrecord notification title -->
+  <string name="screenrecord_notif_title">บันทึกหน้าจอ</string>
   <!-- Screenrecord notification action: Stop -->
+  <string name="screenrecord_notif_stop">หยุด</string>
   <!-- Screenrecord notification action: show/hide pointer -->
+  <string name="screenrecord_notif_pointer_on">แสดงจุด</string>
+  <string name="screenrecord_notif_pointer_off">ซ่อนจุด</string>
   <!-- Screen record notification error title -->
+  <string name="screenrecord_notif_error">ไม่สามารถบันทึกวิดิโอหน้าจอ</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
+  <string name="delete_screenshot_toast">ลบภาพถ่ายหน้าจอ</string>
+  <string name="gestures_message">วาดท่าทางที่นี่</string>
+  <string name="rr_sys_tuner">ตัวปรับหน้าผู้ใช้งานของระบบ</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="left_shortcut_hint">กวาดจากขวาสำหรับ %1$s</string>
+  <string name="right_shortcut_hint">กวาดจากซ้ายสำหรับ %1$s</string>
+  <string name="lockscreen_message">แตะที่ไอคอมบนด้านซ้ายหรือด้านขวาของหน้าจอเพื่อจัดทางลัดของหน้าจอล็อค</string>
+  <string name="lockscreen_default_target">ปกติ</string>
+  <string name="select_application">เลือกแอปพลิเคชัน</string>
+  <string name="lockscreen_choose_action_title">เลือกการกระทำ</string>
+  <string name="lockscreen_none_target">ไม่มี</string>
   <!-- App circle sidebar -->
+  <string name="app_float_maximize_item_title">ขยายให้มากที่สุด</string>
+  <string name="app_float_item_title">มุมมองแบบลอย</string>
+  <string name="app_stop_item_title">ปิดแอป</string>
   <!-- On The Go -->
+  <string name="onthego_notif_ticker">โหมด On-The-Go ถูกเปิดใช้งาน</string>
+  <string name="onthego_notif_title">โหมด On-The-Go ไม่ถูกใช้งาน</string>
+  <string name="onthego_notif_stop">หยุด</string>
+  <string name="onthego_notif_options">ตัวเลือก</string>
+  <string name="onthego_notif_error">ไม่สามารถเริ่มต้นโหมด On-The-Go ได้</string>
+  <string name="onthego_notif_restart">เริ่มโหมด On-The-Go ใหม่</string>
+  <string name="onthego_notif_camera_changed">โหมดของกล้องถูกเปลี่ยน</string>
+  <string name="onthego_transparency">ความโปร่งใส</string>
+  <string name="onthego_front_camera">ใช้กล้องหน้า</string>
+  <string name="onthego_service_toggle">เริ่มบริการใหม่อัตโนมัติ</string>
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">เสียง</string>
+  <string name="quick_settings_sound_ring">มีเสียง</string>
+  <string name="quick_settings_sound_vibrate">สั่น</string>
+  <string name="quick_settings_sound_dnd">ห้าม​รบกวน</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">ระดับเสียง</string>
+  <string name="quick_settings_volume_panel_label">ระดับเสียง</string>
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_screenshot_label">ภาพหน้าจอ</string>
+  <string name="quick_settings_region_screenshot_label">บางส่วนของภาพหน้าจอ</string>
+  <string name="quick_settings_adb_network">ADB บนเครือข่าย</string>
+  <string name="quick_settings_network_adb_enabled_label">เปิดใช้งาน</string>
+  <string name="quick_settings_network_adb_disabled_label">ปิดการใช้งาน</string>
+  <string name="quick_settings_sync_label">ซิงก์ข้อมูล</string>
+  <string name="accessibility_quick_settings_sync_off">ปิดการซิงก์</string>
+  <string name="accessibility_quick_settings_sync_on">เปิดซิงก์</string>
+  <string name="accessibility_quick_settings_sync_changed_off">ปิดการซิงก์</string>
+  <string name="accessibility_quick_settings_sync_changed_on">เปิดการซิงก์</string>
+  <string name="quick_settings_expanded_desktop_label">เต็มจอ</string>
+  <string name="quick_settings_expanded_desktop">ขยายเต็มจอ</string>
+  <string name="quick_settings_expanded_desktop_off">ปกติ</string>
+  <string name="quick_settings_reboot_label">เริ่มระบบใหม่</string>
+  <string name="quick_settings_reboot_recovery_label">กู้คืน</string>
+  <string name="accessibility_quick_settings_usb_tether_off">ปิดการกระจายสัญญาณผ่าน USB</string>
+  <string name="accessibility_quick_settings_usb_tether_on">เปิดการกระจายสัญญาณผ่าน USB</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">การกระจายสัญญาณผ่าน USB ถูกปิด</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">การกระจายสัญญาณผ่าน USB ถูกเปิด</string>
+  <string name="quick_settings_usb_tether_label">การกระจายสัญญาณผ่าน USB</string>
+  <string name="quick_settings_music_label">เพลง</string>
+  <string name="quick_settings_music_play">เล่น</string>
+  <string name="quick_settings_music_pause">พัก</string>
+  <string name="quick_settings_ime_tile_label">วิธีการป้อนข้อมูล</string>
+  <string name="rr_qs_tile">การตั้งค่า</string>
+  <string name="quick_settings_caffeine_label">คาเฟอีน</string>
+  <string name="accessibility_quick_settings_caffeine_off">ปิดโหมดคาเฟอีน</string>
+  <string name="accessibility_quick_settings_caffeine_on">เปิดโหมดคาเฟอีน</string>
+  <string name="qs_app_picker_title">ตัวเลือกแอป</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE เปิด </string>
+  <string name="lte_off">LTE ปิด</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC ปิด</string>
+  <string name="quick_settings_screenrecord">บันทึกวิดิโอหน้าจอ</string>
+  <string name="quick_settings_screenrecord_on">บันทึก...</string>
+  <string name="quick_settings_navigation_bar">บาร์นำทาง</string>
+  <string name="quick_settings_smartbar">บาร์นำทางแบบฉลาด</string>
+  <string name="quick_settings_smartbar_off">ปิดบาร์นำทางแบบฉลาด</string>
+  <string name="quick_settings_fling">พุ่ง</string>
+  <string name="quick_settings_fling_off">ปิดการพุ่ง</string>
+  <string name="quick_settings_appcirclebar_title">แถบแอปแบบวงกลม</string>
+  <string name="quick_settings_appcirclebar_on">เปิดแถบแอปแบบวงกลม</string>
+  <string name="quick_settings_appcirclebar_off">ปิดแถบแอปแบบวงกลม</string>
+  <string name="quick_settings_gesture_anywhere_label">ท่าทางทุกที่</string>
+  <string name="quick_settings_gesture_anywhere_on">เปิดท่าทาง</string>
+  <string name="quick_settings_gesture_anywhere_off">ปิดท่าทาง</string>
+  <string name="quick_settings_appsidebar_title">บาร์ข้างสำหรับแอป</string>
+  <string name="quick_settings_appsidebar_on">บาร์ข้างสำหรับแอปถูกเปิด</string>
+  <string name="quick_settings_appsidebar_off">บาร์ข้างสำหรับแอปถูกปิด</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">เปิดการจำลองแบบชีพจร</string>
+  <string name="quick_settings_pulse_disabled">ไม่มีตัวจำลอง</string>
+  <string name="quick_settings_pulse_label">การจำลองแบบชีพจร</string>
+  <string name="accessibility_quick_settings_pulse_off">การจำลองแบบชีพจรถูกปิด</string>
+  <string name="accessibility_quick_settings_pulse_on">การจำลองแบบชีพจรถูกเปิด</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">การจำลองแบบชีพจรได้ปิดลงแล้ว</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">การจำลองแบบชีพจรได้เปิดแล้ว</string>
+  <string name="quick_settings_pulse_label">การจำลองแบบชีพจรในบาร์นำทาง</string>
+  <string name="quick_settings_pie">พาย</string>
+  <string name="quick_settings_ambient_display_label">หน้าจอแวดล้อม</string>
+  <string name="accessibility_quick_settings_ambient_display_off">ปิดหน้าจอแวดล้อม</string>
+  <string name="accessibility_quick_settings_ambient_display_on">เปิดหน้าจอแวดล้อม</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">หน้าจอแวดล้อมถูกปิด</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">หน้าจอแวดล้อมถูกเปิด</string>
+  <string name="quick_settings_heads_up_label">การแจ้งเตือนด้านบน</string>
+  <string name="accessibility_quick_settings_heads_up_off">ปิดแจ้งเตือนด้านบน</string>
+  <string name="accessibility_quick_settings_heads_up_on">เปิดแจ้งเตือนด้านบน</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">ปิดการแจ้งเตือนด้านบน</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">เปิดการแจ้งเตือนด้านบน</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">การรายงานตำแหน่ง: โหมดประหยัดพลังงาน</string>
+  <string name="accessibility_quick_settings_location_gps_only">การรายงานตำแหน่ง: โหมดเซนเซอร์เท่านั้น</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">การรายงานตำแหน่ง: โหมดความแม่นยำสูง</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">การรายงานตำแหน่ง: เปลี่ยนไปเป็นโหมดประหยัดพลังงาน</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">การรายงานตำแหน่ง: เปลี่ยนไปเป็นโหมดประหยัดพลังงาน</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">การรายงานตำแหน่ง: เปลี่ยนไปเป็นโหมดความแม่นยำสูง</string>
+  <string name="quick_settings_location_detail_title">โหมดการระบุตำแหน่ง</string>
+  <string name="quick_settings_location_battery_saving_label">ประหยัดแบตเตอรี่</string>
+  <string name="quick_settings_location_gps_only_label">อุปกรณ์เท่านั้น</string>
+  <string name="quick_settings_location_high_accuracy_label">ความแม่นยำสูง</string>
+  <string name="quick_settings_location_off_label">ปิดใช้งานตำแหน่ง</string>
+  <string name="quick_settings_location_off_custom_label">ตำแหน่ง</string>
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">ภาษา</string>
+  <string name="quick_settings_locale_more_locales_toast">กรุณาตั้งค่าหลายภาษาเพื่อสามารถเปิดตัวสลับเป็นปกติ</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">ท่าทางสงบนิ่งถูกเปิดแล้ว</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">ท่าทางสงบนิ่งถูกปิดแล้ว</string>
+  <string name="quick_settings_suspend_actions_label">ท่าทางสงบนิ่ง</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">โหมดแบตเตอรี่</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">โหมดแบตเตอรี่: โหมดประหยัดพลังงาน</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">โหมดแบตเตอรี่: โหมดสมดุล</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">โหมดแบตเตอรี่: โหมดประสิทธิภาพ</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">โหมดแบตเตอรี่: โหมดมีประสิทธิภาพอย่างพอเพียง</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">โหมดแบตเตอรี่: โหมดรีบเร่ง</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">โหมดแบตเตอรี่ถูกเปลี่ยนไปเป็นโหมดประหยัดพลังงานแล้ว</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">โหมดแบตเตอรี่ถูกเปลี่ยนไปเป็นโหมดสมดุลแล้ว</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">โหมดแบตเตอรี่ถูกเปลี่ยนไปเป็นโหมดประสิทธิภาพแล้ว</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">โหมดแบตเตอรี่ถูกเปลี่ยนไปเป็นโหมดมีประสิทธิภาพอย่างพอเพียงแล้ว</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">โหมดแบตเตอรี่ถูกเปลี่ยนไปเป็นโหมดรีบเร่งแล้ว</string>
+  <string name="quick_settings_performance_profile_detail_title">โหมดแบตเตอรี่</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">เข็มทิศ</string>
+  <string name="quick_settings_compass_value"><xliff:g id="องศา">%1$.0f</xliff:g>\u00b0 <xliff:g id="ทิศ">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">กำลังเริ่มต้น\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">ปิดเข็มทิศ</string>
+  <string name="accessibility_quick_settings_compass_on">เปิดเข็มทิศ</string>
+  <string name="accessibility_quick_settings_compass_changed_off">เข็มทิศถูกปิดแล้ว</string>
+  <string name="accessibility_quick_settings_compass_changed_on">เข็มทิศถูกเปิดแล้ว</string>
+  <string name="quick_settings_compass_N">เหนือ</string>
+  <string name="quick_settings_compass_NE">ตะวันออกเฉียงเหนือ</string>
+  <string name="quick_settings_compass_E">ตะวันออก</string>
+  <string name="quick_settings_compass_SE">ตะวันออกเฉียงใต้</string>
+  <string name="quick_settings_compass_S">ใต้</string>
+  <string name="quick_settings_compass_SW">ตะวันตกเฉียงใต้</string>
+  <string name="quick_settings_compass_W">ตะวันตก</string>
   <!-- HW Keys Tile -->
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
   <!-- Screenshot Crop & Share -->
+  <string name="action_save_fault">บันทึกไม่ประสบความสำเร็จ</string>
+  <string name="action_save_fault">บันทึกไม่ประสบความสำเร็จ</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <!-- Slim Recents -->
@@ -57,8 +208,14 @@
   <!-- Kill button in notification guts -->
   <!-- OmniJAWS -->
   <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VoLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">การชาร์จเร็ว (<xliff:g id="charging_time_left" ตัวอย่าง="4 ชั่วโมง กับ 2 นาที">%s</xliff:g> จนกระทั่งเต็ม)</string>
+  <string name="keyguard_plugged_in_dash_charging">การชาร์จเร็ว</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">ประหยัดข้อมูล</string>
 </resources>
