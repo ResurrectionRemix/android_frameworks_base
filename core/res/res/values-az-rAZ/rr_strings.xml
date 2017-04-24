@@ -50,5 +50,7 @@
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Tətbiqetmənin zəif batareya istifadə məlumatını sıfırlamasına icazə verər.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">Sistem barlar yenidən başladın</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Restart SystemUIService sistem barlar temalı resursları yükləyə bilər, belə ki,</string>
 </resources>

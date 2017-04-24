@@ -147,11 +147,17 @@
   <string name="quick_settings_location_gps_only_label">Sadəcə cihaz</string>
   <string name="quick_settings_location_high_accuracy_label">Yüksək dəqiqlik</string>
   <string name="quick_settings_location_off_label">Məkan qapalı</string>
+  <string name="quick_settings_location_off_custom_label">yer</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Dil</string>
   <string name="quick_settings_locale_more_locales_toast">Keçid funksionallığını aktivləşdirmək üçün xahiş edirik birdən çox dil quraşdırın</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Təxirə tədbirlər effektiv</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Təxirə tədbirlər əlil
+</string>
+  <string name="quick_settings_suspend_actions_label">tədbirlər dayandırmaq</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Battery rejimi</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
