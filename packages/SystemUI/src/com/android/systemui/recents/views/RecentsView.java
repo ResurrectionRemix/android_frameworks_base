@@ -1336,6 +1336,8 @@ public class RecentsView extends FrameLayout {
                      Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.SHOW_CLEAR_ALL_RECENTS), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.NAVIGATION_BAR_RECENTS), false, this, UserHandle.USER_ALL);
 
              update();
          }
@@ -1377,6 +1379,11 @@ public class RecentsView extends FrameLayout {
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.MEM_TEXT_COLOR))) {
                  checkcolors();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.NAVIGATION_BAR_RECENTS))) {
+                try {
+                mTaskStackView.reloadOnConfigurationChange();
+                } catch (Exception e) {}
              }
              update();
          }
