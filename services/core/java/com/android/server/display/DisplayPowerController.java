@@ -903,13 +903,16 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
     private void animateScreenStateChange(int target, boolean performScreenOffTransition) {
         // If there is already an animation in progress, don't interfere with it.
-        if (mColorFadeOnAnimator.isStarted()
-                || mColorFadeOffAnimator.isStarted()) {
+        if (mColorFadeOnAnimator.isStarted()) {
+            if (target == Display.STATE_ON) {
+                // If display state changed to on, proceed and stop the color fade and turn screen on.
+                mPendingScreenOff = false;
+                return;
+            }
+        }else if (mColorFadeOffAnimator.isStarted()){
             if (target != Display.STATE_ON) {
                 return;
             }
-            // If display state changed to on, proceed and stop the color fade and turn screen on.
-            mPendingScreenOff = false;
         }
 
         // If we were in the process of turning off the screen but didn't quite
