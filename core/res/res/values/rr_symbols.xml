@@ -204,8 +204,4 @@
   <!-- Whether device has dash charging support -->
   <java-symbol type="bool" name="config_hasDashCharger" />
 
-  <!-- call removeCient in cancelAuthentification after stop to 
-       avoid 3s delay for certain fpc HALs -->
-  <java-symbol type="bool" name="config_fingerprintRemoveClientOnCancel" />
-
 </resources>
