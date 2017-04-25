@@ -117,13 +117,13 @@
   <string name="quick_settings_appsidebar_off">Barre d\'application latérale désactivée</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Impulsion activée</string>
-  <string name="quick_settings_pulse_disabled">Aucun aperçu</string>
+  <string name="quick_settings_pulse_disabled">Pas d\'égaliseur</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse desactivé</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse activé</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse éteint</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse allumé</string>
-  <string name="quick_settings_pulse_label">Aperçu de la barre de navigation</string>
+  <string name="quick_settings_pulse_label">Égaliseur Pulse dans la barre de navigation</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Luminosité adaptative</string>
   <string name="accessibility_quick_settings_ambient_display_off">Luminosité adaptative désactivée</string>
@@ -190,9 +190,9 @@
   <string name="quick_settings_compass_W">O</string>
   <string name="quick_settings_compass_NW">NO</string>
   <!-- HW Keys Tile -->
-  <string name="accessibility_quick_settings_hwkeys_on">Touches matérielles activées</string>
-  <string name="accessibility_quick_settings_hwkeys_off">Touches matérielles désactivées</string>
-  <string name="quick_settings_hwkeys_label">Touches matérielles</string>
+  <string name="accessibility_quick_settings_hwkeys_on">Boutons physiques activées</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Boutons physiques désactivées</string>
+  <string name="quick_settings_hwkeys_label">Boutons physiques</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">L\'application a été arrêtée</string>

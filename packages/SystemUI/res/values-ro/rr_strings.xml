@@ -156,24 +156,48 @@
   <string name="accessibility_quick_settings_suspend_actions_off">Suspendare acțiuni dezactivat</string>
   <string name="quick_settings_suspend_actions_label">Suspendarea acţiunilor</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Mod baterie</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Mod baterie: economisire energie.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Mod baterie: echilibrat.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Mod baterie: performanță.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Mod baterie: eficiență.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Mod baterie: rapid.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Mod baterie schimbat în mod economisire energie.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Mod baterie schimbat în mod echilibrat.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Mod baterie schimbat în mod performanță.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Mod baterie schimbat în mod eficiență.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Mod baterie schimbat în mod rapid.</string>
+  <string name="quick_settings_performance_profile_detail_title">Mod baterie</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Busolă</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f </xliff:g> \u00b0 <xliff:g id="direction">%2$s </xliff:g></string>
   <string name="quick_settings_compass_init">Inițializare\u2026</string>
   <string name="accessibility_quick_settings_compass_off">Busolă inactivă</string>
   <string name="accessibility_quick_settings_compass_on">Busolă activă</string>
   <string name="accessibility_quick_settings_compass_changed_off">Busola oprită</string>
   <string name="accessibility_quick_settings_compass_changed_on">Busola activtă</string>
+  <string name="quick_settings_compass_N">N</string>
+  <string name="quick_settings_compass_NE">NE</string>
+  <string name="quick_settings_compass_E">E</string>
+  <string name="quick_settings_compass_SE">SE</string>
+  <string name="quick_settings_compass_S">S</string>
+  <string name="quick_settings_compass_SW">SV</string>
+  <string name="quick_settings_compass_W">Mie</string>
+  <string name="quick_settings_compass_NW">NV</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Taste fizice pornite</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Taste fizice oprite</string>
+  <string name="quick_settings_hwkeys_label">Taste fizice</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicație oprită</string>
@@ -236,6 +260,10 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">Voce prin LTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Se încarcă (<xliff:g id="Charging_TIME_LEFT">%s</xliff:g> până la finalizare)</string>
+  <string name="keyguard_plugged_in_dash_charging">Încărcare</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Economizor de date</string>
 </resources>

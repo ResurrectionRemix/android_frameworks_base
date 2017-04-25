@@ -177,7 +177,7 @@
   <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Chế độ pin đã thay đổi thành chế độ hiệu năng.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Chế độ pin đã thay đổi thành chế độ nhanh.</string>
-  <string name="quick_settings_performance_profile_detail_title">Pin yếu</string>
+  <string name="quick_settings_performance_profile_detail_title">Chế độ pin</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">La bàn</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
