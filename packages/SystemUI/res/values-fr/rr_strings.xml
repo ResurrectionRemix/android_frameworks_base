@@ -190,8 +190,8 @@
   <string name="quick_settings_compass_W">O</string>
   <string name="quick_settings_compass_NW">NO</string>
   <!-- HW Keys Tile -->
-  <string name="accessibility_quick_settings_hwkeys_on">Boutons physiques activées</string>
-  <string name="accessibility_quick_settings_hwkeys_off">Boutons physiques désactivées</string>
+  <string name="accessibility_quick_settings_hwkeys_on">Boutons physiques activés</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Boutons physiques désactivés</string>
   <string name="quick_settings_hwkeys_label">Boutons physiques</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
