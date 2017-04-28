@@ -3407,8 +3407,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             launchHomeFromHotKey(DEFAULT_DISPLAY, false /* awakenDreams */,
                     true /*respectKeyguard*/);
                 break;
-            case KEY_ACTION_BACK:
             case KEY_ACTION_MENU:
+                triggerVirtualKeypress(KeyEvent.KEYCODE_MENU, false);
+                break;
+            case KEY_ACTION_BACK:
             case KEY_ACTION_IN_APP_SEARCH:
                 triggerVirtualKeypress(keyCode, false);
                 break;
