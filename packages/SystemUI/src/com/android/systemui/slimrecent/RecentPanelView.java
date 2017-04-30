@@ -293,7 +293,7 @@ public class RecentPanelView {
             expanded = isExpanded;
             expandVisible = !isTopTask;
             customIcon = isTopTask && screenPinningEnabled;
-            custom = mContext.getDrawable(R.drawable.recents_lock_to_app_pin);
+            custom = mContext.getDrawable(R.drawable.ic_slimrec_pin_app);
             customClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
