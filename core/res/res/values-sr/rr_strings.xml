@@ -21,17 +21,17 @@
   <string name="system_error_vendorprint">Ваш имиџ система добављача не одговара систему. Флешујте <xliff:g id="string">%s</xliff:g> имиџ добављача за ваш уређај</string>
   <string name="global_action_screenrecord">Снимање екрана</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Избледи</string>
-  <string name="animation_slide_right">Помери десно</string>
-  <string name="animation_slide_left">Помери лево</string>
-  <string name="animation_slide_right_no_fade">Помери десно (без изблеђивања)</string>
-  <string name="animation_slide_left_no_fade">Помери лево (без изблеђивања)</string>
+  <string name="animation_fade">Изблеђивање</string>
+  <string name="animation_slide_right">Клизање удесно</string>
+  <string name="animation_slide_left">Клизање улево</string>
+  <string name="animation_slide_right_no_fade">Клизање удесно (без изблеђивања)</string>
+  <string name="animation_slide_left_no_fade">Клизање улево (без изблеђивања)</string>
   <string name="animation_slide_up">Клизање на доле</string>
   <string name="animation_slide_down">Клизање на горе</string>
   <string name="animation_default">Подразумевано</string>
   <string name="animation_translucent">Прозирност</string>
   <string name="animation_grow_shrink">Раст (ка горе)</string>
-  <string name="animation_grow_shrink_center">Расте (ка центру)</string>
+  <string name="animation_grow_shrink_center">Раст (ка центру)</string>
   <string name="animation_grow_shrink_bottom">Раст (ка доле)</string>
   <string name="animation_grow_shrink_left">Раст (улево)</string>
   <string name="animation_grow_shrink_right">Раст (удесно)</string>

@@ -52,5 +52,5 @@
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_restartUI">Redémarrer les barres du système</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_restartUI">Redémarrer le Service SystemUI afin que les barres du système puissent charger les ressources du thème</string>
+  <string name="permdesc_restartUI">Redémarrer SystemUIService afin que les barres du système puissent charger les ressources du thème</string>
 </resources>
