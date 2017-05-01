@@ -291,10 +291,13 @@ public class DetailedWeatherView extends LinearLayout {
     public void weatherError(int errorReason) {
         mConditionLine.setVisibility(View.VISIBLE);
         mProgressContainer.setVisibility(View.GONE);
-        mWeatherData.setVisibility(View.GONE);
+        if (errorReason == OmniJawsClient.EXTRA_ERROR_DISABLED) {
+            mWeatherData.setVisibility(View.GONE);
+            mNoWeatherNotice.setText(getResources().getString(R.string.omnijaws_service_disabled));
+        } else {
+            mWeatherData.setVisibility(View.VISIBLE);
+            mNoWeatherNotice.setText("*");
+        }
         mNoWeatherNotice.setVisibility(View.VISIBLE);
-        mNoWeatherNotice.setText(errorReason == OmniJawsClient.EXTRA_ERROR_DISABLED ?
-            getResources().getString(R.string.omnijaws_service_disabled) :
-            getResources().getString(R.string.omnijaws_service_error_long));
     }
 }
