@@ -130,11 +130,11 @@
   <string name="accessibility_quick_settings_ambient_display_on">Actieve display aan</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Actieve display uitgeschakeld</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">Actieve display ingeschakeld</string>
-  <string name="quick_settings_heads_up_label">Zwevende meldingen</string>
-  <string name="accessibility_quick_settings_heads_up_off">Zwevende meldingen uit</string>
-  <string name="accessibility_quick_settings_heads_up_on">Zwevende meldingen aan</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">Zwevende meldingen uitgeschakeld</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">Zwevende meldingen ingeschakeld</string>
+  <string name="quick_settings_heads_up_label">Notificaties</string>
+  <string name="accessibility_quick_settings_heads_up_off">Notificaties uit</string>
+  <string name="accessibility_quick_settings_heads_up_on">Notificaties aan</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">Notificaties uitgeschakeld</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">Notificaties ingeschakeld</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Locatiebepaling: accu besparingsmodus.</string>
   <string name="accessibility_quick_settings_location_gps_only">Locatiebepaling: alleen apparaat.</string>

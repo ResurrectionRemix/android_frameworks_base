@@ -38,7 +38,7 @@
   <string name="action_null">Em branco</string>
   <string name="global_action_torch">Lanterna</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Reiniciar a IU do sistema</string>
+  <string name="reboot_systemui">Reiniciar Sistema Ui</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">Modo On-The-Go</string>
   <!-- ADB enabled, but not connected notification title -->
