@@ -32,6 +32,7 @@ import android.provider.Settings;
 import android.os.UserHandle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -129,6 +130,7 @@ public class KeyguardStatusBarView extends RelativeLayout
         }
     };
     private boolean mHideContents;
+    private boolean mTouchStarted;
 
     public KeyguardStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -162,6 +164,23 @@ public class KeyguardStatusBarView extends RelativeLayout
         loadDimens();
         updateUserSwitcher();
         updateVisibilities();
+        setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int action = event.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    mTouchStarted = true;
+                } else if (action == MotionEvent.ACTION_UP) {
+                    if (mTouchStarted) {
+                        toggleContents(!mHideContents);
+                    }
+                    mTouchStarted = false;
+                } else if (action == MotionEvent.ACTION_CANCEL) {
+                    mTouchStarted = false;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
