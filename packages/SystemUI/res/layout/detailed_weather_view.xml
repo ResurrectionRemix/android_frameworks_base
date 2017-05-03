@@ -30,60 +30,75 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="top"
-            android:paddingStart="10dp" >
+            android:paddingStart="5dp" >
 
             <TextView
                 android:id="@+id/current_weather_city"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
                 android:singleLine="true"
-                android:ellipsize="end" />
-
-            <Space
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:ellipsize="end"
+                android:layout_weight="2" />
 
             <TextView
                 android:id="@+id/current_weather_data"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/no_weather_notice"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
                 android:singleLine="true"
+                android:layout_weight="3"
                 android:visibility="gone"
                 android:text="@string/omnijaws_service_unkown" />
 
-            <Space
-                android:layout_width="0dip"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="2"
+                android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/current_weather_timestamp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
-                android:singleLine="true"/>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    android:layout_weight="1" />
 
-            <ImageView android:id="@+id/refresh"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_menu_refresh"
-                android:background="?android:selectableItemBackgroundBorderless" />
+                <TextView
+                    android:id="@+id/error_marker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/current_weather_timestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Weather.Detailed"
+                    android:singleLine="true"/>
+
+                <ImageView android:id="@+id/refresh"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_menu_refresh"
+                    android:background="?android:selectableItemBackgroundBorderless" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

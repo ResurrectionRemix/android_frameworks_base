@@ -81,6 +81,7 @@ public class DetailedWeatherView extends LinearLayout {
     private ImageView mRefresh;
     private View mConditionLine;
     private View mProgressContainer;
+    private TextView mErrorMarker;
 
     /** The background colors of the app, it changes thru out the day to mimic the sky. **/
     public static final String[] BACKGROUND_SPECTRUM = { "#212121", "#27232e", "#2d253a",
@@ -130,6 +131,7 @@ public class DetailedWeatherView extends LinearLayout {
         mCurrentView = findViewById(R.id.current);
         mCurrentImage  = (ImageView) findViewById(R.id.current_image);
         mCurrentText = (TextView) findViewById(R.id.current_text);
+        mErrorMarker = (TextView) findViewById(R.id.error_marker);
         if (!mShowCurrent) {
             mCurrentView.setVisibility(View.GONE);
         }
@@ -158,6 +160,7 @@ public class DetailedWeatherView extends LinearLayout {
     public void updateWeatherData(OmniJawsClient.WeatherInfo weatherData) {
         mConditionLine.setVisibility(View.VISIBLE);
         mProgressContainer.setVisibility(View.GONE);
+        mErrorMarker.setVisibility(View.GONE);
 
         if (weatherData == null) {
             mWeatherData.setVisibility(View.GONE);
@@ -293,11 +296,14 @@ public class DetailedWeatherView extends LinearLayout {
         mProgressContainer.setVisibility(View.GONE);
         if (errorReason == OmniJawsClient.EXTRA_ERROR_DISABLED) {
             mWeatherData.setVisibility(View.GONE);
+            mErrorMarker.setVisibility(View.GONE);
             mNoWeatherNotice.setText(getResources().getString(R.string.omnijaws_service_disabled));
+            mNoWeatherNotice.setVisibility(View.VISIBLE);
         } else {
             mWeatherData.setVisibility(View.VISIBLE);
-            mNoWeatherNotice.setText("*");
+            mErrorMarker.setVisibility(View.VISIBLE);
+            mErrorMarker.setText(getResources().getString(R.string.omnijaws_service_error_marker));
+            mNoWeatherNotice.setVisibility(View.GONE);
         }
-        mNoWeatherNotice.setVisibility(View.VISIBLE);
     }
 }
