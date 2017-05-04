@@ -170,7 +170,7 @@
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Chế độ pin đã thay đổi thành chế độ tiết kiệm điện năng.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_bal">Chế độ pin đã thay đổi thành chế độ tiết kiệm cân bằng.</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Chế độ pin đã thay đổi thành chế độ cân bằng.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_perf">Chế độ pin đã thay đổi thành chế độ hiệu suất.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -260,7 +260,7 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Đang sạc nhanh (<xliff:g id="charging_time_left" example="4 giờ và 2 phút">%s</xliff:g> cho đến khi đầy)</string>
+  <string name="keyguard_indication_dash_charging_time">Đang sạc nhanh (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> cho đến khi đầy)</string>
   <string name="keyguard_plugged_in_dash_charging">Sạc nhanh</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>

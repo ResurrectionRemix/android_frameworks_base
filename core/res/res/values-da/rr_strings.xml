@@ -18,9 +18,12 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Standard</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="system_error_vendorprint">Dit forhandler billede er ikke i overensstemmelse med dit system. Flash <xliff:g id="string">%s</xliff:g> forhandler billedet til din enhed</string>
   <string name="global_action_screenrecord">Skærmoptagelse</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Animationsfade</string>
+  <string name="animation_slide_right">Glid ind højre</string>
+  <string name="animation_slide_left">Glid ind venstre</string>
   <string name="animation_default">Standard</string>
   <string name="animation_translucent">Semitransparent</string>
   <string name="action_null">Tom</string>
