@@ -84,5 +84,11 @@
             android:ellipsize="marquee"
             android:singleLine="true" />
 
+        <include layout="@layout/keyguard_weather_view"
+            android:id="@+id/keyguard_weather_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/owner_info" />
+
     </LinearLayout>
 </com.android.keyguard.KeyguardStatusView>
