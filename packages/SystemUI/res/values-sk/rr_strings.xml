@@ -255,6 +255,8 @@
   <string name="omnijaws_label_default">Počasie</string>
   <string name="omnijaws_current_text">Teraz</string>
   <string name="omnijaws_package_not_available">OmniJaws nie je k dispozícii</string>
+  <string name="omnijaws_service_error_long">Chyba pri načítavaní údajov o počasí</string>
+  <string name="omnijaws_service_disabled">Služba vypnutá</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->

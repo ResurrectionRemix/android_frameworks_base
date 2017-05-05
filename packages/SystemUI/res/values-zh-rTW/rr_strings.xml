@@ -255,6 +255,8 @@
   <string name="omnijaws_label_default">天氣</string>
   <string name="omnijaws_current_text">立刻</string>
   <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
+  <string name="omnijaws_service_error_long">載入天氣資料錯誤</string>
+  <string name="omnijaws_service_disabled">服務已停用</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->

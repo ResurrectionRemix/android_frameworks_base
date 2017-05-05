@@ -16,7 +16,7 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">ปกติ</string>
+  <string name="default_string">ค่าเริ่มต้น</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">อิมเมจ vendor ของคุณไม่สัมพันธ์กับระบบ. กรุณาแฟลช <xliff:g id="string">%s</xliff:g> ที่เป็น อิมเมจเวนเดอร์ สำหรับอุปกรณ์ของคุณ</string>
   <string name="global_action_screenrecord">อัดวิดิโอหน้าจอ</string>

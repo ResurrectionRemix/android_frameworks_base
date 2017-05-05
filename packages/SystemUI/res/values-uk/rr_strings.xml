@@ -256,6 +256,8 @@
   <string name="omnijaws_label_default">Погода</string>
   <string name="omnijaws_current_text">Зараз</string>
   <string name="omnijaws_package_not_available">OmniJaws недоступний</string>
+  <string name="omnijaws_service_error_long">Помилка завантаження даних про погоду</string>
+  <string name="omnijaws_service_disabled">Службу вимкнено</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->

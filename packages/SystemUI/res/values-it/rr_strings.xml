@@ -256,6 +256,8 @@
   <string name="omnijaws_label_default">Meteo</string>
   <string name="omnijaws_current_text">Adesso</string>
   <string name="omnijaws_package_not_available">OmniJaws non disponibile</string>
+  <string name="omnijaws_service_error_long">Errore durante il caricamento dei dati meteo</string>
+  <string name="omnijaws_service_disabled">Servizio disabilitato</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format">Text for Translation
 <xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>

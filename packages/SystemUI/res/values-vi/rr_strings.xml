@@ -255,6 +255,8 @@
   <string name="omnijaws_label_default">Thời tiết</string>
   <string name="omnijaws_current_text">Hiện tại</string>
   <string name="omnijaws_package_not_available">OmniJaws không có sẵn</string>
+  <string name="omnijaws_service_error_long">Lỗi tải dữ liệu thời tiết</string>
+  <string name="omnijaws_service_disabled">Dịch vụ bị vô hiệu hóa</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
