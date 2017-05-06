@@ -669,7 +669,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
         mBatteryMeterView.setDarkIntensity(
                 isInArea(mTintArea, mBatteryMeterView) ? mDarkIntensity : 0);
-        mClockController.setTextColor(mTintArea, mIconTint);
+        if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUSBAR_CLOCK_COLOR,
+                mContext.getResources().getColor(R.color.status_bar_clock_color),
+                UserHandle.USER_CURRENT) == mContext.getResources().
+                getColor(R.color.status_bar_clock_color)) {
+        mClockController.setTextColor(mIconTint);
+        }
 		if (Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO_COLOR, 0xFFFFFFFF,
                 UserHandle.USER_CURRENT) == 0xFFFFFFFF) {
@@ -695,6 +701,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
                 getColor(R.color.status_bar_clock_color)) {
         mCarrierLabel.setTextColor(mIconTint);
         }
+
         mCustomLogo = Settings.System.getIntForUser(mContext.getContentResolver(),
                Settings.System.CUSTOM_LOGO_STYLE, 0,
                UserHandle.USER_CURRENT);
