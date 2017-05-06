@@ -1622,7 +1622,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     private boolean isOmniSwitchEnabled() {
         int settingsValue = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.RECENTS_USE_OMNISWITCH, 0
+                mContext.getContentResolver(), Settings.System.NAVIGATION_BAR_RECENTS, 0
                 , UserHandle.USER_CURRENT);
         return (settingsValue == 1);
     }
