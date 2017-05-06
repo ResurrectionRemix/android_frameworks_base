@@ -104,8 +104,6 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 import android.telephony.TelephonyManager;
 
-import cyanogenmod.power.PerformanceManager;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -143,9 +141,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
     private final StatusBarIconController mIconController;
     private final TileServices mServices;
 
-    private final int mNumPerfProfiles;
-    private final PerformanceManager mPerformanceManager;
-
     private final List<Callback> mCallbacks = new ArrayList<>();
     private final AutoTileManager mAutoTiles;
     private final ManagedProfileController mProfileController;
@@ -180,8 +175,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         mIconController = iconController;
         mNextAlarmController = nextAlarmController;
         mProfileController = new ManagedProfileController(this);
-        mPerformanceManager = PerformanceManager.getInstance(mContext);
-        mNumPerfProfiles = mPerformanceManager.getNumberOfProfiles();
 
         final HandlerThread ht = new HandlerThread(QSTileHost.class.getSimpleName(),
                 Process.THREAD_PRIORITY_BACKGROUND);
@@ -507,7 +500,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("compass")) return new CompassTile(this);
         else if (tileSpec.equals("weather")) return new WeatherTile(this);
         else if (tileSpec.equals("suspend_actions")) return new SuspendActionsTile(this);
-        else if (tileSpec.equals("performance") && mNumPerfProfiles > 0) return new PerfProfileTile(this);
+        else if (tileSpec.equals("performance")) return new PerfProfileTile(this);
         else if (tileSpec.equals("hwkeys")) return  new HWKeysTile(this);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);

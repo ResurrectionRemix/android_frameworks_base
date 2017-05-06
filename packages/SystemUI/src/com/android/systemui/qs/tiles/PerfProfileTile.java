@@ -44,26 +44,32 @@ public class PerfProfileTile extends QSTile<PerfProfileTile.ProfileState> {
 
     private static final Intent BATTERY_SETTINGS = new Intent(Intent.ACTION_POWER_USAGE_SUMMARY);
 
-    private final String[] mEntries;
-    private final String[] mDescriptionEntries;
-    private final String[] mAnnouncementEntries;
-    private final int[] mPerfProfileValues;
-    private final int mNumPerfProfiles;
-    private final Icon mIcon;
+    private String[] mEntries;
+    private String[] mDescriptionEntries;
+    private String[] mAnnouncementEntries;
+    private int[] mPerfProfileValues;
+    private int mNumPerfProfiles;
+    private Icon mIcon;
 
-    private final PowerManager mPm;
-    private final PerformanceManager mPerformanceManager;
+    private PowerManager mPm;
+    private PerformanceManager mPerformanceManager;
     private boolean mListening;
 
     private PerformanceProfileObserver mObserver;
 
     public PerfProfileTile(Host host) {
         super(host);
+        populateList();
+    }
+
+    private void populateList() {
         mObserver = new PerformanceProfileObserver(mHandler);
         mPm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mPerformanceManager = PerformanceManager.getInstance(mContext);
         mNumPerfProfiles = mPerformanceManager.getNumberOfProfiles();
-
+        if (!(mNumPerfProfiles>0)) {
+            return;
+        }
         mPerfProfileValues = new int[mNumPerfProfiles];
         mEntries = new String[mNumPerfProfiles];
         mDescriptionEntries = new String[mNumPerfProfiles];
@@ -127,14 +133,24 @@ public class PerfProfileTile extends QSTile<PerfProfileTile.ProfileState> {
 
     @Override
     protected void handleUpdateState(ProfileState state, Object arg) {
-        state.visible = mPerformanceManager.getNumberOfProfiles() > 0;
         state.profile = arg == null ? getCurrentProfileIndex() : (Integer) arg;
         state.label = mEntries[state.profile];
         state.icon = mIcon;
         state.contentDescription = mDescriptionEntries[state.profile];
     }
 
+    private boolean isPerfProfilesSupported(){
+        boolean isSupported = false;
+        isSupported = (mPerformanceManager.getNumberOfProfiles() > 0);
+        return isSupported;
+    }
+
     @Override
+    public boolean isAvailable(){
+        return isPerfProfilesSupported();
+    }
+
+   @Override
     public int getMetricsCategory() {
         return MetricsEvent.QUICK_SETTINGS;
     }
@@ -187,7 +203,6 @@ public class PerfProfileTile extends QSTile<PerfProfileTile.ProfileState> {
                 break;
             }
         }
-
         return index;
     }
 
