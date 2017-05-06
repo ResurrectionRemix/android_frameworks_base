@@ -31,7 +31,7 @@ import android.widget.TextView;
 
 import com.android.systemui.R;
 import com.android.systemui.omni.DetailedWeatherView;
-import com.android.systemui.omni.OmniJawsClient;
+import com.android.internal.util.rr.OmniJawsClient;
 
 public class StatusBarWeatherLeft extends TextView implements
         OmniJawsClient.OmniJawsObserver {

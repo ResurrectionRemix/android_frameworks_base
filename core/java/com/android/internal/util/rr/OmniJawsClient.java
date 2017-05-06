@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.android.systemui.omni;
+package com.android.internal.util.rr;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -38,8 +38,6 @@ import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
-
-import com.android.systemui.R;
 
 public class OmniJawsClient {
     private static final String TAG = "WeatherService:OmniJawsClient";
@@ -412,7 +410,7 @@ public class OmniJawsClient {
     }
 
     public Drawable getDefaultWeatherConditionImage() {
-        return mContext.getResources().getDrawable(R.drawable.ic_qs_weather_default_on);
+        return mContext.getResources().getDrawable(com.android.internal.R.drawable.ic_qs_weather_default_on);
     }
 
     public void addObserver(OmniJawsObserver observer) {

@@ -44,7 +44,7 @@ import com.android.internal.logging.MetricsProto.MetricsEvent;
 import com.android.internal.util.rr.PackageUtils;
 import com.android.systemui.R;
 import com.android.systemui.omni.DetailedWeatherView;
-import com.android.systemui.omni.OmniJawsClient;
+import com.android.internal.util.rr.OmniJawsClient;
 import com.android.systemui.qs.QSDetailItems;
 import com.android.systemui.qs.QSDetailItems.Item;
 import com.android.systemui.qs.QSDetailItemsList;

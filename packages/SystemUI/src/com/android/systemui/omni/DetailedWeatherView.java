@@ -44,8 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.systemui.R;
-import com.android.systemui.omni.OmniJawsClient;
-//import com.android.systemui.statusbar.phone.SettingsButton;
+import com.android.internal.util.rr.OmniJawsClient;
 import com.android.systemui.statusbar.phone.ActivityStarter;
 
 import java.text.SimpleDateFormat;

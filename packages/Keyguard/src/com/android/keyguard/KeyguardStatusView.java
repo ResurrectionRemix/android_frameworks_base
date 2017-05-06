@@ -50,7 +50,7 @@ import android.widget.TextView;
 import com.android.internal.util.rr.ImageHelper;
 import com.android.internal.widget.LockPatternUtils;
 
-import cyanogenmod.weather.util.WeatherUtils;
+import com.android.internal.util.rr.OmniJawsClient;
 
 import java.util.Date;
 import java.text.NumberFormat;

@@ -204,4 +204,6 @@
   <!-- Whether device has dash charging support -->
   <java-symbol type="bool" name="config_hasDashCharger" />
 
+  <java-symbol type="drawable" name="ic_qs_weather_default_on" />
+
 </resources>
