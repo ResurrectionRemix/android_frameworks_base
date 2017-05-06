@@ -250,12 +250,12 @@
   <string name="kill">Arrêter l’application</string>
   <!-- OmniJAWS -->
   <string name="omnijaws_service_error">Erreur</string>
-  <string name="omnijaws_service_unkown">Aucune donnée Météo disponible</string>
+  <string name="omnijaws_service_unkown">Donnée météo indisponible</string>
   <string name="omnijaws_detail_header">Prévisions Météo</string>
   <string name="omnijaws_label_default">Météo</string>
   <string name="omnijaws_current_text">Actuellement</string>
   <string name="omnijaws_package_not_available">OmniJaws indisponible</string>
-  <string name="omnijaws_service_error_long">Erreur lors du chargement des données météo</string>
+  <string name="omnijaws_service_error_long">Erreur de chargement des données</string>
   <string name="omnijaws_service_disabled">Service désactivé</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
