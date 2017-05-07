@@ -255,6 +255,8 @@
   <string name="omnijaws_label_default">Καιρός</string>
   <string name="omnijaws_current_text">Τώρα</string>
   <string name="omnijaws_package_not_available">Τα OmniJaws δεν είναι διαθέσιμα</string>
+  <string name="omnijaws_service_error_long">Σφάλμα κατά τη φόρτωση δεδομένων καιρού</string>
+  <string name="omnijaws_service_disabled">Η υπηρεσία απενεργοποιήθηκε</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
