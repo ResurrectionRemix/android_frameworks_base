@@ -5981,6 +5981,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String DATA_ACTIVITY_ARROWS = "data_activity_arrows";
 
         /**
+         * Whether to show QS footer warnings
+         * @hide
+         */
+        public static final String QS_FOOTER_WARNINGS = "qs_footer_warnings";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
