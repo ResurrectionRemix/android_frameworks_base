@@ -832,7 +832,7 @@ public class UsbDeviceManager {
                 case MSG_BOOT_COMPLETED:
                     mBootCompleted = true;
                     if (mPendingBootBroadcast) {
-                        updateUsbStateBroadcastIfNeeded(false);
+                        updateUsbStateBroadcastIfNeeded();
                         mPendingBootBroadcast = false;
                     }
                     if (mCurrentAccessory != null) {
