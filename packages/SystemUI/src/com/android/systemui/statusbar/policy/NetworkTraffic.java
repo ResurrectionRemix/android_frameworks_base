@@ -36,7 +36,8 @@ import com.android.systemui.R;
 * to only use it for a single boolean. 32-bits is plenty of room for what we need it to do.
 *
 */
-public class NetworkTraffic extends TextView {
+public class NetworkTraffic extends TextView implements
+    SecurityController.SecurityControllerCallback {
     public static final int MASK_UP = 0x00000001;        // Least valuable bit
     public static final int MASK_DOWN = 0x00000002;      // Second least valuable bit
     public static final int MASK_UNIT = 0x00000004;      // Third least valuable bit
@@ -63,6 +64,7 @@ public class NetworkTraffic extends TextView {
     private int GB = MB * KB;
     private boolean mAutoHide;
     private boolean mHideArrow;
+    public SecurityController mSC;
     private int mAutoHideThreshold;
     private int mNetworkTrafficColor;
     private int mDarkModeBackgroundColor;
@@ -93,7 +95,10 @@ public class NetworkTraffic extends TextView {
             long newTotalTxBytes = TrafficStats.getTotalTxBytes();
             long rxData = newTotalRxBytes - totalRxBytes;
             long txData = newTotalTxBytes - totalTxBytes;
-
+            if (isVpnEnabled()) {
+                 rxData = rxData/2;
+                 txData = txData/2;
+            }
             if (shouldHide(rxData, txData, timeDelta)) {
                 setText("");
                 setVisibility(View.GONE);
@@ -245,8 +250,22 @@ public class NetworkTraffic extends TextView {
         updateSettings();
     }
 
+    public boolean isVpnEnabled() {
+        return mSC.isVpnEnabled();
+    }
+
+    public void setSecurityController(SecurityController sc) {
+        mSC = sc;
+    }
+
+    @Override
+    public void onStateChanged() {
+        // do nothing
+    }
+
     @Override
     protected void onAttachedToWindow() {
+        mSC.addCallback(this);
         super.onAttachedToWindow();
         if (!mAttached) {
             mAttached = true;
@@ -259,6 +278,7 @@ public class NetworkTraffic extends TextView {
 
     @Override
     protected void onDetachedFromWindow() {
+        mSC.removeCallback(this);
         super.onDetachedFromWindow();
         if (mAttached) {
             mContext.unregisterReceiver(mIntentReceiver);
