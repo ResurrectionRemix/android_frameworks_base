@@ -2077,7 +2077,10 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
                     return false;
                 }
             }
-
+            // remove window token and unbind first, then bind and add window token
+            if (wallpaper.userId == mCurrentUserId && mLastWallpaper != null) {
+                detachWallpaperLocked(mLastWallpaper);
+            }
             // Bind the service!
             if (DEBUG) Slog.v(TAG, "Binding to:" + componentName);
             WallpaperConnection newConn = new WallpaperConnection(wi, wallpaper);
@@ -2101,9 +2104,7 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
                 Slog.w(TAG, msg);
                 return false;
             }
-            if (wallpaper.userId == mCurrentUserId && mLastWallpaper != null) {
-                detachWallpaperLocked(mLastWallpaper);
-            }
+            // Adding window token
             wallpaper.wallpaperComponent = componentName;
             wallpaper.connection = newConn;
             newConn.mReply = reply;
