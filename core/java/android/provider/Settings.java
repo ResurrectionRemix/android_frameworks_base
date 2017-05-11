@@ -3957,6 +3957,18 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
 
         /**
+         * Whether to launch default music player when headset plugged in
+         * 0 = don't do anything (default)
+         * 1 = launch only on wired connection
+         * 2 = launch only on bt connection but no carkit
+         * 3 = launch only on bt connection
+         * 4 = launch on both connection types but no carkit
+         * 5 = launch on both connection types
+         * @hide
+         */
+        public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4124,6 +4136,11 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_STATE);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
+<<<<<<< HEAD
+=======
+            PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_MEDIA_STREAM);
+            PRIVATE_SETTINGS.add(HEADSET_CONNECT_PLAYER);
+>>>>>>> 5e6d6ca... Launch music player on headset connect: add BT compatibility [1/2]
         }
 
         /**
