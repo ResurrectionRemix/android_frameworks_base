@@ -236,11 +236,11 @@
   <string name="tm_clear_task">مسح</string>
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">جلسة نوافذ متعددة نشطة حالياً.\n قم بالضغط على أحد التطبيقات لإرساءه الآن.</string>
-  <string name="recents_multiwin_nolastapp">لقد قمت بمسح جميع التطبيقات المشغلة حديثاً، الرجاء إختيار تطبيق من المُشغل أو من درج التطبيقات.</string>
-  <string name="slim_recent_keyguard">قم بفك قفل جهازك لعرض التطبيقات المشغلة حديثاً</string>
-  <string name="slim_recent_pinned">قم بإلغاء تثبيت الشاشة لعرض التطبيقات المشغلة حديثاً</string>
+  <string name="recents_multiwin_nolastapp">لقد قمت بمسح جميع الحديثة، الرجاء إختيار تطبيق من المُشغل أو من درج التطبيقات.</string>
+  <string name="slim_recent_keyguard">قم بفك قفل جهازك لعرض الحديثة</string>
+  <string name="slim_recent_pinned">قم بإلغاء تثبيت الشاشة لعرض الحديثة</string>
   <!-- Slim recents app sidebar queue app toast -->
-  <string name="toast_recents_queue_app">قم بتشغيل %s بعد إغلاق التطبيقات المشغلة حديثاً</string>
+  <string name="toast_recents_queue_app">قم بتشغيل %s بعد إغلاق الحديثة</string>
   <string name="toast_recents_cancel_queued_app">تم إلغاء تشغيل التطبيق</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">إيقاف بالقوة؟</string>
