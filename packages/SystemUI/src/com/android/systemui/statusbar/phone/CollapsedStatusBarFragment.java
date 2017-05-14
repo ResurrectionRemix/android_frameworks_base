@@ -62,6 +62,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private NetworkController mNetworkController;
     private LinearLayout mSystemIconArea;
     private Clock mClockView;
+    private View mStatusBarLogo, mStatusBarLogoRight;
     private View mNotificationIconAreaInner;
     private View mNetworkTrafficHolder;
     private View mCenteredIconArea;
@@ -113,6 +114,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mClockView = (Clock) mStatusBar.findViewById(R.id.clock);
         mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
         mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
+        mStatusBarLogo = mStatusBar.findViewById(R.id.statusbar_logo);
+        mStatusBarLogoRight = mStatusBar.findViewById(R.id.statusbar_logo_right);
         showSystemIconArea(false);
         showClock(false);
         initEmergencyCryptkeeperText();
@@ -261,6 +264,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         for (View batteryBar: mBatteryBars) {
             animateHide(batteryBar, animate);
         }
+        animateHide(mStatusBarLogoRight, animate);
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -269,6 +273,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         for (View batteryBar: mBatteryBars) {
             animateShow(batteryBar, animate);
         }
+        animateShow(mStatusBarLogoRight, animate);
     }
 
     public void hideClock(boolean animate) {
@@ -298,11 +303,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCenteredIconArea, animate);
+        animateHide(mStatusBarLogo, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenteredIconArea, animate);
+        animateShow(mStatusBarLogo, animate);
     }
 
     public void hideOperatorName(boolean animate) {
