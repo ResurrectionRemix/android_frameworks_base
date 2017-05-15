@@ -17,7 +17,6 @@
 package com.android.systemui.qs.tiles;
 
 import android.content.Context;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -107,7 +106,6 @@ public class WifiTile extends QSTile<QSTile.SignalState> {
         mState.copyTo(mStateBeforeClick);
         MetricsLogger.action(mContext, getMetricsCategory(), !mState.value);
         mController.setWifiEnabled(!mState.value);
-
     }
 
     @Override
@@ -137,6 +135,10 @@ public class WifiTile extends QSTile<QSTile.SignalState> {
             if (!mWifiController.canConfigWifi()) {
                 mHost.startActivityDismissingKeyguard(new Intent(Settings.ACTION_WIFI_SETTINGS));
             } else {
+                if (!mState.value) {
+                    mController.setWifiEnabled(true);
+                    mState.value = true;
+                }
                 showDetail(true);
             }
         } else {
