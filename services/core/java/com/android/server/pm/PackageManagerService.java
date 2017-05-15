@@ -1613,9 +1613,11 @@ public class PackageManagerService extends IPackageManager.Stub
                 }
                 case MCS_GIVE_UP: {
                     if (DEBUG_INSTALL) Slog.i(TAG, "mcs_giveup too many retries");
-                    HandlerParams params = mPendingInstalls.remove(0);
-                    Trace.asyncTraceEnd(TRACE_TAG_PACKAGE_MANAGER, "queueInstall",
-                            System.identityHashCode(params));
+                    if (mPendingInstalls.size() > 0) {
+                        HandlerParams params = mPendingInstalls.remove(0);
+                        Trace.asyncTraceEnd(TRACE_TAG_PACKAGE_MANAGER, "queueInstall",
+                                System.identityHashCode(params));
+                    }
                     break;
                 }
                 case SEND_PENDING_BROADCAST: {
