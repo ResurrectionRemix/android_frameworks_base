@@ -110,10 +110,13 @@ public class SettingsDrawerActivity extends Activity {
         setActionBar(toolbar);
         mDrawerAdapter = new SettingsDrawerAdapter(this);
         ListView listView = (ListView) findViewById(R.id.left_drawer);
+        View header = getLayoutInflater().inflate(R.layout.header, null);
+        listView.addHeaderView(header, null, false);
         listView.setAdapter(mDrawerAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(android.widget.AdapterView<?> parent, View view, int position,
                     long id) {
+                position = position - 1;
                 onTileClicked(mDrawerAdapter.getTile(position));
             }
         });
