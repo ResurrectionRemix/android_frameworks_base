@@ -4006,6 +4006,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String OPA_ANIM_DURATION_X = "opa_anim_duration_x";
 
         /**
+         * Headset Connect Player
+         * @hide
+         */
+        public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
+
+        /**
          * Pixel Anim Duration
          * @hide
          */

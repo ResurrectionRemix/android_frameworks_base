@@ -5168,8 +5168,8 @@ public class AudioService extends IAudioService.Stub {
             mContentResolver.registerContentObserver(CMSettings.System.getUriFor(
                 CMSettings.System.VOLUME_KEYS_CONTROL_RING_STREAM), false, this);
 
-            mContentResolver.registerContentObserver(CMSettings.System.getUriFor(
-                    CMSettings.System.HEADSET_CONNECT_PLAYER), false, this);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADSET_CONNECT_PLAYER), false, this);
         }
 
         @Override
@@ -5202,8 +5202,8 @@ public class AudioService extends IAudioService.Stub {
                         CMSettings.System.VOLUME_KEYS_CONTROL_RING_STREAM, 1,
                         UserHandle.USER_CURRENT) == 1;
             }
-            mLaunchPlayer = CMSettings.System.getIntForUser(mContext.getContentResolver(),
-                CMSettings.System.HEADSET_CONNECT_PLAYER, 0, UserHandle.USER_CURRENT);
+            mLaunchPlayer = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.HEADSET_CONNECT_PLAYER, 0, UserHandle.USER_CURRENT);
         }
 
         private void updateEncodedSurroundOutput() {
