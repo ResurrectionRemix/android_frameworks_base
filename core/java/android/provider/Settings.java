@@ -4754,8 +4754,14 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String SHOW_SETTINGS_DRAWER = "show_settings_drawer";
 
+        /**
+         * Whether to hide Settings custom header
+         * @hide
+         */
+        public static final String SHOW_SETTINGS_HEADER = "show_settings_header";
 
-	/*
+
+	    /*
          * show clear all recents button
          *  @hide
          */

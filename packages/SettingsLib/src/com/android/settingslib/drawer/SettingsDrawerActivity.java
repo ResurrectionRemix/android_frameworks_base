@@ -110,13 +110,17 @@ public class SettingsDrawerActivity extends Activity {
         setActionBar(toolbar);
         mDrawerAdapter = new SettingsDrawerAdapter(this);
         ListView listView = (ListView) findViewById(R.id.left_drawer);
-        View header = getLayoutInflater().inflate(R.layout.header, null);
-        listView.addHeaderView(header, null, false);
+        if(isHeaderEnabled()) {
+           View header = getLayoutInflater().inflate(R.layout.header, null);
+           listView.addHeaderView(header, null, false);
+        }
         listView.setAdapter(mDrawerAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(android.widget.AdapterView<?> parent, View view, int position,
                     long id) {
-                position = position - 1;
+                if(isHeaderEnabled()) {
+                   position = position - 1;
+                }
                 onTileClicked(mDrawerAdapter.getTile(position));
             }
         });
@@ -254,6 +258,11 @@ public class SettingsDrawerActivity extends Activity {
     public boolean isDrawerEnabled() {
         return Settings.System.getInt(getApplicationContext().getContentResolver(),
             Settings.System.SHOW_SETTINGS_DRAWER, 1) == 1;
+    }
+
+    public boolean isHeaderEnabled() {
+        return Settings.System.getInt(getApplicationContext().getContentResolver(),
+            Settings.System.SHOW_SETTINGS_HEADER, 0) == 1;
     }
 
     @Override
