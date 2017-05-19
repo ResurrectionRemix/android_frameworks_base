@@ -318,9 +318,7 @@ public class DozeService extends DreamService {
             s.setListening(listen);
         }
         listenForBroadcasts(listen);
-        if (mDozeParameters.getPulseOnNotifications()) {
-            listenForNotifications(listen);
-        }
+        listenForNotifications(listen);
     }
 
     private void reregisterAllSensors() {
