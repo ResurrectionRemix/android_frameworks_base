@@ -202,8 +202,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikácia bola ukončená</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Plávajúce oznámenia sú odložené na 1 minútu.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • Plávajúce oznámenia sú odložené na <xliff:g id="number">%d </xliff:g> minút.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Plávajúce upozornenia sú odložené na 1 minútu.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • Plávajúce upozornenia sú odložené na <xliff:g id="number">%d </xliff:g> minút.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Žiadna snímka obrazovky</string>
   <string name="screenshot_abort_text">Operácia bola prerušená</string>

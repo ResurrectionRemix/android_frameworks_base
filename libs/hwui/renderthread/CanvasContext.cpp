@@ -353,6 +353,11 @@ void CanvasContext::draw() {
 
     Frame frame = mEglManager.beginFrame(mEglSurface);
 
+    if (frame.width() == 0 || frame.height() == 0) {
+        ALOGW("CanvasContext draw skip empty frame(%dx%d)", frame.width(), frame.height());
+        return;
+    }
+
     if (frame.width() != mLastFrameWidth || frame.height() != mLastFrameHeight) {
         // can't rely on prior content of window if viewport size changes
         dirty.setEmpty();

@@ -18,39 +18,39 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Implicit</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Imaginea dumneavoastră de furnizor nu corespunde sistemului. Vă rugăm faceți flash la imaginea de furnizor <xliff:g id="string">%s </xliff:g> pentru aparatul dvs</string>
-  <string name="global_action_screenrecord">Captura de ecran</string>
+  <string name="system_error_vendorprint">Imaginea dumneavoastră de furnizor nu corespunde cu cea a sistemului. Vă rugăm să dați flash la imaginea de furnizor <xliff:g id="string">%s </xliff:g> pentru aparatul dvs</string>
+  <string name="global_action_screenrecord">Filmare ecran</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Estompare</string>
   <string name="animation_slide_right">Glisați la dreapta</string>
   <string name="animation_slide_left">Glisați la stânga</string>
-  <string name="animation_slide_right_no_fade">Gliseaza la reapta (Fara estompare)</string>
-  <string name="animation_slide_left_no_fade">Gliseaza la stanga (Fara estompare)</string>
-  <string name="animation_slide_up">Gliseaza in jos</string>
-  <string name="animation_slide_down">Gliseaza in sus</string>
+  <string name="animation_slide_right_no_fade">Glisează spre dreapta (Fără estompare)</string>
+  <string name="animation_slide_left_no_fade">Glisează spre stânga (Fără estompare)</string>
+  <string name="animation_slide_up">Glisează în jos</string>
+  <string name="animation_slide_down">Glisează în sus</string>
   <string name="animation_default">Implicit</string>
   <string name="animation_translucent">Translucid</string>
-  <string name="animation_grow_shrink">Mareste (sus)</string>
-  <string name="animation_grow_shrink_center">Mareste (centru)</string>
-  <string name="animation_grow_shrink_bottom">Mareste (jos)</string>
-  <string name="animation_grow_shrink_left">Mareste (stanga)</string>
-  <string name="animation_grow_shrink_right">Mareste (dreapta)</string>
+  <string name="animation_grow_shrink">Mărește (spre sus)</string>
+  <string name="animation_grow_shrink_center">Mărește (spre centru)</string>
+  <string name="animation_grow_shrink_bottom">Mărește (spre jos)</string>
+  <string name="animation_grow_shrink_left">Mărește (spre stânga)</string>
+  <string name="animation_grow_shrink_right">Mărește (spre dreapta)</string>
   <string name="action_null">Gol</string>
   <string name="global_action_torch">Lanternă</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">Reporniţi SystemUI</string>
   <!-- On-The-Go -->
-  <string name="global_action_onthego">Mod On-The-Go</string>
+  <string name="global_action_onthego">Mod \"On-The-Go\"</string>
   <!-- ADB enabled, but not connected notification title -->
-  <string name="adb_not_connected_notification_title">ADB inactiv</string>
-  <string name="adb_active_custom_tile_not_connected">inactiv</string>
-  <string name="singlehandmode_slide_hint_message">Glisaţi degetul peste bara de navigare pentru a comuta între vizualizările standard și mini ecran</string>
+  <string name="adb_not_connected_notification_title">ADB este inactiv</string>
+  <string name="adb_active_custom_tile_not_connected">Inactiv</string>
+  <string name="singlehandmode_slide_hint_message">Glisaţi cu degetul peste bara de navigare pentru a comuta între vizualizările standard și mini</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_resetBatteryStats">resetare statistici baterie</string>
+  <string name="permlab_resetBatteryStats">Resetare statistici baterie</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_resetBatteryStats">Permite unei aplicații să reseteze datele de utilizare curente la nivelul de bază al bateriei.</string>
+  <string name="permdesc_resetBatteryStats">Permite unei aplicații să reseteze datele de utilizare curente la nivelul de bază ale bateriei.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_restartUI">repornirea sistemului de bare</string>
+  <string name="permlab_restartUI">Repornire interfață</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_restartUI">Repornirea SystemUIService pentru a permite a system bars de a încărcarea resursele modificate</string>
+  <string name="permdesc_restartUI">Repornirea SystemUI este necesară ca barele de Sistem să poată fi modificate</string>
 </resources>

@@ -64,6 +64,7 @@ public class QSFooter implements OnClickListener, DialogInterface.OnClickListene
     private boolean mIsVisible;
     private boolean mIsIconVisible;
     private boolean mIsIcon2Visible;
+    private boolean mShowWarnings;
     private int mFooterTextId;
     private int mFooterIconId;
     private int mFooterIcon2Id;
@@ -289,9 +290,9 @@ public class QSFooter implements OnClickListener, DialogInterface.OnClickListene
             if (mFooterTextId != 0) {
                 mFooterText.setText(mFooterTextId);
             }
-            mRootView.setVisibility(mIsVisible ? View.VISIBLE : View.GONE);
-            mFooterIcon.setVisibility(mIsIconVisible ? View.VISIBLE : View.INVISIBLE);
-            mFooterIcon2.setVisibility(mIsIcon2Visible ? View.VISIBLE : View.INVISIBLE);
+            mRootView.setVisibility((mIsVisible && mShowWarnings) ? View.VISIBLE : View.GONE);
+            mFooterIcon.setVisibility((mIsIconVisible && mShowWarnings) ? View.VISIBLE : View.INVISIBLE);
+            mFooterIcon2.setVisibility((mIsIcon2Visible && mShowWarnings) ? View.VISIBLE : View.INVISIBLE);
         }
     };
 
@@ -337,5 +338,11 @@ public class QSFooter implements OnClickListener, DialogInterface.OnClickListene
             mDialog.dismiss();
             mContext.startActivity(intent);
         }
+    }
+
+    public void updateSettings() {
+        mShowWarnings = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_FOOTER_WARNINGS, 1,
+                UserHandle.USER_CURRENT) == 1;
     }
 }

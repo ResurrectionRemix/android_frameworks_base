@@ -2816,17 +2816,28 @@ public final class ActiveServices {
         return info;
     }
 
+    static boolean checkIntractAcrossUsersFullPermission() {
+        final int uid = Binder.getCallingUid();
+        return ActivityManager.checkUidPermission(
+                    android.Manifest.permission.INTERACT_ACROSS_USERS_FULL,
+                    uid) == PackageManager.PERMISSION_GRANTED;
+    }
+
     List<ActivityManager.RunningServiceInfo> getRunningServiceInfoLocked(int maxNum,
             int flags) {
+        boolean granted = checkIntractAcrossUsersFullPermission();
+        return getRunningServiceInfoLocked(maxNum, flags, granted);
+    }
+
+    List<ActivityManager.RunningServiceInfo> getRunningServiceInfoLocked(int maxNum,
+            int flags, boolean granted) {
         ArrayList<ActivityManager.RunningServiceInfo> res
                 = new ArrayList<ActivityManager.RunningServiceInfo>();
 
         final int uid = Binder.getCallingUid();
         final long ident = Binder.clearCallingIdentity();
         try {
-            if (ActivityManager.checkUidPermission(
-                    android.Manifest.permission.INTERACT_ACROSS_USERS_FULL,
-                    uid) == PackageManager.PERMISSION_GRANTED) {
+            if (granted) {
                 int[] users = mAm.mUserController.getUsers();
                 for (int ui=0; ui<users.length && res.size() < maxNum; ui++) {
                     ArrayMap<ComponentName, ServiceRecord> alls = getServices(users[ui]);

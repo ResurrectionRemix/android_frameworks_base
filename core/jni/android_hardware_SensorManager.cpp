@@ -112,24 +112,6 @@ nativeClassInit (JNIEnv *_env, jclass _this)
 }
 
 /**
- * A key comparator predicate.
- * It is used to intern strings associated with Sensor data.
- * It defines a 'Strict weak ordering' for the interned strings.
- */
-class InternedStringCompare {
-public:
-    bool operator()(const String8* string1, const String8* string2) const {
-        if (string1 == NULL) {
-            return string2 != NULL;
-        }
-        if (string2 == NULL) {
-            return false;
-        }
-        return string1->compare(*string2) < 0;
-    }
-};
-
-/**
  * A localized interning mechanism for Sensor strings.
  * We implement our own interning to avoid the overhead of using java.lang.String#intern().
  * It is common that Vendor, StringType, and RequirePermission data is common between many of the
@@ -137,17 +119,17 @@ public:
  */
 static jstring
 getInternedString(JNIEnv *env, const String8* string) {
-    static std::map<const String8*, jstring, InternedStringCompare> internedStrings;
+    static std::map<const String8, jstring> internedStrings;
 
     jstring internedString;
-    std::map<const String8*, jstring>::iterator iterator = internedStrings.find(string);
+    std::map<const String8, jstring>::iterator iterator = internedStrings.find(*string);
     if (iterator != internedStrings.end()) {
         internedString = iterator->second;
     } else {
         jstring localString = env->NewStringUTF(string->string());
         // we are implementing our own interning so expect these strings to be backed by global refs
         internedString = (jstring) env->NewGlobalRef(localString);
-        internedStrings.insert(std::make_pair(string, internedString));
+        internedStrings.insert(std::make_pair(*string, internedString));
         env->DeleteLocalRef(localString);
     }
     return internedString;
@@ -171,10 +153,10 @@ translateNativeSensorToJavaSensor(JNIEnv *env, jobject sensor, const Sensor& nat
     }
 
     if (sensor != NULL) {
-        jstring name = env->NewStringUTF(nativeSensor.getName().string());
-        jstring vendor = env->NewStringUTF(nativeSensor.getVendor().string());
+        jstring name = getInternedString(env, &nativeSensor.getName());
+        jstring vendor = getInternedString(env, &nativeSensor.getVendor());
         jstring requiredPermission =
-                env->NewStringUTF(nativeSensor.getRequiredPermission().string());
+                getInternedString(env, &nativeSensor.getRequiredPermission());
 
         env->SetObjectField(sensor, sensorOffsets.name,      name);
         env->SetObjectField(sensor, sensorOffsets.vendor,    vendor);

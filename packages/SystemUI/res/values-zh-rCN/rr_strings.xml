@@ -89,9 +89,9 @@
   <string name="quick_settings_music_pause">暂停</string>
   <string name="quick_settings_ime_tile_label">输入法</string>
   <string name="rr_qs_tile">配置</string>
-  <string name="quick_settings_caffeine_label">Caffeine</string>
-  <string name="accessibility_quick_settings_caffeine_off">Caffeine 关闭</string>
-  <string name="accessibility_quick_settings_caffeine_on">Caffeine 开启</string>
+  <string name="quick_settings_caffeine_label">保持亮屏</string>
+  <string name="accessibility_quick_settings_caffeine_off">保持亮屏关闭</string>
+  <string name="accessibility_quick_settings_caffeine_on">保持亮屏开启</string>
   <string name="qs_app_picker_title">应用程序选择器</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE 开启 </string>

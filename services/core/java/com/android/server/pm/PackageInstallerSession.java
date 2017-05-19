@@ -16,6 +16,7 @@
 
 package com.android.server.pm;
 
+import static android.content.pm.PackageManager.INSTALL_SUCCEEDED;
 import static android.content.pm.PackageManager.INSTALL_FAILED_ABORTED;
 import static android.content.pm.PackageManager.INSTALL_FAILED_CONTAINER_ERROR;
 import static android.content.pm.PackageManager.INSTALL_FAILED_INSUFFICIENT_STORAGE;
@@ -201,6 +202,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     private final Handler.Callback mHandlerCallback = new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
+            int returnCode = INSTALL_SUCCEEDED;
+            String completeMsg = null;
             // Cache package manager data without the lock held
             final PackageInfo pkgInfo = mPm.getPackageInfo(
                     params.appPackageName, PackageManager.GET_SIGNATURES /*flags*/, userId);
@@ -215,14 +218,16 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 try {
                     commitLocked(pkgInfo, appInfo);
                 } catch (PackageManagerException e) {
-                    final String completeMsg = ExceptionUtils.getCompleteMessage(e);
+                    returnCode = e.error;
+                    completeMsg = ExceptionUtils.getCompleteMessage(e);
                     Slog.e(TAG, "Commit of session " + sessionId + " failed: " + completeMsg);
                     destroyInternal();
-                    dispatchSessionFinished(e.error, completeMsg, null);
                 }
-
-                return true;
             }
+            if (returnCode != INSTALL_SUCCEEDED) {
+                dispatchSessionFinished(returnCode, completeMsg, null);
+            }
+            return true;
         }
     };
 
