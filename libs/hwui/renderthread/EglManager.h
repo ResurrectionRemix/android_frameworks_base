@@ -46,6 +46,8 @@ private:
     EGLint mHeight;
     EGLint mBufferAge;
 
+    Frame();
+
     // Maps from 0,0 in top-left to 0,0 in bottom-left
     // If out is not an EGLint[4] you're going to have a bad time
     void map(const SkRect& in, EGLint* out) const;

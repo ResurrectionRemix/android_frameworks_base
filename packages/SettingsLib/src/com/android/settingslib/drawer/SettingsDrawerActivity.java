@@ -76,6 +76,7 @@ public class SettingsDrawerActivity extends Activity {
     private SettingsDrawerAdapter mDrawerAdapter;
     private FrameLayout mContentHeaderContainer;
     private DrawerLayout mDrawerLayout;
+    private boolean mOpenTileFromLeftDrawer = false;
     private boolean mShowingMenu;
     private UserManager mUserManager;
 
@@ -110,10 +111,18 @@ public class SettingsDrawerActivity extends Activity {
         setActionBar(toolbar);
         mDrawerAdapter = new SettingsDrawerAdapter(this);
         ListView listView = (ListView) findViewById(R.id.left_drawer);
+        if(isHeaderEnabled()) {
+           View header = getLayoutInflater().inflate(R.layout.header, null);
+           listView.addHeaderView(header, null, false);
+        }
         listView.setAdapter(mDrawerAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(android.widget.AdapterView<?> parent, View view, int position,
                     long id) {
+                if(isHeaderEnabled()) {
+                   position = position - 1;
+                   mOpenTileFromLeftDrawer = true;
+                }
                 onTileClicked(mDrawerAdapter.getTile(position));
             }
         });
@@ -253,6 +262,11 @@ public class SettingsDrawerActivity extends Activity {
             Settings.System.SHOW_SETTINGS_DRAWER, 1) == 1;
     }
 
+    public boolean isHeaderEnabled() {
+        return Settings.System.getInt(getApplicationContext().getContentResolver(),
+            Settings.System.SHOW_SETTINGS_HEADER, 0) == 1;
+    }
+
     @Override
     public void setContentView(View view) {
         ((ViewGroup) findViewById(R.id.content_frame)).addView(view);
@@ -314,7 +328,13 @@ public class SettingsDrawerActivity extends Activity {
     }
 
     public boolean openTile(Tile tile) {
-        closeDrawer();
+        if (mOpenTileFromLeftDrawer) {
+            // if we open a tile from the left drawer, don't close/animate the drawer
+            // so it will go away with the old activity animation, avoiding lags
+            mOpenTileFromLeftDrawer = false;
+        } else {
+            closeDrawer();
+        }
         if (tile == null) {
             startActivity(new Intent(Settings.ACTION_SETTINGS).addFlags(
                     Intent.FLAG_ACTIVITY_CLEAR_TASK));

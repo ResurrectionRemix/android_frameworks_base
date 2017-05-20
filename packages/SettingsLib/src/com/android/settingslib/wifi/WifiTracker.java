@@ -276,6 +276,9 @@ public class WifiTracker {
     private Collection<ScanResult> fetchScanResults() {
         mScanId++;
         final List<ScanResult> newResults = mWifiManager.getScanResults();
+        if (newResults == null) {
+            return null;
+        }
         for (ScanResult newResult : newResults) {
             if (newResult.SSID == null || newResult.SSID.isEmpty()) {
                 continue;
@@ -344,30 +347,21 @@ public class WifiTracker {
                     continue;
                 }
                 AccessPoint accessPoint = getCachedOrCreate(config, cachedAccessPoints);
-                if (mLastInfo != null && mLastNetworkInfo != null) {
-                    if (config.isPasspoint() == false) {
-                        accessPoint.update(connectionConfig, mLastInfo, mLastNetworkInfo);
-                    }
-                }
+                accessPoint.update(connectionConfig, mLastInfo, mLastNetworkInfo);
                 if (mIncludeSaved) {
-                    if (!config.isPasspoint() || mIncludePasspoints) {
-                        // If saved network not present in scan result then set its Rssi to MAX_VALUE
-                        boolean apFound = false;
-                        for (ScanResult result : results) {
-                            if (result.SSID.equals(accessPoint.getSsidStr())) {
-                                apFound = true;
-                                break;
-                            }
+                    // If saved network not present in scan result then set its Rssi to MAX_VALUE
+                    boolean apFound = false;
+                    for (ScanResult result : results) {
+                        if (result.SSID.equals(accessPoint.getSsidStr())) {
+                            apFound = true;
+                            break;
                         }
-                        if (!apFound) {
-                            accessPoint.setRssi(Integer.MAX_VALUE);
-                        }
-                        accessPoints.add(accessPoint);
                     }
-
-                    if (config.isPasspoint() == false) {
-                        apMap.put(accessPoint.getSsidStr(), accessPoint);
+                    if (!apFound) {
+                        accessPoint.setRssi(Integer.MAX_VALUE);
                     }
+                    accessPoints.add(accessPoint);
+                    apMap.put(accessPoint.getSsidStr(), accessPoint);
                 } else {
                     // If we aren't using saved networks, drop them into the cache so that
                     // we have access to their saved info.
@@ -398,18 +392,18 @@ public class WifiTracker {
                     }
 
                     if (result.isPasspointNetwork()) {
-                        WifiConfiguration config = mWifiManager.getMatchingWifiConfig(result);
-                        if (config != null) {
-                            accessPoint.update(config);
+                        // Retrieve a WifiConfiguration for a Passpoint provider that matches
+                        // the given ScanResult.  This is used for showing that a given AP
+                        // (ScanResult) is available via a Passpoint provider (provider friendly
+                        // name).
+                        try {
+                            WifiConfiguration config = mWifiManager.getMatchingWifiConfig(result);
+                            if (config != null) {
+                                accessPoint.update(config);
+                            }
+                        } catch (UnsupportedOperationException e) {
+                            // Passpoint not supported on the device.
                         }
-                    }
-
-                    if (mLastInfo != null && mLastInfo.getBSSID() != null
-                            && mLastInfo.getBSSID().equals(result.BSSID)
-                            && connectionConfig != null && connectionConfig.isPasspoint()) {
-                        /* This network is connected via this passpoint config */
-                        /* SSID match is not going to work for it; so update explicitly */
-                        accessPoint.update(connectionConfig);
                     }
 
                     accessPoints.add(accessPoint);

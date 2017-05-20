@@ -137,14 +137,14 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">As notificações pop-up foram ativadas</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: poupança de bateria.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas dispositivo.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas no dispositivo.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Modo de localização: alta precisão.</string>
   <string name="accessibility_quick_settings_location_changed_battery_saving">Modo de localização alterado para poupança de bateria.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Modo de localização alterado para apenas dispositivo.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Modo de localização alterado para apenas no dispositivo.</string>
   <string name="accessibility_quick_settings_location_changed_high_accuracy">Modo de localização alterado para alta precisão.</string>
   <string name="quick_settings_location_detail_title">Modo de localização</string>
   <string name="quick_settings_location_battery_saving_label">Poupança de bateria</string>
-  <string name="quick_settings_location_gps_only_label">Apenas dispositivo</string>
+  <string name="quick_settings_location_gps_only_label">Apenas no dispositivo</string>
   <string name="quick_settings_location_high_accuracy_label">Alta precisão</string>
   <string name="quick_settings_location_off_label">Localização desligada</string>
   <string name="quick_settings_location_off_custom_label">Localização</string>
@@ -224,7 +224,7 @@
   <string name="action_save_success">Guardado</string>
   <string name="action_save_fault">Não foi guardado</string>
   <string name="action_edit">Editar</string>
-  <string name="recents_custom_android_n">Limpar tudo</string>
+  <string name="recents_custom_android_n">LIMPAR TUDO</string>
   <string name="recents_free_ram">RAM livre: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->

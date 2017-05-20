@@ -27,7 +27,7 @@
   <string name="animation_slide_right_no_fade">Von rechts einblenden (ohne Verblassen)</string>
   <string name="animation_slide_left_no_fade">Von links einblenden (ohne Verblassen)</string>
   <string name="animation_slide_up">Von unten hineingleiten</string>
-  <string name="animation_slide_down">Von oben hinein gleiten</string>
+  <string name="animation_slide_down">Von oben einblenden</string>
   <string name="animation_default">Standard</string>
   <string name="animation_translucent">Transparent</string>
   <string name="animation_grow_shrink">Von oben einblenden</string>
@@ -48,7 +48,7 @@
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">Akku Statistik zurücksetzen</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_resetBatteryStats">Erlaubt einer App, die aktuelle Akku-Statistik zurückzusetzen.</string>
+  <string name="permdesc_resetBatteryStats">Ermöglicht einer Anwendung, die aktuellen Low-Level-Batterienutzungsdaten zurückzusetzen.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_restartUI">neustart der System leisten</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->

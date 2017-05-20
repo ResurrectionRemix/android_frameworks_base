@@ -207,12 +207,14 @@ public final class ObexHelper {
                     case 0x40:
                         boolean trimTail = true;
                         index++;
-                        length = 0xFF & headerArray[index];
-                        length = length << 8;
-                        index++;
-                        length += 0xFF & headerArray[index];
+                        length = (headerArray[index] << 8) + headerArray[index + 1];
+                        index += 2;
+                        if (length <= 2) {
+                            Log.e(TAG, "Remote sent an OBEX Connect response with " +
+                                  "incorrect header length = " + length);
+                            break;
+                        }
                         length -= 3;
-                        index++;
                         value = new byte[length];
                         System.arraycopy(headerArray, index, value, 0, length);
                         if (length == 0 || (length > 0 && (value[length - 1] != 0))) {

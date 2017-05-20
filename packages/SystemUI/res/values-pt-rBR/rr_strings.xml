@@ -37,7 +37,7 @@
   <string name="right_shortcut_hint">Deslizar para a esquerda para %1$s</string>
   <string name="lockscreen_message">Toque num ícone da esquerda ou da direita para reatribuir um atalho na tela de bloqueio.</string>
   <string name="lockscreen_default_target">Padrão</string>
-  <string name="select_application">Selecione Aplicação</string>
+  <string name="select_application">Selecionar Aplicativo</string>
   <string name="lockscreen_choose_action_title">Escolha a ação</string>
   <string name="lockscreen_none_target">Vazio</string>
   <!-- App circle sidebar -->
@@ -93,7 +93,7 @@
   <string name="accessibility_quick_settings_caffeine_off">Cafeína desligada</string>
   <string name="accessibility_quick_settings_caffeine_on">Cafeína ligada</string>
   <string name="qs_app_picker_title">Selecionador de App</string>
-  <string name="quick_settings_lte_label">4G</string>
+  <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE Ligado </string>
   <string name="lte_off">LTE desligado</string>
   <string name="quick_settings_nfc">NFC</string>

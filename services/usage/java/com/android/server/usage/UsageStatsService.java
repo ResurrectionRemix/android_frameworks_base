@@ -86,6 +86,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * A service that collects, aggregates, and persists application usage data.
@@ -151,8 +152,8 @@ public class UsageStatsService extends SystemService implements
     @GuardedBy("mLock")
     private AppIdleHistory mAppIdleHistory;
 
-    private ArrayList<UsageStatsManagerInternal.AppIdleStateChangeListener>
-            mPackageAccessListeners = new ArrayList<>();
+    private CopyOnWriteArrayList<UsageStatsManagerInternal.AppIdleStateChangeListener>
+            mPackageAccessListeners = new CopyOnWriteArrayList<UsageStatsManagerInternal.AppIdleStateChangeListener>();
 
     private boolean mHaveCarrierPrivilegedApps;
     private List<String> mCarrierPrivilegedApps;
@@ -778,17 +779,13 @@ public class UsageStatsService extends SystemService implements
     }
 
     void addListener(AppIdleStateChangeListener listener) {
-        synchronized (mLock) {
-            if (!mPackageAccessListeners.contains(listener)) {
-                mPackageAccessListeners.add(listener);
-            }
-        }
+        // List is self-synchronized copy-on-write.
+        mPackageAccessListeners.addIfAbsent(listener);
     }
 
     void removeListener(AppIdleStateChangeListener listener) {
-        synchronized (mLock) {
-            mPackageAccessListeners.remove(listener);
-        }
+        // List is self-synchronized copy-on-write.
+        mPackageAccessListeners.remove(listener);
     }
 
     int getAppId(String packageName) {
@@ -1000,6 +997,7 @@ public class UsageStatsService extends SystemService implements
     }
 
     void informListeners(String packageName, int userId, boolean isIdle) {
+        // List is self-synchronized copy-on-write.
         for (AppIdleStateChangeListener listener : mPackageAccessListeners) {
             listener.onAppIdleStateChanged(packageName, userId, isIdle);
         }
@@ -1007,6 +1005,7 @@ public class UsageStatsService extends SystemService implements
 
     void informParoleStateChanged() {
         final boolean paroled = isParoledOrCharging();
+        // List is self-synchronized copy-on-write.
         for (AppIdleStateChangeListener listener : mPackageAccessListeners) {
             listener.onParoleStateChanged(paroled);
         }

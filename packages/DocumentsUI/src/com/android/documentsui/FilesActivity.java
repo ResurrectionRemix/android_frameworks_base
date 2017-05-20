@@ -188,6 +188,14 @@ public class FilesActivity extends BaseActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle state) {
+        if (!mState.stack.isEmpty()) {
+            mState.restored = true;
+        }
+        super.onSaveInstanceState(state);
+    }
+
+    @Override
     public String getDrawerTitle() {
         Intent intent = getIntent();
         return (intent != null && intent.hasExtra(Intent.EXTRA_TITLE))

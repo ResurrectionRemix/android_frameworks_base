@@ -168,7 +168,7 @@
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bias_perf">Statut batterie: mode rapide.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Statut batterie changé en mode économie d\'énergie.</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">État de batterie basculé sur économie d\'énergie.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_bal">Statut batterie changé en mode équilibré.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->

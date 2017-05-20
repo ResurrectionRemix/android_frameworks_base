@@ -4006,6 +4006,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String OPA_ANIM_DURATION_X = "opa_anim_duration_x";
 
         /**
+         * Headset Connect Player
+         * @hide
+         */
+        public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
+
+        /**
          * Pixel Anim Duration
          * @hide
          */
@@ -4754,8 +4760,14 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String SHOW_SETTINGS_DRAWER = "show_settings_drawer";
 
+        /**
+         * Whether to hide Settings custom header
+         * @hide
+         */
+        public static final String SHOW_SETTINGS_HEADER = "show_settings_header";
 
-	/*
+
+	    /*
          * show clear all recents button
          *  @hide
          */
@@ -5979,6 +5991,36 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String DATA_ACTIVITY_ARROWS = "data_activity_arrows";
+
+        /**
+         * Whether to show QS footer warnings
+         * @hide
+         */
+        public static final String QS_FOOTER_WARNINGS = "qs_footer_warnings";
+
+        /**
+         * Whether the phone vibrates on call connect
+         * @hide
+         */
+        public static final String VIBRATE_ON_CONNECT = "vibrate_on_connect";
+
+        /**
+         * Whether the phone vibrates on call waiting
+         * @hide
+         */
+        public static final String VIBRATE_ON_CALLWAITING = "vibrate_on_callwaiting";
+
+        /**
+         * Whether the phone vibrates on disconnect
+         * @hide
+         */
+        public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
+
+        /**
+         * Whether to enable the no navigation method notification.
+         * @hide
+         */
+        public static final String NO_NAVIGATION_NOTIFICATION = "no_navigation_notification";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

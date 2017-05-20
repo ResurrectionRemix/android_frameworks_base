@@ -16,7 +16,7 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">Predefinida</string>
+  <string name="default_string">Predefinição</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">A sua imagem de fornecedor não coincide com o sistema. Por favor, \"flasha\" a imagem do fornecedor de <xliff:g id="string">%s</xliff:g> para o seu dispositivo</string>
   <string name="global_action_screenrecord">Gravação de ecrã</string>
@@ -38,7 +38,7 @@
   <string name="action_null">Em branco</string>
   <string name="global_action_torch">Lanterna</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Reiniciar Sistema Ui</string>
+  <string name="reboot_systemui">Reiniciar a IU do sistema</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">Modo On-The-Go</string>
   <!-- ADB enabled, but not connected notification title -->

@@ -152,22 +152,38 @@
   <string name="quick_settings_locale_label">भाषा</string>
   <string name="quick_settings_locale_more_locales_toast">कृपया टॉगल कार्यक्षमता सक्षम करने के लिए एक से अधिक भाषाओं को कॉन्फ़िगर करें</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">निलंबित क्रिया चालू</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">निलंबित क्रिया बंद</string>
+  <string name="quick_settings_suspend_actions_label">निलंबित क्रिया</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">बैटरी मोड</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">बैटरी मोड: पावर संचय मोड</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">बैटरी मोड: संतुलित मोड।</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">बैटरी मोड: प्रदर्शन मोड।</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">बैटरी मोड: कार्यक्षमता मोड।</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">बैटरी मोड: त्वरित मोड।</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">बैटरी मोड पावर सेव मोड में परिवर्तित किया गया|</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">बैटरी मोड संतुलित मोड में परिवर्तित किया गया।</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">बैटरी मोड प्रदर्शन मोड में परिवर्तित किया गया।</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">बैटरी मोड कार्यक्षमता मोड में परिवर्तित किया गया।</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">बैटरी मोड त्वरित मोड में बदल गया।</string>
+  <string name="quick_settings_performance_profile_detail_title">बैटरी मोड</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">दिशा-सूचक</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">आवाक्षरित हो रही है\u2026</string>
   <string name="accessibility_quick_settings_compass_off">कम्पास बंद</string>
+  <string name="accessibility_quick_settings_compass_on">दिशा सूचक यंत्र चालू|</string>
   <string name="accessibility_quick_settings_compass_changed_off">कंपास बंद कर दिया।</string>
   <string name="accessibility_quick_settings_compass_changed_on">कम्पास चालू कर दिया</string>
   <string name="quick_settings_compass_N">उ</string>
@@ -179,6 +195,9 @@
   <string name="quick_settings_compass_W">व</string>
   <string name="quick_settings_compass_NW">उ-प</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">HW कुंजी चालू</string>
+  <string name="accessibility_quick_settings_hwkeys_off">HW कुंजियाँ बंद</string>
+  <string name="quick_settings_hwkeys_label">HW कुंजियाँ</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">एप्प समाप्त</string>
@@ -216,24 +235,36 @@
   <string name="message_keep_one_launcher">कम से कम एक घर गतिविधि रखना चाहिए!</string>
   <string name="tm_clear_task">साफ़</string>
   <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Multiwindow सत्र पहलेसे ही चालू| \n अगर किसी भी ऍप को डॉक करना चाहते हे तो उसपे क्लीक करे|</string>
+  <string name="recents_multiwin_nolastapp">अपने सभी चालू ऍप निकाल दिए, कृपया लॉंचर या ड्रावर से कोई एप्प चुने|</string>
+  <string name="slim_recent_keyguard">हाल ही के ऍप देखने के लिए अपने डिवाइस को अनलॉक करे|</string>
+  <string name="slim_recent_pinned">हाल ही के ऍप देखने के लिए स्क्रीन को अनपिन करें</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">हाल ही के ऍप बंद करने के बाद %s लॉन्च करे|</string>
   <string name="toast_recents_cancel_queued_app">अनुप्रयोग लॉन्च रद्द</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">बलपूर्वक रोकें?</string>
+  <string name="force_stop_dlg_text">यदि आप कोई ऍप जबरदस्ती बंद करते हे, तो वो दुर्व्यवहार कर सकता हे|</string>
   <string name="dlg_ok">ओके</string>
   <string name="dlg_cancel">रद्द करें</string>
   <string name="kill">अनुप्रयोग नष्ट करे</string>
   <!-- OmniJAWS -->
   <string name="omnijaws_service_error">त्रुटि</string>
+  <string name="omnijaws_service_unkown">मौसम के बारे में जानकारी उपलब्ध नहीं|</string>
   <string name="omnijaws_detail_header">मौसम</string>
   <string name="omnijaws_label_default">मौसम</string>
   <string name="omnijaws_current_text">अभी</string>
   <string name="omnijaws_package_not_available">OmniJaws उपलब्ध नहीं है</string>
+  <string name="omnijaws_service_error_long">मौसम डेटा लोड करने में त्रुटि</string>
+  <string name="omnijaws_service_disabled">सेवा अक्षम</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_plugged_in_dash_charging">डैश चार्जिंग</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">वीपीएन</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">डेटा सेवर</string>
 </resources>

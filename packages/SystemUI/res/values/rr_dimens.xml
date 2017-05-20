@@ -16,6 +16,10 @@
 */
 -->
 <resources>
+
+    <!-- Custom Carrier Label -->
+    <dimen name="status_bar_carrier_height">14sp</dimen>
+
     <!-- Floating action button -->
     <dimen name="floating_action_button_height">54dp</dimen>
     <dimen name="floating_action_button_width">54dp</dimen>
