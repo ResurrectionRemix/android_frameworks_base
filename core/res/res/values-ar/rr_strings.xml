@@ -36,7 +36,7 @@
   <string name="animation_grow_shrink_left">النمو من (اليسار)</string>
   <string name="animation_grow_shrink_right">النمو من (اليمين)</string>
   <string name="action_null">فارغ</string>
-  <string name="global_action_torch">الكشاف</string>
+  <string name="global_action_torch">ضوء الفلاش</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">اعادة تشغيل واجهة النظام</string>
   <!-- On-The-Go -->
