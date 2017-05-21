@@ -799,6 +799,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         protected void unobserve() {
             super.unobserve();
             ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
         }
 
 	@Override

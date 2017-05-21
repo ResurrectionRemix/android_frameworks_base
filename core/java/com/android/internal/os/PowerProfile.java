@@ -20,12 +20,18 @@ package com.android.internal.os;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.os.SystemProperties;
+import android.util.Xml;
 
 import com.android.internal.util.XmlUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import libcore.io.IoUtils;
+
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -210,14 +216,27 @@ public class PowerProfile {
     }
 
     private void readPowerValuesFromXml(Context context) {
-        int id = com.android.internal.R.xml.power_profile;
+        final String profilePath = SystemProperties.get("ro.power_profile",
+                                           "/system/etc/power_profile.xml");
         final Resources resources = context.getResources();
-        XmlResourceParser parser = resources.getXml(id);
+        XmlResourceParser resParser = null;
+        XmlPullParser parser = null;
         boolean parsingArray = false;
         ArrayList<Double> array = new ArrayList<Double>();
         String arrayName = null;
+        FileReader profileReader = null;
 
         try {
+            if (new File(profilePath).exists()) {
+                profileReader = new FileReader(profilePath);
+                parser = Xml.newPullParser();
+                parser.setInput(profileReader);
+            } else {
+                int id = com.android.internal.R.xml.power_profile;
+                resParser = resources.getXml(id);
+                parser = resParser;
+            }
+
             XmlUtils.beginDocument(parser, TAG_DEVICE);
 
             while (true) {
@@ -261,7 +280,10 @@ public class PowerProfile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            parser.close();
+            if (resParser != null) {
+                resParser.close();
+            }
+            IoUtils.closeQuietly(profileReader);
         }
 
         // Now collect other config variables.
