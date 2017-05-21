@@ -257,4 +257,5 @@
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">データセーバー</string>
+  <!-- No navigation warning notification -->
 </resources>
