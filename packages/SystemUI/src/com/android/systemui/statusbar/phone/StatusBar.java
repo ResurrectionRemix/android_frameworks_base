@@ -720,7 +720,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mKeyguardShowingMedia;
     private boolean mShowMediaMetadata;
 
-    private String[] mNavMediaArrowsExcludeList;
     private MediaSessionManager mMediaSessionManager;
     private MediaController mMediaController;
     private String mMediaNotificationKey;

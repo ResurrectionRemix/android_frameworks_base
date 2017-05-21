@@ -5052,6 +5052,13 @@ public final class Settings {
         */
        public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
+       /**
+        * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+        *
+        * @hide
+        */
+       public static final String ANBI_ENABLED = "anbi_enabled";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
