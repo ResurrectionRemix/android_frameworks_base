@@ -3125,6 +3125,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         };
 
         /**
+         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         *
+         * @hide
+         */
+        public static final String ANBI_ENABLED = "anbi_enabled";
+
+        /**
          * Appended to various volume related settings to record the previous
          * values before they the settings were affected by a silent/vibrate
          * ringer mode change.
