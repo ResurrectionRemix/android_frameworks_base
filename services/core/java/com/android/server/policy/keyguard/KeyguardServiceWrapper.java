@@ -48,6 +48,10 @@ public class KeyguardServiceWrapper implements IKeyguardService {
                 showingStateChangedCallback);
     }
 
+    public KeyguardServiceWrapper(Context context, IKeyguardService service) {
+        mService = service;
+    }
+
     @Override // Binder interface
     public void verifyUnlock(IKeyguardExitCallback callback) {
         try {

@@ -108,6 +108,7 @@ public class WindowAnimator {
 
     boolean mKeyguardGoingAway;
     int mKeyguardGoingAwayFlags;
+    private final boolean mBlurUiEnabled;
 
     /** Use one animation for all entering activities after keyguard is dismissed. */
     Animation mPostKeyguardExitAnimation;
@@ -142,8 +143,8 @@ public class WindowAnimator {
         mContext = service.mContext;
         mPolicy = service.mPolicy;
         mWindowPlacerLocked = service.mWindowPlacerLocked;
-        final boolean isBlurSupported = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_uiBlurEnabled);
+        mBlurUiEnabled = mContext.getResources().getBoolean(
+                           com.android.internal.R.bool.config_uiBlurEnabled);
 
         mAnimationFrameCallback = new Choreographer.FrameCallback() {
             public void doFrame(long frameTimeNs) {
@@ -299,8 +300,8 @@ public class WindowAnimator {
                 (mKeyguardGoingAwayFlags & KEYGUARD_GOING_AWAY_FLAG_NO_WINDOW_ANIMATIONS) != 0;
         final boolean keyguardGoingAwayWithWallpaper =
                 (mKeyguardGoingAwayFlags & KEYGUARD_GOING_AWAY_FLAG_WITH_WALLPAPER) != 0;
-        final boolean seeThrough = Settings.System.getBoolean(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_SEE_THROUGH, false);
+        final boolean seeThrough = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
 
         if (mKeyguardGoingAway&& !mBlurUiEnabled) {
             for (int i = windows.size() - 1; i >= 0; i--) {

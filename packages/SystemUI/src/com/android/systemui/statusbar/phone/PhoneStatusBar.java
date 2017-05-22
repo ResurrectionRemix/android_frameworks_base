@@ -473,6 +473,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private int mBlurDarkColorFilter;
     private int mBlurMixedColorFilter;
     private int mBlurLightColorFilter;
+    private int mBlurLockRadius;
+    private Bitmap mBlurredImage = null;
 
     // RemoteInputView to be activated after unlock
     private View mPendingRemoteInputView;
@@ -607,9 +609,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mLinger = BRIGHTNESS_CONTROL_LINGER_THRESHOLD + 1;
         }
     };
-
-    private int mBlurRadius;
-    private Bitmap mBlurredImage = null;
 
     class SettingsObserver extends UserContentObserver {
         SettingsObserver(Handler handler) {
@@ -785,7 +784,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.QS_FOOTER_WARNINGS),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_BLUR_RADIUS), false, this);	
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -924,6 +923,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
             mMaxKeyguardNotifConfig = Settings.System.getIntForUser(resolver,
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 5, mCurrentUserId);
+            mBlurLockRadius = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 14);
 
             mCustomlogoStyle = Settings.System.getIntForUser(
             resolver, Settings.System.CUSTOM_LOGO_STYLE, 0,
@@ -953,9 +954,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 if (mNotificationPanel != null) {
                     mNotificationPanel.setTaskManagerEnabled(showTaskManager);
                 }
-
-            mBlurRadius = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 14);
+            }
 
 
             mDt2lCameraVibrateConfig = Settings.System.getIntForUser(resolver,
@@ -3052,6 +3051,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
         mKeyguardShowingMedia = artworkDrawable != null;
 
+        Bitmap bitmapDrawable = artworkDrawable.getBitmap();
+        // apply blurred image
+        if (bitmapDrawable == null) {
+            bitmapDrawable = mBlurredImage;
+            // might still be null
+        }
+
+
         boolean allowWhenShade = false;
         if (ENABLE_LOCKSCREEN_WALLPAPER && artworkDrawable == null) {
             Bitmap lockWallpaper = mLockscreenWallpaper.getBitmap();
@@ -3077,12 +3084,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     && mMediaController.getPlaybackState() != null
                     && mMediaController.getPlaybackState().getState()
                             == PlaybackState.STATE_PLAYING);
-        }
-
-        // apply blurred image
-        if (backdropBitmap == null) {
-            backdropBitmap = mBlurredImage;
-            // might still be null
         }
 
         if (keyguardVisible && mKeyguardShowingMedia &&
@@ -3368,6 +3369,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public boolean isQsExpanded() {
         return mNotificationPanel.isQsExpanded();
+    }
+
+
+    public boolean isKeyguardShowingMedia() {
+        return mKeyguardShowingMedia;
     }
 
     public boolean isWakeUpComingFromTouch() {
@@ -6344,25 +6350,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         Trace.endSection();
     }
 
-    public VisualizerView getVisualizer() {
-        return mVisualizerView;
-    }
-
-    public void setBackgroundBitmap(Bitmap bmp) {
+   public void setBackgroundBitmap(Bitmap bmp) {
         if (bmp == null && mBlurredImage == null) return;
 
-        if (bmp != null && mBlurRadius != 0) {
-            mBlurredImage = Blur.blurBitmap(mContext, bmp, mBlurRadius);
+        if (bmp != null && mBlurLockRadius != 0) {
+            mBlurredImage = Blur.blurBitmap(mContext, bmp, mBlurLockRadius);
         } else {
             mBlurredImage = bmp;
         }
-
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                updateMediaMetaData(true);
+                updateMediaMetaData(true,true);
             }
         });
+    }
+
+    public VisualizerView getVisualizer() {
+        return mVisualizerView;
     }
 
     private final class ShadeUpdates {

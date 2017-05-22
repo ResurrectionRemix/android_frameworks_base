@@ -59,6 +59,9 @@ import android.view.SurfaceControl;
 import android.view.WindowManager;
 import android.view.WindowManagerPolicy;
 
+
+import com.android.server.policy.keyguard.KeyguardStateMonitor.OnShowingStateChangedCallback;
+
 import java.io.PrintWriter;
 
 /**
@@ -276,6 +279,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     public static final String KEYGUARD_PACKAGE = "com.android.systemui";
     public static final String KEYGUARD_CLASS = "com.android.systemui.keyguard.KeyguardService";
     private KeyguardServiceWrapper mKeyguardService;
+    private OnShowingStateChangedCallback mCallBack;
     private final ServiceConnection mKeyguardConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -504,10 +508,11 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             }
 
             if (changed && !mPendingRequestChangedLocked) {
-                if ((mKeyguardService != null && !mKeyguardService.isShowing())
+                if ((mKeyguardService != null)
                         && request.policy == DisplayPowerRequest.POLICY_OFF) {
-                    boolean seeThrough = Settings.System.getBoolean(mContext.getContentResolver(),
-                            Settings.System.LOCKSCREEN_SEE_THROUGH, false);
+                    boolean seeThrough = Settings.System.getInt(mContext.getContentResolver(),
+                           Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
+
                     Bitmap bmp = null;
                     if (seeThrough) {
                         WindowManager wm = (WindowManager)
