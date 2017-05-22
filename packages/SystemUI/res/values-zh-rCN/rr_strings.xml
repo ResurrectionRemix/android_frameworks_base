@@ -269,4 +269,6 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">流量节省程序</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">所有导航方法已禁用</string>
+  <string name="no_navigation_warning_text">点击以启用</string>
 </resources>
