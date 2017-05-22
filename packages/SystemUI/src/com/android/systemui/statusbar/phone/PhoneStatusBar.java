@@ -123,6 +123,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.ThreadedRenderer;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -3599,11 +3600,19 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // Panels are not available in setup
         if (!mUserSetup) return;
 
-        if (KeyEvent.KEYCODE_SYSTEM_NAVIGATION_UP == key) {
-            MetricsLogger.action(mContext, MetricsEvent.ACTION_SYSTEM_NAVIGATION_KEY_UP);
+        final boolean needsAxisInversion = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_needsFingerprintAxisInversion);
+        final boolean isRotated = (mDisplay.getRotation() == Surface.ROTATION_90
+                || mDisplay.getRotation() == Surface.ROTATION_270) && needsAxisInversion;
+        if (key ==  (!isRotated ? KeyEvent.KEYCODE_SYSTEM_NAVIGATION_UP
+                : KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN)) {
+            MetricsLogger.action(mContext, !isRotated ? MetricsEvent.ACTION_SYSTEM_NAVIGATION_KEY_UP
+                    : MetricsEvent.ACTION_SYSTEM_NAVIGATION_KEY_DOWN);
             mNotificationPanel.collapse(false /* delayed */, 1.0f /* speedUpFactor */);
-        } else if (KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN == key) {
-            MetricsLogger.action(mContext, MetricsEvent.ACTION_SYSTEM_NAVIGATION_KEY_DOWN);
+        } else if (key ==  (!isRotated ? KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN
+                : KeyEvent.KEYCODE_SYSTEM_NAVIGATION_UP)) {
+            MetricsLogger.action(mContext, !isRotated ? MetricsEvent.ACTION_SYSTEM_NAVIGATION_KEY_DOWN
+                    : MetricsEvent.ACTION_SYSTEM_NAVIGATION_KEY_DOWN);
             if (mNotificationPanel.isFullyCollapsed()) {
                 if (mFingerprintQuickPulldown) {
                     mNotificationPanel.expandWithQs();

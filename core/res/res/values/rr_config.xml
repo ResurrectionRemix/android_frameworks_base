@@ -62,4 +62,7 @@
     <!-- Whether device has dash charging support -->
     <bool name="config_hasDashCharger">false</bool>
 
+    <!-- Whether the device needs axis inversion for the fingerprint notification panel gesture when rotated -->
+    <bool name="config_needsFingerprintAxisInversion">false</bool>
+
 </resources>

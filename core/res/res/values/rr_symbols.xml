@@ -205,5 +205,6 @@
   <java-symbol type="bool" name="config_hasDashCharger" />
 
   <java-symbol type="drawable" name="ic_qs_weather_default_on" />
+  <java-symbol type="bool" name="config_needsFingerprintAxisInversion" />
 
 </resources>
