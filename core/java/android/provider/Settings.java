@@ -3883,6 +3883,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
 
         /**
          * List of wakelock blocks selected
+         * Whether or not to allow quick settings expansion with one swipe on the fingerprint sensor.
+         * @hide
+         */
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN_FP = "status_bar_quick_qs_pulldown_fp";
+
+        /**
+         * List of wakelock blocks selected
          * @hide
          */
         public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
