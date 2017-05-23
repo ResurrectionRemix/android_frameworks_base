@@ -269,4 +269,6 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Trình tiết kiệm dữ liệu</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Tất cả các phương pháp chuyển hướng bị vô hiệu</string>
+  <string name="no_navigation_warning_text">Nhấn để bật</string>
 </resources>
