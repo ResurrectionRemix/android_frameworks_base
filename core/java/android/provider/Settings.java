@@ -4520,10 +4520,15 @@ public final class Settings {
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**
-         * Three Finger Gesture from Oppo
+         * Whether or not to allow quick settings expansion with one swipe on the fingerprint sensor.
          * @hide
          */
-        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN_FP = "status_bar_quick_qs_pulldown_fp";
+
+        /**
+         * --- AICP System settings end
+         *  Add new system settings above this comment
+         */
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
