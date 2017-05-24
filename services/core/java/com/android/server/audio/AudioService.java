@@ -676,6 +676,9 @@ public class AudioService extends IAudioService.Stub {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mHasVibrator = vibrator == null ? false : vibrator.hasVibrator();
 
+        mLaunchPlayer = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.HEADSET_CONNECT_PLAYER, 0, UserHandle.USER_CURRENT);
+
         // Initialize volume
         int maxVolume = SystemProperties.getInt("ro.config.vc_call_vol_steps",
                 MAX_STREAM_VOLUME[AudioSystem.STREAM_VOICE_CALL]);
