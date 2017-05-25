@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">إفتراضي</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">هذه النسخه غير متوافقة مع النظام , برجاء ادخال نسخة الـ <xliff:g id="s</xliff:g>tring\">%s</xliff:g> الخاصة بجهازك</string>
+  <string name="system_error_vendorprint">صورة المُصنِّع الخاصة بك لا تتطابق مع النظام، الرجاء شحن الـ <xliff:g id="string">%s</xliff:g> الصورة المصنعية الخاصة بجهازك</string>
   <string name="global_action_screenrecord">تسجيل الشاشة</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">التلاشي</string>
