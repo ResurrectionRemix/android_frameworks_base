@@ -78,6 +78,7 @@ import com.android.systemui.recents.events.ui.AllTaskViewsDismissedEvent;
 import com.android.systemui.recents.events.ui.DeleteTaskDataEvent;
 import com.android.systemui.recents.events.ui.DismissAllTaskViewsEvent;
 import com.android.systemui.recents.events.ui.DismissTaskViewEvent;
+import com.android.systemui.recents.events.ui.LockTaskStateChangedEvent;
 import com.android.systemui.recents.events.ui.RecentsGrowingEvent;
 import com.android.systemui.recents.events.ui.TaskViewDismissedEvent;
 import com.android.systemui.recents.events.ui.UpdateFreeformTaskViewVisibilityEvent;
@@ -1699,7 +1700,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         if (mEnterAnimationComplete && !useGridLayout()) {
             if (prevScroll > SHOW_STACK_ACTION_BUTTON_SCROLL_THRESHOLD &&
                     curScroll <= SHOW_STACK_ACTION_BUTTON_SCROLL_THRESHOLD &&
-                    mStack.getTaskCount() > 0) {
+                   getLockedTaskCount() != mStack.getTaskCount()) {
                 EventBus.getDefault().send(new ShowStackActionButtonEvent(true /* translate */));
             } else if (prevScroll < HIDE_STACK_ACTION_BUTTON_SCROLL_THRESHOLD &&
                     curScroll >= HIDE_STACK_ACTION_BUTTON_SCROLL_THRESHOLD) {
@@ -1806,6 +1807,28 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
                 event.taskView, useGridLayout(), event.getAnimationTrigger());
     }
 
+    public int getLockedTaskCount() {
+        int count = 0;
+        ArrayList<Task> mTasks = mStack.getStackTasks();
+        for (Task mTask : mTasks) {
+            if (mTask.isLockedTask) {
+                count ++;
+            }
+        }
+        return count;
+    }
+
+    public final void onBusEvent(LockTaskStateChangedEvent event) {
+        if (getLockedTaskCount() == mStack.getTaskCount()) {
+            EventBus.getDefault().send(new HideStackActionButtonEvent());
+        } else {
+            if (mStackScroller.getStackScroll() < TaskStackView.SHOW_STACK_ACTION_BUTTON_SCROLL_THRESHOLD &&
+                        getLockedTaskCount() != mStack.getTaskCount()) {
+                EventBus.getDefault().send(new ShowStackActionButtonEvent(true /* translate */));
+            }
+        }
+    }
+
     public final void onBusEvent(final DismissAllTaskViewsEvent event) {
         // Keep track of the tasks which will have their data removed
         ArrayList<Task> tasks = new ArrayList<>(mStack.getStackTasks());
@@ -1821,7 +1844,10 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
                 // Remove all tasks and delete the task data for all tasks
                 mStack.removeAllTasks();
                 for (int i = tasks.size() - 1; i >= 0; i--) {
-                    EventBus.getDefault().send(new DeleteTaskDataEvent(tasks.get(i)));
+                    Task mTask = tasks.get(i);
+                    if (!mTask.isLockedTask) {
+                        EventBus.getDefault().send(new DeleteTaskDataEvent(tasks.get(i)));
+                    }
                 }
 
                 MetricsLogger.action(getContext(), MetricsEvent.OVERVIEW_DISMISS_ALL);
@@ -1848,6 +1874,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
 
         // Remove the task from the stack
         mStack.removeTask(event.task, event.animation, false /* fromDockGesture */);
+        EventBus.getDefault().send(new LockTaskStateChangedEvent(true));
         EventBus.getDefault().send(new DeleteTaskDataEvent(event.task));
 
         MetricsLogger.action(getContext(), MetricsEvent.OVERVIEW_DISMISS,
@@ -2261,7 +2288,7 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         // Always show the button in grid layout.
         if (useGridLayout() ||
                 (mStackScroller.getStackScroll() < SHOW_STACK_ACTION_BUTTON_SCROLL_THRESHOLD &&
-                        mStack.getTaskCount() > 0)) {
+                        getLockedTaskCount() != mStack.getTaskCount())) {
             EventBus.getDefault().send(new ShowStackActionButtonEvent(false /* translate */));
         } else {
             EventBus.getDefault().send(new HideStackActionButtonEvent());

@@ -38,6 +38,8 @@ import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.model.TaskStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -660,9 +662,17 @@ public class TaskStackAnimationHelper {
 
         int offscreenXOffset = mStackView.getMeasuredWidth() - stackLayout.getTaskRect().left;
 
-        int taskViewCount = taskViews.size();
+        Iterator<TaskView> iterator = taskViews.iterator();
+        while (iterator.hasNext()) {
+            TaskView taskView = iterator.next();
+            if (taskView.getTask().isLockedTask) {
+                iterator.remove();
+            }
+        }
+        List<TaskView> mTaskViews = Collections.unmodifiableList(taskViews);
+        int taskViewCount = mTaskViews.size();
         for (int i = taskViewCount - 1; i >= 0; i--) {
-            TaskView tv = taskViews.get(i);
+            TaskView tv = mTaskViews.get(i);
             int taskIndexFromFront = taskViewCount - i - 1;
             int startDelay = taskIndexFromFront * DOUBLE_FRAME_OFFSET_MS;
 

@@ -8777,6 +8777,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String QS_BT_EASY_TOGGLE = "qs_bt_easy_toggle";
 
         /**
+         * Recents lock
+         * @hide
+         */
+        public static final String LOCKED_RECENT_TASK_LIST = "locked_recent_task_list";
+
+        /**
          * Enable single click to turn Battery Saver on or off.
          * @hide
          */
