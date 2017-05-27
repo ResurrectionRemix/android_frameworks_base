@@ -32,7 +32,9 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.provider.Settings;
 import android.os.CountDownTimer;
+import android.os.UserHandle;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -194,6 +196,7 @@ public class TaskViewHeader extends FrameLayout
     private boolean mShouldDarkenBackgroundColor = false;
 
     private CountDownTimer mFocusTimerCountDown;
+    private Context mContext;
 
     public TaskViewHeader(Context context) {
         this(context, null);
@@ -210,6 +213,7 @@ public class TaskViewHeader extends FrameLayout
     public TaskViewHeader(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setWillNotDraw(false);
+        mContext = context;
 
         // Load the dismiss resources
         Resources res = context.getResources();
@@ -301,14 +305,6 @@ public class TaskViewHeader extends FrameLayout
                 mHeaderButtonPadding);
     }
 
-    private void updateLayoutParams(View button) {
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(mHeaderBarHeight, mHeaderBarHeight, Gravity.END);
-        button.setLayoutParams(lp);
-        button.setPadding(mHeaderButtonPadding, mHeaderButtonPadding, mHeaderButtonPadding,
-                mHeaderButtonPadding);
-    }
-
-
     /**
      * Update the header view when the configuration changes.
      */
@@ -336,7 +332,6 @@ public class TaskViewHeader extends FrameLayout
             mHeaderBarHeight = headerBarHeight;
             mHeaderButtonPadding = headerButtonPadding;
             updateLayoutParams(mIconView, mTitleView, mMoveTaskButton, mDismissButton);
-            updateLayoutParams(mLockTaskButton);
             if (mAppOverlayView != null) {
                 updateLayoutParams(mAppIconView, mAppTitleView, null, mAppInfoView);
             }
@@ -362,7 +357,8 @@ public class TaskViewHeader extends FrameLayout
         boolean showTitle = true;
         boolean showMoveIcon = true;
         boolean showDismissIcon = true;
-        boolean showLockTaskIcon = true;
+        boolean showLockTaskIcon = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.RECENTS_LOCK_ICON, 0, UserHandle.USER_CURRENT) == 1;
         int rightInset = width - getMeasuredWidth();
 
         if (mTask != null && mTask.isFreeformTask()) {
@@ -371,14 +367,12 @@ public class TaskViewHeader extends FrameLayout
             int appIconWidth = mIconView.getMeasuredWidth();
             int titleWidth = (int) mTitleView.getPaint().measureText(mTask.title);
             int dismissWidth = mDismissButton.getMeasuredWidth();
-            int lockTaskWidth = mLockTaskButton.getMeasuredWidth();
             int moveTaskWidth = mMoveTaskButton != null
                     ? mMoveTaskButton.getMeasuredWidth()
                     : 0;
-            showTitle = width >= (appIconWidth + dismissWidth + moveTaskWidth + titleWidth + lockTaskWidth);
-            showMoveIcon = width >= (appIconWidth + dismissWidth + moveTaskWidth + lockTaskWidth);
-            showDismissIcon = width >= (appIconWidth + dismissWidth + lockTaskWidth);
-            showLockTaskIcon = width >= (appIconWidth + lockTaskWidth);
+            showTitle = width >= (appIconWidth + dismissWidth + moveTaskWidth + titleWidth);
+            showMoveIcon = width >= (appIconWidth + dismissWidth + moveTaskWidth);
+            showDismissIcon = width >= (appIconWidth + dismissWidth);
         }
 
         mTitleView.setVisibility(showTitle ? View.VISIBLE : View.INVISIBLE);
@@ -388,8 +382,10 @@ public class TaskViewHeader extends FrameLayout
         }
         mDismissButton.setVisibility(showDismissIcon ? View.VISIBLE : View.INVISIBLE);
         mDismissButton.setTranslationX(rightInset);
-        mLockTaskButton.setVisibility(showLockTaskIcon ? View.VISIBLE : View.INVISIBLE);
-        mLockTaskButton.setTranslationX(rightInset);
+        if (mLockTaskButton != null) {
+            mLockTaskButton.setVisibility(showLockTaskIcon ? View.VISIBLE : View.INVISIBLE);
+            mLockTaskButton.setTranslationX(rightInset);
+        }
 
         setLeftTopRightBottom(0, 0, width, getMeasuredHeight());
     }

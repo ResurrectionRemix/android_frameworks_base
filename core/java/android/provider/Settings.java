@@ -4620,6 +4620,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String LOCKDATE_FONT_SIZE= "lockdate_font_size";
 
         /**
+         * Recents lock icon
+         * @hide
+         */
+        public static final String RECENTS_LOCK_ICON = "recents_lock_icon";
+
+        /**
          * Change fonts for the system lockscreen date
          *
          * @hide
