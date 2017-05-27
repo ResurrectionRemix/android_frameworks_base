@@ -16,7 +16,7 @@
      limitations under the License. 
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="default_string">إفتراضي</string>
+  <string name="default_string">افتراضي</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">صورة المُصنِّع الخاصة بك لا تتطابق مع النظام، الرجاء شحن الـ <xliff:g id="string">%s</xliff:g> الصورة المصنعية الخاصة بجهازك</string>
   <string name="global_action_screenrecord">تسجيل الشاشة</string>
@@ -36,7 +36,7 @@
   <string name="animation_grow_shrink_left">النمو من (اليسار)</string>
   <string name="animation_grow_shrink_right">النمو من (اليمين)</string>
   <string name="action_null">فارغ</string>
-  <string name="global_action_torch">ضوء الفلاش</string>
+  <string name="global_action_torch">الكشاف</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">اعادة تشغيل واجهة النظام</string>
   <!-- On-The-Go -->
