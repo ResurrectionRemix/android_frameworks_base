@@ -960,7 +960,7 @@ void NativeInputManager::interceptMotionBeforeQueueing(nsecs_t when, uint32_t& p
     if (interactive) {
         policyFlags |= POLICY_FLAG_INTERACTIVE;
     }
-    if (policyFlags & POLICY_FLAG_REMOVE_HANDYMODE) {
+    if (policyFlags) {
         ALOGD("interceptMotionBeforeQueueing..");
         JNIEnv* env = jniEnv();
         env->CallIntMethod(mServiceObj,
@@ -972,8 +972,7 @@ void NativeInputManager::interceptMotionBeforeQueueing(nsecs_t when, uint32_t& p
         if (policyFlags & POLICY_FLAG_INTERACTIVE) {
             policyFlags |= POLICY_FLAG_PASS_TO_USER;
         } else {
-            if (policyFlags & POLICY_FLAG_REMOVE_HANDYMODE) {
-                policyFlags &= ~POLICY_FLAG_REMOVE_HANDYMODE;
+            if (policyFlags) {
             }
             JNIEnv* env = jniEnv();
             jint wmActions = env->CallIntMethod(mServiceObj,
