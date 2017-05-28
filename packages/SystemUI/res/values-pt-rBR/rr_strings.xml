@@ -31,13 +31,13 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">A captura de tela foi apagada</string>
   <string name="gestures_message">Desenhe seu gesto aqui</string>
-  <string name="rr_sys_tuner">Sistema UI Tuner</string>
+  <string name="rr_sys_tuner">Sintonizador System UI</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Deslizar para a direita para %1$s</string>
   <string name="right_shortcut_hint">Deslizar para a esquerda para %1$s</string>
   <string name="lockscreen_message">Toque num ícone da esquerda ou da direita para reatribuir um atalho na tela de bloqueio.</string>
   <string name="lockscreen_default_target">Padrão</string>
-  <string name="select_application">Selecionar Aplicativo</string>
+  <string name="select_application">Selecione Aplicação</string>
   <string name="lockscreen_choose_action_title">Escolha a ação</string>
   <string name="lockscreen_none_target">Vazio</string>
   <!-- App circle sidebar -->
@@ -121,8 +121,8 @@
   <string name="quick_settings_pulse_label">Pulso</string>
   <string name="accessibility_quick_settings_pulse_off">Pulso Desligado </string>
   <string name="accessibility_quick_settings_pulse_on">Pulso Ligado</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">Pulso Esta Desligado</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">Pulso Esta Ligado</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulso está Desligado</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulso está Ligado</string>
   <string name="quick_settings_pulse_label">Visualizador da Barra de Navegação</string>
   <string name="quick_settings_pie">Controle Pie</string>
   <string name="quick_settings_ambient_display_label">Tela ambiente</string>
@@ -188,7 +188,7 @@
   <string name="accessibility_quick_settings_compass_changed_on">A bússola foi ligada.</string>
   <string name="quick_settings_compass_N">N</string>
   <string name="quick_settings_compass_NE">NE</string>
-  <string name="quick_settings_compass_E">L</string>
+  <string name="quick_settings_compass_E">E</string>
   <string name="quick_settings_compass_SE">SE</string>
   <string name="quick_settings_compass_S">S</string>
   <string name="quick_settings_compass_SW">SO</string>
@@ -202,7 +202,7 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicativo encerrado</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • As notificações estão cochilando durante 1 minuto.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • As notificações flutuantes vão adormecer durante 1 minuto.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • As notificações estão cochilando por <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nenhuma captura de tela tirada</string>
@@ -262,8 +262,8 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Carregando (<xliff:g id="Charging_TIME_LEFT">%s</xliff:g> até concluir)</string>
-  <string name="keyguard_plugged_in_dash_charging">Carregando</string>
+  <string name="keyguard_indication_dash_charging_time">Carregamento Rápido (<xliff:g id="charging_time_left">%s</xliff:g> até concluir)</string>
+  <string name="keyguard_plugged_in_dash_charging">Carregamento Rápido</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->

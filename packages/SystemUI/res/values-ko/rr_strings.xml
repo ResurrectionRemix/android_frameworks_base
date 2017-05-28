@@ -236,7 +236,7 @@
   <string name="tm_clear_task">지우기</string>
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">멀티윈도우 세션은 이미 활성화되었습니다.\n지금 도킹하려면 탭하세요</string>
-  <string name="recents_multiwin_nolastapp">최근 기록들을 모두 제거했습니다, 런쳐나 서랍에서 앱을 선택해주세요.</string>
+  <string name="recents_multiwin_nolastapp">최근 기록들을 모두 제거했습니다, 런처나 서랍에서 앱을 선택해 주세요.</string>
   <string name="slim_recent_keyguard">최근 기록을 보려면 기기를 잠금 해제하세요</string>
   <string name="slim_recent_pinned">최근 실행 목록을 보려면 화면 고정을 해제하세요</string>
   <!-- Slim recents app sidebar queue app toast -->
@@ -269,4 +269,6 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">데이터 절약 모드</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">모든 내비게이션이 비활성화됨</string>
+  <string name="no_navigation_warning_text">사용하려면 누르세요</string>
 </resources>
