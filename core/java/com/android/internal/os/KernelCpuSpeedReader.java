@@ -44,6 +44,11 @@ public class KernelCpuSpeedReader {
     // How long a CPU jiffy is in milliseconds.
     private final long mJiffyMillis;
 
+    // The maximum amount of read attempts
+    private final int MAX_READ_TRIES = 3;
+
+    private int mFailureCount;
+
     /**
      * @param cpuNumber The cpu (cpu0, cpu1, etc) whose state to read.
      */
@@ -62,6 +67,12 @@ public class KernelCpuSpeedReader {
      * {@link #readDelta}.
      */
     public long[] readDelta() {
+        // Return if we encountered too many read failures already
+        if (mFailureCount >= MAX_READ_TRIES) {
+            Arrays.fill(mDeltaSpeedTimes, 0);
+            return mDeltaSpeedTimes;
+        }
+
         try (BufferedReader reader = new BufferedReader(new FileReader(mProcFile))) {
             TextUtils.SimpleStringSplitter splitter = new TextUtils.SimpleStringSplitter(' ');
             String line;
@@ -84,6 +95,7 @@ public class KernelCpuSpeedReader {
         } catch (IOException e) {
             Slog.e(TAG, "Failed to read cpu-freq: " + e.getMessage());
             Arrays.fill(mDeltaSpeedTimes, 0);
+            mFailureCount++;
         }
         return mDeltaSpeedTimes;
     }
