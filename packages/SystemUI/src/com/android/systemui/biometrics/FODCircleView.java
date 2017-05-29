@@ -60,7 +60,6 @@ import com.android.systemui.R;
 import com.android.systemui.Dependency;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
-import com.android.systemui.tuner.TunerService;
 
 import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreen;
 import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreenCallback;
@@ -69,10 +68,7 @@ import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FODCircleView extends ImageView implements ConfigurationListener,
-        TunerService.Tunable {
-    private static final String TAG = "FODCircleView";
-    private final String SCREEN_BRIGHTNESS = "system:" + Settings.System.SCREEN_BRIGHTNESS;
+public class FODCircleView extends ImageView implements ConfigurationListener {
     private final int mPositionX;
     private final int mPositionY;
     private final int mSize;
@@ -87,7 +83,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
     private IFingerprintInscreen mFingerprintInscreenDaemon;
 
     private int mDreamingOffsetY;
-    private int mCurrentBrightness;
 
     private boolean mIsBouncer;
     private boolean mIsDreaming;
@@ -235,6 +230,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
         mDisplayManager = context.getSystemService(DisplayManager.class);
         mWindowManager = context.getSystemService(WindowManager.class);
+
         mNavigationBarSize = res.getDimensionPixelSize(R.dimen.navigation_bar_size);
 
         mDreamingMaxOffset = (int) (mSize * 0.1f);
@@ -252,6 +248,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND |
                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         mParams.gravity = Gravity.TOP | Gravity.LEFT;
+
         mWindowManager.addView(this, mParams);
 
         mCustomSettingsObserver.observe();
@@ -281,7 +278,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
                 mCurrentDimAmount = drawingDimAmount;
             }
         });
-        Dependency.get(TunerService.class).addTunable(this, SCREEN_BRIGHTNESS);
     }
 
     private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
@@ -349,13 +345,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
         } else if (fodpressed == 2) {
             setImageDrawable(null);
         }
-    }
-
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        mCurrentBrightness = newValue != null ?  Integer.parseInt(newValue) : 0;
-        setDim(false);
     }
 
     @Override
@@ -614,11 +603,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener,
 
     private void setDim(boolean dim) {
         if (dim) {
+            int curBrightness = Settings.System.getInt(getContext().getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS, 100);
             int dimAmount = 0;
 
             IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
             try {
-                    dimAmount = daemon.getDimAmount(mCurrentBrightness);
+                dimAmount = daemon.getDimAmount(curBrightness);
             } catch (RemoteException e) {
                 // do nothing
             }
