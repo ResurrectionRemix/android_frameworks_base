@@ -241,7 +241,7 @@ public final class ShutdownThread extends Thread {
                                             com.android.internal.R.array.shutdown_reboot_actions);
                                     if (actions[selected].equals(SYSTEMUI_REBOOT)) {
                                         mReason = actions[selected];
-                                        doSystemUIReboot();
+                                        doSystemUIReboot(context);
                                         return;
                                     } else if (selected >= 0 && selected < actions.length) {
                                         mReason = actions[selected];
@@ -355,8 +355,8 @@ public final class ShutdownThread extends Thread {
         }
     }
 
-    private static void doSystemUIReboot() {
-        Helpers.restartSystemUI();
+    private static void doSystemUIReboot(Context context) {
+        Helpers.restartSystemUI(context);
     }
 
     private static class CloseDialogReceiver extends BroadcastReceiver
