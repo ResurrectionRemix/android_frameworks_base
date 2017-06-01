@@ -1410,55 +1410,55 @@ public class BackupManagerService {
                 int version = in.readInt();
                 if (version != SCHEDULE_FILE_VERSION) {
                     Slog.e(TAG, "Unknown backup schedule version " + version);
-                    return null;
-                }
+                } else {
 
-                final int N = in.readInt();
-                schedule = new ArrayList<FullBackupEntry>(N);
+                    final int N = in.readInt();
+                    schedule = new ArrayList<FullBackupEntry>(N);
 
-                // HashSet instead of ArraySet specifically because we want the eventual
-                // lookups against O(hundreds) of entries to be as fast as possible, and
-                // we discard the set immediately after the scan so the extra memory
-                // overhead is transient.
-                HashSet<String> foundApps = new HashSet<String>(N);
+                    // HashSet instead of ArraySet specifically because we want the eventual
+                    // lookups against O(hundreds) of entries to be as fast as possible, and
+                    // we discard the set immediately after the scan so the extra memory
+                    // overhead is transient.
+                    HashSet<String> foundApps = new HashSet<String>(N);
 
-                for (int i = 0; i < N; i++) {
-                    String pkgName = in.readUTF();
-                    long lastBackup = in.readLong();
-                    foundApps.add(pkgName); // all apps that we've addressed already
-                    try {
-                        PackageInfo pkg = mPackageManager.getPackageInfo(pkgName, 0);
-                        if (appGetsFullBackup(pkg) && appIsEligibleForBackup(pkg.applicationInfo)) {
-                            schedule.add(new FullBackupEntry(pkgName, lastBackup));
-                        } else {
+                    for (int i = 0; i < N; i++) {
+                        String pkgName = in.readUTF();
+                        long lastBackup = in.readLong();
+                        foundApps.add(pkgName); // all apps that we've addressed already
+                        try {
+                            PackageInfo pkg = mPackageManager.getPackageInfo(pkgName, 0);
+                            if (appGetsFullBackup(pkg) && appIsEligibleForBackup(pkg.applicationInfo)) {
+                                schedule.add(new FullBackupEntry(pkgName, lastBackup));
+                            } else {
+                                if (DEBUG) {
+                                    Slog.i(TAG, "Package " + pkgName
+                                            + " no longer eligible for full backup");
+                                }
+                            }
+                        } catch (NameNotFoundException e) {
                             if (DEBUG) {
                                 Slog.i(TAG, "Package " + pkgName
-                                        + " no longer eligible for full backup");
+                                        + " not installed; dropping from full backup");
                             }
                         }
-                    } catch (NameNotFoundException e) {
-                        if (DEBUG) {
-                            Slog.i(TAG, "Package " + pkgName
-                                    + " not installed; dropping from full backup");
-                        }
                     }
-                }
 
-                // New apps can arrive "out of band" via OTA and similar, so we also need to
-                // scan to make sure that we're tracking all full-backup candidates properly
-                for (PackageInfo app : apps) {
-                    if (appGetsFullBackup(app) && appIsEligibleForBackup(app.applicationInfo)) {
-                        if (!foundApps.contains(app.packageName)) {
-                            if (MORE_DEBUG) {
-                                Slog.i(TAG, "New full backup app " + app.packageName + " found");
+                    // New apps can arrive "out of band" via OTA and similar, so we also need to
+                    // scan to make sure that we're tracking all full-backup candidates properly
+                    for (PackageInfo app : apps) {
+                        if (appGetsFullBackup(app) && appIsEligibleForBackup(app.applicationInfo)) {
+                            if (!foundApps.contains(app.packageName)) {
+                                if (MORE_DEBUG) {
+                                    Slog.i(TAG, "New full backup app " + app.packageName + " found");
+                                }
+                                schedule.add(new FullBackupEntry(app.packageName, 0));
+                                changed = true;
                             }
-                            schedule.add(new FullBackupEntry(app.packageName, 0));
-                            changed = true;
                         }
                     }
-                }
 
-                Collections.sort(schedule);
+                    Collections.sort(schedule);
+                }
             } catch (Exception e) {
                 Slog.e(TAG, "Unable to read backup schedule", e);
                 mFullBackupScheduleFile.delete();
