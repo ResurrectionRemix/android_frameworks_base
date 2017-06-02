@@ -39,7 +39,7 @@
   <string name="lockscreen_default_target">Bawaan</string>
   <string name="select_application">Pilih aplikasi</string>
   <string name="lockscreen_choose_action_title">Pilih tindakan</string>
-  <string name="lockscreen_none_target">Kosong</string>
+  <string name="lockscreen_none_target">Tidak ada</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Perbesar</string>
   <string name="app_float_item_title">Tampilan Mengambang</string>
@@ -67,8 +67,8 @@
   <string name="quick_settings_screenshot_label">Tangkapan Layar</string>
   <string name="quick_settings_region_screenshot_label">Tangkapan layar sebagian</string>
   <string name="quick_settings_adb_network">Jaringan ADB</string>
-  <string name="quick_settings_network_adb_enabled_label">Aktif</string>
-  <string name="quick_settings_network_adb_disabled_label">Tidak aktif</string>
+  <string name="quick_settings_network_adb_enabled_label">Diaktifkan</string>
+  <string name="quick_settings_network_adb_disabled_label">Tidak non aktifkan</string>
   <string name="quick_settings_sync_label">Sinkronisasi</string>
   <string name="accessibility_quick_settings_sync_off">Sinkronisasi mati</string>
   <string name="accessibility_quick_settings_sync_on">Sinkronisasi aktif</string>
@@ -100,19 +100,19 @@
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC Mati</string>
   <string name="quick_settings_screenrecord">Perekam layar</string>
-  <string name="quick_settings_screenrecord_on">Merekam...</string>
-  <string name="quick_settings_navigation_bar">Bar Navigasi</string>
-  <string name="quick_settings_smartbar">Smart bar</string>
-  <string name="quick_settings_smartbar_off">Smart bar mati</string>
+  <string name="quick_settings_screenrecord_on">Merekam ...</string>
+  <string name="quick_settings_navigation_bar">Panel Navigasi</string>
+  <string name="quick_settings_smartbar">Panel Cerdas</string>
+  <string name="quick_settings_smartbar_off">Panel Cerdas Mati</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling mati</string>
-  <string name="quick_settings_appcirclebar_title">Circle bar</string>
-  <string name="quick_settings_appcirclebar_on">Circle bar hidup</string>
-  <string name="quick_settings_appcirclebar_off">Circle bar mati</string>
+  <string name="quick_settings_appcirclebar_title">Panel applikasi Lingkaran</string>
+  <string name="quick_settings_appcirclebar_on">Panel lingkaran hidup</string>
+  <string name="quick_settings_appcirclebar_off">Panel lingkaran mati</string>
   <string name="quick_settings_gesture_anywhere_label">Usap layar dimana saja</string>
   <string name="quick_settings_gesture_anywhere_on">Gestures Hidup</string>
   <string name="quick_settings_gesture_anywhere_off">Gestures Mati</string>
-  <string name="quick_settings_appsidebar_title">App side bar</string>
+  <string name="quick_settings_appsidebar_title">Panel applikasi tepi</string>
   <string name="quick_settings_appsidebar_on">App side bar hidup</string>
   <string name="quick_settings_appsidebar_off">App side bar mati</string>
   <!-- Pulse Tile -->
@@ -195,6 +195,9 @@
   <string name="quick_settings_compass_W">B</string>
   <string name="quick_settings_compass_NW">BL</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">HW Keys Menyala</string>
+  <string name="accessibility_quick_settings_hwkeys_off">HW keys Mati</string>
+  <string name="quick_settings_hwkeys_label">HW keys</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplikasi dimatikan</string>
