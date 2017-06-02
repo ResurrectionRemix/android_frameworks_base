@@ -662,17 +662,9 @@ public class TaskStackAnimationHelper {
 
         int offscreenXOffset = mStackView.getMeasuredWidth() - stackLayout.getTaskRect().left;
 
-        Iterator<TaskView> iterator = taskViews.iterator();
-        while (iterator.hasNext()) {
-            TaskView taskView = iterator.next();
-            if (taskView.getTask().isLockedTask) {
-                iterator.remove();
-            }
-        }
-        List<TaskView> mTaskViews = Collections.unmodifiableList(taskViews);
-        int taskViewCount = mTaskViews.size();
+        int taskViewCount = taskViews.size();
         for (int i = taskViewCount - 1; i >= 0; i--) {
-            TaskView tv = mTaskViews.get(i);
+            TaskView tv = taskViews.get(i);
             int taskIndexFromFront = taskViewCount - i - 1;
             int startDelay = taskIndexFromFront * DOUBLE_FRAME_OFFSET_MS;
 

@@ -36,6 +36,8 @@ import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.views.TaskView;
 import com.android.systemui.statusbar.FlingAnimationUtils;
 
+import com.android.systemui.recents.Recents;
+
 import java.util.HashMap;
 
 public class SwipeHelper implements Gefingerpoken {
@@ -586,7 +588,7 @@ public class SwipeHelper implements Gefingerpoken {
                         // flingadingy
                         TaskView mTaskView = (TaskView) mCurrView;
                         Task mTask = mTaskView.getTask();
-                        if (mTask.isLockedTask) {
+                        if (Recents.sLockedTasks.contains(mTask)) {
                             // snappity
                             mCallback.onDragCancelled(mCurrView);
                             snapChild(mCurrView, 0 /* leftTarget */, velocity);

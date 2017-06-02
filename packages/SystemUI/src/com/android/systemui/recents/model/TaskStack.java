@@ -631,6 +631,9 @@ public class TaskStack {
      * how they should update themselves.
      */
     public void removeTask(Task t, AnimationProps animation, boolean fromDockGesture) {
+        if (Recents.sLockedTasks.contains(t)) {
+            Recents.sLockedTasks.remove(t);
+        }
         if (mStackTaskList.contains(t)) {
             removeTaskImpl(mStackTaskList, t);
             Task newFrontMostTask = getStackFrontMostTask(false  /* includeFreeform */);
@@ -650,10 +653,11 @@ public class TaskStack {
         ArrayList<Task> tasks = mStackTaskList.getTasks();
         for (int i = tasks.size() - 1; i >= 0; i--) {
             Task t = tasks.get(i);
-            if (!t.isLockedTask) {
-                removeTaskImpl(mStackTaskList, t);
-                mRawTaskList.remove(t);
+            if (Recents.sLockedTasks.contains(t)) {
+                continue;
             }
+            removeTaskImpl(mStackTaskList, t);
+            mRawTaskList.remove(t);
         }
         if (mCb != null) {
             // Notify that all tasks have been removed

@@ -130,6 +130,6 @@
     <dimen name="status_bar_weather_padding_end">16dp</dimen>
 
     <!-- Recents lock icon margin -->
-    <dimen name="recents_lock_margin_end">35dp</dimen>
+    <dimen name="recents_lock_margin_end">44dp</dimen>
 
 </resources>
