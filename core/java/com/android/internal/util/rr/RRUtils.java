@@ -72,6 +72,16 @@ public class RRUtils {
     public static final String ACTION_SHOW_OVERLAY = APP_PACKAGE_NAME + ".ACTION_SHOW_OVERLAY";
 
     /**
+     * Intent broadcast action for showing the omniswitch overlay
+     */
+    public static final String ACTION_TOGGLE_OVERLAY2 = APP_PACKAGE_NAME + ".ACTION_TOGGLE_OVERLAY2";
+
+    /**
+     * Intent broadcast action for telling omniswitch to preload tasks
+     */
+    private static final String ACTION_PRELOAD_TASKS = APP_PACKAGE_NAME + ".ACTION_PRELOAD_TASKS";
+
+    /**
      * Intent broadcast action for hiding the omniswitch overlay
      */
     public static final String ACTION_HIDE_OVERLAY = APP_PACKAGE_NAME + ".ACTION_HIDE_OVERLAY";

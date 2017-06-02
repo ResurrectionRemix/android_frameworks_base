@@ -522,8 +522,9 @@
 
     <protected-broadcast android:name="cyanogenmod.intent.action.LID_STATE_CHANGED" />
 
-    <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_TOGGLE_OVERLAY" />
+    <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_TOGGLE_OVERLAY2" />
     <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_RESTORE_HOME_STACK" />
+    <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_PRELOAD_TASKS" />
 
     <protected-broadcast android:name="projekt.substratum.APP_CRASHED" />
 
