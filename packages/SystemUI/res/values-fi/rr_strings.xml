@@ -17,6 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
+  <string name="screenrecord_notif_ticker">Näyttöä tallennetaan</string>
   <!-- Screenrecord notification title -->
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Pysäytä</string>
