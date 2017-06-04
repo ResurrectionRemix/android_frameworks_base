@@ -152,6 +152,9 @@ public class RecentPanelView {
     private static final int OPTION_MULTIWINDOW = 1003;
     private static final int OPTION_CLOSE = 1004;
 
+    private ItemTouchHelper mItemTouchHelper;
+    private View mCurrentDraggingView;
+
     private class RecentCard extends ExpandableCard {
         TaskDescription task;
         int position;
@@ -241,6 +244,18 @@ public class RecentPanelView {
                     }
                 }
             };
+            View.OnTouchListener touchListener = new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int id = v.getId();
+                    if (id == OPTION_MULTIWINDOW) {
+                        mCurrentDraggingView = v;
+                        mItemTouchHelper.startDrag((ViewHolder) v.getTag());
+                        return true;
+                    }
+                    return false;
+                }
+            };
 
             clearOptions();
             addOption(new OptionsItem(
@@ -251,7 +266,8 @@ public class RecentPanelView {
                         mContext.getDrawable(R.drawable.ic_shop), OPTION_MARKET, listener));
             }
             addOption(new OptionsItem(
-                    mContext.getDrawable(R.drawable.ic_multiwindow), OPTION_MULTIWINDOW, listener));
+                    mContext.getDrawable(R.drawable.ic_multiwindow), OPTION_MULTIWINDOW, listener)
+                            .setTouchListener(touchListener));
             addOption(new OptionsItem(
                     mContext.getDrawable(R.drawable.ic_done), OPTION_CLOSE, true));
         }
@@ -361,13 +377,13 @@ public class RecentPanelView {
     }
 
     private void setupItemTouchHelper() {
-        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+        mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
 
             RecentCard card;
             int taskid;
             int initPos;
             int finalPos;
-            boolean isSwipe;
+            boolean isSwipe = false;
             boolean unwantedDrag = true;
 
             @Override
@@ -380,7 +396,7 @@ public class RecentPanelView {
                 the drag not smooth).*/
 
                 ExpandableCardAdapter.ViewHolder vh = (ExpandableCardAdapter.ViewHolder) viewHolder;
-                vh.hideOptions(-1, -1);
+                //vh.hideOptions(-1, -1);
 
                 initPos = viewHolder.getAdapterPosition();
                 card = (RecentCard) mCardAdapter.getCard(initPos);
@@ -410,12 +426,19 @@ public class RecentPanelView {
 
                 if (isSwipe) {
                     //don't start multiwindow on swipe
+                    isSwipe = false;
                     return;
                 }
 
                 if (unwantedDrag) {
                     /*this means MoveThreshold is less than needed, so onMove
-                    has not been considered, so we don't consider the action as wanted drag*/
+                    has not been considered, so we don't consider the action as wanted drag.
+                    Since the drag was started by the multiwindow button, trigger a click on
+                    that instead */
+                    if (mCurrentDraggingView != null) {
+                        mCurrentDraggingView.callOnClick();
+                        mCurrentDraggingView = null;
+                    }
                     return;
                 }
 
@@ -449,11 +472,18 @@ public class RecentPanelView {
                     }
                 //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
                 }, wasDocked ? 100 : 0);
+
+                // Hide card options after using multiwindow button as drag handle
+                if (mCurrentDraggingView != null) {
+                    ((ExpandableCardAdapter.ViewHolder) mCurrentDraggingView.getTag())
+                            .hideOptions(mCurrentDraggingView);
+                    mCurrentDraggingView = null;
+                }
             }
 
             @Override
             public boolean isLongPressDragEnabled() {
-                return true;
+                return false;
             }
 
             @Override
@@ -474,7 +504,7 @@ public class RecentPanelView {
                 return makeMovementFlags(dragFlags, swipeFlags);
             }
         });
-        touchHelper.attachToRecyclerView(mCardRecyclerView);
+        mItemTouchHelper.attachToRecyclerView(mCardRecyclerView);
     }
 
     /**
