@@ -135,6 +135,7 @@ public class RecentPanelView {
 
     private int mMainGravity;
     private float mScaleFactor;
+    private float mCornerRadius;
     private int mExpandedMode = EXPANDED_MODE_AUTO;
     private boolean mShowTopTask;
     private boolean mOnlyShowRunningTasks;
@@ -932,6 +933,10 @@ public class RecentPanelView {
         mCardColor = color;
     }
 
+    protected void setCornerRadius(float radius) {
+        mCornerRadius = radius;
+    }
+
     /**
      * Notify listener that tasks are loaded.
      */
@@ -1218,6 +1223,9 @@ public class RecentPanelView {
                     startApplication(task);
                 }
             };
+            //Set corner radius
+            ec.cornerRadius = mCornerRadius;
+
             mCounter++;
             publishProgress(card);
         }

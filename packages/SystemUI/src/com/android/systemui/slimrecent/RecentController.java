@@ -723,6 +723,9 @@ public class RecentController implements RecentPanelView.OnExitListener,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SLIM_MEM_TEXT_COLOR), 
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SLIM_RECENTS_CORNER_RADIUS),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -773,6 +776,11 @@ public class RecentController implements RecentPanelView.OnExitListener,
                     resolver, Settings.System.RECENT_CARD_BG_COLOR, 0x00ffffff,
                     UserHandle.USER_CURRENT));
             }
+
+            float cornerRadius = Converter.floatDpToPx(mContext, 5/*dp*/);
+            mRecentPanelView.setCornerRadius(Settings.System.getIntForUser(
+                    resolver, Settings.System.SLIM_RECENTS_CORNER_RADIUS, 1,
+                    UserHandle.USER_CURRENT) == 1 ? cornerRadius : 0f);
 
             mRecentContent.setElevation(50);
 

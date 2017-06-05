@@ -28,7 +28,6 @@
         android:layout_marginRight="@dimen/recent_card_layout_margin_horizontal"
         android:layout_marginTop="@dimen/recent_card_layout_marginTop"
         android:layout_marginBottom="@dimen/recent_card_layout_marginBottom"
-        app:cardCornerRadius="@dimen/recent_card_corner_radius"
         android:layout_height="match_parent">
 
         <LinearLayout
