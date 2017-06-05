@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Varsayılan</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Vendor imajı sisteminiz ile eşleşmiyor. Cihazınız için <xliff:g id="string">%s</xliff:g> vendor imajını flaşlayın lütfen</string>
+  <string name="system_error_vendorprint">Üretici dosyanız sisteminiz ile eşleşmiyor. Cihazınız için lütfen <xliff:g id="string">%s</xliff:g> üretici dosyasını flaşlayın</string>
   <string name="global_action_screenrecord">Ekran Kaydı</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Karartma</string>

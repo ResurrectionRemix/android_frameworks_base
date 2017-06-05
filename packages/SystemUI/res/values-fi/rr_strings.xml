@@ -19,11 +19,17 @@
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Näyttöä tallennetaan</string>
   <!-- Screenrecord notification title -->
+  <string name="screenrecord_notif_title">Tallennetaan näyttöä</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Pysäytä</string>
   <!-- Screenrecord notification action: show/hide pointer -->
+  <string name="screenrecord_notif_pointer_on">Näytä osoitin</string>
+  <string name="screenrecord_notif_pointer_off">Piilota osoitin</string>
   <!-- Screen record notification error title -->
+  <string name="screenrecord_notif_error">Näyttöä ei voida tallentaa</string>
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g><xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
+  <string name="delete_screenshot_toast">Kuvakaappaus poistettu</string>
   <!-- Strings for lockscreen shortcut hints -->
   <!-- App circle sidebar -->
   <!-- On The Go -->
@@ -59,6 +65,7 @@
   <!-- Kill button in notification guts -->
   <!-- OmniJAWS -->
   <!-- Weather string format in expanded statusbar header -->
+  <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g><xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <!-- vpn icon switch -->

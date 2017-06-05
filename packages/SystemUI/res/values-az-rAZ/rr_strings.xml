@@ -161,16 +161,44 @@
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_pwrsv">Batareya modu: güc qoruma.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Batareya modu: balanslı mod.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Batareya modu: performans modu.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Batareya modu: məhsuldarlıq modu.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Batareya modu: sürətli mod.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Batareya modu enerjiyə qənaət modu olaraq dəyişdirildi.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Batareya modu balanslı mod olaraq dəyişdirildi.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Batareya modu performans modu olaraq dəyişdirildi.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Batareya modu məhsuldarlıq modu olaraq dəyişdirildi.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Batareya modu sürətli mod olaraq dəyişdirildi.</string>
+  <string name="quick_settings_performance_profile_detail_title">Batereya rejimi</string>
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">Kompas</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+  <string name="quick_settings_compass_init">Başladılır\u2026</string>
+  <string name="accessibility_quick_settings_compass_off">Kompas bağlıdır.</string>
+  <string name="accessibility_quick_settings_compass_on">Kompas açıqdır.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Kompas bağlanıldı.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Kompas açıldı.</string>
+  <string name="quick_settings_compass_N">N</string>
+  <string name="quick_settings_compass_NE">ŞŞ</string>
+  <string name="quick_settings_compass_E">Şə</string>
+  <string name="quick_settings_compass_SE">CŞ</string>
+  <string name="quick_settings_compass_S">C</string>
+  <string name="quick_settings_compass_SW">CQ</string>
+  <string name="quick_settings_compass_W">Q</string>
+  <string name="quick_settings_compass_NW">ŞQ</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Avadanlıq düymələri açıq</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Avadanlıq düymələri bağlı</string>
+  <string name="quick_settings_hwkeys_label">Avadanlıq düymələri</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Tətbiq Sonlandırıldı</string>
@@ -211,6 +239,7 @@
   <string name="recents_multiwin_warning">Çoxlu pəncərə sessiyası artıq aktivdir.\nİndi sabitləmək istəyirsinizsə bir tətbiqə toxunun</string>
   <string name="recents_multiwin_nolastapp">Son istifadə olunanları təmizlədiniz, lütfən başladıcıdan və yaxud tətbiq menyusundan tətbiq seçin.</string>
   <string name="slim_recent_keyguard">Son istifadə olunanları görmək üçün cihazınızın kilidini açın</string>
+  <string name="slim_recent_pinned">Son istifadə edilənləri görmək üçün ekran açın</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Son istifadə olunanları bağladıqdan sonra %s başlat</string>
   <string name="toast_recents_cancel_queued_app">Tətbiq başlatma ləğv edildi</string>
@@ -228,11 +257,20 @@
   <string name="omnijaws_current_text">İndi</string>
   <string name="omnijaws_package_not_available">OmniJaws mövcud deyil
 </string>
+  <string name="omnijaws_service_error_long">Hava durumu məlumatları yüklənərkən xəta baş verdi</string>
+  <string name="omnijaws_service_disabled">Xidmət deaktivdir</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Batareya enerji ilə təmin edilir (tam dolmasına <xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> qaldı)</string>
+  <string name="keyguard_plugged_in_dash_charging">Batareya enerji ilə təmin edilir</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Məlumat qənaəti</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Bütün naviqasiya üsulları deaktivdir</string>
+  <string name="no_navigation_warning_text">Aktivləşdirmək üçün toxunun</string>
 </resources>

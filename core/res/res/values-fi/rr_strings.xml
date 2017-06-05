@@ -18,9 +18,14 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Oletus</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
+  <string name="system_error_vendorprint">Vendor image ei vastaa järjestelmän tietoja. Asenna <xliff:g id="string">%s</xliff:g> vendor image laitteellesi</string>
   <string name="global_action_screenrecord">Ruudun tallennus</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Häivytys</string>
+  <string name="animation_slide_right">Liu\'uta oikealta</string>
+  <string name="animation_slide_left">Liu\'uta vasemmalta</string>
+  <string name="animation_slide_right_no_fade">Liu\'uta oikealta (Ei häivytystä)</string>
+  <string name="animation_slide_left_no_fade">Liu\'uta vasemmalta (Älä häivytä)</string>
   <string name="global_action_torch">Taskulamppu</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">Uudelleenkäynnistä SystemUI</string>
