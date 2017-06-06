@@ -270,4 +270,6 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Заощадження трафіку</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Всі навігаційні методи вимкнуто</string>
+  <string name="no_navigation_warning_text">Торкніться, щоб увімкнути</string>
 </resources>
