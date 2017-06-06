@@ -38,6 +38,8 @@ import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.model.TaskStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**

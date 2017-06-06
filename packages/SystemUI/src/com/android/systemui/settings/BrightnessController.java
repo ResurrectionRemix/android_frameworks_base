@@ -339,10 +339,11 @@ public class BrightnessController implements ToggleSlider.Listener {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                 boolean isChecked) {
-                Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.putIntForUser(mContext.getContentResolver(),
                     SCREEN_BRIGHTNESS_MODE,
                     isChecked ? SCREEN_BRIGHTNESS_MODE_AUTOMATIC :
-                    SCREEN_BRIGHTNESS_MODE_MANUAL);
+                    SCREEN_BRIGHTNESS_MODE_MANUAL,
+                    UserHandle.USER_CURRENT);
                     }
                 });
     }

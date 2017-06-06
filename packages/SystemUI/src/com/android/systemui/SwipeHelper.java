@@ -32,7 +32,11 @@ import android.view.ViewConfiguration;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.android.systemui.classifier.FalsingManager;
+import com.android.systemui.recents.model.Task;
+import com.android.systemui.recents.views.TaskView;
 import com.android.systemui.statusbar.FlingAnimationUtils;
+
+import com.android.systemui.recents.Recents;
 
 import java.util.HashMap;
 
@@ -582,8 +586,17 @@ public class SwipeHelper implements Gefingerpoken {
                 if (!handleUpEvent(ev, mCurrView, velocity, getTranslation(mCurrView))) {
                     if (isDismissGesture(ev)) {
                         // flingadingy
-                        dismissChild(mCurrView, velocity,
-                                !swipedFastEnough() /* useAccelerateInterpolator */);
+                        TaskView mTaskView = (TaskView) mCurrView;
+                        Task mTask = mTaskView.getTask();
+                        if (Recents.sLockedTasks.contains(mTask)) {
+                            // snappity
+                            mCallback.onDragCancelled(mCurrView);
+                            snapChild(mCurrView, 0 /* leftTarget */, velocity);
+                        } else {
+                            // flingadingy
+                            dismissChild(mCurrView, velocity,
+                                    !swipedFastEnough() /* useAccelerateInterpolator */);
+                        }
                     } else {
                         // snappity
                         mCallback.onDragCancelled(mCurrView);

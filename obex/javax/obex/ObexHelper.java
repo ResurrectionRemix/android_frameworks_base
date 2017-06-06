@@ -81,11 +81,16 @@ public final class ObexHelper {
     // The minimum allowed max packet size is 255 according to the OBEX specification
     public static final int LOWER_LIMIT_MAX_PACKET_SIZE = 255;
 
+    // The length of OBEX Byte Sequency Header Id according to the OBEX specification
+    public static final int OBEX_BYTE_SEQ_HEADER_LEN = 0x03;
+
     /**
      * Temporary workaround to be able to push files to Windows 7.
      * TODO: Should be removed as soon as Microsoft updates their driver.
      */
     public static final int MAX_CLIENT_PACKET_SIZE = 0xFC00;
+
+    public static final int A2DP_SCO_OBEX_MAX_CLIENT_PACKET_SIZE = 0x2000;
 
     public static final int OBEX_OPCODE_FINAL_BIT_MASK = 0x80;
 
@@ -207,14 +212,15 @@ public final class ObexHelper {
                     case 0x40:
                         boolean trimTail = true;
                         index++;
-                        length = (headerArray[index] << 8) + headerArray[index + 1];
+                        length = ((0xFF & headerArray[index]) << 8) +
+                                 (0xFF & headerArray[index + 1]);
                         index += 2;
-                        if (length <= 2) {
-                            Log.e(TAG, "Remote sent an OBEX Connect response with " +
+                        if (length <= OBEX_BYTE_SEQ_HEADER_LEN) {
+                            Log.e(TAG, "Remote sent an OBEX packet with " +
                                   "incorrect header length = " + length);
                             break;
                         }
-                        length -= 3;
+                        length -= OBEX_BYTE_SEQ_HEADER_LEN;
                         value = new byte[length];
                         System.arraycopy(headerArray, index, value, 0, length);
                         if (length == 0 || (length > 0 && (value[length - 1] != 0))) {

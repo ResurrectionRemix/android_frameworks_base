@@ -236,7 +236,7 @@
   <string name="tm_clear_task">LIMPAR</string>
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">Já está ativada uma sessão multi-janelas.\nToque numa aplicação que deseja ancorá-la agora.</string>
-  <string name="recents_multiwin_nolastapp">Removeu todas as aplicações recentes. Por favor, escolha uma aplicação do lançador ou gaveta de aplicações.</string>
+  <string name="recents_multiwin_nolastapp">Removeu todas as aplicações recentes. Por favor, escolha uma aplicação do lançador ou painel de aplicações.</string>
   <string name="slim_recent_keyguard">Desbloqueie o dispositivo para ver as aplicações recentes</string>
   <string name="slim_recent_pinned">Soltar o ecrã para ver as aplicações recentes</string>
   <!-- Slim recents app sidebar queue app toast -->
@@ -268,4 +268,7 @@
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Poupança de dados</string>
+  <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Todos os métodos de navegação desativados</string>
+  <string name="no_navigation_warning_text">Toque para ativar</string>
 </resources>

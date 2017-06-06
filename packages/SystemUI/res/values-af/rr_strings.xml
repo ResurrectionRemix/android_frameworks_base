@@ -61,4 +61,5 @@
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
   <!-- vpn icon switch -->
   <!-- data saver icon switch -->
+  <!-- No navigation warning notification -->
 </resources>

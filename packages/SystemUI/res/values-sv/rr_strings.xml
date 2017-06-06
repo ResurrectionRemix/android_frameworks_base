@@ -155,23 +155,33 @@
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">Batteritid</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Batteriläge: strömsparläge.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bal">Batteriläge: balanserat läge.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_perf">Batteriläge: prestandaläge.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Batteriläge: effektivt läge.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Batteriläge: snabbt läge.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Batteriläge ändrat till strömsparläge.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Batteriläge ändrat till balanserat läge.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Batteriläge ändrat till prestandaläge.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Batteriläge ändrat till effektivt läge.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Batteriläge ändrat till snabbt läge.</string>
   <string name="quick_settings_performance_profile_detail_title">Batteritid</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompass</string>
   <string name="quick_settings_compass_init">Initierar\u2026</string>
   <string name="accessibility_quick_settings_compass_off">Kompass av.</string>
   <string name="accessibility_quick_settings_compass_on">Kompass på.</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Kompass av.</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Kompass på.</string>
   <string name="quick_settings_compass_N">N</string>
   <string name="quick_settings_compass_NE">NÖ</string>
   <string name="quick_settings_compass_E">Ö</string>
@@ -181,6 +191,9 @@
   <string name="quick_settings_compass_W">V</string>
   <string name="quick_settings_compass_NW">NV</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Hårdvaruknappar på</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Hårdvaruknappar av</string>
+  <string name="quick_settings_hwkeys_label">Hårdvaruknappar</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App tvångsavslutad</string>
@@ -221,6 +234,7 @@
   <string name="recents_multiwin_warning">En flerfönstersession är redan aktiv. \nTryck bara på en app om du vill docka den nu.</string>
   <string name="recents_multiwin_nolastapp">Du rensade alla senaste appar, välj en app från applådan.</string>
   <string name="slim_recent_keyguard">Lås upp enheten för att visa senaste appar</string>
+  <string name="slim_recent_pinned">Lossa på skärmen för att visa senaste appar</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Starta %s efter stängning av tidigare appar</string>
   <string name="toast_recents_cancel_queued_app">Avbröt appstart</string>
@@ -237,12 +251,18 @@
   <string name="omnijaws_label_default">Väder</string>
   <string name="omnijaws_current_text">Nu</string>
   <string name="omnijaws_package_not_available">OmniJaws är inte tillgänglig.</string>
+  <string name="omnijaws_service_error_long">Fel vid inläsning av väderdata.</string>
+  <string name="omnijaws_service_disabled">Tjänsten har inaktiverats</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Dash laddning (<xliff:g id="laddtid_kvar" exempel="4 timmar och 2 minuter">%s</xliff:g> till full)</string>
+  <string name="keyguard_plugged_in_dash_charging">Dash laddning</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Databesparing</string>
+  <!-- No navigation warning notification -->
 </resources>

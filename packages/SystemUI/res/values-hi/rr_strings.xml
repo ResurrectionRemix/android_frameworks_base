@@ -267,4 +267,5 @@
   <string name="status_bar_vpn">वीपीएन</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">डेटा सेवर</string>
+  <!-- No navigation warning notification -->
 </resources>

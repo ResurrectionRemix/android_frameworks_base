@@ -268,4 +268,7 @@
   <string name="status_bar_vpn">Síť VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Spořič dat</string>
+  <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Všechny způsoby navigace jsou vypnuté</string>
+  <string name="no_navigation_warning_text">Klepnutím povolíte</string>
 </resources>

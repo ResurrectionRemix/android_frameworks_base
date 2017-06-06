@@ -38,7 +38,6 @@ import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.RecentsConfiguration;
 import com.android.systemui.recents.RecentsDebugFlags;
 import com.android.systemui.recents.misc.SystemServicesProxy;
-
 import com.android.systemui.recents.views.grid.TaskGridLayoutAlgorithm;
 import java.util.ArrayList;
 import java.util.Collections;

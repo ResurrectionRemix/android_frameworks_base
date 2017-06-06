@@ -115,6 +115,7 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.omni.OmniSwitchConstants;
 import com.android.internal.util.rr.RRUtils;
+import com.android.internal.utils.du.DUActionUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardHostView.OnDismissAction;
 import com.android.keyguard.KeyguardUpdateMonitor;
@@ -193,6 +194,9 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     private static final String PERMISSION_SELF = "com.android.systemui.permission.SELF";
 
+    private static final String ACTION_ENABLE_NAVIGATION_KEY =
+            "com.android.systemui.action.ENABLE_NAVIGATION_KEY";
+
     // Should match the values in PhoneWindowManager
     public static final String SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps";
     public static final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";
@@ -258,6 +262,8 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected boolean mHeadsUpUserEnabled = false;
     protected boolean mDisableNotificationAlerts = false;
     private boolean mIsAlwaysHeadsupDialer;
+
+    private boolean mIsNavNotificationShowing = false;
 
     protected DevicePolicyManager mDevicePolicyManager;
     protected IDreamManager mDreamManager;
@@ -350,6 +356,36 @@ public abstract class BaseStatusBar extends SystemUI implements
         return mNotificationData.getActiveNotifications().size();
     }
 
+
+    private void showNavigationNotification(boolean show) {
+        NotificationManager noMan = (NotificationManager)
+                mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (show && !mIsNavNotificationShowing) {
+            Intent intent = new Intent(ACTION_ENABLE_NAVIGATION_KEY);
+            intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+            intent.setPackage(mContext.getPackageName());
+
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+            final Notification notification = new Notification.Builder(mContext)
+                    .setContentTitle(mContext.getResources().getString(
+                            R.string.no_navigation_warning_title))
+                    .setContentText(mContext.getResources().getString(
+                            R.string.no_navigation_warning_text))
+                    .setSmallIcon(R.drawable.no_navigation_warning_icon)
+                    .setOngoing(true)
+                    .setAutoCancel(false)
+                    .setVisibility(Notification.VISIBILITY_PUBLIC)
+                    .setContentIntent(pendingIntent)
+                    .build();
+            mIsNavNotificationShowing = true;
+            noMan.notify(R.string.no_navigation_warning_title, notification);
+        } else if (mIsNavNotificationShowing) {
+            mIsNavNotificationShowing = false;
+            noMan.cancel(R.string.no_navigation_warning_title);
+        }
+    }
+
     private final ContentObserver mPieSettingsObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange) {
@@ -382,6 +418,20 @@ public abstract class BaseStatusBar extends SystemUI implements
                     Settings.System.ALWAYS_HEADSUP_DIALER, 0, UserHandle.USER_CURRENT) == 1;
 
             updateLockscreenNotificationSetting();
+
+            // Show notification when no navigation method enabled
+            boolean navNotificationEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.NO_NAVIGATION_NOTIFICATION, 1,
+                    UserHandle.USER_CURRENT) != 0;
+            boolean hasNavbar = DUActionUtils.hasNavbarByDefault(mContext);
+            boolean navbarDisabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.NAVIGATION_BAR_VISIBLE, (hasNavbar ? 1 : 0),
+                    UserHandle.USER_CURRENT) == 0;
+            boolean hwKeysDisabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.HARDWARE_KEYS_DISABLE, (hasNavbar ? 1 : 0),
+                    UserHandle.USER_CURRENT) != 0;
+            showNavigationNotification((hasNavbar && navbarDisabled && navNotificationEnabled) ||
+                    (!hasNavbar && hwKeysDisabled && navbarDisabled && navNotificationEnabled));
         }
 
     };
@@ -657,6 +707,16 @@ public abstract class BaseStatusBar extends SystemUI implements
                     }
                 }
                 onWorkChallengeUnlocked();
+            } else if (ACTION_ENABLE_NAVIGATION_KEY.equals(action)) {
+                if (DUActionUtils.hasNavbarByDefault(context)) {
+                    Settings.Secure.putInt(context.getContentResolver(),
+                            Settings.Secure.NAVIGATION_BAR_VISIBLE,
+                            1);
+                } else {
+                    Settings.Secure.putInt(context.getContentResolver(),
+                            Settings.Secure.HARDWARE_KEYS_DISABLE,
+                            0);
+                }
             }
         }
     };
@@ -813,6 +873,18 @@ public abstract class BaseStatusBar extends SystemUI implements
                 Settings.System.getUriFor(Settings.System.ALWAYS_HEADSUP_DIALER), false,
                 mSettingsObserver,
                 UserHandle.USER_ALL);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.NAVIGATION_BAR_VISIBLE), false,
+                mSettingsObserver,
+                UserHandle.USER_ALL);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false,
+                mSettingsObserver,
+                UserHandle.USER_ALL);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.NO_NAVIGATION_NOTIFICATION), false,
+                mSettingsObserver,
+                UserHandle.USER_ALL);
 
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
@@ -888,6 +960,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         filter.addAction(Intent.ACTION_USER_SWITCHED);
         filter.addAction(Intent.ACTION_USER_ADDED);
         filter.addAction(Intent.ACTION_USER_PRESENT);
+        filter.addAction(ACTION_ENABLE_NAVIGATION_KEY);
         mContext.registerReceiver(mBroadcastReceiver, filter);
 
         IntentFilter internalFilter = new IntentFilter();

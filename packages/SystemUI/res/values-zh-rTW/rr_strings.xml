@@ -268,4 +268,7 @@
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">數據節省模式</string>
+  <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">停用所有導航模式</string>
+  <string name="no_navigation_warning_text">輕按以啟用</string>
 </resources>

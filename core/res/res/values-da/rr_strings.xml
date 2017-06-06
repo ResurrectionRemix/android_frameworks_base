@@ -24,8 +24,17 @@
   <string name="animation_fade">Animationsfade</string>
   <string name="animation_slide_right">Glid ind højre</string>
   <string name="animation_slide_left">Glid ind venstre</string>
+  <string name="animation_slide_right_no_fade">Glid ind fra højre (Uden overgang)</string>
+  <string name="animation_slide_left_no_fade">Glid ind fra venstre (Uden overgang)</string>
+  <string name="animation_slide_up">Glid op fra bunden</string>
+  <string name="animation_slide_down">Glid ned fra toppen</string>
   <string name="animation_default">Standard</string>
   <string name="animation_translucent">Semitransparent</string>
+  <string name="animation_grow_shrink">Voks ind (Oppefra)</string>
+  <string name="animation_grow_shrink_center">Voks ind (Center)</string>
+  <string name="animation_grow_shrink_bottom">Voks ind (Nedefra)</string>
+  <string name="animation_grow_shrink_left">Voks ind (Venstre)</string>
+  <string name="animation_grow_shrink_right">Voks ind (Højre)</string>
   <string name="action_null">Tom</string>
   <string name="global_action_torch">Lommelygte</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
@@ -35,8 +44,13 @@
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB inaktiv</string>
   <string name="adb_active_custom_tile_not_connected">inaktiv</string>
+  <string name="singlehandmode_slide_hint_message">Glid fingeren på tværs af navigationslinjen for at skifte mellem visningerne; standard og mini skærm</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_resetBatteryStats">nulstil batteristatistik</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Tillader en app at nulstille den aktuelle statistik over batteriforbruget.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">genstart systembjælkerne</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Genstart SystemUIService, således at systembjælkerne kan indlæse tema ressourcer</string>
 </resources>

@@ -268,4 +268,7 @@
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Ahorro de datos</string>
+  <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Todos los métodos de navegación estan desactivados</string>
+  <string name="no_navigation_warning_text">Toca para activar</string>
 </resources>

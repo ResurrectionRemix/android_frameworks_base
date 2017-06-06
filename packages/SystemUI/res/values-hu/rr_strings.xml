@@ -268,4 +268,7 @@
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Adatforgalom-csökkentő</string>
+  <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Minden navigációs módszer letiltva</string>
+  <string name="no_navigation_warning_text">Engedélyezéshez érintse meg</string>
 </resources>

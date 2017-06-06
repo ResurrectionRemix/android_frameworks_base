@@ -255,7 +255,7 @@
   <string name="omnijaws_label_default">天气</string>
   <string name="omnijaws_current_text">当前</string>
   <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
-  <string name="omnijaws_service_error_long">加载的天气数据时出错</string>
+  <string name="omnijaws_service_error_long">加载天气数据时出错</string>
   <string name="omnijaws_service_disabled">服务已被禁用</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="温度">%1$s</xliff:g> - <xliff:g id="天气">%2$s</xliff:g></string>
@@ -268,4 +268,7 @@
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">流量节省程序</string>
+  <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">所有导航方法已禁用</string>
+  <string name="no_navigation_warning_text">轻触以开启</string>
 </resources>

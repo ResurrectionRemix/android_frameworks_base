@@ -305,4 +305,8 @@
     <!-- data saver icon switch -->
     <string name="status_bar_datasaver">Data saver</string>
 
+    <!-- No navigation warning notification -->
+    <string name="no_navigation_warning_title">All navigation methods disabled</string>
+    <string name="no_navigation_warning_text">Tap to enable</string>
+
 </resources>

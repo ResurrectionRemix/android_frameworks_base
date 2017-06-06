@@ -285,6 +285,8 @@ public class WifiP2pManager {
 
     IWifiP2pManager mService;
 
+    private Channel mChannel;
+
     private static final int BASE = Protocol.BASE_WIFI_P2P_MANAGER;
 
     /** @hide */
@@ -895,14 +897,16 @@ public class WifiP2pManager {
         return initalizeChannel(srcContext, srcLooper, listener, getP2pStateMachineMessenger());
     }
 
-    private Channel initalizeChannel(Context srcContext, Looper srcLooper, ChannelListener listener,
-                                     Messenger messenger) {
+    private synchronized Channel initalizeChannel(Context srcContext, Looper srcLooper,
+                                      ChannelListener listener, Messenger messenger) {
         if (messenger == null) return null;
 
-        Channel c = new Channel(srcContext, srcLooper, listener);
-        if (c.mAsyncChannel.connectSync(srcContext, c.mHandler, messenger)
+        if (mChannel != null) mChannel.mAsyncChannel.disconnect();
+
+        mChannel = new Channel(srcContext, srcLooper, listener);
+        if (mChannel.mAsyncChannel.connectSync(srcContext, mChannel.mHandler, messenger)
                 == AsyncChannel.STATUS_SUCCESSFUL) {
-            return c;
+            return mChannel;
         } else {
             return null;
         }

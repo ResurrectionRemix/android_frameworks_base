@@ -525,6 +525,8 @@
     <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_TOGGLE_OVERLAY" />
     <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_RESTORE_HOME_STACK" />
 
+    <protected-broadcast android:name="projekt.substratum.APP_CRASHED" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
@@ -3180,11 +3182,12 @@
     <permission android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
                 android:protectionLevel="signature|privileged" />
 
-    <!-- Allows an application to make calls to OverlayManagerService.-->
-    <permission android:name="android.permission.MODIFY_OVERLAYS"
+    <!-- Allows an application to make calls to OverlayManagerService.
+         @hide -->
+    <permission android:name="oms.permission.MODIFY_OVERLAYS"
         android:label="@string/permlab_modifyOverlays"
         android:description="@string/permdesc_modifyOverlays"
-        android:protectionLevel="normal" />
+        android:protectionLevel="signatureOrSystem" />
 
     <!-- Allows an application to restart the SystemUI process.-->
     <permission android:name="android.permission.RESTART_UI"

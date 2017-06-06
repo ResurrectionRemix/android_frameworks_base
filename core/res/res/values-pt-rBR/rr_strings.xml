@@ -21,13 +21,13 @@
   <string name="system_error_vendorprint">Sua imagem de fornecedor não coincide com o sistema. Por favor faça o flash da imagem de fornecedor de <xliff:g id="string">%s </xliff:g> para o seu dispositivo</string>
   <string name="global_action_screenrecord">Gravação de Tela</string>
   <!-- AOKP custom system animations -->
-  <string name="animation_fade">Esmaecer</string>
+  <string name="animation_fade">Desvanecer</string>
   <string name="animation_slide_right">Deslizar para direita</string>
   <string name="animation_slide_left">Deslize para a esquerda</string>
   <string name="animation_slide_right_no_fade">Deslize para direita (Sem desvanecer)</string>
-  <string name="animation_slide_left_no_fade">Deslize para esquerda(Sem desvanecer)</string>
+  <string name="animation_slide_left_no_fade">Deslize para a Esquerda (Sem desvanecer)</string>
   <string name="animation_slide_up">Deslize para baixo</string>
-  <string name="animation_slide_down">Deslize para cima</string>
+  <string name="animation_slide_down">Deslizar para cima</string>
   <string name="animation_default">Padrão</string>
   <string name="animation_translucent">Translúcido</string>
   <string name="animation_grow_shrink">Crescer no (Topo)</string>
@@ -46,7 +46,7 @@
   <string name="adb_active_custom_tile_not_connected">inativo</string>
   <string name="singlehandmode_slide_hint_message">Deslize seu dedo através da barra de navegação para alternar entre os modos de exibição de tela padrão e pequeno</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permlab_resetBatteryStats">repor estatísticas da bateria</string>
+  <string name="permlab_resetBatteryStats">Redefinir estatísticas da bateria</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_resetBatteryStats">Permite que uma aplicação reinicie os dados de utilização atual da bateria.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
