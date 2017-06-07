@@ -168,13 +168,13 @@
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bias_perf">电池模式：快速模式</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">更改电池模式为省电模式</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">电池模式已更改为省电模式</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_bal">更改电池模式为平衡模式</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">电池模式已更改为平衡模式</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_perf">更改电池模式为性能模式</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">电池模式已更改为性能模式</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">更改电池模式为效率模式</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">电池模式已更改为效率模式</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">更改电池模式为快速模式</string>
   <string name="quick_settings_performance_profile_detail_title">电池模式</string>
@@ -256,7 +256,7 @@
   <string name="omnijaws_current_text">当前</string>
   <string name="omnijaws_package_not_available">OmniJaws 不可用</string>
   <string name="omnijaws_service_error_long">加载天气数据时出错</string>
-  <string name="omnijaws_service_disabled">服务已被禁用</string>
+  <string name="omnijaws_service_disabled">服务已禁用</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="温度">%1$s</xliff:g> - <xliff:g id="天气">%2$s</xliff:g></string>
   <!-- volte icon switch -->
@@ -269,6 +269,6 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">流量节省程序</string>
   <!-- No navigation warning notification -->
-  <string name="no_navigation_warning_title">所有导航方法已禁用</string>
-  <string name="no_navigation_warning_text">轻触以开启</string>
+  <string name="no_navigation_warning_title">所有导航方式已禁用</string>
+  <string name="no_navigation_warning_text">点击以启用</string>
 </resources>

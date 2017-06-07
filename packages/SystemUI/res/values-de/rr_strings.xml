@@ -26,7 +26,7 @@
   <string name="screenrecord_notif_pointer_on">Cursor anzeigen</string>
   <string name="screenrecord_notif_pointer_off">Cursor ausblenden</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Bildschirmvideo konnte nicht aufgenommen werden</string>
+  <string name="screenrecord_notif_error">Bildschirmkonnte nicht aufgenommen werden</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Screenshot gelöscht</string>
@@ -125,7 +125,7 @@
   <string name="accessibility_quick_settings_pulse_changed_on">Impuls eingeschalten</string>
   <string name="quick_settings_pulse_label">Navigationsleisten Visualisierung</string>
   <string name="quick_settings_pie">Pie</string>
-  <string name="quick_settings_ambient_display_label">Inaktivitätsdisplay</string>
+  <string name="quick_settings_ambient_display_label">Inaktivitätsbildschirm</string>
   <string name="accessibility_quick_settings_ambient_display_off">Inaktivitätsbildschirm aus.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Inaktivitätsbildschirm an</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">Inaktivitätsbildschirm ausgeschaltet</string>
@@ -139,8 +139,8 @@
   <string name="accessibility_quick_settings_location_battery_saving">Standortdienste: Energiesparmodus.</string>
   <string name="accessibility_quick_settings_location_gps_only">Standortdienste: Nur Gerät.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Standortdienste: Hohe Genauigkeit.</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">Die Standortbestimmung wurde auf Energiesparmodus geändert.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Die Standortbestimmung wurde auf \"Nur Gerät\" geändert.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Standortdienst wurde in Energiesparmodus geändert.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Standortdienst wurde auf \"Nur Gerät\" geändert.</string>
   <string name="accessibility_quick_settings_location_changed_high_accuracy">Die Standortbestimmung wurde auf \"Hohe Genauigkeit\" geändert.</string>
   <string name="quick_settings_location_detail_title">Standortmodus</string>
   <string name="quick_settings_location_battery_saving_label">Energiesparmodus</string>
@@ -158,7 +158,7 @@
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">Batterie Modus</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_pwrsv">Batterie Modus: Energiesparmodus</string>
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Batterie Modus: Energiesparmodus.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bal">Batterie Modus: Ausgeglichen</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -217,7 +217,7 @@
   <string name="pref_category_main">Haupteinstellungen</string>
   <string name="pref_category_user">Benutzereinstellungen</string>
   <string name="pref_crop_behavior_title">Crop-Verhalten</string>
-  <string name="pref_crop_behavior_summary">Das zugeschnittene Bild verwenden, auch wenn das ursprüngliche nicht beschnitten wurde</string>
+  <string name="pref_crop_behavior_summary">Das zugeschnittene Bild verwenden, auch wenn das ursprüngliche nicht zugeschnitten wurde</string>
   <string name="action_ok">OK</string>
   <string name="action_delete_success">Gelöscht</string>
   <string name="action_delete_fault">Löschen war nicht erfolgreich</string>
@@ -235,9 +235,9 @@
   <string name="message_keep_one_launcher">Ein Launcher sollte aktiv bleiben!</string>
   <string name="tm_clear_task">Bereinigen</string>
   <!-- Slim Recents -->
-  <string name="recents_multiwin_warning">Eine Multiwindow Sitzung ist schon aktiv.\nKlicke einfach auf eine App wenn du es jetzt andocken willst</string>
+  <string name="recents_multiwin_warning">Eine Multiwindow Sitzung ist schon aktiv.\nKlicke einfach auf eine App wenn du sie andocken willst.</string>
   <string name="recents_multiwin_nolastapp">Du hast alle zuletzt geöffnete Apps geschlossen, bitte wähle eine App aus dem Launcher.</string>
-  <string name="slim_recent_keyguard">Entsperren um den Anwendungsverlauf anzuzeigen</string>
+  <string name="slim_recent_keyguard">Entsperren um zuletzt geöffnete Apps anzuzeigen</string>
   <string name="slim_recent_pinned">Löse Sie den Bildschirm, um den Anwendungsverlauf anzuzeigen</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Starte %s nach dem Schließen des Anwendungsverlaufs</string>
@@ -267,7 +267,7 @@
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
-  <string name="status_bar_datasaver">Datensparer</string>
+  <string name="status_bar_datasaver">Datenverbrauch reduzieren</string>
   <!-- No navigation warning notification -->
   <string name="no_navigation_warning_title">Alle Navigationsmethoden deaktiviert</string>
   <string name="no_navigation_warning_text">Zum Aktivieren tippen</string>

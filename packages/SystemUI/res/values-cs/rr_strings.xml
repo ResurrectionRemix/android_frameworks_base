@@ -152,9 +152,9 @@
   <string name="quick_settings_locale_label">Jazyk</string>
   <string name="quick_settings_locale_more_locales_toast">Prosím nastavte přepínač umožňující více jazyků</string>
   <!-- Suspend Actions Tile -->
-  <string name="accessibility_quick_settings_suspend_actions_on">Pozastavené akce povoleny</string>
-  <string name="accessibility_quick_settings_suspend_actions_off">Pozastavené akce zakázány</string>
-  <string name="quick_settings_suspend_actions_label">Pozastavené akce</string>
+  <string name="accessibility_quick_settings_suspend_actions_on">Akce po zhasnutí obrazovky povoleny</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Akce po zhasnutí obrazovky zakázány</string>
+  <string name="quick_settings_suspend_actions_label">Akce po zhasnutí obrazovky</string>
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">Režim baterie</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
