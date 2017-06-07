@@ -467,7 +467,11 @@ public class RecentPanelView {
                                     .startActivityFromRecents((finalPos > initPos) ? taskid : newTaskid, options.toBundle());
                             /*after we docked our main app, on the other side of the screen we
                             open the app we dragged the main app over*/
-                            mController.openOnDraggedApptoOtherSide((finalPos > initPos) ? newTaskid : taskid);
+                            mController.openOnDraggedApptoOtherSide((finalPos > initPos)
+                                    ? newTaskid : taskid);
+                            // No need to keep the panel open, we already chose both
+                            // top and bottom apps
+                            mController.closeRecents();
                         } catch (RemoteException e) {}
                     }
                 //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
