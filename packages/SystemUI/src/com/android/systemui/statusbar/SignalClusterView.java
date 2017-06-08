@@ -131,6 +131,9 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private boolean mVoLTEicon;
 
     private final IconLogger mIconLogger = Dependency.get(IconLogger.class);
+    private static final String DISABLE_NO_SIM =
+            "system:" + Settings.System.DISABLE_NO_SIM;
+    private boolean mShowNoSims;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -193,6 +196,14 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             mNetworkController.removeCallback(this);
             mNetworkController.addCallback(this);
         }
+            case DISABLE_NO_SIM:
+                mShowNoSims = 
+                        newValue != null && Integer.parseInt(newValue) != 0;
+                     apply();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -252,8 +263,8 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
         int endPadding = mMobileSignalGroup.getChildCount() > 0 ? mMobileSignalGroupEndPadding : 0;
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
-
-        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST);
+        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST,
+                   DISABLE_NO_SIM);
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
@@ -578,7 +589,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
         if (mNoSimsVisible) {
             mIconLogger.onIconShown(SLOT_MOBILE);
-            mNoSimsCombo.setVisibility(View.VISIBLE);
+            mNoSimsCombo.setVisibility(!mShowNoSims ? View.VISIBLE : View.GONE);
             if (!Objects.equals(mSimDetected, mNoSimsCombo.getTag())) {
                 mNoSimsCombo.setTag(mSimDetected);
                 if (mSimDetected) {
