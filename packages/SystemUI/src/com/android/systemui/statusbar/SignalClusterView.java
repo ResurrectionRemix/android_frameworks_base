@@ -117,6 +117,9 @@ public class SignalClusterView
     private boolean mBlockEthernet;
     private boolean mBlockVolte;
     private boolean mBlockVpn;
+    private static final String DISABLE_NO_SIM =
+            "system:" + Settings.System.DISABLE_NO_SIM;
+    private boolean mShowNoSims;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -170,6 +173,11 @@ public class SignalClusterView
                      mNC.addSignalCallback(this);
                      apply();
                  }
+                break;
+            case DISABLE_NO_SIM:
+                mShowNoSims = 
+                        newValue != null && Integer.parseInt(newValue) != 0;
+                     apply();
                 break;
             default:
                 break;
@@ -249,7 +257,7 @@ public class SignalClusterView
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
 
         TunerService.get(mContext).addTunable(this,
-                StatusBarIconController.ICON_BLACKLIST);
+                StatusBarIconController.ICON_BLACKLIST,DISABLE_NO_SIM);
 
         apply();
         applyIconTint();
@@ -591,7 +599,7 @@ public class SignalClusterView
             mWifiSignalSpacer.setVisibility(View.GONE);
         }
 
-        mNoSimsCombo.setVisibility(mNoSimsVisible ? View.VISIBLE : View.GONE);
+        mNoSimsCombo.setVisibility((mNoSimsVisible && !mShowNoSims) ? View.VISIBLE : View.GONE);
     }
 
     /**

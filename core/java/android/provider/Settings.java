@@ -4512,6 +4512,11 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String NO_SIM_CLUSTER_SWITCH = "no_sim_cluster_switch";
 
+        /**
+         * Disable No sim icon if sim isnt available
+         * @hide
+         */
+        public static final String DISABLE_NO_SIM = "disable_no_sim";
 
         /**
          * @hide
