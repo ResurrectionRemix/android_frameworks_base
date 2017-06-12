@@ -5628,6 +5628,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String LOCK_SCREEN_WEATHER_WIND_COLOR = "lock_screen_weather_wind_color";
 
         /**
+         * Smartbar touch sounds
+         * @hide
+         */
+        public static final String NAV_BUTTON_SOUNDS = "nav_button_sounds";
+
+        /**
          * Color of Lockscreen Shortcuts Icons
          * @hide
          */
