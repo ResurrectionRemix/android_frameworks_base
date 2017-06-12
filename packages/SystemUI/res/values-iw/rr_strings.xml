@@ -100,6 +100,7 @@
   <string name="quick_settings_gesture_anywhere_label">מחווה בכל מקום</string>
   <string name="quick_settings_gesture_anywhere_on">מחוות הפעלה</string>
   <string name="quick_settings_gesture_anywhere_off">מחוות הפסקה</string>
+  <string name="quick_settings_appsidebar_title">סרגל צד של יישומים</string>
   <!-- Pulse Tile -->
   <!-- Location Tile -->
   <string name="quick_settings_location_high_accuracy_label">רמת דיוק גבוהה</string>
