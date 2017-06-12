@@ -27,6 +27,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionInfo;
@@ -56,6 +57,10 @@ import com.android.systemui.statusbar.policy.NetworkControllerImpl;
 import com.android.systemui.statusbar.policy.SecurityController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
+
+import static android.telephony.TelephonyManager.PHONE_TYPE_GSM;
+import static com.android.internal.telephony.PhoneConstants.LTE_ON_CDMA_TRUE;
+import static com.android.internal.telephony.PhoneConstants.LTE_ON_CDMA_UNKNOWN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +139,8 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private static final String DISABLE_NO_SIM =
             "system:" + Settings.System.DISABLE_NO_SIM;
     private boolean mShowNoSims;
+    private SubscriptionManager mSubscriptionManager;
+    private TelephonyManager mTelephony;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -163,6 +170,11 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         mNetworkController = Dependency.get(NetworkController.class);
         mSecurityController = Dependency.get(SecurityController.class);
         updateActivityEnabled();
+        mTelephony = mContext.getSystemService(TelephonyManager.class);
+
+        if (mTelephony != null) {
+            mSubscriptionManager = SubscriptionManager.from(mContext);
+        }
     }
 
     public void setForceBlockWifi() {
@@ -196,6 +208,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             mNetworkController.removeCallback(this);
             mNetworkController.addCallback(this);
         }
+        switch (key) {
             case DISABLE_NO_SIM:
                 mShowNoSims = 
                         newValue != null && Integer.parseInt(newValue) != 0;
@@ -331,8 +344,8 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         if (state == null) {
             return;
         }
-        final int slotId = SubscriptionManager.getSlotId(subId);
-        final int simState = SubscriptionManager.getSimStateForSlotIdx(slotId);
+        final int slotId = SubscriptionManager.getSlotIndex(subId);
+        final int simState = SubscriptionManager.getSimStateForSlotIndex(slotId);
         final boolean mIsRequired = isNosimRequired() && simState == TelephonyManager.SIM_STATE_NOT_READY;
         state.mMobileVisible = statusIcon.visible && !mBlockMobile &&
               !mIsRequired;
@@ -364,6 +377,40 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         mSimDetected = simDetected;
         mMobileIms = !mNoSimsVisible && mMobileIms;
         apply();
+    }
+
+    public boolean simMissing() {
+        if (mTelephony == null) {
+            return false;
+        }
+        List<SubscriptionInfo> subs = mSubscriptionManager.getActiveSubscriptionInfoList();
+        if (subs != null) {
+            for (SubscriptionInfo sub : subs) {
+                int simState = mTelephony.getSimState(sub.getSimSlotIndex());
+                int subId = sub.getSubscriptionId();
+                boolean isGsm = isGSM(subId);
+                boolean isLte = isLte(subId);
+                if ((isGsm || isLte) && simState != 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isGSM(int subId) {
+        return mTelephony.getCurrentPhoneType(subId) == PHONE_TYPE_GSM;
+    }
+
+    public boolean isLte(int subId) {
+        return getLteOnCdmaMode(subId) == LTE_ON_CDMA_TRUE;
+    }
+
+    public int getLteOnCdmaMode(int subId) {
+        if (mTelephony == null || mTelephony.getLteOnCdmaMode(subId) == LTE_ON_CDMA_UNKNOWN) {
+            return SystemProperties.getInt("telephony.lteOnCdmaDevice", LTE_ON_CDMA_UNKNOWN);
+        }
+        return mTelephony.getLteOnCdmaMode(subId);
     }
 
     @Override
@@ -483,6 +530,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
     // Run after each indicator change.
     private void apply() {
+        boolean show = simMissing() && !mShowNoSims;
         if (mWifiGroup == null) return;
 
         if (mVpnVisible) {
@@ -586,10 +634,9 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         } else {
             mWifiSignalSpacer.setVisibility(View.GONE);
         }
-
         if (mNoSimsVisible) {
             mIconLogger.onIconShown(SLOT_MOBILE);
-            mNoSimsCombo.setVisibility(!mShowNoSims ? View.VISIBLE : View.GONE);
+            mNoSimsCombo.setVisibility(show ? View.VISIBLE : View.GONE);
             if (!Objects.equals(mSimDetected, mNoSimsCombo.getTag())) {
                 mNoSimsCombo.setTag(mSimDetected);
                 if (mSimDetected) {
@@ -637,7 +684,6 @@ public class SignalClusterView extends LinearLayout implements NetworkController
                 apply();
             }
         }
-
         public void update() {
             mVoLTEicon = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SHOW_VOLTE_ICON, 0, UserHandle.USER_CURRENT) == 1;
