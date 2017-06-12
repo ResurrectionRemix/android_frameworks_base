@@ -25,6 +25,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionInfo;
@@ -48,6 +49,10 @@ import com.android.systemui.statusbar.policy.NetworkControllerImpl;
 import com.android.systemui.statusbar.policy.SecurityController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
+
+import static android.telephony.TelephonyManager.PHONE_TYPE_GSM;
+import static com.android.internal.telephony.PhoneConstants.LTE_ON_CDMA_TRUE;
+import static com.android.internal.telephony.PhoneConstants.LTE_ON_CDMA_UNKNOWN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +125,8 @@ public class SignalClusterView
     private static final String DISABLE_NO_SIM =
             "system:" + Settings.System.DISABLE_NO_SIM;
     private boolean mShowNoSims;
+    private SubscriptionManager mSubscriptionManager;
+    private TelephonyManager mTelephony;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -146,6 +153,10 @@ public class SignalClusterView
         TypedValue typedValue = new TypedValue();
         res.getValue(R.dimen.status_bar_icon_scale_factor, typedValue, true);
         mIconScaleFactor = typedValue.getFloat();
+        mTelephony = mContext.getSystemService(TelephonyManager.class);
+        if (mTelephony != null) {
+            mSubscriptionManager = SubscriptionManager.from(mContext);
+        }
     }
 
     @Override
@@ -352,6 +363,40 @@ public class SignalClusterView
         mNoSimsVisible = show && !mBlockMobile;
         mMobileIms = !mNoSimsVisible && mMobileIms;
         apply();
+    }
+
+    public boolean simMissing() {
+        if (mTelephony == null) {
+            return false;
+        }
+        List<SubscriptionInfo> subs = mSubscriptionManager.getActiveSubscriptionInfoList();
+        if (subs != null) {
+            for (SubscriptionInfo sub : subs) {
+                int simState = mTelephony.getSimState(sub.getSimSlotIndex());
+                int subId = sub.getSubscriptionId();
+                boolean isGsm = isGSM(subId);
+                boolean isLte = isLte(subId);
+                if ((isGsm || isLte) && simState != 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isGSM(int subId) {
+        return mTelephony.getCurrentPhoneType(subId) == PHONE_TYPE_GSM;
+    }
+
+    public boolean isLte(int subId) {
+        return getLteOnCdmaMode(subId) == LTE_ON_CDMA_TRUE;
+    }
+
+    public int getLteOnCdmaMode(int subId) {
+        if (mTelephony == null || mTelephony.getLteOnCdmaMode(subId) == LTE_ON_CDMA_UNKNOWN) {
+            return SystemProperties.getInt("telephony.lteOnCdmaDevice", LTE_ON_CDMA_UNKNOWN);
+        }
+        return mTelephony.getLteOnCdmaMode(subId);
     }
 
     @Override
@@ -598,8 +643,8 @@ public class SignalClusterView
         } else {
             mWifiSignalSpacer.setVisibility(View.GONE);
         }
-
-        mNoSimsCombo.setVisibility((mNoSimsVisible && !mShowNoSims) ? View.VISIBLE : View.GONE);
+        boolean show = simMissing() && (mNoSimsVisible && !mShowNoSims);
+        mNoSimsCombo.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     /**
