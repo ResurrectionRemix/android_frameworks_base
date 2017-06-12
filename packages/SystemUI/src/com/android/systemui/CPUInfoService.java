@@ -45,6 +45,7 @@ public class CPUInfoService extends Service {
     private Thread mCurCPUThread;
     private final String TAG = "CPUInfoService";
     private PowerManager mPowerManager;
+    private boolean mDisplayTemp=false;
     private boolean mPowerProfilesSupported;
     private int mNumCpus = 1;
     private String[] mCurrFreq=null;
@@ -188,9 +189,11 @@ public class CPUInfoService extends Service {
 
             int y = mPaddingTop - (int)mAscent;
 
-            canvas.drawText("Temp:"+mCPUTemp, RIGHT-mPaddingRight-mMaxWidth,
-                y-1, mOnlinePaint);
-            y += mFH;
+            if (mDisplayTemp){
+                canvas.drawText("Temp:"+mCPUTemp, RIGHT-mPaddingRight-mMaxWidth,
+                    y-1, mOnlinePaint);
+                y += mFH;
+            }
 
             for(int i=0; i<mCurrFreq.length; i++){
                 String s=getCPUInfoString(i);
@@ -218,7 +221,7 @@ public class CPUInfoService extends Service {
             final int NW = mPowerProfilesSupported ? (mNumCpus + 1) : mNumCpus;
 
             int neededWidth = mPaddingLeft + mPaddingRight + mMaxWidth;
-            int neededHeight = mPaddingTop + mPaddingBottom + (mFH*(1+NW));
+            int neededHeight = mPaddingTop + mPaddingBottom + (mFH*(mDisplayTemp?(1+NW):NW));
             if (neededWidth != mNeededWidth || neededHeight != mNeededHeight) {
                 mNeededWidth = neededWidth;
                 mNeededHeight = neededHeight;
@@ -268,7 +271,12 @@ public class CPUInfoService extends Service {
                     if (cpuTemp == null){
                         cpuTemp = CPUInfoService.readOneLine(CPU_TEMP_OPPO);
                     }
-                    sb.append(cpuTemp == null?"0":cpuTemp);
+                    if (cpuTemp == null){
+                      sb.append("0");
+                    } else {
+                      sb.append(cpuTemp);
+                      mDisplayTemp=true;
+                    }
                     sb.append(";");
                     String lpMode = CPUInfoService.readOneLine(CPU_LP_MODE);
                     sb.append(lpMode == null?"0":lpMode);
