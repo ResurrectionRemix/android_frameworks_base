@@ -205,7 +205,7 @@
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notification furtive pendant 1 minute.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Notification furtive pendant <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Screenshot action -->
-  <string name="screenshot_abort_title">Aucune capture d\'écran</string>
+  <string name="screenshot_abort_title">Aucune capture d\'écran prise</string>
   <string name="screenshot_abort_text">Opération annulée</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">Supprimée</string>
@@ -217,7 +217,7 @@
   <string name="pref_category_main">Général</string>
   <string name="pref_category_user">Utilisateur</string>
   <string name="pref_crop_behavior_title">Rogner</string>
-  <string name="pref_crop_behavior_summary">Utiliser l\'image recadrée, même si l\'image originale n\'a pas été recadrée par l\'action de recadrage</string>
+  <string name="pref_crop_behavior_summary">Utiliser l\'image recadrée même si l\'image originale n\'a pas été recadrée par l\'action de recadrage</string>
   <string name="action_ok">OK</string>
   <string name="action_delete_success">Supprimée</string>
   <string name="action_delete_fault">Échec de la suppression</string>
