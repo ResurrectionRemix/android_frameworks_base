@@ -300,7 +300,7 @@ public class NetworkTraffic extends TextView implements
         ConnectivityManager connManager =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo network = (connManager != null) ? connManager.getActiveNetworkInfo() : null;
-        return network != null && network.isConnected();
+        return network != null;
     }
 
     private void updateSettings() {
