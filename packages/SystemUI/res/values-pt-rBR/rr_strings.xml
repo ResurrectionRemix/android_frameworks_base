@@ -102,8 +102,8 @@
   <string name="quick_settings_screenrecord">Gravação de tela</string>
   <string name="quick_settings_screenrecord_on">Gravando ...</string>
   <string name="quick_settings_navigation_bar">Barra de Navegação</string>
-  <string name="quick_settings_smartbar">Smart bar</string>
-  <string name="quick_settings_smartbar_off">SmartBar desligada</string>
+  <string name="quick_settings_smartbar">Barra Inteligente</string>
+  <string name="quick_settings_smartbar_off">Barra Inteligente desligada</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling desligado</string>
   <string name="quick_settings_appcirclebar_title">Barra circular de aplicativos</string>

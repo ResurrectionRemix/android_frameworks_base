@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Capture d\'écran supprimée</string>
   <string name="gestures_message">Dessinez votre geste ici</string>
-  <string name="rr_sys_tuner">Option de l\'interface utilisateur du système</string>
+  <string name="rr_sys_tuner">Réglage de l\'UI du système</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Glisser vers la droite pour %1$s</string>
   <string name="right_shortcut_hint">Glisser vers la gauche pour %1$s</string>
