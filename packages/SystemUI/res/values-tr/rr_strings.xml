@@ -202,8 +202,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Uygulama Sonlandırıldı</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • Gözatma bildirimi 1 dakika kadar erteleniyor.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Gözatma bildirimi <xliff:g id="number">%d</xliff:g> dakika kadar erteleniyor.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • gözatma bildirimi 1 dakika kadar erteleniyor.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • gözatma bildirimi <xliff:g id="number">%d</xliff:g> dakika kadar erteleniyor.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Ekran görüntüsü alınamadı</string>
   <string name="screenshot_abort_text">İşlem iptal edildi</string>

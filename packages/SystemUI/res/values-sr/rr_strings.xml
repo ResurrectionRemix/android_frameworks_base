@@ -106,16 +106,24 @@
   <string name="quick_settings_smartbar_off">Паметна трака је искључена</string>
   <string name="quick_settings_fling">Флинг</string>
   <string name="quick_settings_fling_off">Флинг иск</string>
+  <string name="quick_settings_appcirclebar_title">Кружна трака апликација</string>
+  <string name="quick_settings_appcirclebar_on">Кружна трака апликација укључена</string>
+  <string name="quick_settings_appcirclebar_off">Кружна трака апликација искључена</string>
   <string name="quick_settings_gesture_anywhere_label">Гест било где</string>
   <string name="quick_settings_gesture_anywhere_on">Гестови укљ</string>
   <string name="quick_settings_gesture_anywhere_off">Гестови иск</string>
+  <string name="quick_settings_appsidebar_title">Бочна трака апликација</string>
+  <string name="quick_settings_appsidebar_on">Бочна трака апликација укључена</string>
+  <string name="quick_settings_appsidebar_off">Бочна трака апликација искључена</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Пулс омогућен</string>
+  <string name="quick_settings_pulse_disabled">Онемогући Визуализатор</string>
   <string name="quick_settings_pulse_label">Пулс</string>
   <string name="accessibility_quick_settings_pulse_off">Пулс иск</string>
   <string name="accessibility_quick_settings_pulse_on">Пулс укљ</string>
   <string name="accessibility_quick_settings_pulse_changed_off">Пулс искључен</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Пулс укључен</string>
+  <string name="quick_settings_pulse_label">Визуализатор навигацијске траке</string>
   <string name="quick_settings_pie">Пита</string>
   <string name="quick_settings_ambient_display_label">Амбијентални приказ</string>
   <string name="accessibility_quick_settings_ambient_display_off">Амбијентални приказ искључен.</string>
@@ -128,6 +136,12 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">Искачућа обавештења искључена</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">Искачућа обавештења укључена</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Извештавање о локацији: режим уштеде батерије.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Извештавање о локацији: само сензори.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Извештавање о локацији: режим велике прецизности.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Извештавање о локацији промењено у мод штедње батерије.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Izveštavanje o lokaciji promenjen u režimu samo senzori.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Извештавање о лакацији измењен у режим само сензора.</string>
   <string name="quick_settings_location_detail_title">Режим локације</string>
   <string name="quick_settings_location_battery_saving_label">Чување батерије</string>
   <string name="quick_settings_location_gps_only_label">Само уређај</string>
@@ -138,18 +152,31 @@
   <string name="quick_settings_locale_label">Језик</string>
   <string name="quick_settings_locale_more_locales_toast">Молим Вас одаберите више језика како би омогућили функционалност промене</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">Обустава радњи омогућена</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">Обустава радњи онемогућена</string>
+  <string name="quick_settings_suspend_actions_label">Обустава радњи</string>
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">Режим батерије</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Режим батерије: уштеда батерије.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Режим батерије: балансирано.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Режим батерије: режим перформанси.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Режим батерије: режим ефикасности.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Режим батерије: брзи режим.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Режим батерије промењен у режим штедње.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Режим рада батерије промењен у балансиран режим.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Режим рада батерије промењен у режим перформанси.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Режим рада батерије промењен у режим ефикасности.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Режим рада батерије промењен у брзи режим.</string>
   <string name="quick_settings_performance_profile_detail_title">Режим батерије</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Компас</string>
@@ -168,10 +195,15 @@
   <string name="quick_settings_compass_W">З</string>
   <string name="quick_settings_compass_NW">СЗ</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">Физичка дугмад укључена</string>
+  <string name="accessibility_quick_settings_hwkeys_off">Физичка дугмад искључена</string>
+  <string name="quick_settings_hwkeys_label">Физичка дугмад</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Апликација је затворена</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> •обавештења су одгођена за 1 минут.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • обавештења су одгођена за <xliff:g id="number">%d</xliff:g> min.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Снимак екрана није снимљен</string>
   <string name="screenshot_abort_text">Операција обустављена</string>
@@ -200,10 +232,19 @@
   <string name="message_switch_fail">Немогуће је одабрати овај задатак зато што не поседује интерфејс.</string>
   <string name="tasklist_killall">Прекини све</string>
   <string name="tasklist_memory_usage">"Слободно • Укупна меморија : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
+  <string name="message_keep_one_launcher">Требате задржати барем једну почетну активност!</string>
   <string name="tm_clear_task">ОБРИШИ</string>
   <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">Режим рада са више прозора је већ активан. \nСамо додирните апликацију ако је желите спојити сад.</string>
+  <string name="recents_multiwin_nolastapp">Уклонили сте све недавне апликације, одаберите апликацију из покретача или фиоке апликација.</string>
+  <string name="slim_recent_keyguard">Одључајте уређај да би сте видели попис недавних апликација</string>
+  <string name="slim_recent_pinned">Одкачите екран за приказ недавних апликација</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">Покрени %s по затварању недавних апликација</string>
+  <string name="toast_recents_cancel_queued_app">Отказано покретање апликација</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Присилно заустави?</string>
+  <string name="force_stop_dlg_text">Присилно заустављање апликације може довести до њеног лошег рада.</string>
   <string name="dlg_ok">У реду</string>
   <string name="dlg_cancel">Одустани</string>
   <string name="kill">Убиј апликацију</string>
@@ -213,13 +254,21 @@
   <string name="omnijaws_detail_header">Време</string>
   <string name="omnijaws_label_default">Време</string>
   <string name="omnijaws_current_text">Сада</string>
+  <string name="omnijaws_package_not_available">OmniJaws недоступан</string>
+  <string name="omnijaws_service_error_long">Грешка при учитавању података временске прогнозе</string>
+  <string name="omnijaws_service_disabled">Услуга онемогућена</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Dash пуњење (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> до краја)</string>
+  <string name="keyguard_plugged_in_dash_charging">Dash пуњење</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">ВПН</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Уштеда података</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Све методе навигације онемогућени</string>
+  <string name="no_navigation_warning_text">Додирните да омогућите</string>
 </resources>
