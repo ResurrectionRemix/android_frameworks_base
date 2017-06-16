@@ -200,6 +200,7 @@ public class TaskViewHeader extends FrameLayout
 
     private Context mContext;
     private boolean mShowLockIcon;
+    private int mRecentsType;
     private Handler mHandler;
     private SettingsObserver mSettingsObserver;
 
@@ -385,8 +386,9 @@ public class TaskViewHeader extends FrameLayout
         }
         mDismissButton.setVisibility(showDismissIcon ? View.VISIBLE : View.INVISIBLE);
         mDismissButton.setTranslationX(rightInset);
+        boolean show = mRecentsType != 2 && mShowLockIcon;
         if (mLockTaskButton != null) {
-            mLockTaskButton.setVisibility(mShowLockIcon ? View.VISIBLE : View.INVISIBLE);
+            mLockTaskButton.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
             mLockTaskButton.setTranslationX(rightInset);
         }
 
@@ -798,6 +800,9 @@ public class TaskViewHeader extends FrameLayout
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENTS_LOCK_ICON),
                     false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_RECENTS),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -809,6 +814,8 @@ public class TaskViewHeader extends FrameLayout
         public void update() {
             mShowLockIcon = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.RECENTS_LOCK_ICON, 0, UserHandle.USER_CURRENT) == 1;
+            mRecentsType = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.NAVIGATION_BAR_RECENTS, 0, UserHandle.USER_CURRENT);
         }
     }
 }
