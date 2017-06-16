@@ -697,6 +697,15 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+                 <activity
+                        android:name=".pbs_skull"
+                        android:label="PitchBlack 3 - smart" >
+                        <intent-filter>
+                                <action android:name="org.omnirom.DaylightHeaderPack1" />
+
+                                <category android:name="android.intent.category.DEFAULT" />
+                        </intent-filter>
+                </activity>
 		 <activity
 			android:name=".getr_base"
 			android:label="Get resurrected - smart" >
