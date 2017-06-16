@@ -403,7 +403,9 @@ public class SecurityControllerImpl extends CurrentUserTracker implements Securi
                 boolean hasCACerts = !(conn.getService().getUserCaAliases().getList().isEmpty());
                 return new Pair<Integer, Boolean>(userId[0], hasCACerts);
             } catch (RemoteException | InterruptedException | AssertionError e) {
-                Log.i(TAG, e.getMessage());
+                if (e != null && e.getMessage() != null) {
+                    Log.i(TAG, e.getMessage());
+                }
                 new Handler(Dependency.get(Dependency.BG_LOOPER)).postDelayed(
                         () -> new CACertLoader().execute(userId[0]),
                         CA_CERT_LOADING_RETRY_TIME_IN_MS);
