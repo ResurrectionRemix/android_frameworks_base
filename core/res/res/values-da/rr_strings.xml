@@ -18,8 +18,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Standard</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Dit forhandler billede er ikke i overensstemmelse med dit system. Flash <xliff:g id="string">%s</xliff:g> forhandler billedet til din enhed</string>
-  <string name="global_action_screenrecord">Skærmoptagelse</string>
+  <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+  <string name="global_action_screenrecord">Screenrecord</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Animationsfade</string>
   <string name="animation_slide_right">Glid ind højre</string>

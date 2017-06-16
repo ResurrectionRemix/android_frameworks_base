@@ -35,6 +35,7 @@
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Stryg til højre for %1$s</string>
   <string name="right_shortcut_hint">Stryk til venstre for %1$s</string>
+  <string name="lockscreen_message">Tap an icon on the left or right to reassign a lock screen shortcut.yes.</string>
   <string name="select_application">Vælg applikation</string>
   <string name="lockscreen_choose_action_title">Vælg handling</string>
   <!-- App circle sidebar -->
