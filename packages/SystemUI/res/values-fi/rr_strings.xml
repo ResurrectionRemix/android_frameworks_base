@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Kuvakaappaus poistettu</string>
   <!-- Strings for lockscreen shortcut hints -->
+  <string name="lockscreen_default_target">Oletus</string>
   <!-- App circle sidebar -->
   <!-- On The Go -->
   <!-- Sound QS Tile -->
