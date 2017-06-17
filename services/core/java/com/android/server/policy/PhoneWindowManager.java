@@ -7364,7 +7364,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      * @param event
      */
     private void interceptSystemNavigationKey(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP && areSystemNavigationKeysEnabled()) {
+        if (event.getAction() == KeyEvent.ACTION_UP/* && areSystemNavigationKeysEnabled()*/) {
             IStatusBarService sbar = getStatusBarService();
             if (sbar != null) {
                 try {
@@ -8921,10 +8921,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 Settings.Global.ENABLE_ACCESSIBILITY_GLOBAL_GESTURE_ENABLED, 0) == 1;
     }
 
-    private boolean areSystemNavigationKeysEnabled() {
+    /*private boolean areSystemNavigationKeysEnabled() {
         return Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
-    }
+    }*/
 
     @Override
     public boolean performHapticFeedbackLw(WindowState win, int effectId, boolean always) {
