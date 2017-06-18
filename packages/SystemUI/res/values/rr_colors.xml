@@ -150,6 +150,7 @@
     <color name="screenshot_background_color">@android:color/black</color>
 
     <color name="batterymeter_frame_color_darkintensity">@color/dark_mode_icon_color_dual_tone_background</color>
+    <color name="battery_charge_level_on_normal_statusbar">@color/light_mode_icon_color_dual_tone_fill</color> <!-- level color on normal statusbar -->
 
     <!-- Separate QS text label tint from icon tint -->
     <color name="qs_tile_label_tint_unavailable">@color/qs_tile_tint_unavailable</color>
