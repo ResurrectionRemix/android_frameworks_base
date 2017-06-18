@@ -112,11 +112,9 @@ public class BatteryMeterDrawable extends Drawable implements
     private BatteryController mBatteryController;
     private boolean mPowerSaveEnabled;
 
-    private int mDarkModeBackgroundColor;
     private int mDarkModeBatteryMeterFrameColor;
     private int mDarkModeFillColor;
 
-    private int mLightModeBackgroundColor;
     private int mLightModeBatteryMeterFrameColor;
     private int mLightModeFillColor;
 
@@ -230,12 +228,12 @@ public class BatteryMeterDrawable extends Drawable implements
         mClearPaint = new Paint();
         mClearPaint.setColor(0);
 
-        mDarkModeBackgroundColor =
-                context.getColor(R.color.dark_mode_icon_color_dual_tone_background);
-        mDarkModeFillColor = context.getColor(R.color.dark_mode_icon_color_dual_tone_fill);
-        mLightModeBackgroundColor =
-                context.getColor(R.color.light_mode_icon_color_dual_tone_background);
-        mLightModeFillColor = context.getColor(R.color.light_mode_icon_color_dual_tone_fill);
+        mDarkModeBatteryMeterFrameColor =
+                context.getColor(R.color.batterymeter_frame_color_darkintensity);
+        mDarkModeFillColor = context.getColor(R.color.battery_charge_level_on_light_statusbar);
+        mLightModeBatteryMeterFrameColor =
+                context.getColor(R.color.batterymeter_frame_color);
+        mLightModeFillColor = context.getColor(R.color.battery_charge_level_on_normal_statusbar);
 
         mDarkModeBatteryMeterFrameColor =
                 context.getColor(R.color.batterymeter_frame_color_darkintensity);
