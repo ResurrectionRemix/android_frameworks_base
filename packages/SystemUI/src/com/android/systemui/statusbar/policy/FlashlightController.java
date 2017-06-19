@@ -94,7 +94,7 @@ public class FlashlightController {
         tryInitCamera();
     }
 
-    private void tryInitCamera() {
+    public void tryInitCamera() {
         try {
             mCameraId = getCameraId();
         } catch (Throwable e) {
