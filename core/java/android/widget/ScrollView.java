@@ -691,7 +691,9 @@ public class ScrollView extends FrameLayout {
                     if (overScrollBy(0, deltaY, 0, mScrollY, 0, range, 0, mOverscrollDistance, true)
                             && !hasNestedScrollingParent()) {
                         // Break our velocity if we hit a scroll barrier.
-                        mVelocityTracker.clear();
+                        if (mVelocityTracker != null) {
+                            mVelocityTracker.clear();
+                        }
                     }
 
                     final int scrolledDeltaY = mScrollY - oldY;
