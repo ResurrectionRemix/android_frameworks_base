@@ -311,4 +311,6 @@
     <string name="pie_battery_level">"BATTERY LEVEL "</string>
     <string name="quick_settings_pie">Pie</string>
 
+    <string name="accessibility_data_sim">Current Data Sim</string>
+    <string name="data_switch_started">Switching data SIM, this may take up to a minute...</string>
 </resources>
