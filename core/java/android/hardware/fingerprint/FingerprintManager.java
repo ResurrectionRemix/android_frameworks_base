@@ -790,7 +790,7 @@ public class FingerprintManager implements BiometricFingerprintConstants {
                 throw e.rethrowFromSystemServer();
             }
         } else {
-            Slog.w(TAG, "isFingerprintHardwareDetected(): Service not connected!");
+            if (DEBUG) Slog.w(TAG, "isFingerprintHardwareDetected(): Service not connected!");
         }
         return false;
     }
