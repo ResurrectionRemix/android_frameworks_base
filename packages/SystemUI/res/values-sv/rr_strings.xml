@@ -177,6 +177,7 @@
   <string name="quick_settings_performance_profile_detail_title">Batteritid</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Kompass</string>
+  <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">Initierar\u2026</string>
   <string name="accessibility_quick_settings_compass_off">Kompass av.</string>
   <string name="accessibility_quick_settings_compass_on">Kompass på.</string>
@@ -265,4 +266,5 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Databesparing</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_text">Knacka lätt för att aktivera</string>
 </resources>
