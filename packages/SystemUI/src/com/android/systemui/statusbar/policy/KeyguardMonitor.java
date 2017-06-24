@@ -127,7 +127,8 @@ public final class KeyguardMonitor extends KeyguardUpdateMonitorCallback {
     }
 
     private void notifyKeyguardChanged() {
-        for (Callback callback : mCallbacks) {
+        for (int i = 0; i < mCallbacks.size(); i++) {
+            Callback callback = mCallbacks.get(i);
             callback.onKeyguardChanged();
         }
     }
