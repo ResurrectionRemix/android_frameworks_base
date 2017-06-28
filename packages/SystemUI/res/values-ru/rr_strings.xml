@@ -33,8 +33,8 @@
   <string name="gestures_message">Нарисуйте ваш жест здесь</string>
   <string name="rr_sys_tuner">Настройка системного интерфейса</string>
   <!-- Strings for lockscreen shortcut hints -->
-  <string name="left_shortcut_hint">Проведите вправо для %1$s</string>
-  <string name="right_shortcut_hint">Проведите влево для %1$s</string>
+  <string name="left_shortcut_hint">Свайп вправо для %1$s</string>
+  <string name="right_shortcut_hint">Свайп влево для %1$s</string>
   <string name="lockscreen_message">Нажмите на значок слева или справа для изменения ярлыков на экране блокировки.</string>
   <string name="lockscreen_default_target">По умолчанию</string>
   <string name="select_application">Выберите приложение</string>
