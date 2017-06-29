@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -92,10 +93,6 @@ public class BluetoothTile extends QSTile<QSTile.BooleanState>  {
             if (!mController.canConfigBluetooth()) {
                 mHost.startActivityDismissingKeyguard(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
             } else {
-                if (!mState.value) {
-                    mState.value = true;
-                    mController.setBluetoothEnabled(true);
-                }
                 showDetail(true);
             }
         } else {
@@ -107,21 +104,22 @@ public class BluetoothTile extends QSTile<QSTile.BooleanState>  {
     @Override
     protected void handleClick() {
         boolean easyToggle = isBtEasyToggleEnabled();
-        if (easyToggle) {
-            final boolean isEnabled = (Boolean)mState.value;
-            MetricsLogger.action(mContext, getMetricsCategory(), !isEnabled);
-            mController.setBluetoothEnabled(!isEnabled);
-        } else {
-            if (!mController.canConfigBluetooth()) {
-                mHost.startActivityDismissingKeyguard(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
-                return;
-            }
-            if (!mState.value) {
+            if (easyToggle) {
+                final boolean isEnabled = (Boolean)mState.value;
+                MetricsLogger.action(mContext, getMetricsCategory(), !isEnabled);
+	        mController.setBluetoothEnabled(!isEnabled);
+            } else {
+                if (!mController.canConfigBluetooth()) {
+	            mHost.startActivityDismissingKeyguard(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
+    	            return;
+    	        }
+                showDetail(true);
+                if (!mState.value) {
                 mState.value = true;
                 mController.setBluetoothEnabled(true);
+                }
             }
         }
-    }
 
     @Override
     public CharSequence getTileLabel() {
