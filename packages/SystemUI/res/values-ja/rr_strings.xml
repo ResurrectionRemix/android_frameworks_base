@@ -192,6 +192,9 @@
   <string name="quick_settings_compass_W">西</string>
   <string name="quick_settings_compass_NW">北西</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">HWキーON</string>
+  <string name="accessibility_quick_settings_hwkeys_off">HWキーOFF</string>
+  <string name="quick_settings_hwkeys_label">HWキー</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">アプリを強制終了しました</string>
@@ -229,6 +232,8 @@
   <string name="message_keep_one_launcher">少なくとも1つのホームアプリを起動しておいて下さい！</string>
   <string name="tm_clear_task">消去</string>
   <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">マルチウィンドウセッションは既に有効です。\n
+今すぐドッキングするには、アプリをタップします。</string>
   <string name="recents_multiwin_nolastapp">アプリ履歴にアプリがありません。ランチャーかドロワーからアプリを起動してください。</string>
   <string name="slim_recent_keyguard">アプリ履歴を表示するには画面のロックを解除してください</string>
   <string name="slim_recent_pinned">アプリ履歴を表示するには画面の固定を解除してください</string>
@@ -248,14 +253,18 @@
   <string name="omnijaws_label_default">天気</string>
   <string name="omnijaws_current_text">今</string>
   <string name="omnijaws_package_not_available">OmniJaws は使用できません。</string>
+  <string name="omnijaws_service_error_long">気象データ読み込みエラー</string>
+  <string name="omnijaws_service_disabled">サービスは無効です</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s </xliff:g><xliff:g id="condition">%2$s </xliff:g></string>
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_plugged_in_dash_charging">急速充電</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">データセーバー</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_text">タップして有効にする</string>
 </resources>
