@@ -152,6 +152,9 @@
   <string name="quick_settings_locale_label">言語</string>
   <string name="quick_settings_locale_more_locales_toast">切り替え機能を有効にするので複数の言語を設定してください。</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">操作を中断します。</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">無効になっている操作を中断します。</string>
+  <string name="quick_settings_suspend_actions_label">操作の中断</string>
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">バッテリー モード</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -260,11 +263,13 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">急速充電中（充電完了まで<xliff:g id="Charging_TIME_LEFT">%s</xliff:g>）</string>
   <string name="keyguard_plugged_in_dash_charging">急速充電</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">データセーバー</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">無効になっているすべてのナビゲーション メソッド</string>
   <string name="no_navigation_warning_text">タップして有効にする</string>
 </resources>
