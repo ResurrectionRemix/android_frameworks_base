@@ -9147,6 +9147,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String FORCE_CHARGE_BATTERY_TEXT = "force_charge_battery_text";
 
+         /**
+         * Whether to pulse the battery icon when charging
+         *
+         * @hide
+         */
+       public static final String STATUS_BAR_PULSE_CHARGING_BATTERY = "status_bar_pulse_charging_battery";
+
         /**
          * Charging symbol near battery text percentage
          * 0: no symbol
