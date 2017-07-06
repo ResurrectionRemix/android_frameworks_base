@@ -633,13 +633,14 @@ public class KeyguardViewMediator extends SystemUI {
             boolean trust = mTrustManager.isTrustUsuallyManaged(currentUser);
             boolean fingerprint = mUpdateMonitor.isUnlockWithFingerprintPossible(currentUser);
             boolean any = trust || fingerprint;
+            boolean fpunlock = mUpdateMonitor.isFingerprintUnlockAfterRebootAllowed();
             KeyguardUpdateMonitor.StrongAuthTracker strongAuthTracker =
                     mUpdateMonitor.getStrongAuthTracker();
             int strongAuth = strongAuthTracker.getStrongAuthForUser(currentUser);
 
-            if (any && !strongAuthTracker.hasUserAuthenticatedSinceBoot()) {
+            if (any && !strongAuthTracker.hasUserAuthenticatedSinceBoot() && !fpunlock) {
                 return KeyguardSecurityView.PROMPT_REASON_RESTART;
-            } else if (fingerprint && mUpdateMonitor.hasFingerprintUnlockTimedOut(currentUser)) {
+            } else if (fingerprint && !fpunlock && mUpdateMonitor.hasFingerprintUnlockTimedOut(currentUser)) {
                 return KeyguardSecurityView.PROMPT_REASON_TIMEOUT;
             } else if (any && (strongAuth & STRONG_AUTH_REQUIRED_AFTER_DPM_LOCK_NOW) != 0) {
                 return KeyguardSecurityView.PROMPT_REASON_DEVICE_ADMIN;
