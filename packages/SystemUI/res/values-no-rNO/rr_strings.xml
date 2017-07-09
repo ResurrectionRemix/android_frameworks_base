@@ -31,6 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Skjermbilde slettet</string>
   <string name="gestures_message">Tegn gesten din here</string>
+  <string name="rr_sys_tuner">Justere Systemgrensesnitt.</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">Sveip til høyre for %1$s</string>
   <string name="right_shortcut_hint">Sveip til venstre for %1$s</string>
@@ -41,14 +42,42 @@
   <string name="lockscreen_none_target">Ingen</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maksimer</string>
+  <string name="app_float_item_title">Flytende visning</string>
   <string name="app_stop_item_title">Steng app</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">\"På farten\" aktivet</string>
   <string name="onthego_notif_title">\"På farten\" er aktiv</string>
   <string name="onthego_notif_stop">Stopp</string>
+  <string name="onthego_notif_options">Egenskaper</string>
+  <string name="onthego_transparency">Gjennomsiktighet</string>
+  <string name="onthego_front_camera">Bruk front kamera</string>
+  <string name="onthego_service_toggle">Restarte enheten automatisk</string>
   <!-- Sound QS Tile -->
+  <string name="quick_settings_sound_label">Lyd</string>
+  <string name="quick_settings_sound_ring">Ring</string>
+  <string name="quick_settings_sound_vibrate">Vibrere</string>
+  <string name="quick_settings_sound_dnd">Ikke forstyrr</string>
   <!-- Volume QS Tile -->
+  <string name="accessibility_quick_settings_volume_panel">Volum</string>
+  <string name="quick_settings_volume_panel_label">Volum</string>
   <!-- Quick Settings tiles -->
+  <string name="quick_settings_screenshot_label">Skjermdump</string>
+  <string name="quick_settings_region_screenshot_label">Delvis skjermdump</string>
+  <string name="quick_settings_adb_network">ADB nettverk</string>
+  <string name="quick_settings_network_adb_enabled_label">Aktivert</string>
+  <string name="quick_settings_network_adb_disabled_label">Deaktivert</string>
+  <string name="quick_settings_sync_label">Synkroniser</string>
+  <string name="accessibility_quick_settings_sync_off">Synkronisering av</string>
+  <string name="accessibility_quick_settings_sync_on">Synkronisering på</string>
+  <string name="accessibility_quick_settings_sync_changed_off">Synkronisering avslått</string>
+  <string name="accessibility_quick_settings_sync_changed_on">Synkronisering påslått</string>
+  <string name="quick_settings_expanded_desktop_label">Utvidet skrivebord</string>
+  <string name="quick_settings_expanded_desktop">Utvidet</string>
+  <string name="quick_settings_expanded_desktop_off">Normal</string>
+  <string name="quick_settings_reboot_label">Omstart</string>
+  <string name="quick_settings_reboot_recovery_label">Gjenoppretting</string>
+  <string name="accessibility_quick_settings_usb_tether_off">Feil ved USB-tilknytning</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB-tilknytning</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC av</string>
   <!-- Pulse Tile -->
