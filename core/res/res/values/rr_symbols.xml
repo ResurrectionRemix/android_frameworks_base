@@ -215,4 +215,6 @@
 
   <!-- Pocket bridge -->
   <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
+
+  <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 </resources>
