@@ -204,4 +204,6 @@
 
   <!-- Themes -->
   <java-symbol type="color" name="theme_generic_semi_transparent_color" />
+
+  <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 </resources>
