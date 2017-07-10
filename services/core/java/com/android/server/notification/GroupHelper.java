@@ -54,6 +54,7 @@ public class GroupHelper {
                 // Not grouped by the app, add to the list of notifications for the app;
                 // send grouping update if app exceeds the autogrouping limit.
                 synchronized (mUngroupedNotifications) {
+                    if ("android".equals(sbn.getPackageName())) return;
                     Map<String, LinkedHashSet<String>> ungroupedNotificationsByUser
                             = mUngroupedNotifications.get(sbn.getUserId());
                     if (ungroupedNotificationsByUser == null) {
