@@ -36,10 +36,13 @@
   <string name="left_shortcut_hint">Stryg til højre for %1$s</string>
   <string name="right_shortcut_hint">Stryk til venstre for %1$s</string>
   <string name="lockscreen_message">Tap an icon on the left or right to reassign a lock screen shortcut.yes.</string>
+  <string name="lockscreen_default_target">Standard</string>
   <string name="select_application">Vælg applikation</string>
   <string name="lockscreen_choose_action_title">Vælg handling</string>
+  <string name="lockscreen_none_target">Ingen</string>
   <!-- App circle sidebar -->
   <string name="app_float_maximize_item_title">Maksimer</string>
+  <string name="app_float_item_title">Flydende visning</string>
   <string name="app_stop_item_title">Luk app ned</string>
   <!-- On The Go -->
   <string name="onthego_notif_ticker">På farten er aktiveret</string>
@@ -69,8 +72,59 @@
   <string name="quick_settings_sync_label">Sync</string>
   <string name="accessibility_quick_settings_sync_off">Sync fra</string>
   <string name="accessibility_quick_settings_sync_on">Sync til</string>
+  <string name="accessibility_quick_settings_sync_changed_off">Synkronisering slået fra</string>
+  <string name="accessibility_quick_settings_sync_changed_on">Synkronisering slået til</string>
+  <string name="quick_settings_expanded_desktop_label">Udvidet skrivebord</string>
+  <string name="quick_settings_expanded_desktop">Udvidet</string>
+  <string name="quick_settings_expanded_desktop_off">Normal</string>
   <string name="quick_settings_reboot_label">Genstart</string>
+  <string name="quick_settings_reboot_recovery_label">Gendannelse tilsstand</string>
+  <string name="accessibility_quick_settings_usb_tether_off">USB-tethering fra</string>
+  <string name="accessibility_quick_settings_usb_tether_on">USB-tethering til</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USB-tethering slået fra</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USB-tethering slået til</string>
+  <string name="quick_settings_usb_tether_label">USB-tethering</string>
+  <string name="quick_settings_music_label">Musik</string>
+  <string name="quick_settings_music_play">Afspil</string>
+  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_ime_tile_label">Inputmetode</string>
+  <string name="rr_qs_tile">Konfiguration</string>
+  <string name="quick_settings_caffeine_label">Koffein</string>
+  <string name="accessibility_quick_settings_caffeine_off">Koffein fra</string>
+  <string name="accessibility_quick_settings_caffeine_on">Koffein til</string>
+  <string name="qs_app_picker_title">App Picker</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE TIL </string>
+  <string name="lte_off">LTE FRA</string>
+  <string name="quick_settings_nfc">NFC</string>
+  <string name="quick_settings_nfc_label">NFC</string>
+  <string name="quick_settings_nfc_off">NFC slukket</string>
+  <string name="quick_settings_screenrecord">Skærmoptagelse</string>
+  <string name="quick_settings_screenrecord_on">Optager...</string>
+  <string name="quick_settings_navigation_bar">Navigation Bar</string>
+  <string name="quick_settings_smartbar">Smart bar</string>
+  <string name="quick_settings_smartbar_off">SmartBar fra</string>
+  <string name="quick_settings_fling">Fling</string>
+  <string name="quick_settings_fling_off">Fling fra</string>
+  <string name="quick_settings_appcirclebar_title">App cirkel bar</string>
+  <string name="quick_settings_appcirclebar_on">App cirkel bar slået til</string>
+  <string name="quick_settings_appcirclebar_off">App cirkel bar slået fra</string>
+  <string name="quick_settings_gesture_anywhere_label">Gestures overalt</string>
+  <string name="quick_settings_gesture_anywhere_on">Gestures til</string>
+  <string name="quick_settings_gesture_anywhere_off">Gestures fra</string>
+  <string name="quick_settings_appsidebar_title">App side bar</string>
+  <string name="quick_settings_appsidebar_on">App side bar til</string>
+  <string name="quick_settings_appsidebar_off">App side bar fra</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">Puls aktiveret</string>
+  <string name="quick_settings_pulse_disabled">Ingen Visualiseringer</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Puls til</string>
+  <string name="accessibility_quick_settings_pulse_on">Puls fra</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Puls slukket</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Puls tændt</string>
+  <string name="quick_settings_pulse_label">Navigation bar visualizer</string>
+  <string name="quick_settings_pie">Pie</string>
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <!-- Suspend Actions Tile -->
@@ -86,14 +140,50 @@
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_S">S</string>
+  <string name="quick_settings_compass_SW">SV</string>
+  <string name="quick_settings_compass_W">V</string>
+  <string name="quick_settings_compass_NW">NV</string>
   <!-- HW Keys Tile -->
+  <string name="accessibility_quick_settings_hwkeys_on">HW taster aktiveret</string>
+  <string name="accessibility_quick_settings_hwkeys_off">HW taster deaktiveret</string>
+  <string name="quick_settings_hwkeys_label">HW taster</string>
   <!-- PA Pie controls -->
   <!-- Kill app toast -->
+  <string name="app_killed_message">App lukket</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • Notifikationer er på pause i 1 minut.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> •Notifikationer er på pause i <xliff:g id="number">%d </xliff:g> minutter.</string>
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">Ingen screenshot taget</string>
+  <string name="screenshot_abort_text">Operation afbrudt</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Slettet</string>
+  <string name="action_delete_fault">Sletning mislykkedes</string>
+  <string name="action_save_success">Gemt</string>
+  <string name="action_save_fault">Operation mislykkedes</string>
+  <string name="pref_action_color_title">Farve på handlingsknapper</string>
+  <string name="pref_action_color_summary">Vælg din foretrukne farve for handlingsknapper</string>
+  <string name="pref_category_main">Hoved indstillinger</string>
+  <string name="pref_category_user">Brugerindstillinger</string>
+  <string name="pref_crop_behavior_title">Beskæring opsætning</string>
+  <string name="pref_crop_behavior_summary">Bruge det beskårne billede, selv om det originale ikke har været beskåret med beskærings action</string>
+  <string name="action_ok">Ok</string>
+  <string name="action_delete_success">Slettet</string>
+  <string name="action_delete_fault">Sletning mislykkedes</string>
+  <string name="action_save_success">Gemt</string>
+  <string name="action_save_fault">Operation mislykkedes</string>
+  <string name="action_edit">Redigér</string>
+  <string name="recents_custom_android_n">RYD ALLE</string>
+  <string name="recents_free_ram">Ledig RAM: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">Jobliste</string>
+  <string name="message_switch_fail">Kan ikke skifte til denne opgave, fordi den ingen grænseflade har.</string>
+  <string name="tasklist_killall">Luk alle</string>
+  <string name="tasklist_memory_usage">"• Samlede hukommelse: <xliff:g id="number">%s </xliff:g> • <xliff:g id="name"> %s </xliff:g>"</string>
+  <string name="message_keep_one_launcher">Skal have mindst én hjem aktivitet!</string>
+  <string name="tm_clear_task">Ryd</string>
   <!-- Slim Recents -->
   <!-- Slim recents app sidebar queue app toast -->
   <!-- Kill button in notification guts -->

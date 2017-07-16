@@ -54,7 +54,7 @@
   <string name="onthego_notif_camera_changed">Kamera modu değiştirildi</string>
   <string name="onthego_transparency">Saydamlık</string>
   <string name="onthego_front_camera">Ön kamerayı kullan</string>
-  <string name="onthego_service_toggle">Otomatik olarak hizmeti yeniden başlat</string>
+  <string name="onthego_service_toggle">Otomatik olarak servisi yeniden başlat</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">Ses</string>
   <string name="quick_settings_sound_ring">Zil sesi</string>
@@ -256,7 +256,7 @@
   <string name="omnijaws_current_text">Şimdi</string>
   <string name="omnijaws_package_not_available">OmniJaws mevcut değil</string>
   <string name="omnijaws_service_error_long">Hava durumu verileri yüklenirken hata oluştu</string>
-  <string name="omnijaws_service_disabled">Hizmet devre dışı</string>
+  <string name="omnijaws_service_disabled">Servis devre dışı</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
