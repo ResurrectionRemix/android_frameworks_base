@@ -85,6 +85,11 @@ public class RRUtils {
      */
     private static final String ACTION_RESTORE_HOME_STACK = APP_PACKAGE_NAME + ".ACTION_RESTORE_HOME_STACK";
 
+     /**
+     * Intent broadcast action for hide the omniswitch overlay
+     */
+    private static final String ACTION_HIDE_OVERLAY = APP_PACKAGE_NAME + ".ACTION_HIDE_OVERLAY";
+
     /**
      * Intent for launching the omniswitch settings actvity
      */
@@ -105,6 +110,12 @@ public class RRUtils {
      */
     public static void restoreHomeStack(Context context, UserHandle user) {
         final Intent intent = new Intent(RRUtils.ACTION_RESTORE_HOME_STACK);
+        intent.setPackage(APP_PACKAGE_NAME);
+        context.sendBroadcastAsUser(intent, user);
+    }
+
+    public static void hideOmniSwitchRecents(Context context, UserHandle user) {
+        final Intent intent = new Intent(RRUtils.ACTION_HIDE_OVERLAY);
         intent.setPackage(APP_PACKAGE_NAME);
         context.sendBroadcastAsUser(intent, user);
     }
