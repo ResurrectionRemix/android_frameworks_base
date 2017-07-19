@@ -4087,7 +4087,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // Remember that home is pressed and handle special actions.
             if (repeatCount == 0) {
                 mHomePressed = true;
-                if (mOmniSwitchRecents) {
+                if (mOmniSwitchRecents == 1) {
                     RRUtils.hideOmniSwitchRecents(mContext, UserHandle.CURRENT);
                 }
                 if (mHomeDoubleTapPending) {

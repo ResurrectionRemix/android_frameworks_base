@@ -529,6 +529,8 @@
 
     <protected-broadcast android:name="projekt.substratum.APP_CRASHED" />
 
+    <protected-broadcast android:name="intent_navbar_edit" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
