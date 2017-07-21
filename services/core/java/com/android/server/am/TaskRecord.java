@@ -573,7 +573,12 @@ final class TaskRecord extends ConfigurationContainer implements TaskWindowConta
     }
 
     void getWindowContainerBounds(Rect bounds) {
-        mWindowContainerController.getBounds(bounds);
+        if (mWindowContainerController != null) {
+            mWindowContainerController.getBounds(bounds);
+            return;
+        }
+        Slog.w(TAG, "getWindowContainerBounds: task " + this + " has null window container.");
+        bounds.setEmpty();
     }
 
     /**
