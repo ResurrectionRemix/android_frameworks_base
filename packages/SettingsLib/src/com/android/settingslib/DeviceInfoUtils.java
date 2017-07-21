@@ -47,6 +47,7 @@ public class DeviceInfoUtils {
 
     private static final String FILENAME_PROC_VERSION = "/proc/version";
     private static final String FILENAME_MSV = "/sys/board_properties/soc/msv";
+    private static final String FILENAME_PROC_CPUINFO = "/proc/cpuinfo";
 
     /**
      * Reads a line from the specified file.
@@ -236,4 +237,36 @@ public class DeviceInfoUtils {
         return sb.toString();
     }
 
+     /**
+      * Returns the Hardware or Processor value in /proc/cpuinfo,
+      * else returns "Unknown" (regex can be changed with a device overlay)
+      * @return a string that describes the processor
+      */
+     public static String getDeviceProcessorInfo(Context context) {
+        // Hardware or Processor : XYZ
+        final String PROC_REGEX = context.getResources().getString(R.string.processor_regex); /* hardware or processor string */
+
+         try {
+             BufferedReader reader = new BufferedReader(new FileReader(FILENAME_PROC_CPUINFO));
+             String cpuinfo;
+
+             try {
+                 while (null != (cpuinfo = reader.readLine())) {
+                     Matcher m = Pattern.compile(PROC_REGEX).matcher(cpuinfo);
+                     if (m.matches()) {
+                         return m.group(1);
+                     }
+                 }
+                 return "Unknown";
+             } finally {
+                 reader.close();
+             }
+         } catch (IOException e) {
+             Log.e(TAG,
+                 "IO Exception when getting cpuinfo for Device Info screen",
+                 e);
+
+             return "Unknown";
+         }
+     }
 }
