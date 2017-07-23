@@ -202,7 +202,7 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">ปิดแอป</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"></xliff:g><xliff:g id="string"></string>
+  <string name="heads_up_snooze_message_one_minute">• <xliff:g id="string">%s</xliff:g> Peeking แจ้งมี snoozing 1 นาที</string>
   <!-- Screenshot action -->
   <!-- Screenshot Crop & Share -->
   <string name="action_save_fault">บันทึกไม่ประสบความสำเร็จ</string>
