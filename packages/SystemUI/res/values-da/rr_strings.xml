@@ -125,6 +125,7 @@
   <string name="accessibility_quick_settings_pulse_changed_on">Puls tændt</string>
   <string name="quick_settings_pulse_label">Navigation bar visualizer</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="quick_settings_ambient_display_label">Ambient display</string>
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <!-- Suspend Actions Tile -->

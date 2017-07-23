@@ -73,7 +73,7 @@
   <string name="accessibility_quick_settings_sync_off">सिंक बंद</string>
   <string name="accessibility_quick_settings_sync_on">सिंक चालु</string>
   <string name="accessibility_quick_settings_sync_changed_off">सिंक्रनाइज़ेशन बंद कर दिया।</string>
-  <string name="accessibility_quick_settings_sync_changed_on">Sync चालु कर दिया</string>
+  <string name="accessibility_quick_settings_sync_changed_on">सिंक्रनाइज़ेशन चालु कर दिया।</string>
   <string name="quick_settings_expanded_desktop_label">विस्तारित डेस्कटॉप</string>
   <string name="quick_settings_expanded_desktop">विस्तारित</string>
   <string name="quick_settings_expanded_desktop_off">सामान्य</string>
@@ -93,14 +93,14 @@
   <string name="accessibility_quick_settings_caffeine_off">कैफीन बंद</string>
   <string name="accessibility_quick_settings_caffeine_on">कैफीन चालू</string>
   <string name="qs_app_picker_title">App चुनने वाला</string>
-  <string name="quick_settings_lte_label">LTE</string>
+  <string name="quick_settings_lte_label">4G</string>
   <string name="lte_on">LTE चालू </string>
   <string name="lte_off">LTE बंद</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC बंद</string>
   <string name="quick_settings_screenrecord">स्क्रीन रिकॉर्ड</string>
-  <string name="quick_settings_screenrecord_on">रिकॉर्डिंग...</string>
+  <string name="quick_settings_screenrecord_on">रिकॉर्डिंग चालू...</string>
   <string name="quick_settings_navigation_bar">नेविगेशन पट्टी</string>
   <string name="quick_settings_smartbar">स्मार्ट पट्टी</string>
   <string name="quick_settings_smartbar_off">स्मार्ट पट्टी बंद</string>
