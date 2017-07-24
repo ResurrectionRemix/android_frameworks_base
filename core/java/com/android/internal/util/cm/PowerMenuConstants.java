@@ -46,9 +46,8 @@ public class PowerMenuConstants {
         GLOBAL_ACTION_KEY_BUGREPORT,
         GLOBAL_ACTION_KEY_VOICEASSIST,
         GLOBAL_ACTION_KEY_ASSIST,
-        GLOBAL_ACTION_KEY_SILENT,
-        GLOBAL_ACTION_KEY_EMERGENCY
-
+        GLOBAL_ACTION_KEY_EMERGENCY,
+        GLOBAL_ACTION_KEY_SILENT
     };
 
     public static String[] getAllActions() {

@@ -2328,6 +2328,7 @@
         <item>bugreport</item>
         <item>voiceassist</item>
         <item>assist</item>
+        <item>emergency</item>
         <item>silent</item>
     </string-array>
 
