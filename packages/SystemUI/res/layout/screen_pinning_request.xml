@@ -33,7 +33,7 @@
         android:id="@+id/spacer"
         android:layout_width="@dimen/screen_pinning_request_width"
         android:layout_height="18dp"
-        android:background="?android:attr/colorAccent" />
+        android:background="@color/screen_pinning_background_color" />
 
     <include
         android:layout_width="@dimen/screen_pinning_request_width"

@@ -28,7 +28,7 @@
     android:id="@+id/screen_pinning_buttons"
     android:layout_width="match_parent"
     android:layout_height="@dimen/screen_pinning_request_button_height"
-    android:background="?android:attr/colorAccent">
+    android:background="@color/screen_pinning_background_color">
 
     <View
         android:layout_width="@dimen/screen_pinning_request_side_width"

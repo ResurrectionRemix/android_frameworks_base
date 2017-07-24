@@ -14,5 +14,5 @@
      limitations under the License.
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:alpha="0.25" android:color="?android:attr/colorAccent" />
+    <item android:alpha="0.25" android:color="@color/screen_pinning_nav_icon_hightlight_outer_color" />
 </selector>
