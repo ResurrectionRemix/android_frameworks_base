@@ -48,7 +48,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
-import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
@@ -217,8 +216,9 @@ public class RecentPanelView {
                             try {
                                 //resize the docked stack to fullscreen to disable current multiwindow mode
                                 ActivityManagerNative.getDefault().resizeStack(
-                                                    ActivityManager.StackId.DOCKED_STACK_ID, null, true, true, false, -1);
-                            } catch (RemoteException e) {}
+                                                    ActivityManager.StackId.DOCKED_STACK_ID,
+                                                    null, true, true, false, -1);
+                            } catch (Exception e) {}
                             wasDocked = true;
                         }
                         ActivityOptions options = ActivityOptions.makeBasic();
@@ -232,7 +232,7 @@ public class RecentPanelView {
                                             .startActivityFromRecents(task.persistentTaskId, options.toBundle());
                                     mController.openLastApptoBottom();
                                     clearOptions();
-                                } catch (RemoteException e) {}
+                                } catch (Exception e) {}
                             }
                         //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
                         }, wasDocked ? 100 : 0);
@@ -453,8 +453,9 @@ public class RecentPanelView {
                     try {
                         //resize the docked stack to fullscreen to disable current multiwindow mode
                         ActivityManagerNative.getDefault().resizeStack(
-                                            ActivityManager.StackId.DOCKED_STACK_ID, null, true, true, false, -1);
-                    } catch (RemoteException e) {}
+                                            ActivityManager.StackId.DOCKED_STACK_ID,
+                                            null, true, true, false, -1);
+                    } catch (Exception e) {}
                     wasDocked = true;
                 }
                 ActivityOptions options = ActivityOptions.makeBasic();
@@ -475,7 +476,7 @@ public class RecentPanelView {
                             // No need to keep the panel open, we already chose both
                             // top and bottom apps
                             mController.closeRecents();
-                        } catch (RemoteException e) {}
+                        } catch (Exception e) {}
                     }
                 //if we disabled a running multiwindow mode, just wait a little bit before docking the new apps
                 }, wasDocked ? 100 : 0);
