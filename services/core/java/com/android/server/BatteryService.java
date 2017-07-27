@@ -176,6 +176,10 @@ public final class BatteryService extends SystemService {
     private int mBatteryReallyFullARGB;
     private boolean mMultiColorLed;
 
+    //Battery light on DND
+    private boolean mAllowBatteryLightOnDnd;
+    private boolean mIsDndActive;
+
     private boolean mSentLowBatteryBroadcast = false;
 
     private final int mVbattSamplingIntervalMsec = 30000; /* sampling frequency - 30 seconds */
@@ -1007,8 +1011,7 @@ public final class BatteryService extends SystemService {
             final int status = mBatteryProps.batteryStatus;
             mNotificationLedBrightnessLevel = mUseSegmentedBatteryLed ? level :
                     LIGHT_BRIGHTNESS_MAXIMUM;
-
-            if (!mLightEnabled) {
+            if (!mLightEnabled || (mIsDndActive && !mAllowBatteryLightOnDnd)) {
                 // No lights if explicitly disabled
                 mBatteryLight.turnOff();
             } else if (level < mLowBatteryWarningLevel) {
@@ -1161,6 +1164,12 @@ public final class BatteryService extends SystemService {
                 resolver.registerContentObserver(
                         Settings.System.getUriFor(Settings.System.BATTERY_LIGHT_REALLY_FULL_COLOR),
                         false, this, UserHandle.USER_ALL);
+                resolver.registerContentObserver(
+                        Settings.System.getUriFor(Settings.System.BATTERY_LIGHT_ALLOW_ON_DND),
+                        false, this, UserHandle.USER_ALL);
+                resolver.registerContentObserver(
+                        Settings.Global.getUriFor(Settings.Global.ZEN_MODE),
+                        false, this, UserHandle.USER_ALL);
             }
 
             update();
@@ -1181,6 +1190,13 @@ public final class BatteryService extends SystemService {
             // Low battery pulse
             mLedPulseEnabled = CMSettings.System.getInt(resolver,
                         CMSettings.System.BATTERY_LIGHT_PULSE, 1) != 0;
+
+            // DND battery light
+            mAllowBatteryLightOnDnd = Settings.System.getInt(resolver,
+                    Settings.System.BATTERY_LIGHT_ALLOW_ON_DND, 1) == 1;
+            mIsDndActive = Settings.Global.getInt(resolver,
+                    Settings.Global.ZEN_MODE, Settings.Global.ZEN_MODE_OFF)
+                    != Settings.Global.ZEN_MODE_OFF;
 
             // Light colors
             mBatteryLowARGB = CMSettings.System.getInt(resolver,
