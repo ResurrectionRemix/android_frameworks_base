@@ -35,13 +35,13 @@
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">%1$s için sağa kaydırın</string>
   <string name="right_shortcut_hint">%1$s için sola kaydırın</string>
-  <string name="lockscreen_message">Kilit ekranı kısayolunu oluşturmak için sol veya sağdaki simgeye dokunun.</string>
+  <string name="lockscreen_message">Bir kilit ekranı kısayolu atamak için sol veya sağdaki bir simgeye dokunun.</string>
   <string name="lockscreen_default_target">Varsayılan</string>
   <string name="select_application">Uygulama seçin</string>
   <string name="lockscreen_choose_action_title">Eylem seçin</string>
   <string name="lockscreen_none_target">Hiçbiri</string>
   <!-- App circle sidebar -->
-  <string name="app_float_maximize_item_title">Maksimuma çıkar</string>
+  <string name="app_float_maximize_item_title">En yükseğe çıkar</string>
   <string name="app_float_item_title">Yüzer görünüm</string>
   <string name="app_stop_item_title">Uygulamayı sonlandır</string>
   <!-- On The Go -->
@@ -74,7 +74,7 @@
   <string name="accessibility_quick_settings_sync_on">Eşitleme açık</string>
   <string name="accessibility_quick_settings_sync_changed_off">Eşitleme kapatıldı</string>
   <string name="accessibility_quick_settings_sync_changed_on">Eşitleme açıldı</string>
-  <string name="quick_settings_expanded_desktop_label">Genişletilmiş masaüstü</string>
+  <string name="quick_settings_expanded_desktop_label">Genişletilmiş ekran</string>
   <string name="quick_settings_expanded_desktop">Genişletilmiş</string>
   <string name="quick_settings_expanded_desktop_off">Standart</string>
   <string name="quick_settings_reboot_label">Yeniden başlat</string>
@@ -137,10 +137,10 @@
   <string name="accessibility_quick_settings_heads_up_changed_on">Bildirim pencereleri açıldı</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Konum bildirimi: pil tasarruf modu.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Konum bildirimi: sadece sensörler modu.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Konum bildirimi: yalnızca sensörler modu.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Konum bildirmi: yüksek doğruluk modu.</string>
   <string name="accessibility_quick_settings_location_changed_battery_saving">Konum bildirimi pil tasarruf moduna geçti.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Konum bildirimi sadece sensörler moduna geçti.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Konum bildirimi yalnızca sensörler moduna geçti.</string>
   <string name="accessibility_quick_settings_location_changed_high_accuracy">Konum bildirimi yüksek hassasiyet moduna geçti.</string>
   <string name="quick_settings_location_detail_title">Konum modu</string>
   <string name="quick_settings_location_battery_saving_label">Pil tasarrufu</string>

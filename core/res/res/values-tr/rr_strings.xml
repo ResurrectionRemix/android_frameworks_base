@@ -28,7 +28,7 @@
   <string name="animation_slide_left_no_fade">Sola kaydır (karartma yok)</string>
   <string name="animation_slide_up">Aşağı kaydır</string>
   <string name="animation_slide_down">Yukarı kaydır</string>
-  <string name="animation_default">Sıfırla</string>
+  <string name="animation_default">Varsayılan</string>
   <string name="animation_translucent">Yarı saydam</string>
   <string name="animation_grow_shrink">Yayılan (yukarıya)</string>
   <string name="animation_grow_shrink_center">Yayılan (ortaya)</string>

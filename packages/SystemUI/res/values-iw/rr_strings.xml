@@ -17,7 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">מסך מוקלט</string>
+  <string name="screenrecord_notif_ticker">המסך מוקלט</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">מקליט מסך</string>
   <!-- Screenrecord notification action: Stop -->
@@ -79,15 +79,20 @@
   <string name="quick_settings_expanded_desktop_off">רגיל</string>
   <string name="quick_settings_reboot_label">הפעלה מחדש</string>
   <string name="quick_settings_reboot_recovery_label">שחזור</string>
-  <string name="accessibility_quick_settings_usb_tether_off">USB קשירת מבוטלת</string>
-  <string name="accessibility_quick_settings_usb_tether_on">USB קשירת מופעלת</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_off">USB קשירת כבוי</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_on">USB קשירת כבוי</string>
+  <string name="accessibility_quick_settings_usb_tether_off">שיתוף אינטרנט USB מבוטל</string>
+  <string name="accessibility_quick_settings_usb_tether_on">שיתוף אינטרנט USB מופעל</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">שיתוף אינטרנט USB כבוי</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">שיתוף אינטרנט פועל</string>
+  <string name="quick_settings_usb_tether_label">שיתוף אינטרנט דרך USB</string>
   <string name="quick_settings_music_label">מוזיקה</string>
   <string name="quick_settings_music_play">הפעל</string>
   <string name="quick_settings_music_pause">השהה</string>
   <string name="quick_settings_ime_tile_label">שיטת קלט</string>
   <string name="rr_qs_tile">הגדרות</string>
+  <string name="quick_settings_caffeine_label">קפאין</string>
+  <string name="accessibility_quick_settings_caffeine_off">קפאין קפוא</string>
+  <string name="accessibility_quick_settings_caffeine_on">קפאין כבוי</string>
+  <string name="qs_app_picker_title">מסנן יישומים</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE מופעל </string>
   <string name="lte_off">LTE מופסק</string>
@@ -97,19 +102,63 @@
   <string name="quick_settings_screenrecord">הקלטת מסך</string>
   <string name="quick_settings_screenrecord_on">מקליט...</string>
   <string name="quick_settings_navigation_bar">שורת הניווט</string>
+  <string name="quick_settings_smartbar">סרגל ניווט חכם</string>
+  <string name="quick_settings_smartbar_off">סרגל ניווט חכם כבוי</string>
+  <string name="quick_settings_fling">החלק</string>
+  <string name="quick_settings_fling_off">החלק כבוי</string>
+  <string name="quick_settings_appcirclebar_title">מעגל ניווט יישומים</string>
+  <string name="quick_settings_appcirclebar_on">מעגל ניווט יישומים פועל</string>
+  <string name="quick_settings_appcirclebar_off">מעגל ניווט יישומים כבוי</string>
   <string name="quick_settings_gesture_anywhere_label">מחווה בכל מקום</string>
   <string name="quick_settings_gesture_anywhere_on">מחוות הפעלה</string>
   <string name="quick_settings_gesture_anywhere_off">מחוות הפסקה</string>
   <string name="quick_settings_appsidebar_title">סרגל צד של יישומים</string>
+  <string name="quick_settings_appsidebar_on">סרגל יישומים צידי פועל</string>
+  <string name="quick_settings_appsidebar_off">סרגל יישומים צידי כבוי</string>
   <!-- Pulse Tile -->
+  <string name="quick_settings_pulse_enabled">פולס מופעל</string>
+  <string name="quick_settings_pulse_disabled">אין תצורה</string>
+  <string name="quick_settings_pulse_label">פולס</string>
+  <string name="accessibility_quick_settings_pulse_off">פולס כבוי</string>
+  <string name="accessibility_quick_settings_pulse_on">פולס דולק</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">פולס כבוי</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">פולס דולק</string>
+  <string name="quick_settings_pulse_label">תצורת סרגל יישומים</string>
+  <string name="quick_settings_pie">פאי</string>
+  <string name="quick_settings_ambient_display_label">תצוגת אמביאנט</string>
+  <string name="accessibility_quick_settings_ambient_display_off">תצוגת אמביאנט כבויה.</string>
+  <string name="accessibility_quick_settings_ambient_display_on">תצוגת אמביאנט דולקת</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">תצוגת אמביאנט כבויה</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">תצוגת אמביאנט דולקת</string>
+  <string name="quick_settings_heads_up_label">הודעה עליונה</string>
+  <string name="accessibility_quick_settings_heads_up_off">הודעה עליונה כבויה</string>
+  <string name="accessibility_quick_settings_heads_up_on">הודעה עליונה דולקת</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">הודעה עליונה כבויה</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">הודעה עליונה דולקת</string>
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">דיווח מיקום: מצב חסכון סוללה.</string>
+  <string name="accessibility_quick_settings_location_gps_only">דיווח מיקום: מצב חיישן בלבד.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">דיווח מיקום: מצב מיקום מדויק.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">מצב דיווח מיקום שונה למצב חסכון סוללה.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">מצב דיווח מיקום שונה למצב חיישן בלבד.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">מצב דיווח מיקום שונה למצב מיקום מדויק.</string>
+  <string name="quick_settings_location_detail_title">מצב מיקום</string>
+  <string name="quick_settings_location_battery_saving_label">חסכון בסוללה</string>
+  <string name="quick_settings_location_gps_only_label">מכשיר בלבד</string>
   <string name="quick_settings_location_high_accuracy_label">רמת דיוק גבוהה</string>
+  <string name="quick_settings_location_off_label">מיקום כבוי</string>
+  <string name="quick_settings_location_off_custom_label">מיקום</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">שפה</string>
+  <string name="quick_settings_locale_more_locales_toast">אנא הגדר מספר שפות בהדי להפעיל מצב בחירה</string>
   <!-- Suspend Actions Tile -->
+  <string name="accessibility_quick_settings_suspend_actions_on">מצב השהיית פעילות מופעל</string>
+  <string name="accessibility_quick_settings_suspend_actions_off">מצב השהיית פעילות כבוי</string>
+  <string name="quick_settings_suspend_actions_label">השהיית פעילות</string>
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">מצב הסוללה</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">מצב סוללה: חסכון בסוללה.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_bal">מצב הסוללה: מצב מאוזן.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -131,6 +180,7 @@
   <string name="quick_settings_performance_profile_detail_title">מצב סוללה</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">מצפן</string>
+  <string name="accessibility_quick_settings_compass_off">מצפן כבוי.</string>
   <string name="accessibility_quick_settings_compass_on">מצפן דלוק.</string>
   <string name="accessibility_quick_settings_compass_changed_off">המצפן כבוי.</string>
   <string name="accessibility_quick_settings_compass_changed_on">המצפן מופעל.</string>
@@ -150,6 +200,7 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">אפליקציה הושבתה</string>
   <!-- Heads up snooze toast -->
+  <string name="heads_up_snooze_message_one_minute">הצצה להודעות מופסקת למשך דקה.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">לא נלקחה תמונת מסך</string>
   <string name="screenshot_abort_text">הפעולה בוטלה</string>
@@ -162,6 +213,8 @@
   <string name="pref_action_color_summary">בחר את הצבע האהוב עליך עבור לחצני פעולה</string>
   <string name="pref_category_main">הגדרות ראשיות</string>
   <string name="pref_category_user">הגדרות משתמש</string>
+  <string name="pref_crop_behavior_title">אופן חיתוך</string>
+  <string name="pref_crop_behavior_summary">השתמש בתמונה החתוכה גם אם התמונה המקורית לא נחתכה באמצעות כלי החיתוך</string>
   <string name="action_ok">אישור</string>
   <string name="action_delete_success">נמחק</string>
   <string name="action_delete_fault">המחיקה לא בוצעה</string>
@@ -187,12 +240,31 @@
   <string name="toast_recents_cancel_queued_app">בוטלה הפעלת האפליקציה</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">לאלץ עצירה?</string>
+  <string name="force_stop_dlg_text">אם תכריח את הפסקת היישום, יתכן כי היישום לא יפעל כהלכה.</string>
+  <string name="dlg_ok">OK</string>
+  <string name="dlg_cancel">בטל</string>
+  <string name="kill">הפסק יישום</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">שגיאה</string>
+  <string name="omnijaws_service_unkown">אין מידע מזג אוויר</string>
+  <string name="omnijaws_detail_header">מזג אוויר</string>
+  <string name="omnijaws_label_default">מזג אוויר</string>
+  <string name="omnijaws_current_text">כעת</string>
+  <string name="omnijaws_package_not_available">OmniJaws אינו זמין</string>
+  <string name="omnijaws_service_error_long">שגיאה בטעינת נתוני מזג האויר</string>
+  <string name="omnijaws_service_disabled">השירות הושבת</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">טעינה מהירה (<xliff:g id="Charging_TIME_LEFT">%s</xliff:g> עד לסיום)</string>
+  <string name="keyguard_plugged_in_dash_charging">טעינה מהירה</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">‏חוסך הנתונים (Data Saver)</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">כל אפשרויות הניווט מושבתות</string>
+  <string name="no_navigation_warning_text">הקש להפעלה</string>
 </resources>
