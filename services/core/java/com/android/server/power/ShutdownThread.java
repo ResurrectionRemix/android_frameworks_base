@@ -71,7 +71,7 @@ import java.nio.charset.StandardCharsets;
 public final class ShutdownThread extends Thread {
     // constants
     private static final String TAG = "ShutdownThread";
-    private static final int PHONE_STATE_POLL_SLEEP_MSEC = 500;
+    private static final int PHONE_STATE_POLL_SLEEP_MSEC = 250;
     // maximum time we wait for the shutdown broadcast before going on.
     private static final int MAX_BROADCAST_TIME = 10*1000;
     private static final int MAX_SHUTDOWN_WAIT_TIME = 20*1000;
@@ -85,7 +85,7 @@ public final class ShutdownThread extends Thread {
     private static final int MOUNT_SERVICE_STOP_PERCENT = 20;
 
     // length of vibration before shutting down
-    private static final int SHUTDOWN_VIBRATE_MS = 500;
+    private static final int SHUTDOWN_VIBRATE_MS = 250;
 
     // state tracking
     private static final Object sIsStartedGuard = new Object();
