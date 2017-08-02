@@ -1639,6 +1639,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         Process.killProcess(Process.myPid());
     }
 
+    @Override
+    public void leftInLandscapeChanged(boolean isLeft) {
+        if (DEBUG)
+            Log.d(TAG, "StatusBar API leftInLandscapeChanged = " + isLeft);
+    }
+
     protected H createHandler() {
          return new H();
     }

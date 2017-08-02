@@ -472,6 +472,22 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
         }
     }
 
+    /**
+     * Window manager notifies SystemUI of navigation bar "left in landscape" changes
+     *
+     * @hide
+     */
+    @Override
+    public void leftInLandscapeChanged(boolean isLeft) {
+        enforceStatusBar();
+        if (mBar != null) {
+            try {
+                mBar.leftInLandscapeChanged(isLeft);
+            } catch (RemoteException ex) {
+            }
+        }
+    }
+
     public void addTile(ComponentName component) {
         enforceStatusBarOrShell();
 
