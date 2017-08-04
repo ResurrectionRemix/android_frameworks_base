@@ -31,23 +31,9 @@
     <!-- On-The-Go -->
     <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
     <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
-
-    
-    <!-- Enable PA Pie relocation to either stick to a physical side or default to the right side -->
-    <bool name="config_relocatePieOnRotation">true</bool>
-
-    <!-- Enable force PA Pie centered -->
-    <bool name="config_forcePieCentered">true</bool>
-
-    <!-- Sensivity of pie gestures controlls.
-        Must be minimum 1 and maximum 10 (See @EdgeServiceConstants.java).
-        Default for pie is high sensivity -->
-    <integer name="pie_gesture_sensivity">10</integer>
-
     <!-- Default value how much apps show the app screenshot on recents view entry -->
     <integer name="expanded_items_default">2</integer>
 
     <!-- Most Devices support LTE. Hence LTE tile is visibile. Devices like Galaxy s2, s3 require this to be false -->
     <bool name="device_supports_lte">true</bool>
-
 </resources>

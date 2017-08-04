@@ -53,7 +53,6 @@ import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.ExpandedDesktopTile;
-import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.NfcTile;
@@ -492,7 +491,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("pulse")) return new PulseTile(this);
         else if (tileSpec.equals("app_circle_bar")) return new AppCircleBarTile(this);
         else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
-        else if (tileSpec.equals("pie")) return new PieTile(this);
         else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
         else if (tileSpec.equals("night")) return new NightDisplayTile(this);
         else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);

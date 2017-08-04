@@ -18,8 +18,4 @@
 <resources>
     <dimen name="phone_height">210dp</dimen>
     <dimen name="phone_width">420dp</dimen>
-
-    <!-- PA Pie -->
-    <dimen name="pie_panel_padding">100dp</dimen>
-
 </resources>

@@ -135,7 +135,6 @@
     <string name="accessibility_quick_settings_pulse_changed_off">Pulse turned off</string>
     <string name="accessibility_quick_settings_pulse_changed_on">Pulse turned on</string>
     <string name="quick_settings_pulse_label">Navigation bar visualizer</string>
-    <string name="quick_settings_pie">Pie</string>
     <string name="quick_settings_ambient_display_label">Ambient display</string>
     <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
     <string name="accessibility_quick_settings_ambient_display_on">Ambient display on</string>
@@ -210,13 +209,6 @@
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
     <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
     <string name="quick_settings_hwkeys_label">HW keys</string>
-
-    <!-- PA Pie controls -->
-    <string name="pie_date_format" translatable="false">ccc, dd MMM yyyy</string>
-    <string name="pie_hour_format_12" translatable="false">hh:mm</string>
-    <string name="pie_hour_format_24" translatable="false">HH:mm</string>
-    <string name="pie_am_pm" translatable="false">a</string>
-
     <!-- Kill app toast -->
     <string name="app_killed_message">App Killed</string>
 
