@@ -167,7 +167,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         @Override
         public void onChange(boolean selfChange) {
             final boolean enabled = System.getIntForUser(mContext.getContentResolver(),
-                    POCKET_JUDGE, 1 /* default */, UserHandle.USER_CURRENT) != 0;
+                    POCKET_JUDGE, 0 /* default */, UserHandle.USER_CURRENT) == 1;
             setEnabled(enabled);
         }
 

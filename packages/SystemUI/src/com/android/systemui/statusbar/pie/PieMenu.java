@@ -1062,11 +1062,7 @@ public class PieMenu extends RelativeLayout {
      * Checks whether the PIE detail is allowed to show
      */
     private boolean isAllowedToDraw() {
-        final int immersiveModeAllowsPie = Settings.Secure.getInt(
-                mContext.getContentResolver(),
-                Settings.Secure.SYSTEM_DESIGN_FLAGS, 0);
-        return !mPanel.isKeyguardLocked() && immersiveModeAllowsPie !=
-                View.SYSTEM_DESIGN_FLAG_IMMERSIVE_NAV;
+        return !mPanel.isKeyguardLocked();
     }
 
     /**
