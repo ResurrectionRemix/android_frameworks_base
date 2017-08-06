@@ -48,7 +48,7 @@
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">Akku Statistik zurücksetzen</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_resetBatteryStats">Ermöglicht einer Anwendung, die aktuellen Low-Level-Batterienutzungsdaten zurückzusetzen.</string>
+  <string name="permdesc_resetBatteryStats">Erlaubt einer App, die aktuelle Akku-Statistik zurückzusetzen.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_restartUI">neustart der System leisten</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
