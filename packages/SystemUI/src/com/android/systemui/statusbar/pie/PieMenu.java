@@ -541,8 +541,8 @@ public class PieMenu extends RelativeLayout {
         mStatusTextTopMarginLand = mResources.getDimensionPixelSize(
                 R.dimen.pie_status_text_top_margin_land);
         mStatusIconSize = mResources.getDimensionPixelSize(R.dimen.pie_status_item_size);
-        mNetworkText = getNetworkText();
         mSsidText = getWifiSsid();
+        mNetworkText = getNetworkText(mSsidText);
         createSignalIcons();
 
         // Set colors
@@ -629,8 +629,8 @@ public class PieMenu extends RelativeLayout {
      * Create and layout the wifi and mobile signal icons
      */
     private void createSignalIcons() {
-        mNetworkText = getNetworkText();
         mSsidText = getWifiSsid();
+        mNetworkText = getNetworkText(mSsidText);
 
         if (mNetworkText != null) {
             mNetworkIcon.setImageResource(mNetworkIconResId);
@@ -1175,7 +1175,7 @@ public class PieMenu extends RelativeLayout {
     /**
      * Get the current provider name and the mobile data type, if enabled
      */
-    private String getNetworkText() {
+    private String getNetworkText(String mSsidText) {
         boolean mobileDataEnabled = TelephonyManager.getDefault().getDataEnabled(mSubId);
         String type = TelephonyManager.getDefault().getNetworkTypeName();
         String operatorName = mTelephonyManager.getNetworkOperatorName();
@@ -1185,7 +1185,7 @@ public class PieMenu extends RelativeLayout {
         if (operatorName != null && operatorName.equals("")) {
             operatorName = null;
         }
-        if (!mobileDataEnabled) {
+        if (!mobileDataEnabled || mSsidText != null) {
             return operatorName == null ? null : operatorName.toUpperCase();
         }
         return operatorName == null || type == null ? null :
