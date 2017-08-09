@@ -39,7 +39,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     uicommon \
     android-support-v7-cardview
 
-LOCAL_JAVA_LIBRARIES := telephony-common org.dirtyunicorns.utils
+LOCAL_JAVA_LIBRARIES := telephony-common org.dirtyunicorns.utils telephony-ext
 
 LOCAL_FULL_LIBS_MANIFEST_FILES := $(LOCAL_PATH)/AndroidManifest_cm.xml
 
