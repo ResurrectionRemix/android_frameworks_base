@@ -227,7 +227,7 @@ public class SystemUIApplication extends Application {
         @Override
         public void onCallbackAdded(int themeMode, int color) {
             final boolean defaultTheme = Settings.Secure.getInt(getContentResolver(),
-                    Settings.Secure.THEME_ACCENT_COLOR, 1) == 0;
+                    Settings.Secure.THEME_ACCENT_COLOR, 0) == 0;
             if (themeMode == 0 && defaultTheme) {
                 getTheme().applyStyle(R.style.systemui_theme, true);
             } else {
