@@ -23,6 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager.SpanSizeLookup;
 import android.support.v7.widget.RecyclerView;
@@ -270,15 +271,16 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         holder.mTileView.onStateChanged(info.state);
         holder.mTileView.setAppLabel(info.appLabel);
         holder.mTileView.setShowAppLabel(position > mEditIndex && !info.isSystem);
-
         final boolean selectable = !mAccessibilityMoving || position < mEditIndex;
-        if (!(mAccessibilityManager.isTouchExplorationEnabled() && selectable)) {
-            holder.mTileView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    move(holder.getAdapterPosition(), mEditIndex, holder.mTileView);
-                }
-            });
+        if (isSingleTapEnabled()) {
+           if (!(mAccessibilityManager.isTouchExplorationEnabled() && selectable)) {
+               holder.mTileView.setOnClickListener(new OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                         move(holder.getAdapterPosition(), mEditIndex, holder.mTileView);
+                    }
+               });
+            }
         }
         if (mAccessibilityManager.isTouchExplorationEnabled()) {
             holder.mTileView.setClickable(selectable);
@@ -317,6 +319,11 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         move(mAccessibilityFromIndex, position, v);
 
         notifyDataSetChanged();
+    }
+
+    public boolean isSingleTapEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QUICK_TILE_ADD, 0) == 1;
     }
 
     private void showAccessibilityDialog(final int position, final View v) {

@@ -4212,6 +4212,12 @@ public final class Settings {
         public static final String QS_FOOTER_WARNINGS = "qs_footer_warnings";
 
         /**
+         *
+         * @hide
+         */
+        public static final String QUICK_TILE_ADD = "quick_tile_add";
+
+        /**
          * Whether to show the battery bar
          * @hide
          */
