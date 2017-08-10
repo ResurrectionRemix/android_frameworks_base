@@ -22,6 +22,7 @@ import android.annotation.NonNull;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.KeyguardManager;
+import android.app.ThemeManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -124,6 +125,7 @@ public class VolumeDialog implements TunerService.Tunable {
     private final Accessibility mAccessibility = new Accessibility();
     private ColorStateList mActiveSliderTint;
     private ColorStateList mInactiveSliderTint;
+    private ColorStateList mInactiveSliderTintColorEngine;
     private VolumeDialogMotion mMotion;
     private final int mWindowType;
     private final ZenModeController mZenModeController;
@@ -171,7 +173,8 @@ public class VolumeDialog implements TunerService.Tunable {
         mAccessibilityMgr =
                 (AccessibilityManager) mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
         mActiveSliderTint = ColorStateList.valueOf(Utils.getColorAccent(mContext));
-        mInactiveSliderTint = ColorStateList.valueOf(Utils.getColorAccent(mContext));
+        mInactiveSliderTint = loadColorStateList(R.color.volume_slider_inactive);
+        mInactiveSliderTintColorEngine = ColorStateList.valueOf(Utils.getColorAccent(mContext));
 
         initDialog();
 
@@ -290,7 +293,7 @@ public class VolumeDialog implements TunerService.Tunable {
         mDialog.dismiss();
         mDialogView.setBackgroundColor(ta.getColor(0, 0));
         mActiveSliderTint = ColorStateList.valueOf(Utils.getColorAccent(mContext));
-        mInactiveSliderTint = ColorStateList.valueOf(Utils.getColorAccent(mContext));
+        mInactiveSliderTintColorEngine = ColorStateList.valueOf(Utils.getColorAccent(mContext));
         endText.setTextColor(ta.getColor(1, 0));
         ta.recycle();
     }
@@ -903,7 +906,9 @@ public class VolumeDialog implements TunerService.Tunable {
             row.slider.requestFocus();
         }
         final ColorStateList tint = isActive && row.slider.isEnabled() ? mActiveSliderTint
-                : mInactiveSliderTint;
+                : (ThemeManager.isOverlayEnabled()
+                        ? mInactiveSliderTint
+                        : mInactiveSliderTintColorEngine);
         if (tint == row.cachedSliderTint) return;
         row.cachedSliderTint = tint;
         row.slider.setProgressTintList(tint);

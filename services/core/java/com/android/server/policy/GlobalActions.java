@@ -398,7 +398,9 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
                 Settings.Secure.THEME_ACCENT_COLOR, 0);
 
         if (themeMode == 0 && accentColor == 0) {
-            context.setTheme(R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+            // Don't apply any style, use the one that the context already has
+            // to keep default behaviour
+            //context.setTheme(R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         } else {
             context.getTheme().applyStyle(sTheme, true);
         }

@@ -79,7 +79,8 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
     private int mDefaultColumns;
 
     public QSCustomizer(Context context, AttributeSet attrs) {
-        super(new ContextThemeWrapper(context, Utils.getColorAccent(context)), attrs);
+        super(new ContextThemeWrapper(context, ThemeManager.isOverlayEnabled()
+                ? R.style.edit_theme : Utils.getColorAccent(context)), attrs);
         mClipper = new QSDetailClipper(this);
 
         LayoutInflater.from(getContext()).inflate(R.layout.qs_customize_panel_content, this);

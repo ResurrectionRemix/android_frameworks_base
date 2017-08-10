@@ -18,6 +18,7 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.Nullable;
+import android.app.ThemeManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -97,7 +98,9 @@ public class QSDetail extends LinearLayout {
         mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
         mQsDetailHeaderSwitch = (Switch) mQsDetailHeader.findViewById(android.R.id.toggle);
         mQsDetailHeaderProgress = (ImageView) findViewById(R.id.qs_detail_header_progress);
-        mQsDetailHeaderProgress.setBackgroundColor(Utils.getColorAccent(mContext));
+        if (!ThemeManager.isOverlayEnabled()) {
+            mQsDetailHeaderProgress.setBackgroundColor(Utils.getColorAccent(mContext));
+        }
 
         updateDetailText();
 
