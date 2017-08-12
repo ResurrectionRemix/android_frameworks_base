@@ -99,6 +99,7 @@ oneway interface IStatusBar
     void startAssist(in Bundle args);
     void screenPinningStateChanged(boolean enabled);
     void leftInLandscapeChanged(boolean isLeft);
+    void toggleFlashlight();
 
     // SystemUI Restart method for masquerade
     void restartUI();

@@ -1645,6 +1645,12 @@ public abstract class BaseStatusBar extends SystemUI implements
             Log.d(TAG, "StatusBar API leftInLandscapeChanged = " + isLeft);
     }
 
+    @Override
+    public void toggleFlashlight() {
+        if (DEBUG)
+            Log.d(TAG, "StatusBar API toggleFlashlight");
+    }
+
     protected H createHandler() {
          return new H();
     }

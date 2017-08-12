@@ -488,6 +488,17 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
         }
     }
 
+    @Override
+    public void toggleFlashlight() {
+        enforceStatusBarService();
+        if (mBar != null) {
+            try {
+                mBar.toggleFlashlight();
+            } catch (RemoteException ex) {
+            }
+        }
+    }
+
     public void addTile(ComponentName component) {
         enforceStatusBarOrShell();
 
