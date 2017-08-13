@@ -124,7 +124,6 @@
   <string name="accessibility_quick_settings_pulse_changed_off">Pulse desactivat</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulse activat</string>
   <string name="quick_settings_pulse_label">Visualitzador de barra de navegació</string>
-  <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambient Display</string>
   <string name="accessibility_quick_settings_ambient_display_off">Ambient Display desactivada.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Ambient Display activada</string>
@@ -183,7 +182,6 @@
   <string name="quick_settings_compass_W">O</string>
   <string name="quick_settings_compass_NW">NO</string>
   <!-- HW Keys Tile -->
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App matada</string>
   <!-- Heads up snooze toast -->
@@ -205,7 +203,7 @@
   <string name="pref_crop_behavior_summary">Utilitzar la imatge retallada fins i tot si l\'original un fet no ha estat retallada amb l\'acció de retallar</string>
   <string name="action_ok">Acceptar</string>
   <string name="action_delete_success">Eliminat</string>
-  <string name="action_delete_fault">No s\'ha pogut suprimir</string>
+  <string name="action_delete_fault">S\'ha eliminat correctament</string>
   <string name="action_save_success">Guardat</string>
   <string name="action_save_fault">No s\'ha pogut guardar</string>
   <string name="action_edit">Editar</string>
@@ -236,4 +234,6 @@
   <!-- vpn icon switch -->
   <!-- data saver icon switch -->
   <!-- No navigation warning notification -->
+  <!-- Pie controls -->
+  <string name="quick_settings_pie">Pie</string>
 </resources>

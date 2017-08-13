@@ -124,7 +124,6 @@
   <string name="accessibility_quick_settings_pulse_changed_off">การจำลองแบบชีพจรได้ปิดลงแล้ว</string>
   <string name="accessibility_quick_settings_pulse_changed_on">การจำลองแบบชีพจรได้เปิดแล้ว</string>
   <string name="quick_settings_pulse_label">การจำลองแบบชีพจรในบาร์นำทาง</string>
-  <string name="quick_settings_pie">พาย</string>
   <string name="quick_settings_ambient_display_label">หน้าจอแวดล้อม</string>
   <string name="accessibility_quick_settings_ambient_display_off">ปิดหน้าจอแวดล้อม</string>
   <string name="accessibility_quick_settings_ambient_display_on">เปิดหน้าจอแวดล้อม</string>
@@ -198,21 +197,64 @@
   <string name="accessibility_quick_settings_hwkeys_on">HW ปุ่มเปิด</string>
   <string name="accessibility_quick_settings_hwkeys_off">HW ปุ่มปิด</string>
   <string name="quick_settings_hwkeys_label">HW คีย์</string>
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">ปิดแอป</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute">• <xliff:g id="string">%s</xliff:g> Peeking แจ้งมี snoozing 1 นาที</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • Peeking แจ้งเตือนมี snoozing <xliff:g id="number">%d</xliff:g> นาที</string>
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">ไม่มีภาพถ่าย</string>
+  <string name="screenshot_abort_text">การดำเนินงานที่ยกเลิก</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">ลบ</string>
+  <string name="action_delete_fault">บันทึกไม่ประสบความสำเร็จ</string>
+  <string name="action_save_success">บันทึกแล้ว</string>
   <string name="action_save_fault">บันทึกไม่ประสบความสำเร็จ</string>
+  <string name="pref_action_color_title">สีปุ่มดำเนินการ</string>
+  <string name="pref_action_color_summary">เลือกสีที่คุณชื่นชอบสำหรับปุ่มปฏิบัติการ</string>
+  <string name="pref_category_main">การตั้งค่าหลัก</string>
+  <string name="pref_category_user">การตั้งค่าของผู้ใช้</string>
+  <string name="pref_crop_behavior_title">ลักษณะการทำงานของพืช</string>
+  <string name="pref_crop_behavior_summary">ใช้รูปครอบตัดแม้ว่าเดิมยังไม่ได้ตัดกับดำเนินการตัดจริง</string>
+  <string name="action_ok">เสร็จสิ้น</string>
+  <string name="action_delete_success">ลบ</string>
+  <string name="action_delete_fault">บันทึกไม่ประสบความสำเร็จ</string>
+  <string name="action_save_success">บันทึกแล้ว</string>
   <string name="action_save_fault">บันทึกไม่ประสบความสำเร็จ</string>
+  <string name="action_edit">แก้ไข</string>
+  <string name="recents_custom_android_n">ล้างทั้งหมด</string>
+  <string name="recents_free_ram">แรมเหลือน้อย: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
+  <string name="task_manager_title">ตัวจัดการงาน</string>
+  <string name="message_switch_fail">ไม่สามารถสลับงานนี้ เนื่องจากมีอินเทอร์เฟซไม่</string>
+  <string name="tasklist_killall">ฆ่าทั้งหมด</string>
+  <string name="tasklist_memory_usage">"•หน่วยความจำทั้งหมด: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
+  <string name="message_keep_one_launcher">ควรให้อย่างน้อยหนึ่งกิจกรรมที่บ้าน</string>
+  <string name="tm_clear_task">ชัดเจน</string>
   <!-- Slim Recents -->
+  <string name="recents_multiwin_warning">เซสชัน multiwindow อยู่แล้วใช้งาน \nJust แตะแอปถ้าคุณต้องการเชื่อมต่อตอนนี้</string>
+  <string name="recents_multiwin_nolastapp">คุณลบรายการล่าสุดทั้งหมด โปรดเลือกแอพที่เปิดหรือลิ้นชัก</string>
+  <string name="slim_recent_keyguard">ปลดล็อคอุปกรณ์ของคุณเพื่อดูรายการล่าสุด</string>
+  <string name="slim_recent_pinned">ปักหมุดหน้าจอเพื่อดูรายการล่าสุด</string>
   <!-- Slim recents app sidebar queue app toast -->
+  <string name="toast_recents_queue_app">เปิดตัว %s หลังจากปิดรายการล่าสุด</string>
+  <string name="toast_recents_cancel_queued_app">ยกเลิกการเปิดใช้แอปฯ</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">บังคับให้หยุด?</string>
+  <string name="force_stop_dlg_text">หากคุณบังคับปิดแอปพลิเคชัน อาจทำให้การทำงานผิดพลาดได้.</string>
+  <string name="dlg_ok">เสร็จสิ้น</string>
+  <string name="dlg_cancel">ยกเลิก</string>
+  <string name="kill">ปิดแอป</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">ผิดพลาด</string>
+  <string name="omnijaws_service_unkown">ไม่มีข้อมูลสภาพอากาศ</string>
+  <string name="omnijaws_detail_header">สภาพอากาศ</string>
+  <string name="omnijaws_label_default">สภาพอากาศ</string>
+  <string name="omnijaws_current_text">ตอนนี้</string>
+  <string name="omnijaws_package_not_available">OmniJaws ยังไม่เปิดใช้งาน</string>
+  <string name="omnijaws_service_error_long">ข้อผิดพลาดในการรับข้อมูลสภาพอากาศ</string>
+  <string name="omnijaws_service_disabled">ปิดใช้งาน Service</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
@@ -225,4 +267,8 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">ประหยัดข้อมูล</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">วิธีการนำทางทั้งหมดปิดใช้งาน</string>
+  <string name="no_navigation_warning_text">แตะเพื่อเปิดใช้งาน</string>
+  <!-- Pie controls -->
+  <string name="quick_settings_pie">พาย</string>
 </resources>

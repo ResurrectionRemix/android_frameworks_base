@@ -53,4 +53,7 @@
   <string name="permlab_restartUI">เริ่ม บาร์ของระบบใหม่</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">เริ่ม บริการของ SystemUI ใหม่เพราะว่า บาร์ของระบบไม่สามารถโหลดทรัพยากรธีมได้</string>
+  <!-- Pocket Lock -->
+  <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

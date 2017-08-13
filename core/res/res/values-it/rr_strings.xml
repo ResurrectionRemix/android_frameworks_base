@@ -53,4 +53,7 @@
   <string name="permlab_restartUI">riavviare le barre del sistema</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">Riavviare SystemUIService in modo che le barre del sistema possono caricare le risorse a tema</string>
+  <!-- Pocket Lock -->
+  <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

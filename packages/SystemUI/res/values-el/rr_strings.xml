@@ -124,7 +124,6 @@
   <string name="accessibility_quick_settings_pulse_changed_off">Ο παλμός απενεργοποιήθηκε</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Ο παλμός ενεργοποιήθηκε</string>
   <string name="quick_settings_pulse_label">Οπτικοποιητής γραμμής πλοήγησης</string>
-  <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Οθόνη ambient</string>
   <string name="accessibility_quick_settings_ambient_display_off">Οθόνη ambient ανενεργή.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Οθόνη περιβάλλοντος ενεργοποιημένη</string>
@@ -198,7 +197,6 @@
   <string name="accessibility_quick_settings_hwkeys_on">Φυσικά πλήκτρα ενεργά</string>
   <string name="accessibility_quick_settings_hwkeys_off">Φυσικά πλήκτρα ανενεργά</string>
   <string name="quick_settings_hwkeys_label">Φυσικά πλήκτρα</string>
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Η εφαρμογή τερματίστηκε</string>
   <!-- Heads up snooze toast -->
@@ -219,10 +217,10 @@
   <string name="pref_crop_behavior_title">Συμπεριφορά αποκοπής</string>
   <string name="pref_crop_behavior_summary">Χρήση της περικομμένης εικόνας, ακόμη και αν η αρχική δεν έχει περικοπεί με την ενέργεια περικοπής εικόνας</string>
   <string name="action_ok">Αποδοχή</string>
-  <string name="action_delete_success">Διαγράφηκαν</string>
-  <string name="action_delete_fault">Η διαγραφή απέτυχε</string>
-  <string name="action_save_success">Αποθήκευση επιτυχής</string>
-  <string name="action_save_fault">Η αποθήκευση απέτυχε</string>
+  <string name="action_delete_success">Διαγράφτηκε</string>
+  <string name="action_delete_fault">Η διαγραφή ήταν ανεπιτυχής</string>
+  <string name="action_save_success">Αποθηκεύτηκε</string>
+  <string name="action_save_fault">Η αποθήκευση ήταν ανεπιτυχής</string>
   <string name="action_edit">Επεξεργασία</string>
   <string name="recents_custom_android_n">ΑΠΑΛΟΙΦΉ ΌΛΩΝ</string>
   <string name="recents_free_ram">Ελεύθερη μνήμη RAM: %1$d MB</string>
@@ -271,4 +269,9 @@
   <!-- No navigation warning notification -->
   <string name="no_navigation_warning_title">Όλοι οι μέθοδοι πλοήγησης έχουν απενεργοποιηθεί</string>
   <string name="no_navigation_warning_text">Πατήστε για ενεργοποίηση</string>
+  <!-- Pie controls -->
+  <string name="pie_hour_format_12">ωω:λλ</string>
+  <string name="pie_hour_format_24">ΩΩ:λλ</string>
+  <string name="pie_am_pm">π</string>
+  <string name="quick_settings_pie">Pie</string>
 </resources>

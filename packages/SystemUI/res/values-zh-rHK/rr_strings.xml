@@ -124,7 +124,6 @@
   <string name="accessibility_quick_settings_pulse_changed_off">已關閉呼吸燈</string>
   <string name="accessibility_quick_settings_pulse_changed_on">已開啟呼吸燈</string>
   <string name="quick_settings_pulse_label">導覽列視覺化</string>
-  <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">環境顯示</string>
   <string name="accessibility_quick_settings_ambient_display_off">關閉環境顯示</string>
   <string name="accessibility_quick_settings_ambient_display_on">開啟環境顯示</string>
@@ -198,7 +197,6 @@
   <string name="accessibility_quick_settings_hwkeys_on">開啟實體按鍵</string>
   <string name="accessibility_quick_settings_hwkeys_off">關閉實體按鍵</string>
   <string name="quick_settings_hwkeys_label">實體按鍵</string>
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">已終止應用程式</string>
   <!-- Heads up snooze toast -->
@@ -271,4 +269,9 @@
   <!-- No navigation warning notification -->
   <string name="no_navigation_warning_title">停用所有導航模式</string>
   <string name="no_navigation_warning_text">輕按以啟用</string>
+  <!-- Pie controls -->
+  <string name="pie_hour_format_12">hh:mm</string>
+  <string name="pie_hour_format_24">HH:mm</string>
+  <string name="pie_am_pm">a</string>
+  <string name="quick_settings_pie">Pie</string>
 </resources>

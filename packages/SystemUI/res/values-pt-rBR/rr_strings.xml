@@ -124,7 +124,6 @@
   <string name="accessibility_quick_settings_pulse_changed_off">Pulso está Desligado</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Pulso está Ligado</string>
   <string name="quick_settings_pulse_label">Visualizador da Barra de Navegação</string>
-  <string name="quick_settings_pie">Controle Pie</string>
   <string name="quick_settings_ambient_display_label">Tela ambiente</string>
   <string name="accessibility_quick_settings_ambient_display_off">Tela Ambiente desligada.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Tela Ambiente ligada</string>
@@ -198,7 +197,6 @@
   <string name="accessibility_quick_settings_hwkeys_on">Teclas físicas ativadas</string>
   <string name="accessibility_quick_settings_hwkeys_off">Teclas físicas desativadas</string>
   <string name="quick_settings_hwkeys_label">Teclas físicas</string>
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicativo encerrado</string>
   <!-- Heads up snooze toast -->
@@ -220,9 +218,9 @@
   <string name="pref_crop_behavior_summary">Usar a imagem recortada, mesmo que o original na verdade ainda não foi cortada com a ação de cortar</string>
   <string name="action_ok">Ok</string>
   <string name="action_delete_success">Excluído</string>
-  <string name="action_delete_fault">Operação não teve sucesso.</string>
+  <string name="action_delete_fault">Falha ao deletar</string>
   <string name="action_save_success">Salvo</string>
-  <string name="action_save_fault">Operação não teve sucesso.</string>
+  <string name="action_save_fault">Falha ao salvar</string>
   <string name="action_edit">Editar</string>
   <string name="recents_custom_android_n">LIMPAR TUDO</string>
   <string name="recents_free_ram">RAM Livre: %1$d MB</string>
@@ -271,4 +269,9 @@
   <!-- No navigation warning notification -->
   <string name="no_navigation_warning_title">Todos os métodos de navegação desativados</string>
   <string name="no_navigation_warning_text">Toque para ativar</string>
+  <!-- Pie controls -->
+  <string name="pie_hour_format_12">hh:mm</string>
+  <string name="pie_hour_format_24">HH:mm</string>
+  <string name="pie_am_pm">a</string>
+  <string name="quick_settings_pie">Controle Pie</string>
 </resources>

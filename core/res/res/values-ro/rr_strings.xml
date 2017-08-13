@@ -19,7 +19,7 @@
   <string name="default_string">Implicit</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
   <string name="system_error_vendorprint">Imaginea dumneavoastră de furnizor nu corespunde cu cea a sistemului. Vă rugăm să dați flash la imaginea de furnizor <xliff:g id="string">%s </xliff:g> pentru aparatul dvs</string>
-  <string name="global_action_screenrecord">Filmare ecran</string>
+  <string name="global_action_screenrecord">Înregistrare Ecran</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Estompare</string>
   <string name="animation_slide_right">Glisați la dreapta</string>
@@ -53,4 +53,7 @@
   <string name="permlab_restartUI">Repornire interfață</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">Repornirea SystemUI este necesară ca barele de Sistem să poată fi modificate</string>
+  <!-- Pocket Lock -->
+  <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

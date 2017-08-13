@@ -18,8 +18,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">預設</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">您的供應者映像檔與系統不相符。 請刷入您的裝置 <xliff:g id="string">%s</xliff:g> 專用的供應者映像檔。</string>
-  <string name="global_action_screenrecord">螢幕錄製</string>
+  <string name="system_error_vendorprint">您的映像檔與系統不相符。 請刷入您的裝置 <xliff:g id="string">%s</xliff:g> 專用的映像檔。</string>
+  <string name="global_action_screenrecord">螢幕錄影</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">淡出</string>
   <string name="animation_slide_right">從右滑入</string>
@@ -42,7 +42,7 @@
   <!-- On-The-Go -->
   <string name="global_action_onthego">On-The-Go 模式</string>
   <!-- ADB enabled, but not connected notification title -->
-  <string name="adb_not_connected_notification_title">ADB未啟用</string>
+  <string name="adb_not_connected_notification_title">ADB 未啟用</string>
   <string name="adb_active_custom_tile_not_connected">未啟用</string>
   <string name="singlehandmode_slide_hint_message">在導覽列上滑動手指以切換標準或單手模式</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
@@ -53,4 +53,7 @@
   <string name="permlab_restartUI">重新啟動系統列</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">重新啟動 SystemUIService，以便系統列可以載入主題資源</string>
+  <!-- Pocket Lock -->
+  <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

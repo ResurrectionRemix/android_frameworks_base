@@ -124,7 +124,6 @@
   <string name="accessibility_quick_settings_pulse_changed_off">Puls slukket</string>
   <string name="accessibility_quick_settings_pulse_changed_on">Puls tændt</string>
   <string name="quick_settings_pulse_label">Navigation bar visualizer</string>
-  <string name="quick_settings_pie">Pie</string>
   <string name="quick_settings_ambient_display_label">Ambient display</string>
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
@@ -149,7 +148,6 @@
   <string name="accessibility_quick_settings_hwkeys_on">HW taster aktiveret</string>
   <string name="accessibility_quick_settings_hwkeys_off">HW taster deaktiveret</string>
   <string name="quick_settings_hwkeys_label">HW taster</string>
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">App lukket</string>
   <!-- Heads up snooze toast -->
@@ -196,4 +194,6 @@
   <!-- vpn icon switch -->
   <!-- data saver icon switch -->
   <!-- No navigation warning notification -->
+  <!-- Pie controls -->
+  <string name="quick_settings_pie">Pie</string>
 </resources>

@@ -17,25 +17,25 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">正在錄製螢幕</string>
+  <string name="screenrecord_notif_ticker">螢幕錄影中</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">正在錄影螢幕</string>
+  <string name="screenrecord_notif_title">螢幕錄影中</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">停止</string>
   <!-- Screenrecord notification action: show/hide pointer -->
   <string name="screenrecord_notif_pointer_on">顯示觸控指標</string>
   <string name="screenrecord_notif_pointer_off">隱藏觸控指標</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">無法錄製螢幕</string>
+  <string name="screenrecord_notif_error">螢幕無法錄影</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">螢幕截圖已刪除</string>
+  <string name="delete_screenshot_toast">已刪除螢幕截圖</string>
   <string name="gestures_message">請在此畫出手勢</string>
   <string name="rr_sys_tuner">系統使用者介面調整精靈</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">向右滑動即可 %1$s</string>
   <string name="right_shortcut_hint">向左滑動即可 %1$s</string>
-  <string name="lockscreen_message">輕觸左側或右側的圖示以重新指定鎖定畫面捷徑。</string>
+  <string name="lockscreen_message">輕觸左側或右側的圖示以重新指定鎖定畫面之捷徑。</string>
   <string name="lockscreen_default_target">預設</string>
   <string name="select_application">選取應用程式</string>
   <string name="lockscreen_choose_action_title">選擇動作</string>
@@ -51,7 +51,7 @@
   <string name="onthego_notif_options">選項</string>
   <string name="onthego_notif_error">無法啟動 On-The-Go</string>
   <string name="onthego_notif_restart">重新啟動 On-The-Go</string>
-  <string name="onthego_notif_camera_changed">相機模式已變更</string>
+  <string name="onthego_notif_camera_changed">相機模式已改變</string>
   <string name="onthego_transparency">透明度</string>
   <string name="onthego_front_camera">使用前置鏡頭</string>
   <string name="onthego_service_toggle">自動重新啟動服務</string>
@@ -64,7 +64,7 @@
   <string name="accessibility_quick_settings_volume_panel">音量</string>
   <string name="quick_settings_volume_panel_label">音量</string>
   <!-- Quick Settings tiles -->
-  <string name="quick_settings_screenshot_label">擷取螢幕畫面</string>
+  <string name="quick_settings_screenshot_label">螢幕截圖</string>
   <string name="quick_settings_region_screenshot_label">區域截圖</string>
   <string name="quick_settings_adb_network">網路 ADB</string>
   <string name="quick_settings_network_adb_enabled_label">已啟用</string>
@@ -72,8 +72,8 @@
   <string name="quick_settings_sync_label">自動同步</string>
   <string name="accessibility_quick_settings_sync_off">關閉同步</string>
   <string name="accessibility_quick_settings_sync_on">開啟同步</string>
-  <string name="accessibility_quick_settings_sync_changed_off">同步已關閉</string>
-  <string name="accessibility_quick_settings_sync_changed_on">同步已開啟</string>
+  <string name="accessibility_quick_settings_sync_changed_off">同步_已關閉</string>
+  <string name="accessibility_quick_settings_sync_changed_on">同步_已開啟</string>
   <string name="quick_settings_expanded_desktop_label">延伸桌面</string>
   <string name="quick_settings_expanded_desktop">延伸</string>
   <string name="quick_settings_expanded_desktop_off">正常</string>
@@ -101,7 +101,7 @@
   <string name="quick_settings_nfc_off">NFC 關閉</string>
   <string name="quick_settings_screenrecord">螢幕畫面錄製</string>
   <string name="quick_settings_screenrecord_on">正在錄製…</string>
-  <string name="quick_settings_navigation_bar">導航列</string>
+  <string name="quick_settings_navigation_bar">導覽列</string>
   <string name="quick_settings_smartbar">智慧列</string>
   <string name="quick_settings_smartbar_off">智慧列關閉</string>
   <string name="quick_settings_fling">滑動手勢</string>
@@ -123,8 +123,7 @@
   <string name="accessibility_quick_settings_pulse_on">呼吸燈開啟</string>
   <string name="accessibility_quick_settings_pulse_changed_off">呼吸燈已關閉</string>
   <string name="accessibility_quick_settings_pulse_changed_on">呼吸燈已開啟</string>
-  <string name="quick_settings_pulse_label">導覽列視覺化</string>
-  <string name="quick_settings_pie">扇形</string>
+  <string name="quick_settings_pulse_label">導覽列視覺化效果</string>
   <string name="quick_settings_ambient_display_label">環境顯示</string>
   <string name="accessibility_quick_settings_ambient_display_off">環境顯示 關閉</string>
   <string name="accessibility_quick_settings_ambient_display_on">環境顯示開啟</string>
@@ -198,7 +197,6 @@
   <string name="accessibility_quick_settings_hwkeys_on">開啟實體按鍵</string>
   <string name="accessibility_quick_settings_hwkeys_off">關閉實體按鍵</string>
   <string name="quick_settings_hwkeys_label">實體按鍵</string>
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">已終止應用程式</string>
   <!-- Heads up snooze toast -->
@@ -269,6 +267,9 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">數據節省模式</string>
   <!-- No navigation warning notification -->
-  <string name="no_navigation_warning_title">停用所有導航模式</string>
+  <string name="no_navigation_warning_title">停用所有導覽模式</string>
   <string name="no_navigation_warning_text">輕按以啟用</string>
+  <!-- Pie controls -->
+  <string name="pie_hour_format_12">小時:分鐘</string>
+  <string name="quick_settings_pie">扇形</string>
 </resources>

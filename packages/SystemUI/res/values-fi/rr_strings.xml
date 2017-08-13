@@ -54,7 +54,6 @@
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Compass QS Tile -->
   <!-- HW Keys Tile -->
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
@@ -72,4 +71,5 @@
   <!-- vpn icon switch -->
   <!-- data saver icon switch -->
   <!-- No navigation warning notification -->
+  <!-- Pie controls -->
 </resources>

@@ -124,7 +124,6 @@
   <string name="accessibility_quick_settings_pulse_changed_off">النبض معطل</string>
   <string name="accessibility_quick_settings_pulse_changed_on">النبض مفعل</string>
   <string name="quick_settings_pulse_label">المؤثرات البصرية لشريط التنقل</string>
-  <string name="quick_settings_pie">الفطيرة</string>
   <string name="quick_settings_ambient_display_label">العرض المحيطي</string>
   <string name="accessibility_quick_settings_ambient_display_off">العرض المحيطي لا يعمل.</string>
   <string name="accessibility_quick_settings_ambient_display_on">العرض المحيطي يعمل</string>
@@ -198,7 +197,6 @@
   <string name="accessibility_quick_settings_hwkeys_on">الأزرار الملموسة تعمل</string>
   <string name="accessibility_quick_settings_hwkeys_off">الأزرار الملموسة لا تعمل</string>
   <string name="quick_settings_hwkeys_label">الأزرار الملموسة</string>
-  <!-- PA Pie controls -->
   <!-- Kill app toast -->
   <string name="app_killed_message">تم إيقاف التطبيق</string>
   <!-- Heads up snooze toast -->
@@ -220,9 +218,9 @@
   <string name="pref_crop_behavior_summary">استخدام الصورة المقتصة حتى لو لم يتم اقتصاص النسخة الأصلية بواسطة إجراء الاقتصاص</string>
   <string name="action_ok">حسناً</string>
   <string name="action_delete_success">تم الحذف</string>
-  <string name="action_delete_fault">فشل الحذف</string>
+  <string name="action_delete_fault">الحذف لم يكن ناجحاً</string>
   <string name="action_save_success">تم الحفظ</string>
-  <string name="action_save_fault">الحفظ لم ينجح</string>
+  <string name="action_save_fault">الحفظ لم يكن ناجحاً</string>
   <string name="action_edit">تحرير</string>
   <string name="recents_custom_android_n">مسح الكل</string>
   <string name="recents_free_ram">ذاكرة الوصول العشوائي الحرة: %1$d ميغابايت</string>
@@ -271,4 +269,8 @@
   <!-- No navigation warning notification -->
   <string name="no_navigation_warning_title">جميع اساليب الملاحة معطلة</string>
   <string name="no_navigation_warning_text">اضغط للتفعيل</string>
+  <!-- Pie controls -->
+  <string name="pie_hour_format_12">hh:mm</string>
+  <string name="pie_hour_format_24">HH:mm</string>
+  <string name="quick_settings_pie">الفطيرة</string>
 </resources>
