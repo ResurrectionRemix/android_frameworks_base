@@ -6549,7 +6549,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Assume this is called from the Handler thread.
     private void takeScreenshot(final int screenshotType) {
         synchronized (mScreenshotLock) {
-            if (mScreenshotConnection != null) {
+            if (mScreenshotConnection != null || mPocketLockShowing) {
                 return;
             }
             final ComponentName serviceComponent = new ComponentName(SYSUI_PACKAGE,
