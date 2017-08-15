@@ -84,6 +84,7 @@ import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -398,14 +399,12 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
                 Settings.Secure.THEME_ACCENT_COLOR, 0);
 
         if (themeMode == 0 && accentColor == 0) {
-            // Don't apply any style, use the one that the context already has
-            // to keep default behaviour
-            //context.setTheme(R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+            // Keep original theme
+            return context;
         } else {
-            context.getTheme().applyStyle(sTheme, true);
+            // Use our color engine theme
+            return new ContextThemeWrapper(context, sTheme);
         }
-
-        return context;
     }
 
     /**
@@ -1257,7 +1256,9 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
 
         public View getView(int position, View convertView, ViewGroup parent) {
             Action action = getItem(position);
-            return action.create(getContext(mContext), convertView, parent, LayoutInflater.from(mContext));
+            Context inflateContext = getContext(mContext);
+            return action.create(inflateContext, convertView, parent,
+                    LayoutInflater.from(inflateContext));
         }
     }
 
