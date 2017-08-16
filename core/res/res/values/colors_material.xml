@@ -24,7 +24,7 @@
     <color name="background_floating_material_dark">@color/material_grey_800</color>
     <color name="background_floating_material_light">@color/white</color>
 
-    <color name="primary_material_dark">@color/material_pixel_blue_dark</color>
+    <color name="primary_material_dark">@color/material_grey_900</color>
     <color name="primary_material_light">@color/material_grey_100</color>
     <color name="primary_material_settings">@color/material_blue_grey_900</color>
     <color name="primary_dark_material_dark">@color/black</color>
@@ -86,12 +86,12 @@
     <color name="material_grey_100">#fff5f5f5</color>
     <color name="material_grey_50">#fffafafa</color>
 
-    <color name="material_deep_teal_50">@color/accent_material_dark</color>
-    <color name="material_deep_teal_100">@color/accent_material_dark</color>
-    <color name="material_deep_teal_200">@color/accent_material_dark</color>
-    <color name="material_deep_teal_300">@color/accent_material_dark</color>
-    <color name="material_deep_teal_500">@color/accent_material_dark</color>
-    <color name="material_deep_teal_700">@color/accent_material_dark</color>
+    <color name="material_deep_teal_50">#ffe0f2f1</color>
+    <color name="material_deep_teal_100">#ffb2dfdb</color>
+    <color name="material_deep_teal_200">#ff80cbc4</color>
+    <color name="material_deep_teal_300">#ff4db6ac</color>
+    <color name="material_deep_teal_500">#ff009688</color>
+    <color name="material_deep_teal_700">#ff00796b</color>
 
     <color name="material_blue_grey_200">#ffb0bec5</color>
     <color name="material_blue_grey_700">#ff455a64</color>
@@ -130,8 +130,8 @@
     <color name="datepicker_default_pressed_text_color_material_light">#ff0099cc</color>
     <color name="datepicker_default_pressed_text_color_material_dark">#ff0099cc</color>
 
-    <color name="datepicker_default_circle_background_color_material_light">@color/accent_material_dark</color>
-    <color name="datepicker_default_circle_background_color_material_dark">@color/accent_material_dark</color>
+    <color name="datepicker_default_circle_background_color_material_light">@color/material_deep_teal_500</color>
+<color name="datepicker_default_circle_background_color_material_dark">@color/material_deep_teal_200</color>
 
     <color name="datepicker_default_view_animator_color_material_light">#fff2f2f2</color>
     <color name="datepicker_default_view_animator_color_material_dark">#ff303030</color>
