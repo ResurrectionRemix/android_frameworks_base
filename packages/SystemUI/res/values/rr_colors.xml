@@ -30,10 +30,9 @@
     <color name="lockscreen_bottom_shorcut_info_text">#ff9e9e9e</color>
     <!-- Lockscreen bottom shorcut phone inner background color -->
     <color name="lockscreen_bottom_shorcut_phone_inner_background">@android:color/black</color>
-    
-    <color name="system_primary_color">@*android:color/primary_material_settings</color>
     <color name="system_secondary_color">@*android:color/secondary_device_default_settings</color>
-    <color name="system_accent_color">@*android:color/accent_material_dark</color>
+    <color name="system_primary_color">@*android:color/primary_material_dark</color>
+    <color name="system_accent_color">@*android:color/material_deep_teal_700</color>
 
     <!-- Custom Navbar Color -->
     <color name="icon_color_back">@android:color/white</color>
