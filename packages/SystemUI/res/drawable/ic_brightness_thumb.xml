@@ -20,8 +20,8 @@
     android:viewportHeight="38">
 
     <path
-        android:fillColor="@color/system_accent_color"
         android:strokeWidth="1"
         android:pathData="M11.5,1.9 C1.7,6.4,-2.5,17.1,1.9,26.5 C8.9,41.6,29.1,41.6,36.1,26.5
-C40.6,16.9,36,5.8,25.8,1.5 C20.9,-0.5,16.4,-0.4,11.5,1.9 Z" />
+C40.6,16.9,36,5.8,25.8,1.5 C20.9,-0.5,16.4,-0.4,11.5,1.9 Z"
+        android:fillColor="?android:attr/colorAccent" />
 </vector>
