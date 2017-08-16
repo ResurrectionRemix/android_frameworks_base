@@ -394,9 +394,9 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
 
     public static Context getContext(Context context) {
         int themeMode = Settings.Secure.getInt(context.getContentResolver(),
-                Settings.Secure.THEME_PRIMARY_COLOR, 0);
+                Settings.Secure.THEME_PRIMARY_COLOR, 2);
         int accentColor = Settings.Secure.getInt(context.getContentResolver(),
-                Settings.Secure.THEME_ACCENT_COLOR, 0);
+                Settings.Secure.THEME_ACCENT_COLOR, 3);
 
         if (themeMode == 0 && accentColor == 0) {
             // Keep original theme
