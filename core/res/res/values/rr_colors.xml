@@ -17,12 +17,6 @@
 <!-- Colors specific to pixel theme. -->
 <resources>
 
-    <!-- RR Pixel theme main colors -->
-    <color name="material_pixel_primary_dark_material_dark">#242424</color><!--Pixel Statusbar Color-->
-    <color name="material_pixel_blue_dark">#ff2d2d2d</color><!-- Pixel Primary Color-->
-    <color name="material_pixel_blue_light">#ff3a3a3a</color><!-- Pixel Secondary Color-->
-    <color name="material_pixel_blue_bright">#ff4285f4</color><!-- Pixel Accent Color-->
-
 
     <!-- Substratum Exposed Colors -->
     <color name="resolver_list_bg">@color/white</color>
