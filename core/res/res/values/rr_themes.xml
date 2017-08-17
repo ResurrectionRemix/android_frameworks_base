@@ -109,32 +109,32 @@
     </style>
     <!-- End red accent color -->
 
-    <!-- Blue accent color -->
+    <!--Teal accent color -->
     <style name="Theme_DeviceDefault_Dark_Blue" parent="Theme_DeviceDefault_Dark">
-        <item name="colorAccent">@color/blue_accent_color</item>
+        <item name="colorAccent">@color/teal_accent_color</item>
         <item name="alertDialogTheme">@style/Theme_Dark_Blue_Alert_Dialog</item>
     </style>
 
     <style name="Theme_DeviceDefault_Grey_Blue" parent="Theme_DeviceDefault_Grey">
-        <item name="colorAccent">@color/blue_accent_color</item>
+        <item name="colorAccent">@color/teal_accent_color</item>
         <item name="alertDialogTheme">@style/Theme_Grey_Blue_Alert_Dialog</item>
     </style>
 
     <style name="Theme_DeviceDefault_White_Blue" parent="Theme_DeviceDefault_White">
-        <item name="colorAccent">@color/blue_accent_color</item>
+        <item name="colorAccent">@color/teal_accent_color</item>
         <item name="alertDialogTheme">@style/Theme_White_Blue_Alert_Dialog</item>
     </style>
 
     <style name="Theme_Dark_Blue_Alert_Dialog" parent="Theme_Dark_Alert_Dialog">
-        <item name="colorAccent">@color/blue_accent_color</item>
+        <item name="colorAccent">@color/teal_accent_color</item>
     </style>
 
     <style name="Theme_Grey_Blue_Alert_Dialog" parent="Theme_Grey_Alert_Dialog">
-        <item name="colorAccent">@color/blue_accent_color</item>
+        <item name="colorAccent">@color/teal_accent_color</item>
     </style>
 
     <style name="Theme_White_Blue_Alert_Dialog" parent="Theme_White_Alert_Dialog">
-        <item name="colorAccent">@color/blue_accent_color</item>
+        <item name="colorAccent">@color/teal_accent_color</item>
     </style>
     <!-- End blue accent color -->
 

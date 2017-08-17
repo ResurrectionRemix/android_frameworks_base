@@ -24,10 +24,10 @@
     <color name="background_floating_material_dark">@color/material_grey_800</color>
     <color name="background_floating_material_light">@color/white</color>
 
-    <color name="primary_material_dark">@color/material_grey_900</color>
+    <color name="primary_material_dark">@color/material_pixel_blue_dark</color>
     <color name="primary_material_light">@color/material_grey_100</color>
-    <color name="primary_material_settings">@color/material_blue_grey_900</color>
-    <color name="primary_dark_material_dark">@color/black</color>
+    <color name="primary_material_settings">@color/material_pixel_blue_dark</color>
+    <color name="primary_dark_material_dark">@color/material_pixel_primary_dark_material_dark</color>
     <color name="primary_dark_material_light">@color/material_grey_600</color>
     <color name="primary_dark_material_light_light_status_bar">@color/material_grey_300</color>
     <color name="primary_dark_material_settings">@color/material_blue_grey_950</color>
@@ -36,10 +36,11 @@
     <color name="tertiary_material_settings">@color/material_blue_grey_700</color>
     <color name="quaternary_material_settings">@color/material_blue_grey_200</color>
 
-    <color name="accent_material_700">@color/material_deep_teal_700</color>
-    <color name="accent_material_light">@color/material_deep_teal_500</color>
-    <color name="accent_material_dark">@color/material_deep_teal_200</color>
-    <color name="accent_material_50">@color/material_deep_teal_50</color>
+
+    <color name="accent_material_700">@color/material_pixel_blue_dark</color>
+    <color name="accent_material_light">@color/material_pixel_blue_bright</color>
+    <color name="accent_material_dark">@color/material_pixel_blue_bright</color>
+    <color name="accent_material_50">@color/material_pixel_blue_bright</color>
 
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
@@ -131,7 +132,7 @@
     <color name="datepicker_default_pressed_text_color_material_dark">#ff0099cc</color>
 
     <color name="datepicker_default_circle_background_color_material_light">@color/material_deep_teal_500</color>
-<color name="datepicker_default_circle_background_color_material_dark">@color/material_deep_teal_200</color>
+    <color name="datepicker_default_circle_background_color_material_dark">@color/material_deep_teal_200</color>
 
     <color name="datepicker_default_view_animator_color_material_light">#fff2f2f2</color>
     <color name="datepicker_default_view_animator_color_material_dark">#ff303030</color>
