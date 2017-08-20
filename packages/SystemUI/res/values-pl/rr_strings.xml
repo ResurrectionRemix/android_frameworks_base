@@ -270,8 +270,11 @@
   <string name="no_navigation_warning_title">Wszystkie metody nawigacji wyłączone</string>
   <string name="no_navigation_warning_text">Dotknij, aby włączyć</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">gg:mm</string>
   <string name="pie_hour_format_24">GG:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_battery_level">"POZIOM NAŁADOWANIA BATERII "</string>
   <string name="quick_settings_pie">Kołowy pasek nawigacji</string>
+  <string name="data_switch_started">Przełączanie karty SIM do transmisji danych. Może to potrwać do minuty...</string>
 </resources>

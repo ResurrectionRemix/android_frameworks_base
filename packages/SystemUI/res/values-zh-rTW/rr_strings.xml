@@ -270,6 +270,12 @@
   <string name="no_navigation_warning_title">停用所有導覽模式</string>
   <string name="no_navigation_warning_text">輕按以啟用</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">yyyy MMMM dd, EEEE</string>
   <string name="pie_hour_format_12">小時:分鐘</string>
+  <string name="pie_state_name">扇形控制項</string>
+  <string name="pie_state_summary">在全螢幕模式中使用扇形控制項</string>
+  <string name="pie_battery_level">"電池等級 "</string>
   <string name="quick_settings_pie">扇形</string>
+  <string name="accessibility_data_sim">目前數據 SIM 卡</string>
+  <string name="data_switch_started">正在切換行動數據連線 SIM 卡，這可能需要一點時間...</string>
 </resources>

@@ -272,5 +272,7 @@
   <!-- Pie controls -->
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
+  <string name="pie_battery_level">"BATTERINIVÅ "</string>
   <string name="quick_settings_pie">Paj</string>
+  <string name="accessibility_data_sim">Nuvarande data-Sim</string>
 </resources>

@@ -270,5 +270,11 @@
   <string name="no_navigation_warning_title">Minden navigációs módszer letiltva</string>
   <string name="no_navigation_warning_text">Engedélyezéshez érintse meg</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, yyyy MMMM dd</string>
+  <string name="pie_state_name">Pie vezérlő</string>
+  <string name="pie_state_summary">Pie vezérlő használata teljes képernyős üzemmódban</string>
+  <string name="pie_battery_level">"AKKUMULÁTOR SZINTJE "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Jelenlegi adat SIM</string>
+  <string name="data_switch_started">Váltás az adatforgalomhoz használt SIM-kártyák között, ez legfeljebb egy percet vesz igénybe\u2026</string>
 </resources>

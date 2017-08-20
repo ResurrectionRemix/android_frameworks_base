@@ -54,6 +54,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">Neustart des SystemUIService für das Nachladen designter Ressourcen</string>
   <!-- Pocket Lock -->
+  <string name="pocket_lock_message_long_press">Power Taste gedrückt halten, um mit dem Gerät zu interagieren</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

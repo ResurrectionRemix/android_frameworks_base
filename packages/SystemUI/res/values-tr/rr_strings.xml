@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Tüm gezinme yöntemleri devre dışı</string>
   <string name="no_navigation_warning_text">Etkinleştirmek için dokunun</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">ss:dd</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">Pie kontrolleri</string>
+  <string name="pie_state_summary">Tam ekran modundayken pie kontrollerini kullanın</string>
+  <string name="pie_battery_level">"PİL SEVİYESİ "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Mevcut Veri SIM</string>
+  <string name="data_switch_started">Veri için kullanılan SIM kart değiştiriliyor. Bu işlem bir dakika kadar sürebilir...</string>
 </resources>

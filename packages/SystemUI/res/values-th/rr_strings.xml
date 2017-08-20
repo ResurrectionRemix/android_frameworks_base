@@ -270,5 +270,11 @@
   <string name="no_navigation_warning_title">วิธีการนำทางทั้งหมดปิดใช้งาน</string>
   <string name="no_navigation_warning_text">แตะเพื่อเปิดใช้งาน</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+  <string name="pie_state_name">ควบคุมแบบวงกลม</string>
+  <string name="pie_state_summary">ใช้พายควบคุมขณะอยู่ในโหมดใหญ่พิเศษ</string>
+  <string name="pie_battery_level">"ระดับแบตเตอรี่ "</string>
   <string name="quick_settings_pie">พาย</string>
+  <string name="accessibility_data_sim">ปัจจุบันข้อมูล Sim</string>
+  <string name="data_switch_started">สลับข้อมูลซิมอาจใช้เวลานานถึงหนึ่งนาที ...</string>
 </resources>

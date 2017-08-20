@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Všetky spôsoby navigácie sú vypnuté</string>
   <string name="no_navigation_warning_text">Zapnite kliknutím na položku</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:MM</string>
   <string name="pie_am_pm">AM/PM</string>
+  <string name="pie_state_name">Kruhové ovládanie</string>
+  <string name="pie_state_summary">Použiť kruhové ovládacie prvky v pohlcujúcom režime</string>
+  <string name="pie_battery_level">"ÚROVEŇ NABITIA BATÉRIE "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Aktuálna SIM pre dáta</string>
+  <string name="data_switch_started">Prepínanie údajov SIM, môže to trvať až minútu...</string>
 </resources>

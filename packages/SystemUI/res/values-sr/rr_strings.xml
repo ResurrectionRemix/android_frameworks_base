@@ -273,5 +273,7 @@
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">а</string>
+  <string name="pie_state_name">\"Пита\" контроле</string>
+  <string name="pie_battery_level">"НИВО БАТЕРИЈЕ "</string>
   <string name="quick_settings_pie">Пита</string>
 </resources>

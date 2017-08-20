@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Alle Navigationsmethoden deaktiviert</string>
   <string name="no_navigation_warning_text">Zum Aktivieren tippen</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">AM/PM</string>
+  <string name="pie_state_name">Pie-Steuerung</string>
+  <string name="pie_state_summary">Pie-Steuerungen während des Immersive-Modus verwenden</string>
+  <string name="pie_battery_level">"AKKUSTAND "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Aktuelle Daten-Sim</string>
+  <string name="data_switch_started">Wechsel der Daten-SIM. Dies kann bis zu einer Minute dauern.</string>
 </resources>

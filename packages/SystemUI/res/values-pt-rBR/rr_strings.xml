@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Todos os métodos de navegação desativados</string>
   <string name="no_navigation_warning_text">Toque para ativar</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">Controles Pie</string>
+  <string name="pie_state_summary">Use controles de torta durante o modo envolvente</string>
+  <string name="pie_battery_level">"NÍVEL DA BATERIA "</string>
   <string name="quick_settings_pie">Controle Pie</string>
+  <string name="accessibility_data_sim">SIM de dados atual</string>
+  <string name="data_switch_started">Trocando dados SIM, isto pode demorar até um minuto...</string>
 </resources>

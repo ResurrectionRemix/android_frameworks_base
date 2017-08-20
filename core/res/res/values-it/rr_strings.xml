@@ -54,6 +54,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">Riavviare SystemUIService in modo che le barre del sistema possono caricare le risorse a tema</string>
   <!-- Pocket Lock -->
+  <string name="pocket_lock_message_long_press">Premi a lungo il tasto di accensione per interagire</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

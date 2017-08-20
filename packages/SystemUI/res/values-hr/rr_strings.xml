@@ -270,5 +270,11 @@
   <string name="no_navigation_warning_title">Svi načini navigacije onemogućeni</string>
   <string name="no_navigation_warning_text">Dodirnite za omogućavanje</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
+  <string name="pie_state_name">Kontrola pitom</string>
+  <string name="pie_state_summary">Upotreba kontrola pitom u cjelozaslonskom načinu</string>
+  <string name="pie_battery_level">"RAZINA BATERIJE "</string>
   <string name="quick_settings_pie">Pita</string>
+  <string name="accessibility_data_sim">Trenutna podatkovna SIM-ica</string>
+  <string name="data_switch_started">Prebacivanje podatkovne SIM-ice, ovo može potrajati minutu...</string>
 </resources>

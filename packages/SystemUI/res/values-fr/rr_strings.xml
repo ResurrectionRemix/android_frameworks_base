@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Toutes les méthodes de navigation desactivées</string>
   <string name="no_navigation_warning_text">Tapez pour activer</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, jj MMMM aaaa</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">un</string>
+  <string name="pie_state_name">Contrôles des raccourcis de l\'arc</string>
+  <string name="pie_state_summary">Utiliser l\'arc en mode immersif</string>
+  <string name="pie_battery_level">"BATTERIE "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Données de la carte SIM actuelle</string>
+  <string name="data_switch_started">Changement de carte SIM en cours… Cela peut prendre jusqu\'à une minute...</string>
 </resources>

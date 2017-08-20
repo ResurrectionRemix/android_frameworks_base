@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Todos los métodos de navegación estan desactivados</string>
   <string name="no_navigation_warning_text">Toca para activar</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM aaaa</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">Controles de Pie</string>
+  <string name="pie_state_summary">Usar los controles de Pie mientras estás en modo inmersivo</string>
+  <string name="pie_battery_level">"NIVEL DE BATERÍA "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Datos actuales de la Sim</string>
+  <string name="data_switch_started">Cambiando de SIM. Este proceso puede durar hasta un minuto...</string>
 </resources>

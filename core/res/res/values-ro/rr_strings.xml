@@ -40,7 +40,7 @@
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
   <string name="reboot_systemui">Reporniţi SystemUI</string>
   <!-- On-The-Go -->
-  <string name="global_action_onthego">Mod \"On-The-Go\"</string>
+  <string name="global_action_onthego">Mod \"În mişcare\"</string>
   <!-- ADB enabled, but not connected notification title -->
   <string name="adb_not_connected_notification_title">ADB este inactiv</string>
   <string name="adb_active_custom_tile_not_connected">Inactiv</string>
@@ -54,6 +54,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">Repornirea SystemUI este necesară ca barele de Sistem să poată fi modificate</string>
   <!-- Pocket Lock -->
+  <string name="pocket_lock_message_long_press">Apăsați lung butonul de alimentare pentru interacţiune</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

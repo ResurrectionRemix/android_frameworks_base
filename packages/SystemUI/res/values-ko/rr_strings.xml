@@ -270,5 +270,11 @@
   <string name="no_navigation_warning_title">모든 내비게이션이 비활성화됨</string>
   <string name="no_navigation_warning_text">사용하려면 누르세요</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">yyyy MMMM dd, EEEE</string>
+  <string name="pie_state_name">파이 컨트롤</string>
+  <string name="pie_state_summary">전체 화면 모드에서 파이 컨트롤 사용</string>
+  <string name="pie_battery_level">"배터리 잔량 "</string>
   <string name="quick_settings_pie">Pie 컨트롤</string>
+  <string name="accessibility_data_sim">사용 중인 데이터 SIM</string>
+  <string name="data_switch_started">데이터 SIM을 전환하는 중입니다. 최대 1분 정도 걸릴 수 있습니다...</string>
 </resources>

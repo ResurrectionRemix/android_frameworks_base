@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Tất cả các phương pháp chuyển hướng bị vô hiệu</string>
   <string name="no_navigation_warning_text">Nhấn để bật</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">giờ:phút</string>
   <string name="pie_hour_format_24">Giờ:phút</string>
   <string name="pie_am_pm">am</string>
+  <string name="pie_state_name">Điều khiển Bánh</string>
+  <string name="pie_state_summary">Sử dụng điều khiển bánh trong khi ở chế độ im lặng</string>
+  <string name="pie_battery_level">"MỨC PIN "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Dữ liệu Sim hiện tại</string>
+  <string name="data_switch_started">Đang chuyển dữ liệu SIM, quá trình này có thể mất tới một phút...</string>
 </resources>
