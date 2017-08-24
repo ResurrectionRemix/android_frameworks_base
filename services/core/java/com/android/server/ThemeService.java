@@ -145,12 +145,12 @@ public class ThemeService extends IThemeService.Stub implements IBinder.DeathRec
 
     private int getThemeMode() {
         return Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.THEME_PRIMARY_COLOR, 2);
+                Settings.Secure.THEME_PRIMARY_COLOR, 0);
     }
 
     private int getAccentColor() {
         return Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.THEME_ACCENT_COLOR, 3);
+                Settings.Secure.THEME_ACCENT_COLOR, 0);
     }
 
     public static void returnToDefaultTheme(Context context) {
