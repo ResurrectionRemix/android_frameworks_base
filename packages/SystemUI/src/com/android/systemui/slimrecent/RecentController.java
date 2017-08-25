@@ -87,6 +87,7 @@ import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.statusbar.BaseStatusBar;
 
 import java.util.List;
+import com.android.settingslib.Utils;
 
 /**
  * Our main recents controller.
@@ -1069,7 +1070,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
             mMemBar.setMax(max);
             mMemBar.setProgress(available);
             mMemBar.getProgressDrawable().setColorFilter(mMembarcolor == 0x00ffffff
-                    ? mContext.getResources().getColor(R.color.system_accent_color)
+                    ? Utils.getColorAccent(mContext)
                     : mMembarcolor, Mode.MULTIPLY);
             mMemText.setTextColor(mMemtextcolor == 0x00ffffff
                     ? mContext.getResources().getColor(R.color.recents_membar_text_color)

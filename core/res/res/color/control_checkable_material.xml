@@ -19,6 +19,6 @@
           android:alpha="?attr/disabledAlpha"
           android:color="?attr/colorControlNormal" />
     <item android:state_checked="true"
-          android:color="?attr/colorControlActivated" />
+          android:color="?attr/colorAccent" />
     <item android:color="?attr/colorControlNormal" />
 </selector>

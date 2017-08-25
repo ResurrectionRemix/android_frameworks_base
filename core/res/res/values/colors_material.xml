@@ -32,10 +32,9 @@
     <color name="primary_dark_material_light_light_status_bar">@color/material_grey_300</color>
     <color name="primary_dark_material_settings">@color/material_blue_grey_950</color>
 
-    <color name="secondary_material_settings">@color/material_blue_grey_800</color>
+    <color name="secondary_material_settings">@color/material_pixel_blue_light</color>
     <color name="tertiary_material_settings">@color/material_blue_grey_700</color>
     <color name="quaternary_material_settings">@color/material_blue_grey_200</color>
-
 
     <color name="accent_material_700">@color/material_pixel_blue_dark</color>
     <color name="accent_material_light">@color/material_pixel_blue_bright</color>

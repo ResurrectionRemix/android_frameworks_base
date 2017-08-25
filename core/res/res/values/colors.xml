@@ -151,7 +151,7 @@
 
     <color name="accessibility_focus_highlight">#bf39b500</color>
 
-    <color name="system_notification_accent_color">@color/material_pixel_blue_bright</color>
+    <color name="system_notification_accent_color">@color/accent_device_default_light</color>
     <color name="battery_saver_mode_color">#fff4511e</color><!-- deep orange 600 -->
 
     <!-- Default user icon colors -->

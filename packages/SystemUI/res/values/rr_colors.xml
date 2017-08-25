@@ -18,9 +18,11 @@
 -->
 <resources>
     <!-- Floating action button -->
-    <color name="fab_color">#ffffffff</color>
+    <color name="fab_color">@*android:color/accent_device_default_light</color>
     <color name="fab_color_ripple">#ff7a7a7a</color>
-    <color name="floating_action_button_icon_color">@*android:color/accent_material_dark</color>
+    <color name="floating_action_button_icon_color">#ffffffff</color>
+    <color name="recents_fab_color">?android:attr/colorAccent</color>
+    <color name="floating_action_button_touch_tint">@*android:color/accent_device_default_light</color>
 
     <!-- Volume panel border coler -->
     <color name="volume_panel_border_color">#ff2962ff</color><!-- blue A700 -->
@@ -32,7 +34,7 @@
     <color name="lockscreen_bottom_shorcut_phone_inner_background">@android:color/black</color>
     <color name="system_secondary_color">@*android:color/secondary_device_default_settings</color>
     <color name="system_primary_color">@*android:color/primary_material_dark</color>
-    <color name="system_accent_color">@*android:color/material_deep_teal_700</color>
+    <color name="system_accent_color">@*android:color/accent_device_default_light</color>
 
     <!-- Custom Navbar Color -->
     <color name="icon_color_back">@android:color/white</color>
@@ -52,7 +54,7 @@
     <color name="ga_info_text_color">#b3ffffff</color>
     <color name="ga_info_icon_color">#b3ffffff</color>
     <color name="ga_fab_bg_color">#282828</color>
-    <color name="ga_fab_icon_color">@*android:color/accent_material_dark</color>
+    <color name="ga_fab_icon_color">@*android:color/accent_device_default_light</color>
     <color name="ga_fab_color_ripple">#ff7a7a7a</color>
 
     <!-- Sceenshot Crop and Share -->
@@ -75,12 +77,12 @@
 
 	<!-- Task Manager -->
     <color name="tm_floating_action_button_icon_color">#ffffff</color>
-    <color name="tm_floating_action_button_bg_color">@*android:color/accent_material_dark</color>
+    <color name="tm_floating_action_button_bg_color">?android:attr/colorAccent</color>
     <color name="memory_usage_item_background">@*android:color/secondary_device_default_settings</color>
     <color name="memory_usage_text">#ffffffff</color>
     <color name="task_item_background">@*android:color/secondary_device_default_settings</color>
     <color name="task_item_text">#b3ffffff</color>
-    <color name="task_manager_bg_color">@*android:color/primary_material_settings</color>
+    <color name="task_manager_bg_color">?android:attr/colorPrimary</color>
     <color name="tm_button_color">#b3ffffff</color>
     <color name="tm_close_button_color">#b3ffffff</color>
 

@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/fab_tm"
-    android:width="54dp"
-    android:height="54dp"
-    android:viewportWidth="158.0"
-    android:viewportHeight="158.0"
-    android:tint="@color/tm_floating_action_button_bg_color"/>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/tm_floating_action_button_bg_color" />
+</shape>

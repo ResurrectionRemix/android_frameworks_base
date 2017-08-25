@@ -55,12 +55,12 @@
             android:layout_marginBottom="13dp"
             android:layout_gravity="center" >
      <ImageButton
+        android:id="@+id/tm_fab"
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:layout_gravity="center"
         android:clickable="true"
-        android:background="@drawable/ic_fab_tm"
-        android:tint="@color/tm_floating_action_button_bg_color"/>
+        android:background="@drawable/ic_fab_tm"/>
     <ImageButton
             android:id="@+id/kill_all_button"
             android:layout_width="54dp"
