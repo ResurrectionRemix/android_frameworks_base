@@ -77,7 +77,7 @@
   <string name="quick_settings_expanded_desktop_label">Erweiterter Desktop</string>
   <string name="quick_settings_expanded_desktop">Erweitert</string>
   <string name="quick_settings_expanded_desktop_off">Normal</string>
-  <string name="quick_settings_reboot_label">Neustarten</string>
+  <string name="quick_settings_reboot_label">Neustart</string>
   <string name="quick_settings_reboot_recovery_label">Recovery</string>
   <string name="accessibility_quick_settings_usb_tether_off">USB-Tethering aus</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB-Tethering an</string>

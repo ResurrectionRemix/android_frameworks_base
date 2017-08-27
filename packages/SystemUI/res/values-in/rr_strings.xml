@@ -273,5 +273,7 @@
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">Kontrol Pie</string>
+  <string name="pie_battery_level">"TINGKAT BATERAI "</string>
   <string name="quick_settings_pie">Pie</string>
 </resources>

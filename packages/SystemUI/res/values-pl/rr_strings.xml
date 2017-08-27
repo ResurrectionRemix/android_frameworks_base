@@ -274,7 +274,10 @@
   <string name="pie_hour_format_12">gg:mm</string>
   <string name="pie_hour_format_24">GG:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">Kontrola PIE</string>
+  <string name="pie_state_summary">Używaj kontroli PIE w trybie pełnoekranowym</string>
   <string name="pie_battery_level">"POZIOM NAŁADOWANIA BATERII "</string>
   <string name="quick_settings_pie">Kołowy pasek nawigacji</string>
+  <string name="accessibility_data_sim">Dane karty SIM</string>
   <string name="data_switch_started">Przełączanie karty SIM do transmisji danych. Może to potrwać do minuty...</string>
 </resources>

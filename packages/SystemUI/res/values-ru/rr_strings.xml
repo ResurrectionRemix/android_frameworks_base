@@ -270,7 +270,13 @@
   <string name="no_navigation_warning_title">Все способы навигации выключены</string>
   <string name="no_navigation_warning_text">Нажмите, чтобы включить</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, дд ММММ гггг</string>
   <string name="pie_hour_format_12">чч:мм</string>
   <string name="pie_hour_format_24">ЧЧ:мм</string>
+  <string name="pie_state_name">PIE-управление</string>
+  <string name="pie_state_summary">Использовать PIE-управление в полноэкранном режиме</string>
+  <string name="pie_battery_level">"Заряд батареи"</string>
   <string name="quick_settings_pie">PIE</string>
+  <string name="accessibility_data_sim">Текущая SIM-карта</string>
+  <string name="data_switch_started">Смена SIM-карты, это может занять около минуты...</string>
 </resources>

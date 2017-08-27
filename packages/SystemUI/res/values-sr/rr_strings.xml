@@ -270,10 +270,14 @@
   <string name="no_navigation_warning_title">Све методе навигације онемогућени</string>
   <string name="no_navigation_warning_text">Додирните да омогућите</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">а</string>
   <string name="pie_state_name">\"Пита\" контроле</string>
+  <string name="pie_state_summary">Употреба конторла пите у раду преко целог екрана</string>
   <string name="pie_battery_level">"НИВО БАТЕРИЈЕ "</string>
   <string name="quick_settings_pie">Пита</string>
+  <string name="accessibility_data_sim">Тренутна Сим за мобилни интернет</string>
+  <string name="data_switch_started">Пребацивање Сим картице за мобилни интернет, ово може потрајати до минут...</string>
 </resources>
