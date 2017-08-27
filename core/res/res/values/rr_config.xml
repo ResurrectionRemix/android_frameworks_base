@@ -107,17 +107,18 @@
     <!-- Whether Keypress Boost is enabled -->
     <bool name="config_enableKeypressBoost">false</bool>
  
+    <!-- Extended Boosts for QPerformance -->
+ 
+    <!-- Duration of the boost in seconds -->
+    <integer name="onbootboost_duration">30</integer>
+   
+    <!-- Boost parameters which get passed to QPerformance -->
+    <integer-array name="qboost_strong_param_value"/>
+    <integer-array name="qboost_weak_param_value"/>
+
     <!-- Boost parameters which get passed to QPerformance -->
     <integer-array name="keypressboost_strong_param_value"/>
     <integer-array name="keypressboost_weak_param_value"/>
-
-    <!-- Extended Boosts for QPerformance -->
-
-    <!-- Whether cpu boost is enabled right after boot -->
-    <bool name="config_enableCpuBoostOnBoot">false</bool>
-
-    <!-- Duration of the boost in seconds, default is 30 -->
-    <integer name="onbootboost_duration">0</integer>
 
     <!-- Boost parameters which get passed to QPerformance -->
     <integer-array name="onbootboost_param_value"/>
