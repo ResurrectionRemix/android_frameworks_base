@@ -80,6 +80,7 @@ import android.os.UserManagerInternal;
 import android.os.storage.IStorageManager;
 import android.os.storage.StorageManager;
 import android.util.ArraySet;
+import android.util.BoostFramework;
 import android.util.IntArray;
 import android.util.Pair;
 import android.util.Slog;
@@ -443,20 +444,22 @@ final class UserController {
             /**
              * For boosting right after boot
              */
-            final int mBoostParamVal[] = mInjector.getContext().getResources().getIntArray(
-                    com.android.internal.R.array.onbootboost_param_value);
             final boolean lIsPerfBoostEnabled = mBoostParamVal.length != 0;
 
             if (lIsPerfBoostEnabled) {
+            final int mBoostParamVal[] = mInjector.getContext().getResources().getIntArray(
+                    com.android.internal.R.array.onbootboost_param_value);
                 int mBoostDuration = mInjector.getContext().getResources().getInteger(
                         com.android.internal.R.integer.onbootboost_duration);
+                int BOOST_ON_BOOT_DEFAULT_DURATION = 30; // 30 seconds
 
                 BoostFramework mPerf = new BoostFramework();
 
                 Slog.i(TAG, "Bootup boost was triggered for " + mBoostDuration + " seconds!");
 
-                if (mBoostDuration != 0)
-                    mBoostDuration = mBoostDuration * 1000; // Convert seconds to milliseconds
+                mBoostDuration = (mBoostDuration == 0
+                    ? BOOST_ON_BOOT_DEFAULT_DURATION
+                    : mBoostDuration) * 1000; // Convert seconds to milliseconds
 
                 mPerf.perfLockAcquire(mBoostDuration, mBoostParamVal);
             }
