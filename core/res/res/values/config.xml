@@ -2856,8 +2856,9 @@
         <item>logout</item>
         <item>bugreport</item>
         <item>screenshot</item>
-        <item>emergency</item>
+        <item>recovery</item>
     </string-array>
+        <!--<item>emergency</item>-->
 
     <!-- Number of milliseconds to hold a wake lock to ensure that drawing is fully
          flushed to the display while dozing.  This value needs to be large enough
