@@ -98,8 +98,8 @@ public abstract class TunerService {
                 // Disable access to tuner.
                 TunerService.setTunerEnabled(context, false);
                 // Make them sit through the warning dialog again.
-                Settings.Secure.putInt(context.getContentResolver(),
-                        TunerFragment.SETTING_SEEN_TUNER_WARNING, 0);
+                /*Settings.Secure.putInt(context.getContentResolver(),
+                        TunerFragment.SETTING_SEEN_TUNER_WARNING, 0);*/
                 if (onDisabled != null) {
                     onDisabled.run();
                 }
