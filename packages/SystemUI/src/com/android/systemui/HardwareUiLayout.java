@@ -84,7 +84,7 @@ public class HardwareUiLayout extends FrameLayout implements Tunable {
         updateSettings();
     }
 
-    private void updateSettings() {
+    public void updateSettings() {
         mEdgeBleed = Settings.Secure.getInt(getContext().getContentResolver(),
                 EDGE_BLEED, 0) != 0;
         mRoundedDivider = Settings.Secure.getInt(getContext().getContentResolver(),
