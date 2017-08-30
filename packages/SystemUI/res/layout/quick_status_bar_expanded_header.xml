@@ -15,7 +15,7 @@
 ** limitations under the License.
 -->
 
-<!-- Extends RelativeLayout -->
+<!-- Extends FrameLayout -->
 <com.android.systemui.qs.QuickStatusBarHeader
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header"
@@ -26,68 +26,123 @@
     android:clickable="false"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:paddingTop="0dp"
+    android:elevation="4dp"
     android:paddingEnd="0dp"
-    android:paddingStart="0dp">
+    android:paddingStart="0dp"
+    android:paddingTop="0dp">
 
     <include layout="@layout/quick_status_bar_header_system_icons" />
 
-    <com.android.systemui.qs.HorizontalClippingLinearLayout
+    <ImageView
+        android:id="@+id/qs_header_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:paddingBottom="@dimen/qs_panel_footer_height"/>
 
-        <HorizontalScrollView
-            android:id="@+id/quick_qs_panel_scroll"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:paddingStart="@dimen/qs_scroller_margin"
-            android:paddingEnd="@dimen/qs_scroller_margin"
-            android:overScrollMode="never"
-            android:scrollbars="none">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp">
 
-            <com.android.systemui.qs.QuickQSPanel
-                android:id="@+id/quick_qs_panel"
+            <com.android.keyguard.CarrierText
+                android:id="@+id/qs_carrier_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:gravity="center_vertical|start"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?android:attr/textColorPrimary"/>
+
+            <com.android.systemui.BatteryMeterView
+                android:id="@+id/battery"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                />
+
+            <com.android.systemui.statusbar.policy.Clock
+                android:id="@+id/clock"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingEnd="@dimen/status_bar_clock_end_padding"
+                android:paddingStart="@dimen/status_bar_clock_starting_padding"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+                systemui:showDark="false"
+                />
+        </LinearLayout>
+
+        <com.android.systemui.qs.HorizontalClippingLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/qs_scroller_top_margin"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <HorizontalScrollView
+                android:id="@+id/quick_qs_panel_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:accessibilityTraversalAfter="@+id/date_time_group"
-                android:accessibilityTraversalBefore="@id/expand_indicator"
+                android:layout_height="wrap_content"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:focusable="true"
-                android:importantForAccessibility="yes" />
+                android:overScrollMode="never"
+                android:paddingEnd="@dimen/qs_scroller_margin"
+                android:paddingStart="@dimen/qs_scroller_margin"
+                android:scrollbars="none">
 
-        </HorizontalScrollView>
-    </com.android.systemui.qs.HorizontalClippingLinearLayout>
+                <com.android.systemui.qs.QuickQSPanel
+                    android:id="@+id/quick_qs_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:accessibilityTraversalAfter="@+id/date_time_group"
+                    android:accessibilityTraversalBefore="@id/expand_indicator"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:focusable="true"
+                    android:importantForAccessibility="yes"/>
 
-    <com.android.systemui.statusbar.AlphaOptimizedImageView
-        android:id="@+id/qs_detail_header_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:alpha="0"
-        android:background="@color/qs_detail_progress_track"
-        android:src="@drawable/indeterminate_anim"/>
+            </HorizontalScrollView>
+        </com.android.systemui.qs.HorizontalClippingLinearLayout>
 
-    <TextView
-        android:id="@+id/header_debug_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:fontFamily="sans-serif-condensed"
-        android:padding="2dp"
-        android:textColor="#00A040"
-        android:textSize="11dp"
-        android:textStyle="bold"
-        android:visibility="invisible"/>
+        <com.android.systemui.statusbar.AlphaOptimizedImageView
+            android:id="@+id/qs_detail_header_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:alpha="0"
+            android:background="@color/qs_detail_progress_track"
+            android:src="@drawable/indeterminate_anim"/>
 
+        <TextView
+            android:id="@+id/header_debug_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="2dp"
+            android:textColor="#00A040"
+            android:textSize="11dp"
+            android:textStyle="bold"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 </com.android.systemui.qs.QuickStatusBarHeader>
+
