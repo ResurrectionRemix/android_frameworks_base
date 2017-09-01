@@ -802,6 +802,9 @@ public class StatusBarWindowView extends FrameLayout implements TunerService.Tun
         if (mNotificationPanel != null) {
             mNotificationPanel.setQsSmartPulldown(qsSmartPullDown);
             mNotificationPanel.setQsSecureExpandDisabled(isQsSecureExpandDisabled);
+            boolean isDoubleTapEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN, 0, UserHandle.USER_CURRENT) == 1;
+            mNotificationPanel.setLockscreenDoubleTapToSleep(isDoubleTapEnabled);
         }
     }
 

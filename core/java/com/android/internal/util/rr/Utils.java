@@ -48,6 +48,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
+import android.os.SystemClock;
 
 import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
@@ -162,6 +163,14 @@ public class Utils {
     public static boolean isChineseLanguage() {
        return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
                Locale.CHINESE.getLanguage());
+    }
+
+    // Method to turn off the screen
+    public static void switchScreenOff(Context ctx) {
+        PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+        if (pm!= null) {
+            pm.goToSleep(SystemClock.uptimeMillis());
+        }
     }
 
     public static ActivityInfo getRunningActivityInfo(Context context) {
