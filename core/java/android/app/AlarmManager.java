@@ -1015,6 +1015,17 @@ public class AlarmManager {
         }
     }
 
+    /** @hide */
+    public String getSeenAlarms() {
+        try {
+            if (mService != null) {
+                return mService.getSeenAlarms();
+            }
+        } catch (RemoteException e) {
+        }
+        return null;
+    }
+
     /**
      * Gets information about the next alarm clock currently scheduled.
      *
