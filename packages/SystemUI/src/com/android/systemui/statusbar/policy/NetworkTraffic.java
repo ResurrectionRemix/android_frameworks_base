@@ -152,11 +152,11 @@ public class NetworkTraffic extends TextView implements
         }
 
         private String formatOutput(long timeDelta, long data, String symbol) {
-            long speed = (long)(data / (timeDelta / 1000F));
+            long speed = (long)(data / (timeDelta / (float)KB / 3.0f));
             if (speed < KB) {
                 return decimalFormat.format(speed) + symbol;
             } else if (speed < MB) {
-                return decimalFormat.format(speed / (float)KB) + 'k' + symbol;
+                return decimalFormat.format(speed / (float)KB) + 'K' + symbol;
             } else if (speed < GB) {
                 return decimalFormat.format(speed / (float)MB) + 'M' + symbol;
             }
@@ -164,8 +164,8 @@ public class NetworkTraffic extends TextView implements
         }
 
         private boolean shouldHide(long rxData, long txData, long timeDelta) {
-            long speedTxKB = (long)(txData / (timeDelta / 1000f)) / KILOBYTE;
-            long speedRxKB = (long)(rxData / (timeDelta / 1000f)) / KILOBYTE;
+            long speedTxKB = (long)(txData / (timeDelta / (float)KB)) / KILOBYTE;
+            long speedRxKB = (long)(rxData / (timeDelta / (float)KB)) / KILOBYTE;
             int mState = 2;
                 return mAutoHide &&
                    (mState == MASK_DOWN && speedRxKB <= mAutoHideThreshold ||
