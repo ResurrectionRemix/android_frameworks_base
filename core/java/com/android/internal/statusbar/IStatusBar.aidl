@@ -177,4 +177,9 @@ oneway interface IStatusBar
      * Notifies System UI whether the recents animation is running or not.
      */
     void onRecentsAnimationStateChanged(boolean running);
+
+    /**
+     * ABC
+     */
+    void toggleCameraFlash();
 }
