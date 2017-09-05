@@ -73,6 +73,12 @@ import android.telephony.UiccSlotInfo;
 interface ITelephony {
 
     /**
+     * Toggle between 3G and LTE (NT_MODE_CDMA, NT_MODE_GLOBAL)
+     * @param boolean to turn on and off LTE
+     */
+    void toggleLTE(boolean on);
+
+    /**
      * Dial a number. This doesn't place the call. It displays
      * the Dialer screen.
      * @param number the number to be dialed. If null, this
