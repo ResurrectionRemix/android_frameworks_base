@@ -35,6 +35,7 @@ import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
+import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
@@ -127,6 +128,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new UsbTetherTile(mHost);
             case "volume_panel":
                 return new VolumeTile(mHost);
+            case "lte":
+                return new LteTile(mHost);
         }
 
         // Intent tiles.
