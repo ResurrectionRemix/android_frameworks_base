@@ -35,7 +35,6 @@ public class BootReceiver extends BroadcastReceiver {
     private SettingsObserver mSettingsObserver;
     private Context mContext;
     private int peakRate;
-
     private class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -50,6 +49,9 @@ public class BootReceiver extends BroadcastReceiver {
                     false, this);
             mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.REFRESH_RATE_SETTING),
+                    false, this);
+            mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.SHOW_CPU_OVERLAY),
                     false, this);
             update();
         }
@@ -71,6 +73,12 @@ public class BootReceiver extends BroadcastReceiver {
                 mContext.startService(screenState);
             } else {
                 mContext.stopService(screenState);
+            }
+            Intent cpuinfo = new Intent(mContext, com.android.systemui.CPUInfoService.class);
+            if (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.SHOW_CPU_OVERLAY, 0) != 0) {
+                mContext.startService(cpuinfo);
+            } else {
+                mContext.stopService(cpuinfo);
             }
             updateRefreshRate();
         }
@@ -139,6 +147,16 @@ public class BootReceiver extends BroadcastReceiver {
             updateRefreshRate();
         } catch (Exception e) {
             Log.e(TAG, "Can't start custom services", e);
+        }
+
+            // Start the cpu info overlay, if activated
+            if (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.SHOW_CPU_OVERLAY, 0) != 0) {
+                Intent cpuinfo = new Intent(mContext, com.android.systemui.CPUInfoService.class);
+                mContext.startService(cpuinfo);
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "Can't start load average service", e);
         }
     }
 }

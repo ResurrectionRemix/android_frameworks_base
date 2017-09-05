@@ -736,10 +736,6 @@
         <service android:name=".FPSInfoService"
                 android:exported="false" />
 
-        <!-- CPU Info -->
-        <service android:name=".CPUInfoService"
-                android:exported="true" />
-
         <service android:name=".screenstate.ScreenStateService"
                 android:exported="false" >
             <intent-filter>
@@ -772,5 +768,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- CPU Info -->
+        <service android:name=".CPUInfoService"
+                android:exported="false" />
+        <receiver android:name=".BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
