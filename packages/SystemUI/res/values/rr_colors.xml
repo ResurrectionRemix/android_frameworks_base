@@ -45,5 +45,7 @@
     <!-- Exposed qs_statusbar_background -->
     <color name="qs_statusbar_background">#FF000000</color>
 
-
+    <!-- Floating action button -->
+    <color name="fab_color">@*android:color/accent_device_default_light</color>
+    <color name="floating_action_button_icon_color">@android:color/white</color>
 </resources>
