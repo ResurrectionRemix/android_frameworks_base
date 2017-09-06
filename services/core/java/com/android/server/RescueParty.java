@@ -164,6 +164,7 @@ public class RescueParty {
      * opportunity to reset any settings depending on our rescue level.
      */
     public static void onSettingsProviderPublished(Context context) {
+        if (isDisabled()) return;
         handleNativeRescuePartyResets();
         executeRescueLevel(context);
     }
