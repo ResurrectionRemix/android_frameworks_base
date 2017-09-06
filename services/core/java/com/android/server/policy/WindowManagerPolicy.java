@@ -68,6 +68,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.WindowConfiguration;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -1501,4 +1502,9 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
      * @return whether the value was changed.
      */
     boolean setAodShowing(boolean aodShowing);
+
+    /**
+     * Send some ActionHandler commands to WindowManager.
+     */
+    public void sendCustomAction(Intent intent);
 }
