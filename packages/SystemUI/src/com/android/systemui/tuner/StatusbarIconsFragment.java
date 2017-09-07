@@ -19,11 +19,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v14.preference.PreferenceFragment;
-import android.support.v7.preference.Preference;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,59 +32,20 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 import com.android.systemui.plugins.PluginPrefs;
 
-public class TunerFragment extends PreferenceFragment {
+public class StatusbarIconsFragment extends TunerFragment {
 
-    private static final String TAG = "TunerFragment";
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+    private static final String TAG = "StatusbarIconsFragment";
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.tuner_prefs);
-    }
-
-    private boolean alwaysOnAvailable() {
-        return new AmbientDisplayConfiguration(getContext()).alwaysOnAvailable();
+        addPreferencesFromResource(R.xml.statusbar_icon_settings);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(R.string.system_ui_tuner);
+        getActivity().setTitle(R.string.statusbar_icons_blacklist);
 
         MetricsLogger.visibility(getContext(), MetricsEvent.TUNER, true);
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        MetricsLogger.visibility(getContext(), MetricsEvent.TUNER, false);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }

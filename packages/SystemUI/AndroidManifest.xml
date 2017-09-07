@@ -294,20 +294,45 @@
                 android:exported="true" />
 
         <activity android:name=".tuner.TunerActivity"
-                  android:enabled="true"
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/system_ui_tuner"
                   android:process=":tuner"
+                  android:parentActivityName="com.android.settings.rr.MainSettingsLayout"
                   android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <meta-data android:name="com.android.settings.category"
-                    android:value="com.android.settings.category.ia.system" />
-            <meta-data android:name="com.android.settings.summary"
-                    android:resource="@string/summary_empty"/>
+        </activity>
+
+        <activity android:name=".tuner.StatusBarIconsTunerActivity"
+                  android:icon="@drawable/tuner"
+                  android:theme="@style/TunerSettings"
+                  android:label="@string/statusbar_icons_blacklist"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.rr.StatusBarSettings"
+                  android:exported="true">
+        </activity>
+
+        <activity android:name=".tuner.NavBarTunerActivity"
+                  android:theme="@style/TunerSettings"
+                  android:label="@string/navbar_tuner_activity"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.rr.Navigation"
+                  android:exported="true">
+        </activity>
+
+        <activity android:name=".tuner.LockscreenTunerActivity"
+                  android:theme="@style/TunerSettings"
+                  android:label="@string/lockscreen_tuner_activity"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.rr.LockSettings"
+                  android:exported="true">
+        </activity>
+
+        <activity android:name=".tuner.PowerNotificationsTunerActivity"
+                  android:theme="@style/TunerSettings"
+                  android:label="@string/powernotif_tuner_activity"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.rr.Misc"
+                  android:exported="true">
         </activity>
 
         <activity-alias android:name=".DemoMode"
@@ -615,13 +640,13 @@
             android:singleUser="true"
             android:permission="android.permission.BIND_DREAM_SERVICE" />
 
-        <receiver
+        <!--<receiver
             android:name=".tuner.TunerService$ClearReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.android.systemui.action.CLEAR_TUNER" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"

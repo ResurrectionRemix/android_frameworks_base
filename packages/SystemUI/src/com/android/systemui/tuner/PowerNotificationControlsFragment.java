@@ -45,6 +45,12 @@ public class PowerNotificationControlsFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final View switchBar = view.findViewById(R.id.switch_bar);
@@ -86,7 +92,7 @@ public class PowerNotificationControlsFragment extends Fragment {
     }
 
     private boolean isEnabled() {
-        int setting = Settings.Secure.getInt(getContext().getContentResolver(), KEY_SHOW_PNC, 0);
+        int setting = Settings.Secure.getInt(getContext().getContentResolver(), KEY_SHOW_PNC, 1);
         return setting == 1;
     }
 

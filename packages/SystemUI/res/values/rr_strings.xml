@@ -111,4 +111,10 @@
     <string name="menu_ime_always_show">Menu / Keyboard Switcher (always show)</string>
     <string name="search">Search</string>
 
+    <!-- SysUI Tuner -->
+    <string name="statusbar_icons_blacklist">Status bar icons</string>
+    <string name="navbar_tuner_activity">Navigation bar buttons</string>
+    <string name="lockscreen_tuner_activity">Lockscreen shortcuts</string>
+    <string name="powernotif_tuner_activity">Power notifications</string>
+
 </resources>
