@@ -887,7 +887,6 @@ class GlobalScreenshot {
                     case MotionEvent.ACTION_CANCEL:
                         stopScreenshot();
                         finisher.run();
->>>>>>> 8b81378b9bf... base: refine partial screenshot handling
                 }
             }
         });
