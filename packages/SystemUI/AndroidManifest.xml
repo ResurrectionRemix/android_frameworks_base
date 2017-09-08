@@ -411,6 +411,15 @@
             </intent-filter>
         </activity-alias>
 
+
+        <activity android:name=".tuner.LockscreenActivity"
+                  android:theme="@style/ExTunerSettings"
+                  android:label="@string/tuner_lock_screen"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.rr.LockSettings"
+                  android:exported="true">
+        </activity>
+
         <activity
             android:name=".stackdivider.ForcedResizableInfoActivity"
             android:theme="@style/ForcedResizableTheme"
