@@ -348,6 +348,14 @@
             </intent-filter>
         </activity-alias>
 
+        <activity android:name=".tuner.StatusbarItemsActivity"
+                  android:theme="@style/ExTunerSettings"
+                  android:label="@string/statusbar_items_title"
+                  android:process=":tuner"
+                  android:parentActivityName="com.android.settings.rr.StatusBarSettings"
+                  android:exported="true">
+        </activity>
+
         <!-- Service used by secondary users to register themselves with the system user. -->
         <service android:name=".recents.RecentsSystemUserService"
             android:exported="false"
