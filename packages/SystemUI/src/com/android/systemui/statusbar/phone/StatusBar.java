@@ -6656,7 +6656,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MEDIA_METADATA),
                     false, this, UserHandle.USER_ALL);
-            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_QUICKBAR_SCROLL_ENABLED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -6734,6 +6734,19 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.NO_SIM_CLUSTER_SWITCH),
                  false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_ROWS_PORTRAIT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_ROWS_LANDSCAPE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLUMNS_PORTRAIT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_COLUMNS_LANDSCAPE),
+                    false, this, UserHandle.USER_ALL);
+            update();
         }
 
         @Override
@@ -6794,13 +6807,19 @@ public class StatusBar extends SystemUI implements DemoMode,
             }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NO_SIM_CLUSTER_SWITCH))) {
                     trytoinflateclusters();
-             }
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_PORTRAIT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_LANDSCAPE)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_PORTRAIT)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_LANDSCAPE))) {
+                setQsRowsColumns();
+            }
         }
 
         public void update() {
             setStatusBarWindowViewOptions();
             setHeadsUpBlacklist();
             setLockscreenMediaMetadata();
+            setQsRowsColumns();
             updateQsPanelResources();
             updateRecentsMode();
             updateRecentsIconPack();
@@ -6910,6 +6929,12 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     private void updateQsPanelResources() {
+        if (mQSPanel != null) {
+            mQSPanel.updateResources();
+        }
+    }
+
+    private void setQsRowsColumns() {
         if (mQSPanel != null) {
             mQSPanel.updateResources();
         }
