@@ -4524,6 +4524,30 @@ public final class Settings {
         public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
 
         /**
+         * How many rows to show in the qs panel when in portrait
+         * @hide
+         */
+        public static final String QS_ROWS_PORTRAIT = "qs_rows_portrait";
+
+        /**
+         * How many rows to show in the qs panel when in landscape
+         * @hide
+         */
+        public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
+
+        /**
+         * How many columns to show in the qs panel when in portrait
+         * @hide
+         */
+        public static final String QS_COLUMNS_PORTRAIT = "qs_columns_portrait";
+
+        /**
+         * How many columns to show in the qs panel when in landscape
+         * @hide
+         */
+        public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
