@@ -2921,6 +2921,12 @@ public final class Settings {
         public static final int END_BUTTON_BEHAVIOR_DEFAULT = END_BUTTON_BEHAVIOR_SLEEP;
 
         /**
+        * List of Apps hidden from recents
+        * @hide
+        */
+        public static final String HIDE_FROM_RECENTS_LIST = "hide_from_recents_list";
+
+        /**
          * Is advanced settings mode turned on. 0 == no, 1 == yes
          * @hide
          */
