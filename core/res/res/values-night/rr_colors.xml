@@ -20,5 +20,8 @@
     <!-- Gradient Shit -->
     <color name="gradient_start">#ff8ab4f8</color>
     <color name="gradient_end">#ff8ab4f8</color>
+
+    <color name="toast_bg">@color/material_grey_800</color>
+    <color name="toast_text">@color/white</color>
 </resources>
 

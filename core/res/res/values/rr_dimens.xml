@@ -20,4 +20,6 @@
 <resources>
     <dimen name="qs_background_inset">0dp</dimen>
 
+    <dimen name="toast_elevation">2dp</dimen>
+
 </resources>

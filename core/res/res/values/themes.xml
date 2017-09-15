@@ -217,7 +217,7 @@ please see themes_device_defaults.xml.
         <item name="presentationTheme">@style/Theme.DeviceDefault.Dialog.Presentation</item>
 
         <!-- Toast attributes -->
-        <item name="toastFrameBackground">@drawable/toast_frame</item>
+        <item name="toastFrameBackground">@drawable/toast_frame_material</item>
 
         <!-- Panel attributes -->
         <item name="panelBackground">@drawable/menu_background</item>

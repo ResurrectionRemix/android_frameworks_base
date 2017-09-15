@@ -155,8 +155,8 @@ please see styles_device_defaults.xml.
     </style>
 
     <style name="Animation.Toast">
-        <item name="windowEnterAnimation">@anim/toast_enter</item>
-        <item name="windowExitAnimation">@anim/toast_exit</item>
+        <item name="windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="windowExitAnimation">@anim/slide_out_down</item>
     </style>
 
     <style name="Animation.Tooltip">

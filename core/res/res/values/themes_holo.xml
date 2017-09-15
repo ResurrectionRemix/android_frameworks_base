@@ -208,7 +208,7 @@ please see themes_device_defaults.xml.
         <item name="presentationTheme">@style/Theme.Holo.Dialog.Presentation</item>
 
         <!-- Toast attributes -->
-        <item name="toastFrameBackground">@drawable/toast_frame</item>
+        <item name="toastFrameBackground">@drawable/toast_frame_material</item>
 
         <!-- Panel attributes -->
         <item name="panelBackground">@drawable/menu_hardkey_panel_holo_dark</item>
@@ -571,7 +571,7 @@ please see themes_device_defaults.xml.
         <item name="presentationTheme">@style/Theme.Holo.Light.Dialog.Presentation</item>
 
         <!-- Toast attributes -->
-        <item name="toastFrameBackground">@drawable/toast_frame</item>
+        <item name="toastFrameBackground">@drawable/toast_frame_material</item>
 
         <!-- Panel attributes -->
         <item name="panelBackground">@drawable/menu_hardkey_panel_holo_light</item>

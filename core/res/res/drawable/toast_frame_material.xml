@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <padding android:top="10dp" android:right="12dp" android:bottom="10dp" android:left="12dp" />
+            <solid android:color="@color/toast_bg" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+</layer-list>
