@@ -26,6 +26,7 @@ import static com.android.internal.os.ZygoteConnectionConstants.CONNECTION_TIMEO
 import static com.android.internal.os.ZygoteConnectionConstants.MAX_ZYGOTE_ARGC;
 import static com.android.internal.os.ZygoteConnectionConstants.WRAPPED_PID_TIMEOUT_MILLIS;
 
+import android.graphics.Typeface;
 import android.net.Credentials;
 import android.net.LocalSocket;
 import android.os.FactoryTest;
@@ -189,6 +190,10 @@ class ZygoteConnection {
             } catch (ErrnoException errnoEx) {
                 throw new IllegalStateException("Unable to set up pipe for invoke-with", errnoEx);
             }
+        }
+
+        if (parsedArgs.refreshFont) {
+            Typeface.recreateDefaults();
         }
 
         /**
@@ -417,6 +422,11 @@ class ZygoteConnection {
         boolean preloadDefault;
 
         /**
+         * Whether to refresh displayed font
+         */
+        boolean refreshFont;
+
+        /**
          * Constructs instance and parses args
          * @param args zygote command-line args
          * @throws IllegalArgumentException
@@ -582,6 +592,8 @@ class ZygoteConnection {
                     preloadPackageCacheKey = args[++curArg];
                 } else if (arg.equals("--preload-default")) {
                     preloadDefault = true;
+                } else if (arg.equals("--refresh-font")) {
+                    refreshFont = true;
                 } else {
                     break;
                 }
