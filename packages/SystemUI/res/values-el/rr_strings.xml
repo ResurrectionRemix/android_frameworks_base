@@ -276,7 +276,7 @@
   <string name="pie_am_pm">π</string>
   <string name="pie_state_name">Χειρισμοί Pie</string>
   <string name="pie_state_summary">Χρησιμοποιήστε χειρισμό pie ενώ ειναι στη λειτουργία πλήρους οθόνης</string>
-  <string name="pie_battery_level">"ΕΠΊΠΕΔΟ ΜΠΑΤΑΡΊΑΣ "</string>
+  <string name="pie_battery_level">"ΕΠΙΠΕΔΟ ΜΠΑΤΑΡΙΑΣ "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="accessibility_data_sim">Τρέχοντα δεδομένα Sim</string>
   <string name="data_switch_started">Εναλλαγή κάρτας SIM δεδομένων, αυτό μπορεί να διαρκέσει πάνω από ένα λεπτό...</string>

@@ -95,7 +95,7 @@
   <string name="qs_app_picker_title">Selecionador de App</string>
   <string name="quick_settings_lte_label">LTE</string>
   <string name="lte_on">LTE Ligado </string>
-  <string name="lte_off">LTE desligado</string>
+  <string name="lte_off">4G desligado</string>
   <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC desligado</string>
@@ -117,7 +117,7 @@
   <string name="quick_settings_appsidebar_off">Barra lateral de aplicativos desativada</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse Habilitado</string>
-  <string name="quick_settings_pulse_disabled">Nenhum visualizador</string>
+  <string name="quick_settings_pulse_disabled">Sem visualizador</string>
   <string name="quick_settings_pulse_label">Pulso</string>
   <string name="accessibility_quick_settings_pulse_off">Pulso Desligado </string>
   <string name="accessibility_quick_settings_pulse_on">Pulso Ligado</string>
@@ -201,21 +201,21 @@
   <string name="app_killed_message">Aplicativo encerrado</string>
   <!-- Heads up snooze toast -->
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • As notificações flutuantes vão adormecer durante 1 minuto.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • As notificações estão cochilando por <xliff:g id="number">%d</xliff:g> minutos.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • As notificações desativadas por <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nenhuma captura de tela tirada</string>
   <string name="screenshot_abort_text">Operação abortada</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">Excluído</string>
-  <string name="action_delete_fault">Operação não teve sucesso.</string>
+  <string name="action_delete_fault">Falha ao apagar</string>
   <string name="action_save_success">Salvo</string>
-  <string name="action_save_fault">Operação não teve sucesso.</string>
-  <string name="pref_action_color_title">Cor de botões de ação</string>
+  <string name="action_save_fault">Falha ao salvar</string>
+  <string name="pref_action_color_title">Cor dos botões de ação</string>
   <string name="pref_action_color_summary">Escolha sua cor favorita para os botões de ação</string>
   <string name="pref_category_main">Configurações principais</string>
   <string name="pref_category_user">Configurações do usuário</string>
-  <string name="pref_crop_behavior_title">Comportamento do cortar</string>
-  <string name="pref_crop_behavior_summary">Usar a imagem recortada, mesmo que o original na verdade ainda não foi cortada com a ação de cortar</string>
+  <string name="pref_crop_behavior_title">Comportamento do corte</string>
+  <string name="pref_crop_behavior_summary">Usar a imagem recortada mesmo que o original ainda não foi realmente cortado</string>
   <string name="action_ok">Ok</string>
   <string name="action_delete_success">Excluído</string>
   <string name="action_delete_fault">Falha ao deletar</string>
@@ -228,31 +228,31 @@
   <!-- Task Manager -->
   <string name="task_manager_title">Gerenciador de Tarefas</string>
   <string name="message_switch_fail">Não é possível mudar para esta tarefa, porque ela não tem nenhuma interface.</string>
-  <string name="tasklist_killall">Terminar tudo</string>
+  <string name="tasklist_killall">Matar tudo</string>
   <string name="tasklist_memory_usage">"Memória Livre/Total: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
-  <string name="message_keep_one_launcher">Deve manter pelo menos uma atividade!</string>
+  <string name="message_keep_one_launcher">Deve manter pelo menos uma área de trabalho!</string>
   <string name="tm_clear_task">LIMPAR</string>
   <!-- Slim Recents -->
-  <string name="recents_multiwin_warning">Uma sessão de multi-janelas já está ativa.\nBasta tocar no aplicativo que deseja ancorá-lo agora.</string>
-  <string name="recents_multiwin_nolastapp">Todas as aplicações recentes foram removidas. Por favor, escolha um app da launcher ou da gaveta de aplicativos.</string>
+  <string name="recents_multiwin_warning">Uma sessão de multi-janelas já está ativa.\nSó toque no aplicativo se deseja ancorá-lo.</string>
+  <string name="recents_multiwin_nolastapp">Você removeu todos os aplicativos recentes, por favor escolha um do launcher ou da gaveta de aplicativos.</string>
   <string name="slim_recent_keyguard">Desbloqueie o dispositivo para ver as aplicações recentes</string>
-  <string name="slim_recent_pinned">Desafixar a tela para ver os recentes</string>
+  <string name="slim_recent_pinned">Desafixe a tela para ver os recentes</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Abrir %s após fechar os recentes</string>
-  <string name="toast_recents_cancel_queued_app">Cancelar execução do app</string>
+  <string name="toast_recents_cancel_queued_app">Início do aplicativo cancelado</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Forçar parada?</string>
-  <string name="force_stop_dlg_text">Se você forçar a interrupção de um app, ele pode apresentar mau funcionamento.</string>
+  <string name="force_stop_dlg_text">Se você forçar a interrupção de um aplicativo, ele pode apresentar mau funcionamento.</string>
   <string name="dlg_ok">Ok</string>
   <string name="dlg_cancel">Cancelar</string>
-  <string name="kill">Fechar aplicativo</string>
+  <string name="kill">Matar aplicativo</string>
   <!-- OmniJAWS -->
   <string name="omnijaws_service_error">Erro</string>
   <string name="omnijaws_service_unkown">Sem informações meteorológicas</string>
   <string name="omnijaws_detail_header">Previsão do Tempo</string>
   <string name="omnijaws_label_default">Previsão do Tempo</string>
   <string name="omnijaws_current_text">Agora</string>
-  <string name="omnijaws_package_not_available">OmniJaws não disponível</string>
+  <string name="omnijaws_package_not_available">OmniJaws indisponível</string>
   <string name="omnijaws_service_error_long">Erro ao carregar as informações meteorológicas</string>
   <string name="omnijaws_service_disabled">Serviço desativado</string>
   <!-- Weather string format in expanded statusbar header -->

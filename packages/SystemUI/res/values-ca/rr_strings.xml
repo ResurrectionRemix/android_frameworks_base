@@ -155,16 +155,28 @@
   <string name="accessibility_quick_settings_suspend_actions_off">Suspendre accions deshabilitat</string>
   <string name="quick_settings_suspend_actions_label">Suspendre accions</string>
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Mode de bateria</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Mode de bateria: estalvi de bateria.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Mode de bateria: optimitzat.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Mode de bateria: rendiment.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_power">Mode de bateria: eficiència.</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">Mode de bateria: mode ràpid.</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">Mode de batería canviat a estalvi d\'energia.</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bal">Mode de bateria canviat a optimitzat.</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_perf">Mode de bateria canviat a rendiment.</string>
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_power">Mode de bateria canviat a eficiència.</string>
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_changed_bias_perf">Mode de bateria canviat a mode ràpid.</string>
+  <string name="quick_settings_performance_profile_detail_title">Mode de bateria</string>
   <!-- Compass QS Tile -->
   <string name="quick_settings_compass_label">Brúixola</string>
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
@@ -224,16 +236,40 @@
   <string name="slim_recent_pinned">Allibera la pantalla per veure recents</string>
   <!-- Slim recents app sidebar queue app toast -->
   <string name="toast_recents_queue_app">Obre %s després de tancar els recents</string>
+  <string name="toast_recents_cancel_queued_app">Llençament d\'aplicació cancelat</string>
   <!-- Kill button in notification guts -->
+  <string name="force_stop_dlg_title">Força l\'apagada?</string>
+  <string name="force_stop_dlg_text">Si forçes l\'apagada d\'una app, pot no comportar-se correctament.</string>
   <string name="dlg_ok">Acceptar</string>
+  <string name="dlg_cancel">Cancelar</string>
+  <string name="kill">Atura l\'app</string>
   <!-- OmniJAWS -->
+  <string name="omnijaws_service_error">Error</string>
+  <string name="omnijaws_service_unkown">Sense informació sobre el temps</string>
+  <string name="omnijaws_detail_header">Temps</string>
+  <string name="omnijaws_label_default">Temps</string>
+  <string name="omnijaws_current_text">Ara</string>
+  <string name="omnijaws_package_not_available">OmniJaws no disponible</string>
+  <string name="omnijaws_service_error_long">Error carregant l\'informació del temps</string>
+  <string name="omnijaws_service_disabled">Servei deshabilitat</string>
   <!-- Weather string format in expanded statusbar header -->
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- volte icon switch -->
+  <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">Càrrega Dash (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> fins a completar)</string>
+  <string name="keyguard_plugged_in_dash_charging">Càrrega Dash</string>
   <!-- vpn icon switch -->
+  <string name="status_bar_vpn">VPN</string>
   <!-- data saver icon switch -->
+  <string name="status_bar_datasaver">Economitzador de dades</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">Tots els mètodes de navegació deshabilitats</string>
+  <string name="no_navigation_warning_text">Premer per habilitar</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM aaaa</string>
+  <string name="pie_battery_level">"NIVELL DE BATERIA "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Sim de dades actual</string>
+  <string name="data_switch_started">Canviant la sim de dades mòbils, pot tardar fins a un minut...</string>
 </resources>

@@ -270,8 +270,14 @@
   <string name="no_navigation_warning_title">Alle navigatiemethoden uitgeschakeld</string>
   <string name="no_navigation_warning_text">Tik om in te schakelen</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">Pie besturing</string>
+  <string name="pie_state_summary">Gebruik pie besturing in immersieve modus</string>
+  <string name="pie_battery_level">"BATTERIJNIVEAU "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Huidige Data Sim</string>
+  <string name="data_switch_started">Schakelen naar simkaart voor mobiele gegevens, dit kan even duren...</string>
 </resources>

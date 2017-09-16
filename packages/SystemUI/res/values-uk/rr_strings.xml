@@ -271,8 +271,14 @@
   <string name="no_navigation_warning_title">Всі навігаційні методи вимкнуто</string>
   <string name="no_navigation_warning_text">Торкніться, щоб увімкнути</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">Управління PIE</string>
+  <string name="pie_state_summary">Використовувати керування PIE в повноекранному режимі</string>
+  <string name="pie_battery_level">"Заряд батареї"</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Поточна SIM-карта для мобільних даних</string>
+  <string name="data_switch_started">Змінення SIM-карти для мобільного Інтернету. Це може зайняти до хвилини…</string>
 </resources>

@@ -52,8 +52,9 @@
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_restartUI">सिस्टम को पुनरारंभ करें</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-  <string name="permdesc_restartUI">SystemUIService प्रणाली सलाखों थीमाधारित संसाधन लोड कर सकते हैं ताकि पुनरारंभ करें</string>
+  <string name="permdesc_restartUI">सिस्टम प्रयोक्ता इंटरफ़ेस पुनरारंभ करें ताकि सिस्टम पट्टी थीमाधारित संसाधन लोड कर सके</string>
   <!-- Pocket Lock -->
+  <string name="pocket_lock_message_long_press">अंतर अधिनियम करने के लिए लंबे समय तक पॉवर बटन दबाएँ</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

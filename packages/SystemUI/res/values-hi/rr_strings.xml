@@ -135,12 +135,12 @@
   <string name="accessibility_quick_settings_heads_up_changed_off">संकेत बंद कर दिया</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">संकेत चालु कर दिया</string>
   <!-- Location Tile -->
-  <string name="accessibility_quick_settings_location_battery_saving">स्थान रिपोर्टिंग: बैटरी बचत मोड।</string>
-  <string name="accessibility_quick_settings_location_gps_only">स्थान रिपोर्टिंग: सेंसर मोड।</string>
-  <string name="accessibility_quick_settings_location_high_accuracy">स्थान रिपोर्टिंग: उच्च सटीकता मोड।</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">स्थान रिपोर्टिंग बदलाव: बैटरी बचत मोड।</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">स्थान रिपोर्टिंग बदलाव:: सेंसर मोड।</string>
-  <string name="accessibility_quick_settings_location_changed_high_accuracy">स्थान रिपोर्टिंग बदलाव:: उच्च सटीकता मोड।</string>
+  <string name="accessibility_quick_settings_location_battery_saving">स्थान रिपोर्टिंग: बैटरी बचत मोड</string>
+  <string name="accessibility_quick_settings_location_gps_only">स्थान रिपोर्टिंग: केवल सेंसर मोड</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">स्थान रिपोर्टिंग: उच्च सटीकता मोड</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">स्थान रिपोर्टिंग बदलाव: बैटरी बचत मोड</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">स्थान रिपोर्टिंग बदलाव:: सेंसर मोड</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">स्थान रिपोर्टिंग बदलाव:: उच्च सटीकता मोड</string>
   <string name="quick_settings_location_detail_title">स्थान मोड</string>
   <string name="quick_settings_location_battery_saving_label">बैटरी बचत</string>
   <string name="quick_settings_location_gps_only_label">केवल डिवाइस</string>
@@ -159,15 +159,15 @@
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_pwrsv">बैटरी मोड: पावर संचय मोड</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_bal">बैटरी मोड: संतुलित मोड।</string>
+  <string name="accessibility_quick_settings_perf_profile_bal">बैटरी मोड: संतुलित मोड</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_perf">बैटरी मोड: प्रदर्शन मोड।</string>
+  <string name="accessibility_quick_settings_perf_profile_perf">बैटरी मोड: प्रदर्शन मोड</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_bias_power">बैटरी मोड: कार्यक्षमता मोड।</string>
+  <string name="accessibility_quick_settings_perf_profile_bias_power">बैटरी मोड: कार्यक्षमता मोड</string>
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_bias_perf">बैटरी मोड: त्वरित मोड।</string>
+  <string name="accessibility_quick_settings_perf_profile_bias_perf">बैटरी मोड: त्वरित मोड</string>
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
-  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">बैटरी मोड पावर सेव मोड में परिवर्तित किया गया|</string>
+  <string name="accessibility_quick_settings_perf_profile_changed_pwrsv">बैटरी मोड पावर सेव मोड में परिवर्तित किया गया</string>
   <!-- Announcement made when the battery mode tile changes to balanced (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_quick_settings_perf_profile_changed_bal">बैटरी मोड संतुलित मोड में परिवर्तित किया गया।</string>
   <!-- Announcement made when the battery mode tile changes to performance (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -182,8 +182,8 @@
   <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
   <string name="quick_settings_compass_init">आवाक्षरित हो रही है\u2026</string>
   <string name="accessibility_quick_settings_compass_off">कम्पास बंद</string>
-  <string name="accessibility_quick_settings_compass_on">दिशा सूचक यंत्र चालू|</string>
-  <string name="accessibility_quick_settings_compass_changed_off">कंपास बंद कर दिया।</string>
+  <string name="accessibility_quick_settings_compass_on">दिशा सूचक चालू</string>
+  <string name="accessibility_quick_settings_compass_changed_off">कंपास बंद कर दिया</string>
   <string name="accessibility_quick_settings_compass_changed_on">कम्पास चालू कर दिया</string>
   <string name="quick_settings_compass_N">उ</string>
   <string name="quick_settings_compass_NE">उ-पू</string>
@@ -203,13 +203,13 @@
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> सूचना देखना 1 मिनट के लिए स्थगित करने हैं।</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s </xliff:g> • सूचनाएँ <xliff:g id="number">%d </xliff:g> मिनट के लिए स्थगित करने हैं।</string>
   <!-- Screenshot action -->
-  <string name="screenshot_abort_title">स्क्रीनशॉट नहीं लिया लिया</string>
+  <string name="screenshot_abort_title">स्क्रीनशॉट नहीं लिया</string>
   <string name="screenshot_abort_text">करवाई निलंबित</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">हटाए गए</string>
   <string name="action_delete_fault">हटाने का कार्य विफल रहा</string>
   <string name="action_save_success">सहेजा गया</string>
-  <string name="action_save_fault">बचत असफल था</string>
+  <string name="action_save_fault">सहेज विफल रहा</string>
   <string name="pref_action_color_title">क्रिया बटन रंग</string>
   <string name="pref_action_color_summary">क्रिया बटन के लिए अपने पसंदीदा रंग चुनें</string>
   <string name="pref_category_main">मुख्य सेटिंग</string>
@@ -260,16 +260,24 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
+  <string name="keyguard_indication_dash_charging_time">तेज़ चार्जिंग (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> पूर्ण होने तक)</string>
   <string name="keyguard_plugged_in_dash_charging">डैश चार्जिंग</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">वीपीएन</string>
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">डेटा सेवर</string>
   <!-- No navigation warning notification -->
+  <string name="no_navigation_warning_title">सभी नेविगेशन विधियाँ अक्षम</string>
   <string name="no_navigation_warning_text">सक्षम करने के लिए टैप करें</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">घंटे:मिनट</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
+  <string name="pie_state_name">पाइ नियंत्रण</string>
+  <string name="pie_state_summary">इमर्सिव मोड मे होने पर पाई कंट्रोल्स का उपयोग करें</string>
+  <string name="pie_battery_level">"बैटरी स्तर "</string>
   <string name="quick_settings_pie">पाई</string>
+  <string name="accessibility_data_sim">वर्तमान डेटा सिम</string>
+  <string name="data_switch_started">डेटा सिम बदला जा रहा, यह करने में एक मिनट तक लग सकते हैं...</string>
 </resources>

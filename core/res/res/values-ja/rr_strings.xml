@@ -54,6 +54,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">SystemUIService を再起動してシステムバーのテーマリソースを読み込むことができます。</string>
   <!-- Pocket Lock -->
+  <string name="pocket_lock_message_long_press">電源ボタンを長押しでライト点灯</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

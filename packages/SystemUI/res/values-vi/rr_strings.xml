@@ -274,8 +274,8 @@
   <string name="pie_hour_format_12">giờ:phút</string>
   <string name="pie_hour_format_24">Giờ:phút</string>
   <string name="pie_am_pm">am</string>
-  <string name="pie_state_name">Điều khiển Bánh</string>
-  <string name="pie_state_summary">Sử dụng điều khiển bánh trong khi ở chế độ im lặng</string>
+  <string name="pie_state_name">Điều hướng Pie</string>
+  <string name="pie_state_summary">Sử dụng điều khiển pie khi ở chế độ nhập vai</string>
   <string name="pie_battery_level">"MỨC PIN "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="accessibility_data_sim">Dữ Liệu Sim Hiện Tại</string>

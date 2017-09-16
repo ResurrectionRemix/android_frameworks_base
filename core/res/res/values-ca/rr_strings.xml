@@ -54,6 +54,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">Reiniciar SystemUIService per que les barres del sistema puguin carregar els recursos temàtics</string>
   <!-- Pocket Lock -->
+  <string name="pocket_lock_message_long_press">Manté el botó d\'engegada per interactuar</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

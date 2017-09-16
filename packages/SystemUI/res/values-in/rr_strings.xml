@@ -270,10 +270,14 @@
   <string name="no_navigation_warning_title">Semua metode navigasi dimatikan</string>
   <string name="no_navigation_warning_text">Ketuk untuk menghidupkan</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_am_pm">a</string>
   <string name="pie_state_name">Kontrol Pie</string>
+  <string name="pie_state_summary">Gunakan kontrol pie ketika dalam mode immersive</string>
   <string name="pie_battery_level">"TINGKAT BATERAI "</string>
   <string name="quick_settings_pie">Pie</string>
+  <string name="accessibility_data_sim">Kartu SIM saat ini</string>
+  <string name="data_switch_started">Mengganti kartu SIM, dibutuhkan beberapa saat...</string>
 </resources>
