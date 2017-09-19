@@ -7592,6 +7592,16 @@ public final class Settings {
         public static final String SHOW_MEDIA_HEADS_UP = "show_media_heads_up";
 
         /**
+         * Whether to display the torch option in the power menu
+         *
+         * @hide
+         */
+        public static final String POWERMENU_TORCH = "powermenu_torch";
+        /** @hide */
+        private static final Validator POWERMENU_TORCH_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7806,6 +7816,7 @@ public final class Settings {
             BUTTON_BACKLIGHT_ENABLE,
             BUTTON_BACKLIGHT_TIMEOUT,
             BUTTON_BACKLIGHT_ON_TOUCH_ONLY,
+            POWERMENU_TORCH,
         };
 
         /**
@@ -8086,6 +8097,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ENABLE);
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_TIMEOUT);
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ON_TOUCH_ONLY);
+            PRIVATE_SETTINGS.add(POWERMENU_TORCH);
         }
 
         /**
@@ -8350,6 +8362,7 @@ public final class Settings {
                     BUTTON_BACKLIGHT_TIMEOUT_VALIDATOR);
             VALIDATORS.put(BUTTON_BACKLIGHT_ON_TOUCH_ONLY,
                     BUTTON_BACKLIGHT_ON_TOUCH_ONLY_VALIDATOR);
+            VALIDATORS.put(POWERMENU_TORCH, POWERMENU_TORCH_VALIDATOR);
         }
 
         /**

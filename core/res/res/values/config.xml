@@ -2887,6 +2887,8 @@
         <item>screenshot</item>
         <item>screenrecord</item>
         <item>onthego</item>
+        <item>torch</item>
+        <item>logout</item>
         <item>users</item>
         <item>silent</item>
         <item>airplane</item>
