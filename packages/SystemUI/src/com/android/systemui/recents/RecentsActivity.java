@@ -421,6 +421,10 @@ public class RecentsActivity extends Activity implements ViewTreeObserver.OnPreD
         // Notify of the next draw
         mRecentsView.getViewTreeObserver().addOnPreDrawListener(mRecentsDrawnEventListener);
 
+         if (isInMultiWindowMode()) {
+             reloadTaskStack(true /* isInMultiWindowMode */, false /* sendConfigChangedEvent */);
+         }
+
         // If Recents was restarted, then it should complete the enter animation with partially
         // reset launch state with dock, app and home set to false
         Object isRelaunching = getLastNonConfigurationInstance();
