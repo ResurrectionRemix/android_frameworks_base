@@ -85,7 +85,6 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
     private boolean mOpening;
     private boolean mIsShowingNavBackdrop;
     private GridLayoutManager mLayout;
-    private int mDefaultColumns;
     private Menu mColumnsSubMenu;
     private Menu mColumnsLandscapeSubMenu;
 
@@ -116,20 +115,26 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         if (menuItemLand != null) {
             mColumnsLandscapeSubMenu = menuItemLand.getSubMenu();
         }
-        updateColumnsMenu();
+
+        int qsTitlesValue = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.OMNI_QS_TILE_TITLE_VISIBILITY, 1,
+                UserHandle.USER_CURRENT);
+        MenuItem qsTitlesMenuItem = mToolbar.getMenu().findItem(R.id.menu_item_titles);
+        qsTitlesMenuItem.setChecked(qsTitlesValue == 1);
+
         int accentColor = Utils.getColorAttr(context, android.R.attr.colorAccent);
         mToolbar.setTitleTextColor(accentColor);
         mToolbar.getNavigationIcon().setTint(accentColor);
         mToolbar.getOverflowIcon().setTint(accentColor);
         mToolbar.setTitle(R.string.qs_edit);
-        mDefaultColumns = Math.max(1,
+        int defaultColumns = Math.max(1,
                     mContext.getResources().getInteger(R.integer.quick_settings_num_columns));
         mRecyclerView = (RecyclerView) findViewById(android.R.id.list);
         mTileAdapter = new TileAdapter(getContext());
         mTileQueryHelper = new TileQueryHelper(context, mTileAdapter);
         mRecyclerView.setAdapter(mTileAdapter);
         mTileAdapter.getItemTouchHelper().attachToRecyclerView(mRecyclerView);
-        mLayout = new GridLayoutManager(getContext(), mDefaultColumns);
+        mLayout = new GridLayoutManager(getContext(), defaultColumns);
         mLayout.setSpanSizeLookup(mTileAdapter.getSizeLookup());
         mRecyclerView.setLayoutManager(mLayout);
         mRecyclerView.addItemDecoration(mTileAdapter.getItemDecoration());
@@ -138,6 +143,8 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         mRecyclerView.setItemAnimator(animator);
         mLightBarController = Dependency.get(LightBarController.class);
         updateNavBackDrop(getResources().getConfiguration());
+
+        updateSettings();
     }
 
     @Override
@@ -265,6 +272,14 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                 Settings.System.putIntForUser(mContext.getContentResolver(),
                         Settings.System.OMNI_QS_LAYOUT_COLUMNS, 5, UserHandle.USER_CURRENT);
                 break;
+            case R.id.menu_item_columns_six:
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.OMNI_QS_LAYOUT_COLUMNS, 6, UserHandle.USER_CURRENT);
+                break;
+            case R.id.menu_item_columns_landscape_three:
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, 3, UserHandle.USER_CURRENT);
+                break;
             case R.id.menu_item_columns_landscape_four:
                 Settings.System.putIntForUser(mContext.getContentResolver(),
                         Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, 4, UserHandle.USER_CURRENT);
@@ -285,6 +300,12 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                 Settings.System.putIntForUser(mContext.getContentResolver(),
                         Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, 8, UserHandle.USER_CURRENT);
                 break;
+            case R.id.menu_item_titles:
+                item.setChecked(!item.isChecked());
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.OMNI_QS_TILE_TITLE_VISIBILITY, item.isChecked() ? 1 : 0,
+                        UserHandle.USER_CURRENT);
+                break;
         }
         updateSettings();
         return false;
@@ -297,13 +318,6 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
             tiles.add(tile);
         }
         mTileAdapter.resetTileSpecs(mHost, tiles);
-        Settings.System.putIntForUser(mContext.getContentResolver(),
-                Settings.System.OMNI_QS_LAYOUT_COLUMNS, mDefaultColumns,
-                UserHandle.USER_CURRENT);
-        Settings.System.putIntForUser(mContext.getContentResolver(),
-                Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, mDefaultColumns,
-                UserHandle.USER_CURRENT);
-        updateSettings();
     }
 
     private void setTileSpecs() {
@@ -397,19 +411,24 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         final Resources res = mContext.getResources();
         boolean isPortrait = res.getConfiguration().orientation
                 == Configuration.ORIENTATION_PORTRAIT;
+        int defaultColumns = Math.max(1, mContext.getResources().getInteger(R.integer.quick_settings_num_columns));
         int columns = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, mDefaultColumns,
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, defaultColumns,
                 UserHandle.USER_CURRENT);
         int columnsLandscape = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, mDefaultColumns,
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, defaultColumns,
                 UserHandle.USER_CURRENT);
+        boolean showTitles = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.OMNI_QS_TILE_TITLE_VISIBILITY, 1,
+                UserHandle.USER_CURRENT) == 1;
         mTileAdapter.setColumnCount(isPortrait ? columns : columnsLandscape);
+        mTileAdapter.setHideLabel(!showTitles);
         mLayout.setSpanCount(isPortrait ? columns : columnsLandscape);
-        updateColumnsMenu();
+        updateColumnsMenu(defaultColumns);
     }
-     private void updateColumnsMenu() {
+    private void updateColumnsMenu(int defaultColumns) {
         int columns = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, mDefaultColumns,
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, defaultColumns,
                 UserHandle.USER_CURRENT);
         MenuItem menuItemThree = mToolbar.getMenu().findItem(R.id.menu_item_columns_three);
         menuItemThree.setChecked(columns == 3);
@@ -417,14 +436,19 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         menuItemFour.setChecked(columns == 4);
         MenuItem menuItemFive = mToolbar.getMenu().findItem(R.id.menu_item_columns_five);
         menuItemFive.setChecked(columns == 5);
+        MenuItem menuItemSix = mToolbar.getMenu().findItem(R.id.menu_item_columns_six);
+        menuItemSix.setChecked(columns == 6);
+
          int columnsLandscape = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, mDefaultColumns,
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, defaultColumns,
                 UserHandle.USER_CURRENT);
+        menuItemThree = mToolbar.getMenu().findItem(R.id.menu_item_columns_landscape_three);
+        menuItemThree.setChecked(columnsLandscape == 3);
         menuItemFour = mToolbar.getMenu().findItem(R.id.menu_item_columns_landscape_four);
         menuItemFour.setChecked(columnsLandscape == 4);
         menuItemFive = mToolbar.getMenu().findItem(R.id.menu_item_columns_landscape_five);
         menuItemFive.setChecked(columnsLandscape == 5);
-        MenuItem menuItemSix = mToolbar.getMenu().findItem(R.id.menu_item_columns_landscape_six);
+        menuItemSix = mToolbar.getMenu().findItem(R.id.menu_item_columns_landscape_six);
         menuItemSix.setChecked(columnsLandscape == 6);
         MenuItem menuItemSeven = mToolbar.getMenu().findItem(R.id.menu_item_columns_landscape_seven);
         menuItemSeven.setChecked(columnsLandscape == 7);

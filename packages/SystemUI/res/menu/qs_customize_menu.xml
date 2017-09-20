@@ -27,11 +27,17 @@ limitations under the License.
                 <item android:id="@+id/menu_item_columns_five"
                       android:title="@string/qs_menu_item_columns_five"
                       android:checkable="true" />
+                <item android:id="@+id/menu_item_columns_six"
+                      android:title="@string/qs_menu_item_columns_six"
+                      android:checkable="true" />
             </menu>
         </item>
         <item android:id="@+id/menu_item_columns_landscape"
               android:title="@string/qs_menu_item_columns_landscape">
             <menu>
+                <item android:id="@+id/menu_item_columns_landscape_three"
+                      android:title="@string/qs_menu_item_columns_three"
+                      android:checkable="true" />
                 <item android:id="@+id/menu_item_columns_landscape_four"
                       android:title="@string/qs_menu_item_columns_four"
                       android:checkable="true" />
@@ -49,6 +55,9 @@ limitations under the License.
                       android:checkable="true" />
             </menu>
         </item>
+        <item android:id="@+id/menu_item_titles"
+              android:title="@string/qs_menu_item_titles"
+              android:checkable="true" />
         <item android:id="@+id/menu_item_reset"
               android:title="@string/qs_menu_item_reset"/>
 </menu>

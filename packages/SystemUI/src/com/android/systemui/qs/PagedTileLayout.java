@@ -435,4 +435,14 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         }
         postDistributeTiles();
     }
+
+    @Override
+    public int getNumColumns() {
+        return mPages.get(0).getNumColumns();
+    }
+
+    @Override
+    public boolean isShowTitles() {
+        return mPages.get(0).isShowTitles();
+    }
 }

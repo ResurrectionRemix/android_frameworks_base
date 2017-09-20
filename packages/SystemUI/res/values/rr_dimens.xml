@@ -19,4 +19,7 @@
 
     <dimen name="screenrecord_hint_size">48dp</dimen>
 
+    <!-- Tile without label height -->
+    <dimen name="qs_tile_height_wo_label">48dp</dimen>
+
 </resources>
