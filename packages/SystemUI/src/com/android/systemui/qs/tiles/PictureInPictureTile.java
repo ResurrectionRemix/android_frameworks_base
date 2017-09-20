@@ -15,6 +15,7 @@
 
 package com.android.systemui.qs.tiles;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.service.quicksettings.Tile;
@@ -53,13 +54,9 @@ public class PictureInPictureTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
-    public void handleLongClick() {
-        //
-    }
-
-    @Override
     public Intent getLongClickIntent() {
-        return null;
+        return new Intent().setComponent(new ComponentName(
+            "com.android.settings", "com.android.settings.Settings$PictureInPictureSettingsActivity"));
     }
 
     @Override
