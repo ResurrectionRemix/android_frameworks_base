@@ -43,6 +43,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.transition.AutoTransition;
 import android.transition.Transition;
@@ -513,12 +514,14 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         if (mAccessibility.mFeedbackEnabled) return 20000;
         if (mHovering) return 16000;
         if (mSafetyWarning != null) return 5000;
-        if (mExpanded || mExpandButtonAnimationRunning) return 5000;
-        if (mActiveStream == AudioManager.STREAM_MUSIC) return 1500;
         if (mZenFooter.shouldShowIntroduction()) {
             return 6000;
         }
-        return 3000;
+        int mVolumeDialogTimeout = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.VOLUME_DIALOG_TIMEOUT, 3000);
+        if (mExpanded || mExpandButtonAnimationRunning) return mVolumeDialogTimeout;
+        if (mActiveStream == AudioManager.STREAM_MUSIC) return mVolumeDialogTimeout;
+        return mVolumeDialogTimeout;
     }
 
     protected void dismissH(int reason) {
