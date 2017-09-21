@@ -200,8 +200,8 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">L\'application a été arrêtée</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notification furtive pendant 1 minute.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Notification furtive pendant <xliff:g id="number">%d</xliff:g> minutes.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Notifications flottantes désactivées pendant 1 minute.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Notifications flottantes désactivées pendant <xliff:g id="number">%d</xliff:g> minutes.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Aucune capture d\'écran prise</string>
   <string name="screenshot_abort_text">Opération annulée</string>
