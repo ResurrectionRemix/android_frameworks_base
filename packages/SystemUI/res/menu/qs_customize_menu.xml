@@ -55,6 +55,23 @@ limitations under the License.
                       android:checkable="true" />
             </menu>
         </item>
+        <item android:id="@+id/menu_item_rows"
+              android:title="@string/qs_menu_item_rows">
+            <menu>
+                <item android:id="@+id/menu_item_rows_one"
+                      android:title="@string/qs_menu_item_rows_one"
+                      android:checkable="true" />
+                <item android:id="@+id/menu_item_rows_two"
+                      android:title="@string/qs_menu_item_rows_two"
+                      android:checkable="true" />
+                <item android:id="@+id/menu_item_rows_three"
+                      android:title="@string/qs_menu_item_rows_three"
+                      android:checkable="true" />
+                <item android:id="@+id/menu_item_rows_four"
+                      android:title="@string/qs_menu_item_rows_four"
+                      android:checkable="true" />
+            </menu>
+        </item>
         <item android:id="@+id/menu_item_titles"
               android:title="@string/qs_menu_item_titles"
               android:checkable="true" />
