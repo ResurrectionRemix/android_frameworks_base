@@ -559,7 +559,6 @@ public class EdgeBackGestureHandler implements DisplayListener {
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        }
     }
 
     private void sendEvent(int action, int code) {

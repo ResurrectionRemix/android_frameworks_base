@@ -50,6 +50,7 @@ android_library {
         "res-keyguard",
         "res",
         "slimrecent/res",
+        "res-hwkeys",
     ],
     static_libs: [
         "SystemUIPluginLib",

@@ -111,18 +111,19 @@
     <integer name="config_sysCPUTempMultiplier">1</integer>
     <integer name="config_sysBatteryTempMultiplier">1</integer>
 
-    <!-- Hardware 'face' keys present on the device, stored as a bit field.
+    <!-- Hardware keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following keys present:
-          1 - Home
-          2 - Back
-          4 - Menu
-          8 - Assistant (search)
-          16 - App switch
-          32 - Camera
-       For example, a device with Back, Home and AppSwitch keys would set this
-       config to 19. -->
-    <integer name="config_deviceHardwareKeys">0</integer>
+             1 - Home
+             2 - Back
+             4 - Menu
+             8 - Assistant (search)
+            16 - App switch
+            32 - Camera
+            64 - Volume rocker
+         For example, a device with Home, Back and Menu keys would set this
+         config to 7. -->
+    <integer name="config_deviceHardwareKeys">64</integer>
 
     <!-- Control the behavior when the user long presses or double taps one of the below keys.
           0 - Nothing
