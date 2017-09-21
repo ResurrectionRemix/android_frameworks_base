@@ -30,6 +30,7 @@
 
     <!-- SystemUI Tuner Parts -->
     <string name="systemui_tuner_icon_manager_title">Icon manager</string>
+    <string name="systemui_tuner_navbar_title">Stock settings</string>
 
     <!-- QS Tiles -->
     <string name="quick_settings_reboot_label">Reboot</string>

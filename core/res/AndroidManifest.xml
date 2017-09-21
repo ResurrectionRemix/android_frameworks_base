@@ -3552,6 +3552,13 @@
     <permission android:name="android.permission.INSTANT_APP_FOREGROUND_SERVICE"
         android:protectionLevel="signature|development|instant|appop" />
 
+    <!-- Allows an application to toggle navigation button editor.
+         @hide -->
+    <permission android:name="android.permission.NAVIGATION_EDITOR"
+        android:label="@string/permlab_toggleNavigationEditor"
+        android:description="@string/permdesc_toggleNavigationEditor"
+        android:protectionLevel="signatureOrSystem" />
+ 
     <application android:process="system"
                  android:persistent="true"
                  android:hasCode="false"
