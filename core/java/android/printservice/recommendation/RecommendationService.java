@@ -124,8 +124,12 @@ public abstract class RecommendationService extends Service {
                     // the connection change has not guarantee when the connection change binder
                     // transaction is actually processed.
                     try {
-                        mCallbacks.onRecommendationsUpdated((List<RecommendationInfo>) msg.obj);
-                    } catch (RemoteException | NullPointerException e) {
+                        if (mCallbacks != null) {
+                            mCallbacks.onRecommendationsUpdated((List<RecommendationInfo>) msg.obj);
+                        } else {
+                            Log.e(LOG_TAG, "Could not update services mCallbacks = null");
+                        }
+                    } catch (RemoteException e) {
                         Log.e(LOG_TAG, "Could not update recommended services", e);
                     }
                     break;
