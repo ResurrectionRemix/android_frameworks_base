@@ -175,6 +175,11 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         }
     }
 
+    @Override
+    public boolean isShowTitles() {
+        return mPages.get(0).isShowTitles();
+    }
+
     public void setPageListener(PageListener listener) {
         mPageListener = listener;
     }
