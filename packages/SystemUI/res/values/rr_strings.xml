@@ -173,6 +173,8 @@
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
     <string name="quick_settings_poweroff_label">Power off</string>
 
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
 
     <!-- Compass QS Tile -->
     <string name="quick_settings_compass_label">Compass</string>
