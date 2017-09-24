@@ -117,7 +117,7 @@
   <string name="quick_settings_appsidebar_off">App side bar mati</string>
   <!-- Pulse Tile -->
   <string name="quick_settings_pulse_enabled">Pulse diaktifkan</string>
-  <string name="quick_settings_pulse_disabled">Tidak ada Visualizer</string>
+  <string name="quick_settings_pulse_disabled">No visualizer</string>
   <string name="quick_settings_pulse_label">Pulse</string>
   <string name="accessibility_quick_settings_pulse_off">Pulse nonaktif</string>
   <string name="accessibility_quick_settings_pulse_on">Pulse aktif</string>

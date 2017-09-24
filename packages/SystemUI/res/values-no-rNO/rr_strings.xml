@@ -49,6 +49,9 @@
   <string name="onthego_notif_title">\"På farten\" er aktiv</string>
   <string name="onthego_notif_stop">Stopp</string>
   <string name="onthego_notif_options">Egenskaper</string>
+  <string name="onthego_notif_error">Kan ikke starte på farten</string>
+  <string name="onthego_notif_restart">Restart \"På farten\"</string>
+  <string name="onthego_notif_camera_changed">Kameramodus endret</string>
   <string name="onthego_transparency">Gjennomsiktighet</string>
   <string name="onthego_front_camera">Bruk front kamera</string>
   <string name="onthego_service_toggle">Restarte enheten automatisk</string>
@@ -78,8 +81,36 @@
   <string name="quick_settings_reboot_recovery_label">Gjenoppretting</string>
   <string name="accessibility_quick_settings_usb_tether_off">Feil ved USB-tilknytning</string>
   <string name="accessibility_quick_settings_usb_tether_on">USB-tilknytning</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">USB tethering deaktivert</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering aktivert</string>
+  <string name="quick_settings_usb_tether_label">USB-tilknytning</string>
+  <string name="quick_settings_music_label">Musikk</string>
+  <string name="quick_settings_music_play">Spill</string>
+  <string name="quick_settings_music_pause">Pause</string>
+  <string name="quick_settings_ime_tile_label">Inndatametode</string>
+  <string name="rr_qs_tile">Konfigurasjon</string>
+  <string name="quick_settings_caffeine_label">Koffein</string>
+  <string name="accessibility_quick_settings_caffeine_off">Koffein av</string>
+  <string name="accessibility_quick_settings_caffeine_on">Koffein på</string>
+  <string name="qs_app_picker_title">App plukker</string>
+  <string name="quick_settings_lte_label">LTE</string>
+  <string name="lte_on">LTE PÅ </string>
+  <string name="lte_off">LTE AV</string>
+  <string name="quick_settings_nfc">NFC</string>
   <string name="quick_settings_nfc_label">NFC</string>
   <string name="quick_settings_nfc_off">NFC av</string>
+  <string name="quick_settings_screenrecord">Skjermopptak</string>
+  <string name="quick_settings_screenrecord_on">Opptak...</string>
+  <string name="quick_settings_navigation_bar">Navigasjonsfelt</string>
+  <string name="quick_settings_smartbar">Smart bar</string>
+  <string name="quick_settings_smartbar_off">Smart bar av</string>
+  <string name="quick_settings_appcirclebar_title">App sirkel bar</string>
+  <string name="quick_settings_appcirclebar_on">App sirkel bar på</string>
+  <string name="quick_settings_appcirclebar_off">App sirkel bar av</string>
+  <string name="quick_settings_gesture_anywhere_on">Bevegelser</string>
+  <string name="quick_settings_gesture_anywhere_off">Bevegelser av</string>
+  <string name="quick_settings_appsidebar_title">App sidestolpe</string>
+  <string name="quick_settings_appsidebar_on">App side bar på</string>
   <!-- Pulse Tile -->
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
