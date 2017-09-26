@@ -7337,6 +7337,16 @@ public final class Settings {
         public static final String VOLUME_ANSWER_CALL = "volume_answer_call";
 
         /**
+         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         *
+         * @hide
+         */
+        public static final String ANBI_ENABLED_OPTION = "anbi_enabled_option";
+        /** @hide */
+        private static final Validator ANBI_ENABLED_OPTION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7537,6 +7547,7 @@ public final class Settings {
             QS_PANEL_BG_USE_FW,
             QS_PANEL_BG_USE_ACCENT,
             VOLUME_ROCKER_WAKE,
+            ANBI_ENABLED_OPTION,
         };
 
         /**
@@ -7803,6 +7814,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
             PRIVATE_SETTINGS.add(VOLUME_ROCKER_WAKE);
+            PRIVATE_SETTINGS.add(ANBI_ENABLED_OPTION);
         }
 
         /**
@@ -8048,6 +8060,7 @@ public final class Settings {
             VALIDATORS.put(QS_PANEL_BG_USE_FW, QS_PANEL_BG_USE_FW_VALIDATOR);
             VALIDATORS.put(QS_PANEL_BG_USE_ACCENT, QS_PANEL_BG_USE_ACCENT_VALIDATOR);
             VALIDATORS.put(VOLUME_ROCKER_WAKE, VOLUME_ROCKER_WAKE_VALIDATOR);
+            VALIDATORS.put(ANBI_ENABLED_OPTION, ANBI_ENABLED_OPTION_VALIDATOR);
         }
 
         /**
