@@ -54,9 +54,6 @@ public class PocketLock {
         mLayoutParams = getLayoutParams();
         mView = LayoutInflater.from(mContext).inflate(
                 com.android.internal.R.layout.pocket_lock_view_layout, null);
-        mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     public void show(final boolean animate) {
@@ -72,6 +69,7 @@ public class PocketLock {
                 }
 
                 if (animate) {
+                    mView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                     mView.animate().alpha(1.0f).setListener(new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animator) {
@@ -80,6 +78,7 @@ public class PocketLock {
 
                         @Override
                         public void onAnimationEnd(Animator animator) {
+                            mView.setLayerType(View.LAYER_TYPE_NONE, null);
                             mAnimating = false;
                         }
 
@@ -120,6 +119,7 @@ public class PocketLock {
                 }
 
                 if (animate) {
+                    mView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                     mView.animate().alpha(0.0f).setListener(new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animator) {
@@ -128,6 +128,7 @@ public class PocketLock {
 
                         @Override
                         public void onAnimationEnd(Animator animator) {
+                            mView.setLayerType(View.LAYER_TYPE_NONE, null);
                             mAnimating = false;
                             removeView();
                         }
@@ -152,7 +153,10 @@ public class PocketLock {
 
     private void addView() {
         if (mWindowManager != null && !mAttached) {
-            mWindowManager.addView(mView, mLayoutParams);
+            mWindowManager.addView(mView, mLayoutParams);          
+            mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
             mAttached = true;
         }
     }
@@ -174,6 +178,8 @@ public class PocketLock {
         mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
+                | WindowManager.LayoutParams.FLAG_FULLSCREEN
                 | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         return mLayoutParams;
     }
