@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2017 AICP
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<resources>
+
+    <!-- Cardinal directions for the compass tile -->
+    <string-array name="cardinal_directions">
+        <item>@string/quick_settings_compass_N</item>  <!-- North -->
+        <item>@string/quick_settings_compass_NE</item> <!-- North east -->
+        <item>@string/quick_settings_compass_E</item>  <!-- East -->
+        <item>@string/quick_settings_compass_SE</item> <!-- South east -->
+        <item>@string/quick_settings_compass_S</item>  <!-- South -->
+        <item>@string/quick_settings_compass_SW</item> <!-- South west -->
+        <item>@string/quick_settings_compass_W</item>  <!-- West -->
+        <item>@string/quick_settings_compass_NW</item> <!-- North west -->
+    </string-array>
+
+</resources>
