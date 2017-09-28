@@ -32,21 +32,42 @@
 
     <include layout="@layout/quick_status_bar_header_system_icons" />
 
-    <com.android.systemui.qs.QuickQSPanel
-        android:id="@+id/quick_qs_panel"
+    <com.android.systemui.qs.HorizontalClippingLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
         android:layout_marginTop="31dp"
-        android:layout_alignParentTop="true"
-        android:accessibilityTraversalAfter="@+id/date_time_group"
-        android:accessibilityTraversalBefore="@id/expand_indicator"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:focusable="true"
-        android:importantForAccessibility="yes" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true">
+
+        <HorizontalScrollView
+            android:id="@+id/quick_qs_panel_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/qs_scroller_margin"
+            android:paddingEnd="@dimen/qs_scroller_margin"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <com.android.systemui.qs.QuickQSPanel
+                android:id="@+id/quick_qs_panel"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:accessibilityTraversalAfter="@+id/date_time_group"
+                android:accessibilityTraversalBefore="@id/expand_indicator"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:importantForAccessibility="yes" />
+
+        </HorizontalScrollView>
+    </com.android.systemui.qs.HorizontalClippingLinearLayout>
 
     <com.android.systemui.statusbar.AlphaOptimizedImageView
         android:id="@+id/qs_detail_header_progress"
