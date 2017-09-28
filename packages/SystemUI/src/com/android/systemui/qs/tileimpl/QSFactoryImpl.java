@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SyncTile;
+import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.UserTile;
@@ -97,6 +98,7 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("ime")) return new ImeTile(mHost);
         else if (tileSpec.equals("locale")) return new LocaleTile(mHost);
         else if (tileSpec.equals("music")) return new MusicTile(mHost);
+        else if (tileSpec.equals("sound")) return new SoundTile(mHost);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(mHost, tileSpec);
