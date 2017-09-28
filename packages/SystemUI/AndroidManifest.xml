@@ -295,6 +295,9 @@
 
     <protected-broadcast android:name="com.android.systemui.action.PLUGIN_CHANGED" />
 
+    <!-- Locale QS -->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
