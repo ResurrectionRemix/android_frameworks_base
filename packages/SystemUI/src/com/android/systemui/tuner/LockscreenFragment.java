@@ -26,6 +26,12 @@ import android.content.pm.LauncherApps;
 import android.content.pm.LauncherApps.ShortcutQuery;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ShortcutInfo;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
@@ -39,7 +45,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -341,7 +346,6 @@ public class LockscreenFragment extends PreferenceFragment {
 
         @Override
         public IntentButton create(Map<String, String> settings) {
-        Log.d("maxwen", "create " + mKey + " " + settings);
             String buttonStr = settings.get(mKey);
             if (!TextUtils.isEmpty(buttonStr)) {
                 if (buttonStr.contains("::")) {
@@ -381,7 +385,9 @@ public class LockscreenFragment extends PreferenceFragment {
         private void init() {
             mShortcut = getShortcutInfo(mContext, mShortcutString);
             if (mShortcut != null) {
-                mIconState.drawable = mShortcut.icon.loadDrawable(mContext).mutate();
+                // we need to flatten AdaptiveIconDrawable layers to a single drawable
+                mIconState.drawable = getBitmapDrawable(
+                        mContext.getResources(), mShortcut.icon.loadDrawable(mContext)).mutate();
                 mIconState.contentDescription = mShortcut.label;
                 mIconState.drawable = new ScalingDrawableWrapper(mIconState.drawable,
                         mSize / (float) mIconState.drawable.getIntrinsicWidth());
@@ -402,7 +408,10 @@ public class LockscreenFragment extends PreferenceFragment {
             if (!mInitDone) {
                 init();
             }
-            return mShortcut.intent;
+            if (mShortcut != null) {
+                return mShortcut.intent;
+            }
+            return null;
         }
     }
 
@@ -431,7 +440,9 @@ public class LockscreenFragment extends PreferenceFragment {
         private void init() {
             try {
                 ActivityInfo info = mContext.getPackageManager().getActivityInfo(mComponentName, 0);
-                mIconState.drawable = info.loadIcon(mContext.getPackageManager()).mutate();
+                // we need to flatten AdaptiveIconDrawable layers to a single drawable
+                mIconState.drawable = getBitmapDrawable(
+                        mContext.getResources(), info.loadIcon(mContext.getPackageManager())).mutate();
                 mIconState.contentDescription = info.loadLabel(mContext.getPackageManager());
                 mIconState.drawable = new ScalingDrawableWrapper(mIconState.drawable,
                         mSize / (float) mIconState.drawable.getIntrinsicWidth());
@@ -456,6 +467,22 @@ public class LockscreenFragment extends PreferenceFragment {
             }
             return mIntent;
         }
+    }
+
+    private static BitmapDrawable getBitmapDrawable(Resources resources, Drawable image) {
+        if (image instanceof BitmapDrawable) {
+            return (BitmapDrawable) image;
+        }
+        final Canvas canvas = new Canvas();
+        canvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,
+                Paint.FILTER_BITMAP_FLAG));
+
+        Bitmap bmResult = Bitmap.createBitmap(image.getIntrinsicWidth(), image.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bmResult);
+        image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        image.draw(canvas);
+        return new BitmapDrawable(resources, bmResult);
     }
 
     private static class HiddenButton implements IntentButton {
