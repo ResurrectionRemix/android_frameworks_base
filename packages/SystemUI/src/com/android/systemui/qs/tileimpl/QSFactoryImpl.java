@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
+import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.PowerShareTile;
@@ -55,11 +56,8 @@ import com.android.systemui.qs.tiles.ReadingModeTile;
 import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.SmartPixelsTile;
-<<<<<<< HEAD
-=======
 import com.android.systemui.qs.tiles.SoundSearchTile;
 import com.android.systemui.qs.tiles.SoundTile;
->>>>>>> b551b51620b... QS: Add Sound tile to Quick Settings
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
@@ -72,7 +70,6 @@ import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.RRTile;
 import com.android.systemui.util.leak.GarbageMonitor;
-import com.android.systemui.qs.tiles.SoundSearchTIle;
 
 
 import javax.inject.Inject;
@@ -125,6 +122,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<RRTile> mRRTileProvider;
     private final Provider<SmartPixelsTile> mSmartPixelsTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
+    private final Provider<MusicTile> mMusicTileProvider;
 
     private QSTileHost mHost;
 
@@ -169,7 +167,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<RRTile> rrTileProvider,
             Provider<AODTile> aodTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider),
-            Provider<SoundTile> soundTileProvider) {
+            Provider<SoundTile> soundTileProvider),
+            Provider<MusicTile> musicTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -211,6 +210,7 @@ public class QSFactoryImpl implements QSFactory {
         mRRTileProvider = rrTileProvider;
         mSmartPixelsTileProvider = smartPixelsTileProvider;
         mSoundTileProvider = soundTileProvider;
+        mMusicTileProvider = musicTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -309,6 +309,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSmartPixelsTileProvider.get();
             case "sound":
                 return mSoundTileProvider.get();
+            case "music":
+                return mMusicTileProvider.get();
         }
 
         // Intent tiles.
