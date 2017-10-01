@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Predefinição</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">A sua imagem de fornecedor não coincide com o sistema. Por favor, \"flasha\" a imagem do fornecedor de <xliff:g id="string">%s</xliff:g> para o seu dispositivo</string>
+  <string name="system_error_vendorprint">A sua imagem de fornecedor não coincide com o sistema. Por favor \"flashe\" a imagem do fornecedor <xliff:g id="string">%s</xliff:g> para o seu dispositivo</string>
   <string name="global_action_screenrecord">Gravação de ecrã</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Desvanecer</string>
@@ -30,15 +30,15 @@
   <string name="animation_slide_down">Deslizar para cima</string>
   <string name="animation_default">Predefinida</string>
   <string name="animation_translucent">Translúcida</string>
-  <string name="animation_grow_shrink">Crescer (Topo)</string>
+  <string name="animation_grow_shrink">Crescer (Cima)</string>
   <string name="animation_grow_shrink_center">Crescer (Centro)</string>
   <string name="animation_grow_shrink_bottom">Crescer (Baixo)</string>
   <string name="animation_grow_shrink_left">Crescer (Esquerda)</string>
   <string name="animation_grow_shrink_right">Crescer (Direita)</string>
-  <string name="action_null">Em branco</string>
+  <string name="action_null">Vazia</string>
   <string name="global_action_torch">Lanterna</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Reiniciar a IU do Sistema</string>
+  <string name="reboot_systemui">Reiniciar a IU do sist.</string>
   <!-- On-The-Go -->
   <string name="global_action_onthego">Modo On-The-Go</string>
   <!-- ADB enabled, but not connected notification title -->

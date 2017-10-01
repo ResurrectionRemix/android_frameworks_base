@@ -33,11 +33,11 @@
   <string name="gestures_message">Desenhe aqui o seu gesto</string>
   <string name="rr_sys_tuner">Sintonizador da interface do sistema</string>
   <!-- Strings for lockscreen shortcut hints -->
-  <string name="left_shortcut_hint">Deslizar para a direita para %1$s</string>
+  <string name="left_shortcut_hint">Deslizar à direita para %1$s</string>
   <string name="right_shortcut_hint">Deslizar para a esquerda para %1$s</string>
   <string name="lockscreen_message">Toque num ícone à esquerda ou à direita para atribuir um atalho no ecrã de bloqueio.</string>
   <string name="lockscreen_default_target">Predefinido</string>
-  <string name="select_application">Selecione aplicação</string>
+  <string name="select_application">Selecionar aplicação</string>
   <string name="lockscreen_choose_action_title">Escolha a ação</string>
   <string name="lockscreen_none_target">Nenhuma</string>
   <!-- App circle sidebar -->
@@ -49,7 +49,7 @@
   <string name="onthego_notif_title">On-The-Go está ativo</string>
   <string name="onthego_notif_stop">Parar</string>
   <string name="onthego_notif_options">Opções</string>
-  <string name="onthego_notif_error">Impossível iniciar o On-The-Go</string>
+  <string name="onthego_notif_error">Impossível iniciar On-The-Go</string>
   <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
   <string name="onthego_notif_camera_changed">Modo de câmara alterado</string>
   <string name="onthego_transparency">Transparência</string>
@@ -79,14 +79,14 @@
   <string name="quick_settings_expanded_desktop_off">Normal</string>
   <string name="quick_settings_reboot_label">Reiniciar</string>
   <string name="quick_settings_reboot_recovery_label">Recuperação</string>
-  <string name="accessibility_quick_settings_usb_tether_off">Partilha de internet por USB desligado</string>
-  <string name="accessibility_quick_settings_usb_tether_on">Partilha de internet por USB ligada</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_off">Partilha de internet por USB foi desligada</string>
-  <string name="accessibility_quick_settings_usb_tether_changed_on">Partilha de internet por USB foi ligada</string>
-  <string name="quick_settings_usb_tether_label">Partilha de internet por USB</string>
+  <string name="accessibility_quick_settings_usb_tether_off">Partilha de Internet por USB desligada</string>
+  <string name="accessibility_quick_settings_usb_tether_on">Partilha de Internet por USB ligada</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_off">A partilha de Internet por USB foi desligada</string>
+  <string name="accessibility_quick_settings_usb_tether_changed_on">A partilha de Internet por USB foi ligada</string>
+  <string name="quick_settings_usb_tether_label">Partilha de Internet por USB</string>
   <string name="quick_settings_music_label">Música</string>
   <string name="quick_settings_music_play">Reproduzir</string>
-  <string name="quick_settings_music_pause">Pausar</string>
+  <string name="quick_settings_music_pause">Pausa</string>
   <string name="quick_settings_ime_tile_label">Método de entrada</string>
   <string name="rr_qs_tile">Definições</string>
   <string name="quick_settings_caffeine_label">Cafeína</string>
@@ -102,8 +102,8 @@
   <string name="quick_settings_screenrecord">Gravação de ecrã</string>
   <string name="quick_settings_screenrecord_on">A gravar...</string>
   <string name="quick_settings_navigation_bar">Barra de navegação</string>
-  <string name="quick_settings_smartbar">Barra de navegação</string>
-  <string name="quick_settings_smartbar_off">Barra de navegação desligada</string>
+  <string name="quick_settings_smartbar">Barra inteligente</string>
+  <string name="quick_settings_smartbar_off">Barra inteligente desligada</string>
   <string name="quick_settings_fling">Fling</string>
   <string name="quick_settings_fling_off">Fling desligado</string>
   <string name="quick_settings_appcirclebar_title">Barra circular de aplicações</string>
@@ -116,30 +116,30 @@
   <string name="quick_settings_appsidebar_on">Barra lateral de aplicações ligada</string>
   <string name="quick_settings_appsidebar_off">Barra lateral de aplicações desligada</string>
   <!-- Pulse Tile -->
-  <string name="quick_settings_pulse_enabled">Mostrar notificações ativado</string>
-  <string name="quick_settings_pulse_disabled">Nenhum visualizador</string>
-  <string name="quick_settings_pulse_label">Mostrar notificações</string>
-  <string name="accessibility_quick_settings_pulse_off">Mostrar notificações desligado</string>
-  <string name="accessibility_quick_settings_pulse_on">Mostrar notificações ligado</string>
-  <string name="accessibility_quick_settings_pulse_changed_off">Mostrar notificações foi desligado</string>
-  <string name="accessibility_quick_settings_pulse_changed_on">Mostrar notificações foi ligado</string>
-  <string name="quick_settings_pulse_label">Visualizador da Barra de navegação</string>
+  <string name="quick_settings_pulse_enabled">Pulse ativado</string>
+  <string name="quick_settings_pulse_disabled">Pulse desativado</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
+  <string name="accessibility_quick_settings_pulse_off">Pulse desligado</string>
+  <string name="accessibility_quick_settings_pulse_on">Pulse ligado</string>
+  <string name="accessibility_quick_settings_pulse_changed_off">Pulse foi desligado</string>
+  <string name="accessibility_quick_settings_pulse_changed_on">Pulse foi ligado</string>
+  <string name="quick_settings_pulse_label">Pulse</string>
   <string name="quick_settings_ambient_display_label">Visualização de ambiente</string>
   <string name="accessibility_quick_settings_ambient_display_off">Visualização de ambiente desativada.</string>
   <string name="accessibility_quick_settings_ambient_display_on">Visualização de ambiente ativada</string>
-  <string name="accessibility_quick_settings_ambient_display_changed_off">A visualização de ambiente foi desativada</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">A visualização de ambiente foi desligada</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">A visualização de ambiente foi ativada</string>
-  <string name="quick_settings_heads_up_label">Notificações pop-up</string>
-  <string name="accessibility_quick_settings_heads_up_off">Notificações pop-up desativadas</string>
-  <string name="accessibility_quick_settings_heads_up_on">Notificações pop-up ativadas</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">As notificações pop-up foram desativadas</string>
+  <string name="quick_settings_heads_up_label">Notificações heads-up</string>
+  <string name="accessibility_quick_settings_heads_up_off">Notificações heads-up desativadas</string>
+  <string name="accessibility_quick_settings_heads_up_on">Notificações heads-up ativadas</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">As notificações heads-up foram desativadas</string>
   <string name="accessibility_quick_settings_heads_up_changed_on">As notificações pop-up foram ativadas</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: poupança de bateria.</string>
-  <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas no dispositivo.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas sensores.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Modo de localização: alta precisão.</string>
   <string name="accessibility_quick_settings_location_changed_battery_saving">Modo de localização alterado para poupança de bateria.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Modo de localização alterado para apenas no dispositivo.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Modo de localização alterado para apenas sensores.</string>
   <string name="accessibility_quick_settings_location_changed_high_accuracy">Modo de localização alterado para alta precisão.</string>
   <string name="quick_settings_location_detail_title">Modo de localização</string>
   <string name="quick_settings_location_battery_saving_label">Poupança de bateria</string>
@@ -200,41 +200,41 @@
   <!-- Kill app toast -->
   <string name="app_killed_message">Aplicação fechada</string>
   <!-- Heads up snooze toast -->
-  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • as notificações flutuantes vão adormecer por 1 minuto.</string>
-  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • as notificações flutuantes vão adormecer por <xliff:g id="number">%d</xliff:g> minutos.</string>
+  <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> • as notificações flutuantes vão parar por 1 minuto.</string>
+  <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • as notificações flutuantes vão parar por <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Screenshot action -->
   <string name="screenshot_abort_title">Nenhuma captura de ecrã</string>
   <string name="screenshot_abort_text">Operação cancelada</string>
   <!-- Screenshot Crop & Share -->
-  <string name="action_delete_success">Eliminado</string>
-  <string name="action_delete_fault">A eliminação não teve sucesso</string>
-  <string name="action_save_success">Guardado</string>
-  <string name="action_save_fault">Não foi guardado</string>
+  <string name="action_delete_success">Eliminada</string>
+  <string name="action_delete_fault">Não foi possível eliminar</string>
+  <string name="action_save_success">Guardada</string>
+  <string name="action_save_fault">Não foi possível guardar</string>
   <string name="pref_action_color_title">Cor dos botões de ação</string>
-  <string name="pref_action_color_summary">Escolha sua cor favorita para os botões de ação</string>
+  <string name="pref_action_color_summary">Escolha a sua cor favorita para os botões de ação</string>
   <string name="pref_category_main">Definições principais</string>
   <string name="pref_category_user">Definições do utilizador</string>
   <string name="pref_crop_behavior_title">Comportamento de corte</string>
   <string name="pref_crop_behavior_summary">Usar a imagem recortada, mesmo que a original não tenha sido cortada com a ferramenta de corte</string>
   <string name="action_ok">OK</string>
-  <string name="action_delete_success">Eliminado</string>
+  <string name="action_delete_success">Eliminada</string>
   <string name="action_delete_fault">Não foi possível eliminar</string>
-  <string name="action_save_success">Guardado</string>
-  <string name="action_save_fault">Guardado com sucesso</string>
+  <string name="action_save_success">Guardada</string>
+  <string name="action_save_fault">Não foi possível guardar</string>
   <string name="action_edit">Editar</string>
-  <string name="recents_custom_android_n">LIMPAR TUDO</string>
+  <string name="recents_custom_android_n">Limpar tudo</string>
   <string name="recents_free_ram">RAM livre: %1$d MB</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <string name="task_manager_title">Gestor de tarefas</string>
-  <string name="message_switch_fail">Não é possível mudar para esta tarefa, porque não tem nenhuma interface.</string>
-  <string name="tasklist_killall">Terminar todas</string>
+  <string name="message_switch_fail">Não é possível mudar para esta tarefa porque não tem nenhuma interface.</string>
+  <string name="tasklist_killall">Fechar todas</string>
   <string name="tasklist_memory_usage">"Livre • Memória Total: <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
   <string name="message_keep_one_launcher">Deve manter pelo menos uma atividade!</string>
-  <string name="tm_clear_task">LIMPAR</string>
+  <string name="tm_clear_task">Limpar</string>
   <!-- Slim Recents -->
-  <string name="recents_multiwin_warning">Já está ativada uma sessão multi-janelas.\nToque numa aplicação que deseja ancorá-la agora.</string>
-  <string name="recents_multiwin_nolastapp">Removeu todas as aplicações recentes. Por favor, escolha uma aplicação do lançador ou painel de aplicações.</string>
+  <string name="recents_multiwin_warning">Já está ativada uma sessão multi-janelas.\nToque numa aplicação para ancorá-la.</string>
+  <string name="recents_multiwin_nolastapp">Removeu todas as aplicações recentes. Por favor, escolha uma aplicação no lançador ou no painel de aplicações.</string>
   <string name="slim_recent_keyguard">Desbloqueie o dispositivo para ver as aplicações recentes</string>
   <string name="slim_recent_pinned">Soltar o ecrã para ver as aplicações recentes</string>
   <!-- Slim recents app sidebar queue app toast -->
@@ -242,7 +242,7 @@
   <string name="toast_recents_cancel_queued_app">Iniciação de aplicação cancelada</string>
   <!-- Kill button in notification guts -->
   <string name="force_stop_dlg_title">Forçar paragem?</string>
-  <string name="force_stop_dlg_text">Se forçar a paragem de uma aplicação, ela pode ficar a funcionar incorretamente.</string>
+  <string name="force_stop_dlg_text">Se forçar a paragem de uma aplicação, esta pode ficar a funcionar incorretamente.</string>
   <string name="dlg_ok">OK</string>
   <string name="dlg_cancel">Cancelar</string>
   <string name="kill">Terminar aplicação</string>
@@ -276,7 +276,7 @@
   <string name="pie_am_pm">a</string>
   <string name="pie_state_name">Controlos Pie</string>
   <string name="pie_state_summary">Use os controlos Pie durante o modo imersivo</string>
-  <string name="pie_battery_level">"NÍVEL DA BATERIA "</string>
+  <string name="pie_battery_level">"Nível de bateria "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="accessibility_data_sim">Dados atuais do SIM</string>
   <string name="data_switch_started">A alterar os dados do SIM. Isto pode demorar até 1 minuto...</string>

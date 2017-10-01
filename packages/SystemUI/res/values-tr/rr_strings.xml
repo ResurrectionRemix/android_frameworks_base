@@ -19,7 +19,7 @@
   <!-- Screenrecord Notification Ticker -->
   <string name="screenrecord_notif_ticker">Ekran kaydediliyor</string>
   <!-- Screenrecord notification title -->
-  <string name="screenrecord_notif_title">Ekran kayıt ediliyor</string>
+  <string name="screenrecord_notif_title">Ekran kaydediliyor</string>
   <!-- Screenrecord notification action: Stop -->
   <string name="screenrecord_notif_stop">Durdur</string>
   <!-- Screenrecord notification action: show/hide pointer -->
