@@ -4421,6 +4421,52 @@ public final class Settings {
         public static final String TOAST_ANIMATION = "toast_animation";
 
         /**
+         * Whether to show the battery bar
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR = "statusbar_battery_bar";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_COLOR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_THICKNESS =
+                "statusbar_battery_bar_thickness";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_THICKNESS_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_STYLE = "statusbar_battery_bar_style";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_STYLE_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_ANIMATE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * ListView Animations
          * 0 == None
          * 1 == Wave (Left)
@@ -4775,6 +4821,11 @@ public final class Settings {
             STATUS_BAR_TICKER_TICK_DURATION,
             STATUS_BAR_SHOW_CARRIER,
             CUSTOM_CARRIER_LABEL,
+            STATUSBAR_BATTERY_BAR,
+            STATUSBAR_BATTERY_BAR_COLOR,
+            STATUSBAR_BATTERY_BAR_THICKNESS,
+            STATUSBAR_BATTERY_BAR_STYLE,
+            STATUSBAR_BATTERY_BAR_ANIMATE
         };
 
         /**
@@ -4910,6 +4961,11 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CUSTOM_CARRIER_LABEL);
             PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
             PRIVATE_SETTINGS.add(ON_THE_GO_CAMERA);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_COLOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_THICKNESS);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_STYLE);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_ANIMATE);
         }
 
         /**
@@ -5024,6 +5080,12 @@ public final class Settings {
             VALIDATORS.put(GLOBAL_ACTIONS_ONTHEGO,GLOBAL_ACTIONS_ONTHEGO_VALIDATOR);
             VALIDATORS.put(ON_THE_GO_SERVICE_RESTART,ON_THE_GO_SERVICE_RESTART_VALIDATOR);
             VALIDATORS.put(ON_THE_GO_CAMERA,ON_THE_GO_CAMERA_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR, STATUSBAR_BATTERY_BAR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_COLOR, STATUSBAR_BATTERY_BAR_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_THICKNESS,
+                    STATUSBAR_BATTERY_BAR_THICKNESS_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_STYLE, STATUSBAR_BATTERY_BAR_STYLE_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_ANIMATE, STATUSBAR_BATTERY_BAR_ANIMATE_VALIDATOR);
         }
 
         /**
