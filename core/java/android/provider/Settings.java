@@ -4210,6 +4210,35 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
 
         /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_CHARGING_COLOR =
+                "statusbar_battery_bar_charging_color";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR =
+                "statusbar_battery_bar_battery_low_color";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR =
+                "statusbar_battery_bar_enable_charging_color";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS = "statusbar_battery_bar_blend_color";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE =
+                "statusbar_battery_bar_blend_color_reverse";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
