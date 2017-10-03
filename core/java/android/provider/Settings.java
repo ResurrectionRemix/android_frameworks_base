@@ -4558,7 +4558,27 @@ public final class Settings {
          * How many rows to show in the qs panel when in landscape
          * @hide
          */
+
         public static final String QS_ROWS_LANDSCAPE = "qs_rows_landscape";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_DARK_COLOR =
+                "statusbar_battery_bar_dark_color";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_DARK_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_THICKNESS =
+                "statusbar_battery_bar_thickness";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_THICKNESS_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * How many columns to show in the qs panel when in portrait
@@ -4708,6 +4728,70 @@ public final class Settings {
         private static final Validator SCREEN_OFF_ANIMATION_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
 
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_CHARGING_COLOR =
+                "statusbar_battery_bar_charging_color";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_CHARGING_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_CHARGING_DARK_COLOR =
+                "statusbar_battery_bar_charging_dark_color";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_CHARGING_DARK_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR =
+                "statusbar_battery_bar_battery_low_color";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR =
+                "statusbar_battery_bar_battery_low_dark_color";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR =
+                "statusbar_battery_bar_enable_charging_color";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+       /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE =
+                "statusbar_battery_bar_blend_color_reverse";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+       /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE =
+                "statusbar_battery_bar_blend_dark_color_reverse";
+
+        /** @hide */
+        private static final Validator STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
@@ -4796,7 +4880,15 @@ public final class Settings {
             STATUSBAR_BATTERY_BAR_STYLE,
             STATUSBAR_BATTERY_BAR_ANIMATE,
             THREE_FINGER_GESTURE,
-            SCREEN_OFF_ANIMATION
+            SCREEN_OFF_ANIMATION,
+            STATUSBAR_BATTERY_BAR_DARK_COLOR,
+            STATUSBAR_BATTERY_BAR_CHARGING_COLOR,
+            STATUSBAR_BATTERY_BAR_CHARGING_DARK_COLOR,
+            STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR,
+            STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR,
+            STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR,
+            STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE,
+            STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE,
         };
 
         /**
@@ -4926,6 +5018,14 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_ANIMATE);
             PRIVATE_SETTINGS.add(THREE_FINGER_GESTURE);
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_DARK_COLOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_CHARGING_COLOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_CHARGING_DARK_COLOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE);
+            PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE);
         }
 
         /**
@@ -5030,6 +5130,14 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_ANIMATE, STATUSBAR_BATTERY_BAR_ANIMATE_VALIDATOR);
             VALIDATORS.put(THREE_FINGER_GESTURE, THREE_FINGER_GESTURE_VALIDATOR);
             VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_DARK_COLOR, STATUSBAR_BATTERY_BAR_DARK_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_CHARGING_COLOR, STATUSBAR_BATTERY_BAR_CHARGING_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_CHARGING_DARK_COLOR, STATUSBAR_BATTERY_BAR_CHARGING_DARK_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR, STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR, STATUSBAR_BATTERY_BAR_BATTERY_LOW_DARK_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR, STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE, STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE_VALIDATOR);
+            VALIDATORS.put(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE, STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE_VALIDATOR);
         }
 
         /**
