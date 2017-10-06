@@ -54,6 +54,7 @@ import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.events.EventBus;
 import com.android.systemui.recents.events.activity.LaunchTaskEvent;
 import com.android.systemui.recents.events.ui.ShowApplicationInfoEvent;
+import com.android.systemui.recents.misc.IconPackHelper;
 import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.recents.misc.Utilities;
 import com.android.systemui.recents.model.Task;
@@ -752,8 +753,17 @@ public class TaskViewHeader extends FrameLayout
         mAppTitleView.setText(ssp.getBadgedApplicationLabel(activityInfo.applicationInfo, userId));
         mAppTitleView.setTextColor(mTask.useLightOnPrimaryColor ?
                 mTaskBarViewLightTextColor : mTaskBarViewDarkTextColor);
-        mAppIconView.setImageDrawable(ssp.getBadgedApplicationIcon(activityInfo.applicationInfo,
-                userId));
+        Drawable icon = null;
+        if (activityInfo != null && IconPackHelper.getInstance(getContext()).isIconPackLoaded()) {
+            int iconId = IconPackHelper.getInstance(getContext()).getResourceIdForActivityIcon(activityInfo);
+            if (iconId != 0) {
+                icon = IconPackHelper.getInstance(getContext()).getIconPackResources().getDrawable(iconId);
+            }
+        }
+        if (icon == null) {
+            icon = ssp.getBadgedApplicationIcon(activityInfo.applicationInfo, userId);
+        }
+        mAppIconView.setImageDrawable(icon);
         mAppInfoView.setImageDrawable(mTask.useLightOnPrimaryColor
                 ? mLightInfoIcon
                 : mDarkInfoIcon);
