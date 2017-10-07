@@ -20,10 +20,10 @@ import android.widget.ImageView;
 
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
-import com.android.systemui.statusbar.phone.ButtonDispatcher;
+import com.android.systemui.plugins.statusbar.phone.NavBarButtonProvider.ButtonInterface;
 import com.android.systemui.statusbar.policy.KeyButtonView;
 
-public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInterface{
+public class OpaLayout extends FrameLayout implements ButtonInterface{
 
     private static final int ANIMATION_STATE_NONE = 0;
     private static final int ANIMATION_STATE_DIAMOND = 1;
@@ -611,6 +611,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         fadeInButton(mGreen);
     }
 
+
     private void fadeInButton(View viewToFade){
         ObjectAnimator animator = ObjectAnimator.ofFloat(viewToFade, View.ALPHA, 0.0f, 1.0f);
         animator.setDuration(OpaLayout.OPA_FADE_IN_DURATION); //ms
@@ -633,5 +634,8 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
                 viewToFade.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public void setDarkIntensity(float intensity) {
     }
 }
