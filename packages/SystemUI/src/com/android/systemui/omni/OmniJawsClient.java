@@ -434,10 +434,6 @@ public class OmniJawsClient {
         }
     }
 
-    public Drawable getDefaultWeatherConditionImage() {
-        return mContext.getResources().getDrawable(R.drawable.ic_qs_weather_default_on);
-    }
-
     public void addObserver(OmniJawsObserver observer) {
         if (mObserver.size() == 0) {
             if (mReceiver != null) {
