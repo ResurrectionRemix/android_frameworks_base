@@ -4102,13 +4102,15 @@ public final class Settings {
         /**
          * Setting to determine whether or not to show the battery percentage in the status bar.
          *    0 - Don't show percentage
-         *    1 - Show percentage
+         *    1 - Show percentage outside
+         *    2 - Show percentage inside
          * @hide
          */
         public static final String SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
         /** @hide */
-        private static final Validator SHOW_BATTERY_PERCENT_VALIDATOR = BOOLEAN_VALIDATOR;
+        public static final Validator SHOW_BATTERY_PERCENT_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
