@@ -20,12 +20,14 @@ package com.android.systemui.qs.tiles;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.util.Log;
@@ -205,6 +207,9 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
                 mWeatherData = mWeatherClient.getWeatherInfo();
                 if (mWeatherData != null) {
                     mWeatherImage = mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode);
+                    if (mWeatherImage instanceof VectorDrawable) {
+                        mWeatherImage = applyTint(mWeatherImage);
+                    }
                     mWeatherLabel = mWeatherData.temp + mWeatherData.tempUnits;
                 } else {
                     mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_service_unkown);
@@ -219,6 +224,15 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
         if (isShowingDetail()) {
             mDetailedView.updateWeatherData(mWeatherData);
         }
+    }
+
+    private Drawable applyTint(Drawable icon) {
+        TypedArray array =
+                mContext.obtainStyledAttributes(new int[]{android.R.attr.colorControlNormal});
+        icon = icon.mutate();
+        icon.setTint(array.getColor(0, 0));
+        array.recycle();
+        return icon;
     }
 
     @Override

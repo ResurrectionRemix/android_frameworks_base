@@ -20,6 +20,7 @@ package com.android.systemui.omni;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -29,6 +30,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.text.TextPaint;
 import android.text.format.DateFormat;
 import android.util.ArraySet;
@@ -256,6 +258,9 @@ public class DetailedWeatherView extends FrameLayout {
     }
 
     private Drawable overlay(Resources resources, Drawable image, String min, String max, String tempUnits) {
+        if (image instanceof VectorDrawable) {
+            image = applyTint(image);
+        }
         final Canvas canvas = new Canvas();
         canvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,
                 Paint.FILTER_BITMAP_FLAG));
@@ -289,6 +294,15 @@ public class DetailedWeatherView extends FrameLayout {
         canvas.drawText(str, width / 2 - bounds.width() / 2, height - textSize / 2, textPaint);
 
         return new BitmapDrawable(resources, bmp);
+    }
+
+    private Drawable applyTint(Drawable icon) {
+        TypedArray array =
+                mContext.obtainStyledAttributes(new int[]{android.R.attr.colorControlNormal});
+        icon = icon.mutate();
+        icon.setTint(array.getColor(0, 0));
+        array.recycle();
+        return icon;
     }
 
     private void forceRefreshWeatherSettings() {
