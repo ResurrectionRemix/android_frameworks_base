@@ -4239,6 +4239,12 @@ public final class Settings {
                 "statusbar_battery_bar_blend_color_reverse";
 
         /**
+          * show the membar in recents
+          *  @hide
+          */
+        public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
