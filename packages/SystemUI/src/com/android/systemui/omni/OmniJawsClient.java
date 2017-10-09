@@ -68,7 +68,8 @@ public class OmniJawsClient {
             "forecast_condition",
             "forecast_condition_code",
             "time_stamp",
-            "forecast_date"
+            "forecast_date",
+            "pin_wheel"
     };
 
     final String[] SETTINGS_PROJECTION = new String[] {
@@ -96,6 +97,7 @@ public class OmniJawsClient {
         public String tempUnits;
         public String windUnits;
         public String provider;
+        public String pinWheel;
 
         public String toString() {
             return city + ":" + new Date(timeStamp) + ": " + windSpeed + ":" + windDirection + ":" +conditionCode + ":" + temp + ":" + humidity + ":" + condition + ":" + tempUnits + ":" + windUnits + ": " + forecasts;
@@ -256,6 +258,7 @@ public class OmniJawsClient {
                             mCachedInfo.humidity = c.getString(5);
                             mCachedInfo.condition = c.getString(6);
                             mCachedInfo.timeStamp = Long.valueOf(c.getString(11));
+                            mCachedInfo.pinWheel = c.getString(13);
                         } else {
                             DayForecast day = new DayForecast();
                             day.low = getFormattedValue(c.getFloat(7));

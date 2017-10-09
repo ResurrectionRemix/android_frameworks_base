@@ -191,11 +191,11 @@ public class DetailedWeatherView extends FrameLayout {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         mWeatherTimestamp.setText(getResources().getString(R.string.omnijaws_service_last_update) + " " + sdf.format(timeStamp));
         if (mShowCurrent) {
-            mWeatherData.setText(weatherData.windSpeed + " " + weatherData.windUnits + " " + weatherData.windDirection +" - " +
+            mWeatherData.setText(weatherData.windSpeed + " " + weatherData.windUnits + " " + weatherData.pinWheel +" - " +
                     weatherData.humidity);
         } else {
             mWeatherData.setText(weatherData.temp + weatherData.tempUnits + " - " +
-                    weatherData.windSpeed + " " + weatherData.windUnits + " " + weatherData.windDirection +" - " +
+                    weatherData.windSpeed + " " + weatherData.windUnits + " " + weatherData.pinWheel +" - " +
                     weatherData.humidity);
         }
 
