@@ -51,7 +51,7 @@ public class OmniJawsClient {
             = Uri.parse("content://org.omnirom.omnijaws.provider/settings");
 
     private static final String ICON_PACKAGE_DEFAULT = "org.omnirom.omnijaws";
-    private static final String ICON_PREFIX_DEFAULT = "weather";
+    private static final String ICON_PREFIX_DEFAULT = "outline";
     private static final String EXTRA_ERROR = "error";
     public static final int EXTRA_ERROR_DISABLED = 2;
 
