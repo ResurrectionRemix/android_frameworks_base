@@ -4656,6 +4656,11 @@ public final class Settings {
         public static final String ANIM_TILE_DURATION = "anim_tile_duration";
 
        /**
+         * @hide
+         */
+        public static final String STATUS_BAR_LOGO = "status_bar_logo";
+
+       /**
          * Whether to wake the display when plugging or unplugging the charger
          *
          * @hide
@@ -5132,6 +5137,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE);
             PRIVATE_SETTINGS.add(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE);
+            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
         }
 
         /**

@@ -5900,6 +5900,10 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             }
         }
 
+        @Override
+            public void onChange(boolean selfChange) {
+        }
+
         public void update() {
             updateTickerAnimation();
             updateTickerTickDuration();
