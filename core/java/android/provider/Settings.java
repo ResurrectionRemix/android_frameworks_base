@@ -4251,6 +4251,11 @@ public final class Settings {
         public static final String TOAST_ICON = "toast_icon";
 
         /**
+         * @hide
+         */
+        public static final String STATUS_BAR_LOGO = "status_bar_logo";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4427,6 +4432,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
             PRIVATE_SETTINGS.add(QS_QUICKBAR_SCROLL_ENABLED);
             PRIVATE_SETTINGS.add(QS_TILE_TITLE_VISIBILITY);
+            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
         }
 
         /**

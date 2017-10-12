@@ -82,12 +82,21 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     private class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
+    private View mRRLogo;
+    private boolean mShowLogo;
+    private final Handler mHandler = new Handler();
+
+    private class RRSettingsObserver extends ContentObserver {
+        RRSettingsObserver(Handler handler) {
             super(handler);
         }
 
         void observe() {
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CARRIER),
+                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -96,7 +105,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             updateSettings(true);
         }
     }
-    private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
+
+    private RRSettingsObserver mRRSettingsObserver = new RRSettingsObserver(mHandler);
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -113,7 +123,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mNetworkController = Dependency.get(NetworkController.class);
         mStatusBarComponent = SysUiServiceProvider.getComponent(getContext(), StatusBar.class);
         mTickerObserver = new TickerObserver(new Handler());
-        mSettingsObserver.observe();
+        mRRSettingsObserver.observe();
     }
 
     class TickerObserver extends UserContentObserver {
@@ -141,6 +151,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     UserHandle.USER_CURRENT);
             initTickerView();
         }
+        mRRSettingsObserver.observe();
     }
 
     @Override
@@ -162,6 +173,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSignalClusterView = mStatusBar.findViewById(R.id.signal_cluster);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
+        mRRLogo = mStatusBar.findViewById(R.id.status_bar_logo);
         updateSettings(false);
         // Default to showing until we know otherwise.
         showSystemIconArea(false);
@@ -278,8 +290,18 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateHide(mNotificationIconAreaInner, animate, true);
     }
 
+    public void hideNotificationIconArea(boolean animate) {
+        animateHide(mNotificationIconAreaInner, animate, true);
+        if (mShowLogo) {
+            animateHide(mRRLogo, animate, true);
+        }
+    }
+
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
+        if (mShowLogo) {
+            animateShow(mRRLogo, animate);
+        }
     }
 
     public void hideCarrierName(boolean animate) {
@@ -383,6 +405,20 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mCustomCarrierLabel, animate);
         } else {
             animateHide(mCustomCarrierLabel, animate, false);
+    }
+
+    public void updateSettings(boolean animate) {
+        mShowLogo = Settings.System.getIntForUser(
+                getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO, 0,
+                UserHandle.USER_CURRENT) == 1;
+        if (mNotificationIconAreaInner != null) {
+            if (mShowLogo) {
+                if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
+                    animateShow(mRRLogo, animate);
+                }
+            } else {
+                animateHide(mRRLogo, animate, false);
+            }
         }
     }
 }

@@ -44,7 +44,7 @@
     <LinearLayout android:id="@+id/status_bar_contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="6dp"
+        android:paddingStart="4dp"
         android:paddingEnd="8dp"
         android:orientation="horizontal"
         >
@@ -58,10 +58,20 @@
             android:visibility="gone"
             android:singleLine="true"/>
 
+        <ImageView
+            android:id="@+id/status_bar_logo"
+            android:layout_width="@dimen/status_bar_icon_size"
+            android:layout_height="@dimen/status_bar_icon_size"
+            android:src="@drawable/status_bar_logo"
+            android:scaleType="centerInside"
+            android:padding="2dp"
+            android:visibility="gone" />
+
         <!-- The alpha of this area is controlled from both PhoneStatusBarTransitions and
              PhoneStatusBar (DISABLE_NOTIFICATION_ICONS). -->
         <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
             android:id="@+id/notification_icon_area"
+            android:paddingStart="2dp"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
