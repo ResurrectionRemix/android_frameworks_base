@@ -84,6 +84,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         SettingsObserver(Handler handler) {
     private View mRRLogo;
     private boolean mShowLogo;
+
+    private View RRLogo;
+    private View RRLogoRight;
+    private int mShowLogo;
     private final Handler mHandler = new Handler();
 
     private class RRSettingsObserver extends ContentObserver {
@@ -174,6 +178,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mRRLogo = mStatusBar.findViewById(R.id.status_bar_logo);
+        RRLogo = mStatusBar.findViewById(R.id.status_bar_logo);
+        RRLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
         updateSettings(false);
         // Default to showing until we know otherwise.
         showSystemIconArea(false);
@@ -280,10 +286,16 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate, true);
+        if (mShowLogo == 2) {
+            animateHide(RRLogoRight, animate, false);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
+        if (mShowLogo == 2) {
+            animateShow(RRLogoRight, animate);
+        }
     }
 
      public void hideNotificationIconArea(boolean animate) {
@@ -292,8 +304,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate, true);
-        if (mShowLogo) {
-            animateHide(mRRLogo, animate, true);
+        if (mShowLogo == 1) {
+            animateHide(RRLogo, animate, false);
         }
     }
 
@@ -313,6 +325,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void showCarrierName(boolean animate) {
         if (mCustomCarrierLabel != null) {
             setCarrierLabel(animate);
+        }
+        if (mShowLogo == 1) {
+            animateShow(RRLogo, animate);
         }
     }
 
@@ -410,14 +425,23 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void updateSettings(boolean animate) {
         mShowLogo = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO, 0,
-                UserHandle.USER_CURRENT) == 1;
+                UserHandle.USER_CURRENT);
         if (mNotificationIconAreaInner != null) {
-            if (mShowLogo) {
+            if (mShowLogo == 1) {
                 if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
                     animateShow(mRRLogo, animate);
                 }
-            } else {
-                animateHide(mRRLogo, animate, false);
+            } else if (mShowLogo != 1) {
+                animateHide(RRLogo, animate, false);
+            }
+        }
+        if (mSystemIconArea != null) {
+            if (mShowLogo == 2) {
+                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
+                    animateShow(RRLogoRight, animate);
+                }
+            } else if (mShowLogo != 2) {
+                animateHide(RRLogoRight, animate, false);
             }
         }
     }
