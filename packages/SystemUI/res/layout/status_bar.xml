@@ -131,6 +131,15 @@
             >
 
             <include layout="@layout/system_icons" />
+
+            <ImageView
+                android:id="@+id/status_bar_logo_right"
+                android:layout_width="@dimen/status_bar_icon_size"
+                android:layout_height="@dimen/status_bar_icon_size"
+                android:src="@drawable/status_bar_logo"
+                android:scaleType="centerInside"
+                android:paddingStart="4dp"
+                android:visibility="gone" />
         </com.android.keyguard.AlphaOptimizedLinearLayout>
     </LinearLayout>
 
