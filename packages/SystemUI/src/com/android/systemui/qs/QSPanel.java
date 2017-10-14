@@ -291,6 +291,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             brightnessSlider.setMirror(mirrorSlider);
             brightnessSlider.setMirrorController(mBrightnessMirrorController);
         }
+        if (mTileLayout instanceof PagedTileLayout) {
+            ((PagedTileLayout) mTileLayout).postDistributeTiles();
+        }
     }
 
     public void onCollapse() {
