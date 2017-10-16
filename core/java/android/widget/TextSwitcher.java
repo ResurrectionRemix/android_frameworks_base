@@ -93,4 +93,13 @@ public class TextSwitcher extends ViewSwitcher {
     public CharSequence getAccessibilityClassName() {
         return TextSwitcher.class.getName();
     }
+
+    /**
+     * Sets the color of the text view that is currently showing.
+     *
+     * @param color the text color to display
+     */
+    public void setTextColor(int color) {
+        ((TextView)getCurrentView()).setTextColor(color);
+    }
 }
