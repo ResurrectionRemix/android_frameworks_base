@@ -83,6 +83,22 @@ public class ImageSwitcher extends ViewSwitcher
     }
 
     /**
+     * @hide
+     */
+    public void setImageDrawableTint(Drawable drawable, int tint, boolean isGrayscale)
+    {
+        ImageView image = (ImageView)this.getNextView();
+        if (isGrayscale) {
+            drawable.setTint(tint);
+            image.setImageDrawable(drawable);
+        } else  {
+            image.setImageDrawable(drawable);
+            image.setImageTintList(null);
+        }
+        showNext();
+    }
+
+    /**
      * Sets a new drawable on the ImageSwitcher.
      * This will set that drawable on the next ImageView in the switcher and will
      * then switch to that view.
