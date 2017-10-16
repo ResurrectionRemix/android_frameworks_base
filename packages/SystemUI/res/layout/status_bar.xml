@@ -131,6 +131,14 @@
     </com.android.keyguard.AlphaOptimizedLinearLayout>
 
     <ViewStub
+        android:id="@+id/ticker_stub"
+        android:inflatedId="@+id/ticker"
+        android:layout="@layout/status_bar_ticker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
+
+    <ViewStub
         android:id="@+id/emergency_cryptkeeper_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
