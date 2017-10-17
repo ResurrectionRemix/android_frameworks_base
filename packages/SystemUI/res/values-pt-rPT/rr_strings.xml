@@ -133,7 +133,7 @@
   <string name="accessibility_quick_settings_heads_up_off">Notificações heads-up desativadas</string>
   <string name="accessibility_quick_settings_heads_up_on">Notificações heads-up ativadas</string>
   <string name="accessibility_quick_settings_heads_up_changed_off">As notificações heads-up foram desativadas</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">As notificações pop-up foram ativadas</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">As notificações heads-up foram ativadas</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: poupança de bateria.</string>
   <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas sensores.</string>

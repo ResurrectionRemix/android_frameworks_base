@@ -114,8 +114,10 @@
   <!-- Pulse Tile -->
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
+  <string name="quick_settings_locale_label">Språk</string>
   <!-- Suspend Actions Tile -->
   <!-- Perf Profile Tile -->
+  <string name="qs_tile_performance">Batterimodus</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->

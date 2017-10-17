@@ -54,7 +54,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">重新啟動 SystemUIService，以便系統列可以載入主題資源</string>
   <!-- Pocket Lock -->
-  <string name="pocket_lock_message_long_press">長按電源鍵進行交互</string>
+  <string name="pocket_lock_message_long_press">長按電源鍵即可啟動手電筒</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

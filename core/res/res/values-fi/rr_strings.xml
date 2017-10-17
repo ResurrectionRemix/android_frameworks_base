@@ -18,25 +18,43 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Oletus</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Vendor image ei vastaa järjestelmän tietoja. Asenna <xliff:g id="string">%s</xliff:g> vendor image laitteellesi</string>
-  <string name="global_action_screenrecord">Ruudun tallennus</string>
+  <string name="system_error_vendorprint">Vendor image ei vastaa järjestelmän tietoja. Ole hyvä ja asenna <xliff:g id="string">%s</xliff:g> vendor image laitteellesi</string>
+  <string name="global_action_screenrecord">Näytön tallennus</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Häivytys</string>
   <string name="animation_slide_right">Liu\'uta oikealta</string>
   <string name="animation_slide_left">Liu\'uta vasemmalta</string>
   <string name="animation_slide_right_no_fade">Liu\'uta oikealta (Ei häivytystä)</string>
-  <string name="animation_slide_left_no_fade">Liu\'uta vasemmalta (Älä häivytä)</string>
+  <string name="animation_slide_left_no_fade">Liu\'uta vasemmalta (Ei häivytystä)</string>
+  <string name="animation_slide_up">Liu\'uta alhaalta</string>
+  <string name="animation_slide_down">Liu\'uta ylhäältä</string>
+  <string name="animation_default">Oletus</string>
+  <string name="animation_translucent">Läpikuultava</string>
+  <string name="animation_grow_shrink">Sisään kasvu (Ylhäältä)</string>
+  <string name="animation_grow_shrink_center">Sisään kasvu (Keskeltä)</string>
+  <string name="animation_grow_shrink_bottom">Sisään kasvu (Alhaalta)</string>
+  <string name="animation_grow_shrink_left">Sisään kasvu (Vasemmalta)</string>
+  <string name="animation_grow_shrink_right">Sisään kasvu (Oikealta)</string>
+  <string name="action_null">Tyhjä</string>
   <string name="global_action_torch">Taskulamppu</string>
   <!-- Button to soft reboot the device, within the Reboot Options dialog -->
-  <string name="reboot_systemui">Uudelleenkäynnistä SystemUI</string>
+  <string name="reboot_systemui">Käynnistä SystemUI uudelleen</string>
   <!-- On-The-Go -->
+  <string name="global_action_onthego">On-The-Go Tila</string>
   <!-- ADB enabled, but not connected notification title -->
+  <string name="adb_not_connected_notification_title">Ei ADB yhteyttä</string>
+  <string name="adb_active_custom_tile_not_connected">ei yhteyttä</string>
+  <string name="singlehandmode_slide_hint_message">Liu\'uta sormeasi navigointipalkin yli vaihtaaksesi normaalin ja pienen näkymän välillä</string>
   <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permlab_resetBatteryStats">Nollaa akun tilastotiedot</string>
   <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_resetBatteryStats">Sallii sovelluksen nollata tämänhetkiset akun käytön tilastot.</string>
   <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permlab_restartUI">käynnistä systeemin palkit uusiksi</string>
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+  <string name="permdesc_restartUI">Käynnistä SystemUIService uusiksi, jotta systeemi voi ladata teematut resurssit</string>
   <!-- Pocket Lock -->
+  <string name="pocket_lock_message_long_press">Paina virtanäppäintä pitkään vaikuttaaksesi</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

@@ -203,7 +203,7 @@
   <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s </xliff:g> • As notificações flutuantes vão adormecer durante 1 minuto.</string>
   <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> • As notificações desativadas por <xliff:g id="number">%d</xliff:g> minutos.</string>
   <!-- Screenshot action -->
-  <string name="screenshot_abort_title">Nenhuma captura de tela tirada</string>
+  <string name="screenshot_abort_title">Nenhuma captura de tela feita</string>
   <string name="screenshot_abort_text">Operação abortada</string>
   <!-- Screenshot Crop & Share -->
   <string name="action_delete_success">Excluído</string>
