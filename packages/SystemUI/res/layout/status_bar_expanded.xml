@@ -53,7 +53,8 @@
             android:layout_width="@dimen/notification_panel_width"
             android:layout_height="match_parent"
             android:layout_gravity="@integer/notification_panel_layout_gravity"
-            android:layout_marginBottom="@dimen/close_handle_underlap" />
+            android:layout_marginBottom="@dimen/close_handle_underlap"
+            android:elevation="4dp" />
 
         <include layout="@layout/ambient_indication"
             android:id="@+id/ambient_indication_container" />
