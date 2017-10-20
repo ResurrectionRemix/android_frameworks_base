@@ -19,7 +19,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:paddingBottom="@dimen/qs_tile_padding_top"
-    android:paddingTop="@dimen/qs_tile_padding_top"
+    android:paddingTop="@dimen/qs_footer_padding_top"
     android:paddingStart="@dimen/qs_footer_padding_start"
     android:paddingEnd="@dimen/qs_footer_padding_end"
     android:gravity="center_vertical"
