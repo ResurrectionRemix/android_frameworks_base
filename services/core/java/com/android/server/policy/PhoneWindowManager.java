@@ -113,6 +113,7 @@ import static android.view.WindowManager.LayoutParams.TYPE_QS_DIALOG;
 import static android.view.WindowManager.LayoutParams.TYPE_SCREENSHOT;
 import static android.view.WindowManager.LayoutParams.TYPE_SEARCH_BAR;
 import static android.view.WindowManager.LayoutParams.TYPE_SECURE_SYSTEM_OVERLAY;
+import static android.view.WindowManager.LayoutParams.TYPE_SLIM_RECENTS;
 import static android.view.WindowManager.LayoutParams.TYPE_STATUS_BAR;
 import static android.view.WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL;
 import static android.view.WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL;
@@ -3251,6 +3252,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case TYPE_STATUS_BAR_PANEL:
             case TYPE_STATUS_BAR_SUB_PANEL:
             case TYPE_SYSTEM_DIALOG:
+            case TYPE_SLIM_RECENTS:
             case TYPE_VOLUME_OVERLAY:
             case TYPE_PRESENTATION:
             case TYPE_PRIVATE_PRESENTATION:
