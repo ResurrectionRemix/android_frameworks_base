@@ -358,6 +358,17 @@
             </intent-filter>
         </activity>
 
+        <!-- <activity
+            android:name="com.android.systemui.slimrecent.RecentController$ContainerActivity"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:theme="@style/ContainerActivityTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>-->
+
         <activity
             android:name=".stackdivider.ForcedResizableInfoActivity"
             android:theme="@style/ForcedResizableTheme"

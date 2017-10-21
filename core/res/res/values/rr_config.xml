@@ -70,7 +70,7 @@
         <item>com.Slack</item>
     </string-array>
 
-    <!-- The duration (in milliseconds) of slim recent app screen animation. -->
+    <!-- The duration (in milliseconds) of recent app screen animation. -->
     <integer name="config_recentDefaultDur">150</integer>
 
 </resources>

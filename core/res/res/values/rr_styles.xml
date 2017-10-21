@@ -18,7 +18,7 @@
 <resources>
 
     <!-- Slim recent app screen animation -->
-    <style name="Animation.SlimRecentScreen" parent="">
+    <style name="Animation.SlimRecentScreen">
         <item name="android:windowEnterAnimation">@anim/recent_enter</item>
         <item name="android:windowExitAnimation">@anim/recent_exit</item>
     </style>

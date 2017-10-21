@@ -85,5 +85,11 @@
   <java-symbol type="anim" name="slide_in_left_no_fade" />
   <java-symbol type="anim" name="slide_out_right_no_fade" />
 
+   <!-- Slim recent app screen-->
+  <java-symbol type="integer" name="config_recentDefaultDur" />
+  <java-symbol type="style" name="Animation.SlimRecentScreen" />
+  <java-symbol type="anim" name="recent_screen_fade_out" />
+  <java-symbol type="anim" name="recent_enter" />
+
 
 </resources>
