@@ -4262,12 +4262,6 @@ public final class Settings {
         public static final String USE_SLIM_RECENTS = "use_slim_recents";
 
         /**
-         * Whether to only show actually running tasks
-         * @hide
-         */
-        public static final String RECENT_SHOW_RUNNING_TASKS = "show_running_tasks";
-
-        /**
          * Amount of apps to show in recents
          * @hide
          */
@@ -4300,13 +4294,6 @@ public final class Settings {
         public static final String RECENT_PANEL_EXPANDED_MODE = "recent_panel_expanded_mode";
 
         /**
-         * Recent panel: Show topmost task
-         *
-         * @hide
-         */
-        public static final String RECENT_PANEL_SHOW_TOPMOST = "recent_panel_show_topmost";
-
-        /**
          * Recent panel background color
          *
          * @hide
@@ -4319,13 +4306,6 @@ public final class Settings {
          * @hide
          */
         public static final String RECENT_CARD_BG_COLOR = "recent_card_bg_color";
-
-        /**
-         * Recent card text color
-         *
-         * @hide
-         */
-        public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
 
         /**
          * Slim recents AICPfied empty recents drawable
@@ -4442,6 +4422,12 @@ public final class Settings {
          * @hide
          */
         public static final String SHOW_VOLTE_ICON = "show_volte_icon";
+
+        /**
+         * Apps to blacklist in Slim Recents
+         * @hide
+         */
+        public static final String SLIM_RECENTS_BLACKLIST_VALUES = "slim_recents_blacklist_values";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

@@ -40,6 +40,7 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.StackId;
 import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
+import android.app.IActivityManager;
 import android.app.INotificationManager;
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -215,7 +216,6 @@ import com.android.systemui.recents.events.activity.UndockingTaskEvent;
 import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.slimrecent.RecentController;
-import com.android.systemui.slimrecent.SlimScreenPinningRequest;
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.stackdivider.WindowManagerProxy;
 import com.android.systemui.statusbar.ActivatableNotificationView;
@@ -619,9 +619,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
     }
-
-    // Slim recents
-    private RecentController mSlimRecents;
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
@@ -1076,8 +1073,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         createAndAddWindows();
-
-        updateRecents();
 
         mSettingsObserver.onChange(false); // set up
         mCustomSettingsObserver.observe();
@@ -1857,28 +1852,24 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     protected boolean toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
-        if (mSlimRecents != null) {
-            int dockSide = WindowManagerProxy.getInstance().getDockSide();
-            if (dockSide == WindowManager.DOCKED_INVALID) {
-                mSlimRecents.startMultiWindow();
-                if (metricsDockAction != -1) {
-                   MetricsLogger.action(mContext, metricsDockAction);
-                }
-            } else {
-                EventBus.getDefault().send(new UndockingTaskEvent());
-                if (metricsUndockAction != -1) {
-                    MetricsLogger.action(mContext, metricsUndockAction);
-                }
-            }
-            return true;
-        }
         if (mRecents == null) {
             return false;
         }
         int dockSide = WindowManagerProxy.getInstance().getDockSide();
         if (dockSide == WindowManager.DOCKED_INVALID) {
-            return mRecents.dockTopTask(NavigationBarGestureHelper.DRAG_MODE_NONE,
-                    ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT, null, metricsDockAction);
+            boolean isInLockTaskMode = false;
+            try {
+               IActivityManager activityManager = ActivityManagerNative.getDefault();
+                if (activityManager.isInLockTaskMode()) {
+                    isInLockTaskMode = true;
+               }
+            } catch (RemoteException e) {}
+           if (mSlimRecents != null && !isInLockTaskMode) {
+                mSlimRecents.startMultiWindow();
+            } else {
+                return mRecents.dockTopTask(NavigationBarGestureHelper.DRAG_MODE_NONE,
+                        ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT, null, metricsDockAction);
+            }
         } else {
             Divider divider = getComponent(Divider.class);
             if (divider != null && divider.isMinimized() && !divider.isHomeStackResizable()) {
@@ -6389,6 +6380,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     protected RecentsComponent mRecents;
 
+    private RecentController mSlimRecents;
+
     protected int mZenMode;
 
     // which notification is currently being longpress-examined by the user
@@ -6524,11 +6517,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setQsPanelOptions();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.USE_SLIM_RECENTS))) {
-                updateRecents();
+                updateRecentsMode();
             } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.RECENT_CARD_BG_COLOR))
-                    || uri.equals(Settings.System.getUriFor(
-                    Settings.System.RECENT_CARD_TEXT_COLOR))) {
+                    Settings.System.RECENT_CARD_BG_COLOR))) {
                 rebuildRecentsScreen();
             }
         }
@@ -6546,7 +6537,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateQsPanelResources();
 
             // Update slim recents
-            updateRecents();
+            updateRecentsMode();
             rebuildRecentsScreen();
         }
     }
@@ -7360,24 +7351,16 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void preloadRecentApps() {
-        if (mSlimRecents != null) {
-            mSlimRecents.preloadRecentTasksList();
-        } else {
-            int msg = MSG_PRELOAD_RECENT_APPS;
-            mHandler.removeMessages(msg);
-            mHandler.sendEmptyMessage(msg);
-        }
+        int msg = MSG_PRELOAD_RECENT_APPS;
+        mHandler.removeMessages(msg);
+        mHandler.sendEmptyMessage(msg);
     }
 
     @Override
     public void cancelPreloadRecentApps() {
-        if (mSlimRecents != null) {
-            mSlimRecents.cancelPreloadingRecentTasksList();
-        } else {
-            int msg = MSG_CANCEL_PRELOAD_RECENT_APPS;
-            mHandler.removeMessages(msg);
-            mHandler.sendEmptyMessage(msg);
-        }
+        int msg = MSG_CANCEL_PRELOAD_RECENT_APPS;
+        mHandler.removeMessages(msg);
+        mHandler.sendEmptyMessage(msg);
     }
 
     @Override
@@ -8373,39 +8356,29 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
-    @Override
-    public void hideRecentApps(boolean triggeredFromAltTab, boolean triggeredFromHomeKey) {
-        if (mSlimRecents != null) {
-            mSlimRecents.hideRecents(triggeredFromHomeKey);
-        } // else Recents does it from its callback
-    }
+    private void updateRecentsMode() {
+        boolean slimRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.USE_SLIM_RECENTS, 0, mCurrentUserId) == 1;
 
-    @Override
-    public void toggleRecentApps() {
-        if (mSlimRecents != null) {
-            sendCloseSystemWindows(mContext, SYSTEM_DIALOG_REASON_RECENT_APPS);
-            mSlimRecents.toggleRecents(mDisplay, mLayoutDirection, getStatusBarView());
-        } // else Recents does it from its callback
-    }
-
-    protected void rebuildRecentsScreen() {
-        if (mSlimRecents != null) {
-            mSlimRecents.rebuildRecentsScreen();
+        if (slimRecents) {
+            mRecents.evictAllCaches();
+            mRecents.removeSbCallbacks();
+            mSlimRecents = new RecentController(mContext);
+            rebuildRecentsScreen();
+            mSlimRecents.addSbCallbacks();
+        } else {
+            mRecents.addSbCallbacks();
+            if (mSlimRecents != null) {
+                mSlimRecents.evictAllCaches();
+                mSlimRecents.removeSbCallbacks();
+                mSlimRecents = null;
+            }
         }
     }
 
-    protected void updateRecents() {
-        boolean slimRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.USE_SLIM_RECENTS, 0, UserHandle.USER_CURRENT) == 1;
-
-        if (slimRecents) {
-            mSlimRecents = new RecentController(mContext, mLayoutDirection);
-            mRecents = null;
-            //mSlimRecents.setCallback(this);
-            rebuildRecentsScreen();
-        } else {
-            mRecents = getComponent(Recents.class);
-            mSlimRecents = null;
+    private void rebuildRecentsScreen() {
+        if (mSlimRecents != null) {
+            mSlimRecents.rebuildRecentsScreen();
         }
     }
 
