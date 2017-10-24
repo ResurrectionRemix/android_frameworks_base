@@ -82,7 +82,10 @@ public abstract class Ticker implements DarkReceiver {
         StaticLayout getLayout(CharSequence substr) {
             int w = mTextSwitcher.getWidth() - mTextSwitcher.getPaddingLeft()
                     - mTextSwitcher.getPaddingRight();
-            return new StaticLayout(substr, mPaint, w, Alignment.ALIGN_NORMAL, 1, 0, true);
+            if (w > 0) {
+                return new StaticLayout(substr, mPaint, w, Alignment.ALIGN_NORMAL, 1, 0, true);
+            }
+            return null;
         }
 
         CharSequence rtrim(CharSequence substr, int start, int end) {
@@ -102,6 +105,9 @@ public abstract class Ticker implements DarkReceiver {
             }
             CharSequence substr = this.text.subSequence(this.current, this.text.length());
             StaticLayout l = getLayout(substr);
+            if (l == null) {
+                return null;
+            }
             int lineCount = l.getLineCount();
             if (lineCount > 0) {
                 int start = l.getLineStart(0);
@@ -128,6 +134,9 @@ public abstract class Ticker implements DarkReceiver {
 
             CharSequence substr = this.text.subSequence(index, this.text.length());
             StaticLayout l = getLayout(substr);
+            if (l == null) {
+                return null;
+            }
             final int lineCount = l.getLineCount();
             int i;
             for (i=0; i<lineCount; i++) {
