@@ -149,7 +149,7 @@
   <string name="quick_settings_location_off_custom_label">Konum</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Dil</string>
-  <string name="quick_settings_locale_more_locales_toast">Geçiş işlevselliğini etkinleştirmek için lütfen birden fazla dil yapılandırın</string>
+  <string name="quick_settings_locale_more_locales_toast">Değiştirme işlevselliğini etkinleştirmek için lütfen birden fazla dil yapılandırın</string>
   <!-- Suspend Actions Tile -->
   <string name="accessibility_quick_settings_suspend_actions_on">İşlemleri askıya alma etkin</string>
   <string name="accessibility_quick_settings_suspend_actions_off">İşlemleri askıya alma devre dışı</string>

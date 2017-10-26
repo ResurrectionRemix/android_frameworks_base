@@ -18,7 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="default_string">Par défaut</string>
   <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-  <string name="system_error_vendorprint">Le système ne correspond pas à votre appareil. Veuillez flasher <xliff:g id="string">%s</xliff:g> version adaptée à votre appareil</string>
+  <string name="system_error_vendorprint">Le fichier vendor.img actuel est incompatible avec votre appareil. Veuillez flasher <xliff:g id="string">%s</xliff:g> version adaptée à votre appareil</string>
   <string name="global_action_screenrecord">Capture vidéo</string>
   <!-- AOKP custom system animations -->
   <string name="animation_fade">Fondu</string>
@@ -54,7 +54,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <string name="permdesc_restartUI">Redémarrer SystemUIService afin que les barres du système puissent charger les ressources du thème</string>
   <!-- Pocket Lock -->
-  <string name="pocket_lock_message_long_press">Appui long sur le bouton d\'alimentation pour interagir</string>
+  <string name="pocket_lock_message_long_press">Faites un appui long sur le bouton Marche/Arrêt pour interagir</string>
   <!-- Defines the sysfs attribute path used by pocket bridge
         to communicate pocket state to the pocket judge kernel driver. -->
 </resources>

@@ -230,7 +230,7 @@
   <string name="message_switch_fail">Impossible de basculer vers cette tâche, car elle ne possède pas d\'interface.</string>
   <string name="tasklist_killall">Tout arrêter</string>
   <string name="tasklist_memory_usage">"Disponible • Mémoire totale : <xliff:g id="number">%s</xliff:g> • <xliff:g id="name">%s</xliff:g>"</string>
-  <string name="message_keep_one_launcher">Vous devez garder au moins un lanceur d\'application!</string>
+  <string name="message_keep_one_launcher">Vous devez garder au moins une activité d\'écran d\'accueil!</string>
   <string name="tm_clear_task">EFFACER</string>
   <!-- Slim Recents -->
   <string name="recents_multiwin_warning">Une session multifenêtres est déjà en cours. \nAppuyez simplement sur une application si vous souhaitez l\'activer maintenant.</string>
@@ -267,8 +267,8 @@
   <!-- data saver icon switch -->
   <string name="status_bar_datasaver">Économiseur de données</string>
   <!-- No navigation warning notification -->
-  <string name="no_navigation_warning_title">Toutes les méthodes de navigation desactivées</string>
-  <string name="no_navigation_warning_text">Tapez pour activer</string>
+  <string name="no_navigation_warning_title">Toutes les méthodes de navigation sont désactivées</string>
+  <string name="no_navigation_warning_text">Appuyez pour activer</string>
   <!-- Pie controls -->
   <string name="pie_date_format">EEEE, jj MMMM aaaa</string>
   <string name="pie_hour_format_12">hh:mm</string>
