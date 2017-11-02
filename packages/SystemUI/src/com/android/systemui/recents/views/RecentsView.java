@@ -35,6 +35,7 @@ import android.graphics.drawable.Drawable;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.util.MathUtils;
+import android.view.Gravity;
 import android.view.AppTransitionAnimationSpec;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -53,7 +54,6 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settingslib.Utils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
-import android.widget.LinearLayout;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.RecentsActivity;
 import com.android.systemui.recents.RecentsActivityLaunchState;
@@ -327,17 +327,6 @@ public class RecentsView extends FrameLayout {
         return mLastTaskLaunchedWasFreeform;
     }
 
-    public void dismissAllTasksAnimated() {
-        int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View child = getChildAt(i);
-            if (child != mSearchBar) {
-                TaskStackView stackView = (TaskStackView) child;
-                stackView.dismissAllTasks();
-            }
-        }
-    }
-
     /** Launches the focused task from the first stack if possible */
     public boolean launchFocusedTask(int logEvent) {
         if (mTaskStackView != null) {
@@ -447,23 +436,6 @@ public class RecentsView extends FrameLayout {
         EventBus.getDefault().unregister(mTouchHandler);
     }
 
-    public void noUserInteraction() {
-        if (mClearRecents != null) {
-            mClearRecents.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    protected void onAttachedToWindow () {
-        super.onAttachedToWindow();
-        mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
-        mClearRecents.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dismissAllTasksAnimated();
-            }
-        });
-    }
-
     /**
      * This is called with the full size of the window since we are handling our own insets.
      */
@@ -491,6 +463,32 @@ public class RecentsView extends FrameLayout {
         }
 
         setMeasuredDimension(width, height);
+
+        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
+
+        if (mClearRecents != null && showClearAllRecents) {
+            int clearRecentsLocation = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.RECENTS_CLEAR_ALL_LOCATION,
+            Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_RIGHT, UserHandle.USER_CURRENT);
+
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
+                    mClearRecents.getLayoutParams();
+            params.topMargin = taskStackBounds.top;
+            params.rightMargin = width - taskStackBounds.right;
+            switch (clearRecentsLocation) {
+                case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_LEFT:
+                    params.gravity = Gravity.TOP | Gravity.LEFT;
+                    break;
+                case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_RIGHT:
+                default:
+                    params.gravity = Gravity.TOP | Gravity.RIGHT;
+                    break;
+            }
+            mClearRecents.setLayoutParams(params);
+        } else {
+            mClearRecents.setVisibility(View.GONE);
+        }
     }
 
     /**
