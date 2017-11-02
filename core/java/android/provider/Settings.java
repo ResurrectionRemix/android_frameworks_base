@@ -3969,16 +3969,22 @@ public final class Settings {
         public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
 
         /**
-         * location of the clear all rectents button
+         * Whether to show Brightness Icon On Brightness Slider
          * @hide
          */
-        public static final String RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
+        public static final String QS_SHOW_BRIGHTNESS_ICON = "qs_show_brightness_icon";
 
         /**
          * show clear all recents button
-         *  @hide
+         * @hide
          */
         public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
+
+        /**
+         * location of the clear all recents button
+         * @hide
+         */
+        public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

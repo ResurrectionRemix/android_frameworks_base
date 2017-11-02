@@ -30,8 +30,4 @@ public class Constants {
         @Deprecated
         public static final int DismissSourceHistorySwipeGesture = 3;
     }
-
-        // clear button location
-        public static final int RECENTS_CLEAR_ALL_TOP_RIGHT    = 0;
-        public static final int RECENTS_CLEAR_ALL_TOP_LEFT     = 1;
 }
