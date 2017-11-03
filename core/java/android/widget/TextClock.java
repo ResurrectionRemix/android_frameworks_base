@@ -134,6 +134,7 @@ public class TextClock extends TextView {
 
     private boolean mRegistered;
     private boolean mShouldRunTicker;
+    private boolean mShouldChooseFormat;
 
     private Calendar mTime;
     private String mTimeZone;
@@ -149,13 +150,21 @@ public class TextClock extends TextView {
 
         @Override
         public void onChange(boolean selfChange) {
-            chooseFormat();
+            if (mShouldRunTicker) {
+                chooseFormat();
+            } else if (!mShouldChooseFormat) {
+                mShouldChooseFormat = true;
+            }
             onTimeChanged();
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            chooseFormat();
+            if (mShouldRunTicker) {
+                chooseFormat();
+            } else if (!mShouldChooseFormat) {
+                mShouldChooseFormat = true;
+            }
             onTimeChanged();
         }
     };
@@ -523,6 +532,10 @@ public class TextClock extends TextView {
 
         if (!mShouldRunTicker && isVisible) {
             mShouldRunTicker = true;
+            if (mShouldChooseFormat) {
+                mShouldChooseFormat = false;
+                chooseFormat();
+            }
             if (mHasSeconds) {
                 mTicker.run();
             } else {
@@ -571,10 +584,12 @@ public class TextClock extends TextView {
             }
             final ContentResolver resolver = getContext().getContentResolver();
             if (mShowCurrentUserTime) {
-                resolver.registerContentObserver(Settings.System.CONTENT_URI, true,
+                resolver.registerContentObserver(
+                        Settings.System.getUriFor(Settings.System.TIME_12_24), true,
                         mFormatChangeObserver, UserHandle.USER_ALL);
             } else {
-                resolver.registerContentObserver(Settings.System.CONTENT_URI, true,
+                resolver.registerContentObserver(
+                        Settings.System.getUriFor(Settings.System.TIME_12_24), true,
                         mFormatChangeObserver);
             }
         }
