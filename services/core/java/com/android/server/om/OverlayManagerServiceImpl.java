@@ -273,19 +273,96 @@ final class OverlayManagerServiceImpl {
     }
 
     void onOverlayPackageChanged(@NonNull final String packageName, final int userId) {
-        Slog.wtf(TAG, "onOverlayPackageChanged called, but only pre-installed overlays supported");
+        if (DEBUG) {
+            Slog.d(TAG, "onOverlayPackageChanged packageName=" + packageName + " userId=" + userId);
+        }
+
+        final PackageInfo overlayPackage = mPackageManager.getPackageInfo(packageName, userId);
+        if (overlayPackage == null) {
+            Slog.w(TAG, "overlay package " + packageName + " was changed, but couldn't be found");
+            onOverlayPackageRemoved(packageName, userId);
+            return;
+        }
+
+        final PackageInfo targetPackage =
+                mPackageManager.getPackageInfo(overlayPackage.overlayTarget, userId);
+
+        mSettings.init(packageName, userId, overlayPackage.overlayTarget,
+                overlayPackage.applicationInfo.getBaseCodePath(),
+                isPackageStaticOverlay(overlayPackage),
+                overlayPackage.overlayPriority);
+        try {
+            if (updateState(targetPackage, overlayPackage, userId)) {
+                mListener.onOverlaysChanged(overlayPackage.overlayTarget, userId);
+            }
+        } catch (OverlayManagerSettings.BadKeyException e) {
+            Slog.e(TAG, "failed to update settings", e);
+            mSettings.remove(packageName, userId);
+        }
     }
 
     void onOverlayPackageUpgrading(@NonNull final String packageName, final int userId) {
-        Slog.wtf(TAG, "onOverlayPackageUpgrading called, but only pre-installed overlays supported");
+        if (DEBUG) {
+            Slog.d(TAG, "onOverlayPackageUpgrading packageName=" + packageName + " userId=" + userId);
+        }
+
+        try {
+            final OverlayInfo oi = mSettings.getOverlayInfo(packageName, userId);
+            mSettings.setUpgrading(packageName, userId, true);
+            removeIdmapIfPossible(oi);
+        } catch (OverlayManagerSettings.BadKeyException e) {
+            Slog.e(TAG, "failed to update settings", e);
+            mSettings.remove(packageName, userId);
+        }
     }
 
     void onOverlayPackageUpgraded(@NonNull final String packageName, final int userId) {
-        Slog.wtf(TAG, "onOverlayPackageUpgraded called, but only pre-installed overlays supported");
+        if (DEBUG) {
+            Slog.d(TAG, "onOverlayPackageUpgraded packageName=" + packageName + " userId=" + userId);
+        }
+
+        final PackageInfo overlayPackage = mPackageManager.getPackageInfo(packageName, userId);
+        if (overlayPackage == null) {
+            Slog.w(TAG, "overlay package " + packageName + " was upgraded, but couldn't be found");
+            onOverlayPackageRemoved(packageName, userId);
+            return;
+        }
+
+        try {
+            final String storedTargetPackageName = mSettings.getTargetPackageName(packageName, userId);
+            if (!overlayPackage.overlayTarget.equals(storedTargetPackageName)) {
+                // Sneaky little hobbitses, changing the overlay's target package
+                // from one version to the next! We can't use the old version's
+                // state.
+                mSettings.remove(packageName, userId);
+                onOverlayPackageAdded(packageName, userId);
+                return;
+            }
+
+            mSettings.setUpgrading(packageName, userId, false);
+            final PackageInfo targetPackage =
+                mPackageManager.getPackageInfo(overlayPackage.overlayTarget, userId);
+            if (updateState(targetPackage, overlayPackage, userId)) {
+                mListener.onOverlaysChanged(overlayPackage.overlayTarget, userId);
+            }
+        } catch (OverlayManagerSettings.BadKeyException e) {
+            Slog.e(TAG, "failed to update settings", e);
+            mSettings.remove(packageName, userId);
+        }
     }
 
     void onOverlayPackageRemoved(@NonNull final String packageName, final int userId) {
-        Slog.wtf(TAG, "onOverlayPackageRemoved called, but only pre-installed overlays supported");
+        if (DEBUG) {
+            Slog.d(TAG, "onOverlayPackageRemoved packageName=" + packageName + " userId=" + userId);
+        }
+
+        try {
+            final OverlayInfo oi = mSettings.getOverlayInfo(packageName, userId);
+            mSettings.remove(packageName, userId);
+            removeIdmapIfPossible(oi);
+        } catch (OverlayManagerSettings.BadKeyException e) {
+            Slog.e(TAG, "failed to remove overlay package", e);
+        }
     }
 
     OverlayInfo getOverlayInfo(@NonNull final String packageName, final int userId) {
