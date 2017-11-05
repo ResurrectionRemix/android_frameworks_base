@@ -64,6 +64,7 @@ import com.android.systemui.qs.tiles.ImeTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocaleTile;
+import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NavigationBarTile;
@@ -466,6 +467,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("work")) return new WorkModeTile(this);
         else if (tileSpec.equals("rotation")) return new RotationLockTile(this);
         else if (tileSpec.equals("flashlight")) return new FlashlightTile(this);
+        else if (tileSpec.equals("livedisplay")) return new LiveDisplayTile(this);
         else if (tileSpec.equals("location")) return new LocationTile(this);
         else if (tileSpec.equals("cast")) return new CastTile(this);
         else if (tileSpec.equals("hotspot")) return new HotspotTile(this);

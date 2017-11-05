@@ -36,6 +36,9 @@
     <!-- Blur surface -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 
+    <!-- LiveDisplay tile -->
+    <uses-permission android:name="cyanogenmod.permission.MANAGE_LIVEDISPLAY" />
+
     <application>
 
         <activity-alias
