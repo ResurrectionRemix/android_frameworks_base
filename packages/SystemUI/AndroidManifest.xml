@@ -344,6 +344,16 @@
                   android:exported="true">
         </activity>
 
+        <activity android:name=".tuner.LockscreenActivity"
+                  android:enabled="true"
+                  android:icon="@drawable/tuner"
+                  android:theme="@style/TunerSettings"
+                  android:label="@string/systemui_tuner_lockscreen_bottom_shortcuts_title"
+                  android:parentActivityName="com.android.settings.rr"
+                  android:process=":tuner"
+                  android:exported="true">
+        </activity>
+
         <!-- Service used by secondary users to register themselves with the system user. -->
         <service android:name=".recents.RecentsSystemUserService"
             android:exported="false"

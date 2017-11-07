@@ -214,7 +214,6 @@
     <string name="pie_state_summary">Use pie controls while in immersive mode</string>
     <string name="pie_battery_level">"BATTERY LEVEL "</string>
     <string name="quick_settings_pie">Pie</string>
-
     <string name="recents_custom_android_n">CLEAR ALL</string>
 
 </resources>
