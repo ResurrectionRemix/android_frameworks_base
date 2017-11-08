@@ -17,14 +17,15 @@
     xmlns:systemui="http://schemas.android.com/apk/res-auto"
     android:layout_height="48dp"
     android:layout_width="match_parent"
-    android:paddingLeft="22dp"
-    android:paddingRight="22dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     style="@style/BrightnessDialogContainer">
 
     <ImageView
         android:id="@+id/brightness_left"
-        android:layout_width="21.0dip"
-        android:layout_height="21.0dip"
+        android:layout_marginEnd="6.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_brightness_left"
         android:contentDescription="@null" />
@@ -41,20 +42,21 @@
 
     <ImageView
         android:id="@+id/brightness_right"
-        android:layout_width="21.0dip"
-        android:layout_height="21.0dip"
+        android:layout_marginStart="6.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_brightness_right"
         android:contentDescription="@null" />
 
     <ImageButton
         android:id="@+id/brightness_icon"
-        android:layout_width="21.0dip"
-        android:layout_height="21.0dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_qs_brightness_auto_off"
         android:contentDescription="@null"
-        android:layout_marginStart="30.0dip" />
+        android:layout_marginStart="25.0dip" />
 
 </LinearLayout>
