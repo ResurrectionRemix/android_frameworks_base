@@ -95,6 +95,7 @@ import com.android.server.coverage.CoverageService;
 import com.android.server.devicepolicy.DevicePolicyManagerService;
 import com.android.server.display.DisplayManagerService;
 import com.android.server.display.color.ColorDisplayService;
+import com.android.server.display.ScreenStabilization;
 import com.android.server.dreams.DreamManagerService;
 import com.android.server.emergency.EmergencyAffordanceService;
 import com.android.server.gpu.GpuService;
@@ -1853,6 +1854,10 @@ public final class SystemServer {
 
             traceBeginAndSlog("StartCrossProfileAppsService");
             mSystemServiceManager.startService(CrossProfileAppsService.class);
+            traceEnd();
+
+            traceBeginAndSlog("Starting ScreenStabilization Service");
+            mSystemServiceManager.startService(ScreenStabilization.class);
             traceEnd();
 
             traceBeginAndSlog("StartPocketService");

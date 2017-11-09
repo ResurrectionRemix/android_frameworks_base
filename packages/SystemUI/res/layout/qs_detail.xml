@@ -21,9 +21,9 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:orientation="vertical"
-    android:paddingBottom="8dp"
     android:visibility="invisible"
     android:elevation="4dp"
+    android:paddingBottom="0.01dp"
     android:importantForAccessibility="no" >
 
     <View
