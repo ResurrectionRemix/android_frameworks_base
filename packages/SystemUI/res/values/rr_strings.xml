@@ -240,4 +240,14 @@
          [CHAR LIMIT=4] -->
     <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
 
+     <!-- Screen Stabilization -->
+    <string name="quick_settings_stabilization_label">Screen Stabilization</string>
+    <string name="quick_settings_stabilization_off">Stabilization is disabled</string>
+    <string name="quick_settings_stabilization_on">Stabilization is enabled</string>
+    <string name="low_label">Low</string>
+    <string name="high_label">High</string>
+    <string name="stabilization_velocity_friction">Velocity Friction</string>
+    <string name="stabilization_velocity_amplitude">Velocity Amplitude</string>
+    <string name="stabilization_position_friction">Position Friction</string>
+
 </resources>

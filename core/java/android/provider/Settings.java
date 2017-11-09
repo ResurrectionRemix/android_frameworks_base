@@ -6306,6 +6306,21 @@ public final class Settings {
         public static final String QS_TILE_ACCENT_TINT = "qs_tile_accent_tint";
 
         /**
+         * Screen stabilization parameters
+         * @hide
+         */
+        public static final String STABILIZATION_ENABLE = "stabilization_enable";
+
+        /** @hide */
+        public static final String STABILIZATION_VELOCITY_FRICTION = "stabilization_velocity_friction";
+
+        /** @hide */
+        public static final String STABILIZATION_POSITION_FRICTION = "stabilization_position_friction";
+
+        /** @hide */
+        public static final String STABILIZATION_VELOCITY_AMPLITUDE = "stabilization_velocity_amplitude";
+
+        /**
          * SBC HD priority - whether to use dual channel for SBC by default
          * @hide
          */
