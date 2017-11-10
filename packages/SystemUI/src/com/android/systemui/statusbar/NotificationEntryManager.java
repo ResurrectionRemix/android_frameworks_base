@@ -956,7 +956,7 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
     }
 
     public boolean shouldPeek(NotificationData.Entry entry, StatusBarNotification sbn) {
-        if (!mUseHeadsUp || mPresenter.isDeviceInVrMode()) {
+        if (!mUseHeadsUp && !mPresenter.isDozing() || mPresenter.isDeviceInVrMode()) {
             if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode");
             return false;
         }
