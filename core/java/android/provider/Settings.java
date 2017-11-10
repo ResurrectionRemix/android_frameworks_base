@@ -5596,6 +5596,13 @@ public final class Settings {
         public static final String AMBIENT_BATTERY_PERCENT = "ambient_battery_percent";
 
         /**
+         * Whether to vibrate on power connection or disconnection
+         * Whether to show a notification when the battery is charged at the set level and screen is off
+         * @hide
+         */
+        public static final String ALERT_ON_CHARGED_LEVEL = "alert_on_charged_level";
+
+       /**
          * Whether to change the transparency of the qs panel
          * @hide
          */

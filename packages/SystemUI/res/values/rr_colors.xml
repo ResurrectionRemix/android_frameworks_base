@@ -71,4 +71,6 @@
     <color name="screen_pinning_positive_text_color">@android:color/white</color>
     <color name="screen_pinning_negative_text_color">@android:color/white</color>
 
+    <color name="battery_level_good_color">#ff319111</color><!-- green -->
+
 </resources>
