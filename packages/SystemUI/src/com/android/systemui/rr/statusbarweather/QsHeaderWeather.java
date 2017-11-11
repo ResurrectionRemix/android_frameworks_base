@@ -171,10 +171,16 @@ public class QsHeaderWeather extends TextView implements
                     Settings.Secure.QS_TILES, UserHandle.USER_CURRENT).split(",");
             boolean weatherTileEnabled = Arrays.asList(tiles).contains("weather");
             Log.d(TAG, "Weather tile enabled " + weatherTileEnabled);
-            if (!weatherTileEnabled) {
+            if (!weatherTileEnabled  && !isLockscreenWeatherEnabled()) {
                 mWeatherClient.setOmniJawsEnabled(false);
             }
         }
+    }
+
+    public boolean isLockscreenWeatherEnabled() {
+       return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     private void queryAndUpdateWeather() {

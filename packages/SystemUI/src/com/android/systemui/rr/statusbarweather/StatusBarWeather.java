@@ -142,6 +142,12 @@ public class StatusBarWeather extends TextView implements
         if (DEBUG) Log.d(TAG, "weatherError " + errorReason);
     }
 
+    public boolean isLockscreenWeatherEnabled() {
+       return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
+    } 
+
     public void updateSettings(boolean onChange) {
         ContentResolver resolver = mContext.getContentResolver();
         mStatusBarWeatherEnabled = Settings.System.getIntForUser(
@@ -179,7 +185,7 @@ public class StatusBarWeather extends TextView implements
                     Settings.Secure.QS_TILES, UserHandle.USER_CURRENT).split(",");
             boolean weatherTileEnabled = Arrays.asList(tiles).contains("weather");
             Log.d(TAG, "Weather tile enabled " + weatherTileEnabled);
-            if (!weatherTileEnabled) {
+            if (!weatherTileEnabled  && !isLockscreenWeatherEnabled()) {
                 mWeatherClient.setOmniJawsEnabled(false);
             }
         }
