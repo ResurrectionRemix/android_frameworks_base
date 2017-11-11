@@ -336,6 +336,16 @@
         <item name="darkIconTheme">@style/QSIconTheme</item>
     </style>
 
+    <style name="systemui_theme_dark" parent="@*android:style/Theme.DeviceDefault.QuickSettingsDark">
+        <item name="lightIconTheme">@style/DualToneLightTheme</item>
+        <item name="darkIconTheme">@style/DualToneDarkTheme</item>
+    </style>
+
+    <style name="qs_theme_dark" parent="systemui_theme_dark">
+        <item name="lightIconTheme">@style/QSIconTheme</item>
+        <item name="darkIconTheme">@style/QSIconTheme</item>
+    </style>
+
     <style name="systemui_theme_remote_input" parent="@android:style/Theme.DeviceDefault.Light">
         <item name="android:colorAccent">@color/remote_input_accent</item>
     </style>
