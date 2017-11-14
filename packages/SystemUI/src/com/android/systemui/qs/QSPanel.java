@@ -272,6 +272,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         if (mTileLayout != null) {
             mTileLayout.updateResources();
         }
+        updateSettings();
     }
 
     @Override
@@ -619,7 +620,17 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         int getOffsetTop(TileRecord tile);
 
         boolean updateResources();
+        void updateSettings();
 
         void setListening(boolean listening);
+    }
+
+    public void updateSettings() {
+        if (mTileLayout != null) {
+            mTileLayout.updateSettings();
+        }
+        if (mCustomizePanel != null) {
+            mCustomizePanel.updateSettings();
+        }
     }
 }

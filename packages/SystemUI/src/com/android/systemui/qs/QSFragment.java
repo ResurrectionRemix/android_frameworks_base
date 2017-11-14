@@ -340,6 +340,10 @@ public class QSFragment extends Fragment implements QS {
         // Let the panel know the position changed and it needs to update where notifications
         // and whatnot are.
         mPanelView.onQsHeightChanged();
+
+        if (!mQSCustomizer.isCustomizing()) {
+            mQSPanel.updateSettings();
+        }
     }
 
     /**

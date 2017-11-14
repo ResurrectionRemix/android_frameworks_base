@@ -7120,6 +7120,12 @@ public final class Settings {
                 "system_navigation_keys_enabled";
 
         /**
+         * Quick Settings number of columns
+         * @hide
+         */
+        public static final String QS_LAYOUT_COLUMNS = "qs_layout_columns";
+
+        /**
          * Holds comma separated list of ordering of QS tiles.
          * @hide
          */

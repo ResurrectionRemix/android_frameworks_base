@@ -279,7 +279,8 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         private int getRows() {
             final Resources res = getContext().getResources();
             if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                return res.getInteger(R.integer.quick_settings_num_rows_portrait);
+                // Always have 3 rows in portrait.
+                return 3;
             }
             return Math.max(1, res.getInteger(R.integer.quick_settings_num_rows));
         }
@@ -322,5 +323,13 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
 
     public interface PageListener {
         void onPageChanged(boolean isFirst);
+    }
+
+    @Override
+    public void updateSettings() {
+        for (int i = 0; i < mPages.size(); i++) {
+            mPages.get(i).updateSettings();
+        }
+        postDistributeTiles();
     }
 }

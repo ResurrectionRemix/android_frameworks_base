@@ -20,12 +20,15 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,6 +85,8 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
     private boolean mCustomizing;
     private NotificationsQuickSettingsContainer mNotifQsContainer;
     private QS mQs;
+    private GridLayoutManager mLayout;
+    private int mDefaultColumns;
     private boolean mFinishedFetchingTiles = false;
     private int mX;
     private int mY;
@@ -109,20 +114,22 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         mToolbar.getMenu().add(Menu.NONE, MENU_RESET, 0,
                 mContext.getString(com.android.internal.R.string.reset));
         mToolbar.setTitle(R.string.qs_edit);
-
+        mDefaultColumns = Math.max(1, mContext.getResources().getInteger(R.integer.quick_settings_num_columns));
         mRecyclerView = findViewById(android.R.id.list);
         mTileAdapter = new TileAdapter(getContext());
         mRecyclerView.setAdapter(mTileAdapter);
         mTileAdapter.getItemTouchHelper().attachToRecyclerView(mRecyclerView);
-        GridLayoutManager layout = new GridLayoutManager(getContext(), 3);
-        layout.setSpanSizeLookup(mTileAdapter.getSizeLookup());
-        mRecyclerView.setLayoutManager(layout);
+        mLayout = new GridLayoutManager(getContext(), mDefaultColumns);
+        mLayout.setSpanSizeLookup(mTileAdapter.getSizeLookup());
+        mRecyclerView.setLayoutManager(mLayout);
         mRecyclerView.addItemDecoration(mTileAdapter.getItemDecoration());
         DefaultItemAnimator animator = new DefaultItemAnimator();
         animator.setMoveDuration(TileAdapter.MOVE_DURATION);
         mRecyclerView.setItemAnimator(animator);
         mLightBarController = Dependency.get(LightBarController.class);
         updateNavBackDrop(getResources().getConfiguration());
+
+        updateSettings();
     }
 
     @Override
@@ -139,6 +146,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
             navBackdrop.setVisibility(mIsShowingNavBackdrop ? View.VISIBLE : View.GONE);
         }
         updateNavColors();
+        updateSettings();
     }
 
     private void updateNavColors() {
@@ -241,6 +249,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                 reset();
                 break;
         }
+        updateSettings();
         return false;
     }
 
@@ -251,6 +260,8 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
             tiles.add(tile);
         }
         mTileAdapter.resetTileSpecs(mHost, tiles);
+        Settings.Secure.putInt(mContext.getContentResolver(),
+                Settings.Secure.QS_LAYOUT_COLUMNS, mDefaultColumns);
     }
 
     private void setTileSpecs() {
@@ -309,6 +320,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         public void onAnimationEnd(Animator animation) {
             if (isShown) {
                 setCustomizing(true);
+                updateSettings();
             }
             mOpening = false;
             mNotifQsContainer.setCustomizerAnimating(false);
@@ -339,4 +351,12 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
             mNotifQsContainer.setCustomizerAnimating(false);
         }
     };
+
+    public void updateSettings() {
+        int columns = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.QS_LAYOUT_COLUMNS, mDefaultColumns,
+                UserHandle.USER_CURRENT);
+        mTileAdapter.setColumnCount(columns);
+        mLayout.setSpanCount(columns);
+    }
 }
