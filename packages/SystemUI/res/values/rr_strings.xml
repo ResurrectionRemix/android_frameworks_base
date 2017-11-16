@@ -120,4 +120,8 @@
 
     <!-- 4G LTE switch -->
     <string name="show_fourg_title">Show 4G instead of LTE</string>
+
+   <string name="global_action_reboot_recovery">Recovery</string>
+   <string name="global_action_reboot">Restart</string>
+
 </resources>
