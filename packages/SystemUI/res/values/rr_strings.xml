@@ -31,8 +31,9 @@
     <!-- SystemUI Tuner Parts -->
     <string name="systemui_tuner_icon_manager_title">Icon manager</string>
 
-    <!-- Reboot/Recovery QS Tile -->
+    <!-- QS Tiles -->
     <string name="quick_settings_reboot_label">Reboot</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
+    <string name="quick_settings_screenshot_label">Screenshot</string>
 
 </resources>
