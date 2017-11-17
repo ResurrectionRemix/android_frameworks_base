@@ -249,6 +249,21 @@ void CanvasContext::setWideGamut(bool wideGamut) {
 bool CanvasContext::makeCurrent() {
     if (mStopped) return false;
 
+    ANativeWindow *nwin = (ANativeWindow *)mNativeSurface.get();
+    if (nwin) {
+        int bufferage = -1;
+        int res = nwin->query(nwin, NATIVE_WINDOW_BUFFER_AGE, &bufferage);
+        if (res == NO_INIT) {
+            ALOGE("makeCurrent %p, but the nativewindow is not inited bufferage %d", nwin, bufferage);
+            setSurface(nullptr);
+            return false;
+        }
+    } else {
+        ALOGE("makeCurrent but there is no active, skip draw");
+        setSurface(nullptr);
+        return false;
+    }
+
     auto result = mRenderPipeline->makeCurrent();
     switch (result) {
         case MakeCurrentResult::AlreadyCurrent:
