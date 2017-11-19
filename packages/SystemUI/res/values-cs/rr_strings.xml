@@ -260,8 +260,8 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VoLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Rychlé nabíjení (plně nabito za <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g>)</string>
-  <string name="keyguard_plugged_in_dash_charging">Rychlé nabíjení</string>
+  <string name="keyguard_indication_dash_charging_time">DASH nabíjení (plně nabito za <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g>)</string>
+  <string name="keyguard_plugged_in_dash_charging">DASH nabíjení</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">Síť VPN</string>
   <!-- data saver icon switch -->

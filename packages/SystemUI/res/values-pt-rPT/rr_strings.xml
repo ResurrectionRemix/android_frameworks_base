@@ -87,7 +87,7 @@
   <string name="quick_settings_music_label">Música</string>
   <string name="quick_settings_music_play">Reproduzir</string>
   <string name="quick_settings_music_pause">Pausa</string>
-  <string name="quick_settings_ime_tile_label">Método de entrada</string>
+  <string name="quick_settings_ime_tile_label">Método de introdução</string>
   <string name="rr_qs_tile">Definições</string>
   <string name="quick_settings_caffeine_label">Cafeína</string>
   <string name="accessibility_quick_settings_caffeine_off">Cafeína desligada</string>
@@ -129,11 +129,11 @@
   <string name="accessibility_quick_settings_ambient_display_on">Visualização de ambiente ativada</string>
   <string name="accessibility_quick_settings_ambient_display_changed_off">A visualização de ambiente foi desligada</string>
   <string name="accessibility_quick_settings_ambient_display_changed_on">A visualização de ambiente foi ativada</string>
-  <string name="quick_settings_heads_up_label">Notificações heads-up</string>
-  <string name="accessibility_quick_settings_heads_up_off">Notificações heads-up desativadas</string>
-  <string name="accessibility_quick_settings_heads_up_on">Notificações heads-up ativadas</string>
-  <string name="accessibility_quick_settings_heads_up_changed_off">As notificações heads-up foram desativadas</string>
-  <string name="accessibility_quick_settings_heads_up_changed_on">As notificações heads-up foram ativadas</string>
+  <string name="quick_settings_heads_up_label">Notificações flutuantes</string>
+  <string name="accessibility_quick_settings_heads_up_off">Notificações flutuantes desativadas</string>
+  <string name="accessibility_quick_settings_heads_up_on">Notificações flutuantes ativadas</string>
+  <string name="accessibility_quick_settings_heads_up_changed_off">As notificações flutuantes foram desativadas</string>
+  <string name="accessibility_quick_settings_heads_up_changed_on">As notificações flutuantes foram ativadas</string>
   <!-- Location Tile -->
   <string name="accessibility_quick_settings_location_battery_saving">Modo de localização: poupança de bateria.</string>
   <string name="accessibility_quick_settings_location_gps_only">Modo de localização: apenas sensores.</string>

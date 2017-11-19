@@ -272,5 +272,10 @@
   <!-- Pie controls -->
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
+  <string name="pie_state_name">تحكم Pie</string>
+  <string name="pie_state_summary">استخدام عناصر تحكم Pie اثناء وضع سطح المكتب</string>
+  <string name="pie_battery_level">"مستوى البطارية "</string>
   <string name="quick_settings_pie">الفطيرة</string>
+  <string name="accessibility_data_sim">شريحة البيانات الحالية</string>
+  <string name="data_switch_started">جار تغيير شريحة البيانات, قد يستغرق هذا حتى الدقيقة...</string>
 </resources>

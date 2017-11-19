@@ -125,6 +125,10 @@
   <string name="accessibility_quick_settings_pulse_changed_on">Puls tændt</string>
   <string name="quick_settings_pulse_label">Navigation bar visualizer</string>
   <string name="quick_settings_ambient_display_label">Ambient display</string>
+  <string name="accessibility_quick_settings_ambient_display_off">Opmærksom skærm fra</string>
+  <string name="accessibility_quick_settings_ambient_display_on">Opmærksom skærm til</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_off">Opmærksom skærm slået fra</string>
+  <string name="accessibility_quick_settings_ambient_display_changed_on">Opmærksom skærm slået til</string>
   <!-- Location Tile -->
   <!-- Language\Locale Tile -->
   <!-- Suspend Actions Tile -->
@@ -140,6 +144,10 @@
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Compass QS Tile -->
+  <string name="accessibility_quick_settings_compass_off">Kompas fra</string>
+  <string name="accessibility_quick_settings_compass_on">Kompas til</string>
+  <string name="accessibility_quick_settings_compass_changed_off">Kompas slået fra</string>
+  <string name="accessibility_quick_settings_compass_changed_on">Kompas slået til</string>
   <string name="quick_settings_compass_S">S</string>
   <string name="quick_settings_compass_SW">SV</string>
   <string name="quick_settings_compass_W">V</string>
