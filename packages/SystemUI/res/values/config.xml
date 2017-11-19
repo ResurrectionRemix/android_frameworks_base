@@ -414,6 +414,9 @@
         <item>30</item>
         <item>60</item>
         <item>120</item>
+		<item>300</item>
+		<item>720</item>
+		<item>1440</item>
     </integer-array>
 
     <!-- Smart replies in notifications: Whether smart replies in notifications are enabled. -->
