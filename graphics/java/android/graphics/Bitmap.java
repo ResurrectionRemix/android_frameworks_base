@@ -806,6 +806,11 @@ public final class Bitmap implements Parcelable {
         if (y + height > source.getHeight()) {
             throw new IllegalArgumentException("y + height must be <= bitmap.height()");
         }
+        if (source.mNativePtr == 0 || source.isRecycled()) {
+            throw new IllegalArgumentException("source.mNativePtr must be >0 and it can not be"
+                                               + "recycled before using");
+        }
+
 
         // check if we can just return our argument unchanged
         if (!source.isMutable() && x == 0 && y == 0 && width == source.getWidth() &&
