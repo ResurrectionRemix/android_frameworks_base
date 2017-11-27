@@ -18,7 +18,10 @@
 <resources>
     <!-- Notification icon/text dynamic tint -->
     <color name="notification_text_default_color">@android:color/notification_default_color</color>
-    
+
+    <!-- Ambient Notification icon/text dynamic tint -->
+    <color name="notification_ambient_default_color">@android:color/notification_text_default_color</color>
+
     <!-- Notification sender text color -->
     <color name="sender_text_color">@android:color/black</color> 
 </resources>
