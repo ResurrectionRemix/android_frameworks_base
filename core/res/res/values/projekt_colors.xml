@@ -23,5 +23,9 @@
     <color name="notification_ambient_default_color">@android:color/notification_text_default_color</color>
 
     <!-- Notification sender text color -->
-    <color name="sender_text_color">@android:color/black</color> 
+    <color name="sender_text_color">@android:color/black</color>
+
+    <!-- Toast text and bg colors -->
+    <color name="toast_bg_color">#E6EEEEEE</color>
+    <color name="toast_text_color">@color/primary_text_default_material_light</color>
 </resources>
