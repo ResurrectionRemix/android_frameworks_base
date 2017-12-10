@@ -35,4 +35,6 @@
     <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
     <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
 
+    <!-- config for showing AM/PM in 12hour format -->
+    <bool name="config_showAmpm">true</bool>
 </resources>

@@ -425,10 +425,13 @@ public class KeyguardStatusView extends GridLayout implements
             if (key.equals(cacheKey)) return;
 
             clockView12 = DateFormat.getBestDateTimePattern(locale, clockView12Skel);
-            // CLDR insists on adding an AM/PM indicator even though it wasn't in the skeleton
-            // format.  The following code removes the AM/PM indicator if we didn't want it.
-            if (!clockView12Skel.contains("a")) {
-                clockView12 = clockView12.replaceAll("a", "").trim();
+
+            if(!context.getResources().getBoolean(com.android.systemui.R.bool.config_showAmpm)) {
+                // CLDR insists on adding an AM/PM indicator even though it wasn't in the skeleton
+                // format.  The following code removes the AM/PM indicator if we didn't want it.
+                if (!clockView12Skel.contains("a")) {
+                    clockView12 = clockView12.replaceAll("a", "").trim();
+                }
             }
 
             clockView24 = DateFormat.getBestDateTimePattern(locale, clockView24Skel);

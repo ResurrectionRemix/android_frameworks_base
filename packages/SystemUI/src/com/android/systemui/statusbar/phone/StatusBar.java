@@ -4958,6 +4958,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
         if (modeChange || command.equals(COMMAND_CLOCK)) {
             dispatchDemoCommandToView(command, args, R.id.clock);
+            dispatchDemoCommandToView(command, args, R.id.center_clock);
         }
         if (modeChange || command.equals(COMMAND_BATTERY)) {
             mBatteryController.dispatchDemoCommand(command, args);

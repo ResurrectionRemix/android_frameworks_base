@@ -4117,6 +4117,79 @@ public final class Settings {
 
 
         /**
+         * Clock (and date) position on the status bar
+         * 0: Right clock
+         * 1: Center clock
+         * 2: Hidden clock
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_DATE_POSITION = "status_bar_clock_date_position";
+
+        /**
+         * Wether to show clock seconds on the status bar
+         * 0: Hide
+         * 1: Show
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_SHOW_SECONDS = "status_bar_clock_show_seconds";
+
+        /**
+         * Wether to show the date left to the clock on the status bar
+         * 0: Hide
+         * 1: Show
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_SHOW_DATE = "status_bar_clock_show_date";
+
+        /**
+         * The DateFormat string for the date on the status bar
+         * - "dd/MM/yy"
+         * - "MM/dd/yy"
+         * - "yyyy-MM-dd"
+         * - "yyyy-dd-MM"
+         * - "dd-MM-yyyy"
+         * - "MM-dd-yyyy"
+         * - "MMM dd"
+         * - "MMM dd, yyyy"
+         * - "MMMM dd, yyyy"
+         * - "EEE"
+         * - "EEE dd"
+         * - "EEE dd/MM"
+         * - "EEE MM/dd"
+         * - "EEE dd MMM"
+         * - "EEE MMM dd"
+         * - "EEE MMMM dd"
+         * - "EEEE dd/MM"
+         * - "EEEE MM/dd"
+         * - "Custom date format"
+         * default: "EEE", (day name in week (short))
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_DATE_FORMAT = "status_bar_clock_date_format";
+
+        /**
+         * The date style on the status bar
+         * 0 - Regular (case insensitive)
+         * 1 - Lowercase
+         * 2 - Uppercase
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_DATE_STYLE = "status_bar_clock_date_style";
+
+        /**
+         * Whether to show the date small in status bar
+         * 0: Normal
+         * 1: Small
+         * default: 0
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_DATE_SIZE_SMALL = "status_bar_clock_date_sizes_mall";
+
+        /**
          * Whether to display the power menu dialog while on the lockscreen
          * @hide
          */
