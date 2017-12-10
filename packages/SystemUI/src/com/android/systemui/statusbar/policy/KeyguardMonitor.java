@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -127,8 +128,8 @@ public final class KeyguardMonitor extends KeyguardUpdateMonitorCallback {
     }
 
     private void notifyKeyguardChanged() {
-        for (int i = 0; i < mCallbacks.size(); i++) {
-            Callback callback = mCallbacks.get(i);
+        ArrayList<Callback> callbacks = new ArrayList<Callback>(mCallbacks);
+        for (Callback callback : callbacks) {
             callback.onKeyguardChanged();
         }
     }
