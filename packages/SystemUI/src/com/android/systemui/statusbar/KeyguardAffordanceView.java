@@ -57,6 +57,7 @@ public class KeyguardAffordanceView extends ImageView {
     protected final int mNormalColor;
     private final int mMinBackgroundRadius;
     private final Paint mCirclePaint;
+    private final int mNormalColorNoTint;
     private final ArgbEvaluator mColorInterpolator;
     private final FlingAnimationUtils mFlingAnimationUtils;
     private float mCircleRadius;
@@ -80,6 +81,7 @@ public class KeyguardAffordanceView extends ImageView {
     private boolean mFinishing;
     private boolean mLaunchingAffordance;
     private boolean mShouldTint = true;
+    private boolean mSkipTinting = false;
 
     private CanvasProperty<Float> mHwCircleRadius;
     private CanvasProperty<Float> mHwCenterX;
@@ -134,6 +136,7 @@ public class KeyguardAffordanceView extends ImageView {
         mCirclePaint.setColor(mCircleColor);
 
         mNormalColor = a.getColor(android.R.styleable.ImageView_tint, 0xffffffff);
+        mNormalColorNoTint = 0xffffffff;
         mDarkIconColor = 0xff000000;
         mMinBackgroundRadius = mContext.getResources().getDimensionPixelSize(
                 R.dimen.keyguard_affordance_min_background_radius);
@@ -143,9 +146,14 @@ public class KeyguardAffordanceView extends ImageView {
         a.recycle();
     }
 
-    public void setImageDrawable(@Nullable Drawable drawable, boolean tint) {
+    public void setImageDrawable(@Nullable Drawable drawable, boolean tint, boolean skipTinting) {
+        if (skipTinting) {
+            drawable.setTintList(null);
+            drawable.setTintMode(null);
+        }
         super.setImageDrawable(drawable);
         mShouldTint = tint;
+        mSkipTinting = skipTinting;
         updateIconColor();
     }
 
@@ -191,7 +199,7 @@ public class KeyguardAffordanceView extends ImageView {
         Drawable drawable = getDrawable().mutate();
         float alpha = mCircleRadius / mMinBackgroundRadius;
         alpha = Math.min(1.0f, alpha);
-        int color = (int) mColorInterpolator.evaluate(alpha, mNormalColor, mDarkIconColor);
+        int color = (int) mColorInterpolator.evaluate(alpha, (mSkipTinting ? mNormalColorNoTint : mNormalColor), mDarkIconColor);
         drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 
