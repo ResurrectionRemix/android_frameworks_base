@@ -111,16 +111,31 @@
   <string name="quick_settings_gesture_anywhere_off">Bevegelser av</string>
   <string name="quick_settings_appsidebar_title">App sidestolpe</string>
   <string name="quick_settings_appsidebar_on">App side bar på</string>
+  <string name="quick_settings_appsidebar_off">App side stolpe av</string>
   <!-- Pulse Tile -->
   <!-- Location Tile -->
+  <string name="accessibility_quick_settings_location_battery_saving">Posisjonssrapportering: batterisparingsmodus.</string>
+  <string name="accessibility_quick_settings_location_gps_only">Posisjonsrapportering: Kun sensorer.</string>
+  <string name="accessibility_quick_settings_location_high_accuracy">Posisjonsrapportering: Høy nøyaktighet.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Posisjonssrapportering endret til batterisparingsmodus.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Posisjonsrapportering endret til kun sensorer.</string>
+  <string name="accessibility_quick_settings_location_changed_high_accuracy">Posisjonsrapportering endret til høy nøyaktighet.</string>
+  <string name="quick_settings_location_battery_saving_label">Batterisparingsmodus</string>
+  <string name="quick_settings_location_gps_only_label">Kun enhet</string>
+  <string name="quick_settings_location_high_accuracy_label">Høy nøyaktighet</string>
+  <string name="quick_settings_location_off_label">Posisjonsrapportering av</string>
+  <string name="quick_settings_location_off_custom_label">Posisjon</string>
   <!-- Language\Locale Tile -->
   <string name="quick_settings_locale_label">Språk</string>
   <!-- Suspend Actions Tile -->
   <!-- Perf Profile Tile -->
   <string name="qs_tile_performance">Batterimodus</string>
   <!-- Content description of the battery mode tile in quick settings when on, power save mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_pwrsv">Batterimodus: strømsparemodus.</string>
   <!-- Content description of the battery mode tile in quick settings when on, balanced mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_bal">Batterimodus: balansert.</string>
   <!-- Content description of the battery mode tile in quick settings when on, performance mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_perf_profile_perf">Batterimodus: høy ytelse.</string>
   <!-- Content description of the battery mode tile in quick settings when on, efficiency mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Content description of the battery mode tile in quick settings when on, quick mode (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Announcement made when the battery mode tile changes to power save (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -129,11 +144,19 @@
   <!-- Announcement made when the battery mode tile changes to efficiency (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Announcement made when the battery mode tile changes to quick (not shown on the screen). [CHAR LIMIT=NONE] -->
   <!-- Compass QS Tile -->
+  <string name="quick_settings_compass_label">Kompass</string>
   <!-- HW Keys Tile -->
   <!-- Kill app toast -->
+  <string name="app_killed_message">Applikasjon tvangsavsluttet</string>
   <!-- Heads up snooze toast -->
   <!-- Screenshot action -->
+  <string name="screenshot_abort_title">Ingen skjermbilde tatt</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Slettet</string>
+  <string name="action_delete_fault">Sletting mislyktes</string>
+  <string name="action_save_success">Lagret</string>
+  <string name="action_save_fault">Lagring mislyktes</string>
+  <string name="pref_category_main">Hovedinnstillinger</string>
   <!-- Path data for Solid battery -->
   <!-- Task Manager -->
   <!-- Slim Recents -->

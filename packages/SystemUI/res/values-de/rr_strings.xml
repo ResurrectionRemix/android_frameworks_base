@@ -26,7 +26,7 @@
   <string name="screenrecord_notif_pointer_on">Cursor anzeigen</string>
   <string name="screenrecord_notif_pointer_off">Cursor ausblenden</string>
   <!-- Screen record notification error title -->
-  <string name="screenrecord_notif_error">Bildschirmkonnte nicht aufgenommen werden</string>
+  <string name="screenrecord_notif_error">Bildschirm konnte nicht aufgenommen werden</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">Screenshot gelöscht</string>
@@ -138,8 +138,8 @@
   <string name="accessibility_quick_settings_location_battery_saving">Standortdienste: Energiesparmodus.</string>
   <string name="accessibility_quick_settings_location_gps_only">Standortdienste: Nur Gerät.</string>
   <string name="accessibility_quick_settings_location_high_accuracy">Standortdienste: Hohe Genauigkeit.</string>
-  <string name="accessibility_quick_settings_location_changed_battery_saving">Standortdienst wurde in Energiesparmodus geändert.</string>
-  <string name="accessibility_quick_settings_location_changed_gps_only">Standortdienst wurde auf \"Nur Gerät\" geändert.</string>
+  <string name="accessibility_quick_settings_location_changed_battery_saving">Die Standortbestimmung wurde auf Energiesparmodus geändert.</string>
+  <string name="accessibility_quick_settings_location_changed_gps_only">Die Standortbestimmung wurde auf \"Nur Gerät\" geändert.</string>
   <string name="accessibility_quick_settings_location_changed_high_accuracy">Die Standortbestimmung wurde auf \"Hohe Genauigkeit\" geändert.</string>
   <string name="quick_settings_location_detail_title">Standortmodus</string>
   <string name="quick_settings_location_battery_saving_label">Energiesparmodus</string>
@@ -260,7 +260,7 @@
   <!-- volte icon switch -->
   <string name="status_bar_volte">VOLTE</string>
   <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
-  <string name="keyguard_indication_dash_charging_time">Wird schnell aufgeladen (voll in <xliff:g id="verbleibende_Aufladezeit" beispiel="4 Stunden und 2 Minuten">%s</xliff:g>)</string>
+  <string name="keyguard_indication_dash_charging_time">Wird schnell aufgeladen (voll in <xliff:g id="verbleibende_Aufladezeit" example="4 Stunden und 2 Minuten">%s</xliff:g>)</string>
   <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
   <!-- vpn icon switch -->
   <string name="status_bar_vpn">VPN</string>

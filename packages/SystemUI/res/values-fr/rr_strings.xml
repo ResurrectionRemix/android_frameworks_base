@@ -270,10 +270,10 @@
   <string name="no_navigation_warning_title">Toutes les méthodes de navigation sont désactivées</string>
   <string name="no_navigation_warning_text">Appuyez pour activer</string>
   <!-- Pie controls -->
-  <string name="pie_date_format">EEEE, dd MMMM aaaa</string>
+  <string name="pie_date_format">EEEE, jj MMMM aaaa</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
-  <string name="pie_am_pm">a</string>
+  <string name="pie_am_pm">un</string>
   <string name="pie_state_name">Contrôles des raccourcis de l\'arc</string>
   <string name="pie_state_summary">Utiliser l\'arc en mode immersif</string>
   <string name="pie_battery_level">"BATTERIE "</string>

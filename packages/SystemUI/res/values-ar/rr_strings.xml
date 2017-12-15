@@ -31,7 +31,7 @@
   <!-- Screenshot Delete Toast -->
   <string name="delete_screenshot_toast">تم حذف لقطة الشاشة</string>
   <string name="gestures_message">أرسم الحركة هنا</string>
-  <string name="rr_sys_tuner">تخصيص نظام واجهة المستخدم</string>
+  <string name="rr_sys_tuner">ضابط واجهة المستخدم للنطام</string>
   <!-- Strings for lockscreen shortcut hints -->
   <string name="left_shortcut_hint">إسحب لليمين لـ %1$s</string>
   <string name="right_shortcut_hint">إسحب لليسار لـ %1$s</string>
@@ -49,15 +49,15 @@
   <string name="onthego_notif_title">تم تفعيل وضع On-The-Go</string>
   <string name="onthego_notif_stop">إيقاف</string>
   <string name="onthego_notif_options">خيارات</string>
-  <string name="onthego_notif_error">فشل في تشغيل On-The-Go</string>
-  <string name="onthego_notif_restart">إعادة تشغيل On-The-Go</string>
+  <string name="onthego_notif_error">فشل تشغيل وضع On-The-Go</string>
+  <string name="onthego_notif_restart">إعادة تشغيل وضع On-The-Go</string>
   <string name="onthego_notif_camera_changed">تم تغيير وضع الكاميرا</string>
   <string name="onthego_transparency">الشفافية</string>
   <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
-  <string name="onthego_service_toggle">تلقائياً إعادة تشغيل الخدمة</string>
+  <string name="onthego_service_toggle">خدمة إعادة التشغيل التلقائي</string>
   <!-- Sound QS Tile -->
   <string name="quick_settings_sound_label">الصوت</string>
-  <string name="quick_settings_sound_ring">التنبيه</string>
+  <string name="quick_settings_sound_ring">رنين</string>
   <string name="quick_settings_sound_vibrate">هزاز</string>
   <string name="quick_settings_sound_dnd">عدم الإزعاج</string>
   <!-- Volume QS Tile -->
@@ -67,16 +67,16 @@
   <string name="quick_settings_screenshot_label">تصوير الشاشة</string>
   <string name="quick_settings_region_screenshot_label">صورة جزئية للشاشة</string>
   <string name="quick_settings_adb_network">شبكة ADB</string>
-  <string name="quick_settings_network_adb_enabled_label">مفعل</string>
-  <string name="quick_settings_network_adb_disabled_label">معطل</string>
-  <string name="quick_settings_sync_label">المزامنة</string>
+  <string name="quick_settings_network_adb_enabled_label">مفعّل</string>
+  <string name="quick_settings_network_adb_disabled_label">معطّل</string>
+  <string name="quick_settings_sync_label">مزامنة</string>
   <string name="accessibility_quick_settings_sync_off">إيقاف المزامنة</string>
   <string name="accessibility_quick_settings_sync_on">تفعيل المزامنة</string>
   <string name="accessibility_quick_settings_sync_changed_off">تم إيقاف المزامنة</string>
   <string name="accessibility_quick_settings_sync_changed_on">تم تشغيل المزامنة</string>
-  <string name="quick_settings_expanded_desktop_label">سطح المكتب الموسع</string>
-  <string name="quick_settings_expanded_desktop">توسيع</string>
-  <string name="quick_settings_expanded_desktop_off">عادي</string>
+  <string name="quick_settings_expanded_desktop_label">وضع سطح المكتب الموسع</string>
+  <string name="quick_settings_expanded_desktop">موسّع</string>
+  <string name="quick_settings_expanded_desktop_off">الوضع العادي</string>
   <string name="quick_settings_reboot_label">إعادة التشغيل</string>
   <string name="quick_settings_reboot_recovery_label">الإسترداد</string>
   <string name="accessibility_quick_settings_usb_tether_off">ربط USB لا يعمل</string>
@@ -270,6 +270,7 @@
   <string name="no_navigation_warning_title">جميع اساليب الملاحة معطلة</string>
   <string name="no_navigation_warning_text">اضغط للتفعيل</string>
   <!-- Pie controls -->
+  <string name="pie_date_format">EEEE, dd MMMM yyyy</string>
   <string name="pie_hour_format_12">hh:mm</string>
   <string name="pie_hour_format_24">HH:mm</string>
   <string name="pie_state_name">تحكم Pie</string>

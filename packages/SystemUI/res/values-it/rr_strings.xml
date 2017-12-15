@@ -276,10 +276,10 @@
   <string name="pie_hour_format_12">oo:mm</string>
   <string name="pie_hour_format_24">OO:mm</string>
   <string name="pie_am_pm">un</string>
-  <string name="pie_state_name">Controlli Pie</string>
+  <string name="pie_state_name">Linguetta di controllo</string>
   <string name="pie_state_summary">In modalità immersiva, usa controlli a scomparsa</string>
   <string name="pie_battery_level">"LIVELLO BATTERIA "</string>
   <string name="quick_settings_pie">Pie</string>
   <string name="accessibility_data_sim">Dati correnti Sim</string>
-  <string name="data_switch_started">Passaggio dati SIM, questo può richiedere fino a un minuto...</string>
+  <string name="data_switch_started">Passaggio dei dati della SIM, potrebbe richiedere fino a un minuto...</string>
 </resources>
