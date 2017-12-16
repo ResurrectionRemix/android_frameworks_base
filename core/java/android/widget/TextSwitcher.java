@@ -96,7 +96,7 @@ public class TextSwitcher extends ViewSwitcher {
 
     /**
      * Sets the color of the text view that is currently showing.
-     *
+     * @hide
      * @param color the text color to display
      */
     public void setTextColor(int color) {

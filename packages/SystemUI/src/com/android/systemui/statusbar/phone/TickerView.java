@@ -23,7 +23,7 @@ import com.android.systemui.statusbar.phone.Ticker;
 
 public class TickerView extends TextSwitcher
 {
-    Ticker mTicker;
+    private Ticker mTicker;
 
     public TickerView(Context context, AttributeSet attrs) {
         super(context, attrs);
