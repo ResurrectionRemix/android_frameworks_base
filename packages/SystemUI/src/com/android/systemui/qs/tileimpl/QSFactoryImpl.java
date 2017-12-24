@@ -39,6 +39,7 @@ import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.CompassTile;
+import com.android.systemui.qs.tiles.CPUInfoTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
@@ -143,6 +144,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<NavBarTile> mNavBarTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<GestureAnyWhereTile> mGestureAnyWhereTileProvider;
+    private final Provider<CPUInfoTile> mCPUInfoTileProvider;
 
     private QSTileHost mHost;
 
@@ -198,7 +200,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<MonoToggleTile> monoToggleTileProvider,
             Provider<NavBarTile> navbarTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
-            Provider<GestureAnyWhereTile> gesturenywhereTileProvider) {
+            Provider<GestureAnyWhereTile> gesturenywhereTileProvider,
+            Provider<CPUInfoTile> cpuInfoTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -251,6 +254,7 @@ public class QSFactoryImpl implements QSFactory {
         mNavBarTileProvider = navbarTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
         mGestureAnyWhereTileProvider = gesturenywhereTileProvider;
+        mCPUInfoTileProvider = cpuInfoTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -371,6 +375,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mScreenshotTileProvider.get();
             case "gestureanywhere":
                 return mGestureAnyWhereTileProvider.get();
+            case "cpuinfo":
+                return mCPUInfoTileProvider.get();
         }
 
         // Intent tiles.
