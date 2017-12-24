@@ -99,6 +99,7 @@ public class DeviceStorageMonitorService extends SystemService {
     /** Map from storage volume UUID to internal state */
     private final ArrayMap<UUID, State> mStates = new ArrayMap<>();
 
+    private long mFreeMem = 0;
     /**
      * State for a specific storage volume, including the current "level" that
      * we've alerted the user and apps about.
@@ -204,6 +205,7 @@ public class DeviceStorageMonitorService extends SystemService {
             final long totalBytes = file.getTotalSpace();
             final long usableBytes = file.getUsableSpace();
 
+            mFreeMem = usableBytes;
             int oldLevel = state.level;
             int newLevel;
             if (mForceLevel != State.LEVEL_UNKNOWN) {
@@ -470,9 +472,10 @@ public class DeviceStorageMonitorService extends SystemService {
 
             final CharSequence details;
             if (StorageManager.UUID_DEFAULT.equals(uuid)) {
-                details = context.getText(isBootImageOnDisk()
-                        ? com.android.internal.R.string.low_internal_storage_view_text
-                        : com.android.internal.R.string.low_internal_storage_view_text_no_boot);
+                details = context.getText((!isBootImageOnDisk()
+                        && mFreeMem < BOOT_IMAGE_STORAGE_REQUIREMENT)
+                        ? com.android.internal.R.string.low_internal_storage_view_text_no_boot
+                        : com.android.internal.R.string.low_internal_storage_view_text);
             } else {
                 details = context.getText(
                         com.android.internal.R.string.low_internal_storage_view_text);
