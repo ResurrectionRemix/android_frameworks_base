@@ -43,6 +43,7 @@
 
     <color name="system_primary_color">@*android:color/primary_material_light</color>
     <color name="system_accent_color">@*android:color/material_deep_teal_700</color>
+    <color name="system_primary_color_dark">@*android:color/primary_material_dark</color>
 
     <!-- Recents membar text color -->
     <color name="recents_membar_text_color">@android:color/white</color>

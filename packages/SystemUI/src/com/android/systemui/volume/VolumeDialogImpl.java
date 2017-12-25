@@ -25,6 +25,8 @@ import android.annotation.NonNull;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.KeyguardManager;
+import android.app.WallpaperColors;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -45,6 +47,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.transition.AutoTransition;
@@ -75,11 +78,14 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import com.android.internal.colorextraction.ColorExtractor;
+
 import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
+import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
 import com.android.systemui.plugins.VolumeDialogController.State;
@@ -99,7 +105,8 @@ import java.util.List;
  *
  * Methods ending in "H" must be called on the (ui) handler.
  */
-public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
+public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable,
+        ColorExtractor.OnColorsChangedListener {
     private static final String TAG = Util.logTag(VolumeDialogImpl.class);
 
     public static final String SHOW_FULL_ZEN = "sysui_show_full_zen";
@@ -164,11 +171,13 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
     private int mCustomCornerRadius;
     private int mCustomDashWidth;
     private int mCustomDashGap;
+    private SysuiColorExtractor mColorExtractor;
 
     public VolumeDialogImpl(Context context) {
         mContext = new ContextThemeWrapper(context, com.android.systemui.R.style.qs_theme);
         mZenModeController = Dependency.get(ZenModeController.class);
         mController = Dependency.get(VolumeDialogController.class);
+        mColorExtractor = Dependency.get(SysuiColorExtractor.class);
         mKeyguard = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mAccessibilityMgr =
@@ -188,6 +197,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         mController.addCallback(mControllerCallbackH, mHandler);
         mController.getState();
         Dependency.get(TunerService.class).addTunable(this, SHOW_FULL_ZEN);
+        mColorExtractor.addOnColorsChangedListener(this);
 
         final Configuration currentConfig = mContext.getResources().getConfiguration();
         mDensity = currentConfig.densityDpi;
@@ -1379,6 +1389,11 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         private int lastAudibleLevel = 1;
     }
 
+    @Override
+    public void onColorsChanged(ColorExtractor extractor, int which) {
+        setVolumeStroke();
+    }
+
     private void setVolumeAlpha() {
         mVolumeDialogAlpha = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.TRANSPARENT_VOLUME_DIALOG, 255);
@@ -1387,7 +1402,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         }
     }
 
-    public void setVolumeStroke () {
+    public void setVolumeStroke() {
         mVolumeDialogStroke = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.VOLUME_DIALOG_STROKE, 0);
         mCustomStrokeColor = Settings.System.getInt(mContext.getContentResolver(),
@@ -1402,18 +1417,35 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
                     Settings.System.VOLUME_DIALOG_STROKE_DASH_GAP, 10);
 
         final GradientDrawable volumeDialogGd = new GradientDrawable();
+        int userThemeSetting = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.SYSTEM_UI_THEME, 0,
+                UserHandle.USER_CURRENT);
+
+        boolean useDarkTheme = false;
+        if (userThemeSetting == 0) {
+            // The system wallpaper defines if QS should be light or dark.
+            WallpaperColors systemColors = mColorExtractor
+                    .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+            useDarkTheme = systemColors != null
+                    && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
+        } else {
+            useDarkTheme = userThemeSetting == 2;
+        }
+
+        final int mVolumeDialogColor = mContext.getResources().getColor(useDarkTheme ?
+                R.color.system_primary_color_dark : R.color.system_primary_color);
 
         if (mVolumeDialogStroke == 0) { // Disable by setting border thickness to 0
-            volumeDialogGd.setColor(mContext.getResources().getColor(R.color.system_primary_color));
+            volumeDialogGd.setColor(mVolumeDialogColor);
             volumeDialogGd.setStroke(0, mContext.getResources().getColor(R.color.system_accent_color));
             volumeDialogGd.setCornerRadius(mCustomCornerRadius);
             mDialogView.setBackground(volumeDialogGd);
         } else if (mVolumeDialogStroke == 1) { // use accent color for border
-            volumeDialogGd.setColor(mContext.getResources().getColor(R.color.system_primary_color));
+            volumeDialogGd.setColor(mVolumeDialogColor);
             volumeDialogGd.setStroke(mCustomStrokeThickness, mContext.getResources().getColor(R.color.system_accent_color),
                     mCustomDashWidth, mCustomDashGap);
         } else if (mVolumeDialogStroke == 2) { // use custom border color
-            volumeDialogGd.setColor(mContext.getResources().getColor(R.color.system_primary_color));
+            volumeDialogGd.setColor(mVolumeDialogColor);
             volumeDialogGd.setStroke(mCustomStrokeThickness, mCustomStrokeColor, mCustomDashWidth, mCustomDashGap);
         }
 
