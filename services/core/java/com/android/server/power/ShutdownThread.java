@@ -51,6 +51,7 @@ import android.os.UserManager;
 import android.os.Vibrator;
 import android.os.storage.IStorageManager;
 import android.os.storage.IStorageShutdownObserver;
+import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.TimingsTraceLog;
@@ -201,11 +202,32 @@ public final class ShutdownThread extends Thread {
                     .create();
             closer.dialog = sConfirmDialog;
             sConfirmDialog.setOnDismissListener(closer);
+            WindowManager.LayoutParams attrs = sConfirmDialog.getWindow().getAttributes();
+
+            attrs.alpha = setRebootDialogAlpha(context);
             sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+            sConfirmDialog.getWindow().setDimAmount(setRebootDialogDim(context));
             sConfirmDialog.show();
         } else {
             beginShutdownSequence(context);
         }
+    }
+
+    private static float setRebootDialogAlpha(Context context) {
+        int mRebootDialogAlpha = Settings.System.getInt(
+                context.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_MENU, 100);
+        double dAlpha = mRebootDialogAlpha / 100.0;
+        float alpha = (float) dAlpha;
+        return alpha;
+    }
+
+    private static float setRebootDialogDim(Context context) {
+        int mRebootDialogDim = Settings.System.getInt(context.getContentResolver(),
+                Settings.System.TRANSPARENT_POWER_DIALOG_DIM, 50);
+        double dDim = mRebootDialogDim / 100.0;
+        float dim = (float) dDim;
+        return dim;
     }
 
     private static class CloseDialogReceiver extends BroadcastReceiver
@@ -360,6 +382,11 @@ public final class ShutdownThread extends Thread {
         }
         pd.setCancelable(false);
         pd.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+
+        WindowManager.LayoutParams attrs = pd.getWindow().getAttributes();
+
+        attrs.alpha = setRebootDialogAlpha(context);
+        pd.getWindow().setDimAmount(setRebootDialogDim(context));
 
         pd.show();
         return pd;
