@@ -1755,6 +1755,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private final Runnable mBackLongPress = new Runnable() {
         @Override
         public void run() {
+            if (unpinActivity(false)) {
+                return;
+            }
+
             if (ActionUtils.killForegroundApp(mContext, mCurrentUserId)) {
                 performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
                         "Back - Long Press");
@@ -3562,7 +3566,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             return -1;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mKillAppLongpressBack) {
+            if (mKillAppLongpressBack || unpinActivity(true)) {
                 if (down && repeatCount == 0) {
                     mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
                 }
@@ -3800,6 +3804,22 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
             } catch (Exception e) {
                 Slog.w(TAG, "Could not dispatch event to device key handler", e);
+            }
+        }
+        return false;
+    }
+
+    private boolean unpinActivity(boolean checkOnly) {
+        if (!hasNavigationBar()) {
+            try {
+                if (ActivityTaskManager.getService().isInLockTaskMode()) {
+                    if (!checkOnly) {
+                        ActivityTaskManager.getService().stopSystemLockTaskMode();
+                    }
+                    return true;
+                }
+            } catch (RemoteException e) {
+                // ignore
             }
         }
         return false;
