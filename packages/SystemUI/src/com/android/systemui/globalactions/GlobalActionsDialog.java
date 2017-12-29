@@ -36,7 +36,9 @@ import com.android.systemui.volume.VolumeDialogMotion.LogDecelerateInterpolator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.ActivityManager;
+import android.app.ActivityManagerNative;
 import android.app.Dialog;
+import android.app.IActivityManager;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -121,12 +123,13 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
     private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
     private static final String GLOBAL_ACTION_KEY_RESTART = "restart";
-    private static final String GLOBAL_ACTION_KEY_RESTART_RECOVERY = "recovery";
+    private static final String GLOBAL_ACTION_KEY_ADVANCED = "advanced";
 
     private static final int SHOW_TOGGLES_BUTTON = 1;
-    private static final int RESTART_RECOVERY_BUTTON = 2;
-    private static final int RESTART_BOOTLOADER_BUTTON = 3;
-    private static final int RESTART_UI_BUTTON = 4;
+    private static final int RESTART_HOT_BUTTON = 2;
+    private static final int RESTART_RECOVERY_BUTTON = 3;
+    private static final int RESTART_BOOTLOADER_BUTTON = 4;
+    private static final int RESTART_UI_BUTTON = 5;
 
     private final Context mContext;
     private final GlobalActionsManager mWindowManagerFuncs;
@@ -141,6 +144,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private ToggleAction.State mAirplaneState = ToggleAction.State.Off;
 
     private AdvancedAction mShowAdvancedToggles;
+    private AdvancedAction mRestartHot;
     private AdvancedAction mRestartRecovery;
     private AdvancedAction mRestartBootloader;
     private AdvancedAction mRestartSystemUI;
@@ -373,6 +377,21 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
             }
         };
 
+        mRestartHot = new AdvancedAction(
+                RESTART_HOT_BUTTON,
+                com.android.systemui.R.drawable.ic_restart_hot,
+                com.android.systemui.R.string.global_action_restart_hot,
+                mWindowManagerFuncs, mHandler) {
+
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            public boolean showBeforeProvisioning() {
+                return true;
+            }
+        };
+
         mRestartRecovery = new AdvancedAction(
                 RESTART_RECOVERY_BUTTON,
                 com.android.systemui.R.drawable.ic_restart_recovery,
@@ -420,7 +439,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
         mItems = new ArrayList<Action>();
         String[] defaultActions = mContext.getResources().getStringArray(
-                R.array.config_globalActionsList);
+                R.array.config_custom_globalActionsList);
 
         ArraySet<String> addedKeys = new ArraySet<String>();
         for (int i = 0; i < defaultActions.length; i++) {
@@ -456,7 +475,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                 mItems.add(getAssistAction());
             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
                 mItems.add(new RestartAction());
-            } else if (GLOBAL_ACTION_KEY_RESTART_RECOVERY.equals(actionKey)) {
+            } else if (GLOBAL_ACTION_KEY_ADVANCED.equals(actionKey)) {
                 mItems.add(mShowAdvancedToggles);
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
@@ -1234,6 +1253,10 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
     private static void triggerAction(int type, Handler h, GlobalActionsManager funcs, Context ctx) {
         switch (type) {
+            case RESTART_HOT_BUTTON:
+                h.sendEmptyMessage(MESSAGE_DISMISS);
+                doHotReboot();
+                break;
             case RESTART_RECOVERY_BUTTON:
                 h.sendEmptyMessage(MESSAGE_DISMISS);
                 funcs.advancedReboot(PowerManager.REBOOT_RECOVERY);
@@ -1422,6 +1445,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
     private void addNewItems() {
         mItems.clear();
+        mItems.add(mRestartHot);
         mItems.add(mRestartRecovery);
         mItems.add(mRestartBootloader);
         mItems.add(mRestartSystemUI);
@@ -1617,5 +1641,17 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
     public static void restartSystemUI(Context ctx) {
         Process.killProcess(Process.myPid());
+    }
+
+    private static void doHotReboot() {
+        try {
+            final IActivityManager am =
+                  ActivityManagerNative.asInterface(ServiceManager.checkService("activity"));
+            if (am != null) {
+                am.restart();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "failure trying to perform hot reboot", e);
+        }
     }
 }

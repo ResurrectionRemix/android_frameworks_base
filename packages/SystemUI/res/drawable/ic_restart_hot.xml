@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Dirty Unicorns Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24.000000dp"
+    android:height="24.000000dp"
+    android:viewportWidth="512.000000"
+    android:viewportHeight="512.000000"
+    android:tint="?android:attr/colorControlNormal">
+
+    <group
+        android:translateY="512.000000"
+        android:scaleX="0.100000"
+        android:scaleY="-0.100000">
+        <path
+            android:fillColor="#000000"
+            android:strokeWidth="1"
+            android:pathData="M2030 4161 c-289 -292 -525 -536 -525 -541 0 -5 232 -244 515 -531 l515 -522 6 249
+c3 137 7 357 8 489 l1 241 68 -4 c231 -12 453 -86 655 -218 92 -60 289 -257 350
+-351 264 -400 302 -884 104 -1324 l-25 -56 161 -114 c88 -63 165 -116 169 -117 13
+-5 104 194 143 311 68 203 79 284 80 552 0 257 -7 316 -61 502 -199 689 -826 1198
+-1516 1230 l-118 6 -2 365 -3 365 -525 -532z" />
+        <path
+            android:fillColor="#000000"
+            android:strokeWidth="1"
+            android:pathData="M880 1938 c0 -41 49 -226 86 -326 68 -183 170 -357 301 -514 66 -79 212 -220 223
+-216 11 5 260 286 260 294 0 4 -46 55 -103 113 -178 184 -282 373 -347 629 l-11 42
+-204 0 -205 0 0 -22z" />
+        <path
+            android:fillColor="#000000"
+            android:strokeWidth="1"
+            android:pathData="M3215 1081 c-21 -21 -195 -100 -273 -125 -46 -14 -123 -33 -170 -41 -94 -17 -306
+-20 -388 -7 l-52 9 -59 -191 c-53 -169 -58 -192 -43 -198 49 -19 225 -30 393 -25
+270 8 444 51 685 168 l122 60 -92 180 c-51 98 -98 179 -103 179 -6 0 -15 -4 -20
+-9z" />
+    </group>
+</vector>
