@@ -124,6 +124,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
     private static final String GLOBAL_ACTION_KEY_RESTART = "restart";
     private static final String GLOBAL_ACTION_KEY_ADVANCED = "advanced";
+    private static final String GLOBAL_ACTION_KEY_SCREENSHOT = "screenshot";
 
     private static final int SHOW_TOGGLES_BUTTON = 1;
     private static final int RESTART_HOT_BUTTON = 2;
@@ -477,6 +478,8 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                 mItems.add(new RestartAction());
             } else if (GLOBAL_ACTION_KEY_ADVANCED.equals(actionKey)) {
                 mItems.add(mShowAdvancedToggles);
+            } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
+                mItems.add(getScreenshotAction());
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
             }
@@ -573,6 +576,33 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         public void onPress() {
             mWindowManagerFuncs.reboot(false);
         }
+    }
+
+    private Action getScreenshotAction() {
+        return new SinglePressAction(com.android.systemui.R.drawable.ic_screenshot,
+                com.android.systemui.R.string.global_action_screenshot) {
+
+            @Override
+            public void onPress() {
+               mHandler.postDelayed(new Runnable() {
+                   @Override
+                    public void run() {
+                        Intent intent = new Intent(Intent.ACTION_SCREENSHOT);
+                        mContext.sendBroadcast(intent);
+                    }
+                }, 500);
+            }
+
+            @Override
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            @Override
+            public boolean showBeforeProvisioning() {
+                return true;
+            }
+        };
     }
 
     private class BugReportAction extends SinglePressAction implements LongPressAction {

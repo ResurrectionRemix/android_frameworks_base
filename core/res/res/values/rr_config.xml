@@ -30,6 +30,7 @@
         <item>power</item>
         <item>restart</item>
         <item>advanced</item>
+        <item>screenshot</item>
     </string-array>
 
     <!-- The list of components which should be automatically disabled. -->
