@@ -3973,8 +3973,13 @@ public final class Settings {
         public static final String POWERMENU_AIRPLANE = "powermenu_airplane";
 
         /**
+         * Whether to display the power menu dialog while on the lockscreen
+         * @hide
+         */
+        public static final String POWERMENU_LOCKSCREEN = "powermenu_lockscreen";
 
-         * Wheter to show network traffic indicator in statusbar
+        /**
+         * Whether to show network traffic indicator in statusbar
          * @hide
          */
         public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
