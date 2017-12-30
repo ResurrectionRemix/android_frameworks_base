@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<!-- Copyright (C) 2017 The Dirty Unicorns Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,6 +14,28 @@
      limitations under the License.
 -->
 
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/ic_lock_airplane_mode_alpha"
-    android:tint="?attr/colorControlActivated" />
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24.000000dp"
+    android:height="24.000000dp"
+    android:viewportWidth="512.000000"
+    android:viewportHeight="512.000000"
+    android:tint="?android:attr/colorControlNormal">
+
+    <group
+        android:translateY="512.000000"
+        android:scaleX="0.100000"
+        android:scaleY="-0.100000">
+        <path
+            android:fillColor="#000000"
+            android:strokeWidth="1"
+            android:pathData="M2520 4231 c-71 -23 -131 -74 -166 -141 -18 -32 -19 -73 -24 -564 l-5 -528 -707
+-442 -707 -441 -1 -177 c0 -100 4 -178 9 -178 5 0 71 20 148 44 184 59 440 139 703
+221 118 37 289 91 380 120 91 29 168 49 173 46 4 -4 6 -223 5 -487 l-3 -479 -178
+-134 -178 -134 3 -131 c2 -102 6 -130 16 -128 28 5 234 63 417 117 l189 55 246 -71
+c135 -39 268 -77 297 -85 29 -8 59 -17 68 -20 13 -5 15 11 15 128 l0 134 -180 134
+-180 135 0 488 c0 268 1 487 3 487 1 0 43 -13 92 -29 50 -16 155 -50 235 -74 80
+-25 334 -105 565 -177 510 -160 508 -160 518 -160 4 0 7 80 7 178 l-1 177 -707 441
+-707 441 -5 529 c-5 481 -7 532 -23 561 -28 52 -77 103 -121 125 -44 23 -153 33
+-196 19z" />
+    </group>
+</vector>
