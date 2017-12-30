@@ -450,34 +450,47 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
             if (GLOBAL_ACTION_KEY_POWER.equals(actionKey)) {
                 mItems.add(new PowerAction());
             } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
-                mItems.add(mAirplaneModeOn);
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_AIRPLANE, 0) != 0) {
+                    mItems.add(mAirplaneModeOn);
+                }
             } else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
-                if (Settings.Global.getInt(mContext.getContentResolver(),
-                        Settings.Global.BUGREPORT_IN_POWER_MENU, 0) != 0 && isCurrentUserOwner()) {
-                    mItems.add(new BugReportAction());
-                }
+                //if (Settings.Global.getInt(mContext.getContentResolver(),
+                //        Settings.Global.BUGREPORT_IN_POWER_MENU, 0) != 0 && isCurrentUserOwner()) {
+                //    mItems.add(new BugReportAction());
+                //}
             } else if (GLOBAL_ACTION_KEY_SILENT.equals(actionKey)) {
-                if (mShowSilentToggle) {
-                    mItems.add(mSilentModeAction);
-                }
+                //if (mShowSilentToggle) {
+                //    mItems.add(mSilentModeAction);
+                //}
             } else if (GLOBAL_ACTION_KEY_USERS.equals(actionKey)) {
-                if (SystemProperties.getBoolean("fw.power_user_switcher", false)) {
-                    addUsersToMenu(mItems);
-                }
+                //if (SystemProperties.getBoolean("fw.power_user_switcher", false)) {
+                //    addUsersToMenu(mItems);
+                //}
             } else if (GLOBAL_ACTION_KEY_SETTINGS.equals(actionKey)) {
-                mItems.add(getSettingsAction());
+                //mItems.add(getSettingsAction());
             } else if (GLOBAL_ACTION_KEY_LOCKDOWN.equals(actionKey)) {
-                mItems.add(getLockdownAction());
+                //mItems.add(getLockdownAction());
             } else if (GLOBAL_ACTION_KEY_VOICEASSIST.equals(actionKey)) {
-                mItems.add(getVoiceAssistAction());
+                //mItems.add(getVoiceAssistAction());
             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
-                mItems.add(getAssistAction());
+                //mItems.add(getAssistAction());
             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
-                mItems.add(new RestartAction());
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_REBOOT, 1) == 1) {
+                    mItems.add(new RestartAction());
+                }
             } else if (GLOBAL_ACTION_KEY_ADVANCED.equals(actionKey)) {
-                mItems.add(mShowAdvancedToggles);
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_REBOOT, 1) == 1 && Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_ADVANCED_REBOOT, 0) != 0) {
+                    mItems.add(mShowAdvancedToggles);
+                }
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
-                mItems.add(getScreenshotAction());
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWERMENU_SCREENSHOT, 0) != 0) {
+                    mItems.add(getScreenshotAction());
+                }
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
             }
