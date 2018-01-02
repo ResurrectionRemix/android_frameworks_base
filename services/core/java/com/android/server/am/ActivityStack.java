@@ -2035,9 +2035,10 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         final boolean keyguardOrAodShowing = mStackSupervisor.getKeyguardController()
                 .isKeyguardOrAodShowing(displayId);
         final boolean keyguardLocked = mStackSupervisor.getKeyguardController().isKeyguardLocked();
-        final boolean showWhenLocked = r.canShowWhenLocked();
-        final boolean dismissKeyguard = r.hasDismissKeyguardWindows();
         if (shouldBeVisible) {
+            //showWhenLock is meaningful when r is on Top or keyguard is Locked
+            final boolean showWhenLocked = (isTop || keyguardLocked) && r.canShowWhenLocked();
+            final boolean dismissKeyguard = r.hasDismissKeyguardWindows();
             if (dismissKeyguard && mTopDismissingKeyguardActivity == null) {
                 mTopDismissingKeyguardActivity = r;
             }
@@ -2053,18 +2054,17 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
             if (canShowWithKeyguard) {
                 return true;
             }
+            if (keyguardOrAodShowing) {
+                // If keyguard is showing, nothing is visible, except if we are able to dismiss
+                // Keyguard right away and AOD isn't visible.
+                return mStackSupervisor.getKeyguardController()
+                        .canShowActivityWhileKeyguardShowing(r, dismissKeyguard);
+            } else if (keyguardLocked) {
+                return mStackSupervisor.getKeyguardController().canShowWhileOccluded(
+                        dismissKeyguard, showWhenLocked);
+            }
         }
-        if (keyguardOrAodShowing) {
-            // If keyguard is showing, nothing is visible, except if we are able to dismiss Keyguard
-            // right away and AOD isn't visible.
-            return shouldBeVisible && mStackSupervisor.getKeyguardController()
-                    .canShowActivityWhileKeyguardShowing(r, dismissKeyguard);
-        } else if (keyguardLocked) {
-            return shouldBeVisible && mStackSupervisor.getKeyguardController().canShowWhileOccluded(
-                    dismissKeyguard, showWhenLocked);
-        } else {
-            return shouldBeVisible;
-        }
+        return shouldBeVisible;
     }
 
     /**
