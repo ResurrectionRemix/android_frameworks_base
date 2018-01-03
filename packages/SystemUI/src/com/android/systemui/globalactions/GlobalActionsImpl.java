@@ -97,12 +97,14 @@ public class GlobalActionsImpl implements GlobalActions {
         bar.getIndeterminateDrawable().setTint(color);
         TextView message = d.findViewById(R.id.text1);
         message.setTextColor(color);
-        if (reason != null && PowerManager.REBOOT_BOOTLOADER.equals(reason)) {
-            message.setText(com.android.internal.R.string.reboot_to_bootloader_message);
-        } else if (reason != null && PowerManager.REBOOT_RECOVERY.equals(reason)) {
-            message.setText(com.android.internal.R.string.reboot_to_recovery_message);
-        } else if (isReboot) {
-            message.setText(R.string.reboot_message);
+
+        boolean mIsReboot = isReboot;
+        if (reason != null && (PowerManager.REBOOT_BOOTLOADER.equals(reason) || PowerManager.REBOOT_RECOVERY.equals(reason))) {
+            mIsReboot = true;
+        }
+
+        if (mIsReboot){
+             message.setText(R.string.reboot_to_reset_message);
         }
 
         Point displaySize = new Point();
