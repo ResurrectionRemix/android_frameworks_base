@@ -110,6 +110,7 @@ import com.android.server.power.ShutdownThread;
 import com.android.server.restrictions.RestrictionsManagerService;
 import com.android.server.security.KeyAttestationApplicationIdProviderService;
 import com.android.server.security.KeyChainSystemService;
+import com.android.server.smartpixels.SmartPixelsReceiver;
 import com.android.server.soundtrigger.SoundTriggerService;
 import com.android.server.stats.StatsCompanionService;
 import com.android.server.statusbar.StatusBarManagerService;
@@ -271,6 +272,7 @@ public final class SystemServer {
     private PackageManager mPackageManager;
     private ContentResolver mContentResolver;
     private EntropyMixer mEntropyMixer;
+    private SmartPixelsReceiver mSmartPixelsReceiver;
 
     private boolean mOnlyCore;
     private boolean mFirstBoot;
@@ -2001,6 +2003,7 @@ public final class SystemServer {
                 reportWtf("Notifying incident daemon running", e);
             }
             traceEnd();
+            mSmartPixelsReceiver = new SmartPixelsReceiver(context);
         }, BOOT_TIMINGS_TRACE_LOG);
     }
 

@@ -43,6 +43,8 @@
     <!-- Whether device has turbo power charging support -->
     <java-symbol type="bool" name="config_hasTurboPowerCharger" />
 
+    <java-symbol type="bool" name="config_supportSmartPixels" />
+
     <!-- Toast Animation -->
     <java-symbol type="style" name="Animation.Toast.Fade" />
     <java-symbol type="style" name="Animation.Toast.SlideRight" />
