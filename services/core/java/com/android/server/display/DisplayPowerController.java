@@ -21,6 +21,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.content.pm.ParceledListSlice;
@@ -397,6 +398,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     static final int SCREEN_OFF_CRT = 1;
     static final int SCREEN_OFF_SCALE = 2;
 
+    final ContentResolver cr;
     /**
      * Creates the display power controller.
      */
@@ -414,6 +416,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         mWindowManagerPolicy = LocalServices.getService(WindowManagerPolicy.class);
         mBlanker = blanker;
         mContext = context;
+
+        cr = mContext.getContentResolver();
 
         final Resources resources = context.getResources();
         final int screenBrightnessSettingMinimum = clampAbsoluteBrightness(resources.getInteger(
@@ -1060,10 +1064,19 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             mAppliedDimming = false;
         }
 
-        // If low power mode is enabled, scale brightness by screenLowPowerBrightnessFactor
-        // as long as it is above the minimum threshold.
+        // If low power mode is enabled and Smart Pixels Service is stopped,
+        // scale brightness by screenLowPowerBrightnessFactor
+        // as long as it is above the minimum threshold
+        int mSmartPixelsEnable = Settings.System.getIntForUser(
+                cr, Settings.System.SMART_PIXELS_ENABLE,
+                0, UserHandle.USER_CURRENT);
+        int mSmartPixelsOnPowerSave = Settings.System.getIntForUser(
+                cr, Settings.System.SMART_PIXELS_ON_POWER_SAVE,
+                0, UserHandle.USER_CURRENT);
+
         if (mPowerRequest.lowPowerMode) {
-            if (brightness > mScreenBrightnessRangeMinimum) {
+            if ((brightness > mScreenBrightnessRangeMinimum) &&
+                  ((mSmartPixelsEnable == 0) || (mSmartPixelsOnPowerSave == 0))) {
                 final float brightnessFactor =
                         Math.min(mPowerRequest.screenLowPowerBrightnessFactor, 1);
                 final int lowPowerBrightness = (int) (brightness * brightnessFactor);
