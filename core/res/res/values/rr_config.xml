@@ -87,4 +87,7 @@
     <!-- Whether device has turbo power charging support -->
     <bool name="config_hasTurboPowerCharger">false</bool>
 
+  <!-- Whether the device supports Smart Pixels -->
+  <bool name="config_enableSmartPixels">false</bool>
+
 </resources>

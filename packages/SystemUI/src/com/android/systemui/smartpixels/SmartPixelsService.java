@@ -1,40 +1,68 @@
-package screen.dimmer.pixelfilter;
+/*
+ * Copyright (c) 2015, Sergii Pylypenko
+ *           (c) 2018, Joe Maples
+ *           (c) 2018, CarbonROM
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * * Neither the name of screen-dimmer-pixel-filter nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
+package com.android.systemui.smartpixels;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Service;
-import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.UserHandle;
+import android.os.UserManager;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.android.systemui.R;
 
-public class FilterService extends Service implements SensorEventListener {
-    public static final String LOG = "Pixel Filter"; //NON-NLS
+public class SmartPixelsService extends Service {
+    public static final String LOG = "SmartPixelsService";
 
     private WindowManager windowManager;
     private ImageView view = null;
@@ -43,50 +71,27 @@ public class FilterService extends Service implements SensorEventListener {
     private boolean destroyed = false;
     private boolean intentProcessed = false;
     public static boolean running = false;
-    public static MainActivity gui = null;
-
-    private SensorManager sensors = null;
-    private Sensor lightSensor = null;
-    private ScreenOffReceiver screenOffReceiver = null;
-
-    private int samsungBackLightValue = 0;
-    private String SAMSUNG_BACK_LIGHT_SETTING = "button_key_light"; //NON-NLS
 
     private int startCounter = 0;
+    private Context mContext;
+
+    // Pixel Filter Settings
+    private int mPattern = 3;
+    private int mShiftTimeout = 4;
 
     @Override
     public IBinder onBind(Intent intent) {
-    return null;
+        return null;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         running = true;
-        MainActivity guiCopy = gui;
-        if (guiCopy != null) {
-            guiCopy.updateCheckbox();
-        }
-
-        Log.d(LOG, "Service started"); //NON-NLS
-        Cfg.Init(this);
-
-        if (Cfg.UseLightSensor) {
-            sensors = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-            lightSensor = sensors.getDefaultSensor(Sensor.TYPE_LIGHT);
-            if (lightSensor != null) {
-                StartSensor.get().registerListener(sensors, this, lightSensor, 1200000, 1000000);
-            }
-
-            IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-            filter.addAction(Intent.ACTION_SCREEN_OFF);
-            screenOffReceiver = new ScreenOffReceiver();
-            registerReceiver(screenOffReceiver, filter);
-        } else {
-            startFilter();
-        }
-        Cfg.WasEnabled = true;
-        Cfg.Save(this);
+        mContext = this;
+        updateSettings();
+        Log.d(LOG, "Service started");
+        startFilter();
     }
 
     public void startFilter() {
@@ -116,12 +121,6 @@ public class FilterService extends Service implements SensorEventListener {
         } catch (Exception e) {
             running = false;
             view = null;
-            Log.d(LOG, "Permission " + Manifest.permission.SYSTEM_ALERT_WINDOW + " not granted - launching permission activity"); //NON-NLS
-            Log.d(LOG, e.toString()); //NON-NLS
-            Intent intent = new Intent(this, PermissionActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            stopSelf();
             return;
         }
 
@@ -138,30 +137,15 @@ public class FilterService extends Service implements SensorEventListener {
                 updatePattern();
                 view.invalidate();
                 if (!destroyed) {
-                    handler.postDelayed(this, Grids.ShiftTimeouts[Cfg.ShiftTimeoutIdx]);
+                    handler.postDelayed(this, Grids.ShiftTimeouts[mShiftTimeout]);
                 }
             }
-        }, Grids.ShiftTimeouts[Cfg.ShiftTimeoutIdx]);
-
-        if (Cfg.SamsungBacklight) {
-            try {
-                samsungBackLightValue = android.provider.Settings.System.getInt(getContentResolver(), SAMSUNG_BACK_LIGHT_SETTING);
-                android.provider.Settings.System.putInt(getContentResolver(), SAMSUNG_BACK_LIGHT_SETTING, 0);
-            } catch (Exception e) {
-            }
-        }
+        }, Grids.ShiftTimeouts[mShiftTimeout]);
     }
 
     public void stopFilter() {
         if (view == null) {
             return;
-        }
-
-        if (Cfg.SamsungBacklight) {
-            try {
-                android.provider.Settings.System.putInt(getContentResolver(), SAMSUNG_BACK_LIGHT_SETTING, samsungBackLightValue);
-            } catch (Exception e) {
-            }
         }
 
         startCounter++;
@@ -170,117 +154,18 @@ public class FilterService extends Service implements SensorEventListener {
         view = null;
     }
 
-    private WindowManager.LayoutParams getLayoutParams()
-    {
-        //DisplayMetrics metrics = new DisplayMetrics();
-        //windowManager.getDefaultDisplay().getRealMetrics(metrics);
-        Point displaySize = new Point();
-        windowManager.getDefaultDisplay().getRealSize(displaySize);
-        Point windowSize = new Point();
-        windowManager.getDefaultDisplay().getSize(windowSize);
-        displaySize.x += displaySize.x - windowSize.x;
-        displaySize.y += displaySize.y - windowSize.y;
-
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                displaySize.x, //metrics.widthPixels, // + getNavigationBarWidth(), //WindowManager.LayoutParams.MATCH_PARENT,
-                displaySize.y, //metrics.heightPixels, // + getNavigationBarHeight(), //WindowManager.LayoutParams.MATCH_PARENT,
-                0,
-                0,
-                //Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ?
-                //WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY :
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
-                        //WindowManager.LayoutParams.FLAG_FULLSCREEN |
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
-                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 ?
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN : 0) |
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS |
-                        //WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR |
-                        //WindowManager.LayoutParams.FLAG_DIM_BEHIND |
-                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                PixelFormat.TRANSPARENT
-        );
-
-        params.buttonBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
-        params.dimAmount = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
-        params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE; // View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        //params.gravity = Gravity.DISPLAY_CLIP_HORIZONTAL | Gravity.DISPLAY_CLIP_VERTICAL;
-        return params;
-    }
-
-    private int getNavigationBarHeight() {
-        Resources resources = getResources();
-        int id = resources.getIdentifier("navigation_bar_height_landscape", "dimen", "android"); //NON-NLS
-        if (id > 0) {
-            return resources.getDimensionPixelSize(id) * 2;
-        }
-        return 0;
-    }
-
-    private int getNavigationBarWidth() {
-        Resources resources = getResources();
-        int id = resources.getIdentifier("navigation_bar_height", "dimen", "android"); //NON-NLS
-        if (id > 0) {
-            return resources.getDimensionPixelSize(id) * 2;
-        }
-        return 0;
-    }
-
     @Override
-    public int onStartCommand (Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         if (Intent.ACTION_DELETE.equals(intent.getAction()) ||
                 (intentProcessed && Intent.ACTION_INSERT.equals(intent.getAction()))) {
-            Log.d(LOG, "Service got shutdown intent"); //NON-NLS
-            Ntf.show(this, false);
+            Log.d(LOG, "Service got shutdown intent");
+            stopSelf();
             intentProcessed = true;
-            Cfg.WasEnabled = false;
-            Cfg.Save(this);
-            if (!Cfg.PersistentNotification) {
-                stopSelf();
-                return START_NOT_STICKY;
-            } else {
-                stopFilter();
-                return START_STICKY;
-            }
-        }
-        if (Cfg.PersistentNotification && Intent.ACTION_RUN.equals(intent.getAction())) {
-            startFilter();
-            Cfg.WasEnabled = true;
-            Cfg.Save(this);
+            return START_NOT_STICKY;
         }
 
         intentProcessed = true;
-        Log.d(LOG, "Service got intent " + intent.getAction()); //NON-NLS
-        if (running && intent.hasExtra(TaskerActivity.BUNDLE_PATTERN)) {
-            Cfg.Pattern = intent.getIntExtra(TaskerActivity.BUNDLE_PATTERN, Cfg.Pattern);
-            if (view != null) {
-                updatePattern();
-                view.invalidate();
-            }
-        }
-        if (running && getString(R.string.intent_brighter).equals(intent.getAction())) {
-            if (Cfg.Pattern > 0 && Cfg.Pattern != Grids.PatternIdCustom) {
-                Cfg.Pattern--;
-            }
-            Cfg.Save(this);
-            if (view != null) {
-                updatePattern();
-                view.invalidate();
-            }
-        }
-        if (running && getString(R.string.intent_darker).equals(intent.getAction())) {
-            if (Cfg.Pattern + 1 < Grids.Patterns.length && Cfg.Pattern + 1 != Grids.PatternIdCustom) {
-                Cfg.Pattern++;
-            }
-            Cfg.Save(this);
-            if (view != null) {
-                updatePattern();
-                view.invalidate();
-            }
-        }
-        Ntf.show(this, true);
+        Log.d(LOG, "Service got intent " + intent.getAction());
         return START_STICKY;
     }
 
@@ -289,72 +174,76 @@ public class FilterService extends Service implements SensorEventListener {
         super.onDestroy();
         destroyed = true;
         stopFilter();
-
-        if (lightSensor != null) {
-            unregisterReceiver(screenOffReceiver);
-            sensors.unregisterListener(this, lightSensor);
-        }
-        Ntf.show(this, false);
-
-        Log.d(LOG, "Service stopped"); //NON-NLS
+        Log.d(LOG, "Service stopped");
         running = false;
-
-        MainActivity guiCopy = gui;
-        if (guiCopy != null)
-            guiCopy.updateCheckbox();
     }
 
-    int getShift() {
-        long shift = (System.currentTimeMillis() / Grids.ShiftTimeouts[Cfg.ShiftTimeoutIdx]) % Grids.GridSize;
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.d(LOG, "Screen orientation changed, updating window layout");
+        WindowManager.LayoutParams params = getLayoutParams();
+        windowManager.updateViewLayout(view, params);
+    }
+
+    private WindowManager.LayoutParams getLayoutParams()
+    {
+        Point displaySize = new Point();
+        windowManager.getDefaultDisplay().getRealSize(displaySize);
+        Point windowSize = new Point();
+        windowManager.getDefaultDisplay().getRealSize(windowSize);
+        Resources res = getResources();
+        int mStatusBarHeight = res.getDimensionPixelOffset(R.dimen.status_bar_height);
+        displaySize.x += displaySize.x - windowSize.x + (mStatusBarHeight * 2);
+        displaySize.y += displaySize.y - windowSize.y + (mStatusBarHeight * 2);
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                displaySize.x,
+                displaySize.y,
+                0,
+                0,
+                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN |
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS |
+                        WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                PixelFormat.TRANSPARENT
+        );
+
+        // Use the rounded corners overlay to hide it from screenshots. See 132c9f514.
+        params.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY;
+
+        params.dimAmount = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+        return params;
+    }
+
+    private int getShift() {
+        long shift = (System.currentTimeMillis() / Grids.ShiftTimeouts[mShiftTimeout]) % Grids.GridSize;
         return Grids.GridShift[(int)shift];
     }
 
-    void updatePattern() {
-        //Log.d(LOG, "Filter pattern " + Cfg.Pattern);
+    private void updatePattern() {
         int shift = getShift();
         int shiftX = shift % Grids.GridSideSize;
         int shiftY = shift / Grids.GridSideSize;
         for (int i = 0; i < Grids.GridSize; i++) {
             int x = (i + shiftX) % Grids.GridSideSize;
             int y = ((i / Grids.GridSideSize) + shiftY) % Grids.GridSideSize;
-            int color = (Grids.Patterns[Cfg.Pattern][i] == 0) ? Color.TRANSPARENT : Color.BLACK;
+            int color = (Grids.Patterns[mPattern][i] == 0) ? Color.TRANSPARENT : Color.BLACK;
             bmp.setPixel(x, y, color);
         }
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.values[0] > Cfg.LightSensorValue) {
-            stopFilter();
-        }
-        if (event.values[0] < Cfg.LightSensorValue * 0.6f) {
-            startFilter();
-        }
-    }
-
-    class ScreenOffReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (lightSensor != null) {
-                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                    //Log.d(LOG, "Service received screen off, disabling light sensor");
-                    sensors.unregisterListener(FilterService.this, lightSensor);
-                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                    //Log.d(LOG, "Service received screen on, enabling light sensor");
-                    StartSensor.get().registerListener(sensors, FilterService.this, lightSensor, 1200000, 1000000);
-                }
-            }
-        }
-    }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Log.d(LOG, "Screen orientation changed, updating window layout"); //NON-NLS
-        WindowManager.LayoutParams params = getLayoutParams();
-        windowManager.updateViewLayout(view, params);
+    private void updateSettings() {
+        mPattern = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.SMART_PIXELS_PATTERN,
+                3, UserHandle.USER_CURRENT);
+        mShiftTimeout = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.SMART_PIXELS_SHIFT_TIMEOUT,
+                4, UserHandle.USER_CURRENT);
     }
 }

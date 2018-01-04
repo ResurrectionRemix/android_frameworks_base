@@ -1,22 +1,42 @@
-package screen.dimmer.pixelfilter;
+/*
+ * Copyright (c) 2015, Sergii Pylypenko
+ *           (c) 2018, Joe Maples
+ *           (c) 2018, CarbonROM
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * * Neither the name of screen-dimmer-pixel-filter nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
+package com.android.systemui.smartpixels;
 
 public class Grids {
 
     public static final int GridSize = 64;
     public static final int GridSideSize = 8;
-    public static final int PatternIdCustom = 7;
-
-    public static int Id[] = new int[] {
-            R.id.checkBox1 ,R.id.checkBox2, R.id.checkBox3, R.id.checkBox4, R.id.checkBox5, R.id.checkBox6, R.id.checkBox7, R.id.checkBox8,
-            R.id.checkBox9, R.id.checkBox10,R.id.checkBox11,R.id.checkBox12,R.id.checkBox13,R.id.checkBox14,R.id.checkBox15,R.id.checkBox16,
-            R.id.checkBox17,R.id.checkBox18,R.id.checkBox19,R.id.checkBox20,R.id.checkBox21,R.id.checkBox22,R.id.checkBox23,R.id.checkBox24,
-            R.id.checkBox25,R.id.checkBox26,R.id.checkBox27,R.id.checkBox28,R.id.checkBox29,R.id.checkBox30,R.id.checkBox31,R.id.checkBox32,
-            R.id.checkBox33,R.id.checkBox34,R.id.checkBox35,R.id.checkBox36,R.id.checkBox37,R.id.checkBox38,R.id.checkBox39,R.id.checkBox40,
-            R.id.checkBox41,R.id.checkBox42,R.id.checkBox43,R.id.checkBox44,R.id.checkBox45,R.id.checkBox46,R.id.checkBox47,R.id.checkBox48,
-            R.id.checkBox49,R.id.checkBox50,R.id.checkBox51,R.id.checkBox52,R.id.checkBox53,R.id.checkBox54,R.id.checkBox55,R.id.checkBox56,
-            R.id.checkBox57,R.id.checkBox58,R.id.checkBox59,R.id.checkBox60,R.id.checkBox61,R.id.checkBox62,R.id.checkBox63,R.id.checkBox64,
-    };
-
 
     public static String[] PatternNames = new String[] {
             "12%",
@@ -26,11 +46,6 @@ public class Grids {
             "62%",
             "75%",
             "88%",
-            "Custom 1", // NON-NLS
-            "Custom 2", // NON-NLS
-            "Custom 3", // NON-NLS
-            "Custom 4", // NON-NLS
-            "Custom 5", // NON-NLS
     };
 
     public static byte[][] Patterns = new byte[][] {
@@ -103,57 +118,6 @@ public class Grids {
                     1, 1, 0, 1, 1, 1, 1, 1,
                     1, 1, 1, 1, 1, 1, 1, 0,
                     1, 1, 1, 1, 0, 1, 1, 1,
-            },
-            // Custom patterns
-            {
-                    1, 0, 0, 0, 1, 0, 0, 0,
-                    0, 0, 1, 0, 0, 0, 1, 0,
-                    0, 1, 0, 0, 0, 1, 0, 0,
-                    0, 0, 0, 1, 0, 0, 0, 1,
-                    1, 0, 0, 0, 1, 0, 0, 0,
-                    0, 0, 1, 0, 0, 0, 1, 0,
-                    0, 1, 0, 0, 0, 1, 0, 0,
-                    0, 0, 0, 1, 0, 0, 0, 1,
-            },
-            {
-                    1, 0, 0, 0, 1, 0, 0, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-                    0, 0, 1, 0, 0, 0, 1, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-                    1, 0, 0, 0, 1, 0, 0, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-                    0, 0, 1, 0, 0, 0, 1, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-            },
-            {
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-            },
-            {
-                    0, 1, 1, 1, 0, 1, 1, 1,
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    1, 1, 0, 1, 1, 1, 0, 1,
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    0, 1, 1, 1, 0, 1, 1, 1,
-                    1, 0, 1, 0, 1, 0, 1, 0,
-                    1, 1, 0, 1, 1, 1, 0, 1,
-                    1, 0, 1, 0, 1, 0, 1, 0,
-            },
-            {
-                    0, 1, 1, 1, 0, 1, 1, 1,
-                    1, 1, 0, 1, 1, 1, 0, 1,
-                    1, 0, 1, 1, 1, 0, 1, 1,
-                    1, 1, 1, 0, 1, 1, 1, 0,
-                    0, 1, 1, 1, 0, 1, 1, 1,
-                    1, 1, 0, 1, 1, 1, 0, 1,
-                    1, 0, 1, 1, 1, 0, 1, 1,
-                    1, 1, 1, 0, 1, 1, 1, 0,
             },
     };
 
