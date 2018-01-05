@@ -90,6 +90,12 @@ public class FlashlightControllerImpl implements FlashlightController {
         }
     }
 
+    public synchronized void initFlashLight() {
+        if (mCameraId == null) {
+            tryInitCamera();
+        }
+    }
+
     public void setFlashlight(boolean enabled) {
         boolean pendingError = false;
         synchronized (this) {
