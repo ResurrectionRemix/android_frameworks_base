@@ -556,16 +556,14 @@ public class StatusBar extends SystemUI implements DemoMode,
     private Ticker mTicker;
     private boolean mTicking;
 
-<<<<<<< HEAD
     protected AppCircleSidebar mAppCircleSidebar;
 
    // Pie controls
     protected PieController mPieController;
     public int mOrientation = 0;
     private OrientationEventListener mOrientationListener;
-=======
+
     private int mAmbientMediaPlaying;
->>>>>>> 3ab0b65... Ambient display music ticker [1/2]
 
     // Tracking finger for opening/closing.
     boolean mTracking;
@@ -6608,13 +6606,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STATUS_BAR_BATTERY_SAVER_COLOR),
                     false, this, UserHandle.USER_ALL);
-<<<<<<< HEAD
-=======
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_AMBIENT_FOR_MEDIA),
                     false, this, UserHandle.USER_ALL);
-            update();
->>>>>>> 3ab0b65... Ambient display music ticker [1/2]
         }
 
         @Override
@@ -6676,14 +6670,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setLockscreenMaxNotifications();
             updateFPQuickPulldown();
             updateBatterySaverColor();
-<<<<<<< HEAD
-=======
-
-            // Update slim recents
-            updateRecentsMode();
-            rebuildRecentsScreen();
             setForceAmbient();
->>>>>>> 3ab0b65... Ambient display music ticker [1/2]
         }
     }
 
