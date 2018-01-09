@@ -4798,6 +4798,12 @@ public final class Settings {
         public static final String APP_CIRCLE_BAR_SHOW_TRIGGER = "app_circle_bar_show_trigger";
 
         /**
+         * Unlock keystore with fingerprint after reboot
+         * @hide
+         */
+        public static final String FP_UNLOCK_KEYSTORE = "fp_unlock_keystore";
+
+         /**
          * Use EdgeGesture Service for system gestures in PhoneWindowManager
          * @hide
          */
