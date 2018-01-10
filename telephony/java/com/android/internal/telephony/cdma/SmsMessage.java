@@ -1046,4 +1046,61 @@ public class SmsMessage extends SmsMessageBase {
     public ArrayList<CdmaSmsCbProgramData> getSmsCbProgramData() {
         return mBearerData.serviceCategoryProgramData;
     }
+
+    /**
+    * CT WDP header contains WDP Msg Identifier and WDP Userdata
+    */
+    protected boolean processCdmaCTWdpHeader(SmsMessage sms) {
+        int subparamId = 0;
+        int subParamLen = 0;
+        int msgID = 0;
+        boolean decodeSuccess = false;
+        try {
+            BitwiseInputStream inStream = new BitwiseInputStream(sms.getUserData());
+
+            /* Decode WDP Messsage Identifier */
+            subparamId = inStream.read(8);
+            if (subparamId != 0) {
+                Rlog.e(LOG_TAG, "Invalid WDP SubparameterId");
+                return false;
+            }
+            subParamLen = inStream.read(8);
+            if (subParamLen != 3) {
+                Rlog.e(LOG_TAG, "Invalid WDP subparameter length");
+                return false;
+            }
+            sms.mBearerData.messageType = inStream.read(4);
+            msgID = inStream.read(8) << 8;
+            msgID |= inStream.read(8);
+            sms.mBearerData.hasUserDataHeader = (inStream.read(1) == 1);
+            if (sms.mBearerData.hasUserDataHeader) {
+                Rlog.e(LOG_TAG, "Invalid WDP UserData header value");
+                return false;
+            }
+            inStream.skip(3);
+            sms.mBearerData.messageId = msgID;
+            sms.mMessageRef = msgID;
+
+            /* Decode WDP User Data */
+            subparamId = inStream.read(8);
+            subParamLen = inStream.read(8) * 8;
+            sms.mBearerData.userData.msgEncoding = inStream.read(5);
+            int consumedBits = 5;
+            if (sms.mBearerData.userData.msgEncoding != 0) {
+                Rlog.e(LOG_TAG, "Invalid WDP encoding");
+                return false;
+            }
+            sms.mBearerData.userData.numFields = inStream.read(8);
+            consumedBits += 8;
+            int remainingBits = subParamLen - consumedBits;
+            int dataBits = sms.mBearerData.userData.numFields * 8;
+            dataBits = dataBits < remainingBits ? dataBits : remainingBits;
+            sms.mBearerData.userData.payload = inStream.readByteArray(dataBits);
+            sms.mUserData = sms.mBearerData.userData.payload;
+            decodeSuccess = true;
+        } catch (BitwiseInputStream.AccessException ex) {
+            Rlog.e(LOG_TAG, "CT WDP Header decode failed: " + ex);
+        }
+        return decodeSuccess;
+    }
 }
