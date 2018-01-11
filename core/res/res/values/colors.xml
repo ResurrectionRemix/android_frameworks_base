@@ -202,4 +202,9 @@
     <!-- FloatingToolbar -->
     <color name="floating_popup_divider_dark">#2F2F2F</color>
     <color name="floating_popup_divider_light">#E9E9E9</color>
+
+    <!-- Moved here from Settings (Omni) -->
+    <color name="suggestion_condition_background">#f2f2f2</color>
+    <color name="condition_card_background">#f8f8f8</color>
+    <color name="global_wifi_details_icon_color">#8A000000</color>
 </resources>
