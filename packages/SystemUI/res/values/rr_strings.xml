@@ -39,15 +39,24 @@
 
     <!-- Screenrecord Notification Ticker -->
     <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+    <string name="screenrecord_notif_final_ticker">Screen recorded successfully</string>
     <!-- Screenrecord notification title -->
     <string name="screenrecord_notif_title">Recording screen</string>
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">Stop</string>
+    <string name="screenrecord_notif_completed">Screen recorded successfully</string>
     <!-- Screenrecord notification action: show/hide pointer -->
     <string name="screenrecord_notif_pointer_on">Show pointer</string>
     <string name="screenrecord_notif_pointer_off">Hide pointer</string>
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Unable to record screen</string>
     <string name="notification_channel_screenrecord">Screenrecords</string>
+    <string name="screenrecord_hide_hint">Hide hint</string>
+    <string name="screenrecord_show_hint">Show hint</string>
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Screenrecord</string>
+    <string name="quick_settings_screenrecord_lq_label">Screenrecord 480p</string>
+    <string name="quick_settings_screenrecord_mq_label">Screenrecord 720p</string>
+    <string name="quick_settings_screenrecord_hq_label">Screenrecord 720p+</string>
 
 </resources>

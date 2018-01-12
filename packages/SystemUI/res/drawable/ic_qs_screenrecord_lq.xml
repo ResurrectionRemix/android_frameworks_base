@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2017 The ABC rom
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M 10.714844 0.49804688 C 7.8611737 0.49804688 6.1347656 2.2595294 6.1347656 5.1308594 L 6.1347656 15.964844 L 6.1347656 26.957031 C 6.1347656 29.722631 7.8965431 31.501953 10.626953 31.501953 L 21.373047 31.501953 C 24.068247 31.484353 25.865234 29.722522 25.865234 27.044922 L 25.865234 4.9550781 C 25.865234 2.2775281 24.068247 0.49804688 21.373047 0.49804688 L 10.714844 0.49804688 z M 8.671875 4.7617188 L 23.345703 4.7617188 L 23.345703 24.419922 L 8.671875 24.419922 L 8.671875 4.7617188 z M 19.662109 17.931641 A 3.1697335 3.1697335 0 0 0 16.492188 21.101562 A 3.1697335 3.1697335 0 0 0 19.662109 24.271484 A 3.1697335 3.1697335 0 0 0 22.832031 21.101562 A 3.1697335 3.1697335 0 0 0 19.662109 17.931641 z M 13.216797 27.34375 L 18.765625 27.34375 L 18.765625 28.648438 L 13.216797 28.648438 L 13.216797 27.34375 z " />
+</vector>
