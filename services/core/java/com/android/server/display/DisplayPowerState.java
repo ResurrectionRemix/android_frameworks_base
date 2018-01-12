@@ -55,7 +55,6 @@ final class DisplayPowerState {
     private final Handler mHandler;
     private final Choreographer mChoreographer;
     private final DisplayBlanker mBlanker;
-    private final ColorFade mColorFade;
     private final PhotonicModulator mPhotonicModulator;
 
     private int mScreenState;
@@ -69,12 +68,13 @@ final class DisplayPowerState {
     private boolean mColorFadeDrawPending;
 
     private Runnable mCleanListener;
+    private ScreenStateAnimator mColorFade;
 
-    public DisplayPowerState(DisplayBlanker blanker, ColorFade colorFade) {
+    public DisplayPowerState(DisplayBlanker blanker, int screenAnimatorMode) {
         mHandler = new Handler(true /*async*/);
         mChoreographer = Choreographer.getInstance();
         mBlanker = blanker;
-        mColorFade = colorFade;
+        setScreenStateAnimator(screenAnimatorMode);
         mPhotonicModulator = new PhotonicModulator();
         mPhotonicModulator.start();
 
@@ -118,6 +118,17 @@ final class DisplayPowerState {
             return object.getScreenBrightness();
         }
     };
+
+    public void setScreenStateAnimator(int mode) {
+        if (mColorFade != null) {
+            mColorFade.dismiss();
+        }
+        if (mode == DisplayPowerController.SCREEN_OFF_FADE) {
+            mColorFade = new ColorFade(Display.DEFAULT_DISPLAY);
+        } else {
+            mColorFade = new ElectronBeam(Display.DEFAULT_DISPLAY);
+        }
+    }
 
     /**
      * Sets whether the screen is on, off, or dozing.
