@@ -92,6 +92,7 @@ class GlobalScreenrecord {
     private WindowManager mWindowManager;
 
     private String mNotifContent = null;
+    private boolean mHintShowing = false;
 
     private void setFinisher(Runnable finisher) {
         mFinisher = finisher;
@@ -219,8 +220,8 @@ class GlobalScreenrecord {
         mCaptureThread.setMode(mode);
         mCaptureThread.start();
 
-        updateNotification(mode);
         showHint();
+        updateNotification(mode);
     }
 
     public void updateNotification(int mode) {
@@ -257,6 +258,11 @@ class GlobalScreenrecord {
         PendingIntent pointerPendIntent = PendingIntent.getService(mContext, 0, pointerIntent,
             PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent hintIntent = new Intent(mContext, TakeScreenrecordService.class)
+            .setAction(TakeScreenrecordService.ACTION_TOGGLE_HINT);
+        PendingIntent hintPendIntent = PendingIntent.getService(mContext, 0, hintIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT);
+
         boolean showTouches = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SHOW_TOUCHES, 0, UserHandle.USER_CURRENT) != 0;
         int togglePointerIconId = showTouches ?
@@ -265,17 +271,23 @@ class GlobalScreenrecord {
         int togglePointerStringId = showTouches ?
                 R.string.screenrecord_notif_pointer_off :
                 R.string.screenrecord_notif_pointer_on;
+        int hideHintStringId = mHintShowing ?
+                R.string.screenrecord_hide_hint :
+                R.string.screenrecord_show_hint;
         builder
             .addAction(com.android.internal.R.drawable.ic_media_stop,
                 r.getString(R.string.screenrecord_notif_stop), stopPendIntent)
             .addAction(togglePointerIconId,
-                r.getString(togglePointerStringId), pointerPendIntent);
+                r.getString(togglePointerStringId), pointerPendIntent)
+            .addAction(R.drawable.ic_hide_hint,
+                r.getString(hideHintStringId), hintPendIntent);
 
         Notification notif = builder.build();
         mNotificationManager.notify(SCREENRECORD_NOTIFICATION_ID, notif);
     }
 
     private void showHint() {
+        mHintShowing = true;
         final int size = (int) (mContext.getResources()
                 .getDimensionPixelSize(R.dimen.screenrecord_hint_size));
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -305,12 +317,29 @@ class GlobalScreenrecord {
             }
         });
 
+        hint.startAnimation(getHintAnimation());
+    }
+
+    public void toggleHint() {
+        mHintShowing = !mHintShowing;
+        final ImageView hint = (ImageView) mFrameLayout.findViewById(R.id.hint);
+        if (mHintShowing) {
+            hint.setImageAlpha(255);
+            hint.startAnimation(getHintAnimation());
+        } else  {
+            hint.setImageAlpha(0);
+            hint.setAnimation(null);
+        }
+        updateNotification(-1);
+    }
+
+    private Animation getHintAnimation() {
         Animation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(500);
         anim.setStartOffset(100);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
-        hint.startAnimation(anim);
+        return anim;
     }
 
     /**
