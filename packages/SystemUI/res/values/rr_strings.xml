@@ -178,4 +178,6 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
 
+  <dimen name="screenrecord_hint_size">48dp</dimen>
+
 </resources>

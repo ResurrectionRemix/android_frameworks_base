@@ -36,6 +36,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.provider.Settings;
 import android.content.res.Resources;
 import android.media.MediaScannerConnection;
@@ -44,7 +45,15 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
 import android.util.Log;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.android.systemui.R;
 import com.android.systemui.util.NotificationChannels;
@@ -76,10 +85,57 @@ class GlobalScreenrecord {
 
     private CaptureThread mCaptureThread;
 
+    private Runnable mFinisher;
+
+    private FrameLayout mFrameLayout;
+    private LayoutInflater mInflater;
+    private WindowManager mWindowManager;
+
+    private String mNotifContent = null;
+
+    private void setFinisher(Runnable finisher) {
+        mFinisher = finisher;
+    }
+
     private class CaptureThread extends Thread {
+        private Runnable mFInisher;
+        private int mMode;
+
+        public void setMode(int mode) {
+            mMode = mode;
+        }
+
         public void run() {
             Runtime rt = Runtime.getRuntime();
-            String[] cmds = new String[] {"/system/bin/screenrecord", TMP_PATH};
+
+            // additional arguments to pass to screenrecord bin
+            final String[] cmds = new String[6];
+            cmds[0] = "/system/bin/screenrecord";
+            cmds[1] = TMP_PATH;
+            switch (mMode) {
+                case WindowManager.SCREEN_RECORD_LOW_QUALITY:
+                    // low resolution and 1.5Mbps
+                    cmds[2] = "--size";
+                    cmds[3] = "480x800";
+                    cmds[4] = "--bit-rate";
+                    cmds[5] = "1500000";
+                    break;
+                case WindowManager.SCREEN_RECORD_MID_QUALITY:
+                    // default resolution (720p) and 4Mbps
+                    cmds[2] = "--size";
+                    cmds[3] = "720x1280";
+                    cmds[4] = "--bit-rate";
+                    cmds[5] = "4000000";
+                    break;
+                case WindowManager.SCREEN_RECORD_HIGH_QUALITY:
+                    // default resolution (720p) and 8Mbps
+                    cmds[2] = "--size";
+                    cmds[3] = "720x1280";
+                    cmds[4] = "--bit-rate";
+                    cmds[5] = "8000000";
+                    break;
+            }
+
             try {
                 Process proc = rt.exec(cmds);
                 BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
@@ -133,14 +189,16 @@ class GlobalScreenrecord {
                     stopScreenrecord();
                 } else if (msg.what == MSG_TASK_ERROR) {
                     mCaptureThread = null;
+                    mFinisher.run();
                     // TODO: Notify the error
                 }
             }
         };
-
         mNotificationManager =
-            (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mWindowManager =
+                (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public boolean isRecording() {
@@ -150,24 +208,41 @@ class GlobalScreenrecord {
     /**
      * Starts recording the screen.
      */
-    void takeScreenrecord() {
+    void takeScreenrecord(Runnable finisher, int mode) {
         if (mCaptureThread != null) {
             Log.e(TAG, "Capture Thread is already running, ignoring screenrecord start request");
             return;
         }
 
+        setFinisher(finisher);
         mCaptureThread = new CaptureThread();
+        mCaptureThread.setMode(mode);
         mCaptureThread.start();
 
-        updateNotification();
+        updateNotification(mode);
+        showHint();
     }
 
-    public void updateNotification(){
+    public void updateNotification(int mode) {
         final Resources r = mContext.getResources();
+        final String base = r.getString(R.string.screenrecord_notif_title);
+        switch (mode) {
+            case WindowManager.SCREEN_RECORD_LOW_QUALITY:
+                mNotifContent = base + " - 480x800 @1.5Mbps";
+                break;
+            case WindowManager.SCREEN_RECORD_MID_QUALITY:
+                mNotifContent = base + " - 720x1280 @4Mbps";
+                break;
+            case WindowManager.SCREEN_RECORD_HIGH_QUALITY:
+                mNotifContent = base + " - 720x1280 @8Mbps";
+                break;
+            case -1:
+                mNotifContent = mNotifContent;
+        }
         // Display a notification
         Notification.Builder builder = new Notification.Builder(mContext, NotificationChannels.SCREENRECORDS)
             .setTicker(r.getString(R.string.screenrecord_notif_ticker))
-            .setContentTitle(r.getString(R.string.screenrecord_notif_title))
+            .setContentTitle(mNotifContent)
             .setSmallIcon(R.drawable.ic_capture_video)
             .setWhen(System.currentTimeMillis())
             .setOngoing(true);
@@ -200,12 +275,51 @@ class GlobalScreenrecord {
         mNotificationManager.notify(SCREENRECORD_NOTIFICATION_ID, notif);
     }
 
+    private void showHint() {
+        final int size = (int) (mContext.getResources()
+                .getDimensionPixelSize(R.dimen.screenrecord_hint_size));
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE // don't get softkey inputs
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, // allow outside inputs
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        params.width = size;
+        params.height = size;
+
+        mFrameLayout = new FrameLayout(mContext);
+
+        mWindowManager.addView(mFrameLayout, params);
+        mInflater.inflate(R.layout.screenrecord_hint, mFrameLayout);
+
+        final ImageView hint = (ImageView) mFrameLayout.findViewById(R.id.hint);
+        hint.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Turn off pointer in all cases
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.SHOW_TOUCHES, 0, UserHandle.USER_CURRENT);
+                Message msg = Message.obtain(mHandler, MSG_TASK_ENDED);
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(500);
+        anim.setStartOffset(100);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        hint.startAnimation(anim);
+    }
+
     /**
      * Stops recording the screen.
      */
     void stopScreenrecord() {
         if (mCaptureThread == null) {
             Log.e(TAG, "No capture thread, cannot stop screen recording!");
+            mFinisher.run();
             return;
         }
 
@@ -220,6 +334,10 @@ class GlobalScreenrecord {
             // wait...
         }
 
+        final ImageView hint = (ImageView) mFrameLayout.findViewById(R.id.hint);
+        hint.setAnimation(null);
+        mWindowManager.removeView(mFrameLayout);
+
         // Give a second to screenrecord to finish the file
         mHandler.postDelayed(new Runnable() { public void run() {
             mCaptureThread = null;
@@ -233,6 +351,7 @@ class GlobalScreenrecord {
             if (!screenshots.exists()) {
                 if (!screenshots.mkdir()) {
                     Log.e(TAG, "Cannot create screenrecords directory");
+                    mFinisher.run();
                     return;
                 }
             }
@@ -260,6 +379,7 @@ class GlobalScreenrecord {
                 new MediaScannerConnection.OnScanCompletedListener() {
                 public void onScanCompleted(String path, Uri uri) {
                     Log.i(TAG, "MediaScanner done scanning " + path);
+                    mFinisher.run();
                 }
             });
         } }, 2000);
