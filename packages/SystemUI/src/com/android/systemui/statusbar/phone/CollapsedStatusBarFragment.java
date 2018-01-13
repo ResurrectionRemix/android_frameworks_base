@@ -81,6 +81,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mCustomCarrierLabel;
     private int mShowCarrierLabel;
 
+    // AICP additions
+    private View mBatteryBar;
+
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
         public void setIsAirplaneMode(NetworkController.IconState icon) {
@@ -146,6 +149,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mClockController = new ClockController(mStatusBar);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
+        mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
         showSystemIconArea(false);
         showClock(false);
         initEmergencyCryptkeeperText();
@@ -272,11 +276,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
         animateHide(mClockController.getClockLayout(), animate);
+        animateHide(mBatteryBar, animate);
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mClockController.getClockLayout(), animate);
+        animateShow(mBatteryBar, animate);
     }
 
     public void hideClock(boolean animate) {
