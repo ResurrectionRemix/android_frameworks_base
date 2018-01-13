@@ -76,6 +76,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     // Custom Carrier
     private View mCustomCarrierLabel;
+    private View mBatteryBar;
     private int mShowCarrierLabel;
 
     private View mRRLogo;
@@ -179,6 +180,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mRRLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
         mWeatherTextView = mStatusBar.findViewById(R.id.weather_temp);
         mWeatherImageView = mStatusBar.findViewById(R.id.weather_image);
+        mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
         updateSettings(false);
         // Default to showing until we know otherwise.
         showSystemIconArea(false);
@@ -288,6 +290,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 2) {
             animateHide(mRRLogoRight, animate, false);
         }
+        animateHide(mBatteryBar, animate, true);
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -295,6 +298,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 2) {
             animateShow(mRRLogoRight, animate);
         }
+        animateShow(mBatteryBar, animate);
     }
 
     public void hideNotificationIconArea(boolean animate) {
@@ -302,6 +306,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 1) {
             animateHide(mRRLogo, animate, false);
         }
+        animateHide(mBatteryBar, animate, true);
     }
 
     public void showNotificationIconArea(boolean animate) {
@@ -309,6 +314,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 1) {
             animateShow(mRRLogo, animate);
         }
+        animateShow(mBatteryBar, animate);
     }
 
     public void hideCarrierName(boolean animate) {
