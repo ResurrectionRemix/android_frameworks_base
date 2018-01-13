@@ -31,19 +31,26 @@
 
 package com.android.systemui.omni.screenrecord;
 
+import android.app.ActivityManager;
+import android.app.ActivityOptions;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.provider.Settings;
 import android.content.res.Resources;
 import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
 import android.os.UserHandle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -78,6 +85,10 @@ class GlobalScreenrecord {
 
     private static final String TMP_PATH = Environment.getExternalStorageDirectory()
             + File.separator + "__tmp_screenrecord.mp4";
+
+    private static final String SCREENRECORD_SHARE_SUBJECT_TEMPLATE = "Screenrecord (%s)";
+    private static final String SCREENRECORD_URI_ID = "android:screenrecord_uri_id";
+    private static final String SHARING_INTENT = "android:screenrecord_sharing_intent";
 
     private Context mContext;
     private Handler mHandler;
@@ -371,14 +382,15 @@ class GlobalScreenrecord {
         mHandler.postDelayed(new Runnable() { public void run() {
             mCaptureThread = null;
 
-            final String fileName = "SCR_"
-                    + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".mp4";
+            final String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            final String fileName = "ScreenRec_"
+                    + date + ".mp4";
             final File pictures = Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_PICTURES);
-            final File screenshots = new File(pictures, "Screenrecords");
+            final File screenrecords = new File(pictures, "Screenrecords");
 
-            if (!screenshots.exists()) {
-                if (!screenshots.mkdir()) {
+            if (!screenrecords.exists()) {
+                if (!screenrecords.mkdir()) {
                     Log.e(TAG, "Cannot create screenrecords directory");
                     mFinisher.run();
                     return;
@@ -386,7 +398,7 @@ class GlobalScreenrecord {
             }
 
             final File input = new File(TMP_PATH);
-            final File output = new File(screenshots, fileName);
+            final File output = new File(screenrecords, fileName);
 
             Log.d(TAG, "Copying file to " + output.getAbsolutePath());
 
@@ -402,18 +414,45 @@ class GlobalScreenrecord {
             }
 
             // Make it appear in gallery, run MediaScanner
-            // also make sure to tell media scammer that the tmp file got deleted
-            MediaScannerConnection.scanFile(mContext,
-                new String[] { output.getAbsolutePath(), input.getAbsolutePath() }, null,
-                new MediaScannerConnection.OnScanCompletedListener() {
-                public void onScanCompleted(String path, Uri uri) {
-                    Log.i(TAG, "MediaScanner done scanning " + path);
-                    mFinisher.run();
-                }
-            });
+            // also make sure to tell media scanner that the tmp file got deleted
+            MediaScannerConnectionClient client =
+                    new MediaScanner(mContext);
+            ((MediaScanner)client).connectAndScan(input.getAbsolutePath(), null);
+            ((MediaScanner)client).connectAndScan(output.getAbsolutePath(), date);
         } }, 2000);
     }
 
+    private final class MediaScanner implements MediaScannerConnectionClient {
+
+        private String mFileName;
+        private String mDate;
+        private MediaScannerConnection mConnection;
+
+        public MediaScanner(Context ctx) {
+            mConnection = new MediaScannerConnection(ctx, this);
+        }
+
+        @Override
+        public void onMediaScannerConnected() {
+            mConnection.scanFile(mFileName, null);
+        }
+
+        @Override
+        public void onScanCompleted(String path, Uri uri) {
+            Log.i(TAG, "MediaScanner done scanning " + path);
+            if (mDate != null) {
+                showFinalNotification(uri, mDate);
+            }
+            // disconnect the service to avoid leaks
+            mConnection.disconnect();
+        }
+
+        public void connectAndScan(String fileName, String date) {
+            this.mFileName = fileName;
+            this.mDate = date;
+            mConnection.connect();
+        }
+    }
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {
         InputStream is = null;
@@ -433,6 +472,124 @@ class GlobalScreenrecord {
             if (os != null) {
                 os.close();
             }
+        }
+    }
+
+    private void showFinalNotification(Uri uri, String date) {
+        mNotificationManager.cancel(SCREENRECORD_NOTIFICATION_ID);
+
+        // Create a share intent
+        //String subjectDate = DateFormat.getDateTimeInstance().format(new Date(mImageTime));
+        String subject = String.format(SCREENRECORD_SHARE_SUBJECT_TEMPLATE, date);
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("video/mp4");
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+
+        PendingIntent shareAction = PendingIntent.getBroadcast(mContext, 0,
+                new Intent(mContext, GlobalScreenrecord.ShareReceiver.class)
+                        .putExtra(SHARING_INTENT, sharingIntent),
+                PendingIntent.FLAG_CANCEL_CURRENT);
+
+        // Create a delete action for the notification
+        PendingIntent deleteAction = PendingIntent.getBroadcast(mContext, 0,
+                new Intent(mContext, GlobalScreenrecord.DeleteScreenrecordReceiver.class)
+                        .putExtra(GlobalScreenrecord.SCREENRECORD_URI_ID, uri.toString()),
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+
+        final Resources r = mContext.getResources();
+        Notification.Builder builder = new Notification.Builder(mContext, NotificationChannels.SCREENRECORDS)
+            .setTicker(r.getString(R.string.screenrecord_notif_final_ticker))
+            .setContentTitle(r.getString(R.string.screenrecord_notif_completed))
+            .setSmallIcon(R.drawable.ic_capture_video)
+            .setWhen(System.currentTimeMillis())
+            .setAutoCancel(true);
+        builder
+            .addAction(R.drawable.ic_screenshot_share,
+                r.getString(com.android.internal.R.string.share), shareAction)
+            .addAction(R.drawable.ic_screenshot_delete,
+                r.getString(com.android.internal.R.string.delete), deleteAction);
+        Notification notif = builder.build();
+        mNotificationManager.notify(SCREENRECORD_NOTIFICATION_ID, notif);
+
+        mFinisher.run();
+    }
+
+    /**
+     * Receiver to proxy the share intent.
+     */
+    public static class ShareReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                ActivityManager.getService().closeSystemDialogs("screenrecord");
+            } catch (RemoteException e) {
+            }
+
+            Intent sharingIntent = intent.getParcelableExtra(SHARING_INTENT);
+            PendingIntent chooseAction = PendingIntent.getBroadcast(context, 0,
+                    new Intent(context, GlobalScreenrecord.TargetChosenReceiver.class),
+                    PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+            Intent chooserIntent = Intent.createChooser(sharingIntent, null,
+                    chooseAction.getIntentSender())
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            ActivityOptions opts = ActivityOptions.makeBasic();
+            opts.setDisallowEnterPictureInPictureWhileLaunching(true);
+            context.startActivityAsUser(chooserIntent, opts.toBundle(), UserHandle.CURRENT);
+        }
+    }
+
+    /**
+     * Removes the notification for a screenrecord after a share target is chosen.
+     */
+    public static class TargetChosenReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Clear the notification
+            final NotificationManager nm =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.cancel(SCREENRECORD_NOTIFICATION_ID);
+        }
+    }
+
+    /**
+     * Removes the last screenrecord.
+     */
+    public static class DeleteScreenrecordReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!intent.hasExtra(SCREENRECORD_URI_ID)) {
+                return;
+            }
+
+            final Uri uri = Uri.parse(intent.getStringExtra(SCREENRECORD_URI_ID));
+            // Clear the notification
+            final NotificationManager nm =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.cancel(SCREENRECORD_NOTIFICATION_ID);
+            // And delete the image from the media store
+            new DeleteVideoInBackgroundTask(context).execute(uri);
+        }
+    }
+
+    /**
+    * An AsyncTask that deletes a video from the media store in the background.
+    */
+    private static class DeleteVideoInBackgroundTask extends AsyncTask<Uri, Void, Void> {
+        private Context mContext;
+
+        DeleteVideoInBackgroundTask(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected Void doInBackground(Uri... params) {
+            if (params.length != 1) return null;
+
+            Uri uri = params[0];
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.delete(uri, null, null);
+            return null;
         }
     }
 }
