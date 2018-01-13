@@ -122,4 +122,6 @@
 
     <!-- Boost parameters which get passed to QPerformance -->
     <integer-array name="onbootboost_param_value"/>
+
+    <bool name="config_dozeAlwaysOnDisplayEnabledDefault">false</bool>
 </resources>
