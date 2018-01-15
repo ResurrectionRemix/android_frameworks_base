@@ -101,6 +101,7 @@ class GlobalScreenrecord {
     private FrameLayout mFrameLayout;
     private LayoutInflater mInflater;
     private WindowManager mWindowManager;
+    private boolean mIsHintAtRight;
 
     private String mNotifContent = null;
     private boolean mHintShowing = false;
@@ -299,6 +300,7 @@ class GlobalScreenrecord {
 
     private void showHint() {
         mHintShowing = true;
+        mIsHintAtRight = true;
         final int size = (int) (mContext.getResources()
                 .getDimensionPixelSize(R.dimen.screenrecord_hint_size));
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -325,6 +327,19 @@ class GlobalScreenrecord {
                         Settings.System.SHOW_TOUCHES, 0, UserHandle.USER_CURRENT);
                 Message msg = Message.obtain(mHandler, MSG_TASK_ENDED);
                 mHandler.sendMessage(msg);
+            }
+        });
+
+        hint.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View v) {
+                hint.setAnimation(null);
+                WindowManager.LayoutParams params =
+                        (WindowManager.LayoutParams) mFrameLayout.getLayoutParams();
+                params.gravity = Gravity.BOTTOM | (mIsHintAtRight? Gravity.LEFT : Gravity.RIGHT);
+                mIsHintAtRight = !mIsHintAtRight;
+                mWindowManager.updateViewLayout(mFrameLayout, params);
+                hint.startAnimation(getHintAnimation());
+                return true;
             }
         });
 
